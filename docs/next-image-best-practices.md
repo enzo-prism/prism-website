@@ -202,3 +202,11 @@ Let's create a script to verify all images in the project:
 # Ensure critical images have priority attribute
 # Check for meaningful alt text
 # Implement error handling
+
+# Example script commands
+# find . -name "*.tsx" -exec grep -Hn "<Image" {} \;
+# find . -name "*.tsx" -exec grep -Hn "next/image" {} \;
+# grep -r "remotePatterns" next.config.js
+# find . -name "*.tsx" -exec grep -Hn "priority" {} \;
+# find . -name "*.tsx" -exec grep -Hn "alt=" {} \;
+# find . -name "*.tsx" -exec grep -Hn "onError" {} \;

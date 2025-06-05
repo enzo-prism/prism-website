@@ -1,4 +1,5 @@
-"use client"
+```typescriptreact file="components/client-showcase.tsx"
+[v0-no-op-code-block-prefix]"use client"
 
 import { useRef, useState, useEffect, useCallback } from "react"
 import OptimizedImage from "./optimized-image"
@@ -58,7 +59,7 @@ export default function ClientShowcase() {
       business: "laguna beach dental arts",
       clientType: "website",
       gradient: "bg-gradient-to-br from-teal-200 to-teal-400",
-      image: "/dr-teagan-willes-headshot.jpeg",
+      image: "/dr-teagan-willes.jpeg",
     },
     {
       id: 4,
@@ -212,6 +213,7 @@ export default function ClientShowcase() {
       gradient: "bg-gradient-to-br from-red-500 via-rose-600 to-pink-600",
       image: "/instagram-clients/alex-hormozi.png",
     },
+    // Add the new clients below
     {
       id: 25,
       name: "justin mateen",
@@ -228,6 +230,15 @@ export default function ClientShowcase() {
       gradient: "bg-gradient-to-br from-red-400 via-blue-400 to-red-500",
       image: "/instagram-clients/cole-hocker.png",
     },
+    {
+      id: 27,
+      name: "miguel pimentel",
+      business: "grammy-winning artist",
+      clientType: "Instagram",
+      gradient: "bg-gradient-to-br from-orange-400 via-pink-500 to-purple-600",
+      image: "/instagram-clients/m.png",
+    },
+    // Miguel's entry (ID 24) has been removed.
   ]
 
   const [clients, setClients] = useState<Client[]>([])
@@ -242,8 +253,8 @@ export default function ClientShowcase() {
   const [imagesPreloaded, setImagesPreloaded] = useState(false)
 
   useEffect(() => {
-    // Ensure any previous Miguel entries (ID 23 or 24 or 27) are filtered out before shuffling
-    const filteredClientsData = clientsData.filter((client) => client.id !== 23 && client.id !== 24 && client.id !== 27)
+    // Ensure any previous Miguel entries (ID 23 or 24) are filtered out before shuffling
+    const filteredClientsData = clientsData.filter((client) => client.id !== 23 && client.id !== 24)
     const shuffledClients = shuffleArray(filteredClientsData)
     setClients([...shuffledClients, ...shuffledClients])
     setIsLoaded(true)

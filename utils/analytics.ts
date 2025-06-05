@@ -226,14 +226,14 @@ export function trackSkoolEmailSubmission(email: string, source: string) {
  * @param email The email to hash
  * @returns A simple hash representation
  */
-export function hashEmail(email: string): string {
+function hashEmail(email: string): string {
   // This is a simple hash function for demonstration
   // In production, use a proper hashing algorithm
   let hash = 0
   for (let i = 0; i < email.length; i++) {
     const char = email.charCodeAt(i)
     hash = (hash << 5) - hash + char
-    hash = hash & 0xffffffff // Convert to 32bit integer
+    hash = hash & hash // Convert to 32bit integer
   }
   return hash.toString(16)
 }

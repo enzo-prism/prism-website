@@ -2,38 +2,29 @@
 
 import { useState, useEffect } from "react"
 
-/**
- * Custom hook to detect if the current viewport matches a mobile media query.
- * @param query The media query string to match against. Defaults to '(max-width: 768px)'.
- * @returns True if the media query matches, false otherwise.
- */
-export function useMobile(query = "(max-width: 768px)"): boolean {
-  const [matches, setMatches] = useState<boolean>(false)
+const MOBILE_BREAKPOINT = 768
+
+export function useMobile(query = `(max-width: ${MOBILE_BREAKPOINT}px)`): boolean {
+  const [matches, setMatches] = useState(false)
 
   useEffect(() => {
-    // Ensure window is defined (for SSR compatibility during build or in Node.js environments)
-    if (typeof window === "undefined") {
-      return
+    // Ensure window is defined (for SSR/build time)
+    if (typeof window !== "undefined") {
+      const mediaQueryList = window.matchMedia(query)
+      const listener = () => setMatches(mediaQueryList.matches)
+
+      // Set initial state
+      listener()
+
+      // Add listener for changes
+      mediaQueryList.addEventListener("change", listener)
+
+      // Cleanup listener on component unmount
+      return () => {
+        mediaQueryList.removeEventListener("change", listener)
+      }
     }
-
-    const mediaQuery = window.matchMedia(query)
-
-    // Set the initial state
-    setMatches(mediaQuery.matches)
-
-    const handleChange = (event: MediaQueryListEvent) => {
-      setMatches(event.matches)
-    }
-
-    // Add listener for changes
-    // Using addEventListener/removeEventListener for modern browsers
-    mediaQuery.addEventListener("change", handleChange)
-
-    // Cleanup listener on component unmount
-    return () => {
-      mediaQuery.removeEventListener("change", handleChange)
-    }
-  }, [query]) // Re-run effect if the query changes
+  }, [query])
 
   return matches
 }
