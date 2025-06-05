@@ -138,7 +138,7 @@ export default function ClientShowcase() {
       business: "crow canyon orthodontics",
       clientType: "podcast guest",
       gradient: "bg-gradient-to-br from-sky-200 to-sky-400",
-      image: "/dr-arash-abolfazlian.png",
+      image: "/dr-arash-abolfazlian.png", // Ensured this line is clean
     },
     {
       id: 14,
@@ -252,9 +252,9 @@ export default function ClientShowcase() {
   useEffect(() => {
     if (isLoaded && clients.length > 0) {
       const imagesToPreload = clients
-        .slice(0, Math.min(5, clients.length))
+        .slice(0, Math.min(5, clients.length)) // Preload first 5 visible images
         .filter((client) => client.image)
-        .map((client) => client.image)
+        .map((client) => client.image as string)
 
       imagesToPreload.forEach((imageSrc) => {
         if (typeof imageSrc === "string") {
@@ -267,9 +267,8 @@ export default function ClientShowcase() {
 
   useEffect(() => {
     if (!containerRef.current || !isLoaded || clients.length === 0) {
-      // Added clients.length === 0 check to prevent issues if all clients are removed
-      setContentWidth(0) // Reset content width if no clients
-      setAnimationDuration(0) // Reset animation duration
+      setContentWidth(0)
+      setAnimationDuration(0)
       return
     }
 
@@ -278,7 +277,6 @@ export default function ClientShowcase() {
       if (!container) return
 
       const containerWidthVal = container.clientWidth
-      // Ensure scrollWidth is accessed only if there are child elements
       const actualContentWidth = container.firstChild ? container.scrollWidth / 2 : 0
 
       setContainerWidth(containerWidthVal)
@@ -371,8 +369,7 @@ export default function ClientShowcase() {
   }, [captureScrollPosition])
 
   if (!isLoaded || clients.length === 0) {
-    // Check if clients array is empty
-    return null // Render nothing if no clients
+    return null
   }
 
   const isAnimationActive = contentWidth > containerWidth && !isPaused && !isPermanentlyStopped
@@ -422,7 +419,7 @@ export default function ClientShowcase() {
                       height={498}
                       className="object-cover w-full h-full"
                       sizes="280px"
-                      priority={index < 5}
+                      priority={index < 5} // Prioritize loading for first 5 images
                       fallbackSrc={`/placeholder.svg?height=498&width=280&query=${encodeURIComponent(client.name)}`}
                       fallbackColor={
                         client.gradient.includes("from-") ? client.gradient.split("from-")[1].split(" ")[0] : "#f3f4f6"
