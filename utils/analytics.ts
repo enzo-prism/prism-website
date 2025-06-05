@@ -226,7 +226,7 @@ export function trackSkoolEmailSubmission(email: string, source: string) {
  * @param email The email to hash
  * @returns A simple hash representation
  */
-function hashEmail(email: string): string {
+export function hashEmail(email: string): string {
   // This is a simple hash function for demonstration
   // In production, use a proper hashing algorithm
   let hash = 0
