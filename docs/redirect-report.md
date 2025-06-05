@@ -53,7 +53,7 @@ import { Menu, X } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import { useMobile } from "@/hooks/use-mobile"
 import OptimizedImage from "./optimized-image"
-// Add import for trackExternalLinkClick
+// Import analytics helper
 import { trackNavigation } from "@/utils/analytics"
 
 export default function Navbar() {
