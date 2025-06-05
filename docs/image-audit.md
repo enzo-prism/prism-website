@@ -132,6 +132,40 @@ Show loading states while images are loading:
 3. Replace all image implementations with the standardized component
 4. Add proper error boundaries around image-heavy sections
 5. Implement image preloading for critical above-the-fold images
-\`\`\`
 
-Now, let's create an enhanced image component that follows all best practices:
+## Enhanced Image Component
+
+Here is an enhanced image component that follows all best practices:
+
+\`\`\`jsx
+import Image from 'next/image';
+import { useState } from 'react';
+
+const EnhancedImage = ({ src, alt, width, height, isPriority, blurDataURL }) => {
+  const [fallbackImage, setFallbackImage] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
+  return (
+    <div className="relative">
+      {isLoading && (
+        <div className="absolute inset-0 flex items-center justify-center bg-gray-100">
+          <span className="loading-spinner" />
+        </div>
+      )}
+      <Image
+        src={fallbackImage ? "/placeholder.svg" : src}
+        alt={alt}
+        width={width}
+        height={height}
+        quality={85}
+        priority={isPriority}
+        placeholder="blur"
+        blurDataURL={blurDataURL}
+        onError={() => setFallbackImage(true)}
+        onLoadingComplete={() => setIsLoading(false)}
+      />
+    </div>
+  );
+};
+
+export default EnhancedImage;

@@ -41,12 +41,9 @@ This data will help us identify any additional redirect needs and measure the ef
 2. Consider creating dedicated sections on the homepage to capture traffic from deleted pages
 3. Update any external links to point directly to the homepage where possible
 4. Review navigation to ensure it no longer references deleted pages
-\`\`\`
 
-Let's also update the navbar component to remove links to the deleted pages:
-
-```typescriptreact file="components/navbar.tsx"
-[v0-no-op-code-block-prefix]"use client"
+\`\`\`typescriptreact file="components/navbar.tsx"
+"use client"
 
 import { useState } from "react"
 import Link from "next/link"

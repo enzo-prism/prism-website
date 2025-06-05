@@ -1,28 +1,39 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useState, useEffect } from "react"
 
-const MOBILE_BREAKPOINT = 768
-
-export function useMobile() {
-  const [isMobile, setIsMobile] = useState(false)
+/**
+ * Custom hook to detect if the current viewport matches a mobile media query.
+ * @param query The media query string to match against. Defaults to '(max-width: 768px)'.
+ * @returns True if the media query matches, false otherwise.
+ */
+export function useMobile(query = "(max-width: 768px)"): boolean {
+  const [matches, setMatches] = useState<boolean>(false)
 
   useEffect(() => {
-    const checkIfMobile = () => {
-      setIsMobile(window.innerWidth < MOBILE_BREAKPOINT)
+    // Ensure window is defined (for SSR compatibility during build or in Node.js environments)
+    if (typeof window === "undefined") {
+      return
     }
 
-    // Initial check
-    checkIfMobile()
+    const mediaQuery = window.matchMedia(query)
 
-    // Add event listener
-    window.addEventListener("resize", checkIfMobile)
+    // Set the initial state
+    setMatches(mediaQuery.matches)
 
-    // Clean up
+    const handleChange = (event: MediaQueryListEvent) => {
+      setMatches(event.matches)
+    }
+
+    // Add listener for changes
+    // Using addEventListener/removeEventListener for modern browsers
+    mediaQuery.addEventListener("change", handleChange)
+
+    // Cleanup listener on component unmount
     return () => {
-      window.removeEventListener("resize", checkIfMobile)
+      mediaQuery.removeEventListener("change", handleChange)
     }
-  }, [])
+  }, [query]) // Re-run effect if the query changes
 
-  return isMobile
+  return matches
 }

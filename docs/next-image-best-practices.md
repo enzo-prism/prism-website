@@ -192,6 +192,13 @@ Before deploying, ensure:
 3. Critical images use the `priority` attribute
 4. All images have meaningful alt text
 5. Error handling is implemented for all images
-\`\`\`
 
 Let's create a script to verify all images in the project:
+
+\`\`\`bash
+# Script to verify images in the project
+# Check for width and height attributes
+# Verify remote domains are configured
+# Ensure critical images have priority attribute
+# Check for meaningful alt text
+# Implement error handling

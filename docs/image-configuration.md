@@ -18,6 +18,11 @@ images: {
       protocol: 'https',
       hostname: 'hebbkx1anhila5yf.public.blob.vercel-storage.com',
       pathname: '/**',
+    },
+    {
+      protocol: 'https',
+      hostname: 'new-image-source.com',
+      pathname: '/**',
     }
   ],
   unoptimized: false,
@@ -57,12 +62,24 @@ const [imageError, setImageError] = useState(false);
 const fallbackUrl = `/placeholder.svg?height=${height}&width=${width}&query=${encodeURIComponent(description)}`;
 \`\`\`
 
+4. **Implement lazy loading** for off-screen images to improve performance:
+
+\`\`\`jsx
+<Image
+  src={imageUrl || "/placeholder.svg"}
+  alt={altText}
+  loading="lazy"
+  // other props...
+/>
+\`\`\`
+
 ## Common Issues and Solutions
 
 1. **Images not displaying**: Check that the domain is properly configured in `next.config.mjs`
 2. **Blurry images**: Ensure proper `sizes` attribute is set based on responsive design
 3. **Layout shifts**: Always specify width and height or use the `fill` property with a parent container that has position relative
 4. **Performance issues**: Use the `priority` prop only for above-the-fold images
+5. **Lazy loading not working**: Ensure the `loading` prop is set to `"lazy"` and the image is not above the fold
 
 ## Testing Image Display
 
@@ -72,6 +89,7 @@ Before deploying, test image display in the following scenarios:
 2. With images that fail to load
 3. On mobile devices
 4. With various screen sizes
+5. With lazy loading enabled
 
 ## Maintenance
 
