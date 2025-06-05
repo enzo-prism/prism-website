@@ -1,0 +1,355 @@
+"use client"
+
+import Link from "next/link"
+import { ArrowLeft } from "lucide-react"
+import Navbar from "@/components/navbar"
+import Footer from "@/components/footer"
+import Breadcrumbs from "@/components/breadcrumbs"
+import ScrollProgressBar from "@/components/scroll-progress-bar"
+import { BlogPostSchema } from "@/components/schema-markup"
+import { trackEvent } from "@/utils/analytics"
+import { cn } from "@/lib/utils"
+
+export default function ClientBlogPostPage() {
+  const gradientForThisPost = "bg-gradient-to-br from-sky-300/30 via-cyan-300/30 to-teal-300/30" // New Gradient
+
+  return (
+    <div className="flex min-h-screen flex-col">
+      <ScrollProgressBar />
+      <div className="pt-1">
+        <Navbar />
+        <Breadcrumbs
+          items={[
+            { name: "blog", url: "/blog" },
+            { name: "create a website with replit", url: "/blog/create-website-more-business-replit" },
+          ]}
+        />
+        <main className="flex-1">
+          <div className="w-full bg-gradient-to-b from-neutral-50 to-white py-12 md:py-16">
+            <div className="container mx-auto px-4 md:px-6">
+              <div className="max-w-3xl mx-auto">
+                <div className="relative w-full max-w-2xl mx-auto mb-8 md:mb-12 rounded-lg overflow-hidden">
+                  <div className={cn("aspect-[16/9] relative", gradientForThisPost)}>
+                    {/* Optional: Add a subtle icon or text overlay here if desired */}
+                  </div>
+                </div>
+
+                <div className="mb-6">
+                  <Link
+                    href="/blog"
+                    className="inline-flex items-center text-sm text-neutral-600 hover:text-neutral-900 transition-colors lowercase"
+                  >
+                    <ArrowLeft className="mr-2 h-4 w-4" />
+                    back to all posts
+                  </Link>
+                </div>
+
+                <div className="mb-10">
+                  <div className="flex flex-wrap items-center gap-3 mb-4">
+                    <span className="inline-block px-3 py-1 bg-neutral-100 rounded-full text-xs lowercase">
+                      web development & ai
+                    </span>
+                    <span className="text-sm text-neutral-500 lowercase">june 1, 2025</span>
+                  </div>
+                  <h1 className="text-3xl md:text-4xl font-bold tracking-tight lowercase mb-4">
+                    create a website that gets you more business: a simple guide using replit
+                  </h1>
+                </div>
+
+                <div className="prose prose-neutral max-w-none space-y-6 lowercase-prose">
+                  <p className="text-lg leading-relaxed">
+                    it's 2025, and having a website that actively works for your business is more important than ever.
+                    if you don't have one, have an outdated one, or just want more leads, this guide is for you. we'll
+                    use a tool called replit to make the process easier, even if you're not a tech whiz or familiar with
+                    ai.
+                  </p>
+                  <p>
+                    think of replit as an online workspace where you can build and run websites without complicated
+                    setups. some newer tools, including those on platforms like replit, are starting to use artificial
+                    intelligence (ai) to help you build faster and smarter. don't worry, we'll keep it simple!
+                  </p>
+
+                  <h3 className="text-xl font-bold mt-8 mb-4">why a good website matters:</h3>
+                  <ul className="space-y-2 my-6">
+                    <li>
+                      attracts new customers: people search online for products and services. your website is your
+                      online storefront.
+                    </li>
+                    <li>builds trust: a professional website makes your business look credible.</li>
+                    <li>generates leads: it can capture contact information from potential customers.</li>
+                    <li>
+                      works 24/7: your website is always available to provide information and collect leads, even when
+                      you're not working.
+                    </li>
+                  </ul>
+                  <p>let's get started! here's your step-by-step guide:</p>
+
+                  <hr className="my-8" />
+                  <h3 className="text-2xl font-semibold mt-8 mb-4">phase 1: planning your website</h3>
+
+                  <h4 className="text-lg font-bold mt-6 mb-3">step 1: define your website's goal.</h4>
+                  <p>what do you want visitors to do? examples:</p>
+                  <ul className="space-y-1 my-4">
+                    <li>call you for a quote?</li>
+                    <li>fill out a contact form?</li>
+                    <li>buy a product?</li>
+                    <li>sign up for your newsletter?</li>
+                  </ul>
+                  <p>
+                    keep it focused. one or two main goals are best for a new website. this will be key to getting more
+                    leads.
+                  </p>
+
+                  <h4 className="text-lg font-bold mt-6 mb-3">step 2: know your audience.</h4>
+                  <ul className="space-y-1 my-4">
+                    <li>
+                      who are your ideal customers? (e.g., local homeowners, young professionals, other businesses)
+                    </li>
+                    <li>what are their needs or problems that your business solves?</li>
+                  </ul>
+                  <p>speak their language on your website.</p>
+
+                  <h4 className="text-lg font-bold mt-6 mb-3">step 3: outline your key pages.</h4>
+                  <p>most business websites need at least these:</p>
+                  <ul className="space-y-1 my-4">
+                    <li>homepage: the first impression. clearly state what you do and who you help.</li>
+                    <li>about us: tell your story and build trust.</li>
+                    <li>services/products: detail what you offer.</li>
+                    <li>contact us: make it easy for people to reach you (phone, email, form).</li>
+                    <li>(optional but recommended): testimonials/reviews, blog.</li>
+                  </ul>
+
+                  <h4 className="text-lg font-bold mt-6 mb-3">step 4: gather your content.</h4>
+                  <ul className="space-y-1 my-4">
+                    <li>
+                      text: write down the information for each page. keep it clear, concise, and focused on customer
+                      benefits.
+                    </li>
+                    <li>
+                      images/videos: high-quality photos of your work, products, team, or even stock images can make
+                      your site engaging.
+                    </li>
+                    <li>your logo: if you have one, get it ready.</li>
+                  </ul>
+
+                  <hr className="my-8" />
+                  <h3 className="text-2xl font-semibold mt-8 mb-4">phase 2: building your website with replit</h3>
+                  <p>
+                    replit offers different ways to build websites. for beginners, starting with a template or a simple
+                    framework is often easiest. replit also has features that can help deploy and host your website.
+                    some new ai-powered tools are emerging on replit that can help generate code or suggest content,
+                    making the process even simpler.
+                  </p>
+
+                  <h4 className="text-lg font-bold mt-6 mb-3">step 1: sign up for replit.</h4>
+                  <p>go to replit.com and create a free account.</p>
+
+                  <h4 className="text-lg font-bold mt-6 mb-3">step 2: find a suitable template or starting point.</h4>
+                  <p>
+                    replit has a "templates" section. look for simple website templates (often using html, css, and
+                    maybe a bit of javascript). keywords to search for might include "business website template,"
+                    "landing page template," or "portfolio template."
+                  </p>
+                  <p>
+                    <strong>ai assistance (keep an eye out!):</strong> as you explore replit, you might find ai-powered
+                    features. for example, some tools can:
+                  </p>
+                  <ul className="space-y-1 my-4">
+                    <li>
+                      suggest code snippets: if you're trying to create a specific section, ai might help generate the
+                      basic structure.
+                    </li>
+                    <li>
+                      help with content: some ai can help you rephrase sentences or generate ideas for what to write.
+                    </li>
+                  </ul>
+                  <p>look for "ai" or "ghostwriter" (replit's ai feature) prompts within the replit interface.</p>
+
+                  <h4 className="text-lg font-bold mt-6 mb-3">step 3: customize your chosen template.</h4>
+                  <ul className="space-y-1 my-4">
+                    <li>
+                      replace placeholder text: add your own business name, headlines, service descriptions, and contact
+                      information.
+                    </li>
+                    <li>add your images: upload your photos and logo.</li>
+                    <li>
+                      change colors and fonts (optional): many templates allow for easy visual adjustments to match your
+                      brand. keep it simple and readable.
+                    </li>
+                    <li>
+                      focus on your "call to action": this is what you want visitors to do (e.g., "get a free quote,"
+                      "contact us today," "shop now"). make these buttons or links prominent.
+                    </li>
+                  </ul>
+
+                  <h4 className="text-lg font-bold mt-6 mb-3">step 4: create your key pages.</h4>
+                  <p>
+                    based on your outline, create the different pages. most templates will allow you to duplicate an
+                    existing page structure and then modify its content.
+                  </p>
+
+                  <h4 className="text-lg font-bold mt-6 mb-3">step 5: add a contact form (crucial for leads!).</h4>
+                  <p>this is how visitors can easily send you their information.</p>
+                  <p>
+                    many templates come with a built-in contact form, or you can find simple html contact form templates
+                    online.
+                  </p>
+                  <p>
+                    alternatively, you can embed forms from services like google forms or dedicated form builders if you
+                    find coding a form too tricky initially.
+                  </p>
+                  <p>
+                    what to ask for: keep it brief – name, email, phone (optional), and a message field are usually
+                    enough.
+                  </p>
+
+                  <h4 className="text-lg font-bold mt-6 mb-3">step 6: make sure it's mobile-friendly.</h4>
+                  <p>
+                    many people will visit your site on their phones. most modern replit templates are "responsive,"
+                    meaning they automatically adjust to different screen sizes.
+                  </p>
+                  <p>use replit's preview feature to see how your site looks on a simulated phone screen.</p>
+
+                  <h4 className="text-lg font-bold mt-6 mb-3">step 7: basic search engine optimization (seo).</h4>
+                  <p>seo helps people find your site on google. here are simple starting points:</p>
+                  <ul className="space-y-1 my-4">
+                    <li>
+                      page titles: give each page a clear title that includes relevant keywords (e.g., "plumbing
+                      services in [your city] | [your business name]"). you'll usually set this in the html {"<title>"}{" "}
+                      tag.
+                    </li>
+                    <li>
+                      headings: use headings (h1, h2, etc.) on your pages to structure content and include keywords.
+                      your main page title should be an h1.
+                    </li>
+                    <li>
+                      keywords in content: naturally include terms people would search for to find your services. don't
+                      overdo it!
+                    </li>
+                  </ul>
+                  <p>
+                    <strong>ai for seo (potential):</strong> some newer ai tools can suggest keywords or analyze your
+                    content for seo friendliness. if replit's ai features offer this, explore it.
+                  </p>
+
+                  <hr className="my-8" />
+                  <h3 className="text-2xl font-semibold mt-8 mb-4">phase 3: launching and improving your website</h3>
+
+                  <h4 className="text-lg font-bold mt-6 mb-3">step 1: test everything.</h4>
+                  <ul className="space-y-1 my-4">
+                    <li>click every link.</li>
+                    <li>submit your contact form to make sure you receive the messages.</li>
+                    <li>check how it looks on different devices (desktop, phone, tablet).</li>
+                    <li>ask a friend to look at it and give you feedback.</li>
+                  </ul>
+
+                  <h4 className="text-lg font-bold mt-6 mb-3">step 2: "deploy" your website (make it live).</h4>
+                  <p>
+                    replit makes this easy. when your project (your "repl") is running, replit usually provides a live
+                    web address (url) for it (e.g., yourprojectname.yourusername.replit.co).
+                  </p>
+                  <p>
+                    for a more professional look, you might eventually want a custom domain name (e.g.,
+                    www.yourbusinessname.com). replit often has guides on how to connect a custom domain to your
+                    project.
+                  </p>
+
+                  <h4 className="text-lg font-bold mt-6 mb-3">step 3: promote your new website.</h4>
+                  <ul className="space-y-1 my-4">
+                    <li>
+                      add the website address to your business cards, email signature, social media profiles, and any
+                      local business listings (like google my business).
+                    </li>
+                    <li>tell your existing customers about it.</li>
+                  </ul>
+
+                  <h4 className="text-lg font-bold mt-6 mb-3">step 4: monitor and update (lead conversion focus).</h4>
+                  <ul className="space-y-1 my-4">
+                    <li>track your leads: how many inquiries are you getting through the website?</li>
+                    <li>ask for feedback: when new customers contact you, ask how they found you.</li>
+                    <li>
+                      keep content fresh: occasionally update your services, add new testimonials, or post a blog entry
+                      if you have one.
+                    </li>
+                    <li>
+                      look at basic analytics (if available): some tools (including potentially future replit
+                      integrations or simple external tools like google analytics) can show you how many people visit
+                      your site and what pages they look at. this can give you clues about what's working.
+                    </li>
+                  </ul>
+
+                  <hr className="my-8" />
+                  <h3 className="text-xl font-bold mt-8 mb-4">how ai can help (even if you're not an expert):</h3>
+                  <ul className="space-y-2 my-6">
+                    <li>
+                      <strong>content ideas & generation:</strong> if you're stuck on what to write, ai tools can
+                      provide outlines, draft paragraphs, or help you rephrase your ideas to be more engaging. replit's
+                      "ghostwriter" might assist here.
+                    </li>
+                    <li>
+                      <strong>code assistance:</strong> if you decide to learn a little html or css, ai can help you
+                      find errors in your code or suggest how to build a specific feature.
+                    </li>
+                    <li>
+                      <strong>simplifying tasks:</strong> the goal of ai in website builders is to make complex tasks
+                      easier, like setting up certain functionalities or optimizing for search engines, without you
+                      needing to become an expert coder or seo specialist.
+                    </li>
+                  </ul>
+
+                  <hr className="my-8" />
+                  <h3 className="text-xl font-bold mt-8 mb-4">key takeaways for more leads:</h3>
+                  <ul className="space-y-2 my-6">
+                    <li>clear call to action: tell visitors exactly what you want them to do.</li>
+                    <li>easy contact: make your phone number, email, and contact form highly visible.</li>
+                    <li>mobile-friendly: essential for today's users.</li>
+                    <li>trust builders: testimonials, professional design, and clear information build confidence.</li>
+                    <li>
+                      keep it simple: a clean, easy-to-understand website often converts better than a cluttered one.
+                    </li>
+                  </ul>
+                  <p>
+                    building your first (or new) website can feel like a big step, but tools like replit are making it
+                    more accessible. focus on clear communication, making it easy for potential customers to connect
+                    with you, and don't be afraid to start simple. you can always add more features later as your
+                    business and confidence grow! good luck!
+                  </p>
+                  <p className="font-medium mt-8">• enzo</p>
+                </div>
+
+                <div className="mt-12 p-6 bg-neutral-50 rounded-lg">
+                  <h3 className="text-xl font-bold mb-2 lowercase">
+                    ready to build a website that grows your business?
+                  </h3>
+                  <p className="text-neutral-600 mb-4 lowercase">
+                    let prism help you create a powerful online presence.
+                  </p>
+                  <Link
+                    href="/get-started"
+                    onClick={() =>
+                      trackEvent({ action: "click", category: "cta", label: "blog_post_get_started_replit_guide" })
+                    }
+                  >
+                    <button className="inline-flex items-center justify-center rounded-full bg-neutral-900 px-6 py-3 text-sm font-medium text-white hover:bg-neutral-800 lowercase">
+                      get started with prism
+                    </button>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+        <Footer />
+      </div>
+      <BlogPostSchema
+        title="create a website that gets you more business: a simple guide using replit"
+        description="Learn how to create a website that generates more business leads using Replit, even if you're not a tech whiz. A simple guide for 2025."
+        url="https://prism.agency/blog/create-website-more-business-replit"
+        imageUrl="https://prism.agency/placeholder.svg?height=630&width=1200&query=Replit%20website%20building%20interface%20with%20code%20and%20browser%20preview"
+        datePublished="2025-06-01T00:00:00.000Z"
+        dateModified="2025-06-01T00:00:00.000Z"
+        authorName="Enzo"
+      />
+    </div>
+  )
+}
