@@ -58,7 +58,7 @@ export default function ClientShowcase() {
       business: "laguna beach dental arts",
       clientType: "website",
       gradient: "bg-gradient-to-br from-teal-200 to-teal-400",
-      image: "/dr-teagan-willes.jpeg",
+      image: "/placeholder-user.jpg",
     },
     {
       id: 4,
