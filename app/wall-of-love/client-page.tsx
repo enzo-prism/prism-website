@@ -282,7 +282,7 @@ const quotesData: Quote[] = [
   },
   {
     id: 48,
-    text: "It’s 3am now and I was talking to myself. This its hard rn. I needed this",
+    text: "It’s 3am now and I was talking to myself. This is hard rn. I needed this",
     client: "yann.ng14",
     company: "Instagram Community of Entrepreneurs",
   },
