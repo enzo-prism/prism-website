@@ -3,7 +3,6 @@
 import Link from "next/link"
 import { trackNavigation } from "@/utils/analytics"
 import CoreImage from "./core-image"
-import { Instagram, Youtube, Twitter, Music } from "lucide-react"
 
 export default function Footer() {
   // Navigation items matching the navbar
@@ -96,52 +95,65 @@ export default function Footer() {
           <p className="text-xs text-neutral-500 lowercase">prism © 2023-2025. all rights reserved.</p>
           <div className="flex flex-col sm:flex-row items-center gap-4">
             <p className="text-xs text-neutral-500 lowercase">made with ❤️ for growing businesses</p>
-            <div className="flex items-center gap-x-3">
+            <div className="flex items-center gap-x-3 text-sm">
+              {" "}
+              {/* Added text-sm for consistency if desired */}
               <Link
                 href="https://www.instagram.com/the_design_prism/"
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Instagram"
+                aria-label="Prism Agency on Instagram"
                 onClick={() =>
                   trackNavigation("footer_social_instagram", "https://www.instagram.com/the_design_prism/")
                 }
-                className="text-neutral-500 hover:text-neutral-900 transition-colors"
+                className="text-neutral-500 hover:text-neutral-900 transition-colors lowercase"
               >
-                <Instagram className="h-5 w-5" />
-                <span className="sr-only">Instagram</span>
+                Instagram
               </Link>
               <Link
                 href="https://www.youtube.com/@the_design_prism"
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="YouTube"
+                aria-label="Prism Agency on YouTube"
                 onClick={() => trackNavigation("footer_social_youtube", "https://www.youtube.com/@the_design_prism")}
-                className="text-neutral-500 hover:text-neutral-900 transition-colors"
+                className="text-neutral-500 hover:text-neutral-900 transition-colors lowercase"
               >
-                <Youtube className="h-5 w-5" />
-                <span className="sr-only">YouTube</span>
+                YouTube
               </Link>
               <Link
                 href="https://x.com/NosisTheGod"
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Twitter X"
+                aria-label="Prism Agency on X (formerly Twitter)"
                 onClick={() => trackNavigation("footer_social_twitter_x", "https://x.com/NosisTheGod")}
-                className="text-neutral-500 hover:text-neutral-900 transition-colors"
+                className="text-neutral-500 hover:text-neutral-900 transition-colors lowercase"
               >
-                <Twitter className="h-5 w-5" />
-                <span className="sr-only">Twitter X</span>
+                X
               </Link>
               <Link
                 href="https://www.tiktok.com/@the_design_prism"
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="TikTok"
+                aria-label="Prism Agency on TikTok"
                 onClick={() => trackNavigation("footer_social_tiktok", "https://www.tiktok.com/@the_design_prism")}
-                className="text-neutral-500 hover:text-neutral-900 transition-colors"
+                className="text-neutral-500 hover:text-neutral-900 transition-colors lowercase"
               >
-                <Music className="h-5 w-5" /> {/* Using Music icon for TikTok */}
-                <span className="sr-only">TikTok</span>
+                TikTok
+              </Link>
+              <Link
+                href="https://www.linkedin.com/company/web-prism/?viewAsMember=true"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Prism Agency on LinkedIn"
+                onClick={() =>
+                  trackNavigation(
+                    "footer_social_linkedin",
+                    "https://www.linkedin.com/company/web-prism/?viewAsMember=true",
+                  )
+                }
+                className="text-neutral-500 hover:text-neutral-900 transition-colors lowercase"
+              >
+                LinkedIn
               </Link>
             </div>
           </div>

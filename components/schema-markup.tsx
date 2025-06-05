@@ -75,7 +75,18 @@ export function OrganizationSchema() {
       width: 600,
       height: 60,
     },
-    sameAs: ["https://www.instagram.com/prism.agency", "https://www.linkedin.com/company/prism-agency"],
+    sameAs: [
+      // Previous official links (review if these are still primary or should be removed/updated)
+      "https://www.instagram.com/prism.agency",
+      "https://www.linkedin.com/company/prism-agency",
+
+      // Current/newly added social profiles
+      "https://www.instagram.com/the_design_prism/",
+      "https://www.youtube.com/@the_design_prism",
+      "https://x.com/NosisTheGod",
+      "https://www.tiktok.com/@the_design_prism",
+      "https://www.linkedin.com/company/web-prism/?viewAsMember=true",
+    ],
     contactPoint: {
       "@type": "ContactPoint",
       telephone: "+1-800-123-4567",
@@ -188,8 +199,6 @@ export function BlogPostSchema({
     />
   )
 }
-
-// Add the FAQSchema component after the BlogPostSchema component
 
 export function FAQSchema({ questions }: { questions: { question: string; answer: string }[] }) {
   const faqSchema = {
