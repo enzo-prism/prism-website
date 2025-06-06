@@ -225,7 +225,6 @@ export default function ClientShowcase() {
   ]
 
   const [clients, setClients] = useState<Client[]>([])
-  const [imagesPreloaded, setImagesPreloaded] = useState(false)
   const [isLoaded, setIsLoaded] = useState(false)
   const [isPaused, setIsPaused] = useState(false)
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, dragFree: true })
@@ -310,7 +309,6 @@ export default function ClientShowcase() {
           .slice(0, Math.min(10, clients.length))
           .filter((client) => client.image)
           .map((client) => client.image as string)}
-        onComplete={() => setImagesPreloaded(true)}
       />
 
       <div
