@@ -200,6 +200,57 @@ export function BlogPostSchema({
   )
 }
 
+export function CaseStudySchema({
+  title,
+  description,
+  url,
+  imageUrl,
+  datePublished,
+  dateModified,
+  clientName,
+  outcome,
+}: {
+  title: string
+  description: string
+  url: string
+  imageUrl: string
+  datePublished: string
+  dateModified: string
+  clientName: string
+  outcome: string
+}) {
+  const caseStudySchema = {
+    "@context": "https://schema.org",
+    "@type": "CaseStudy",
+    headline: title,
+    description,
+    image: imageUrl,
+    author: {
+      "@id": "https://prism.agency/#organization",
+    },
+    about: {
+      "@type": "Organization",
+      name: clientName,
+    },
+    datePublished,
+    dateModified,
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": url,
+    },
+    text: outcome,
+  }
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{
+        __html: JSON.stringify(caseStudySchema),
+      }}
+    />
+  )
+}
+
 export function FAQSchema({ questions }: { questions: { question: string; answer: string }[] }) {
   const faqSchema = {
     "@context": "https://schema.org",

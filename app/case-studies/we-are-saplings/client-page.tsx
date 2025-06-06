@@ -6,6 +6,7 @@ import { ArrowRight, ArrowLeft } from "lucide-react"
 import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
 import PageViewTracker from "@/components/page-view-tracker"
+import { CaseStudySchema } from "@/components/schema-markup"
 import { trackCTAClick } from "@/utils/analytics"
 import ScrollProgressBar from "@/components/scroll-progress-bar"
 
@@ -226,6 +227,16 @@ export default function WeSaplingsPage() {
         </section>
       </main>
       <Footer />
+      <CaseStudySchema
+        title="we are saplings case study | prism"
+        description="How Prism helped We Are Saplings launch a digital platform to give kids playful tools for understanding and managing emotions."
+        url="https://prism.agency/case-studies/we-are-saplings"
+        imageUrl="https://prism.agency/we-are-saplings-hero.png"
+        datePublished="2025-04-01T00:00:00.000Z"
+        dateModified="2025-04-01T00:00:00.000Z"
+        clientName="We Are Saplings"
+        outcome="1,200+ parents and 37 schools joined the wait-list, TED Talk views up 65%"
+      />
     </div>
   )
 }

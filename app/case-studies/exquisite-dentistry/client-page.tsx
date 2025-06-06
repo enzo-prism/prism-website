@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button"
 import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
 import PageViewTracker from "@/components/page-view-tracker"
+import { CaseStudySchema } from "@/components/schema-markup"
 import { trackCTAClick } from "@/utils/analytics"
 import { useState, useEffect } from "react"
 import Image from "next/image"
@@ -480,6 +481,16 @@ export default function ExquisiteDentistryCaseStudy() {
         </div>
       </main>
       <Footer />
+      <CaseStudySchema
+        title="aligning digital excellence with luxury care | exquisite dentistry case study"
+        description="how we elevated beverly hills' exquisite dentistry's online presence to match their premium in-person experience through a complete digital overhaul."
+        url="https://prism.agency/case-studies/exquisite-dentistry"
+        imageUrl="https://prism.agency/exquisite-dentistry-consultation.png"
+        datePublished="2025-02-01T00:00:00.000Z"
+        dateModified="2025-02-01T00:00:00.000Z"
+        clientName="Exquisite Dentistry"
+        outcome="elevated patient journey and higher-quality leads"
+      />
     </div>
   )
 }
