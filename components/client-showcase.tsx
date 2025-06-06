@@ -233,7 +233,6 @@ export default function ClientShowcase() {
   const [clients, setClients] = useState<Client[]>([])
   const containerRef = useRef<HTMLDivElement>(null)
   const [isPaused, setIsPaused] = useState(false)
-  const [isPermanentlyStopped, setIsPermanentlyStopped] = useState(false)
   const [isLoaded, setIsLoaded] = useState(false)
   const [containerWidth, setContainerWidth] = useState(0)
   const [contentWidth, setContentWidth] = useState(0)
@@ -319,13 +318,13 @@ export default function ClientShowcase() {
 
   const handleMouseEnter = () => {
     setIsPaused(true)
-    setIsPermanentlyStopped(true)
     captureScrollPosition()
     trackClientShowcaseInteraction("hover_pause")
   }
 
   const handleMouseLeave = () => {
-    // Auto-scrolling remains stopped
+    setIsPaused(false)
+    trackClientShowcaseInteraction("hover_resume")
   }
 
   const captureScrollPosition = useCallback(() => {
@@ -362,17 +361,21 @@ export default function ClientShowcase() {
   }
 
   const handleTouchStart = useCallback(() => {
-    setIsPermanentlyStopped(true)
     setIsPaused(true)
     captureScrollPosition()
     trackClientShowcaseInteraction("touch_stop_scrolling")
   }, [captureScrollPosition])
 
+  const handleTouchEnd = useCallback(() => {
+    setIsPaused(false)
+    trackClientShowcaseInteraction("touch_resume_scrolling")
+  }, [])
+
   if (!isLoaded || clients.length === 0) {
     return null
   }
 
-  const isAnimationActive = contentWidth > containerWidth && !isPaused && !isPermanentlyStopped
+  const isAnimationActive = contentWidth > containerWidth && !isPaused
 
   return (
     <div className="relative w-full overflow-hidden">
@@ -391,6 +394,7 @@ export default function ClientShowcase() {
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
       >
         <div
           className="flex pause-on-scroll"
