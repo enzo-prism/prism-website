@@ -1,14 +1,10 @@
 "use client"
 
-import { useRef, useState, useEffect, useCallback } from "react"
+import { useState, useEffect, useCallback } from "react"
 import OptimizedImage from "./optimized-image"
-
-// Import the tracking function at the top of the file
 import { trackClientShowcaseInteraction } from "@/utils/analytics"
-// Add the import for scroll optimization utilities
-import { throttle, addPassiveEventListener, removePassiveEventListener } from "@/utils/scroll-optimization"
-// Import the new preloader component
 import ClientImagePreloader from "./client-image-preloader"
+import useEmblaCarousel from "embla-carousel-react"
 
 interface Client {
   id: number
@@ -31,8 +27,6 @@ const shuffleArray = <T,>(array: T[]): T[] => {
   return shuffled
 }
 
-// Define a configurable speed factor (pixels per second)
-const SCROLL_SPEED_FACTOR = 80
 
 export default function ClientShowcase() {
   const clientsData: Client[] = [
@@ -231,14 +225,10 @@ export default function ClientShowcase() {
   ]
 
   const [clients, setClients] = useState<Client[]>([])
-  const containerRef = useRef<HTMLDivElement>(null)
-  const [isPaused, setIsPaused] = useState(false)
-  const [isLoaded, setIsLoaded] = useState(false)
-  const [containerWidth, setContainerWidth] = useState(0)
-  const [contentWidth, setContentWidth] = useState(0)
-  const [animationDuration, setAnimationDuration] = useState(0)
-  const [currentScrollPosition, setCurrentScrollPosition] = useState(0)
   const [imagesPreloaded, setImagesPreloaded] = useState(false)
+  const [isLoaded, setIsLoaded] = useState(false)
+  const [isPaused, setIsPaused] = useState(false)
+  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, dragFree: true })
 
   useEffect(() => {
     // Ensure any previous Miguel entries (ID 23 or 24 or 27) are filtered out before shuffling
@@ -251,7 +241,7 @@ export default function ClientShowcase() {
   useEffect(() => {
     if (isLoaded && clients.length > 0) {
       const imagesToPreload = clients
-        .slice(0, Math.min(5, clients.length)) // Preload first 5 visible images
+        .slice(0, Math.min(5, clients.length))
         .filter((client) => client.image)
         .map((client) => client.image as string)
 
@@ -264,61 +254,8 @@ export default function ClientShowcase() {
     }
   }, [isLoaded, clients])
 
-  useEffect(() => {
-    if (!containerRef.current || !isLoaded || clients.length === 0) {
-      setContentWidth(0)
-      setAnimationDuration(0)
-      return
-    }
-
-    const calculateWidths = () => {
-      const container = containerRef.current
-      if (!container) return
-
-      const containerWidthVal = container.clientWidth
-      const actualContentWidth = container.firstChild ? container.scrollWidth / 2 : 0
-
-      setContainerWidth(containerWidthVal)
-      setContentWidth(actualContentWidth)
-
-      if (actualContentWidth > 0 && SCROLL_SPEED_FACTOR > 0) {
-        const duration = actualContentWidth / SCROLL_SPEED_FACTOR
-        setAnimationDuration(duration)
-      } else {
-        setAnimationDuration(0)
-      }
-    }
-
-    calculateWidths()
-    const debouncedCalculateWidths = throttle(calculateWidths, 200)
-    window.addEventListener("resize", debouncedCalculateWidths)
-    return () => window.removeEventListener("resize", debouncedCalculateWidths)
-  }, [isLoaded, clients])
-
-  const handleScroll = useCallback(
-    throttle(() => {
-      if (containerRef.current) {
-        trackClientShowcaseInteraction("manual_scroll")
-      }
-    }, 100),
-    [],
-  )
-
-  useEffect(() => {
-    const container = containerRef.current
-    if (container) {
-      addPassiveEventListener(container, "scroll", handleScroll)
-      return () => {
-        if (container) {
-          removePassiveEventListener(container, "scroll", handleScroll)
-        }
-      }
-    }
-  }, [handleScroll])
-
   const handleMouseEnter = () => {
     setIsPaused(true)
-    captureScrollPosition()
     trackClientShowcaseInteraction("hover_pause")
   }
 
@@ -327,55 +264,44 @@ export default function ClientShowcase() {
     trackClientShowcaseInteraction("hover_resume")
   }
 
-  const captureScrollPosition = useCallback(() => {
-    if (containerRef.current) {
-      const innerContainer = containerRef.current.querySelector("div")
-      if (innerContainer) {
-        const style = window.getComputedStyle(innerContainer)
-        const matrix = new WebMatrix(style.transform)
-        const translateX = matrix.m41 || 0
-        setCurrentScrollPosition(translateX)
-      }
-    }
-  }, [])
-
-  function WebMatrix(transformString: string | null) {
-    // @ts-ignore
-    this.m41 = 0
-    if (!transformString || transformString === "none") return
-
-    const matrixMatch = transformString.match(/matrix.*$$(.+)$$/)
-    if (matrixMatch) {
-      const values = matrixMatch[1].split(/,\s*/)
-      if (values.length >= 6) {
-        // @ts-ignore
-        this.m41 = Number.parseFloat(values[4])
-      }
-    } else {
-      const translateMatch = transformString.match(/translateX$$(.+)px$$/)
-      if (translateMatch) {
-        // @ts-ignore
-        this.m41 = Number.parseFloat(translateMatch[1])
-      }
-    }
-  }
-
   const handleTouchStart = useCallback(() => {
     setIsPaused(true)
-    captureScrollPosition()
     trackClientShowcaseInteraction("touch_stop_scrolling")
-  }, [captureScrollPosition])
+  }, [])
 
   const handleTouchEnd = useCallback(() => {
     setIsPaused(false)
     trackClientShowcaseInteraction("touch_resume_scrolling")
   }, [])
 
+  useEffect(() => {
+    if (!emblaApi) return
+
+    const onPointerDown = () => {
+      trackClientShowcaseInteraction("manual_scroll")
+    }
+
+    emblaApi.on("pointerDown", onPointerDown)
+
+    return () => {
+      emblaApi.off("pointerDown", onPointerDown)
+    }
+  }, [emblaApi])
+
+  useEffect(() => {
+    if (!emblaApi) return
+    const interval = setInterval(() => {
+      if (!isPaused) {
+        emblaApi.scrollNext()
+      }
+    }, 3000)
+
+    return () => clearInterval(interval)
+  }, [emblaApi, isPaused])
+
   if (!isLoaded || clients.length === 0) {
     return null
   }
-
-  const isAnimationActive = contentWidth > containerWidth && !isPaused
 
   return (
     <div className="relative w-full overflow-hidden">
@@ -388,25 +314,14 @@ export default function ClientShowcase() {
       />
 
       <div
-        ref={containerRef}
-        className="flex w-full overflow-x-auto pb-8 scrollbar-hide hardware-accelerated scroll-container"
-        onScroll={handleScroll}
+        ref={emblaRef}
+        className="overflow-hidden pb-8"
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
       >
-        <div
-          className="flex pause-on-scroll"
-          style={{
-            transform: isAnimationActive ? `translateX(-${contentWidth}px)` : `translateX(${currentScrollPosition}px)`,
-            transition: isAnimationActive ? `transform ${animationDuration}s linear infinite` : "none",
-            animation:
-              isAnimationActive && animationDuration > 0
-                ? `scroll-clients ${animationDuration}s linear infinite`
-                : "none",
-          }}
-        >
+        <div className="flex">
           {clients.map((client, index) => (
             <div
               key={`${client.id}-${index}`}
@@ -423,7 +338,7 @@ export default function ClientShowcase() {
                       height={498}
                       className="object-cover w-full h-full"
                       sizes="280px"
-                      priority={index < 5} // Prioritize loading for first 5 images
+                      priority={index < 5}
                       fallbackSrc={`/placeholder.svg?height=498&width=280&query=${encodeURIComponent(client.name)}`}
                       fallbackColor={
                         client.gradient.includes("from-") ? client.gradient.split("from-")[1].split(" ")[0] : "#f3f4f6"
