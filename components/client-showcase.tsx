@@ -233,11 +233,18 @@ export default function ClientShowcase() {
   const [clients, setClients] = useState<Client[]>([])
   const containerRef = useRef<HTMLDivElement>(null)
   const [isPaused, setIsPaused] = useState(false)
+  const isPausedRef = useRef(isPaused)
+  const prevPausedRef = useRef(isPaused)
   const [isLoaded, setIsLoaded] = useState(false)
   const [containerWidth, setContainerWidth] = useState(0)
   const [contentWidth, setContentWidth] = useState(0)
   const [animationDuration, setAnimationDuration] = useState(0)
   const [currentScrollPosition, setCurrentScrollPosition] = useState(0)
+
+  // Keep a ref of the latest paused state for the IntersectionObserver
+  useEffect(() => {
+    isPausedRef.current = isPaused
+  }, [isPaused])
 
   useEffect(() => {
     // Ensure any previous Miguel entries (ID 23 or 24 or 27) are filtered out before shuffling
@@ -368,6 +375,28 @@ export default function ClientShowcase() {
   const handleTouchEnd = useCallback(() => {
     setIsPaused(false)
     trackClientShowcaseInteraction("touch_resume_scrolling")
+  }, [])
+
+  // Pause the animation when the showcase leaves the viewport
+  useEffect(() => {
+    const container = containerRef.current
+    if (!container) return
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setIsPaused(prevPausedRef.current)
+        } else {
+          prevPausedRef.current = isPausedRef.current
+          setIsPaused(true)
+        }
+      })
+    })
+
+    observer.observe(container)
+    return () => {
+      observer.disconnect()
+    }
   }, [])
 
   if (!isLoaded || clients.length === 0) {
