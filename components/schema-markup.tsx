@@ -223,3 +223,39 @@ export function FAQSchema({ questions }: { questions: { question: string; answer
     />
   )
 }
+
+export function VideoSchema({
+  name,
+  description,
+  thumbnailUrl,
+  uploadDate,
+  contentUrl,
+  embedUrl,
+}: {
+  name: string
+  description: string
+  thumbnailUrl: string
+  uploadDate: string
+  contentUrl: string
+  embedUrl: string
+}) {
+  const videoSchema = {
+    "@context": "https://schema.org",
+    "@type": "VideoObject",
+    name,
+    description,
+    thumbnailUrl,
+    uploadDate,
+    contentUrl,
+    embedUrl,
+  }
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{
+        __html: JSON.stringify(videoSchema),
+      }}
+    />
+  )
+}

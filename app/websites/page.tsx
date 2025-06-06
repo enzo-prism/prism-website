@@ -229,22 +229,26 @@ const growthVideos = [
     videoId: "ZnHNjFqS2U4",
     title: "From 0 To $1M: The Ultimate Website Conversion Guide",
     description: "Unlock the secrets to turning website visitors into paying customers and skyrocket your revenue.",
+    uploadDate: "2024-01-10",
   },
   {
     videoId: "01siuAlmmzs",
     title: "AI SEO Secrets: How We Rank #1 on Google (Faster)",
     description: "Discover cutting-edge AI strategies to dominate search engine rankings and drive organic traffic.",
+    uploadDate: "2024-02-15",
   },
   {
     videoId: "dJuJCSlQlNY",
     title: "Web Design That Converts: 2025 Trends You Can't Ignore",
     description:
       "Stay ahead of the curve with the latest web design innovations that captivate users and boost conversions.",
+    uploadDate: "2024-03-20",
   },
   {
     videoId: "R2bl4PdWmLk",
     title: "Add Custom Font in Replit",
     description: "Learn how to easily add custom fonts to your Replit projects for unique website styling.",
+    uploadDate: "2024-04-18",
   },
 ]
 
@@ -485,7 +489,12 @@ export default function WebsitesPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12 max-w-6xl mx-auto">
               {growthVideos.map((video) => (
                 <div key={video.videoId} className="flex flex-col">
-                  <YouTubeVideoEmbed videoId={video.videoId} title={video.title} />
+                  <YouTubeVideoEmbed
+                    videoId={video.videoId}
+                    title={video.title}
+                    description={video.description}
+                    uploadDate={video.uploadDate}
+                  />
                 </div>
               ))}
             </div>
