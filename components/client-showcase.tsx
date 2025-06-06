@@ -132,7 +132,7 @@ export default function ClientShowcase() {
       business: "crow canyon orthodontics",
       clientType: "podcast guest",
       gradient: "bg-gradient-to-br from-sky-200 to-sky-400",
-      image: "/dr-arash-abolfazlian.png", // Ensured this line is clean
+      image: "/dr-arash-abolfazlian.png",
     },
     {
       id: 14,
