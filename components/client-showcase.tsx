@@ -238,7 +238,6 @@ export default function ClientShowcase() {
   const [contentWidth, setContentWidth] = useState(0)
   const [animationDuration, setAnimationDuration] = useState(0)
   const [currentScrollPosition, setCurrentScrollPosition] = useState(0)
-  const [imagesPreloaded, setImagesPreloaded] = useState(false)
 
   useEffect(() => {
     // Ensure any previous Miguel entries (ID 23 or 24 or 27) are filtered out before shuffling
@@ -384,7 +383,6 @@ export default function ClientShowcase() {
           .slice(0, Math.min(10, clients.length))
           .filter((client) => client.image)
           .map((client) => client.image as string)}
-        onComplete={() => setImagesPreloaded(true)}
       />
 
       <div
