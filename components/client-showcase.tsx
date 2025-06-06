@@ -7,8 +7,6 @@ import OptimizedImage from "./optimized-image"
 import { trackClientShowcaseInteraction } from "@/utils/analytics"
 // Add the import for scroll optimization utilities
 import { throttle, addPassiveEventListener, removePassiveEventListener } from "@/utils/scroll-optimization"
-// Import the new preloader component
-import ClientImagePreloader from "./client-image-preloader"
 
 interface Client {
   id: number
@@ -238,7 +236,7 @@ export default function ClientShowcase() {
   const [contentWidth, setContentWidth] = useState(0)
   const [animationDuration, setAnimationDuration] = useState(0)
   const [currentScrollPosition, setCurrentScrollPosition] = useState(0)
-  const [imagesPreloaded, setImagesPreloaded] = useState(false)
+  const [imagesLoaded, setImagesLoaded] = useState(0)
 
   useEffect(() => {
     // Ensure any previous Miguel entries (ID 23 or 24 or 27) are filtered out before shuffling
@@ -248,21 +246,6 @@ export default function ClientShowcase() {
     setIsLoaded(true)
   }, [])
 
-  useEffect(() => {
-    if (isLoaded && clients.length > 0) {
-      const imagesToPreload = clients
-        .slice(0, Math.min(5, clients.length)) // Preload first 5 visible images
-        .filter((client) => client.image)
-        .map((client) => client.image as string)
-
-      imagesToPreload.forEach((imageSrc) => {
-        if (typeof imageSrc === "string") {
-          const img = new Image()
-          img.src = imageSrc
-        }
-      })
-    }
-  }, [isLoaded, clients])
 
   useEffect(() => {
     if (!containerRef.current || !isLoaded || clients.length === 0) {
@@ -371,6 +354,13 @@ export default function ClientShowcase() {
     trackClientShowcaseInteraction("touch_resume_scrolling")
   }, [])
 
+  useEffect(() => {
+    const imagesToLoad = Math.min(10, clients.length)
+    if (imagesLoaded >= imagesToLoad && imagesToLoad > 0) {
+      console.log("Initial showcase images loaded")
+    }
+  }, [imagesLoaded, clients.length])
+
   if (!isLoaded || clients.length === 0) {
     return null
   }
@@ -379,13 +369,6 @@ export default function ClientShowcase() {
 
   return (
     <div className="relative w-full overflow-hidden">
-      <ClientImagePreloader
-        imagePaths={clients
-          .slice(0, Math.min(10, clients.length))
-          .filter((client) => client.image)
-          .map((client) => client.image as string)}
-        onComplete={() => setImagesPreloaded(true)}
-      />
 
       <div
         ref={containerRef}
@@ -423,7 +406,9 @@ export default function ClientShowcase() {
                       height={498}
                       className="object-cover w-full h-full"
                       sizes="280px"
-                      priority={index < 5} // Prioritize loading for first 5 images
+                      priority={index < 2}
+                      loading={index < 2 ? "eager" : "lazy"}
+                      onLoadingComplete={() => setImagesLoaded((c) => c + 1)}
                       fallbackSrc={`/placeholder.svg?height=498&width=280&query=${encodeURIComponent(client.name)}`}
                       fallbackColor={
                         client.gradient.includes("from-") ? client.gradient.split("from-")[1].split(" ")[0] : "#f3f4f6"
