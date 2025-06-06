@@ -223,3 +223,45 @@ export function FAQSchema({ questions }: { questions: { question: string; answer
     />
   )
 }
+export function ServiceSchema({
+  services,
+}: {
+  services: {
+    id: string
+    name: string
+    description: string
+    url: string
+    lowPrice: number
+    highPrice: number
+  }[]
+}) {
+  const schema = {
+    "@context": "https://schema.org",
+    "@graph": services.map((service) => ({
+      "@type": "Service",
+      "@id": service.id,
+      name: service.name,
+      description: service.description,
+      provider: {
+        "@id": "https://prism.agency/#organization",
+      },
+      offers: {
+        "@type": "AggregateOffer",
+        priceCurrency: "USD",
+        lowPrice: service.lowPrice,
+        highPrice: service.highPrice,
+        url: service.url,
+      },
+    })),
+  }
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{
+        __html: JSON.stringify(schema),
+      }}
+    />
+  )
+}
+
