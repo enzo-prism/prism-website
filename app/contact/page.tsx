@@ -1,4 +1,5 @@
 import { Mail, Instagram, CalendarDays } from "lucide-react"
+import { ContactPageSchema } from "@/components/schema-markup"
 import Link from "next/link"
 import type { Metadata } from "next"
 
@@ -51,7 +52,9 @@ export default function ContactPage() {
   ]
 
   return (
-    <div className="min-h-screen bg-white flex flex-col items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <>
+      <ContactPageSchema />
+      <div className="min-h-screen bg-white flex flex-col items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-10 text-center">
         <div>
           <h1 className="text-4xl font-bold tracking-tight text-neutral-900 sm:text-5xl lowercase">get in touch.</h1>
@@ -91,5 +94,6 @@ export default function ContactPage() {
         </div>
       </div>
     </div>
+    </>
   )
 }

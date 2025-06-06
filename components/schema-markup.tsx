@@ -223,6 +223,37 @@ export function FAQSchema({ questions }: { questions: { question: string; answer
     />
   )
 }
+
+export function ContactPageSchema() {
+  const contactSchema = {
+    "@context": "https://schema.org",
+    "@type": "ContactPage",
+    url: "https://www.design-prism.com/contact",
+    mainEntity: {
+      "@type": "Organization",
+      "@id": "https://prism.agency/#organization",
+      name: "Prism Agency",
+      telephone: "+1-800-123-4567",
+      email: "support@design-prism.com",
+      contactPoint: {
+        "@type": "ContactPoint",
+        telephone: "+1-800-123-4567",
+        email: "support@design-prism.com",
+        url: "https://calendly.com/enzomarzorati/30min",
+        contactType: "customer service",
+      },
+    },
+  }
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{
+        __html: JSON.stringify(contactSchema),
+      }}
+    />
+  )
+}
 export function ServiceSchema({
   services,
 }: {
