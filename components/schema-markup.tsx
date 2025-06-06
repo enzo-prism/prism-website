@@ -223,3 +223,60 @@ export function FAQSchema({ questions }: { questions: { question: string; answer
     />
   )
 }
+
+type Review = {
+  "@type": "Review"
+  itemReviewed: {
+    "@id": string
+  }
+  author: {
+    "@type": "Person"
+    name: string
+  }
+  reviewBody: string
+  reviewRating?: {
+    "@type": "Rating"
+    ratingValue: number
+    bestRating?: number
+  }
+}
+
+export function ReviewSchema({
+  authorName,
+  reviewBody,
+  ratingValue,
+}: {
+  authorName: string
+  reviewBody: string
+  ratingValue?: number
+}) {
+  const reviewSchema: Review = {
+    "@type": "Review",
+    itemReviewed: {
+      "@id": "https://prism.agency/#organization",
+    },
+    author: {
+      "@type": "Person",
+      name: authorName,
+    },
+    reviewBody,
+    ...(ratingValue
+      ? {
+          reviewRating: {
+            "@type": "Rating",
+            ratingValue,
+            bestRating: 5,
+          },
+        }
+      : {}),
+  }
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{
+        __html: JSON.stringify(reviewSchema),
+      }}
+    />
+  )
+}

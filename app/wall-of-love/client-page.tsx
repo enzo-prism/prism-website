@@ -4,6 +4,7 @@ import Link from "next/link"
 import { ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useEffect, useState } from "react"
+import { ReviewSchema } from "@/components/schema-markup"
 
 interface Quote {
   id: number
@@ -509,19 +510,21 @@ export default function WallOfLoveClientPage() {
         <main className="max-w-2xl mx-auto px-4 py-12 sm:px-6 lg:px-8 sm:py-16">
           <div className="space-y-8">
             {shuffledQuotes.map((quote) => (
-              <blockquote
-                key={quote.id}
-                className="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300"
-                aria-label={`Testimonial from ${quote.client.toLowerCase()}`}
-              >
-                <p className="text-lg text-neutral-700 leading-relaxed mb-4">
-                  &ldquo;{renderFormattedText(quote.text.toLowerCase())}&rdquo;
-                </p>
-                <footer className="text-right">
-                  <p className="font-semibold text-neutral-800">{quote.client.toLowerCase()}</p>
-                  <p className="text-sm text-neutral-500">{quote.company.toLowerCase()}</p>
-                </footer>
-              </blockquote>
+              <div key={quote.id}>
+                <ReviewSchema authorName={quote.client} reviewBody={quote.text} />
+                <blockquote
+                  className="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300"
+                  aria-label={`Testimonial from ${quote.client.toLowerCase()}`}
+                >
+                  <p className="text-lg text-neutral-700 leading-relaxed mb-4">
+                    &ldquo;{renderFormattedText(quote.text.toLowerCase())}&rdquo;
+                  </p>
+                  <footer className="text-right">
+                    <p className="font-semibold text-neutral-800">{quote.client.toLowerCase()}</p>
+                    <p className="text-sm text-neutral-500">{quote.company.toLowerCase()}</p>
+                  </footer>
+                </blockquote>
+              </div>
             ))}
           </div>
         </main>
