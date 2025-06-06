@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button"
 import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
 import PageViewTracker from "@/components/page-view-tracker"
+import { CaseStudySchema } from "@/components/schema-markup"
 import { trackCTAClick } from "@/utils/analytics"
 import { useState, useEffect } from "react"
 import Image from "next/image"
@@ -497,6 +498,16 @@ export default function ChristopherWongCaseStudy() {
         </div>
       </main>
       <Footer />
+      <CaseStudySchema
+        title="powering a seamless transition for dr. christopher wong"
+        description="how we helped a palo alto dental practice achieve 100% patient retention and sustainable growth through a multi-phase digital strategy."
+        url="https://prism.agency/case-studies/dr-christopher-wong"
+        imageUrl="https://prism.agency/dr-wong-polaroids.png"
+        datePublished="2025-01-15T00:00:00.000Z"
+        dateModified="2025-01-15T00:00:00.000Z"
+        clientName="Dr. Christopher B. Wong"
+        outcome="achieved 100% patient retention and sustained growth"
+      />
     </div>
   )
 }

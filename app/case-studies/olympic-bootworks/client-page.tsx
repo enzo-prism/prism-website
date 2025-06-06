@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button"
 import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
 import PageViewTracker from "@/components/page-view-tracker"
+import { CaseStudySchema } from "@/components/schema-markup"
 import { trackCTAClick } from "@/utils/analytics"
 import { useState, useEffect } from "react"
 import Image from "next/image"
@@ -498,6 +499,16 @@ export default function OlympicBootworksCaseStudy() {
         </div>
       </main>
       <Footer />
+      <CaseStudySchema
+        title="olympic bootworks case study - from 10/100 online to always-open revenue engine"
+        description="discover how prism transformed olympic bootworks from a dated squarespace template to a lightning-fast e-commerce powerhouse with real-time inventory sync and 24/7 booking engine."
+        url="https://prism.agency/case-studies/olympic-bootworks"
+        imageUrl="https://prism.agency/olympic-bootworks.png"
+        datePublished="2025-03-01T00:00:00.000Z"
+        dateModified="2025-03-01T00:00:00.000Z"
+        clientName="Olympic Bootworks"
+        outcome="300%+ organic visibility, $25k+ online sales, and 150+ bookings in the first 90 days"
+      />
     </div>
   )
 }
