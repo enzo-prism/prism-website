@@ -21,16 +21,6 @@ interface Client {
   image?: string
 }
 
-// Fisher-Yates (Knuth) shuffle algorithm
-const shuffleArray = <T,>(array: T[]): T[] => {
-  const shuffled = [...array]
-  for (let i = shuffled.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1))
-    ;[shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]]
-  }
-  return shuffled
-}
-
 // Define a configurable speed factor (pixels per second)
 const SCROLL_SPEED_FACTOR = 80
 
@@ -247,10 +237,10 @@ export default function ClientShowcase() {
   }, [isPaused])
 
   useEffect(() => {
-    // Ensure any previous Miguel entries (ID 23 or 24 or 27) are filtered out before shuffling
-    const filteredClientsData = clientsData.filter((client) => client.id !== 23 && client.id !== 24 && client.id !== 27)
-    const shuffledClients = shuffleArray(filteredClientsData)
-    setClients([...shuffledClients, ...shuffledClients])
+    const filteredClientsData = clientsData.filter(
+      (client) => client.id !== 23 && client.id !== 24 && client.id !== 27,
+    )
+    setClients([...filteredClientsData, ...filteredClientsData])
     setIsLoaded(true)
   }, [])
 
