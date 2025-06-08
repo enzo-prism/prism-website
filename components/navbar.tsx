@@ -24,6 +24,7 @@ export default function Navbar() {
     { emoji: "🖥️", label: "websites", href: "/websites" },
     { emoji: "📱", label: "apps", href: "/apps" },
     { emoji: "🎨", label: "designs", href: "/designs" },
+    { emoji: "🎉", label: "offers", href: "/offers" }, // Added new offers link
     { emoji: "❤️", label: "wall of love", href: "/wall-of-love" },
     { emoji: "💰", label: "affiliate", href: "/affiliate" },
   ]

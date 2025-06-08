@@ -1,149 +1,63 @@
-import type { MetadataRoute } from "next"
+import type { MetadataRoute } from "next/server"
 
-export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = "https://design-prism.com" // UPDATED
-  const currentDate = new Date().toISOString()
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"
 
-  // Blog posts - would be dynamically generated in a real implementation
-  const blogPosts = [
+export default function sitemap(): MetadataRoute["sitemap"] {
+  const routes = [
     {
-      url: `${baseUrl}/blog/business-visibility-chatgpt`,
-      lastModified: currentDate,
-      changeFrequency: "monthly" as const,
-      priority: 0.7,
-    },
-    {
-      url: `${baseUrl}/blog/conversion-rate-optimization`,
-      lastModified: currentDate,
-      changeFrequency: "monthly" as const,
-      priority: 0.7,
-    },
-    {
-      url: `${baseUrl}/blog/mobile-app-ux`,
-      lastModified: currentDate,
-      changeFrequency: "monthly" as const,
-      priority: 0.7,
-    },
-    {
-      url: `${baseUrl}/blog/custom-website-development`,
-      lastModified: currentDate,
-      changeFrequency: "monthly" as const,
-      priority: 0.7,
-    },
-    {
-      url: `${baseUrl}/blog/ai-digital-marketing`,
-      lastModified: currentDate,
-      changeFrequency: "monthly" as const,
-      priority: 0.7,
-    },
-    {
-      url: `${baseUrl}/blog/brand-strategy`,
-      lastModified: currentDate,
-      changeFrequency: "monthly" as const,
-      priority: 0.7,
-    },
-  ]
-
-  // Case studies
-  const caseStudies = [
-    {
-      url: `${baseUrl}/case-studies/dr-christopher-wong`,
-      lastModified: currentDate,
-      changeFrequency: "monthly" as const,
-      priority: 0.7,
-    },
-    {
-      url: `${baseUrl}/case-studies/exquisite-dentistry`,
-      lastModified: currentDate,
-      changeFrequency: "monthly" as const,
-      priority: 0.7,
-    },
-    {
-      url: `${baseUrl}/case-studies/olympic-bootworks`,
-      lastModified: currentDate,
-      changeFrequency: "monthly" as const,
-      priority: 0.7,
-    },
-    {
-      url: `${baseUrl}/case-studies/we-are-saplings`,
-      lastModified: currentDate,
-      changeFrequency: "monthly" as const,
-      priority: 0.7,
-    },
-    // Additional case studies would be added here if more exist
-  ]
-
-  // Main pages
-  const mainPages = [
-    {
-      url: `${baseUrl}/`,
-      lastModified: currentDate,
-      changeFrequency: "weekly" as const,
+      url: baseUrl,
+      lastModified: new Date(),
+      changeFrequency: "yearly",
       priority: 1,
     },
     {
       url: `${baseUrl}/about`,
-      lastModified: currentDate,
-      changeFrequency: "monthly" as const,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
       priority: 0.8,
     },
     {
-      url: `${baseUrl}/websites`,
-      lastModified: currentDate,
-      changeFrequency: "monthly" as const,
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/apps`,
-      lastModified: currentDate,
-      changeFrequency: "monthly" as const,
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/designs`,
-      lastModified: currentDate,
-      changeFrequency: "monthly" as const,
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/get-started`,
-      lastModified: currentDate,
-      changeFrequency: "monthly" as const,
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/case-studies`, // Parent page for case studies
-      lastModified: currentDate,
-      changeFrequency: "monthly" as const,
+      url: `${baseUrl}/services`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
       priority: 0.8,
     },
     {
-      url: `${baseUrl}/blog`, // Parent page for blog
-      lastModified: currentDate,
-      changeFrequency: "weekly" as const,
+      url: `${baseUrl}/portfolio`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
       priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/wall-of-love`,
-      lastModified: currentDate,
-      changeFrequency: "monthly" as const,
-      priority: 0.7,
-    },
-    {
-      url: `${baseUrl}/ig`, // Instagram Landing Page
-      lastModified: currentDate,
-      changeFrequency: "monthly" as const,
-      priority: 0.6,
     },
     {
       url: `${baseUrl}/contact`,
-      lastModified: currentDate,
-      changeFrequency: "yearly" as const,
-      priority: 0.5,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.8,
     },
-    // Add other main pages like /pricing, /pricing-dental if they are meant to be indexed
+    {
+      url: `${baseUrl}/blog`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/offers`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/offers/summer-website-makeover`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
   ]
 
-  // Combine all routes
-  return [...mainPages, ...caseStudies, ...blogPosts]
+  return routes.map((route) => ({
+    url: route.url,
+    lastModified: route.lastModified,
+    changeFrequency: route.changeFrequency,
+    priority: route.priority,
+  }))
 }
