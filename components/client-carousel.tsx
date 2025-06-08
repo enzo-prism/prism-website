@@ -3,8 +3,8 @@
 import { useState, useEffect, useCallback } from "react"
 import Image from "next/image"
 import { ChevronLeft, ChevronRight } from "lucide-react"
-// Add the import for scroll optimization utilities
-import { throttle } from "@/utils/scroll-optimization"
+// Import isTouchDevice from scroll optimization utilities
+import { throttle, isTouchDevice } from "@/utils/scroll-optimization"
 
 interface Slide {
   id: number
@@ -43,6 +43,13 @@ export default function ClientCarousel() {
 
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isAutoPlaying, setIsAutoPlaying] = useState(true)
+  // State to store if the device is a touch device, determined on client-side mount
+  const [isClientTouchDevice, setIsClientTouchDevice] = useState(false)
+
+  useEffect(() => {
+    // Determine if it's a touch device once the component has mounted on the client
+    setIsClientTouchDevice(isTouchDevice())
+  }, [])
 
   const nextSlide = useCallback(() => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % slides.length)
@@ -52,32 +59,47 @@ export default function ClientCarousel() {
     setCurrentIndex((prevIndex) => (prevIndex - 1 + slides.length) % slides.length)
   }, [slides.length])
 
-  // Auto-advance slides with optimization for mobile
+  // Auto-advance slides
   useEffect(() => {
-    let interval: NodeJS.Timeout
+    let interval: NodeJS.Timeout | undefined
 
-    const startAutoPlay = throttle(() => {
-      if (isAutoPlaying) {
+    // The throttle function for starting auto-play
+    const startAutoPlayThrottled = throttle(() => {
+      // Check isAutoPlaying and is-scrolling inside the throttled function
+      // to use their current values when the throttled function executes.
+      if (isAutoPlaying && typeof document !== "undefined" && !document.body.classList.contains("is-scrolling")) {
         interval = setInterval(() => {
           nextSlide()
         }, 5000) // Change slide every 5 seconds
       }
-    }, 200)
+    }, 200) // Throttle calls to 200ms
 
-    // Only start autoplay if not scrolling
-    if (isAutoPlaying && !document.body.classList.contains("is-scrolling")) {
-      startAutoPlay()
+    if (isAutoPlaying) {
+      startAutoPlayThrottled()
     }
 
-    // Clean up
+    // Clean up: clear interval when component unmounts or dependencies change
     return () => {
       if (interval) clearInterval(interval)
+      // Note: Standard throttle implementations may not have a .cancel() method.
+      // The check `if (isAutoPlaying)` inside startAutoPlayThrottled helps prevent
+      // starting new intervals if isAutoPlaying became false before throttle executed.
     }
-  }, [isAutoPlaying, nextSlide])
+  }, [isAutoPlaying, nextSlide]) // Dependencies for the auto-play effect
 
-  // Pause auto-play on hover
-  const handleMouseEnter = () => setIsAutoPlaying(false)
-  const handleMouseLeave = () => setIsAutoPlaying(true)
+  // Pause auto-play on hover, but only for non-touch devices
+  const handleMouseEnter = () => {
+    if (!isClientTouchDevice) {
+      setIsAutoPlaying(false)
+    }
+  }
+
+  // Resume auto-play on mouse leave, but only for non-touch devices
+  const handleMouseLeave = () => {
+    if (!isClientTouchDevice) {
+      setIsAutoPlaying(true)
+    }
+  }
 
   // Get the previous, current, and next slide indices
   const getSlideIndex = (offset: number) => {
@@ -85,7 +107,14 @@ export default function ClientCarousel() {
   }
 
   return (
-    <div className="relative w-full py-8" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+    <div
+      className="relative w-full py-8"
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      // Adding touch-action: pan-y can sometimes help prevent conflicts on mobile,
+      // though the primary fix is disabling mouseenter/leave for touch.
+      style={{ touchAction: "pan-y" }}
+    >
       {/* Carousel container */}
       <div className="relative overflow-hidden">
         <div className="flex justify-center items-center">
@@ -93,12 +122,15 @@ export default function ClientCarousel() {
           <div className="relative mx-2 transition-all duration-500 ease-in-out opacity-50 scale-75">
             <div className="w-full max-w-[180px] rounded-lg overflow-hidden shadow-sm border">
               <div className="relative" style={{ paddingBottom: "177.78%" }}>
+                {" "}
+                {/* Aspect ratio container */}
                 <Image
-                  src={slides[getSlideIndex(-1)].image || "/placeholder.svg"}
+                  src={slides[getSlideIndex(-1)].image || "/placeholder.svg?width=180&height=320&text=Previous+Client"}
                   alt={slides[getSlideIndex(-1)].title}
                   width={180}
                   height={320}
                   className="object-cover absolute inset-0 w-full h-full hardware-accelerated"
+                  loading="lazy" // Lazy load off-screen images
                 />
               </div>
               <div className="bg-white p-3">
@@ -111,13 +143,15 @@ export default function ClientCarousel() {
           <div className="relative mx-2 transition-all duration-500 ease-in-out z-10 scale-100">
             <div className="w-full max-w-[220px] rounded-lg overflow-hidden shadow-md border">
               <div className="relative" style={{ paddingBottom: "177.78%" }}>
+                {" "}
+                {/* Aspect ratio container */}
                 <Image
-                  src={slides[currentIndex].image || "/placeholder.svg"}
+                  src={slides[currentIndex].image || "/placeholder.svg?width=220&height=391&text=Current+Client"}
                   alt={slides[currentIndex].title}
                   width={220}
                   height={391}
                   className="object-cover absolute inset-0 w-full h-full hardware-accelerated"
-                  priority
+                  priority // Prioritize loading the current, visible slide
                 />
               </div>
               <div className="bg-white p-4">
@@ -131,12 +165,15 @@ export default function ClientCarousel() {
           <div className="relative mx-2 transition-all duration-500 ease-in-out opacity-50 scale-75">
             <div className="w-full max-w-[180px] rounded-lg overflow-hidden shadow-sm border">
               <div className="relative" style={{ paddingBottom: "177.78%" }}>
+                {" "}
+                {/* Aspect ratio container */}
                 <Image
-                  src={slides[getSlideIndex(1)].image || "/placeholder.svg"}
+                  src={slides[getSlideIndex(1)].image || "/placeholder.svg?width=180&height=320&text=Next+Client"}
                   alt={slides[getSlideIndex(1)].title}
                   width={180}
                   height={320}
                   className="object-cover absolute inset-0 w-full h-full hardware-accelerated"
+                  loading="lazy" // Lazy load off-screen images
                 />
               </div>
               <div className="bg-white p-3">
@@ -149,7 +186,7 @@ export default function ClientCarousel() {
         {/* Navigation arrows */}
         <button
           onClick={(e) => {
-            e.preventDefault()
+            e.preventDefault() // Prevent any default browser action
             prevSlide()
           }}
           className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/80 rounded-full p-2 shadow-md hover:bg-white transition-colors z-20"
@@ -160,7 +197,7 @@ export default function ClientCarousel() {
 
         <button
           onClick={(e) => {
-            e.preventDefault()
+            e.preventDefault() // Prevent any default browser action
             nextSlide()
           }}
           className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/80 rounded-full p-2 shadow-md hover:bg-white transition-colors z-20"
