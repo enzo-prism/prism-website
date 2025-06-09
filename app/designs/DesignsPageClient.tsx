@@ -1,6 +1,6 @@
 "use client"
 
-import type React from "react"
+import type React from "react" // Keep type import
 
 import { useState, useEffect, useCallback, useRef } from "react"
 import { ChevronLeft, ChevronRight, ArrowRight } from "lucide-react"
@@ -13,7 +13,7 @@ import { useMobile } from "@/hooks/use-mobile"
 import { motion, AnimatePresence, useSpring } from "framer-motion"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 
-// Quotes data
+// Quotes data (assuming slides array is defined as before)
 const slides = [
   {
     id: "1",
@@ -71,7 +71,7 @@ const slides = [
   },
 ]
 
-// Design services FAQs
+// Design services FAQs (assuming designFaqs array is defined as before)
 const designFaqs = [
   {
     question: "what types of design services do you offer?",
@@ -105,35 +105,47 @@ const designFaqs = [
   },
 ]
 
+const X_OFFSET = 100 // Represents a percentage or relative unit for Framer Motion
+
 export default function DesignsPageClient() {
   const isMobile = useMobile()
   const [currentSlide, setCurrentSlide] = useState(0)
   const [shuffledSlides, setShuffledSlides] = useState([...slides])
   const [isDragging, setIsDragging] = useState(false)
-  const [dragDirection, setDragDirection] = useState<null | "left" | "right">(null)
-  const [dragDistance, setDragDistance] = useState(0)
+  const [dragDirectionVisual, setDragDirectionVisual] = useState<null | "left" | "right">(null) // For visual swipe indicators
+  const [transitionIntent, setTransitionIntent] = useState<"next" | "prev" | null>(null) // For animation direction
+
   const touchStartX = useRef(0)
   const touchCurrentX = useRef(0)
-  const slideWidth = useRef(0)
+  const slideWidth = useRef(0) // For potential use if X_OFFSET needs to be dynamic
   const slideContainerRef = useRef<HTMLDivElement>(null)
-  const dragThreshold = 50 // Minimum distance to trigger slide change
+  const dragThreshold = 50
   const dragSpring = useSpring(0, { stiffness: 300, damping: 30 })
 
-  // Shuffle slides on initial load
   useEffect(() => {
     const shuffled = [...slides].sort(() => Math.random() - 0.5)
     setShuffledSlides(shuffled)
   }, [])
 
   const nextSlide = useCallback(() => {
+    setTransitionIntent("next")
     setCurrentSlide((prev) => (prev === shuffledSlides.length - 1 ? 0 : prev + 1))
   }, [shuffledSlides.length])
 
   const prevSlide = useCallback(() => {
+    setTransitionIntent("prev")
     setCurrentSlide((prev) => (prev === 0 ? shuffledSlides.length - 1 : prev - 1))
   }, [shuffledSlides.length])
 
-  // Handle keyboard navigation
+  const goToSlide = useCallback(
+    (index: number) => {
+      if (index === currentSlide) return
+      setTransitionIntent(index > currentSlide ? "next" : "prev")
+      setCurrentSlide(index)
+    },
+    [currentSlide],
+  )
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "ArrowRight") nextSlide()
@@ -143,7 +155,6 @@ export default function DesignsPageClient() {
     return () => window.removeEventListener("keydown", handleKeyDown)
   }, [nextSlide, prevSlide])
 
-  // Handle touch events for swipe
   const handleTouchStart = (e: React.TouchEvent) => {
     if (slideContainerRef.current) {
       slideWidth.current = slideContainerRef.current.offsetWidth
@@ -151,7 +162,6 @@ export default function DesignsPageClient() {
     touchStartX.current = e.touches[0].clientX
     touchCurrentX.current = e.touches[0].clientX
     setIsDragging(true)
-    setDragDistance(0)
     dragSpring.set(0)
   }
 
@@ -160,39 +170,54 @@ export default function DesignsPageClient() {
 
     touchCurrentX.current = e.touches[0].clientX
     const distance = touchCurrentX.current - touchStartX.current
-    setDragDistance(distance)
     dragSpring.set(distance)
 
-    // Determine drag direction for visual indicator
     if (distance > 10) {
-      setDragDirection("right")
+      setDragDirectionVisual("right")
     } else if (distance < -10) {
-      setDragDirection("left")
+      setDragDirectionVisual("left")
     } else {
-      setDragDirection(null)
+      setDragDirectionVisual(null)
     }
   }
 
   const handleTouchEnd = () => {
     setIsDragging(false)
-    setDragDirection(null)
-
     const distance = touchCurrentX.current - touchStartX.current
 
-    // Animate back to center
-    dragSpring.set(0, { damping: 20 })
-
-    // If dragged far enough, change slide
     if (Math.abs(distance) > dragThreshold) {
       if (distance < 0) {
-        nextSlide() // Swiped left
+        // Swiped left
+        nextSlide()
       } else {
-        prevSlide() // Swiped right
+        // Swiped right
+        prevSlide()
       }
+    } else {
+      dragSpring.set(0, { damping: 20 }) // Animate back if not enough drag
     }
 
+    setDragDirectionVisual(null) // Reset visual indicator
     touchStartX.current = 0
     touchCurrentX.current = 0
+    // dragSpring.set(0) // Already handled or will be by new animation
+  }
+
+  const slideVariants = {
+    initial: (intent: "next" | "prev" | null) => ({
+      opacity: 0,
+      x: intent === "next" ? X_OFFSET : intent === "prev" ? -X_OFFSET : 0,
+    }),
+    animate: {
+      opacity: 1,
+      x: 0,
+      zIndex: 1,
+    },
+    exit: (intent: "next" | "prev" | null) => ({
+      opacity: 0,
+      zIndex: 0,
+      x: intent === "next" ? -X_OFFSET : intent === "prev" ? X_OFFSET : 0,
+    }),
   }
 
   return (
@@ -200,7 +225,7 @@ export default function DesignsPageClient() {
       <PageViewTracker title="Captivating Designs" />
       <Navbar />
       <main className="flex-1">
-        {/* Hero Section - Matching apps and websites pages */}
+        {/* Hero Section */}
         <section className="px-4 py-16 md:py-24 lg:py-32">
           <div className="container mx-auto px-4 md:px-6">
             <div className="flex flex-col items-center space-y-6 text-center max-w-3xl mx-auto">
@@ -229,7 +254,6 @@ export default function DesignsPageClient() {
         <section className="px-4 py-16 md:py-24 bg-white">
           <div className="container mx-auto px-4 md:px-6">
             <div className="flex flex-col items-center">
-              {/* Image Slider */}
               <div
                 className="w-full max-w-3xl relative"
                 ref={slideContainerRef}
@@ -241,32 +265,33 @@ export default function DesignsPageClient() {
                 aria-label={`Slide ${currentSlide + 1} of ${shuffledSlides.length}`}
               >
                 <div className="relative">
-                  <AnimatePresence mode="wait">
+                  <AnimatePresence initial={false} custom={transitionIntent} mode="wait">
                     <motion.div
-                      key={currentSlide}
-                      initial={{ opacity: 0, x: dragDirection === "left" ? 100 : -100 }}
-                      animate={{
-                        opacity: 1,
-                        x: isDragging ? dragDistance : 0,
+                      key={shuffledSlides[currentSlide]?.id || currentSlide} // Use a stable key
+                      custom={transitionIntent}
+                      variants={slideVariants}
+                      initial="initial"
+                      animate="animate"
+                      exit="exit"
+                      transition={{
+                        x: { type: "spring", stiffness: 300, damping: 30, duration: 0.4 },
+                        opacity: { duration: 0.3 },
                       }}
-                      exit={{ opacity: 0, x: dragDirection === "left" ? -100 : 100 }}
-                      transition={{ duration: 0.3 }}
-                      style={{ x: isDragging ? dragSpring : 0 }}
+                      style={{ x: isDragging ? dragSpring : 0 }} // Apply drag motion
                       className="aspect-square w-full overflow-hidden rounded-lg bg-white"
                     >
                       <img
-                        src={shuffledSlides[currentSlide].image || "/placeholder.svg"}
-                        alt={`Design slide: ${shuffledSlides[currentSlide].quote}`}
+                        src={shuffledSlides[currentSlide]?.image || "/placeholder.svg"}
+                        alt={`Design slide: ${shuffledSlides[currentSlide]?.quote}`}
                         className="w-full h-full object-contain"
                       />
 
-                      {/* Swipe direction indicators - only visible during active swipe */}
-                      {isDragging && dragDirection === "left" && (
+                      {isDragging && dragDirectionVisual === "left" && (
                         <div className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/80 p-2 rounded-full shadow-md">
                           <ChevronLeft className="h-6 w-6 text-black" />
                         </div>
                       )}
-                      {isDragging && dragDirection === "right" && (
+                      {isDragging && dragDirectionVisual === "right" && (
                         <div className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/80 p-2 rounded-full shadow-md">
                           <ChevronRight className="h-6 w-6 text-black" />
                         </div>
@@ -274,7 +299,6 @@ export default function DesignsPageClient() {
                     </motion.div>
                   </AnimatePresence>
 
-                  {/* Navigation Arrows - Only visible on non-mobile */}
                   {!isMobile && (
                     <>
                       <button
@@ -295,20 +319,18 @@ export default function DesignsPageClient() {
                   )}
                 </div>
 
-                {/* Quote Text */}
                 <div className="mt-6 text-center">
                   <p className="text-xl md:text-2xl font-light text-gray-800 mb-2 lowercase">
-                    {shuffledSlides[currentSlide].quote}
+                    {shuffledSlides[currentSlide]?.quote}
                   </p>
-                  <p className="text-sm md:text-base text-gray-600 lowercase">{shuffledSlides[currentSlide].author}</p>
+                  <p className="text-sm md:text-base text-gray-600 lowercase">{shuffledSlides[currentSlide]?.author}</p>
                 </div>
 
-                {/* Slide Indicators */}
                 <div className="flex justify-center space-x-2 mt-6">
                   {shuffledSlides.map((_, index) => (
                     <button
                       key={index}
-                      onClick={() => setCurrentSlide(index)}
+                      onClick={() => goToSlide(index)}
                       className={`h-2 rounded-full transition-all ${
                         currentSlide === index ? "w-6 bg-black" : "w-2 bg-gray-300"
                       }`}
@@ -317,7 +339,6 @@ export default function DesignsPageClient() {
                   ))}
                 </div>
 
-                {/* Swipe Hint - Only visible on mobile */}
                 {isMobile && (
                   <div className="flex items-center justify-center space-x-2 text-center text-sm text-gray-500 mt-4">
                     <ChevronLeft className="h-4 w-4" />
