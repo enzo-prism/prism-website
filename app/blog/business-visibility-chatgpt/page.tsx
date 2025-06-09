@@ -1,23 +1,26 @@
-import type { Metadata } from "next" // This would typically be in a server component wrapper
+import type { Metadata } from "next"
 import BusinessVisibilityChatGPTClientPage from "./BusinessVisibilityChatGPTClientPage"
 
 export const metadata: Metadata = {
-  title: "How I'm Getting My Business to Show Up in ChatGPT (And How You Can Too)",
+  title: "How to Rank Higher in AI Search: A Live Experiment | Prism",
   description:
-    "Learn the six steps to make your business visible to AI like ChatGPT without tricks—just smart strategy.",
+    "Enzo from Prism conducts a live experiment on ranking in AI search (ChatGPT, Gemini, Grock, Perplexity) and shares key takeaways for businesses.",
   openGraph: {
-    title: "How I'm Getting My Business to Show Up in ChatGPT (And How You Can Too)",
+    title: "How to Rank Higher in AI Search: A Live Experiment | Prism",
     description:
-      "Learn the six steps to make your business visible to AI like ChatGPT without tricks—just smart strategy.",
+      "Enzo from Prism conducts a live experiment on ranking in AI search (ChatGPT, Gemini, Grock, Perplexity) and shares key takeaways for businesses.",
     url: "https://prism.agency/blog/business-visibility-chatgpt",
-    images: ["https://prism.agency/blog/chatgpt-business-visibility.png"],
+    images: ["https://prism.agency/blog/ai-search-ranking-experiment.png"],
     type: "article",
-    publishedTime: "2025-05-27T00:00:00.000Z",
-    modifiedTime: "2025-05-27T00:00:00.000Z",
-    authors: ["enzo"],
+    publishedTime: "2025-06-08T00:00:00.000Z",
+    modifiedTime: "2025-06-08T00:00:00.000Z",
+    authors: ["Enzo from Prism"],
+  },
+  alternates: {
+    canonical: "https://prism.agency/blog/business-visibility-chatgpt",
   },
 }
 
-export default function BusinessVisibilityChatGPTPage() {
+export default function AiSearchRankingExperimentPage() {
   return <BusinessVisibilityChatGPTClientPage />
 }

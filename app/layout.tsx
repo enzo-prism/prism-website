@@ -1,10 +1,18 @@
 import type React from "react"
 import type { Metadata } from "next"
+import { Inter } from "next/font/google" // Import Inter
 import "./globals.css"
 import ScrollManager from "@/components/scroll-manager"
 // Import the schema components
 import { OrganizationSchema, WebsiteSchema } from "@/components/schema-markup"
 import HotjarScript from "@/components/hotjar-script"
+
+// Initialize Inter font
+const inter = Inter({
+  subsets: ["latin"],
+  display: "swap", // Ensures text remains visible during font loading
+  variable: "--font-inter", // Optional: define a CSS variable
+})
 
 export const metadata: Metadata = {
   title: {
@@ -64,7 +72,8 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className="scroll-smooth">
+    // Apply the font class and variable to the html tag
+    <html lang="en" className={`${inter.variable} ${inter.className} scroll-smooth`}>
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, user-scalable=yes" />
         {/* Add mobile-specific meta tags for better scrolling */}
@@ -78,14 +87,19 @@ export default function RootLayout({
         <script
           dangerouslySetInnerHTML={{
             __html: `
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-9B141WTH4R');
-      `,
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-9B141WTH4R');
+    `,
           }}
         />
       </head>
+      {/* You can also apply inter.className directly to body if preferred,
+        but applying to html covers the entire document.
+        The existing font-sans class from Tailwind will then use this font
+        if tailwind.config.ts is updated accordingly.
+    */}
       <body className="font-sans antialiased">
         <OrganizationSchema />
         <WebsiteSchema />

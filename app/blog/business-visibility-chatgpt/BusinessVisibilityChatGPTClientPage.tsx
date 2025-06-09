@@ -9,25 +9,66 @@ import ScrollProgressBar from "@/components/scroll-progress-bar"
 import { BlogPostSchema } from "@/components/schema-markup"
 import { trackEvent } from "@/utils/analytics"
 import { cn } from "@/lib/utils" // Import cn
+import YoutubeVideoEmbed from "@/components/youtube-video-embed"
 
 export default function BusinessVisibilityChatGPTClientPage() {
-  const gradientForThisPost = "bg-gradient-to-br from-sky-300/30 via-cyan-300/30 to-teal-300/30" // Gradient 2
+  const gradientForThisPost = "bg-gradient-to-br from-purple-300/30 via-pink-300/30 to-red-300/30" // New gradient for this post
 
-  // Dummy content for illustration
-  const postTitle = "How I'm Getting My Business to Show Up in ChatGPT (And How You Can Too)"
-  const postCategory = "Digital Marketing"
-  const postDate = "May 27, 2025"
+  const postTitle = "How to Rank Higher in AI Search: A Live Experiment"
+  const postCategory = "AI Search Optimization"
+  const postDate = "June 8, 2025" // Updated to current date as an example
   const postContent = `
     <p class="text-lg leading-relaxed">
-      ChatGPT is changing how people find and trust businesses. Learn the six steps to make your business visible to AI without tricks—just smart strategy.
+      Hey everyone, Enzo here. I hope you're having a great day. If you're anything like me, you're up late thinking about how to get your business to rank higher, especially in this new world of AI search. It's a question we're obsessed with at Prism, where we help businesses like yours enhance their websites and apps to drive revenue.
     </p>
-    <p>Content about ChatGPT visibility...</p>
-    <h3 class="text-xl font-bold mt-8 mb-4">Step 1: Understand How AI Uses Information</h3>
-    <p>Details about step 1...</p>
-    <hr class="my-8" />
-    <h3 class="text-xl font-bold mt-8 mb-4">Step 2: Optimize Your Online Presence</h3>
-    <p>Details about step 2...</p>
-    <p class="font-medium mt-8">• enzo</p>
+    <p class="mt-4">
+      A huge part of what makes a website successful is generating impressions and converting those into customers. Increasingly, the key to boosting those impressions is through AI search. You've probably heard of Search Engine Optimization (SEO) for Google. Well, the good news is that many of those same principles apply to AI-powered search tools like ChatGPT, Gemini, Grock, and Perplexity.
+    </p>
+    <p class="mt-4">
+      Today, I want to walk you through a live experiment I conducted to see how our own company, Prism, ranks on these platforms.
+    </p>
+
+    <h3 class="text-2xl font-bold mt-10 mb-4">The Old Rules Still Apply (Mostly)</h3>
+    <p>
+      Before we dive in, let's quickly recap how you traditionally improve your Google ranking. It comes down to a few key things:
+    </p>
+    <ul class="list-disc list-inside space-y-2 mt-4">
+      <li><strong>Good Reviews:</strong> Positive feedback signals to search engines that you're a trustworthy business.</li>
+      <li><strong>High-Quality Content:</strong> The more valuable and relevant content you have online, the more material search engines have to crawl and understand what you do.</li>
+      <li><strong>Backlinks:</strong> When other reputable websites link to yours, it's a powerful endorsement that tells search engines you're a legitimate and respected authority in your field.</li>
+    </ul>
+    <p class="mt-4">
+      Essentially, these AI platforms are trying to do the same thing as Google: figure out if you're a legit business that they should recommend to their users. Your job is to provide them with as much evidence as possible that you are the best at what you do.
+    </p>
+
+    <h3 class="text-2xl font-bold mt-10 mb-4">Our Live Test: How Does Prism Rank?</h3>
+    <p>
+      I gave four of the major AI search platforms the same simple prompt: "Tell me more about Prism, the agency for websites, apps, and designs." Here's what happened:
+    </p>
+    <ul class="list-disc list-inside space-y-3 mt-4">
+      <li><strong>Perplexity:</strong> After an initial scare, we found that Prism was the number two result. The top result was another agency that has worked with thousands of corporations globally, which likely gives them more "rapport" in the eyes of the AI. It's a good reminder that your overall business reputation and history play a significant role.</li>
+      <li><strong>Grock:</strong> This one was a bit of a shock. We didn't show up at all. Not even in the top ten. This highlights how different the algorithms for these platforms can be and the importance of not assuming that a good ranking on one will translate to others. When I gave Grock our direct domain, it seemed to pigeonhole us as being focused on our dental clients, which is a good insight into how our content is being interpreted.</li>
+      <li><strong>Gemini:</strong> Success! We were the number one result. The summary it provided was accurate and highlighted our focus on helping ambitious founders. This was a great outcome and shows that our messaging is resonating on some platforms.</li>
+      <li><strong>ChatGPT:</strong> Unfortunately, we didn't rank here either. Another company consistently appeared for our search terms. This further emphasizes the dental-focused perception of our business, which is something we'll need to address in our content strategy.</li>
+    </ul>
+
+    <h3 class="text-2xl font-bold mt-10 mb-4">What We Learned and What You Can Do</h3>
+    <p>
+      This experiment was a valuable, real-time look at our current standing in the world of AI search. Here are the key takeaways for any business looking to improve its ranking:
+    </p>
+    <ol class="list-decimal list-inside space-y-3 mt-4">
+      <li><strong>Know Where You Stand:</strong> Regularly check how your business is ranking on these different AI platforms. You can't improve what you don't measure. Make sure you're doing this in an incognito window to get unbiased results.</li>
+      <li><strong>Build Your Online Reputation:</strong> The principles of SEO are more important than ever. Focus on getting good reviews, creating high-quality content, and building a strong backlink profile. Your online reputation is your "street cred" with these AI models.</li>
+      <li><strong>Ensure Your Site is Crawlable:</strong> On the technical side, make sure your website is easy for these AI platforms to crawl and understand. This includes having a clear sitemap and a properly configured <code>robots.txt</code> file.</li>
+      <li><strong>Stay Consistent:</strong> These platforms are constantly changing. What works today might not work tomorrow. It's important to have someone on your team who is regularly monitoring your AI search rankings and adjusting your strategy accordingly.</li>
+    </ol>
+    <p class="mt-6">
+      Ultimately, ranking higher in AI search comes down to proving that you are a reputable and authoritative business. By focusing on the fundamentals of good content, a strong online presence, and technical SEO, you can position your business for success in this new era of search.
+    </p>
+    <p class="mt-4">
+      If you have any questions or want to learn more about how we can help your business thrive online, don't hesitate to reach out to us on our website or leave a comment below.
+    </p>
+    <p class="mt-8 font-medium italic">*(The video of this live experiment is below)*</p>
   `
 
   return (
@@ -38,17 +79,17 @@ export default function BusinessVisibilityChatGPTClientPage() {
         <Breadcrumbs
           items={[
             { name: "blog", url: "/blog" },
-            { name: "chatgpt business visibility", url: "/blog/business-visibility-chatgpt" },
+            { name: "ai search ranking experiment", url: "/blog/business-visibility-chatgpt" },
           ]}
         />
         <main className="flex-1">
           <div className="w-full bg-gradient-to-b from-neutral-50 to-white py-12 md:py-16">
             <div className="container mx-auto px-4 md:px-6">
               <div className="max-w-3xl mx-auto">
-                {/* Gradient hero section */}
                 <div className="relative w-full max-w-2xl mx-auto mb-8 md:mb-12 rounded-lg overflow-hidden">
                   <div className={cn("aspect-[16/9] relative", gradientForThisPost)}>
-                    {/* Optional: Add a subtle icon or text overlay here if desired */}
+                    {/* You can add a visual element here if desired, e.g., an abstract AI/Search graphic */}
+                    {/* <img src="/placeholder.svg?width=800&height=450" alt="AI Search Ranking" className="object-cover w-full h-full" /> */}
                   </div>
                 </div>
 
@@ -73,19 +114,21 @@ export default function BusinessVisibilityChatGPTClientPage() {
                 </div>
 
                 <div
-                  className="prose prose-neutral max-w-none space-y-6 lowercase-prose"
+                  className="prose prose-neutral max-w-none space-y-6 lowercase-prose" // Ensure prose styles apply
                   dangerouslySetInnerHTML={{ __html: postContent }}
                 />
 
+                <div className="my-12">
+                  <YoutubeVideoEmbed videoId="_hei2C4164Q" title="Live Experiment: Ranking in AI Search" />
+                </div>
+
                 <div className="mt-12 p-6 bg-neutral-50 rounded-lg">
-                  <h3 className="text-xl font-bold mb-2 lowercase">want to improve your ai visibility?</h3>
-                  <p className="text-neutral-600 mb-4 lowercase">
-                    let prism help your business get noticed by ai search.
-                  </p>
+                  <h3 className="text-xl font-bold mb-2 lowercase">want to improve your ai search ranking?</h3>
+                  <p className="text-neutral-600 mb-4 lowercase">let prism help your business get noticed by ai.</p>
                   <Link
                     href="/get-started"
                     onClick={() =>
-                      trackEvent({ action: "click", category: "cta", label: "blog_post_get_started_chatgpt_vis" })
+                      trackEvent({ action: "click", category: "cta", label: "blog_post_get_started_ai_rank" })
                     }
                   >
                     <button className="inline-flex items-center justify-center rounded-full bg-neutral-900 px-6 py-3 text-sm font-medium text-white hover:bg-neutral-800 lowercase">
@@ -101,12 +144,12 @@ export default function BusinessVisibilityChatGPTClientPage() {
       </div>
       <BlogPostSchema
         title={postTitle}
-        description="Learn the six steps to make your business visible to AI like ChatGPT without tricks—just smart strategy."
-        url="https://prism.agency/blog/business-visibility-chatgpt"
-        imageUrl="https://prism.agency/blog/chatgpt-business-visibility.png"
-        datePublished="2025-05-27T00:00:00.000Z"
-        dateModified="2025-05-27T00:00:00.000Z"
-        authorName="enzo"
+        description="A live experiment on how Prism ranks in AI search (ChatGPT, Gemini, Grock, Perplexity) and key takeaways for businesses."
+        url="https://prism.agency/blog/business-visibility-chatgpt" // URL remains the same for this page
+        imageUrl="https://prism.agency/blog/ai-search-ranking-experiment.png" // Suggesting a new image name
+        datePublished="2025-06-08T00:00:00.000Z" // Updated date
+        dateModified="2025-06-08T00:00:00.000Z" // Updated date
+        authorName="Enzo from Prism"
       />
     </div>
   )

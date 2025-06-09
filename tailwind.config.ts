@@ -10,6 +10,21 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        // Set the Inter font variable as the primary sans-serif font
+        sans: [
+          "var(--font-inter)",
+          "system-ui",
+          "-apple-system",
+          "BlinkMacSystemFont",
+          '"Segoe UI"',
+          "Roboto",
+          '"Helvetica Neue"',
+          "Arial",
+          '"Noto Sans"',
+          "sans-serif",
+        ],
+      },
       colors: {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
@@ -84,17 +99,10 @@ const config: Config = {
             height: "0",
           },
         },
-        "scroll-clients": {
-          from: { transform: "translateX(0)" },
-          to: { transform: "translateX(-50%)" },
-        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
-        expandUnderline: "expandUnderline 3s ease-in-out",
-        "scroll-clients":
-          "scroll-clients var(--scroll-clients-duration, 40s) linear infinite",
       },
     },
   },
