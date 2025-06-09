@@ -6,60 +6,18 @@ import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
 import PageViewTracker from "@/components/page-view-tracker"
 import { trackCTAClick } from "@/utils/analytics"
-import BlogPostCard from "@/components/blog-post-card" // Corrected import path
+import BlogPostCard from "@/components/blog-post-card"
+import type { BlogFrontmatter } from "@/lib/mdx"
 
 // Define the blog post type
-interface BlogPost {
-  id: string
-  title: string
-  category: string
-  date: string
-  description: string
+interface BlogPost extends BlogFrontmatter {
   slug: string
-  image: string
   featured?: boolean
-  gradientClass: string
+  compact?: boolean
 }
 
-export default function BlogPage() {
-  const blogPosts: BlogPost[] = [
-    {
-      id: "3", // New post
-      title: "Create a Website That Gets You More Business: A Simple Guide Using Replit",
-      category: "Web Development & AI",
-      date: "June 1, 2025",
-      description:
-        "Learn how to create a website that generates more business leads using Replit, even if you're not a tech whiz. A simple guide for 2025.",
-      slug: "create-website-more-business-replit",
-      image: "/placeholder.svg?height=600&width=1200",
-      featured: false,
-      gradientClass: "bg-gradient-to-br from-green-300/30 via-teal-300/30 to-cyan-300/30", // Distinct gradient
-    },
-    {
-      id: "2",
-      title: "still relying on word-of-mouth? how ai can effortlessly welcome more patients to your dental practice",
-      category: "ai & marketing",
-      date: "june 1, 2025",
-      description:
-        "discover how ai tools like chatbots, smart advertising, and seo can help your dental practice attract more new patients without technical expertise.",
-      slug: "ai-effortlessly-welcome-more-patients-dental-practice",
-      image: "/blog/ai-dental-patient-growth.png",
-      featured: true,
-      gradientClass: "bg-gradient-to-br from-pink-300/30 via-purple-300/30 to-indigo-300/30",
-    },
-    {
-      id: "1",
-      title: "How I'm Getting My Business to Show Up in ChatGPT (And How You Can Too)",
-      category: "Digital Marketing",
-      date: "May 27, 2025",
-      description:
-        "ChatGPT is changing how people find and trust businesses. Learn the six steps to make your business visible to AI without tricks—just smart strategy.",
-      slug: "business-visibility-chatgpt",
-      image: "/blog/chatgpt-business-visibility.png",
-      featured: true, // Assuming this was also featured, adjust if not
-      gradientClass: "bg-gradient-to-br from-sky-300/30 via-cyan-300/30 to-teal-300/30",
-    },
-  ]
+export default function BlogPage({ posts }: { posts: BlogPost[] }) {
+  const blogPosts = posts
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -87,7 +45,7 @@ export default function BlogPage() {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {blogPosts.map((post) => (
                   <BlogPostCard
-                    key={post.id}
+                    key={post.slug}
                     title={post.title}
                     category={post.category}
                     date={post.date}
