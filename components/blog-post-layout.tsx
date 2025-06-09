@@ -8,16 +8,32 @@ import Breadcrumbs from "@/components/breadcrumbs"
 import ScrollProgressBar from "@/components/scroll-progress-bar"
 import { BlogPostSchema } from "@/components/schema-markup"
 import { cn } from "@/lib/utils"
-import type { BlogFrontmatter } from "@/lib/mdx"
 
 interface Props {
   children: React.ReactNode
-  frontmatter: BlogFrontmatter
   slug: string
+  title: string
+  description: string
+  date: string
+  category: string
+  gradientClass: string
+  image: string
+  openGraph?: any
+  canonical?: string
 }
 
-export default function BlogPostLayout({ children, frontmatter, slug }: Props) {
-  const { title, category, date, gradientClass } = frontmatter
+export default function BlogPostLayout({
+  children,
+  slug,
+  title,
+  description,
+  date,
+  category,
+  gradientClass,
+  image,
+  openGraph,
+  canonical,
+}: Props) {
   return (
     <div className="flex min-h-screen flex-col">
       <ScrollProgressBar />
@@ -59,12 +75,12 @@ export default function BlogPostLayout({ children, frontmatter, slug }: Props) {
       </div>
       <BlogPostSchema
         title={title}
-        description={frontmatter.description}
-        url={frontmatter.openGraph?.url || frontmatter.canonical || `https://prism.agency/blog/${slug}`}
-        imageUrl={`https://prism.agency${frontmatter.image}`}
-        datePublished={frontmatter.openGraph?.publishedTime || frontmatter.date}
-        dateModified={frontmatter.openGraph?.modifiedTime || frontmatter.date}
-        authorName={frontmatter.openGraph?.authors?.[0] || "prism"}
+        description={description}
+        url={openGraph?.url || canonical || `https://prism.agency/blog/${slug}`}
+        imageUrl={`https://prism.agency${image}`}
+        datePublished={openGraph?.publishedTime || date}
+        dateModified={openGraph?.modifiedTime || date}
+        authorName={openGraph?.authors?.[0] || "prism"}
       />
     </div>
   )

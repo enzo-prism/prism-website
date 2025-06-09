@@ -19,7 +19,17 @@ export default async function BlogPostPage({ params }: PageProps) {
   const { frontmatter } = await getPost(params.slug)
   const content = await renderPost(params.slug)
   return (
-    <BlogPostLayout frontmatter={frontmatter} slug={params.slug}>
+    <BlogPostLayout
+      slug={params.slug}
+      title={frontmatter.title}
+      description={frontmatter.description}
+      date={frontmatter.date}
+      category={frontmatter.category}
+      gradientClass={frontmatter.gradientClass}
+      image={frontmatter.image}
+      openGraph={frontmatter.openGraph}
+      canonical={frontmatter.canonical}
+    >
       {content}
     </BlogPostLayout>
   )
