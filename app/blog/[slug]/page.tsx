@@ -1,8 +1,15 @@
 import type { Metadata } from 'next'
 import BlogPostLayout from '@/components/blog-post-layout'
-import { getPost, renderPost } from '@/lib/mdx'
+import { getAllPosts, getPost, renderPost } from '@/lib/mdx'
 
 interface PageProps { params: { slug: string } }
+
+export const dynamicParams = false
+
+export async function generateStaticParams() {
+  const posts = await getAllPosts()
+  return posts.map(post => ({ slug: post.slug }))
+}
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { frontmatter } = await getPost(params.slug)
