@@ -4,9 +4,10 @@ import Footer from "@/components/footer"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
-import CoreImage from "@/components/core-image"
-import ScrollProgressBar from "@/components/scroll-progress-bar" // Added ScrollProgressBar import
-import { useMobile } from "@/hooks/use-mobile" // Added useMobile hook import
+import ScrollProgressBar from "@/components/scroll-progress-bar"
+import { useMobile } from "@/hooks/use-mobile"
+import Link from "next/link"
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel"
 import {
   CheckCircle,
   ArrowRight,
@@ -20,26 +21,29 @@ import {
   HelpCircle,
   MessageSquare,
   Mail,
+  Star,
 } from "lucide-react"
 
-const testimonials = [
+const carouselTestimonialsData = [
   {
-    quote: "We spent tons on marketing before and never saw results. Prism rebuilt our site and traffic exploded.",
-    name: "Michael, Exquisite Studio — Beverly Hills",
-    company: "",
-    image: "/placeholder.svg?width=80&height=80",
+    quote: "The site’s new design is better than I ever could’ve imagined.",
+    name: "Ludmila",
+    business: "Mataria Dental Group (Torrance, CA)",
   },
   {
-    quote: "New customers keep mentioning how beautiful our new website is!",
-    name: "Buck, Olympic Bootworks — Tahoe",
-    company: "",
-    image: "/placeholder.svg?width=80&height=80",
+    quote: "We spent a ton on marketing before and never saw good results. We love working with Prism.",
+    name: "Michael",
+    business: "Exquisite Dentistry (Beverly Hills, CA)",
   },
   {
-    quote: "Prism made the whole process effortless, and our sales calls tripled within weeks.",
-    name: "Renata, Coast Wellness — San Luis Obispo",
-    company: "",
-    image: "/placeholder.svg?width=80&height=80",
+    quote: "I love it!! Thank you for helping bring my vision to life.",
+    name: "Clare",
+    business: "We Are Saplings",
+  },
+  {
+    quote: "New customers keep mentioning how beautiful our website is!! Thank you!",
+    name: "Renata",
+    business: "Coast Periodontics (San Luis Obispo, CA)",
   },
 ]
 
@@ -65,101 +69,108 @@ const faqItems = [
 
 const FeatureListItem = ({ text }: { text: string }) => (
   <li className="flex items-start">
-    <CheckCircle className="h-5 w-5 text-green-500 mr-3 mt-1 shrink-0" />
-    <span className="text-foreground/80">{text}</span>
+    <CheckCircle className="h-5 w-5 text-green-600/80 mr-3 mt-1 shrink-0" />
+    <span className="text-neutral-700 dark:text-neutral-300">{text}</span>
   </li>
 )
 
-export default function SummerWebsiteMakeoverClientPageMinimalUpdatedCopy() {
-  const isMobile = useMobile() // Initialize the hook
+export default function SummerWebsiteMakeoverOpenAIStylePage() {
+  const isMobile = useMobile()
 
   return (
-    <>
+    <div className="bg-white dark:bg-neutral-950 text-neutral-900 dark:text-neutral-100 font-sans">
       <Navbar />
-      {isMobile && <ScrollProgressBar />} {/* Conditionally render the progress bar */}
-      <main className="bg-background text-foreground font-sans">
+      {isMobile && <ScrollProgressBar />}
+      <main>
         {/* Hero Section */}
-        <section className="py-20 md:py-32">
+        <section className="py-24 md:py-40">
           <div className="container mx-auto px-6 text-center">
-            <Sun className="h-16 w-16 md:h-20 md:w-20 text-yellow-400 mx-auto mb-6" />
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight mb-6 max-w-3xl mx-auto">
+            <Sun className="h-16 w-16 md:h-20 md:w-20 text-neutral-400 dark:text-neutral-500 mx-auto mb-8" />
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-semibold tracking-tight mb-6 max-w-3xl mx-auto">
               Summer Website Makeover
             </h1>
-            <p className="text-xl md:text-2xl text-primary font-medium mb-8 max-w-2xl mx-auto">
+            <p className="text-xl md:text-2xl text-neutral-800 dark:text-neutral-200 font-medium mb-10 max-w-2xl mx-auto">
               Triple Your Traffic & Conversions in 30 Days — Guaranteed
             </p>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-12">
+            <p className="text-lg text-neutral-600 dark:text-neutral-400 max-w-2xl mx-auto mb-12">
               Your site shouldn’t feel like a ghost town. Let Prism turn it into a 24/7 growth engine while you stay
               focused on running your business.
             </p>
-            <a href="https://growthprism.app/summer-makeover" target="_blank" rel="noopener noreferrer">
+            <Link href="/get-started" passHref legacyBehavior>
               <Button
+                as="a"
                 size="lg"
-                className="text-lg px-8 py-3 group rounded-lg shadow-sm hover:shadow-md transition-shadow"
+                className="text-base px-8 py-3 group rounded-md bg-neutral-900 text-white hover:bg-neutral-700 dark:bg-neutral-100 dark:text-neutral-900 dark:hover:bg-neutral-300 transition-colors"
               >
                 Book a 15-min Fit Call
-                <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
               </Button>
-            </a>
+            </Link>
           </div>
         </section>
 
         {/* Exactly What You Get */}
-        <section className="py-16 md:py-24 bg-slate-50 dark:bg-slate-900/50">
+        <section className="py-20 md:py-32 bg-neutral-50 dark:bg-neutral-900">
           <div className="container mx-auto px-6">
-            <h2 className="text-3xl md:text-4xl font-bold text-center mb-16">Exactly What You Get</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12">
-              <div>
-                <div className="flex items-center mb-4">
-                  <Zap className="h-7 w-7 text-primary mr-3" />
-                  <h3 className="text-2xl font-semibold">Full-Stack Site Rebuild</h3>
-                </div>
-                <ul className="space-y-3">
-                  <FeatureListItem text="Lightning-fast pages (90 + PageSpeed)" />
-                  <FeatureListItem text="Mobile-first, accessibility-friendly design" />
-                  <FeatureListItem text="Crystal-clear copy written for humans + search engines" />
-                </ul>
-              </div>
-              <div>
-                <div className="flex items-center mb-4">
-                  <TrendingUp className="h-7 w-7 text-primary mr-3" />
-                  <h3 className="text-2xl font-semibold">Traffic Multiplier Engine</h3>
-                </div>
-                <ul className="space-y-3">
-                  <FeatureListItem text="On-page SEO, schema, and technical health fixes" />
-                  <FeatureListItem text="Google Business Profile sync (where applicable)" />
-                  <FeatureListItem text="Launch-ready blog template + 3 custom content briefs" />
-                </ul>
-              </div>
-              <div>
-                <div className="flex items-center mb-4">
-                  <Sparkles className="h-7 w-7 text-primary mr-3" />
-                  <h3 className="text-2xl font-semibold">Conversion Booster Suite</h3>
-                </div>
-                <ul className="space-y-3">
-                  <FeatureListItem text="A/B-tested hero headline + CTA" />
-                  <FeatureListItem text="Streamlined inquiry / checkout flow" />
-                  <FeatureListItem text="Live chat + AI receptionist widget installed" />
-                </ul>
-              </div>
-              <div>
-                <div className="flex items-center mb-4">
-                  <BarChart className="h-7 w-7 text-primary mr-3" />
-                  <h3 className="text-2xl font-semibold">Real-Time Prism Dashboard</h3>
-                </div>
-                <ul className="space-y-3">
-                  <FeatureListItem text="Track visitors, leads, and sales 24/7" />
-                  <FeatureListItem text="Compare pre- vs. post-launch KPIs at a glance" />
-                </ul>
-              </div>
-              <div className="md:col-span-2 lg:col-span-1">
-                <Card className="bg-primary/5 dark:bg-primary/10 border-primary/20 shadow-none h-full">
-                  <CardContent className="p-6">
-                    <div className="flex items-center mb-3">
-                      <CalendarDays className="h-7 w-7 text-primary mr-3" />
-                      <h3 className="text-2xl font-semibold">Bonus “Summer Sizzle” Assets</h3>
+            <h2 className="text-3xl md:text-4xl font-semibold text-center mb-20">Exactly What You Get</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-16">
+              {[
+                {
+                  icon: Zap,
+                  title: "Full-Stack Site Rebuild",
+                  items: [
+                    "Lightning-fast pages (90+ PageSpeed)",
+                    "Mobile-first, accessibility-friendly design",
+                    "Crystal-clear copy written for humans + search engines",
+                  ],
+                },
+                {
+                  icon: TrendingUp,
+                  title: "Traffic Multiplier Engine",
+                  items: [
+                    "On-page SEO, schema, and technical health fixes",
+                    "Google Business Profile sync (where applicable)",
+                    "Launch-ready blog template + 3 custom content briefs",
+                  ],
+                },
+                {
+                  icon: Sparkles,
+                  title: "Conversion Booster Suite",
+                  items: [
+                    "A/B-tested hero headline + CTA",
+                    "Streamlined inquiry / checkout flow",
+                    "Live chat + AI receptionist widget installed",
+                  ],
+                },
+                {
+                  icon: BarChart,
+                  title: "Real-Time Prism Dashboard",
+                  items: ["Track visitors, leads, and sales 24/7", "Compare pre- vs. post-launch KPIs at a glance"],
+                },
+              ].map((feature, idx) => {
+                const IconComponent = feature.icon
+                return (
+                  <div key={idx}>
+                    <div className="flex items-center mb-5">
+                      <IconComponent className="h-7 w-7 text-neutral-500 dark:text-neutral-400 mr-3" />
+                      <h3 className="text-2xl font-medium">{feature.title}</h3>
                     </div>
-                    <p className="text-sm text-muted-foreground mb-4">(available until July 31)</p>
+                    <ul className="space-y-3">
+                      {feature.items.map((item) => (
+                        <FeatureListItem key={item} text={item} />
+                      ))}
+                    </ul>
+                  </div>
+                )
+              })}
+              <div className="md:col-span-2 lg:col-span-1">
+                <Card className="bg-white dark:bg-neutral-800/70 border border-neutral-200 dark:border-neutral-700 shadow-none h-full">
+                  <CardContent className="p-6 md:p-8">
+                    <div className="flex items-center mb-4">
+                      <CalendarDays className="h-7 w-7 text-neutral-500 dark:text-neutral-400 mr-3" />
+                      <h3 className="text-2xl font-medium">Bonus “Summer Sizzle” Assets</h3>
+                    </div>
+                    <p className="text-sm text-neutral-500 dark:text-neutral-400 mb-5">(available until July 31)</p>
                     <ul className="space-y-3">
                       <FeatureListItem text="Five social posts announcing your makeover 🌴" />
                       <FeatureListItem text="Branded email blast template to past customers/subscribers" />
@@ -173,89 +184,105 @@ export default function SummerWebsiteMakeoverClientPageMinimalUpdatedCopy() {
         </section>
 
         {/* 30-Day 3× Growth Guarantee */}
-        <section className="py-16 md:py-24">
+        <section className="py-20 md:py-32">
           <div className="container mx-auto px-6 text-center">
-            <Rocket className="h-16 w-16 text-primary mx-auto mb-6" />
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">30-Day 3× Growth Guarantee 🚀</h2>
-            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-              If we don’t hit 300 % of your current traffic or conversions within 30 days of launch, we keep optimizing
+            <Rocket className="h-16 w-16 text-neutral-400 dark:text-neutral-500 mx-auto mb-8" />
+            <h2 className="text-3xl md:text-4xl font-semibold mb-6">30-Day 3× Growth Guarantee 🚀</h2>
+            <p className="text-lg text-neutral-600 dark:text-neutral-400 max-w-3xl mx-auto">
+              If we don’t hit 300% of your current traffic or conversions within 30 days of launch, we keep optimizing
               free until we do — or refund you. No fine print.
             </p>
           </div>
         </section>
 
-        {/* Success Stories */}
-        <section className="py-16 md:py-24 bg-slate-50 dark:bg-slate-900/50">
+        {/* What Our Clients Say */}
+        <section className="py-20 md:py-32 bg-neutral-50 dark:bg-neutral-900">
           <div className="container mx-auto px-6">
-            <h2 className="text-3xl md:text-4xl font-bold text-center mb-16">Success Stories</h2>
-            <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-8">
-              {testimonials.map((testimonial, index) => (
-                <Card
-                  key={index}
-                  className="shadow-sm border border-border/50 bg-background hover:shadow-md transition-shadow duration-300 flex flex-col"
-                >
-                  <CardContent className="p-6 md:p-8 flex flex-col flex-grow">
-                    <p className="text-lg italic text-foreground/90 mb-6 flex-grow">&quot;{testimonial.quote}&quot;</p>
-                    <div className="flex items-center mt-auto">
-                      <CoreImage
-                        src={testimonial.image}
-                        alt={`Photo of ${testimonial.name}`}
-                        width={60}
-                        height={60}
-                        className="rounded-full mr-4"
-                        fallbackSrc={`/placeholder.svg?width=60&height=60&query=${encodeURIComponent(testimonial.name)}`}
-                        trackingId={`testimonial_image_minimal_${testimonial.name.toLowerCase().replace(/[^a-z0-9]+/g, "_")}`}
-                      />
-                      <div>
-                        <p className="font-semibold text-foreground">{testimonial.name}</p>
-                        {testimonial.company && <p className="text-sm text-muted-foreground">{testimonial.company}</p>}
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
+            <div className="text-center mb-16">
+              <h2 className="text-3xl md:text-4xl font-semibold tracking-tight">What Our Clients Say</h2>
+              <p className="text-neutral-600 dark:text-neutral-400 max-w-xl mx-auto text-lg mt-4">
+                Real feedback from businesses we've helped thrive.
+              </p>
             </div>
-            <p className="text-center mt-12 text-muted-foreground">(More live dashboards available on request.)</p>
+            <Carousel
+              opts={{ align: "start", loop: true }}
+              className="w-full max-w-xs sm:max-w-xl md:max-w-2xl lg:max-w-4xl xl:max-w-5xl mx-auto"
+            >
+              <CarouselContent>
+                {carouselTestimonialsData.map((testimonial, index) => (
+                  <CarouselItem key={index} className="sm:basis-1/2 lg:basis-1/3">
+                    <div className="p-2 h-full">
+                      <Card className="h-full flex flex-col bg-white dark:bg-neutral-800/70 border border-neutral-200 dark:border-neutral-700 shadow-none hover:border-neutral-300 dark:hover:border-neutral-600 transition-colors">
+                        <CardContent className="flex flex-col flex-grow items-start justify-between p-6 space-y-4">
+                          <div className="flex">
+                            {[...Array(5)].map((_, i) => (
+                              <Star key={i} className="w-5 h-5 text-yellow-400 fill-yellow-400" />
+                            ))}
+                          </div>
+                          <p className="text-neutral-700 dark:text-neutral-300 text-base leading-relaxed flex-grow">
+                            &quot;{testimonial.quote}&quot;
+                          </p>
+                          <div>
+                            <p className="font-medium text-neutral-800 dark:text-neutral-200 text-sm">
+                              {testimonial.name}
+                            </p>
+                            <p className="text-xs text-neutral-500 dark:text-neutral-400">{testimonial.business}</p>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    </div>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPrevious className="hidden sm:flex text-neutral-500 hover:text-neutral-700 dark:text-neutral-400 dark:hover:text-neutral-200 left-[-50px]" />
+              <CarouselNext className="hidden sm:flex text-neutral-500 hover:text-neutral-700 dark:text-neutral-400 dark:hover:text-neutral-200 right-[-50px]" />
+            </Carousel>
           </div>
         </section>
 
         {/* Investment & Availability */}
-        <section className="py-16 md:py-24">
+        <section className="py-20 md:py-32">
           <div className="container mx-auto px-6 text-center">
-            <h2 className="text-3xl md:text-4xl font-bold mb-8">Investment & Availability</h2>
-            <p className="text-3xl md:text-4xl font-bold text-primary mb-2">$4,800 all-inclusive</p>
-            <p className="text-lg text-muted-foreground mb-8">(or 2 × $2,500)</p>
-            <div className="bg-yellow-100/70 dark:bg-yellow-700/30 border border-yellow-400/50 text-yellow-700 dark:text-yellow-300 p-6 rounded-lg max-w-md mx-auto mb-10 shadow-sm">
-              <p className="font-semibold text-lg">Only 7 Summer Makeover slots left!</p>
+            <h2 className="text-3xl md:text-4xl font-semibold mb-8">Investment & Availability</h2>
+            <p className="text-4xl md:text-5xl font-semibold text-neutral-900 dark:text-neutral-100 mb-2">
+              $4,800 all-inclusive
+            </p>
+            <p className="text-lg text-neutral-600 dark:text-neutral-400 mb-10">(or 2 × $2,500)</p>
+            <div className="bg-yellow-50 dark:bg-yellow-900/30 border border-yellow-300 dark:border-yellow-700 text-yellow-700 dark:text-yellow-300 p-6 rounded-lg max-w-md mx-auto mb-12 shadow-sm">
+              <p className="font-medium text-lg">Only 7 Summer Makeover slots left!</p>
               <p className="text-sm">Next intake opens in October.</p>
             </div>
-            <a href="https://growthprism.app/summer-makeover" target="_blank" rel="noopener noreferrer">
+            <Link href="/get-started" passHref legacyBehavior>
               <Button
+                as="a"
                 size="lg"
-                variant="default"
-                className="text-xl px-10 py-4 group rounded-lg shadow-sm hover:shadow-md transition-shadow"
+                className="text-base px-10 py-4 group rounded-md bg-neutral-900 text-white hover:bg-neutral-700 dark:bg-neutral-100 dark:text-neutral-900 dark:hover:bg-neutral-300 transition-colors"
               >
                 Book a 15-minute Fit Call
-                <ArrowRight className="ml-3 h-6 w-6 group-hover:translate-x-1.5 transition-transform" />
+                <ArrowRight className="ml-3 h-5 w-5 transition-transform group-hover:translate-x-1" />
               </Button>
-            </a>
+            </Link>
           </div>
         </section>
 
         {/* FAQ Section */}
-        <section className="py-16 md:py-24 bg-slate-50 dark:bg-slate-900/50">
+        <section className="py-20 md:py-32 bg-neutral-50 dark:bg-neutral-900">
           <div className="container mx-auto px-6">
-            <div className="flex items-center justify-center mb-12">
-              <HelpCircle className="h-8 w-8 text-primary mr-3" />
-              <h2 className="text-3xl md:text-4xl font-bold text-center">FAQ</h2>
+            <div className="flex items-center justify-center mb-16">
+              <HelpCircle className="h-8 w-8 text-neutral-500 dark:text-neutral-400 mr-3" />
+              <h2 className="text-3xl md:text-4xl font-semibold text-center">FAQ</h2>
             </div>
             <Accordion type="single" collapsible className="w-full max-w-3xl mx-auto">
               {faqItems.map((item, index) => (
-                <AccordionItem value={`item-${index}`} key={index} className="border-b border-border/50">
-                  <AccordionTrigger className="text-lg text-left font-medium py-5 hover:no-underline hover:text-primary transition-colors">
+                <AccordionItem
+                  value={`item-${index}`}
+                  key={index}
+                  className="border-b border-neutral-200 dark:border-neutral-700"
+                >
+                  <AccordionTrigger className="text-lg text-left font-medium py-6 hover:no-underline text-neutral-800 dark:text-neutral-200 hover:text-neutral-600 dark:hover:text-neutral-400 transition-colors">
                     {item.question}
                   </AccordionTrigger>
-                  <AccordionContent className="pt-1 pb-5 text-base text-muted-foreground">
+                  <AccordionContent className="pt-2 pb-6 text-base text-neutral-600 dark:text-neutral-400">
                     {item.answer}
                   </AccordionContent>
                 </AccordionItem>
@@ -265,43 +292,48 @@ export default function SummerWebsiteMakeoverClientPageMinimalUpdatedCopy() {
         </section>
 
         {/* Final CTA Section */}
-        <section className="py-20 md:py-32">
+        <section className="py-24 md:py-40">
           <div className="container mx-auto px-6 text-center">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6 max-w-2xl mx-auto">
+            <h2 className="text-3xl md:text-4xl font-semibold mb-6 max-w-2xl mx-auto">
               Ready to Turn Your Website into a Sales Machine?
             </h2>
-            <p className="text-lg text-muted-foreground mb-4">Stop settling for “meh.”</p>
-            <p className="text-lg text-muted-foreground mb-4">Get a site that sells while you sleep.</p>
-            <p className="text-lg text-muted-foreground mb-10">
+            <p className="text-lg text-neutral-600 dark:text-neutral-400 mb-4">Stop settling for “meh.”</p>
+            <p className="text-lg text-neutral-600 dark:text-neutral-400 mb-4">
+              Get a site that sells while you sleep.
+            </p>
+            <p className="text-lg text-neutral-600 dark:text-neutral-400 mb-12">
               Claim your Summer Website Makeover before the last slots disappear.
             </p>
-            <a href="https://growthprism.app/summer-makeover" target="_blank" rel="noopener noreferrer">
+            <Link href="/get-started" passHref legacyBehavior>
               <Button
+                as="a"
                 size="lg"
-                className="text-xl px-10 py-4 group rounded-lg shadow-sm hover:shadow-md transition-shadow mb-16"
+                className="text-base px-10 py-4 group rounded-md bg-neutral-900 text-white hover:bg-neutral-700 dark:bg-neutral-100 dark:text-neutral-900 dark:hover:bg-neutral-300 transition-colors mb-20"
               >
                 Book Your Fit Call Now
-                <ArrowRight className="ml-3 h-6 w-6 group-hover:translate-x-1.5 transition-transform" />
+                <ArrowRight className="ml-3 h-5 w-5 transition-transform group-hover:translate-x-1" />
               </Button>
-            </a>
+            </Link>
 
-            <div className="border-t border-border/30 pt-10 max-w-xl mx-auto">
-              <p className="text-md font-medium text-foreground/90 mb-6">Need a quick answer first?</p>
+            <div className="border-t border-neutral-200 dark:border-neutral-700 pt-12 max-w-xl mx-auto">
+              <p className="text-base font-medium text-neutral-800 dark:text-neutral-200 mb-6">
+                Need a quick answer first?
+              </p>
               <div className="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-8">
                 <a
                   href="https://www.instagram.com/the_design_prism/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center text-muted-foreground hover:text-primary transition-colors group"
+                  className="flex items-center text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors group"
                 >
-                  <MessageSquare className="h-5 w-5 mr-2 group-hover:text-primary transition-colors" />
+                  <MessageSquare className="h-5 w-5 mr-2 text-neutral-500 dark:text-neutral-400 group-hover:text-neutral-700 dark:group-hover:text-neutral-200 transition-colors" />
                   DM @the_design_prism
                 </a>
                 <a
                   href="mailto:enzo@design-prism.com"
-                  className="flex items-center text-muted-foreground hover:text-primary transition-colors group"
+                  className="flex items-center text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors group"
                 >
-                  <Mail className="h-5 w-5 mr-2 group-hover:text-primary transition-colors" />
+                  <Mail className="h-5 w-5 mr-2 text-neutral-500 dark:text-neutral-400 group-hover:text-neutral-700 dark:group-hover:text-neutral-200 transition-colors" />
                   enzo@design-prism.com
                 </a>
               </div>
@@ -310,6 +342,6 @@ export default function SummerWebsiteMakeoverClientPageMinimalUpdatedCopy() {
         </section>
       </main>
       <Footer />
-    </>
+    </div>
   )
 }
