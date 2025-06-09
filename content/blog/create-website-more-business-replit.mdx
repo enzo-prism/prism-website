@@ -27,7 +27,6 @@ twitter:
 canonical: "https://prism.agency/blog/create-website-more-business-replit"
 ---
 
-import Link from 'next/link'
 import { trackEvent } from '@/utils/analytics'
 
 <p className="text-lg leading-relaxed">
@@ -295,15 +294,10 @@ ready to build a website that grows your business?
 <p className="text-neutral-600 mb-4 lowercase">
 let prism help you create a powerful online presence.
 </p>
-<Link
-href="/get-started"
-onClick={() =>
-trackEvent({ action: "click", category: "cta", label: "blog_post_get_started_replit_guide" })
-}
->
-<button className="inline-flex items-center justify-center rounded-full bg-neutral-900 px-6 py-3 text-sm font-medium text-white hover:bg-neutral-800 lowercase">
-get started with prism
-</button>
-</Link>
+<a href="/get-started">
+  <button className="inline-flex items-center justify-center rounded-full bg-neutral-900 px-6 py-3 text-sm font-medium text-white hover:bg-neutral-800 lowercase">
+    get started with prism
+  </button>
+</a>
 </div>
 
