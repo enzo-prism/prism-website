@@ -246,6 +246,18 @@ const growthVideos = [
     title: "Add Custom Font in Replit",
     description: "Learn how to easily add custom fonts to your Replit projects for unique website styling.",
   },
+  {
+    videoId: "_hei2C4164Q",
+    title: "Appear in AI Search Results",
+    description:
+      "Learn how to optimize your online presence to appear in AI-driven search results and connect with more customers.",
+  },
+  {
+    videoId: "3we3n1T3QrI",
+    title: "Website Analytics to Explode Sales",
+    description:
+      "Discover how to leverage website analytics to understand customer behavior and make data-driven decisions that significantly boost sales.",
+  },
 ]
 
 export default function WebsitesPage() {
@@ -425,7 +437,7 @@ export default function WebsitesPage() {
                 </p>
               </div>
               <div className="bg-white p-6 rounded-lg shadow-sm border border-neutral-200 hover:shadow-md transition-shadow text-center md:text-left">
-                <Video className="h-8 w-8 text-neutral-700 mb-4 mx-auto md:mx-0" />
+                <Video className="h-8 w-8 text-neutral-700 mb-4 mx-auto md:mx_0" />
                 <h3 className="text-xl font-semibold lowercase text-neutral-800 mb-2">screen recording analysis</h3>
                 <p className="text-sm text-neutral-600 lowercase">
                   see exactly how users interact with your site to identify improvement areas.
@@ -486,6 +498,9 @@ export default function WebsitesPage() {
               {growthVideos.map((video) => (
                 <div key={video.videoId} className="flex flex-col">
                   <YouTubeVideoEmbed videoId={video.videoId} title={video.title} />
+                  {/* Optional: Add title and description below the video if needed */}
+                  {/* <h3 className="text-lg font-semibold lowercase mt-4 mb-1 text-neutral-800">{video.title}</h3> */}
+                  {/* <p className="text-sm text-neutral-600 lowercase">{video.description}</p> */}
                 </div>
               ))}
             </div>
