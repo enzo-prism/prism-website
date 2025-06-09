@@ -258,7 +258,7 @@ export default function SummerWebsiteMakeoverOpenAIStylePage() {
                 size="lg"
                 className="text-base px-10 py-4 group rounded-md bg-neutral-900 text-white hover:bg-neutral-700 dark:bg-neutral-100 dark:text-neutral-900 dark:hover:bg-neutral-300 transition-colors"
               >
-                Book a 15-minute Fit Call
+                Book a 30-min Fit Call
                 <ArrowRight className="ml-3 h-5 w-5 transition-transform group-hover:translate-x-1" />
               </Button>
             </Link>
