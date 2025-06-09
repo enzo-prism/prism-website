@@ -11,9 +11,7 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        // Set the Inter font variable as the primary sans-serif font
         sans: [
-          "var(--font-inter)",
           "system-ui",
           "-apple-system",
           "BlinkMacSystemFont",

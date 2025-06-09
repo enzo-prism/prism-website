@@ -22,8 +22,6 @@ twitter:
 canonical: "https://prism.agency/blog/business-visibility-chatgpt"
 ---
 
-import YoutubeVideoEmbed from '@/components/youtube-video-embed'
-import Link from 'next/link'
 import { trackEvent } from '@/utils/analytics'
 
 <p class="text-lg leading-relaxed">
@@ -78,21 +76,24 @@ If you have any questions or want to learn more about how we can help your busin
 </p>
 
 <div className="my-12">
-<YoutubeVideoEmbed videoId="_hei2C4164Q" title="Live Experiment: Ranking in AI Search" />
+  <div className="relative overflow-hidden rounded-xl shadow-md" style={{ paddingBottom: '56.25%' }}>
+    <iframe
+      className="absolute top-0 left-0 w-full h-full border-0 rounded-xl"
+      src="https://www.youtube.com/embed/_hei2C4164Q?rel=0&showinfo=0&modestbranding=1&iv_load_policy=3"
+      title="Live Experiment: Ranking in AI Search"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      allowFullScreen
+    ></iframe>
+  </div>
 </div>
 
 <div className="mt-12 p-6 bg-neutral-50 rounded-lg">
 <h3 className="text-xl font-bold mb-2 lowercase">want to improve your ai search ranking?</h3>
 <p className="text-neutral-600 mb-4 lowercase">let prism help your business get noticed by ai.</p>
-<Link
-href="/get-started"
-onClick={() =>
-trackEvent({ action: "click", category: "cta", label: "blog_post_get_started_ai_rank" })
-}
->
-<button className="inline-flex items-center justify-center rounded-full bg-neutral-900 px-6 py-3 text-sm font-medium text-white hover:bg-neutral-800 lowercase">
-get started
-</button>
-</Link>
+<a href="/get-started">
+  <button className="inline-flex items-center justify-center rounded-full bg-neutral-900 px-6 py-3 text-sm font-medium text-white hover:bg-neutral-800 lowercase">
+    get started
+  </button>
+</a>
 </div>
 
