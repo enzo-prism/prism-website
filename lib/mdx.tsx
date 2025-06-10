@@ -1,8 +1,10 @@
 // This module is server-side only, responsible for fetching and parsing blog content.
 import "server-only" // Ensures this module only runs on the server
+import React from "react"
 import fs from "fs/promises" // Node.js file system module for server-side operations
 import path from "path" // Node.js path module for server-side path manipulation
 import matter from "gray-matter" // For parsing frontmatter from .mdx files
+import { MDXRemote } from "next-mdx-remote"
 
 export type BlogFrontmatter = {
   title: string
@@ -91,9 +93,17 @@ export async function renderPost(slug: string) {
   // The post.content is the string directly from the .mdx file (after frontmatter).
   // This string contains HTML tags with Tailwind classes.
   let cleanedContent = post.content
+  
+  // Remove import statements which are not valid in HTML
+  cleanedContent = cleanedContent.replace(/^import\s+.*$/gm, '')
+  
   // Remove trailing ``` if present
   if (cleanedContent.trimEnd().endsWith("```")) {
     cleanedContent = cleanedContent.substring(0, cleanedContent.lastIndexOf("```"))
   }
+  
+  // Trim any leading/trailing whitespace
+  cleanedContent = cleanedContent.trim()
+  
   return <div dangerouslySetInnerHTML={{ __html: cleanedContent }} />
 }
