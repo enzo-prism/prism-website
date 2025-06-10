@@ -50,8 +50,8 @@ export default function BlogPostLayout({
                     <CoreImage
                       src={image}
                       alt={title}
-                      width={Number(image.match(/width=(\d+)/)?.[1] || 1200)}
-                      height={Number(image.match(/height=(\d+)/)?.[1] || 630)}
+                      width={1200}
+                      height={630}
                       className="h-full w-full object-cover"
                       quality={90}
                       trackingId={`blogpost_${slug}`}
