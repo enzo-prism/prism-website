@@ -1,11 +1,7 @@
-"use client"
-
-import Link from "next/link"
-import { ArrowRight } from "lucide-react"
 import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
-import PageViewTracker from "@/components/page-view-tracker"
-import { trackCTAClick } from "@/utils/analytics"
+import BlogPageTracker from "./BlogPageTracker"
+import BlogCTAButton from "./BlogCTAButton"
 import BlogPostCard from "@/components/blog-post-card"
 import type { BlogFrontmatter } from "@/lib/mdx"
 
@@ -21,7 +17,7 @@ export default function BlogPage({ posts }: { posts: BlogPost[] }) {
 
   return (
     <div className="flex min-h-screen flex-col">
-      <PageViewTracker title="Blog" />
+      <BlogPageTracker />
       <Navbar />
       <main className="flex-1">
         {/* Hero Section */}
@@ -75,14 +71,7 @@ export default function BlogPage({ posts }: { posts: BlogPost[] }) {
               <h2 className="text-2xl font-bold tracking-tighter lowercase sm:text-3xl">want to work with us?</h2>
               <p className="text-neutral-600 lowercase">let's discuss how we can help your business grow</p>
               <div className="pt-4">
-                <Link href="/get-started">
-                  <button
-                    className="inline-flex items-center justify-center rounded-full bg-neutral-900 px-6 py-3 text-sm font-medium text-white hover:bg-neutral-800 lowercase"
-                    onClick={() => trackCTAClick("get started", "blog page")}
-                  >
-                    get started <ArrowRight className="ml-2 h-4 w-4" />
-                  </button>
-                </Link>
+                <BlogCTAButton />
               </div>
             </div>
           </div>
