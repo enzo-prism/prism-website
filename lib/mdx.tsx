@@ -5,6 +5,7 @@ import fs from "fs/promises" // Node.js file system module for server-side opera
 import path from "path" // Node.js path module for server-side path manipulation
 import matter from "gray-matter" // For parsing frontmatter from .mdx files
 import { MDXRemote } from "next-mdx-remote"
+import YouTubeVideoEmbed from "@/components/youtube-video-embed"
 
 export type BlogFrontmatter = {
   title: string
@@ -128,6 +129,24 @@ export async function renderPost(slug: string) {
   
   // Trim any leading/trailing whitespace
   cleanedContent = cleanedContent.trim()
+  
+  // Process YouTube video embeds
+  cleanedContent = cleanedContent.replace(
+    /<YouTubeVideoEmbed\s+videoId="([^"]+)"\s+title="([^"]+)"\s*\/>/g,
+    (_, videoId, title) => {
+      return `<div class="my-12">
+        <div class="relative overflow-hidden rounded-xl shadow-md" style="padding-bottom: 56.25%;">
+          <iframe
+            class="absolute top-0 left-0 w-full h-full border-0 rounded-xl"
+            src="https://www.youtube.com/embed/${videoId}?rel=0&showinfo=0&modestbranding=1&iv_load_policy=3"
+            title="${title}"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen
+          ></iframe>
+        </div>
+      </div>`
+    }
+  )
   
   return <div dangerouslySetInnerHTML={{ __html: cleanedContent }} />
 }
