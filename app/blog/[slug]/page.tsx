@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import BlogPostLayout from '@/components/blog-post-layout'
 import { getAllPosts, getPost, renderPost } from '@/lib/mdx'
+import { notFound } from 'next/navigation'
 
 interface PageProps { params: { slug: string } }
 
@@ -8,11 +9,14 @@ export const dynamicParams = false
 
 export async function generateStaticParams() {
   const posts = await getAllPosts()
+  if (!posts) return []
   return posts.map(post => ({ slug: post.slug }))
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const { frontmatter } = await getPost(params.slug)
+  const post = await getPost(params.slug)
+  if (!post) notFound()
+  const { frontmatter } = post
   return {
     title: frontmatter.title,
     description: frontmatter.description,
@@ -23,7 +27,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export default async function BlogPostPage({ params }: PageProps) {
-  const { frontmatter } = await getPost(params.slug)
+  const post = await getPost(params.slug)
+  if (!post) notFound()
+  const { frontmatter } = post
   const content = await renderPost(params.slug)
   return (
     <BlogPostLayout
