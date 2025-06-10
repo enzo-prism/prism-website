@@ -68,7 +68,7 @@ export default function BlogPostLayout({
                       {title}
                     </h1>
                   </div>
-                  <div className="prose prose-neutral max-w-none space-y-6 lowercase-prose">
+                  <div className="prose-blog lowercase-prose">
                     {children}
                   </div>
                 </article>
