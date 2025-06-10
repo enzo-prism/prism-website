@@ -5,6 +5,9 @@ import { getAllPosts } from "@/lib/mdx"
 export const metadata: Metadata = {
   title: "blog",
   description: "thoughts on design, development, and digital strategy from the prism team.",
+  alternates: {
+    canonical: "https://prism.agency/blog",
+  },
 }
 
 export default async function Blog() {
