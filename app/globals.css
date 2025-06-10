@@ -125,3 +125,162 @@ body {
 .prose h6 {
   /* text-transform: lowercase; /* This is already handled by the page's h1, but good for prose consistency if needed */
 }
+
+/* Blog Typography Improvements */
+.prose-blog {
+  @apply prose prose-neutral dark:prose-invert lg:prose-lg max-w-none;
+  
+  /* Base font improvements */
+  font-size: 1.0625rem; /* 17px base for better readability */
+  line-height: 1.75;
+  color: rgb(23 23 23); /* Slightly softer than pure black */
+}
+
+.dark .prose-blog {
+  color: rgb(245 245 245);
+}
+
+/* Paragraph spacing */
+.prose-blog p {
+  @apply mb-6 leading-relaxed;
+}
+
+/* Headings styling */
+.prose-blog h1,
+.prose-blog h2,
+.prose-blog h3,
+.prose-blog h4,
+.prose-blog h5,
+.prose-blog h6 {
+  @apply font-bold tracking-tight;
+  margin-top: 3rem;
+  margin-bottom: 1.5rem;
+}
+
+.prose-blog h1 {
+  @apply text-3xl md:text-4xl;
+}
+
+.prose-blog h2 {
+  @apply text-2xl md:text-3xl;
+}
+
+.prose-blog h3 {
+  @apply text-xl md:text-2xl;
+}
+
+.prose-blog h4 {
+  @apply text-lg md:text-xl;
+}
+
+/* First heading after article start */
+.prose-blog > h1:first-child,
+.prose-blog > h2:first-child,
+.prose-blog > h3:first-child {
+  margin-top: 0;
+}
+
+/* Lists improvements */
+.prose-blog ul,
+.prose-blog ol {
+  @apply my-6 space-y-3;
+  padding-left: 1.5rem;
+}
+
+.prose-blog ul {
+  list-style-type: disc;
+}
+
+.prose-blog ol {
+  list-style-type: decimal;
+}
+
+.prose-blog li {
+  @apply leading-relaxed;
+  padding-left: 0.375rem;
+}
+
+.prose-blog li::marker {
+  color: rgb(115 115 115);
+}
+
+.dark .prose-blog li::marker {
+  color: rgb(163 163 163);
+}
+
+/* Nested lists */
+.prose-blog li ul,
+.prose-blog li ol {
+  margin-top: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+/* Links styling */
+.prose-blog a {
+  @apply text-neutral-900 dark:text-neutral-100 underline decoration-neutral-400 dark:decoration-neutral-600 underline-offset-2 transition-colors;
+}
+
+.prose-blog a:hover {
+  @apply decoration-neutral-600 dark:decoration-neutral-400;
+}
+
+/* Blockquotes */
+.prose-blog blockquote {
+  @apply border-l-4 border-neutral-300 dark:border-neutral-700 pl-6 py-1 my-8 italic;
+  quotes: none;
+}
+
+/* Code blocks */
+.prose-blog code {
+  @apply bg-neutral-100 dark:bg-neutral-800 px-1.5 py-0.5 rounded text-sm font-mono;
+}
+
+.prose-blog pre {
+  @apply bg-neutral-100 dark:bg-neutral-800 rounded-lg p-4 overflow-x-auto my-8;
+}
+
+.prose-blog pre code {
+  @apply bg-transparent p-0;
+}
+
+/* Horizontal rules */
+.prose-blog hr {
+  @apply my-12 border-neutral-200 dark:border-neutral-800;
+}
+
+/* Images */
+.prose-blog img {
+  @apply rounded-lg my-8;
+}
+
+/* Tables */
+.prose-blog table {
+  @apply w-full my-8;
+}
+
+.prose-blog th {
+  @apply text-left font-semibold p-3 border-b-2 border-neutral-300 dark:border-neutral-700;
+}
+
+.prose-blog td {
+  @apply p-3 border-b border-neutral-200 dark:border-neutral-800;
+}
+
+/* Strong emphasis */
+.prose-blog strong {
+  @apply font-semibold text-neutral-900 dark:text-neutral-100;
+}
+
+/* Improve spacing for blog post sections */
+.prose-blog > *:first-child {
+  margin-top: 0;
+}
+
+.prose-blog > *:last-child {
+  margin-bottom: 0;
+}
+
+/* CTA sections within blog posts */
+.prose-blog .blog-cta {
+  @apply my-12 p-8 bg-neutral-50 dark:bg-neutral-900 rounded-xl;
+}

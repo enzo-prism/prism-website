@@ -97,6 +97,30 @@ export async function renderPost(slug: string) {
   // Remove import statements which are not valid in HTML
   cleanedContent = cleanedContent.replace(/^import\s+.*$/gm, '')
   
+  // Clean up common inline styles and standardize elements
+  // Convert class to className for React compatibility
+  cleanedContent = cleanedContent.replace(/\sclass="/g, ' className="')
+  
+  // Remove inline text size classes from paragraphs (will be handled by prose-blog)
+  cleanedContent = cleanedContent.replace(/<p\s+className="[^"]*text-lg[^"]*">/g, '<p>')
+  cleanedContent = cleanedContent.replace(/<p\s+className="[^"]*leading-relaxed[^"]*">/g, '<p>')
+  
+  // Standardize heading elements (remove inline size classes)
+  cleanedContent = cleanedContent.replace(/<h([1-6])\s+className="[^"]*text-\w+[^"]*">/g, '<h$1>')
+  cleanedContent = cleanedContent.replace(/<h([1-6])\s+className="[^"]*font-\w+[^"]*">/g, '<h$1>')
+  
+  // Standardize list classes (remove inline spacing)
+  cleanedContent = cleanedContent.replace(/<ul\s+className="[^"]*space-y-\d+[^"]*">/g, '<ul>')
+  cleanedContent = cleanedContent.replace(/<ol\s+className="[^"]*space-y-\d+[^"]*">/g, '<ol>')
+  cleanedContent = cleanedContent.replace(/<ul\s+className="[^"]*list-disc[^"]*">/g, '<ul>')
+  cleanedContent = cleanedContent.replace(/<ol\s+className="[^"]*list-decimal[^"]*">/g, '<ol>')
+  
+  // Clean up common margin/padding utilities that conflict with prose styling
+  cleanedContent = cleanedContent.replace(/\s(mt|mb|my|pt|pb|py)-\d+/g, '')
+  
+  // Preserve special components like CTAs and embedded content
+  // These will keep their styling as they're intentionally designed
+  
   // Remove trailing ``` if present
   if (cleanedContent.trimEnd().endsWith("```")) {
     cleanedContent = cleanedContent.substring(0, cleanedContent.lastIndexOf("```"))
