@@ -22,7 +22,7 @@ twitter:
 canonical: "https://prism.agency/blog/business-visibility-chatgpt"
 ---
 
-import { trackEvent } from '@/utils/analytics'
+{/* Removed imports for YouTubeVideoEmbed and BlogCTAButton as they won't be processed as React components here */}
 
 <p class="text-lg leading-relaxed">
 Hey everyone, Enzo here. I hope you're having a great day. If you're anything like me, you're up late thinking about how to get your business to rank higher, especially in this new world of AI search. It's a question we're obsessed with at Prism, where we help businesses like yours enhance their websites and apps to drive revenue.
@@ -75,24 +75,27 @@ Ultimately, ranking higher in AI search comes down to proving that you are a rep
 If you have any questions or want to learn more about how we can help your business thrive online, don't hesitate to reach out to us on our website or leave a comment below.
 </p>
 
-<div className="my-12">
-  <div className="relative overflow-hidden rounded-xl shadow-md" style={{ paddingBottom: '56.25%' }}>
+<div class="my-12">
+  <div class="relative overflow-hidden rounded-xl shadow-md" style="padding-bottom: 56.25%;">
     <iframe
-      className="absolute top-0 left-0 w-full h-full border-0 rounded-xl"
+      class="absolute top-0 left-0 w-full h-full border-0 rounded-xl"
       src="https://www.youtube.com/embed/_hei2C4164Q?rel=0&showinfo=0&modestbranding=1&iv_load_policy=3"
       title="Live Experiment: Ranking in AI Search"
       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-      allowFullScreen
+      allowfullscreen
     ></iframe>
   </div>
 </div>
 
-<div className="mt-12 p-6 bg-neutral-50 rounded-lg">
-<h3 className="text-xl font-bold mb-2 lowercase">want to improve your ai search ranking?</h3>
-<p className="text-neutral-600 mb-4 lowercase">let prism help your business get noticed by ai.</p>
-<a href="/get-started">
-  <button className="inline-flex items-center justify-center rounded-full bg-neutral-900 px-6 py-3 text-sm font-medium text-white hover:bg-neutral-800 lowercase">
+<div class="mt-12 p-6 bg-neutral-50 dark:bg-neutral-800/50 rounded-lg border border-neutral-200 dark:border-neutral-700/50">
+  <h3 class="text-xl font-bold mb-2 lowercase">want to improve your ai search ranking?</h3>
+  <p class="text-neutral-600 dark:text-neutral-400 mb-6 lowercase">let prism help your business get noticed by ai.</p>
+  <a 
+    href="/get-started" 
+    class="inline-flex items-center justify-center rounded-full bg-neutral-900 px-6 py-3 text-sm font-medium text-white hover:bg-neutral-800 dark:bg-white dark:hover:bg-neutral-200 dark:text-neutral-900 lowercase w-full sm:w-auto"
+    onclick="trackEvent('Blog CTA Click', { page_title: document.title, cta_text: 'get started', cta_url: '/get-started' });"
+  >
     get started
-  </button>
-</a>
+  </a>
 </div>
+\`\`\`
