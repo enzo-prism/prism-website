@@ -426,32 +426,93 @@ export default function ChristopherWongCaseStudy() {
                   the impact: a thriving practice, poised for the future
                 </h2>
                 <div className="prose prose-neutral max-w-none space-y-4 lowercase">
-                  <p>Working with Dr. Christopher B. Wong has been a privilege. The results speak for themselves:</p>
+                  <p>
+                    Our partnership with Dr. Christopher B. Wong has yielded remarkable results, transforming his online
+                    presence and significantly boosting patient acquisition. The data clearly illustrates the impact of
+                    the rebuilt website and our strategic digital marketing efforts:
+                  </p>
 
-                  <div className="grid gap-4 md:grid-cols-3 my-6">
-                    <div className="border p-4 rounded-md text-center">
-                      <h3 className="font-medium mb-2 lowercase">sustained growth</h3>
-                      <p className="text-neutral-600 text-sm">
-                        His practice isn't just stable; it's growing. Key metrics are consistently "up and to the
-                        right."
-                      </p>
-                    </div>
+                  <h4 className="font-medium lowercase !mt-6 !mb-2">1. dramatic growth in attracting new patients</h4>
+                  <p>
+                    The new website immediately began attracting a new stream of potential patients, with user traffic
+                    showing a significant upward trend post-launch. Recently, the site attracted a strong base of{" "}
+                    <strong className="font-semibold">3,600 active users</strong>. Critically,{" "}
+                    <strong className="font-semibold">3,500 (97%) of these users were new</strong>, indicating the
+                    rebuilt site is effectively reaching a fresh audience. User activity saw a dramatic and sustained
+                    spike in the most recent period (april-june), pointing directly to the positive impact of the new
+                    website launch.
+                  </p>
 
-                    <div className="border p-4 rounded-md text-center">
-                      <h3 className="font-medium mb-2 lowercase">dominant online presence</h3>
-                      <p className="text-neutral-600 text-sm">
-                        Increased visibility and a wealth of positive reviews make his practice a top choice in Palo
-                        Alto.
-                      </p>
-                    </div>
+                  <h4 className="font-medium lowercase !mt-6 !mb-2">2. organic search is the #1 driver of traffic</h4>
+                  <p>
+                    Thanks to a powerful seo foundation, the new website has secured top visibility on search engines.
+                    Organic search is the leading source of traffic, delivering{" "}
+                    <strong className="font-semibold">1,400 sessions</strong>. This demonstrates that the website is
+                    successfully appearing in front of potential patients who are actively using search engines like
+                    google to look for a dentist in the palo alto area. It is effectively connecting with local patients
+                    at the exact moment they are seeking dental services, making it the practice's most powerful patient
+                    acquisition tool.
+                  </p>
 
-                    <div className="border p-4 rounded-md text-center">
-                      <h3 className="font-medium mb-2 lowercase">efficient patient acquisition</h3>
-                      <p className="text-neutral-600 text-sm">
-                        Data-driven strategies mean marketing efforts are targeted and effective, maximizing return on
-                        investment.
-                      </p>
-                    </div>
+                  <h4 className="font-medium lowercase !mt-6 !mb-2">3. a strong, diversified digital presence</h4>
+                  <p>
+                    The rebuilt website serves as a successful hub for all marketing efforts. Beyond search, it shows a
+                    healthy and balanced mix of traffic sources. With{" "}
+                    <strong className="font-semibold">1,300 direct sessions</strong>, a significant number of users are
+                    navigating directly to the new site, signaling strong brand awareness. The site also attracted{" "}
+                    <strong className="font-semibold">733 sessions from referrals</strong> and{" "}
+                    <strong className="font-semibold">694 from paid search</strong>, creating a well-rounded strategy
+                    that doesn't rely on a single channel for success. This strong performance across multiple key
+                    channels proves it is a versatile and effective asset for both attracting new patients and engaging
+                    the existing community.
+                  </p>
+
+                  <p className="!mt-6">
+                    These figures underscore not just sustained growth but a dominant online presence and efficient,
+                    data-driven patient acquisition, maximizing return on investment for Dr. Wong's practice.
+                  </p>
+                </div>
+
+                {/* Existing Key Stats - can be kept or merged */}
+                <div className="grid gap-4 md:grid-cols-3 my-6">
+                  <div className="border p-4 rounded-md text-center">
+                    <h3 className="font-medium mb-2 lowercase">sustained growth</h3>
+                    <p className="text-neutral-600 text-sm">
+                      His practice isn't just stable; it's growing. Key metrics are consistently "up and to the right."
+                    </p>
+                  </div>
+                  <div className="border p-4 rounded-md text-center">
+                    <h3 className="font-medium mb-2 lowercase">dominant online presence</h3>
+                    <p className="text-neutral-600 text-sm">
+                      Increased visibility and a wealth of positive reviews make his practice a top choice in Palo Alto.
+                    </p>
+                  </div>
+                  <div className="border p-4 rounded-md text-center">
+                    <h3 className="font-medium mb-2 lowercase">efficient patient acquisition</h3>
+                    <p className="text-neutral-600 text-sm">
+                      Data-driven strategies mean marketing efforts are targeted and effective, maximizing return on
+                      investment.
+                    </p>
+                  </div>
+                </div>
+
+                {/* New Key Stats Section for Traffic Data */}
+                <div className="grid gap-4 grid-cols-2 md:grid-cols-4 my-6 pt-6 border-t">
+                  <div className="border p-4 rounded-md text-center">
+                    <div className="text-2xl font-bold mb-1 lowercase">3,600</div>
+                    <div className="text-sm text-neutral-600 lowercase">active users recently</div>
+                  </div>
+                  <div className="border p-4 rounded-md text-center">
+                    <div className="text-2xl font-bold mb-1 lowercase">97%</div>
+                    <div className="text-sm text-neutral-600 lowercase">new user acquisition</div>
+                  </div>
+                  <div className="border p-4 rounded-md text-center">
+                    <div className="text-2xl font-bold mb-1 lowercase">1,400</div>
+                    <div className="text-sm text-neutral-600 lowercase">organic search sessions</div>
+                  </div>
+                  <div className="border p-4 rounded-md text-center">
+                    <div className="text-2xl font-bold mb-1 lowercase">top driver</div>
+                    <div className="text-sm text-neutral-600 lowercase">organic search growth</div>
                   </div>
                 </div>
               </section>

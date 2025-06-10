@@ -90,5 +90,10 @@ export async function renderPost(slug: string) {
 
   // The post.content is the string directly from the .mdx file (after frontmatter).
   // This string contains HTML tags with Tailwind classes.
-  return <div dangerouslySetInnerHTML={{ __html: post.content }} />
+  let cleanedContent = post.content
+  // Remove trailing ``` if present
+  if (cleanedContent.trimEnd().endsWith("```")) {
+    cleanedContent = cleanedContent.substring(0, cleanedContent.lastIndexOf("```"))
+  }
+  return <div dangerouslySetInnerHTML={{ __html: cleanedContent }} />
 }
