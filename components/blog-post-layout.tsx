@@ -44,29 +44,34 @@ export default function BlogPostLayout({
           <div className="w-full bg-gradient-to-b from-neutral-50 to-white py-12 md:py-16">
             <div className="container mx-auto px-4 md:px-6">
               <div className="max-w-3xl mx-auto">
-                <div className="relative w-full max-w-2xl mx-auto mb-8 md:mb-12 rounded-lg overflow-hidden">
-                  <div className={cn("aspect-[16/9] relative", gradientClass)} />
-                </div>
                 <div className="mb-6">
-                  <Link href="/blog" className="inline-flex items-center text-sm text-neutral-600 hover:text-neutral-900 transition-colors lowercase">
+                  <Link
+                    href="/blog"
+                    className="inline-flex items-center text-sm text-neutral-600 hover:text-neutral-900 transition-colors lowercase"
+                  >
                     <ArrowLeft className="mr-2 h-4 w-4" />
                     back to all posts
                   </Link>
                 </div>
-                <div className="mb-10">
-                  <div className="flex flex-wrap items-center gap-3 mb-4">
-                    <span className="inline-block px-3 py-1 bg-neutral-100 rounded-full text-xs lowercase">
-                      {category}
-                    </span>
-                    <span className="text-sm text-neutral-500 lowercase">{date}</span>
+                <article>
+                  <div className="relative w-full max-w-2xl mx-auto mb-8 md:mb-12 rounded-lg overflow-hidden">
+                    <div className={cn("aspect-[16/9] relative", gradientClass)} />
                   </div>
-                  <h1 className="text-3xl md:text-4xl font-bold tracking-tight lowercase mb-4">
-                    {title}
-                  </h1>
-                </div>
-                <div className="prose prose-neutral max-w-none space-y-6 lowercase-prose">
-                  {children}
-                </div>
+                  <div className="mb-10">
+                    <div className="flex flex-wrap items-center gap-3 mb-4">
+                      <span className="inline-block px-3 py-1 bg-neutral-100 rounded-full text-xs lowercase">
+                        {category}
+                      </span>
+                      <span className="text-sm text-neutral-500 lowercase">{date}</span>
+                    </div>
+                    <h1 className="text-3xl md:text-4xl font-bold tracking-tight lowercase mb-4">
+                      {title}
+                    </h1>
+                  </div>
+                  <div className="prose prose-neutral max-w-none space-y-6 lowercase-prose">
+                    {children}
+                  </div>
+                </article>
               </div>
             </div>
           </div>
