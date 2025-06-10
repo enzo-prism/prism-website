@@ -10,6 +10,8 @@ import { CaseStudySchema } from "@/components/schema-markup"
 import { trackCTAClick } from "@/utils/analytics"
 import { useState, useEffect } from "react"
 import Image from "next/image"
+import { DrWongGrowthChart } from "@/components/case-studies/dr-wong-growth-chart"
+import { DrWongUserDemographicsChart } from "@/components/case-studies/dr-wong-user-demographics-chart" // Import the new chart
 
 export default function ChristopherWongCaseStudy() {
   const [activeSection, setActiveSection] = useState("")
@@ -434,22 +436,37 @@ export default function ChristopherWongCaseStudy() {
 
                   <h4 className="font-medium lowercase !mt-6 !mb-2">1. dramatic growth in attracting new patients</h4>
                   <p>
-                    The new website immediately began attracting a new stream of potential patients, with user traffic
-                    showing a significant upward trend post-launch. Recently, the site attracted a strong base of{" "}
-                    <strong className="font-semibold">3,600 active users</strong>. Critically,{" "}
-                    <strong className="font-semibold">3,500 (97%) of these users were new</strong>, indicating the
-                    rebuilt site is effectively reaching a fresh audience. User activity saw a dramatic and sustained
-                    spike in the most recent period (april-june), pointing directly to the positive impact of the new
-                    website launch.
+                    The new website immediately began attracting a new stream of potential patients. Recently, the site
+                    attracted a strong base of <strong className="font-semibold">3,600 active users</strong>.
+                    Critically, a vast majority—
+                    <strong className="font-semibold">nearly 97% (3,500 users)—were new</strong>, indicating the rebuilt
+                    site is effectively reaching and engaging a fresh audience. The chart below visually represents this
+                    significant new user acquisition.
                   </p>
+                  <div className="my-8">
+                    <DrWongUserDemographicsChart />
+                  </div>
+
+                  {/* The DrWongGrowthChart can be moved or kept if desired, for now, this focuses on replacing the traffic sources chart */}
+                  <h4 className="font-medium lowercase !mt-8 !mb-4">
+                    visualizing overall growth: website traffic over time
+                  </h4>
+                  <p>
+                    The line chart below illustrates the consistent upward trajectory of website sessions, particularly
+                    highlighting the significant surge in traffic from April to June, reinforcing the immediate and
+                    positive impact of the new website and ongoing optimization efforts.
+                  </p>
+                  <div className="my-8">
+                    <DrWongGrowthChart />
+                  </div>
 
                   <h4 className="font-medium lowercase !mt-6 !mb-2">2. organic search is the #1 driver of traffic</h4>
                   <p>
-                    Thanks to a powerful seo foundation, the new website has secured top visibility on search engines.
+                    Thanks to a powerful SEO foundation, the new website has secured top visibility on search engines.
                     Organic search is the leading source of traffic, delivering{" "}
                     <strong className="font-semibold">1,400 sessions</strong>. This demonstrates that the website is
                     successfully appearing in front of potential patients who are actively using search engines like
-                    google to look for a dentist in the palo alto area. It is effectively connecting with local patients
+                    Google to look for a dentist in the Palo Alto area. It is effectively connecting with local patients
                     at the exact moment they are seeking dental services, making it the practice's most powerful patient
                     acquisition tool.
                   </p>
@@ -467,52 +484,48 @@ export default function ChristopherWongCaseStudy() {
                     the existing community.
                   </p>
 
-                  <p className="!mt-6">
-                    These figures underscore not just sustained growth but a dominant online presence and efficient,
-                    data-driven patient acquisition, maximizing return on investment for Dr. Wong's practice.
-                  </p>
-                </div>
+                  <div className="grid gap-4 md:grid-cols-3 my-6">
+                    <div className="border p-4 rounded-md text-center">
+                      <h3 className="font-medium mb-2 lowercase">sustained growth</h3>
+                      <p className="text-neutral-600 text-sm">
+                        His practice isn't just stable; it's growing. Key metrics are consistently "up and to the
+                        right."
+                      </p>
+                    </div>
+                    <div className="border p-4 rounded-md text-center">
+                      <h3 className="font-medium mb-2 lowercase">dominant online presence</h3>
+                      <p className="text-neutral-600 text-sm">
+                        Increased visibility and a wealth of positive reviews make his practice a top choice in Palo
+                        Alto.
+                      </p>
+                    </div>
+                    <div className="border p-4 rounded-md text-center">
+                      <h3 className="font-medium mb-2 lowercase">efficient patient acquisition</h3>
+                      <p className="text-neutral-600 text-sm">
+                        Data-driven strategies mean marketing efforts are targeted and effective, maximizing return on
+                        investment.
+                      </p>
+                    </div>
+                  </div>
 
-                {/* Existing Key Stats - can be kept or merged */}
-                <div className="grid gap-4 md:grid-cols-3 my-6">
-                  <div className="border p-4 rounded-md text-center">
-                    <h3 className="font-medium mb-2 lowercase">sustained growth</h3>
-                    <p className="text-neutral-600 text-sm">
-                      His practice isn't just stable; it's growing. Key metrics are consistently "up and to the right."
-                    </p>
-                  </div>
-                  <div className="border p-4 rounded-md text-center">
-                    <h3 className="font-medium mb-2 lowercase">dominant online presence</h3>
-                    <p className="text-neutral-600 text-sm">
-                      Increased visibility and a wealth of positive reviews make his practice a top choice in Palo Alto.
-                    </p>
-                  </div>
-                  <div className="border p-4 rounded-md text-center">
-                    <h3 className="font-medium mb-2 lowercase">efficient patient acquisition</h3>
-                    <p className="text-neutral-600 text-sm">
-                      Data-driven strategies mean marketing efforts are targeted and effective, maximizing return on
-                      investment.
-                    </p>
-                  </div>
-                </div>
-
-                {/* New Key Stats Section for Traffic Data */}
-                <div className="grid gap-4 grid-cols-2 md:grid-cols-4 my-6 pt-6 border-t">
-                  <div className="border p-4 rounded-md text-center">
-                    <div className="text-2xl font-bold mb-1 lowercase">3,600</div>
-                    <div className="text-sm text-neutral-600 lowercase">active users recently</div>
-                  </div>
-                  <div className="border p-4 rounded-md text-center">
-                    <div className="text-2xl font-bold mb-1 lowercase">97%</div>
-                    <div className="text-sm text-neutral-600 lowercase">new user acquisition</div>
-                  </div>
-                  <div className="border p-4 rounded-md text-center">
-                    <div className="text-2xl font-bold mb-1 lowercase">1,400</div>
-                    <div className="text-sm text-neutral-600 lowercase">organic search sessions</div>
-                  </div>
-                  <div className="border p-4 rounded-md text-center">
-                    <div className="text-2xl font-bold mb-1 lowercase">top driver</div>
-                    <div className="text-sm text-neutral-600 lowercase">organic search growth</div>
+                  {/* New Key Stats Section for Traffic Data */}
+                  <div className="grid gap-4 grid-cols-2 md:grid-cols-4 my-6 pt-6 border-t">
+                    <div className="border p-4 rounded-md text-center">
+                      <div className="text-2xl font-bold mb-1 lowercase">3,600</div>
+                      <div className="text-sm text-neutral-600 lowercase">active users recently</div>
+                    </div>
+                    <div className="border p-4 rounded-md text-center">
+                      <div className="text-2xl font-bold mb-1 lowercase">97%</div>
+                      <div className="text-sm text-neutral-600 lowercase">new user acquisition</div>
+                    </div>
+                    <div className="border p-4 rounded-md text-center">
+                      <div className="text-2xl font-bold mb-1 lowercase">1,400</div>
+                      <div className="text-sm text-neutral-600 lowercase">organic search sessions</div>
+                    </div>
+                    <div className="border p-4 rounded-md text-center">
+                      <div className="text-2xl font-bold mb-1 lowercase">top driver</div>
+                      <div className="text-sm text-neutral-600 lowercase">organic search growth</div>
+                    </div>
                   </div>
                 </div>
               </section>
