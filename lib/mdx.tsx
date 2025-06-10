@@ -120,6 +120,13 @@ export async function renderPost(slug: string) {
   
   // Preserve special components like CTAs and embedded content
   // These will keep their styling as they're intentionally designed
+
+  // Convert <YouTubeVideoEmbed> tags to standard iframe embeds
+  cleanedContent = cleanedContent.replace(
+    /<YouTubeVideoEmbed\s+videoId="([^"]+)"\s+title="([^"]+)"\s*\/>/g,
+    (_match, videoId, title) =>
+      `<div class="relative overflow-hidden rounded-xl shadow-md" style="padding-bottom:56.25%"><iframe class="absolute top-0 left-0 w-full h-full border-0 rounded-xl" src="https://www.youtube.com/embed/${videoId}?rel=0&showinfo=0&modestbranding=1&iv_load_policy=3" title="${title}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>`,
+  )
   
   // Remove trailing ``` if present
   if (cleanedContent.trimEnd().endsWith("```")) {
