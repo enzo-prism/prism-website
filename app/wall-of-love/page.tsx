@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Wall of Love | Prism",
     description: "Hear what our clients have to say about Prism. Real testimonials from satisfied customers.",
-    url: "https://prism.agency/wall-of-love",
+    url: "https://design-prism.com/wall-of-love",
     images: [
       {
         url: "/prism-opengraph.png", // Using existing opengraph image
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     images: ["/prism-opengraph.png"],
   },
   alternates: {
-    canonical: "https://prism.agency/wall-of-love",
+    canonical: "https://design-prism.com/wall-of-love",
   },
 }
 

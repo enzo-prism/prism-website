@@ -9,9 +9,9 @@ export const metadata: Metadata = {
   description:
     "Check out the latest offers and promotions from Prism. Don't miss out on great deals for websites, apps, and designs.",
   openGraph: {
-    title: "Current Offers | Prism",
-    description: "Explore special offers on our digital services.",
-    url: "https://prism.agency/offers", // Replace with your actual domain
+    title: "Limited-Time Offers | Prism",
+    description: "Exclusive offers on our web design, app development, and design services.",
+    url: "https://design-prism.com/offers", // Replace with your actual domain
   },
 }
 

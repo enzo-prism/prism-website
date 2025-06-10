@@ -10,6 +10,7 @@ import { CaseStudySchema } from "@/components/schema-markup"
 import { trackCTAClick } from "@/utils/analytics"
 import { useState, useEffect } from "react"
 import Image from "next/image"
+import SocialShare from "@/components/social-share"
 
 export default function OlympicBootworksCaseStudy() {
   const [activeSection, setActiveSection] = useState("")
@@ -497,13 +498,21 @@ export default function OlympicBootworksCaseStudy() {
             </div>
           </div>
         </div>
+        <div className="mt-12">
+          <SocialShare
+            url="https://design-prism.com/case-studies/olympic-bootworks"
+            imageUrl="https://design-prism.com/olympic-bootworks.png"
+            title="Olympic Bootworks Case Study"
+            description="Discover how we crafted a digital presence for a premier ski boot fitting shop."
+          />
+        </div>
       </main>
       <Footer />
       <CaseStudySchema
         title="olympic bootworks case study - from 10/100 online to always-open revenue engine"
         description="discover how prism transformed olympic bootworks from a dated squarespace template to a lightning-fast e-commerce powerhouse with real-time inventory sync and 24/7 booking engine."
-        url="https://prism.agency/case-studies/olympic-bootworks"
-        imageUrl="https://prism.agency/olympic-bootworks.png"
+        url="https://design-prism.com/case-studies/olympic-bootworks"
+        imageUrl="https://design-prism.com/olympic-bootworks.png"
         datePublished="2025-03-01T00:00:00.000Z"
         dateModified="2025-03-01T00:00:00.000Z"
         clientName="Olympic Bootworks"

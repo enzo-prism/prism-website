@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button"
 import { trackCTAClick, trackPageView } from "@/utils/analytics"
 import { useEffect } from "react"
 import CoreImage from "@/components/core-image"
+import confetti from "@/utils/confetti"
 
 export default function ThanksPageClient() {
   const [isLoaded, setIsLoaded] = useState(false)
@@ -27,10 +28,11 @@ export default function ThanksPageClient() {
     }
   }, [])
 
-  const handleBookCallClick = () => {
-    trackCTAClick("Book Kickoff Call", "thanks_page")
-    // Open Calendly or your booking system
-    window.open("https://calendly.com/prism-agency/kickoff", "_blank")
+  const handleScheduleClick = () => {
+    confetti()
+    setTimeout(() => {
+      window.open("https://calendly.com/design-prism/kickoff", "_blank")
+    }, 500)
   }
 
   return (
@@ -62,7 +64,7 @@ export default function ThanksPageClient() {
         </p>
 
         <div className="flex flex-col gap-4 sm:flex-row sm:justify-center">
-          <Button size="lg" className="gap-2" onClick={handleBookCallClick}>
+          <Button size="lg" className="gap-2" onClick={handleScheduleClick}>
             <Calendar className="h-5 w-5" />
             Book Kickoff Call
             <ArrowRight className="h-4 w-4" />
@@ -81,10 +83,12 @@ export default function ThanksPageClient() {
         <div className="mt-16 text-center text-sm text-gray-500">
           <p>A confirmation email has been sent to your inbox with your receipt and next steps.</p>
           <p className="mt-2">
-            If you have any questions, please contact us at{" "}
-            <a href="mailto:hello@prism.agency" className="underline hover:text-gray-700">
-              hello@prism.agency
+            If you have any questions, you can reply to the email I just sent you
+            or email me directly at{" "}
+            <a href="mailto:hello@design-prism.com" className="underline hover:text-gray-700">
+              hello@design-prism.com
             </a>
+            .
           </p>
         </div>
       )}

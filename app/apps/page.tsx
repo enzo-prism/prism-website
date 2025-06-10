@@ -47,7 +47,7 @@ export const metadata: Metadata = {
     images: ["/prism-opengraph.png"],
   },
   alternates: {
-    canonical: "https://prism.agency/apps",
+    canonical: "https://design-prism.com/apps",
   },
 }
 

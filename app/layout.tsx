@@ -57,6 +57,10 @@ export const metadata: Metadata = {
     },
   },
   generator: "v0.dev",
+  metadataBase: new URL("https://design-prism.com"),
+  alternates: {
+    canonical: "/",
+  },
 }
 
 export default function RootLayout({
