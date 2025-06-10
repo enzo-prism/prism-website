@@ -37,7 +37,7 @@ export const metadata: Metadata = {
     images: ["/prism-opengraph.png"],
   },
   alternates: {
-    canonical: "https://prism.agency/websites",
+    canonical: "https://design-prism.com/websites",
   },
 }
 
@@ -145,7 +145,7 @@ const websiteProjects = [
 
 const clientTestimonialsWithQuotes = [
   {
-    quote: "The site’s new design is better than I ever could’ve imagined.",
+    quote: "The site's new design is better than I ever could've imagined.",
     name: "Ludmila",
     business: "Mataria Dental Group (Torrance, CA)",
   },
@@ -170,7 +170,7 @@ const clientTestimonialsWithQuotes = [
     business: "Coast Periodontics (San Luis Obispo, CA)",
   },
   {
-    quote: "Prism made everything so simple. We finally have a site we’re proud to show patients.",
+    quote: "Prism made everything so simple. We finally have a site we're proud to show patients.",
     name: "Dr. Banaga",
     business: "Town Centre Dental (Brentwood, CA)",
   },
@@ -180,12 +180,12 @@ const clientTestimonialsWithQuotes = [
     business: "Laguna Beach Dental Arts (Laguna Beach, CA)",
   },
   {
-    quote: "We’ve had more new patient calls in the last month than we’ve had in years.",
+    quote: "We've had more new patient calls in the last month than we've had in years.",
     name: "Dr. Wong",
     business: "Christopher B. Wong DDS (Palo Alto, CA)",
   },
   {
-    quote: "The whole process felt seamless. It’s such a relief to know our site is in good hands.",
+    quote: "The whole process felt seamless. It's such a relief to know our site is in good hands.",
     name: "Dr. Ji",
     business: "Grace Dental (Santa Rosa, CA)",
   },
@@ -195,7 +195,7 @@ const clientTestimonialsWithQuotes = [
     business: "Grace Dental (Santa Rosa, CA)",
   },
   {
-    quote: "I’ve worked with a lot of creatives over the years—and this was one of the best experiences I’ve had.",
+    quote: "I've worked with a lot of creatives over the years—and this was one of the best experiences I've had.",
     name: "Suzanne Meinhardt",
     business: "Rebellious Aging (Los Gatos, CA)",
   },

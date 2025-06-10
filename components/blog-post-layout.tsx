@@ -81,8 +81,8 @@ export default function BlogPostLayout({
       <BlogPostSchema
         title={title}
         description={description}
-        url={openGraph?.url || canonical || `https://prism.agency/blog/${slug}`}
-        imageUrl={`https://prism.agency${image}`}
+        url={openGraph?.url || canonical || `https://design-prism.com/blog/${slug}`}
+        imageUrl={`https://design-prism.com${image}`}
         datePublished={openGraph?.publishedTime || date}
         dateModified={openGraph?.modifiedTime || date}
         authorName={openGraph?.authors?.[0] || "prism"}

@@ -106,11 +106,18 @@ export default function ThanksCallPageClient() {
           </div>
           <p className="mb-2">
             if you need to reschedule or have any questions, please contact us at{" "}
-            <a href="mailto:hello@prism.agency" className="underline hover:text-gray-700">
-              hello@prism.agency
+            <a href="mailto:hello@design-prism.com" className="underline hover:text-gray-700">
+              hello@design-prism.com
             </a>
           </p>
           <p className="text-xs">we'll reach out 15 minutes before your scheduled call time</p>
+          <p className="mt-4 text-center text-gray-600">
+            In the meantime, feel free to email us at{" "}
+            <a href="mailto:hello@design-prism.com" className="underline hover:text-gray-700">
+              hello@design-prism.com
+            </a>
+            .
+          </p>
         </div>
       )}
     </main>

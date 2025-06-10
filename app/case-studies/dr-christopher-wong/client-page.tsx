@@ -12,6 +12,7 @@ import { useState, useEffect } from "react"
 import Image from "next/image"
 import { DrWongGrowthChart } from "@/components/case-studies/dr-wong-growth-chart"
 import { DrWongUserDemographicsChart } from "@/components/case-studies/dr-wong-user-demographics-chart" // Import the new chart
+import SocialShare from "@/components/social-share"
 
 export default function ChristopherWongCaseStudy() {
   const [activeSection, setActiveSection] = useState("")
@@ -575,13 +576,21 @@ export default function ChristopherWongCaseStudy() {
       <CaseStudySchema
         title="powering a seamless transition for dr. christopher wong"
         description="how we helped a palo alto dental practice achieve 100% patient retention and sustainable growth through a multi-phase digital strategy."
-        url="https://prism.agency/case-studies/dr-christopher-wong"
-        imageUrl="https://prism.agency/dr-wong-polaroids.png"
+        url="https://design-prism.com/case-studies/dr-christopher-wong"
+        imageUrl="https://design-prism.com/dr-wong-polaroids.png"
         datePublished="2025-01-15T00:00:00.000Z"
         dateModified="2025-01-15T00:00:00.000Z"
         clientName="Dr. Christopher B. Wong"
         outcome="achieved 100% patient retention and sustained growth"
       />
+      <div className="mt-12">
+        <SocialShare
+          url="https://design-prism.com/case-studies/dr-christopher-wong"
+          imageUrl="https://design-prism.com/dr-wong-polaroids.png"
+          title="Dr. Christopher Wong Case Study"
+          description="See how we helped Dr. Wong's dental practice attract more patients."
+        />
+      </div>
     </div>
   )
 }

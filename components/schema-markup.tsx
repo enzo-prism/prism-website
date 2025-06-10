@@ -66,12 +66,12 @@ type Article = {
 export function OrganizationSchema() {
   const orgSchema: Organization = {
     "@type": "Organization",
-    "@id": "https://prism.agency/#organization",
+    "@id": "https://design-prism.com/#organization",
     name: "Prism Agency",
-    url: "https://prism.agency",
+    url: "https://design-prism.com",
     logo: {
       "@type": "ImageObject",
-      url: "https://prism.agency/transparent-prism-logo.png",
+      url: "https://design-prism.com/transparent-prism-logo.png",
       width: 600,
       height: 60,
     },
@@ -107,17 +107,17 @@ export function OrganizationSchema() {
 export function WebsiteSchema() {
   const websiteSchema: WebSite = {
     "@type": "WebSite",
-    "@id": "https://prism.agency/#website",
-    url: "https://prism.agency",
+    "@id": "https://design-prism.com/#website",
+    url: "https://design-prism.com",
     name: "Prism Agency",
     description:
       "Digital agency creating websites, apps, and designs that shatter revenue goals and delight customers.",
     publisher: {
-      "@id": "https://prism.agency/#organization",
+      "@id": "https://design-prism.com/#organization",
     },
     potentialAction: {
       "@type": "SearchAction",
-      target: "https://prism.agency/search?q={search_term_string}",
+      target: "https://design-prism.com/search?q={search_term_string}",
       "query-input": "required name=search_term_string",
     },
   }
@@ -180,7 +180,7 @@ export function BlogPostSchema({
       name: authorName,
     },
     publisher: {
-      "@id": "https://prism.agency/#organization",
+      "@id": "https://design-prism.com/#organization",
     },
     datePublished: datePublished,
     dateModified: dateModified,
@@ -226,7 +226,7 @@ export function CaseStudySchema({
     description,
     image: imageUrl,
     author: {
-      "@id": "https://prism.agency/#organization",
+      "@id": "https://design-prism.com/#organization",
     },
     about: {
       "@type": "Organization",
@@ -282,7 +282,7 @@ export function ContactPageSchema() {
     url: "https://www.design-prism.com/contact",
     mainEntity: {
       "@type": "Organization",
-      "@id": "https://prism.agency/#organization",
+      "@id": "https://design-prism.com/#organization",
       name: "Prism Agency",
       telephone: "+1-800-123-4567",
       email: "support@design-prism.com",

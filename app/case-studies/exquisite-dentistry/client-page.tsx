@@ -10,6 +10,7 @@ import { CaseStudySchema } from "@/components/schema-markup"
 import { trackCTAClick } from "@/utils/analytics"
 import { useState, useEffect } from "react"
 import Image from "next/image"
+import SocialShare from "@/components/social-share"
 
 export default function ExquisiteDentistryCaseStudy() {
   const [activeSection, setActiveSection] = useState("")
@@ -479,13 +480,21 @@ export default function ExquisiteDentistryCaseStudy() {
             </div>
           </div>
         </div>
+        <div className="mt-12">
+          <SocialShare
+            url="https://design-prism.com/case-studies/exquisite-dentistry"
+            imageUrl="https://design-prism.com/exquisite-dentistry-consultation.png"
+            title="Exquisite Dentistry Case Study"
+            description="See how a new website and brand identity revitalized a top-tier dental practice."
+          />
+        </div>
       </main>
       <Footer />
       <CaseStudySchema
         title="aligning digital excellence with luxury care | exquisite dentistry case study"
         description="how we elevated beverly hills' exquisite dentistry's online presence to match their premium in-person experience through a complete digital overhaul."
-        url="https://prism.agency/case-studies/exquisite-dentistry"
-        imageUrl="https://prism.agency/exquisite-dentistry-consultation.png"
+        url="https://design-prism.com/case-studies/exquisite-dentistry"
+        imageUrl="https://design-prism.com/exquisite-dentistry-consultation.png"
         datePublished="2025-02-01T00:00:00.000Z"
         dateModified="2025-02-01T00:00:00.000Z"
         clientName="Exquisite Dentistry"
