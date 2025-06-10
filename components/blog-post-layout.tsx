@@ -58,7 +58,7 @@ export default function BlogPostLayout({
                     />
                   ) : (
                     <div className={cn("aspect-[16/9] w-full", gradientClass)} />
-                  )
+                  )}
                 </div>
                 <div className="mb-6">
                   <Link href="/blog" className="inline-flex items-center text-sm text-neutral-600 hover:text-neutral-900 transition-colors lowercase">
