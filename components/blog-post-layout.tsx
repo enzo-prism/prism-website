@@ -5,6 +5,7 @@ import { ArrowLeft } from "lucide-react"
 import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
 import Breadcrumbs from "@/components/breadcrumbs"
+import CoreImage from "@/components/core-image"
 import ScrollProgressBar from "@/components/scroll-progress-bar"
 import { BlogPostSchema } from "@/components/schema-markup"
 import { cn } from "@/lib/utils"
@@ -45,7 +46,19 @@ export default function BlogPostLayout({
             <div className="container mx-auto px-4 md:px-6">
               <div className="max-w-3xl mx-auto">
                 <div className="relative w-full max-w-2xl mx-auto mb-8 md:mb-12 rounded-lg overflow-hidden">
-                  <div className={cn("aspect-[16/9] relative", gradientClass)} />
+                  {image ? (
+                    <CoreImage
+                      src={image}
+                      alt={title}
+                      width={Number(image.match(/width=(\d+)/)?.[1] || 1200)}
+                      height={Number(image.match(/height=(\d+)/)?.[1] || 630)}
+                      className="h-full w-full object-cover"
+                      quality={90}
+                      trackingId={`blogpost_${slug}`}
+                    />
+                  ) : (
+                    <div className={cn("aspect-[16/9] w-full", gradientClass)} />
+                  )
                 </div>
                 <div className="mb-6">
                   <Link href="/blog" className="inline-flex items-center text-sm text-neutral-600 hover:text-neutral-900 transition-colors lowercase">
