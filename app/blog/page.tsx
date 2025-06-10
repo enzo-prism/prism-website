@@ -1,5 +1,5 @@
 import type { Metadata } from "next"
-import BlogPage from "./client-page"
+import BlogPage from "./BlogPage"
 import { getAllPosts } from "@/lib/mdx"
 
 export const metadata: Metadata = {
