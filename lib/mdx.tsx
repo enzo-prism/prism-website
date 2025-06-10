@@ -3,7 +3,7 @@ import "server-only"
 import fs from "fs/promises"
 import path from "path"
 import matter from "gray-matter"
-import { micromark } from "micromark" // Using a simpler markdown parser as a workaround
+// micromark is removed as the content is already HTML-like
 
 export type BlogFrontmatter = {
   title: string
@@ -26,10 +26,12 @@ async function _getPost(slug: string): Promise<{ frontmatter: BlogFrontmatter; c
   const filePath = path.join(BLOG_PATH, `${slug}.mdx`)
   try {
     const rawFileContent = await fs.readFile(filePath, "utf8")
+    // 'matter' extracts frontmatter and leaves the rest of the file content as a string.
+    // This 'content' string is assumed to be HTML/JSX-like based on the screenshot.
     const { data, content } = matter(rawFileContent)
     return { frontmatter: data as BlogFrontmatter, content }
   } catch (error) {
-    console.error(`[MDXLib] Failed to get post "${slug}":`, error)
+    console.error(`[MDXLib] Failed to get post "${slug}" from "${filePath}":`, error)
     return null
   }
 }
@@ -43,6 +45,7 @@ async function _getAllPosts(): Promise<Array<{ slug: string } & BlogFrontmatter>
     const mdxFiles = files.filter((fileName) => fileName.endsWith(".mdx"))
 
     if (mdxFiles.length === 0) {
+      console.warn(`[MDXLib] No .mdx files found in ${BLOG_PATH}`)
       return []
     }
 
@@ -55,9 +58,16 @@ async function _getAllPosts(): Promise<Array<{ slug: string } & BlogFrontmatter>
     )
 
     const validPosts = postsData.filter(Boolean) as Array<{ slug: string } & BlogFrontmatter>
+
+    if (validPosts.length === 0 && mdxFiles.length > 0) {
+      console.warn(
+        `[MDXLib] MDX files were found in ${BLOG_PATH}, but no valid posts could be processed. Check _getPost errors above.`,
+      )
+    }
+
     return validPosts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
   } catch (error) {
-    console.error(`[MDXLib] Failed to get all posts:`, error)
+    console.error(`[MDXLib] Failed to get all posts from "${BLOG_PATH}":`, error)
     return null
   }
 }
@@ -66,20 +76,20 @@ export const getPost = _getPost
 export const getAllPosts = _getAllPosts
 
 /**
- * Renders a blog post's content as HTML.
- * This is a workaround to avoid the 'astring' error from next-mdx-remote.
- * NOTE: This will not render JSX components inside .mdx files.
+ * Prepares the raw HTML-like content from the .mdx file for rendering.
+ * This function returns a React element that uses dangerouslySetInnerHTML
+ * to render the HTML content from the post.
  */
 export async function renderPost(slug: string) {
   const post = await getPost(slug)
 
   if (!post || typeof post.content !== "string") {
+    console.error(`[MDXLib] Post "${slug}" not found or content is invalid for renderPost.`)
     throw new Error(`Post "${slug}" not found or content is invalid.`)
   }
 
-  // Convert markdown content to an HTML string.
-  const htmlContent = micromark(post.content)
-
-  // Render the HTML content. The wrapping div can be styled as needed.
-  return <div className="prose dark:prose-invert" dangerouslySetInnerHTML={{ __html: htmlContent }} />
+  // The post.content is the string directly from the .mdx file (after frontmatter).
+  // This string contains HTML tags with Tailwind classes.
+  // This div will be the child of the styled div in BlogPostLayout.
+  return <div dangerouslySetInnerHTML={{ __html: post.content }} />
 }
