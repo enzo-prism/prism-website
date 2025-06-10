@@ -116,10 +116,17 @@ export async function renderPost(slug: string) {
   cleanedContent = cleanedContent.replace(/<ol\s+className="[^"]*list-decimal[^"]*">/g, '<ol>')
   
   // Clean up common margin/padding utilities that conflict with prose styling
-  cleanedContent = cleanedContent.replace(/\s(mt|mb|my|pt|pb|py)-\d+/g, '')
+  // BUT preserve them for video containers and special components
+  cleanedContent = cleanedContent.replace(/<(p|h[1-6]|ul|ol|li)[^>]*>/g, (match) => {
+    return match.replace(/\s(mt|mb|my|pt|pb|py)-\d+/g, '')
+  })
   
   // Preserve special components like CTAs and embedded content
-  // These will keep their styling as they're intentionally designed
+  // Video embeds need their styles preserved
+  
+  // Fix iframe attributes for React compatibility
+  cleanedContent = cleanedContent.replace(/\sallowfullscreen(?=[\s>])/gi, ' allowFullScreen')
+  cleanedContent = cleanedContent.replace(/\sallowfullscreen=""/gi, ' allowFullScreen')
   
   // Remove trailing ``` if present
   if (cleanedContent.trimEnd().endsWith("```")) {

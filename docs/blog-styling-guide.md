@@ -78,6 +78,48 @@ This is an informational callout box.
 />
 ```
 
+### Video Embeds
+
+The blog system fully supports video embeds with responsive sizing. You can embed videos in two ways:
+
+#### 1. Using the VideoEmbed Component (Recommended)
+
+```mdx
+import { VideoEmbed } from '@/components/mdx-components'
+
+<VideoEmbed 
+  src="https://www.youtube.com/watch?v=VIDEO_ID" 
+  title="My Video Title"
+  aspectRatio="16:9"
+/>
+```
+
+The VideoEmbed component:
+- Automatically converts YouTube URLs to embed format
+- Supports different aspect ratios: "16:9" (default), "4:3", or "1:1"
+- Adds proper styling and shadows
+- Ensures responsive sizing
+
+#### 2. Direct HTML Embed
+
+You can also use direct HTML for video embeds:
+
+```html
+<div class="my-12">
+  <div class="relative overflow-hidden rounded-xl shadow-md" style="padding-bottom: 56.25%;">
+    <iframe
+      class="absolute top-0 left-0 w-full h-full border-0 rounded-xl"
+      src="https://www.youtube.com/embed/VIDEO_ID"
+      title="Video Title"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      allowfullscreen
+    ></iframe>
+  </div>
+</div>
+```
+
+Note: The styling system preserves the `padding-bottom` style for video containers to maintain aspect ratios.
+
 ## Best Practices
 
 1. **Avoid Inline Styles**: Let the prose system handle styling

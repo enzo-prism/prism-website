@@ -271,6 +271,37 @@ body {
   @apply font-semibold text-neutral-900 dark:text-neutral-100;
 }
 
+/* Video embeds - YouTube, Vimeo, etc */
+.prose-blog .video-embed,
+.prose-blog > div[style*="padding-bottom"] {
+  @apply my-12;
+}
+
+.prose-blog iframe {
+  @apply w-full h-full rounded-lg shadow-lg;
+}
+
+/* Responsive video container */
+.prose-blog .relative.overflow-hidden[style*="padding-bottom"],
+.prose-blog > div > .relative.overflow-hidden[style*="padding-bottom"] {
+  @apply my-12;
+}
+
+/* Ensure video containers maintain aspect ratio */
+.prose-blog div[style*="padding-bottom: 56.25%"] {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25% !important; /* 16:9 aspect ratio */
+}
+
+.prose-blog div[style*="padding-bottom: 56.25%"] iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
 /* Improve spacing for blog post sections */
 .prose-blog > *:first-child {
   margin-top: 0;

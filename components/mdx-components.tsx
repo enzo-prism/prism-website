@@ -74,23 +74,47 @@ export const MDXComponents = {
   // Video embed component
   VideoEmbed: ({ 
     src, 
-    title 
+    title,
+    aspectRatio = "16:9"
   }: { 
     src: string; 
     title: string;
-  }) => (
-    <div className="my-12">
-      <div className="relative overflow-hidden rounded-xl shadow-md" style={{ paddingBottom: "56.25%" }}>
-        <iframe
-          className="absolute top-0 left-0 w-full h-full border-0 rounded-xl"
-          src={src}
-          title={title}
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          allowFullScreen
-        />
+    aspectRatio?: "16:9" | "4:3" | "1:1";
+  }) => {
+    // Calculate padding based on aspect ratio
+    const paddingBottom = {
+      "16:9": "56.25%",
+      "4:3": "75%",
+      "1:1": "100%"
+    }[aspectRatio];
+    
+    // Process YouTube URLs to ensure embed format
+    let embedSrc = src;
+    if (src.includes('youtube.com/watch?v=')) {
+      const videoId = src.split('v=')[1]?.split('&')[0];
+      embedSrc = `https://www.youtube.com/embed/${videoId}?rel=0&showinfo=0&modestbranding=1&iv_load_policy=3`;
+    } else if (src.includes('youtu.be/')) {
+      const videoId = src.split('youtu.be/')[1]?.split('?')[0];
+      embedSrc = `https://www.youtube.com/embed/${videoId}?rel=0&showinfo=0&modestbranding=1&iv_load_policy=3`;
+    }
+    
+    return (
+      <div className="my-12">
+        <div 
+          className="relative overflow-hidden rounded-xl shadow-md"
+          style={{ paddingBottom }}
+        >
+          <iframe
+            className="absolute top-0 left-0 w-full h-full border-0 rounded-xl"
+            src={embedSrc}
+            title={title}
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowFullScreen
+          />
+        </div>
       </div>
-    </div>
-  ),
+    );
+  },
   
   // Grid layout for comparison or features
   Grid: ({ 
