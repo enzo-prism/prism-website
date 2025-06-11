@@ -1,6 +1,6 @@
 "use client"
 
-import { Line, LineChart, XAxis, YAxis, CartesianGrid, ResponsiveContainer } from "recharts"
+import { Area, AreaChart, XAxis, YAxis, CartesianGrid, ResponsiveContainer } from "recharts"
 import { ChartContainer, ChartTooltip, ChartTooltipContent, type ChartConfig } from "@/components/ui/chart"
 
 const chartData = [
@@ -27,18 +27,19 @@ const chartConfig = {
 
 export function DrWongGrowthChart() {
   return (
-    <ChartContainer config={chartConfig} className="h-[300px] w-full">
+    <ChartContainer config={chartConfig} className="h-[260px] xs:h-[280px] sm:h-[320px] md:h-[360px] w-full">
       <ResponsiveContainer width="100%" height="100%">
-        <LineChart
+        <AreaChart
           data={chartData}
-          margin={{
-            top: 5,
-            right: 10,
-            left: -20, // Adjust to pull Y-axis labels closer if needed
-            bottom: 0,
-          }}
+          margin={{ top: 5, right: 10, left: -20, bottom: 0 }}
         >
-          <CartesianGrid vertical={false} strokeDasharray="3 3" stroke="hsl(var(--muted-foreground) / 0.3)" />
+          <defs>
+            <linearGradient id="colorSessions" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="5%" stopColor="hsl(var(--chart-1))" stopOpacity={0.8} />
+              <stop offset="95%" stopColor="hsl(var(--chart-1))" stopOpacity={0} />
+            </linearGradient>
+          </defs>
+          <CartesianGrid vertical={false} strokeDasharray="3 3" stroke="hsl(var(--muted-foreground) / 0.2)" />
           <XAxis
             dataKey="month"
             tickLine={false}
@@ -52,28 +53,29 @@ export function DrWongGrowthChart() {
             axisLine={false}
             stroke="hsl(var(--muted-foreground))"
             fontSize={12}
-            tickFormatter={(value) => (value >= 1000 ? `${value / 1000}k` : value.toString())}
-            domain={["dataMin - 200", "dataMax + 200"]} // Add some padding to min/max
+            tickFormatter={(value: number) => (value >= 1000 ? `${value / 1000}k` : value.toString())}
+            domain={["dataMin - 200", "dataMax + 200"]}
           />
           <ChartTooltip
-            cursor={true}
+            cursor={{ strokeDasharray: "3 3" }}
             content={
               <ChartTooltipContent
-                indicator="line"
+                indicator="area"
                 labelClassName="font-semibold"
                 className="rounded-lg shadow-lg bg-background/95 backdrop-blur-sm"
               />
             }
           />
-          <Line
-            dataKey="sessions"
+          <Area
             type="monotone"
+            dataKey="sessions"
             stroke="var(--color-sessions)"
             strokeWidth={2.5}
-            dot={false}
-            activeDot={{ r: 7, fill: "var(--color-sessions)", strokeWidth: 2, stroke: "hsl(var(--background))" }}
+            fillOpacity={1}
+            fill="url(#colorSessions)"
+            activeDot={{ r: 6, style: { filter: "drop-shadow(0 0 3px hsl(var(--chart-1)))" } }}
           />
-        </LineChart>
+        </AreaChart>
       </ResponsiveContainer>
     </ChartContainer>
   )
