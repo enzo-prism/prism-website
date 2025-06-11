@@ -384,7 +384,8 @@ export default function ClientShowcase() {
                       width={280}
                       height={498}
                       className="object-cover w-full h-full"
-                      sizes="280px"
+                      sizes="(max-width: 640px) 60vw, (max-width: 1024px) 35vw, 280px"
+                      quality={90}
                       priority={index < 5} // Prioritize loading for first 5 images
                       fallbackSrc={`/placeholder.svg?height=498&width=280&query=${encodeURIComponent(client.name)}`}
                       fallbackColor={
