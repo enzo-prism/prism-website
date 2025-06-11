@@ -17,7 +17,7 @@ export function DrWongUserDemographicsChart() {
 
   return (
     <div className="relative flex flex-col items-center">
-      <div className="w-full h-52 xs:h-56 sm:h-64 md:h-72 lg:h-80">
+      <div className="w-full aspect-square max-h-[320px] sm:max-h-[360px] md:max-h-[400px] mx-auto">
         <ResponsiveContainer width="100%" height="100%">
           <PieChart>
             <Pie
