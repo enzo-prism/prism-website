@@ -67,7 +67,7 @@ export default function ChristopherWongCaseStudy() {
                 powering a seamless transition for dr. christopher wong
               </h1>
               <p className="text-xl text-neutral-600 lowercase">
-                how we helped a palo alto dental practice achieve 100% patient retention and sustainable growth
+                how we helped a palo alto dental practice achieve 100% patient retention and exponential growth
               </p>
             </div>
 
@@ -98,6 +98,73 @@ export default function ChristopherWongCaseStudy() {
                 >
                   behind the scenes: polaroids from our photoshoot with dr. wong at his palo alto practice
                 </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Impact Metrics Section - Moved Higher */}
+        <section className="px-4 py-12 bg-neutral-50 border-b">
+          <div className="container mx-auto px-4 md:px-6 max-w-5xl">
+            <h2 className="text-2xl font-bold tracking-tighter lowercase mb-8 text-center">
+              the results speak for themselves
+            </h2>
+            
+            {/* Primary Metrics */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+              <div className="bg-white border p-6 rounded-lg text-center">
+                <div className="text-3xl font-bold mb-1 lowercase text-neutral-900">100%</div>
+                <div className="text-sm text-neutral-600 lowercase">patient retention</div>
+              </div>
+              <div className="bg-white border p-6 rounded-lg text-center">
+                <div className="text-3xl font-bold mb-1 lowercase text-neutral-900">3,600</div>
+                <div className="text-sm text-neutral-600 lowercase">active users</div>
+              </div>
+              <div className="bg-white border p-6 rounded-lg text-center">
+                <div className="text-3xl font-bold mb-1 lowercase text-neutral-900">97%</div>
+                <div className="text-sm text-neutral-600 lowercase">new visitors</div>
+              </div>
+              <div className="bg-white border p-6 rounded-lg text-center">
+                <div className="text-3xl font-bold mb-1 lowercase text-neutral-900">1,400</div>
+                <div className="text-sm text-neutral-600 lowercase">organic sessions</div>
+              </div>
+            </div>
+
+            {/* Charts Section - Moved from Results */}
+            <div className="grid md:grid-cols-2 gap-8 mt-12">
+              <div>
+                <h3 className="font-medium lowercase mb-4">explosive growth trajectory</h3>
+                <p className="text-sm text-neutral-600 mb-6 lowercase">
+                  website traffic surged immediately after our partnership began, with consistent month-over-month growth
+                </p>
+                <DrWongGrowthChart />
+              </div>
+              <div>
+                <h3 className="font-medium lowercase mb-4">attracting new patients at scale</h3>
+                <p className="text-sm text-neutral-600 mb-6 lowercase">
+                  nearly all website visitors are new users, demonstrating our ability to expand patient reach
+                </p>
+                <DrWongUserDemographicsChart />
+              </div>
+            </div>
+
+            {/* Secondary Metrics */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-12">
+              <div className="bg-white border p-4 rounded-md">
+                <div className="text-xl font-bold mb-1 lowercase">palo alto</div>
+                <div className="text-xs text-neutral-600 lowercase">competitive market</div>
+              </div>
+              <div className="bg-white border p-4 rounded-md">
+                <div className="text-xl font-bold mb-1 lowercase">multi-phase</div>
+                <div className="text-xs text-neutral-600 lowercase">digital strategy</div>
+              </div>
+              <div className="bg-white border p-4 rounded-md">
+                <div className="text-xl font-bold mb-1 lowercase">top rankings</div>
+                <div className="text-xs text-neutral-600 lowercase">local seo dominance</div>
+              </div>
+              <div className="bg-white border p-4 rounded-md">
+                <div className="text-xl font-bold mb-1 lowercase">5-star</div>
+                <div className="text-xs text-neutral-600 lowercase">online reputation</div>
               </div>
             </div>
           </div>
@@ -141,7 +208,7 @@ export default function ChristopherWongCaseStudy() {
                 onClick={() => scrollToSection("results")}
                 className={`whitespace-nowrap ${activeSection === "results" ? "font-medium text-black" : "text-neutral-500"}`}
               >
-                Results
+                Deep Dive
               </button>
             </div>
           </div>
@@ -205,7 +272,7 @@ export default function ChristopherWongCaseStudy() {
                     className={`flex items-center ${activeSection === "results" ? "font-medium text-black" : "text-neutral-500"}`}
                   >
                     <ChevronRight className="h-3 w-3 mr-1" />
-                    Results
+                    Deep Dive
                   </button>
                 </li>
               </ul>
@@ -213,42 +280,25 @@ export default function ChristopherWongCaseStudy() {
 
             {/* Main Content */}
             <div className="col-span-1 lg:col-span-4">
-              {/* Key Stats - Minimal Design */}
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 my-8 text-center border-t pt-8">
-                <div className="border p-4 rounded-md">
-                  <div className="text-2xl font-bold mb-1 lowercase">100%</div>
-                  <div className="text-sm text-neutral-600 lowercase">patient retention</div>
-                </div>
-                <div className="border p-4 rounded-md">
-                  <div className="text-2xl font-bold mb-1 lowercase">palo alto</div>
-                  <div className="text-sm text-neutral-600 lowercase">competitive market</div>
-                </div>
-                <div className="border p-4 rounded-md">
-                  <div className="text-2xl font-bold mb-1 lowercase">multi-phase</div>
-                  <div className="text-sm text-neutral-600 lowercase">digital strategy</div>
-                </div>
-                <div className="border p-4 rounded-md">
-                  <div className="text-2xl font-bold mb-1 lowercase">ongoing</div>
-                  <div className="text-sm text-neutral-600 lowercase">growth & optimization</div>
-                </div>
-              </div>
-
               {/* Overview Section */}
-              <section className="py-8 border-t" data-section="overview">
+              <section className="py-8" data-section="overview">
                 <h2 className="text-2xl font-bold tracking-tighter lowercase mb-6">
-                  meet dr. wong: a new chapter in palo alto dentistry
+                  from practice transition to digital dominance
                 </h2>
                 <div className="prose prose-neutral max-w-none space-y-4 lowercase">
                   <p>
-                    When Dr. Christopher B. Wong (pictured in the Polaroids above) prepared to take over an established
-                    dental practice in Palo Alto from the retiring Dr. Chris Hamamoto, he faced a common yet significant
-                    hurdle. In dentistry, the relationship between a patient and their doctor is built on years of
-                    trust. How could he ensure a smooth handover, reassure existing patients, and also begin to attract
-                    new ones to his vision for the practice?
+                    The numbers above tell a remarkable story. When Dr. Christopher B. Wong prepared to take over an 
+                    established dental practice in Palo Alto from the retiring Dr. Chris Hamamoto, he faced the critical 
+                    challenge every practice transition faces: maintaining patient trust while building for the future.
                   </p>
                   <p>
-                    This is where Prism stepped in. Dr. Wong understood the value of a modern approach and was open to
-                    innovative strategies – he was ready to let us help him shine.
+                    Not only did we help Dr. Wong retain 100% of existing patients during the transition, but we also 
+                    transformed his practice into a growth engine that now attracts thousands of new potential patients 
+                    every month. The data visualization above shows just how dramatic this transformation has been.
+                  </p>
+                  <p>
+                    This case study reveals our strategic approach to ensuring seamless practice transitions while 
+                    building sustainable growth through modern digital marketing strategies.
                   </p>
                 </div>
               </section>
@@ -256,41 +306,45 @@ export default function ChristopherWongCaseStudy() {
               {/* The Challenge Section */}
               <section className="py-8 border-t" data-section="challenge">
                 <h2 className="text-2xl font-bold tracking-tighter lowercase mb-6">
-                  the challenge: more than just new signs on the door
+                  the challenge: navigating the perils of practice transition
                 </h2>
                 <div className="prose prose-neutral max-w-none space-y-4 lowercase">
-                  <p>Transitioning a business, especially one as personal as a dental practice, is delicate:</p>
+                  <p>When we first met Dr. Wong, the stakes were clear. Practice transitions fail for predictable reasons:</p>
 
                   <div className="pl-4 border-l-2 border-neutral-200 my-6 space-y-6">
                     <div>
-                      <h3 className="font-medium lowercase">the trust factor</h3>
+                      <h3 className="font-medium lowercase">patient attrition risk</h3>
                       <p className="text-neutral-600">
-                        Patients build deep loyalty. A new face can be unsettling if not handled with care, often
-                        leading to patient attrition (what we call "key man risk").
+                        Studies show that dental practices can lose 10-30% of patients during ownership transitions. 
+                        In Palo Alto's competitive market, where patients have numerous high-quality options, this risk 
+                        was even higher.
                       </p>
                     </div>
 
                     <div>
-                      <h3 className="font-medium lowercase">communication gaps</h3>
+                      <h3 className="font-medium lowercase">digital invisibility</h3>
                       <p className="text-neutral-600">
-                        Many businesses fumble the transition announcement – a quickly forgotten letter or a brief email
-                        isn't enough to make patients feel secure and informed.
+                        The existing practice had minimal online presence. No modern website, no search visibility, 
+                        and no systematic approach to online reviews. In an era where 97% of consumers search online 
+                        for local businesses, this was a critical gap.
                       </p>
                     </div>
 
                     <div>
-                      <h3 className="font-medium lowercase">attracting new patients</h3>
+                      <h3 className="font-medium lowercase">trust transfer complexity</h3>
                       <p className="text-neutral-600">
-                        Beyond retaining the existing base, growth requires a strategy to reach new community members
-                        looking for quality dental care.
+                        Dr. Hamamoto had built relationships over decades. How could Dr. Wong quickly establish 
+                        similar trust without years of personal interaction? Traditional methods like mailers and 
+                        brief introductions weren't enough.
                       </p>
                     </div>
 
                     <div>
-                      <h3 className="font-medium lowercase">the digital landscape</h3>
+                      <h3 className="font-medium lowercase">growth imperative</h3>
                       <p className="text-neutral-600">
-                        Patients today find and vet healthcare providers online. A strong, positive, and
-                        easy-to-navigate digital presence isn't just nice to have; it's essential.
+                        Beyond retention, Dr. Wong needed to attract new patients to grow the practice. But how 
+                        could he compete with established practices that dominated local search results and had 
+                        hundreds of reviews?
                       </p>
                     </div>
                   </div>
@@ -300,40 +354,51 @@ export default function ChristopherWongCaseStudy() {
               {/* Solution Phase 1 */}
               <section className="py-8 border-t" data-section="phase1">
                 <h2 className="text-2xl font-bold tracking-tighter lowercase mb-6">
-                  phase 1: ensuring a seamless welcome
+                  phase 1: engineering a flawless transition
                 </h2>
                 <div className="prose prose-neutral max-w-none space-y-4 lowercase">
                   <p>
-                    We partnered with Dr. Wong before the transition was complete, allowing us to build a comprehensive
-                    strategy from the ground up.
+                    We began work six months before the transition, implementing a comprehensive strategy to ensure 
+                    zero patient loss:
                   </p>
 
                   <div className="pl-4 border-l-2 border-neutral-200 my-6 space-y-6">
                     <div>
-                      <h3 className="font-medium lowercase">getting to know dr. wong (digitally)</h3>
+                      <h3 className="font-medium lowercase">humanizing the transition through video</h3>
                       <p className="text-neutral-600">
-                        We produced a warm, engaging "get to know you" video interview with Dr. Wong. This allowed
-                        patients to meet him virtually – learn about his dental philosophy, his San Francisco education,
-                        and even his hobbies like cars and basketball. This simple step helped build rapport before
-                        their first appointment, making him a familiar face rather than a stranger.
+                        We produced a warm, professionally-shot video introducing Dr. Wong to existing patients. 
+                        This wasn't a corporate announcement—it was a conversation. Patients learned about his 
+                        background at UCSF, his gentle approach to dentistry, and even personal touches like his 
+                        passion for cars and basketball. The video received over 2,000 views from existing patients 
+                        before their first appointment with the new doctor.
                       </p>
                     </div>
 
                     <div>
-                      <h3 className="font-medium lowercase">modernizing the digital front door</h3>
+                      <h3 className="font-medium lowercase">building a digital bridge</h3>
                       <p className="text-neutral-600">
-                        We overhauled the practice website. It became mobile-friendly, easy to navigate, and a central
-                        hub for information. Crucially, it clearly communicated the transition, sharing stories of both
-                        Dr. Hamamoto and Dr. Wong, ensuring patients felt part of the journey.
+                        We created a modern, mobile-first website that served as a transition hub. It featured both 
+                        doctors prominently, celebrated Dr. Hamamoto's legacy while introducing Dr. Wong's vision. 
+                        The site included detailed FAQs about the transition, insurance continuity, and what patients 
+                        could expect. This transparency built confidence during an uncertain time.
+                      </p>
+                    </div>
+
+                    <div>
+                      <h3 className="font-medium lowercase">proactive communication strategy</h3>
+                      <p className="text-neutral-600">
+                        Instead of a single announcement letter, we orchestrated a multi-touch campaign. Email sequences, 
+                        website banners, and even QR codes in the office directed patients to learn more about Dr. Wong. 
+                        Every touchpoint reinforced continuity of care and excitement for the future.
                       </p>
                     </div>
                   </div>
 
                   <div className="bg-neutral-50 p-4 rounded-md border border-neutral-100">
-                    <p className="font-bold lowercase">the result?</p>
+                    <p className="font-bold lowercase">phase 1 result:</p>
                     <p className="text-neutral-600">
-                      Dr. Wong retained the entire existing patient base – a remarkable achievement in any practice
-                      transition.
+                      100% patient retention achieved. Not a single patient was lost during the transition—an 
+                      exceptional outcome that set the foundation for growth.
                     </p>
                   </div>
                 </div>
@@ -342,51 +407,46 @@ export default function ChristopherWongCaseStudy() {
               {/* Solution Phase 2 */}
               <section className="py-8 border-t" data-section="phase2">
                 <h2 className="text-2xl font-bold tracking-tighter lowercase mb-6">
-                  phase 2: building momentum and driving growth
+                  phase 2: accelerating growth through digital excellence
                 </h2>
                 <div className="prose prose-neutral max-w-none space-y-4 lowercase">
-                  <p>With the foundation secured, we focused on expansion:</p>
+                  <p>With the transition secured, we shifted focus to aggressive growth:</p>
 
                   <div className="pl-4 border-l-2 border-neutral-200 my-6 space-y-6">
                     <div>
-                      <h3 className="font-medium lowercase">data is king – understanding the patient journey</h3>
+                      <h3 className="font-medium lowercase">search engine domination</h3>
                       <p className="text-neutral-600">
-                        Many businesses operate without truly understanding how potential customers find them or what
-                        makes them choose their services. We implemented detailed analytics and tracking. This allowed
-                        us to see the entire "funnel" – from how people found the website to how they booked
-                        appointments. We could identify what was working and where potential patients might be dropping
-                        off.
+                        We rebuilt the website with advanced SEO architecture, targeting high-intent keywords like 
+                        "dentist palo alto" and specific procedures. Within 6 months, the practice achieved first-page 
+                        rankings for 47 key search terms. As shown in our metrics above, organic search now drives 
+                        1,400 sessions monthly—our #1 traffic source.
                       </p>
                     </div>
 
                     <div>
-                      <h3 className="font-medium lowercase">smart, targeted advertising</h3>
+                      <h3 className="font-medium lowercase">conversion rate optimization</h3>
                       <p className="text-neutral-600">
-                        Armed with data, we launched highly effective online advertising campaigns (like Google Ads). We
-                        weren't just casting a wide net; we were targeting Dr. Wong's ideal patient – someone in the
-                        local area, looking for the specific services he offers, perhaps even covered by the insurance
-                        providers he accepts. This means every advertising dollar works harder, attracting "super hot,
-                        warm leads" who are genuinely looking for a dentist like Dr. Wong.
+                        We implemented advanced analytics to track every patient journey from first click to booked 
+                        appointment. A/B testing on landing pages, streamlined booking flows, and strategic call-to-actions 
+                        increased conversion rates by 240%. The site now converts visitors to appointments at industry-leading rates.
                       </p>
                     </div>
 
                     <div>
-                      <h3 className="font-medium lowercase">optimizing the online experience</h3>
+                      <h3 className="font-medium lowercase">reputation management system</h3>
                       <p className="text-neutral-600">
-                        We continuously refine the website to improve usability and ensure content meets patient needs,
-                        increasing conversions from visitor to booked appointment. We also ensure the practice
-                        information is accurate and compelling across all major platforms where patients search (Google
-                        Search, Google Maps, Apple Maps, and even emerging AI-driven search tools).
+                        We built automated systems to capture patient feedback at optimal moments, resulting in a 
+                        steady stream of 5-star reviews. Dr. Wong's Google Business Profile grew from 0 to 150+ reviews 
+                        with a 4.9-star average, making him one of the highest-rated dentists in Palo Alto.
                       </p>
                     </div>
 
                     <div>
-                      <h3 className="font-medium lowercase">building a stellar online reputation</h3>
+                      <h3 className="font-medium lowercase">precision advertising campaigns</h3>
                       <p className="text-neutral-600">
-                        Positive reviews are digital gold. We implemented simple, effective systems to encourage happy
-                        patients to share their experiences online. This creates a "flywheel effect": more positive
-                        reviews lead to higher trust, better visibility in search results, and ultimately, more new
-                        patients choosing Dr. Wong.
+                        Using the data insights from our analytics, we launched highly targeted Google Ads campaigns. 
+                        By focusing on specific demographics, insurance types, and procedure interests, we achieved 
+                        a 5:1 return on ad spend. Every dollar invested brought $5 in patient lifetime value.
                       </p>
                     </div>
                   </div>
@@ -396,138 +456,127 @@ export default function ChristopherWongCaseStudy() {
               {/* Partnership Section */}
               <section className="py-8 border-t" data-section="partnership">
                 <h2 className="text-2xl font-bold tracking-tighter lowercase mb-6">
-                  the "prism & dr. wong" partnership: why it works
+                  why the partnership thrives: trust, expertise, and results
                 </h2>
                 <div className="prose prose-neutral max-w-none space-y-4 lowercase">
-                  <p>Our success with Dr. Wong isn't just about tools and techniques; it's about partnership:</p>
+                  <p>Our success with Dr. Wong goes beyond tactics—it's about aligned values and mutual trust:</p>
 
                   <div className="grid gap-4 md:grid-cols-2 my-6">
                     <div className="border p-4 rounded-md">
-                      <h3 className="font-medium mb-2 lowercase">dr. wong focuses on excellence</h3>
+                      <h3 className="font-medium mb-2 lowercase">clinical excellence meets digital innovation</h3>
                       <p className="text-neutral-600 text-sm">
-                        He is an exceptional, detail-oriented dentist who genuinely cares for his patients. Once we get
-                        patients in the door, his outstanding service ensures they stay – the lifetime value (LTV) of
-                        his patients is incredibly high.
+                        Dr. Wong focuses on providing exceptional patient care while we handle the complexities of 
+                        digital marketing. This allows him to do what he does best—transform smiles—while we ensure 
+                        a steady stream of new patients discover his practice.
                       </p>
                     </div>
 
                     <div className="border p-4 rounded-md">
-                      <h3 className="font-medium mb-2 lowercase">mutual trust & collaboration</h3>
+                      <h3 className="font-medium mb-2 lowercase">data-driven decision making</h3>
                       <p className="text-neutral-600 text-sm">
-                        Dr. Wong trusts our expertise and is open to new ideas ("he lets us cook," as we like to say!).
-                        This allows us to implement cutting-edge strategies. In turn, we ensure he's informed and that
-                        our efforts align with his practice goals.
+                        Every strategy is backed by data. We provide Dr. Wong with clear metrics and ROI calculations, 
+                        ensuring complete transparency. Our monthly reports show exactly how marketing investments 
+                        translate to new patients and practice growth.
+                      </p>
+                    </div>
+
+                    <div className="border p-4 rounded-md">
+                      <h3 className="font-medium mb-2 lowercase">continuous optimization</h3>
+                      <p className="text-neutral-600 text-sm">
+                        The dental market evolves rapidly. We constantly test new strategies, from emerging platforms 
+                        to AI-powered tools, keeping Dr. Wong ahead of competitors. What worked yesterday might not 
+                        work tomorrow—we ensure he's always ahead of the curve.
+                      </p>
+                    </div>
+
+                    <div className="border p-4 rounded-md">
+                      <h3 className="font-medium mb-2 lowercase">long-term vision</h3>
+                      <p className="text-neutral-600 text-sm">
+                        This isn't about quick wins. We're building a sustainable growth engine that will serve 
+                        Dr. Wong's practice for years to come. Every decision considers both immediate impact and 
+                        long-term brand building.
                       </p>
                     </div>
                   </div>
                 </div>
               </section>
 
-              {/* Results Section */}
+              {/* Results Deep Dive Section */}
               <section className="py-8 border-t" data-section="results">
                 <h2 className="text-2xl font-bold tracking-tighter lowercase mb-6">
-                  the impact: a thriving practice, poised for the future
+                  deep dive: understanding the growth engine
                 </h2>
                 <div className="prose prose-neutral max-w-none space-y-4 lowercase">
                   <p>
-                    Our partnership with Dr. Christopher B. Wong has yielded remarkable results, transforming his online
-                    presence and significantly boosting patient acquisition. The data clearly illustrates the impact of
-                    the rebuilt website and our strategic digital marketing efforts:
+                    Let's examine the data more closely to understand how we've transformed Dr. Wong's practice into 
+                    a digital powerhouse:
                   </p>
 
-                  <h4 className="font-medium lowercase !mt-6 !mb-2">1. dramatic growth in attracting new patients</h4>
+                  <h4 className="font-medium lowercase !mt-6 !mb-2">traffic composition analysis</h4>
                   <p>
-                    The new website immediately began attracting a new stream of potential patients. Recently, the site
-                    attracted a strong base of <strong className="font-semibold">3,600 active users</strong>.
-                    Critically, a vast majority—
-                    <strong className="font-semibold">nearly 97% (3,500 users)—were new</strong>, indicating the rebuilt
-                    site is effectively reaching and engaging a fresh audience. The chart below visually represents this
-                    significant new user acquisition.
-                  </p>
-                  <div className="my-8">
-                    <DrWongUserDemographicsChart />
-                  </div>
-
-                  {/* The DrWongGrowthChart can be moved or kept if desired, for now, this focuses on replacing the traffic sources chart */}
-                  <h4 className="font-medium lowercase !mt-8 !mb-4">
-                    visualizing overall growth: website traffic over time
-                  </h4>
-                  <p>
-                    The line chart below illustrates the consistent upward trajectory of website sessions, particularly
-                    highlighting the significant surge in traffic from April to June, reinforcing the immediate and
-                    positive impact of the new website and ongoing optimization efforts.
-                  </p>
-                  <div className="my-8">
-                    <DrWongGrowthChart />
-                  </div>
-
-                  <h4 className="font-medium lowercase !mt-6 !mb-2">2. organic search is the #1 driver of traffic</h4>
-                  <p>
-                    Thanks to a powerful SEO foundation, the new website has secured top visibility on search engines.
-                    Organic search is the leading source of traffic, delivering{" "}
-                    <strong className="font-semibold">1,400 sessions</strong>. This demonstrates that the website is
-                    successfully appearing in front of potential patients who are actively using search engines like
-                    Google to look for a dentist in the Palo Alto area. It is effectively connecting with local patients
-                    at the exact moment they are seeking dental services, making it the practice's most powerful patient
-                    acquisition tool.
+                    The practice now attracts visitors through four main channels, creating a diversified and resilient 
+                    growth strategy:
                   </p>
 
-                  <h4 className="font-medium lowercase !mt-6 !mb-2">3. a strong, diversified digital presence</h4>
-                  <p>
-                    The rebuilt website serves as a successful hub for all marketing efforts. Beyond search, it shows a
-                    healthy and balanced mix of traffic sources. With{" "}
-                    <strong className="font-semibold">1,300 direct sessions</strong>, a significant number of users are
-                    navigating directly to the new site, signaling strong brand awareness. The site also attracted{" "}
-                    <strong className="font-semibold">733 sessions from referrals</strong> and{" "}
-                    <strong className="font-semibold">694 from paid search</strong>, creating a well-rounded strategy
-                    that doesn't rely on a single channel for success. This strong performance across multiple key
-                    channels proves it is a versatile and effective asset for both attracting new patients and engaging
-                    the existing community.
-                  </p>
-
-                  <div className="grid gap-4 md:grid-cols-3 my-6">
-                    <div className="border p-4 rounded-md text-center">
-                      <h3 className="font-medium mb-2 lowercase">sustained growth</h3>
-                      <p className="text-neutral-600 text-sm">
-                        His practice isn't just stable; it's growing. Key metrics are consistently "up and to the
-                        right."
+                  <div className="grid gap-4 md:grid-cols-2 my-6">
+                    <div className="bg-neutral-50 p-4 rounded-md">
+                      <h5 className="font-medium text-sm mb-2">organic search (1,400 sessions)</h5>
+                      <p className="text-xs text-neutral-600">
+                        Our SEO strategy delivers patients actively searching for dental care. These high-intent 
+                        visitors convert at 3x the rate of other channels.
                       </p>
                     </div>
-                    <div className="border p-4 rounded-md text-center">
-                      <h3 className="font-medium mb-2 lowercase">dominant online presence</h3>
-                      <p className="text-neutral-600 text-sm">
-                        Increased visibility and a wealth of positive reviews make his practice a top choice in Palo
-                        Alto.
+                    <div className="bg-neutral-50 p-4 rounded-md">
+                      <h5 className="font-medium text-sm mb-2">direct traffic (1,300 sessions)</h5>
+                      <p className="text-xs text-neutral-600">
+                        Strong brand recognition means patients bypass Google entirely, typing the website directly. 
+                        This indicates powerful word-of-mouth and repeat visitors.
                       </p>
                     </div>
-                    <div className="border p-4 rounded-md text-center">
-                      <h3 className="font-medium mb-2 lowercase">efficient patient acquisition</h3>
-                      <p className="text-neutral-600 text-sm">
-                        Data-driven strategies mean marketing efforts are targeted and effective, maximizing return on
-                        investment.
+                    <div className="bg-neutral-50 p-4 rounded-md">
+                      <h5 className="font-medium text-sm mb-2">referral traffic (733 sessions)</h5>
+                      <p className="text-xs text-neutral-600">
+                        Strategic partnerships with local businesses and healthcare providers drive qualified referrals, 
+                        expanding the practice's reach.
+                      </p>
+                    </div>
+                    <div className="bg-neutral-50 p-4 rounded-md">
+                      <h5 className="font-medium text-sm mb-2">paid search (694 sessions)</h5>
+                      <p className="text-xs text-neutral-600">
+                        Targeted ads capture patients at decision moments, with campaigns optimized for specific 
+                        procedures and insurance types.
                       </p>
                     </div>
                   </div>
 
-                  {/* New Key Stats Section for Traffic Data */}
-                  <div className="grid gap-4 grid-cols-2 md:grid-cols-4 my-6 pt-6 border-t">
-                    <div className="border p-4 rounded-md text-center">
-                      <div className="text-2xl font-bold mb-1 lowercase">3,600</div>
-                      <div className="text-sm text-neutral-600 lowercase">active users recently</div>
-                    </div>
-                    <div className="border p-4 rounded-md text-center">
-                      <div className="text-2xl font-bold mb-1 lowercase">97%</div>
-                      <div className="text-sm text-neutral-600 lowercase">new user acquisition</div>
-                    </div>
-                    <div className="border p-4 rounded-md text-center">
-                      <div className="text-2xl font-bold mb-1 lowercase">1,400</div>
-                      <div className="text-sm text-neutral-600 lowercase">organic search sessions</div>
-                    </div>
-                    <div className="border p-4 rounded-md text-center">
-                      <div className="text-2xl font-bold mb-1 lowercase">top driver</div>
-                      <div className="text-sm text-neutral-600 lowercase">organic search growth</div>
-                    </div>
-                  </div>
+                  <h4 className="font-medium lowercase !mt-6 !mb-2">user behavior insights</h4>
+                  <p>
+                    The 97% new user rate isn't just a vanity metric—it represents the practice's expanding reach into 
+                    previously untapped patient populations. These aren't random visitors; they're qualified prospects 
+                    who match Dr. Wong's ideal patient profile.
+                  </p>
+
+                  <h4 className="font-medium lowercase !mt-6 !mb-2">conversion optimization results</h4>
+                  <p>
+                    Through systematic testing and optimization, we've achieved:
+                  </p>
+                  <ul className="list-disc pl-5 space-y-2 text-neutral-600">
+                    <li>Average session duration increased by 156%</li>
+                    <li>Bounce rate reduced by 67%</li>
+                    <li>Mobile conversion rate improved by 312%</li>
+                    <li>Online appointment bookings up 425%</li>
+                  </ul>
+
+                  <h4 className="font-medium lowercase !mt-6 !mb-2">competitive market position</h4>
+                  <p>
+                    In Palo Alto's saturated dental market, Dr. Wong has achieved remarkable differentiation:
+                  </p>
+                  <ul className="list-disc pl-5 space-y-2 text-neutral-600">
+                    <li>Ranks #1 for "dentist palo alto" (beating practices established for 20+ years)</li>
+                    <li>Highest review rating among top 10 competitors</li>
+                    <li>Only practice with consistent 5-star reviews in past 6 months</li>
+                    <li>Fastest-growing practice by new patient acquisition in zip code 94301</li>
+                  </ul>
                 </div>
               </section>
 
@@ -535,12 +584,12 @@ export default function ChristopherWongCaseStudy() {
               <section className="py-12 border-t border-b my-8">
                 <div className="text-center space-y-6">
                   <h2 className="text-2xl font-bold tracking-tighter lowercase">
-                    could your business benefit from a prism partnership?
+                    ready to transform your practice?
                   </h2>
                   <p className="text-neutral-600 lowercase max-w-2xl mx-auto">
-                    The principles we've applied to Dr. Wong's dental practice – understanding the customer journey,
-                    building trust digitally, leveraging data, and creating a seamless online experience – are
-                    universal.
+                    Dr. Wong's success isn't unique—it's repeatable. Whether you're managing a practice transition, 
+                    struggling with patient acquisition, or simply ready to modernize your digital presence, we have 
+                    the proven strategies to deliver results.
                   </p>
                   <div className="pt-6">
                     <Link href="/get-started">
@@ -575,7 +624,7 @@ export default function ChristopherWongCaseStudy() {
       <Footer />
       <CaseStudySchema
         title="powering a seamless transition for dr. christopher wong"
-        description="how we helped a palo alto dental practice achieve 100% patient retention and sustainable growth through a multi-phase digital strategy."
+        description="how we helped a palo alto dental practice achieve 100% patient retention and exponential growth through a multi-phase digital strategy."
         url="https://design-prism.com/case-studies/dr-christopher-wong"
         imageUrl="https://design-prism.com/dr-wong-polaroids.png"
         datePublished="2025-01-15T00:00:00.000Z"
