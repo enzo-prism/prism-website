@@ -54,7 +54,7 @@ export default function ChristopherWongCaseStudy() {
   }
 
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className="flex min-h-screen flex-col overflow-x-hidden">
       <PageViewTracker title="Dr. Christopher Wong Case Study" />
       <Navbar />
       <main className="flex-1 bg-white">
@@ -111,7 +111,7 @@ export default function ChristopherWongCaseStudy() {
             </h2>
             
             {/* Primary Metrics */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mb-8">
               <div className="bg-white border p-6 rounded-lg text-center">
                 <div className="text-3xl font-bold mb-1 lowercase text-neutral-900">100%</div>
                 <div className="text-sm text-neutral-600 lowercase">patient retention</div>
@@ -149,7 +149,7 @@ export default function ChristopherWongCaseStudy() {
             </div>
 
             {/* Secondary Metrics */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-12">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mt-12">
               <div className="bg-white border p-4 rounded-md">
                 <div className="text-xl font-bold mb-1 lowercase">palo alto</div>
                 <div className="text-xs text-neutral-600 lowercase">competitive market</div>
