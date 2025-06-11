@@ -2,6 +2,7 @@ import { Mail, Instagram, CalendarDays } from "lucide-react"
 import Link from "next/link"
 import type { Metadata } from "next"
 import { ContactPageSchema } from "@/components/schema-markup"
+import Navbar from "@/components/navbar"
 
 export const metadata: Metadata = {
   title: "Contact Us | Prism",
@@ -53,6 +54,7 @@ export default function ContactPage() {
 
   return (
     <>
+      <Navbar />
       <ContactPageSchema />
       <div className="min-h-screen bg-white flex flex-col items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-md w-full space-y-10 text-center">
