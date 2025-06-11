@@ -288,7 +288,7 @@ export default function ChristopherWongCaseStudy() {
                 <div className="prose prose-neutral max-w-none space-y-4 lowercase">
                   <p>
                     The numbers above tell a remarkable story. When Dr. Christopher B. Wong prepared to take over an 
-                    established dental practice in Palo Alto from the retiring Dr. Chris Hamamoto, he faced the critical 
+                    established dental practice in Palo Alto from the retiring Dr. Kris Hamamoto, he faced the critical 
                     challenge every practice transition faces: maintaining patient trust while building for the future.
                   </p>
                   <p>
