@@ -235,7 +235,12 @@ export default function ClientShowcase() {
     const filteredClientsData = clientsData.filter(
       (client) => client.id !== 23 && client.id !== 24 && client.id !== 27,
     )
-    setClients([...filteredClientsData, ...filteredClientsData])
+
+    // Shuffle the clients so they appear in a random order on every page load
+    const shuffledClients = [...filteredClientsData].sort(() => Math.random() - 0.5)
+
+    // Duplicate the list to enable the seamless scrolling effect
+    setClients([...shuffledClients, ...shuffledClients])
     setIsLoaded(true)
   }, [])
 
