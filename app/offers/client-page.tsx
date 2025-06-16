@@ -4,14 +4,16 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import CoreImage from "@/components/core-image"
+import GradientCard from "@/components/gradient-card"
 import { ArrowRight } from "lucide-react"
 
 interface Offer {
   id: string
   title: string
   description: string
-  imageUrl: string
-  imageAlt: string
+  imageUrl?: string
+  imageAlt?: string
+  gradientType?: "ai-seo" | "website-makeover"
   link: string
   ctaText: string
 }
@@ -22,8 +24,7 @@ const offersData: Offer[] = [
     title: "🤖 ai seo boost™",
     description:
       "make chatgpt, gemini & perplexity name-drop your brand first. get recommended by ai bots 24/7 with our specialized ai search optimization.",
-    imageUrl: "/offers/ai-seo-boost-card.png",
-    imageAlt: "AI SEO Boost illustration showing AI bots recommending your brand",
+    gradientType: "ai-seo",
     link: "/offers/ai-seo-boost",
     ctaText: "boost ai visibility",
   },
@@ -32,8 +33,7 @@ const offersData: Offer[] = [
     title: "☀️ summer website makeover",
     description:
       "triple your traffic & conversions in 30 days with our all-inclusive website rebuild package. full-stack site, seo, conversion boosters, and a 30-day 3x guarantee!",
-    imageUrl: "/offers/summer-makeover-card-v2.png",
-    imageAlt: "Stylized graphic showing website analytics, bounce rate, and a conversion rate funnel.",
+    gradientType: "website-makeover",
     link: "/offers/summer-website-makeover",
     ctaText: "view makeover details",
   },
@@ -69,16 +69,26 @@ export default function OffersClientPage() {
               >
                 <CardHeader className="p-0">
                   <div className="aspect-[16/9] w-full">
-                    <CoreImage
-                      src={offer.imageUrl}
-                      alt={offer.imageAlt}
-                      width={600}
-                      height={338} // Adjusted height for 16:9 based on 600 width
-                      className="object-cover w-full h-full"
-                      fallbackSrc="/placeholder.svg?width=600&height=338"
-                      trackingId={`offer_image_${offer.id}`}
-                      priority={true} // Consider adding priority for LCP images
-                    />
+                    {offer.gradientType ? (
+                      <GradientCard
+                        gradientType={offer.gradientType}
+                        width={600}
+                        height={338}
+                        className="w-full h-full"
+                        trackingId={`offer_gradient_${offer.id}`}
+                      />
+                    ) : (
+                      <CoreImage
+                        src={offer.imageUrl!}
+                        alt={offer.imageAlt!}
+                        width={600}
+                        height={338}
+                        className="object-cover w-full h-full"
+                        fallbackSrc="/placeholder.svg?width=600&height=338"
+                        trackingId={`offer_image_${offer.id}`}
+                        priority={true}
+                      />
+                    )}
                   </div>
                 </CardHeader>
                 <CardContent className="p-4 md:p-6 flex-grow">
