@@ -87,6 +87,13 @@ export default function Footer() {
               >
                 contact
               </Link>
+              <Link
+                href="/careers"
+                className="text-sm text-neutral-600 hover:text-neutral-900 transition-colors lowercase"
+                onClick={() => trackNavigation("footer_careers", "/careers")}
+              >
+                careers
+              </Link>
             </div>
           </div>
         </div>
