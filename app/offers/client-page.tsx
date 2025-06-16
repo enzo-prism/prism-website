@@ -18,6 +18,16 @@ interface Offer {
 
 const offersData: Offer[] = [
   {
+    id: "ai-seo-boost",
+    title: "🤖 ai seo boost™",
+    description:
+      "make chatgpt, gemini & perplexity name-drop your brand first. get recommended by ai bots 24/7 with our specialized ai search optimization.",
+    imageUrl: "/offers/ai-seo-boost-card.png",
+    imageAlt: "AI SEO Boost illustration showing AI bots recommending your brand",
+    link: "/offers/ai-seo-boost",
+    ctaText: "boost ai visibility",
+  },
+  {
     id: "summer-website-makeover",
     title: "☀️ summer website makeover",
     description:
