@@ -35,6 +35,7 @@ export default function PodcastClientPage() {
     {
       number: "01",
       guest: "Dr. Anthony Mataria",
+      youtubeUrl: "https://youtu.be/WIWxwdZflzo",
       takeaways: [
         "From single chair to multi-location",
         "Pricing service-based work with confidence",
@@ -44,6 +45,7 @@ export default function PodcastClientPage() {
     {
       number: "02",
       guest: "Ludmila Garcia",
+      youtubeUrl: "https://youtu.be/5eB4Y27zkE8",
       takeaways: [
         "Turning passion projects into revenue",
         "Operating as a team of one",
@@ -53,6 +55,7 @@ export default function PodcastClientPage() {
     {
       number: "03",
       guest: "Melissa Chen",
+      youtubeUrl: "https://youtu.be/jE6YAimUxMQ",
       takeaways: [
         "Scaling customer experience without losing heart",
         "Hiring before you feel \"ready\"",
@@ -62,6 +65,7 @@ export default function PodcastClientPage() {
     {
       number: "04",
       guest: "Dr. Arash Abolfazlian",
+      youtubeUrl: "https://youtu.be/zL4Ax2bs9pU",
       takeaways: [
         "Switching careers and industries",
         "Financing a first practice purchase",
@@ -71,6 +75,7 @@ export default function PodcastClientPage() {
     {
       number: "05",
       guest: "Dr. Michael Njo",
+      youtubeUrl: "https://youtu.be/0SS1C5d3m1w",
       takeaways: [
         "Buying vs. building a practice",
         "Doubling revenue in 12 months",
@@ -80,6 +85,7 @@ export default function PodcastClientPage() {
     {
       number: "06",
       guest: "Dr. Katie Lee",
+      youtubeUrl: "https://youtu.be/FxuzACT-o2Q",
       takeaways: [
         "Brand-building on TikTok & IG",
         "From side-hustle to full clinic",
@@ -89,6 +95,7 @@ export default function PodcastClientPage() {
     {
       number: "07",
       guest: "Dr. Chris Wong",
+      youtubeUrl: "https://youtu.be/HrksJeYb02Q",
       takeaways: [
         "M&A: buying a legacy practice",
         "Modernizing ops without scaring staff",
@@ -98,6 +105,7 @@ export default function PodcastClientPage() {
     {
       number: "08",
       guest: "Wil Gilmore",
+      youtubeUrl: "https://youtu.be/UDYw11mQe-c",
       takeaways: [
         "Nailing product–market fit in a niche",
         "Fund-raise vs. bootstrap math",
@@ -107,6 +115,7 @@ export default function PodcastClientPage() {
     {
       number: "09",
       guest: "Dr. Teagan Willes",
+      youtubeUrl: "https://youtu.be/wCQrUajsnk8",
       takeaways: [
         "Differentiating in a luxury market",
         "Designing spaces that sell themselves",
@@ -214,16 +223,33 @@ export default function PodcastClientPage() {
                     </div>
                   </CardHeader>
                   <CardContent>
-                    <div className="space-y-2">
-                      <h4 className="text-sm font-medium text-neutral-700 lowercase mb-3">quick-hit takeaways:</h4>
-                      <ul className="space-y-2">
-                        {episode.takeaways.map((takeaway, index) => (
-                          <li key={index} className="text-sm text-neutral-600 lowercase flex items-start">
-                            <span className="w-1.5 h-1.5 bg-neutral-400 rounded-full mr-3 mt-2 flex-shrink-0"></span>
-                            {takeaway}
-                          </li>
-                        ))}
-                      </ul>
+                    <div className="space-y-4">
+                      <div>
+                        <h4 className="text-sm font-medium text-neutral-700 lowercase mb-3">quick-hit takeaways:</h4>
+                        <ul className="space-y-2">
+                          {episode.takeaways.map((takeaway, index) => (
+                            <li key={index} className="text-sm text-neutral-600 lowercase flex items-start">
+                              <span className="w-1.5 h-1.5 bg-neutral-400 rounded-full mr-3 mt-2 flex-shrink-0"></span>
+                              {takeaway}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                      <a
+                        href={episode.youtubeUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={() => trackCTAClick(`watch episode ${episode.number}`, "podcast page")}
+                      >
+                        <Button 
+                          variant="outline" 
+                          size="sm" 
+                          className="w-full rounded-full px-4 py-2 text-xs lowercase"
+                        >
+                          <Youtube className="mr-2 h-3 w-3 text-red-600" />
+                          watch on youtube
+                        </Button>
+                      </a>
                     </div>
                   </CardContent>
                 </Card>
