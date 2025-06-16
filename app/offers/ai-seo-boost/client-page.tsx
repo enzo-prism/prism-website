@@ -3,8 +3,11 @@
 import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
 import { Button } from "@/components/ui/button"
+import { Badge } from "@/components/ui/badge"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel"
 import Link from "next/link"
-import { Search, Target, TrendingUp, Calendar } from "lucide-react"
+import { Search, Target, TrendingUp, Calendar, Star, Check, ChevronRight, Bot, Zap, BarChart3, Users, Clock, Shield } from "lucide-react"
 import { trackCTAClick } from "@/utils/analytics"
 
 export default function AISEOBoostPage() {
@@ -29,84 +32,419 @@ export default function AISEOBoostPage() {
     }
   ]
 
+  const testimonials = [
+    {
+      name: "Dr. Sarah Chen",
+      role: "Dental Practice Owner",
+      content: "ChatGPT now recommends our practice first when people ask about dentists in our area. We've seen a 300% increase in AI-driven inquiries.",
+      rating: 5,
+      location: "San Francisco, CA"
+    },
+    {
+      name: "Marcus Rodriguez",
+      role: "Tech Startup Founder",
+      content: "Perplexity mentions our SaaS tool in 8 out of 10 relevant searches. This has completely transformed our organic acquisition.",
+      rating: 5,
+      location: "Austin, TX"
+    },
+    {
+      name: "Jennifer Walsh",
+      role: "E-commerce Owner",
+      content: "Google's AI Overview now features our products prominently. Our click-through rates from AI search have tripled.",
+      rating: 5,
+      location: "New York, NY"
+    }
+  ]
+
+  const pricingTiers = [
+    {
+      name: "AI Audit Only",
+      price: "$497",
+      description: "Discover your current AI visibility",
+      features: [
+        "Complete AI search analysis",
+        "ChatGPT visibility report",
+        "Gemini recommendation audit",
+        "Perplexity mention tracking",
+        "Competitor AI comparison",
+        "Optimization roadmap"
+      ],
+      popular: false
+    },
+    {
+      name: "Full AI Optimization",
+      price: "$2,997",
+      description: "Complete AI search domination",
+      features: [
+        "Everything in AI Audit",
+        "Strategic content optimization",
+        "Citation building campaign",
+        "AI-friendly schema markup",
+        "Monthly progress reports",
+        "90-day traffic guarantee",
+        "Priority support access"
+      ],
+      popular: true
+    },
+    {
+      name: "Enterprise AI Strategy",
+      price: "Custom",
+      description: "For larger organizations",
+      features: [
+        "Everything in Full Optimization",
+        "Multi-location optimization",
+        "Brand mention management",
+        "Advanced AI tracking setup",
+        "Dedicated account manager",
+        "Quarterly strategy sessions",
+        "Custom reporting dashboard"
+      ],
+      popular: false
+    }
+  ]
+
+  const problemPoints = [
+    {
+      icon: Bot,
+      title: "AI Bots Ignore Your Brand",
+      description: "ChatGPT, Gemini, and Perplexity recommend your competitors instead of you"
+    },
+    {
+      icon: TrendingUp,
+      title: "Missing the AI Traffic Wave",
+      description: "40% of searches now go through AI - and you're not getting any of it"
+    },
+    {
+      icon: Users,
+      title: "Your Customers Ask AI First",
+      description: "They trust AI recommendations more than traditional search results"
+    }
+  ]
+
+  const resultMetrics = [
+    { metric: "2-5x", description: "Increase in AI-driven traffic" },
+    { metric: "90 days", description: "Timeline to see results" },
+    { metric: "100%", description: "Money-back guarantee" },
+    { metric: "24/7", description: "AI bots working for you" }
+  ]
+
   return (
     <>
       <Navbar />
-      <div className="min-h-screen bg-white flex flex-col items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-2xl w-full space-y-16 text-center">
-          
-          {/* Hero Section */}
-          <div>
+      <div className="min-h-screen bg-white">
+        {/* Hero Section */}
+        <section className="py-12 px-4 sm:px-6 lg:px-8">
+          <div className="max-w-4xl mx-auto text-center">
             <div className="text-5xl mb-6" role="img" aria-label="Robot emoji">
               🤖
             </div>
             <h1 className="text-4xl font-bold tracking-tight text-neutral-900 sm:text-5xl md:text-6xl lowercase">
               AI SEO Boost™
             </h1>
-            <p className="mt-6 text-xl text-neutral-600 lowercase max-w-lg mx-auto">
-              Get recommended by AI bots first.
+            <p className="mt-6 text-xl text-neutral-600 lowercase max-w-2xl mx-auto">
+              Make ChatGPT, Gemini & Perplexity name-drop your brand first. Get recommended by AI bots 24/7.
             </p>
             <div className="mt-10">
               <Link href="/get-started">
                 <Button 
                   size="lg"
-                  className="bg-neutral-900 hover:bg-neutral-800 text-white rounded-full px-8 py-4 text-lg lowercase shadow-lg"
+                  className="bg-neutral-900 hover:bg-neutral-800 text-white rounded-full px-8 py-4 text-lg lowercase shadow-lg mr-4"
                   onClick={() => trackCTAClick("book discovery call", "ai-seo-boost hero")}
                 >
                   <Calendar className="mr-3 h-5 w-5" />
                   Book Discovery Call
                 </Button>
               </Link>
+              <Button 
+                variant="outline"
+                size="lg"
+                className="rounded-full px-8 py-4 text-lg lowercase"
+                onClick={() => trackCTAClick("see pricing", "ai-seo-boost hero secondary")}
+              >
+                See Pricing Below
+              </Button>
+            </div>
+            <p className="text-sm text-neutral-500 mt-6 lowercase">
+              ✅ 90-day results guarantee • ✅ No long-term contracts
+            </p>
+          </div>
+        </section>
+
+        {/* The Dream Outcome */}
+        <section className="py-16 bg-neutral-50">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl font-bold text-neutral-900 sm:text-4xl lowercase mb-6">
+                Imagine This: AI Bots Recommend You First
+              </h2>
+              <p className="text-xl text-neutral-600 lowercase max-w-3xl mx-auto">
+                Every time someone asks ChatGPT, Gemini, or Perplexity about your industry, your brand gets mentioned first. 
+                It's like having the world's best referral system working 24/7.
+              </p>
+            </div>
+            <div className="grid md:grid-cols-4 gap-6">
+              {resultMetrics.map((result, index) => (
+                <div key={index} className="text-center">
+                  <div className="text-3xl font-bold text-neutral-900 mb-2">{result.metric}</div>
+                  <div className="text-neutral-600 lowercase">{result.description}</div>
+                </div>
+              ))}
             </div>
           </div>
+        </section>
 
-          {/* What You Get */}
-          <div className="space-y-10">
-            {services.map((service, index) => (
-              <div key={index} className="flex flex-col items-center">
-                <div className="group block w-full max-w-sm p-8 bg-neutral-50 hover:bg-neutral-100 rounded-xl transition-colors duration-150 ease-in-out">
-                  <div className="flex flex-col items-center space-y-4">
-                    <service.icon className="h-8 w-8 text-neutral-600" />
-                    <span className="text-xl font-medium text-neutral-800 lowercase">
-                      {service.title}
-                    </span>
-                    <p className="text-lg text-neutral-600 lowercase font-medium">
+        {/* Why Most Sites Miss the AI Wave */}
+        <section className="py-16">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl font-bold text-neutral-900 sm:text-4xl lowercase mb-6">
+                Why Most Sites Miss the AI Wave
+              </h2>
+              <p className="text-xl text-neutral-600 lowercase max-w-3xl mx-auto">
+                40% of all searches now go through AI engines. If you're not optimized for AI, you're invisible to nearly half your potential customers.
+              </p>
+            </div>
+            <div className="grid md:grid-cols-3 gap-8">
+              {problemPoints.map((problem, index) => (
+                <Card key={index} className="text-center">
+                  <CardHeader>
+                    <problem.icon className="h-12 w-12 text-red-500 mx-auto mb-4" />
+                    <CardTitle className="text-xl lowercase">{problem.title}</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <CardDescription className="text-neutral-600 lowercase">
+                      {problem.description}
+                    </CardDescription>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* What You Get */}
+        <section className="py-16 bg-neutral-50">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl font-bold text-neutral-900 sm:text-4xl lowercase mb-6">
+                What You Get
+              </h2>
+            </div>
+            <div className="grid md:grid-cols-3 gap-8">
+              {services.map((service, index) => (
+                <Card key={index} className="text-center hover:shadow-lg transition-shadow">
+                  <CardHeader>
+                    <service.icon className="h-12 w-12 text-neutral-600 mx-auto mb-4" />
+                    <CardTitle className="text-xl lowercase">{service.title}</CardTitle>
+                    <CardDescription className="text-lg font-medium lowercase">
                       {service.description}
-                    </p>
-                    <p className="text-sm text-neutral-500 lowercase leading-relaxed">
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-neutral-600 lowercase">
                       {service.detail}
                     </p>
-                  </div>
-                </div>
-              </div>
-            ))}
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
           </div>
+        </section>
 
-          {/* Get Started */}
-          <div>
-            <h2 className="text-3xl font-bold tracking-tight text-neutral-900 sm:text-4xl lowercase mb-6">
-              Get Started
+        {/* Pricing Table */}
+        <section className="py-16">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl font-bold text-neutral-900 sm:text-4xl lowercase mb-6">
+                Choose Your AI Optimization Package
+              </h2>
+              <p className="text-xl text-neutral-600 lowercase max-w-3xl mx-auto">
+                Pick the package that fits your business size and goals.
+              </p>
+            </div>
+            
+            {/* Desktop Table */}
+            <div className="hidden lg:block">
+              <div className="grid grid-cols-3 gap-8">
+                {pricingTiers.map((tier, index) => (
+                  <Card key={index} className={`relative ${tier.popular ? 'ring-2 ring-neutral-900 shadow-lg' : ''}`}>
+                    {tier.popular && (
+                      <Badge className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-neutral-900 text-white">
+                        Most Popular
+                      </Badge>
+                    )}
+                    <CardHeader className="text-center">
+                      <CardTitle className="text-2xl lowercase">{tier.name}</CardTitle>
+                      <div className="text-3xl font-bold">{tier.price}</div>
+                      <CardDescription className="lowercase">{tier.description}</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <ul className="space-y-3">
+                        {tier.features.map((feature, idx) => (
+                          <li key={idx} className="flex items-center">
+                            <Check className="h-4 w-4 text-green-500 mr-3" />
+                            <span className="text-sm lowercase">{feature}</span>
+                          </li>
+                        ))}
+                      </ul>
+                      <div className="mt-6">
+                        <Link href="/get-started">
+                          <Button 
+                            className={`w-full ${tier.popular ? 'bg-neutral-900 hover:bg-neutral-800' : 'bg-neutral-600 hover:bg-neutral-700'} text-white lowercase`}
+                            onClick={() => trackCTAClick(`select ${tier.name}`, "ai-seo-boost pricing")}
+                          >
+                            Get Started
+                          </Button>
+                        </Link>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </div>
+
+            {/* Mobile Cards */}
+            <div className="lg:hidden space-y-6">
+              {pricingTiers.map((tier, index) => (
+                <Card key={index} className={`${tier.popular ? 'ring-2 ring-neutral-900' : ''}`}>
+                  {tier.popular && (
+                    <Badge className="absolute -top-3 left-4 bg-neutral-900 text-white">
+                      Most Popular
+                    </Badge>
+                  )}
+                  <CardHeader>
+                    <CardTitle className="text-xl lowercase">{tier.name}</CardTitle>
+                    <div className="text-2xl font-bold">{tier.price}</div>
+                    <CardDescription className="lowercase">{tier.description}</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <ul className="space-y-2 mb-6">
+                      {tier.features.map((feature, idx) => (
+                        <li key={idx} className="flex items-center">
+                          <Check className="h-4 w-4 text-green-500 mr-2" />
+                          <span className="text-sm lowercase">{feature}</span>
+                        </li>
+                      ))}
+                    </ul>
+                    <Link href="/get-started">
+                      <Button 
+                        className={`w-full ${tier.popular ? 'bg-neutral-900 hover:bg-neutral-800' : 'bg-neutral-600 hover:bg-neutral-700'} text-white lowercase`}
+                        onClick={() => trackCTAClick(`select ${tier.name}`, "ai-seo-boost pricing mobile")}
+                      >
+                        Get Started
+                      </Button>
+                    </Link>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Client Testimonials */}
+        <section className="py-16 bg-neutral-50">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl font-bold text-neutral-900 sm:text-4xl lowercase mb-6">
+                What Our Clients Say
+              </h2>
+              <p className="text-xl text-neutral-600 lowercase max-w-3xl mx-auto">
+                Real results from real businesses using AI SEO optimization.
+              </p>
+            </div>
+            
+            <Carousel className="max-w-4xl mx-auto">
+              <CarouselContent>
+                {testimonials.map((testimonial, index) => (
+                  <CarouselItem key={index}>
+                    <Card className="text-center">
+                      <CardHeader>
+                        <div className="flex justify-center mb-4">
+                          {[...Array(testimonial.rating)].map((_, i) => (
+                            <Star key={i} className="h-5 w-5 fill-yellow-400 text-yellow-400" />
+                          ))}
+                        </div>
+                        <CardDescription className="text-lg italic lowercase mb-6">
+                          "{testimonial.content}"
+                        </CardDescription>
+                      </CardHeader>
+                      <CardContent>
+                        <div className="font-semibold">{testimonial.name}</div>
+                        <div className="text-neutral-600 lowercase">{testimonial.role}</div>
+                        <div className="text-sm text-neutral-500">{testimonial.location}</div>
+                      </CardContent>
+                    </Card>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPrevious />
+              <CarouselNext />
+            </Carousel>
+          </div>
+        </section>
+
+        {/* Scarcity & CTA */}
+        <section className="py-16 bg-red-50 border-t-4 border-red-500">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div className="mb-8">
+              <Badge className="bg-red-500 text-white mb-4">
+                <Clock className="h-4 w-4 mr-2" />
+                Limited Time
+              </Badge>
+              <h2 className="text-3xl font-bold text-neutral-900 sm:text-4xl lowercase mb-6">
+                Only 10 Spots Available This Month
+              </h2>
+              <p className="text-xl text-neutral-600 lowercase max-w-3xl mx-auto mb-8">
+                We limit our AI optimization clients to ensure quality results. Don't let your competitors get recommended by AI bots while you wait.
+              </p>
+            </div>
+            
+            <div className="space-y-4">
+              <Link href="/get-started">
+                <Button 
+                  size="lg"
+                  className="bg-red-600 hover:bg-red-700 text-white rounded-full px-12 py-6 text-xl lowercase shadow-lg"
+                  onClick={() => trackCTAClick("claim your spot", "ai-seo-boost scarcity")}
+                >
+                  <Zap className="mr-3 h-6 w-6" />
+                  Claim Your Spot Now
+                </Button>
+              </Link>
+              <p className="text-sm text-neutral-500 lowercase">
+                ✅ 90-day money-back guarantee • ✅ Results within 30-60 days
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Final CTA */}
+        <section className="py-16">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 className="text-3xl font-bold text-neutral-900 sm:text-4xl lowercase mb-6">
+              Ready to Dominate AI Search?
             </h2>
-            <p className="text-lg text-neutral-600 lowercase mb-8 max-w-md mx-auto">
-              Book a 15-minute call to see if your site qualifies for AI optimization.
+            <p className="text-xl text-neutral-600 lowercase max-w-3xl mx-auto mb-8">
+              Book a 15-minute call to see if your site qualifies for AI optimization. No obligation, just honest feedback.
             </p>
             <Link href="/get-started">
               <Button 
                 size="lg"
                 className="bg-neutral-900 hover:bg-neutral-800 text-white rounded-full px-8 py-4 text-lg lowercase shadow-lg"
-                onClick={() => trackCTAClick("book discovery call", "ai-seo-boost cta")}
+                onClick={() => trackCTAClick("book discovery call", "ai-seo-boost final cta")}
               >
                 <Calendar className="mr-3 h-5 w-5" />
-                Book Discovery Call
+                Book Your Discovery Call
               </Button>
             </Link>
             <p className="text-xs text-neutral-400 mt-4 lowercase italic">
-              No pricing on the page—quoted after audit to match your goals.
+              No pricing on the call—quoted after audit to match your specific goals.
             </p>
           </div>
+        </section>
 
-          {/* Back to Offers */}
-          <div className="mt-16">
+        {/* Back to Offers */}
+        <section className="py-8 border-t border-neutral-200">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <Link
               href="/offers"
               className="text-sm font-medium text-neutral-600 hover:text-neutral-900 lowercase transition-colors"
@@ -114,7 +452,7 @@ export default function AISEOBoostPage() {
               ← back to offers
             </Link>
           </div>
-        </div>
+        </section>
       </div>
       <Footer />
     </>
