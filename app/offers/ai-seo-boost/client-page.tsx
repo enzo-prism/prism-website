@@ -87,22 +87,19 @@ export default function AISEOBoostPage() {
       <Navbar />
       <div className="min-h-screen bg-white">
         {/* Hero Section */}
-        <section className="py-12 px-4 sm:px-6 lg:px-8">
+        <section className="py-20 px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto text-center">
-            <div className="text-5xl mb-6" role="img" aria-label="Robot emoji">
-              🤖
-            </div>
-            <h1 className="text-4xl font-bold tracking-tight text-neutral-900 sm:text-5xl md:text-6xl lowercase">
+            <h1 className="text-4xl font-bold tracking-tight text-neutral-900 sm:text-5xl md:text-6xl lowercase leading-tight">
               AI SEO Boost™
             </h1>
-            <p className="mt-6 text-xl text-neutral-600 lowercase max-w-2xl mx-auto">
+            <p className="mt-8 text-xl text-neutral-600 lowercase max-w-2xl mx-auto leading-relaxed">
               Make ChatGPT, Gemini & Perplexity name-drop your brand first. Get recommended by AI bots 24/7.
             </p>
             <div className="mt-10">
               <Link href="/get-started">
                 <Button 
                   size="lg"
-                  className="bg-neutral-900 hover:bg-neutral-800 text-white rounded-full px-8 py-4 text-lg lowercase shadow-lg mr-4"
+                  className="bg-neutral-900 hover:bg-neutral-800 text-white rounded-full px-8 py-4 text-lg lowercase shadow-sm transition-all duration-200 mr-4"
                   onClick={() => trackCTAClick("book discovery call", "ai-seo-boost hero")}
                 >
                   <Calendar className="mr-3 h-5 w-5" />
@@ -111,19 +108,19 @@ export default function AISEOBoostPage() {
               </Link>
             </div>
             <p className="text-sm text-neutral-500 mt-6 lowercase">
-              ✅ 90-day results guarantee • ✅ No long-term contracts
+              90-day results guarantee • No long-term contracts
             </p>
           </div>
         </section>
 
         {/* The Dream Outcome */}
-        <section className="py-16 bg-neutral-50">
+        <section className="py-20 border-t border-neutral-100">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold text-neutral-900 sm:text-4xl lowercase mb-6">
+              <h2 className="text-3xl font-bold text-neutral-900 sm:text-4xl lowercase mb-8 leading-tight">
                 Imagine This: AI Bots Recommend You First
               </h2>
-              <p className="text-xl text-neutral-600 lowercase max-w-3xl mx-auto">
+              <p className="text-xl text-neutral-600 lowercase max-w-3xl mx-auto leading-relaxed">
                 Every time someone asks ChatGPT, Gemini, or Perplexity about your industry, your brand gets mentioned first. 
                 It's like having the world's best referral system working 24/7.
               </p>
@@ -140,13 +137,13 @@ export default function AISEOBoostPage() {
         </section>
 
         {/* Why Most Sites Miss the AI Wave */}
-        <section className="py-16">
+        <section className="py-20">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold text-neutral-900 sm:text-4xl lowercase mb-6">
+              <h2 className="text-3xl font-bold text-neutral-900 sm:text-4xl lowercase mb-8 leading-tight">
                 Why Most Sites Miss the AI Wave
               </h2>
-              <p className="text-xl text-neutral-600 lowercase max-w-3xl mx-auto">
+              <p className="text-xl text-neutral-600 lowercase max-w-3xl mx-auto leading-relaxed">
                 40% of all searches now go through AI engines. If you're not optimized for AI, you're invisible to nearly half your potential customers.
               </p>
             </div>
@@ -154,7 +151,7 @@ export default function AISEOBoostPage() {
               {problemPoints.map((problem, index) => (
                 <Card key={index} className="text-center">
                   <CardHeader>
-                    <problem.icon className="h-12 w-12 text-red-500 mx-auto mb-4" />
+                    <problem.icon className="h-12 w-12 text-amber-600 mx-auto mb-4" />
                     <CardTitle className="text-xl lowercase">{problem.title}</CardTitle>
                   </CardHeader>
                   <CardContent>
@@ -169,16 +166,16 @@ export default function AISEOBoostPage() {
         </section>
 
         {/* What You Get */}
-        <section className="py-16 bg-neutral-50">
+        <section className="py-20 border-t border-neutral-100">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold text-neutral-900 sm:text-4xl lowercase mb-6">
+              <h2 className="text-3xl font-bold text-neutral-900 sm:text-4xl lowercase mb-8 leading-tight">
                 What You Get
               </h2>
             </div>
             <div className="grid md:grid-cols-3 gap-8">
               {services.map((service, index) => (
-                <Card key={index} className="text-center hover:shadow-lg transition-shadow">
+                <Card key={index} className="text-center border border-neutral-200 shadow-sm">
                   <CardHeader>
                     <service.icon className="h-12 w-12 text-neutral-600 mx-auto mb-4" />
                     <CardTitle className="text-xl lowercase">{service.title}</CardTitle>
@@ -199,13 +196,13 @@ export default function AISEOBoostPage() {
 
 
         {/* Client Testimonials */}
-        <section className="py-16 bg-neutral-50">
+        <section className="py-20 border-t border-neutral-100">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold text-neutral-900 sm:text-4xl lowercase mb-6">
+              <h2 className="text-3xl font-bold text-neutral-900 sm:text-4xl lowercase mb-8 leading-tight">
                 What Our Clients Say
               </h2>
-              <p className="text-xl text-neutral-600 lowercase max-w-3xl mx-auto">
+              <p className="text-xl text-neutral-600 lowercase max-w-3xl mx-auto leading-relaxed">
                 Real results from real businesses using AI SEO optimization.
               </p>
             </div>
@@ -241,26 +238,26 @@ export default function AISEOBoostPage() {
         </section>
 
         {/* Scarcity & CTA */}
-        <section className="py-16 bg-red-50 border-t-4 border-red-500">
+        <section className="py-20 bg-gradient-to-b from-amber-50 to-white border-t border-amber-100">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <div className="mb-8">
-              <Badge className="bg-red-500 text-white mb-4">
+            <div className="mb-10">
+              <Badge className="bg-amber-500 text-white mb-6 px-4 py-2">
                 <Clock className="h-4 w-4 mr-2" />
-                Limited Time
+                Limited Availability
               </Badge>
-              <h2 className="text-3xl font-bold text-neutral-900 sm:text-4xl lowercase mb-6">
+              <h2 className="text-3xl font-bold text-neutral-900 sm:text-4xl lowercase mb-8 leading-tight">
                 Only 10 Spots Available This Month
               </h2>
-              <p className="text-xl text-neutral-600 lowercase max-w-3xl mx-auto mb-8">
+              <p className="text-xl text-neutral-600 lowercase max-w-3xl mx-auto mb-10 leading-relaxed">
                 We limit our AI optimization clients to ensure quality results. Don't let your competitors get recommended by AI bots while you wait.
               </p>
             </div>
             
-            <div className="space-y-4">
+            <div className="space-y-6">
               <Link href="/get-started">
                 <Button 
                   size="lg"
-                  className="bg-red-600 hover:bg-red-700 text-white rounded-full px-12 py-6 text-xl lowercase shadow-lg"
+                  className="bg-neutral-900 hover:bg-neutral-800 text-white rounded-full px-12 py-6 text-xl lowercase shadow-sm transition-all duration-200"
                   onClick={() => trackCTAClick("claim your spot", "ai-seo-boost scarcity")}
                 >
                   <Zap className="mr-3 h-6 w-6" />
@@ -268,25 +265,25 @@ export default function AISEOBoostPage() {
                 </Button>
               </Link>
               <p className="text-sm text-neutral-500 lowercase">
-                ✅ 90-day money-back guarantee • ✅ Results within 30-60 days
+                90-day money-back guarantee • Results within 30-60 days
               </p>
             </div>
           </div>
         </section>
 
         {/* Final CTA */}
-        <section className="py-16">
+        <section className="py-20">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 className="text-3xl font-bold text-neutral-900 sm:text-4xl lowercase mb-6">
+            <h2 className="text-3xl font-bold text-neutral-900 sm:text-4xl lowercase mb-8 leading-tight">
               Ready to Dominate AI Search?
             </h2>
-            <p className="text-xl text-neutral-600 lowercase max-w-3xl mx-auto mb-8">
+            <p className="text-xl text-neutral-600 lowercase max-w-3xl mx-auto mb-10 leading-relaxed">
               Book a 15-minute call to see if your site qualifies for AI optimization. No obligation, just honest feedback.
             </p>
             <Link href="/get-started">
               <Button 
                 size="lg"
-                className="bg-neutral-900 hover:bg-neutral-800 text-white rounded-full px-8 py-4 text-lg lowercase shadow-lg"
+                className="bg-neutral-900 hover:bg-neutral-800 text-white rounded-full px-8 py-4 text-lg lowercase shadow-sm transition-all duration-200"
                 onClick={() => trackCTAClick("book discovery call", "ai-seo-boost final cta")}
               >
                 <Calendar className="mr-3 h-5 w-5" />
