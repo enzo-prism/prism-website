@@ -85,14 +85,24 @@ export default function ClientPage() {
                     </Button>
                   </Link>
                 </div>
-                <a
-                  href="https://www.instagram.com/the_design_prism/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mt-6 text-sm text-neutral-400 lowercase hover:text-neutral-600 hover:underline transition-colors"
-                >
-                  38,500+ entrepreneurs follow us on Instagram
-                </a>
+                <div className="mt-6 flex flex-col items-center space-y-2">
+                  <a
+                    href="https://www.instagram.com/the_design_prism/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sm text-neutral-400 lowercase hover:text-neutral-600 hover:underline transition-colors"
+                  >
+                    38,500+ entrepreneurs follow us on Instagram
+                  </a>
+                  <a
+                    href="https://www.youtube.com/@the_design_prism"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sm text-neutral-400 lowercase hover:text-neutral-600 hover:underline transition-colors"
+                  >
+                    24,500+ subscribers on youtube
+                  </a>
+                </div>
               </div>
             </div>
           </div>
