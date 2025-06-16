@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel"
 import Link from "next/link"
-import { Search, Target, TrendingUp, Calendar, Star, Check, ChevronRight, Bot, Zap, BarChart3, Users, Clock, Shield } from "lucide-react"
+import { Search, Target, TrendingUp, Calendar, Star, Bot, Zap, Users, Clock } from "lucide-react"
 import { trackCTAClick } from "@/utils/analytics"
 
 export default function AISEOBoostPage() {
@@ -56,52 +56,6 @@ export default function AISEOBoostPage() {
     }
   ]
 
-  const pricingTiers = [
-    {
-      name: "AI Audit Only",
-      price: "$497",
-      description: "Discover your current AI visibility",
-      features: [
-        "Complete AI search analysis",
-        "ChatGPT visibility report",
-        "Gemini recommendation audit",
-        "Perplexity mention tracking",
-        "Competitor AI comparison",
-        "Optimization roadmap"
-      ],
-      popular: false
-    },
-    {
-      name: "Full AI Optimization",
-      price: "$2,997",
-      description: "Complete AI search domination",
-      features: [
-        "Everything in AI Audit",
-        "Strategic content optimization",
-        "Citation building campaign",
-        "AI-friendly schema markup",
-        "Monthly progress reports",
-        "90-day traffic guarantee",
-        "Priority support access"
-      ],
-      popular: true
-    },
-    {
-      name: "Enterprise AI Strategy",
-      price: "Custom",
-      description: "For larger organizations",
-      features: [
-        "Everything in Full Optimization",
-        "Multi-location optimization",
-        "Brand mention management",
-        "Advanced AI tracking setup",
-        "Dedicated account manager",
-        "Quarterly strategy sessions",
-        "Custom reporting dashboard"
-      ],
-      popular: false
-    }
-  ]
 
   const problemPoints = [
     {
@@ -155,14 +109,6 @@ export default function AISEOBoostPage() {
                   Book Discovery Call
                 </Button>
               </Link>
-              <Button 
-                variant="outline"
-                size="lg"
-                className="rounded-full px-8 py-4 text-lg lowercase"
-                onClick={() => trackCTAClick("see pricing", "ai-seo-boost hero secondary")}
-              >
-                See Pricing Below
-              </Button>
             </div>
             <p className="text-sm text-neutral-500 mt-6 lowercase">
               ✅ 90-day results guarantee • ✅ No long-term contracts
@@ -251,95 +197,6 @@ export default function AISEOBoostPage() {
           </div>
         </section>
 
-        {/* Pricing Table */}
-        <section className="py-16">
-          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold text-neutral-900 sm:text-4xl lowercase mb-6">
-                Choose Your AI Optimization Package
-              </h2>
-              <p className="text-xl text-neutral-600 lowercase max-w-3xl mx-auto">
-                Pick the package that fits your business size and goals.
-              </p>
-            </div>
-            
-            {/* Desktop Table */}
-            <div className="hidden lg:block">
-              <div className="grid grid-cols-3 gap-8">
-                {pricingTiers.map((tier, index) => (
-                  <Card key={index} className={`relative ${tier.popular ? 'ring-2 ring-neutral-900 shadow-lg' : ''}`}>
-                    {tier.popular && (
-                      <Badge className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-neutral-900 text-white">
-                        Most Popular
-                      </Badge>
-                    )}
-                    <CardHeader className="text-center">
-                      <CardTitle className="text-2xl lowercase">{tier.name}</CardTitle>
-                      <div className="text-3xl font-bold">{tier.price}</div>
-                      <CardDescription className="lowercase">{tier.description}</CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                      <ul className="space-y-3">
-                        {tier.features.map((feature, idx) => (
-                          <li key={idx} className="flex items-center">
-                            <Check className="h-4 w-4 text-green-500 mr-3" />
-                            <span className="text-sm lowercase">{feature}</span>
-                          </li>
-                        ))}
-                      </ul>
-                      <div className="mt-6">
-                        <Link href="/get-started">
-                          <Button 
-                            className={`w-full ${tier.popular ? 'bg-neutral-900 hover:bg-neutral-800' : 'bg-neutral-600 hover:bg-neutral-700'} text-white lowercase`}
-                            onClick={() => trackCTAClick(`select ${tier.name}`, "ai-seo-boost pricing")}
-                          >
-                            Get Started
-                          </Button>
-                        </Link>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            </div>
-
-            {/* Mobile Cards */}
-            <div className="lg:hidden space-y-6">
-              {pricingTiers.map((tier, index) => (
-                <Card key={index} className={`${tier.popular ? 'ring-2 ring-neutral-900' : ''}`}>
-                  {tier.popular && (
-                    <Badge className="absolute -top-3 left-4 bg-neutral-900 text-white">
-                      Most Popular
-                    </Badge>
-                  )}
-                  <CardHeader>
-                    <CardTitle className="text-xl lowercase">{tier.name}</CardTitle>
-                    <div className="text-2xl font-bold">{tier.price}</div>
-                    <CardDescription className="lowercase">{tier.description}</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <ul className="space-y-2 mb-6">
-                      {tier.features.map((feature, idx) => (
-                        <li key={idx} className="flex items-center">
-                          <Check className="h-4 w-4 text-green-500 mr-2" />
-                          <span className="text-sm lowercase">{feature}</span>
-                        </li>
-                      ))}
-                    </ul>
-                    <Link href="/get-started">
-                      <Button 
-                        className={`w-full ${tier.popular ? 'bg-neutral-900 hover:bg-neutral-800' : 'bg-neutral-600 hover:bg-neutral-700'} text-white lowercase`}
-                        onClick={() => trackCTAClick(`select ${tier.name}`, "ai-seo-boost pricing mobile")}
-                      >
-                        Get Started
-                      </Button>
-                    </Link>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </div>
-        </section>
 
         {/* Client Testimonials */}
         <section className="py-16 bg-neutral-50">
@@ -437,7 +294,7 @@ export default function AISEOBoostPage() {
               </Button>
             </Link>
             <p className="text-xs text-neutral-400 mt-4 lowercase italic">
-              No pricing on the call—quoted after audit to match your specific goals.
+              Free consultation to assess your AI visibility and create a custom strategy.
             </p>
           </div>
         </section>
