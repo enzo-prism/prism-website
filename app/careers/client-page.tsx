@@ -9,28 +9,6 @@ import { Button } from "@/components/ui/button"
 import { trackCTAClick, trackNavigation } from "@/utils/analytics"
 
 export default function CareersClientPage() {
-  const companyValues = [
-    {
-      emoji: "🚀",
-      title: "excellence first",
-      description: "we create digital experiences that exceed expectations"
-    },
-    {
-      emoji: "🤝",
-      title: "collaborative spirit",
-      description: "we work together to solve complex challenges"
-    },
-    {
-      emoji: "📊",
-      title: "data-driven decisions",
-      description: "every choice is backed by insights and results"
-    },
-    {
-      emoji: "🔄",
-      title: "continuous growth",
-      description: "we're always learning and improving our craft"
-    }
-  ]
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -54,39 +32,9 @@ export default function CareersClientPage() {
           </div>
         </section>
 
-        {/* Values Section */}
-        <section className="px-4 py-16 md:py-24 bg-neutral-50">
-          <div className="container mx-auto px-4 md:px-6">
-            <div className="mb-12 text-center">
-              <h2 className="text-3xl font-bold tracking-tighter lowercase sm:text-4xl">
-                why work with us
-              </h2>
-              <p className="mx-auto mt-4 max-w-[600px] text-neutral-600 lowercase">
-                we're building something special. join a team that values creativity, growth, and impact.
-              </p>
-            </div>
-
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4 max-w-6xl mx-auto">
-              {companyValues.map((value, index) => (
-                <div
-                  key={index}
-                  className="bg-white p-6 rounded-xl shadow-sm border border-neutral-200 hover:shadow-md transition-shadow text-center"
-                >
-                  <div className="text-3xl mb-4">{value.emoji}</div>
-                  <h3 className="text-lg font-semibold lowercase text-neutral-800 mb-2">
-                    {value.title}
-                  </h3>
-                  <p className="text-sm text-neutral-600 lowercase leading-relaxed">
-                    {value.description}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
 
         {/* Current Openings Section */}
-        <section className="px-4 py-16 md:py-24">
+        <section className="px-4 py-16 md:py-24 bg-neutral-50">
           <div className="container mx-auto px-4 md:px-6 max-w-4xl">
             <div className="text-center mb-12">
               <h2 className="text-3xl font-bold tracking-tighter lowercase sm:text-4xl">
@@ -97,7 +45,7 @@ export default function CareersClientPage() {
               </p>
             </div>
 
-            <div className="bg-neutral-50 rounded-xl p-8 md:p-12 text-center">
+            <div className="bg-white rounded-xl p-8 md:p-12 text-center border border-neutral-200 shadow-sm">
               <div className="text-5xl mb-6">💼</div>
               <h3 className="text-xl font-semibold lowercase text-neutral-800 mb-4">
                 no current openings
@@ -116,7 +64,7 @@ export default function CareersClientPage() {
         </section>
 
         {/* Contact CTA Section */}
-        <section className="px-4 py-16 md:py-24 bg-neutral-50">
+        <section className="px-4 py-16 md:py-24">
           <div className="container mx-auto px-4 md:px-6 max-w-4xl">
             <div className="bg-gradient-to-br from-neutral-900 to-neutral-800 rounded-2xl p-8 md:p-12 text-center text-white relative overflow-hidden">
               {/* Background decoration */}
