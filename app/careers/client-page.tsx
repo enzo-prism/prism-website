@@ -1,14 +1,27 @@
 "use client"
 
 import Link from "next/link"
-import { Mail } from "lucide-react"
+import { Mail, ArrowRight, MapPin, Clock, Briefcase } from "lucide-react"
 import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
 import PageViewTracker from "@/components/page-view-tracker"
 import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { trackCTAClick, trackNavigation } from "@/utils/analytics"
 
 export default function CareersClientPage() {
+  const currentJobs = [
+    {
+      id: "front-end-developer",
+      title: "Contract Front-End Developer",
+      type: "Contract",
+      location: "Remote",
+      duration: "Part-time (10-20 hrs/week)",
+      description: "Join our lean team building modern web apps with AI-first tooling. Work with Cursor, Replit, Vercel v0, and Lovable.dev.",
+      requirements: ["React/TypeScript expertise", "Cursor & Replit experience", "Mobile-first design skills"],
+      slug: "front-end-developer"
+    }
+  ]
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -45,20 +58,58 @@ export default function CareersClientPage() {
               </p>
             </div>
 
-            <div className="bg-white rounded-xl p-8 md:p-12 text-center border border-neutral-200 shadow-sm">
-              <div className="text-5xl mb-6">💼</div>
-              <h3 className="text-xl font-semibold lowercase text-neutral-800 mb-4">
-                no current openings
-              </h3>
-              <p className="text-neutral-600 lowercase mb-8 max-w-md mx-auto">
-                we don't have any open positions right now, but we're always interested in meeting talented people.
-              </p>
-              
-              <div className="space-y-4">
-                <p className="text-sm text-neutral-500 lowercase">
-                  send us your portfolio and let us know how you'd like to contribute
-                </p>
-              </div>
+            <div className="space-y-6">
+              {currentJobs.map((job) => (
+                <Card key={job.id} className="bg-white border border-neutral-200 shadow-sm hover:shadow-md transition-shadow">
+                  <CardHeader>
+                    <div className="flex justify-between items-start mb-4">
+                      <div>
+                        <CardTitle className="text-xl font-semibold lowercase text-neutral-800 mb-2">
+                          {job.title}
+                        </CardTitle>
+                        <div className="flex flex-wrap items-center gap-4 text-sm text-neutral-600">
+                          <div className="flex items-center gap-1">
+                            <Briefcase className="h-4 w-4" />
+                            <span className="lowercase">{job.type}</span>
+                          </div>
+                          <div className="flex items-center gap-1">
+                            <MapPin className="h-4 w-4" />
+                            <span className="lowercase">{job.location}</span>
+                          </div>
+                          <div className="flex items-center gap-1">
+                            <Clock className="h-4 w-4" />
+                            <span className="lowercase">{job.duration}</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <CardDescription className="text-neutral-600 lowercase leading-relaxed">
+                      {job.description}
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="mb-6">
+                      <h4 className="text-sm font-medium text-neutral-800 lowercase mb-3">key requirements:</h4>
+                      <ul className="space-y-1">
+                        {job.requirements.map((req, index) => (
+                          <li key={index} className="text-sm text-neutral-600 lowercase flex items-center">
+                            <span className="w-1.5 h-1.5 bg-neutral-400 rounded-full mr-3"></span>
+                            {req}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <Link href={`/careers/${job.slug}`}>
+                      <Button 
+                        className="w-full sm:w-auto rounded-full px-6 py-3 lowercase"
+                        onClick={() => trackCTAClick("view job details", `careers-${job.slug}`)}
+                      >
+                        view details <ArrowRight className="ml-2 h-4 w-4" />
+                      </Button>
+                    </Link>
+                  </CardContent>
+                </Card>
+              ))}
             </div>
           </div>
         </section>
