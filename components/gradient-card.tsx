@@ -37,10 +37,8 @@ export default function GradientCard({
 
   return (
     <div
-      className={`relative overflow-hidden rounded-lg ${config.gradient} ${className}`}
+      className={`relative overflow-hidden rounded-lg ${config.gradient} w-full h-full ${className}`}
       style={{
-        width: `${width}px`,
-        height: `${height}px`,
         aspectRatio: "16/9",
       }}
       data-tracking-id={trackingId}
@@ -52,12 +50,11 @@ export default function GradientCard({
         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent transform -skew-x-12" />
       </div>
       
-      {/* Icon */}
-      <div className="absolute inset-0 flex items-center justify-center">
-        <div className="relative">
+      {/* Icon with safe area and responsive sizing */}
+      <div className="absolute inset-0 flex items-center justify-center p-4 sm:p-6 md:p-8">
+        <div className="relative flex items-center justify-center max-w-[60%] max-h-[60%]">
           <IconComponent 
-            size={80} 
-            className={`${config.iconColor} opacity-20 drop-shadow-sm`}
+            className={`${config.iconColor} opacity-20 drop-shadow-sm w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 lg:w-20 lg:h-20`}
             strokeWidth={1.5}
           />
         </div>

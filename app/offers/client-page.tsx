@@ -72,9 +72,6 @@ export default function OffersClientPage() {
                     {offer.gradientType ? (
                       <GradientCard
                         gradientType={offer.gradientType}
-                        width={600}
-                        height={338}
-                        className="w-full h-full"
                         trackingId={`offer_gradient_${offer.id}`}
                       />
                     ) : (
