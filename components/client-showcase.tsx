@@ -233,7 +233,7 @@ export default function ClientShowcase() {
 
   useEffect(() => {
     const filteredClientsData = clientsData.filter(
-      (client) => client.id !== 23 && client.id !== 24 && client.id !== 27,
+      (client) => client.id !== 23 && client.id !== 24 && client.id !== 27 && client.clientType !== "Instagram",
     )
 
     // Shuffle the clients so they appear in a random order on every page load
