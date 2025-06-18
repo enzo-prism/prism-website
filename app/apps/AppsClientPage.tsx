@@ -136,7 +136,7 @@ export default function AppsClientPage() {
                 <div className="pt-6">
                   <Link href="/get-started?service=app-development">
                     <Button className="rounded-full px-8 py-6 text-lg lowercase">
-                      get started <ArrowRight className="ml-2 h-5 w-5" />
+                      build my app <ArrowRight className="ml-2 h-5 w-5" />
                     </Button>
                   </Link>
                   <p className="text-xs text-neutral-500 mt-2 lowercase">2x sales in 90 days or don't pay</p>

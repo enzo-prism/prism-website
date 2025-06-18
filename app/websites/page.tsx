@@ -283,7 +283,7 @@ export default function WebsitesPage() {
                     size="lg"
                     className="bg-neutral-900 hover:bg-neutral-800 text-white rounded-full px-10 py-7 text-lg lowercase shadow-md"
                   >
-                    get started <ArrowRight className="ml-2 h-5 w-5" />
+                    get new site <ArrowRight className="ml-2 h-5 w-5" />
                   </Button>
                 </Link>
                 <p className="text-xs text-neutral-500 mt-2 lowercase">2x sales in 90 days or don't pay</p>
@@ -457,7 +457,7 @@ export default function WebsitesPage() {
                 size="lg"
                 className="bg-neutral-900 hover:bg-neutral-800 text-white rounded-full px-8 py-6 text-lg lowercase shadow-md"
               >
-                get started <ArrowRight className="ml-2 h-5 w-5" />
+                get new site <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
             </Link>
           </div>
