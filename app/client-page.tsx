@@ -6,7 +6,6 @@ import { ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
-import ClientShowcase from "@/components/client-showcase"
 import { useMobile } from "@/hooks/use-mobile"
 import MobileServicesTiles from "@/components/mobile-services-tiles"
 import CaseStudyCard from "@/components/case-study-card"
@@ -168,15 +167,7 @@ export default function ClientPage() {
           </div>
         </section>
 
-        {/* Client Showcase */}
-        <section className="py-16 md:py-24">
-          <div className="container mx-auto">
-            <h2 className="mb-8 px-4 text-3xl font-bold tracking-tighter lowercase md:px-6 md:text-4xl">
-              trusted by business owners
-            </h2>
-            <ClientShowcase />
-          </div>
-        </section>
+
 
         {/* Wall of Love CTA Section */}
         <section className="py-16 md:py-24 bg-white dark:bg-neutral-900">
