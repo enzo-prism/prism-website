@@ -27,7 +27,7 @@ const quotesData: Quote[] = [
   },
   {
     id: 3,
-    text: "I **love** the new home page; it looks **professional** and it’s **easy for patients.**",
+    text: "I **love** the new home page; it looks **professional** and it's **easy for patients.**",
     client: "Dr. Tingjen Ji",
     company: "Grace Dental",
   },
@@ -39,22 +39,21 @@ const quotesData: Quote[] = [
   },
   {
     id: 5,
-    text: "I’d **love to keep working with you — you’re so talented.**",
+    text: "I'd **love to keep working with you — you're so talented.**",
     client: "Renata Chun",
     company: "Coast Periodontics",
   },
-  { id: 6, text: "I **love everything you’ve done.**", client: "Suzanne Meinhardt", company: "Rebellious Aging" },
-  { id: 7, text: "This looks **so good — I’m so happy!**", client: "Clare Frattarola", company: "We Are Saplings" },
-  { id: 8, text: "The implant page is **great — it’s perfect.**", client: "Dr. Tingjen Ji", company: "Grace Dental" },
+  { id: 6, text: "I **love everything you've done.**", client: "Suzanne Meinhardt", company: "Rebellious Aging" },
+  { id: 8, text: "The implant page is **great — it's perfect.**", client: "Dr. Tingjen Ji", company: "Grace Dental" },
   {
     id: 9,
-    text: "Seeing this makes me feel **hopeful — I’m confident in you.**",
+    text: "Seeing this makes me feel **hopeful — I'm confident in you.**",
     client: "Dr. Tingjen Ji",
     company: "Grace Dental",
   },
   {
     id: 10,
-    text: "That little snippet is **brilliant — it’ll be fun!**",
+    text: "That little snippet is **brilliant — it'll be fun!**",
     client: "Mary Lynn Wheaton",
     company: "Leadership Summit",
   },
@@ -84,7 +83,7 @@ const quotesData: Quote[] = [
   },
   {
     id: 15,
-    text: "Not gonna lie… It’s been an hour and I’m still just listening to this on repeat.",
+    text: "Not gonna lie… It's been an hour and I'm still just listening to this on repeat.",
     client: "aaronwbateman",
     company: "Instagram Community of Entrepreneurs",
   },
@@ -132,7 +131,7 @@ const quotesData: Quote[] = [
   },
   {
     id: 23,
-    text: "that’s great 🔥",
+    text: "that's great 🔥",
     client: "miskagonzalez",
     company: "Instagram Community of Entrepreneurs",
   },
@@ -150,7 +149,7 @@ const quotesData: Quote[] = [
   },
   {
     id: 26,
-    text: "One of the best words of wisdoms you’ll here",
+    text: "One of the best words of wisdoms you'll here",
     client: "linden_raaen3",
     company: "Instagram Community of Entrepreneurs",
   },
@@ -192,7 +191,7 @@ const quotesData: Quote[] = [
   },
   {
     id: 33,
-    text: "I’m making this my morning alarm",
+    text: "I'm making this my morning alarm",
     client: "greegy_the_great",
     company: "Instagram Community of Entrepreneurs",
   },
@@ -258,7 +257,7 @@ const quotesData: Quote[] = [
   },
   {
     id: 44,
-    text: "This is one of the best videos I’ve ever watched. It’s exactly what I always do when the doubts come to my head, I close my eyes and visualise the dream life I’m fighting for, refuel and go again",
+    text: "This is one of the best videos I've ever watched. It's exactly what I always do when the doubts come to my head, I close my eyes and visualise the dream life I'm fighting for, refuel and go again",
     client: "sorin.7_",
     company: "Instagram Community of Entrepreneurs",
   },
@@ -282,7 +281,7 @@ const quotesData: Quote[] = [
   },
   {
     id: 48,
-    text: "It’s 3am now and I was talking to myself. This its hard rn. I needed this",
+    text: "It's 3am now and I was talking to myself. This its hard rn. I needed this",
     client: "yann.ng14",
     company: "Instagram Community of Entrepreneurs",
   },
@@ -342,7 +341,7 @@ const quotesData: Quote[] = [
   },
   {
     id: 58,
-    text: "Might be the realest and best piece of content I’ve seen in the last 5 years.",
+    text: "Might be the realest and best piece of content I've seen in the last 5 years.",
     client: "helder_movement",
     company: "Instagram Community of Entrepreneurs",
   },
