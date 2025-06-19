@@ -1,14 +1,15 @@
 import type { Metadata } from "next"
 import Link from "next/link"
-import { ArrowRight } from "lucide-react"
+import { ArrowUpRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
-import MobileFirstWebsiteGallery from "@/components/mobile-first-website-gallery"
 import PageViewTracker from "@/components/page-view-tracker"
 import { FAQSchema } from "@/components/schema-markup"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import ScrollProgressBar from "@/components/scroll-progress-bar"
+import Image from "@/components/image"
+import { trackCTAClick } from "@/utils/analytics"
 
 export const metadata: Metadata = {
   title: "custom website design portfolio & services | prism",
@@ -32,10 +33,7 @@ const websiteProjects = [
     image: "/exquisite-dentistry-mobile.png",
     url: "https://exquisiteveneersla.com/",
     category: "healthcare",
-    description: "luxury cosmetic dentistry in los angeles",
-    highlight: "interactive before/after sliders showcase transformations",
-    color: "bg-purple-50",
-    showVisitButton: true,
+    description: "luxury cosmetic dentistry",
   },
   {
     id: "9",
@@ -43,21 +41,15 @@ const websiteProjects = [
     image: "/belize-kids-mobile.png",
     url: "https://belizekids.org",
     category: "nonprofit",
-    description: "empowering belizean children to build a brighter future",
-    highlight: "vibrant colors and clear donation pathways",
-    color: "bg-yellow-50",
-    showVisitButton: true,
+    description: "empowering children",
   },
   {
     id: "7",
-    title: "laguna beach dental arts",
+    title: "laguna beach dental",
     image: "/laguna-beach-dental-arts-mobile.png",
     url: "https://lagunabeachdentalarts.com",
     category: "healthcare",
-    description: "experience exceptional dental care",
-    highlight: "stunning ocean views reflect the practice location",
-    color: "bg-cyan-50",
-    showVisitButton: true,
+    description: "exceptional dental care",
   },
   {
     id: "3",
@@ -65,21 +57,7 @@ const websiteProjects = [
     image: "/olympic-bootworks-mobile.png",
     url: "https://www.olympicbootworks.com",
     category: "retail",
-    description: "performance solutions for athletes and outdoor enthusiasts",
-    highlight: "bold, action-oriented design with clear shopping pathways",
-    color: "bg-orange-50",
-    showVisitButton: true,
-  },
-  {
-    id: "2",
-    title: "practice transitions institute",
-    image: "/practice-transitions-institute-mobile.png",
-    url: "https://pti.loveable.app",
-    category: "healthcare",
-    description: "expert guidance for healthcare practice transitions",
-    highlight: "event-driven platform with webinar registration",
-    color: "bg-blue-50",
-    showVisitButton: false,
+    description: "performance solutions",
   },
   {
     id: "1",
@@ -87,65 +65,32 @@ const websiteProjects = [
     image: "/we-are-saplings-mobile.png",
     url: "https://wearesaplings.com",
     category: "education",
-    description: "nurturing resilient kids who bend, not break",
-    highlight: "warm, inviting design with earth tones",
-    color: "bg-green-50",
-    showVisitButton: false,
+    description: "nurturing resilient kids",
   },
   {
     id: "5",
-    title: "dr. christopher b. wong",
+    title: "dr. christopher wong",
     image: "/dr-christopher-wong-mobile.png",
     url: "https://www.chriswongdds.com",
     category: "healthcare",
-    description: "modern dental care with a gentle touch",
-    highlight: "minimalist design with clear call-to-actions",
-    color: "bg-teal-50",
-    showVisitButton: true,
-  },
-  {
-    id: "6",
-    title: "town centre dental",
-    image: "/town-centre-dental-mobile.png",
-    url: "https://www.towncentredental.net",
-    category: "healthcare",
-    description: "enhance your smile at town centre dental",
-    highlight: "warm, inviting design for family dentistry",
-    color: "bg-rose-50",
-    showVisitButton: true,
-  },
-  {
-    id: "8",
-    title: "coast periodontics",
-    image: "/coast-periodontics-mobile.png",
-    url: "http://coastperiodontics.com",
-    category: "healthcare",
-    description: "periodontal & implant therapy in san luis obispo",
-    highlight: "coastal imagery reinforces the brand name",
-    color: "bg-indigo-50",
-    showVisitButton: true,
+    description: "modern dental care",
   },
 ]
-
 
 const websiteFaqs = [
   {
-    question: "how long does it take to build a website?",
-    answer:
-      "most websites are completed within 4-6 weeks from kickoff to launch. we'll provide a specific timeline during our consultation.",
+    question: "timeline",
+    answer: "4-6 weeks from start to launch",
   },
   {
-    question: "what's included in your website design?",
-    answer:
-      "custom design, mobile optimization, seo setup, analytics, training, and post-launch support. unlimited revisions during design phase.",
+    question: "included",
+    answer: "design, mobile optimization, seo, analytics, training, support",
   },
   {
-    question: "how much does a custom website cost?",
-    answer:
-      "websites typically range from $5,000 to $15,000 depending on features. flexible payment plans available with 50% due at start.",
+    question: "investment",
+    answer: "$5k-15k with flexible payment options",
   },
 ]
-
 
 export default function WebsitesPage() {
   return (
@@ -154,69 +99,107 @@ export default function WebsitesPage() {
       <PageViewTracker title="Websites Portfolio & Services" />
       <Navbar />
       <main className="flex-1">
-        <section className="w-full py-24 md:py-32 lg:py-40">
-          <div className="container mx-auto px-4 md:px-6 text-center">
-            <div className="max-w-3xl mx-auto space-y-8">
-              <h1 className="text-6xl font-bold tracking-tight lowercase sm:text-7xl md:text-8xl text-neutral-900">
-                websites.
-              </h1>
-              <p className="text-xl text-neutral-600 md:text-2xl lowercase max-w-xl mx-auto leading-relaxed">
-                beautiful design meets business results.
-              </p>
-              <div className="pt-4">
-                <Link href="/get-started?service=website-design">
-                  <Button
-                    size="lg"
-                    className="bg-neutral-900 hover:bg-neutral-800 text-white rounded-full px-12 py-8 text-lg lowercase"
-                  >
-                    get started <ArrowRight className="ml-2 h-5 w-5" />
-                  </Button>
-                </Link>
-              </div>
-            </div>
+        {/* Hero - Ultra minimal */}
+        <section className="px-4 pt-24 pb-12 sm:pt-32 sm:pb-16">
+          <div className="max-w-7xl mx-auto">
+            <h1 className="text-5xl sm:text-7xl lg:text-8xl font-light tracking-tight text-neutral-900 mb-6">
+              websites
+            </h1>
+            <p className="text-lg sm:text-xl text-neutral-600 max-w-md font-light">
+              clean design, powerful results
+            </p>
           </div>
         </section>
-        <section className="w-full py-16 md:py-24">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-medium lowercase text-neutral-900 md:text-4xl">our work</h2>
-          </div>
-          <MobileFirstWebsiteGallery items={websiteProjects} />
-        </section>
-        <section className="py-24 md:py-32">
-          <div className="container mx-auto px-4 md:px-6 text-center">
-            <div className="max-w-2xl mx-auto space-y-8">
-              <h2 className="text-4xl font-bold lowercase text-neutral-900 md:text-5xl">ready?</h2>
-              <Link href="/get-started?service=website-design">
-                <Button
-                  size="lg"
-                  className="bg-neutral-900 hover:bg-neutral-800 text-white rounded-full px-12 py-8 text-lg lowercase"
+
+        {/* Portfolio Grid - Mobile first */}
+        <section className="px-4 py-12 sm:py-16">
+          <div className="max-w-7xl mx-auto">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+              {websiteProjects.map((project) => (
+                <Link
+                  key={project.id}
+                  href={project.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => trackCTAClick("portfolio-click", project.title)}
+                  className="group relative overflow-hidden bg-neutral-50 rounded-xl aspect-[9/16] sm:aspect-[3/4] hover:shadow-lg transition-all duration-300"
                 >
-                  get started <ArrowRight className="ml-2 h-5 w-5" />
-                </Button>
-              </Link>
-            </div>
-          </div>
-        </section>
-        <section className="py-16 md:py-24 bg-neutral-50">
-          <div className="container mx-auto px-4 md:px-6">
-            <div className="mx-auto max-w-2xl">
-              <h2 className="text-3xl font-bold lowercase text-center mb-12 text-neutral-900 md:text-4xl">questions</h2>
-              <Accordion type="single" collapsible className="w-full space-y-4">
-                {websiteFaqs.map((faq, index) => (
-                  <AccordionItem key={index} value={`item-${index}`} className="bg-white rounded-lg px-6 py-2 border-0">
-                    <AccordionTrigger className="text-left lowercase font-medium text-lg hover:no-underline">
-                      {faq.question}
-                    </AccordionTrigger>
-                    <AccordionContent className="text-neutral-600 lowercase text-base leading-relaxed pt-2">
-                      {faq.answer}
-                    </AccordionContent>
-                  </AccordionItem>
-                ))}
-              </Accordion>
+                  <Image
+                    src={project.image}
+                    alt={project.title}
+                    fill
+                    className="object-cover object-top group-hover:scale-105 transition-transform duration-700"
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    trackingId={`portfolio-${project.id}`}
+                  />
+                  
+                  {/* Minimal overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  
+                  {/* Content */}
+                  <div className="absolute bottom-0 left-0 right-0 p-6 text-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                    <p className="text-xs uppercase tracking-wider opacity-80 mb-1">
+                      {project.category}
+                    </p>
+                    <h3 className="text-lg font-medium mb-1">
+                      {project.title}
+                    </h3>
+                    <p className="text-sm opacity-90">
+                      {project.description}
+                    </p>
+                  </div>
+
+                  {/* Subtle icon */}
+                  <div className="absolute top-4 right-4 w-8 h-8 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <ArrowUpRight className="w-4 h-4 text-white" />
+                  </div>
+                </Link>
+              ))}
             </div>
           </div>
         </section>
 
+        {/* CTA - Clean and simple */}
+        <section className="px-4 py-24 sm:py-32">
+          <div className="max-w-7xl mx-auto text-center">
+            <h2 className="text-3xl sm:text-4xl font-light text-neutral-900 mb-8">
+              ready to start?
+            </h2>
+            <Link href="/get-started?service=website-design">
+              <Button
+                size="lg"
+                className="bg-neutral-900 hover:bg-neutral-800 text-white rounded-full px-8 py-3 text-base font-light transition-all duration-300 hover:scale-105"
+              >
+                begin your project
+              </Button>
+            </Link>
+          </div>
+        </section>
+
+        {/* FAQ - Minimal accordion */}
+        <section className="px-4 py-16 sm:py-24 border-t border-neutral-100">
+          <div className="max-w-2xl mx-auto">
+            <h2 className="text-2xl sm:text-3xl font-light text-neutral-900 mb-12 text-center">
+              frequently asked
+            </h2>
+            <Accordion type="single" collapsible className="space-y-2">
+              {websiteFaqs.map((faq, index) => (
+                <AccordionItem 
+                  key={index} 
+                  value={`item-${index}`} 
+                  className="border-b border-neutral-200 pb-4"
+                >
+                  <AccordionTrigger className="text-left font-light text-lg hover:no-underline py-4">
+                    {faq.question}
+                  </AccordionTrigger>
+                  <AccordionContent className="text-neutral-600 font-light pb-4">
+                    {faq.answer}
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          </div>
+        </section>
 
         <FAQSchema questions={websiteFaqs} />
       </main>
