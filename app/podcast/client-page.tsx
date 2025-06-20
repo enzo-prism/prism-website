@@ -131,20 +131,50 @@ export default function PodcastClientPage() {
                 </p>
               </div>
               <div className="pt-6">
-                <a
-                  href="https://www.youtube.com/@the_design_prism"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={() => trackCTAClick("subscribe youtube", "podcast page")}
-                >
-                  <Button
-                    size="lg"
-                    className="bg-red-600 hover:bg-red-700 text-white rounded-full px-8 py-6 text-lg lowercase shadow-lg"
+                <div className="flex flex-wrap justify-center gap-4">
+                  <a
+                    href="https://www.youtube.com/@the_design_prism"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => trackCTAClick("subscribe youtube", "podcast page")}
                   >
-                    <Youtube className="mr-3 h-6 w-6" />
-                    watch on youtube
-                  </Button>
-                </a>
+                    <Button
+                      size="lg"
+                      className="bg-red-600 hover:bg-red-700 text-white rounded-full px-8 py-6 text-lg lowercase shadow-lg"
+                    >
+                      <Youtube className="mr-3 h-6 w-6" />
+                      watch on youtube
+                    </Button>
+                  </a>
+                  <a
+                    href="https://podcasts.apple.com/us/podcast/the-prism-pod/id1745660200"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => trackCTAClick("apple podcasts", "podcast page")}
+                  >
+                    <Button
+                      size="lg"
+                      className="bg-[#9333ea] hover:bg-[#7e22ce] text-white rounded-full px-8 py-6 text-lg lowercase shadow-lg"
+                    >
+                      <img src="/icons/applepodcasts.svg" alt="Apple Podcasts" className="mr-3 h-6 w-6" />
+                      listen on apple
+                    </Button>
+                  </a>
+                  <a
+                    href="https://open.spotify.com/show/1VvDo110AVVbOYdgZgzoKb?si=a41c116896ff4f80"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => trackCTAClick("spotify", "podcast page")}
+                  >
+                    <Button
+                      size="lg"
+                      className="bg-[#1db954] hover:bg-[#169c46] text-white rounded-full px-8 py-6 text-lg lowercase shadow-lg"
+                    >
+                      <img src="/icons/spotify.svg" alt="Spotify" className="mr-3 h-6 w-6" />
+                      listen on spotify
+                    </Button>
+                  </a>
+                </div>
               </div>
             </div>
           </div>
