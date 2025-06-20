@@ -15,7 +15,7 @@ export default function PodcastClientPage() {
   const episodes = [
     {
       number: "01",
-      guest: "Dr. Anthony Mataria",
+      guest: "Dr. Ahmed Mataria",
       youtubeUrl: "https://youtu.be/WIWxwdZflzo",
       takeaways: [
         "From single chair to multi-location",
@@ -25,7 +25,7 @@ export default function PodcastClientPage() {
     },
     {
       number: "02",
-      guest: "Ludmila Garcia",
+      guest: "Ludmila (dental office manager)",
       youtubeUrl: "https://youtu.be/5eB4Y27zkE8",
       takeaways: [
         "Turning passion projects into revenue",
@@ -35,7 +35,7 @@ export default function PodcastClientPage() {
     },
     {
       number: "03",
-      guest: "Melissa Chen",
+      guest: "Melissa (dental office front desk)",
       youtubeUrl: "https://youtu.be/jE6YAimUxMQ",
       takeaways: [
         "Scaling customer experience without losing heart",
