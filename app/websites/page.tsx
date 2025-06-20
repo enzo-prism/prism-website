@@ -63,6 +63,14 @@ const websiteProjects = [
     category: "healthcare",
     description: "modern dental care",
   },
+  {
+    id: "11",
+    title: "coast periodontics",
+    image: "/coast-periodontics-mobile.png",
+    url: "https://www.coastperiodontics.com",
+    category: "healthcare",
+    description: "expert gum care",
+  },
 ]
 
 
