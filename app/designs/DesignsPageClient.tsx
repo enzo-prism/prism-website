@@ -174,26 +174,14 @@ export default function DesignsPageClient() {
       <Navbar />
       <main className="flex-1">
         {/* Hero Section */}
-        <section className="px-4 py-16 md:py-24 lg:py-32">
-          <div className="container mx-auto px-4 md:px-6">
-            <div className="flex flex-col items-center space-y-6 text-center max-w-3xl mx-auto">
-              <div className="space-y-3">
-                <div className="text-4xl">🎨</div>
-                <h1 className="text-4xl font-bold tracking-tighter lowercase sm:text-5xl md:text-6xl">
-                  captivating designs.
-                </h1>
-                <p className="mx-auto mt-4 max-w-[700px] text-neutral-600 lowercase md:text-xl">
-                  eye-catching visuals and brand identity solutions that make your business unforgettable.
-                </p>
-                <div className="pt-6">
-                  <Link href="/get-started?service=graphic-design">
-                    <Button className="rounded-full px-8 py-6 text-lg lowercase">
-                      design my brand <ArrowRight className="ml-2 h-5 w-5" />
-                    </Button>
-                  </Link>
-                </div>
-              </div>
-            </div>
+        <section className="px-4 pt-24 pb-12 sm:pt-32 sm:pb-16">
+          <div className="max-w-7xl mx-auto">
+            <h1 className="text-5xl sm:text-7xl lg:text-8xl font-light tracking-tight text-neutral-900 mb-6">
+              designs
+            </h1>
+            <p className="text-lg sm:text-xl text-neutral-600 max-w-md font-light">
+              eye-catching visuals and brand identity solutions that make your business unforgettable.
+            </p>
           </div>
         </section>
 
