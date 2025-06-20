@@ -11,7 +11,7 @@ import { CaseStudySchema } from "@/components/schema-markup"
 import { trackCTAClick } from "@/utils/analytics"
 import { useState, useEffect } from "react"
 import SocialShare from "@/components/social-share"
-import { ExquisiteRankLiftChart } from "@/components/case-studies/exquisite-rank-lift-chart"
+import { ExquisitePillarKPIChart } from "@/components/case-studies/exquisite-pillar-kpi-chart"
 import { ExquisiteChannelShareChart } from "@/components/case-studies/exquisite-channel-share-chart"
 
 export default function ExquisiteDentistryCaseStudy() {
@@ -148,9 +148,9 @@ export default function ExquisiteDentistryCaseStudy() {
                   </table>
                 </div>
                 <div className="mt-8">
-                  <ExquisiteRankLiftChart />
+                  <ExquisitePillarKPIChart />
                 </div>
-                <p className="text-sm text-neutral-500 italic mt-2">[Graphic: Interactive “Pillar-to-KPI” Sankey diagram mapping each tactic to the metric it moved]</p>
+                <p className="text-sm text-neutral-500 italic mt-2">Interactive diagram showing how each tactic contributed to key performance improvements</p>
               </section>
 
               {/* Transformation */}
