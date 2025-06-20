@@ -11,7 +11,7 @@ import { CaseStudySchema } from "@/components/schema-markup"
 import { trackCTAClick } from "@/utils/analytics"
 import { useState, useEffect } from "react"
 import SocialShare from "@/components/social-share"
-import { ExquisiteRankLiftChart } from "@/components/case-studies/exquisite-rank-lift-chart"
+import { ExquisitePillarKPIChart } from "@/components/case-studies/exquisite-pillar-kpi-chart"
 import { ExquisiteChannelShareChart } from "@/components/case-studies/exquisite-channel-share-chart"
 
 export default function ExquisiteDentistryCaseStudy() {
@@ -57,6 +57,17 @@ export default function ExquisiteDentistryCaseStudy() {
               <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl">Aligning Digital Excellence with Luxury Care</h1>
               <p className="text-xl text-neutral-600">How Prism elevated Beverly Hills’ Exquisite Dentistry’s online presence to match their premium in-person experience.</p>
               <p className="text-neutral-500">Practice owner: <strong>Dr. Alexie Aguil</strong></p>
+              <p className="text-neutral-500">
+                Website:{" "}
+                <Link
+                  href="https://exquisitedentistryla.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline hover:text-neutral-700 transition-colors"
+                >
+                  exquisitedentistryla.com
+                </Link>
+              </p>
             </div>
             <div className="mt-10 mb-6">
               <Image src="/exquisite-dentistry-consultation.png" alt="Exquisite Dentistry consultation" width={800} height={450} className="rounded-md w-full h-auto" priority />
@@ -148,9 +159,9 @@ export default function ExquisiteDentistryCaseStudy() {
                   </table>
                 </div>
                 <div className="mt-8">
-                  <ExquisiteRankLiftChart />
+                  <ExquisitePillarKPIChart />
                 </div>
-                <p className="text-sm text-neutral-500 italic mt-2">[Graphic: Interactive “Pillar-to-KPI” Sankey diagram mapping each tactic to the metric it moved]</p>
+                <p className="text-sm text-neutral-500 italic mt-2">Interactive diagram showing how each tactic contributed to key performance improvements</p>
               </section>
 
               {/* Transformation */}
