@@ -191,7 +191,6 @@ export default function DesignsPageClient() {
                       design my brand <ArrowRight className="ml-2 h-5 w-5" />
                     </Button>
                   </Link>
-                  <p className="text-xs text-neutral-500 mt-2 lowercase">2x sales in 90 days or don't pay</p>
                 </div>
               </div>
             </div>
