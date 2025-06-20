@@ -317,7 +317,7 @@ export default function DesignsPageClient() {
                 {isMobile && (
                   <div className="flex items-center justify-center space-x-2 text-center text-sm text-gray-500 mt-4">
                     <ChevronLeft className="h-4 w-4" />
-                    <p>swipe to navigate between designs</p>
+                    <p>swipe to navigate</p>
                     <ChevronRight className="h-4 w-4" />
                   </div>
                 )}
