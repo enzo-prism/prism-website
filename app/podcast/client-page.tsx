@@ -240,8 +240,8 @@ export default function PodcastClientPage() {
                           rel="noopener noreferrer"
                           onClick={() => trackCTAClick(`watch episode ${episode.number}`, "podcast page")}
                         >
-                          <Button 
-                            className="w-full bg-red-600 hover:bg-red-700 text-white rounded-full px-6 py-3 lowercase"
+                          <Button
+                            className="w-full bg-red-600 hover:bg-red-700 text-white rounded-full px-6 py-4 lowercase"
                           >
                             <Youtube className="mr-2 h-4 w-4" />
                             watch episode {episode.number}
