@@ -13,6 +13,8 @@ import { useState, useEffect } from "react"
 import SocialShare from "@/components/social-share"
 import { ExquisitePillarKPIChart } from "@/components/case-studies/exquisite-pillar-kpi-chart"
 import { ExquisiteChannelShareChart } from "@/components/case-studies/exquisite-channel-share-chart"
+import { ExquisiteSessionsGrowthChart } from "@/components/case-studies/exquisite-sessions-growth-chart"
+import { ExquisiteSpeedGauge } from "@/components/case-studies/exquisite-speed-gauge"
 
 export default function ExquisiteDentistryCaseStudy() {
   const [activeSection, setActiveSection] = useState("")
@@ -169,8 +171,10 @@ export default function ExquisiteDentistryCaseStudy() {
                   </table>
                 </div>
                 <p className="text-sm text-neutral-600 mt-4">Practice staff note a clear uptick in veneer and whitening consultations, confirming the quality of incoming leads.</p>
-                <p className="text-sm text-neutral-500 italic mt-2">[Graphic: Hockey-stick line chart of sessions/day with marker at 28 Mar relaunch]</p>
-                <p className="text-sm text-neutral-500 italic">[Graphic: Side-by-side speed gauge (4.2 s vs 2.1 s LCP)]</p>
+                <div className="mt-6 space-y-6">
+                  <ExquisiteSessionsGrowthChart />
+                  <ExquisiteSpeedGauge />
+                </div>
               </section>
 
               {/* Results */}
