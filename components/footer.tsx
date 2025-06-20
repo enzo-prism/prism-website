@@ -25,20 +25,26 @@ export default function Footer() {
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
           {/* Brand section */}
           <div className="lg:col-span-2">
-            <div className="flex items-center gap-2 mb-4">
-              <div className="relative h-8 w-8 overflow-hidden rounded-lg">
+            <Link
+              href="/"
+              className="flex items-center gap-2 mb-4"
+              onClick={() => trackNavigation("logo", "/")}
+            >
+              <div className="relative h-8 w-8 overflow-hidden rounded-lg isolate">
                 <CoreImage
-                  src="/transparent-prism-logo.png"
+                  src="/prism-logo.jpeg"
                   alt="Prism logo"
                   width={32}
                   height={32}
-                  className="object-contain rounded-lg"
-                  fallbackSrc="/favicon-rounded.png"
-                  trackingId="footer_logo"
+                  className="object-contain w-full h-full rounded-lg overflow-hidden"
+                  priority
+                  fallbackSrc="/favicon-large.png"
+                  trackingId="navbar_logo"
+                  quality={90}
                 />
               </div>
-              <span className="text-2xl font-bold lowercase">prism</span>
-            </div>
+              <span className="text-2xl font-bold lowercase text-foreground">prism</span>
+            </Link>
             <p className="text-sm text-neutral-600 max-w-md leading-relaxed">
               beautiful websites, apps, and designs that help your business grow. we create digital experiences that
               convert visitors into customers.
