@@ -486,9 +486,11 @@ export default function WallOfLoveClientPage() {
             <h1 className="text-5xl font-bold tracking-tight lowercase sm:text-6xl md:text-7xl text-neutral-900">
               wall of love
             </h1>
-            <p className="text-lg text-neutral-600 md:text-xl lowercase max-w-lg mx-auto">
-              we're deeply thankful for our clients and passionate community of entrepreneurs
-            </p>
+            <div className="text-lg text-neutral-600 md:text-xl lowercase max-w-lg mx-auto space-y-1">
+              <p>15 clients</p>
+              <p>38.5k+ followers on instagram</p>
+              <p>24.5k+ subscribers on youtube</p>
+            </div>
             <div>
               <Link href="/get-started">
                 <Button
