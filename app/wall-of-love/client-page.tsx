@@ -494,9 +494,9 @@ export default function WallOfLoveClientPage() {
                 <Button
                   size="lg"
                   className="bg-neutral-900 hover:bg-neutral-800 text-white rounded-full px-10 py-7 text-lg lowercase shadow-md"
-                  aria-label="Get started with Prism"
+                  aria-label="Hire Prism"
                 >
-                  get started <ArrowRight className="ml-2 h-5 w-5" />
+                  hire prism <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
               </Link>
             </div>
