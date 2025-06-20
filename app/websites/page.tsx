@@ -41,7 +41,7 @@ const websiteProjects = [
   },
   {
     id: "7",
-    title: "laguna beach dental",
+    title: "laguna beach dental arts",
     image: "/laguna-beach-dental-arts-mobile.png",
     url: "https://lagunabeachdentalarts.com",
     category: "healthcare",
