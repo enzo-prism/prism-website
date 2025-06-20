@@ -48,7 +48,6 @@ export async function runImageSystemDiagnostic(): Promise<DiagnosticReport> {
     // 3. Validate all known image paths
     console.log("🔗 Validating image paths...")
     const knownPaths = [
-      "/we-are-saplings-mobile.png",
       "/practice-transitions-institute-mobile.png",
       "/olympic-bootworks-mobile.png",
       "/exquisite-dentistry-mobile.png",

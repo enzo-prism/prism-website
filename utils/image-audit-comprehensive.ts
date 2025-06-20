@@ -145,7 +145,6 @@ export async function performComprehensiveImageAudit(): Promise<AuditSummary> {
 
   // Known image paths from the project
   const imagePaths = [
-    "/we-are-saplings-mobile.png",
     "/practice-transitions-institute-mobile.png",
     "/olympic-bootworks-mobile.png",
     "/exquisite-dentistry-mobile.png",
