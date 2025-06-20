@@ -26,15 +26,17 @@ export default function Footer() {
           {/* Brand section */}
           <div className="lg:col-span-2">
             <div className="flex items-center gap-2 mb-4">
-              <div className="relative h-8 w-8 overflow-hidden rounded-lg">
+              <div className="relative h-8 w-8 overflow-hidden rounded-lg isolate">
                 <CoreImage
-                  src="/transparent-prism-logo.png"
+                  src="/prism-logo.jpeg"
                   alt="Prism logo"
                   width={32}
                   height={32}
-                  className="object-contain rounded-lg"
-                  fallbackSrc="/favicon-rounded.png"
+                  className="object-contain w-full h-full rounded-lg overflow-hidden"
+                  priority
+                  fallbackSrc="/favicon-large.png"
                   trackingId="footer_logo"
+                  quality={90}
                 />
               </div>
               <span className="text-2xl font-bold lowercase">prism</span>
