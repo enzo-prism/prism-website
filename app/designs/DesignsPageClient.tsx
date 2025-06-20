@@ -1,15 +1,12 @@
 "use client"
 
 import { useState, useEffect, useCallback, useRef } from "react"
-import { ChevronLeft, ChevronRight, ArrowRight } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import Link from "next/link"
+import { ChevronLeft, ChevronRight } from "lucide-react"
 import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
 import PageViewTracker from "@/components/page-view-tracker"
 import { useMobile } from "@/hooks/use-mobile"
 import { motion, AnimatePresence } from "framer-motion"
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 
 // Quotes data
 const slides = [
@@ -69,39 +66,6 @@ const slides = [
   },
 ]
 
-// Design services FAQs
-const designFaqs = [
-  {
-    question: "what types of design services do you offer?",
-    answer:
-      "we provide a comprehensive range of design services including brand identity (logos, color palettes, typography), marketing materials (brochures, business cards, flyers), digital assets (social media graphics, email templates, web banners), packaging design, environmental graphics, and custom illustrations. all our designs are created with both aesthetic appeal and strategic business goals in mind.",
-  },
-  {
-    question: "how does your design process work?",
-    answer:
-      "our design process begins with a discovery phase to understand your brand, audience, and objectives. we then create concept designs, gather your feedback, refine the designs, and deliver final files in all formats you need. we maintain open communication throughout and offer unlimited revisions during the concept phase to ensure you're completely satisfied with the final result.",
-  },
-  {
-    question: "how much do your design services cost?",
-    answer:
-      "our design services are priced based on project scope and complexity. logo and brand identity packages typically range from $1,500 to $5,000. individual design projects like brochures or social media templates start at $500. we also offer monthly design subscriptions starting at $997/month for businesses needing ongoing design support. we provide detailed quotes after understanding your specific requirements.",
-  },
-  {
-    question: "how long do design projects take to complete?",
-    answer:
-      "project timelines vary based on complexity. logo and brand identity projects typically take 2-4 weeks from start to finish. smaller projects like social media graphics can be completed in 3-5 business days. we'll provide a specific timeline during our initial consultation and keep you updated on progress throughout the project.",
-  },
-  {
-    question: "what file formats will i receive for my designs?",
-    answer:
-      "we provide all designs in multiple formats suitable for both print and digital use. this typically includes vector files (ai, eps, svg), editable files (psd, indd), and ready-to-use formats (pdf, jpg, png). we also provide brand guidelines and templates when applicable to ensure consistent implementation across all channels.",
-  },
-  {
-    question: "do you offer rush services for urgent design needs?",
-    answer:
-      "yes, we offer expedited design services for time-sensitive projects at an additional fee. depending on our current workload and the complexity of your project, we can often accommodate rush requests with 24-72 hour turnarounds. please contact us directly about your urgent design needs so we can provide specific timing and pricing options.",
-  },
-]
 
 const variants = {
   enter: (direction: number) => {
@@ -313,32 +277,6 @@ export default function DesignsPageClient() {
           </div>
         </section>
 
-        {/* FAQ Section */}
-        <section className="px-4 py-16 md:py-24 bg-gray-50">
-          <div className="container mx-auto px-4 md:px-6">
-            <div className="mx-auto max-w-3xl">
-              <h2 className="text-3xl font-bold tracking-tighter lowercase text-center mb-12">
-                frequently asked questions
-              </h2>
-              <Accordion type="single" collapsible className="w-full">
-                {designFaqs.map((faq, index) => (
-                  <AccordionItem key={index} value={`item-${index}`}>
-                    <AccordionTrigger className="text-left lowercase font-medium">{faq.question}</AccordionTrigger>
-                    <AccordionContent className="text-neutral-600 lowercase">{faq.answer}</AccordionContent>
-                  </AccordionItem>
-                ))}
-              </Accordion>
-              <div className="mt-12 text-center">
-                <p className="text-neutral-600 lowercase mb-6">have more questions? we're here to help.</p>
-                <Link href="/get-started">
-                  <Button className="rounded-full px-8 py-6 text-lg lowercase">
-                    schedule a consultation <ArrowRight className="ml-2 h-5 w-5" />
-                  </Button>
-                </Link>
-              </div>
-            </div>
-          </div>
-        </section>
       </main>
       <Footer />
     </div>
