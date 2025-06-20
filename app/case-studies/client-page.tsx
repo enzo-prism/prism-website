@@ -50,16 +50,6 @@ export default function CaseStudiesPage() {
       description: "Full-stack digital overhaul: brand-new site, e-commerce build, analytics & growth program.",
       slug: "olympic-bootworks",
     },
-    {
-      id: "4",
-      title: "Planting the Seeds of an Emotion-Literate Generation",
-      client: "We Are Saplings",
-      industry: "Education",
-      location: "San Francisco, CA",
-      description:
-        "Zero-to-one brand launch: strategy, custom site, community engine for emotional intelligence tools.",
-      slug: "we-are-saplings",
-    },
   ]
 
   return (

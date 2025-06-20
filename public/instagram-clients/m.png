@@ -86,14 +86,6 @@ export default function ClientShowcase() {
       image: "/suz-meinhardt.png",
     },
     {
-      id: 7,
-      name: "clare frattarola",
-      business: "we are saplings",
-      clientType: "website",
-      gradient: "bg-gradient-to-br from-indigo-200 to-indigo-400",
-      image: "/clare-frattarola-headshot.png",
-    },
-    {
       id: 8,
       name: "buck brown",
       business: "olympic bootworks",

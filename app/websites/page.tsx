@@ -56,14 +56,6 @@ const websiteProjects = [
     description: "performance solutions",
   },
   {
-    id: "1",
-    title: "we are saplings",
-    image: "/we-are-saplings-mobile.png",
-    url: "https://wearesaplings.com",
-    category: "education",
-    description: "nurturing resilient kids",
-  },
-  {
     id: "5",
     title: "dr. christopher wong",
     image: "/dr-christopher-wong-mobile.png",
