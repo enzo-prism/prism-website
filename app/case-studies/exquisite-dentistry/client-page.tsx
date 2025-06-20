@@ -147,10 +147,7 @@ export default function ExquisiteDentistryCaseStudy() {
                     </tbody>
                   </table>
                 </div>
-                <div className="mt-8">
-                  <ExquisitePillarKPIChart />
-                </div>
-                <p className="text-sm text-neutral-500 italic mt-2">Interactive diagram showing how each tactic contributed to key performance improvements</p>
+                {/* Removed interactive KPI chart per latest update */}
               </section>
 
               {/* Transformation */}
