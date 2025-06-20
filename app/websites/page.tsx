@@ -4,8 +4,6 @@ import { Button } from "@/components/ui/button"
 import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
 import PageViewTracker from "@/components/page-view-tracker"
-import { FAQSchema } from "@/components/schema-markup"
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import ScrollProgressBar from "@/components/scroll-progress-bar"
 import WebsitePortfolioGrid from "@/components/website-portfolio-grid"
 
@@ -75,20 +73,6 @@ const websiteProjects = [
   },
 ]
 
-const websiteFaqs = [
-  {
-    question: "timeline",
-    answer: "4-6 weeks from start to launch",
-  },
-  {
-    question: "included",
-    answer: "design, mobile optimization, seo, analytics, training, support",
-  },
-  {
-    question: "investment",
-    answer: "$5k-15k with flexible payment options",
-  },
-]
 
 export default function WebsitesPage() {
   return (
@@ -133,32 +117,6 @@ export default function WebsitesPage() {
           </div>
         </section>
 
-        {/* FAQ - Minimal accordion */}
-        <section className="px-4 py-16 sm:py-24 border-t border-neutral-100">
-          <div className="max-w-2xl mx-auto">
-            <h2 className="text-2xl sm:text-3xl font-light text-neutral-900 mb-12 text-center">
-              frequently asked
-            </h2>
-            <Accordion type="single" collapsible className="space-y-2">
-              {websiteFaqs.map((faq, index) => (
-                <AccordionItem 
-                  key={index} 
-                  value={`item-${index}`} 
-                  className="border-b border-neutral-200 pb-4"
-                >
-                  <AccordionTrigger className="text-left font-light text-lg hover:no-underline py-4">
-                    {faq.question}
-                  </AccordionTrigger>
-                  <AccordionContent className="text-neutral-600 font-light pb-4">
-                    {faq.answer}
-                  </AccordionContent>
-                </AccordionItem>
-              ))}
-            </Accordion>
-          </div>
-        </section>
-
-        <FAQSchema questions={websiteFaqs} />
       </main>
       <Footer />
     </div>
