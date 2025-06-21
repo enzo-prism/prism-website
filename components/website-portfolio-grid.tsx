@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import Image from "next/image"
 import { ArrowUpRight } from "lucide-react"
 import { trackCTAClick } from "@/utils/analytics"
 
@@ -17,20 +18,10 @@ interface WebsitePortfolioGridProps {
   projects: WebsiteProject[]
 }
 
-// Beautiful soft modern gradients
-const gradients = [
-  "from-violet-400 via-purple-400 to-indigo-400", // Purple dream
-  "from-cyan-400 via-sky-400 to-blue-400", // Ocean breeze
-  "from-rose-400 via-pink-400 to-fuchsia-400", // Sunset blush
-  "from-amber-400 via-orange-400 to-yellow-400", // Golden hour
-  "from-emerald-400 via-teal-400 to-cyan-400", // Tropical lagoon
-  "from-blue-400 via-indigo-400 to-purple-400", // Mystic night
-]
-
 export default function WebsitePortfolioGrid({ projects }: WebsitePortfolioGridProps) {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-      {projects.map((project, index) => (
+      {projects.map((project) => (
         <Link
           key={project.id}
           href={project.url}
@@ -39,14 +30,17 @@ export default function WebsitePortfolioGrid({ projects }: WebsitePortfolioGridP
           onClick={() => trackCTAClick("portfolio-click", project.title)}
           className="group relative overflow-hidden rounded-xl aspect-[9/16] sm:aspect-[3/4] hover:shadow-lg transition-all duration-300"
         >
-          {/* Gradient background */}
-          <div className={`absolute inset-0 bg-gradient-to-br ${gradients[index % gradients.length]} opacity-80`} />
+          {/* Actual image */}
+          <Image
+            src={project.image}
+            alt={project.title}
+            fill
+            className="object-cover object-center"
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          />
           
-          {/* Subtle pattern overlay for depth */}
-          <div className="absolute inset-0 opacity-30" style={{
-            backgroundImage: `radial-gradient(circle at 20% 80%, transparent 50%, rgba(255, 255, 255, 0.1) 51%)`,
-            backgroundSize: '100px 100px'
-          }} />
+          {/* Gradient overlay for text readability */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
           
           {/* Content overlay on hover */}
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -72,7 +66,7 @@ export default function WebsitePortfolioGrid({ projects }: WebsitePortfolioGridP
           </div>
           
           {/* Shine effect on hover */}
-          <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+          <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
             <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/10 to-transparent transform -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
           </div>
         </Link>

@@ -26,7 +26,7 @@ const websiteProjects = [
   {
     id: "4",
     title: "exquisite dentistry",
-    image: "/exquisite-dentistry-mobile.png",
+    image: "/exquisite dentistry.png",
     url: "https://exquisiteveneersla.com/",
     category: "healthcare",
     description: "luxury cosmetic dentistry",
@@ -34,7 +34,7 @@ const websiteProjects = [
   {
     id: "9",
     title: "belize kids",
-    image: "/belize-kids-mobile.png",
+    image: "/belize kids.png",
     url: "https://belizekids.org",
     category: "nonprofit",
     description: "empowering children",
@@ -42,7 +42,7 @@ const websiteProjects = [
   {
     id: "7",
     title: "laguna beach dental arts",
-    image: "/laguna-beach-dental-arts-mobile.png",
+    image: "/laguna beach dental arts.png",
     url: "https://lagunabeachdentalarts.com",
     category: "healthcare",
     description: "exceptional dental care",
@@ -50,7 +50,7 @@ const websiteProjects = [
   {
     id: "3",
     title: "olympic bootworks",
-    image: "/olympic-bootworks-mobile.png",
+    image: "/olympic bootworks.png",
     url: "https://www.olympicbootworks.com",
     category: "retail",
     description: "performance solutions",
@@ -58,7 +58,7 @@ const websiteProjects = [
   {
     id: "5",
     title: "dr. christopher wong",
-    image: "/dr-christopher-wong-mobile.png",
+    image: "/dr. christopher wong.png",
     url: "https://www.chriswongdds.com",
     category: "healthcare",
     description: "modern dental care",
@@ -66,7 +66,7 @@ const websiteProjects = [
   {
     id: "11",
     title: "coast periodontics",
-    image: "/coast-periodontics-mobile.png",
+    image: "/coast periodontics.png",
     url: "https://www.coastperiodontics.com",
     category: "healthcare",
     description: "expert gum care",
