@@ -11,7 +11,6 @@ import { CaseStudySchema } from "@/components/schema-markup"
 import { trackCTAClick } from "@/utils/analytics"
 import { useState, useEffect } from "react"
 import SocialShare from "@/components/social-share"
-import { ExquisitePillarKPIChart } from "@/components/case-studies/exquisite-pillar-kpi-chart"
 import { ExquisiteChannelShareChart } from "@/components/case-studies/exquisite-channel-share-chart"
 import { ExquisiteSessionsGrowthChart } from "@/components/case-studies/exquisite-sessions-growth-chart"
 import { ExquisiteSpeedGauge } from "@/components/case-studies/exquisite-speed-gauge"
@@ -57,7 +56,7 @@ export default function ExquisiteDentistryCaseStudy() {
             <div className="space-y-6">
               <div className="inline-block px-4 py-1 bg-neutral-100 rounded-full text-sm lowercase">case study</div>
               <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl">Aligning Digital Excellence with Luxury Care</h1>
-              <p className="text-xl text-neutral-600">How Prism elevated Beverly Hills’ Exquisite Dentistry’s online presence to match their premium in-person experience.</p>
+              <p className="text-xl text-neutral-600">How Prism elevated Beverly Hills' Exquisite Dentistry's online presence to match their premium in-person experience.</p>
               <p className="text-neutral-500">Practice owner: <strong>Dr. Alexie Aguil</strong></p>
             </div>
             <div className="mt-10 mb-6">
@@ -127,12 +126,11 @@ export default function ExquisiteDentistryCaseStudy() {
                   <li><p><strong>Brand incongruence</strong><br />High-end photography and celebrity testimonials were hidden behind clunky navigation.</p></li>
                   <li><p><strong>Visibility gaps</strong><br />Directory inconsistencies made it harder for Google to surface the practice locally.</p></li>
                 </ol>
-                <p className="text-sm text-neutral-500 italic mt-4">[Graphic: “Before” mobile walkthrough]</p>
               </section>
 
               {/* Approach */}
               <section className="py-8 border-t" data-section="approach">
-                <h2 className="text-2xl font-bold tracking-tighter mb-6">Prism’s Approach — Crafting a Patient-Centric Digital Ecosystem</h2>
+                <h2 className="text-2xl font-bold tracking-tighter mb-6">Prism's Approach — Crafting a Patient-Centric Digital Ecosystem</h2>
                 <div className="overflow-x-auto">
                   <table className="w-full text-sm border">
                     <thead>
@@ -141,7 +139,7 @@ export default function ExquisiteDentistryCaseStudy() {
                     <tbody>
                       <tr><td className="border px-3 py-2 font-medium">Bespoke Website Rebuild</td><td className="border px-3 py-2">Hand-coded, mobile-first framework (2.1 s LCP).</td><td className="border px-3 py-2">Load time cut <strong>50 %</strong>; mobile CTR rose to <strong>0.7 %</strong>.</td></tr>
                       <tr><td className="border px-3 py-2 font-medium">UX First</td><td className="border px-3 py-2">Instagram-style navigation, thumb-zone CTAs.</td><td className="border px-3 py-2">Avg. pages per mobile session doubled.</td></tr>
-                      <tr><td className="border px-3 py-2 font-medium">Content Remix</td><td className="border px-3 py-2">Integrated pro photos & video testimonials across service pages.</td><td className="border px-3 py-2"><strong>+68 %</strong> clicks on “veneers” & “teeth-whitening” queries.</td></tr>
+                      <tr><td className="border px-3 py-2 font-medium">Content Remix</td><td className="border px-3 py-2">Integrated pro photos & video testimonials across service pages.</td><td className="border px-3 py-2"><strong>+68 %</strong> clicks on "veneers" & "teeth-whitening" queries.</td></tr>
                       <tr><td className="border px-3 py-2 font-medium">Listing Clean-Up</td><td className="border px-3 py-2">Synced NAP data across 40+ directories.</td><td className="border px-3 py-2">Consistent local-pack visibility.</td></tr>
                       <tr><td className="border px-3 py-2 font-medium">Ad Campaigns</td><td className="border px-3 py-2">High-intent Instagram retargeting.</td><td className="border px-3 py-2">Funnel filled while organic traffic ramped.</td></tr>
                       <tr><td className="border px-3 py-2 font-medium">Systems Integration</td><td className="border px-3 py-2">Connected online scheduling & VOIP tracking.</td><td className="border px-3 py-2">Leads drop straight into the PMS.</td></tr>
@@ -201,7 +199,7 @@ export default function ExquisiteDentistryCaseStudy() {
               <section className="py-12 border-t border-b my-8" data-section="cta">
                 <div className="text-center space-y-6">
                   <h2 className="text-2xl font-bold tracking-tighter">Ready to Close the Digital Gap?</h2>
-                  <p>If your offline experience screams five-star but your website whispers two-star, let’s talk.<br />➡ <strong>Book a 15-min strategy call</strong> or explore more success stories.</p>
+                  <p>If your offline experience screams five-star but your website whispers two-star, let's talk.<br />➡ <strong>Book a 15-min strategy call</strong> or explore more success stories.</p>
                   <div className="pt-6">
                     <Link href="/get-started">
                       <Button className="rounded-full px-8 py-6 text-lg" onClick={() => trackCTAClick("get started", "case study bottom")}>get started <ArrowRight className="ml-2 h-5 w-5" /></Button>
@@ -231,7 +229,7 @@ export default function ExquisiteDentistryCaseStudy() {
         </div>
 
         <div className="mt-12">
-          <SocialShare url="https://design-prism.com/case-studies/exquisite-dentistry" imageUrl="https://design-prism.com/exquisite-dentistry-consultation.png" title="Exquisite Dentistry Case Study" description="How Prism elevated Beverly Hills’ Exquisite Dentistry’s online presence." />
+          <SocialShare url="https://design-prism.com/case-studies/exquisite-dentistry" imageUrl="https://design-prism.com/exquisite-dentistry-consultation.png" title="Exquisite Dentistry Case Study" description="How Prism elevated Beverly Hills' Exquisite Dentistry's online presence." />
         </div>
       </main>
       <Footer />
