@@ -30,6 +30,8 @@ const websiteProjects = [
     url: "https://exquisiteveneersla.com/",
     category: "healthcare",
     description: "luxury cosmetic dentistry",
+    width: 1024,
+    height: 1536,
   },
   {
     id: "9",
@@ -38,6 +40,8 @@ const websiteProjects = [
     url: "https://belizekids.org",
     category: "nonprofit",
     description: "empowering children",
+    width: 1024,
+    height: 1536,
   },
   {
     id: "7",
@@ -46,6 +50,8 @@ const websiteProjects = [
     url: "https://lagunabeachdentalarts.com",
     category: "healthcare",
     description: "exceptional dental care",
+    width: 1024,
+    height: 1536,
   },
   {
     id: "3",
@@ -54,6 +60,8 @@ const websiteProjects = [
     url: "https://www.olympicbootworks.com",
     category: "retail",
     description: "performance solutions",
+    width: 1024,
+    height: 1536,
   },
   {
     id: "5",
@@ -62,6 +70,8 @@ const websiteProjects = [
     url: "https://www.chriswongdds.com",
     category: "healthcare",
     description: "modern dental care",
+    width: 1024,
+    height: 1536,
   },
   {
     id: "11",
@@ -70,6 +80,8 @@ const websiteProjects = [
     url: "https://www.coastperiodontics.com",
     category: "healthcare",
     description: "expert gum care",
+    width: 1024,
+    height: 1536,
   },
 ]
 
