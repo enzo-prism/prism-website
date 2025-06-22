@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import Image from "next/image"
+import Image from "@/components/image"
 import { ArrowUpRight } from "lucide-react"
 import { trackCTAClick } from "@/utils/analytics"
 
@@ -12,6 +12,8 @@ interface WebsiteProject {
   url: string
   category: string
   description: string
+  width: number
+  height: number
 }
 
 interface WebsitePortfolioGridProps {
@@ -34,9 +36,11 @@ export default function WebsitePortfolioGrid({ projects }: WebsitePortfolioGridP
           <Image
             src={project.image}
             alt={project.title}
-            fill
-            className="object-cover object-center"
+            width={project.width}
+            height={project.height}
+            className="object-cover object-center w-full h-full"
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            showLoadingIndicator
           />
           
           {/* Gradient overlay for text readability */}
