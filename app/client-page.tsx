@@ -44,19 +44,29 @@ export default function ClientPage() {
       <Navbar />
       <main className="flex-1">
         {/* Hero Section */}
-        <section className="relative px-4 py-16 md:py-24 lg:py-32 overflow-hidden">
-          {/* Background video */}
-          <div className="absolute inset-0 -z-20 pointer-events-none">
+        <section className="relative py-16 md:py-24 lg:py-32 overflow-hidden">
+          {/* Background video container with full viewport coverage */}
+          <div className="absolute inset-0 -z-20">
             <iframe
               src="https://player.vimeo.com/video/1095467469?background=1&autoplay=1&loop=1&muted=1&controls=0&playsinline=1"
               title="Prism hero background"
-              className="h-full w-full object-cover"
+              style={{
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                width: '100vw',
+                height: '100vh',
+                minWidth: '100%',
+                minHeight: '100%',
+                transform: 'translate(-50%, -50%) scale(1.2)',
+                objectFit: 'cover'
+              }}
               allow="autoplay; fullscreen; picture-in-picture"
               allowFullScreen
             ></iframe>
           </div>
-          {/* Overlay to reduce video opacity for contrast */}
-          <div className="absolute inset-0 bg-black/70 -z-10" />
+          {/* White overlay for elegant contrast */}
+          <div className="absolute inset-0 bg-white/80 -z-10" />
 
           <div className="container relative mx-auto px-4 md:px-6">
             <div className="flex flex-col items-center space-y-6 text-center">
