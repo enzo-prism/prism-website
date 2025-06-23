@@ -167,8 +167,6 @@ export default function ClientPage() {
           </div>
         </section>
 
-
-
         {/* Wall of Love CTA Section */}
         <section className="py-16 md:py-24 bg-white dark:bg-neutral-900">
           <div className="container mx-auto px-4 md:px-6">
@@ -179,6 +177,17 @@ export default function ClientPage() {
               <p className="text-neutral-600 dark:text-neutral-300 lowercase md:text-lg">
                 see why founders love prism ❤️
               </p>
+              {/* Embedded client feedback video */}
+              <div className="mt-6 flex justify-center">
+                <iframe
+                  src="https://player.vimeo.com/video/1095461781?autoplay=1&loop=1&muted=1&background=1&controls=0&title=0&byline=0&portrait=0&playsinline=1"
+                  width="320"
+                  height="180"
+                  className="rounded-lg shadow-md border border-neutral-200"
+                  allow="autoplay; fullscreen; picture-in-picture"
+                  allowFullScreen
+                ></iframe>
+              </div>
               <div className="pt-4">
                 <Link href="/wall-of-love">
                   <Button
