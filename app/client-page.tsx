@@ -20,7 +20,40 @@ import { LOGO_CONFIG, LOGO_SIZES } from "@/lib/constants"
 export default function ClientPage() {
   const isMobile = useMobile() // Added this line
   const [shouldLoadVideo, setShouldLoadVideo] = useState(false)
+  const [videoScale, setVideoScale] = useState(1.5)
   const heroRef = useRef<HTMLElement>(null)
+
+  // Calculate video scale based on viewport dimensions
+  useEffect(() => {
+    const calculateVideoScale = () => {
+      // Video aspect ratio is 16:9
+      const videoAspectRatio = 16 / 9
+      const viewportAspectRatio = window.innerWidth / window.innerHeight
+      
+      // If viewport is taller than video (portrait), scale based on height
+      // If viewport is wider than video (landscape), scale based on width
+      let scale = 1
+      if (viewportAspectRatio < videoAspectRatio) {
+        // Portrait orientation - scale to cover height
+        scale = videoAspectRatio / viewportAspectRatio
+      } else {
+        // Landscape orientation - minimal scale needed
+        scale = 1.2
+      }
+      
+      // Add extra scale for safety margin
+      setVideoScale(Math.max(scale * 1.2, 1.5))
+    }
+
+    calculateVideoScale()
+    window.addEventListener('resize', calculateVideoScale)
+    window.addEventListener('orientationchange', calculateVideoScale)
+    
+    return () => {
+      window.removeEventListener('resize', calculateVideoScale)
+      window.removeEventListener('orientationchange', calculateVideoScale)
+    }
+  }, [])
 
   // Lazy load video when hero section is in viewport
   useEffect(() => {
@@ -95,25 +128,27 @@ export default function ClientPage() {
             
             {/* Video iframe - Only rendered when needed */}
             {shouldLoadVideo && (
-              <iframe
-                src={`https://player.vimeo.com/video/1095467469?background=1&autoplay=1&loop=1&muted=1&controls=0&playsinline=1&quality=${isMobile ? '360p' : 'auto'}`}
-                title="Prism hero background"
-                className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000`}
-                style={{
-                  width: isMobile ? '200%' : '177.77vh', /* Increased scale for mobile */
-                  height: isMobile ? '200%' : '56.25vw', /* Increased scale for mobile */
-                  minWidth: '100%',
-                  minHeight: '100%',
-                  position: 'absolute',
-                  left: '50%',
-                  top: '50%',
-                  transform: 'translate(-50%, -50%)',
-                  opacity: shouldLoadVideo ? 1 : 0,
-                }}
-                allow="autoplay; fullscreen; picture-in-picture"
-                allowFullScreen
-                loading="lazy"
-              />
+              <div className="absolute inset-0 flex items-center justify-center">
+                <iframe
+                  src={`https://player.vimeo.com/video/1095467469?background=1&autoplay=1&loop=1&muted=1&controls=0&playsinline=1&quality=${isMobile ? '360p' : 'auto'}`}
+                  title="Prism hero background"
+                  className="transition-opacity duration-1000"
+                  style={{
+                    width: '100vw',
+                    height: '100vh',
+                    minWidth: '177.77vh', /* 16:9 aspect ratio */
+                    minHeight: '56.25vw', /* 16:9 aspect ratio */
+                    position: 'absolute',
+                    left: '50%',
+                    top: '50%',
+                    transform: `translate(-50%, -50%) scale(${videoScale})`,
+                    opacity: shouldLoadVideo ? 1 : 0,
+                  }}
+                  allow="autoplay; fullscreen; picture-in-picture"
+                  allowFullScreen
+                  loading="lazy"
+                />
+              </div>
             )}
           </div>
           {/* White overlay for elegant contrast */}
