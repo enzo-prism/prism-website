@@ -93,7 +93,7 @@ export default function ClientPage() {
                   impossible is temporary
                 </p>
                 <p className="mx-auto mt-4 max-w-[700px] text-neutral-600 lowercase md:text-xl">
-                  websites, apps, and designs that shatter revenue goals and delight your customers.
+                  beautiful software that grows revenue.
                 </p>
               </div>
               <div className="flex flex-col items-center">
