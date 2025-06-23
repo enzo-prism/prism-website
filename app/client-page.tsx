@@ -81,7 +81,7 @@ export default function ClientPage() {
       <Navbar />
       <main className="flex-1">
         {/* Hero Section */}
-        <section ref={heroRef} className="relative py-16 md:py-24 lg:py-32 overflow-hidden">
+        <section ref={heroRef} className="relative min-h-[100dvh] flex items-center justify-center overflow-hidden">
           {/* Background video container with full coverage */}
           <div className="absolute inset-0 -z-20">
             {/* Lightweight placeholder while video loads */}
@@ -98,10 +98,10 @@ export default function ClientPage() {
               <iframe
                 src={`https://player.vimeo.com/video/1095467469?background=1&autoplay=1&loop=1&muted=1&controls=0&playsinline=1&quality=${isMobile ? '360p' : 'auto'}`}
                 title="Prism hero background"
-                className={`absolute inset-0 w-full h-full ${isMobile ? 'scale-[2]' : 'scale-150'} transition-opacity duration-1000`}
+                className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000`}
                 style={{
-                  width: '177.77vh', /* 16:9 aspect ratio */
-                  height: '56.25vw', /* 16:9 aspect ratio */
+                  width: isMobile ? '200%' : '177.77vh', /* Increased scale for mobile */
+                  height: isMobile ? '200%' : '56.25vw', /* Increased scale for mobile */
                   minWidth: '100%',
                   minHeight: '100%',
                   position: 'absolute',
@@ -119,9 +119,9 @@ export default function ClientPage() {
           {/* White overlay for elegant contrast */}
           <div className="absolute inset-0 bg-white/80 -z-10" />
 
-          <div className="container relative mx-auto px-4 md:px-6">
-            <div className="flex flex-col items-center space-y-6 text-center">
-              <div className="relative mx-auto mb-6 h-16 w-16 md:h-20 md:w-20 lg:h-24 lg:w-24">
+          <div className="container relative mx-auto px-4 md:px-6 py-8 md:py-16">
+            <div className="flex flex-col items-center space-y-4 md:space-y-6 text-center">
+              <div className="relative mx-auto mb-4 md:mb-6 h-16 w-16 md:h-20 md:w-20 lg:h-24 lg:w-24">
                 <CoreImage
                   src={LOGO_CONFIG.src}
                   alt={LOGO_CONFIG.alt}
