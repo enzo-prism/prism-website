@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react"
 import CoreImage from "./core-image"
+import { LOGO_CONFIG, LOGO_SIZES } from "@/lib/constants"
 
 export default function AnimatedLogo() {
   const [isVisible, setIsVisible] = useState(false)
@@ -23,14 +24,14 @@ export default function AnimatedLogo() {
         }`}
       >
         <CoreImage
-          src="/prism-logo-new.svg"
-          alt="Prism logo"
-          width={96}
-          height={96}
-          className="object-contain"
+          src={LOGO_CONFIG.src}
+          alt={LOGO_CONFIG.alt}
+          width={LOGO_SIZES.hero.width}
+          height={LOGO_SIZES.hero.height}
+          className={`object-contain ${LOGO_CONFIG.className}`}
           sizes="(max-width: 768px) 64px, (max-width: 1200px) 80px, 96px"
           priority
-          fallbackSrc="/prism-logo.jpeg"
+          fallbackSrc={LOGO_CONFIG.fallbackSrc}
           trackingId="animated_logo"
         />
       </div>

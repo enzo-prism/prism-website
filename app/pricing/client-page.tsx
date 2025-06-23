@@ -409,7 +409,7 @@ export default function PricingClient() {
         {/* CTA Section */}
         <div className="mx-auto mt-24 md:mt-32 max-w-3xl">
           <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-gray-900 to-gray-800 p-8 md:p-10 text-center text-white shadow-xl">
-            <div className="absolute inset-0 bg-[url('/transparent-prism-logo.png')] bg-no-repeat bg-right-bottom opacity-5"></div>
+            <div className="absolute inset-0 bg-[url('/Prism Logo.png')] bg-no-repeat bg-right-bottom opacity-5"></div>
 
             <h2 className="mb-4 text-2xl md:text-3xl font-bold">ready to grow your business?</h2>
             <p className="mb-8 text-lg text-gray-300">

@@ -3,6 +3,7 @@
 import Link from "next/link"
 import { trackNavigation } from "@/utils/analytics"
 import CoreImage from "./core-image"
+import { LOGO_CONFIG, LOGO_SIZES } from "@/lib/constants"
 
 export default function Footer() {
   // Navigation items matching the navbar
@@ -28,13 +29,13 @@ export default function Footer() {
             <div className="flex items-center gap-2 mb-4">
               <div className="relative h-8 w-8 overflow-hidden rounded-lg isolate">
                 <CoreImage
-                  src="/prism-logo-new.svg"
-                  alt="Prism logo"
+                  src={LOGO_CONFIG.src}
+                  alt={LOGO_CONFIG.alt}
                   width={32}
                   height={32}
-                  className="object-contain w-full h-full rounded-lg overflow-hidden"
+                  className={`object-contain w-full h-full ${LOGO_CONFIG.className} overflow-hidden`}
                   priority
-                  fallbackSrc="/prism-logo.jpeg"
+                  fallbackSrc={LOGO_CONFIG.fallbackSrc}
                   trackingId="footer_logo"
                   quality={90}
                 />

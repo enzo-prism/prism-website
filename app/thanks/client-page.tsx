@@ -8,6 +8,7 @@ import { trackCTAClick, trackPageView } from "@/utils/analytics"
 import { useEffect } from "react"
 import CoreImage from "@/components/core-image"
 import confetti from "@/utils/confetti"
+import { LOGO_CONFIG, LOGO_SIZES } from "@/lib/constants"
 
 export default function ThanksPageClient() {
   const [isLoaded, setIsLoaded] = useState(false)
@@ -41,12 +42,12 @@ export default function ThanksPageClient() {
         <div className="mb-6 flex justify-center">
           <div className="relative h-16 w-16 overflow-hidden rounded-lg">
             <CoreImage
-              src="/prism-logo-new.svg"
-              alt="Prism logo"
+              src={LOGO_CONFIG.src}
+              alt={LOGO_CONFIG.alt}
               width={64}
               height={64}
-              className="object-contain"
-              fallbackSrc="/prism-logo.jpeg"
+              className={`object-contain ${LOGO_CONFIG.className}`}
+              fallbackSrc={LOGO_CONFIG.fallbackSrc}
               trackingId="thanks_page_logo"
             />
           </div>

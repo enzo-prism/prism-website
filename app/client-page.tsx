@@ -14,6 +14,7 @@ import ScrollProgressBar from "@/components/scroll-progress-bar" // Added this i
 import { trackCTAClick, trackServiceCardClick, trackNavigation } from "@/utils/analytics"
 import PageViewTracker from "@/components/page-view-tracker"
 import CoreImage from "@/components/core-image"
+import { LOGO_CONFIG, LOGO_SIZES } from "@/lib/constants"
 
 export default function ClientPage() {
   const isMobile = useMobile() // Added this line
@@ -72,14 +73,14 @@ export default function ClientPage() {
             <div className="flex flex-col items-center space-y-6 text-center">
               <div className="relative mx-auto mb-6 h-16 w-16 md:h-20 md:w-20 lg:h-24 lg:w-24">
                 <CoreImage
-                  src="/prism-logo-new.svg"
-                  alt="Prism logo"
-                  width={96}
-                  height={96}
-                  className="object-contain rounded-xl overflow-hidden" // Ensured overflow-hidden is here too
+                  src={LOGO_CONFIG.src}
+                  alt={LOGO_CONFIG.alt}
+                  width={LOGO_SIZES.hero.width}
+                  height={LOGO_SIZES.hero.height}
+                  className={`object-contain ${LOGO_CONFIG.className} overflow-hidden`}
                   sizes="(max-width: 768px) 64px, (max-width: 1200px) 80px, 96px"
                   priority
-                  fallbackSrc="/prism-logo.jpeg"
+                  fallbackSrc={LOGO_CONFIG.fallbackSrc}
                   trackingId="hero_logo"
                   quality={90}
                   showLoadingIndicator={true}

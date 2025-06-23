@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button"
 import { useMobile } from "@/hooks/use-mobile"
 import CoreImage from "./core-image" // Assuming core-image.tsx is in the same components directory
 import { trackNavigation } from "@/utils/analytics"
+import { LOGO_CONFIG, LOGO_SIZES } from "@/lib/constants"
 
 export default function Navbar() {
   const isMobile = useMobile()
@@ -34,15 +35,15 @@ export default function Navbar() {
           {/* This div provides the dimensions and primary clipping */}
           <div className="relative h-8 w-8 overflow-hidden rounded-lg isolate">
             <CoreImage
-              src="/prism-logo-new.svg"
-              alt="Prism logo"
+              src={LOGO_CONFIG.src}
+              alt={LOGO_CONFIG.alt}
               width={32}
               height={32}
               // Pass classes to CoreImage to apply to the NextImage component
               // This ensures the NextImage itself is rounded and clips its content.
-              className="object-contain w-full h-full rounded-lg overflow-hidden"
+              className={`object-contain w-full h-full ${LOGO_CONFIG.className} overflow-hidden`}
               priority
-              fallbackSrc="/prism-logo.jpeg"
+              fallbackSrc={LOGO_CONFIG.fallbackSrc}
               trackingId="navbar_logo"
               quality={90}
             />

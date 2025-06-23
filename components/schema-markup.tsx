@@ -71,7 +71,7 @@ export function OrganizationSchema() {
     url: "https://design-prism.com",
     logo: {
       "@type": "ImageObject",
-      url: "https://design-prism.com/transparent-prism-logo.png",
+      url: "https://design-prism.com/Prism Logo.png",
       width: 600,
       height: 60,
     },
