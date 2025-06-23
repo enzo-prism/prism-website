@@ -2,6 +2,7 @@
 
 import Link from "next/link"
 import { ArrowRight } from "lucide-react"
+import { useState, useEffect, useRef } from "react"
 
 import { Button } from "@/components/ui/button"
 import Navbar from "@/components/navbar"
@@ -18,6 +19,41 @@ import { LOGO_CONFIG, LOGO_SIZES } from "@/lib/constants"
 
 export default function ClientPage() {
   const isMobile = useMobile() // Added this line
+  const [shouldLoadVideo, setShouldLoadVideo] = useState(false)
+  const heroRef = useRef<HTMLElement>(null)
+
+  // Lazy load video when hero section is in viewport
+  useEffect(() => {
+    if (!heroRef.current) return
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !shouldLoadVideo) {
+            // Check connection speed
+            const connection = (navigator as any).connection
+            const isSlowConnection = connection?.effectiveType === "2g" || connection?.saveData
+            
+            // Load video immediately unless on very slow connection
+            if (!isSlowConnection) {
+              setShouldLoadVideo(true)
+              observer.disconnect()
+            }
+          }
+        })
+      },
+      {
+        rootMargin: "100px", // Start loading 100px before viewport
+        threshold: 0.1,
+      }
+    )
+
+    observer.observe(heroRef.current)
+
+    return () => {
+      observer.disconnect()
+    }
+  }, [shouldLoadVideo])
 
   const featuredCaseStudies = [
     {
@@ -45,26 +81,40 @@ export default function ClientPage() {
       <Navbar />
       <main className="flex-1">
         {/* Hero Section */}
-        <section className="relative py-16 md:py-24 lg:py-32 overflow-hidden">
+        <section ref={heroRef} className="relative py-16 md:py-24 lg:py-32 overflow-hidden">
           {/* Background video container with full coverage */}
           <div className="absolute inset-0 -z-20">
-            <iframe
-              src="https://player.vimeo.com/video/1095467469?background=1&autoplay=1&loop=1&muted=1&controls=0&playsinline=1"
-              title="Prism hero background"
-              className={`absolute inset-0 w-full h-full ${isMobile ? 'scale-[2]' : 'scale-150'}`}
+            {/* Lightweight placeholder while video loads */}
+            <div 
+              className={`absolute inset-0 bg-gradient-to-br from-neutral-100 to-neutral-200 ${shouldLoadVideo ? 'opacity-0' : 'opacity-100'} transition-opacity duration-1000`}
               style={{
-                width: '177.77vh', /* 16:9 aspect ratio */
-                height: '56.25vw', /* 16:9 aspect ratio */
-                minWidth: '100%',
-                minHeight: '100%',
-                position: 'absolute',
-                left: '50%',
-                top: '50%',
-                transform: 'translate(-50%, -50%)',
+                backgroundImage: `radial-gradient(circle at 30% 50%, rgba(120, 119, 198, 0.1) 0%, transparent 50%),
+                                  radial-gradient(circle at 70% 80%, rgba(255, 119, 198, 0.1) 0%, transparent 50%)`,
               }}
-              allow="autoplay; fullscreen; picture-in-picture"
-              allowFullScreen
-            ></iframe>
+            />
+            
+            {/* Video iframe - Only rendered when needed */}
+            {shouldLoadVideo && (
+              <iframe
+                src={`https://player.vimeo.com/video/1095467469?background=1&autoplay=1&loop=1&muted=1&controls=0&playsinline=1&quality=${isMobile ? '360p' : 'auto'}`}
+                title="Prism hero background"
+                className={`absolute inset-0 w-full h-full ${isMobile ? 'scale-[2]' : 'scale-150'} transition-opacity duration-1000`}
+                style={{
+                  width: '177.77vh', /* 16:9 aspect ratio */
+                  height: '56.25vw', /* 16:9 aspect ratio */
+                  minWidth: '100%',
+                  minHeight: '100%',
+                  position: 'absolute',
+                  left: '50%',
+                  top: '50%',
+                  transform: 'translate(-50%, -50%)',
+                  opacity: shouldLoadVideo ? 1 : 0,
+                }}
+                allow="autoplay; fullscreen; picture-in-picture"
+                allowFullScreen
+                loading="lazy"
+              />
+            )}
           </div>
           {/* White overlay for elegant contrast */}
           <div className="absolute inset-0 bg-white/80 -z-10" />
