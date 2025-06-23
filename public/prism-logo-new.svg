@@ -1,0 +1,32 @@
+<svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="prismGradient" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#00CED1;stop-opacity:1" />
+      <stop offset="33%" style="stop-color:#00B4D8;stop-opacity:1" />
+      <stop offset="66%" style="stop-color:#E11CE6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#9B59B6;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="lightGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFFFFF;stop-opacity:0.2" />
+      <stop offset="100%" style="stop-color:#FFFFFF;stop-opacity:0" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background square with rounded corners -->
+  <rect x="20" y="20" width="160" height="160" rx="24" fill="#F8F9FA"/>
+  
+  <!-- Main Prism/A shape -->
+  <g>
+    <!-- Right side of A -->
+    <path d="M100 50 L140 150 L125 150 L100 85 Z" fill="url(#prismGradient)" />
+    
+    <!-- Left side of A -->
+    <path d="M100 50 L100 85 L75 150 L60 150 Z" fill="url(#prismGradient)" opacity="0.85" />
+    
+    <!-- Center bar of A -->
+    <path d="M80 110 L120 110 L115 125 L85 125 Z" fill="url(#prismGradient)" opacity="0.7" />
+    
+    <!-- Light reflection overlay -->
+    <path d="M100 50 L120 100 L110 100 L100 70 Z" fill="url(#lightGradient)" />
+  </g>
+</svg> 

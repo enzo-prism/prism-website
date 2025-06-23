@@ -32,12 +32,12 @@ export default function ThanksCallPageClient() {
         <div className="mb-6 flex justify-center">
           <div className="relative h-16 w-16 overflow-hidden rounded-lg">
             <CoreImage
-              src="/prism-logo.jpeg"
+              src="/prism-logo-new.svg"
               alt="Prism logo"
               width={64}
               height={64}
               className="object-contain"
-              fallbackSrc="/favicon-large.png"
+              fallbackSrc="/prism-logo.jpeg"
               trackingId="thanks_call_page_logo"
             />
           </div>

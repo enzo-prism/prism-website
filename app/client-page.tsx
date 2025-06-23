@@ -72,14 +72,14 @@ export default function ClientPage() {
             <div className="flex flex-col items-center space-y-6 text-center">
               <div className="relative mx-auto mb-6 h-16 w-16 md:h-20 md:w-20 lg:h-24 lg:w-24">
                 <CoreImage
-                  src="/prism-logo.jpeg"
+                  src="/prism-logo-new.svg"
                   alt="Prism logo"
                   width={96}
                   height={96}
                   className="object-contain rounded-xl overflow-hidden" // Ensured overflow-hidden is here too
                   sizes="(max-width: 768px) 64px, (max-width: 1200px) 80px, 96px"
                   priority
-                  fallbackSrc="/favicon-large.png"
+                  fallbackSrc="/prism-logo.jpeg"
                   trackingId="hero_logo"
                   quality={90}
                   showLoadingIndicator={true}

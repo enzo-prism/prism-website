@@ -34,7 +34,7 @@ export default function Navbar() {
           {/* This div provides the dimensions and primary clipping */}
           <div className="relative h-8 w-8 overflow-hidden rounded-lg isolate">
             <CoreImage
-              src="/prism-logo.jpeg"
+              src="/prism-logo-new.svg"
               alt="Prism logo"
               width={32}
               height={32}
@@ -42,7 +42,7 @@ export default function Navbar() {
               // This ensures the NextImage itself is rounded and clips its content.
               className="object-contain w-full h-full rounded-lg overflow-hidden"
               priority
-              fallbackSrc="/favicon-large.png"
+              fallbackSrc="/prism-logo.jpeg"
               trackingId="navbar_logo"
               quality={90}
             />

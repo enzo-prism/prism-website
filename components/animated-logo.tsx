@@ -23,14 +23,14 @@ export default function AnimatedLogo() {
         }`}
       >
         <CoreImage
-          src="/prism-logo.jpeg"
+          src="/prism-logo-new.svg"
           alt="Prism logo"
           width={96}
           height={96}
           className="object-contain"
           sizes="(max-width: 768px) 64px, (max-width: 1200px) 80px, 96px"
           priority
-          fallbackSrc="/favicon-large.png"
+          fallbackSrc="/prism-logo.jpeg"
           trackingId="animated_logo"
         />
       </div>

@@ -28,13 +28,13 @@ export default function Footer() {
             <div className="flex items-center gap-2 mb-4">
               <div className="relative h-8 w-8 overflow-hidden rounded-lg isolate">
                 <CoreImage
-                  src="/prism-logo.jpeg"
+                  src="/prism-logo-new.svg"
                   alt="Prism logo"
                   width={32}
                   height={32}
                   className="object-contain w-full h-full rounded-lg overflow-hidden"
                   priority
-                  fallbackSrc="/favicon-large.png"
+                  fallbackSrc="/prism-logo.jpeg"
                   trackingId="footer_logo"
                   quality={90}
                 />
