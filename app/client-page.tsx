@@ -30,19 +30,21 @@ export default function ClientPage() {
       const videoAspectRatio = 16 / 9
       const viewportAspectRatio = window.innerWidth / window.innerHeight
       
-      // If viewport is taller than video (portrait), scale based on height
-      // If viewport is wider than video (landscape), scale based on width
+      // Calculate the minimum scale needed to cover the viewport
       let scale = 1
+      
       if (viewportAspectRatio < videoAspectRatio) {
-        // Portrait orientation - scale to cover height
+        // Portrait orientation - scale based on width to fill height
         scale = videoAspectRatio / viewportAspectRatio
       } else {
-        // Landscape orientation - minimal scale needed
-        scale = 1.2
+        // Landscape orientation - scale based on height to fill width
+        scale = viewportAspectRatio / videoAspectRatio
       }
       
-      // Add extra scale for safety margin
-      setVideoScale(Math.max(scale * 1.2, 1.5))
+      // Use minimal extra scale (5%) just to ensure no edge gaps
+      // For mobile, use even less extra scale
+      const extraScale = isMobile ? 1.02 : 1.05
+      setVideoScale(scale * extraScale)
     }
 
     calculateVideoScale()
@@ -53,7 +55,7 @@ export default function ClientPage() {
       window.removeEventListener('resize', calculateVideoScale)
       window.removeEventListener('orientationchange', calculateVideoScale)
     }
-  }, [])
+  }, [isMobile])
 
   // Lazy load video when hero section is in viewport
   useEffect(() => {
@@ -128,21 +130,22 @@ export default function ClientPage() {
             
             {/* Video iframe - Only rendered when needed */}
             {shouldLoadVideo && (
-              <div className="absolute inset-0 flex items-center justify-center">
+              <div className="absolute inset-0 overflow-hidden">
                 <iframe
                   src={`https://player.vimeo.com/video/1095467469?background=1&autoplay=1&loop=1&muted=1&controls=0&playsinline=1&quality=${isMobile ? '360p' : 'auto'}`}
                   title="Prism hero background"
                   className="transition-opacity duration-1000"
                   style={{
-                    width: '100vw',
-                    height: '100vh',
-                    minWidth: '177.77vh', /* 16:9 aspect ratio */
-                    minHeight: '56.25vw', /* 16:9 aspect ratio */
+                    width: '100%',
+                    height: '100%',
+                    minWidth: '100%',
+                    minHeight: '100%',
                     position: 'absolute',
                     left: '50%',
                     top: '50%',
                     transform: `translate(-50%, -50%) scale(${videoScale})`,
                     opacity: shouldLoadVideo ? 1 : 0,
+                    objectFit: 'cover',
                   }}
                   allow="autoplay; fullscreen; picture-in-picture"
                   allowFullScreen
