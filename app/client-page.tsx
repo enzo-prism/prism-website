@@ -181,8 +181,8 @@ export default function ClientPage() {
               <div className="mt-6 flex justify-center">
                 <iframe
                   src="https://player.vimeo.com/video/1095461781?autoplay=1&loop=1&muted=1&background=1&controls=0&title=0&byline=0&portrait=0&playsinline=1"
-                  width="320"
-                  height="180"
+                  width="360"
+                  height="360"
                   className="rounded-lg shadow-md border border-neutral-200"
                   allow="autoplay; fullscreen; picture-in-picture"
                   allowFullScreen
