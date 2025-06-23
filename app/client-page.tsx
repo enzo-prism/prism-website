@@ -45,21 +45,21 @@ export default function ClientPage() {
       <main className="flex-1">
         {/* Hero Section */}
         <section className="relative py-16 md:py-24 lg:py-32 overflow-hidden">
-          {/* Background video container with full viewport coverage */}
+          {/* Background video container with full coverage */}
           <div className="absolute inset-0 -z-20">
             <iframe
               src="https://player.vimeo.com/video/1095467469?background=1&autoplay=1&loop=1&muted=1&controls=0&playsinline=1"
               title="Prism hero background"
+              className={`absolute inset-0 w-full h-full ${isMobile ? 'scale-[2]' : 'scale-150'}`}
               style={{
-                position: 'absolute',
-                top: '50%',
-                left: '50%',
-                width: '100vw',
-                height: '100vh',
+                width: '177.77vh', /* 16:9 aspect ratio */
+                height: '56.25vw', /* 16:9 aspect ratio */
                 minWidth: '100%',
                 minHeight: '100%',
-                transform: 'translate(-50%, -50%) scale(1.2)',
-                objectFit: 'cover'
+                position: 'absolute',
+                left: '50%',
+                top: '50%',
+                transform: 'translate(-50%, -50%)',
               }}
               allow="autoplay; fullscreen; picture-in-picture"
               allowFullScreen
