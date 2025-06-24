@@ -142,41 +142,6 @@ export default function AppsPage() {
           </div>
         </section>
 
-        {/* FAQ - Minimal design */}
-        <section className="px-4 py-16 sm:py-20 border-t border-neutral-100">
-          <div className="max-w-3xl mx-auto">
-            <h2 className="text-2xl sm:text-3xl font-light text-neutral-900 mb-8">
-              frequently asked
-            </h2>
-            <div className="space-y-8">
-              <div className="border-b border-neutral-100 pb-6">
-                <h3 className="text-base sm:text-lg font-light text-neutral-900 mb-2">
-                  timeline
-                </h3>
-                <p className="text-sm text-neutral-600 font-light">
-                  2-3 months for simple apps, 4-8 months for complex projects
-                </p>
-              </div>
-              <div className="border-b border-neutral-100 pb-6">
-                <h3 className="text-base sm:text-lg font-light text-neutral-900 mb-2">
-                  platforms
-                </h3>
-                <p className="text-sm text-neutral-600 font-light">
-                  native ios & android, plus cross-platform solutions
-                </p>
-              </div>
-              <div className="border-b border-neutral-100 pb-6">
-                <h3 className="text-base sm:text-lg font-light text-neutral-900 mb-2">
-                  investment
-                </h3>
-                <p className="text-sm text-neutral-600 font-light">
-                  $15k-75k with milestone-based payments
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
         {/* CTA - Clean and simple */}
         <section className="px-4 py-20 sm:py-24 border-t border-neutral-100">
           <div className="max-w-3xl mx-auto text-center">
