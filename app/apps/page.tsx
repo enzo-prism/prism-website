@@ -4,10 +4,8 @@ import { Button } from "@/components/ui/button"
 import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
 import PageViewTracker from "@/components/page-view-tracker"
-import { FAQSchema } from "@/components/schema-markup"
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import ScrollProgressBar from "@/components/scroll-progress-bar"
-import AppsPortfolioGrid from "@/components/apps-portfolio-grid"
+import MinimalAppsList from "@/components/minimal-apps-list"
 
 export const metadata: Metadata = {
   title: "mobile app development portfolio & services | prism",
@@ -28,58 +26,37 @@ const appProjects = [
   {
     id: "1",
     title: "prism dashboard",
-    icon: "/prism-dashboard-icon.png",
     url: "https://growthprism.app",
-    description: "real-time analytics for businesses",
+    description: "real-time analytics and insights for growing businesses",
     category: "business",
   },
   {
     id: "2",
     title: "peak surf",
-    icon: "/peak-icon.png",
     url: "https://peaksurf.club",
-    description: "surf forecasts & community",
+    description: "surf forecasts, tide data, and community features",
     category: "lifestyle",
   },
   {
     id: "3",
     title: "track & field",
-    icon: "/track-and-field-icon.png",
     url: "https://pv-schedule.com",
-    description: "athletic performance tracking",
+    description: "athletic performance tracking and event scheduling",
     category: "sports",
   },
   {
     id: "4",
     title: "sison yum",
-    icon: "/sison-yum-icon.png",
     url: "https://sisonyum.com",
-    description: "private restaurant reviews",
+    description: "private restaurant reviews and dining recommendations",
     category: "food",
   },
   {
     id: "5",
     title: "grind deck",
-    icon: "🃏",
     url: "https://www.grinddeck.com/",
-    description: "gamified productivity",
-    category: "business",
-    isEmoji: true,
-  },
-]
-
-const appFaqs = [
-  {
-    question: "timeline",
-    answer: "2-3 months for simple apps, 4-8 months for complex",
-  },
-  {
-    question: "platforms",
-    answer: "native ios & android, plus cross-platform solutions",
-  },
-  {
-    question: "investment",
-    answer: "$15k-75k with milestone-based payments",
+    description: "gamified productivity with rewards and achievements",
+    category: "productivity",
   },
 ]
 
@@ -89,36 +66,147 @@ export default function AppsPage() {
       <ScrollProgressBar />
       <PageViewTracker title="Mobile Apps Portfolio & Services" />
       <Navbar />
+      
       <main className="flex-1">
         {/* Hero - Ultra minimal */}
-        <section className="px-4 pt-24 pb-12 sm:pt-32 sm:pb-16">
-          <div className="max-w-7xl mx-auto">
-            <h1 className="text-5xl sm:text-7xl lg:text-8xl font-light tracking-tight text-neutral-900 mb-6">
+        <section className="px-4 pt-24 pb-8 sm:pt-32 sm:pb-12">
+          <div className="max-w-3xl mx-auto">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-light tracking-tight text-neutral-900 mb-4">
               apps
             </h1>
-            <p className="text-lg sm:text-xl text-neutral-600 max-w-md font-light">
+            <p className="text-base sm:text-lg text-neutral-600 font-light">
               beautiful interfaces, powerful experiences
             </p>
           </div>
         </section>
 
-        {/* Portfolio Grid - Mobile first */}
-        <section className="px-4 py-12 sm:py-16">
-          <div className="max-w-7xl mx-auto">
-            <AppsPortfolioGrid projects={appProjects} />
+        {/* Portfolio List - Minimal and mobile-first */}
+        <section className="pb-16 sm:pb-20">
+          <div className="max-w-3xl mx-auto">
+            <MinimalAppsList projects={appProjects} />
+          </div>
+        </section>
+
+        {/* Stats - Simple and elegant */}
+        <section className="px-4 py-16 sm:py-20 border-t border-neutral-100">
+          <div className="max-w-3xl mx-auto">
+            <div className="grid grid-cols-3 gap-8 text-center">
+              <div>
+                <p className="text-2xl sm:text-3xl font-light text-neutral-900">25+</p>
+                <p className="text-xs sm:text-sm text-neutral-600 mt-1">apps launched</p>
+              </div>
+              <div>
+                <p className="text-2xl sm:text-3xl font-light text-neutral-900">500k+</p>
+                <p className="text-xs sm:text-sm text-neutral-600 mt-1">total downloads</p>
+              </div>
+              <div>
+                <p className="text-2xl sm:text-3xl font-light text-neutral-900">4.8</p>
+                <p className="text-xs sm:text-sm text-neutral-600 mt-1">avg app rating</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Process - Minimal list */}
+        <section className="px-4 py-16 sm:py-20 border-t border-neutral-100">
+          <div className="max-w-3xl mx-auto">
+            <h2 className="text-2xl sm:text-3xl font-light text-neutral-900 mb-8">
+              our process
+            </h2>
+            <div className="space-y-6">
+              <div className="flex items-start gap-4">
+                <span className="text-xs text-neutral-400 font-mono mt-0.5">01</span>
+                <div>
+                  <h3 className="text-base sm:text-lg font-light text-neutral-900 mb-1">
+                    discovery & strategy
+                  </h3>
+                  <p className="text-sm text-neutral-600 font-light">
+                    understanding your users and defining the app's purpose
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-start gap-4">
+                <span className="text-xs text-neutral-400 font-mono mt-0.5">02</span>
+                <div>
+                  <h3 className="text-base sm:text-lg font-light text-neutral-900 mb-1">
+                    design & prototype
+                  </h3>
+                  <p className="text-sm text-neutral-600 font-light">
+                    creating beautiful interfaces and intuitive user flows
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-start gap-4">
+                <span className="text-xs text-neutral-400 font-mono mt-0.5">03</span>
+                <div>
+                  <h3 className="text-base sm:text-lg font-light text-neutral-900 mb-1">
+                    develop & test
+                  </h3>
+                  <p className="text-sm text-neutral-600 font-light">
+                    building robust code with rigorous quality assurance
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-start gap-4">
+                <span className="text-xs text-neutral-400 font-mono mt-0.5">04</span>
+                <div>
+                  <h3 className="text-base sm:text-lg font-light text-neutral-900 mb-1">
+                    launch & grow
+                  </h3>
+                  <p className="text-sm text-neutral-600 font-light">
+                    app store optimization and ongoing support
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* FAQ - Minimal design */}
+        <section className="px-4 py-16 sm:py-20 border-t border-neutral-100">
+          <div className="max-w-3xl mx-auto">
+            <h2 className="text-2xl sm:text-3xl font-light text-neutral-900 mb-8">
+              frequently asked
+            </h2>
+            <div className="space-y-8">
+              <div className="border-b border-neutral-100 pb-6">
+                <h3 className="text-base sm:text-lg font-light text-neutral-900 mb-2">
+                  timeline
+                </h3>
+                <p className="text-sm text-neutral-600 font-light">
+                  2-3 months for simple apps, 4-8 months for complex projects
+                </p>
+              </div>
+              <div className="border-b border-neutral-100 pb-6">
+                <h3 className="text-base sm:text-lg font-light text-neutral-900 mb-2">
+                  platforms
+                </h3>
+                <p className="text-sm text-neutral-600 font-light">
+                  native ios & android, plus cross-platform solutions
+                </p>
+              </div>
+              <div className="border-b border-neutral-100 pb-6">
+                <h3 className="text-base sm:text-lg font-light text-neutral-900 mb-2">
+                  investment
+                </h3>
+                <p className="text-sm text-neutral-600 font-light">
+                  $15k-75k with milestone-based payments
+                </p>
+              </div>
+            </div>
           </div>
         </section>
 
         {/* CTA - Clean and simple */}
-        <section className="px-4 py-24 sm:py-32">
-          <div className="max-w-7xl mx-auto text-center">
-            <h2 className="text-3xl sm:text-4xl font-light text-neutral-900 mb-8">
+        <section className="px-4 py-20 sm:py-24 border-t border-neutral-100">
+          <div className="max-w-3xl mx-auto text-center">
+            <h2 className="text-2xl sm:text-3xl font-light text-neutral-900 mb-6">
               ready to build?
             </h2>
             <Link href="/get-started?service=app-development">
               <Button
                 size="lg"
-                className="bg-neutral-900 hover:bg-neutral-800 text-white rounded-full px-8 py-3 text-base font-light transition-all duration-300 hover:scale-105"
+                className="bg-neutral-900 hover:bg-neutral-800 text-white rounded-none px-8 py-3 text-sm font-light transition-all duration-200 hover:scale-[1.02]"
               >
                 start your app
               </Button>
@@ -126,32 +214,6 @@ export default function AppsPage() {
           </div>
         </section>
 
-        {/* FAQ - Minimal accordion */}
-        <section className="px-4 py-16 sm:py-24 border-t border-neutral-100">
-          <div className="max-w-2xl mx-auto">
-            <h2 className="text-2xl sm:text-3xl font-light text-neutral-900 mb-12 text-center">
-              frequently asked
-            </h2>
-            <Accordion type="single" collapsible className="space-y-2">
-              {appFaqs.map((faq, index) => (
-                <AccordionItem 
-                  key={index} 
-                  value={`item-${index}`} 
-                  className="border-b border-neutral-200 pb-4"
-                >
-                  <AccordionTrigger className="text-left font-light text-lg hover:no-underline py-4">
-                    {faq.question}
-                  </AccordionTrigger>
-                  <AccordionContent className="text-neutral-600 font-light pb-4">
-                    {faq.answer}
-                  </AccordionContent>
-                </AccordionItem>
-              ))}
-            </Accordion>
-          </div>
-        </section>
-
-        <FAQSchema questions={appFaqs} />
       </main>
       <Footer />
     </div>
