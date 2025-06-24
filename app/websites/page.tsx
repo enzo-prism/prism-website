@@ -5,7 +5,7 @@ import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
 import PageViewTracker from "@/components/page-view-tracker"
 import ScrollProgressBar from "@/components/scroll-progress-bar"
-import WebsitePortfolioGrid from "@/components/website-portfolio-grid"
+import MinimalWebsiteList from "@/components/minimal-website-list"
 
 export const metadata: Metadata = {
   title: "custom website design portfolio & services | prism",
@@ -26,65 +26,46 @@ const websiteProjects = [
   {
     id: "4",
     title: "exquisite dentistry",
-    image: "/exquisite dentistry.png",
     url: "https://exquisiteveneersla.com/",
     category: "healthcare",
-    description: "luxury cosmetic dentistry",
-    width: 1024,
-    height: 1536,
+    description: "luxury cosmetic dentistry practice in beverly hills",
   },
   {
     id: "9",
     title: "belize kids",
-    image: "/belize kids.png",
     url: "https://belizekids.org",
     category: "nonprofit",
-    description: "empowering children",
-    width: 1024,
-    height: 1536,
+    description: "empowering children through education and community",
   },
   {
     id: "7",
     title: "laguna beach dental arts",
-    image: "/laguna beach dental arts.png",
     url: "https://lagunabeachdentalarts.com",
     category: "healthcare",
-    description: "exceptional dental care",
-    width: 1024,
-    height: 1536,
+    description: "exceptional dental care in coastal california",
   },
   {
     id: "3",
     title: "olympic bootworks",
-    image: "/olympic bootworks.png",
     url: "https://www.olympicbootworks.com",
     category: "retail",
-    description: "performance solutions",
-    width: 1024,
-    height: 1536,
+    description: "performance footwear and repair solutions",
   },
   {
     id: "5",
     title: "dr. christopher wong",
-    image: "/dr. christopher wong.png",
     url: "https://www.chriswongdds.com",
     category: "healthcare",
-    description: "modern dental care",
-    width: 1024,
-    height: 1536,
+    description: "modern dental care with a personal touch",
   },
   {
     id: "11",
     title: "coast periodontics",
-    image: "/coast periodontics.png",
     url: "https://www.coastperiodontics.com",
     category: "healthcare",
-    description: "expert gum care",
-    width: 1024,
-    height: 1536,
+    description: "expert periodontal and implant care",
   },
 ]
-
 
 export default function WebsitesPage() {
   return (
@@ -92,36 +73,112 @@ export default function WebsitesPage() {
       <ScrollProgressBar />
       <PageViewTracker title="Websites Portfolio & Services" />
       <Navbar />
+      
       <main className="flex-1">
         {/* Hero - Ultra minimal */}
-        <section className="px-4 pt-24 pb-12 sm:pt-32 sm:pb-16">
-          <div className="max-w-7xl mx-auto">
-            <h1 className="text-5xl sm:text-7xl lg:text-8xl font-light tracking-tight text-neutral-900 mb-6">
+        <section className="px-4 pt-24 pb-8 sm:pt-32 sm:pb-12">
+          <div className="max-w-3xl mx-auto">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-light tracking-tight text-neutral-900 mb-4">
               websites
             </h1>
-            <p className="text-lg sm:text-xl text-neutral-600 max-w-md font-light">
+            <p className="text-base sm:text-lg text-neutral-600 font-light">
               clean design, powerful results
             </p>
           </div>
         </section>
 
-        {/* Portfolio Grid - Mobile first */}
-        <section className="px-4 py-12 sm:py-16">
-          <div className="max-w-7xl mx-auto">
-            <WebsitePortfolioGrid projects={websiteProjects} />
+        {/* Portfolio List - Minimal and mobile-first */}
+        <section className="pb-16 sm:pb-20">
+          <div className="max-w-3xl mx-auto">
+            <MinimalWebsiteList projects={websiteProjects} />
+          </div>
+        </section>
+
+        {/* Stats - Simple and elegant */}
+        <section className="px-4 py-16 sm:py-20 border-t border-neutral-100">
+          <div className="max-w-3xl mx-auto">
+            <div className="grid grid-cols-3 gap-8 text-center">
+              <div>
+                <p className="text-2xl sm:text-3xl font-light text-neutral-900">50+</p>
+                <p className="text-xs sm:text-sm text-neutral-600 mt-1">websites launched</p>
+              </div>
+              <div>
+                <p className="text-2xl sm:text-3xl font-light text-neutral-900">97%</p>
+                <p className="text-xs sm:text-sm text-neutral-600 mt-1">client satisfaction</p>
+              </div>
+              <div>
+                <p className="text-2xl sm:text-3xl font-light text-neutral-900">3x</p>
+                <p className="text-xs sm:text-sm text-neutral-600 mt-1">average roi</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Services - Minimal list */}
+        <section className="px-4 py-16 sm:py-20 border-t border-neutral-100">
+          <div className="max-w-3xl mx-auto">
+            <h2 className="text-2xl sm:text-3xl font-light text-neutral-900 mb-8">
+              what we do
+            </h2>
+            <div className="space-y-6">
+              <div className="flex items-start gap-4">
+                <span className="text-xs text-neutral-400 font-mono mt-0.5">01</span>
+                <div>
+                  <h3 className="text-base sm:text-lg font-light text-neutral-900 mb-1">
+                    custom design
+                  </h3>
+                  <p className="text-sm text-neutral-600 font-light">
+                    tailored to your brand and optimized for conversion
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-start gap-4">
+                <span className="text-xs text-neutral-400 font-mono mt-0.5">02</span>
+                <div>
+                  <h3 className="text-base sm:text-lg font-light text-neutral-900 mb-1">
+                    mobile first
+                  </h3>
+                  <p className="text-sm text-neutral-600 font-light">
+                    responsive design that looks perfect on every device
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-start gap-4">
+                <span className="text-xs text-neutral-400 font-mono mt-0.5">03</span>
+                <div>
+                  <h3 className="text-base sm:text-lg font-light text-neutral-900 mb-1">
+                    seo optimized
+                  </h3>
+                  <p className="text-sm text-neutral-600 font-light">
+                    built to rank and drive organic traffic
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-start gap-4">
+                <span className="text-xs text-neutral-400 font-mono mt-0.5">04</span>
+                <div>
+                  <h3 className="text-base sm:text-lg font-light text-neutral-900 mb-1">
+                    fast & secure
+                  </h3>
+                  <p className="text-sm text-neutral-600 font-light">
+                    lightning-fast load times with enterprise security
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
         </section>
 
         {/* CTA - Clean and simple */}
-        <section className="px-4 py-24 sm:py-32">
-          <div className="max-w-7xl mx-auto text-center">
-            <h2 className="text-3xl sm:text-4xl font-light text-neutral-900 mb-8">
+        <section className="px-4 py-20 sm:py-24 border-t border-neutral-100">
+          <div className="max-w-3xl mx-auto text-center">
+            <h2 className="text-2xl sm:text-3xl font-light text-neutral-900 mb-6">
               ready to start?
             </h2>
             <Link href="/get-started?service=website-design">
               <Button
                 size="lg"
-                className="bg-neutral-900 hover:bg-neutral-800 text-white rounded-full px-8 py-3 text-base font-light transition-all duration-300 hover:scale-105"
+                className="bg-neutral-900 hover:bg-neutral-800 text-white rounded-none px-8 py-3 text-sm font-light transition-all duration-200 hover:scale-[1.02]"
               >
                 begin your project
               </Button>
