@@ -87,26 +87,6 @@ export default function AppsPage() {
           </div>
         </section>
 
-        {/* Stats - Simple and elegant */}
-        <section className="px-4 py-16 sm:py-20 border-t border-neutral-100">
-          <div className="max-w-3xl mx-auto">
-            <div className="grid grid-cols-3 gap-8 text-center">
-              <div>
-                <p className="text-2xl sm:text-3xl font-light text-neutral-900">25+</p>
-                <p className="text-xs sm:text-sm text-neutral-600 mt-1">apps launched</p>
-              </div>
-              <div>
-                <p className="text-2xl sm:text-3xl font-light text-neutral-900">500k+</p>
-                <p className="text-xs sm:text-sm text-neutral-600 mt-1">total downloads</p>
-              </div>
-              <div>
-                <p className="text-2xl sm:text-3xl font-light text-neutral-900">4.8</p>
-                <p className="text-xs sm:text-sm text-neutral-600 mt-1">avg app rating</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
         {/* Process - Minimal list */}
         <section className="px-4 py-16 sm:py-20 border-t border-neutral-100">
           <div className="max-w-3xl mx-auto">
