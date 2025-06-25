@@ -65,7 +65,7 @@ export default function OneTimeFeeClientPage() {
                   asChild
                 >
                   <a
-                    href="https://buy.stripe.com/one-time-design-600"
+                    href="https://buy.stripe.com/3cIcN6c6O8L00Sc23RdZ60B"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
@@ -200,7 +200,7 @@ export default function OneTimeFeeClientPage() {
                   asChild
                 >
                   <a
-                    href="https://buy.stripe.com/one-time-design-600"
+                    href="https://buy.stripe.com/3cIcN6c6O8L00Sc23RdZ60B"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
