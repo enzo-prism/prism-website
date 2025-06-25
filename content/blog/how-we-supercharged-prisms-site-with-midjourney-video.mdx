@@ -28,31 +28,115 @@ canonical: "https://design-prism.com/blog/how-we-supercharged-prisms-site-with-m
 ---
 
 <p className="text-lg leading-relaxed mb-6">
-midjourney recently released a video feature that lets you bring your prompts to life. we decided to test it on prism's homepage, replacing our static hero image with short, looping motion. the result is a subtle animation that loads quickly and gives visitors an instant sense of energy.
+Stunning motion doesn't have to drain your budget—if you know the right AI tools.
 </p>
 
-<h2 className="text-2xl font-bold mt-10 mb-6">why video?</h2>
+<div className="border-l-4 border-gray-300 pl-6 mb-8">
+<h3 className="text-xl font-semibold mb-4">TL;DR</h3>
+<ul className="list-disc pl-6 mb-4 space-y-2">
+  <li>Midjourney's new video model lets small teams create studio-grade motion graphics for about $10 per month.</li>
+  <li>Start with a static Midjourney image, then choose Animate → High Motion (or Low Motion) to get four video variants.</li>
+  <li>Follow a divergent-to-convergent workflow: explore broadly, then refine one hero asset.</li>
+  <li>When embedding, keep file sizes small and lazy-load off-screen clips so motion delights users without hurting performance.</li>
+  <li>A full tutorial video link is at the end of this post.</li>
+</ul>
+</div>
+
+<h2 className="text-2xl font-bold mt-10 mb-6">Why Motion Matters</h2>
 
 <p className="mb-6">
-we've always used gradients and clean typography to keep the site lightweight. but a bit of movement can go a long way in drawing the eye. midjourney's new tool made it easy to generate a short clip that matched our branding without spending hours in a traditional editor.
+A scroll-stopping hero section or subtle background loop instantly shows that your brand sweats the details. Until recently that polish required hiring a motion studio, long revision cycles, and thousands of dollars per clip.
 </p>
 
-<h2 className="text-2xl font-bold mt-10 mb-6">our quick workflow</h2>
+<p className="mb-6">
+AI generation flips the script: we now prototype, iterate, and ship micro-animations in hours, not weeks—freeing budget for growth experiments elsewhere.
+</p>
 
+<h2 className="text-2xl font-bold mt-10 mb-6">Midjourney Video in a Nutshell</h2>
+
+<p className="mb-6">
+<strong>Old workflow:</strong> design → storyboard → animate → render.<br />
+<strong>New workflow:</strong> prompt a single image → click Animate → download.
+</p>
+
+<p className="mb-4 font-semibold">Steps:</p>
 <ol className="list-decimal pl-6 mb-6 space-y-2">
-  <li>we wrote a simple prompt describing the vibe we wanted—"colorful geometric shapes swirling in a smooth loop".</li>
-  <li>midjourney rendered a 4-second video in seconds. we trimmed it to a 2-second loop.</li>
-  <li>the clip was converted to <code>.webm</code> for maximum compression.</li>
-  <li>we dropped it into our next.js page using a lightweight <code>&lt;video&gt;</code> tag with <code>autoplay</code>, <code>loop</code>, and <code>muted</code>.</li>
-  <li>to keep performance high, the video only loads once the hero section scrolls into view.</li>
+  <li>Prompt a static image (example: "Howl's Moving Castle-inspired watercolor cityscape at dusk").</li>
+  <li>Pick your favorite of the four divergent results.</li>
+  <li>Click Animate and choose High Motion or Low Motion.</li>
+  <li>Download the short video loop.</li>
 </ol>
 
-<h2 className="text-2xl font-bold mt-10 mb-6">try it yourself</h2>
-
 <p className="mb-6">
-if you want to experiment with midjourney video on your own site, start small. generate a short loop that complements your design, compress it to <code>.webm</code>, and lazy load it so it doesn't block the page. it's a surprisingly simple upgrade that can make your site feel more alive.
+Midjourney's UX mirrors good design thinking: diverge widely, then converge decisively.
 </p>
 
+<h2 className="text-2xl font-bold mt-10 mb-6">Case Study: Our Revamped Hero Section</h2>
+
+<p className="mb-4">
+<strong>Before:</strong> static gradient and generic stock art.<br />
+<strong>After:</strong> a gently looping AI video that signals creativity and technical mastery.
+</p>
+
+<p className="mb-4 font-semibold">Early results:</p>
+<ul className="list-disc pl-6 mb-6 space-y-1">
+  <li>Average time-on-page up 18% in the first two weeks.</li>
+  <li>Client demos now open with "How did you make that header?!"</li>
+</ul>
+
+<h2 className="text-2xl font-bold mt-10 mb-6">Our Step-by-Step Workflow</h2>
+
+<ol className="list-decimal pl-6 mb-6 space-y-2">
+  <li>Seed inspiration by dragging a reference frame into Midjourney as an image prompt.</li>
+  <li>Iterate prompts until one variation nails the feel.</li>
+  <li>Animate: High Motion for bold hero sections, Low Motion for subtle secondary spots.</li>
+  <li>Compress with ffmpeg or HandBrake; aim for files under 1 MB above the fold.</li>
+  <li>Embed autoplaying, muted, looping video set to <code>object-fit: cover</code>.</li>
+  <li>Run Lighthouse or PageSpeed Insights; keep Core Web Vitals at 90 or higher.</li>
+  <li>Add an alt fallback and a static poster frame for accessibility and SEO.</li>
+</ol>
+
+<h2 className="text-2xl font-bold mt-10 mb-6">Practical Tips</h2>
+
+<div className="grid md:grid-cols-2 gap-6 mb-8">
+  <div>
+    <h3 className="text-lg font-semibold text-green-600 mb-3">Do</h3>
+    <ul className="list-disc pl-6 space-y-1">
+      <li>Batch-generate several prompts and A/B test your favorites.</li>
+      <li>Encode both WebM and MP4 for broad browser support.</li>
+      <li>Store prompts and seeds in Notion so you can reproduce assets later.</li>
+    </ul>
+  </div>
+  <div>
+    <h3 className="text-lg font-semibold text-red-600 mb-3">Don't</h3>
+    <ul className="list-disc pl-6 space-y-1">
+      <li>Set every section to High Motion; visual fatigue is real.</li>
+      <li>Autoplay video with sound turned on.</li>
+      <li>Ignore Core Web Vitals—Google definitely won't.</li>
+    </ul>
+  </div>
+</div>
+
+<h2 className="text-2xl font-bold mt-10 mb-6">What's Next?</h2>
+
+<p className="mb-4">Look out for future deep dives on:</p>
+<ol className="list-decimal pl-6 mb-6 space-y-1">
+  <li>Dynamic prompt chaining, so your CMS can generate motion assets automatically.</li>
+  <li>AI-driven video sprites for in-app micro-interactions.</li>
+  <li>Performance budgeting for motion-heavy landing pages.</li>
+</ol>
+
 <p className="mb-6">
-that’s all there is to it. minimal effort, maximum effect—just how we like it.
+Send us your creations—DM <a href="https://instagram.com/design_prism" className="text-blue-600 hover:underline">@design_prism</a> on Instagram—and let us know what you'd like to learn next.
+</p>
+
+<h2 className="text-2xl font-bold mt-10 mb-6">Tutorial Video</h2>
+
+<p className="mb-6">
+Watch the full step-by-step walk-through here: <a href="https://youtu.be/iaxQ6Jnf3Io" className="text-blue-600 hover:underline">https://youtu.be/iaxQ6Jnf3Io</a>
+</p>
+
+<p className="mb-6 text-center font-medium">
+Happy creating!<br />
+— The Prism Team
 </p>
