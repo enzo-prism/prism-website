@@ -1,13 +1,14 @@
 "use client"
 import { useState, useEffect } from "react"
 import { Calendar, CheckCircle, ArrowRight, ChevronDown } from "lucide-react"
+import { Button } from "@/components/ui/button"
 import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
 import HowItWorksSlides from "@/components/how-it-works-slides"
 import { useMobile } from "@/hooks/use-mobile"
 
 // Import the tracking function at the top of the file
-import { trackCTAClick } from "@/utils/analytics"
+import { trackCTAClick, trackNavigation } from "@/utils/analytics"
 // Add this import at the top with the other imports
 import { FAQSchema } from "@/components/schema-markup"
 
@@ -74,7 +75,7 @@ const faqs = [
   {
     question: "what are your typical project costs?",
     answer:
-      "our projects typically range from $5,000 for smaller design projects to $50,000+ for comprehensive website and app development. we'll provide a custom quote based on your specific needs after our consultation.",
+      "our projects typically range from $5,000 for smaller design projects to $50,000+ for comprehensive website and app development. for single design assets, we also offer a $600 flat fee option. we'll provide a custom quote based on your specific needs after our consultation.",
   },
   {
     question: "how long do projects typically take to complete?",
@@ -149,8 +150,56 @@ export default function ClientGetStartedPage() {
           </div>
         </section>
 
+        {/* Quick Design Callout */}
+        <section className="py-12 md:py-16 bg-neutral-50">
+          <div className="container mx-auto px-4 md:px-6">
+            <div className="mx-auto max-w-4xl">
+              <div className="bg-white rounded-xl p-6 md:p-8 shadow-sm border border-neutral-200">
+                <div className="flex flex-col md:flex-row items-center gap-6">
+                  <div className="flex-shrink-0">
+                    <div className="w-16 h-16 bg-black text-white rounded-full flex items-center justify-center">
+                      <span className="text-2xl">⚡</span>
+                    </div>
+                  </div>
+                  <div className="flex-1 text-center md:text-left">
+                    <h3 className="text-2xl font-bold lowercase mb-2">need just one design?</h3>
+                    <p className="text-neutral-600 lowercase mb-4">
+                      skip the consultation. get a business card, logo, or flyer for $600 with unlimited revisions.
+                    </p>
+                    <div className="flex flex-col sm:flex-row items-center gap-3">
+                      <Button
+                        className="rounded-full px-6 py-3 text-base lowercase"
+                        onClick={() => trackCTAClick("quick design $600", "get started page")}
+                        asChild
+                      >
+                        <a
+                          href="https://buy.stripe.com/3cIcN6c6O8L00Sc23RdZ60B"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          start $600 design <ArrowRight className="ml-2 h-4 w-4" />
+                        </a>
+                      </Button>
+                      <Button
+                        variant="outline"
+                        className="rounded-full px-4 py-3 text-sm lowercase"
+                        onClick={() => trackNavigation("learn more about quick design", "/one-time-fee")}
+                        asChild
+                      >
+                        <a href="/one-time-fee">
+                          learn more
+                        </a>
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* Process Section - Enhanced for mobile */}
-        <section className="bg-neutral-50 px-4 py-16 md:py-24 relative">
+        <section className="bg-white px-4 py-16 md:py-24 relative">
           <div className="container mx-auto px-4 md:px-6">
             <div className="mx-auto max-w-3xl">
               <div
@@ -177,7 +226,7 @@ export default function ClientGetStartedPage() {
         </section>
 
         {/* Calendly Section - Redesigned for mobile */}
-        <section id="schedule" className="px-4 py-16 md:py-24">
+        <section id="schedule" className="px-4 py-16 md:py-24 bg-neutral-50">
           <div className="container mx-auto px-4 md:px-6">
             <div className="mx-auto max-w-3xl">
               <div className="mb-12 text-center">
@@ -277,7 +326,7 @@ export default function ClientGetStartedPage() {
           </div>
         </section>
         {/* FAQs Section */}
-        <section className="px-4 py-16 md:py-24 bg-neutral-50">
+        <section className="px-4 py-16 md:py-24 bg-white">
           <div className="container mx-auto px-4 md:px-6">
             <div className="mx-auto max-w-3xl">
               <div className="mb-12 text-center">

@@ -77,8 +77,72 @@ export default function OneTimeFeeClientPage() {
           </div>
         </section>
 
+        {/* Choose Your Path Section */}
+        <section className="py-12 md:py-16 bg-neutral-50">
+          <div className="container mx-auto px-4 md:px-6">
+            <div className="text-center mb-8">
+              <h2 className="text-2xl font-bold tracking-tighter lowercase sm:text-3xl">
+                choose your path
+              </h2>
+              <p className="mx-auto mt-3 max-w-2xl text-neutral-600 lowercase">
+                not sure which option fits your needs?
+              </p>
+            </div>
+            <div className="grid gap-6 md:grid-cols-2 max-w-4xl mx-auto">
+              {/* Quick Design Option */}
+              <div className="bg-white rounded-xl p-6 border-2 border-black shadow-sm">
+                <div className="text-center">
+                  <div className="w-12 h-12 bg-black text-white rounded-full flex items-center justify-center mx-auto mb-4">
+                    <span className="text-xl">⚡</span>
+                  </div>
+                  <h3 className="text-xl font-bold lowercase mb-2">quick design</h3>
+                  <div className="text-3xl font-bold text-black mb-2">$600</div>
+                  <p className="text-neutral-600 lowercase text-sm mb-4">
+                    perfect for one design asset
+                  </p>
+                  <ul className="text-left text-sm text-neutral-600 lowercase space-y-1 mb-4">
+                    <li>• business card, logo, or flyer</li>
+                    <li>• unlimited revisions</li>
+                    <li>• ready in 1-2 weeks</li>
+                  </ul>
+                  <div className="text-xs text-neutral-500 lowercase">👈 you're here</div>
+                </div>
+              </div>
+              
+              {/* Custom Project Option */}
+              <div className="bg-white rounded-xl p-6 border border-neutral-200 shadow-sm hover:shadow-md transition-shadow">
+                <div className="text-center">
+                  <div className="w-12 h-12 bg-neutral-100 text-neutral-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <span className="text-xl">🚀</span>
+                  </div>
+                  <h3 className="text-xl font-bold lowercase mb-2">custom project</h3>
+                  <div className="text-3xl font-bold text-neutral-900 mb-2">consultation</div>
+                  <p className="text-neutral-600 lowercase text-sm mb-4">
+                    for websites, apps, or multiple designs
+                  </p>
+                  <ul className="text-left text-sm text-neutral-600 lowercase space-y-1 mb-4">
+                    <li>• full websites or apps</li>
+                    <li>• comprehensive design systems</li>
+                    <li>• ongoing growth support</li>
+                  </ul>
+                  <Button
+                    variant="outline"
+                    className="rounded-full text-sm lowercase"
+                    onClick={() => trackNavigation("learn about custom projects", "/get-started")}
+                    asChild
+                  >
+                    <Link href="/get-started">
+                      schedule consultation <ArrowRight className="ml-1 h-3 w-3" />
+                    </Link>
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* What You Can Get Section */}
-        <section className="py-16 md:py-24 bg-neutral-50">
+        <section className="py-16 md:py-24 bg-white">
           <div className="container mx-auto px-4 md:px-6">
             <div className="text-center mb-12">
               <h2 className="text-3xl font-bold tracking-tighter lowercase sm:text-4xl">
@@ -112,7 +176,7 @@ export default function OneTimeFeeClientPage() {
         </section>
 
         {/* Guarantee Section */}
-        <section className="py-16 md:py-24 bg-white">
+        <section className="py-16 md:py-24 bg-neutral-50">
           <div className="container mx-auto px-4 md:px-6">
             <div className="mx-auto max-w-2xl text-center">
               <div className="mb-6 flex justify-center">
@@ -134,7 +198,7 @@ export default function OneTimeFeeClientPage() {
         </section>
 
         {/* How It Works Section */}
-        <section className="py-16 md:py-24 bg-neutral-50">
+        <section className="py-16 md:py-24 bg-white">
           <div className="container mx-auto px-4 md:px-6">
             <div className="text-center mb-12">
               <h2 className="text-3xl font-bold tracking-tighter lowercase sm:text-4xl">
@@ -157,25 +221,57 @@ export default function OneTimeFeeClientPage() {
           </div>
         </section>
 
-        {/* Upsell Section */}
-        <section className="py-16 md:py-24 bg-white">
+        {/* Decision Helper Section */}
+        <section className="py-16 md:py-24 bg-neutral-50">
           <div className="container mx-auto px-4 md:px-6">
-            <div className="mx-auto max-w-2xl text-center space-y-6">
-              <h2 className="text-3xl font-bold tracking-tighter lowercase sm:text-4xl">
-                need more than one design?
-              </h2>
-              <p className="text-lg text-neutral-600 lowercase">
-                growing fast or launching something big? switch to our unlimited design & tech subscription—all-you-can-eat creative and growth work, month-to-month.
-              </p>
+            <div className="mx-auto max-w-3xl text-center space-y-8">
+              <div>
+                <h2 className="text-3xl font-bold tracking-tighter lowercase sm:text-4xl mb-4">
+                  still not sure?
+                </h2>
+                <p className="text-lg text-neutral-600 lowercase">
+                  here's how to choose the right option for your business
+                </p>
+              </div>
+              
+              <div className="grid gap-6 md:grid-cols-2 text-left">
+                <div className="bg-white rounded-xl p-6 shadow-sm">
+                  <h3 className="text-lg font-bold lowercase mb-3 text-green-700">
+                    choose $600 quick design if:
+                  </h3>
+                  <ul className="space-y-2 text-neutral-600 lowercase text-sm">
+                    <li>• you need exactly one design</li>
+                    <li>• you want to start immediately</li>
+                    <li>• you have a clear idea of what you want</li>
+                    <li>• budget is under $1,000</li>
+                  </ul>
+                </div>
+                
+                <div className="bg-white rounded-xl p-6 shadow-sm">
+                  <h3 className="text-lg font-bold lowercase mb-3 text-blue-700">
+                    choose consultation if:
+                  </h3>
+                  <ul className="space-y-2 text-neutral-600 lowercase text-sm">
+                    <li>• you need a website or app</li>
+                    <li>• you want multiple designs</li>
+                    <li>• you need ongoing support</li>
+                    <li>• budget is $5,000+</li>
+                  </ul>
+                </div>
+              </div>
+              
               <div className="pt-4">
+                <p className="text-neutral-500 lowercase text-sm mb-4">
+                  not sure? book a free consultation to explore your options
+                </p>
                 <Button
                   variant="outline"
-                  className="rounded-full px-8 py-3 text-base lowercase"
-                  onClick={() => trackNavigation("view unlimited plan", "/get-started")}
+                  className="rounded-full px-6 py-3 text-base lowercase"
+                  onClick={() => trackNavigation("explore options consultation", "/get-started")}
                   asChild
                 >
                   <Link href="/get-started">
-                    view unlimited plan <ArrowRight className="ml-2 h-4 w-4" />
+                    free consultation <ArrowRight className="ml-2 h-4 w-4" />
                   </Link>
                 </Button>
               </div>
@@ -184,7 +280,7 @@ export default function OneTimeFeeClientPage() {
         </section>
 
         {/* Final CTA Section */}
-        <section className="py-16 md:py-24 bg-neutral-50">
+        <section className="py-16 md:py-24 bg-white">
           <div className="container mx-auto px-4 md:px-6">
             <div className="mx-auto max-w-2xl text-center space-y-6">
               <h2 className="text-3xl font-bold tracking-tighter lowercase sm:text-4xl">
