@@ -1,0 +1,58 @@
+---
+title: "how we supercharged prism's site with midjourney video (and how you can, too)"
+description: "learn how we used midjourney's new video feature to add dynamic motion to the prism homepage without slowing things down—plus a simple workflow you can follow."
+date: "2025-07-05"
+category: "ai & design"
+image: "/prism-opengraph.png"
+gradientClass: "bg-gradient-to-br from-indigo-300/30 via-purple-300/30 to-sky-300/30"
+openGraph:
+  title: "how we supercharged prism's site with midjourney video (and how you can, too)"
+  description: "learn how we used midjourney's new video feature to add dynamic motion to the prism homepage without slowing things down—plus a simple workflow you can follow."
+  url: "https://design-prism.com/blog/how-we-supercharged-prisms-site-with-midjourney-video"
+  siteName: "prism"
+  images:
+    - url: "/prism-opengraph.png"
+      width: 1200
+      height: 630
+      alt: "prism logo on colorful gradient background"
+  locale: "en_US"
+  type: "article"
+  publishedTime: "2025-07-05T00:00:00.000Z"
+  authors: ["enzo"]
+twitter:
+  card: "summary_large_image"
+  title: "midjourney video on the prism homepage"
+  description: "see how we added a lightweight ai generated video to our site in minutes"
+  images: ["/prism-opengraph.png"]
+canonical: "https://design-prism.com/blog/how-we-supercharged-prisms-site-with-midjourney-video"
+---
+
+<p className="text-lg leading-relaxed mb-6">
+midjourney recently released a video feature that lets you bring your prompts to life. we decided to test it on prism's homepage, replacing our static hero image with short, looping motion. the result is a subtle animation that loads quickly and gives visitors an instant sense of energy.
+</p>
+
+<h2 className="text-2xl font-bold mt-10 mb-6">why video?</h2>
+
+<p className="mb-6">
+we've always used gradients and clean typography to keep the site lightweight. but a bit of movement can go a long way in drawing the eye. midjourney's new tool made it easy to generate a short clip that matched our branding without spending hours in a traditional editor.
+</p>
+
+<h2 className="text-2xl font-bold mt-10 mb-6">our quick workflow</h2>
+
+<ol className="list-decimal pl-6 mb-6 space-y-2">
+  <li>we wrote a simple prompt describing the vibe we wanted—"colorful geometric shapes swirling in a smooth loop".</li>
+  <li>midjourney rendered a 4-second video in seconds. we trimmed it to a 2-second loop.</li>
+  <li>the clip was converted to <code>.webm</code> for maximum compression.</li>
+  <li>we dropped it into our next.js page using a lightweight <code>&lt;video&gt;</code> tag with <code>autoplay</code>, <code>loop</code>, and <code>muted</code>.</li>
+  <li>to keep performance high, the video only loads once the hero section scrolls into view.</li>
+</ol>
+
+<h2 className="text-2xl font-bold mt-10 mb-6">try it yourself</h2>
+
+<p className="mb-6">
+if you want to experiment with midjourney video on your own site, start small. generate a short loop that complements your design, compress it to <code>.webm</code>, and lazy load it so it doesn't block the page. it's a surprisingly simple upgrade that can make your site feel more alive.
+</p>
+
+<p className="mb-6">
+that’s all there is to it. minimal effort, maximum effect—just how we like it.
+</p>
