@@ -75,7 +75,7 @@ export default function AppsPage() {
               apps
             </h1>
             <p className="text-base sm:text-lg text-neutral-600 font-light flex items-center gap-3 flex-wrap">
-              we design and build your app, add it to app store, then grow it.
+              we design and build your app, add it to the app store, then grow it.
               <span className="flex items-center gap-2">
                 {/* Apple Logo */}
                 <svg className="h-5 w-5 text-neutral-600" viewBox="0 0 24 24" fill="currentColor">
