@@ -1,0 +1,149 @@
+---
+title: "How We Supercharged Prism’s Site with Midjourney Video (and How You Can, Too)"
+description: "Stunning motion doesn’t have to drain your budget—if you know the right AI tools."
+date: "2025-07-26"
+category: "AI & Design"
+image: "/blog/mobile-app-ux.png"
+gradientClass: "bg-gradient-to-br from-fuchsia-300/30 via-blue-300/30 to-indigo-300/30"
+openGraph:
+  title: "How We Supercharged Prism’s Site with Midjourney Video (and How You Can, Too)"
+  description: "Stunning motion doesn’t have to drain your budget—if you know the right AI tools."
+  url: "https://design-prism.com/blog/midjourney-video-website"
+  siteName: "prism"
+  images:
+    - url: "/blog/mobile-app-ux.png"
+      width: 1200
+      height: 630
+      alt: "Prism hero section with Midjourney video background"
+  locale: "en_US"
+  type: "article"
+  publishedTime: "2025-07-26T00:00:00.000Z"
+  authors: ["enzo"]
+twitter:
+  card: "summary_large_image"
+  title: "How We Supercharged Prism’s Site with Midjourney Video (and How You Can, Too)"
+  description: "Stunning motion doesn’t have to drain your budget—if you know the right AI tools."
+  images: ["/blog/mobile-app-ux.png"]
+canonical: "https://design-prism.com/blog/midjourney-video-website"
+---
+import YouTubeVideoEmbed from '@/components/youtube-video-embed'
+
+How We Supercharged Prism’s Site with Midjourney Video (and How You Can, Too)
+
+Stunning motion doesn’t have to drain your budget—if you know the right AI tools.
+
+⸻
+
+TL;DR
+•Midjourney’s new video model lets small teams create studio-grade motion graphics for $10 / month.
+•Start with a static Midjourney image, then “Animate → High Motion” (or Low) to generate 4 video variants.
+•Use a divergent → convergent workflow: explore broadly, then refine a single hero asset.
+•Embed carefully: optimize file size, lazy-load, and test Core Web Vitals so motion boosts delight without tanking performance.
+•Scroll to the bottom for the full tutorial video.
+
+⸻
+
+Why Motion Matters
+
+A scroll-stopping hero section or subtle looped background instantly communicates that your brand sweats the details. Until recently, that polish meant:
+1.Hiring a motion studio (⟩$5k per clip)
+2.Slow revision cycles
+3.Risky scope creep
+
+AI-driven generation flips that script. We now prototype, iterate, and ship micro-animations in hours, not weeks—freeing budget for growth experiments elsewhere.
+
+⸻
+
+Midjourney Video in a Nutshell
+
+FeatureOld WorkflowMidjourney Video Workflow
+Asset CreationDesign → Storyboard → AnimatePrompt a single image
+Variation / IdeationManual mood boards, versioning“Animate” → auto-diverges to 4 clips
+Cost & TurnaroundHigh, slow$10 / mo, ~1 min per clip
+
+How it works:
+1.Prompt a static image (e.g., “Howl’s Moving Castle-inspired watercolor cityscape, dusk, warm light”).
+2.Choose your favorite of the four divergent results.
+3.Click Animate → High Motion or Low Motion.
+4.Download the 4-second MP4 / WebM loop.
+
+Midjourney’s UX mirrors best-practice design thinking: diverge widely, converge decisively.
+
+⸻
+
+Case Study: Prism’s Revamped Hero
+
+<img src="(screenshot placeholder)" alt="Prism hero section with Midjourney video background" width="100%">
+
+
+Old look: static gradient, generic stock image.
+New look: a gently parallaxing AI video loop that hints at creativity and technical mastery.
+
+Impact so far
+•+18 % average time-on-page (Hotjar, first 14 days)
+•Client demos consistently start with “How did you make that header?!”
+
+⸻
+
+Our Step-by-Step Workflow
+1.Seed Inspiration
+•Favorite reference frame → drag into Midjourney (Image Prompt).
+2.Iterate Prompts
+•“Add studio ghibli vibes” → Version 4 nailed our brand feel.
+3.Animate
+•High-Motion for the hero (bolder), Low-Motion for secondary sections (subtle).
+4.Compression
+•FFMPEG: ffmpeg -i input.mp4 -b:v 900k output.webm
+•Target ≤1 MB for above-the-fold assets.
+5.Embed
+
+<video autoplay muted loop playsinline
+       src="/assets/prism-hero.webm"
+       style="width:100%;height:100%;object-fit:cover;"></video>
+
+
+6.Performance Checks
+•Lighthouse score ≥90 on mobile after lazy-loading off-screen videos.
+7.Accessibility / SEO
+•Provide alt fallback and poster frame; ensure text contrast over motion.
+
+⸻
+
+Practical Tips
+
+DoDon’t
+Batch-generate 3–5 prompts, then A/B test.Set every section to High-Motion—visual fatigue is real.
+Encode to WebM and MP4 for widest support.Autoplay with sound (kills engagement).
+Archive prompts & seeds in Notion; reproducibility matters.Ignore Core Web Vitals—Google will.
+
+⸻
+
+What’s Next?
+
+This post just scratches the surface. In future deep-dives we’ll cover:
+1.Dynamic prompt chaining (programmatic generation from CMS data).
+2.AI-driven video sprites for in-app micro-interactions.
+3.Performance budgeting for motion-heavy landing pages.
+
+Drop a comment or DM us on Instagram (@design_prism) with your creations—we’d love to feature community builds.
+
+⸻
+
+Watch the Full Walk-Through
+
+Grab a coffee and follow along step-by-step:
+
+▶️ Midjourney Video Tutorial
+
+⸻
+
+Happy creating,
+The Prism Team
+
+<div className="my-12">
+  <YouTubeVideoEmbed
+    videoId="iaxQ6Jnf3Io"
+    title="How We Supercharged Prism’s Site with Midjourney Video (and How You Can, Too)"
+  />
+</div>
+
