@@ -129,7 +129,7 @@ export async function renderPost(slug: string) {
       const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`
       
       return `
-        <div class="${containerClass}" style="padding-bottom:56.25%" data-youtube-embed="${videoId}">
+        <div class="${containerClass}" style="padding-bottom:56.25%" data-youtube-embed="${videoId}" data-youtube-title="${title}">
           <div class="youtube-thumbnail absolute inset-0 cursor-pointer">
             <img 
               src="${thumbnailUrl}" 
@@ -147,25 +147,6 @@ export async function renderPost(slug: string) {
             </div>
           </div>
         </div>
-        <script>
-          document.addEventListener('DOMContentLoaded', function() {
-            const thumbnails = document.querySelectorAll('[data-youtube-embed] .youtube-thumbnail');
-            thumbnails.forEach(function(thumbnail) {
-              thumbnail.addEventListener('click', function() {
-                const container = this.parentElement;
-                const videoId = container.getAttribute('data-youtube-embed');
-                const iframe = document.createElement('iframe');
-                iframe.className = 'absolute top-0 left-0 w-full h-full border-0 rounded-xl';
-                iframe.src = 'https://www.youtube.com/embed/' + videoId + '?rel=0&showinfo=0&modestbranding=1&iv_load_policy=3&autoplay=1';
-                iframe.title = '${title}';
-                iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
-                iframe.allowFullscreen = true;
-                container.innerHTML = '';
-                container.appendChild(iframe);
-              });
-            });
-          });
-        </script>
       `.replace(/\s+/g, ' ').trim()
     }
   )
