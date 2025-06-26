@@ -121,11 +121,53 @@ export async function renderPost(slug: string) {
   // Preserve special components like CTAs and embedded content
   // These will keep their styling as they're intentionally designed
 
-  // Convert <YouTubeVideoEmbed> tags to standard iframe embeds
+  // Convert <YouTubeVideoEmbed> tags to thumbnail-first iframe embeds
   cleanedContent = cleanedContent.replace(
-    /<YouTubeVideoEmbed\s+videoId="([^"]+)"\s+title="([^"]+)"\s*\/>/g,
-    (_match, videoId, title) =>
-      `<div class="relative overflow-hidden rounded-xl shadow-md" style="padding-bottom:56.25%"><iframe class="absolute top-0 left-0 w-full h-full border-0 rounded-xl" src="https://www.youtube.com/embed/${videoId}?rel=0&showinfo=0&modestbranding=1&iv_load_policy=3" title="${title}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>`,
+    /<YouTubeVideoEmbed\s+videoId="([^"]+)"\s+title="([^"]+)"(?:\s+className="([^"]*)")?\s*\/>/g,
+    (_match, videoId, title, className = "") => {
+      const containerClass = `relative overflow-hidden rounded-xl shadow-md ${className}`.trim()
+      const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`
+      
+      return `
+        <div class="${containerClass}" style="padding-bottom:56.25%" data-youtube-embed="${videoId}">
+          <div class="youtube-thumbnail absolute inset-0 cursor-pointer">
+            <img 
+              src="${thumbnailUrl}" 
+              alt="${title} - Video thumbnail" 
+              class="absolute inset-0 w-full h-full object-cover"
+              loading="lazy"
+            />
+            <div class="absolute inset-0 bg-black bg-opacity-20 hover:bg-opacity-30 transition-opacity"></div>
+            <div class="absolute inset-0 flex items-center justify-center">
+              <div class="rounded-full bg-red-600 bg-opacity-90 p-4 shadow-lg hover:scale-110 transition-transform">
+                <svg class="h-8 w-8 text-white ml-1" fill="white" viewBox="0 0 24 24">
+                  <path d="M8 5v14l11-7z"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+        <script>
+          document.addEventListener('DOMContentLoaded', function() {
+            const thumbnails = document.querySelectorAll('[data-youtube-embed] .youtube-thumbnail');
+            thumbnails.forEach(function(thumbnail) {
+              thumbnail.addEventListener('click', function() {
+                const container = this.parentElement;
+                const videoId = container.getAttribute('data-youtube-embed');
+                const iframe = document.createElement('iframe');
+                iframe.className = 'absolute top-0 left-0 w-full h-full border-0 rounded-xl';
+                iframe.src = 'https://www.youtube.com/embed/' + videoId + '?rel=0&showinfo=0&modestbranding=1&iv_load_policy=3&autoplay=1';
+                iframe.title = '${title}';
+                iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+                iframe.allowFullscreen = true;
+                container.innerHTML = '';
+                container.appendChild(iframe);
+              });
+            });
+          });
+        </script>
+      `.replace(/\s+/g, ' ').trim()
+    }
   )
   
   // Remove trailing ``` if present
