@@ -132,8 +132,8 @@ export default function ClientPage() {
             {shouldLoadVideo && (
               <div className="absolute inset-0 overflow-hidden">
                 <iframe
-                  src={`https://player.vimeo.com/video/1095467469?background=1&autoplay=1&loop=1&muted=1&controls=0&playsinline=1&quality=${isMobile ? '360p' : 'auto'}`}
-                  title="Prism hero background"
+                  src={`https://player.vimeo.com/video/1096693144?background=1&autoplay=1&loop=1&muted=1&controls=0&playsinline=1&quality=${isMobile ? '360p' : 'auto'}`}
+                  title="Prism hero background video"
                   className="transition-opacity duration-1000"
                   style={{
                     width: '100%',
