@@ -487,7 +487,6 @@ export default function WallOfLoveClientPage() {
               wall of love
             </h1>
             <div className="text-lg text-neutral-600 md:text-xl lowercase max-w-lg mx-auto space-y-1">
-              <p>15 clients</p>
               <p>38.5k+ followers on instagram</p>
               <p>24.5k+ subscribers on youtube</p>
             </div>
