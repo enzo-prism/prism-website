@@ -8,10 +8,22 @@ import { Button } from "@/components/ui/button"
 import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
 import { useMobile } from "@/hooks/use-mobile"
-import MobileServicesTiles from "@/components/mobile-services-tiles"
-import CaseStudyCard from "@/components/case-study-card"
-import ScrollProgressBar from "@/components/scroll-progress-bar" // Added this import
+import dynamic from "next/dynamic"
 
+// Dynamically import mobile-specific components to reduce initial bundle
+const MobileServicesTiles = dynamic(() => import("@/components/mobile-services-tiles"), {
+  ssr: false, // Only load on client side when needed
+  loading: () => <div className="w-full h-32 animate-pulse bg-gray-100 rounded-lg" />
+})
+// Lazy load below-the-fold components
+const CaseStudyCard = dynamic(() => import("@/components/case-study-card"), {
+  loading: () => <div className="w-full h-64 animate-pulse bg-gray-100 rounded-lg" />
+})
+const ScrollProgressBar = dynamic(() => import("@/components/scroll-progress-bar"), {
+  ssr: false
+})
+
+// Import analytics functions directly for now (will optimize separately)
 import { trackCTAClick, trackServiceCardClick, trackNavigation } from "@/utils/analytics"
 import PageViewTracker from "@/components/page-view-tracker"
 import CoreImage from "@/components/core-image"
@@ -22,6 +34,12 @@ export default function ClientPage() {
   const [shouldLoadVideo, setShouldLoadVideo] = useState(false)
   const [videoScale, setVideoScale] = useState(1.5)
   const heroRef = useRef<HTMLElement>(null)
+  
+  // Lazy loading states for below-the-fold sections
+  const [shouldLoadCaseStudies, setShouldLoadCaseStudies] = useState(false)
+  const [shouldLoadTestimonials, setShouldLoadTestimonials] = useState(false)
+  const caseStudiesRef = useRef<HTMLElement>(null)
+  const testimonialsRef = useRef<HTMLElement>(null)
 
   // Calculate video scale based on viewport dimensions
   useEffect(() => {
@@ -57,7 +75,7 @@ export default function ClientPage() {
     }
   }, [isMobile])
 
-  // Lazy load video when hero section is in viewport
+  // Enhanced lazy load video with comprehensive performance checks
   useEffect(() => {
     if (!heroRef.current) return
 
@@ -65,20 +83,35 @@ export default function ClientPage() {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting && !shouldLoadVideo) {
-            // Check connection speed
+            // Enhanced connection speed detection
             const connection = (navigator as any).connection
-            const isSlowConnection = connection?.effectiveType === "2g" || connection?.saveData
+            const isSlowConnection = 
+              connection?.effectiveType === "2g" || 
+              connection?.effectiveType === "slow-2g" ||
+              connection?.saveData
             
-            // Load video immediately unless on very slow connection
-            if (!isSlowConnection) {
+            // Check user motion preferences
+            const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+            
+            // Check device memory if available (< 2GB = skip video)
+            const hasLowMemory = 'deviceMemory' in navigator && (navigator as any).deviceMemory < 2
+            
+            // Load video only on good conditions
+            if (!isSlowConnection && !prefersReducedMotion && !hasLowMemory) {
               setShouldLoadVideo(true)
               observer.disconnect()
+            } else {
+              console.log('[Performance] Skipping video due to:', {
+                slowConnection: isSlowConnection,
+                reducedMotion: prefersReducedMotion,
+                lowMemory: hasLowMemory
+              })
             }
           }
         })
       },
       {
-        rootMargin: "100px", // Start loading 100px before viewport
+        rootMargin: "150px", // Increased preload distance for smoother UX
         threshold: 0.1,
       }
     )
@@ -89,6 +122,52 @@ export default function ClientPage() {
       observer.disconnect()
     }
   }, [shouldLoadVideo])
+
+  // Lazy load case studies section
+  useEffect(() => {
+    if (!caseStudiesRef.current) return
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !shouldLoadCaseStudies) {
+            setShouldLoadCaseStudies(true)
+            observer.disconnect()
+          }
+        })
+      },
+      {
+        rootMargin: "300px", // Load 300px before coming into view
+        threshold: 0.1,
+      }
+    )
+
+    observer.observe(caseStudiesRef.current)
+    return () => observer.disconnect()
+  }, [shouldLoadCaseStudies])
+
+  // Lazy load testimonials section
+  useEffect(() => {
+    if (!testimonialsRef.current) return
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !shouldLoadTestimonials) {
+            setShouldLoadTestimonials(true)
+            observer.disconnect()
+          }
+        })
+      },
+      {
+        rootMargin: "200px", // Load 200px before coming into view
+        threshold: 0.1,
+      }
+    )
+
+    observer.observe(testimonialsRef.current)
+    return () => observer.disconnect()
+  }, [shouldLoadTestimonials])
 
   const featuredCaseStudies = [
     {
@@ -280,7 +359,7 @@ export default function ClientPage() {
         </section>
 
         {/* Wall of Love CTA Section */}
-        <section className="py-16 md:py-24 bg-white dark:bg-neutral-900">
+        <section ref={testimonialsRef} className="py-16 md:py-24 bg-white dark:bg-neutral-900">
           <div className="container mx-auto px-4 md:px-6">
             <div className="mx-auto max-w-2xl space-y-6 text-center">
               <h2 className="text-3xl font-bold tracking-tighter lowercase sm:text-4xl text-neutral-900 dark:text-neutral-100">
@@ -289,16 +368,22 @@ export default function ClientPage() {
               <p className="text-neutral-600 dark:text-neutral-300 lowercase md:text-lg">
                 see why founders love prism ❤️
               </p>
-              {/* Embedded client feedback video */}
+              {/* Embedded client feedback video - Lazy loaded */}
               <div className="mt-6 flex justify-center">
-                <iframe
-                  src="https://player.vimeo.com/video/1095461781?autoplay=1&loop=1&muted=1&background=1&controls=0&title=0&byline=0&portrait=0&playsinline=1"
-                  width="360"
-                  height="360"
-                  className="rounded-lg shadow-md border border-neutral-200"
-                  allow="autoplay; fullscreen; picture-in-picture"
-                  allowFullScreen
-                ></iframe>
+                {shouldLoadTestimonials ? (
+                  <iframe
+                    src="https://player.vimeo.com/video/1095461781?autoplay=1&loop=1&muted=1&background=1&controls=0&title=0&byline=0&portrait=0&playsinline=1"
+                    width="360"
+                    height="360"
+                    className="rounded-lg shadow-md border border-neutral-200"
+                    allow="autoplay; fullscreen; picture-in-picture"
+                    allowFullScreen
+                  ></iframe>
+                ) : (
+                  <div className="w-[360px] h-[360px] bg-gray-100 rounded-lg shadow-md border border-neutral-200 flex items-center justify-center animate-pulse">
+                    <div className="text-gray-400">Loading video...</div>
+                  </div>
+                )}
               </div>
               <div className="pt-4">
                 <Link href="/wall-of-love">
@@ -315,7 +400,7 @@ export default function ClientPage() {
         </section>
 
         {/* Featured Case Studies Section */}
-        <section className="py-16 md:py-24 bg-neutral-50 dark:bg-neutral-800">
+        <section ref={caseStudiesRef} className="py-16 md:py-24 bg-neutral-50 dark:bg-neutral-800">
           <div className="container mx-auto px-4 md:px-6">
             <div className="mb-12">
               <h2 className="text-3xl font-bold tracking-tighter lowercase sm:text-4xl">success stories</h2>
@@ -323,20 +408,33 @@ export default function ClientPage() {
                 see how we've helped businesses achieve remarkable results
               </p>
             </div>
-            <div className="grid gap-6 md:grid-cols-2">
-              {featuredCaseStudies.map((study, index) => (
-                <CaseStudyCard
-                  key={index}
-                  title={study.title}
-                  client={study.client}
-                  industry={study.industry}
-                  location={study.location}
-                  description={study.description}
-                  slug={study.slug}
-                  compact={true}
-                />
-              ))}
-            </div>
+            {shouldLoadCaseStudies ? (
+              <div className="grid gap-6 md:grid-cols-2">
+                {featuredCaseStudies.map((study, index) => (
+                  <CaseStudyCard
+                    key={index}
+                    title={study.title}
+                    client={study.client}
+                    industry={study.industry}
+                    location={study.location}
+                    description={study.description}
+                    slug={study.slug}
+                    compact={true}
+                  />
+                ))}
+              </div>
+            ) : (
+              <div className="grid gap-6 md:grid-cols-2">
+                {[1, 2].map((placeholder) => (
+                  <div key={placeholder} className="bg-white rounded-lg p-6 shadow-sm animate-pulse">
+                    <div className="h-6 bg-gray-200 rounded mb-4"></div>
+                    <div className="h-4 bg-gray-200 rounded mb-2"></div>
+                    <div className="h-4 bg-gray-200 rounded mb-4 w-3/4"></div>
+                    <div className="h-16 bg-gray-200 rounded"></div>
+                  </div>
+                ))}
+              </div>
+            )}
             <div className="mt-8 text-center">
               <Link
                 href="/case-studies"

@@ -9,6 +9,14 @@ const config: Config = {
     "*.{js,ts,jsx,tsx,mdx}",
     "./content/**/*.{md,mdx}",
   ],
+  // Safelist for dynamically generated classes
+  safelist: [
+    'hardware-accelerated',
+    'pause-on-scroll',
+    'mobile-carousel',
+    { pattern: /^animate-/ },
+    { pattern: /^transition-/ },
+  ],
   theme: {
     extend: {
       fontFamily: {
