@@ -1,5 +1,5 @@
 "use client"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { Calendar, CheckCircle, ArrowRight, ChevronDown } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Navbar from "@/components/navbar"
@@ -87,7 +87,9 @@ const faqs = [
 export default function ClientGetStartedPage() {
   const [activeSection, setActiveSection] = useState<string | null>(null)
   const [scrolled, setScrolled] = useState(false)
+  const [shouldLoadVideo, setShouldLoadVideo] = useState(false)
   const isMobile = useMobile()
+  const videoRef = useRef<HTMLDivElement>(null)
 
   // Handle scroll effects
   useEffect(() => {
@@ -99,6 +101,29 @@ export default function ClientGetStartedPage() {
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
+  // Lazy load video
+  useEffect(() => {
+    if (!videoRef.current) return
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !shouldLoadVideo) {
+            setShouldLoadVideo(true)
+            observer.disconnect()
+          }
+        })
+      },
+      {
+        rootMargin: "200px",
+        threshold: 0.1,
+      }
+    )
+
+    observer.observe(videoRef.current)
+    return () => observer.disconnect()
+  }, [shouldLoadVideo])
+
   const toggleSection = (section: string) => {
     setActiveSection(activeSection === section ? null : section)
   }
@@ -108,7 +133,7 @@ export default function ClientGetStartedPage() {
       <Navbar />
       <main className="flex-1">
         {/* Hero Section - Improved for mobile */}
-        <section className="relative px-4 py-12 md:py-24 lg:py-32 overflow-hidden">
+        <section ref={videoRef} className="relative px-4 py-12 md:py-24 lg:py-32 overflow-hidden">
           <div className="container mx-auto px-4 md:px-6">
             <div className="flex flex-col items-center space-y-6 text-center">
               <div
@@ -116,8 +141,22 @@ export default function ClientGetStartedPage() {
                   scrolled ? "transform -translate-y-2 scale-95" : ""
                 }`}
               >
-                <div className="text-5xl md:text-6xl mb-2 transform transition-transform hover:scale-110 duration-300">
-                  🚀
+                {/* Video frame replacing rocket emoji */}
+                <div className="mb-2 flex justify-center">
+                  {shouldLoadVideo ? (
+                    <iframe
+                      src="https://player.vimeo.com/video/1097023041?autoplay=1&loop=1&muted=1&background=1&controls=0&title=0&byline=0&portrait=0&playsinline=1"
+                      width="360"
+                      height="360"
+                      className="rounded-lg shadow-md border border-neutral-200"
+                      allow="autoplay; fullscreen; picture-in-picture"
+                      allowFullScreen
+                    ></iframe>
+                  ) : (
+                    <div className="w-[360px] h-[360px] bg-gray-100 rounded-lg shadow-md border border-neutral-200 flex items-center justify-center animate-pulse">
+                      <div className="text-gray-400">Loading video...</div>
+                    </div>
+                  )}
                 </div>
                 <h1 className="text-4xl font-bold tracking-tighter lowercase sm:text-5xl md:text-6xl">get started</h1>
                 <p className="mx-auto mt-4 max-w-[700px] text-neutral-600 lowercase md:text-xl">
