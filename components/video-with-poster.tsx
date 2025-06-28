@@ -80,6 +80,18 @@ export default function VideoWithPoster({
     }
   }
 
+  // Handle poster image error with detailed logging
+  const handlePosterError = (error: any) => {
+    console.error("Poster image failed to load:", {
+      posterSrc,
+      error,
+      videoId
+    })
+    if (trackAnalytics) {
+      trackVideoInteraction(videoId, "poster_error", `Get started video poster failed to load: ${posterSrc}`)
+    }
+  }
+
   return (
     <div 
       className={`relative overflow-hidden rounded-lg shadow-md border border-neutral-200 ${className}`}
@@ -98,12 +110,11 @@ export default function VideoWithPoster({
           fill
           className="object-cover"
           priority
-          onLoad={() => setIsPosterLoaded(true)}
-          onError={() => {
-            if (trackAnalytics) {
-              trackVideoInteraction(videoId, "poster_error", "Get started video poster failed to load")
-            }
+          onLoad={() => {
+            console.log("Poster image loaded successfully:", posterSrc)
+            setIsPosterLoaded(true)
           }}
+          onError={handlePosterError}
         />
         
         {/* Loading state for poster */}

@@ -147,7 +147,7 @@ export default function ClientGetStartedPage() {
                   {shouldLoadVideo ? (
                     <VideoWithPoster
                       videoId="1097023041"
-                      posterSrc="/get-started-video-poster.png"
+                      posterSrc="/prism%20get%20started.webp"
                       width={360}
                       height={360}
                       autoplay={true}
