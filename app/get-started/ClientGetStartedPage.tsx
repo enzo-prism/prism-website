@@ -6,6 +6,7 @@ import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
 import HowItWorksSlides from "@/components/how-it-works-slides"
 import VideoWithPoster from "@/components/video-with-poster"
+import ElegantHowItWorks from "@/components/elegant-how-it-works"
 import { useMobile } from "@/hooks/use-mobile"
 
 // Import the tracking function at the top of the file
@@ -46,9 +47,8 @@ function ProcessSteps() {
 }
 
 function ClientHowItWorks() {
-  const isMobile = useMobile()
-
-  return isMobile ? <HowItWorksSlides /> : <ProcessSteps />
+  // Use the new elegant component for better design
+  return <ElegantHowItWorks />
 }
 
 // Add this constant after the ClientHowItWorks component and before the ClientGetStartedPage component
@@ -242,31 +242,36 @@ export default function ClientGetStartedPage() {
           </div>
         </section>
 
-        {/* Process Section - Enhanced for mobile */}
-        <section className="bg-white px-4 py-16 md:py-24 relative">
-          <div className="container mx-auto px-4 md:px-6">
-            <div className="mx-auto max-w-3xl">
-              <div
-                className={`mb-12 text-center transition-all duration-500 ${
-                  isMobile ? "transform hover:scale-102" : ""
-                }`}
-              >
-                <h2 className="text-3xl font-bold tracking-tighter lowercase sm:text-4xl">how it works</h2>
-                <p className="mx-auto mt-4 max-w-[700px] text-neutral-600 lowercase">
+        {/* Process Section - Enhanced with modern design */}
+        <section className="relative px-4 py-16 md:py-24 overflow-hidden">
+          {/* Background gradient overlay */}
+          <div className="absolute inset-0 bg-gradient-to-br from-neutral-50/50 via-white to-neutral-50/30 pointer-events-none" />
+          
+          <div className="container mx-auto px-4 md:px-6 relative">
+            <div className="mx-auto max-w-5xl">
+              {/* Section header with enhanced styling */}
+              <div className="mb-16 text-center">
+                <div className="inline-flex items-center gap-2 px-4 py-2 bg-neutral-100 rounded-full text-sm font-medium text-neutral-700 mb-6">
+                  <div className="w-2 h-2 bg-neutral-400 rounded-full animate-pulse"></div>
+                  simple process
+                </div>
+                <h2 className="text-3xl font-bold tracking-tighter lowercase sm:text-4xl md:text-5xl bg-gradient-to-br from-neutral-900 to-neutral-600 bg-clip-text text-transparent">
+                  how it works
+                </h2>
+                <p className="mx-auto mt-6 max-w-[600px] text-lg text-neutral-600 lowercase leading-relaxed">
                   a simple, no-commitment process to see if we're a good fit for each other.
                 </p>
               </div>
 
-              <div className="transform transition-all duration-500 hover:translate-y-[-5px]">
+              {/* Enhanced process component */}
+              <div className="transform transition-all duration-500">
                 <ClientHowItWorks />
               </div>
             </div>
           </div>
 
-          {/* Mobile visual separator */}
-          {isMobile && (
-            <div className="absolute bottom-0 left-0 right-0 h-8 bg-gradient-to-t from-white to-transparent"></div>
-          )}
+          {/* Bottom fade effect */}
+          <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-white via-white/80 to-transparent pointer-events-none"></div>
         </section>
 
         {/* Calendly Section - Redesigned for mobile */}
