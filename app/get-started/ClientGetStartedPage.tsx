@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button"
 import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
 import HowItWorksSlides from "@/components/how-it-works-slides"
+import VideoWithPoster from "@/components/video-with-poster"
 import { useMobile } from "@/hooks/use-mobile"
 
 // Import the tracking function at the top of the file
@@ -141,17 +142,21 @@ export default function ClientGetStartedPage() {
                   scrolled ? "transform -translate-y-2 scale-95" : ""
                 }`}
               >
-                {/* Video frame replacing rocket emoji */}
+                {/* Video frame with poster image */}
                 <div className="mb-2 flex justify-center">
                   {shouldLoadVideo ? (
-                    <iframe
-                      src="https://player.vimeo.com/video/1097023041?autoplay=1&loop=1&muted=1&background=1&controls=0&title=0&byline=0&portrait=0&playsinline=1"
-                      width="360"
-                      height="360"
-                      className="rounded-lg shadow-md border border-neutral-200"
-                      allow="autoplay; fullscreen; picture-in-picture"
-                      allowFullScreen
-                    ></iframe>
+                    <VideoWithPoster
+                      videoId="1097023041"
+                      posterSrc="/get-started-video-poster.png"
+                      width={360}
+                      height={360}
+                      autoplay={true}
+                      loop={true}
+                      muted={true}
+                      controls={false}
+                      posterAlt="Rocket launch animation - Get started with Prism"
+                      trackAnalytics={true}
+                    />
                   ) : (
                     <div className="w-[360px] h-[360px] bg-gray-100 rounded-lg shadow-md border border-neutral-200 flex items-center justify-center animate-pulse">
                       <div className="text-gray-400">Loading video...</div>
