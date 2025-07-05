@@ -9,6 +9,7 @@ import CoreImage from "@/components/core-image"
 import Link from "next/link"
 import { trackNavigation } from "@/utils/analytics"
 import { cn } from "@/lib/utils"
+import { OfferSchema } from "@/components/schema-markup"
 
 export default function PricingClient() {
   const [isAnnual, setIsAnnual] = useState(false)
@@ -429,6 +430,31 @@ export default function PricingClient() {
           </div>
         </div>
       </div>
+      
+      {/* Offer Schema Markup */}
+      <OfferSchema
+        offerId="starter-plan"
+        name="Starter Plan"
+        description="DIY playbooks for business owners who have time to implement digital marketing strategies themselves"
+        businessFunction="http://purl.org/goodrelations/v1#Sell"
+        serviceName="Digital Marketing Starter Package"
+        serviceDescription="Comprehensive DIY digital marketing package including website makeover, mobile booking, review management, and advertising guidance"
+        price={isAnnual ? "11000" : "1000"}
+        priceCurrency="USD"
+        availability="InStock"
+      />
+      
+      <OfferSchema
+        offerId="pro-plan"
+        name="Pro Plan"
+        description="Done-for-you digital marketing services with guaranteed 2x online sales increase in 60 days"
+        businessFunction="http://purl.org/goodrelations/v1#Sell"
+        serviceName="Professional Digital Marketing Service"
+        serviceDescription="Complete done-for-you digital marketing solution including website development, booking systems, review management, advertising, and AI search optimization"
+        price={isAnnual ? "32000" : "3000"}
+        priceCurrency="USD"
+        availability="InStock"
+      />
     </div>
   )
 }

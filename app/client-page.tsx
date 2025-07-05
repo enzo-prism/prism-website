@@ -28,6 +28,7 @@ import { trackCTAClick, trackServiceCardClick, trackNavigation } from "@/utils/a
 import PageViewTracker from "@/components/page-view-tracker"
 import CoreImage from "@/components/core-image"
 import { LOGO_CONFIG, LOGO_SIZES } from "@/lib/constants"
+import { ServiceSchema } from "@/components/schema-markup"
 
 export default function ClientPage() {
   const isMobile = useMobile() // Added this line
@@ -505,6 +506,63 @@ export default function ClientPage() {
         </section>
       </main>
       <Footer />
+      
+      {/* Service Schema Markup */}
+      <ServiceSchema
+        serviceId="website-development"
+        name="Website Development"
+        description="Custom website development services that drive business growth and enhance user experience"
+        serviceType="Website Development"
+        areaServed={["United States", "Canada", "Global"]}
+        offerDetails={{
+          name: "Custom Website Development",
+          description: "Professional website development with modern design and functionality",
+          businessFunction: "http://purl.org/goodrelations/v1#Sell",
+          priceRange: "$2,500 - $10,000"
+        }}
+      />
+      
+      <ServiceSchema
+        serviceId="mobile-app-development"
+        name="Mobile App Development"
+        description="Native and cross-platform mobile app development for iOS and Android"
+        serviceType="Mobile App Development"
+        areaServed={["United States", "Canada", "Global"]}
+        offerDetails={{
+          name: "Mobile App Development Services",
+          description: "End-to-end mobile app development from concept to launch",
+          businessFunction: "http://purl.org/goodrelations/v1#Sell",
+          priceRange: "$5,000 - $25,000"
+        }}
+      />
+      
+      <ServiceSchema
+        serviceId="digital-marketing"
+        name="Digital Marketing"
+        description="Comprehensive digital marketing services including SEO, content marketing, and social media"
+        serviceType="Digital Marketing"
+        areaServed={["United States", "Canada", "Global"]}
+        offerDetails={{
+          name: "Digital Marketing Services",
+          description: "Data-driven digital marketing strategies to grow your online presence",
+          businessFunction: "http://purl.org/goodrelations/v1#Sell",
+          priceRange: "$1,000 - $5,000"
+        }}
+      />
+      
+      <ServiceSchema
+        serviceId="ui-ux-design"
+        name="UI/UX Design"
+        description="User interface and user experience design services for web and mobile applications"
+        serviceType="UI/UX Design"
+        areaServed={["United States", "Canada", "Global"]}
+        offerDetails={{
+          name: "UI/UX Design Services",
+          description: "Beautiful and functional design that enhances user experience",
+          businessFunction: "http://purl.org/goodrelations/v1#Sell",
+          priceRange: "$1,500 - $8,000"
+        }}
+      />
     </div>
   )
 }

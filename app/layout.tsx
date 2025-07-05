@@ -3,7 +3,7 @@ import type { Metadata } from "next"
 import "./globals.css"
 import ScrollManager from "@/components/scroll-manager"
 // Import the schema components
-import { OrganizationSchema, WebsiteSchema } from "@/components/schema-markup"
+import { OrganizationSchema, WebsiteSchema, LocalBusinessSchema } from "@/components/schema-markup"
 import HotjarScript from "@/components/hotjar-script"
 
 
@@ -216,6 +216,7 @@ export default function RootLayout({
         {/* End Google Tag Manager (noscript) */}
         <OrganizationSchema />
         <WebsiteSchema />
+        <LocalBusinessSchema />
         <ScrollManager />
         <HotjarScript />
         {/* existing components */}

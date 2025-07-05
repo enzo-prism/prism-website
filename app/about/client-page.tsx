@@ -9,6 +9,7 @@ import PageViewTracker from "@/components/page-view-tracker"
 import { useMobile } from "@/hooks/use-mobile"
 import { trackVideoInteraction } from "@/utils/analytics"
 import Link from "next/link"
+import { PersonSchema } from "@/components/schema-markup"
 
 export default function AboutClientPage() {
   const isMobile = useMobile()
@@ -195,6 +196,21 @@ export default function AboutClientPage() {
         </section>
       </main>
       <Footer />
+      
+      {/* Person Schema for Enzo */}
+      <PersonSchema
+        personId="enzo-sison"
+        name="Enzo Sison"
+        jobTitle="Founder & CEO"
+        description="Founder of Prism Agency, helping businesses create digital experiences that drive real results"
+        image="https://design-prism.com/enzo-avatar.png"
+        url="https://design-prism.com/about"
+        sameAs={[
+          "https://x.com/NosisTheGod",
+          "https://www.linkedin.com/in/enzo-sison",
+          "https://www.instagram.com/the_design_prism/"
+        ]}
+      />
     </div>
   )
 }
