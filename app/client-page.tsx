@@ -377,14 +377,15 @@ export default function ClientPage() {
                 {shouldLoadTestimonials ? (
                   <VideoWithPoster
                     videoId="1095461781"
-                    posterSrc="/client-feedback-placeholder.png"
+                    posterSrc="/client-feedback-placeholder.svg"
+                    fallbackPosterSrc="/instagram-video-thumbnail.png"
                     width={360}
                     height={360}
                     autoplay={true}
                     loop={true}
                     muted={true}
                     controls={false}
-                    posterAlt="Pixel art illustration of diverse founders working in coffee shops - Client feedback testimonials"
+                    posterAlt="Client feedback testimonials - See why founders love Prism"
                     trackAnalytics={true}
                   />
                 ) : (

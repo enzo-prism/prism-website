@@ -10,6 +10,8 @@ interface VideoWithPosterProps {
   videoId: string
   /** Poster image source */
   posterSrc: string
+  /** Fallback poster image source if primary fails */
+  fallbackPosterSrc?: string
   /** Video width in pixels */
   width: number
   /** Video height in pixels */
@@ -33,6 +35,7 @@ interface VideoWithPosterProps {
 export default function VideoWithPoster({
   videoId,
   posterSrc,
+  fallbackPosterSrc,
   width,
   height,
   className = "",
@@ -47,6 +50,8 @@ export default function VideoWithPoster({
   const [isVideoError, setIsVideoError] = useState(false)
   const [isPosterLoaded, setIsPosterLoaded] = useState(false)
   const [showVideo, setShowVideo] = useState(false)
+  const [currentPosterSrc, setCurrentPosterSrc] = useState(posterSrc)
+  const [hasFallbackFailed, setHasFallbackFailed] = useState(false)
   const iframeRef = useRef<HTMLIFrameElement>(null)
 
   // Build Vimeo URL with parameters
@@ -80,15 +85,28 @@ export default function VideoWithPoster({
     }
   }
 
-  // Handle poster image error with detailed logging
+  // Handle poster image error with fallback support
   const handlePosterError = (error: any) => {
     console.error("Poster image failed to load:", {
-      posterSrc,
+      currentPosterSrc,
       error,
-      videoId
+      videoId,
+      hasFallback: !!fallbackPosterSrc,
+      hasFallbackFailed
     })
+    
+    // Try fallback if available and not already tried
+    if (fallbackPosterSrc && currentPosterSrc !== fallbackPosterSrc && !hasFallbackFailed) {
+      console.log("Attempting fallback poster:", fallbackPosterSrc)
+      setCurrentPosterSrc(fallbackPosterSrc)
+      setIsPosterLoaded(false) // Reset loading state for fallback
+    } else {
+      // Mark fallback as failed if we've exhausted options
+      setHasFallbackFailed(true)
+    }
+    
     if (trackAnalytics) {
-      trackVideoInteraction(videoId, "poster_error", `Get started video poster failed to load: ${posterSrc}`)
+      trackVideoInteraction(videoId, "poster_error", `Video poster failed to load: ${currentPosterSrc}`)
     }
   }
 
@@ -107,14 +125,14 @@ export default function VideoWithPoster({
         {/* Image container with proper positioning */}
         <div className="relative w-full h-full">
           <Image
-            src={posterSrc}
+            src={currentPosterSrc}
             alt={posterAlt}
             width={width}
             height={height}
             className="object-cover w-full h-full"
             priority
             onLoad={() => {
-              console.log("Poster image loaded successfully:", posterSrc)
+              console.log("Poster image loaded successfully:", currentPosterSrc)
               setIsPosterLoaded(true)
             }}
             onError={handlePosterError}
@@ -161,7 +179,7 @@ export default function VideoWithPoster({
         <div className="absolute inset-0 z-30">
           <div className="relative w-full h-full">
             <Image
-              src={posterSrc}
+              src={currentPosterSrc}
               alt={posterAlt}
               width={width}
               height={height}
