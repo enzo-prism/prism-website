@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { ArrowRight } from "lucide-react"
+import { ArrowRight, ChevronLeft, ChevronRight, Star, Check, Sparkles, MessageSquare, Zap, Target, Users, Clock, MousePointer, Megaphone } from "lucide-react"
 import { useState, useEffect, useRef } from "react"
 
 import { Button } from "@/components/ui/button"
@@ -29,6 +29,9 @@ import PageViewTracker from "@/components/page-view-tracker"
 import CoreImage from "@/components/core-image"
 import { LOGO_CONFIG, LOGO_SIZES } from "@/lib/constants"
 import { ServiceSchema } from "@/components/schema-markup"
+import ClientImagePreloader from "@/components/client-image-preloader"
+import YouTubeVideoEmbed from "@/components/youtube-video-embed"
+import VideoWithPoster from "@/components/video-with-poster"
 
 export default function ClientPage() {
   const isMobile = useMobile() // Added this line
@@ -359,7 +362,7 @@ export default function ClientPage() {
           </div>
         </section>
 
-        {/* Wall of Love CTA Section */}
+        {/* Testimonials Section */}
         <section ref={testimonialsRef} className="py-16 md:py-24 bg-white dark:bg-neutral-900">
           <div className="container mx-auto px-4 md:px-6">
             <div className="mx-auto max-w-2xl space-y-6 text-center">
@@ -369,17 +372,21 @@ export default function ClientPage() {
               <p className="text-neutral-600 dark:text-neutral-300 lowercase md:text-lg">
                 see why founders love prism ❤️
               </p>
-              {/* Embedded client feedback video - Lazy loaded */}
+              {/* Embedded client feedback video with poster - Lazy loaded */}
               <div className="mt-6 flex justify-center">
                 {shouldLoadTestimonials ? (
-                  <iframe
-                    src="https://player.vimeo.com/video/1095461781?autoplay=1&loop=1&muted=1&background=1&controls=0&title=0&byline=0&portrait=0&playsinline=1"
-                    width="360"
-                    height="360"
-                    className="rounded-lg shadow-md border border-neutral-200"
-                    allow="autoplay; fullscreen; picture-in-picture"
-                    allowFullScreen
-                  ></iframe>
+                  <VideoWithPoster
+                    videoId="1095461781"
+                    posterSrc="/instagram-video-thumbnail.png"
+                    width={360}
+                    height={360}
+                    autoplay={true}
+                    loop={true}
+                    muted={true}
+                    controls={false}
+                    posterAlt="Client feedback testimonials - See why founders love Prism"
+                    trackAnalytics={true}
+                  />
                 ) : (
                   <div className="w-[360px] h-[360px] bg-gray-100 rounded-lg shadow-md border border-neutral-200 flex items-center justify-center animate-pulse">
                     <div className="text-gray-400">Loading video...</div>
