@@ -104,18 +104,22 @@ export default function VideoWithPoster({
         }`}
         onClick={handlePosterClick}
       >
-        <Image
-          src={posterSrc}
-          alt={posterAlt}
-          fill
-          className="object-cover"
-          priority
-          onLoad={() => {
-            console.log("Poster image loaded successfully:", posterSrc)
-            setIsPosterLoaded(true)
-          }}
-          onError={handlePosterError}
-        />
+        {/* Image container with proper positioning */}
+        <div className="relative w-full h-full">
+          <Image
+            src={posterSrc}
+            alt={posterAlt}
+            width={width}
+            height={height}
+            className="object-cover w-full h-full"
+            priority
+            onLoad={() => {
+              console.log("Poster image loaded successfully:", posterSrc)
+              setIsPosterLoaded(true)
+            }}
+            onError={handlePosterError}
+          />
+        </div>
         
         {/* Loading state for poster */}
         {!isPosterLoaded && (
@@ -155,13 +159,16 @@ export default function VideoWithPoster({
       {/* Error fallback - show poster permanently if video fails */}
       {isVideoError && (
         <div className="absolute inset-0 z-30">
-          <Image
-            src={posterSrc}
-            alt={posterAlt}
-            fill
-            className="object-cover"
-            priority
-          />
+          <div className="relative w-full h-full">
+            <Image
+              src={posterSrc}
+              alt={posterAlt}
+              width={width}
+              height={height}
+              className="object-cover w-full h-full"
+              priority
+            />
+          </div>
           <div className="absolute inset-0 flex items-center justify-center">
             <div className="bg-black bg-opacity-50 text-white px-4 py-2 rounded text-sm">
               Video unavailable
