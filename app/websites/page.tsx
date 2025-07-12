@@ -59,6 +59,13 @@ const websiteProjects = [
     description: "modern dental care with a personal touch",
   },
   {
+    id: "12",
+    title: "fantic bike warehouse",
+    url: "https://fanticbikewarehouse.com/",
+    category: "retail",
+    description: "authorized dealer of premium italian motorcycles and e-bikes",
+  },
+  {
     id: "11",
     title: "coast periodontics",
     url: "https://www.coastperiodontics.com",
