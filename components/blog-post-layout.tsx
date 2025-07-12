@@ -9,6 +9,7 @@ import ScrollProgressBar from "@/components/scroll-progress-bar"
 import { BlogPostSchema } from "@/components/schema-markup"
 import { cn } from "@/lib/utils"
 import CoreImage from "@/components/core-image"
+import { useState } from "react"
 
 interface Props {
   children: React.ReactNode
@@ -38,6 +39,8 @@ export default function BlogPostLayout({
   const effectiveGradient = gradientClass || 'bg-gradient-to-br from-indigo-300/30 via-purple-300/30 to-pink-300/30';
   const effectiveImageUrl = image ? `https://design-prism.com${image}` : 'https://design-prism.com/prism-opengraph.png';
 
+  const [hasImageError, setHasImageError] = useState(false);
+
   return (
     <div className="flex min-h-screen flex-col">
       <ScrollProgressBar />
@@ -59,7 +62,7 @@ export default function BlogPostLayout({
                 </div>
                 <article>
                   <div className="relative w-full max-w-2xl mx-auto mb-8 md:mb-12 rounded-lg overflow-hidden">
-                    {image ? (
+                    {image && !hasImageError ? (
                       <CoreImage
                         src={image}
                         alt={title}
@@ -67,8 +70,9 @@ export default function BlogPostLayout({
                         height={504}
                         className="w-full h-full object-cover"
                         priority={true}
-                        fallbackSrc="/placeholder.svg"
                         trackingId={`blog_hero_${slug}`}
+                        onLoadError={() => setHasImageError(true)}
+                        customErrorHandling={true}
                       />
                     ) : (
                       <div className={cn("aspect-[16/9] relative", effectiveGradient)} />

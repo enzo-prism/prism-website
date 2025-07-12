@@ -10,6 +10,8 @@ interface CoreImageProps extends Omit<ImageProps, "onError" | "onLoadingComplete
   fallbackAlt?: string
   trackingId?: string
   showLoadingIndicator?: boolean
+  onLoadError?: () => void
+  customErrorHandling?: boolean
 }
 
 /**
@@ -35,6 +37,8 @@ export default function CoreImage({
   quality,
   showLoadingIndicator = true,
   className = "",
+  onLoadError,
+  customErrorHandling = false,
   ...props
 }: CoreImageProps) {
   const [error, setError] = useState(false)
@@ -97,20 +101,27 @@ export default function CoreImage({
 
   // Handle image load error
   const handleError = () => {
-    if (!error) {
-      setError(true)
+    console.error(`Image failed to load: ${typeof src === "string" ? src : "object-source"}`)
 
-      // Provide more detailed error information for debugging
-      console.error(`Image failed to load: ${typeof src === "string" ? src : "object-source"}`)
+    onLoadError?.()
 
-      // Track the error for analytics with more context
-      if (trackingId) {
-        trackError(
-          "image_load_failure",
-          `Failed to load image: ${typeof src === "string" ? src : "object-source"}`,
-          `${trackingId} | width: ${validWidth}, height: ${validHeight}, priority: ${priority ? "true" : "false"}`,
-        )
+    if (!customErrorHandling) {
+      if (!error) {
+        setError(true)
+        if (trackingId) {
+          trackError(
+            "image_load_failure",
+            `Failed to load image: ${typeof src === "string" ? src : "object-source"}`,
+            `${trackingId} | width: ${validWidth}, height: ${validHeight}, priority: ${priority ? "true" : "false"}`,
+          )
+        }
       }
+    } else if (trackingId) {
+      trackError(
+        "image_load_failure",
+        `Failed to load image: ${typeof src === "string" ? src : "object-source"}`,
+        `${trackingId} | width: ${validWidth}, height: ${validHeight}, priority: ${priority ? "true" : "false"}`,
+      )
     }
   }
 
