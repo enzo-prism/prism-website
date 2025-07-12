@@ -5,7 +5,6 @@ import fs from "fs/promises" // Node.js file system module for server-side opera
 import path from "path" // Node.js path module for server-side path manipulation
 import matter from "gray-matter" // For parsing frontmatter from .mdx files
 import { MDXRemote } from "next-mdx-remote/rsc"
-import { compile } from "@mdx-js/mdx"
 
 export type BlogFrontmatter = {
   title: string
