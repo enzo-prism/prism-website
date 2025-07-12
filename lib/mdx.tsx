@@ -196,13 +196,33 @@ export async function renderPost(slug: string) {
           mdxOptions: {
             remarkPlugins: [],
             rehypePlugins: [],
-            development: process.env.NODE_ENV === 'development'
+            development: process.env.NODE_ENV === 'development',
+            // More forgiving JSX parsing
+            jsx: true,
+            jsxImportSource: 'react'
           }
         }}
       />
     )
   } catch (error) {
     console.error(`[MDXLib] Failed to render MDX content for post "${slug}":`, error)
+    
+    // In development, show detailed error
+    if (process.env.NODE_ENV === 'development') {
+      return (
+        <div className="prose-blog">
+          <div className="bg-red-50 border-l-4 border-red-500 p-4 my-8">
+            <h3 className="text-lg font-semibold text-red-900 mb-2">MDX Rendering Error</h3>
+            <p className="text-red-700 mb-4">Failed to render blog post "{slug}"</p>
+            <details>
+              <summary className="cursor-pointer font-medium text-red-800">Error Details</summary>
+              <pre className="mt-2 text-sm text-red-600 overflow-auto">{error.message}</pre>
+            </details>
+          </div>
+        </div>
+      )
+    }
+    
     throw new Error(`Failed to render blog post "${slug}". Please check the MDX syntax.`)
   }
 }
