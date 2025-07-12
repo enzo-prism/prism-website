@@ -100,6 +100,8 @@ export async function renderPost(slug: string) {
   // Clean up common inline styles and standardize elements
   // Convert class to className for React compatibility
   cleanedContent = cleanedContent.replace(/\sclass="/g, ' className="')
+  // Convert className to class for HTML compatibility
+  cleanedContent = cleanedContent.replace(/\sclassName="/g, ' class="')
   
   // Remove inline text size classes from paragraphs (will be handled by prose-blog)
   cleanedContent = cleanedContent.replace(/<p\s+className="[^"]*text-lg[^"]*">/g, '<p>')
