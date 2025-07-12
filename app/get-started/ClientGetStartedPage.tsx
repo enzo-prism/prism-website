@@ -8,6 +8,7 @@ import HowItWorksSlides from "@/components/how-it-works-slides"
 import VideoWithPoster from "@/components/video-with-poster"
 import ElegantHowItWorks from "@/components/elegant-how-it-works"
 import { useMobile } from "@/hooks/use-mobile"
+import Link from "next/link"
 
 // Import the tracking function at the top of the file
 import { trackCTAClick, trackNavigation } from "@/utils/analytics"
@@ -76,7 +77,7 @@ const faqs = [
   {
     question: "what are your typical project costs?",
     answer:
-      "our projects typically range from $5,000 for smaller design projects to $50,000+ for comprehensive website and app development. for single design assets, we also offer a $600 flat fee option. we'll provide a custom quote based on your specific needs after our consultation.",
+      "our services start from $750 for design sprints to $1,999/month for our growth accelerator package. custom projects can range up to $50,000+ for comprehensive website and app development. for single design assets, we offer a $750 flat fee option. we'll provide a custom quote based on your specific needs after our consultation.",
   },
   {
     question: "how long do projects typically take to complete?",
@@ -208,21 +209,17 @@ export default function ClientGetStartedPage() {
                   <div className="flex-1 text-center md:text-left">
                     <h3 className="text-2xl font-bold lowercase mb-2">need just one design?</h3>
                     <p className="text-neutral-600 lowercase mb-4">
-                      skip the consultation. get a business card, logo, or flyer for $600 with unlimited revisions.
+                      skip the consultation. get a business card, logo, or flyer for $750 with unlimited revisions.
                     </p>
                     <div className="flex flex-col sm:flex-row items-center gap-3">
                       <Button
                         className="rounded-full px-6 py-3 text-base lowercase"
-                        onClick={() => trackCTAClick("quick design $600", "get started page")}
+                        onClick={() => trackCTAClick("quick design $750", "get started page")}
                         asChild
                       >
-                        <a
-                          href="https://buy.stripe.com/3cIcN6c6O8L00Sc23RdZ60B"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          start $600 design <ArrowRight className="ml-2 h-4 w-4" />
-                        </a>
+                        <Link href="/one-time-fee">
+                          start $750 design <ArrowRight className="ml-2 h-4 w-4" />
+                        </Link>
                       </Button>
                       <Button
                         variant="outline"
@@ -230,9 +227,9 @@ export default function ClientGetStartedPage() {
                         onClick={() => trackNavigation("learn more about quick design", "/one-time-fee")}
                         asChild
                       >
-                        <a href="/one-time-fee">
+                        <Link href="/one-time-fee">
                           learn more
-                        </a>
+                        </Link>
                       </Button>
                     </div>
                   </div>
@@ -374,6 +371,57 @@ export default function ClientGetStartedPage() {
             </div>
           </div>
         </section>
+
+        {/* Add new services teaser section after schedule section */}
+        <section className="py-16 md:py-24 bg-white">
+          <div className="container mx-auto px-4 md:px-6">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl font-bold tracking-tighter lowercase sm:text-4xl">
+                our services
+              </h2>
+              <p className="mx-auto mt-4 max-w-[700px] text-neutral-600 lowercase">
+                choose from our flexible tiers designed to scale with your business needs. for full details, visit our services page.
+              </p>
+            </div>
+            <div className="grid gap-8 md:grid-cols-3 max-w-5xl mx-auto">
+              <div className="bg-neutral-50 rounded-xl p-6">
+                <h3 className="text-xl font-bold lowercase mb-2">design sprint</h3>
+                <div className="text-2xl font-bold mb-2">$750 one-off</div>
+                <ul className="space-y-2 text-neutral-600 lowercase">
+                  <li>custom design assets</li>
+                  <li>unlimited revisions</li>
+                  <li>3-5 days turnaround</li>
+                </ul>
+              </div>
+              <div className="bg-neutral-50 rounded-xl p-6">
+                <h3 className="text-xl font-bold lowercase mb-2">site essentials</h3>
+                <div className="text-2xl font-bold mb-2">$1,200/mo</div>
+                <ul className="space-y-2 text-neutral-600 lowercase">
+                  <li>full website rebuild</li>
+                  <li>unlimited edits</li>
+                  <li>basic analytics</li>
+                </ul>
+              </div>
+              <div className="bg-neutral-50 rounded-xl p-6">
+                <h3 className="text-xl font-bold lowercase mb-2">growth accelerator</h3>
+                <div className="text-2xl font-bold mb-2">$1,999/mo</div>
+                <ul className="space-y-2 text-neutral-600 lowercase">
+                  <li>everything in essentials</li>
+                  <li>advanced SEO & listings</li>
+                  <li>review boosting & apps</li>
+                </ul>
+              </div>
+            </div>
+            <div className="text-center mt-8">
+              <Button variant="outline" className="rounded-full px-6 py-3 text-base lowercase" asChild>
+                <Link href="/services">
+                  explore services <ArrowRight className="ml-2 h-4 w-4" />
+                </Link>
+              </Button>
+            </div>
+          </div>
+        </section>
+
         {/* FAQs Section */}
         <section className="px-4 py-16 md:py-24 bg-white">
           <div className="container mx-auto px-4 md:px-6">
