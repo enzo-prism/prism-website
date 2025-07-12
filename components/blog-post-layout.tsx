@@ -8,6 +8,7 @@ import Breadcrumbs from "@/components/breadcrumbs"
 import ScrollProgressBar from "@/components/scroll-progress-bar"
 import { BlogPostSchema } from "@/components/schema-markup"
 import { cn } from "@/lib/utils"
+import CoreImage from "@/components/core-image"
 
 interface Props {
   children: React.ReactNode
@@ -55,7 +56,20 @@ export default function BlogPostLayout({
                 </div>
                 <article>
                   <div className="relative w-full max-w-2xl mx-auto mb-8 md:mb-12 rounded-lg overflow-hidden">
-                    <div className={cn("aspect-[16/9] relative", gradientClass)} />
+                    {image ? (
+                      <CoreImage
+                        src={image}
+                        alt={title}
+                        width={896}
+                        height={504}
+                        className="w-full h-full object-cover"
+                        priority={true}
+                        fallbackSrc="/placeholder.svg"
+                        trackingId={`blog_hero_${slug}`}
+                      />
+                    ) : (
+                      <div className={cn("aspect-[16/9] relative", gradientClass)} />
+                    )}
                   </div>
                   <div className="mb-10">
                     <div className="flex flex-wrap items-center gap-3 mb-4">
