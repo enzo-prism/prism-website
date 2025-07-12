@@ -12,6 +12,7 @@ interface CoreImageProps extends Omit<ImageProps, "onError" | "onLoadingComplete
   showLoadingIndicator?: boolean
   onLoadError?: () => void
   customErrorHandling?: boolean
+  fallbackElement?: React.ReactNode
 }
 
 /**
@@ -39,6 +40,7 @@ export default function CoreImage({
   className = "",
   onLoadError,
   customErrorHandling = false,
+  fallbackElement,
   ...props
 }: CoreImageProps) {
   const [error, setError] = useState(false)
@@ -150,6 +152,11 @@ export default function CoreImage({
     (isRemote
       ? `/placeholder.svg?height=${validHeight}&width=${validWidth}&query=${encodeURIComponent(alt || "image")}`
       : defaultFallback)
+
+  // After the loading indicator and before rendering Image
+  if (error && fallbackElement) {
+    return fallbackElement;
+  }
 
   return (
     <div className="relative" ref={imageRef}>
