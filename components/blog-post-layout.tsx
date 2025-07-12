@@ -17,8 +17,8 @@ interface Props {
   description: string
   date: string
   category: string
-  gradientClass: string
-  image: string
+  gradientClass?: string
+  image?: string
   openGraph?: any
   canonical?: string
 }
@@ -35,6 +35,9 @@ export default function BlogPostLayout({
   openGraph,
   canonical,
 }: Props) {
+  const effectiveGradient = gradientClass || 'bg-gradient-to-br from-indigo-300/30 via-purple-300/30 to-pink-300/30';
+  const effectiveImageUrl = image ? `https://design-prism.com${image}` : 'https://design-prism.com/prism-opengraph.png';
+
   return (
     <div className="flex min-h-screen flex-col">
       <ScrollProgressBar />
@@ -68,7 +71,7 @@ export default function BlogPostLayout({
                         trackingId={`blog_hero_${slug}`}
                       />
                     ) : (
-                      <div className={cn("aspect-[16/9] relative", gradientClass)} />
+                      <div className={cn("aspect-[16/9] relative", effectiveGradient)} />
                     )}
                   </div>
                   <div className="mb-10">
@@ -96,7 +99,7 @@ export default function BlogPostLayout({
         title={title}
         description={description}
         url={openGraph?.url || canonical || `https://design-prism.com/blog/${slug}`}
-        imageUrl={`https://design-prism.com${image}`}
+        imageUrl={effectiveImageUrl}
         datePublished={openGraph?.publishedTime || date}
         dateModified={openGraph?.modifiedTime || date}
         authorName={openGraph?.authors?.[0] || "prism"}
