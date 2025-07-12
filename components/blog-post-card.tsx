@@ -42,24 +42,20 @@ export default function BlogPostCard({
         
         {/* Image with fallback to gradient */}
         <div className={cn("relative w-full aspect-[4/3]", gradientClass)}>
-          {image && !hasImageError ? (
-            <CoreImage
-              src={image}
-              alt={title}
-              width={400}
-              height={300}
-              className="w-full h-full object-cover"
-              sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-              trackingId={`blog_card_${slug}`}
-              onLoadError={() => setHasImageError(true)}
-              customErrorHandling={true}
-              fallbackElement={
-                <div className={cn("w-full h-full", gradientClass)} />
-              }
-            />
-          ) : (
-            <div className={cn("w-full h-full", gradientClass)} />
-          )}
+          <CoreImage
+            src={image}
+            alt={title}
+            width={400}
+            height={300}
+            className="w-full h-full object-cover"
+            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            trackingId={`blog_card_${slug}`}
+            onLoadError={() => setHasImageError(true)}
+            customErrorHandling={true}
+            fallbackElement={
+              <div className={cn("w-full h-full", gradientClass)} />
+            }
+          />
         </div>
         <div className="p-5 space-y-3 border-t border-neutral-100">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2">
