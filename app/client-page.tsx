@@ -377,7 +377,7 @@ export default function ClientPage() {
                 {shouldLoadTestimonials ? (
                   <VideoWithPoster
                     videoId="1095461781"
-                    posterSrc="/client-feedback-placeholder.svg"
+                    posterSrc="/client feedback image.webp"
                     fallbackPosterSrc="/instagram-video-thumbnail.png"
                     width={360}
                     height={360}
