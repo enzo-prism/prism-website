@@ -4,6 +4,7 @@ import BlogPageTracker from "./BlogPageTracker"
 import BlogCTAButton from "./BlogCTAButton"
 import BlogPostCard from "@/components/blog-post-card"
 import type { BlogFrontmatter } from "@/lib/mdx"
+import BlogPostsList from "./BlogPostsList"
 
 // Define the blog post type
 interface BlogPost extends BlogFrontmatter {
@@ -35,34 +36,7 @@ export default function BlogPage({ posts }: { posts: BlogPost[] }) {
         </section>
 
         {/* Blog Posts List or Empty State */}
-        <section className="px-4 py-8 md:py-12">
-          <div className="container mx-auto px-4 md:px-6">
-            {blogPosts.length > 0 ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {blogPosts.map((post) => (
-                  <BlogPostCard
-                    key={post.slug}
-                    title={post.title}
-                    category={post.category}
-                    date={post.date}
-                    description={post.description}
-                    slug={post.slug}
-                    image={post.image}
-                    featured={post.featured}
-                    gradientClass={post.gradientClass}
-                  />
-                ))}
-              </div>
-            ) : (
-              <div className="text-center py-16 border border-dashed border-neutral-200 rounded-lg">
-                <h3 className="text-xl font-medium text-neutral-600 lowercase mb-2">coming soon</h3>
-                <p className="text-neutral-500 lowercase">
-                  we're working on some great content for you. check back soon!
-                </p>
-              </div>
-            )}
-          </div>
-        </section>
+        <BlogPostsList posts={blogPosts} />
 
         {/* CTA Section */}
         <section className="px-4 py-12 md:py-16 bg-neutral-50">
