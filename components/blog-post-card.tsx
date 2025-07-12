@@ -30,7 +30,6 @@ export default function BlogPostCard({
   compact = false,
   gradientClass,
 }: BlogPostCardProps) {
-  const [hasImageError, setHasImageError] = useState(false)
   return (
     <Link href={`/blog/${slug}`} onClick={() => trackCTAClick(`view blog post`, title)} className="block">
       <div className="border border-neutral-200 rounded-lg overflow-hidden hover:border-neutral-300 transition-all hover:shadow-sm h-full relative group">
@@ -40,23 +39,8 @@ export default function BlogPostCard({
           </div>
         )}
         
-        {/* Image with fallback to gradient */}
-        <div className={cn("relative w-full aspect-[4/3]", gradientClass)}>
-          <CoreImage
-            src={image}
-            alt={title}
-            width={400}
-            height={300}
-            className="w-full h-full object-cover"
-            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-            trackingId={`blog_card_${slug}`}
-            onLoadError={() => setHasImageError(true)}
-            customErrorHandling={true}
-            fallbackElement={
-              <div className={cn("w-full h-full", gradientClass)} />
-            }
-          />
-        </div>
+        {/* Always use gradient for thumbnail */}
+        <div className={cn("relative w-full aspect-[4/3]", gradientClass)} />
         <div className="p-5 space-y-3 border-t border-neutral-100">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2">
             <div className="inline-block px-3 py-1 bg-neutral-100 rounded-full text-xs lowercase">{category}</div>
