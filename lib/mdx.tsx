@@ -50,7 +50,7 @@ async function _getPost(slug: string): Promise<{ frontmatter: BlogFrontmatter; c
     postsCache.set(slug, result)
     
     return result
-  } catch (error) {
+  } catch (error: unknown) {
     console.error(`[MDXLib] Failed to get post "${slug}" from "${filePath}":`, error)
     return null
   }
@@ -100,7 +100,7 @@ async function _getAllPosts(): Promise<Array<{ slug: string } & BlogFrontmatter>
     lastCacheTime = Date.now()
     
     return sortedPosts
-  } catch (error) {
+  } catch (error: unknown) {
     console.error(`[MDXLib] Failed to get all posts from "${BLOG_PATH}":`, error)
     return null
   }
@@ -197,13 +197,12 @@ export async function renderPost(slug: string) {
             rehypePlugins: [],
             development: process.env.NODE_ENV === 'development',
             // More forgiving JSX parsing
-            jsx: true,
             jsxImportSource: 'react'
           }
         }}
       />
     )
-  } catch (error) {
+  } catch (error: unknown) {
     console.error(`[MDXLib] Failed to render MDX content for post "${slug}":`, error)
     
     // In development, show detailed error
@@ -215,7 +214,7 @@ export async function renderPost(slug: string) {
             <p className="text-red-700 mb-4">Failed to render blog post "{slug}"</p>
             <details>
               <summary className="cursor-pointer font-medium text-red-800">Error Details</summary>
-              <pre className="mt-2 text-sm text-red-600 overflow-auto">{error.message}</pre>
+              <pre className="mt-2 text-sm text-red-600 overflow-auto">{error instanceof Error ? error.message : String(error)}</pre>
             </details>
           </div>
         </div>
