@@ -13,11 +13,11 @@ import { trackCTAClick, trackNavigation } from "@/utils/analytics"
 import PageViewTracker from "@/components/page-view-tracker"
 
 const services = [
-  { name: "business card", icon: CreditCard },
   { name: "logo or wordmark", icon: Palette },
-  { name: "social media banner or post set", icon: Share2 },
+  { name: "social media banner or graphic", icon: Share2 },
   { name: "print flyer / brochure / menu", icon: Printer },
-  { name: "landing page mock-up", icon: Globe },
+  { name: "thumbnail set", icon: Globe }, // Updated to align
+  { name: "business card", icon: CreditCard },
   { name: "merch / apparel graphic", icon: User },
 ]
 
@@ -29,8 +29,8 @@ const steps = [
   },
   {
     number: 2,
-    title: "secure your spot",
-    description: "checkout instantly via stripe",
+    title: "get started",
+    description: "schedule a free consultation to discuss details",
   },
   {
     number: 3,
@@ -56,21 +56,18 @@ export default function OneTimeFeeClientPage() {
                 one perfect design, one flat fee
               </h1>
               <p className="mx-auto max-w-2xl text-xl text-neutral-600 lowercase md:text-2xl">
-                a single business card, logo, flyer—or whatever you need—crafted by prism's pros for $600. unlimited iterations until you love it.
+                a single logo, banner, flyer—or whatever custom design asset you need—crafted by prism's pros for $750. unlimited revisions until you love it.
               </p>
               <div className="pt-6">
                 <Button
                   className="rounded-full px-8 py-6 text-lg lowercase"
-                  onClick={() => trackCTAClick("start my design", "hero section")}
+                  onClick={() => trackCTAClick("get started", "hero section")}
                   asChild
+                  variant="outline"
                 >
-                  <a
-                    href="https://buy.stripe.com/3cIcN6c6O8L00Sc23RdZ60B"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    start my design <ArrowRight className="ml-2 h-5 w-5" />
-                  </a>
+                  <Link href="/get-started">
+                    get started <ArrowRight className="ml-2 h-5 w-5" />
+                  </Link>
                 </Button>
               </div>
             </div>
@@ -95,15 +92,15 @@ export default function OneTimeFeeClientPage() {
                   <div className="w-12 h-12 bg-black text-white rounded-full flex items-center justify-center mx-auto mb-4">
                     <span className="text-xl">⚡</span>
                   </div>
-                  <h3 className="text-xl font-bold lowercase mb-2">quick design</h3>
-                  <div className="text-3xl font-bold text-black mb-2">$600</div>
+                  <h3 className="text-xl font-bold lowercase mb-2">design sprint</h3>
+                  <div className="text-3xl font-bold text-black mb-2">$750</div>
                   <p className="text-neutral-600 lowercase text-sm mb-4">
-                    perfect for one design asset
+                    perfect for quick branding needs
                   </p>
                   <ul className="text-left text-sm text-neutral-600 lowercase space-y-1 mb-4">
-                    <li>• business card, logo, or flyer</li>
+                    <li>• custom design assets</li>
                     <li>• unlimited revisions</li>
-                    <li>• ready in 1-2 weeks</li>
+                    <li>• ready in 3-5 business days</li>
                   </ul>
                   <div className="text-xs text-neutral-500 lowercase">👈 you're here</div>
                 </div>
@@ -115,24 +112,24 @@ export default function OneTimeFeeClientPage() {
                   <div className="w-12 h-12 bg-neutral-100 text-neutral-600 rounded-full flex items-center justify-center mx-auto mb-4">
                     <span className="text-xl">🚀</span>
                   </div>
-                  <h3 className="text-xl font-bold lowercase mb-2">custom project</h3>
-                  <div className="text-3xl font-bold text-neutral-900 mb-2">consultation</div>
+                  <h3 className="text-xl font-bold lowercase mb-2">subscription tiers</h3>
+                  <div className="text-3xl font-bold text-neutral-900 mb-2">from $1,200/mo</div>
                   <p className="text-neutral-600 lowercase text-sm mb-4">
-                    for websites, apps, or multiple designs
+                    for comprehensive growth solutions
                   </p>
                   <ul className="text-left text-sm text-neutral-600 lowercase space-y-1 mb-4">
-                    <li>• full websites or apps</li>
-                    <li>• comprehensive design systems</li>
-                    <li>• ongoing growth support</li>
+                    <li>• full website rebuild</li>
+                    <li>• advanced SEO & apps</li>
+                    <li>• ongoing support</li>
                   </ul>
                   <Button
                     variant="outline"
                     className="rounded-full text-sm lowercase"
-                    onClick={() => trackNavigation("learn about custom projects", "/get-started")}
+                    onClick={() => trackNavigation("learn about subscriptions", "/services")}
                     asChild
                   >
-                    <Link href="/get-started">
-                      schedule consultation <ArrowRight className="ml-1 h-3 w-3" />
+                    <Link href="/services">
+                      view full services <ArrowRight className="ml-1 h-3 w-3" />
                     </Link>
                   </Button>
                 </div>
@@ -146,7 +143,7 @@ export default function OneTimeFeeClientPage() {
           <div className="container mx-auto px-4 md:px-6">
             <div className="text-center mb-12">
               <h2 className="text-3xl font-bold tracking-tighter lowercase sm:text-4xl">
-                what you can get for $600
+                what you can get for $750
               </h2>
             </div>
             <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3 max-w-4xl mx-auto">
@@ -191,7 +188,7 @@ export default function OneTimeFeeClientPage() {
                 love-it-or-we-fix-it
               </h3>
               <p className="text-lg text-neutral-600 lowercase">
-                unlimited revisions and direct access to our designers until the final file makes you say, "perfect." no extra fees, ever.
+                unlimited revisions and direct access to our designers until the final file makes you say, "perfect." no extra fees, ever. 100% satisfaction or full refund.
               </p>
             </div>
           </div>
@@ -237,25 +234,25 @@ export default function OneTimeFeeClientPage() {
               <div className="grid gap-6 md:grid-cols-2 text-left">
                 <div className="bg-white rounded-xl p-6 shadow-sm">
                   <h3 className="text-lg font-bold lowercase mb-3 text-green-700">
-                    choose $600 quick design if:
+                    choose $750 design sprint if:
                   </h3>
                   <ul className="space-y-2 text-neutral-600 lowercase text-sm">
-                    <li>• you need exactly one design</li>
-                    <li>• you want to start immediately</li>
+                    <li>• you need quick custom design assets</li>
+                    <li>• best for branding without commitment</li>
                     <li>• you have a clear idea of what you want</li>
-                    <li>• budget is under $1,000</li>
+                    <li>• budget under $1,000</li>
                   </ul>
                 </div>
                 
                 <div className="bg-white rounded-xl p-6 shadow-sm">
                   <h3 className="text-lg font-bold lowercase mb-3 text-blue-700">
-                    choose consultation if:
+                    choose subscription if:
                   </h3>
                   <ul className="space-y-2 text-neutral-600 lowercase text-sm">
-                    <li>• you need a website or app</li>
-                    <li>• you want multiple designs</li>
-                    <li>• you need ongoing support</li>
-                    <li>• budget is $5,000+</li>
+                    <li>• you need a full website or app</li>
+                    <li>• you want ongoing edits and growth</li>
+                    <li>• advanced features like SEO</li>
+                    <li>• budget $1,200+/mo</li>
                   </ul>
                 </div>
               </div>
@@ -292,16 +289,13 @@ export default function OneTimeFeeClientPage() {
               <div className="pt-6">
                 <Button
                   className="rounded-full px-8 py-6 text-lg lowercase"
-                  onClick={() => trackCTAClick("start my design", "final cta")}
+                  onClick={() => trackCTAClick("get started", "final cta")}
                   asChild
+                  variant="outline"
                 >
-                  <a
-                    href="https://buy.stripe.com/3cIcN6c6O8L00Sc23RdZ60B"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    start my design <ArrowRight className="ml-2 h-5 w-5" />
-                  </a>
+                  <Link href="/get-started">
+                    get started <ArrowRight className="ml-2 h-5 w-5" />
+                  </Link>
                 </Button>
               </div>
             </div>
@@ -309,6 +303,67 @@ export default function OneTimeFeeClientPage() {
         </section>
       </main>
       <Footer />
+
+      {/* Add new section after How It Works for add-ons and full suite overview */}
+      <section className="py-16 md:py-24 bg-neutral-50">
+        <div className="container mx-auto px-4 md:px-6">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold tracking-tighter lowercase sm:text-4xl">
+              optional add-on: photo boost
+            </h2>
+          </div>
+          <div className="mx-auto max-w-2xl">
+            <p className="text-neutral-600 lowercase mb-4">
+              for +$499, add a professional photo session or editing to complement your design.
+            </p>
+            <ul className="text-left text-neutral-600 lowercase space-y-2">
+              <li>• on-site 2-hour shoot (local only)</li>
+              <li>• 20-50 optimized images</li>
+              <li>• remote option available</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section className="py-16 md:py-24 bg-white">
+        <div className="container mx-auto px-4 md:px-6">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold tracking-tighter lowercase sm:text-4xl">
+              our full suite of services
+            </h2>
+            <p className="mt-4 text-neutral-600 lowercase">
+              the design sprint is just the beginning. upgrade anytime for more comprehensive support.
+            </p>
+          </div>
+          <div className="grid gap-8 md:grid-cols-2 max-w-4xl mx-auto">
+            <div className="bg-neutral-50 rounded-xl p-6">
+              <h3 className="text-xl font-bold lowercase mb-2">site essentials</h3>
+              <div className="text-2xl font-bold mb-2">$1,200/mo</div>
+              <ul className="space-y-2 text-neutral-600 lowercase">
+                <li>• full website rebuild</li>
+                <li>• unlimited edits</li>
+                <li>• basic analytics</li>
+              </ul>
+            </div>
+            <div className="bg-neutral-50 rounded-xl p-6">
+              <h3 className="text-xl font-bold lowercase mb-2">growth accelerator</h3>
+              <div className="text-2xl font-bold mb-2">$1,999/mo</div>
+              <ul className="space-y-2 text-neutral-600 lowercase">
+                <li>• everything in essentials</li>
+                <li>• advanced SEO & listings</li>
+                <li>• review boosting & apps</li>
+              </ul>
+            </div>
+          </div>
+          <div className="text-center mt-8">
+            <Button variant="outline" className="rounded-full px-6 py-3 text-base lowercase" asChild>
+              <Link href="/services">
+                view detailed pricing <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
+            </Button>
+          </div>
+        </div>
+      </section>
     </div>
   )
 }
