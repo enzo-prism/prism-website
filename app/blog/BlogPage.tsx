@@ -5,6 +5,7 @@ import BlogCTAButton from "./BlogCTAButton"
 import BlogPostCard from "@/components/blog-post-card"
 import type { BlogFrontmatter } from "@/lib/mdx"
 import BlogPostsList from "./BlogPostsList"
+import { BlogListErrorBoundary } from "@/components/blog-error-boundary"
 
 // Define the blog post type
 interface BlogPost extends BlogFrontmatter {
@@ -36,7 +37,9 @@ export default function BlogPage({ posts }: { posts: BlogPost[] }) {
         </section>
 
         {/* Blog Posts List or Empty State */}
-        <BlogPostsList posts={blogPosts} />
+        <BlogListErrorBoundary>
+          <BlogPostsList posts={blogPosts} />
+        </BlogListErrorBoundary>
 
         {/* CTA Section */}
         <section className="px-4 py-12 md:py-16 bg-neutral-50">

@@ -1,152 +1,186 @@
-# Claude Code Project Context
+# CLAUDE.md
+
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
 ## Project Overview
-**Prism Website** - A Next.js-based website built with v0.dev and deployed on Vercel. This is a modern React application with TypeScript, comprehensive error monitoring, and enhanced development workflow through MCP server integrations.
+**Prism Website** - A Next.js 15.2.4 application built with v0.dev and deployed on Vercel. This is a modern marketing/portfolio website for a design and development agency with comprehensive error monitoring and MCP server integrations.
 
 ## Tech Stack
-- **Framework**: Next.js 15.2.4 with React 19
-- **Language**: TypeScript 5
-- **Styling**: Tailwind CSS
+- **Framework**: Next.js 15.2.4 with React 19 and App Router
+- **Language**: TypeScript 5 (strict mode)
+- **Styling**: Tailwind CSS with custom design system
+- **UI Components**: Radix UI primitives with shadcn/ui
+- **Forms**: React Hook Form with Zod validation
+- **Animation**: Framer Motion
+- **Content**: MDX for blog posts with gray-matter
+- **Database**: Supabase (project ref: `ibjqwvkcjdgdifujfnpb`)
+- **Monitoring**: Sentry (org: `prism-m0`, project: `prism-website`)
+- **Testing**: Jest with TypeScript and Testing Library
 - **Deployment**: Vercel
-- **Monitoring**: Sentry
-- **Database**: Supabase
-- **Design**: Figma integration
 
-## MCP Server Capabilities
+## Essential Commands
 
-### GitHub MCP Server
-**Purpose**: Repository management and collaboration
-**Capabilities**:
-- Create, read, update issues and pull requests
-- Search repositories and code
-- Manage branches and commits
-- Access repository metadata and statistics
-- Review and comment on PRs
+```bash
+# Development
+npm run dev          # Start development server (port 3000)
+npm run build        # Build for production
+npm run start        # Start production server
+npm run lint         # Run ESLint
+npm test            # Run Jest tests
 
-**Common Use Cases**:
-- Creating issues for bugs or features
-- Searching for specific code patterns
-- Reviewing PR changes and providing feedback
-- Checking repository status and recent activity
+# MCP Server Management
+npm run mcp:setup    # Setup MCP servers
+npm run mcp:health   # Check MCP server health
+npm run mcp:validate # Validate MCP configuration
 
-### Supabase MCP Server
-**Purpose**: Database operations and management
-**Capabilities**:
-- Read-only database queries
-- Schema inspection
-- Table data analysis
-- Query optimization insights
-- Database health monitoring
+# Running a single test
+npm test -- path/to/test.spec.ts
+npm test -- --watch  # Run tests in watch mode
+```
 
-**Project Context**:
-- Project ref: `ibjqwvkcjdgdifujfnpb`
-- Configured in read-only mode for safety
-- Access via service role token
+## High-Level Architecture
 
-**Common Use Cases**:
-- Analyzing user data patterns
-- Debugging database-related issues
-- Generating reports from stored data
-- Optimizing database queries
+### Directory Structure
+- `/app` - Next.js app router pages using file-based routing
+  - `/api/store-email` - Email storage API endpoint
+  - `/blog/[slug]` - Dynamic blog post routes
+  - `/case-studies/[slug]` - Dynamic case study routes
+- `/components` - React components following atomic design principles
+  - `/ui` - Base UI components (shadcn/ui)
+  - Feature-specific component directories
+- `/content/blog` - MDX blog posts with front matter metadata
+- `/lib` - Core utilities and configurations
+- `/utils` - Helper functions and shared logic
+- `/public` - Static assets (images optimized for web)
+- `/types` - TypeScript type definitions
+- `/__tests__` - Test files co-located with source
 
-### Sentry MCP Server
-**Purpose**: Error monitoring and debugging
-**Capabilities**:
-- View recent errors and exceptions
-- Analyze error trends and patterns
-- Access stack traces and error context
-- Monitor performance metrics
-- Manage issue status and resolution
+### Key Architectural Patterns
 
-**Project Context**:
-- Organization: `prism-m0`
-- Project: `prism-website`
-- Comprehensive error tracking for client/server/edge
+1. **Image Optimization System**
+   - Enhanced Next.js Image component with error handling
+   - Automatic WebP/AVIF conversion
+   - 1-year cache TTL for optimized images
+   - Comprehensive monitoring and fallbacks
 
-**Common Use Cases**:
-- Investigating production errors
-- Monitoring application performance
-- Tracking error resolution progress
-- Analyzing user impact of issues
+2. **Content Management**
+   - MDX-based blog system with dynamic imports
+   - SEO-optimized with canonical URLs and metadata
+   - Related content suggestions algorithm
+   - Social sharing integration
 
-### Figma MCP Server
-**Purpose**: Design collaboration and asset management
-**Capabilities**:
-- Access design files and components
-- Extract design tokens and assets
-- Review design specifications
-- Track design system usage
+3. **Error Boundaries & Monitoring**
+   - Sentry integration across client/server/edge
+   - Custom error boundaries with fallback UI
+   - Performance tracking and analytics
+   - Redirect tracking in middleware
 
-**Setup Note**: Requires local Figma MCP server running on port 3845
+4. **Form Handling**
+   - React Hook Form for complex forms
+   - Zod schemas for validation
+   - Server-side form processing
+   - Progressive enhancement
 
-**Common Use Cases**:
-- Implementing designs accurately
-- Extracting design tokens for CSS
-- Reviewing design specifications
-- Ensuring design-development consistency
+## MCP Server Integration
 
-## Development Workflow
+### Available MCP Servers
 
-### Commands & Scripts
-- `npm run dev` - Start development server
-- `npm run build` - Build for production
-- `npm run lint` - Run ESLint
-- `npm test` - Run Jest tests
+1. **GitHub** (`mcp__github`)
+   - Repository and issue management
+   - Code search and PR operations
+   - Requires: `GITHUB_PERSONAL_ACCESS_TOKEN`
 
-### Key Directories
-- `/app` - Next.js app router pages and layouts
-- `/components` - Reusable React components
-- `/lib` - Utility functions and configurations
-- `/docs` - Project documentation
-- `/public` - Static assets
+2. **Supabase** (`mcp__supabase`)
+   - Read-only database access
+   - Schema inspection and queries
+   - Project: `ibjqwvkcjdgdifujfnpb`
+   - Requires: `SUPABASE_ACCESS_TOKEN`
 
-### Environment Setup
-1. Copy `.env.example` to `.env`
-2. Fill in required tokens:
-   - `GITHUB_PERSONAL_ACCESS_TOKEN`
-   - `SUPABASE_ACCESS_TOKEN`
-3. Ensure Figma MCP server is running locally (if needed)
+3. **Sentry** (`mcp__sentry`)
+   - Error monitoring and debugging
+   - Performance tracking
+   - Organization: `prism-m0`
+   - Requires: Sentry auth
 
-## Best Practices for Claude Code
+4. **Figma** (`mcp__figma`)
+   - Design file access
+   - Asset extraction
+   - Requires: Local server on port 3845
 
-### When to Use Each MCP Server
-- **GitHub**: For any repository operations, issue management, or code collaboration
-- **Supabase**: For database queries, data analysis, or backend debugging
-- **Sentry**: For error investigation, performance monitoring, or production debugging
-- **Figma**: For design implementation, asset extraction, or design system work
+### MCP Usage Guidelines
+- Always check MCP server health before operations
+- Use read-only Supabase access for safety
+- Batch operations when possible to avoid rate limits
+- Monitor errors via Sentry after deployments
 
-### Development Guidelines
-- Always run `npm run lint` before committing
-- Use TypeScript strictly - avoid `any` types
-- Follow existing component patterns
-- Test changes with `npm test`
-- Monitor errors via Sentry MCP after deployments
+## Development Patterns
 
-### Security Notes
-- All MCP servers use environment variables for authentication
-- Supabase is configured in read-only mode
-- Never commit actual tokens to version control
-- Use MCP servers responsibly to avoid API rate limits
+### TypeScript Conventions
+- Path aliases configured: `@/*` maps to root
+- Strict mode enabled - avoid `any` types
+- Use type imports: `import type { ... }`
+- Co-locate types with components
 
-## Common Tasks
+### Component Patterns
+- Use existing UI components from `/components/ui`
+- Follow compound component pattern for complex UIs
+- Implement proper loading and error states
+- Use Framer Motion for animations
 
-### Adding New Features
-1. Use GitHub MCP to create/assign issues
-2. Check Figma MCP for design specifications
-3. Implement with proper TypeScript typing
-4. Test thoroughly with Jest
-5. Monitor via Sentry MCP after deployment
+### Testing Approach
+- Jest configured with TypeScript support
+- MDX remote mocked for testing
+- Test files in `__tests__` directory
+- Focus on user interactions and edge cases
 
-### Debugging Issues
-1. Check Sentry MCP for error details and stack traces
-2. Use Supabase MCP to investigate data-related issues
-3. Use GitHub MCP to search for similar issues or solutions
-4. Update issue status via GitHub MCP when resolved
+### Performance Considerations
+- Use dynamic imports for code splitting
+- Implement proper image optimization
+- Hardware-accelerated animations only
+- Monitor bundle size impacts
 
-### Performance Optimization
-1. Use Sentry MCP to identify performance bottlenecks
-2. Analyze database queries via Supabase MCP
-3. Optimize based on real user data
-4. Monitor improvements via Sentry MCP
+## Security & Environment
 
-This context should help Claude Code provide more targeted and effective assistance for this project.
+### Required Environment Variables
+```bash
+# MCP Server Tokens
+GITHUB_PERSONAL_ACCESS_TOKEN=
+SUPABASE_ACCESS_TOKEN=
+
+# Sentry (auto-configured by Vercel)
+SENTRY_DSN=
+SENTRY_ORG=
+SENTRY_PROJECT=
+```
+
+### Security Best Practices
+- Never commit `.env` files
+- Use service role tokens appropriately
+- SVG files served with CSP headers
+- Sanitize user inputs in forms
+
+## Common Development Tasks
+
+### Working with Blog Posts
+1. Create MDX file in `/content/blog/`
+2. Add front matter with required fields
+3. Use dynamic imports for heavy components
+4. Test SEO metadata generation
+
+### Adding New Pages
+1. Create route in `/app` directory
+2. Implement loading and error states
+3. Add to sitemap if public-facing
+4. Set up proper metadata exports
+
+### Debugging Production Issues
+1. Check Sentry MCP for error details
+2. Review deployment logs on Vercel
+3. Use source maps for stack traces
+4. Monitor performance metrics
+
+### Implementing Design Changes
+1. Reference Figma MCP for specifications
+2. Use existing design tokens
+3. Follow responsive design patterns
+4. Test across breakpoints

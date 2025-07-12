@@ -4,7 +4,8 @@ import React from "react"
 import fs from "fs/promises" // Node.js file system module for server-side operations
 import path from "path" // Node.js path module for server-side path manipulation
 import matter from "gray-matter" // For parsing frontmatter from .mdx files
-import { MDXRemote } from "next-mdx-remote"
+import { MDXRemote } from "next-mdx-remote/rsc"
+import { compile } from "@mdx-js/mdx"
 
 export type BlogFrontmatter = {
   title: string
@@ -18,19 +19,38 @@ export type BlogFrontmatter = {
   canonical?: string
 }
 
+// Cache for processed blog posts
+const postsCache = new Map<string, { frontmatter: BlogFrontmatter; content: string }>()
+const allPostsCache = new Map<string, Array<{ slug: string } & BlogFrontmatter>>()
+
+// Cache TTL (1 hour in production, 1 minute in development)
+const CACHE_TTL = process.env.NODE_ENV === 'production' ? 60 * 60 * 1000 : 60 * 1000
+let lastCacheTime = 0
+
 const BLOG_PATH = "content/blog" // Relative path to blog content
 
 /**
- * Fetches and parses a single blog post by its slug. Server-side only.
+ * Fetches and parses a single blog post by its slug with caching. Server-side only.
  */
 async function _getPost(slug: string): Promise<{ frontmatter: BlogFrontmatter; content: string } | null> {
+  // Check cache first
+  const cached = postsCache.get(slug)
+  if (cached && (Date.now() - lastCacheTime) < CACHE_TTL) {
+    return cached
+  }
+
   // Construct the full path to the .mdx file on the server
   const filePath = path.join(BLOG_PATH, `${slug}.mdx`)
   try {
     // Read the file content using fs.readFile (server-side)
     const rawFileContent = await fs.readFile(filePath, "utf8")
     const { data, content } = matter(rawFileContent)
-    return { frontmatter: data as BlogFrontmatter, content }
+    const result = { frontmatter: data as BlogFrontmatter, content }
+    
+    // Cache the result
+    postsCache.set(slug, result)
+    
+    return result
   } catch (error) {
     console.error(`[MDXLib] Failed to get post "${slug}" from "${filePath}":`, error)
     return null
@@ -38,9 +58,16 @@ async function _getPost(slug: string): Promise<{ frontmatter: BlogFrontmatter; c
 }
 
 /**
- * Fetches and parses all blog posts. Server-side only.
+ * Fetches and parses all blog posts with caching. Server-side only.
  */
 async function _getAllPosts(): Promise<Array<{ slug: string } & BlogFrontmatter> | null> {
+  // Check cache first
+  const cacheKey = 'all-posts'
+  const cached = allPostsCache.get(cacheKey)
+  if (cached && (Date.now() - lastCacheTime) < CACHE_TTL) {
+    return cached
+  }
+
   try {
     // Read the list of files in the blog directory (server-side)
     const files = await fs.readdir(BLOG_PATH)
@@ -54,7 +81,7 @@ async function _getAllPosts(): Promise<Array<{ slug: string } & BlogFrontmatter>
     const postsData = await Promise.all(
       mdxFiles.map(async (fileName) => {
         const slug = fileName.replace(/\.mdx$/, "")
-        const post = await getPost(slug) // Uses the un-cached version
+        const post = await getPost(slug) // Uses the cached version
         return post ? { slug, ...post.frontmatter } : null
       }),
     )
@@ -67,99 +94,115 @@ async function _getAllPosts(): Promise<Array<{ slug: string } & BlogFrontmatter>
       )
     }
 
-    return validPosts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+    const sortedPosts = validPosts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+    
+    // Cache the result and update timestamp
+    allPostsCache.set(cacheKey, sortedPosts)
+    lastCacheTime = Date.now()
+    
+    return sortedPosts
   } catch (error) {
     console.error(`[MDXLib] Failed to get all posts from "${BLOG_PATH}":`, error)
     return null
   }
 }
 
+// Cache management utilities
+export function clearBlogCache() {
+  postsCache.clear()
+  allPostsCache.clear()
+  lastCacheTime = 0
+  console.log('[MDXLib] Blog cache cleared')
+}
+
+export function getBlogCacheStats() {
+  return {
+    postsInCache: postsCache.size,
+    allPostsCached: allPostsCache.size > 0,
+    lastCacheTime: new Date(lastCacheTime).toISOString(),
+    cacheAge: Date.now() - lastCacheTime
+  }
+}
+
 export const getPost = _getPost
 export const getAllPosts = _getAllPosts
 
+// Custom components for MDX rendering
+const mdxComponents = {
+  // Preserve YouTube video embeds with proper security
+  YouTubeVideoEmbed: ({ videoId, title, className = "" }: { videoId: string; title: string; className?: string }) => {
+    const containerClass = `relative overflow-hidden rounded-xl shadow-md ${className}`.trim()
+    const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`
+    
+    return (
+      <div 
+        className={containerClass} 
+        style={{ paddingBottom: '56.25%' }} 
+        data-youtube-embed={videoId} 
+        data-youtube-title={title}
+      >
+        <div className="youtube-thumbnail absolute inset-0 cursor-pointer">
+          <img 
+            src={thumbnailUrl} 
+            alt={`${title} - Video thumbnail`} 
+            className="absolute inset-0 w-full h-full object-cover"
+            loading="lazy"
+          />
+          <div className="absolute inset-0 bg-black bg-opacity-20 hover:bg-opacity-30 transition-opacity"></div>
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="rounded-full bg-red-600 bg-opacity-90 p-4 shadow-lg hover:scale-110 transition-transform">
+              <svg className="h-8 w-8 text-white ml-1" fill="white" viewBox="0 0 24 24">
+                <path d="M8 5v14l11-7z"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  },
+  // Override potentially dangerous HTML elements
+  script: () => null, // Block script tags
+  iframe: ({ src, title, ...props }: any) => {
+    // Only allow YouTube and other trusted domains
+    const allowedDomains = ['youtube.com', 'youtube-nocookie.com', 'vimeo.com']
+    const url = new URL(src || '')
+    if (!allowedDomains.some(domain => url.hostname.includes(domain))) {
+      return null
+    }
+    return <iframe src={src} title={title} {...props} />
+  }
+}
+
 /**
- * Prepares the raw HTML-like content from the .mdx file for rendering.
- * This function returns a React element that uses dangerouslySetInnerHTML
- * to render the HTML content from the post.
+ * Safely renders MDX content using next-mdx-remote/rsc
+ * This replaces the dangerous dangerouslySetInnerHTML approach
  */
 export async function renderPost(slug: string) {
-  const post = await getPost(slug) // This function relies on fs operations
+  const post = await getPost(slug)
 
   if (!post || typeof post.content !== "string") {
     console.error(`[MDXLib] Post "${slug}" not found or content is invalid for renderPost.`)
     throw new Error(`Post "${slug}" not found or content is invalid.`)
   }
 
-  // The post.content is the string directly from the .mdx file (after frontmatter).
-  // This string contains HTML tags with Tailwind classes.
-  let cleanedContent = post.content
-  
-  // Remove import statements which are not valid in HTML
-  cleanedContent = cleanedContent.replace(/^import\s+.*$/gm, '')
-  
-  // Clean up common inline styles and standardize elements
-  // Convert class to className for React compatibility
-  cleanedContent = cleanedContent.replace(/\sclass="/g, ' className="')
-  // Convert className to class for HTML compatibility
-  cleanedContent = cleanedContent.replace(/\sclassName="/g, ' class="')
-  
-  // Remove inline text size classes from paragraphs (will be handled by prose-blog)
-  cleanedContent = cleanedContent.replace(/<p\s+className="[^"]*text-lg[^"]*">/g, '<p>')
-  cleanedContent = cleanedContent.replace(/<p\s+className="[^"]*leading-relaxed[^"]*">/g, '<p>')
-  
-  // Standardize heading elements (remove inline size classes)
-  cleanedContent = cleanedContent.replace(/<h([1-6])\s+className="[^"]*text-\w+[^"]*">/g, '<h$1>')
-  cleanedContent = cleanedContent.replace(/<h([1-6])\s+className="[^"]*font-\w+[^"]*">/g, '<h$1>')
-  
-  // Standardize list classes (remove inline spacing)
-  cleanedContent = cleanedContent.replace(/<ul\s+className="[^"]*space-y-\d+[^"]*">/g, '<ul>')
-  cleanedContent = cleanedContent.replace(/<ol\s+className="[^"]*space-y-\d+[^"]*">/g, '<ol>')
-  cleanedContent = cleanedContent.replace(/<ul\s+className="[^"]*list-disc[^"]*">/g, '<ul>')
-  cleanedContent = cleanedContent.replace(/<ol\s+className="[^"]*list-decimal[^"]*">/g, '<ol>')
-  
-  // Clean up common margin/padding utilities that conflict with prose styling
-  cleanedContent = cleanedContent.replace(/\s(mt|mb|my|pt|pb|py)-\d+/g, '')
-  
-  // Preserve special components like CTAs and embedded content
-  // These will keep their styling as they're intentionally designed
-
-  // Convert <YouTubeVideoEmbed> tags to thumbnail-first iframe embeds
-  cleanedContent = cleanedContent.replace(
-    /<YouTubeVideoEmbed\s+videoId="([^"]+)"\s+title="([^"]+)"(?:\s+className="([^"]*)")?\s*\/>/g,
-    (_match, videoId, title, className = "") => {
-      const containerClass = `relative overflow-hidden rounded-xl shadow-md ${className}`.trim()
-      const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`
-      
-      return `
-        <div class="${containerClass}" style="padding-bottom:56.25%" data-youtube-embed="${videoId}" data-youtube-title="${title}">
-          <div class="youtube-thumbnail absolute inset-0 cursor-pointer">
-            <img 
-              src="${thumbnailUrl}" 
-              alt="${title} - Video thumbnail" 
-              class="absolute inset-0 w-full h-full object-cover"
-              loading="lazy"
-            />
-            <div class="absolute inset-0 bg-black bg-opacity-20 hover:bg-opacity-30 transition-opacity"></div>
-            <div class="absolute inset-0 flex items-center justify-center">
-              <div class="rounded-full bg-red-600 bg-opacity-90 p-4 shadow-lg hover:scale-110 transition-transform">
-                <svg class="h-8 w-8 text-white ml-1" fill="white" viewBox="0 0 24 24">
-                  <path d="M8 5v14l11-7z"/>
-                </svg>
-              </div>
-            </div>
-          </div>
-        </div>
-      `.replace(/\s+/g, ' ').trim()
-    }
-  )
-  
-  // Remove trailing ``` if present
-  if (cleanedContent.trimEnd().endsWith("```")) {
-    cleanedContent = cleanedContent.substring(0, cleanedContent.lastIndexOf("```"))
+  try {
+    // Use MDXRemote for secure rendering
+    return (
+      <MDXRemote 
+        source={post.content}
+        components={mdxComponents}
+        options={{
+          parseFrontmatter: false, // We already parsed it
+          mdxOptions: {
+            remarkPlugins: [],
+            rehypePlugins: [],
+            development: process.env.NODE_ENV === 'development'
+          }
+        }}
+      />
+    )
+  } catch (error) {
+    console.error(`[MDXLib] Failed to render MDX content for post "${slug}":`, error)
+    throw new Error(`Failed to render blog post "${slug}". Please check the MDX syntax.`)
   }
-  
-  // Trim any leading/trailing whitespace
-  cleanedContent = cleanedContent.trim()
-  
-  return <div dangerouslySetInnerHTML={{ __html: cleanedContent }} />
 }

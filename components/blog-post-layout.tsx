@@ -9,6 +9,7 @@ import ScrollProgressBar from "@/components/scroll-progress-bar"
 import { BlogPostSchema } from "@/components/schema-markup"
 import { cn } from "@/lib/utils"
 import CoreImage from "@/components/core-image"
+import { BlogPostErrorBoundary } from "@/components/blog-error-boundary"
 import { useState } from "react"
 
 interface Props {
@@ -89,9 +90,11 @@ export default function BlogPostLayout({
                       {title}
                     </h1>
                   </div>
-                  <div className="prose-blog lowercase-prose">
-                    {children}
-                  </div>
+                  <BlogPostErrorBoundary>
+                    <div className="prose-blog lowercase-prose">
+                      {children}
+                    </div>
+                  </BlogPostErrorBoundary>
                 </article>
               </div>
             </div>

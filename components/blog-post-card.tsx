@@ -3,7 +3,9 @@
 import Link from "next/link"
 import { ArrowRight } from "lucide-react"
 import { trackCTAClick } from "@/utils/analytics"
-import { cn } from "@/lib/utils" // Import cn for conditional classes
+import { cn } from "@/lib/utils"
+import CoreImage from "@/components/core-image"
+import { useState } from "react"
 
 interface BlogPostCardProps {
   title: string
@@ -11,7 +13,7 @@ interface BlogPostCardProps {
   date: string
   description: string
   slug: string
-  image: string // Kept for potential metadata use
+  image: string // Blog post thumbnail image
   featured?: boolean
   compact?: boolean
   gradientClass: string // New prop for gradient class
@@ -23,11 +25,12 @@ export default function BlogPostCard({
   date,
   description,
   slug,
-  // image prop is kept for data consistency
+  image,
   featured = false,
   compact = false,
-  gradientClass, // Receive gradient class
+  gradientClass,
 }: BlogPostCardProps) {
+  const [hasImageError, setHasImageError] = useState(false)
   return (
     <Link href={`/blog/${slug}`} onClick={() => trackCTAClick(`view blog post`, title)} className="block">
       <div className="border border-neutral-200 rounded-lg overflow-hidden hover:border-neutral-300 transition-all hover:shadow-sm h-full relative group">
@@ -36,9 +39,27 @@ export default function BlogPostCard({
             featured
           </div>
         )}
-        {/* Gradient background using the passed gradientClass */}
+        
+        {/* Image with fallback to gradient */}
         <div className={cn("relative w-full aspect-[4/3]", gradientClass)}>
-          {/* You can add an icon or subtle pattern here if desired */}
+          {image && !hasImageError ? (
+            <CoreImage
+              src={image}
+              alt={title}
+              width={400}
+              height={300}
+              className="w-full h-full object-cover"
+              sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+              trackingId={`blog_card_${slug}`}
+              onLoadError={() => setHasImageError(true)}
+              customErrorHandling={true}
+              fallbackElement={
+                <div className={cn("w-full h-full", gradientClass)} />
+              }
+            />
+          ) : (
+            <div className={cn("w-full h-full", gradientClass)} />
+          )}
         </div>
         <div className="p-5 space-y-3 border-t border-neutral-100">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2">
