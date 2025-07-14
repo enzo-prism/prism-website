@@ -1,8 +1,9 @@
 "use client"
 
+import React from 'react';
 import { useState } from "react"
 import Image from "next/image"
-import { Play } from "lucide-react"
+import { Play, AlertCircle } from "lucide-react"
 
 interface YouTubeVideoEmbedProps {
   videoId: string
@@ -18,12 +19,29 @@ export default function YouTubeVideoEmbed({
   showThumbnail = true 
 }: YouTubeVideoEmbedProps) {
   const [isLoaded, setIsLoaded] = useState(false)
+  const [hasError, setHasError] = useState(false);
 
   const handlePlayClick = () => {
-    setIsLoaded(true)
-  }
+    setIsLoaded(true);
+    // Force reload if needed
+    setTimeout(() => {
+      const iframe = document.getElementById(`youtube-${videoId}`) as HTMLIFrameElement | null;
+      if (!iframe?.contentWindow) {
+        setHasError(true);
+      }
+    }, 2000);
+  };
 
   const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`
+
+  if (hasError) {
+    return (
+      <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+        <AlertCircle className="inline-block mr-2" />
+        <span>Video failed to load. Watch it on <a href={`https://youtu.be/${videoId}`} target="_blank" rel="noopener noreferrer" className="underline">YouTube</a>.</span>
+      </div>
+    );
+  }
 
   return (
     <div
@@ -52,11 +70,13 @@ export default function YouTubeVideoEmbed({
         </>
       ) : (
         <iframe
+          id={`youtube-${videoId}`}
           className="absolute top-0 left-0 w-full h-full border-0 rounded-xl"
           src={`https://www.youtube.com/embed/${videoId}?rel=0&showinfo=0&modestbranding=1&iv_load_policy=3&autoplay=1`}
           title={title}
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           allowFullScreen
+          onError={() => setHasError(true)}
         />
       )}
     </div>
