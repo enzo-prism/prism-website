@@ -211,3 +211,43 @@ SENTRY_PROJECT=
 1. Changes made in v0.dev are automatically synced to this repository
 2. Vercel deploys the latest version from this repository
 3. Monitor deployment status and errors via Sentry MCP
+
+## Code Style & Conventions
+
+### Import Organization
+- Group imports: React/Next.js first, then external libraries, then local imports
+- Use type imports where possible: `import type { ... }`
+- Absolute imports using `@/` path alias
+
+### Component File Structure
+```typescript
+// 1. Imports
+// 2. Type definitions
+// 3. Component definition
+// 4. Default export
+```
+
+### Naming Conventions
+- Components: PascalCase (e.g., `HeroSection.tsx`)
+- Utilities: camelCase (e.g., `optimizeImage.ts`)
+- Routes: kebab-case (e.g., `/case-studies/[slug]`)
+- Test files: `*.test.ts` or `*.spec.ts`
+
+## MCP Server Troubleshooting
+
+### Verification Commands
+```bash
+# Test GitHub connectivity
+npm run mcp:health -- github
+
+# Test Supabase connection
+npm run mcp:health -- supabase
+
+# Validate all MCP configurations
+npm run mcp:validate
+```
+
+### Common Issues
+- **Token errors**: Ensure tokens are set in `.env.local`
+- **Connection timeouts**: Check network connectivity and firewall settings
+- **Permission errors**: Verify token scopes match required permissions

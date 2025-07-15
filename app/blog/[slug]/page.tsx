@@ -17,11 +17,30 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const post = await getPost(params.slug)
   if (!post) notFound()
   const { frontmatter } = post
+  
+  // Use dynamic OG image if gradientClass is available
+  const ogImage = frontmatter.gradientClass
+    ? `${process.env.NEXT_PUBLIC_BASE_URL || 'https://design-prism.com'}/api/og/blog/${params.slug}`
+    : frontmatter.openGraph?.images?.[0]?.url || frontmatter.image
+  
   return {
     title: frontmatter.title,
     description: frontmatter.description,
-    openGraph: frontmatter.openGraph,
-    twitter: frontmatter.twitter,
+    openGraph: {
+      ...frontmatter.openGraph,
+      images: [
+        {
+          url: ogImage,
+          width: 1200,
+          height: 630,
+          alt: frontmatter.openGraph?.images?.[0]?.alt || frontmatter.title,
+        },
+      ],
+    },
+    twitter: {
+      ...frontmatter.twitter,
+      images: [ogImage],
+    },
     alternates: { canonical: frontmatter.canonical },
   }
 }
