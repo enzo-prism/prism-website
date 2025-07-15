@@ -142,52 +142,7 @@ export default function RootLayout({
           }}
         />
         {/* YouTube Embed Handler */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-      function initYouTubeEmbeds() {
-        const thumbnails = document.querySelectorAll('[data-youtube-embed] .youtube-thumbnail');
-        thumbnails.forEach(function(thumbnail) {
-          // Remove any existing click listeners to prevent duplicates
-          const newThumbnail = thumbnail.cloneNode(true);
-          thumbnail.parentNode.replaceChild(newThumbnail, thumbnail);
-          
-          newThumbnail.addEventListener('click', function() {
-            const container = this.parentElement;
-            const videoId = container.getAttribute('data-youtube-embed');
-            const videoTitle = container.getAttribute('data-youtube-title') || 'YouTube video';
-            
-            const iframe = document.createElement('iframe');
-            iframe.className = 'absolute top-0 left-0 w-full h-full border-0 rounded-xl';
-            iframe.src = 'https://www.youtube.com/embed/' + videoId + '?rel=0&showinfo=0&modestbranding=1&iv_load_policy=3&autoplay=1';
-            iframe.title = videoTitle;
-            iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
-            iframe.allowFullscreen = true;
-            
-            container.innerHTML = '';
-            container.appendChild(iframe);
-          });
-        });
-      }
-      
-      // Initialize on page load
-      document.addEventListener('DOMContentLoaded', initYouTubeEmbeds);
-      
-      // Re-initialize when content changes (for dynamic content)
-      if (window.MutationObserver) {
-        const observer = new MutationObserver(function(mutations) {
-          mutations.forEach(function(mutation) {
-            if (mutation.addedNodes.length > 0) {
-              // Delay to allow DOM to settle
-              setTimeout(initYouTubeEmbeds, 100);
-            }
-          });
-        });
-        observer.observe(document.body, { childList: true, subtree: true });
-      }
-    `,
-          }}
-        />
+        {/* YouTube embeds are now handled natively with iframe - no custom JavaScript needed */}
         {/* Preconnect to Vimeo for faster video loading */}
         <link rel="preconnect" href="https://player.vimeo.com" />
         <link rel="preconnect" href="https://i.vimeocdn.com" />

@@ -128,34 +128,20 @@ export const getAllPosts = _getAllPosts
 
 // Custom components for MDX rendering
 const mdxComponents = {
-  // Preserve YouTube video embeds with proper security
+  // Simple YouTube embed for MDX content
   YouTubeVideoEmbed: ({ videoId, title, className = "" }: { videoId: string; title: string; className?: string }) => {
-    const containerClass = `relative overflow-hidden rounded-xl shadow-md ${className}`.trim()
-    const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`
-    
     return (
       <div 
-        className={containerClass} 
-        style={{ paddingBottom: '56.25%' }} 
-        data-youtube-embed={videoId} 
-        data-youtube-title={title}
+        className={`relative w-full ${className}`} 
+        style={{ paddingBottom: '56.25%' /* 16:9 Aspect Ratio */ }}
       >
-        <div className="youtube-thumbnail absolute inset-0 cursor-pointer">
-          <img 
-            src={thumbnailUrl} 
-            alt={`${title} - Video thumbnail`} 
-            className="absolute inset-0 w-full h-full object-cover"
-            loading="lazy"
-          />
-          <div className="absolute inset-0 bg-black bg-opacity-20 hover:bg-opacity-30 transition-opacity"></div>
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="rounded-full bg-red-600 bg-opacity-90 p-4 shadow-lg hover:scale-110 transition-transform">
-              <svg className="h-8 w-8 text-white ml-1" fill="white" viewBox="0 0 24 24">
-                <path d="M8 5v14l11-7z"/>
-              </svg>
-            </div>
-          </div>
-        </div>
+        <iframe
+          className="absolute top-0 left-0 w-full h-full rounded-xl border-0"
+          src={`https://www.youtube.com/embed/${videoId}`}
+          title={title}
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowFullScreen
+        />
       </div>
     )
   },
