@@ -56,7 +56,7 @@ export default function YouTubeVideoEmbed({
               src={thumbnailUrl}
               alt={`${title} - Video thumbnail`}
               fill
-              className="object-cover"
+              className="object-contain bg-black"
               priority
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 70vw"
             />

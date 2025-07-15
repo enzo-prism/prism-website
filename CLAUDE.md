@@ -5,6 +5,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Project Overview
 **Prism Website** - A Next.js 15.2.4 application built with v0.dev and deployed on Vercel. This is a modern marketing/portfolio website for a design and development agency with comprehensive error monitoring and MCP server integrations.
 
+**Important**: This repository is automatically synced with v0.dev deployments. Changes made on v0.dev are pushed to this repository automatically.
+
 ## Tech Stack
 - **Framework**: Next.js 15.2.4 with React 19 and App Router
 - **Language**: TypeScript 5 (strict mode)
@@ -45,12 +47,19 @@ npm test -- --watch  # Run tests in watch mode
   - `/api/store-email` - Email storage API endpoint
   - `/blog/[slug]` - Dynamic blog post routes
   - `/case-studies/[slug]` - Dynamic case study routes
+  - Individual route folders (about, services, contact, etc.) with page.tsx files
 - `/components` - React components following atomic design principles
   - `/ui` - Base UI components (shadcn/ui)
   - Feature-specific component directories
+  - Client-side interactive components marked with "use client"
 - `/content/blog` - MDX blog posts with front matter metadata
 - `/lib` - Core utilities and configurations
+  - MDX processing utilities
+  - Constants and shared logic
 - `/utils` - Helper functions and shared logic
+  - Image optimization and monitoring
+  - Analytics tracking
+  - Scroll optimization
 - `/public` - Static assets (images optimized for web)
 - `/types` - TypeScript type definitions
 - `/__tests__` - Test files co-located with source
@@ -115,6 +124,11 @@ npm test -- --watch  # Run tests in watch mode
 
 ## Development Patterns
 
+### Key Development Rules
+- **NEVER create files unless absolutely necessary** - always prefer editing existing files
+- **NEVER proactively create documentation files** (*.md, README) unless explicitly requested
+- **Do what has been asked; nothing more, nothing less**
+
 ### TypeScript Conventions
 - Path aliases configured: `@/*` maps to root
 - Strict mode enabled - avoid `any` types
@@ -128,9 +142,11 @@ npm test -- --watch  # Run tests in watch mode
 - Use Framer Motion for animations
 
 ### Testing Approach
-- Jest configured with TypeScript support
+- Jest configured with TypeScript support (ts-jest preset)
 - MDX remote mocked for testing
 - Test files in `__tests__` directory
+- Test environment: jsdom for React component testing
+- Setup file: jest.setup.ts for test configuration
 - Focus on user interactions and edge cases
 
 ### Performance Considerations
@@ -184,3 +200,14 @@ SENTRY_PROJECT=
 2. Use existing design tokens
 3. Follow responsive design patterns
 4. Test across breakpoints
+
+## v0.dev Integration & Deployment
+
+### Project Links
+- **v0.dev Project**: https://v0.dev/chat/projects/8xmj81uf3fc
+- **Vercel Deployment**: https://vercel.com/enzo-design-prisms-projects/v0-prism-website-design
+
+### Deployment Flow
+1. Changes made in v0.dev are automatically synced to this repository
+2. Vercel deploys the latest version from this repository
+3. Monitor deployment status and errors via Sentry MCP
