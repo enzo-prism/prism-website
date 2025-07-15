@@ -144,7 +144,7 @@ const mdxComponents = {
           <img 
             src={thumbnailUrl} 
             alt={`${title} - Video thumbnail`} 
-            className="absolute inset-0 w-full h-full object-contain bg-black"
+            className="absolute inset-0 w-full h-full object-cover"
             loading="lazy"
           />
           <div className="absolute inset-0 bg-black bg-opacity-20 hover:bg-opacity-30 transition-opacity"></div>
