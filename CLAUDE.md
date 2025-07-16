@@ -7,6 +7,20 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 **Important**: This repository is automatically synced with v0.dev deployments. Changes made on v0.dev are pushed to this repository automatically.
 
+### Quick Start
+```bash
+# Clone and install
+git clone <repository-url>
+cd prism-website
+npm install
+
+# Set up environment variables
+cp .env.example .env.local  # Then add your tokens
+
+# Start development
+npm run dev
+```
+
 ## Tech Stack
 - **Framework**: Next.js 15.2.4 with React 19 and App Router
 - **Language**: TypeScript 5 (strict mode)
@@ -38,6 +52,9 @@ npm run mcp:validate # Validate MCP configuration
 # Running a single test
 npm test -- path/to/test.spec.ts
 npm test -- --watch  # Run tests in watch mode
+
+# Type checking
+npm run typecheck   # Run TypeScript type checking (if available)
 ```
 
 ## High-Level Architecture
@@ -89,6 +106,12 @@ npm test -- --watch  # Run tests in watch mode
    - Zod schemas for validation
    - Server-side form processing
    - Progressive enhancement
+
+5. **Routing & Middleware**
+   - App Router with file-based routing
+   - Middleware for URL redirects and analytics
+   - Dynamic routes for content (blog, case studies)
+   - API routes under `/app/api/`
 
 ## MCP Server Integration
 
@@ -148,6 +171,8 @@ npm test -- --watch  # Run tests in watch mode
 - Test environment: jsdom for React component testing
 - Setup file: jest.setup.ts for test configuration
 - Focus on user interactions and edge cases
+- Run `npm test` to execute all tests
+- Use `npm test -- --coverage` for coverage reports
 
 ### Performance Considerations
 - Use dynamic imports for code splitting
@@ -251,3 +276,13 @@ npm run mcp:validate
 - **Token errors**: Ensure tokens are set in `.env.local`
 - **Connection timeouts**: Check network connectivity and firewall settings
 - **Permission errors**: Verify token scopes match required permissions
+
+## Important Configuration Files
+
+- `next.config.mjs` - Next.js configuration with Sentry integration and image optimization
+- `tsconfig.json` - TypeScript config with strict mode and path aliases
+- `tailwind.config.ts` - Tailwind CSS with custom theme and animations
+- `jest.config.ts` - Jest configuration with ts-jest preset
+- `middleware.ts` - URL redirects and analytics tracking
+- `.env.example` - Template for required environment variables
+- `MCP_SETUP.md` - Detailed MCP server setup instructions
