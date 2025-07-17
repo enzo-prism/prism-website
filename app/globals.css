@@ -11,6 +11,45 @@ body {
     text-wrap: balance;
   }
   
+  /* Enhanced GPU acceleration utilities */
+  .gpu-accelerated {
+    transform: translateZ(0);
+    will-change: transform;
+    backface-visibility: hidden;
+    perspective: 1000px;
+  }
+  
+  .gpu-layer {
+    transform: translate3d(0, 0, 0);
+    will-change: transform;
+  }
+  
+  .smooth-transform {
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .hardware-hover {
+    transition: transform 0.2s ease-out;
+    will-change: transform;
+  }
+  
+  .hardware-hover:hover {
+    transform: translateY(-2px) scale(1.02);
+  }
+  
+  .gpu-fade {
+    transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+    will-change: opacity, transform;
+  }
+  
+  .spring-bounce {
+    transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  }
+  
+  .elastic-scale {
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+  
   /* Performance optimization utilities */
   .hardware-accelerated {
     transform: translateZ(0);
@@ -33,11 +72,58 @@ body {
   /* Critical CSS for above-the-fold content */
   .hero-section {
     contain: layout style paint;
+    transform: translateZ(0);
   }
   
   /* Prevent layout shifts */
   .preserve-aspect {
     aspect-ratio: attr(data-aspect-ratio);
+  }
+  
+  /* Enhanced touch interactions */
+  .touch-feedback {
+    transform: scale(1);
+    transition: transform 0.1s ease-out;
+    will-change: transform;
+  }
+  
+  .touch-feedback:active {
+    transform: scale(0.98);
+  }
+  
+  /* Scroll-triggered animations */
+  .reveal-up {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    will-change: opacity, transform;
+  }
+  
+  .reveal-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  .reveal-fade {
+    opacity: 0;
+    transition: opacity 0.8s ease-out;
+    will-change: opacity;
+  }
+  
+  .reveal-fade.visible {
+    opacity: 1;
+  }
+  
+  .reveal-scale {
+    opacity: 0;
+    transform: scale(0.9);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    will-change: opacity, transform;
+  }
+  
+  .reveal-scale.visible {
+    opacity: 1;
+    transform: scale(1);
   }
   
   /* Enhanced process steps animations */
@@ -63,6 +149,31 @@ body {
   
   .float-gentle {
     animation: floatGentle 3s ease-in-out infinite;
+  }
+  
+  /* Advanced GPU-accelerated animations */
+  .logo-float {
+    animation: logoFloat 4s ease-in-out infinite;
+  }
+  
+  .hero-gradient-shift {
+    animation: gradientShift 8s ease-in-out infinite;
+  }
+  
+  .card-hover-lift {
+    animation: cardHoverLift 0.3s ease-out forwards;
+  }
+  
+  .button-press {
+    animation: buttonPress 0.1s ease-out;
+  }
+  
+  .smooth-reveal {
+    animation: smoothReveal 0.8s ease-out forwards;
+  }
+  
+  .scale-bounce {
+    animation: scaleBounce 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
   }
 }
 
@@ -126,6 +237,75 @@ body {
   }
   50% {
     transform: translateY(-4px);
+  }
+}
+
+/* Advanced GPU-accelerated keyframes */
+@keyframes logoFloat {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-3px) rotate(0.5deg);
+  }
+  50% {
+    transform: translateY(-6px) rotate(0deg);
+  }
+  75% {
+    transform: translateY(-3px) rotate(-0.5deg);
+  }
+}
+
+@keyframes gradientShift {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes cardHoverLift {
+  0% {
+    transform: translateY(0) scale(1);
+  }
+  100% {
+    transform: translateY(-8px) scale(1.02);
+  }
+}
+
+@keyframes buttonPress {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.95);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes smoothReveal {
+  0% {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes scaleBounce {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
   }
 }
 
