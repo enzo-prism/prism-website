@@ -55,6 +55,9 @@ npm test -- --watch  # Run tests in watch mode
 
 # Type checking
 npm run typecheck   # Run TypeScript type checking (if available)
+
+# Running a single test by pattern
+npm test -- --testNamePattern="test name"
 ```
 
 ## High-Level Architecture

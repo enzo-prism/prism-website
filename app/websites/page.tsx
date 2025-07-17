@@ -26,7 +26,7 @@ const websiteProjects = [
   {
     id: "4",
     title: "exquisite dentistry",
-    url: "https://exquisiteveneersla.com/",
+    url: "https://exquisitedentistryla.com/",
     category: "healthcare",
     description: "luxury cosmetic dentistry practice in beverly hills",
   },
