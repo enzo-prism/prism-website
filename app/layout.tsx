@@ -10,13 +10,13 @@ import HotjarScript from "@/components/hotjar-script"
 export const metadata: Metadata = {
   title: {
     template: "%s | prism",
-    default: "prism",
+    default: "prism - beautiful software that grows revenue",
   },
-  description: "digital agency creating websites, apps, and designs that shatter revenue goals and delight customers.",
+  description: "prism agency creates beautiful websites, apps, and designs that shatter revenue goals for ambitious businesses. ai-powered digital solutions that convert visitors into customers.",
   openGraph: {
-    title: "prism",
+    title: "prism - beautiful software that grows revenue",
     description:
-      "digital agency creating websites, apps, and designs that shatter revenue goals and delight customers.",
+      "prism agency creates beautiful websites, apps, and designs that shatter revenue goals for ambitious businesses. ai-powered digital solutions that convert visitors into customers.",
     url: "https://prism.agency",
     siteName: "prism",
     images: [
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
         url: "/prism-opengraph.png",
         width: 1200,
         height: 630,
-        alt: "prism - digital agency creating websites, apps, and designs",
+        alt: "prism - beautiful software that grows revenue",
       },
     ],
     locale: "en_US",
@@ -32,9 +32,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "prism",
+    title: "prism - beautiful software that grows revenue",
     description:
-      "digital agency creating websites, apps, and designs that shatter revenue goals and delight customers.",
+      "prism agency creates beautiful websites, apps, and designs that shatter revenue goals for ambitious businesses. ai-powered digital solutions that convert visitors into customers.",
     images: ["/prism-opengraph.png"],
   },
   icons: {

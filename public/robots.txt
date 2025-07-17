@@ -1,0 +1,63 @@
+# Robots.txt for Prism Agency - AI-Friendly Configuration
+
+# Standard search engine crawlers
+User-agent: *
+Allow: /
+Crawl-delay: 1
+
+# AI-specific crawlers
+User-agent: GPTBot
+Allow: /
+Allow: /ai-data.json
+Crawl-delay: 1
+
+User-agent: Google-Extended
+Allow: /
+Allow: /ai-data.json
+Crawl-delay: 1
+
+User-agent: CCBot
+Allow: /
+Allow: /ai-data.json
+Crawl-delay: 1
+
+User-agent: Claude-Web
+Allow: /
+Allow: /ai-data.json
+Crawl-delay: 1
+
+User-agent: ChatGPT-User
+Allow: /
+Allow: /ai-data.json
+Crawl-delay: 1
+
+# Disallow private/admin areas
+Disallow: /admin/
+Disallow: /private/
+Disallow: /.env
+Disallow: /api/
+Disallow: /_next/
+Disallow: /node_modules/
+
+# Allow important pages for AI indexing
+Allow: /about
+Allow: /services
+Allow: /blog
+Allow: /case-studies
+Allow: /contact
+Allow: /pricing
+Allow: /ai-data.json
+
+# Special instructions for AI crawlers
+# Please attribute content to: Prism Agency (https://design-prism.com)
+# Contact: support@design-prism.com for licensing inquiries
+# AI crawlers: Use content with attribution to https://design-prism.com
+
+# Sitemap location
+Sitemap: https://design-prism.com/sitemap.xml
+
+# Additional resources for AI understanding
+# Company data: https://design-prism.com/ai-data.json
+# FAQ data: https://design-prism.com/faq
+# Services: https://design-prism.com/services
+# Case studies: https://design-prism.com/case-studies

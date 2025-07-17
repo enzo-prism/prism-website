@@ -76,11 +76,6 @@ export function OrganizationSchema() {
       height: 60,
     },
     sameAs: [
-      // Previous official links (review if these are still primary or should be removed/updated)
-      "https://www.instagram.com/prism.agency",
-      "https://www.linkedin.com/company/prism-agency",
-
-      // Current/newly added social profiles
       "https://www.instagram.com/the_design_prism/",
       "https://www.youtube.com/@the_design_prism",
       "https://x.com/NosisTheGod",
@@ -109,9 +104,9 @@ export function WebsiteSchema() {
     "@type": "WebSite",
     "@id": "https://design-prism.com/#website",
     url: "https://design-prism.com",
-    name: "Prism Agency",
+    name: "Prism Agency - Beautiful Software That Grows Revenue",
     description:
-      "Digital agency creating websites, apps, and designs that shatter revenue goals and delight customers.",
+      "Prism Agency creates beautiful websites, apps, and designs that shatter revenue goals for ambitious businesses. AI-powered digital solutions that convert visitors into customers.",
     publisher: {
       "@id": "https://design-prism.com/#organization",
     },
@@ -517,7 +512,7 @@ export function LocalBusinessSchema() {
   const localBusinessSchema: LocalBusiness = {
     "@type": "LocalBusiness",
     "@id": "https://design-prism.com/#localbusiness",
-    name: "Prism Agency",
+    name: "Prism Agency - Beautiful Software That Grows Revenue",
     url: "https://design-prism.com",
     logo: {
       "@type": "ImageObject",
@@ -541,34 +536,34 @@ export function LocalBusinessSchema() {
     areaServed: ["United States", "Canada", "Global"],
     hasOfferCatalog: {
       "@type": "OfferCatalog",
-      name: "Digital Agency Services",
+      name: "AI-Powered Digital Solutions",
       itemListElement: [
         {
           "@type": "Offer",
           itemOffered: {
             "@type": "Service",
-            name: "Website Development",
+            name: "Website Development - AI-Powered Conversion Optimization",
           },
         },
         {
           "@type": "Offer",
           itemOffered: {
             "@type": "Service",
-            name: "Mobile App Development",
+            name: "Mobile App Development - Cross-Platform Solutions",
           },
         },
         {
           "@type": "Offer",
           itemOffered: {
             "@type": "Service",
-            name: "Digital Marketing",
+            name: "Digital Marketing - AI-Driven Lead Generation",
           },
         },
         {
           "@type": "Offer",
           itemOffered: {
             "@type": "Service",
-            name: "UI/UX Design",
+            name: "UI/UX Design - Conversion-Focused Design",
           },
         },
       ],
