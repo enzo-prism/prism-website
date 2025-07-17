@@ -53,11 +53,11 @@ npm run mcp:validate # Validate MCP configuration
 npm test -- path/to/test.spec.ts
 npm test -- --watch  # Run tests in watch mode
 
-# Type checking
-npm run typecheck   # Run TypeScript type checking (if available)
-
 # Running a single test by pattern
 npm test -- --testNamePattern="test name"
+
+# Coverage report
+npm test -- --coverage
 ```
 
 ## High-Level Architecture
@@ -91,30 +91,35 @@ npm test -- --testNamePattern="test name"
    - Automatic WebP/AVIF conversion
    - 1-year cache TTL for optimized images
    - Comprehensive monitoring and fallbacks
+   - Custom image processing utilities in `/utils/image.ts`
 
 2. **Content Management**
    - MDX-based blog system with dynamic imports
    - SEO-optimized with canonical URLs and metadata
    - Related content suggestions algorithm
    - Social sharing integration
+   - Blog posts stored in `/content/blog/` with front matter
 
 3. **Error Boundaries & Monitoring**
    - Sentry integration across client/server/edge
    - Custom error boundaries with fallback UI
    - Performance tracking and analytics
    - Redirect tracking in middleware
+   - Automatic error capture with source maps
 
 4. **Form Handling**
    - React Hook Form for complex forms
    - Zod schemas for validation
    - Server-side form processing
    - Progressive enhancement
+   - Email storage via Supabase integration
 
 5. **Routing & Middleware**
    - App Router with file-based routing
    - Middleware for URL redirects and analytics
    - Dynamic routes for content (blog, case studies)
    - API routes under `/app/api/`
+   - Automatic trailing slash handling
 
 ## MCP Server Integration
 
@@ -174,8 +179,8 @@ npm test -- --testNamePattern="test name"
 - Test environment: jsdom for React component testing
 - Setup file: jest.setup.ts for test configuration
 - Focus on user interactions and edge cases
-- Run `npm test` to execute all tests
-- Use `npm test -- --coverage` for coverage reports
+- Module path mapping configured for `@/*` imports
+- SVG files transformed in tests
 
 ### Performance Considerations
 - Use dynamic imports for code splitting
