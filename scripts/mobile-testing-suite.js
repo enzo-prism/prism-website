@@ -125,6 +125,13 @@ if (fs.existsSync(globalsCSS)) {
     addResult('performance', 'Touch Target Sizing', 'warnings', 'Missing touch target optimizations');
   }
   
+  // Check for zoom prevention
+  if (cssContent.includes('touch-action: manipulation') && cssContent.includes('user-scalable=no')) {
+    addResult('performance', 'Zoom Prevention', 'passed', 'Includes zoom prevention rules');
+  } else {
+    addResult('performance', 'Zoom Prevention', 'warnings', 'Missing zoom prevention optimizations');
+  }
+  
   // Check for scroll optimizations
   if (cssContent.includes('-webkit-overflow-scrolling: touch')) {
     addResult('performance', 'Scroll Optimization', 'passed', 'Includes touch scroll optimization');
@@ -260,11 +267,17 @@ const layoutFiles = [
 ];
 
 let hasViewportMeta = false;
+let hasZoomPrevention = false;
 layoutFiles.forEach(layoutPath => {
   if (fs.existsSync(layoutPath)) {
     const layoutContent = fs.readFileSync(layoutPath, 'utf8');
     if (layoutContent.includes('viewport') && layoutContent.includes('width=device-width')) {
       hasViewportMeta = true;
+      
+      // Check for zoom prevention in viewport meta tag
+      if (layoutContent.includes('user-scalable=no') && layoutContent.includes('maximum-scale=1')) {
+        hasZoomPrevention = true;
+      }
     }
   }
 });
@@ -273,6 +286,12 @@ if (hasViewportMeta) {
   addResult('usability', 'Viewport Meta Tag', 'passed', 'Includes proper viewport meta tag');
 } else {
   addResult('usability', 'Viewport Meta Tag', 'warnings', 'Viewport meta tag not found in layout files');
+}
+
+if (hasZoomPrevention) {
+  addResult('usability', 'Zoom Prevention Meta Tag', 'passed', 'Viewport meta tag prevents zooming');
+} else {
+  addResult('usability', 'Zoom Prevention Meta Tag', 'warnings', 'Viewport meta tag allows zooming');
 }
 
 // Final Results

@@ -242,6 +242,79 @@ export function smoothScrollTo(element: HTMLElement | string, options: ScrollInt
   }
 }
 
+// Prevent zoom gestures on mobile devices
+export function preventZoomGestures(): void {
+  if (typeof window === "undefined") return
+
+  let lastTouchEnd = 0
+  let isZooming = false
+
+  // Prevent double-tap zoom
+  const preventDoubleTapZoom = (e: Event) => {
+    const touchEvent = e as TouchEvent
+    const now = Date.now()
+    if (now - lastTouchEnd <= 300) {
+      e.preventDefault()
+    }
+    lastTouchEnd = now
+  }
+
+  // Prevent pinch-to-zoom
+  const preventPinchZoom = (e: Event) => {
+    const touchEvent = e as TouchEvent
+    if (touchEvent.touches && touchEvent.touches.length > 1) {
+      e.preventDefault()
+      isZooming = true
+    } else {
+      isZooming = false
+    }
+  }
+
+  // Prevent zoom on touch end
+  const preventZoomOnTouchEnd = (e: Event) => {
+    if (isZooming) {
+      e.preventDefault()
+    }
+  }
+
+  // Prevent wheel zoom with Ctrl/Cmd key
+  const preventWheelZoom = (e: WheelEvent) => {
+    if (e.ctrlKey || e.metaKey) {
+      e.preventDefault()
+    }
+  }
+
+  // Prevent keyboard zoom shortcuts
+  const preventKeyboardZoom = (e: KeyboardEvent) => {
+    if ((e.ctrlKey || e.metaKey) && (e.key === "+" || e.key === "-" || e.key === "0")) {
+      e.preventDefault()
+    }
+  }
+
+  // Add event listeners
+  addPassiveEventListener(document, "touchend", preventDoubleTapZoom)
+  addPassiveEventListener(document, "touchstart", preventPinchZoom)
+  addPassiveEventListener(document, "touchmove", preventPinchZoom)
+  addPassiveEventListener(document, "touchend", preventZoomOnTouchEnd)
+  
+  // Non-passive listeners for preventDefault to work
+  document.addEventListener("wheel", preventWheelZoom, { passive: false })
+  document.addEventListener("keydown", preventKeyboardZoom, { passive: false })
+
+  // iOS-specific zoom prevention
+  if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
+    // Disable user-select to prevent text selection zoom triggers
+    ;(document.body.style as any).webkitUserSelect = "none"
+    ;(document.body.style as any).webkitTouchCallout = "none"
+    
+    // Additional iOS-specific zoom prevention
+    const meta = document.querySelector('meta[name="viewport"]') as HTMLMetaElement
+    if (meta) {
+      meta.content = "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover"
+    }
+  }
+}
+
 // Initialize all scroll optimizations
 export function initializeScrollOptimizations(): void {
   if (typeof window === "undefined") return
@@ -250,12 +323,14 @@ export function initializeScrollOptimizations(): void {
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", () => {
       optimizeScrollPerformance()
+      preventZoomGestures()
       if (isTouchDevice()) {
         preventScrollBounce()
       }
     })
   } else {
     optimizeScrollPerformance()
+    preventZoomGestures()
     if (isTouchDevice()) {
       preventScrollBounce()
     }
