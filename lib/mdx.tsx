@@ -36,113 +36,49 @@ export type BlogFrontmatter = {
   canonical?: string
 }
 
-// Cache for processed blog posts
-const postsCache = new Map<string, { frontmatter: BlogFrontmatter; content: string }>()
-const allPostsCache = new Map<string, Array<{ slug: string } & BlogFrontmatter>>()
+const BLOG_PATH = "content/blog"
 
-// Cache TTL (1 hour in production, 1 minute in development)
-const CACHE_TTL = process.env.NODE_ENV === 'production' ? 60 * 60 * 1000 : 60 * 1000
-let lastCacheTime = 0
-
-const BLOG_PATH = "content/blog" // Relative path to blog content
-
-/**
- * Fetches and parses a single blog post by its slug with caching. Server-side only.
- */
-async function _getPost(slug: string): Promise<{ frontmatter: BlogFrontmatter; content: string } | null> {
-  // Check cache first
-  const cached = postsCache.get(slug)
-  if (cached && (Date.now() - lastCacheTime) < CACHE_TTL) {
-    return cached
-  }
-
-  // Construct the full path to the .mdx file on the server
+async function getPost(slug: string): Promise<{ frontmatter: BlogFrontmatter; content: string } | null> {
   const filePath = path.join(BLOG_PATH, `${slug}.mdx`)
   try {
-    // Read the file content using fs.readFile (server-side)
     const rawFileContent = await fs.readFile(filePath, "utf8")
     const { data, content } = matter(rawFileContent)
-    const result = { frontmatter: data as BlogFrontmatter, content }
-    
-    // Cache the result
-    postsCache.set(slug, result)
-    
-    return result
+    return { frontmatter: data as BlogFrontmatter, content }
   } catch (error: unknown) {
     console.error(`[MDXLib] Failed to get post "${slug}" from "${filePath}":`, error)
     return null
   }
 }
 
-/**
- * Fetches and parses all blog posts with caching. Server-side only.
- */
-async function _getAllPosts(): Promise<Array<{ slug: string } & BlogFrontmatter> | null> {
-  // Check cache first
-  const cacheKey = 'all-posts'
-  const cached = allPostsCache.get(cacheKey)
-  if (cached && (Date.now() - lastCacheTime) < CACHE_TTL) {
-    return cached
-  }
-
+async function getAllPosts(): Promise<Array<{ slug: string } & BlogFrontmatter> | null> {
   try {
-    // Read the list of files in the blog directory (server-side)
     const files = await fs.readdir(BLOG_PATH)
     const mdxFiles = files.filter((fileName) => fileName.endsWith(".mdx"))
-
     if (mdxFiles.length === 0) {
       console.warn(`[MDXLib] No .mdx files found in ${BLOG_PATH}`)
       return []
     }
-
     const postsData = await Promise.all(
       mdxFiles.map(async (fileName) => {
         const slug = fileName.replace(/\.mdx$/, "")
-        const post = await getPost(slug) // Uses the cached version
+        const post = await getPost(slug)
         return post ? { slug, ...post.frontmatter } : null
       }),
     )
-
     const validPosts = postsData.filter(Boolean) as Array<{ slug: string } & BlogFrontmatter>
-
     if (validPosts.length === 0 && mdxFiles.length > 0) {
       console.warn(
-        `[MDXLib] MDX files were found in ${BLOG_PATH}, but no valid posts could be processed. Check _getPost errors above.`,
+        `[MDXLib] MDX files were found in ${BLOG_PATH}, but no valid posts could be processed. Check getPost errors above.`,
       )
     }
-
-    const sortedPosts = validPosts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-    
-    // Cache the result and update timestamp
-    allPostsCache.set(cacheKey, sortedPosts)
-    lastCacheTime = Date.now()
-    
-    return sortedPosts
+    return validPosts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
   } catch (error: unknown) {
     console.error(`[MDXLib] Failed to get all posts from "${BLOG_PATH}":`, error)
     return null
   }
 }
 
-// Cache management utilities
-export function clearBlogCache() {
-  postsCache.clear()
-  allPostsCache.clear()
-  lastCacheTime = 0
-  console.log('[MDXLib] Blog cache cleared')
-}
-
-export function getBlogCacheStats() {
-  return {
-    postsInCache: postsCache.size,
-    allPostsCached: allPostsCache.size > 0,
-    lastCacheTime: new Date(lastCacheTime).toISOString(),
-    cacheAge: Date.now() - lastCacheTime
-  }
-}
-
-export const getPost = _getPost
-export const getAllPosts = _getAllPosts
+export { getPost, getAllPosts }
 
 // Custom components for MDX rendering
 const mdxComponents = {

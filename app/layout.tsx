@@ -182,7 +182,6 @@ export default function RootLayout({
         <ErrorTracker />
         <MCPHealthMonitor />
         <PerformanceMonitor />
-        <ReleaseTracker />
         <SentryContextProvider>
           {children}
         </SentryContextProvider>
