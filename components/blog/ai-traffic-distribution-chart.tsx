@@ -59,9 +59,9 @@ export default function AITrafficDistributionChart() {
         </p>
       </motion.div>
 
-      <div className="grid md:grid-cols-2 gap-6">
+      <div className="grid lg:grid-cols-2 gap-6">
         <motion.div variants={fadeInUp}>
-          <div className="h-80 chart-container">
+          <div className="h-64 sm:h-72 md:h-80 chart-container">
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
                 <Pie
@@ -70,7 +70,7 @@ export default function AITrafficDistributionChart() {
                   cy="50%"
                   labelLine={false}
                   label={renderCustomizedLabel}
-                  outerRadius={80}
+                  outerRadius={70}
                   fill="#8884d8"
                   dataKey="value"
                   onMouseEnter={onPieEnter}
@@ -95,46 +95,50 @@ export default function AITrafficDistributionChart() {
                     backgroundColor: '#ffffff',
                     border: '1px solid #e5e7eb',
                     borderRadius: '8px',
-                    fontSize: '12px',
+                    fontSize: '14px',
                     boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
                     zIndex: 9999
                   }}
                   labelStyle={{ color: '#374151', fontWeight: 'bold' }}
-                  itemStyle={{ color: '#6b7280' }}
-                  formatter={(value: any, name: any, props: any) => [
-                    `${value}%`,
-                    props.payload.description
-                  ]}
+                  itemStyle={{ color: '#374151' }}
+                  formatter={(value: any, name: any, props: any) => {
+                    const description = props.payload?.description || 'No description available'
+                    return [`${value}%`, description]
+                  }}
+                  labelFormatter={(label) => `Traffic Source: ${label}`}
                 />
               </PieChart>
             </ResponsiveContainer>
           </div>
         </motion.div>
 
-        <motion.div className="space-y-4" variants={fadeInUp}>
+        <motion.div className="space-y-3" variants={fadeInUp}>
           {data.map((item, index) => (
             <motion.div
               key={item.name}
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: index * 0.1 }}
-              className={`p-4 rounded-lg border-2 transition-all cursor-pointer ${
+              className={`p-4 rounded-lg border-2 transition-all cursor-pointer touch-feedback ${
                 activeIndex === index
                   ? 'border-neutral-300 bg-neutral-50'
                   : 'border-neutral-200 hover:border-neutral-300'
               }`}
               onMouseEnter={() => setActiveIndex(index)}
               onMouseLeave={() => setActiveIndex(null)}
+              onClick={() => setActiveIndex(activeIndex === index ? null : index)}
             >
-              <div className="flex items-center gap-3 mb-2">
-                <div 
-                  className="w-4 h-4 rounded-full"
-                  style={{ backgroundColor: item.color }}
-                />
-                <h4 className="font-semibold text-neutral-900">{item.name}</h4>
-                <span className="text-sm font-bold text-neutral-600">{item.value}%</span>
+              <div className="flex flex-col sm:flex-row sm:items-center gap-3 mb-2">
+                <div className="flex items-center gap-3 flex-1">
+                  <div 
+                    className="w-4 h-4 rounded-full flex-shrink-0"
+                    style={{ backgroundColor: item.color }}
+                  />
+                  <h4 className="font-semibold text-neutral-900 text-sm sm:text-base">{item.name}</h4>
+                </div>
+                <span className="text-sm font-bold text-neutral-600 ml-7 sm:ml-0">{item.value}%</span>
               </div>
-              <p className="text-sm text-neutral-600">{item.description}</p>
+              <p className="text-sm text-neutral-600 leading-relaxed">{item.description}</p>
             </motion.div>
           ))}
         </motion.div>

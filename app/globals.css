@@ -685,9 +685,9 @@ body {
   @apply prose prose-neutral dark:prose-invert lg:prose-lg max-w-none;
   
   /* Base font improvements */
-  font-size: 1.0625rem; /* 17px base for better readability */
+  font-size: 1.125rem; /* 18px base for better readability */
   line-height: 1.75;
-  color: rgb(23 23 23); /* Slightly softer than pure black */
+  color: rgb(17 17 17); /* Darker for better contrast */
 }
 
 .dark .prose-blog {
@@ -697,6 +697,11 @@ body {
 /* Paragraph spacing */
 .prose-blog p {
   @apply mb-6 leading-relaxed;
+  color: rgb(17 17 17); /* Ensure consistent contrast for paragraphs */
+}
+
+.dark .prose-blog p {
+  color: rgb(245 245 245);
 }
 
 /* Headings styling */
@@ -755,7 +760,7 @@ body {
 }
 
 .prose-blog li::marker {
-  color: rgb(115 115 115);
+  color: rgb(75 75 75); /* Darker for better contrast */
 }
 
 .dark .prose-blog li::marker {
@@ -771,11 +776,11 @@ body {
 
 /* Links styling */
 .prose-blog a {
-  @apply text-neutral-900 dark:text-neutral-100 underline decoration-neutral-400 dark:decoration-neutral-600 underline-offset-2 transition-colors;
+  @apply text-neutral-900 dark:text-neutral-100 underline decoration-neutral-500 dark:decoration-neutral-500 underline-offset-2 transition-colors;
 }
 
 .prose-blog a:hover {
-  @apply decoration-neutral-600 dark:decoration-neutral-400;
+  @apply decoration-neutral-700 dark:decoration-neutral-300;
 }
 
 /* Blockquotes */
@@ -846,6 +851,37 @@ body {
 
 .enhanced-readability blockquote {
   @apply text-lg italic text-neutral-600 dark:text-neutral-400 border-l-8 border-neutral-300 dark:border-neutral-700 pl-8 my-12;
+}
+
+/* Mobile-specific blog improvements */
+@media (max-width: 640px) {
+  .prose-blog {
+    font-size: 1rem; /* 16px on mobile for better readability */
+    line-height: 1.65;
+  }
+  
+  .prose-blog p {
+    margin-bottom: 1.5rem;
+    line-height: 1.7;
+  }
+  
+  .prose-blog h1,
+  .prose-blog h2,
+  .prose-blog h3 {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    line-height: 1.3;
+  }
+  
+  .prose-blog ul,
+  .prose-blog ol {
+    margin: 1.5rem 0;
+    padding-left: 1.25rem;
+  }
+  
+  .prose-blog li {
+    margin-bottom: 0.5rem;
+  }
 }
 
 /* Blog post animation enhancements - Progressive Enhancement */

@@ -83,10 +83,10 @@ export default function AITrafficDeclineChart() {
         </p>
       </motion.div>
 
-      <motion.div className="flex gap-2 mb-6" variants={fadeInUp}>
+      <motion.div className="flex flex-col sm:flex-row gap-2 mb-6" variants={fadeInUp}>
         <button
           onClick={() => setActiveView('timeline')}
-          className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
+          className={`px-4 py-3 sm:py-2 rounded-md text-sm font-medium transition-colors touch-feedback min-h-[44px] ${
             activeView === 'timeline'
               ? 'bg-purple-100 text-purple-700'
               : 'bg-neutral-100 text-neutral-600 hover:bg-neutral-200'
@@ -96,7 +96,7 @@ export default function AITrafficDeclineChart() {
         </button>
         <button
           onClick={() => setActiveView('industry')}
-          className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
+          className={`px-4 py-3 sm:py-2 rounded-md text-sm font-medium transition-colors touch-feedback min-h-[44px] ${
             activeView === 'industry'
               ? 'bg-purple-100 text-purple-700'
               : 'bg-neutral-100 text-neutral-600 hover:bg-neutral-200'
@@ -108,18 +108,22 @@ export default function AITrafficDeclineChart() {
 
       <motion.div variants={fadeInUp}>
         {activeView === 'timeline' ? (
-          <div className="h-80 chart-container">
+          <div className="h-64 sm:h-72 md:h-80 chart-container">
             <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={data} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+              <LineChart data={data} margin={{ top: 5, right: 15, left: 10, bottom: 5 }}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#f3f4f6" />
                 <XAxis 
                   dataKey="month" 
-                  tick={{ fontSize: 12 }}
-                  stroke="#6b7280"
+                  tick={{ fontSize: 10 }}
+                  stroke="#374151"
+                  interval={0}
+                  angle={-45}
+                  textAnchor="end"
+                  height={60}
                 />
                 <YAxis 
-                  tick={{ fontSize: 12 }}
-                  stroke="#6b7280"
+                  tick={{ fontSize: 10 }}
+                  stroke="#374151"
                   domain={[65, 105]}
                 />
                 <Tooltip 
@@ -127,12 +131,22 @@ export default function AITrafficDeclineChart() {
                     backgroundColor: '#ffffff',
                     border: '1px solid #e5e7eb',
                     borderRadius: '8px',
-                    fontSize: '12px',
+                    fontSize: '14px',
                     boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
                     zIndex: 9999
                   }}
                   labelStyle={{ color: '#374151', fontWeight: 'bold' }}
-                  itemStyle={{ color: '#6b7280' }}
+                  itemStyle={{ color: '#374151' }}
+                  formatter={(value: any, name: any) => {
+                    if (name === 'Traditional Organic') {
+                      return [`${value}%`, 'Traditional Organic Search']
+                    }
+                    if (name === 'With AI Features') {
+                      return [`${value}%`, 'With AI Search Features']
+                    }
+                    return [`${value}%`, name]
+                  }}
+                  labelFormatter={(label) => `Period: ${label}`}
                 />
                 <Line
                   type="monotone"
@@ -159,24 +173,24 @@ export default function AITrafficDeclineChart() {
             </ResponsiveContainer>
           </div>
         ) : (
-          <div className="space-y-4">
+          <div className="space-y-3">
             {industryData.map((industry, index) => (
               <motion.div
                 key={industry.name}
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: index * 0.1 }}
-                className="flex items-center justify-between p-4 bg-neutral-50 rounded-lg"
+                className="flex flex-col sm:flex-row sm:items-center justify-between p-4 bg-neutral-50 rounded-lg gap-3"
               >
                 <div className="flex items-center gap-3">
                   <div 
-                    className="w-4 h-4 rounded-full"
+                    className="w-4 h-4 rounded-full flex-shrink-0"
                     style={{ backgroundColor: industry.color }}
                   />
-                  <span className="font-medium text-neutral-900">{industry.name}</span>
+                  <span className="font-medium text-neutral-900 text-sm sm:text-base">{industry.name}</span>
                 </div>
                 <div className="flex items-center gap-3">
-                  <div className="w-24 bg-neutral-200 rounded-full h-2">
+                  <div className="w-20 sm:w-24 bg-neutral-200 rounded-full h-2">
                     <motion.div
                       className="h-2 rounded-full"
                       style={{ backgroundColor: industry.color }}
@@ -185,7 +199,7 @@ export default function AITrafficDeclineChart() {
                       transition={{ duration: 1, delay: index * 0.1 }}
                     />
                   </div>
-                  <span className="text-sm font-semibold text-neutral-700 w-8">
+                  <span className="text-sm font-semibold text-neutral-700 min-w-[2rem] text-right">
                     -{industry.decline}%
                   </span>
                 </div>

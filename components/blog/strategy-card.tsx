@@ -70,21 +70,21 @@ export default function StrategyCard({
       style={{ transformStyle: "preserve-3d" }}
     >
       <motion.div variants={fadeInUp}>
-        <div className="flex items-start gap-4 mb-4">
-          <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-500 rounded-lg flex items-center justify-center flex-shrink-0">
+        <div className="flex flex-col sm:flex-row sm:items-start gap-4 mb-4">
+          <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-500 rounded-lg flex items-center justify-center flex-shrink-0 mx-auto sm:mx-0">
             <Icon className="w-6 h-6 text-white" />
           </div>
-          <div className="flex-1">
-            <h3 className="text-xl font-bold text-neutral-900 mb-2">{title}</h3>
-            <p className="text-neutral-600 mb-3">{description}</p>
-            <div className="flex gap-2 flex-wrap">
-              <span className={`px-2 py-1 rounded-full text-xs font-medium border ${getDifficultyColor(difficulty)}`}>
+          <div className="flex-1 text-center sm:text-left">
+            <h3 className="text-lg sm:text-xl font-bold text-neutral-900 mb-2">{title}</h3>
+            <p className="text-neutral-600 mb-3 leading-relaxed">{description}</p>
+            <div className="flex gap-2 flex-wrap justify-center sm:justify-start">
+              <span className={`px-3 py-1 rounded-full text-xs font-medium border ${getDifficultyColor(difficulty)}`}>
                 {difficulty}
               </span>
-              <span className={`px-2 py-1 rounded-full text-xs font-medium border ${getImpactColor(impact)}`}>
+              <span className={`px-3 py-1 rounded-full text-xs font-medium border ${getImpactColor(impact)}`}>
                 {impact} Impact
               </span>
-              <span className="px-2 py-1 rounded-full text-xs font-medium bg-neutral-100 text-neutral-800 border border-neutral-200">
+              <span className="px-3 py-1 rounded-full text-xs font-medium bg-neutral-100 text-neutral-800 border border-neutral-200">
                 {timeframe}
               </span>
             </div>
@@ -93,8 +93,8 @@ export default function StrategyCard({
       </motion.div>
 
       <motion.div variants={fadeInUp}>
-        <h4 className="font-semibold text-neutral-900 mb-3">Implementation Steps:</h4>
-        <div className="space-y-2 mb-4">
+        <h4 className="font-semibold text-neutral-900 mb-3 text-center sm:text-left">Implementation Steps:</h4>
+        <div className="space-y-3 mb-4">
           {steps.map((step, index) => (
             <motion.div
               key={index}
@@ -107,7 +107,7 @@ export default function StrategyCard({
               <div className="w-6 h-6 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0 mt-0.5">
                 <span className="text-xs font-semibold text-blue-700">{index + 1}</span>
               </div>
-              <p className="text-sm text-neutral-700">{step}</p>
+              <p className="text-sm text-neutral-700 leading-relaxed">{step}</p>
             </motion.div>
           ))}
         </div>
@@ -118,10 +118,10 @@ export default function StrategyCard({
           className="mt-4 p-4 bg-blue-50 rounded-lg border-l-4 border-blue-500"
           variants={fadeInUp}
         >
-          <h5 className="font-semibold text-blue-900 mb-2">Pro Tips:</h5>
-          <div className="space-y-1">
+          <h5 className="font-semibold text-blue-900 mb-2 text-center sm:text-left">Pro Tips:</h5>
+          <div className="space-y-2">
             {tips.map((tip, index) => (
-              <p key={index} className="text-sm text-blue-800">
+              <p key={index} className="text-sm text-blue-800 leading-relaxed">
                 • {tip}
               </p>
             ))}
