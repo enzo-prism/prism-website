@@ -10,6 +10,7 @@ import { BlogPostSchema } from "@/components/schema-markup"
 import { cn } from "@/lib/utils"
 import CoreImage from "@/components/core-image"
 import { BlogPostErrorBoundary } from "@/components/blog-error-boundary"
+import AnimatedBlogWrapper from "@/components/blog/animated-blog-wrapper"
 import { useState } from "react"
 
 interface Props {
@@ -91,9 +92,11 @@ export default function BlogPostLayout({
                     </h1>
                   </div>
                   <BlogPostErrorBoundary>
-                    <div className="prose-blog lowercase-prose">
-                      {children}
-                    </div>
+                    <AnimatedBlogWrapper>
+                      <div className="prose-blog lowercase-prose">
+                        {children}
+                      </div>
+                    </AnimatedBlogWrapper>
                   </BlogPostErrorBoundary>
                 </article>
               </div>
