@@ -6,6 +6,16 @@ import path from "path" // Node.js path module for server-side path manipulation
 import matter from "gray-matter" // For parsing frontmatter from .mdx files
 import { MDXRemote } from "next-mdx-remote/rsc"
 
+// Import blog components
+import AITrafficDeclineChart from '@/components/blog/ai-traffic-decline-chart'
+import AITrafficDistributionChart from '@/components/blog/ai-traffic-distribution-chart'
+import AISearchComparison from '@/components/blog/ai-search-comparison'
+import StrategyTimelineChart from '@/components/blog/strategy-timeline-chart'
+import BrandTaglineGenerator from '@/components/blog/brand-tagline-generator'
+import AIMentionTracker from '@/components/blog/ai-mention-tracker'
+import StrategyCard from '@/components/blog/strategy-card'
+import { Target, Users, Zap, MessageCircle, Widgets, Gauge, Scale } from 'lucide-react'
+
 export type BlogFrontmatter = {
   title: string
   description: string
@@ -145,6 +155,22 @@ const mdxComponents = {
       </div>
     )
   },
+  // Blog post interactive components
+  AITrafficDeclineChart,
+  AITrafficDistributionChart,
+  AISearchComparison,
+  StrategyTimelineChart,
+  BrandTaglineGenerator,
+  AIMentionTracker,
+  StrategyCard,
+  // Lucide icons
+  Target,
+  Users,
+  Zap,
+  MessageCircle,
+  Widgets,
+  Gauge,
+  Scale,
   // Override potentially dangerous HTML elements
   script: () => null, // Block script tags
   iframe: ({ src, title, ...props }: any) => {
