@@ -99,7 +99,7 @@ export function MobileParagraph({
     <motion.p
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, ease: "easeOut" }}
+      transition={{ duration: 0.5 }}
       className={`
         leading-relaxed text-base
         ${emphasized 
@@ -129,7 +129,7 @@ export function MobileList({
     <motion.div
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, ease: "easeOut" }}
+      transition={{ duration: 0.5 }}
       className={`space-y-3 ${className}`}
     >
       {items.map((item, index) => (
@@ -180,13 +180,13 @@ export function MobileHeading({
     4: "text-lg mb-2"
   }
   
-  const Component = `h${level}` as keyof JSX.IntrinsicElements
+  const Component = `h${level}` as keyof React.JSX.IntrinsicElements
   
   return (
     <motion.div
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, ease: "easeOut" }}
+      transition={{ duration: 0.5 }}
     >
       <Component className={`${baseStyles} ${levelStyles[level]} ${className}`}>
         {children}

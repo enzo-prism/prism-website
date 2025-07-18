@@ -187,15 +187,15 @@ class MobilePerformanceMonitor {
   public shouldOptimizeForMobile(): boolean {
     const metrics = this.getMetrics()
     return metrics.deviceType === 'mobile' || 
-           (metrics.batteryLevel && metrics.batteryLevel < 30) ||
-           (metrics.connectionType && ['slow-2g', '2g', '3g'].includes(metrics.connectionType))
+           (!!metrics.batteryLevel && metrics.batteryLevel < 30) ||
+           (!!metrics.connectionType && ['slow-2g', '2g', '3g'].includes(metrics.connectionType))
   }
 
   public getOptimalAnimationSettings(): { duration: number; easing: string; reduce: boolean } {
     const metrics = this.getMetrics()
     const shouldReduce = this.shouldOptimizeForMobile() || 
-                        (metrics.memoryUsage && metrics.memoryUsage > 30) ||
-                        (metrics.batteryLevel && metrics.batteryLevel < 20)
+                        (!!metrics.memoryUsage && metrics.memoryUsage > 30) ||
+                        (!!metrics.batteryLevel && metrics.batteryLevel < 20)
 
     return {
       duration: shouldReduce ? 0.2 : 0.5,
@@ -263,9 +263,9 @@ export function shouldDeferNonCriticalResources(
   
   return (
     metrics.deviceType === 'mobile' ||
-    (metrics.batteryLevel && metrics.batteryLevel < 30) ||
-    (metrics.connectionType && ['slow-2g', '2g', '3g'].includes(metrics.connectionType)) ||
-    (metrics.memoryUsage && metrics.memoryUsage > 40)
+    (!!metrics.batteryLevel && metrics.batteryLevel < 30) ||
+    (!!metrics.connectionType && ['slow-2g', '2g', '3g'].includes(metrics.connectionType)) ||
+    (!!metrics.memoryUsage && metrics.memoryUsage > 40)
   )
 }
 

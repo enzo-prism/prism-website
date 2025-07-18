@@ -110,8 +110,8 @@ function supportsPassive(): boolean {
         return false
       },
     }
-    window.addEventListener("test", () => {}, options)
-    window.removeEventListener("test", () => {}, options)
+    window.addEventListener("test" as any, () => {}, options as any)
+    window.removeEventListener("test" as any, () => {}, options as any)
   } catch (err) {
     passiveSupported = false
   }
@@ -170,12 +170,12 @@ export function optimizeTouchScrolling(element: HTMLElement): void {
 
   // Set touch-action for better scroll performance
   element.style.touchAction = "pan-y"
-  element.style.webkitOverflowScrolling = "touch"
+  ;(element.style as any).webkitOverflowScrolling = "touch"
   element.style.overscrollBehavior = "contain"
 
   // Add momentum scrolling for iOS
   if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
-    element.style.webkitOverflowScrolling = "touch"
+    ;(element.style as any).webkitOverflowScrolling = "touch"
   }
 }
 
@@ -183,8 +183,8 @@ export function optimizeTouchScrolling(element: HTMLElement): void {
 export function preventScrollBounce(): void {
   if (typeof window === "undefined") return
 
-  const preventDefault = (e: TouchEvent) => {
-    if (e.touches.length > 1) return
+  const preventDefault = (e: Event) => {
+    if ((e as TouchEvent).touches.length > 1) return
 
     const target = e.target as HTMLElement
     const scrollable = target.closest("[data-scrollable]") || target.closest(".scroll-container") || document.body

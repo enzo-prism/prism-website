@@ -33,7 +33,7 @@ export function ExquisiteChannelShareChart() {
               <Cell key={`cell-${index}`} fill={entry.fill} />
             ))}
           </Pie>
-          <ChartLegend content={<ChartLegendContent nameKey="channel" className="lowercase text-sm" />} className="-translate-y-2 flex-wrap gap-2" />
+          <ChartLegend content={<ChartLegendContent nameKey="channel" className="lowercase text-sm" payload={[]} />} className="-translate-y-2 flex-wrap gap-2" />
         </PieChart>
       </ResponsiveContainer>
     </ChartContainer>

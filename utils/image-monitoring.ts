@@ -127,7 +127,7 @@ class ImageMonitoringService {
       const response = await fetch(url, { method: "HEAD" })
       const loadTime = performance.now() - startTime
 
-      const success = response.ok && response.headers.get("Content-Type")?.startsWith("image/")
+      const success = response.ok && (response.headers.get("Content-Type")?.startsWith("image/") ?? false)
 
       this.recordImageLoad(url, loadTime, success, success ? undefined : `HTTP ${response.status}`, 0)
 

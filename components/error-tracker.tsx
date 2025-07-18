@@ -36,7 +36,7 @@ export default function ErrorTracker() {
 
       // Call the original handler if it exists
       if (originalOnUnhandledRejection) {
-        return originalOnUnhandledRejection(event)
+        return originalOnUnhandledRejection.call(window, event)
       }
     }
 

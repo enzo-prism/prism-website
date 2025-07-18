@@ -123,7 +123,7 @@ function parseColorWithOpacity(colorString: string): string | null {
   const colorGroup = tailwindColors[colorName as keyof typeof tailwindColors]
   if (!colorGroup) return null
   
-  const baseColor = colorGroup[shade as keyof typeof colorGroup]
+  const baseColor = (colorGroup as any)[shade]
   if (!baseColor) return null
   
   // If there's opacity, convert it

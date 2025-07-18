@@ -55,7 +55,7 @@ export default function EnhancedImage({
   })
 
   const imageRef = useRef<HTMLDivElement>(null)
-  const retryTimeoutRef = useRef<NodeJS.Timeout>()
+  const retryTimeoutRef = useRef<NodeJS.Timeout | null>(null)
 
   // Validate image source
   const validateImageSrc = useCallback((imageSrc: string): boolean => {

@@ -18,7 +18,7 @@ interface MobileInfoCardProps {
   title?: string
   content: string
   variant?: "info" | "tip" | "warning" | "success" | "highlight"
-  icon?: "info" | "tip" | "warning" | "success" | "lightbulb" | "target" | "trending" | "star" | "zap" | "award"
+  icon?: "info" | "tip" | "warning" | "success" | "highlight" | "lightbulb" | "target" | "trending" | "star" | "zap" | "award"
   className?: string
 }
 
@@ -27,6 +27,7 @@ const iconMap = {
   tip: Lightbulb,
   warning: AlertTriangle,
   success: CheckCircle,
+  highlight: Star,
   lightbulb: Lightbulb,
   target: Target,
   trending: TrendingUp,

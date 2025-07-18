@@ -47,7 +47,7 @@ export default function Image({
   })
 
   const imageRef = useRef<HTMLDivElement>(null)
-  const retryTimeoutRef = useRef<NodeJS.Timeout>()
+  const retryTimeoutRef = useRef<NodeJS.Timeout | null>(null)
 
   // Simple path validation - just check if it's a non-empty string
   const isValidPath = useCallback((path: string | undefined): boolean => {

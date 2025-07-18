@@ -67,7 +67,15 @@ export function DrWongTrafficSourcesChart() {
             innerRadius="60%"
             strokeWidth={3}
             stroke="hsl(var(--background))"
-            activeShape={(props) => {
+            activeShape={(props: {
+              cx?: number
+              cy?: number  
+              innerRadius?: number
+              outerRadius?: number
+              startAngle?: number
+              endAngle?: number
+              fill?: string
+            }) => {
               const { cx, cy, innerRadius, outerRadius, startAngle, endAngle, fill } = props
               return (
                 <g>
@@ -75,7 +83,7 @@ export function DrWongTrafficSourcesChart() {
                     cx={cx}
                     cy={cy}
                     innerRadius={innerRadius}
-                    outerRadius={outerRadius + 4}
+                    outerRadius={outerRadius ? outerRadius + 4 : 4}
                     startAngle={startAngle}
                     endAngle={endAngle}
                     fill={fill}
@@ -90,7 +98,7 @@ export function DrWongTrafficSourcesChart() {
             ))}
           </Pie>
           <ChartLegend
-            content={<ChartLegendContent nameKey="source" className="lowercase text-sm" />}
+            content={<ChartLegendContent nameKey="source" className="lowercase text-sm" payload={[]} />}
             className="-translate-y-2 flex-wrap gap-2 [&>*]:basis-1/4 [&>*]:justify-center"
           />
         </PieChart>

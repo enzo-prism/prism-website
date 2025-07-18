@@ -77,7 +77,7 @@ export default function MinimalistVideoPlayer({
       trackVideoInteraction(videoId, "complete", "Video completed")
     })
 
-    playerRef.current.on("timeupdate", (data) => {
+    playerRef.current.on("timeupdate", (data: { percent: number }) => {
       // Track progress at 25%, 50%, 75%
       const percent = Math.floor(data.percent * 100)
       if (percent === 25 || percent === 50 || percent === 75) {

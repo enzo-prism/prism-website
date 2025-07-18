@@ -5,7 +5,7 @@ import { useState } from "react"
 const data = [
   { name: "new users", value: 80.9, color: "#6366F1" }, // indigo-500
   { name: "returning users", value: 19.1, color: "#EF4444" }, // red-500
-] as const
+]
 
 export function DrWongUserDemographicsChart() {
   const [activeIndex, setActiveIndex] = useState<number | null>(null)

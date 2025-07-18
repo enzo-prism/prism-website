@@ -29,7 +29,7 @@ export default function MobileFirstWebsiteGallery({ items }: MobileFirstWebsiteG
   const [isAutoPlaying, setIsAutoPlaying] = useState(true)
   const [touchStart, setTouchStart] = useState<number | null>(null)
   const [touchEnd, setTouchEnd] = useState<number | null>(null)
-  const intervalRef = useRef<NodeJS.Timeout>()
+  const intervalRef = useRef<NodeJS.Timeout | null>(null)
 
   const activeItem = items[activeIndex]
 

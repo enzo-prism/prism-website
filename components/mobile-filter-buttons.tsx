@@ -201,7 +201,12 @@ function MobileFilterButton({
   const [isPressed, setIsPressed] = useState(false)
 
   // Mobile-optimized button styles
-  const buttonVariants = reducedMotion ? {} : {
+  const buttonVariants = reducedMotion ? {
+    initial: { opacity: 0 },
+    animate: { opacity: 1 },
+    hover: {},
+    tap: {}
+  } : {
     initial: { 
       opacity: 0, 
       scale: 0.9,
@@ -214,7 +219,6 @@ function MobileFilterButton({
       transition: {
         duration: 0.3,
         delay: index * 0.05,
-        ease: "easeOut",
       }
     },
     hover: isMobile ? {} : {

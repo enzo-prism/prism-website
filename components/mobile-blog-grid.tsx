@@ -41,7 +41,6 @@ const mobileCardVariants = {
     scale: 1,
     transition: {
       duration: 0.4,
-      ease: "easeOut",
     },
   },
 }
@@ -72,7 +71,6 @@ const desktopCardVariants = {
     rotateX: 0,
     transition: {
       duration: 0.6,
-      ease: [0.6, -0.05, 0.01, 0.99],
     },
   },
 }
@@ -213,7 +211,6 @@ export function MobileBlogList({ children, posts, className = "" }: MobileBlogGr
         scale: 1,
         transition: {
           duration: 0.3,
-          ease: "easeOut",
         },
       },
     }

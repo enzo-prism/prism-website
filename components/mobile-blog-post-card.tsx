@@ -66,7 +66,12 @@ export default function MobileBlogPostCard({
   const readingTime = Math.ceil(description.length / 200) || 1
 
   // Mobile-optimized variants
-  const mobileCardVariants = reducedMotion ? {} : {
+  const mobileCardVariants = reducedMotion ? {
+    initial: { opacity: 0 },
+    animate: { opacity: 1 },
+    hover: {},
+    tap: {}
+  } : {
     initial: { 
       opacity: 0, 
       y: 20,
@@ -78,7 +83,6 @@ export default function MobileBlogPostCard({
       scale: 1,
       transition: {
         duration: 0.4,
-        ease: "easeOut",
       }
     },
     hover: isMobile ? {} : {

@@ -41,7 +41,6 @@ export default function MobileHeroSection({
       y: 0,
       transition: {
         duration: 0.6,
-        ease: "easeOut",
         staggerChildren: 0.2,
       },
     },
@@ -54,7 +53,6 @@ export default function MobileHeroSection({
       y: 0,
       transition: {
         duration: 0.4,
-        ease: "easeOut",
       },
     },
   }
@@ -78,7 +76,6 @@ export default function MobileHeroSection({
       y: 0,
       transition: {
         duration: 0.8,
-        ease: [0.6, -0.05, 0.01, 0.99],
       },
     },
   }
@@ -92,7 +89,6 @@ export default function MobileHeroSection({
       rotateX: 0,
       transition: {
         duration: 0.6,
-        ease: [0.6, -0.05, 0.01, 0.99],
       },
     },
   }
@@ -240,8 +236,7 @@ export default function MobileHeroSection({
             transition={{
               duration: reducedMotion ? 0.3 : 0.8,
               delay: reducedMotion ? 0.2 : 0.6,
-              ease: "easeOut",
-            }}
+                  }}
             style={{ transformOrigin: "left" }}
           />
         </div>

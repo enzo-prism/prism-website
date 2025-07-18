@@ -230,7 +230,7 @@ export default function ScrollingTimeline() {
           }
         })
       },
-      [visibleEvents],
+      { threshold: 0.1 }
     )
 
     events.forEach((event) => {

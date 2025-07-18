@@ -7,6 +7,7 @@ import {
   YAxis,
   CartesianGrid,
   ReferenceLine,
+  ResponsiveContainer,
 } from "recharts"
 import {
   ChartContainer,
@@ -34,10 +35,8 @@ const chartConfig = {
 export function ExquisiteSessionsGrowthChart() {
   return (
     <ChartContainer config={chartConfig} className="w-full aspect-video md:h-[360px]">
-      {(width: number, height: number) => (
+      <ResponsiveContainer width="100%" height="100%">
         <AreaChart
-          width={width}
-          height={height}
           data={data}
           margin={{ top: 5, right: 10, left: 0, bottom: 0 }}
         >
@@ -66,7 +65,7 @@ export function ExquisiteSessionsGrowthChart() {
             cursor={{ strokeDasharray: "3 3" }}
             content={
               <ChartTooltipContent
-                indicator="area"
+                indicator="line"
                 labelClassName="font-semibold"
                 className="rounded-lg shadow-lg bg-background/95 backdrop-blur-sm"
               />
@@ -82,7 +81,7 @@ export function ExquisiteSessionsGrowthChart() {
             activeDot={{ r: 6, style: { filter: "drop-shadow(0 0 3px hsl(var(--chart-1)))" } }}
           />
         </AreaChart>
-      )}
+      </ResponsiveContainer>
     </ChartContainer>
   )
 }

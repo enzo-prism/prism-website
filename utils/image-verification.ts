@@ -23,7 +23,7 @@ export async function verifyImageUrl(url: string): Promise<boolean> {
     const response = await fetch(url, { method: "HEAD" })
 
     // Check if the response is OK and the content type is an image
-    return response.ok && response.headers.get("Content-Type")?.startsWith("image/")
+    return response.ok && (response.headers.get("Content-Type")?.startsWith("image/") ?? false)
   } catch (error) {
     console.error(`Failed to verify image URL: ${url}`, error)
     return false

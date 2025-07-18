@@ -10,7 +10,7 @@
 export async function isImageValid(url: string): Promise<boolean> {
   try {
     const response = await fetch(url, { method: "HEAD" })
-    return response.ok && response.headers.get("Content-Type")?.startsWith("image/")
+    return response.ok && (response.headers.get("Content-Type")?.startsWith("image/") ?? false)
   } catch (error) {
     return false
   }

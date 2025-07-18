@@ -22,6 +22,7 @@ export type EventType =
   | "error"
   | "scroll_milestone"
   | "user_preference"
+  | "skool_email_submission"
 
 /**
  * Track a custom event in Google Analytics

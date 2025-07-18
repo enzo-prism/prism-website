@@ -31,8 +31,8 @@ export default function ScrollManager() {
       )
 
       // Improve scroll momentum on iOS
-      document.body.style.webkitOverflowScrolling = "touch"
-      document.documentElement.style.webkitOverflowScrolling = "touch"
+      ;(document.body.style as any).webkitOverflowScrolling = "touch"
+      ;(document.documentElement.style as any).webkitOverflowScrolling = "touch"
     }
 
     // Optimize for different screen sizes
