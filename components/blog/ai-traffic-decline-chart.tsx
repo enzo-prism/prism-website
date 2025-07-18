@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react"
 import { motion } from "framer-motion"
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ReferenceLine } from "recharts"
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
 import { fadeInUp, staggerContainer } from "@/utils/animation-variants"
 
 const data = [
@@ -109,7 +108,7 @@ export default function AITrafficDeclineChart() {
 
       <motion.div variants={fadeInUp}>
         {activeView === 'timeline' ? (
-          <div className="h-80">
+          <div className="h-80 chart-container">
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={data} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#f3f4f6" />
@@ -125,11 +124,15 @@ export default function AITrafficDeclineChart() {
                 />
                 <Tooltip 
                   contentStyle={{
-                    backgroundColor: '#f9fafb',
+                    backgroundColor: '#ffffff',
                     border: '1px solid #e5e7eb',
                     borderRadius: '8px',
-                    fontSize: '12px'
+                    fontSize: '12px',
+                    boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+                    zIndex: 9999
                   }}
+                  labelStyle={{ color: '#374151', fontWeight: 'bold' }}
+                  itemStyle={{ color: '#6b7280' }}
                 />
                 <Line
                   type="monotone"

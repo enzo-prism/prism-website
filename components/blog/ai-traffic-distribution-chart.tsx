@@ -61,7 +61,7 @@ export default function AITrafficDistributionChart() {
 
       <div className="grid md:grid-cols-2 gap-6">
         <motion.div variants={fadeInUp}>
-          <div className="h-80">
+          <div className="h-80 chart-container">
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
                 <Pie
@@ -92,11 +92,19 @@ export default function AITrafficDistributionChart() {
                 </Pie>
                 <Tooltip 
                   contentStyle={{
-                    backgroundColor: '#f9fafb',
+                    backgroundColor: '#ffffff',
                     border: '1px solid #e5e7eb',
                     borderRadius: '8px',
-                    fontSize: '12px'
+                    fontSize: '12px',
+                    boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+                    zIndex: 9999
                   }}
+                  labelStyle={{ color: '#374151', fontWeight: 'bold' }}
+                  itemStyle={{ color: '#6b7280' }}
+                  formatter={(value: any, name: any, props: any) => [
+                    `${value}%`,
+                    props.payload.description
+                  ]}
                 />
               </PieChart>
             </ResponsiveContainer>

@@ -914,7 +914,26 @@ body {
 /* Enhanced chart animations */
 .chart-container {
   position: relative;
-  overflow: hidden;
+  overflow: visible; /* Allow tooltips to extend beyond container */
+}
+
+/* Recharts tooltip styling and z-index management */
+.recharts-tooltip-wrapper {
+  z-index: 9999 !important;
+  pointer-events: none;
+}
+
+.recharts-tooltip-cursor {
+  pointer-events: none;
+}
+
+/* Ensure chart elements are interactive */
+.recharts-surface {
+  overflow: visible;
+}
+
+.recharts-layer {
+  pointer-events: auto;
 }
 
 .chart-container::before {
