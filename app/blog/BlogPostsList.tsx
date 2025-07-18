@@ -50,7 +50,7 @@ export default function BlogPostsList({ posts }: { posts: BlogPost[] }) {
                     date={post.date}
                     description={post.description}
                     slug={post.slug}
-                    image={post.image}
+                    image={post.image || '/blog/ai-digital-marketing.png'}
                     featured={post.featured}
                     gradientClass={post.gradientClass}
                   />
@@ -66,7 +66,7 @@ export default function BlogPostsList({ posts }: { posts: BlogPost[] }) {
                     date={post.date}
                     description={post.description}
                     slug={post.slug}
-                    image={post.image}
+                    image={post.image || '/blog/ai-digital-marketing.png'}
                     featured={post.featured}
                     gradientClass={post.gradientClass}
                   />

@@ -65,17 +65,17 @@ export default function MobileBlogPostCard({
   // Calculate reading time
   const readingTime = Math.ceil(description.length / 200) || 1
 
-  // Mobile-optimized variants
+  // Mobile-optimized variants with fallback visibility
   const mobileCardVariants = reducedMotion ? {
-    initial: { opacity: 0 },
+    initial: { opacity: 1 }, // Start visible as fallback
     animate: { opacity: 1 },
     hover: {},
     tap: {}
   } : {
     initial: { 
-      opacity: 0, 
-      y: 20,
-      scale: 0.95,
+      opacity: 1, // Start visible as fallback
+      y: 0,
+      scale: 1,
     },
     animate: { 
       opacity: 1, 
@@ -105,6 +105,7 @@ export default function MobileBlogPostCard({
       <motion.div
         ref={cardRef}
         className={`
+          mobile-blog-card animate-in
           relative border border-neutral-200 rounded-xl overflow-hidden h-full
           bg-white shadow-sm hover:shadow-md transition-shadow duration-200
           ${isPressed ? 'shadow-inner' : ''}

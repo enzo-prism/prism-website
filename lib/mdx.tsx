@@ -29,7 +29,7 @@ export type BlogFrontmatter = {
   description: string
   date: string
   category: string
-  image: string
+  image?: string
   gradientClass: string
   openGraph?: Record<string, any>
   twitter?: Record<string, any>
@@ -43,7 +43,32 @@ async function getPost(slug: string): Promise<{ frontmatter: BlogFrontmatter; co
   try {
     const rawFileContent = await fs.readFile(filePath, "utf8")
     const { data, content } = matter(rawFileContent)
-    return { frontmatter: data as BlogFrontmatter, content }
+    
+    // Validate required fields
+    if (!data.title || !data.description || !data.date || !data.category) {
+      console.error(`[MDXLib] Post "${slug}" missing required fields:`, {
+        title: !!data.title,
+        description: !!data.description,
+        date: !!data.date,
+        category: !!data.category
+      })
+      return null
+    }
+    
+    // Provide fallback for optional fields
+    const frontmatter: BlogFrontmatter = {
+      title: data.title,
+      description: data.description,
+      date: data.date,
+      category: data.category,
+      image: data.image || '/blog/ai-digital-marketing.png', // Default fallback image
+      gradientClass: data.gradientClass || 'bg-gradient-to-br from-blue-300/30 via-purple-300/30 to-pink-300/30',
+      openGraph: data.openGraph,
+      twitter: data.twitter,
+      canonical: data.canonical
+    }
+    
+    return { frontmatter, content }
   } catch (error: unknown) {
     console.error(`[MDXLib] Failed to get post "${slug}" from "${filePath}":`, error)
     return null

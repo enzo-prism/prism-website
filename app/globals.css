@@ -177,6 +177,40 @@ input, textarea, select {
     animation-play-state: running;
   }
   
+  /* Blog card visibility fallbacks */
+  .mobile-blog-card {
+    opacity: 1 !important;
+    transform: none !important;
+    visibility: visible !important;
+  }
+  
+  .mobile-blog-grid {
+    opacity: 1 !important;
+    transform: none !important;
+    visibility: visible !important;
+  }
+  
+  /* Progressive enhancement - only animate if JavaScript is enabled */
+  .js-enabled .mobile-blog-card {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+  }
+  
+  .js-enabled .mobile-blog-card.animate-in {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  .js-enabled .mobile-blog-grid {
+    opacity: 0;
+    transition: opacity 0.3s ease-out;
+  }
+  
+  .js-enabled .mobile-blog-grid.animate-in {
+    opacity: 1;
+  }
+
   /* Enhanced touch interactions */
   .touch-feedback {
     transform: scale(1);

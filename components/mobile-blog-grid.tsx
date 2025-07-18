@@ -17,9 +17,9 @@ interface MobileBlogGridProps {
   className?: string
 }
 
-// Mobile-optimized animation variants
+// Mobile-optimized animation variants with fallback
 const mobileGridVariants = {
-  hidden: { opacity: 0 },
+  hidden: { opacity: 1 }, // Start visible as fallback
   visible: {
     opacity: 1,
     transition: {
@@ -31,9 +31,9 @@ const mobileGridVariants = {
 
 const mobileCardVariants = {
   hidden: { 
-    opacity: 0, 
-    y: 20,
-    scale: 0.95,
+    opacity: 1, // Start visible as fallback
+    y: 0,
+    scale: 1,
   },
   visible: {
     opacity: 1,
@@ -79,8 +79,8 @@ export default function MobileBlogGrid({ children, posts, className = "" }: Mobi
   const ref = useRef(null)
   const isInView = useInView(ref, { 
     once: true, 
-    margin: "-50px",
-    amount: 0.2
+    margin: "0px", // More forgiving margin for mobile
+    amount: 0.1 // Lower threshold for earlier triggering
   })
   const isMobile = useMobile()
   const [reducedMotion, setReducedMotion] = useState(false)
@@ -107,15 +107,22 @@ export default function MobileBlogGrid({ children, posts, className = "" }: Mobi
     { hidden: { opacity: 0 }, visible: { opacity: 1 } } :
     isMobile ? mobileCardVariants : desktopCardVariants
 
+  // Add JS-enabled class to document for progressive enhancement
+  useEffect(() => {
+    document.documentElement.classList.add('js-enabled')
+  }, [])
+
   return (
     <motion.div
       ref={ref}
       className={`
+        mobile-blog-grid
         grid gap-6 w-full
         ${isMobile 
           ? 'grid-cols-1 px-4' 
           : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'
         }
+        ${isInView ? 'animate-in' : ''}
         ${className}
       `}
       variants={gridVariants}
