@@ -87,6 +87,11 @@ export function MobileInteractiveWidget({
     y.set(0)
   }
 
+  // Initialize animations
+  useEffect(() => {
+    controls.start({ opacity: 1, y: 0 })
+  }, [controls])
+
   // Widget type specific content
   const getWidgetContent = () => {
     switch (type) {
@@ -218,7 +223,6 @@ export function MobileInteractiveWidget({
     <motion.div
       ref={containerRef}
       initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
       className={`
         relative overflow-hidden rounded-2xl bg-gradient-to-br from-white via-neutral-50 to-neutral-100 
