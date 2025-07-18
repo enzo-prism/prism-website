@@ -165,7 +165,6 @@ export default function AITrafficDeclineChart() {
                   dot={{ fill: '#ef4444', strokeWidth: 2, r: 4 }}
                   name="With AI Features"
                   animationDuration={animationComplete ? 0 : 2000}
-                  animationDelay={500}
                 />
                 <ReferenceLine y={85} stroke="#f59e0b" strokeDasharray="5 5" label="15% Decline" />
                 <ReferenceLine y={70} stroke="#ef4444" strokeDasharray="5 5" label="30% Decline" />

@@ -29,6 +29,9 @@ interface Props {
     url?: string
     image?: string
     siteName?: string
+    publishedTime?: string
+    modifiedTime?: string
+    authors?: string[]
   }
   canonical?: string
 }

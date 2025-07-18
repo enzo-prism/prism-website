@@ -1,9 +1,14 @@
-import type { MetadataRoute } from "next/server"
+import type { MetadataRoute } from "next"
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"
 
-export default function sitemap(): MetadataRoute["sitemap"] {
-  const routes = [
+export default function sitemap(): MetadataRoute.Sitemap {
+  const routes: Array<{
+    url: string
+    lastModified: Date
+    changeFrequency: "yearly" | "monthly" | "weekly" | "daily" | "hourly" | "always" | "never"
+    priority: number
+  }> = [
     {
       url: baseUrl,
       lastModified: new Date(),

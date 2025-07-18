@@ -3,7 +3,7 @@ import BlogPostLayout from '@/components/blog-post-layout'
 import { getAllPosts, getPost, renderPost } from '@/lib/mdx'
 import { notFound } from 'next/navigation'
 
-interface PageProps { params: { slug: string } }
+interface PageProps { params: Promise<{ slug: string }> }
 
 export const dynamicParams = false
 
@@ -14,13 +14,14 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const post = await getPost(params.slug)
+  const { slug } = await params
+  const post = await getPost(slug)
   if (!post) notFound()
   const { frontmatter } = post
   
   // Use dynamic OG image if gradientClass is available
   const ogImage = frontmatter.gradientClass
-    ? `${process.env.NEXT_PUBLIC_BASE_URL || 'https://design-prism.com'}/api/og/blog/${params.slug}`
+    ? `${process.env.NEXT_PUBLIC_BASE_URL || 'https://design-prism.com'}/api/og/blog/${slug}`
     : frontmatter.openGraph?.images?.[0]?.url || frontmatter.image
   
   return {
@@ -46,13 +47,14 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export default async function BlogPostPage({ params }: PageProps) {
-  const post = await getPost(params.slug)
+  const { slug } = await params
+  const post = await getPost(slug)
   if (!post) notFound()
   const { frontmatter } = post
-  const content = await renderPost(params.slug)
+  const content = await renderPost(slug)
   return (
     <BlogPostLayout
-      slug={params.slug}
+      slug={slug}
       title={frontmatter.title}
       description={frontmatter.description}
       date={frontmatter.date}

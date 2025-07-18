@@ -60,7 +60,7 @@ export function DrWongGrowthChart() {
             cursor={{ strokeDasharray: "3 3" }}
             content={
               <ChartTooltipContent
-                indicator="area"
+indicator="line"
                 labelClassName="font-semibold"
                 className="rounded-lg shadow-lg bg-background/95 backdrop-blur-sm"
               />

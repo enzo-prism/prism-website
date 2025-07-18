@@ -7,11 +7,14 @@ export const runtime = 'edge'
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { slug: string } }
+  { params }: { params: Promise<{ slug: string }> }
 ) {
   try {
+    // Await the params since they're async in Next.js 15
+    const { slug } = await params
+    
     // Get the blog post metadata
-    const postMetadata = getPostMetadataForOG(params.slug)
+    const postMetadata = getPostMetadataForOG(slug)
     
     if (!postMetadata) {
       return new Response('Blog post not found', { status: 404 })

@@ -23,7 +23,7 @@ export function useRevealAnimation(
 
   const [isVisible, setIsVisible] = useState(false)
   const [hasTriggered, setHasTriggered] = useState(false)
-  const elementRef = useRef<HTMLElement>(null)
+  const elementRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const currentElement = elementRef.current
@@ -79,7 +79,7 @@ export function useStaggeredReveal(
 ) {
   const { delay = 100, ...restOptions } = options
   const [visibleItems, setVisibleItems] = useState<boolean[]>(new Array(count).fill(false))
-  const containerRef = useRef<HTMLElement>(null)
+  const containerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const currentElement = containerRef.current
@@ -124,7 +124,7 @@ export function useStaggeredReveal(
 
 // Hook for parallax effects
 export function useParallaxEffect(intensity: number = 0.5) {
-  const elementRef = useRef<HTMLElement>(null)
+  const elementRef = useRef<HTMLDivElement>(null)
   const [offset, setOffset] = useState(0)
 
   useEffect(() => {
@@ -165,7 +165,7 @@ export function useParallaxEffect(intensity: number = 0.5) {
 
 // Hook for GPU-accelerated hover effects
 export function useGPUHover() {
-  const elementRef = useRef<HTMLElement>(null)
+  const elementRef = useRef<HTMLDivElement>(null)
   const [isHovered, setIsHovered] = useState(false)
 
   useEffect(() => {

@@ -96,16 +96,16 @@ export default function SummerWebsiteMakeoverOpenAIStylePage() {
               Your site shouldn’t feel like a ghost town. Let Prism turn it into a 24/7 growth engine while you stay
               focused on running your business.
             </p>
-            <Link href="/get-started" passHref legacyBehavior>
-              <Button
-                as="a"
-                size="lg"
-                className="text-base px-8 py-3 group rounded-md bg-neutral-900 text-white hover:bg-neutral-700 dark:bg-neutral-100 dark:text-neutral-900 dark:hover:bg-neutral-300 transition-colors"
-              >
+            <Button
+              asChild
+              size="lg"
+              className="text-base px-8 py-3 group rounded-md bg-neutral-900 text-white hover:bg-neutral-700 dark:bg-neutral-100 dark:text-neutral-900 dark:hover:bg-neutral-300 transition-colors"
+            >
+              <Link href="/get-started">
                 Book a 30-min Fit Call
                 <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
-              </Button>
-            </Link>
+              </Link>
+            </Button>
           </div>
         </section>
 
@@ -252,16 +252,16 @@ export default function SummerWebsiteMakeoverOpenAIStylePage() {
               <p className="font-medium text-lg">Only 7 Summer Makeover slots left!</p>
               <p className="text-sm">Next intake opens in October.</p>
             </div>
-            <Link href="/get-started" passHref legacyBehavior>
-              <Button
-                as="a"
-                size="lg"
-                className="text-base px-10 py-4 group rounded-md bg-neutral-900 text-white hover:bg-neutral-700 dark:bg-neutral-100 dark:text-neutral-900 dark:hover:bg-neutral-300 transition-colors"
-              >
+            <Button
+              asChild
+              size="lg"
+              className="text-base px-10 py-4 group rounded-md bg-neutral-900 text-white hover:bg-neutral-700 dark:bg-neutral-100 dark:text-neutral-900 dark:hover:bg-neutral-300 transition-colors"
+            >
+              <Link href="/get-started">
                 Book a 30-min Fit Call
                 <ArrowRight className="ml-3 h-5 w-5 transition-transform group-hover:translate-x-1" />
-              </Button>
-            </Link>
+              </Link>
+            </Button>
           </div>
         </section>
 
@@ -304,16 +304,16 @@ export default function SummerWebsiteMakeoverOpenAIStylePage() {
             <p className="text-lg text-neutral-600 dark:text-neutral-400 mb-12">
               Claim your Summer Website Makeover before the last slots disappear.
             </p>
-            <Link href="/get-started" passHref legacyBehavior>
-              <Button
-                as="a"
-                size="lg"
-                className="text-base px-10 py-4 group rounded-md bg-neutral-900 text-white hover:bg-neutral-700 dark:bg-neutral-100 dark:text-neutral-900 dark:hover:bg-neutral-300 transition-colors mb-20"
-              >
+            <Button
+              asChild
+              size="lg"
+              className="text-base px-10 py-4 group rounded-md bg-neutral-900 text-white hover:bg-neutral-700 dark:bg-neutral-100 dark:text-neutral-900 dark:hover:bg-neutral-300 transition-colors mb-20"
+            >
+              <Link href="/get-started">
                 Book Your Fit Call Now
                 <ArrowRight className="ml-3 h-5 w-5 transition-transform group-hover:translate-x-1" />
-              </Button>
-            </Link>
+              </Link>
+            </Button>
 
             <div className="border-t border-neutral-200 dark:border-neutral-700 pt-12 max-w-xl mx-auto">
               <p className="text-base font-medium text-neutral-800 dark:text-neutral-200 mb-6">

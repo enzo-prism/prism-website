@@ -350,7 +350,6 @@ export default function ClientGetStartedPage() {
                           <Link href="/one-time-fee">
                             <motion.span
                               className="relative z-10"
-                              animate={magneticButton.hover(mousePosition)}
                             >
                               start $750 design <ArrowRight className="ml-2 h-4 w-4 inline-block" />
                             </motion.span>
