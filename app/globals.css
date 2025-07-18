@@ -109,6 +109,48 @@ body {
     aspect-ratio: attr(data-aspect-ratio);
   }
   
+  /* Mobile performance optimizations */
+  .mobile-performance-optimized {
+    content-visibility: auto;
+    contain-intrinsic-size: 0 500px;
+  }
+  
+  .mobile-lazy-load {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+  
+  .mobile-lazy-load.loaded {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  .mobile-reduced-motion {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  .mobile-smooth-scroll {
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  .mobile-gpu-accelerated {
+    transform: translateZ(0);
+    will-change: transform;
+    backface-visibility: hidden;
+  }
+  
+  .mobile-battery-efficient {
+    animation-play-state: paused;
+  }
+  
+  .mobile-battery-efficient.in-viewport {
+    animation-play-state: running;
+  }
+  
   /* Enhanced touch interactions */
   .touch-feedback {
     transform: scale(1);
@@ -384,6 +426,56 @@ body {
   .stagger-fade-in:nth-child(3) { animation-delay: 0.3s; }
   .stagger-fade-in:nth-child(4) { animation-delay: 0.4s; }
   .stagger-fade-in:nth-child(5) { animation-delay: 0.5s; }
+  
+  /* Hide scrollbars */
+  .scrollbar-hide {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* Line clamp utilities */
+  .line-clamp-1 {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  
+  /* Mobile accessibility */
+  .mobile-focus-ring {
+    outline: 2px solid #3b82f6;
+    outline-offset: 2px;
+  }
+  
+  .mobile-screen-reader-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
 }
 
 /* Keyframe animations for enhanced process steps */
@@ -983,6 +1075,182 @@ body {
   .mobile-info-card {
     padding: 1.25rem;
     margin: 1rem 0;
+  }
+  
+  /* Blog-specific mobile improvements */
+  .mobile-blog-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    padding: 0 1rem;
+  }
+  
+  .mobile-blog-card {
+    min-height: 280px;
+    border-radius: 0.75rem;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  .mobile-blog-card:active {
+    transform: scale(0.98);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+  }
+  
+  .mobile-hero-section {
+    padding: 2rem 1rem;
+    text-align: center;
+  }
+  
+  .mobile-hero-title {
+    font-size: 1.75rem;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+  }
+  
+  .mobile-hero-subtitle {
+    font-size: 1rem;
+    line-height: 1.5;
+    margin-bottom: 1.5rem;
+  }
+  
+  .mobile-filter-container {
+    overflow-x: auto;
+    padding: 0 1rem;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  .mobile-filter-container::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .mobile-filter-button {
+    min-height: 44px;
+    min-width: 44px;
+    padding: 0.75rem 1rem;
+    white-space: nowrap;
+    border-radius: 1.5rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    scroll-snap-align: start;
+  }
+  
+  .mobile-filter-button:active {
+    transform: scale(0.95);
+  }
+  
+  .mobile-blog-post-card {
+    background: white;
+    border-radius: 0.75rem;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  .mobile-blog-post-card:active {
+    transform: scale(0.98);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
+  }
+  
+  .mobile-blog-post-content {
+    padding: 1.25rem;
+  }
+  
+  .mobile-blog-post-title {
+    font-size: 1.125rem;
+    line-height: 1.3;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+  }
+  
+  .mobile-blog-post-description {
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: rgb(75, 85, 99);
+    margin-bottom: 1rem;
+  }
+  
+  .mobile-blog-post-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    color: rgb(107, 114, 128);
+  }
+  
+  .mobile-cta-button {
+    min-height: 48px;
+    min-width: 48px;
+    padding: 0.75rem 1.5rem;
+    border-radius: 1.5rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+  }
+  
+  .mobile-cta-button:active {
+    transform: scale(0.95);
+  }
+}
+
+/* Ultra-small screens (phones in portrait, <375px) */
+@media (max-width: 374px) {
+  .mobile-hero-section {
+    padding: 1.5rem 0.75rem;
+  }
+  
+  .mobile-hero-title {
+    font-size: 1.5rem;
+  }
+  
+  .mobile-hero-subtitle {
+    font-size: 0.875rem;
+  }
+  
+  .mobile-blog-grid {
+    gap: 1rem;
+    padding: 0 0.75rem;
+  }
+  
+  .mobile-blog-card {
+    min-height: 260px;
+  }
+  
+  .mobile-blog-post-content {
+    padding: 1rem;
+  }
+  
+  .mobile-filter-container {
+    padding: 0 0.75rem;
+  }
+  
+  .mobile-filter-button {
+    min-height: 40px;
+    min-width: 40px;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.75rem;
+  }
+}
+
+/* Large phones and small tablets (375px - 640px) */
+@media (min-width: 375px) and (max-width: 640px) {
+  .mobile-blog-grid {
+    gap: 1.25rem;
+  }
+  
+  .mobile-blog-card {
+    min-height: 300px;
+  }
+  
+  .mobile-hero-title {
+    font-size: 2rem;
+  }
+  
+  .mobile-hero-subtitle {
+    font-size: 1.125rem;
   }
 }
 

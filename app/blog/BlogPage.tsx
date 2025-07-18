@@ -7,6 +7,7 @@ import type { BlogFrontmatter } from "@/lib/mdx"
 import BlogPostsList from "./BlogPostsList"
 import { BlogListErrorBoundary } from "@/components/blog-error-boundary"
 import AnimatedHeroSection from "@/components/animated-hero-section"
+import MobileHeroSection from "@/components/mobile-hero-section"
 
 // Define the blog post type
 interface BlogPost extends BlogFrontmatter {
@@ -23,8 +24,8 @@ export default function BlogPage({ posts }: { posts: BlogPost[] }) {
       <BlogPageTracker />
       <Navbar />
       <main className="flex-1">
-        {/* Enhanced Animated Hero Section */}
-        <AnimatedHeroSection
+        {/* Mobile-Optimized Hero Section */}
+        <MobileHeroSection
           title="insights & ideas"
           subtitle="thoughts on design, development, and digital strategy from the prism team"
         />
