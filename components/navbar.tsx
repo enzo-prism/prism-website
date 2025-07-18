@@ -30,7 +30,7 @@ export default function Navbar() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container mx-auto flex h-16 items-center justify-between px-4 md:px-6">
+      <div className="w-full max-w-7xl mx-auto flex h-16 items-center justify-between px-4 md:px-6">
         <Link href="/" className="flex items-center gap-2" onClick={() => trackNavigation("logo", "/")}>
           {/* This div provides the dimensions and primary clipping */}
           <div className="relative h-8 w-8 overflow-hidden rounded-lg isolate">

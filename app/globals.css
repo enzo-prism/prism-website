@@ -8,11 +8,12 @@ body {
 
 /* Prevent zooming on mobile devices */
 html, body {
-  touch-action: manipulation;
+  touch-action: pan-x pan-y;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  overscroll-behavior: none;
 }
 
 /* Disable zoom on iOS Safari */
@@ -30,13 +31,6 @@ input, textarea, select {
   -webkit-tap-highlight-color: transparent;
 }
 
-/* Disable zoom CSS property for browsers that support it */
-html {
-  zoom: 1 !important;
-  -moz-transform: scale(1) !important;
-  -webkit-transform: scale(1) !important;
-  transform: scale(1) !important;
-}
 
 @layer utilities {
   .text-balance {

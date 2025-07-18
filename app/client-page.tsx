@@ -218,7 +218,7 @@ export default function ClientPage() {
       <Navbar />
       <main className="flex-1">
         {/* Hero Section */}
-        <section ref={heroRef} className="hero-section relative min-h-[100dvh] flex items-center justify-center overflow-hidden">
+        <section ref={heroRef} className="hero-section relative min-h-[100vh] flex items-center justify-center overflow-hidden">
           {/* Background video container with full coverage */}
           <div className="absolute inset-0 -z-20 gpu-layer">
             {/* Lightweight placeholder while video loads */}

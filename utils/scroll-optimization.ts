@@ -291,13 +291,11 @@ export function preventZoomGestures(): void {
     }
   }
 
-  // Add event listeners
-  addPassiveEventListener(document, "touchend", preventDoubleTapZoom)
-  addPassiveEventListener(document, "touchstart", preventPinchZoom)
-  addPassiveEventListener(document, "touchmove", preventPinchZoom)
-  addPassiveEventListener(document, "touchend", preventZoomOnTouchEnd)
-  
-  // Non-passive listeners for preventDefault to work
+  // Add non-passive event listeners for zoom prevention to work
+  document.addEventListener("touchend", preventDoubleTapZoom, { passive: false })
+  document.addEventListener("touchstart", preventPinchZoom, { passive: false })
+  document.addEventListener("touchmove", preventPinchZoom, { passive: false })
+  document.addEventListener("touchend", preventZoomOnTouchEnd, { passive: false })
   document.addEventListener("wheel", preventWheelZoom, { passive: false })
   document.addEventListener("keydown", preventKeyboardZoom, { passive: false })
 
@@ -306,12 +304,6 @@ export function preventZoomGestures(): void {
     // Disable user-select to prevent text selection zoom triggers
     ;(document.body.style as any).webkitUserSelect = "none"
     ;(document.body.style as any).webkitTouchCallout = "none"
-    
-    // Additional iOS-specific zoom prevention
-    const meta = document.querySelector('meta[name="viewport"]') as HTMLMetaElement
-    if (meta) {
-      meta.content = "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover"
-    }
   }
 }
 
