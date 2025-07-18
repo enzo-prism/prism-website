@@ -14,7 +14,7 @@ import StrategyTimelineChart from '@/components/blog/strategy-timeline-chart'
 import BrandTaglineGenerator from '@/components/blog/brand-tagline-generator'
 import AIMentionTracker from '@/components/blog/ai-mention-tracker'
 import StrategyCard from '@/components/blog/strategy-card'
-import { Target, Users, Zap, MessageCircle, Widgets, Gauge, Scale } from 'lucide-react'
+import { Target, Users, Zap, MessageCircle, LayoutGrid, Gauge, Scale } from 'lucide-react'
 
 export type BlogFrontmatter = {
   title: string
@@ -163,14 +163,14 @@ const mdxComponents = {
   BrandTaglineGenerator,
   AIMentionTracker,
   StrategyCard,
-  // Lucide icons
-  Target,
-  Users,
-  Zap,
-  MessageCircle,
-  Widgets,
-  Gauge,
-  Scale,
+  // Lucide icons as wrapper components
+  Target: (props: any) => <Target {...props} />,
+  Users: (props: any) => <Users {...props} />,
+  Zap: (props: any) => <Zap {...props} />,
+  MessageCircle: (props: any) => <MessageCircle {...props} />,
+  LayoutGrid: (props: any) => <LayoutGrid {...props} />,
+  Gauge: (props: any) => <Gauge {...props} />,
+  Scale: (props: any) => <Scale {...props} />,
   // Override potentially dangerous HTML elements
   script: () => null, // Block script tags
   iframe: ({ src, title, ...props }: any) => {
