@@ -22,6 +22,12 @@ export default function EnhancedProcessSteps() {
   const mouseX = useMotionValue(0)
   const mouseY = useMotionValue(0)
 
+  // Create transform values for all steps at the top level
+  const rotateX = useTransform(mouseY, [-100, 100], [10, -10])
+  const rotateY = useTransform(mouseX, [-100, 100], [-10, 10])
+  const springRotateX = useSpring(rotateX, { stiffness: 300, damping: 30 })
+  const springRotateY = useSpring(rotateY, { stiffness: 300, damping: 30 })
+
   const steps: Step[] = [
     {
       number: 1,
@@ -95,11 +101,6 @@ export default function EnhancedProcessSteps() {
       
       <div className="grid gap-8 md:gap-12 md:grid-cols-3 relative">
         {steps.map((step, index) => {
-          const rotateX = useTransform(mouseY, [-100, 100], [10, -10])
-          const rotateY = useTransform(mouseX, [-100, 100], [-10, 10])
-          const springRotateX = useSpring(rotateX, { stiffness: 300, damping: 30 })
-          const springRotateY = useSpring(rotateY, { stiffness: 300, damping: 30 })
-
           return (
             <motion.div
               key={step.number}
