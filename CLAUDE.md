@@ -7,6 +7,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 **Important**: This repository is automatically synced with v0.dev deployments. Changes made on v0.dev are pushed to this repository automatically.
 
+### Prerequisites
+- Node.js 18+ 
+- npm or yarn
+- Claude Code (for enhanced development workflow with MCP servers)
+
 ### Quick Start
 ```bash
 # Clone and install
@@ -60,6 +65,9 @@ npm test -- --testNamePattern="test name"
 # Coverage report
 npm test -- --coverage
 
+# Debug mode
+npm test -- --detectOpenHandles
+
 # Diagnostics and Verification
 npm run diagnose:images  # Run image system diagnostics
 npm run verify:deploy    # Verify deployment readiness
@@ -101,6 +109,7 @@ npm run verify:deploy    # Verify deployment readiness
    - 1-year cache TTL for optimized images
    - Comprehensive monitoring and fallbacks
    - Custom image processing utilities in `/utils/image.ts`
+   - Diagnostic script available: `npm run diagnose:images`
 
 2. **Content Management**
    - MDX-based blog system with dynamic imports
@@ -253,6 +262,7 @@ SENTRY_PROJECT=
 1. Changes made in v0.dev are automatically synced to this repository
 2. Vercel deploys the latest version from this repository
 3. Monitor deployment status and errors via Sentry MCP
+4. Verify deployment readiness with: `npm run verify:deploy`
 
 ## Code Style & Conventions
 
