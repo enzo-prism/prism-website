@@ -2,6 +2,8 @@
 
 import { useState, useMemo } from 'react'
 import BlogPostCard from '@/components/blog-post-card'
+import { AnimatedBlogGridWithObserver } from '@/components/animated-blog-grid'
+import AnimatedFilterButtons from '@/components/animated-filter-buttons'
 import type { BlogFrontmatter } from "@/lib/mdx"
 
 interface BlogPost extends BlogFrontmatter {
@@ -25,25 +27,15 @@ export default function BlogPostsList({ posts }: { posts: BlogPost[] }) {
   return (
     <section className="px-4 py-8 md:py-12">
       <div className="container mx-auto px-4 md:px-6">
-        {/* Filter buttons */}
-        <div className="flex overflow-x-auto gap-2 mb-8 pb-2">
-          {categories.map(cat => (
-            <button
-              key={cat}
-              onClick={() => setSelectedCategory(cat)}
-              className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-colors ${
-                selectedCategory === cat 
-                  ? 'bg-neutral-900 text-white' 
-                  : 'bg-neutral-100 text-neutral-900 hover:bg-neutral-200'
-              }`}
-            >
-              {cat}
-            </button>
-          ))}
-        </div>
+        {/* Enhanced animated filter buttons */}
+        <AnimatedFilterButtons
+          categories={categories}
+          selectedCategory={selectedCategory}
+          onCategoryChange={setSelectedCategory}
+        />
 
         {filteredPosts.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <AnimatedBlogGridWithObserver posts={filteredPosts}>
             {filteredPosts.map((post) => (
               <BlogPostCard
                 key={post.slug}
@@ -57,7 +49,7 @@ export default function BlogPostsList({ posts }: { posts: BlogPost[] }) {
                 gradientClass={post.gradientClass}
               />
             ))}
-          </div>
+          </AnimatedBlogGridWithObserver>
         ) : (
           <div className="text-center py-16 border border-dashed border-neutral-200 rounded-lg">
             <h3 className="text-xl font-medium text-neutral-600 lowercase mb-2">no posts found</h3>

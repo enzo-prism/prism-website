@@ -17,6 +17,35 @@ body {
     will-change: transform;
     backface-visibility: hidden;
     perspective: 1000px;
+    contain: layout style paint;
+  }
+  
+  /* Blog-specific GPU acceleration */
+  .blog-card-3d {
+    transform: translateZ(0);
+    will-change: transform;
+    backface-visibility: hidden;
+    perspective: 1000px;
+    transform-style: preserve-3d;
+  }
+  
+  .blog-grid-container {
+    contain: layout style paint;
+    transform: translateZ(0);
+    will-change: transform;
+  }
+  
+  .blog-filter-button {
+    transform: translateZ(0);
+    will-change: transform, background-color, color;
+    backface-visibility: hidden;
+  }
+  
+  .blog-hero-parallax {
+    transform: translateZ(0);
+    will-change: transform;
+    backface-visibility: hidden;
+    contain: layout style paint;
   }
   
   .gpu-layer {
@@ -102,6 +131,31 @@ body {
   .reveal-up.visible {
     opacity: 1;
     transform: translateY(0);
+  }
+  
+  /* Blog-specific animations */
+  .blog-card-entrance {
+    opacity: 0;
+    transform: translateY(60px) scale(0.8) translateZ(0);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    will-change: opacity, transform;
+  }
+  
+  .blog-card-entrance.visible {
+    opacity: 1;
+    transform: translateY(0) scale(1) translateZ(0);
+  }
+  
+  .blog-filter-entrance {
+    opacity: 0;
+    transform: translateY(20px) translateZ(0);
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+    will-change: opacity, transform;
+  }
+  
+  .blog-filter-entrance.visible {
+    opacity: 1;
+    transform: translateY(0) translateZ(0);
   }
   
   .reveal-fade {

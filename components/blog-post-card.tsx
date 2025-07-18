@@ -1,11 +1,13 @@
 "use client"
 
+import React, { useState, useRef } from "react"
 import Link from "next/link"
 import { ArrowRight } from "lucide-react"
+import { motion, useMotionValue, useSpring, useTransform } from "framer-motion"
 import { trackCTAClick } from "@/utils/analytics"
 import { cn } from "@/lib/utils"
 import CoreImage from "@/components/core-image"
-import { useState } from "react"
+import { blogCardHover3D, blogCardPerspective } from "@/utils/animation-variants"
 
 interface BlogPostCardProps {
   title: string
@@ -30,29 +32,139 @@ export default function BlogPostCard({
   compact = false,
   gradientClass,
 }: BlogPostCardProps) {
+  const ref = useRef<HTMLDivElement>(null)
+  
+  // Mouse position tracking for 3D tilt effect
+  const x = useMotionValue(0)
+  const y = useMotionValue(0)
+  
+  // Spring animations for smooth tilt
+  const mouseXSpring = useSpring(x, { stiffness: 500, damping: 50 })
+  const mouseYSpring = useSpring(y, { stiffness: 500, damping: 50 })
+  
+  // Transform mouse position to rotation values
+  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["17.5deg", "-17.5deg"])
+  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-17.5deg", "17.5deg"])
+  
+  // Handle mouse movement for 3D tilt
+  const handleMouseMove = (event: React.MouseEvent<HTMLDivElement>) => {
+    if (!ref.current) return
+    
+    const rect = ref.current.getBoundingClientRect()
+    const width = rect.width
+    const height = rect.height
+    
+    const mouseX = (event.clientX - rect.left) / width - 0.5
+    const mouseY = (event.clientY - rect.top) / height - 0.5
+    
+    x.set(mouseX)
+    y.set(mouseY)
+  }
+  
+  // Reset tilt on mouse leave
+  const handleMouseLeave = () => {
+    x.set(0)
+    y.set(0)
+  }
+
   return (
     <Link href={`/blog/${slug}`} onClick={() => trackCTAClick(`view blog post`, title)} className="block">
-      <div className="border border-neutral-200 rounded-lg overflow-hidden hover:border-neutral-300 transition-all hover:shadow-sm h-full relative group">
+      <motion.div
+        ref={ref}
+        className="border border-neutral-200 rounded-lg overflow-hidden h-full relative group cursor-pointer"
+        variants={blogCardHover3D}
+        initial="initial"
+        whileHover="hover"
+        whileTap="tap"
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
+        style={{
+          // GPU acceleration
+          transform: "translateZ(0)",
+          willChange: "transform",
+          backfaceVisibility: "hidden",
+          perspective: "1000px",
+          transformStyle: "preserve-3d",
+          rotateX,
+          rotateY,
+        }}
+      >
         {featured && (
-          <div className="absolute top-3 left-3 text-xs text-white bg-black/80 px-3 py-1 rounded-full lowercase z-10">
+          <motion.div 
+            className="absolute top-3 left-3 text-xs text-white bg-black/80 px-3 py-1 rounded-full lowercase z-10"
+            initial={{ scale: 0, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ delay: 0.3, duration: 0.3 }}
+          >
             featured
-          </div>
+          </motion.div>
         )}
         
-        {/* Always use gradient for thumbnail */}
-        <div className={cn("relative w-full aspect-[4/3]", gradientClass)} />
-        <div className="p-5 space-y-3 border-t border-neutral-100">
+        {/* Enhanced gradient thumbnail with shimmer effect */}
+        <motion.div 
+          className={cn("relative w-full aspect-[4/3] overflow-hidden", gradientClass)}
+          whileHover={{ scale: 1.05 }}
+          transition={{ duration: 0.3 }}
+        >
+          <motion.div
+            className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full"
+            animate={{ x: ["0%", "100%"] }}
+            transition={{
+              duration: 2,
+              repeat: Infinity,
+              repeatDelay: 3,
+              ease: "linear"
+            }}
+          />
+        </motion.div>
+        
+        <motion.div 
+          className="p-5 space-y-3 border-t border-neutral-100"
+          style={{ transform: "translateZ(20px)" }}
+        >
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2">
-            <div className="inline-block px-3 py-1 bg-neutral-100 rounded-full text-xs lowercase">{category}</div>
+            <motion.div 
+              className="inline-block px-3 py-1 bg-neutral-100 rounded-full text-xs lowercase"
+              whileHover={{ scale: 1.05, backgroundColor: "rgb(229, 229, 229)" }}
+              transition={{ duration: 0.2 }}
+            >
+              {category}
+            </motion.div>
             <div className="text-sm text-neutral-500 lowercase">{date}</div>
           </div>
-          <h3 className="text-lg font-bold lowercase group-hover:text-neutral-700 transition-colors">{title}</h3>
-          {!compact && <p className="text-neutral-600 lowercase">{description}</p>}
-          <div className="flex items-center text-sm font-medium text-neutral-900 lowercase pt-2 group-hover:translate-x-0.5 transition-transform">
-            read post <ArrowRight className="ml-1 h-4 w-4" />
-          </div>
-        </div>
-      </div>
+          
+          <motion.h3 
+            className="text-lg font-bold lowercase"
+            style={{ transform: "translateZ(30px)" }}
+          >
+            {title}
+          </motion.h3>
+          
+          {!compact && (
+            <motion.p 
+              className="text-neutral-600 lowercase"
+              style={{ transform: "translateZ(20px)" }}
+            >
+              {description}
+            </motion.p>
+          )}
+          
+          <motion.div 
+            className="flex items-center text-sm font-medium text-neutral-900 lowercase pt-2"
+            style={{ transform: "translateZ(40px)" }}
+            whileHover={{ x: 4 }}
+            transition={{ duration: 0.2 }}
+          >
+            read post 
+            <motion.div
+              animate={{ x: [0, 4, 0] }}
+              transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+            >
+              <ArrowRight className="ml-1 h-4 w-4" />
+            </motion.div>
+          </motion.div>
+        </motion.div>
+      </motion.div>
     </Link>
   )
 }

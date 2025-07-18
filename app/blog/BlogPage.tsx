@@ -6,6 +6,7 @@ import BlogPostCard from "@/components/blog-post-card"
 import type { BlogFrontmatter } from "@/lib/mdx"
 import BlogPostsList from "./BlogPostsList"
 import { BlogListErrorBoundary } from "@/components/blog-error-boundary"
+import AnimatedHeroSection from "@/components/animated-hero-section"
 
 // Define the blog post type
 interface BlogPost extends BlogFrontmatter {
@@ -22,19 +23,11 @@ export default function BlogPage({ posts }: { posts: BlogPost[] }) {
       <BlogPageTracker />
       <Navbar />
       <main className="flex-1">
-        {/* Hero Section */}
-        <section className="px-4 py-12 md:py-16">
-          <div className="container mx-auto px-4 md:px-6">
-            <div className="space-y-4 text-center md:text-left">
-              <h1 className="text-3xl font-bold tracking-tighter lowercase sm:text-4xl md:text-5xl">
-                insights & ideas
-              </h1>
-              <p className="text-neutral-600 lowercase md:text-lg max-w-2xl mx-auto md:mx-0">
-                thoughts on design, development, and digital strategy from the prism team
-              </p>
-            </div>
-          </div>
-        </section>
+        {/* Enhanced Animated Hero Section */}
+        <AnimatedHeroSection
+          title="insights & ideas"
+          subtitle="thoughts on design, development, and digital strategy from the prism team"
+        />
 
         {/* Blog Posts List or Empty State */}
         <BlogListErrorBoundary>
