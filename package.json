@@ -7,10 +7,13 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "typecheck": "tsc --noEmit --skipLibCheck",
     "test": "jest",
     "mcp:setup": "node scripts/setup-mcp.js",
     "mcp:health": "node scripts/mcp-health-check.js",
-    "mcp:validate": "npm run mcp:health && echo '✅ MCP servers are ready for Claude Code'"
+    "mcp:validate": "npm run mcp:health && echo '✅ MCP servers are ready for Claude Code'",
+    "diagnose:images": "node scripts/diagnose-images.js",
+    "verify:deploy": "node scripts/verify-deploy.js"
   },
   "dependencies": {
     "@emotion/is-prop-valid": "latest",

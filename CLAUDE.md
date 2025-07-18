@@ -42,6 +42,7 @@ npm run dev          # Start development server (port 3000)
 npm run build        # Build for production
 npm run start        # Start production server
 npm run lint         # Run ESLint
+npm run typecheck    # Run TypeScript type checking
 npm test            # Run Jest tests
 
 # MCP Server Management
@@ -58,6 +59,10 @@ npm test -- --testNamePattern="test name"
 
 # Coverage report
 npm test -- --coverage
+
+# Diagnostics and Verification
+npm run diagnose:images  # Run image system diagnostics
+npm run verify:deploy    # Verify deployment readiness
 ```
 
 ## High-Level Architecture
@@ -83,6 +88,10 @@ npm test -- --coverage
 - `/public` - Static assets (images optimized for web)
 - `/types` - TypeScript type definitions
 - `/__tests__` - Test files co-located with source
+- `/scripts` - Build and maintenance scripts
+  - MCP server setup and health checks
+  - Image system diagnostics
+  - Deployment verification
 
 ### Key Architectural Patterns
 
@@ -264,7 +273,7 @@ SENTRY_PROJECT=
 - Components: PascalCase (e.g., `HeroSection.tsx`)
 - Utilities: camelCase (e.g., `optimizeImage.ts`)
 - Routes: kebab-case (e.g., `/case-studies/[slug]`)
-- Test files: `*.test.ts` or `*.spec.ts`
+- Test files: `*.test.ts`, `*.spec.ts`, or `*.test.tsx` for React components
 
 ## MCP Server Troubleshooting
 
