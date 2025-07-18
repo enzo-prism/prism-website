@@ -2,6 +2,7 @@
 
 import * as Sentry from "@sentry/nextjs"
 import { addBreadcrumb, isSentryInitialized } from "./sentry-helpers"
+import { SpanStatusCode } from '@sentry/types'
 
 export interface ReleaseInfo {
   version: string
@@ -18,16 +19,14 @@ export function createSentryRelease(releaseInfo: ReleaseInfo): void {
   if (!isSentryInitialized()) return
   
   // Set the release context
-  Sentry.configureScope((scope) => {
-    scope.setTag("release", releaseInfo.version)
-    scope.setTag("environment", releaseInfo.environment)
-    scope.setContext("release", {
-      version: releaseInfo.version,
-      environment: releaseInfo.environment,
-      commit: releaseInfo.commit,
-      deployedAt: releaseInfo.deployedAt.toISOString(),
-      previousVersion: releaseInfo.previousVersion,
-    })
+  Sentry.setTag("release", releaseInfo.version)
+  Sentry.setTag("environment", releaseInfo.environment)
+  Sentry.setContext("release", {
+    version: releaseInfo.version,
+    environment: releaseInfo.environment,
+    commit: releaseInfo.commit,
+    deployedAt: releaseInfo.deployedAt.toISOString(),
+    previousVersion: releaseInfo.previousVersion,
   })
   
   addBreadcrumb(
@@ -72,15 +71,16 @@ export function trackDeployment(
     )
     
     // Track successful deployment as a transaction
-    const transaction = Sentry.startTransaction({
+    Sentry.startSpan({
       name: `Deployment Success: ${version}`,
       op: "deployment",
-      description: `Successful deployment of ${version} to ${environment}`,
+    }, (span) => {
+      if (span) {
+        span.setAttribute("description", `Successful deployment of ${version} to ${environment}`)
+        span.setAttributes(deploymentData)
+        span.setStatus({ code: SpanStatusCode.OK })
+      }
     })
-    
-    transaction.setData("deployment", deploymentData)
-    transaction.setStatus("ok")
-    transaction.finish()
   } else {
     addBreadcrumb(
       `Deployment ${version} to ${environment} failed`,
@@ -206,9 +206,7 @@ export function trackFeatureFlag(
   )
   
   // Set feature flag as tag for filtering
-  Sentry.configureScope((scope) => {
-    scope.setTag(`feature.${flagName}`, enabled ? "on" : "off")
-  })
+  Sentry.setTag(`feature.${flagName}`, enabled ? "on" : "off")
 }
 
 /**
@@ -283,13 +281,11 @@ export function trackABTest(
   )
   
   // Set A/B test as tags for filtering and analysis
-  Sentry.configureScope((scope) => {
-    scope.setTag(`ab_test.${testName}`, variant)
-    scope.setContext("ab_tests", {
-      [testName]: {
-        variant,
-        assignedAt: new Date().toISOString(),
-      },
-    })
+  Sentry.setTag(`ab_test.${testName}`, variant)
+  Sentry.setContext("ab_tests", {
+    [testName]: {
+      variant,
+      assignedAt: new Date().toISOString(),
+    },
   })
 }
