@@ -1,11 +1,11 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { LucideIcon } from "lucide-react"
+import { Target, Users, Zap, MessageCircle, LayoutGrid, Gauge, Scale } from "lucide-react"
 import { fadeInUp, card3D } from "@/utils/animation-variants"
 
 interface StrategyCardProps {
-  icon: LucideIcon
+  icon: string
   title: string
   description: string
   difficulty: "Easy" | "Medium" | "Hard"
@@ -17,7 +17,7 @@ interface StrategyCardProps {
 }
 
 export default function StrategyCard({
-  icon: Icon,
+  icon,
   title,
   description,
   difficulty,
@@ -27,6 +27,20 @@ export default function StrategyCard({
   tips,
   className = ""
 }: StrategyCardProps) {
+  const getIcon = (iconName: string) => {
+    switch (iconName) {
+      case 'target': return Target
+      case 'users': return Users
+      case 'zap': return Zap
+      case 'message-circle': return MessageCircle
+      case 'layout-grid': return LayoutGrid
+      case 'gauge': return Gauge
+      case 'scale': return Scale
+      default: return Target
+    }
+  }
+  
+  const Icon = getIcon(icon)
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
       case 'Easy': return 'bg-green-100 text-green-800 border-green-200'
