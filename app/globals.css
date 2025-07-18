@@ -938,6 +938,54 @@ body {
   }
 }
 
+/* Mobile-first component optimizations */
+@media (max-width: 768px) {
+  .mobile-optimized {
+    padding: 1rem;
+    margin: 0.5rem;
+    border-radius: 0.75rem;
+  }
+  
+  .mobile-touch-target {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  .mobile-card-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .mobile-strategy-card {
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .mobile-interactive-widget {
+    padding: 1.5rem;
+    margin: 1rem 0;
+  }
+  
+  .mobile-content-section {
+    padding: 1rem;
+    margin: 1rem 0;
+  }
+  
+  .mobile-hero-card {
+    margin: 1rem;
+    padding: 1.5rem;
+  }
+  
+  .mobile-stat-card {
+    padding: 1.25rem;
+  }
+  
+  .mobile-info-card {
+    padding: 1.25rem;
+    margin: 1rem 0;
+  }
+}
+
 /* Blog post animation enhancements - Progressive Enhancement */
 .prose-blog h1,
 .prose-blog h2,
