@@ -164,7 +164,7 @@ const mdxComponents = {
   StrategyCard,
   // Override potentially dangerous HTML elements
   script: () => null, // Block script tags
-  iframe: ({ src, title, ...props }: any) => {
+  iframe: ({ src, title, ...props }: React.IframeHTMLAttributes<HTMLIFrameElement>) => {
     // Only allow YouTube and other trusted domains
     const allowedDomains = ['youtube.com', 'youtube-nocookie.com', 'vimeo.com']
     const url = new URL(src || '')

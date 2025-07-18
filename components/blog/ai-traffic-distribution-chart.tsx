@@ -13,7 +13,16 @@ const data = [
 ]
 
 const RADIAN = Math.PI / 180
-const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent }: any) => {
+interface PieChartLabelProps {
+  cx: number
+  cy: number
+  midAngle: number
+  innerRadius: number
+  outerRadius: number
+  percent: number
+}
+
+const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent }: PieChartLabelProps) => {
   const radius = innerRadius + (outerRadius - innerRadius) * 0.5
   const x = cx + radius * Math.cos(-midAngle * RADIAN)
   const y = cy + radius * Math.sin(-midAngle * RADIAN)
@@ -35,7 +44,7 @@ const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, per
 export default function AITrafficDistributionChart() {
   const [activeIndex, setActiveIndex] = useState<number | null>(null)
 
-  const onPieEnter = (_: any, index: number) => {
+  const onPieEnter = (_: unknown, index: number) => {
     setActiveIndex(index)
   }
 
@@ -101,7 +110,7 @@ export default function AITrafficDistributionChart() {
                   }}
                   labelStyle={{ color: '#374151', fontWeight: 'bold' }}
                   itemStyle={{ color: '#374151' }}
-                  formatter={(value: any, name: any, props: any) => {
+                  formatter={(value: number, name: string, props: { payload?: { color?: string } }) => {
                     const description = props.payload?.description || 'No description available'
                     return [`${value}%`, description]
                   }}

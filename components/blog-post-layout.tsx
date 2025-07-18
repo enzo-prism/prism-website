@@ -22,7 +22,14 @@ interface Props {
   category: string
   gradientClass?: string
   image?: string
-  openGraph?: any
+  openGraph?: {
+    type?: string
+    title?: string
+    description?: string
+    url?: string
+    image?: string
+    siteName?: string
+  }
   canonical?: string
 }
 

@@ -6,7 +6,7 @@ eslint: {
   ignoreDuringBuilds: false,
 },
 typescript: {
-  ignoreBuildErrors: true,
+  ignoreBuildErrors: false,
 },
 // Enhanced image optimization configuration
 images: {

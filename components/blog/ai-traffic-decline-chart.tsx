@@ -137,7 +137,7 @@ export default function AITrafficDeclineChart() {
                   }}
                   labelStyle={{ color: '#374151', fontWeight: 'bold' }}
                   itemStyle={{ color: '#374151' }}
-                  formatter={(value: any, name: any) => {
+                  formatter={(value: number, name: string) => {
                     if (name === 'Traditional Organic') {
                       return [`${value}%`, 'Traditional Organic Search']
                     }

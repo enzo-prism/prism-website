@@ -80,6 +80,16 @@ const blogPosts = {
     category: "AI Trends",
     gradientClass: "bg-gradient-to-br from-teal-300/30 via-cyan-300/30 to-indigo-300/30",
   },
+  'dental-practice-1-3m-swamp': {
+    title: "The 1–3M Swamp for Dental Practices",
+    category: "Business & Leadership",
+    gradientClass: "bg-gradient-to-br from-teal-300/30 via-blue-300/30 to-indigo-300/30",
+  },
+  'adapting-small-business-ai-search-revolution-2025': {
+    title: "Adapting Your Small Business to the AI Search Revolution: Reclaim Your Traffic in 2025",
+    category: "Content Marketing & SEO",
+    gradientClass: "bg-gradient-to-br from-purple-300/30 via-blue-300/30 to-cyan-300/30",
+  },
 } as const
 
 export function getPostMetadataForOG(slug: string) {

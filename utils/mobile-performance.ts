@@ -72,8 +72,8 @@ class MobilePerformanceMonitor {
       // First Input Delay
       const fidObserver = new PerformanceObserver((entryList) => {
         const entries = entryList.getEntries()
-        entries.forEach((entry: any) => {
-          this.metrics.firstInputDelay = entry.processingStart - entry.startTime
+        entries.forEach((entry: PerformanceEntry & { processingStart?: number }) => {
+          this.metrics.firstInputDelay = (entry.processingStart || 0) - entry.startTime
         })
       })
       fidObserver.observe({ entryTypes: ['first-input'] })
@@ -82,10 +82,10 @@ class MobilePerformanceMonitor {
       // Cumulative Layout Shift
       const clsObserver = new PerformanceObserver((entryList) => {
         const entries = entryList.getEntries()
-        entries.forEach((entry: any) => {
+        entries.forEach((entry: PerformanceEntry & { hadRecentInput?: boolean; value?: number }) => {
           if (!entry.hadRecentInput) {
             this.metrics.cumulativeLayoutShift = 
-              (this.metrics.cumulativeLayoutShift || 0) + entry.value
+              (this.metrics.cumulativeLayoutShift || 0) + (entry.value || 0)
           }
         })
       })
@@ -124,7 +124,13 @@ class MobilePerformanceMonitor {
 
   private observeBatteryStatus(): void {
     if ('getBattery' in navigator) {
-      (navigator as any).getBattery().then((battery: any) => {
+      interface BatteryManager {
+        level: number
+      }
+      interface NavigatorWithBattery extends Navigator {
+        getBattery(): Promise<BatteryManager>
+      }
+      (navigator as NavigatorWithBattery).getBattery().then((battery: BatteryManager) => {
         this.metrics.batteryLevel = battery.level * 100
       })
     }

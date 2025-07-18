@@ -86,7 +86,7 @@ export default function VideoWithPoster({
   }
 
   // Handle poster image error with fallback support
-  const handlePosterError = (error: any) => {
+  const handlePosterError = (error: Event) => {
     console.error("Poster image failed to load:", {
       currentPosterSrc,
       error,

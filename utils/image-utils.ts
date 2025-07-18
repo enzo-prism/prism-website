@@ -60,7 +60,7 @@ export function generatePlaceholderURL(width: number, height: number, alt: strin
  * @param height Height to validate
  * @returns Object with validated width and height
  */
-export function validateImageDimensions(width: any, height: any): { width: number; height: number } {
+export function validateImageDimensions(width: unknown, height: unknown): { width: number; height: number } {
   const defaultWidth = 100
   const defaultHeight = 100
 

@@ -10,7 +10,7 @@ const data = [
 export function DrWongUserDemographicsChart() {
   const [activeIndex, setActiveIndex] = useState<number | null>(null)
 
-  const handleEnter = (_: any, index: number) => setActiveIndex(index)
+  const handleEnter = (_: unknown, index: number) => setActiveIndex(index)
   const handleLeave = () => setActiveIndex(null)
 
   const activeData = activeIndex !== null ? data[activeIndex] : data[0]

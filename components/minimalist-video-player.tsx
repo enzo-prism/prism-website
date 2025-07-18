@@ -68,7 +68,7 @@ export default function MinimalistVideoPlayer({
     playerRef.current.on("play", () => setIsPlaying(true))
     playerRef.current.on("pause", () => setIsPlaying(false))
     playerRef.current.on("ended", () => setIsPlaying(false))
-    playerRef.current.on("volumechange", (event: any) => {
+    playerRef.current.on("volumechange", (event: { volume: number }) => {
       setIsMuted(event.volume === 0)
     })
 

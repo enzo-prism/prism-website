@@ -30,10 +30,10 @@ export default function EnhancedImage({
     setImgSrc(typeof src === "string" ? src : "")
   }, [src])
 
-  // Generate a simple SVG for the blur placeholder
-  const blurDataURL = `data:image/svg+xml;base64,${Buffer.from(
-    `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}"><rect width="100%" height="100%" fill="${fallbackColor}" /></svg>`,
-  ).toString("base64")}`
+  // Generate a simple SVG for the blur placeholder (browser-compatible)
+  const blurDataURL = `data:image/svg+xml;base64,${btoa(
+    `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}"><rect width="100%" height="100%" fill="${fallbackColor}" /></svg>`
+  )}`
 
   // Generate a placeholder URL if the image fails to load
   const placeholderSrc =
