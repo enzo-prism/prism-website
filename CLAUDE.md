@@ -196,6 +196,7 @@ npm run verify:deploy    # Verify deployment readiness
 - Test files in `__tests__` directory
 - Test environment: jsdom for React component testing
 - Setup file: jest.setup.ts for test configuration
+- TypeScript config: tsconfig.jest.json for test-specific settings
 - Focus on user interactions and edge cases
 - Module path mapping configured for `@/*` imports
 - SVG files transformed in tests
@@ -313,8 +314,10 @@ npm run mcp:validate
 - `middleware.ts` - URL redirects and analytics tracking
 - `.env.example` - Template for required environment variables
 - `MCP_SETUP.md` - Detailed MCP server setup instructions
-# important-instruction-reminders
-Do what has been asked; nothing more, nothing less.
-NEVER create files unless they're absolutely necessary for achieving your goal.
-ALWAYS prefer editing an existing file to creating a new one.
-NEVER proactively create documentation files (*.md) or README files. Only create documentation files if explicitly requested by the User.
+
+## Important Reminders
+
+- **Do what has been asked; nothing more, nothing less**
+- **NEVER create files unless they're absolutely necessary** for achieving your goal
+- **ALWAYS prefer editing an existing file** to creating a new one
+- **NEVER proactively create documentation files** (*.md) or README files - only create documentation files if explicitly requested by the User
