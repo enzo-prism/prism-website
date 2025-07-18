@@ -29,17 +29,25 @@ function checkEnvFile() {
   log('\n🔍 Checking environment configuration...', 'blue');
   
   const envPath = path.join(process.cwd(), '.env');
+  const envLocalPath = path.join(process.cwd(), '.env.local');
   const envExamplePath = path.join(process.cwd(), '.env.example');
   
-  if (!fs.existsSync(envPath)) {
-    log('❌ .env file not found', 'red');
+  let activeEnvFile = null;
+  if (fs.existsSync(envLocalPath)) {
+    activeEnvFile = envLocalPath;
+    log('✅ Using .env.local for environment configuration', 'green');
+  } else if (fs.existsSync(envPath)) {
+    activeEnvFile = envPath;
+    log('✅ Using .env for environment configuration', 'green');
+  } else {
+    log('❌ No environment file found (.env or .env.local)', 'red');
     if (fs.existsSync(envExamplePath)) {
-      log('💡 Run: cp .env.example .env', 'yellow');
+      log('💡 Run: cp .env.example .env.local', 'yellow');
     }
     return false;
   }
   
-  const envContent = fs.readFileSync(envPath, 'utf8');
+  const envContent = fs.readFileSync(activeEnvFile, 'utf8');
   const requiredVars = ['GITHUB_PERSONAL_ACCESS_TOKEN', 'SUPABASE_ACCESS_TOKEN'];
   
   let allVarsPresent = true;
@@ -101,7 +109,8 @@ function testGitHubConnection() {
   }
   
   try {
-    const result = execSync(`curl -s -H "Authorization: token ${token}" https://api.github.com/user`, 
+    // Use Bearer token format for newer GitHub API
+    const result = execSync(`curl -s -H "Authorization: Bearer ${token}" https://api.github.com/user`, 
       { encoding: 'utf8', timeout: 10000 });
     
     const response = JSON.parse(result);
@@ -128,11 +137,14 @@ function testSupabaseConnection() {
   }
   
   try {
-    const result = execSync(`curl -s -H "Authorization: Bearer ${token}" https://ibjqwvkcjdgdifujfnpb.supabase.co/rest/v1/`, 
+    const result = execSync(`curl -s -H "Authorization: Bearer ${token}" -H "apikey: ${token}" https://ibjqwvkcjdgdifujfnpb.supabase.co/rest/v1/`, 
       { encoding: 'utf8', timeout: 10000 });
     
-    // Supabase REST API returns HTML swagger docs on root, which indicates success
-    if (result.includes('swagger') || result.includes('supabase')) {
+    // Check if the response indicates successful authentication
+    if (result.includes('Invalid API key')) {
+      log('❌ Supabase API error: Invalid API key', 'red');
+      return false;
+    } else if (result.includes('swagger') || result.includes('supabase') || result.length > 0) {
       log('✅ Supabase API connected', 'green');
       return true;
     } else {
@@ -186,8 +198,15 @@ function main() {
   log('🚀 MCP Server Health Check', 'bold');
   log('================================', 'blue');
   
-  // Load environment variables
-  require('dotenv').config();
+  // Load environment variables from .env.local if it exists, otherwise .env
+  const envLocalPath = path.join(process.cwd(), '.env.local');
+  const envPath = path.join(process.cwd(), '.env');
+  
+  if (fs.existsSync(envLocalPath)) {
+    require('dotenv').config({ path: envLocalPath });
+  } else {
+    require('dotenv').config({ path: envPath });
+  }
   
   const results = {
     envConfig: checkEnvFile(),

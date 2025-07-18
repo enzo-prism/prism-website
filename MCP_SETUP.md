@@ -38,8 +38,10 @@ This project is configured with MCP (Model Context Protocol) servers for enhance
 
 First, copy the example environment file:
 ```bash
-cp .env.example .env
+cp .env.example .env.local
 ```
+
+**Note:** We use `.env.local` for local development as it takes precedence over `.env` and is automatically ignored by Git.
 
 ### 2. Token Generation & Configuration
 
@@ -51,7 +53,7 @@ cp .env.example .env
    - **Permissions**:
      - Repository permissions: Contents (Read), Issues (Read/Write), Pull requests (Read/Write), Metadata (Read)
      - Account permissions: None needed
-3. Copy the token and add to `.env`:
+3. Copy the token and add to `.env.local`:
    ```bash
    GITHUB_PERSONAL_ACCESS_TOKEN=ghp_your_token_here
    ```
@@ -61,7 +63,7 @@ cp .env.example .env
 2. Select your project: `ibjqwvkcjdgdifujfnpb`
 3. Navigate to **Settings > API**
 4. Copy the **service_role** key (not the anon key)
-5. Add to `.env`:
+5. Add to `.env.local`:
    ```bash
    SUPABASE_ACCESS_TOKEN=sbp_your_token_here
    ```
@@ -95,6 +97,22 @@ curl http://127.0.0.1:3845/health
 2. Ask Claude to list recent GitHub issues - it should access them via MCP
 3. Ask Claude to describe your Supabase database schema
 4. Ask Claude to check recent Sentry errors
+
+#### Cursor IDE Integration
+This project includes VS Code/Cursor settings in `.vscode/settings.json` that configure:
+- MCP server integration for Cursor
+- TypeScript and ESLint auto-formatting
+- Tailwind CSS IntelliSense
+- MDX file support
+
+**Alternative MCP Configurations:**
+- **Default**: `.mcp.json` - Uses npm packages (works in most environments)
+- **Docker**: `.mcp.docker.json` - Uses Docker containers (requires Docker installed)
+
+To switch to Docker configuration:
+```bash
+cp .mcp.docker.json .mcp.json
+```
 
 ## Usage Examples
 
@@ -163,8 +181,13 @@ curl http://127.0.0.1:3845/health
 - **Solution**: Verify organization slug is correct in Sentry setup
 - **Note**: No additional tokens needed for Sentry MCP server
 
+#### "MCP servers not working in Cursor"
+- **Cause**: Cursor may need explicit MCP configuration
+- **Solution**: Check `.vscode/settings.json` has correct MCP server settings
+- **Alternative**: Use Claude Code directly for MCP functionality
+
 ### Debug Steps
-1. Check `.env` file exists and has correct variable names
+1. Check `.env.local` file exists and has correct variable names
 2. Verify tokens have not expired
 3. Test API connectivity using curl commands above
 4. Check Claude Code console for detailed error messages

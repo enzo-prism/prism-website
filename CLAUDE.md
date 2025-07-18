@@ -38,6 +38,8 @@ npm run dev
 - **Monitoring**: Sentry (org: `prism-m0`, project: `prism-website`)
 - **Testing**: Jest with TypeScript and Testing Library
 - **Deployment**: Vercel
+- **Analytics**: PostHog integration
+- **Email**: Resend for transactional emails
 
 ## Essential Commands
 
@@ -51,9 +53,10 @@ npm run typecheck    # Run TypeScript type checking
 npm test            # Run Jest tests
 
 # MCP Server Management
-npm run mcp:setup    # Setup MCP servers
-npm run mcp:health   # Check MCP server health
-npm run mcp:validate # Validate MCP configuration
+npm run mcp:setup       # Setup MCP servers
+npm run mcp:health      # Check MCP server health
+npm run mcp:test-github # Test GitHub MCP server specifically
+npm run mcp:validate    # Validate MCP configuration
 
 # Running a single test
 npm test -- path/to/test.spec.ts
@@ -103,7 +106,13 @@ npm run verify:deploy    # Verify deployment readiness
 
 ### Key Architectural Patterns
 
-1. **Image Optimization System**
+1. **Server Components vs Client Components**
+   - Server Components by default (no "use client" directive)
+   - Client Components for interactivity (onClick, useState, useEffect)
+   - Form submissions use server actions
+   - Dynamic imports for heavy client components
+
+2. **Image Optimization System**
    - Enhanced Next.js Image component with error handling
    - Automatic WebP/AVIF conversion
    - 1-year cache TTL for optimized images
@@ -111,28 +120,28 @@ npm run verify:deploy    # Verify deployment readiness
    - Custom image processing utilities in `/utils/image.ts`
    - Diagnostic script available: `npm run diagnose:images`
 
-2. **Content Management**
+3. **Content Management**
    - MDX-based blog system with dynamic imports
    - SEO-optimized with canonical URLs and metadata
    - Related content suggestions algorithm
    - Social sharing integration
    - Blog posts stored in `/content/blog/` with front matter
 
-3. **Error Boundaries & Monitoring**
+4. **Error Boundaries & Monitoring**
    - Sentry integration across client/server/edge
    - Custom error boundaries with fallback UI
    - Performance tracking and analytics
    - Redirect tracking in middleware
    - Automatic error capture with source maps
 
-4. **Form Handling**
+5. **Form Handling**
    - React Hook Form for complex forms
    - Zod schemas for validation
    - Server-side form processing
    - Progressive enhancement
    - Email storage via Supabase integration
 
-5. **Routing & Middleware**
+6. **Routing & Middleware**
    - App Router with file-based routing
    - Middleware for URL redirects and analytics
    - Dynamic routes for content (blog, case studies)
@@ -219,6 +228,11 @@ SUPABASE_ACCESS_TOKEN=
 SENTRY_DSN=
 SENTRY_ORG=
 SENTRY_PROJECT=
+
+# Additional Services
+RESEND_API_KEY=
+NEXT_PUBLIC_POSTHOG_KEY=
+NEXT_PUBLIC_POSTHOG_HOST=
 ```
 
 ### Security Best Practices
@@ -314,6 +328,9 @@ npm run mcp:validate
 - `middleware.ts` - URL redirects and analytics tracking
 - `.env.example` - Template for required environment variables
 - `MCP_SETUP.md` - Detailed MCP server setup instructions
+- `package.json` - Dependencies and scripts (check for available commands)
+- `postcss.config.mjs` - PostCSS configuration for Tailwind
+- `jest.setup.ts` - Jest test environment setup
 
 ## Important Reminders
 
@@ -321,3 +338,56 @@ npm run mcp:validate
 - **NEVER create files unless they're absolutely necessary** for achieving your goal
 - **ALWAYS prefer editing an existing file** to creating a new one
 - **NEVER proactively create documentation files** (*.md) or README files - only create documentation files if explicitly requested by the User
+
+## Commonly Used Commands Summary
+
+```bash
+# Quick development workflow
+npm run dev          # Start dev server on port 3000
+npm run lint         # Check code quality
+npm run typecheck    # Validate TypeScript types
+npm test            # Run all tests
+
+# Test specific file or pattern
+npm test -- __tests__/utils/image.test.ts
+npm test -- --testNamePattern="optimizeImage"
+
+# Before deploying
+npm run verify:deploy    # Check deployment readiness
+npm run diagnose:images  # Verify image system health
+```
+
+## Critical Architecture Understanding
+
+### Next.js App Router Structure
+The application uses Next.js 15's App Router, which means:
+- Routes are defined by folder structure in `/app`
+- Each route folder needs a `page.tsx` file to be accessible
+- Layouts (`layout.tsx`) wrap child routes automatically
+- Server Components are the default (no "use client" needed)
+- Metadata is exported from page files for SEO
+
+### Component Architecture
+1. **Server Components** (default):
+   - Can fetch data directly
+   - Render on the server
+   - Better performance and SEO
+   
+2. **Client Components** ("use client"):
+   - Required for interactivity (useState, useEffect, onClick)
+   - Located primarily in `/components` directory
+   - Should be kept as small as possible
+
+### Data Flow
+1. **Static Content**: MDX files in `/content/blog/`
+2. **Dynamic Data**: Supabase integration for email storage
+3. **Forms**: Server actions for processing
+4. **Analytics**: PostHog client-side tracking
+5. **Errors**: Sentry captures across all environments
+
+### Performance Optimization Strategy
+1. **Images**: Custom optimization pipeline with monitoring
+2. **Code Splitting**: Dynamic imports for heavy components
+3. **Caching**: 1-year TTL for optimized assets
+4. **Animations**: Hardware-accelerated only (transform, opacity)
+5. **Bundle Size**: Monitor imports and tree-shaking
