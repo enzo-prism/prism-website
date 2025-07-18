@@ -1,13 +1,11 @@
-import Navbar from "@/components/navbar"
-import Footer from "@/components/footer"
-import BlogPageTracker from "./BlogPageTracker"
-import BlogCTAButton from "./BlogCTAButton"
-import BlogPostCard from "@/components/blog-post-card"
-import type { BlogFrontmatter } from "@/lib/mdx"
-import BlogPostsList from "./BlogPostsList"
 import { BlogListErrorBoundary } from "@/components/blog-error-boundary"
-import AnimatedHeroSection from "@/components/animated-hero-section"
+import Footer from "@/components/footer"
 import MobileHeroSection from "@/components/mobile-hero-section"
+import Navbar from "@/components/navbar"
+import type { BlogFrontmatter } from "@/lib/mdx"
+import BlogCTAButton from "./BlogCTAButton"
+import BlogPageTracker from "./BlogPageTracker"
+import BlogPostsList from "./BlogPostsList"
 
 // Define the blog post type
 interface BlogPost extends BlogFrontmatter {
@@ -23,14 +21,14 @@ export default function BlogPage({ posts }: { posts: BlogPost[] }) {
     <div className="flex min-h-screen flex-col">
       <BlogPageTracker />
       <Navbar />
-      <main className="flex-1">
+      <main className="flex-1 relative">
         {/* Mobile-Optimized Hero Section */}
         <MobileHeroSection
           title="insights & ideas"
           subtitle="thoughts on design, development, and digital strategy from the prism team"
         />
 
-        {/* Blog Posts List or Empty State */}
+        {/* Blog Posts List with Filter Navigation */}
         <BlogListErrorBoundary>
           <BlogPostsList posts={blogPosts} />
         </BlogListErrorBoundary>
