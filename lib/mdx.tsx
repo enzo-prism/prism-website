@@ -15,6 +15,15 @@ import BrandTaglineGenerator from '@/components/blog/brand-tagline-generator'
 import AIMentionTracker from '@/components/blog/ai-mention-tracker'
 import StrategyCard from '@/components/blog/strategy-card'
 
+// Import mobile components for MDX
+import { MobileHeroCard } from '@/components/mobile/MobileHeroCard'
+import { MobileStatCard } from '@/components/mobile/MobileStatCard'
+import { MobileStrategyCard } from '@/components/mobile/MobileStrategyCard'
+import { MobileInfoCard } from '@/components/mobile/MobileInfoCard'
+import { MobileContentSection, MobileParagraph, MobileList, MobileHeading } from '@/components/mobile/MobileContentSection'
+import { MobileSectionDivider } from '@/components/mobile/MobileSectionDivider'
+import { MobileInteractiveWidget } from '@/components/mobile/MobileInteractiveWidget'
+
 export type BlogFrontmatter = {
   title: string
   description: string
@@ -162,6 +171,17 @@ const mdxComponents = {
   BrandTaglineGenerator,
   AIMentionTracker,
   StrategyCard,
+  // Mobile components for blog content
+  MobileHeroCard,
+  MobileStatCard,
+  MobileStrategyCard,
+  MobileInfoCard,
+  MobileContentSection,
+  MobileParagraph,
+  MobileList,
+  MobileHeading,
+  MobileSectionDivider,
+  MobileInteractiveWidget,
   // Override potentially dangerous HTML elements
   script: () => null, // Block script tags
   iframe: ({ src, title, ...props }: React.IframeHTMLAttributes<HTMLIFrameElement>) => {
