@@ -9,7 +9,6 @@ import SentryContextProvider from "@/components/sentry-context-provider"
 import ErrorTracker from "@/components/error-tracker"
 import MCPHealthMonitor from "@/components/mcp-health-monitor"
 import PerformanceMonitor from "@/components/performance-monitor"
-import ReleaseTracker from "@/components/release-tracker"
 
 
 export const metadata: Metadata = {
