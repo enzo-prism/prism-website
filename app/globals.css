@@ -848,7 +848,7 @@ body {
   @apply text-lg italic text-neutral-600 dark:text-neutral-400 border-l-8 border-neutral-300 dark:border-neutral-700 pl-8 my-12;
 }
 
-/* Blog post animation enhancements */
+/* Blog post animation enhancements - Progressive Enhancement */
 .prose-blog h1,
 .prose-blog h2,
 .prose-blog h3,
@@ -856,9 +856,22 @@ body {
 .prose-blog ul,
 .prose-blog ol,
 .prose-blog blockquote {
+  /* Content is visible by default - animations are enhancement only */
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+/* Animation starting state - only when animations are actively supported */
+.supports-animations .prose-blog h1,
+.supports-animations .prose-blog h2,
+.supports-animations .prose-blog h3,
+.supports-animations .prose-blog p,
+.supports-animations .prose-blog ul,
+.supports-animations .prose-blog ol,
+.supports-animations .prose-blog blockquote {
   opacity: 0;
   transform: translateY(20px);
-  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
 }
 
 .prose-blog h1.animate-reveal,

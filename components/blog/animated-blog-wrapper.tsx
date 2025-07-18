@@ -17,26 +17,36 @@ export default function AnimatedBlogWrapper({ children, className = "" }: Animat
   })
 
   const y = useTransform(scrollYProgress, [0, 1], [0, -50])
-  const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0])
+  // Keep content visible throughout scroll - remove fade out effect
+  const opacity = useTransform(scrollYProgress, [0, 0.1], [0, 1])
 
   useEffect(() => {
-    // Add scroll-triggered animations to headings and paragraphs
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("animate-reveal")
-          }
-        })
-      },
-      { threshold: 0.1, rootMargin: "0px 0px -50px 0px" }
-    )
+    // Enable animations only when JS is available and animations are supported
+    const supportsAnimations = !window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    
+    if (supportsAnimations && containerRef.current) {
+      // Add animation support class to enable hidden initial state
+      containerRef.current.classList.add("supports-animations")
+      
+      // Add scroll-triggered animations to headings and paragraphs
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("animate-reveal")
+            }
+          })
+        },
+        { threshold: 0.1, rootMargin: "0px 0px -50px 0px" }
+      )
 
-    // Observe all headings and paragraphs
-    const elements = containerRef.current?.querySelectorAll("h1, h2, h3, p, ul, ol, blockquote")
-    elements?.forEach((el) => observer.observe(el))
+      // Observe all headings and paragraphs
+      const elements = containerRef.current.querySelectorAll("h1, h2, h3, p, ul, ol, blockquote")
+      elements.forEach((el) => observer.observe(el))
 
-    return () => observer.disconnect()
+      return () => observer.disconnect()
+    }
+    // If animations aren't supported or are disabled, content remains visible by default
   }, [])
 
   return (
