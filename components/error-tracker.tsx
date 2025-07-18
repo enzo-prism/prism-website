@@ -16,6 +16,13 @@ export default function ErrorTracker() {
         "js_error",
         typeof message === "string" ? message : JSON.stringify(message),
         `${source}:${lineno}:${colno}`,
+        {
+          source,
+          lineno,
+          colno,
+          stack: error?.stack,
+          userAgent: window.navigator.userAgent,
+        }
       )
 
       // Call the original handler if it exists
@@ -32,6 +39,11 @@ export default function ErrorTracker() {
         "unhandled_promise_rejection",
         event.reason?.message || "Unknown promise rejection",
         event.reason?.stack || "No stack trace available",
+        {
+          reason: event.reason,
+          promiseRejection: true,
+          userAgent: window.navigator.userAgent,
+        }
       )
 
       // Call the original handler if it exists

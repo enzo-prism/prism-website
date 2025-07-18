@@ -1,6 +1,7 @@
 "use client"
 
 import { sendGAEvent } from "@next/third-parties/google"
+import { captureErrorWithContext, addBreadcrumb, isSentryInitialized } from "./sentry-helpers"
 
 // Custom event types
 export type EventType =
@@ -60,7 +61,7 @@ export function trackPageView(path: string, title: string) {
 }
 
 /**
- * Track a CTA button click
+ * Track a CTA button click with enhanced tracking
  * @param ctaText The text of the CTA
  * @param location The location of the CTA on the page
  */
@@ -69,6 +70,20 @@ export function trackCTAClick(ctaText: string, location: string) {
     cta_text: ctaText,
     cta_location: location,
   })
+
+  // Add breadcrumb for user journey tracking
+  if (isSentryInitialized()) {
+    addBreadcrumb(
+      `CTA clicked: ${ctaText}`,
+      "user",
+      "info",
+      {
+        ctaText,
+        location,
+        url: typeof window !== "undefined" ? window.location.href : undefined,
+      }
+    )
+  }
 }
 
 /**
@@ -183,17 +198,37 @@ export function trackScrollMilestone(percentage: number, pageTitle: string) {
 }
 
 /**
- * Track errors encountered by users
+ * Track errors encountered by users with enhanced Sentry integration
  * @param errorType The type of error
  * @param errorMessage The error message
  * @param errorLocation Where the error occurred
+ * @param additionalContext Optional additional context for debugging
  */
-export function trackError(errorType: string, errorMessage: string, errorLocation: string) {
+export function trackError(
+  errorType: string, 
+  errorMessage: string, 
+  errorLocation: string,
+  additionalContext?: Record<string, any>
+) {
+  // Track in Google Analytics for business metrics
   trackEvent("error", {
     error_type: errorType,
     error_message: errorMessage,
     error_location: errorLocation,
   })
+
+  // Also capture in Sentry for detailed debugging (if available)
+  if (isSentryInitialized()) {
+    captureErrorWithContext(errorMessage, {
+      errorType,
+      component: errorLocation,
+      url: typeof window !== "undefined" ? window.location.href : undefined,
+      additionalData: {
+        errorLocation,
+        ...additionalContext,
+      },
+    })
+  }
 }
 
 /**

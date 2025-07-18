@@ -2,6 +2,7 @@
 
 import * as Sentry from '@sentry/nextjs';
 import { useEffect } from 'react';
+import { captureErrorWithContext } from '@/utils/sentry-helpers';
 
 export default function GlobalError({
   error,
@@ -11,7 +12,19 @@ export default function GlobalError({
   reset: () => void;
 }) {
   useEffect(() => {
-    Sentry.captureException(error);
+    // Capture with enhanced context for better debugging
+    captureErrorWithContext(error, {
+      errorType: 'global_react_error',
+      component: 'GlobalErrorBoundary',
+      additionalData: {
+        digest: error.digest,
+        name: error.name,
+        stack: error.stack,
+        timestamp: new Date().toISOString(),
+        userAgent: typeof window !== 'undefined' ? window.navigator.userAgent : 'unknown',
+        url: typeof window !== 'undefined' ? window.location.href : 'unknown',
+      },
+    });
   }, [error]);
 
   return (

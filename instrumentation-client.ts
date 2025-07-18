@@ -24,3 +24,6 @@ Sentry.init({
     }),
   ],
 });
+
+// Export the required router transition hook to eliminate build warnings
+export const onRouterTransitionStart = Sentry.captureRouterTransitionStart;
