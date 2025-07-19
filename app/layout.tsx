@@ -73,7 +73,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className="scroll-smooth" suppressHydrationWarning>
+    <html lang="en" className="m-0 p-0 w-full h-full scroll-smooth" suppressHydrationWarning>
       <head>
         {/* Google Tag Manager - Deferred for better performance */}
         <script
@@ -165,7 +165,7 @@ export default function RootLayout({
         The existing font-sans class from Tailwind will then use this font
         if tailwind.config.ts is updated accordingly.
     */}
-      <body className="font-sans antialiased">
+      <body className="m-0 p-0 w-full min-h-screen font-sans antialiased">
         {/* Google Tag Manager (noscript) */}
         <noscript
           dangerouslySetInnerHTML={{
