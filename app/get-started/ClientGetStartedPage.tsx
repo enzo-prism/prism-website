@@ -250,7 +250,9 @@ export default function ClientGetStartedPage() {
                   whileTap={{ scale: 0.95 }}
                 >
                   <motion.a
-                    href="#schedule"
+                    href="https://calendar.notion.so/meet/enzosison/client-meeting"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="flex items-center justify-center w-full py-4 px-6 bg-black text-white rounded-full text-lg lowercase relative overflow-hidden min-h-[44px] shadow-lg"
                     onClick={() => trackCTAClick("quick schedule", "get started page")}
                     whileHover={{ scale: 1.02 }}
@@ -354,7 +356,7 @@ export default function ClientGetStartedPage() {
           <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-white via-white/80 to-transparent pointer-events-none" />
         </motion.section>
 
-        {/* Calendly Section - Enhanced with animations */}
+        {/* Notion Calendar Section - Enhanced with animations */}
         <motion.section 
           id="schedule" 
           className="px-4 py-16 md:py-24 bg-neutral-50"
@@ -482,7 +484,7 @@ export default function ClientGetStartedPage() {
                   variants={fadeInUp}
                 >
                   <motion.a
-                    href="https://calendly.com/enzo-prism/exclusive-strategy-session-with-prism"
+                    href="https://calendar.notion.so/meet/enzosison/client-meeting"
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={() => trackCTAClick("schedule your call", "get started page")}
