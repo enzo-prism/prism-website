@@ -79,35 +79,34 @@ export function MobileStrategyCard({
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, ease: "easeOut" }}
+      whileTap={{ scale: 0.98 }}
       className={`
-        relative overflow-hidden rounded-xl bg-white dark:bg-neutral-900 
-        border border-neutral-200 dark:border-neutral-800 
-        shadow-lg transition-all duration-300 hover:shadow-xl
+        relative overflow-hidden rounded-lg bg-white 
+        border border-neutral-200 shadow-sm 
+        mobile-card mx-0 my-4
         ${className}
       `}
     >
-      {/* Header */}
-      <div className="p-6 pb-4">
+      {/* Header - Mobile optimized */}
+      <div className="p-4">
         {/* Icon and badges */}
-        <div className="flex items-start justify-between mb-4">
+        <div className="flex items-start justify-between mb-3">
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="flex items-center gap-3"
+            className="flex items-center gap-2"
           >
-            <div className="p-2 rounded-lg bg-neutral-100 dark:bg-neutral-800">
-              <IconComponent className="h-5 w-5 text-neutral-600 dark:text-neutral-400" />
+            <div className="p-1.5 rounded-md bg-neutral-100">
+              <IconComponent className="h-4 w-4 text-neutral-600" />
             </div>
-            <div className="flex flex-col gap-2">
-              <div className="flex flex-wrap gap-2">
-                <Badge className={`text-xs ${difficultyColors[difficulty]}`}>
-                  {difficulty}
-                </Badge>
-                <Badge className={`text-xs ${impactColors[impact]}`}>
-                  {impact} Impact
-                </Badge>
-              </div>
+            <div className="flex flex-wrap gap-1">
+              <Badge className={`text-xs px-2 py-0.5 ${difficultyColors[difficulty]}`}>
+                {difficulty}
+              </Badge>
+              <Badge className={`text-xs px-2 py-0.5 ${impactColors[impact]}`}>
+                {impact}
+              </Badge>
             </div>
           </motion.div>
           
@@ -115,9 +114,9 @@ export function MobileStrategyCard({
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="flex items-center gap-2 text-sm text-neutral-500 dark:text-neutral-400"
+            className="flex items-center gap-1 text-xs text-neutral-500"
           >
-            <Clock className="h-4 w-4" />
+            <Clock className="h-3 w-3" />
             <span>{timeframe}</span>
           </motion.div>
         </div>
@@ -127,7 +126,7 @@ export function MobileStrategyCard({
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5, delay: 0.3 }}
-          className="text-lg font-semibold text-neutral-900 dark:text-white mb-3 leading-tight"
+          className="text-base font-bold text-neutral-900 mb-2 leading-tight lowercase"
         >
           {title}
         </motion.h3>
@@ -137,29 +136,27 @@ export function MobileStrategyCard({
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.4 }}
-          className="text-neutral-600 dark:text-neutral-300 mb-4 leading-relaxed"
+          className="text-neutral-600 mb-3 leading-relaxed text-sm line-clamp-3"
         >
           {description}
         </motion.p>
         
-        {/* Expand button */}
+        {/* Expand button - Touch optimized */}
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.5 }}
         >
-          <Button
+          <button
             onClick={() => setIsExpanded(!isExpanded)}
-            variant="ghost"
-            size="sm"
-            className="w-full justify-between p-3 h-auto text-left hover:bg-neutral-50 dark:hover:bg-neutral-800 rounded-lg"
+            className="mobile-button w-full justify-between bg-neutral-50 text-neutral-700 hover:bg-neutral-100"
           >
             <span className="flex items-center gap-2 text-sm font-medium">
               <ArrowRight className="h-4 w-4" />
-              {isExpanded ? "Hide Details" : "View Steps & Tips"}
+              {isExpanded ? "hide details" : "view steps"}
             </span>
             {isExpanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
-          </Button>
+          </button>
         </motion.div>
       </div>
       
@@ -173,14 +170,14 @@ export function MobileStrategyCard({
             transition={{ duration: 0.3, ease: "easeInOut" }}
             className="overflow-hidden"
           >
-            <div className="px-6 pb-6 pt-2 border-t border-neutral-100 dark:border-neutral-800">
+            <div className="px-4 pb-4 pt-2 border-t border-neutral-100">
               {/* Steps */}
-              <div className="mb-6">
-                <h4 className="flex items-center gap-2 text-sm font-medium text-neutral-900 dark:text-white mb-3">
+              <div className="mb-4">
+                <h4 className="flex items-center gap-2 text-sm font-bold text-neutral-900 mb-3 lowercase">
                   <CheckCircle2 className="h-4 w-4 text-green-500" />
-                  Implementation Steps
+                  steps to follow
                 </h4>
-                <div className="space-y-3">
+                <div className="space-y-2">
                   {steps.map((step, index) => (
                     <motion.div
                       key={index}
@@ -188,32 +185,32 @@ export function MobileStrategyCard({
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ duration: 0.4, delay: index * 0.1 }}
                       className={`
-                        flex items-start gap-3 p-3 rounded-lg border-2 transition-all duration-200
+                        flex items-start gap-3 p-3 rounded-lg border transition-all duration-200 mobile-card
                         ${completedSteps.includes(index) 
-                          ? "bg-green-50 border-green-200 dark:bg-green-900/10 dark:border-green-800" 
-                          : "bg-neutral-50 border-neutral-200 dark:bg-neutral-800 dark:border-neutral-700 hover:border-neutral-300 dark:hover:border-neutral-600"
+                          ? "bg-green-50 border-green-200" 
+                          : "bg-neutral-50 border-neutral-200"
                         }
                       `}
                     >
                       <button
                         onClick={() => toggleStep(index)}
                         className={`
-                          flex-shrink-0 w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all duration-200
+                          flex-shrink-0 w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all duration-200 mobile-touch-target
                           ${completedSteps.includes(index)
                             ? "bg-green-500 border-green-500 text-white"
-                            : "border-neutral-300 dark:border-neutral-600 hover:border-green-500"
+                            : "border-neutral-300 hover:border-green-500"
                           }
                         `}
                       >
                         {completedSteps.includes(index) && (
-                          <CheckCircle2 className="h-4 w-4" />
+                          <CheckCircle2 className="h-3 w-3" />
                         )}
                       </button>
                       <span className={`
                         text-sm leading-relaxed flex-1 transition-all duration-200
                         ${completedSteps.includes(index)
-                          ? "text-green-800 dark:text-green-200 line-through opacity-75"
-                          : "text-neutral-700 dark:text-neutral-300"
+                          ? "text-green-800 line-through opacity-75"
+                          : "text-neutral-700"
                         }
                       `}>
                         {step}
@@ -226,9 +223,9 @@ export function MobileStrategyCard({
               {/* Tips */}
               {tips && tips.length > 0 && (
                 <div>
-                  <h4 className="flex items-center gap-2 text-sm font-medium text-neutral-900 dark:text-white mb-3">
+                  <h4 className="flex items-center gap-2 text-sm font-bold text-neutral-900 mb-3 lowercase">
                     <Lightbulb className="h-4 w-4 text-yellow-500" />
-                    Pro Tips
+                    pro tips
                   </h4>
                   <div className="space-y-2">
                     {tips.map((tip, index) => (
@@ -237,10 +234,10 @@ export function MobileStrategyCard({
                         initial={{ opacity: 0, x: -20 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.4, delay: 0.2 + index * 0.1 }}
-                        className="flex items-start gap-3 p-3 rounded-lg bg-yellow-50 border border-yellow-200 dark:bg-yellow-900/10 dark:border-yellow-800"
+                        className="flex items-start gap-3 p-3 rounded-lg bg-yellow-50 border border-yellow-200 mobile-card"
                       >
-                        <AlertCircle className="h-4 w-4 text-yellow-600 dark:text-yellow-400 mt-0.5 flex-shrink-0" />
-                        <span className="text-sm text-yellow-800 dark:text-yellow-200 leading-relaxed">
+                        <AlertCircle className="h-4 w-4 text-yellow-600 mt-0.5 flex-shrink-0" />
+                        <span className="text-sm text-yellow-800 leading-relaxed">
                           {tip}
                         </span>
                       </motion.div>
