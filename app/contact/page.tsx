@@ -64,7 +64,7 @@ export default function ContactPage() {
             <h1 className="text-4xl font-bold tracking-tight text-neutral-900 sm:text-5xl lowercase">get in touch.</h1>
             <p className="mt-4 text-lg text-neutral-600 lowercase">
               we&apos;re here to help. reach out through any of these channels.
-          </p>
+            </p>
         </div>
 
         {/* CTA Alternative */}
