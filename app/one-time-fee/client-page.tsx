@@ -102,6 +102,16 @@ export default function OneTimeFeeClientPage() {
                     <li>• unlimited revisions</li>
                     <li>• ready in 3-5 business days</li>
                   </ul>
+                  <div className="mb-4">
+                    <a
+                      href="https://buy.stripe.com/9B6bJ2gn41iy1WgaAndZ60D"
+                      className="inline-flex items-center justify-center rounded-full bg-black text-white px-6 py-3 text-base lowercase font-medium hover:bg-neutral-800 transition-colors"
+                      onClick={() => trackCTAClick("checkout $750 design", "design sprint card")}
+                    >
+                      <CreditCard className="mr-2 h-4 w-4" />
+                      checkout
+                    </a>
+                  </div>
                   <div className="text-xs text-neutral-500 lowercase">👈 you're here</div>
                 </div>
               </div>
