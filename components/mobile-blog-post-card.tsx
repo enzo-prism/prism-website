@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState, useRef, useEffect } from "react"
+import React, { useState, useEffect } from "react"
 import Link from "next/link"
 import { ArrowRight, Clock, Calendar } from "lucide-react"
 import { motion } from "framer-motion"
@@ -32,10 +32,8 @@ export default function MobileBlogPostCard({
   compact = false,
   gradientClass,
 }: MobileBlogPostCardProps) {
-  const [isPressed, setIsPressed] = useState(false)
   const [reducedMotion, setReducedMotion] = useState(false)
   const isMobile = useMobile()
-  const cardRef = useRef<HTMLDivElement>(null)
 
   // Check for reduced motion preference
   useEffect(() => {
@@ -50,79 +48,22 @@ export default function MobileBlogPostCard({
     return () => mediaQuery.removeEventListener('change', handleChange)
   }, [])
 
-  // Simplified touch interactions - no interference with navigation
-  const handleMouseDown = () => {
-    setIsPressed(true)
-  }
-
-  const handleMouseUp = () => {
-    setIsPressed(false)
-  }
-
   // Calculate reading time
   const readingTime = Math.ceil(description.length / 200) || 1
-
-  // Mobile-optimized variants with fallback visibility
-  const mobileCardVariants = reducedMotion ? {
-    initial: { opacity: 1 }, // Start visible as fallback
-    animate: { opacity: 1 },
-    hover: {},
-    tap: {}
-  } : {
-    initial: { 
-      opacity: 1, // Start visible as fallback
-      y: 0,
-      scale: 1,
-    },
-    animate: { 
-      opacity: 1, 
-      y: 0,
-      scale: 1,
-      transition: {
-        duration: 0.4,
-      }
-    },
-    hover: isMobile ? {} : {
-      y: -4,
-      scale: 1.02,
-      transition: { duration: 0.2 }
-    },
-    tap: {
-      scale: 0.98,
-      transition: { duration: 0.1 }
-    }
-  }
 
   return (
     <Link 
       href={`/blog/${slug}`} 
       onClick={() => trackCTAClick(`view blog post`, title)}
-      className="block focus:outline-none focus:ring-2 focus:ring-neutral-500 focus:ring-offset-2 rounded-lg"
+      className={`
+        block focus:outline-none focus:ring-2 focus:ring-neutral-500 focus:ring-offset-2 rounded-lg
+        mobile-blog-card animate-in
+        relative border border-neutral-200 rounded-xl overflow-hidden h-full
+        bg-white shadow-sm hover:shadow-md transition-all duration-200
+        ${isMobile ? 'min-h-[280px] active:scale-[0.98]' : 'hover:scale-[1.02] hover:-translate-y-1'}
+      `}
     >
-      <motion.div
-        ref={cardRef}
-        className={`
-          mobile-blog-card animate-in
-          relative border border-neutral-200 rounded-xl overflow-hidden h-full
-          bg-white shadow-sm hover:shadow-md transition-shadow duration-200
-          ${isPressed ? 'shadow-inner' : ''}
-          ${isMobile ? 'min-h-[280px]' : ''}
-        `}
-        variants={mobileCardVariants}
-        initial="initial"
-        animate="animate"
-        whileHover="hover"
-        onMouseDown={handleMouseDown}
-        onMouseUp={handleMouseUp}
-        onMouseLeave={handleMouseUp}
-        style={{
-          // Mobile-optimized GPU acceleration
-          transform: "translateZ(0)",
-          willChange: "transform",
-          backfaceVisibility: "hidden",
-          cursor: "pointer",
-        }}
-      >
+      <div className="h-full w-full">
         {/* Featured badge */}
         {featured && (
           <motion.div 
@@ -229,17 +170,7 @@ export default function MobileBlogPostCard({
           </div>
         </div>
         
-        {/* Touch feedback overlay */}
-        {isPressed && (
-          <motion.div
-            className="absolute inset-0 bg-black/5 rounded-xl"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.1 }}
-          />
-        )}
-      </motion.div>
+      </div>
     </Link>
   )
 }
@@ -255,7 +186,6 @@ export function CompactMobileBlogPostCard({
   featured = false,
   gradientClass,
 }: MobileBlogPostCardProps) {
-  const [isPressed, setIsPressed] = useState(false)
   const [reducedMotion, setReducedMotion] = useState(false)
 
   useEffect(() => {
@@ -277,18 +207,11 @@ export function CompactMobileBlogPostCard({
       className="block focus:outline-none focus:ring-2 focus:ring-neutral-500 focus:ring-offset-2 rounded-lg"
     >
       <motion.div
-        className={`
-          relative border border-neutral-200 rounded-xl overflow-hidden
-          bg-white shadow-sm hover:shadow-md transition-shadow duration-200
-          ${isPressed ? 'shadow-inner' : ''}
-          min-h-[120px]
-        `}
+        className="relative border border-neutral-200 rounded-xl overflow-hidden bg-white shadow-sm hover:shadow-md transition-all duration-200 min-h-[120px] active:scale-[0.98]"
         initial={reducedMotion ? {} : { opacity: 0, y: 20 }}
         animate={reducedMotion ? {} : { opacity: 1, y: 0 }}
         transition={{ duration: 0.4, ease: "easeOut" }}
         whileTap={reducedMotion ? {} : { scale: 0.98 }}
-        onTouchStart={() => setIsPressed(true)}
-        onTouchEnd={() => setIsPressed(false)}
         style={{
           transform: "translateZ(0)",
           willChange: "transform",
@@ -342,16 +265,6 @@ export function CompactMobileBlogPostCard({
           </div>
         </div>
         
-        {/* Touch feedback overlay */}
-        {isPressed && (
-          <motion.div
-            className="absolute inset-0 bg-black/5 rounded-xl"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.1 }}
-          />
-        )}
       </motion.div>
     </Link>
   )
