@@ -34,6 +34,7 @@ import YouTubeVideoEmbed from "@/components/youtube-video-embed"
 import VideoWithPoster from "@/components/video-with-poster"
 import { useRevealAnimation, useStaggeredReveal, useGPUHover } from "@/hooks/use-reveal-animation"
 import GetStartedCTA from "@/components/GetStartedCTA"
+import IndustryResultsSection from "@/components/industry-results-section"
 
 export default function ClientPage() {
   const isMobile = useMobile() // Added this line
@@ -395,6 +396,9 @@ export default function ClientPage() {
           analyticsLabel="services section CTA"
           variant="light"
         />
+
+        {/* Industry Results Section */}
+        <IndustryResultsSection />
 
         {/* Testimonials Section */}
         <section 

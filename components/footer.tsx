@@ -12,6 +12,7 @@ export default function Footer() {
     { emoji: "🖥️", label: "websites", href: "/websites" },
     { emoji: "📱", label: "apps", href: "/apps" },
     { emoji: "🎨", label: "designs", href: "/designs" },
+    { emoji: "📊", label: "roi results", href: "/#industry-results" },
     { emoji: "🎁", label: "offers", href: "/offers" },
     { emoji: "✍️", label: "blog", href: "/blog" },
     { emoji: "🎙️", label: "podcast", href: "/podcast" },
@@ -52,17 +53,36 @@ export default function Footer() {
           <div>
             <h3 className="font-semibold text-sm uppercase tracking-wide text-neutral-900 mb-4">explore</h3>
             <nav className="flex flex-col space-y-3">
-              {navItems.map((item) => (
-                <Link
-                  key={item.label}
-                  href={item.href}
-                  className="flex items-center gap-2 text-sm text-neutral-600 hover:text-neutral-900 transition-colors"
-                  onClick={() => trackNavigation(`footer_${item.label}`, item.href)}
-                >
-                  <span className="text-base">{item.emoji}</span>
-                  <span className="lowercase">{item.label}</span>
-                </Link>
-              ))}
+              {navItems.map((item) => {
+                const handleClick = (e: React.MouseEvent) => {
+                  trackNavigation(`footer_${item.label}`, item.href)
+                  
+                  // Handle smooth scrolling for hash links
+                  if (item.href.startsWith('/#')) {
+                    e.preventDefault()
+                    const elementId = item.href.substring(2)
+                    const element = document.getElementById(elementId)
+                    if (element) {
+                      element.scrollIntoView({ behavior: 'smooth', block: 'start' })
+                    } else {
+                      // If element not found, navigate to homepage first
+                      window.location.href = item.href
+                    }
+                  }
+                }
+
+                return (
+                  <Link
+                    key={item.label}
+                    href={item.href}
+                    className="flex items-center gap-2 text-sm text-neutral-600 hover:text-neutral-900 transition-colors"
+                    onClick={handleClick}
+                  >
+                    <span className="text-base">{item.emoji}</span>
+                    <span className="lowercase">{item.label}</span>
+                  </Link>
+                )
+              })}
             </nav>
           </div>
 
