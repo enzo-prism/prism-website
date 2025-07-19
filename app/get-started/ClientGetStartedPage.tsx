@@ -1,6 +1,6 @@
 "use client"
 import { useState, useEffect, useRef } from "react"
-import { Calendar, CheckCircle, ArrowRight, ChevronDown, Sparkles } from "lucide-react"
+import { Calendar, CheckCircle, ArrowRight, ChevronDown } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
@@ -19,7 +19,6 @@ import {
   glowPulse,
   pageTransition,
   revealOnScroll,
-  shimmer,
   magneticButton,
   successPop,
 } from "@/utils/animation-variants"
@@ -104,7 +103,6 @@ export default function ClientGetStartedPage() {
   const [activeSection, setActiveSection] = useState<string | null>(null)
   const [scrolled, setScrolled] = useState(false)
   const [shouldLoadVideo, setShouldLoadVideo] = useState(false)
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
   const isMobile = useMobile()
   const videoRef = useRef<HTMLDivElement>(null)
   const heroRef = useRef<HTMLDivElement>(null)
@@ -148,17 +146,6 @@ export default function ClientGetStartedPage() {
     setActiveSection(activeSection === section ? null : section)
   }
 
-  // Handle mouse position for magnetic effects
-  const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect()
-    const x = e.clientX - rect.left - rect.width / 2
-    const y = e.clientY - rect.top - rect.height / 2
-    setMousePosition({ x, y })
-  }
-
-  const handleMouseLeave = () => {
-    setMousePosition({ x: 0, y: 0 })
-  }
 
   return (
     <motion.div 
@@ -299,111 +286,6 @@ export default function ClientGetStartedPage() {
           </motion.div>
         </motion.section>
 
-        {/* Quick Design Callout */}
-        <motion.section 
-          className="py-12 md:py-16 bg-neutral-50"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.3 }}
-          variants={revealOnScroll}
-        >
-          <div className="container mx-auto px-4 md:px-6">
-            <div className="mx-auto max-w-4xl">
-              <motion.div 
-                className="bg-white rounded-xl p-6 md:p-8 shadow-sm border border-neutral-200 relative overflow-hidden"
-                whileHover={{ scale: 1.02 }}
-                transition={{ duration: 0.3 }}
-              >
-                <div className="flex flex-col md:flex-row items-center gap-6">
-                  <motion.div 
-                    className="flex-shrink-0"
-                  >
-                    <motion.div 
-                      className="w-16 h-16 bg-black text-white rounded-full flex items-center justify-center"
-                      whileHover={{ scale: 1.1 }}
-                    >
-                      <Sparkles className="w-8 h-8" />
-                    </motion.div>
-                  </motion.div>
-                  <div className="flex-1 text-center md:text-left">
-                    <motion.h3 
-                      className="text-2xl font-bold lowercase mb-2"
-                      variants={fadeInUp}
-                    >
-                      need just one design?
-                    </motion.h3>
-                    <motion.p 
-                      className="text-neutral-600 lowercase mb-4"
-                      variants={fadeInUp}
-                    >
-                      skip the consultation. get a business card, logo, or flyer for $750 with unlimited revisions.
-                    </motion.p>
-                    <motion.div 
-                      className="flex flex-col sm:flex-row items-center gap-3"
-                      variants={staggerContainer}
-                    >
-                      <motion.div
-                        variants={springScale}
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                        onMouseMove={handleMouseMove}
-                        onMouseLeave={handleMouseLeave}
-                      >
-                        <Button
-                          className="rounded-full px-6 py-3 text-base lowercase relative overflow-hidden group"
-                          onClick={() => trackCTAClick("quick design $750", "get started page")}
-                          asChild
-                        >
-                          <Link href="/one-time-fee">
-                            <motion.span
-                              className="relative z-10"
-                            >
-                              start $750 design <ArrowRight className="ml-2 h-4 w-4 inline-block" />
-                            </motion.span>
-                            <motion.div
-                              className="absolute inset-0 bg-gradient-to-r from-gray-900 to-black opacity-0 group-hover:opacity-100"
-                              initial={{ x: "-100%" }}
-                              whileHover={{ x: 0 }}
-                              transition={{ duration: 0.3 }}
-                            />
-                          </Link>
-                        </Button>
-                      </motion.div>
-                      <motion.div
-                        variants={springScale}
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                      >
-                        <Button
-                          variant="outline"
-                          className="rounded-full px-4 py-3 text-sm lowercase"
-                          onClick={() => trackNavigation("learn more about quick design", "/one-time-fee")}
-                          asChild
-                        >
-                          <Link href="/one-time-fee">
-                            learn more
-                          </Link>
-                        </Button>
-                      </motion.div>
-                    </motion.div>
-                  </div>
-                </div>
-                
-                {/* Shimmer effect */}
-                <motion.div
-                  className="absolute inset-0 -z-10"
-                  style={{
-                    background: "linear-gradient(105deg, transparent 40%, rgba(255, 255, 255, 0.7) 50%, transparent 60%)",
-                    backgroundSize: "200% 200%",
-                  }}
-                  variants={shimmer}
-                  initial="initial"
-                  animate="animate"
-                />
-              </motion.div>
-            </div>
-          </div>
-        </motion.section>
 
         {/* Process Section - Enhanced with GPU animations */}
         <motion.section 
