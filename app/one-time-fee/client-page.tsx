@@ -60,7 +60,7 @@ export default function OneTimeFeeClientPage() {
               </p>
               <div className="pt-6">
                 <a
-                  href="https://buy.stripe.com/9AAndZ60D"
+                  href="https://buy.stripe.com/9B6bJ2gn41iy1WgaAndZ60D"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center justify-center rounded-full px-8 py-6 text-lg lowercase border border-black bg-transparent text-black hover:bg-black hover:text-white transition-colors font-medium"
@@ -105,6 +105,8 @@ export default function OneTimeFeeClientPage() {
                   <div className="mb-4">
                     <a
                       href="https://buy.stripe.com/9B6bJ2gn41iy1WgaAndZ60D"
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="inline-flex items-center justify-center rounded-full bg-black text-white px-6 py-3 text-base lowercase font-medium hover:bg-neutral-800 transition-colors"
                       onClick={() => trackCTAClick("checkout $750 design", "design sprint card")}
                     >
@@ -298,7 +300,7 @@ export default function OneTimeFeeClientPage() {
               </p>
               <div className="pt-6">
                 <a
-                  href="https://buy.stripe.com/9AAndZ60D"
+                  href="https://buy.stripe.com/9B6bJ2gn41iy1WgaAndZ60D"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center justify-center rounded-full px-8 py-6 text-lg lowercase border border-black bg-transparent text-black hover:bg-black hover:text-white transition-colors font-medium"
