@@ -249,9 +249,15 @@ export function preventZoomGestures(): void {
   let lastTouchEnd = 0
   let isZooming = false
 
-  // Prevent double-tap zoom
+  // Prevent double-tap zoom - but allow clicks on links and buttons
   const preventDoubleTapZoom = (e: Event) => {
-    const touchEvent = e as TouchEvent
+    const target = e.target as HTMLElement
+    
+    // Don't prevent on clickable elements
+    if (target.closest('a, button, [role="button"], .mobile-blog-card')) {
+      return
+    }
+    
     const now = Date.now()
     if (now - lastTouchEnd <= 300) {
       e.preventDefault()
@@ -270,8 +276,15 @@ export function preventZoomGestures(): void {
     }
   }
 
-  // Prevent zoom on touch end
+  // Prevent zoom on touch end - but allow clicks on clickable elements
   const preventZoomOnTouchEnd = (e: Event) => {
+    const target = e.target as HTMLElement
+    
+    // Don't prevent on clickable elements
+    if (target.closest('a, button, [role="button"], .mobile-blog-card')) {
+      return
+    }
+    
     if (isZooming) {
       e.preventDefault()
     }

@@ -50,15 +50,12 @@ export default function MobileBlogPostCard({
     return () => mediaQuery.removeEventListener('change', handleChange)
   }, [])
 
-  // Handle touch interactions
-  const handleTouchStart = () => {
+  // Simplified touch interactions - no interference with navigation
+  const handleMouseDown = () => {
     setIsPressed(true)
-    if (isMobile && 'vibrate' in navigator) {
-      navigator.vibrate(30)
-    }
   }
 
-  const handleTouchEnd = () => {
+  const handleMouseUp = () => {
     setIsPressed(false)
   }
 
@@ -115,12 +112,9 @@ export default function MobileBlogPostCard({
         initial="initial"
         animate="animate"
         whileHover="hover"
-        whileTap="tap"
-        onTouchStart={handleTouchStart}
-        onTouchEnd={handleTouchEnd}
-        onMouseDown={() => setIsPressed(true)}
-        onMouseUp={() => setIsPressed(false)}
-        onMouseLeave={() => setIsPressed(false)}
+        onMouseDown={handleMouseDown}
+        onMouseUp={handleMouseUp}
+        onMouseLeave={handleMouseUp}
         style={{
           // Mobile-optimized GPU acceleration
           transform: "translateZ(0)",
