@@ -65,55 +65,55 @@ export default function ContactPage() {
             <p className="mt-4 text-lg text-neutral-600 lowercase">
               we&apos;re here to help. reach out through any of these channels.
             </p>
-        </div>
+          </div>
 
-        {/* CTA Alternative */}
-        <div className="bg-neutral-50 rounded-xl p-6 mb-8">
-          <h2 className="text-xl font-semibold text-neutral-900 mb-3 lowercase">ready to start a project?</h2>
-          <p className="text-neutral-600 mb-4 lowercase">skip the back-and-forth and get started with a structured consultation.</p>
-          <Button size="lg" asChild className="w-full bg-neutral-900 text-white hover:bg-neutral-800 rounded-full min-h-[44px]">
-            <Link 
-              href="/get-started"
-              onClick={() => trackCTAClick("get started", "contact alternative CTA")}
-            >
-              get started
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </Link>
-          </Button>
-        </div>
-
-        <p className="text-sm text-neutral-500 mb-6 lowercase">or contact us directly:</p>
-
-        <div className="space-y-6">
-          {contactMethods.map((method) => (
-            <div key={method.name} className="flex flex-col items-center">
-              <Link
-                href={method.href}
-                target={method.target || "_self"}
-                rel={method.target === "_blank" ? "noopener noreferrer" : undefined}
-                className="group block w-full max-w-xs p-6 bg-neutral-50 hover:bg-neutral-100 rounded-xl transition-colors duration-150 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500"
+          {/* CTA Alternative */}
+          <div className="bg-neutral-50 rounded-xl p-6 mb-8">
+            <h2 className="text-xl font-semibold text-neutral-900 mb-3 lowercase">ready to start a project?</h2>
+            <p className="text-neutral-600 mb-4 lowercase">skip the back-and-forth and get started with a structured consultation.</p>
+            <Button size="lg" asChild className="w-full bg-neutral-900 text-white hover:bg-neutral-800 rounded-full min-h-[44px]">
+              <Link 
+                href="/get-started"
+                onClick={() => trackCTAClick("get started", "contact alternative CTA")}
               >
-                <div className="flex flex-col items-center space-y-3">
-                  {method.icon}
-                  <span className="text-lg font-medium text-neutral-800 lowercase group-hover:text-neutral-900">
-                    {method.name}
-                  </span>
-                  <p className="text-sm text-neutral-600 lowercase group-hover:text-neutral-700">{method.value}</p>
-                </div>
+                get started
+                <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
-            </div>
-          ))}
-        </div>
+            </Button>
+          </div>
 
-        <div className="mt-12">
-          <Link
-            href="/"
-            className="text-sm font-medium text-neutral-600 hover:text-neutral-900 lowercase transition-colors"
-            onClick={() => trackNavigation("contact_back_home", "/")}
-          >
-            &larr; back to home
-          </Link>
-        </div>
+          <p className="text-sm text-neutral-500 mb-6 lowercase">or contact us directly:</p>
+
+          <div className="space-y-6">
+            {contactMethods.map((method) => (
+              <div key={method.name} className="flex flex-col items-center">
+                <Link
+                  href={method.href}
+                  target={method.target || "_self"}
+                  rel={method.target === "_blank" ? "noopener noreferrer" : undefined}
+                  className="group block w-full max-w-xs p-6 bg-neutral-50 hover:bg-neutral-100 rounded-xl transition-colors duration-150 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500"
+                >
+                  <div className="flex flex-col items-center space-y-3">
+                    {method.icon}
+                    <span className="text-lg font-medium text-neutral-800 lowercase group-hover:text-neutral-900">
+                      {method.name}
+                    </span>
+                    <p className="text-sm text-neutral-600 lowercase group-hover:text-neutral-700">{method.value}</p>
+                  </div>
+                </Link>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-12">
+            <Link
+              href="/"
+              className="text-sm font-medium text-neutral-600 hover:text-neutral-900 lowercase transition-colors"
+              onClick={() => trackNavigation("contact_back_home", "/")}
+            >
+              &larr; back to home
+            </Link>
+          </div>
       </div>
     </>
   )
