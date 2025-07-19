@@ -151,7 +151,7 @@ export default function DesignsPageClient() {
 
         {/* Slider Section */}
         <section className="px-4 py-16 md:py-24 bg-white">
-          <div className="container mx-auto px-4 md:px-6">
+          <div className="container mx-auto">
             <div className="flex flex-col items-center">
               {/* Image Slider */}
               <div

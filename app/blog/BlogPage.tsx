@@ -34,7 +34,7 @@ export default function BlogPage({ posts }: { posts: BlogPost[] }) {
         </BlogListErrorBoundary>
 
         {/* CTA Section */}
-        <section className="px-4 py-12 md:py-16 bg-neutral-50">
+        <section className="py-12 md:py-16 bg-neutral-50">
           <div className="container mx-auto px-4 md:px-6">
             <div className="mx-auto max-w-2xl space-y-4 text-center">
               <h2 className="text-2xl font-bold tracking-tighter lowercase sm:text-3xl">want to work with us?</h2>

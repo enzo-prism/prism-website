@@ -326,7 +326,7 @@ export default function ClientPage() {
         {/* Services Overview */}
         <section 
           ref={servicesRef} 
-          className={`bg-neutral-50 px-4 py-16 md:py-24 ${servicesVisible ? 'reveal-up visible' : 'reveal-up'}`}
+          className={`bg-neutral-50 py-16 md:py-24 ${servicesVisible ? 'reveal-up visible' : 'reveal-up'}`}
         >
           <div className="container mx-auto px-4 md:px-6">
             <div className="text-center mb-12">
@@ -490,7 +490,7 @@ export default function ClientPage() {
         </section>
 
         {/* Bottom CTA Section */}
-        <section className="bg-neutral-50 dark:bg-neutral-800 px-4 py-16 md:py-24">
+        <section className="bg-neutral-50 dark:bg-neutral-800 py-16 md:py-24">
           <div className="container mx-auto px-4 md:px-6">
             <div className="mx-auto max-w-2xl space-y-6 text-center">
               <h2 className="text-3xl font-bold tracking-tighter lowercase sm:text-4xl gpu-accelerated">
@@ -514,7 +514,7 @@ export default function ClientPage() {
         </section>
 
         {/* About Section */}
-        <section className="border-t border-neutral-100 dark:border-neutral-800 px-4 py-12">
+        <section className="border-t border-neutral-100 dark:border-neutral-800 py-12">
           <div className="container mx-auto px-4 md:px-6">
             <div className="flex flex-col md:flex-row items-center justify-between gap-6">
               <div className="md:w-1/2">
