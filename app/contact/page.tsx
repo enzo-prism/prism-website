@@ -114,6 +114,7 @@ export default function ContactPage() {
               &larr; back to home
             </Link>
           </div>
+        </div>
       </div>
     </>
   )
