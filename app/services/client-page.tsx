@@ -93,7 +93,7 @@ export default function ServicesClient() {
             </CardContent>
             <CardFooter className="p-6 pt-0">
               <Button asChild variant="outline" className="w-full"> 
-                <Link href="/get-started">Get Started</Link>
+                <Link href="/one-time-fee">View Details</Link>
               </Button>
             </CardFooter>
           </Card>
