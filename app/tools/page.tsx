@@ -2,6 +2,8 @@ import type { Metadata } from "next"
 import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
 import ROICalculator from "@/components/roi-calculator"
+import GetStartedCTA from "@/components/GetStartedCTA"
+import Link from "next/link"
 
 export const metadata: Metadata = {
   title: "Free Business Tools - ROI Calculator | Prism Agency",
@@ -88,30 +90,15 @@ export default function ToolsPage() {
               </div>
             </div>
 
-            <div className="mt-16 text-center">
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">
-                Ready to Turn These Numbers Into Reality?
-              </h2>
-              <p className="text-gray-600 mb-8 max-w-2xl mx-auto">
-                Our ROI calculator shows the potential. Now let's make it happen. Schedule a free consultation to discuss your specific needs and goals.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <a
-                  href="https://calendly.com/enzomarzorati/30min"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center px-8 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-semibold"
-                >
-                  Schedule Free Consultation
-                </a>
-                <a
-                  href="/contact"
-                  className="inline-flex items-center px-8 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors font-semibold"
-                >
-                  Get In Touch
-                </a>
-              </div>
-            </div>
+            {/* CTA Section */}
+            <GetStartedCTA
+              heading="ready to see real results for your business?"
+              description="our ROI calculator shows the potential. now let's make it happen with a custom strategy tailored to your goals."
+              buttonText="get started"
+              analyticsLabel="tools conversion CTA"
+              variant="light"
+              className="mt-16"
+            />
           </div>
         </div>
       </main>

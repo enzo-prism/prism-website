@@ -1,8 +1,10 @@
-import { Mail, Instagram, CalendarDays } from "lucide-react"
+import { Mail, Instagram, CalendarDays, ArrowRight } from "lucide-react"
 import Link from "next/link"
 import type { Metadata } from "next"
 import { ContactPageSchema } from "@/components/schema-markup"
 import Navbar from "@/components/navbar"
+import { Button } from "@/components/ui/button"
+import { trackCTAClick, trackNavigation } from "@/utils/analytics"
 
 export const metadata: Metadata = {
   title: "Contact Us | Prism",
@@ -65,6 +67,23 @@ export default function ContactPage() {
           </p>
         </div>
 
+        {/* CTA Alternative */}
+        <div className="bg-neutral-50 rounded-xl p-6 mb-8">
+          <h2 className="text-xl font-semibold text-neutral-900 mb-3 lowercase">ready to start a project?</h2>
+          <p className="text-neutral-600 mb-4 lowercase">skip the back-and-forth and get started with a structured consultation.</p>
+          <Button size="lg" asChild className="w-full bg-neutral-900 text-white hover:bg-neutral-800 rounded-full min-h-[44px]">
+            <Link 
+              href="/get-started"
+              onClick={() => trackCTAClick("get started", "contact alternative CTA")}
+            >
+              get started
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </Link>
+          </Button>
+        </div>
+
+        <p className="text-sm text-neutral-500 mb-6 lowercase">or contact us directly:</p>
+
         <div className="space-y-6">
           {contactMethods.map((method) => (
             <div key={method.name} className="flex flex-col items-center">
@@ -90,11 +109,11 @@ export default function ContactPage() {
           <Link
             href="/"
             className="text-sm font-medium text-neutral-600 hover:text-neutral-900 lowercase transition-colors"
+            onClick={() => trackNavigation("contact_back_home", "/")}
           >
             &larr; back to home
           </Link>
         </div>
-      </div>
       </div>
     </>
   )

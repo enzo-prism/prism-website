@@ -8,6 +8,7 @@ import Footer from "@/components/footer"
 import PageViewTracker from "@/components/page-view-tracker"
 import { Button } from "@/components/ui/button"
 import { trackCTAClick, trackNavigation } from "@/utils/analytics"
+import GetStartedCTA from "@/components/GetStartedCTA"
 
 export default function PodcastClientPage() {
   const [expandedEpisode, setExpandedEpisode] = useState<string | null>(null)
@@ -255,6 +256,15 @@ export default function PodcastClientPage() {
             </div>
           </div>
         </section>
+
+        {/* CTA Section */}
+        <GetStartedCTA
+          heading="inspired by these success stories?"
+          description="let's write yours next. from idea to execution, we'll help you build something remarkable."
+          buttonText="start your journey"
+          analyticsLabel="podcast inspiration CTA"
+          variant="light"
+        />
 
         {/* Simple Footer Links */}
         <section className="px-4 py-16">

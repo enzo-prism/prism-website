@@ -7,6 +7,7 @@ import Footer from "@/components/footer"
 import PageViewTracker from "@/components/page-view-tracker"
 import { useMobile } from "@/hooks/use-mobile"
 import { motion, AnimatePresence } from "framer-motion"
+import GetStartedCTA from "@/components/GetStartedCTA"
 
 // Quotes data
 const slides = [
@@ -276,6 +277,15 @@ export default function DesignsPageClient() {
             </div>
           </div>
         </section>
+
+        {/* CTA Section */}
+        <GetStartedCTA
+          heading="inspired by what you see?"
+          description="let's create something amazing together. from logos to complete brand identities, we'll bring your vision to life."
+          buttonText="start your design project"
+          analyticsLabel="design portfolio CTA"
+          variant="gradient"
+        />
 
       </main>
       <Footer />

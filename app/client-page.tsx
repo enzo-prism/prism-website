@@ -33,6 +33,7 @@ import ClientImagePreloader from "@/components/client-image-preloader"
 import YouTubeVideoEmbed from "@/components/youtube-video-embed"
 import VideoWithPoster from "@/components/video-with-poster"
 import { useRevealAnimation, useStaggeredReveal, useGPUHover } from "@/hooks/use-reveal-animation"
+import GetStartedCTA from "@/components/GetStartedCTA"
 
 export default function ClientPage() {
   const isMobile = useMobile() // Added this line
@@ -385,6 +386,15 @@ export default function ClientPage() {
             )}
           </div>
         </section>
+
+        {/* Mid-Content CTA */}
+        <GetStartedCTA
+          heading="see a service that fits your needs?"
+          description="let's discuss your project and find the perfect solution to grow your business."
+          buttonText="let's discuss your project"
+          analyticsLabel="services section CTA"
+          variant="light"
+        />
 
         {/* Testimonials Section */}
         <section 
