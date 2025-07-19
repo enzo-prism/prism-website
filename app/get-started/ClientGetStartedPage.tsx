@@ -221,8 +221,8 @@ export default function ClientGetStartedPage() {
                       <VideoWithPoster
                         videoId="1097023041"
                         posterSrc="/prism%20get%20started.webp"
-                        width={360}
-                        height={360}
+                        width={isMobile ? 200 : 360}
+                        height={isMobile ? 200 : 360}
                         autoplay={true}
                         loop={true}
                         muted={true}
@@ -233,57 +233,66 @@ export default function ClientGetStartedPage() {
                     </motion.div>
                   ) : (
                     <motion.div 
-                      className="w-[360px] h-[360px] bg-gray-100 rounded-lg shadow-md border border-neutral-200 flex items-center justify-center"
+                      className={`${isMobile ? 'w-[200px] h-[200px]' : 'w-[360px] h-[360px]'} bg-gray-100 rounded-lg shadow-md border border-neutral-200 flex items-center justify-center`}
                       animate={{ opacity: [0.5, 1, 0.5] }}
                       transition={{ duration: 1.5, repeat: Infinity }}
                     >
-                      <div className="text-gray-400">Loading video...</div>
+                      <div className="text-gray-400 text-sm">Loading video...</div>
                     </motion.div>
                   )}
                 </motion.div>
                 <motion.h1 
-                  className="text-4xl font-bold tracking-tighter lowercase sm:text-5xl md:text-6xl"
+                  className="text-3xl font-bold tracking-tighter lowercase sm:text-4xl md:text-5xl lg:text-6xl"
                   variants={fadeInUp}
                 >
                   get started
                 </motion.h1>
                 <motion.p 
-                  className="mx-auto mt-4 max-w-[700px] text-neutral-600 lowercase md:text-xl"
+                  className="mx-auto mt-4 max-w-[600px] text-neutral-600 lowercase text-base sm:text-lg md:text-xl px-4"
                   variants={fadeInUp}
                 >
                   schedule a 30-minute consultation with our team to discuss your goals.
                 </motion.p>
               </motion.div>
 
-              {/* Mobile-only quick action button */}
+              {/* Mobile-optimized CTA button with 44px minimum touch target */}
               {isMobile && (
                 <motion.div 
-                  className="mt-8 w-full max-w-xs"
+                  className="mt-8 w-full max-w-sm px-4"
                   variants={successPop}
                   whileTap={{ scale: 0.95 }}
                 >
                   <motion.a
                     href="#schedule"
-                    className="flex items-center justify-center w-full py-3 px-6 bg-black text-white rounded-full text-lg lowercase relative overflow-hidden"
+                    className="flex items-center justify-center w-full py-4 px-6 bg-black text-white rounded-full text-lg lowercase relative overflow-hidden min-h-[44px] shadow-lg"
                     onClick={() => trackCTAClick("quick schedule", "get started page")}
-                    whileHover={{ scale: 1.05 }}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
                     variants={glowPulse}
                   >
-                    <Calendar className="mr-2 h-5 w-5" />
-                    schedule now
-                    <ArrowRight className="ml-2 h-4 w-4" />
+                    <Calendar className="mr-3 h-5 w-5" />
+                    schedule consultation
+                    <ArrowRight className="ml-3 h-4 w-4" />
                   </motion.a>
                 </motion.div>
               )}
 
-              {/* Mobile scroll indicator */}
+              {/* Mobile scroll indicator - positioned below CTA to avoid overlap */}
               {isMobile && (
                 <motion.div 
-                  className="absolute bottom-4 left-0 right-0 flex justify-center"
-                  animate={{ y: [0, 10, 0] }}
-                  transition={{ duration: 1.5, repeat: Infinity }}
+                  className="mt-12 flex justify-center"
+                  animate={{ y: [0, 8, 0] }}
+                  transition={{ duration: 2, repeat: Infinity }}
                 >
-                  <ChevronDown className="h-6 w-6 text-neutral-400" />
+                  <motion.div 
+                    className="flex flex-col items-center gap-2"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 1 }}
+                  >
+                    <span className="text-xs text-neutral-400 lowercase">scroll to explore</span>
+                    <ChevronDown className="h-5 w-5 text-neutral-400" />
+                  </motion.div>
                 </motion.div>
               )}
             </div>
@@ -597,7 +606,7 @@ export default function ClientGetStartedPage() {
                     onClick={() => trackCTAClick("schedule your call", "get started page")}
                     className={`
                       block w-full text-center py-4 px-6 rounded-full relative overflow-hidden
-                      ${isMobile ? "bg-black text-white shadow-lg" : "bg-black text-white"}
+                      ${isMobile ? "bg-black text-white shadow-lg min-h-[44px]" : "bg-black text-white"}
                       text-lg lowercase font-medium group
                     `}
                     whileHover={{ scale: 1.02 }}
@@ -644,10 +653,120 @@ export default function ClientGetStartedPage() {
                 choose from our flexible tiers designed to scale with your business needs. for full details, visit our services page.
               </p>
             </motion.div>
-            <motion.div 
-              className="grid gap-8 md:grid-cols-3 max-w-5xl mx-auto"
-              variants={staggerContainer}
-            >
+            {/* Mobile: Horizontal scrolling carousel */}
+            {isMobile ? (
+              <motion.div 
+                className="overflow-x-auto pb-4 px-4 mobile-pricing-carousel"
+                variants={staggerContainer}
+              >
+                <div className="flex gap-4 w-max">
+                  {[
+                    {
+                      title: "design sprint",
+                      price: "$750 one-off",
+                      features: ["custom design assets", "unlimited revisions", "3-5 days turnaround"],
+                      highlight: false
+                    },
+                    {
+                      title: "site essentials", 
+                      price: "$1,200/mo",
+                      features: ["full website rebuild", "unlimited edits", "basic analytics"],
+                      highlight: false
+                    },
+                    {
+                      title: "growth accelerator",
+                      price: "$1,999/mo", 
+                      features: ["everything in essentials", "advanced SEO & listings", "review boosting & apps"],
+                      highlight: true
+                    }
+                  ].map((service, index) => (
+                    <motion.div
+                      key={index}
+                      className={`
+                        flex-shrink-0 w-[280px] p-6 rounded-xl relative overflow-hidden mobile-pricing-card
+                        ${service.highlight 
+                          ? 'bg-gradient-to-br from-neutral-900 to-black text-white shadow-xl' 
+                          : 'bg-white border border-neutral-200 shadow-sm'
+                        }
+                      `}
+                      variants={springScale}
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                    >
+                      {service.highlight && (
+                        <motion.div 
+                          className="absolute top-3 right-3 bg-yellow-400 text-black px-2 py-1 rounded-full text-xs font-bold"
+                          initial={{ scale: 0 }}
+                          animate={{ scale: 1 }}
+                          transition={{ delay: 0.5, type: "spring" }}
+                        >
+                          POPULAR
+                        </motion.div>
+                      )}
+                      
+                      <h3 className={`text-xl font-bold lowercase mb-3 ${service.highlight ? 'text-white' : 'text-neutral-900'}`}>
+                        {service.title}
+                      </h3>
+                      
+                      <motion.div 
+                        className={`text-3xl font-bold mb-4 ${service.highlight ? 'text-white' : 'text-neutral-900'}`}
+                        whileHover={{ scale: 1.05 }}
+                      >
+                        {service.price}
+                      </motion.div>
+                      
+                      <ul className={`space-y-3 ${service.highlight ? 'text-neutral-200' : 'text-neutral-600'}`}>
+                        {service.features.map((feature, featureIndex) => (
+                          <li key={featureIndex} className="flex items-start text-sm lowercase">
+                            <motion.div 
+                              className={`w-1.5 h-1.5 rounded-full mt-2 mr-3 flex-shrink-0 ${service.highlight ? 'bg-yellow-400' : 'bg-neutral-400'}`}
+                              initial={{ scale: 0 }}
+                              animate={{ scale: 1 }}
+                              transition={{ delay: 0.1 * featureIndex }}
+                            />
+                            {feature}
+                          </li>
+                        ))}
+                      </ul>
+                      
+                      <motion.button
+                        className={`
+                          w-full mt-6 py-3 px-4 rounded-full font-medium text-sm lowercase min-h-[44px]
+                          ${service.highlight 
+                            ? 'bg-white text-black hover:bg-neutral-100' 
+                            : 'bg-black text-white hover:bg-neutral-800'
+                          }
+                        `}
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                        onClick={() => trackCTAClick(`${service.title} select`, "get started page")}
+                      >
+                        get started
+                      </motion.button>
+                    </motion.div>
+                  ))}
+                </div>
+                
+                {/* Scroll indicator for mobile */}
+                <motion.div 
+                  className="flex justify-center mt-4 gap-2"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.5 }}
+                >
+                  <div className="text-xs text-neutral-400 flex items-center gap-2">
+                    <ArrowRight className="h-3 w-3 rotate-180" />
+                    swipe to see all options
+                    <ArrowRight className="h-3 w-3" />
+                  </div>
+                </motion.div>
+              </motion.div>
+            ) : (
+              // Desktop: Original grid layout
+              <motion.div 
+                className="grid gap-8 md:grid-cols-3 max-w-5xl mx-auto"
+                variants={staggerContainer}
+              >
               <motion.div
                 className="bg-neutral-50 rounded-xl p-6 relative"
                 variants={springScale}
@@ -732,6 +851,8 @@ export default function ClientGetStartedPage() {
                 </ul>
               </motion.div>
             </motion.div>
+            )}
+            
             <motion.div 
               className="text-center mt-8"
               variants={fadeInUp}
@@ -783,7 +904,7 @@ export default function ClientGetStartedPage() {
                     whileHover={{ scale: 1.02 }}
                   >
                     <motion.button
-                      className="flex w-full items-center justify-between px-6 py-4 text-left"
+                      className={`flex w-full items-center justify-between px-6 text-left ${isMobile ? 'py-5 min-h-[44px]' : 'py-4'}`}
                       onClick={() => toggleSection(`faq-${index}`)}
                       whileTap={{ scale: 0.98 }}
                     >

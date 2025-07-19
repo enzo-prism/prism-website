@@ -1801,3 +1801,41 @@ input, textarea, select {
   from { width: 0; }
   to { width: 100%; }
 }
+
+/* Mobile-first enhancements for /get-started page */
+.mobile-pricing-carousel {
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.mobile-pricing-carousel::-webkit-scrollbar {
+  display: none;
+}
+
+.mobile-pricing-card {
+  scroll-snap-align: center;
+  scroll-snap-stop: always;
+}
+
+/* Enhanced mobile touch targets */
+@media (max-width: 768px) {
+  .mobile-touch-target {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  /* Better mobile spacing */
+  .mobile-hero-spacing {
+    padding-top: 3rem;
+    padding-bottom: 2rem;
+  }
+  
+  /* Optimized mobile text */
+  .mobile-optimized-text {
+    font-size: 1rem;
+    line-height: 1.5;
+    letter-spacing: -0.01em;
+  }
+}
