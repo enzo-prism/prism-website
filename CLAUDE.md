@@ -275,7 +275,7 @@ NEXT_PUBLIC_POSTHOG_HOST=
 
 ### Deployment Flow
 1. Changes made in v0.dev are automatically synced to this repository
-2. Vercel deploys the latest version from this repository
+2. Vercel automatically deploys from the main branch (no manual CI/CD configuration needed)
 3. Monitor deployment status and errors via Sentry MCP
 4. Verify deployment readiness with: `npm run verify:deploy`
 
@@ -327,6 +327,8 @@ npm run mcp:validate
 - `jest.config.ts` - Jest configuration with ts-jest preset
 - `middleware.ts` - URL redirects and analytics tracking
 - `.env.example` - Template for required environment variables
+- `.mcp.json` - MCP server configuration (uses Docker for GitHub server)
+- `.vscode/settings.json` - VS Code/Cursor IDE configuration with TypeScript, ESLint, and Tailwind IntelliSense
 - `MCP_SETUP.md` - Detailed MCP server setup instructions
 - `package.json` - Dependencies and scripts (check for available commands)
 - `postcss.config.mjs` - PostCSS configuration for Tailwind
