@@ -59,16 +59,16 @@ export default function OneTimeFeeClientPage() {
                 a single logo, banner, flyer—or whatever custom design asset you need—crafted by prism's pros for $750. unlimited revisions until you love it.
               </p>
               <div className="pt-6">
-                <Button
-                  className="rounded-full px-8 py-6 text-lg lowercase"
-                  onClick={() => trackCTAClick("get started", "hero section")}
-                  asChild
-                  variant="outline"
+                <a
+                  href="https://buy.stripe.com/9AAndZ60D"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center rounded-full px-8 py-6 text-lg lowercase border border-black bg-transparent text-black hover:bg-black hover:text-white transition-colors font-medium"
+                  onClick={() => trackCTAClick("purchase design sprint", "hero section")}
                 >
-                  <Link href="/get-started">
-                    get started <ArrowRight className="ml-2 h-5 w-5" />
-                  </Link>
-                </Button>
+                  <CreditCard className="mr-2 h-5 w-5" />
+                  purchase design sprint <ArrowRight className="ml-2 h-5 w-5" />
+                </a>
               </div>
             </div>
           </div>
@@ -297,16 +297,16 @@ export default function OneTimeFeeClientPage() {
                 one flat fee, unlimited revisions, until you love it
               </p>
               <div className="pt-6">
-                <Button
-                  className="rounded-full px-8 py-6 text-lg lowercase"
-                  onClick={() => trackCTAClick("get started", "final cta")}
-                  asChild
-                  variant="outline"
+                <a
+                  href="https://buy.stripe.com/9AAndZ60D"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center rounded-full px-8 py-6 text-lg lowercase border border-black bg-transparent text-black hover:bg-black hover:text-white transition-colors font-medium"
+                  onClick={() => trackCTAClick("purchase design sprint", "final cta")}
                 >
-                  <Link href="/get-started">
-                    get started <ArrowRight className="ml-2 h-5 w-5" />
-                  </Link>
-                </Button>
+                  <CreditCard className="mr-2 h-5 w-5" />
+                  purchase design sprint <ArrowRight className="ml-2 h-5 w-5" />
+                </a>
               </div>
             </div>
           </div>
