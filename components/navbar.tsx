@@ -30,7 +30,8 @@ export default function Navbar() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="w-full max-w-7xl mx-auto flex h-16 items-center justify-between px-4 md:px-6">
+      <div className="w-full max-w-7xl mx-auto flex h-16 items-center justify-between px-0 md:px-6">
+        <div className="flex items-center justify-between w-full px-4 md:px-0">
         <Link href="/" className="flex items-center gap-2" onClick={() => trackNavigation("logo", "/")}>
           {/* This div provides the dimensions and primary clipping */}
           <div className="relative h-8 w-8 overflow-hidden rounded-lg isolate">
@@ -58,7 +59,7 @@ export default function Navbar() {
             </Button>
 
             {isMenuOpen && (
-              <div className="absolute left-0 top-16 z-50 w-full bg-background p-4 shadow-md animate-in slide-in-from-top-4 duration-300">
+              <div className="absolute left-0 top-16 z-50 w-full bg-background px-4 py-4 shadow-md animate-in slide-in-from-top-4 duration-300">
                 <nav className="flex flex-col space-y-4">
                   {navItems.map((item) => (
                     <Link
@@ -99,6 +100,7 @@ export default function Navbar() {
             ))}
           </nav>
         )}
+        </div>
       </div>
     </header>
   )
