@@ -83,138 +83,67 @@ export default function BlogPostLayout({
   if (isMobile) {
     return (
       <div className="flex min-h-screen flex-col bg-white">
-        {/* Mobile-optimized progress bar */}
-        <div className="fixed top-0 left-0 right-0 z-50 h-1 bg-neutral-100">
+        {/* Minimal progress bar */}
+        <div className="fixed top-0 left-0 right-0 z-50 h-0.5 bg-neutral-200">
           <div 
-            className="h-full bg-gradient-to-r from-blue-500 to-purple-500 transition-all duration-300"
+            className="h-full bg-neutral-900 transition-all duration-300"
             style={{ width: `${scrollProgress}%` }}
           />
         </div>
 
-        {/* Floating back button */}
-        {showFloatingNav && (
-          <Link
-            href="/blog"
-            className="fixed top-4 left-4 z-40 w-10 h-10 bg-white/90 backdrop-blur-sm border border-neutral-200 rounded-full flex items-center justify-center shadow-lg transition-all duration-300 hover:bg-white"
-          >
-            <ArrowLeft className="w-5 h-5 text-neutral-700" />
-          </Link>
-        )}
+        <main className="flex-1 pt-2">
+          {/* Simple Header */}
+          <div className="px-4 py-6 border-b border-neutral-100">
+            <Link
+              href="/blog"
+              className="inline-flex items-center text-neutral-600 hover:text-neutral-900 transition-colors mb-6"
+            >
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              <span className="text-sm">back to blog</span>
+            </Link>
 
-        <main className="flex-1">
-          {/* Hero Section - Full Screen on Mobile */}
-          <div className="relative min-h-screen flex flex-col">
-            {/* Background */}
-            <div className="absolute inset-0">
-              {image && !hasImageError ? (
-                <CoreImage
-                  src={image}
-                  alt={title}
-                  width={400}
-                  height={800}
-                  className="w-full h-full object-cover"
-                  priority={true}
-                  trackingId={`blog_hero_mobile_${slug}`}
-                  onLoadError={() => setHasImageError(true)}
-                  customErrorHandling={true}
-                />
-              ) : (
-                <div className={cn("w-full h-full", effectiveGradient)} />
-              )}
-              {/* Overlay for text readability */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+            {/* Category */}
+            <div className="mb-3">
+              <span className="text-xs text-neutral-500 uppercase tracking-wide">{category}</span>
             </div>
 
-            {/* Content */}
-            <div className="relative z-10 flex flex-col h-full p-4 pt-8">
-              {/* Top navigation - minimal */}
-              <div className="flex items-center justify-between mb-4">
-                <Link
-                  href="/blog"
-                  className="w-10 h-10 bg-white/20 backdrop-blur-sm border border-white/30 rounded-full flex items-center justify-center transition-all duration-300"
-                >
-                  <ArrowLeft className="w-5 h-5 text-white" />
-                </Link>
-                
-                <button className="w-10 h-10 bg-white/20 backdrop-blur-sm border border-white/30 rounded-full flex items-center justify-center transition-all duration-300">
-                  <Share2 className="w-5 h-5 text-white" />
-                </button>
-              </div>
+            {/* Title */}
+            <h1 className="text-2xl font-bold text-neutral-900 leading-tight mb-4">
+              {title}
+            </h1>
 
-              {/* Spacer to push content to bottom */}
-              <div className="flex-1" />
-
-              {/* Hero content */}
-              <div className="space-y-4 pb-8">
-                {/* Category badge */}
-                <div className="inline-block px-3 py-1 bg-white/90 backdrop-blur-sm rounded-full">
-                  <span className="text-xs font-medium text-neutral-900 lowercase">{category}</span>
-                </div>
-
-                {/* Title */}
-                <h1 className="text-2xl font-bold text-white leading-tight lowercase">
-                  {title}
-                </h1>
-
-                {/* Meta info */}
-                <div className="flex items-center gap-4 text-white/80 text-sm">
-                  <div className="flex items-center gap-1">
-                    <Calendar className="w-4 h-4" />
-                    <span>{new Date(date).toLocaleDateString()}</span>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <Clock className="w-4 h-4" />
-                    <span>{readingTime} min read</span>
-                  </div>
-                </div>
-
-                {/* Description */}
-                <p className="text-white/90 text-sm leading-relaxed line-clamp-3">
-                  {description}
-                </p>
-
-                {/* Reading hint */}
-                <div className="flex items-center justify-center pt-4">
-                  <div className="flex flex-col items-center gap-2 text-white/60">
-                    <div className="w-6 h-10 border-2 border-white/40 rounded-full flex justify-center">
-                      <div className="w-1 h-3 bg-white/60 rounded-full mt-2 animate-bounce" />
-                    </div>
-                    <span className="text-xs">Scroll to read</span>
-                  </div>
-                </div>
-              </div>
+            {/* Meta info */}
+            <div className="flex items-center gap-4 text-neutral-500 text-sm">
+              <span>{new Date(date).toLocaleDateString()}</span>
+              <span>•</span>
+              <span>{readingTime} min read</span>
             </div>
+
+            {/* Description */}
+            <p className="text-neutral-600 text-base leading-relaxed mt-4 max-w-2xl">
+              {description}
+            </p>
           </div>
 
           {/* Content Section */}
-          <div className="bg-white relative">
-            <div className="px-4 py-8">
-              <BlogPostErrorBoundary>
-                <AnimatedBlogWrapper>
-                  <div className="mobile-blog-content prose-mobile">
-                    {children}
-                  </div>
-                </AnimatedBlogWrapper>
-              </BlogPostErrorBoundary>
-            </div>
+          <div className="px-4 py-8">
+            <BlogPostErrorBoundary>
+              <div className="prose-minimal">
+                {children}
+              </div>
+            </BlogPostErrorBoundary>
           </div>
 
-          {/* Bottom CTA */}
-          <div className="bg-neutral-50 p-4">
-            <div className="bg-white rounded-lg p-6 text-center shadow-sm">
-              <h3 className="text-lg font-bold mb-2 lowercase">enjoyed this post?</h3>
-              <p className="text-sm text-neutral-600 mb-4">share it with your network</p>
-              <div className="flex gap-3 justify-center">
-                <button className="px-4 py-2 bg-neutral-900 text-white rounded-full text-sm font-medium">
-                  share
-                </button>
-                <Link 
-                  href="/blog"
-                  className="px-4 py-2 border border-neutral-300 text-neutral-700 rounded-full text-sm font-medium"
-                >
-                  more posts
-                </Link>
-              </div>
+          {/* Simple Bottom Navigation */}
+          <div className="px-4 py-8 border-t border-neutral-100">
+            <div className="text-center">
+              <Link 
+                href="/blog"
+                className="inline-flex items-center text-neutral-600 hover:text-neutral-900 transition-colors"
+              >
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                <span className="text-sm">back to all posts</span>
+              </Link>
             </div>
           </div>
         </main>
