@@ -3,7 +3,7 @@
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
 ## Project Overview
-**Prism Website** - A Next.js 15.2.4 application built with v0.dev and deployed on Vercel. This is a modern marketing/portfolio website for a design and development agency with comprehensive error monitoring and MCP server integrations.
+**Prism Website** (package name: `my-v0-project`) - A Next.js 15.2.4 application built with v0.dev and deployed on Vercel. This is a modern marketing/portfolio website for a design and development agency with comprehensive error monitoring and MCP server integrations.
 
 **Important**: This repository is automatically synced with v0.dev deployments. Changes made on v0.dev are pushed to this repository automatically.
 
@@ -27,16 +27,16 @@ npm run dev
 ```
 
 ## Tech Stack
-- **Framework**: Next.js 15.2.4 with React 19 and App Router
+- **Framework**: Next.js 15.2.4 with React 19.1.0 and App Router
 - **Language**: TypeScript 5 (strict mode)
-- **Styling**: Tailwind CSS with custom design system
+- **Styling**: Tailwind CSS 3.4.17 with custom design system
 - **UI Components**: Radix UI primitives with shadcn/ui
-- **Forms**: React Hook Form with Zod validation
-- **Animation**: Framer Motion
+- **Forms**: React Hook Form with Zod 3.24.1 validation
+- **Animation**: Framer Motion 12.23.6
 - **Content**: MDX for blog posts with gray-matter
 - **Database**: Supabase (project ref: `ibjqwvkcjdgdifujfnpb`)
-- **Monitoring**: Sentry (org: `prism-m0`, project: `prism-website`)
-- **Testing**: Jest with TypeScript and Testing Library
+- **Monitoring**: Sentry 9.40.0 (org: `prism-m0`, project: `prism-website`)
+- **Testing**: Jest 29.7.0 with TypeScript and Testing Library
 - **Deployment**: Vercel
 - **Analytics**: PostHog integration
 - **Email**: Resend for transactional emails
