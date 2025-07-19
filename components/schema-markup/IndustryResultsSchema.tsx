@@ -1,7 +1,9 @@
 import Script from "next/script"
 
 interface IndustryResult {
+  id: string
   name: string
+  icon: React.ReactNode
   ltv: number
   monthlyCustomers: number
   monthlyValue: number
@@ -9,7 +11,10 @@ interface IndustryResult {
   investmentMax: number
   roiMin: number
   roiMax: number
-  caseStudies: string[]
+  caseStudies: Array<{
+    name: string
+    link?: string
+  }>
 }
 
 interface IndustryResultsSchemaProps {
