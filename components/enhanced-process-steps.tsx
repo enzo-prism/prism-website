@@ -190,14 +190,6 @@ export default function EnhancedProcessSteps() {
                       {step.icon && (
                         <motion.div 
                           className="text-neutral-500 group-hover:text-neutral-700 transition-colors"
-                          animate={{
-                            rotate: activeStep === step.number ? 360 : 0,
-                          }}
-                          transition={{
-                            duration: 20,
-                            repeat: Infinity,
-                            ease: "linear",
-                          }}
                         >
                           {step.icon}
                         </motion.div>

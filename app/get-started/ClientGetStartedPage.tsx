@@ -308,8 +308,6 @@ export default function ClientGetStartedPage() {
                 <div className="flex flex-col md:flex-row items-center gap-6">
                   <motion.div 
                     className="flex-shrink-0"
-                    animate={{ rotate: 360 }}
-                    transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
                   >
                     <motion.div 
                       className="w-16 h-16 bg-black text-white rounded-full flex items-center justify-center"

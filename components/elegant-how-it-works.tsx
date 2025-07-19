@@ -163,8 +163,6 @@ function MobileElegantSteps() {
                   <div className="flex items-center gap-4 mb-4">
                     <motion.div 
                       className="flex items-center justify-center w-12 h-12 bg-gradient-to-br from-neutral-100 to-neutral-200 rounded-xl"
-                      animate={{ rotate: [0, 360] }}
-                      transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
                     >
                       {step.icon}
                     </motion.div>
