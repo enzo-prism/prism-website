@@ -1,3 +1,5 @@
+"use client"
+
 import { Mail, Instagram, CalendarDays, ArrowRight } from "lucide-react"
 import Link from "next/link"
 import type { Metadata } from "next"
