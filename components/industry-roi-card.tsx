@@ -7,7 +7,8 @@ import { DollarSign, Users, TrendingUp, ArrowRight } from "lucide-react"
 import { trackEvent } from "@/utils/analytics"
 
 interface IndustryROICardProps {
-  industry: string
+  id: string
+  name: string
   icon: React.ReactNode
   ltv: number
   monthlyCustomers: number
@@ -24,7 +25,8 @@ interface IndustryROICardProps {
 }
 
 export default function IndustryROICard({
-  industry,
+  id,
+  name,
   icon,
   ltv,
   monthlyCustomers,
@@ -52,7 +54,7 @@ export default function IndustryROICard({
   const handleCaseStudyClick = (caseStudyName: string) => {
     trackEvent("click", {
       element_type: "case_study_link",
-      industry: industry,
+      industry: name,
       case_study: caseStudyName
     })
   }
@@ -70,7 +72,7 @@ export default function IndustryROICard({
             <div className="w-12 h-12 bg-neutral-50 rounded-full flex items-center justify-center">
               {icon}
             </div>
-            <h3 className="text-xl font-bold lowercase">{industry}</h3>
+            <h3 className="text-xl font-bold lowercase">{name}</h3>
           </div>
         </div>
 
