@@ -3,7 +3,8 @@
 import Link from "next/link"
 import { ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { useEffect, useState } from "react"
+import { useEffect, useState, useRef, useCallback } from "react"
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion"
 
 interface Quote {
   id: number
@@ -470,11 +471,129 @@ const shuffleArray = (array: Quote[]): Quote[] => {
   return newArray
 }
 
+const TestimonialCard = ({ quote, index }: { quote: Quote; index: number }) => {
+  const [isVisible, setIsVisible] = useState(false)
+  const cardRef = useRef<HTMLDivElement>(null)
+  const shouldReduceMotion = useReducedMotion()
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true)
+          observer.disconnect()
+        }
+      },
+      { threshold: 0.1, rootMargin: "50px" }
+    )
+
+    if (cardRef.current) {
+      observer.observe(cardRef.current)
+    }
+
+    return () => observer.disconnect()
+  }, [])
+
+  const cardVariants = {
+    hidden: shouldReduceMotion 
+      ? { opacity: 0 }
+      : { 
+          opacity: 0, 
+          y: 20,
+          scale: 0.95,
+        },
+    visible: shouldReduceMotion
+      ? { opacity: 1 }
+      : {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          transition: {
+            duration: 0.5,
+            delay: index * 0.05,
+            ease: [0.21, 0.47, 0.32, 0.98],
+          },
+        },
+    hover: shouldReduceMotion
+      ? {}
+      : {
+          scale: 1.02,
+          y: -4,
+          transition: {
+            duration: 0.2,
+            ease: "easeOut",
+          },
+        },
+  }
+
+  return (
+    <motion.blockquote
+      ref={cardRef}
+      variants={cardVariants}
+      initial="hidden"
+      animate={isVisible ? "visible" : "hidden"}
+      whileHover="hover"
+      whileTap={{ scale: 0.98 }}
+      className="bg-white p-6 rounded-xl shadow-md will-change-transform"
+      style={{
+        transform: "translateZ(0)",
+        backfaceVisibility: "hidden",
+        perspective: 1000,
+        contain: "layout style paint",
+      }}
+      aria-label={`Testimonial from ${quote.client.toLowerCase()}`}
+    >
+      <p className="text-lg text-neutral-700 leading-relaxed mb-4">
+        &ldquo;{renderFormattedText(quote.text.toLowerCase())}&rdquo;
+      </p>
+      <footer className="text-right">
+        <p className="font-semibold text-neutral-800">{quote.client.toLowerCase()}</p>
+        <p className="text-sm text-neutral-500">{quote.company.toLowerCase()}</p>
+      </footer>
+    </motion.blockquote>
+  )
+}
+
 export default function WallOfLoveClientPage() {
   const [shuffledQuotes, setShuffledQuotes] = useState<Quote[]>([])
+  const [visibleCount, setVisibleCount] = useState(10)
+  const loadMoreRef = useRef<HTMLDivElement>(null)
+  const [isMobile, setIsMobile] = useState(false)
 
   useEffect(() => {
     setShuffledQuotes(shuffleArray(quotesData))
+    
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768)
+    }
+    
+    checkMobile()
+    window.addEventListener('resize', checkMobile, { passive: true })
+    
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && visibleCount < shuffledQuotes.length) {
+          setVisibleCount((prev) => Math.min(prev + (isMobile ? 5 : 10), shuffledQuotes.length))
+        }
+      },
+      { threshold: 0.1, rootMargin: isMobile ? "50px" : "100px" }
+    )
+
+    if (loadMoreRef.current) {
+      observer.observe(loadMoreRef.current)
+    }
+
+    return () => observer.disconnect()
+  }, [visibleCount, shuffledQuotes.length, isMobile])
+
+  useEffect(() => {
+    if ('ontouchstart' in window) {
+      document.documentElement.style.setProperty('--touch-action', 'pan-y')
+    }
   }, [])
 
   return (
@@ -505,25 +624,49 @@ export default function WallOfLoveClientPage() {
         </div>
       </section>
 
-      <div className="bg-neutral-50">
+      <div className="bg-neutral-50 optimize-scrolling">
         <main className="max-w-2xl mx-auto px-4 py-12 sm:px-6 lg:px-8 sm:py-16">
-          <div className="space-y-8">
-            {shuffledQuotes.map((quote) => (
-              <blockquote
-                key={quote.id}
-                className="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300"
-                aria-label={`Testimonial from ${quote.client.toLowerCase()}`}
+          <motion.div 
+            className="space-y-8"
+            initial={false}
+            style={{
+              transform: "translateZ(0)",
+              willChange: "contents",
+              WebkitOverflowScrolling: "touch",
+              overscrollBehaviorY: "contain",
+            }}
+          >
+            <AnimatePresence mode="popLayout">
+              {shuffledQuotes.slice(0, visibleCount).map((quote, index) => (
+                <TestimonialCard
+                  key={quote.id}
+                  quote={quote}
+                  index={index % 10}
+                />
+              ))}
+            </AnimatePresence>
+          </motion.div>
+          
+          {visibleCount < shuffledQuotes.length && (
+            <div
+              ref={loadMoreRef}
+              className="h-20 flex items-center justify-center mt-8"
+            >
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="flex items-center space-x-2 text-neutral-500"
               >
-                <p className="text-lg text-neutral-700 leading-relaxed mb-4">
-                  &ldquo;{renderFormattedText(quote.text.toLowerCase())}&rdquo;
-                </p>
-                <footer className="text-right">
-                  <p className="font-semibold text-neutral-800">{quote.client.toLowerCase()}</p>
-                  <p className="text-sm text-neutral-500">{quote.company.toLowerCase()}</p>
-                </footer>
-              </blockquote>
-            ))}
-          </div>
+                <motion.div
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                  className="w-5 h-5 border-2 border-neutral-300 border-t-neutral-600 rounded-full"
+                />
+                <span>Loading more testimonials...</span>
+              </motion.div>
+            </div>
+          )}
         </main>
       </div>
     </>

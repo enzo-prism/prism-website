@@ -31,6 +31,95 @@ body {
 @tailwind components;
 @tailwind utilities;
 
+/* GPU Acceleration Utilities */
+@layer utilities {
+  .gpu-accelerated {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+    will-change: transform;
+  }
+  
+  .gpu-layer {
+    transform: translate3d(0, 0, 0);
+    will-change: transform, opacity;
+  }
+  
+  .hardware-accelerated {
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+  
+  .optimize-scrolling {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-y: contain;
+    touch-action: pan-y;
+  }
+  
+  .contain-paint {
+    contain: layout style paint;
+  }
+  
+  .contain-strict {
+    contain: strict;
+  }
+  
+  .will-change-transform {
+    will-change: transform;
+  }
+  
+  .will-change-opacity {
+    will-change: opacity;
+  }
+  
+  .will-change-auto {
+    will-change: auto;
+  }
+}
+
+/* Performance optimizations for mobile */
+@media (max-width: 768px) {
+  .gpu-accelerated,
+  .gpu-layer,
+  .hardware-accelerated {
+    transform: none;
+    will-change: auto;
+  }
+  
+  /* Apply GPU acceleration only during animations on mobile */
+  .animating {
+    transform: translateZ(0);
+    will-change: transform, opacity;
+  }
+  
+  /* Reduce animation complexity on low-end devices */
+  @media (hover: none) and (pointer: coarse) {
+    * {
+      animation-duration: 0.3s !important;
+      transition-duration: 0.2s !important;
+    }
+  }
+}
+
+/* Reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  
+  .will-change-transform,
+  .will-change-opacity {
+    will-change: auto !important;
+  }
+}
+
 /* Mobile-specific viewport fixes */
 @media (max-width: 768px) {
   html, body {
