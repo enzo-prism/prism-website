@@ -473,7 +473,7 @@ const shuffleArray = (array: Quote[]): Quote[] => {
 
 const TestimonialCard = ({ quote, index }: { quote: Quote; index: number }) => {
   const [isVisible, setIsVisible] = useState(false)
-  const cardRef = useRef<HTMLDivElement>(null)
+  const cardRef = useRef<HTMLQuoteElement>(null)
   const shouldReduceMotion = useReducedMotion()
 
   useEffect(() => {
