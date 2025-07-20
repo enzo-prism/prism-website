@@ -88,11 +88,11 @@ body {
     will-change: auto;
   }
   
-  /* Consistent GPU acceleration for all testimonial cards */
+  /* Remove conflicting transforms on mobile - let Framer Motion handle animations */
   .testimonial-card {
     backface-visibility: hidden;
     perspective: 1000px;
-    transform: translateZ(0);
+    /* Remove transform: translateZ(0) to prevent conflicts with Framer Motion */
     contain: layout style paint;
   }
   
@@ -100,7 +100,7 @@ body {
   .testimonial-container {
     -webkit-overflow-scrolling: touch;
     overscroll-behavior-y: contain;
-    transform: translateZ(0);
+    /* Remove transform to prevent conflicts */
     contain: layout;
   }
   
