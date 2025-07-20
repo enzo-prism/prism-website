@@ -21,6 +21,8 @@ interface Step {
 function MobileElegantSteps() {
   const [activeStep, setActiveStep] = useState<number>(1)
   const [isInView, setIsInView] = useState(false)
+  const [touchStart, setTouchStart] = useState<number | null>(null)
+  const [touchEnd, setTouchEnd] = useState<number | null>(null)
   const sectionRef = useRef<HTMLDivElement>(null)
 
   const steps: Step[] = [
@@ -68,16 +70,32 @@ function MobileElegantSteps() {
     return () => observer.disconnect()
   }, [])
 
-  // Auto-advance steps for engagement (paused on user interaction)
-  useEffect(() => {
-    if (!isInView) return
+  // Swipe gesture detection
+  const minSwipeDistance = 50
 
-    const interval = setInterval(() => {
-      setActiveStep((prev) => (prev % steps.length) + 1)
-    }, 5000) // Slightly longer for better reading time
+  const onTouchStart = (e: React.TouchEvent) => {
+    setTouchEnd(null)
+    setTouchStart(e.targetTouches[0].clientX)
+  }
 
-    return () => clearInterval(interval)
-  }, [isInView, steps.length])
+  const onTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX)
+  }
+
+  const onTouchEnd = () => {
+    if (!touchStart || !touchEnd) return
+    
+    const distance = touchStart - touchEnd
+    const isLeftSwipe = distance > minSwipeDistance
+    const isRightSwipe = distance < -minSwipeDistance
+
+    if (isLeftSwipe && activeStep < steps.length) {
+      setActiveStep(activeStep + 1)
+    }
+    if (isRightSwipe && activeStep > 1) {
+      setActiveStep(activeStep - 1)
+    }
+  }
 
   return (
     <motion.div 
@@ -113,8 +131,14 @@ function MobileElegantSteps() {
         ))}
       </motion.div>
 
-      {/* Steps container */}
-      <div className="relative overflow-hidden" style={{ perspective: 1000 }}>
+      {/* Steps container with swipe support */}
+      <div 
+        className="relative overflow-hidden" 
+        style={{ perspective: 1000 }}
+        onTouchStart={onTouchStart}
+        onTouchMove={onTouchMove}
+        onTouchEnd={onTouchEnd}
+      >
         <AnimatePresence mode="wait">
           {steps.map((step, index) => (
             activeStep === step.number && (
