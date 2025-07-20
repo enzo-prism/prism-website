@@ -588,9 +588,9 @@ export default function WallOfLoveClientPage() {
         cardRefs.current.set(el, index)
         observerRef.current?.observe(el)
       } else {
-        // WeakMap automatically handles cleanup when element is garbage collected
-        // Just unobserve if observer still exists
-        observerRef.current?.unobserve(el as HTMLQuoteElement)
+        // When el is null, element has been unmounted
+        // WeakMap automatically handles cleanup, no need to unobserve null
+        // Skip unobserve since element is already removed from DOM
       }
     }
   }, [])
