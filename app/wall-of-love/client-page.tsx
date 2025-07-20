@@ -541,6 +541,7 @@ const TestimonialCard = ({ quote, index, isMobile, isVisible, cardRef }: {
   return (
     <motion.blockquote
       ref={cardRef}
+      data-index={index}
       variants={cardVariants}
       initial="hidden"
       animate={isVisible ? "visible" : "hidden"}
@@ -570,6 +571,25 @@ export default function WallOfLoveClientPage() {
   const [isMobile, setIsMobile] = useState(false)
   const cardRefs = useRef<Map<number, HTMLQuoteElement>>(new Map())
   const observerRef = useRef<IntersectionObserver | null>(null)
+
+  const observerCallback = useCallback((entries: IntersectionObserverEntry[]) => {
+    setVisibleCards(prev => {
+      const newVisibleCards = new Set(prev)
+      
+      entries.forEach((entry) => {
+        const cardElement = entry.target as HTMLQuoteElement
+        const cardIndex = parseInt(cardElement.dataset.index || '-1', 10)
+        
+        if (cardIndex >= 0) {
+          if (entry.isIntersecting) {
+            newVisibleCards.add(cardIndex)
+          }
+        }
+      })
+      
+      return newVisibleCards.size !== prev.size ? newVisibleCards : prev
+    })
+  }, [])
 
   const setCardRef = useCallback((index: number) => {
     return (el: HTMLQuoteElement | null) => {
@@ -602,25 +622,7 @@ export default function WallOfLoveClientPage() {
   useEffect(() => {
     // Single observer for all testimonial cards
     observerRef.current = new IntersectionObserver(
-      (entries) => {
-        const newVisibleCards = new Set(visibleCards)
-        
-        entries.forEach((entry) => {
-          const cardElement = entry.target as HTMLQuoteElement
-          const cardIndex = Array.from(cardRefs.current.entries())
-            .find(([_, el]) => el === cardElement)?.[0]
-          
-          if (cardIndex !== undefined) {
-            if (entry.isIntersecting) {
-              newVisibleCards.add(cardIndex)
-            }
-          }
-        })
-        
-        if (newVisibleCards.size !== visibleCards.size) {
-          setVisibleCards(newVisibleCards)
-        }
-      },
+      observerCallback,
       { 
         threshold: 0.15, 
         rootMargin: isMobile ? "20px" : "50px"
@@ -630,7 +632,7 @@ export default function WallOfLoveClientPage() {
     return () => {
       observerRef.current?.disconnect()
     }
-  }, [isMobile, visibleCards])
+  }, [isMobile, observerCallback])
 
   useEffect(() => {
     const loadMoreObserver = new IntersectionObserver(
