@@ -4,7 +4,7 @@ import Link from "next/link"
 import { ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useEffect, useState, useRef, useCallback } from "react"
-import { motion, AnimatePresence, useReducedMotion } from "framer-motion"
+import { motion, AnimatePresence, useReducedMotion, Variants } from "framer-motion"
 
 interface Quote {
   id: number
@@ -494,7 +494,7 @@ const TestimonialCard = ({ quote, index }: { quote: Quote; index: number }) => {
     return () => observer.disconnect()
   }, [])
 
-  const cardVariants = {
+  const cardVariants: Variants = {
     hidden: shouldReduceMotion 
       ? { opacity: 0 }
       : { 
@@ -511,7 +511,7 @@ const TestimonialCard = ({ quote, index }: { quote: Quote; index: number }) => {
           transition: {
             duration: 0.5,
             delay: index * 0.05,
-            ease: [0.21, 0.47, 0.32, 0.98],
+            ease: "easeInOut",
           },
         },
     hover: shouldReduceMotion
