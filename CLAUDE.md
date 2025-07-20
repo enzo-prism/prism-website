@@ -201,14 +201,14 @@ npm run verify:deploy    # Verify deployment readiness
 
 ### Testing Approach
 - Jest configured with TypeScript support (ts-jest preset)
-- MDX remote mocked for testing
+- MDX remote mocked for testing (see `__mocks__/mdxremote.js`)
 - Test files in `__tests__` directory
 - Test environment: jsdom for React component testing
 - Setup file: jest.setup.ts for test configuration
 - TypeScript config: tsconfig.jest.json for test-specific settings
 - Focus on user interactions and edge cases
 - Module path mapping configured for `@/*` imports
-- SVG files transformed in tests
+- Transform configuration for next-mdx-remote module
 
 ### Performance Considerations
 - Use dynamic imports for code splitting
@@ -300,6 +300,11 @@ NEXT_PUBLIC_POSTHOG_HOST=
 - Routes: kebab-case (e.g., `/case-studies/[slug]`)
 - Test files: `*.test.ts`, `*.spec.ts`, or `*.test.tsx` for React components
 
+### Comment Policy
+- **NEVER add comments to code unless explicitly requested**
+- Code should be self-documenting through clear naming and structure
+- Only add comments when the user specifically asks for them
+
 ## MCP Server Troubleshooting
 
 ### Verification Commands
@@ -340,6 +345,8 @@ npm run mcp:validate
 - **NEVER create files unless they're absolutely necessary** for achieving your goal
 - **ALWAYS prefer editing an existing file** to creating a new one
 - **NEVER proactively create documentation files** (*.md) or README files - only create documentation files if explicitly requested by the User
+- **NEVER add comments to code unless explicitly requested**
+- **NEVER add emojis to files unless the user explicitly requests them**
 
 ## Commonly Used Commands Summary
 
