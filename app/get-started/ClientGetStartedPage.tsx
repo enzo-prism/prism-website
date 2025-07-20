@@ -613,9 +613,12 @@ export default function ClientGetStartedPage() {
                         ))}
                       </ul>
                       
-                      <motion.button
+                      <motion.a
+                        href="https://calendar.notion.so/meet/enzosison/client-meeting"
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className={`
-                          w-full mt-6 py-3 px-4 rounded-full font-medium text-sm lowercase min-h-[44px]
+                          block w-full mt-6 py-3 px-4 rounded-full font-medium text-sm lowercase min-h-[44px] text-center
                           ${service.highlight 
                             ? 'bg-white text-black hover:bg-neutral-100' 
                             : 'bg-black text-white hover:bg-neutral-800'
@@ -623,10 +626,10 @@ export default function ClientGetStartedPage() {
                         `}
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
-                        onClick={() => trackCTAClick(`${service.title} select`, "get started page")}
+                        onClick={() => trackCTAClick(`${service.title} schedule call`, "get started page")}
                       >
-                        get started
-                      </motion.button>
+                        schedule call
+                      </motion.a>
                     </motion.div>
                   ))}
                 </div>
