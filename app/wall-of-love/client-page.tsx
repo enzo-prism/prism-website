@@ -491,7 +491,8 @@ const TestimonialCard = ({ quote, index, isMobile, isVisible, cardRef }: {
     if (shouldReduceMotion) {
       return {
         hidden: { opacity: 0 },
-        visible: { opacity: 1 }
+        visible: { opacity: 1 },
+        hover: {} // Empty object for type consistency
       }
     }
 
@@ -508,7 +509,8 @@ const TestimonialCard = ({ quote, index, isMobile, isVisible, cardRef }: {
             duration: 0.3,
             ease: "easeOut",
           },
-        }
+        },
+        hover: {} // Empty object for type consistency
       }
     }
 
