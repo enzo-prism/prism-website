@@ -21,6 +21,7 @@ const redirects: Record<string, string> = {
   // "/blog": "/", // REMOVED - We now have a blog page
   "/pod": "/",
   "/refer": "/get-started",
+  "/tools": "/services", // Redirect tools page to services
 
   // Also redirect all case study pages to the new case studies structure
   "/our-work/town-centre-dental-case-study": "/case-studies",
@@ -73,6 +74,7 @@ export const config = {
     // "/blog", // REMOVED - We now have a blog page
     "/pod",
     "/refer",
+    "/tools",
     "/our-work/:path*", // This will match all paths under /our-work/
   ],
 }

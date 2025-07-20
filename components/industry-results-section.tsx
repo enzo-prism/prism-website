@@ -11,13 +11,6 @@ import { trackEvent } from "@/utils/analytics"
 import { useRevealAnimation } from "@/hooks/use-reveal-animation"
 import { useMobile } from "@/hooks/use-mobile"
 
-// Lazy load the calculator
-const ROICalculator = dynamic(() => import("./roi-calculator"), {
-  loading: () => (
-    <div className="w-full max-w-xl mx-auto h-96 bg-gray-100 rounded-lg animate-pulse" />
-  ),
-  ssr: false
-})
 
 // Industry data
 const industries = [
@@ -86,7 +79,6 @@ const industries = [
 
 export default function IndustryResultsSection() {
   const [activeIndustry, setActiveIndustry] = useState(0)
-  const [showCalculator, setShowCalculator] = useState(false)
   const isMobile = useMobile()
   const sectionRef = useRef<HTMLElement>(null)
   const { elementRef, isVisible } = useRevealAnimation({ threshold: 0.2 })
@@ -100,13 +92,6 @@ export default function IndustryResultsSection() {
     })
   }
 
-  const handleCalculatorToggle = () => {
-    setShowCalculator(!showCalculator)
-    trackEvent("click", {
-      element_type: "roi_calculator_toggle",
-      action: showCalculator ? "hide" : "show"
-    })
-  }
 
   return (
     <>
@@ -178,47 +163,24 @@ export default function IndustryResultsSection() {
             )}
           </div>
 
-          {/* ROI Calculator Section */}
-          <div className="text-center space-y-6">
-            {!showCalculator ? (
-              <Button
-                variant="outline"
-                className="rounded-full px-6 py-3 lowercase"
-                onClick={handleCalculatorToggle}
-              >
-                calculate your potential roi <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            ) : (
-              <motion.div
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.3 }}
-              >
-                <ROICalculator />
-              </motion.div>
-            )}
-          </div>
-
           {/* Bottom CTA */}
-          {!showCalculator && (
-            <div className="mt-12 text-center">
-              <p className="text-sm text-neutral-500 lowercase mb-4">
-                ready to see results like these for your business?
-              </p>
-              <Button
-                className="rounded-full px-8 py-3 lowercase"
-                onClick={() => trackEvent("cta_click", {
-                  cta_text: "get started with prism",
-                  cta_location: "industry_results_section"
-                })}
-                asChild
-              >
-                <a href="/get-started">
-                  get started with prism <ArrowRight className="ml-2 h-4 w-4" />
-                </a>
-              </Button>
-            </div>
-          )}
+          <div className="mt-12 text-center">
+            <p className="text-sm text-neutral-500 lowercase mb-4">
+              ready to see results like these for your business?
+            </p>
+            <Button
+              className="rounded-full px-8 py-3 lowercase"
+              onClick={() => trackEvent("cta_click", {
+                cta_text: "get started with prism",
+                cta_location: "industry_results_section"
+              })}
+              asChild
+            >
+              <a href="/get-started">
+                get started with prism <ArrowRight className="ml-2 h-4 w-4" />
+              </a>
+            </Button>
+          </div>
         </div>
       </section>
     </>
