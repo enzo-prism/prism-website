@@ -88,23 +88,12 @@ body {
     will-change: auto;
   }
   
-  /* Apply GPU acceleration only during animations on mobile */
-  .animating {
+  /* Consistent GPU acceleration for all testimonial cards */
+  .testimonial-card {
+    backface-visibility: hidden;
+    perspective: 1000px;
     transform: translateZ(0);
-    will-change: transform, opacity;
-  }
-  
-  /* Reduce animation complexity on low-end devices */
-  @media (hover: none) and (pointer: coarse) {
-    * {
-      animation-duration: 0.3s !important;
-      transition-duration: 0.2s !important;
-    }
-    
-    /* Disable hover effects on touch devices */
-    .testimonial-card:hover {
-      transform: none !important;
-    }
+    contain: layout style paint;
   }
   
   /* Optimize scrolling performance */
@@ -112,20 +101,20 @@ body {
     -webkit-overflow-scrolling: touch;
     overscroll-behavior-y: contain;
     transform: translateZ(0);
+    contain: layout;
   }
   
-  /* Mobile-specific testimonial optimizations */
-  .testimonial-card {
-    backface-visibility: hidden;
-    perspective: 1000px;
-  }
-  
-  .testimonial-card.animating {
-    will-change: transform, opacity;
-  }
-  
-  .testimonial-card:not(.animating) {
-    will-change: auto;
+  /* Reduce animation complexity on low-end devices */
+  @media (hover: none) and (pointer: coarse) {
+    * {
+      animation-duration: 0.25s !important;
+      transition-duration: 0.15s !important;
+    }
+    
+    /* Disable hover effects on touch devices */
+    .testimonial-card:hover {
+      transform: none !important;
+    }
   }
 }
 

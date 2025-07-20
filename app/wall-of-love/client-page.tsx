@@ -479,64 +479,38 @@ const TestimonialCard = ({ quote, index, isMobile, isVisible, cardRef }: {
   cardRef: (el: HTMLQuoteElement | null) => void;
 }) => {
   const shouldReduceMotion = useReducedMotion()
-  const [hasAnimated, setHasAnimated] = useState(false)
-
-  useEffect(() => {
-    if (isVisible && !hasAnimated) {
-      setHasAnimated(true)
-    }
-  }, [isVisible, hasAnimated])
 
   const cardVariants: Variants = useMemo(() => {
     if (shouldReduceMotion) {
       return {
         hidden: { opacity: 0 },
         visible: { opacity: 1 },
-        hover: {} // Empty object for type consistency
-      }
-    }
-
-    if (isMobile) {
-      return {
-        hidden: { 
-          opacity: 0, 
-          y: 15,
-        },
-        visible: {
-          opacity: 1,
-          y: 0,
-          transition: {
-            duration: 0.3,
-            ease: "easeOut",
-          },
-        },
-        hover: {} // Empty object for type consistency
+        hover: {}
       }
     }
 
     return {
       hidden: { 
         opacity: 0, 
-        y: 20,
+        y: isMobile ? 10 : 15,
       },
       visible: {
         opacity: 1,
         y: 0,
         transition: {
-          duration: 0.4,
-          delay: Math.min(index * 0.03, 0.3),
+          duration: isMobile ? 0.25 : 0.3,
           ease: "easeOut",
         },
       },
-      hover: {
-        y: -4,
+      hover: isMobile ? {} : {
+        y: -3,
         transition: {
-          duration: 0.2,
+          duration: 0.15,
           ease: "easeOut",
         },
       },
     }
-  }, [shouldReduceMotion, isMobile, index])
+  }, [shouldReduceMotion, isMobile])
 
   return (
     <motion.blockquote
@@ -546,9 +520,11 @@ const TestimonialCard = ({ quote, index, isMobile, isVisible, cardRef }: {
       initial="hidden"
       animate={isVisible ? "visible" : "hidden"}
       whileHover={!isMobile ? "hover" : undefined}
-      className={`testimonial-card bg-white p-6 rounded-xl shadow-md ${!hasAnimated && isVisible ? 'animating' : ''}`}
+      className="testimonial-card bg-white p-6 rounded-xl shadow-md"
       style={{
         contain: "layout style paint",
+        transform: "translateZ(0)",
+        willChange: isVisible ? "transform, opacity" : "auto",
       }}
       aria-label={`Testimonial from ${quote.client.toLowerCase()}`}
     >
@@ -569,39 +545,52 @@ export default function WallOfLoveClientPage() {
   const [visibleCards, setVisibleCards] = useState<Set<number>>(new Set())
   const loadMoreRef = useRef<HTMLDivElement>(null)
   const [isMobile, setIsMobile] = useState(false)
-  const cardRefs = useRef<Map<number, HTMLQuoteElement>>(new Map())
+  const cardRefs = useRef<WeakMap<HTMLQuoteElement, number>>(new WeakMap())
   const observerRef = useRef<IntersectionObserver | null>(null)
 
   const observerCallback = useCallback((entries: IntersectionObserverEntry[]) => {
-    setVisibleCards(prev => {
-      const newVisibleCards = new Set(prev)
+    const updates = { cards: new Set<number>(), shouldLoadMore: false }
+    
+    entries.forEach((entry) => {
+      const element = entry.target as HTMLElement
       
-      entries.forEach((entry) => {
-        const cardElement = entry.target as HTMLQuoteElement
-        const cardIndex = parseInt(cardElement.dataset.index || '-1', 10)
-        
-        if (cardIndex >= 0) {
-          if (entry.isIntersecting) {
-            newVisibleCards.add(cardIndex)
-          }
-        }
-      })
+      // Handle load more detection
+      if (element === loadMoreRef.current && entry.isIntersecting) {
+        updates.shouldLoadMore = true
+        return
+      }
       
-      return newVisibleCards.size !== prev.size ? newVisibleCards : prev
+      // Handle card visibility
+      const cardElement = element as HTMLQuoteElement
+      const cardIndex = parseInt(cardElement.dataset.index || '-1', 10)
+      
+      if (cardIndex >= 0 && entry.isIntersecting) {
+        updates.cards.add(cardIndex)
+      }
     })
-  }, [])
+    
+    // Batch state updates
+    if (updates.cards.size > 0) {
+      setVisibleCards(prev => {
+        const newSet = new Set([...prev, ...updates.cards])
+        return newSet.size !== prev.size ? newSet : prev
+      })
+    }
+    
+    if (updates.shouldLoadMore) {
+      setVisibleCount(prev => Math.min(prev + (isMobile ? 5 : 8), shuffledQuotes.length))
+    }
+  }, [isMobile, shuffledQuotes.length])
 
   const setCardRef = useCallback((index: number) => {
     return (el: HTMLQuoteElement | null) => {
       if (el) {
-        cardRefs.current.set(index, el)
+        cardRefs.current.set(el, index)
         observerRef.current?.observe(el)
       } else {
-        const existing = cardRefs.current.get(index)
-        if (existing) {
-          observerRef.current?.unobserve(existing)
-          cardRefs.current.delete(index)
-        }
+        // WeakMap automatically handles cleanup when element is garbage collected
+        // Just unobserve if observer still exists
+        observerRef.current?.unobserve(el as HTMLQuoteElement)
       }
     }
   }, [])
@@ -620,36 +609,24 @@ export default function WallOfLoveClientPage() {
   }, [])
 
   useEffect(() => {
-    // Single observer for all testimonial cards
+    // Single observer for both card visibility and load-more detection
     observerRef.current = new IntersectionObserver(
       observerCallback,
       { 
-        threshold: 0.15, 
-        rootMargin: isMobile ? "20px" : "50px"
+        threshold: [0.1, 0.15], 
+        rootMargin: isMobile ? "30px" : "60px"
       }
     )
+
+    // Observe load more element if it exists
+    if (loadMoreRef.current) {
+      observerRef.current.observe(loadMoreRef.current)
+    }
 
     return () => {
       observerRef.current?.disconnect()
     }
-  }, [isMobile, observerCallback])
-
-  useEffect(() => {
-    const loadMoreObserver = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && visibleCount < shuffledQuotes.length) {
-          setVisibleCount((prev) => Math.min(prev + (isMobile ? 5 : 8), shuffledQuotes.length))
-        }
-      },
-      { threshold: 0.1, rootMargin: isMobile ? "50px" : "100px" }
-    )
-
-    if (loadMoreRef.current) {
-      loadMoreObserver.observe(loadMoreRef.current)
-    }
-
-    return () => loadMoreObserver.disconnect()
-  }, [visibleCount, shuffledQuotes.length, isMobile])
+  }, [observerCallback])
 
   useEffect(() => {
     if ('ontouchstart' in window) {
