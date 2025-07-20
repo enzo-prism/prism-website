@@ -3,7 +3,7 @@
 import Link from "next/link"
 import { ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { useEffect, useState, useRef, useCallback } from "react"
+import { useEffect, useState, useRef, useCallback, useMemo } from "react"
 import { motion, AnimatePresence, useReducedMotion, Variants } from "framer-motion"
 
 interface Quote {
@@ -471,60 +471,70 @@ const shuffleArray = (array: Quote[]): Quote[] => {
   return newArray
 }
 
-const TestimonialCard = ({ quote, index }: { quote: Quote; index: number }) => {
-  const [isVisible, setIsVisible] = useState(false)
-  const cardRef = useRef<HTMLQuoteElement>(null)
+const TestimonialCard = ({ quote, index, isMobile, isVisible, cardRef }: { 
+  quote: Quote; 
+  index: number;
+  isMobile: boolean;
+  isVisible: boolean;
+  cardRef: (el: HTMLQuoteElement | null) => void;
+}) => {
   const shouldReduceMotion = useReducedMotion()
+  const [hasAnimated, setHasAnimated] = useState(false)
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true)
-          observer.disconnect()
-        }
-      },
-      { threshold: 0.1, rootMargin: "50px" }
-    )
+    if (isVisible && !hasAnimated) {
+      setHasAnimated(true)
+    }
+  }, [isVisible, hasAnimated])
 
-    if (cardRef.current) {
-      observer.observe(cardRef.current)
+  const cardVariants: Variants = useMemo(() => {
+    if (shouldReduceMotion) {
+      return {
+        hidden: { opacity: 0 },
+        visible: { opacity: 1 }
+      }
     }
 
-    return () => observer.disconnect()
-  }, [])
-
-  const cardVariants: Variants = {
-    hidden: shouldReduceMotion 
-      ? { opacity: 0 }
-      : { 
+    if (isMobile) {
+      return {
+        hidden: { 
           opacity: 0, 
-          y: 20,
-          scale: 0.95,
+          y: 15,
         },
-    visible: shouldReduceMotion
-      ? { opacity: 1 }
-      : {
+        visible: {
           opacity: 1,
           y: 0,
-          scale: 1,
           transition: {
-            duration: 0.5,
-            delay: index * 0.05,
-            ease: "easeInOut",
-          },
-        },
-    hover: shouldReduceMotion
-      ? {}
-      : {
-          scale: 1.02,
-          y: -4,
-          transition: {
-            duration: 0.2,
+            duration: 0.3,
             ease: "easeOut",
           },
+        }
+      }
+    }
+
+    return {
+      hidden: { 
+        opacity: 0, 
+        y: 20,
+      },
+      visible: {
+        opacity: 1,
+        y: 0,
+        transition: {
+          duration: 0.4,
+          delay: Math.min(index * 0.03, 0.3),
+          ease: "easeOut",
         },
-  }
+      },
+      hover: {
+        y: -4,
+        transition: {
+          duration: 0.2,
+          ease: "easeOut",
+        },
+      },
+    }
+  }, [shouldReduceMotion, isMobile, index])
 
   return (
     <motion.blockquote
@@ -532,13 +542,9 @@ const TestimonialCard = ({ quote, index }: { quote: Quote; index: number }) => {
       variants={cardVariants}
       initial="hidden"
       animate={isVisible ? "visible" : "hidden"}
-      whileHover="hover"
-      whileTap={{ scale: 0.98 }}
-      className="bg-white p-6 rounded-xl shadow-md will-change-transform"
+      whileHover={!isMobile ? "hover" : undefined}
+      className={`testimonial-card bg-white p-6 rounded-xl shadow-md ${!hasAnimated && isVisible ? 'animating' : ''}`}
       style={{
-        transform: "translateZ(0)",
-        backfaceVisibility: "hidden",
-        perspective: 1000,
         contain: "layout style paint",
       }}
       aria-label={`Testimonial from ${quote.client.toLowerCase()}`}
@@ -557,8 +563,26 @@ const TestimonialCard = ({ quote, index }: { quote: Quote; index: number }) => {
 export default function WallOfLoveClientPage() {
   const [shuffledQuotes, setShuffledQuotes] = useState<Quote[]>([])
   const [visibleCount, setVisibleCount] = useState(10)
+  const [visibleCards, setVisibleCards] = useState<Set<number>>(new Set())
   const loadMoreRef = useRef<HTMLDivElement>(null)
   const [isMobile, setIsMobile] = useState(false)
+  const cardRefs = useRef<Map<number, HTMLQuoteElement>>(new Map())
+  const observerRef = useRef<IntersectionObserver | null>(null)
+
+  const setCardRef = useCallback((index: number) => {
+    return (el: HTMLQuoteElement | null) => {
+      if (el) {
+        cardRefs.current.set(index, el)
+        observerRef.current?.observe(el)
+      } else {
+        const existing = cardRefs.current.get(index)
+        if (existing) {
+          observerRef.current?.unobserve(existing)
+          cardRefs.current.delete(index)
+        }
+      }
+    }
+  }, [])
 
   useEffect(() => {
     setShuffledQuotes(shuffleArray(quotesData))
@@ -574,20 +598,53 @@ export default function WallOfLoveClientPage() {
   }, [])
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
+    // Single observer for all testimonial cards
+    observerRef.current = new IntersectionObserver(
+      (entries) => {
+        const newVisibleCards = new Set(visibleCards)
+        
+        entries.forEach((entry) => {
+          const cardElement = entry.target as HTMLQuoteElement
+          const cardIndex = Array.from(cardRefs.current.entries())
+            .find(([_, el]) => el === cardElement)?.[0]
+          
+          if (cardIndex !== undefined) {
+            if (entry.isIntersecting) {
+              newVisibleCards.add(cardIndex)
+            }
+          }
+        })
+        
+        if (newVisibleCards.size !== visibleCards.size) {
+          setVisibleCards(newVisibleCards)
+        }
+      },
+      { 
+        threshold: 0.15, 
+        rootMargin: isMobile ? "20px" : "50px"
+      }
+    )
+
+    return () => {
+      observerRef.current?.disconnect()
+    }
+  }, [isMobile, visibleCards])
+
+  useEffect(() => {
+    const loadMoreObserver = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting && visibleCount < shuffledQuotes.length) {
-          setVisibleCount((prev) => Math.min(prev + (isMobile ? 5 : 10), shuffledQuotes.length))
+          setVisibleCount((prev) => Math.min(prev + (isMobile ? 5 : 8), shuffledQuotes.length))
         }
       },
       { threshold: 0.1, rootMargin: isMobile ? "50px" : "100px" }
     )
 
     if (loadMoreRef.current) {
-      observer.observe(loadMoreRef.current)
+      loadMoreObserver.observe(loadMoreRef.current)
     }
 
-    return () => observer.disconnect()
+    return () => loadMoreObserver.disconnect()
   }, [visibleCount, shuffledQuotes.length, isMobile])
 
   useEffect(() => {
@@ -626,26 +683,18 @@ export default function WallOfLoveClientPage() {
 
       <div className="bg-neutral-50 optimize-scrolling">
         <main className="max-w-2xl mx-auto px-4 py-12 sm:px-6 lg:px-8 sm:py-16">
-          <motion.div 
-            className="space-y-8"
-            initial={false}
-            style={{
-              transform: "translateZ(0)",
-              willChange: "contents",
-              WebkitOverflowScrolling: "touch",
-              overscrollBehaviorY: "contain",
-            }}
-          >
-            <AnimatePresence mode="popLayout">
-              {shuffledQuotes.slice(0, visibleCount).map((quote, index) => (
-                <TestimonialCard
-                  key={quote.id}
-                  quote={quote}
-                  index={index % 10}
-                />
-              ))}
-            </AnimatePresence>
-          </motion.div>
+          <div className="testimonial-container space-y-8">
+            {shuffledQuotes.slice(0, visibleCount).map((quote, index) => (
+              <TestimonialCard
+                key={quote.id}
+                quote={quote}
+                index={index}
+                isMobile={isMobile}
+                isVisible={visibleCards.has(index)}
+                cardRef={setCardRef(index)}
+              />
+            ))}
+          </div>
           
           {visibleCount < shuffledQuotes.length && (
             <div

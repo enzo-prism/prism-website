@@ -100,6 +100,32 @@ body {
       animation-duration: 0.3s !important;
       transition-duration: 0.2s !important;
     }
+    
+    /* Disable hover effects on touch devices */
+    .testimonial-card:hover {
+      transform: none !important;
+    }
+  }
+  
+  /* Optimize scrolling performance */
+  .testimonial-container {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-y: contain;
+    transform: translateZ(0);
+  }
+  
+  /* Mobile-specific testimonial optimizations */
+  .testimonial-card {
+    backface-visibility: hidden;
+    perspective: 1000px;
+  }
+  
+  .testimonial-card.animating {
+    will-change: transform, opacity;
+  }
+  
+  .testimonial-card:not(.animating) {
+    will-change: auto;
   }
 }
 
