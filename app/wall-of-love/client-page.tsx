@@ -3,8 +3,7 @@
 import Link from "next/link"
 import { ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { useEffect, useState, useRef, useCallback, useMemo } from "react"
-import { motion, AnimatePresence, useReducedMotion, Variants } from "framer-motion"
+import { useEffect, useState, useRef, useCallback } from "react"
 
 interface Quote {
   id: number
@@ -471,60 +470,18 @@ const shuffleArray = (array: Quote[]): Quote[] => {
   return newArray
 }
 
-const TestimonialCard = ({ quote, index, isMobile, isVisible, cardRef }: { 
+const TestimonialCard = ({ quote, index, cardRef }: { 
   quote: Quote; 
   index: number;
-  isMobile: boolean;
-  isVisible: boolean;
   cardRef: (el: HTMLQuoteElement | null) => void;
 }) => {
-  const shouldReduceMotion = useReducedMotion()
-
-  const cardVariants: Variants = useMemo(() => {
-    if (shouldReduceMotion) {
-      return {
-        hidden: { opacity: 0 },
-        visible: { opacity: 1 },
-        hover: {}
-      }
-    }
-
-    return {
-      hidden: { 
-        opacity: 0, 
-        y: isMobile ? 10 : 15,
-      },
-      visible: {
-        opacity: 1,
-        y: 0,
-        transition: {
-          duration: isMobile ? 0.25 : 0.3,
-          ease: "easeOut",
-        },
-      },
-      hover: isMobile ? {} : {
-        y: -3,
-        transition: {
-          duration: 0.15,
-          ease: "easeOut",
-        },
-      },
-    }
-  }, [shouldReduceMotion, isMobile])
-
   return (
-    <motion.blockquote
+    <blockquote
       ref={cardRef}
       data-index={index}
-      variants={cardVariants}
-      initial="hidden"
-      animate={isVisible ? "visible" : "hidden"}
-      whileHover={!isMobile ? "hover" : undefined}
-      className="testimonial-card bg-white p-4 sm:p-6 rounded-xl shadow-md w-full"
+      className="testimonial-card bg-white p-4 sm:p-6 rounded-xl shadow-md w-full transition-transform duration-200 hover:shadow-lg hover:-translate-y-1"
       style={{
         contain: "layout style paint",
-        // Remove transform style on mobile to prevent conflicts
-        willChange: isVisible ? "opacity, transform" : "auto",
       }}
       aria-label={`Testimonial from ${quote.client.toLowerCase()}`}
     >
@@ -535,14 +492,13 @@ const TestimonialCard = ({ quote, index, isMobile, isVisible, cardRef }: {
         <p className="font-semibold text-sm sm:text-base text-neutral-800">{quote.client.toLowerCase()}</p>
         <p className="text-xs sm:text-sm text-neutral-500">{quote.company.toLowerCase()}</p>
       </footer>
-    </motion.blockquote>
+    </blockquote>
   )
 }
 
 export default function WallOfLoveClientPage() {
   const [shuffledQuotes, setShuffledQuotes] = useState<Quote[]>([])
   const [visibleCount, setVisibleCount] = useState(10)
-  const [visibleCards, setVisibleCards] = useState<Set<number>>(new Set())
   const loadMoreRef = useRef<HTMLDivElement>(null)
   // Initialize with proper SSR-friendly default
   const [isMobile, setIsMobile] = useState(() => {
@@ -556,48 +512,20 @@ export default function WallOfLoveClientPage() {
   const observerRef = useRef<IntersectionObserver | null>(null)
 
   const observerCallback = useCallback((entries: IntersectionObserverEntry[]) => {
-    const updates = { cards: new Set<number>(), shouldLoadMore: false }
-    
     entries.forEach((entry) => {
       const element = entry.target as HTMLElement
       
       // Handle load more detection
       if (element === loadMoreRef.current && entry.isIntersecting) {
-        updates.shouldLoadMore = true
-        return
-      }
-      
-      // Handle card visibility
-      const cardElement = element as HTMLQuoteElement
-      const cardIndex = parseInt(cardElement.dataset.index || '-1', 10)
-      
-      if (cardIndex >= 0 && entry.isIntersecting) {
-        updates.cards.add(cardIndex)
+        setVisibleCount(prev => Math.min(prev + (isMobile ? 5 : 8), shuffledQuotes.length))
       }
     })
-    
-    // Batch state updates
-    if (updates.cards.size > 0) {
-      setVisibleCards(prev => {
-        const newSet = new Set([...prev, ...updates.cards])
-        return newSet.size !== prev.size ? newSet : prev
-      })
-    }
-    
-    if (updates.shouldLoadMore) {
-      setVisibleCount(prev => Math.min(prev + (isMobile ? 5 : 8), shuffledQuotes.length))
-    }
   }, [isMobile, shuffledQuotes.length])
 
   const setCardRef = useCallback((index: number) => {
     return (el: HTMLQuoteElement | null) => {
       if (el) {
         cardRefs.current.set(el, index)
-        observerRef.current?.observe(el)
-      } else {
-        // When el is null, element has been unmounted
-        // WeakMap automatically handles cleanup, no need to unobserve null
-        // Skip unobserve since element is already removed from DOM
       }
     }
   }, [])
@@ -617,12 +545,12 @@ export default function WallOfLoveClientPage() {
   }, [])
 
   useEffect(() => {
-    // Single observer for both card visibility and load-more detection
+    // Observer for load-more detection
     observerRef.current = new IntersectionObserver(
       observerCallback,
       { 
-        threshold: [0.1, 0.15], 
-        rootMargin: isMobile ? "30px" : "60px"
+        threshold: 0.1, 
+        rootMargin: "60px"
       }
     )
 
@@ -678,8 +606,6 @@ export default function WallOfLoveClientPage() {
                 key={quote.id}
                 quote={quote}
                 index={index}
-                isMobile={isHydrated ? isMobile : false}
-                isVisible={visibleCards.has(index)}
                 cardRef={setCardRef(index)}
               />
             ))}
@@ -690,19 +616,10 @@ export default function WallOfLoveClientPage() {
               ref={loadMoreRef}
               className="h-20 flex items-center justify-center mt-8"
             >
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                className="flex items-center space-x-2 text-neutral-500"
-              >
-                <motion.div
-                  animate={{ rotate: 360 }}
-                  transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                  className="w-5 h-5 border-2 border-neutral-300 border-t-neutral-600 rounded-full"
-                />
+              <div className="flex items-center space-x-2 text-neutral-500">
+                <div className="w-5 h-5 border-2 border-neutral-300 border-t-neutral-600 rounded-full" />
                 <span className="text-sm sm:text-base">Loading more testimonials...</span>
-              </motion.div>
+              </div>
             </div>
           )}
         </main>
