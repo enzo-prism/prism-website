@@ -3,26 +3,51 @@
 import { useEffect, useState } from "react"
 import CoreImage from "./core-image"
 import { LOGO_CONFIG, LOGO_SIZES } from "@/lib/constants"
+import { useMobile } from "@/hooks/use-mobile"
 
 export default function AnimatedLogo() {
   const [isVisible, setIsVisible] = useState(false)
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false)
+  const isMobile = useMobile()
 
   useEffect(() => {
-    // Delay the appearance for a subtle entrance
-    const timer = setTimeout(() => {
+    // Check for reduced motion preference
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
+    setPrefersReducedMotion(mediaQuery.matches)
+    
+    const handleChange = (e: MediaQueryListEvent) => {
+      setPrefersReducedMotion(e.matches)
+    }
+    
+    mediaQuery.addEventListener('change', handleChange)
+    
+    // For mobile or reduced motion, show immediately without animation
+    if (isMobile || mediaQuery.matches) {
       setIsVisible(true)
-    }, 300)
+    } else {
+      // Delay the appearance for a subtle entrance on desktop
+      const timer = setTimeout(() => {
+        setIsVisible(true)
+      }, 200) // Reduced delay to prevent conflicts
+      
+      return () => {
+        clearTimeout(timer)
+        mediaQuery.removeEventListener('change', handleChange)
+      }
+    }
 
-    return () => clearTimeout(timer)
-  }, [])
+    return () => mediaQuery.removeEventListener('change', handleChange)
+  }, [isMobile])
+
+  // Skip animation for mobile and reduced motion users
+  const shouldAnimate = !isMobile && !prefersReducedMotion
+  const animationClasses = shouldAnimate 
+    ? `transition-all duration-700 ease-out ${isVisible ? "opacity-100 transform-none" : "opacity-0 scale-95"}`
+    : "opacity-100"
 
   return (
     <div className="relative mx-auto mb-6 h-16 w-16 md:h-20 md:w-20 lg:h-24 lg:w-24">
-      <div
-        className={`absolute inset-0 rounded-xl overflow-hidden transition-all duration-1000 ease-out ${
-          isVisible ? "opacity-100 transform-none" : "opacity-0 scale-90"
-        }`}
-      >
+      <div className={`absolute inset-0 rounded-xl overflow-hidden ${animationClasses}`}>
         <CoreImage
           src={LOGO_CONFIG.src}
           alt={LOGO_CONFIG.alt}
@@ -33,6 +58,8 @@ export default function AnimatedLogo() {
           priority
           fallbackSrc={LOGO_CONFIG.fallbackSrc}
           trackingId="animated_logo"
+          quality={90}
+          showLoadingIndicator={true}
         />
       </div>
     </div>

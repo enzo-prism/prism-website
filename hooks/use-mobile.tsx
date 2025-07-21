@@ -9,22 +9,14 @@ import { useState, useEffect } from "react"
  * @returns {boolean} - True if the media query matches, false otherwise.
  */
 export function useMobile(query = "(max-width: 768px)"): boolean {
-  // Initialize with a reasonable default based on common screen sizes
-  const [isMobile, setIsMobile] = useState(() => {
-    // For SSR, try to make an educated guess if possible
-    if (typeof window === "undefined") {
-      return false // Default to false for SSR
-    }
-    // Quick check on client-side
-    return window.innerWidth <= 768
-  })
-  
+  // Initialize with false for SSR consistency
+  const [isMobile, setIsMobile] = useState(false)
   const [isHydrated, setIsHydrated] = useState(false)
 
   useEffect(() => {
+    // Mark as hydrated and immediately check
     setIsHydrated(true)
     
-    // This effect should only run on the client side.
     if (typeof window === "undefined") {
       return
     }
@@ -36,7 +28,7 @@ export function useMobile(query = "(max-width: 768px)"): boolean {
       setIsMobile(mediaQuery.matches)
     }
 
-    // Set the initial state immediately on hydration
+    // Set the initial state immediately on hydration to prevent flashing
     handleResize()
 
     // Add an event listener to handle changes in the media query status.
@@ -48,8 +40,9 @@ export function useMobile(query = "(max-width: 768px)"): boolean {
     }
   }, [query]) // Re-run the effect if the query changes.
 
-  // During SSR and before hydration, provide a stable value
-  if (!isHydrated && typeof window === "undefined") {
+  // Always return false during SSR to prevent hydration mismatches
+  // This prevents animation conflicts during initial render
+  if (!isHydrated) {
     return false
   }
 

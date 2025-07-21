@@ -400,3 +400,8 @@ The application uses Next.js 15's App Router, which means:
 3. **Caching**: 1-year TTL for optimized assets
 4. **Animations**: Hardware-accelerated only (transform, opacity)
 5. **Bundle Size**: Monitor imports and tree-shaking
+# important-instruction-reminders
+Do what has been asked; nothing more, nothing less.
+NEVER create files unless they're absolutely necessary for achieving your goal.
+ALWAYS prefer editing an existing file to creating a new one.
+NEVER proactively create documentation files (*.md) or README files. Only create documentation files if explicitly requested by the User.

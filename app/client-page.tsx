@@ -265,13 +265,13 @@ export default function ClientPage() {
 
           <div className="container relative mx-auto px-4 md:px-6 py-8 md:py-16">
             <div className="flex flex-col items-center space-y-4 md:space-y-6 text-center">
-              <div className="relative mx-auto mb-4 md:mb-6 h-16 w-16 md:h-20 md:w-20 lg:h-24 lg:w-24 logo-float">
+              <div className={`relative mx-auto mb-4 md:mb-6 h-16 w-16 md:h-20 md:w-20 lg:h-24 lg:w-24 ${!isMobile ? 'logo-float' : ''}`}>
                 <CoreImage
                   src={LOGO_CONFIG.src}
                   alt={LOGO_CONFIG.alt}
                   width={LOGO_SIZES.hero.width}
                   height={LOGO_SIZES.hero.height}
-                  className={`object-contain ${LOGO_CONFIG.className} overflow-hidden gpu-accelerated`}
+                  className={`object-contain ${LOGO_CONFIG.className} overflow-hidden`}
                   sizes="(max-width: 768px) 64px, (max-width: 1200px) 80px, 96px"
                   priority
                   fallbackSrc={LOGO_CONFIG.fallbackSrc}
@@ -280,8 +280,8 @@ export default function ClientPage() {
                   showLoadingIndicator={true}
                 />
               </div>
-              <div className="space-y-3 smooth-reveal">
-                <h1 className="text-5xl font-bold tracking-tighter lowercase sm:text-6xl md:text-7xl lg:text-8xl gpu-accelerated">
+              <div className={`space-y-3 ${!isMobile ? 'smooth-reveal' : ''}`}>
+                <h1 className={`text-5xl font-bold tracking-tighter lowercase sm:text-6xl md:text-7xl lg:text-8xl ${!isMobile ? 'gpu-accelerated' : ''}`}>
                   prism
                 </h1>
                 <p className="text-2xl font-medium text-neutral-500 lowercase sm:text-3xl md:text-4xl">

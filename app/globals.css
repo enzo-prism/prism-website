@@ -133,6 +133,22 @@ body {
   .will-change-opacity {
     will-change: auto !important;
   }
+  
+  /* Specifically disable all floating/moving animations */
+  .logo-float,
+  .float-gentle,
+  .hero-gradient-shift,
+  .card-hover-lift {
+    animation: none !important;
+  }
+  
+  /* Disable transform animations */
+  .hardware-hover,
+  .smooth-transform,
+  .elastic-scale {
+    transform: none !important;
+    transition: none !important;
+  }
 }
 
 /* Mobile-specific viewport fixes */
@@ -500,6 +516,13 @@ input, textarea, select {
   /* Advanced GPU-accelerated animations */
   .logo-float {
     animation: logoFloat 4s ease-in-out infinite;
+  }
+  
+  /* Disable logo animation on mobile and for reduced motion */
+  @media (max-width: 768px), (prefers-reduced-motion: reduce) {
+    .logo-float {
+      animation: none !important;
+    }
   }
   
   .hero-gradient-shift {
