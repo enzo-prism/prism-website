@@ -520,20 +520,20 @@ const TestimonialCard = ({ quote, index, isMobile, isVisible, cardRef }: {
       initial="hidden"
       animate={isVisible ? "visible" : "hidden"}
       whileHover={!isMobile ? "hover" : undefined}
-      className="testimonial-card bg-white p-6 rounded-xl shadow-md"
+      className="testimonial-card bg-white p-4 sm:p-6 rounded-xl shadow-md w-full"
       style={{
         contain: "layout style paint",
-        transform: "translateZ(0)",
-        willChange: isVisible ? "transform, opacity" : "auto",
+        // Remove transform style on mobile to prevent conflicts
+        willChange: isVisible ? "opacity, transform" : "auto",
       }}
       aria-label={`Testimonial from ${quote.client.toLowerCase()}`}
     >
-      <p className="text-lg text-neutral-700 leading-relaxed mb-4">
+      <p className="text-base sm:text-lg text-neutral-700 leading-relaxed mb-3 sm:mb-4">
         &ldquo;{renderFormattedText(quote.text.toLowerCase())}&rdquo;
       </p>
       <footer className="text-right">
-        <p className="font-semibold text-neutral-800">{quote.client.toLowerCase()}</p>
-        <p className="text-sm text-neutral-500">{quote.company.toLowerCase()}</p>
+        <p className="font-semibold text-sm sm:text-base text-neutral-800">{quote.client.toLowerCase()}</p>
+        <p className="text-xs sm:text-sm text-neutral-500">{quote.company.toLowerCase()}</p>
       </footer>
     </motion.blockquote>
   )
@@ -544,7 +544,14 @@ export default function WallOfLoveClientPage() {
   const [visibleCount, setVisibleCount] = useState(10)
   const [visibleCards, setVisibleCards] = useState<Set<number>>(new Set())
   const loadMoreRef = useRef<HTMLDivElement>(null)
-  const [isMobile, setIsMobile] = useState(false)
+  // Initialize with proper SSR-friendly default
+  const [isMobile, setIsMobile] = useState(() => {
+    if (typeof window === "undefined") {
+      return false // SSR default
+    }
+    return window.innerWidth < 768
+  })
+  const [isHydrated, setIsHydrated] = useState(false)
   const cardRefs = useRef<WeakMap<HTMLQuoteElement, number>>(new WeakMap())
   const observerRef = useRef<IntersectionObserver | null>(null)
 
@@ -596,6 +603,7 @@ export default function WallOfLoveClientPage() {
   }, [])
 
   useEffect(() => {
+    setIsHydrated(true)
     setShuffledQuotes(shuffleArray(quotesData))
     
     const checkMobile = () => {
@@ -636,25 +644,25 @@ export default function WallOfLoveClientPage() {
 
   return (
     <>
-      <section className="w-full py-16 md:py-24 lg:py-32 bg-white">
-        <div className="container mx-auto px-4 md:px-6 text-center">
+      <section className="w-full py-16 md:py-24 lg:py-32 bg-white overflow-x-hidden">
+        <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="max-w-2xl mx-auto space-y-6">
             <div className="text-5xl mb-4">❤️</div>
-            <h1 className="text-5xl font-bold tracking-tight lowercase sm:text-6xl md:text-7xl text-neutral-900">
+            <h1 className="text-4xl sm:text-5xl font-bold tracking-tight lowercase sm:text-6xl md:text-7xl text-neutral-900 break-words">
               wall of love
             </h1>
-            <div className="text-lg text-neutral-600 md:text-xl lowercase max-w-lg mx-auto space-y-1">
+            <div className="text-base sm:text-lg text-neutral-600 md:text-xl lowercase max-w-lg mx-auto space-y-1">
               <p>38.5k+ followers on instagram</p>
               <p>24.5k+ subscribers on youtube</p>
             </div>
-            <div>
+            <div className="pt-2">
               <Link href="/get-started">
                 <Button
                   size="lg"
-                  className="bg-neutral-900 hover:bg-neutral-800 text-white rounded-full px-10 py-7 text-lg lowercase shadow-md"
+                  className="bg-neutral-900 hover:bg-neutral-800 text-white rounded-full px-6 sm:px-10 py-5 sm:py-7 text-base sm:text-lg lowercase shadow-md w-auto"
                   aria-label="Hire Prism"
                 >
-                  hire prism <ArrowRight className="ml-2 h-5 w-5" />
+                  hire prism <ArrowRight className="ml-2 h-4 sm:h-5 w-4 sm:w-5" />
                 </Button>
               </Link>
             </div>
@@ -662,15 +670,15 @@ export default function WallOfLoveClientPage() {
         </div>
       </section>
 
-      <div className="bg-neutral-50 optimize-scrolling">
-        <main className="max-w-2xl mx-auto px-4 py-12 sm:px-6 lg:px-8 sm:py-16">
-          <div className="testimonial-container space-y-8">
-            {shuffledQuotes.slice(0, visibleCount).map((quote, index) => (
+      <div className="bg-neutral-50 optimize-scrolling overflow-x-hidden">
+        <main className="w-full max-w-2xl mx-auto px-4 py-12 sm:px-6 lg:px-8 sm:py-16">
+          <div className="testimonial-container space-y-6 sm:space-y-8">
+            {(!isHydrated ? quotesData.slice(0, visibleCount) : shuffledQuotes.slice(0, visibleCount)).map((quote, index) => (
               <TestimonialCard
                 key={quote.id}
                 quote={quote}
                 index={index}
-                isMobile={isMobile}
+                isMobile={isHydrated ? isMobile : false}
                 isVisible={visibleCards.has(index)}
                 cardRef={setCardRef(index)}
               />
@@ -693,7 +701,7 @@ export default function WallOfLoveClientPage() {
                   transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
                   className="w-5 h-5 border-2 border-neutral-300 border-t-neutral-600 rounded-full"
                 />
-                <span>Loading more testimonials...</span>
+                <span className="text-sm sm:text-base">Loading more testimonials...</span>
               </motion.div>
             </div>
           )}
