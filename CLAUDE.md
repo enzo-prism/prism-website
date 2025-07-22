@@ -75,6 +75,16 @@ npm test -- --detectOpenHandles
 # Diagnostics and Verification
 npm run diagnose:images  # Run image system diagnostics
 npm run verify:deploy    # Verify deployment readiness
+npm run verify:images    # Verify all images in public directory
+
+# Mobile Testing & Optimization
+node scripts/mobile-testing-suite.js  # Run comprehensive mobile tests
+node scripts/mobile-optimization-check.js  # Check mobile optimization
+
+# Additional Scripts
+python scripts/update-notion-tasks.py  # Update Notion tasks (requires NOTION_API_TOKEN env var)
+node scripts/test-github-mcp.js        # Test GitHub MCP server
+node scripts/mcp-health-check.js       # Check all MCP servers health
 
 # Additional useful commands
 npm run analyze      # Analyze bundle size
@@ -154,6 +164,14 @@ npm run check-updates # Check for dependency updates
    - API routes under `/app/api/`
    - Automatic trailing slash handling
 
+7. **Mobile-First Development**
+   - Dedicated mobile components in `/components/mobile/`
+   - Mobile-specific hooks for device detection and accessibility
+   - Performance optimizations for touch interactions
+   - GPU acceleration utilities for smooth animations
+   - Comprehensive mobile testing suite
+   - Touch target optimization (44px minimum)
+
 ## MCP Server Integration
 
 ### Available MCP Servers
@@ -185,6 +203,11 @@ npm run check-updates # Check for dependency updates
 - Use read-only Supabase access for safety
 - Batch operations when possible to avoid rate limits
 - Monitor errors via Sentry after deployments
+
+### MCP Docker Alternative
+- Docker configuration available in `.mcp.docker.json`
+- GitHub MCP can run in Docker: `ghcr.io/github/github-mcp-server`
+- Useful for isolated environments or permission issues
 
 ## Development Patterns
 
@@ -246,6 +269,8 @@ NEXT_PUBLIC_POSTHOG_HOST=
 - Use service role tokens appropriately
 - SVG files served with CSP headers
 - Sanitize user inputs in forms
+- **CRITICAL**: Never hardcode API tokens in scripts - always use environment variables
+- Sentry trace sampling is set to 100% - consider reducing for production
 
 ## Common Development Tasks
 
@@ -272,6 +297,14 @@ NEXT_PUBLIC_POSTHOG_HOST=
 2. Use existing design tokens
 3. Follow responsive design patterns
 4. Test across breakpoints
+
+### Mobile Development
+1. Use mobile-specific components from `/components/mobile/`
+2. Implement `use-mobile` hook for device detection
+3. Ensure touch targets are at least 44px
+4. Test with mobile testing suite: `node scripts/mobile-testing-suite.js`
+5. Use GPU acceleration utilities for animations
+6. Optimize scroll performance with `-webkit-overflow-scrolling: touch`
 
 ## v0.dev Integration & Deployment
 
@@ -338,12 +371,14 @@ npm run mcp:validate
 - `jest.config.ts` - Jest configuration with ts-jest preset
 - `middleware.ts` - URL redirects and analytics tracking
 - `.env.example` - Template for required environment variables
-- `.mcp.json` - MCP server configuration (uses Docker for GitHub server)
+- `.mcp.json` - MCP server configuration (standard npm-based)
+- `.mcp.docker.json` - Docker-based MCP configuration for GitHub server
 - `.vscode/settings.json` - VS Code/Cursor IDE configuration with TypeScript, ESLint, and Tailwind IntelliSense
 - `MCP_SETUP.md` - Detailed MCP server setup instructions
 - `package.json` - Dependencies and scripts (check for available commands)
 - `postcss.config.mjs` - PostCSS configuration for Tailwind
 - `jest.setup.ts` - Jest test environment setup
+- `sentry.edge.config.ts` - Sentry edge runtime configuration
 
 ## Special Files and Patterns
 
@@ -357,6 +392,9 @@ npm run mcp:validate
 - `/utils/analytics.ts` - PostHog analytics wrapper
 - `/utils/sentry-helpers.ts` - Sentry error tracking utilities
 - `/lib/mdx.tsx` - MDX processing and blog post loading
+- `/utils/mobile-performance.ts` - Mobile performance optimization utilities
+- `/hooks/use-mobile.tsx` - Mobile device detection hook
+- `/hooks/use-mobile-accessibility.tsx` - Mobile accessibility features
 
 ### Blog Post Structure
 Blog posts in `/content/blog/` require specific front matter:
