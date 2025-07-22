@@ -51,6 +51,7 @@ npm run start        # Start production server
 npm run lint         # Run ESLint
 npm run typecheck    # Run TypeScript type checking
 npm test            # Run Jest tests
+npm run format       # Format code with Prettier
 
 # MCP Server Management
 npm run mcp:setup       # Setup MCP servers
@@ -74,6 +75,10 @@ npm test -- --detectOpenHandles
 # Diagnostics and Verification
 npm run diagnose:images  # Run image system diagnostics
 npm run verify:deploy    # Verify deployment readiness
+
+# Additional useful commands
+npm run analyze      # Analyze bundle size
+npm run check-updates # Check for dependency updates
 ```
 
 ## High-Level Architecture
@@ -81,6 +86,7 @@ npm run verify:deploy    # Verify deployment readiness
 ### Directory Structure
 - `/app` - Next.js app router pages using file-based routing
   - `/api/store-email` - Email storage API endpoint
+  - `/api/og` - Open Graph image generation endpoint
   - `/blog/[slug]` - Dynamic blog post routes
   - `/case-studies/[slug]` - Dynamic case study routes
   - Individual route folders (about, services, contact, etc.) with page.tsx files
@@ -339,6 +345,33 @@ npm run mcp:validate
 - `postcss.config.mjs` - PostCSS configuration for Tailwind
 - `jest.setup.ts` - Jest test environment setup
 
+## Special Files and Patterns
+
+### Mock Files for Testing
+- `__mocks__/mdxremote.js` - Mocks next-mdx-remote for Jest tests
+- Test files follow patterns: `*.test.ts`, `*.spec.ts`, `*.test.tsx`
+
+### Key Utility Files
+- `/utils/image.ts` - Core image component with error handling
+- `/utils/image-optimization.ts` - Image processing utilities
+- `/utils/analytics.ts` - PostHog analytics wrapper
+- `/utils/sentry-helpers.ts` - Sentry error tracking utilities
+- `/lib/mdx.tsx` - MDX processing and blog post loading
+
+### Blog Post Structure
+Blog posts in `/content/blog/` require specific front matter:
+```yaml
+---
+title: "Post Title"
+publishedAt: "2025-07-01"
+summary: "Brief description"
+author: "Author Name"
+category: "design" | "development" | "creative"
+image: "/blog/image.jpg"
+featured: true | false
+---
+```
+
 ## Important Reminders
 
 - **Do what has been asked; nothing more, nothing less**
@@ -400,6 +433,33 @@ The application uses Next.js 15's App Router, which means:
 3. **Caching**: 1-year TTL for optimized assets
 4. **Animations**: Hardware-accelerated only (transform, opacity)
 5. **Bundle Size**: Monitor imports and tree-shaking
+
+## Common Gotchas and Patterns
+
+### Image Handling
+- Always use the custom `Image` component from `/utils/image.ts` instead of Next.js Image directly
+- Images require `alt` text for accessibility
+- Public images should be placed in `/public/` subdirectories organized by feature
+
+### Form Submissions
+- Forms use server actions (not API routes) for processing
+- Always validate with Zod schemas on both client and server
+- Email storage happens through Supabase integration
+
+### MDX Content
+- Blog posts must have valid front matter or they won't load
+- Use `getBlogPosts()` from `/lib/mdx.tsx` to load posts
+- Dynamic imports for heavy components in MDX content
+
+### Testing Patterns
+- Mock next-mdx-remote using the provided mock file
+- Use `@testing-library/react` for component testing
+- Test files should be co-located in `__tests__` directory
+
+### Environment-Specific Behavior
+- Sentry only captures errors in production
+- PostHog analytics disabled in development
+- MCP servers require proper token configuration
 # important-instruction-reminders
 Do what has been asked; nothing more, nothing less.
 NEVER create files unless they're absolutely necessary for achieving your goal.

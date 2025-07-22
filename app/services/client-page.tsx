@@ -66,13 +66,23 @@ export default function ServicesClient() {
               </Badge>
             </button>
           </div>
+          <p className="text-center text-sm text-muted-foreground mt-3">
+            Pricing toggle applies to subscription plans only
+          </p>
         </div>
 
         {/* Tiers Grid */}
-        <div className="grid gap-8 lg:gap-12 md:grid-cols-3 max-w-6xl mx-auto">
+        <div className="flex flex-col gap-8 md:grid md:gap-8 lg:gap-12 md:grid-cols-3 max-w-6xl mx-auto">
           {/* Design Sprint */}
-          <Card className="relative h-full flex flex-col rounded-xl overflow-hidden border-0 bg-white shadow-md transition-all duration-300 hover:shadow-lg">
-            <CardHeader className="pt-8 pb-6 text-center border-b">
+          <div className="order-3 md:order-1 flex flex-col gap-8">
+            <div className="md:hidden border-t-2 border-dashed border-gray-300 pt-8 -mt-0">
+              <div className="text-center mb-8">
+                <p className="text-sm font-medium text-gray-900 mb-1">One-Time Service</p>
+                <p className="text-sm text-muted-foreground">No subscription required</p>
+              </div>
+            </div>
+            <Card className="relative h-full flex flex-col rounded-xl overflow-hidden border-0 bg-white shadow-md transition-all duration-300 hover:shadow-lg">
+              <CardHeader className="pt-8 pb-6 text-center border-b">
               <div className="mb-3">
                 <span className="inline-block px-4 py-1 rounded-full bg-gray-100 text-sm font-medium text-gray-800">
                   Design Sprint
@@ -97,9 +107,10 @@ export default function ServicesClient() {
               </Button>
             </CardFooter>
           </Card>
+          </div>
 
           {/* Site Essentials */}
-          <Card className="relative h-full flex flex-col rounded-xl overflow-hidden border-0 bg-white shadow-md transition-all duration-300 hover:shadow-lg">
+          <Card className="relative h-full flex flex-col rounded-xl overflow-hidden border-0 bg-white shadow-md transition-all duration-300 hover:shadow-lg order-1 md:order-2">
             <CardHeader className="pt-8 pb-6 text-center border-b">
               <div className="mb-3">
                 <span className="inline-block px-4 py-1 rounded-full bg-gray-100 text-sm font-medium text-gray-800">
@@ -133,7 +144,7 @@ export default function ServicesClient() {
           </Card>
 
           {/* Growth Accelerator */}
-          <Card className="relative h-full flex flex-col rounded-xl overflow-hidden border-0 bg-gray-900 text-white shadow-xl transition-all duration-300 hover:shadow-2xl">
+          <Card className="relative h-full flex flex-col rounded-xl overflow-hidden border-0 bg-gray-900 text-white shadow-xl transition-all duration-300 hover:shadow-2xl order-2 md:order-3">
             <div className="absolute top-0 right-0 mt-4 mr-4">
               <Badge className="bg-white text-gray-900 hover:bg-white">Recommended</Badge>
             </div>
