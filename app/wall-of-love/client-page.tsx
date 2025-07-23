@@ -473,6 +473,16 @@ const shuffleArray = (array: Quote[]): Quote[] => {
     const j = Math.floor(Math.random() * (i + 1))
     ;[newArray[i], newArray[j]] = [newArray[j], newArray[i]]
   }
+  
+  // Ensure the new testimonial (id: 76) appears in the first 10
+  const newTestimonialIndex = newArray.findIndex(q => q.id === 76)
+  if (newTestimonialIndex > 9) {
+    // Move it to a random position in the first 10
+    const newPosition = Math.floor(Math.random() * 10)
+    const [testimonial] = newArray.splice(newTestimonialIndex, 1)
+    newArray.splice(newPosition, 0, testimonial)
+  }
+  
   return newArray
 }
 
@@ -504,7 +514,7 @@ const TestimonialCard = ({ quote, index, cardRef }: {
 
 export default function WallOfLoveClientPage() {
   const [shuffledQuotes, setShuffledQuotes] = useState<Quote[]>([])
-  const [visibleCount, setVisibleCount] = useState(10)
+  const [visibleCount, setVisibleCount] = useState(15) // Increased from 10 to 15
   const loadMoreRef = useRef<HTMLDivElement>(null)
   // Initialize with proper SSR-friendly default
   const [isMobile, setIsMobile] = useState(() => {
