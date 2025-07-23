@@ -74,7 +74,7 @@ npm test -- --detectOpenHandles
 # Diagnostics and Verification
 npm run diagnose:images  # Run image system diagnostics
 npm run verify:deploy    # Verify deployment readiness
-npm run verify:images    # Verify all images in public directory
+npx ts-node scripts/verify-images.ts  # Verify all images in public directory
 
 # Mobile Testing & Optimization
 node scripts/mobile-testing-suite.js  # Run comprehensive mobile tests
@@ -91,7 +91,8 @@ node scripts/mcp-health-check.js       # Check all MCP servers health
 ### Directory Structure
 - `/app` - Next.js app router pages using file-based routing
   - `/api/store-email` - Email storage API endpoint
-  - `/api/og` - Open Graph image generation endpoint
+  - `/api/prism-leads` - Lead generation API endpoint  
+  - `/api/og/blog/[slug]` - Dynamic Open Graph image generation for blog posts
   - `/blog/[slug]` - Dynamic blog post routes
   - `/case-studies/[slug]` - Dynamic case study routes
   - Individual route folders (about, services, contact, etc.) with page.tsx files
@@ -124,11 +125,12 @@ node scripts/mcp-health-check.js       # Check all MCP servers health
    - Dynamic imports for heavy client components
 
 2. **Image Optimization System**
-   - Enhanced Next.js Image component with error handling
-   - Automatic WebP/AVIF conversion
+   - Enhanced custom Image component with error handling and retry logic
+   - Automatic WebP/AVIF conversion via Next.js
    - 1-year cache TTL for optimized images
    - Comprehensive monitoring and fallbacks
-   - Custom image processing utilities in `/utils/image.ts`
+   - Custom image processing utilities in `/utils/image-utils.ts`
+   - Core Image component in `/components/image.tsx`
    - Diagnostic script available: `npm run diagnose:images`
 
 3. **Content Management**
@@ -382,11 +384,11 @@ npm run mcp:validate
 - Test files follow patterns: `*.test.ts`, `*.spec.ts`, `*.test.tsx`
 
 ### Key Utility Files
-- `/utils/image.ts` - Core image component with error handling
-- `/utils/image-optimization.ts` - Image processing utilities
+- `/components/image.tsx` - Enhanced Image component with error handling and retry logic
+- `/utils/image-utils.ts` - Image validation and preloading utilities
 - `/utils/analytics.ts` - PostHog analytics wrapper
 - `/utils/sentry-helpers.ts` - Sentry error tracking utilities
-- `/lib/mdx.tsx` - MDX processing and blog post loading
+- `/lib/mdx.tsx` - MDX processing and blog post loading with security controls
 - `/utils/mobile-performance.ts` - Mobile performance optimization utilities
 - `/hooks/use-mobile.tsx` - Mobile device detection hook
 - `/hooks/use-mobile-accessibility.tsx` - Mobile accessibility features
@@ -396,12 +398,24 @@ Blog posts in `/content/blog/` require specific front matter:
 ```yaml
 ---
 title: "Post Title"
-publishedAt: "2025-07-01"
-summary: "Brief description"
-author: "Author Name"
-category: "design" | "development" | "creative"
-image: "/blog/image.jpg"
-featured: true | false
+description: "Brief description for SEO and metadata"
+date: "2025-07-01"
+category: "Content Marketing & SEO" | "Design" | "Development"
+image: "/blog/image.png"
+gradientClass: "bg-gradient-to-br from-blue-300/30 via-purple-300/30 to-pink-300/30"
+openGraph:
+  title: "Open Graph title"
+  description: "OG description"
+  url: "https://design-prism.com/blog/post-slug"
+  siteName: "prism"
+  images:
+    - url: "/blog/image.png"
+      width: 1200
+      height: 630
+      alt: "Alt text for OG image"
+  locale: "en_US"
+  type: "article"
+  publishedTime: "2025-07-01T00:00:00.000Z"
 ---
 ```
 
@@ -470,9 +484,10 @@ The application uses Next.js 15's App Router, which means:
 ## Common Gotchas and Patterns
 
 ### Image Handling
-- Always use the custom `Image` component from `/utils/image.ts` instead of Next.js Image directly
+- Always use the custom `Image` component from `/components/image.tsx` instead of Next.js Image directly
 - Images require `alt` text for accessibility
 - Public images should be placed in `/public/` subdirectories organized by feature
+- Custom Image component includes error handling, retry logic, and loading indicators
 
 ### Form Submissions
 - Forms use server actions (not API routes) for processing
@@ -481,8 +496,11 @@ The application uses Next.js 15's App Router, which means:
 
 ### MDX Content
 - Blog posts must have valid front matter or they won't load
-- Use `getBlogPosts()` from `/lib/mdx.tsx` to load posts
+- Use `getAllPosts()` and `getPost()` from `/lib/mdx.tsx` to load posts
+- `renderPost()` function safely renders MDX with security controls
+- MDX components include YouTube embeds, interactive charts, and mobile components
 - Dynamic imports for heavy components in MDX content
+- Script tags are blocked for security, only trusted iframe domains allowed
 
 ### Testing Patterns
 - Mock next-mdx-remote using the provided mock file
@@ -501,7 +519,7 @@ The application uses Next.js 15's App Router, which means:
 ### Common Error Resolutions
 - **Module not found errors**: Run `npm install` and check path aliases in `tsconfig.json`
 - **Type errors**: Run `npm run typecheck` to identify TypeScript issues
-- **Image loading failures**: Check `/utils/image.ts` error handling and run `npm run diagnose:images`
+- **Image loading failures**: Check `/components/image.tsx` error handling and run `npm run diagnose:images`
 - **MDX parsing errors**: Verify front matter format in blog posts
 - **Test failures**: Check if MDX is properly mocked in `__mocks__/mdxremote.js`
 
