@@ -80,6 +80,14 @@ npx ts-node scripts/verify-images.ts  # Verify all images in public directory
 node scripts/mobile-testing-suite.js  # Run comprehensive mobile tests
 node scripts/mobile-optimization-check.js  # Check mobile optimization
 
+# Git Sync Management
+npm run git:status       # Check git synchronization health
+npm run git:sync         # Fetch and check sync status  
+npm run git:cleanup      # Interactive branch cleanup
+npm run git:cleanup-dry  # Preview branch cleanup
+npm run git:hooks-install # Install intelligent git hooks
+./scripts/git-batch-cleanup.sh  # Fast batch branch cleanup
+
 # Additional Scripts
 python scripts/update-notion-tasks.py  # Update Notion tasks (requires NOTION_API_TOKEN env var)
 node scripts/test-github-mcp.js        # Test GitHub MCP server
@@ -168,6 +176,14 @@ node scripts/mcp-health-check.js       # Check all MCP servers health
    - GPU acceleration utilities for smooth animations
    - Comprehensive mobile testing suite
    - Touch target optimization (44px minimum)
+
+8. **Git Sync Management**
+   - Real-time sync monitoring between v0.dev, Cursor, and Claude Code
+   - Intelligent git hooks for multi-tool coordination
+   - Automated branch cleanup system (handles 200+ stale branches)
+   - Tool-specific workflow detection and attribution
+   - Comprehensive sync health reporting and recommendations
+   - See `/docs/git-sync-management.md` for complete documentation
 
 ## MCP Server Integration
 
@@ -376,6 +392,11 @@ npm run mcp:validate
 - `postcss.config.mjs` - PostCSS configuration for Tailwind
 - `jest.setup.ts` - Jest test environment setup
 - `sentry.edge.config.ts` - Sentry edge runtime configuration
+- `docs/git-sync-management.md` - Complete git synchronization system documentation
+- `scripts/git-sync-monitor.js` - Git sync health monitoring and reporting
+- `scripts/git-branch-cleanup.js` - Interactive branch cleanup system
+- `scripts/git-batch-cleanup.sh` - Fast batch branch cleanup for automation
+- `scripts/setup-git-hooks.js` - Multi-tool git hook coordination system
 
 ## Special Files and Patterns
 
