@@ -14,7 +14,14 @@
     "mcp:test-github": "node scripts/test-github-mcp.js",
     "mcp:validate": "npm run mcp:health && echo '✅ MCP servers are ready for Claude Code'",
     "diagnose:images": "npx ts-node scripts/image-system-diagnostic.ts",
-    "verify:deploy": "npx ts-node scripts/verify-deployment.ts"
+    "verify:deploy": "npx ts-node scripts/verify-deployment.ts",
+    "git:status": "node scripts/git-sync-monitor.js check",
+    "git:report": "node scripts/git-sync-monitor.js report",
+    "git:sync": "git fetch origin && npm run git:status",
+    "git:cleanup": "node scripts/git-branch-cleanup.js",
+    "git:cleanup-dry": "node scripts/git-branch-cleanup.js --dry-run",
+    "git:hooks-install": "node scripts/setup-git-hooks.js install",
+    "git:hooks-remove": "node scripts/setup-git-hooks.js remove"
   },
   "dependencies": {
     "@emotion/is-prop-valid": "latest",
