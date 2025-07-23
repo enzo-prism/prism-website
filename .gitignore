@@ -25,3 +25,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Git sync management logs
+git-sync-report.json
+scripts/logs/
