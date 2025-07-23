@@ -447,6 +447,12 @@ const quotesData: Quote[] = [
     client: "leinad_inamat",
     company: "Instagram Community of Entrepreneurs",
   },
+  {
+    id: 76,
+    text: "this video is life changing",
+    client: "andriiikoo",
+    company: "Instagram Community of Entrepreneurs",
+  },
 ]
 
 const renderFormattedText = (text: string) => {

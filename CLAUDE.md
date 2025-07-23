@@ -51,7 +51,6 @@ npm run start        # Start production server
 npm run lint         # Run ESLint
 npm run typecheck    # Run TypeScript type checking
 npm test            # Run Jest tests
-npm run format       # Format code with Prettier
 
 # MCP Server Management
 npm run mcp:setup       # Setup MCP servers
@@ -85,10 +84,6 @@ node scripts/mobile-optimization-check.js  # Check mobile optimization
 python scripts/update-notion-tasks.py  # Update Notion tasks (requires NOTION_API_TOKEN env var)
 node scripts/test-github-mcp.js        # Test GitHub MCP server
 node scripts/mcp-health-check.js       # Check all MCP servers health
-
-# Additional useful commands
-npm run analyze      # Analyze bundle size
-npm run check-updates # Check for dependency updates
 ```
 
 ## High-Level Architecture
@@ -493,8 +488,25 @@ The application uses Next.js 15's App Router, which means:
 - Mock next-mdx-remote using the provided mock file
 - Use `@testing-library/react` for component testing
 - Test files should be co-located in `__tests__` directory
+- Run specific test files with: `npm test -- __tests__/path/to/test.ts`
+- Use `--testNamePattern` for running specific test cases
 
 ### Environment-Specific Behavior
 - Sentry only captures errors in production
 - PostHog analytics disabled in development
 - MCP servers require proper token configuration
+
+## Quick Debugging Reference
+
+### Common Error Resolutions
+- **Module not found errors**: Run `npm install` and check path aliases in `tsconfig.json`
+- **Type errors**: Run `npm run typecheck` to identify TypeScript issues
+- **Image loading failures**: Check `/utils/image.ts` error handling and run `npm run diagnose:images`
+- **MDX parsing errors**: Verify front matter format in blog posts
+- **Test failures**: Check if MDX is properly mocked in `__mocks__/mdxremote.js`
+
+### Performance Debugging
+- Bundle size analysis: Check `.next/analyze/` after build
+- Slow page loads: Review dynamic imports and component splitting
+- Animation jank: Ensure using GPU-accelerated properties only
+- Image optimization: Monitor Next.js image optimization logs
