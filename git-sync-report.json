@@ -1,94 +1,23 @@
 {
-  "timestamp": "2025-07-23T20:52:08.143Z",
+  "timestamp": "2025-07-24T21:11:05.061Z",
   "branch": "main",
   "sync_status": {
-    "commits_ahead": 2,
+    "commits_ahead": 0,
     "commits_behind": 0,
     "is_clean": false
   },
   "changes": {
     "unstaged": [
-      "CLAUDE.md"
+      "git-sync-report.json",
+      "scripts/logs/git-sync.log"
     ],
-    "staged": []
+    "staged": [
+      "content/blog/breaking-free-education-psyop.mdx"
+    ]
   },
   "branches": {
-    "cursor": [
-      "origin/cursor/add-new-blog-post-for-ai-era-96a6",
-      "origin/cursor/add-new-blog-post-with-video-5090",
-      "origin/cursor/add-youtube-video-to-blog-post-2222",
-      "origin/cursor/analyze-and-fix-build-log-errors-73c9",
-      "origin/cursor/audit-and-streamline-the-codebase-b11f",
-      "origin/cursor/debug-blog-page-rendering-issues-2f19",
-      "origin/cursor/fix-rendering-issues-on-blog-page-bb01",
-      "origin/cursor/fix-repeated-title-in-blog-post-1574",
-      "origin/cursor/fix-text-display-issues-on-webpage-aece",
-      "origin/cursor/fix-video-display-formatting-ce70",
-      "origin/cursor/fix-youtube-video-display-on-blog-posts-06c8",
-      "origin/cursor/improve-blog-post-body-text-styling-59d1",
-      "origin/cursor/improve-video-design-in-blog-post-a6ca",
-      "origin/cursor/update-blog-post-design-for-youtube-videos-3f40",
-      "origin/cursor/update-case-study-layout-and-content-54bb"
-    ],
-    "codex": [
-      "origin/codex/add-@keyframes-scroll-clients-animation",
-      "origin/codex/add-coast-periodontics-tile-to-websites-page",
-      "origin/codex/add-contactpageschema-to-contact-page",
-      "origin/codex/add-intersectionobserver-to-clientshowcase",
-      "origin/codex/add-mdx-support-for-blog-posts",
-      "origin/codex/add-missing-graphics-to-case-study",
-      "origin/codex/add-new-blog-post--the-6m-arr-playbook",
-      "origin/codex/add-new-blog-post-about-midjourney-video",
-      "origin/codex/add-videoschema-component-and-update-embedding",
-      "origin/codex/amend-metadata-export-to-include-canonical-tag",
-      "origin/codex/analyze-and-optimize-images-loading-on-websites-page",
-      "origin/codex/analyze-codebase-for-image-loading-optimization",
-      "origin/codex/change-div-to-article-in-blog-post-layout",
-      "origin/codex/create-and-implement-casestudyschema-component",
-      "origin/codex/create-blog-post-layout-component",
-      "origin/codex/create-reviewschema-component-and-wrap-testimonials",
-      "origin/codex/create-test-for-hashemail-function",
-      "origin/codex/delete-case-study--we-are-saplings",
-      "origin/codex/fix-blog-preview-tile-images",
-      "origin/codex/fix-image-display-issue-in-homepage-slider",
-      "origin/codex/fix-typo-in-client-page.tsx",
-      "origin/codex/fix-video-display-issue-in-blog-post",
-      "origin/codex/implement-serviceschema-component-with-pricing",
-      "origin/codex/implement-static-generation-for-blog-pages",
-      "origin/codex/improve-blog-post-design-for-readability",
-      "origin/codex/increase-padding-for-watch-episode-button",
-      "origin/codex/install-google-tag-manager",
-      "origin/codex/locate-and-fix-a-bug-in-codebase",
-      "origin/codex/optimize-image-loading-with-lazy-and-priority",
-      "origin/codex/re-build-and-redesign-case-study-page",
-      "origin/codex/refactor-blog-components-for-server-side-use",
-      "origin/codex/refactor-carousel-with-useemblacarousel",
-      "origin/codex/refactor-youtube-video-embedding-in-blog-posts",
-      "origin/codex/remove-faqs-section-from-designs-page",
-      "origin/codex/remove-faqs-section-from-websites-page",
-      "origin/codex/remove-graphic-from-case-study-section",
-      "origin/codex/remove-sales-text-from-cta-button",
-      "origin/codex/remove-shufflearray-and-update-effect",
-      "origin/codex/remove-unused-imagespreloaded-state-or-delay-animation",
-      "origin/codex/replace-gradient-with-image-in-blog-post-layout",
-      "origin/codex/set-up-jest-with-typescript-support",
-      "origin/codex/setup-eslint-with-next.js-and-typescript",
-      "origin/codex/update--wall-of-love--page-text",
-      "origin/codex/update-button-text-on-summer-website-makeover",
-      "origin/codex/update-comment-for-import-statement",
-      "origin/codex/update-cta-text-on-wall-of-love-page",
-      "origin/codex/update-error-handling-and-caching-for-blog-posts",
-      "origin/codex/update-footer-prism-logo-to-match-nav",
-      "origin/codex/update-graphic-chart-in-case-study",
-      "origin/codex/update-hashemail-logic-in-utils",
-      "origin/codex/update-image-slideshow-behavior",
-      "origin/codex/update-podcast-page-design-with-additional-ctas",
-      "origin/codex/update-podcast-page-with-accurate-names",
-      "origin/codex/update-text-on-websites-page-card",
-      "origin/codex/update-top-heading-design-of-designs-page",
-      "origin/r4azxk-codex/update-footer-prism-logo-to-match-nav",
-      "origin/x7mqgn-codex/update-graphic-chart-in-case-study"
-    ],
+    "cursor": [],
+    "codex": [],
     "v0": [
       "origin/feat/video-embed-blog-support",
       "origin/fix/update-domain-and-config"
@@ -96,34 +25,26 @@
     "other": []
   },
   "last_commit": {
-    "hash": "155df7660a12a7679d26dc8fc8f7fbb6918284d9",
-    "message": "fix: Resolve syntax error in git-branch-cleanup script",
+    "hash": "a442ca3c86bc19e4daa7cbd3da89b4d043e026b9",
+    "message": "feat: Add Breaking Free from Education Psyop blog post",
     "author": "enzo-prism",
-    "date": "2025-07-23 13:48:22 -0700"
+    "date": "2025-07-24 13:26:33 -0700"
   },
   "issues": [
     {
-      "type": "commits_ahead",
-      "severity": "medium",
-      "message": "Local branch is 2 commits ahead of origin/main",
-      "suggestion": "Push local commits or reset to match remote"
-    },
-    {
       "type": "unstaged_changes",
       "severity": "low",
-      "message": "1 files have unstaged changes: CLAUDE.md",
+      "message": "2 files have unstaged changes: git-sync-report.json, scripts/logs/git-sync.log",
       "suggestion": "Stage and commit changes or stash them"
     },
     {
-      "type": "branch_pollution",
-      "severity": "high",
-      "message": "74 remote branches detected (Cursor: 15, Codex: 57)",
-      "suggestion": "Run branch cleanup to remove stale branches"
+      "type": "staged_changes",
+      "severity": "low",
+      "message": "1 files are staged but not committed: content/blog/breaking-free-education-psyop.mdx",
+      "suggestion": "Commit staged changes"
     }
   ],
   "recommendations": [
-    "Run git sync to align local and remote branches",
-    "Execute branch cleanup script to remove stale branches",
     "Commit or stash pending changes before switching tools"
   ]
 }

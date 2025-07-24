@@ -5,6 +5,7 @@ import fs from "fs/promises" // Node.js file system module for server-side opera
 import path from "path" // Node.js path module for server-side path manipulation
 import matter from "gray-matter" // For parsing frontmatter from .mdx files
 import { MDXRemote } from "next-mdx-remote/rsc"
+import Image from "next/image"
 
 // Import blog components
 import AITrafficDeclineChart from '@/components/blog/ai-traffic-decline-chart'
@@ -107,6 +108,8 @@ export { getPost, getAllPosts }
 
 // Custom components for MDX rendering
 const mdxComponents = {
+  // Next.js Image component for optimized images
+  Image,
   // Simple YouTube embed for MDX content
   YouTubeVideoEmbed: ({ videoId, title, className = "" }: { videoId: string; title: string; className?: string }) => {
     return (
