@@ -86,6 +86,7 @@ npm run git:sync         # Fetch and check sync status
 npm run git:cleanup      # Interactive branch cleanup
 npm run git:cleanup-dry  # Preview branch cleanup
 npm run git:hooks-install # Install intelligent git hooks
+npm run git:hooks-remove   # Remove git hooks
 ./scripts/git-batch-cleanup.sh  # Fast batch branch cleanup
 
 # Additional Scripts
@@ -95,6 +96,14 @@ node scripts/mcp-health-check.js       # Check all MCP servers health
 ```
 
 ## High-Level Architecture
+
+### Core Application Flow
+The application follows a standard Next.js 15 App Router pattern with these key flows:
+1. **Page Rendering**: Server Components → Client hydration → Interactive features
+2. **Content Pipeline**: MDX files → gray-matter parsing → next-mdx-remote rendering → Dynamic imports
+3. **Form Processing**: Client validation (React Hook Form + Zod) → Server actions → Supabase storage
+4. **Error Handling**: Try/catch blocks → Sentry capture → User-friendly error boundaries
+5. **Image Loading**: Custom Image component → Next.js optimization → Retry logic → Fallback states
 
 ### Directory Structure
 - `/app` - Next.js app router pages using file-based routing
@@ -251,6 +260,7 @@ node scripts/mcp-health-check.js       # Check all MCP servers health
 - Focus on user interactions and edge cases
 - Module path mapping configured for `@/*` imports
 - Transform configuration for next-mdx-remote module
+- Testing utilities from `@testing-library/react` and `@testing-library/jest-dom`
 
 ### Performance Considerations
 - Use dynamic imports for code splitting
@@ -439,6 +449,20 @@ openGraph:
   publishedTime: "2025-07-01T00:00:00.000Z"
 ---
 ```
+
+## Error Handling Patterns
+
+### Sentry Integration
+- Automatic error capture in production with source maps
+- Performance monitoring for slow renders and API calls
+- Custom error boundaries wrap key UI sections
+- Edge runtime errors captured separately via `sentry.edge.config.ts`
+
+### Common Error Scenarios
+1. **Image Loading Failures**: Handled by custom Image component with retry logic
+2. **MDX Parse Errors**: Caught during build time, graceful fallbacks in production
+3. **API Failures**: Server actions return typed error responses
+4. **MCP Server Errors**: Health check scripts detect and report issues
 
 ## Important Reminders
 
