@@ -125,15 +125,27 @@ export function optimizeScrollPerformance(): void {
   const body = document.body
   const html = document.documentElement
 
-  // Only apply webkit-overflow-scrolling on actual touch devices
-  if (isTouchDevice()) {
+  // Detect Safari desktop
+  const isSafariDesktop = /^((?!chrome|android).)*safari/i.test(navigator.userAgent) && 
+                         !('ontouchstart' in window) && 
+                         !navigator.maxTouchPoints &&
+                         !window.matchMedia("(pointer: coarse)").matches
+
+  // Only apply webkit-overflow-scrolling on actual touch devices, not Safari desktop
+  if (isTouchDevice() && !isSafariDesktop) {
     // Set CSS properties for better scrolling on mobile
     html.style.setProperty("-webkit-overflow-scrolling", "touch")
     html.style.setProperty("overscroll-behavior", "none")
+  } else if (isSafariDesktop) {
+    // Remove any scroll-related styles for Safari desktop
+    html.style.removeProperty("-webkit-overflow-scrolling")
+    html.style.removeProperty("overscroll-behavior")
+    html.style.removeProperty("scroll-behavior")
+    body.style.removeProperty("scroll-behavior")
   }
 
   // Add touch device class
-  if (isTouchDevice()) {
+  if (isTouchDevice() && !isSafariDesktop) {
     body.classList.add("touch-device")
   }
 
@@ -331,6 +343,17 @@ export function preventZoomGestures(): void {
 // Initialize all scroll optimizations
 export function initializeScrollOptimizations(): void {
   if (typeof window === "undefined") return
+
+  // Detect Safari desktop
+  const isSafariDesktop = /^((?!chrome|android).)*safari/i.test(navigator.userAgent) && 
+                         !('ontouchstart' in window) && 
+                         !navigator.maxTouchPoints &&
+                         !window.matchMedia("(pointer: coarse)").matches
+
+  // Skip all optimizations for Safari desktop
+  if (isSafariDesktop) {
+    return
+  }
 
   // Wait for DOM to be ready
   if (document.readyState === "loading") {

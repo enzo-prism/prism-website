@@ -20,6 +20,7 @@ body {
   /* Add Safari-specific scrolling fixes */
   position: relative;
   overflow-y: auto;
+  -webkit-overflow-scrolling: auto; /* Force native scrolling on Safari */
 }
 
 /* Ensure no safe area padding interferes on mobile */
@@ -1975,14 +1976,27 @@ input, textarea, select {
   /* This targets Safari desktop only */
   html {
     scroll-behavior: auto !important;
+    overflow: visible !important;
+    height: auto !important;
+  }
+  
+  body {
+    scroll-behavior: auto !important;
+    -webkit-overflow-scrolling: auto !important;
+    overflow-y: auto !important;
+    position: relative !important;
+    height: auto !important;
+    min-height: 100vh !important;
   }
   
   .scroll-smooth {
     scroll-behavior: auto !important;
   }
   
-  body {
-    -webkit-overflow-scrolling: auto !important;
+  /* Fix any containers that might block scrolling */
+  main, div[role="main"] {
+    height: auto !important;
+    overflow: visible !important;
   }
 }
 
@@ -1994,13 +2008,9 @@ input, textarea, select {
   }
   
   /* Fix for Safari's viewport calculation issues */
-  html, body {
-    overflow: initial;
-  }
-  
   body {
     overflow-x: hidden;
-    overflow-y: scroll;
+    overflow-y: auto;
     -webkit-overflow-scrolling: auto;
   }
 }

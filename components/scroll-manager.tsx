@@ -5,15 +5,19 @@ import { initializeScrollOptimizations, isTouchDevice, optimizeTouchScrolling } 
 
 export default function ScrollManager() {
   useEffect(() => {
-    // Initialize all scroll optimizations
-    initializeScrollOptimizations()
-
-    // Detect Safari desktop
-    const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent)
-    const isDesktop = !isTouchDevice()
+    // Detect Safari desktop more accurately
+    const isSafariDesktop = /^((?!chrome|android).)*safari/i.test(navigator.userAgent) && 
+                           !('ontouchstart' in window) && 
+                           !navigator.maxTouchPoints &&
+                           !window.matchMedia("(pointer: coarse)").matches
+    
+    // Initialize scroll optimizations only for non-Safari desktop
+    if (!isSafariDesktop) {
+      initializeScrollOptimizations()
+    }
 
     // Additional mobile-specific optimizations
-    if (isTouchDevice()) {
+    if (isTouchDevice() && !isSafariDesktop) {
       // Optimize main scrollable areas
       const scrollableElements = document.querySelectorAll(".scroll-container, [data-scrollable]")
       scrollableElements.forEach((element) => {
@@ -46,15 +50,17 @@ export default function ScrollManager() {
         // Mobile optimizations
         document.body.classList.add("mobile-optimized")
         // Only apply smooth scroll on mobile, not on desktop Safari
-        if (!isDesktop || !isSafari) {
+        if (!isSafariDesktop) {
           document.documentElement.style.setProperty("scroll-behavior", "smooth")
         }
       } else {
         // Desktop optimizations
         document.body.classList.remove("mobile-optimized")
-        // Remove smooth scroll on desktop Safari
-        if (isSafari && isDesktop) {
+        // Always remove smooth scroll on Safari desktop
+        if (isSafariDesktop) {
           document.documentElement.style.removeProperty("scroll-behavior")
+          document.documentElement.classList.remove("scroll-smooth")
+          document.body.style.removeProperty("scroll-behavior")
         }
       }
     }
