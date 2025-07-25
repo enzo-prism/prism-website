@@ -5,15 +5,6 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Project Overview
 **Prism Website** - A Next.js 15.2.4 marketing website for a design/development agency, automatically synced with v0.dev and deployed on Vercel.
 
-## Tech Stack
-- **Framework**: Next.js 15.2.4 with App Router, TypeScript 5
-- **Styling**: Tailwind CSS 3.4.17, shadcn/ui components
-- **Content**: MDX blog posts with gray-matter
-- **Forms**: React Hook Form + Zod validation → Server actions → Supabase
-- **Monitoring**: Sentry (org: `prism-m0`, project: `prism-website`)
-- **Testing**: Jest with ts-jest, Testing Library
-- **Animation**: Framer Motion 12.23.6
-
 ## Essential Commands
 
 ```bash
@@ -88,22 +79,11 @@ npm run git:cleanup     # Clean stale branches
 - Branch cleanup for stale branches
 - See `/docs/git-sync-management.md` for details
 
-## MCP Server Integration
-
-**Available Servers:**
-- **GitHub** (`mcp__github`) - Repository management, requires `GITHUB_PERSONAL_ACCESS_TOKEN`
-- **Supabase** (`mcp__supabase`) - Read-only DB access, project: `ibjqwvkcjdgdifujfnpb`
-- **Sentry** (`mcp__sentry`) - Error monitoring, org: `prism-m0`
-- **Figma** (`mcp__figma`) - Design files, port 3845
-
-Docker alternative available in `.mcp.docker.json` for isolated environments.
-
 ## Critical Patterns
 
 **Development Rules**
 - NEVER create files unless absolutely necessary - prefer editing existing files
 - NEVER proactively create documentation files (*.md) unless explicitly requested
-- NEVER add comments to code unless explicitly requested
 - Do what has been asked; nothing more, nothing less
 
 **TypeScript**
@@ -152,6 +132,7 @@ MDX posts in `/content/blog/` require front matter with: title, description, dat
 - Type errors: Run `npm run typecheck`
 - Image failures: Check custom Image component, run `npm run diagnose:images`
 - Test failures: Verify MDX mock is working
+- Git sync issues: Run `npm run git:status` and follow recommendations
 
 **v0.dev Deployment**
 - Project: https://v0.dev/chat/projects/8xmj81uf3fc
