@@ -125,9 +125,12 @@ export function optimizeScrollPerformance(): void {
   const body = document.body
   const html = document.documentElement
 
-  // Set CSS properties for better scrolling
-  html.style.setProperty("-webkit-overflow-scrolling", "touch")
-  html.style.setProperty("overscroll-behavior", "none")
+  // Only apply webkit-overflow-scrolling on actual touch devices
+  if (isTouchDevice()) {
+    // Set CSS properties for better scrolling on mobile
+    html.style.setProperty("-webkit-overflow-scrolling", "touch")
+    html.style.setProperty("overscroll-behavior", "none")
+  }
 
   // Add touch device class
   if (isTouchDevice()) {
@@ -179,9 +182,14 @@ export function optimizeTouchScrolling(element: HTMLElement): void {
   }
 }
 
-// Prevent scroll bounce on iOS
+// Prevent scroll bounce on iOS - only enable on actual iOS devices
 export function preventScrollBounce(): void {
   if (typeof window === "undefined") return
+
+  // Only apply on iOS devices, not on desktop Safari
+  if (!/iPad|iPhone|iPod/.test(navigator.userAgent)) {
+    return
+  }
 
   const preventDefault = (e: Event) => {
     if ((e as TouchEvent).touches.length > 1) return
@@ -329,14 +337,16 @@ export function initializeScrollOptimizations(): void {
     document.addEventListener("DOMContentLoaded", () => {
       optimizeScrollPerformance()
       preventZoomGestures()
-      if (isTouchDevice()) {
+      // Only prevent scroll bounce on actual touch devices
+      if (isTouchDevice() && /iPad|iPhone|iPod/.test(navigator.userAgent)) {
         preventScrollBounce()
       }
     })
   } else {
     optimizeScrollPerformance()
     preventZoomGestures()
-    if (isTouchDevice()) {
+    // Only prevent scroll bounce on actual touch devices
+    if (isTouchDevice() && /iPad|iPhone|iPod/.test(navigator.userAgent)) {
       preventScrollBounce()
     }
   }

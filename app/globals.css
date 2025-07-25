@@ -7,7 +7,7 @@ html {
   margin: 0;
   padding: 0;
   width: 100%;
-  height: 100%;
+  /* Remove height: 100% to fix Safari scrolling */
 }
 
 body {
@@ -17,6 +17,9 @@ body {
   min-height: 100vh;
   overflow-x: hidden; /* Prevent horizontal scroll */
   font-family: Arial, Helvetica, sans-serif;
+  /* Add Safari-specific scrolling fixes */
+  position: relative;
+  overflow-y: auto;
 }
 
 /* Ensure no safe area padding interferes on mobile */
@@ -1964,5 +1967,40 @@ input, textarea, select {
     font-size: 1rem;
     line-height: 1.5;
     letter-spacing: -0.01em;
+  }
+}
+
+/* Safari Desktop Specific Fixes */
+@supports (-webkit-appearance: none) and (not (-webkit-touch-callout: none)) {
+  /* This targets Safari desktop only */
+  html {
+    scroll-behavior: auto !important;
+  }
+  
+  .scroll-smooth {
+    scroll-behavior: auto !important;
+  }
+  
+  body {
+    -webkit-overflow-scrolling: auto !important;
+  }
+}
+
+/* Safari scroll container fixes */
+@supports (-webkit-appearance: none) {
+  .scroll-container {
+    -webkit-overflow-scrolling: auto;
+    transform: translateZ(0);
+  }
+  
+  /* Fix for Safari's viewport calculation issues */
+  html, body {
+    overflow: initial;
+  }
+  
+  body {
+    overflow-x: hidden;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: auto;
   }
 }

@@ -73,7 +73,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className="m-0 p-0 w-full h-full scroll-smooth" suppressHydrationWarning>
+    <html lang="en" className="m-0 p-0 w-full" suppressHydrationWarning>
       <head>
         {/* Google Tag Manager - Deferred for better performance */}
         <script

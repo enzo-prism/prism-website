@@ -8,6 +8,10 @@ export default function ScrollManager() {
     // Initialize all scroll optimizations
     initializeScrollOptimizations()
 
+    // Detect Safari desktop
+    const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent)
+    const isDesktop = !isTouchDevice()
+
     // Additional mobile-specific optimizations
     if (isTouchDevice()) {
       // Optimize main scrollable areas
@@ -41,10 +45,17 @@ export default function ScrollManager() {
       if (e.matches) {
         // Mobile optimizations
         document.body.classList.add("mobile-optimized")
-        document.documentElement.style.setProperty("scroll-behavior", "smooth")
+        // Only apply smooth scroll on mobile, not on desktop Safari
+        if (!isDesktop || !isSafari) {
+          document.documentElement.style.setProperty("scroll-behavior", "smooth")
+        }
       } else {
         // Desktop optimizations
         document.body.classList.remove("mobile-optimized")
+        // Remove smooth scroll on desktop Safari
+        if (isSafari && isDesktop) {
+          document.documentElement.style.removeProperty("scroll-behavior")
+        }
       }
     }
 
