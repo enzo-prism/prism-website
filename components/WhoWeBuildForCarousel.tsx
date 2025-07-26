@@ -1,12 +1,13 @@
 'use client';
 import { useRevealAnimation } from '@/hooks/use-reveal-animation';
 import { trackNavigation } from '@/utils/analytics';
+import { useEffect, useState } from 'react';
 
-const items = [
+const originalItems = [
   { emoji: '🪥', label: 'cosmetic dentist' },
   { emoji: '🦷', label: 'general dentist' },
   { emoji: '👨‍👩‍👧', label: 'family dentist' },
-  { emoji: '🩻', label: 'endodontist' },
+  { emoji: '🦷', label: 'endodontist' },
   { emoji: '🦷', label: 'periodontist' },
   { emoji: '🎓', label: 'alumni programs' },
   { emoji: '🧘‍♀️', label: 'wellness communities' },
@@ -17,8 +18,24 @@ const items = [
   { emoji: '📦', label: 'e-commerce brands' },
 ];
 
+// Fisher-Yates shuffle algorithm for true randomization
+function shuffleArray<T>(array: T[]): T[] {
+  const shuffled = [...array];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
+}
+
 export default function WhoWeBuildForCarousel() {
   const { elementRef, isVisible } = useRevealAnimation({ threshold: 0.2, delay: 100 });
+  const [items, setItems] = useState(originalItems);
+  
+  // Randomize items on client-side mount to avoid hydration issues
+  useEffect(() => {
+    setItems(shuffleArray(originalItems));
+  }, []);
   
   return (
     <section id="who-we-build-for" ref={elementRef} className={`py-16 md:py-20 bg-white dark:bg-neutral-900 ${isVisible ? 'reveal-up visible' : 'reveal-up'}`}>
