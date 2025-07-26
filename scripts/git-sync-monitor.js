@@ -239,13 +239,17 @@ class GitSyncMonitor {
 
   async checkSync() {
     try {
-      // Fetch latest from remote
-      this.log('Fetching latest changes from remote...');
-      this.executeGitCommand('git fetch origin');
+      // Skip fetch for performance - only fetch when explicitly needed
+      // this.log('Fetching latest changes from remote...');
+      // this.executeGitCommand('git fetch origin');
 
       // Generate and display report
       const report = this.generateSyncReport();
-      this.printSummary(report);
+      
+      // Only print summary if not in quiet mode
+      if (!process.argv.includes('--quiet')) {
+        this.printSummary(report);
+      }
 
       // Return exit code based on issues
       const highSeverityIssues = report.issues.filter(i => i.severity === 'high');
