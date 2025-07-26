@@ -4,7 +4,6 @@ import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
 import VideoWithPoster from "@/components/video-with-poster"
 import { useMobile } from "@/hooks/use-mobile"
 import { trackCTAClick } from "@/utils/analytics"
@@ -410,14 +409,14 @@ export default function ClientGetStartedPage() {
                       <label htmlFor="message" className="block text-sm font-medium text-neutral-700 lowercase mb-2">
                         why would you be a great fit for prism? *
                       </label>
-                      <Textarea
+                      <textarea
                         id="message"
                         name="message"
                         required
                         value={formData.message}
                         onChange={handleInputChange}
                         rows={5}
-                        className="w-full"
+                        className="w-full rounded-md border border-neutral-200 bg-white px-3 py-2 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-neutral-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                         placeholder="Tell us about your business, your goals, and why you think we'd work well together..."
                       />
                     </motion.div>
