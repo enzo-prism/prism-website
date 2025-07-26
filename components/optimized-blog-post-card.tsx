@@ -1,11 +1,11 @@
 "use client"
 
-import React, { useRef, useState } from "react"
-import Link from "next/link"
-import { ArrowRight } from "lucide-react"
-import { trackCTAClick } from "@/utils/analytics"
 import { cn } from "@/lib/utils"
-import { motion } from "framer-motion"
+import { trackCTAClick } from "@/utils/analytics"
+import { motion, Variants } from "framer-motion"
+import { ArrowRight } from "lucide-react"
+import Link from "next/link"
+import { useRef, useState } from "react"
 
 interface OptimizedBlogPostCardProps {
   title: string
@@ -36,7 +36,7 @@ export default function OptimizedBlogPostCard({
   const [isHovered, setIsHovered] = useState(false)
   
   // Staggered entrance animation
-  const cardVariants = {
+  const cardVariants: Variants = {
     hidden: {
       opacity: 0,
       y: 50,
@@ -49,7 +49,7 @@ export default function OptimizedBlogPostCard({
       transition: {
         duration: 0.5,
         delay: index * 0.05,
-        ease: [0.6, -0.05, 0.01, 0.99],
+        ease: "easeOut" as const,
       }
     }
   }
