@@ -16,6 +16,7 @@ const originalItems = [
   { emoji: '💻', label: 'software startups' },
   { emoji: '🤖', label: 'ai startups' },
   { emoji: '📦', label: 'e-commerce brands' },
+  { emoji: '🏔️', label: 'executive leadership events' },
 ];
 
 // Fisher-Yates shuffle algorithm for true randomization
