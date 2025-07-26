@@ -33,17 +33,36 @@ export default function SimpleBlogPostCard({
     <Link 
       href={`/blog/${slug}`} 
       onClick={() => trackCTAClick(`view blog post`, title)} 
-      className="block h-full"
+      className="block h-full gpu-accelerated"
+      style={{
+        // GPU acceleration for each card
+        transform: "translateZ(0)",
+        backfaceVisibility: "hidden",
+        willChange: "transform, opacity"
+      }}
     >
-      <div className="border border-neutral-200 rounded-lg overflow-hidden h-full flex flex-col transition-opacity hover:opacity-90">
+      <div 
+        className="border border-neutral-200 rounded-lg overflow-hidden h-full flex flex-col transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
+        style={{
+          // Create hardware layer
+          transform: "translate3d(0, 0, 0)",
+          transformStyle: "preserve-3d"
+        }}
+      >
         {featured && (
           <div className="absolute top-3 left-3 text-xs text-white bg-black/80 px-3 py-1 rounded-full lowercase z-10">
             featured
           </div>
         )}
         
-        {/* Simple gradient thumbnail */}
-        <div className={cn("relative w-full aspect-[4/3] overflow-hidden", gradientClass)} />
+        {/* Simple gradient thumbnail with GPU acceleration */}
+        <div 
+          className={cn("relative w-full aspect-[4/3] overflow-hidden", gradientClass)}
+          style={{
+            transform: "translateZ(0)",
+            backfaceVisibility: "hidden"
+          }}
+        />
         
         <div className="p-5 space-y-3 border-t border-neutral-100 flex-1 flex flex-col">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">

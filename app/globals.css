@@ -49,37 +49,46 @@ body {
     will-change: transform, opacity;
   }
   
-  .hardware-accelerated {
-    transform: translateZ(0);
-    -webkit-transform: translateZ(0);
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
-  }
-  
-  .optimize-scrolling {
+  /* Performance optimizations for blog scrolling */
+  .smooth-scroll {
     -webkit-overflow-scrolling: touch;
     overscroll-behavior-y: contain;
-    touch-action: pan-y;
   }
   
-  .contain-paint {
+  .hardware-accelerated {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    -webkit-transform: translateZ(0);
+    will-change: transform, opacity, filter;
+  }
+  
+  .optimized-grid {
     contain: layout style paint;
+    content-visibility: auto;
   }
   
-  .contain-strict {
-    contain: strict;
+  .card-3d {
+    transform-style: preserve-3d;
+    transform: translate3d(0, 0, 0);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), 
+                box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
   
-  .will-change-transform {
-    will-change: transform;
+  .card-3d:hover {
+    transform: translate3d(0, -4px, 0) scale(1.02);
+    box-shadow: 0 12px 24px -10px rgba(0, 0, 0, 0.15);
   }
   
-  .will-change-opacity {
-    will-change: opacity;
-  }
-  
-  .will-change-auto {
-    will-change: auto;
+  /* Reduce motion for accessibility */
+  @media (prefers-reduced-motion: reduce) {
+    .card-3d,
+    .hardware-accelerated,
+    .gpu-accelerated {
+      animation: none !important;
+      transition: none !important;
+      transform: none !important;
+    }
   }
 }
 

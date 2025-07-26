@@ -67,16 +67,26 @@ export default function BlogPostLayout({
   const readingTime = calculateReadingTime(description);
 
   useEffect(() => {
+    let ticking = false;
+    
     const handleScroll = () => {
-      const scrollTop = window.scrollY;
-      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-      const progress = (scrollTop / docHeight) * 100;
-      
-      setScrollProgress(Math.min(progress, 100));
-      setShowFloatingNav(scrollTop > 300); // Show after scrolling 300px
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const scrollTop = window.scrollY;
+          const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+          const progress = (scrollTop / docHeight) * 100;
+          
+          setScrollProgress(Math.min(progress, 100));
+          setShowFloatingNav(scrollTop > 300); // Show after scrolling 300px
+          
+          ticking = false;
+        });
+        
+        ticking = true;
+      }
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
