@@ -2,8 +2,8 @@ import type { Metadata } from "next"
 import ClientGetStartedPage from "./ClientGetStartedPage"
 
 export const metadata: Metadata = {
-  title: "get started",
-  description: "schedule a no-commitment consultation with the prism team to discuss your digital goals.",
+  title: "join the waitlist",
+  description: "prism is at capacity but accepting applications from exceptional companies. apply to join our exclusive waitlist.",
 }
 
 export default function GetStartedPage() {

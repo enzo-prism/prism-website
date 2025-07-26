@@ -1,123 +1,45 @@
 "use client"
-import { useState, useEffect, useRef } from "react"
-import { Calendar, CheckCircle, ArrowRight, ChevronDown } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import Navbar from "@/components/navbar"
-import Footer from "@/components/footer"
-import HowItWorksSlides from "@/components/how-it-works-slides"
-import VideoWithPoster from "@/components/video-with-poster"
-import ElegantHowItWorks from "@/components/elegant-how-it-works"
-import { useMobile } from "@/hooks/use-mobile"
-import Link from "next/link"
-import { motion, AnimatePresence, useScroll, useTransform, useInView } from "framer-motion"
 import AnimatedBackground from "@/components/animated-background"
+import Footer from "@/components/footer"
+import Navbar from "@/components/navbar"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Textarea } from "@/components/ui/textarea"
+import VideoWithPoster from "@/components/video-with-poster"
+import { useMobile } from "@/hooks/use-mobile"
+import { trackCTAClick } from "@/utils/analytics"
 import {
-  fadeInUp,
-  staggerContainer,
-  springScale,
-  accordionContent,
-  glowPulse,
-  pageTransition,
-  revealOnScroll,
-  magneticButton,
-  successPop,
+    fadeInUp,
+    pageTransition,
+    springScale,
+    staggerContainer,
+    successPop
 } from "@/utils/animation-variants"
+import { AnimatePresence, motion } from "framer-motion"
+import { CheckCircle, Send, Star, Users, Zap } from "lucide-react"
+import { useEffect, useRef, useState } from "react"
 
-// Import the tracking function at the top of the file
-import { trackCTAClick, trackNavigation } from "@/utils/analytics"
-// Add this import at the top with the other imports
-import { FAQSchema } from "@/components/schema-markup"
-
-function ProcessSteps() {
-  return (
-    <div className="grid gap-8 md:grid-cols-3">
-      <div className="flex flex-col items-center text-center">
-        <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-neutral-100">
-          <span className="text-2xl">1</span>
-        </div>
-        <h3 className="mb-2 text-xl font-bold lowercase">consultation</h3>
-        <p className="text-neutral-600 lowercase">we meet for 30 minutes to discuss your goals and challenges.</p>
-      </div>
-
-      <div className="flex flex-col items-center text-center">
-        <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-neutral-100">
-          <span className="text-2xl">2</span>
-        </div>
-        <h3 className="mb-2 text-xl font-bold lowercase">proposal</h3>
-        <p className="text-neutral-600 lowercase">
-          if we're a good fit, we'll create a custom proposal for your project.
-        </p>
-      </div>
-
-      <div className="flex flex-col items-center text-center">
-        <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-neutral-100">
-          <span className="text-2xl">3</span>
-        </div>
-        <h3 className="mb-2 text-xl font-bold lowercase">kickoff</h3>
-        <p className="text-neutral-600 lowercase">once approved, we begin work on your website, app, or designs.</p>
-      </div>
-    </div>
-  )
+interface FormData {
+  name: string
+  email: string
+  company: string
+  website: string
+  message: string
 }
-
-function ClientHowItWorks() {
-  // Use the new elegant component for better design
-  return <ElegantHowItWorks />
-}
-
-// Add this constant after the ClientHowItWorks component and before the ClientGetStartedPage component
-const faqs = [
-  {
-    question: "what happens during the 30-minute consultation?",
-    answer:
-      "during our consultation, we'll discuss your business goals, current challenges, and how our services might help. we'll ask questions about your target audience, competitors, and what success looks like for you. there's no pressure or obligation—it's simply a chance for us to understand your needs and see if we're a good fit.",
-  },
-  {
-    question: "is there any cost or obligation for the initial consultation?",
-    answer:
-      "no, the 30-minute consultation is completely free with no obligations. we believe in building relationships based on trust and mutual benefit, not pressure tactics.",
-  },
-  {
-    question: "how soon can we start working together after the consultation?",
-    answer:
-      "if we both agree we're a good fit, we can typically begin work within 1-2 weeks of proposal approval. for urgent projects, we may be able to accommodate faster timelines—just let us know during our consultation.",
-  },
-  {
-    question: "what information should i prepare before our call?",
-    answer:
-      "it's helpful to think about your goals, timeline, budget range, and any examples of websites, apps, or designs you admire. don't worry if you don't have everything figured out—part of our job is helping you clarify your vision.",
-  },
-  {
-    question: "what are your typical project costs?",
-    answer:
-      "our services start from $750 for design sprints to $1,999/month for our growth accelerator package. custom projects can range up to $50,000+ for comprehensive website and app development. for single design assets, we offer a $750 flat fee option. we'll provide a custom quote based on your specific needs after our consultation.",
-  },
-  {
-    question: "how long do projects typically take to complete?",
-    answer:
-      "project timelines vary based on scope and complexity. design projects may take 2-4 weeks, while websites typically take 4-8 weeks, and apps can take 8-12 weeks or more. we'll provide a detailed timeline in our proposal.",
-  },
-]
 
 export default function ClientGetStartedPage() {
-  const [activeSection, setActiveSection] = useState<string | null>(null)
-  const [scrolled, setScrolled] = useState(false)
   const [shouldLoadVideo, setShouldLoadVideo] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
+  const [formData, setFormData] = useState<FormData>({
+    name: '',
+    email: '',
+    company: '',
+    website: '',
+    message: ''
+  })
   const isMobile = useMobile()
   const videoRef = useRef<HTMLDivElement>(null)
-  const heroRef = useRef<HTMLDivElement>(null)
-  const { scrollYProgress } = useScroll()
-  const heroParallax = useTransform(scrollYProgress, [0, 1], [0, -100])
-
-  // Handle scroll effects
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50)
-    }
-
-    window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
-  }, [])
 
   // Lazy load video
   useEffect(() => {
@@ -142,10 +64,82 @@ export default function ClientGetStartedPage() {
     return () => observer.disconnect()
   }, [shouldLoadVideo])
 
-  const toggleSection = (section: string) => {
-    setActiveSection(activeSection === section ? null : section)
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }))
   }
 
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setIsSubmitting(true)
+    
+    try {
+      // Send to store-email endpoint
+      const response = await fetch('/api/store-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email: formData.email }),
+      })
+
+      if (!response.ok) throw new Error('Failed to submit')
+
+      // Send to Prism leads endpoint
+      await fetch('/api/prism-leads', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          ...formData,
+          source: 'waitlist',
+          timestamp: new Date().toISOString()
+        }),
+      })
+
+      setSubmitStatus('success')
+      trackCTAClick('waitlist application submitted', 'get started page')
+      
+      // Reset form after success
+      setTimeout(() => {
+        setFormData({
+          name: '',
+          email: '',
+          company: '',
+          website: '',
+          message: ''
+        })
+      }, 2000)
+    } catch (error) {
+      console.error('Error submitting form:', error)
+      setSubmitStatus('error')
+    } finally {
+      setIsSubmitting(false)
+      setTimeout(() => setSubmitStatus('idle'), 5000)
+    }
+  }
+
+  const clientTypes = [
+    {
+      icon: <Star className="h-5 w-5" />,
+      title: "Innovative Startups",
+      description: "Tech companies with unique products solving real problems"
+    },
+    {
+      icon: <Users className="h-5 w-5" />,
+      title: "Healthcare Practices",
+      description: "Medical and dental practices focused on patient growth"
+    },
+    {
+      icon: <Zap className="h-5 w-5" />,
+      title: "Growth-Focused Brands",
+      description: "Companies ready to scale with premium digital presence"
+    }
+  ]
 
   return (
     <motion.div 
@@ -157,13 +151,11 @@ export default function ClientGetStartedPage() {
     >
       <Navbar />
       <main className="flex-1">
-        {/* Hero Section - Enhanced with GPU animations */}
+        {/* Hero Section */}
         <motion.section 
           ref={videoRef} 
           className="relative px-4 py-12 md:py-24 lg:py-32 overflow-hidden"
-          style={{ y: heroParallax }}
         >
-          {/* Animated background */}
           <AnimatedBackground />
           
           <motion.div 
@@ -176,33 +168,22 @@ export default function ClientGetStartedPage() {
               <motion.div
                 className="space-y-3"
                 variants={fadeInUp}
-                style={{
-                  transform: scrolled ? "translateY(-8px) scale(0.95)" : "translateY(0) scale(1)",
-                  transition: "transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
-                }}
               >
-                {/* Video frame with poster image */}
+                {/* Video frame */}
                 <motion.div 
                   className="mb-2 flex justify-center"
                   variants={springScale}
-                  whileHover={{ scale: 1.02, rotateY: 5 }}
-                  whileTap={{ scale: 0.98 }}
-                  style={{ perspective: 1000 }}
+                  whileHover={{ scale: 1.02 }}
                 >
                   {shouldLoadVideo ? (
                     <motion.div
                       animate={{
                         y: [0, -10, 0],
-                        rotateZ: [-0.5, 0.5, -0.5],
                       }}
                       transition={{
                         duration: 4,
                         repeat: Infinity,
                         ease: "easeInOut",
-                      }}
-                      style={{
-                        transform: "translateZ(0)",
-                        willChange: "transform",
                       }}
                     >
                       <VideoWithPoster
@@ -228,537 +209,87 @@ export default function ClientGetStartedPage() {
                     </motion.div>
                   )}
                 </motion.div>
+                
                 <motion.h1 
                   className="text-3xl font-bold tracking-tighter lowercase sm:text-4xl md:text-5xl lg:text-6xl"
                   variants={fadeInUp}
                 >
-                  get started
+                  we're at capacity
                 </motion.h1>
+                
                 <motion.p 
-                  className="mx-auto mt-4 max-w-[600px] text-neutral-600 lowercase text-base sm:text-lg md:text-xl px-4"
+                  className="mx-auto mt-4 max-w-[700px] text-neutral-600 lowercase text-base sm:text-lg md:text-xl px-4"
                   variants={fadeInUp}
                 >
-                  schedule a 30-minute consultation with our team to discuss your goals.
+                  prism is currently at full capacity, but we're accepting applications from exceptional companies that align with our vision.
                 </motion.p>
               </motion.div>
-
-              {/* Mobile-optimized CTA button with 44px minimum touch target */}
-              {isMobile && (
-                <motion.div 
-                  className="mt-8 w-full max-w-sm px-4"
-                  variants={successPop}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <motion.a
-                    href="https://calendar.notion.so/meet/enzosison/client-meeting"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center justify-center w-full py-4 px-6 bg-black text-white rounded-full text-lg lowercase relative overflow-hidden min-h-[44px] shadow-lg"
-                    onClick={() => trackCTAClick("quick schedule", "get started page")}
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    variants={glowPulse}
-                  >
-                    <Calendar className="mr-3 h-5 w-5" />
-                    schedule consultation
-                    <ArrowRight className="ml-3 h-4 w-4" />
-                  </motion.a>
-                </motion.div>
-              )}
-
-              {/* Mobile scroll indicator - positioned below CTA to avoid overlap */}
-              {isMobile && (
-                <motion.div 
-                  className="mt-12 flex justify-center"
-                  animate={{ y: [0, 8, 0] }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                >
-                  <motion.div 
-                    className="flex flex-col items-center gap-2"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 1 }}
-                  >
-                    <span className="text-xs text-neutral-400 lowercase">scroll to explore</span>
-                    <ChevronDown className="h-5 w-5 text-neutral-400" />
-                  </motion.div>
-                </motion.div>
-              )}
             </div>
           </motion.div>
         </motion.section>
 
-
-        {/* Process Section - Enhanced with GPU animations */}
+        {/* Who We Work With Section */}
         <motion.section 
-          className="relative px-4 py-16 md:py-24 overflow-hidden"
+          className="relative px-4 py-16 md:py-24 bg-neutral-50"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.2 }}
         >
-          {/* Animated gradient overlay */}
           <motion.div 
-            className="absolute inset-0 bg-gradient-to-br from-neutral-50/50 via-white to-neutral-50/30 pointer-events-none"
-            animate={{
-              opacity: [0.3, 0.5, 0.3],
-              scale: [1, 1.1, 1],
-            }}
-            transition={{
-              duration: 10,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-          />
-          
-          <motion.div 
-            className="container mx-auto px-4 md:px-6 relative"
+            className="container mx-auto px-4 md:px-6"
             variants={staggerContainer}
           >
             <div className="mx-auto max-w-5xl">
-              {/* Section header with enhanced styling */}
-              <motion.div className="mb-16 text-center" variants={fadeInUp}>
-                <motion.div 
-                  className="inline-flex items-center gap-2 px-4 py-2 bg-neutral-100 rounded-full text-sm font-medium text-neutral-700 mb-6"
-                  whileHover={{ scale: 1.05 }}
-                >
-                  <motion.div 
-                    className="w-2 h-2 bg-neutral-400 rounded-full"
-                    animate={{ scale: [1, 1.5, 1] }}
-                    transition={{ duration: 1, repeat: Infinity }}
-                  />
-                  simple process
-                </motion.div>
-                <motion.h2 
-                  className="text-3xl font-bold tracking-tighter lowercase sm:text-4xl md:text-5xl bg-gradient-to-br from-neutral-900 to-neutral-600 bg-clip-text text-transparent"
-                  variants={fadeInUp}
-                >
-                  how it works
-                </motion.h2>
-                <motion.p 
-                  className="mx-auto mt-6 max-w-[600px] text-lg text-neutral-600 lowercase leading-relaxed"
-                  variants={fadeInUp}
-                >
-                  a simple, no-commitment process to see if we're a good fit for each other.
-                </motion.p>
-              </motion.div>
-
-              {/* Enhanced process component */}
-              <motion.div 
-                variants={revealOnScroll}
-                className="transform transition-all duration-500"
-              >
-                <ClientHowItWorks />
-              </motion.div>
-            </div>
-          </motion.div>
-
-          {/* Bottom fade effect */}
-          <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-white via-white/80 to-transparent pointer-events-none" />
-        </motion.section>
-
-        {/* Notion Calendar Section - Enhanced with animations */}
-        <motion.section 
-          id="schedule" 
-          className="px-4 py-16 md:py-24 bg-neutral-50"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.3 }}
-        >
-          <motion.div 
-            className="container mx-auto px-4 md:px-6"
-            variants={staggerContainer}
-          >
-            <div className="mx-auto max-w-3xl">
               <motion.div className="mb-12 text-center" variants={fadeInUp}>
-                <h2 className="text-3xl font-bold tracking-tighter lowercase sm:text-4xl">schedule your call</h2>
-                <p className="mx-auto mt-4 max-w-[700px] text-neutral-600 lowercase">
-                  pick a time that works for you to chat with our team.
+                <h2 className="text-3xl font-bold tracking-tighter lowercase sm:text-4xl md:text-5xl">
+                  who we work with
+                </h2>
+                <p className="mx-auto mt-4 max-w-[700px] text-neutral-600 lowercase text-lg">
+                  we partner with companies that share our commitment to excellence and innovation.
                 </p>
               </motion.div>
 
-              {/* Mobile-optimized card with animations */}
               <motion.div 
-                className="rounded-xl border shadow-sm overflow-hidden bg-white"
-                variants={springScale}
-                whileHover={{ y: -5, boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)" }}
+                className="grid gap-8 md:grid-cols-3"
+                variants={staggerContainer}
               >
-                {/* Card header - always visible */}
-                <motion.div className="p-6 border-b" variants={fadeInUp}>
-                  <h3 className="text-2xl font-bold lowercase">exclusive strategy session</h3>
-                  <p className="mt-2 text-neutral-600 lowercase">
-                    in this 30-minute call, we'll discuss your goals and see if we're a good fit to work together.
-                  </p>
-                </motion.div>
-
-                {/* Mobile accordion sections */}
-                {isMobile ? (
-                  <AnimatePresence>
-                    <div className="divide-y">
-                      {/* What to expect section */}
-                      <div className="border-t">
-                        <motion.button
-                          className="flex items-center justify-between w-full p-4 text-left"
-                          onClick={() => toggleSection("expect")}
-                          whileTap={{ scale: 0.98 }}
-                        >
-                          <span className="font-medium">what to expect</span>
-                          <motion.div
-                            animate={{ rotate: activeSection === "expect" ? 180 : 0 }}
-                            transition={{ duration: 0.3 }}
-                          >
-                            <ChevronDown className="h-5 w-5" />
-                          </motion.div>
-                        </motion.button>
-
-                        <AnimatePresence>
-                          {activeSection === "expect" && (
-                            <motion.div
-                              initial="closed"
-                              animate="open"
-                              exit="closed"
-                              variants={accordionContent}
-                              className="px-4 pb-4 overflow-hidden"
-                            >
-                              <motion.ul 
-                                className="space-y-3"
-                                variants={staggerContainer}
-                                initial="initial"
-                                animate="animate"
-                              >
-                                {[
-                                  "no commitment or obligation",
-                                  "understand your business goals",
-                                  "explore potential solutions"
-                                ].map((item, index) => (
-                                  <motion.li 
-                                    key={index}
-                                    className="flex items-start"
-                                    variants={fadeInUp}
-                                  >
-                                    <motion.div
-                                      initial={{ scale: 0 }}
-                                      animate={{ scale: 1 }}
-                                      transition={{ delay: index * 0.1, type: "spring" }}
-                                    >
-                                      <CheckCircle className="mr-2 h-5 w-5 text-green-500 mt-0.5 flex-shrink-0" />
-                                    </motion.div>
-                                    <span className="text-neutral-600 lowercase">{item}</span>
-                                  </motion.li>
-                                ))}
-                              </motion.ul>
-                            </motion.div>
-                          )}
-                        </AnimatePresence>
-                      </div>
-                    </div>
-                  </AnimatePresence>
-                ) : (
-                  // Desktop version - always expanded
-                  <motion.div className="p-6" variants={fadeInUp}>
-                    <motion.ul 
-                      className="space-y-2"
-                      variants={staggerContainer}
-                    >
-                      {[
-                        "no commitment or obligation",
-                        "understand your business goals",
-                        "explore potential solutions"
-                      ].map((item, index) => (
-                        <motion.li 
-                          key={index}
-                          className="flex items-start"
-                          variants={fadeInUp}
-                          whileHover={{ x: 5 }}
-                        >
-                          <CheckCircle className="mr-2 h-5 w-5 text-green-500 mt-0.5" />
-                          <span className="text-neutral-600 lowercase">{item}</span>
-                        </motion.li>
-                      ))}
-                    </motion.ul>
-                  </motion.div>
-                )}
-
-                {/* CTA Button - Enhanced with animations */}
-                <motion.div 
-                  className={`p-6 ${isMobile ? "bg-neutral-50" : ""}`}
-                  variants={fadeInUp}
-                >
-                  <motion.a
-                    href="https://calendar.notion.so/meet/enzosison/client-meeting"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={() => trackCTAClick("schedule your call", "get started page")}
-                    className={`
-                      block w-full text-center py-4 px-6 rounded-full relative overflow-hidden
-                      ${isMobile ? "bg-black text-white shadow-lg min-h-[44px]" : "bg-black text-white"}
-                      text-lg lowercase font-medium group
-                    `}
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    variants={glowPulse}
+                {clientTypes.map((type, index) => (
+                  <motion.div
+                    key={index}
+                    className="bg-white rounded-xl p-6 shadow-sm border border-neutral-200"
+                    variants={springScale}
+                    whileHover={{ 
+                      scale: 1.05,
+                      boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1)",
+                    }}
                   >
                     <motion.div 
-                      className="flex items-center justify-center relative z-10"
-                      whileHover={{ x: 5 }}
+                      className="flex items-center justify-center w-12 h-12 rounded-full bg-neutral-100 mb-4"
+                      whileHover={{ rotate: 360 }}
+                      transition={{ duration: 0.5 }}
                     >
-                      <Calendar className="mr-2 h-5 w-5" />
-                      schedule your call
-                      {isMobile && <ArrowRight className="ml-2 h-4 w-4" />}
+                      {type.icon}
                     </motion.div>
-                    <motion.div
-                      className="absolute inset-0 bg-gradient-to-r from-gray-900 to-black opacity-0 group-hover:opacity-100"
-                      initial={{ x: "-100%" }}
-                      whileHover={{ x: 0 }}
-                      transition={{ duration: 0.3 }}
-                    />
-                  </motion.a>
-                </motion.div>
+                    <h3 className="text-xl font-bold lowercase mb-2">{type.title}</h3>
+                    <p className="text-neutral-600 lowercase">{type.description}</p>
+                  </motion.div>
+                ))}
+              </motion.div>
+
+              <motion.div 
+                className="mt-12 text-center"
+                variants={fadeInUp}
+              >
+                <div className="inline-flex items-center gap-2 px-4 py-2 bg-yellow-100 rounded-full text-sm font-medium text-neutral-700">
+                  <div className="w-2 h-2 bg-yellow-400 rounded-full animate-pulse" />
+                  limited spots available
+                </div>
               </motion.div>
             </div>
           </motion.div>
         </motion.section>
 
-        {/* Services teaser section with 3D cards */}
-        <motion.section 
-          className="py-16 md:py-24 bg-white"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
-        >
-          <motion.div 
-            className="container mx-auto px-4 md:px-6"
-            variants={staggerContainer}
-          >
-            <motion.div className="text-center mb-12" variants={fadeInUp}>
-              <h2 className="text-3xl font-bold tracking-tighter lowercase sm:text-4xl">
-                our services
-              </h2>
-              <p className="mx-auto mt-4 max-w-[700px] text-neutral-600 lowercase">
-                choose from our flexible tiers designed to scale with your business needs. for full details, visit our services page.
-              </p>
-            </motion.div>
-            {/* Mobile: Horizontal scrolling carousel */}
-            {isMobile ? (
-              <motion.div 
-                className="overflow-x-auto pb-4 px-4 mobile-pricing-carousel"
-                variants={staggerContainer}
-              >
-                <div className="flex gap-4 w-max">
-                  {[
-                    {
-                      title: "design sprint",
-                      price: "$750 one-off",
-                      features: ["custom design assets", "unlimited revisions", "3-5 days turnaround"],
-                      highlight: false
-                    },
-                    {
-                      title: "site essentials", 
-                      price: "$1,200/mo",
-                      features: ["full website rebuild", "unlimited edits", "basic analytics"],
-                      highlight: false
-                    },
-                    {
-                      title: "growth accelerator",
-                      price: "$1,999/mo", 
-                      features: ["everything in essentials", "advanced SEO & listings", "review boosting & apps"],
-                      highlight: true
-                    }
-                  ].map((service, index) => (
-                    <motion.div
-                      key={index}
-                      className={`
-                        flex-shrink-0 w-[280px] p-6 rounded-xl relative overflow-hidden mobile-pricing-card
-                        ${service.highlight 
-                          ? 'bg-gradient-to-br from-neutral-900 to-black text-white shadow-xl' 
-                          : 'bg-white border border-neutral-200 shadow-sm'
-                        }
-                      `}
-                      variants={springScale}
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                    >
-                      {service.highlight && (
-                        <motion.div 
-                          className="absolute top-3 right-3 bg-yellow-400 text-black px-2 py-1 rounded-full text-xs font-bold"
-                          initial={{ scale: 0 }}
-                          animate={{ scale: 1 }}
-                          transition={{ delay: 0.5, type: "spring" }}
-                        >
-                          POPULAR
-                        </motion.div>
-                      )}
-                      
-                      <h3 className={`text-xl font-bold lowercase mb-3 ${service.highlight ? 'text-white' : 'text-neutral-900'}`}>
-                        {service.title}
-                      </h3>
-                      
-                      <motion.div 
-                        className={`text-3xl font-bold mb-4 ${service.highlight ? 'text-white' : 'text-neutral-900'}`}
-                        whileHover={{ scale: 1.05 }}
-                      >
-                        {service.price}
-                      </motion.div>
-                      
-                      <ul className={`space-y-3 ${service.highlight ? 'text-neutral-200' : 'text-neutral-600'}`}>
-                        {service.features.map((feature, featureIndex) => (
-                          <li key={featureIndex} className="flex items-start text-sm lowercase">
-                            <motion.div 
-                              className={`w-1.5 h-1.5 rounded-full mt-2 mr-3 flex-shrink-0 ${service.highlight ? 'bg-yellow-400' : 'bg-neutral-400'}`}
-                              initial={{ scale: 0 }}
-                              animate={{ scale: 1 }}
-                              transition={{ delay: 0.1 * featureIndex }}
-                            />
-                            {feature}
-                          </li>
-                        ))}
-                      </ul>
-                      
-                      <motion.a
-                        href="https://calendar.notion.so/meet/enzosison/client-meeting"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className={`
-                          block w-full mt-6 py-3 px-4 rounded-full font-medium text-sm lowercase min-h-[44px] text-center
-                          ${service.highlight 
-                            ? 'bg-white text-black hover:bg-neutral-100' 
-                            : 'bg-black text-white hover:bg-neutral-800'
-                          }
-                        `}
-                        whileHover={{ scale: 1.02 }}
-                        whileTap={{ scale: 0.98 }}
-                        onClick={() => trackCTAClick(`${service.title} schedule call`, "get started page")}
-                      >
-                        schedule call
-                      </motion.a>
-                    </motion.div>
-                  ))}
-                </div>
-                
-                {/* Scroll indicator for mobile */}
-                <motion.div 
-                  className="flex justify-center mt-4 gap-2"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.5 }}
-                >
-                  <div className="text-xs text-neutral-400 flex items-center gap-2">
-                    <ArrowRight className="h-3 w-3 rotate-180" />
-                    swipe to see all options
-                    <ArrowRight className="h-3 w-3" />
-                  </div>
-                </motion.div>
-              </motion.div>
-            ) : (
-              // Desktop: Original grid layout
-              <motion.div 
-                className="grid gap-8 md:grid-cols-3 max-w-5xl mx-auto"
-                variants={staggerContainer}
-              >
-              <motion.div
-                className="bg-neutral-50 rounded-xl p-6 relative"
-                variants={springScale}
-                whileHover={{ 
-                  scale: 1.05, 
-                  rotateY: 5,
-                  z: 50,
-                }}
-                style={{ 
-                  transformStyle: "preserve-3d",
-                  perspective: 1000,
-                }}
-              >
-                <h3 className="text-xl font-bold lowercase mb-2">design sprint</h3>
-                <motion.div 
-                  className="text-2xl font-bold mb-2"
-                  whileHover={{ scale: 1.1 }}
-                >
-                  $750 one-off
-                </motion.div>
-                <ul className="space-y-2 text-neutral-600 lowercase">
-                  <li>custom design assets</li>
-                  <li>unlimited revisions</li>
-                  <li>3-5 days turnaround</li>
-                </ul>
-              </motion.div>
-              <motion.div
-                className="bg-neutral-50 rounded-xl p-6 relative"
-                variants={springScale}
-                whileHover={{ 
-                  scale: 1.05, 
-                  rotateY: 5,
-                  z: 50,
-                }}
-                style={{ 
-                  transformStyle: "preserve-3d",
-                  perspective: 1000,
-                }}
-              >
-                <h3 className="text-xl font-bold lowercase mb-2">site essentials</h3>
-                <motion.div 
-                  className="text-2xl font-bold mb-2"
-                  whileHover={{ scale: 1.1 }}
-                >
-                  $1,200/mo
-                </motion.div>
-                <ul className="space-y-2 text-neutral-600 lowercase">
-                  <li>full website rebuild</li>
-                  <li>unlimited edits</li>
-                  <li>basic analytics</li>
-                </ul>
-              </motion.div>
-              <motion.div
-                className="bg-neutral-50 rounded-xl p-6 relative overflow-hidden"
-                variants={springScale}
-                whileHover={{ 
-                  scale: 1.05, 
-                  rotateY: 5,
-                  z: 50,
-                }}
-                style={{ 
-                  transformStyle: "preserve-3d",
-                  perspective: 1000,
-                }}
-              >
-                <h3 className="text-xl font-bold lowercase mb-2">growth accelerator</h3>
-                <motion.div 
-                  className="text-2xl font-bold mb-2 relative"
-                  whileHover={{ scale: 1.1 }}
-                >
-                  $1,999/mo
-                  <motion.div
-                    className="absolute -inset-2 bg-gradient-to-r from-yellow-400 to-orange-400 opacity-20 blur-xl"
-                    animate={{ scale: [1, 1.2, 1] }}
-                    transition={{ duration: 2, repeat: Infinity }}
-                  />
-                </motion.div>
-                <ul className="space-y-2 text-neutral-600 lowercase">
-                  <li>everything in essentials</li>
-                  <li>advanced SEO & listings</li>
-                  <li>review boosting & apps</li>
-                </ul>
-              </motion.div>
-            </motion.div>
-            )}
-            
-            <motion.div 
-              className="text-center mt-8"
-              variants={fadeInUp}
-            >
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <Button variant="outline" className="rounded-full px-6 py-3 text-base lowercase" asChild>
-                  <Link href="/services">
-                    explore services <ArrowRight className="ml-2 h-4 w-4" />
-                  </Link>
-                </Button>
-              </motion.div>
-            </motion.div>
-          </motion.div>
-        </motion.section>
-
-        {/* FAQs Section with enhanced accordion */}
+        {/* Application Form Section */}
         <motion.section 
           className="px-4 py-16 md:py-24 bg-white"
           initial="hidden"
@@ -769,61 +300,227 @@ export default function ClientGetStartedPage() {
             className="container mx-auto px-4 md:px-6"
             variants={staggerContainer}
           >
-            <div className="mx-auto max-w-3xl">
+            <div className="mx-auto max-w-2xl">
               <motion.div className="mb-12 text-center" variants={fadeInUp}>
                 <h2 className="text-3xl font-bold tracking-tighter lowercase sm:text-4xl">
-                  frequently asked questions
+                  apply for the waitlist
                 </h2>
-                <p className="mx-auto mt-4 max-w-[700px] text-neutral-600 lowercase">
-                  everything you need to know about working with us.
+                <p className="mx-auto mt-4 max-w-[600px] text-neutral-600 lowercase">
+                  tell us about your company and why you'd be a great fit for prism.
                 </p>
               </motion.div>
 
-              <motion.div 
-                className="space-y-6"
-                variants={staggerContainer}
-              >
-                {faqs.map((faq, index) => (
-                  <motion.div 
-                    key={index} 
-                    className="rounded-lg border bg-white shadow-sm overflow-hidden"
-                    variants={fadeInUp}
-                    whileHover={{ scale: 1.02 }}
+              <AnimatePresence mode="wait">
+                {submitStatus === 'success' ? (
+                  <motion.div
+                    key="success"
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.8 }}
+                    variants={successPop}
+                    className="text-center py-12"
                   >
-                    <motion.button
-                      className={`flex w-full items-center justify-between px-6 text-left ${isMobile ? 'py-5 min-h-[44px]' : 'py-4'}`}
-                      onClick={() => toggleSection(`faq-${index}`)}
-                      whileTap={{ scale: 0.98 }}
+                    <motion.div
+                      className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-green-100 mb-6"
+                      animate={{ rotate: [0, 360] }}
+                      transition={{ duration: 0.5 }}
                     >
-                      <h3 className="font-medium lowercase">{faq.question}</h3>
-                      <motion.div
-                        animate={{ rotate: activeSection === `faq-${index}` ? 180 : 0 }}
-                        transition={{ duration: 0.3 }}
-                      >
-                        <ChevronDown className="h-5 w-5 text-neutral-500" />
-                      </motion.div>
-                    </motion.button>
-                    <AnimatePresence>
-                      {activeSection === `faq-${index}` && (
-                        <motion.div
-                          initial="closed"
-                          animate="open"
-                          exit="closed"
-                          variants={accordionContent}
-                          className="px-6 pb-4"
-                        >
-                          <p className="text-neutral-600 lowercase">{faq.answer}</p>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
+                      <CheckCircle className="h-10 w-10 text-green-600" />
+                    </motion.div>
+                    <h3 className="text-2xl font-bold lowercase mb-2">application received!</h3>
+                    <p className="text-neutral-600 lowercase">
+                      we'll review your application and get back to you if there's a fit.
+                    </p>
                   </motion.div>
-                ))}
+                ) : (
+                  <motion.form 
+                    key="form"
+                    onSubmit={handleSubmit}
+                    className="space-y-6"
+                    variants={staggerContainer}
+                  >
+                    <motion.div className="grid gap-6 md:grid-cols-2" variants={fadeInUp}>
+                      <div>
+                        <label htmlFor="name" className="block text-sm font-medium text-neutral-700 lowercase mb-2">
+                          your name *
+                        </label>
+                        <Input
+                          id="name"
+                          name="name"
+                          type="text"
+                          required
+                          value={formData.name}
+                          onChange={handleInputChange}
+                          className="w-full"
+                          placeholder="John Doe"
+                        />
+                      </div>
+                      
+                      <div>
+                        <label htmlFor="email" className="block text-sm font-medium text-neutral-700 lowercase mb-2">
+                          email address *
+                        </label>
+                        <Input
+                          id="email"
+                          name="email"
+                          type="email"
+                          required
+                          value={formData.email}
+                          onChange={handleInputChange}
+                          className="w-full"
+                          placeholder="john@company.com"
+                        />
+                      </div>
+                    </motion.div>
+
+                    <motion.div className="grid gap-6 md:grid-cols-2" variants={fadeInUp}>
+                      <div>
+                        <label htmlFor="company" className="block text-sm font-medium text-neutral-700 lowercase mb-2">
+                          company name *
+                        </label>
+                        <Input
+                          id="company"
+                          name="company"
+                          type="text"
+                          required
+                          value={formData.company}
+                          onChange={handleInputChange}
+                          className="w-full"
+                          placeholder="Acme Inc."
+                        />
+                      </div>
+                      
+                      <div>
+                        <label htmlFor="website" className="block text-sm font-medium text-neutral-700 lowercase mb-2">
+                          current website (if any)
+                        </label>
+                        <Input
+                          id="website"
+                          name="website"
+                          type="url"
+                          value={formData.website}
+                          onChange={handleInputChange}
+                          className="w-full"
+                          placeholder="https://www.example.com"
+                        />
+                      </div>
+                    </motion.div>
+
+                    <motion.div variants={fadeInUp}>
+                      <label htmlFor="message" className="block text-sm font-medium text-neutral-700 lowercase mb-2">
+                        why would you be a great fit for prism? *
+                      </label>
+                      <Textarea
+                        id="message"
+                        name="message"
+                        required
+                        value={formData.message}
+                        onChange={handleInputChange}
+                        rows={5}
+                        className="w-full"
+                        placeholder="Tell us about your business, your goals, and why you think we'd work well together..."
+                      />
+                    </motion.div>
+
+                    <motion.div 
+                      className="pt-4"
+                      variants={fadeInUp}
+                    >
+                      <Button
+                        type="submit"
+                        disabled={isSubmitting}
+                        className="w-full py-4 text-lg lowercase rounded-full"
+                        size="lg"
+                      >
+                        {isSubmitting ? (
+                          <motion.span
+                            animate={{ opacity: [0.5, 1, 0.5] }}
+                            transition={{ duration: 1.5, repeat: Infinity }}
+                          >
+                            submitting...
+                          </motion.span>
+                        ) : (
+                          <>
+                            submit application
+                            <Send className="ml-2 h-5 w-5" />
+                          </>
+                        )}
+                      </Button>
+                    </motion.div>
+
+                    {submitStatus === 'error' && (
+                      <motion.p 
+                        className="text-red-600 text-sm text-center lowercase"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                      >
+                        something went wrong. please try again.
+                      </motion.p>
+                    )}
+                  </motion.form>
+                )}
+              </AnimatePresence>
+
+              <motion.div 
+                className="mt-12 text-center"
+                variants={fadeInUp}
+              >
+                <p className="text-sm text-neutral-500 lowercase">
+                  we review applications weekly and will contact you if there's a potential fit.
+                </p>
               </motion.div>
             </div>
           </motion.div>
+        </motion.section>
 
-          {/* Add FAQ Schema for SEO */}
-          <FAQSchema questions={faqs} />
+        {/* What Makes a Great Fit Section */}
+        <motion.section 
+          className="px-4 py-16 md:py-24 bg-neutral-50"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+        >
+          <motion.div 
+            className="container mx-auto px-4 md:px-6"
+            variants={staggerContainer}
+          >
+            <div className="mx-auto max-w-3xl">
+              <motion.div className="text-center mb-12" variants={fadeInUp}>
+                <h2 className="text-3xl font-bold tracking-tighter lowercase sm:text-4xl">
+                  what makes a great fit
+                </h2>
+              </motion.div>
+
+              <motion.div 
+                className="bg-white rounded-xl p-8 shadow-sm border border-neutral-200"
+                variants={springScale}
+                whileHover={{ y: -5 }}
+              >
+                <motion.ul 
+                  className="space-y-4"
+                  variants={staggerContainer}
+                >
+                  {[
+                    "You have a unique product or service that solves real problems",
+                    "You're committed to excellence and long-term growth",
+                    "You value premium design and user experience", 
+                    "You're ready to invest in your digital presence",
+                    "You appreciate collaborative partnerships over transactional relationships"
+                  ].map((item, index) => (
+                    <motion.li 
+                      key={index}
+                      className="flex items-start"
+                      variants={fadeInUp}
+                      whileHover={{ x: 5 }}
+                    >
+                      <CheckCircle className="mr-3 h-5 w-5 text-green-500 mt-0.5 flex-shrink-0" />
+                      <span className="text-neutral-700 lowercase">{item}</span>
+                    </motion.li>
+                  ))}
+                </motion.ul>
+              </motion.div>
+            </div>
+          </motion.div>
         </motion.section>
       </main>
       <Footer />
