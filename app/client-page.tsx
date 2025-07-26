@@ -1,12 +1,12 @@
 "use client"
 
+import { ArrowRight } from "lucide-react"
 import Link from "next/link"
-import { ArrowRight, ChevronLeft, ChevronRight, Star, Check, Sparkles, MessageSquare, Zap, Target, Users, Clock, MousePointer, Megaphone } from "lucide-react"
-import { useState, useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 
-import { Button } from "@/components/ui/button"
-import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
+import Navbar from "@/components/navbar"
+import { Button } from "@/components/ui/button"
 import { useMobile } from "@/hooks/use-mobile"
 import dynamic from "next/dynamic"
 
@@ -24,16 +24,15 @@ const ScrollProgressBar = dynamic(() => import("@/components/scroll-progress-bar
 })
 
 // Import analytics functions directly for now (will optimize separately)
-import { trackCTAClick, trackServiceCardClick, trackNavigation } from "@/utils/analytics"
-import PageViewTracker from "@/components/page-view-tracker"
 import CoreImage from "@/components/core-image"
-import { LOGO_CONFIG, LOGO_SIZES } from "@/lib/constants"
-import { ServiceSchema } from "@/components/schema-markup"
-import ClientImagePreloader from "@/components/client-image-preloader"
-import YouTubeVideoEmbed from "@/components/youtube-video-embed"
-import VideoWithPoster from "@/components/video-with-poster"
-import { useRevealAnimation, useStaggeredReveal, useGPUHover } from "@/hooks/use-reveal-animation"
 import GetStartedCTA from "@/components/GetStartedCTA"
+import PageViewTracker from "@/components/page-view-tracker"
+import { ServiceSchema } from "@/components/schema-markup"
+import VideoWithPoster from "@/components/video-with-poster"
+import WhoWeBuildForCarousel from "@/components/WhoWeBuildForCarousel"
+import { useRevealAnimation, useStaggeredReveal } from "@/hooks/use-reveal-animation"
+import { LOGO_CONFIG, LOGO_SIZES } from "@/lib/constants"
+import { trackCTAClick, trackNavigation, trackServiceCardClick } from "@/utils/analytics"
 
 export default function ClientPage() {
   const isMobile = useMobile() // Added this line
@@ -395,6 +394,9 @@ export default function ClientPage() {
           analyticsLabel="services section CTA"
           variant="light"
         />
+
+        {/* Who We Build For Carousel */}
+        <WhoWeBuildForCarousel />
 
         {/* Testimonials Section */}
         <section 
