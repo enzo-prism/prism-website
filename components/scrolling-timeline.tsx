@@ -58,8 +58,8 @@ export default function ScrollingTimeline() {
       id: 12,
       year: "June 2012",
       title: "makes first dollar from youtube",
-      description:
-        "made money from playing video games?? important moment that changed the way I viewed the world forever",
+          description:
+      "important moment that changed the way I viewed the world forever",
       icon: "🎮",
     },
     {
