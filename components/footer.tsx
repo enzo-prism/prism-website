@@ -1,9 +1,9 @@
 "use client"
 
-import Link from "next/link"
+import { LOGO_CONFIG } from "@/lib/constants"
 import { trackNavigation } from "@/utils/analytics"
+import Link from "next/link"
 import CoreImage from "./core-image"
-import { LOGO_CONFIG, LOGO_SIZES } from "@/lib/constants"
 
 export default function Footer() {
   // Navigation items matching the navbar
@@ -12,7 +12,6 @@ export default function Footer() {
     { emoji: "🖥️", label: "websites", href: "/websites" },
     { emoji: "📱", label: "apps", href: "/apps" },
     { emoji: "🎨", label: "designs", href: "/designs" },
-    { emoji: "📊", label: "roi results", href: "/#industry-results" },
     { emoji: "🎁", label: "offers", href: "/offers" },
     { emoji: "✍️", label: "blog", href: "/blog" },
     { emoji: "🎙️", label: "podcast", href: "/podcast" },
