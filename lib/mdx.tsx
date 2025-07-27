@@ -1,29 +1,29 @@
 // This module is server-side only, responsible for fetching and parsing blog content.
-import "server-only" // Ensures this module only runs on the server
-import React from "react"
-import fs from "fs/promises" // Node.js file system module for server-side operations
-import path from "path" // Node.js path module for server-side path manipulation
-import matter from "gray-matter" // For parsing frontmatter from .mdx files
+import fs from "fs/promises"; // Node.js file system module for server-side operations
+import matter from "gray-matter"; // For parsing frontmatter from .mdx files
 import { MDXRemote } from "next-mdx-remote/rsc"
 import Image from "next/image"
+import path from "path"; // Node.js path module for server-side path manipulation
+import React from "react"
+import "server-only"; // Ensures this module only runs on the server
 
 // Import blog components
+import AIMentionTracker from '@/components/blog/ai-mention-tracker'
+import AISearchComparison from '@/components/blog/ai-search-comparison'
 import AITrafficDeclineChart from '@/components/blog/ai-traffic-decline-chart'
 import AITrafficDistributionChart from '@/components/blog/ai-traffic-distribution-chart'
-import AISearchComparison from '@/components/blog/ai-search-comparison'
-import StrategyTimelineChart from '@/components/blog/strategy-timeline-chart'
 import BrandTaglineGenerator from '@/components/blog/brand-tagline-generator'
-import AIMentionTracker from '@/components/blog/ai-mention-tracker'
 import StrategyCard from '@/components/blog/strategy-card'
+import StrategyTimelineChart from '@/components/blog/strategy-timeline-chart'
 
 // Import mobile components for MDX
+import { MobileContentSection, MobileHeading, MobileList, MobileParagraph } from '@/components/mobile/MobileContentSection'
 import { MobileHeroCard } from '@/components/mobile/MobileHeroCard'
+import { MobileInfoCard } from '@/components/mobile/MobileInfoCard'
+import { MobileInteractiveWidget } from '@/components/mobile/MobileInteractiveWidget'
+import { MobileSectionDivider } from '@/components/mobile/MobileSectionDivider'
 import { MobileStatCard } from '@/components/mobile/MobileStatCard'
 import { MobileStrategyCard } from '@/components/mobile/MobileStrategyCard'
-import { MobileInfoCard } from '@/components/mobile/MobileInfoCard'
-import { MobileContentSection, MobileParagraph, MobileList, MobileHeading } from '@/components/mobile/MobileContentSection'
-import { MobileSectionDivider } from '@/components/mobile/MobileSectionDivider'
-import { MobileInteractiveWidget } from '@/components/mobile/MobileInteractiveWidget'
 
 export type BlogFrontmatter = {
   title: string
@@ -62,7 +62,7 @@ async function getPost(slug: string): Promise<{ frontmatter: BlogFrontmatter; co
       description: data.description,
       date: data.date,
       category: data.category,
-      image: data.image || '/blog/ai-digital-marketing.png', // Default fallback image
+      image: data.image, // No fallback - let the layout component handle missing images
       gradientClass: data.gradientClass || 'bg-gradient-to-br from-blue-300/30 via-purple-300/30 to-pink-300/30',
       openGraph: data.openGraph,
       twitter: data.twitter,
@@ -104,7 +104,7 @@ async function getAllPosts(): Promise<Array<{ slug: string } & BlogFrontmatter> 
   }
 }
 
-export { getPost, getAllPosts }
+export { getAllPosts, getPost }
 
 // Custom components for MDX rendering
 const mdxComponents = {
