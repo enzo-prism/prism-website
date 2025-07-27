@@ -43,7 +43,7 @@ export default function WhoWeBuildForCarousel() {
       <div className="container mx-auto px-4 md:px-6">
         <div className="text-center mb-8">
           <h2 className="text-2xl md:text-3xl font-bold tracking-tighter lowercase sm:text-4xl gpu-accelerated">who we build for</h2>
-          <p className="mt-2 text-neutral-600 dark:text-neutral-400 lowercase">increase leads, sales, and ltv</p>
+          <p className="mt-2 text-neutral-600 dark:text-neutral-400 lowercase">systems that grow leads, sales, and ltv</p>
         </div>
         <div
           className="flex overflow-x-auto scroll-smooth scrollbar-hide gap-4 md:gap-6 pb-4 -mx-4 px-4 md:mx-0 md:px-0"
