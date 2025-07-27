@@ -158,85 +158,68 @@ export default function PrismFlywheelClient() {
   const learnInView = useInView(learnRef, { once: true, margin: "-100px" })
 
   return (
-    <div className="min-h-screen bg-white">
-      {/* Hero Section */}
+    <div className="min-h-screen bg-white dark:bg-neutral-950">
+      {/* Hero Section - Minimal & Elegant */}
       <motion.section 
-        className="relative px-4 pt-20 pb-16 md:pt-32 md:pb-24 overflow-hidden"
+        className="relative px-4 pt-24 pb-12 md:pt-40 md:pb-20"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 0.8 }}
+        transition={{ duration: 1 }}
       >
-        {/* Animated background with prism effect */}
-        <div className="absolute inset-0 opacity-30">
-          <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50" />
-          <motion.div
-            className="absolute top-1/4 left-1/4 w-64 h-64 bg-gradient-to-br from-blue-200/30 to-purple-200/30 rounded-full blur-3xl"
-            animate={{
-              scale: [1, 1.2, 1],
-              rotate: [0, 180, 360],
-            }}
-            transition={{
-              duration: 20,
-              repeat: Infinity,
-              ease: "linear"
-            }}
-          />
-        </div>
-
-        <div className="container mx-auto max-w-6xl relative z-10">
+        <div className="container mx-auto max-w-5xl">
           <motion.div 
-            className="text-center space-y-6"
-            variants={staggerContainer}
+            className="space-y-8"
             initial="initial"
             animate="animate"
+            variants={staggerContainer}
           >
-            <motion.h1 
-              className="text-4xl md:text-6xl font-bold tracking-tight lowercase"
+            {/* Minimal heading */}
+            <motion.div 
+              className="text-center"
               variants={fadeInUp}
             >
-              the prism flywheel: compounding leverage for unstoppable growth
-            </motion.h1>
+              <h1 className="text-3xl md:text-5xl lg:text-6xl font-light tracking-tight text-neutral-900 dark:text-white">
+                The Prism Flywheel
+              </h1>
+              <div className="mt-4 text-sm font-medium tracking-[0.3em] uppercase text-neutral-400">
+                Compounding Growth System
+              </div>
+            </motion.div>
             
+            {/* Clean description */}
             <motion.p 
-              className="text-lg md:text-xl text-neutral-600 max-w-3xl mx-auto lowercase"
+              className="text-base md:text-lg text-center text-neutral-600 dark:text-neutral-400 max-w-2xl mx-auto leading-relaxed"
               variants={fadeInUp}
             >
-              harness frontier ai and cutting-edge tech to build a self-reinforcing system 
-              that transforms code and content into revenue. we craft custom flywheels that 
-              compound value, delivering maximum leverage for innovative startups, healthcare 
-              practices, and ambitious brands.
+              Transform code and content into revenue through our AI-powered growth system. 
+              Research, create, optimize, and scale—each cycle compounds your success.
             </motion.p>
 
-            <motion.p
-              className="text-neutral-500 lowercase"
+            {/* Single elegant CTA */}
+            <motion.div 
+              className="text-center"
               variants={fadeInUp}
             >
-              in a world of endless grind, prism's flywheel turns effort into exponential 
-              results—research, create, optimize, monetize, repeat.
-            </motion.p>
-
-            <motion.div variants={fadeInUp}>
-              <Link href="/get-started" onClick={() => trackCTAClick("get started", "hero-flywheel")}>
+              <Link href="/get-started" onClick={() => trackCTAClick("get started", "hero-flywheel-minimal")}>
                 <Button 
-                  size="lg"
-                  className="bg-neutral-900 hover:bg-neutral-800 text-white rounded-full btn-responsive-cta lowercase"
+                  className="group px-8 py-3 bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 font-medium text-sm rounded-full hover:scale-[1.02] transition-all duration-200"
                 >
-                  <span className="hidden sm:inline">build your custom flywheel</span>
-                  <span className="sm:hidden">get started</span>
-                  <ArrowRight className="ml-2 btn-icon-responsive" />
+                  Build Your Flywheel
+                  <ArrowRight className="inline-block ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </Button>
               </Link>
             </motion.div>
           </motion.div>
 
-          {/* Flywheel Video */}
+          {/* Flywheel Video - Elegant Presentation */}
           <motion.div 
-            className="mt-16 relative max-w-2xl mx-auto"
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.5, duration: 0.8 }}
+            className="mt-20 relative max-w-3xl mx-auto"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4, duration: 0.8 }}
           >
-            <div className="relative w-full aspect-square rounded-xl overflow-hidden shadow-2xl bg-black">
+            {/* Video with subtle border */}
+            <div className="relative w-full aspect-square rounded-lg overflow-hidden border border-neutral-200 dark:border-neutral-800">
               <iframe
                 src="https://player.vimeo.com/video/1104840957?background=1&autoplay=1&loop=1&muted=1&controls=0&playsinline=1&title=0&byline=0&portrait=0"
                 title="Prism Flywheel Visualization"
@@ -251,44 +234,54 @@ export default function PrismFlywheelClient() {
               />
             </div>
             
-            {/* Interactive phase indicators below video */}
-            <div className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4">
+            {/* Minimalist phase indicators */}
+            <div className="mt-12 flex flex-wrap justify-center gap-8">
               {flywheelPhases.map((phase, index) => (
-                <motion.div
+                <motion.button
                   key={phase.number}
-                  className={`p-4 rounded-lg bg-white shadow-md hover:shadow-lg transition-shadow cursor-pointer ${phase.color}`}
-                  whileHover={{ scale: 1.05, y: -5 }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={() => setActivePhase(phase.number)}
-                  custom={index}
-                  initial="hidden"
-                  animate="visible"
-                  variants={cardAnimation}
-                  style={{
-                    transform: "translateZ(0)",
-                    willChange: "transform",
-                    backfaceVisibility: "hidden",
-                  }}
+                  className={`group flex flex-col items-center space-y-2 transition-all ${
+                    activePhase === phase.number ? 'opacity-100' : 'opacity-60 hover:opacity-100'
+                  }`}
+                  whileHover={{ y: -2 }}
+                  onClick={() => setActivePhase(activePhase === phase.number ? null : phase.number)}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.6 + index * 0.1 }}
                 >
-                  <phase.icon className="h-6 w-6 mb-2" />
-                  <h4 className="font-semibold text-sm lowercase">{phase.title}</h4>
-                </motion.div>
+                  <div className={`w-12 h-12 rounded-full border-2 flex items-center justify-center transition-colors ${
+                    activePhase === phase.number 
+                      ? 'border-neutral-900 dark:border-white bg-neutral-900 dark:bg-white' 
+                      : 'border-neutral-300 dark:border-neutral-700'
+                  }`}>
+                    <span className={`text-sm font-medium ${
+                      activePhase === phase.number 
+                        ? 'text-white dark:text-neutral-900' 
+                        : 'text-neutral-600 dark:text-neutral-400'
+                    }`}>
+                      {phase.number}
+                    </span>
+                  </div>
+                  <span className="text-xs text-neutral-600 dark:text-neutral-400 font-medium">
+                    {phase.title.split(' ')[0]}
+                  </span>
+                </motion.button>
               ))}
             </div>
 
-            {/* Phase details */}
-            <AnimatePresence>
+            {/* Clean phase details */}
+            <AnimatePresence mode="wait">
               {activePhase && (
                 <motion.div
-                  className="mt-4 bg-white p-6 rounded-lg shadow-xl"
-                  initial={{ opacity: 0, y: -10 }}
+                  className="mt-8 text-center max-w-md mx-auto"
+                  initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.3 }}
                 >
-                  <h4 className="font-bold text-lg lowercase mb-2">
-                    phase {activePhase}: {flywheelPhases[activePhase - 1].title}
+                  <h4 className="text-lg font-medium text-neutral-900 dark:text-white mb-2">
+                    {flywheelPhases[activePhase - 1].title}
                   </h4>
-                  <p className="text-neutral-600 lowercase">
+                  <p className="text-sm text-neutral-600 dark:text-neutral-400">
                     {flywheelPhases[activePhase - 1].details}
                   </p>
                 </motion.div>
@@ -298,281 +291,275 @@ export default function PrismFlywheelClient() {
         </div>
       </motion.section>
 
-      {/* Philosophy Section */}
+      {/* Philosophy Section - Minimal Design */}
       <motion.section 
         ref={philosophyRef}
-        className="py-16 md:py-24 bg-neutral-50"
+        className="py-24 md:py-32"
         initial="hidden"
         animate={philosophyInView ? "visible" : "hidden"}
         variants={gpuScrollReveal}
-        style={{
-          transform: "translateZ(0)",
-          willChange: philosophyInView ? "transform, opacity, filter" : "auto",
-          backfaceVisibility: "hidden",
-        }}
       >
-        <div className="container mx-auto px-4 max-w-6xl">
+        <div className="container mx-auto px-4 max-w-5xl">
           <motion.div 
-            className="grid md:grid-cols-2 gap-12 items-center"
+            className="space-y-16"
             variants={staggerContainer}
           >
-            <motion.div variants={fadeInUp}>
-              <h2 className="text-3xl md:text-4xl font-bold mb-6 lowercase">
-                our vision: building leverage through code, content, and ai
-              </h2>
-              <p className="text-neutral-600 mb-6 lowercase">
-                at prism, we believe growth isn't about hustle—it's about intelligent systems. 
-                our flywheel starts with deep research, leverages ai for creation, optimizes 
-                with data, and scales through monetization. this creates a virtuous cycle where 
-                every input compounds, turning your business into a revenue powerhouse.
-              </p>
-              <p className="text-neutral-600 mb-8 lowercase">
-                we use frontier technologies to orchestrate code for automation, content for 
-                engagement, and ai for innovation—ensuring thoughtful, data-driven decisions 
-                at every turn.
-              </p>
-              
-              <div className="space-y-4">
-                <motion.div 
-                  className="flex items-start space-x-3"
-                  variants={fadeInUp}
-                >
-                  <CheckCircle className="h-6 w-6 text-green-600 mt-0.5" />
-                  <div>
-                    <h3 className="font-semibold lowercase">maximum leverage</h3>
-                    <p className="text-sm text-neutral-600 lowercase">
-                      amplify your efforts with tools like grok and claude for intelligent automation
-                    </p>
-                  </div>
-                </motion.div>
-                
-                <motion.div 
-                  className="flex items-start space-x-3"
-                  variants={fadeInUp}
-                >
-                  <CheckCircle className="h-6 w-6 text-green-600 mt-0.5" />
-                  <div>
-                    <h3 className="font-semibold lowercase">compounding flywheel</h3>
-                    <p className="text-sm text-neutral-600 lowercase">
-                      each phase builds on the last, creating exponential growth without burnout
-                    </p>
-                  </div>
-                </motion.div>
-                
-                <motion.div 
-                  className="flex items-start space-x-3"
-                  variants={fadeInUp}
-                >
-                  <CheckCircle className="h-6 w-6 text-green-600 mt-0.5" />
-                  <div>
-                    <h3 className="font-semibold lowercase">custom tech</h3>
-                    <p className="text-sm text-neutral-600 lowercase">
-                      a bespoke blend tailored to your niche, from startups to healthcare
-                    </p>
-                  </div>
-                </motion.div>
-              </div>
-            </motion.div>
-
+            {/* Section header */}
             <motion.div 
-              className="relative"
+              className="text-center"
               variants={fadeInUp}
             >
-              <div className="aspect-square rounded-2xl bg-gradient-to-br from-purple-100 to-indigo-100 p-8">
-                <div className="h-full flex items-center justify-center">
-                  <div className="text-center">
-                    <Brain className="h-24 w-24 text-purple-600 mx-auto mb-4" />
-                    <p className="text-2xl font-bold text-purple-900 lowercase">
-                      code × content × ai = leverage
-                    </p>
-                  </div>
+              <h2 className="text-2xl md:text-3xl font-light text-neutral-900 dark:text-white">
+                Our Philosophy
+              </h2>
+              <div className="mt-6 w-12 h-px bg-neutral-900 dark:bg-white mx-auto" />
+            </motion.div>
+
+            {/* Content grid */}
+            <motion.div 
+              className="grid md:grid-cols-2 gap-16 items-start"
+              variants={fadeInUp}
+            >
+              {/* Text content */}
+              <div className="space-y-6">
+                <p className="text-base text-neutral-600 dark:text-neutral-400 leading-relaxed">
+                  Growth isn't about endless hustle—it's about building intelligent systems. 
+                  Our flywheel methodology creates a virtuous cycle where every input compounds, 
+                  transforming your business into a sustainable revenue engine.
+                </p>
+                
+                <p className="text-base text-neutral-600 dark:text-neutral-400 leading-relaxed">
+                  We orchestrate frontier AI with thoughtful automation, ensuring every decision 
+                  is data-driven and every action creates lasting value.
+                </p>
+
+                {/* Key principles */}
+                <div className="pt-8 space-y-6">
+                  {[
+                    { title: "Maximum Leverage", desc: "AI amplifies effort, not replaces it" },
+                    { title: "Compound Growth", desc: "Each cycle builds on the last" },
+                    { title: "Custom Solutions", desc: "Tailored to your unique needs" }
+                  ].map((item, index) => (
+                    <motion.div 
+                      key={index}
+                      className="flex items-start space-x-4"
+                      variants={fadeInUp}
+                    >
+                      <div className="w-1 h-12 bg-neutral-900 dark:bg-white opacity-20" />
+                      <div>
+                        <h3 className="font-medium text-neutral-900 dark:text-white mb-1">
+                          {item.title}
+                        </h3>
+                        <p className="text-sm text-neutral-600 dark:text-neutral-400">
+                          {item.desc}
+                        </p>
+                      </div>
+                    </motion.div>
+                  ))}
                 </div>
               </div>
+
+              {/* Visual element - Minimal equation */}
+              <motion.div 
+                className="flex items-center justify-center md:justify-end"
+                variants={fadeInUp}
+              >
+                <div className="text-center space-y-4">
+                  <div className="text-4xl md:text-5xl font-light text-neutral-900 dark:text-white">
+                    <span>Code</span>
+                    <span className="mx-3 text-neutral-400">×</span>
+                    <span>Content</span>
+                    <span className="mx-3 text-neutral-400">×</span>
+                    <span>AI</span>
+                  </div>
+                  <div className="text-2xl text-neutral-400">=</div>
+                  <div className="text-3xl md:text-4xl font-light text-neutral-900 dark:text-white">
+                    Leverage
+                  </div>
+                </div>
+              </motion.div>
             </motion.div>
           </motion.div>
         </div>
       </motion.section>
 
-      {/* How It Works Section */}
+      {/* How It Works Section - Minimalist Timeline */}
       <motion.section 
         ref={howItWorksRef}
-        className="py-16 md:py-24"
+        className="py-24 md:py-32 bg-neutral-50 dark:bg-neutral-900"
         initial="hidden"
         animate={howItWorksInView ? "visible" : "hidden"}
         variants={gpuScrollReveal}
-        style={{
-          transform: "translateZ(0)",
-          willChange: howItWorksInView ? "transform, opacity, filter" : "auto",
-          backfaceVisibility: "hidden",
-        }}
       >
-        <div className="container mx-auto px-4 max-w-6xl">
+        <div className="container mx-auto px-4 max-w-4xl">
           <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
             variants={staggerContainer}
+            className="space-y-20"
           >
-            <motion.h2 
-              className="text-3xl md:text-4xl font-bold text-center mb-4 lowercase"
+            {/* Section header */}
+            <motion.div 
+              className="text-center"
               variants={fadeInUp}
             >
-              the flywheel in action: a step-by-step engine for growth
-            </motion.h2>
-            <motion.p 
-              className="text-center text-neutral-600 mb-12 lowercase"
-              variants={fadeInUp}
-            >
-              our flywheel is a four-phase system designed to evolve with your business
-            </motion.p>
+              <h2 className="text-2xl md:text-3xl font-light text-neutral-900 dark:text-white">
+                How It Works
+              </h2>
+              <p className="mt-4 text-neutral-600 dark:text-neutral-400">
+                Four phases, infinite cycles of growth
+              </p>
+            </motion.div>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {flywheelPhases.map((phase) => (
-                <motion.div
-                  key={phase.number}
-                  className="relative"
-                  variants={fadeInUp}
-                >
-                  <Card className="p-6 h-full hover:shadow-lg transition-shadow cursor-pointer">
-                    <div className={`inline-flex p-3 rounded-full bg-neutral-100 mb-4 ${phase.color}`}>
-                      <phase.icon className="h-6 w-6" />
+            {/* Vertical timeline */}
+            <div className="relative">
+              {/* Central line */}
+              <div className="absolute left-8 md:left-1/2 top-0 bottom-0 w-px bg-neutral-200 dark:bg-neutral-800 md:-translate-x-1/2" />
+
+              {/* Phase items */}
+              <div className="space-y-16">
+                {flywheelPhases.map((phase, index) => (
+                  <motion.div
+                    key={phase.number}
+                    className={`relative flex items-start ${
+                      index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'
+                    } flex-row`}
+                    variants={fadeInUp}
+                  >
+                    {/* Number indicator */}
+                    <div className="absolute left-8 md:left-1/2 w-8 h-8 -ml-4 md:-ml-4 rounded-full bg-white dark:bg-neutral-950 border-2 border-neutral-900 dark:border-white flex items-center justify-center">
+                      <span className="text-xs font-medium">{phase.number}</span>
                     </div>
-                    
-                    <div className="text-sm text-neutral-500 mb-2 lowercase">
-                      phase {phase.number}
+
+                    {/* Content */}
+                    <div className={`ml-20 md:ml-0 flex-1 ${
+                      index % 2 === 0 ? 'md:pr-12 md:text-right' : 'md:pl-12'
+                    }`}>
+                      <h3 className="text-lg font-medium text-neutral-900 dark:text-white mb-2">
+                        {phase.title}
+                      </h3>
+                      <p className="text-sm text-neutral-600 dark:text-neutral-400 mb-3">
+                        {phase.description}
+                      </p>
+                      <p className="text-xs text-neutral-500 dark:text-neutral-500">
+                        {phase.details}
+                      </p>
                     </div>
-                    
-                    <h3 className="text-xl font-bold mb-3 lowercase">
-                      {phase.title}
-                    </h3>
-                    
-                    <p className="text-neutral-600 text-sm mb-3 lowercase">
-                      {phase.description}
-                    </p>
-                    
-                    <p className="text-xs text-neutral-500 lowercase">
-                      {phase.details}
-                    </p>
-                  </Card>
-                  
-                  {phase.number < 4 && (
-                    <div className="hidden lg:block absolute top-1/2 -right-3 transform -translate-y-1/2">
-                      <ArrowRight className="h-6 w-6 text-neutral-300" />
-                    </div>
-                  )}
-                </motion.div>
-              ))}
+                  </motion.div>
+                ))}
+              </div>
             </div>
 
-            <motion.p 
-              className="text-center mt-12 text-neutral-600 lowercase"
+            {/* Bottom CTA */}
+            <motion.div 
+              className="text-center pt-8"
               variants={fadeInUp}
             >
-              this loop compounds: outputs from one phase fuel the next, creating a growth engine that scales effortlessly
-            </motion.p>
+              <Link href="/get-started">
+                <Button 
+                  variant="ghost"
+                  className="text-neutral-900 dark:text-white hover:bg-transparent border-b-2 border-transparent hover:border-neutral-900 dark:hover:border-white rounded-none px-0 py-2 transition-all"
+                  onClick={() => trackCTAClick("start flywheel", "how it works")}
+                >
+                  Start Your Flywheel →
+                </Button>
+              </Link>
+            </motion.div>
           </motion.div>
         </div>
       </motion.section>
 
-      {/* Tech Stack Section */}
+      {/* Tech Stack Section - Minimal Grid */}
       <motion.section 
         ref={techStackRef}
-        className="py-16 md:py-24 bg-neutral-50"
+        className="py-24 md:py-32"
         initial="hidden"
         animate={techStackInView ? "visible" : "hidden"}
         variants={gpuScrollReveal}
-        style={{
-          transform: "translateZ(0)",
-          willChange: techStackInView ? "transform, opacity, filter" : "auto",
-          backfaceVisibility: "hidden",
-        }}
       >
-        <div className="container mx-auto px-4 max-w-6xl">
+        <div className="container mx-auto px-4 max-w-5xl">
           <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
             variants={staggerContainer}
+            className="space-y-16"
           >
-            <motion.h2 
-              className="text-3xl md:text-4xl font-bold text-center mb-4 lowercase"
+            {/* Section header */}
+            <motion.div 
+              className="text-center"
               variants={fadeInUp}
             >
-              our custom tech combination: frontier ai meets practical power
-            </motion.h2>
-            <motion.p 
-              className="text-center text-neutral-600 mb-12 max-w-3xl mx-auto lowercase"
-              variants={fadeInUp}
-            >
-              we thoughtfully curate a stack of best-in-class tools to build your flywheel—integrating 
-              ai for intelligence, design for beauty, and platforms for reach
-            </motion.p>
+              <h2 className="text-2xl md:text-3xl font-light text-neutral-900 dark:text-white">
+                Technology Stack
+              </h2>
+              <p className="mt-4 text-neutral-600 dark:text-neutral-400 max-w-2xl mx-auto">
+                Frontier AI meets practical implementation
+              </p>
+            </motion.div>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {/* Minimal tech grid */}
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-x-12 gap-y-16">
               {techStackItems.map((item, index) => (
                 <motion.div
                   key={index}
                   variants={fadeInUp}
-                  whileHover={{ y: -5 }}
-                  onHoverStart={() => setHoveredTech(index)}
-                  onHoverEnd={() => setHoveredTech(null)}
+                  className="group"
                 >
-                  <Card className={`p-6 h-full transition-all ${
-                    hoveredTech === index ? 'shadow-xl' : 'shadow-md'
-                  }`}>
-                    <div className={`inline-flex p-3 rounded-lg bg-gradient-to-br ${item.color} text-white mb-4`}>
-                      <item.icon className="h-6 w-6" />
-                    </div>
-                    
-                    <div className="text-sm text-neutral-500 mb-2 lowercase">
+                  <div className="space-y-3">
+                    {/* Category label */}
+                    <div className="text-xs font-medium tracking-wider uppercase text-neutral-400">
                       {item.category}
                     </div>
                     
-                    <h3 className="text-lg font-bold mb-3 lowercase">
+                    {/* Title */}
+                    <h3 className="text-lg font-normal text-neutral-900 dark:text-white">
                       {item.title}
                     </h3>
                     
-                    <p className="text-neutral-600 text-sm lowercase">
+                    {/* Description */}
+                    <p className="text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed">
                       {item.description}
                     </p>
-                  </Card>
+                    
+                    {/* Subtle hover indicator */}
+                    <div className="h-px bg-neutral-200 dark:bg-neutral-800 transition-all group-hover:bg-neutral-900 dark:group-hover:bg-white" />
+                  </div>
                 </motion.div>
               ))}
             </div>
 
+            {/* Bottom note */}
             <motion.p 
-              className="text-center mt-12 text-neutral-600 lowercase max-w-3xl mx-auto"
+              className="text-center text-sm text-neutral-500 dark:text-neutral-500"
               variants={fadeInUp}
             >
-              this isn't a generic stack—it's a custom orchestration, deeply thoughtful to 
-              maximize leverage for your unique growth needs
+              Custom-tailored for your unique growth trajectory
             </motion.p>
           </motion.div>
         </div>
       </motion.section>
 
-      {/* Mid-page CTA Section */}
-      <section className="py-12 md:py-16 bg-gradient-to-r from-purple-50 via-indigo-50 to-blue-50">
-        <div className="container mx-auto px-4 max-w-4xl text-center">
+      {/* Mid-page CTA Section - Minimal */}
+      <section className="py-20 md:py-28">
+        <div className="container mx-auto px-4">
           <motion.div
+            className="text-center max-w-2xl mx-auto"
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
             variants={fadeInUp}
           >
-            <h3 className="text-2xl md:text-3xl font-bold mb-4 lowercase">
-              see how the flywheel can transform your business
+            <h3 className="text-xl md:text-2xl font-light text-neutral-900 dark:text-white mb-6">
+              Ready to compound your growth?
             </h3>
-            <p className="text-neutral-600 mb-6 lowercase">
-              join forward-thinking leaders who are already compounding their growth
-            </p>
-            <Link href="/get-started" onClick={() => trackCTAClick("explore flywheel", "mid-page-flywheel")}>
+            <Link href="/get-started" onClick={() => trackCTAClick("explore flywheel minimal", "mid-page-flywheel")}>
               <Button 
-                size="lg"
-                className="bg-neutral-900 hover:bg-neutral-800 text-white rounded-full btn-responsive-cta lowercase"
+                variant="outline"
+                className="border-neutral-900 dark:border-white text-neutral-900 dark:text-white hover:bg-neutral-900 hover:text-white dark:hover:bg-white dark:hover:text-neutral-900 rounded-full px-8 py-3 transition-all"
               >
-                explore your flywheel
-                <ArrowRight className="ml-2 btn-icon-responsive" />
+                Start Building
               </Button>
             </Link>
           </motion.div>
@@ -854,47 +841,47 @@ export default function PrismFlywheelClient() {
         </div>
       </motion.section>
 
-      {/* CTA Footer Section */}
-      <section className="py-16 md:py-24 bg-gradient-to-br from-neutral-900 to-neutral-800 text-white">
-        <div className="container mx-auto px-4 max-w-4xl text-center">
+      {/* CTA Footer Section - Minimal */}
+      <section className="py-32 md:py-40 bg-neutral-950 text-white">
+        <div className="container mx-auto px-4">
           <motion.div
+            className="text-center max-w-3xl mx-auto space-y-8"
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
             variants={staggerContainer}
           >
-            <motion.h2 
-              className="text-3xl md:text-4xl font-bold mb-4 lowercase"
-              variants={fadeInUp}
-            >
-              ready to compound your growth?
-            </motion.h2>
-            <motion.p 
-              className="text-neutral-200 mb-8 lowercase max-w-2xl mx-auto"
-              variants={fadeInUp}
-            >
-              join visionary leaders leveraging prism's flywheel. 
-              secure your spot for a custom growth engine that scales with you
-            </motion.p>
+            <motion.div variants={fadeInUp}>
+              <h2 className="text-3xl md:text-4xl font-light">
+                Ready to Build?
+              </h2>
+            </motion.div>
 
-            <motion.div variants={fadeInUp} className="mb-8">
-              <Link href="/get-started" onClick={() => trackCTAClick("apply now", "footer-flywheel")}>
+            <motion.div variants={fadeInUp}>
+              <p className="text-neutral-400 text-lg leading-relaxed">
+                Transform your business with a growth system that compounds. 
+                Join leaders who choose leverage over hustle.
+              </p>
+            </motion.div>
+
+            <motion.div variants={fadeInUp} className="pt-4">
+              <Link href="/get-started" onClick={() => trackCTAClick("apply now minimal", "footer-flywheel")}>
                 <Button 
-                  size="lg"
-                  className="bg-white text-neutral-900 hover:bg-neutral-100 rounded-full btn-responsive-cta lowercase"
+                  className="bg-white text-neutral-900 hover:bg-neutral-100 font-medium text-sm px-10 py-4 rounded-full transition-all hover:scale-[1.02]"
                 >
-                  apply for your flywheel
-                  <ArrowRight className="ml-2 btn-icon-responsive" />
+                  Apply for Your Flywheel
                 </Button>
               </Link>
             </motion.div>
 
-            <motion.p 
-              className="text-sm text-neutral-400 lowercase"
+            <motion.div 
               variants={fadeInUp}
+              className="pt-8 border-t border-neutral-800"
             >
-              deeply thoughtful tech for exceptional results—let's compound your success
-            </motion.p>
+              <p className="text-xs text-neutral-500">
+                Limited spots available for Q1 2025
+              </p>
+            </motion.div>
           </motion.div>
         </div>
       </section>
