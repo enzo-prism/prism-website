@@ -2153,3 +2153,28 @@ input, textarea, select {
   transform: translateY(-2px);
   box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.2);
 }
+
+/* Responsive CTA Button Utilities */
+.btn-responsive-cta {
+  /* Mobile first approach */
+  @apply px-4 py-3 text-sm;
+  
+  /* Small screens and up */
+  @screen sm {
+    @apply px-6 py-4 text-base;
+  }
+  
+  /* Medium screens and up */
+  @screen md {
+    @apply px-8 py-6 text-lg;
+  }
+}
+
+/* Responsive icon sizing for buttons */
+.btn-icon-responsive {
+  @apply h-4 w-4;
+  
+  @screen sm {
+    @apply h-5 w-5;
+  }
+}

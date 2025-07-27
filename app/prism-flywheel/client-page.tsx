@@ -218,14 +218,15 @@ export default function PrismFlywheelClient() {
             <motion.div variants={fadeInUp}>
               <Button 
                 size="lg"
-                className="bg-neutral-900 hover:bg-neutral-800 text-white rounded-full px-8 py-6 text-lg lowercase"
+                className="bg-neutral-900 hover:bg-neutral-800 text-white rounded-full btn-responsive-cta lowercase"
                 onClick={() => {
                   trackCTAClick("join waitlist", "hero-flywheel")
                   document.getElementById('waitlist-form')?.scrollIntoView({ behavior: 'smooth' })
                 }}
               >
-                join the waitlist for your custom flywheel
-                <ArrowRight className="ml-2 h-5 w-5" />
+                <span className="hidden sm:inline">join the waitlist for your custom flywheel</span>
+                <span className="sm:hidden">join the waitlist</span>
+                <ArrowRight className="ml-2 btn-icon-responsive" />
               </Button>
             </motion.div>
           </motion.div>
@@ -860,11 +861,11 @@ export default function PrismFlywheelClient() {
               </p>
               <Button 
                 size="lg"
-                className="bg-white text-neutral-900 hover:bg-neutral-100 rounded-full px-8 py-6 text-lg lowercase"
+                className="bg-white text-neutral-900 hover:bg-neutral-100 rounded-full btn-responsive-cta lowercase"
                 onClick={() => trackCTAClick("apply now", "footer-flywheel")}
               >
                 apply for early access
-                <ArrowRight className="ml-2 h-5 w-5" />
+                <ArrowRight className="ml-2 btn-icon-responsive" />
               </Button>
             </motion.div>
 
