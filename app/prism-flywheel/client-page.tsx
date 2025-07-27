@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { trackCTAClick } from "@/utils/analytics"
-import { fadeInUp, staggerContainer, scrollRevealBlog } from "@/utils/animation-variants"
+import { fadeInUp, staggerContainer } from "@/utils/animation-variants"
 import { AnimatePresence, motion, useInView, Variants } from "framer-motion"
 import {
     ArrowRight,
@@ -19,7 +19,7 @@ import {
     Zap
 } from "lucide-react"
 import Link from "next/link"
-import { useState, useRef } from "react"
+import { useRef, useState } from "react"
 
   // GPU-accelerated scroll reveal animation
   const gpuScrollReveal: Variants = {
@@ -216,18 +216,16 @@ export default function PrismFlywheelClient() {
             </motion.p>
 
             <motion.div variants={fadeInUp}>
-              <Button 
-                size="lg"
-                className="bg-neutral-900 hover:bg-neutral-800 text-white rounded-full btn-responsive-cta lowercase"
-                onClick={() => {
-                  trackCTAClick("join waitlist", "hero-flywheel")
-                  document.getElementById('waitlist-form')?.scrollIntoView({ behavior: 'smooth' })
-                }}
-              >
-                <span className="hidden sm:inline">join the waitlist for your custom flywheel</span>
-                <span className="sm:hidden">join the waitlist</span>
-                <ArrowRight className="ml-2 btn-icon-responsive" />
-              </Button>
+              <Link href="/get-started" onClick={() => trackCTAClick("get started", "hero-flywheel")}>
+                <Button 
+                  size="lg"
+                  className="bg-neutral-900 hover:bg-neutral-800 text-white rounded-full btn-responsive-cta lowercase"
+                >
+                  <span className="hidden sm:inline">build your custom flywheel</span>
+                  <span className="sm:hidden">get started</span>
+                  <ArrowRight className="ml-2 btn-icon-responsive" />
+                </Button>
+              </Link>
             </motion.div>
           </motion.div>
 
@@ -553,6 +551,34 @@ export default function PrismFlywheelClient() {
         </div>
       </motion.section>
 
+      {/* Mid-page CTA Section */}
+      <section className="py-12 md:py-16 bg-gradient-to-r from-purple-50 via-indigo-50 to-blue-50">
+        <div className="container mx-auto px-4 max-w-4xl text-center">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fadeInUp}
+          >
+            <h3 className="text-2xl md:text-3xl font-bold mb-4 lowercase">
+              see how the flywheel can transform your business
+            </h3>
+            <p className="text-neutral-600 mb-6 lowercase">
+              join forward-thinking leaders who are already compounding their growth
+            </p>
+            <Link href="/get-started" onClick={() => trackCTAClick("explore flywheel", "mid-page-flywheel")}>
+              <Button 
+                size="lg"
+                className="bg-neutral-900 hover:bg-neutral-800 text-white rounded-full btn-responsive-cta lowercase"
+              >
+                explore your flywheel
+                <ArrowRight className="ml-2 btn-icon-responsive" />
+              </Button>
+            </Link>
+          </motion.div>
+        </div>
+      </section>
+
       {/* Data-Driven Optimization Section */}
       <motion.section 
         ref={dataRef}
@@ -829,7 +855,7 @@ export default function PrismFlywheelClient() {
       </motion.section>
 
       {/* CTA Footer Section */}
-      <section id="waitlist-form" className="py-16 md:py-24 bg-gradient-to-br from-neutral-900 to-neutral-800 text-white">
+      <section className="py-16 md:py-24 bg-gradient-to-br from-neutral-900 to-neutral-800 text-white">
         <div className="container mx-auto px-4 max-w-4xl text-center">
           <motion.div
             initial="hidden"
@@ -841,32 +867,26 @@ export default function PrismFlywheelClient() {
               className="text-3xl md:text-4xl font-bold mb-4 lowercase"
               variants={fadeInUp}
             >
-              ignite your flywheel today
+              ready to compound your growth?
             </motion.h2>
             <motion.p 
               className="text-neutral-200 mb-8 lowercase max-w-2xl mx-auto"
               variants={fadeInUp}
             >
-              join visionary leaders building with prism. apply for our selective waitlist 
-              and unlock a custom growth engine
+              join visionary leaders leveraging prism's flywheel. 
+              secure your spot for a custom growth engine that scales with you
             </motion.p>
 
-            {/* Typeform embed placeholder */}
-            <motion.div 
-              className="bg-white/10 rounded-lg p-8 mb-8"
-              variants={fadeInUp}
-            >
-              <p className="text-neutral-300 mb-4 lowercase">
-                [typeform waitlist application will be embedded here]
-              </p>
-              <Button 
-                size="lg"
-                className="bg-white text-neutral-900 hover:bg-neutral-100 rounded-full btn-responsive-cta lowercase"
-                onClick={() => trackCTAClick("apply now", "footer-flywheel")}
-              >
-                apply for early access
-                <ArrowRight className="ml-2 btn-icon-responsive" />
-              </Button>
+            <motion.div variants={fadeInUp} className="mb-8">
+              <Link href="/get-started" onClick={() => trackCTAClick("apply now", "footer-flywheel")}>
+                <Button 
+                  size="lg"
+                  className="bg-white text-neutral-900 hover:bg-neutral-100 rounded-full btn-responsive-cta lowercase"
+                >
+                  apply for your flywheel
+                  <ArrowRight className="ml-2 btn-icon-responsive" />
+                </Button>
+              </Link>
             </motion.div>
 
             <motion.p 
