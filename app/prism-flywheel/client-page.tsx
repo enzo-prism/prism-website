@@ -387,6 +387,19 @@ export default function PrismFlywheelClient() {
                     Leverage
                   </div>
                 </div>
+                
+                {/* Naval quote on leverage */}
+                <motion.div 
+                  className="mt-8 max-w-xs"
+                  variants={fadeInUp}
+                >
+                  <p className="text-sm font-light italic text-neutral-600 dark:text-neutral-400 text-center">
+                    "Leverage is a force multiplier for your judgment."
+                  </p>
+                  <p className="text-xs text-neutral-500 dark:text-neutral-500 text-center mt-2">
+                    — Naval Ravikant
+                  </p>
+                </motion.div>
               </motion.div>
             </motion.div>
           </motion.div>
@@ -505,15 +518,27 @@ export default function PrismFlywheelClient() {
           >
             {/* Section header */}
             <motion.div 
-              className="text-center"
+              className="text-center space-y-6"
               variants={fadeInUp}
             >
-              <h2 className="text-2xl md:text-3xl font-light text-neutral-900 dark:text-white">
-                Technology Stack
-              </h2>
-              <p className="mt-4 text-neutral-600 dark:text-neutral-400 max-w-2xl mx-auto">
-                Frontier AI meets practical implementation
-              </p>
+              <div>
+                <h2 className="text-2xl md:text-3xl font-light text-neutral-900 dark:text-white">
+                  Technology Stack
+                </h2>
+                <p className="mt-4 text-neutral-600 dark:text-neutral-400 max-w-2xl mx-auto">
+                  Frontier AI meets practical implementation
+                </p>
+              </div>
+              
+              {/* Jobs quote on design */}
+              <blockquote className="max-w-xl mx-auto">
+                <p className="text-sm font-light italic text-neutral-600 dark:text-neutral-400">
+                  "Design is not just what it looks like and feels like. Design is how it works."
+                </p>
+                <cite className="block text-xs font-normal not-italic text-neutral-500 dark:text-neutral-500 mt-2">
+                  — Steve Jobs
+                </cite>
+              </blockquote>
             </motion.div>
 
             {/* Minimal tech grid */}
@@ -917,6 +942,19 @@ export default function PrismFlywheelClient() {
               <p className="text-neutral-400 text-lg leading-relaxed">
                 Transform your business with a growth system that compounds. 
                 Join leaders who choose leverage over hustle.
+              </p>
+            </motion.div>
+
+            {/* Innovation quote */}
+            <motion.div 
+              variants={fadeInUp}
+              className="py-6"
+            >
+              <p className="text-base font-light italic text-neutral-500 dark:text-neutral-500">
+                "Innovation distinguishes between a leader and a follower."
+              </p>
+              <p className="text-xs text-neutral-600 dark:text-neutral-600 mt-2">
+                — Steve Jobs
               </p>
             </motion.div>
 
