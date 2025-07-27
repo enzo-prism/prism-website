@@ -190,6 +190,8 @@ export default function ClientGetStartedPage() {
     }
   ]
 
+
+
   return (
     <motion.div 
       className="flex min-h-screen flex-col"
@@ -200,106 +202,81 @@ export default function ClientGetStartedPage() {
     >
       <Navbar />
       <main className="flex-1">
-        {/* Hero Section */}
+        {/* Hero Section - Redesigned for minimalism */}
         <motion.section 
           ref={videoRef} 
-          className="relative px-4 py-12 md:py-24 lg:py-32 overflow-hidden"
+          className="relative px-4 py-16 md:py-24 lg:py-32 bg-gradient-to-b from-white to-neutral-50"
         >
-          <AnimatedBackground />
-          
           <motion.div 
-            className="container mx-auto px-4 md:px-6 relative z-10"
-            variants={staggerContainer}
+            className="container mx-auto px-4 md:px-6 max-w-4xl"
             initial="initial"
             animate="animate"
           >
-            <div className="flex flex-col items-center space-y-6 text-center">
-              <motion.div
-                className="space-y-3"
-                variants={fadeInUp}
+            <div className="flex flex-col items-center space-y-8 text-center">
+              {/* Video - No floating animation, clean presentation */}
+              <motion.div 
+                className="relative"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
               >
-                {/* Video frame */}
-                <motion.div 
-                  className="mb-2 flex justify-center"
-                  variants={springScale}
-                  whileHover={{ scale: 1.02 }}
-                >
-                  {shouldLoadVideo ? (
-                    <motion.div
-                      animate={{
-                        y: [0, -10, 0],
-                      }}
-                      transition={{
-                        duration: 4,
-                        repeat: Infinity,
-                        ease: "easeInOut",
-                      }}
-                    >
-                      <VideoWithPoster
-                        videoId="1097023041"
-                        posterSrc="/prism%20get%20started.webp"
-                        width={isMobile ? 200 : 360}
-                        height={isMobile ? 200 : 360}
-                        autoplay={true}
-                        loop={true}
-                        muted={true}
-                        controls={false}
-                        posterAlt="Rocket launch animation - Get started with Prism"
-                        trackAnalytics={true}
-                      />
-                    </motion.div>
-                  ) : (
-                    <motion.div 
-                      className={`${isMobile ? 'w-[200px] h-[200px]' : 'w-[360px] h-[360px]'} bg-gray-100 rounded-lg shadow-md border border-neutral-200 flex items-center justify-center`}
-                      animate={{ opacity: [0.5, 1, 0.5] }}
-                      transition={{ duration: 1.5, repeat: Infinity }}
-                    >
-                      <div className="text-gray-400 text-sm">Loading video...</div>
-                    </motion.div>
-                  )}
-                </motion.div>
-                
+                {shouldLoadVideo ? (
+                  <div className="rounded-2xl overflow-hidden shadow-2xl">
+                    <VideoWithPoster
+                      videoId="1097023041"
+                      posterSrc="/prism%20get%20started.webp"
+                      width={isMobile ? 280 : 400}
+                      height={isMobile ? 280 : 400}
+                      autoplay={true}
+                      loop={true}
+                      muted={true}
+                      controls={false}
+                      posterAlt="Rocket launch animation - Get started with Prism"
+                      trackAnalytics={true}
+                    />
+                  </div>
+                ) : (
+                  <div className={`${isMobile ? 'w-[280px] h-[280px]' : 'w-[400px] h-[400px]'} bg-neutral-100 rounded-2xl flex items-center justify-center`}>
+                    <div className="text-neutral-400 text-sm">Loading video...</div>
+                  </div>
+                )}
+              </motion.div>
+              
+              {/* Clean typography with minimal animation */}
+              <div className="space-y-4">
                 <motion.h1 
-                  className="text-3xl font-bold tracking-tighter lowercase sm:text-4xl md:text-5xl lg:text-6xl"
-                  variants={fadeInUp}
+                  className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl text-neutral-900"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, ease: [0.25, 0.1, 0.25, 1], delay: 0.1 }}
                 >
-                  elevate your brand
+                  Elevate Your Brand
                 </motion.h1>
                 
-                <motion.h2 
-                  className="text-xl font-medium tracking-tight lowercase sm:text-2xl md:text-3xl text-neutral-700"
-                  variants={fadeInUp}
-                >
-                  secure early access to prism's revenue-driving design innovations
-                </motion.h2>
-                
                 <motion.p 
-                  className="mx-auto mt-4 max-w-[700px] text-neutral-600 lowercase text-base sm:text-lg md:text-xl px-4"
-                  variants={fadeInUp}
+                  className="text-xl sm:text-2xl text-neutral-600 max-w-2xl mx-auto font-light"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, ease: [0.25, 0.1, 0.25, 1], delay: 0.2 }}
                 >
-                  tired of generic digital tools that stall growth? prism crafts bespoke experiences for visionary startups and healthcare leaders.
+                  Join Prism's exclusive circle of innovators transforming digital experiences
                 </motion.p>
+              </div>
 
-                {/* Urgency indicators */}
-                <motion.div 
-                  className="flex flex-wrap items-center justify-center gap-4 mt-6"
-                  variants={fadeInUp}
-                >
-                  <div className="inline-flex items-center gap-2 px-4 py-2 bg-black text-white rounded-full text-sm font-medium">
-                    <Shield className="w-4 h-4" />
-                    limited to 10 partners monthly
-                  </div>
-                  <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium ${
-                    daysUntilReview === 0 
-                      ? 'bg-red-100 text-red-700' 
-                      : daysUntilReview === 1 
-                      ? 'bg-orange-100 text-orange-700' 
-                      : 'bg-yellow-100 text-neutral-700'
-                  }`}>
-                    <Clock className={`w-4 h-4 ${daysUntilReview <= 1 ? 'animate-spin' : 'animate-pulse'}`} />
-                    next review {daysUntilReview === 0 ? 'today' : daysUntilReview === 1 ? 'tomorrow' : `in ${daysUntilReview} days`}
-                  </div>
-                </motion.div>
+              {/* Simple, elegant CTA section */}
+              <motion.div 
+                className="flex flex-col sm:flex-row items-center gap-4 mt-8"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, ease: [0.25, 0.1, 0.25, 1], delay: 0.3 }}
+              >
+                <div className="flex items-center gap-2 px-5 py-2.5 bg-neutral-900 text-white rounded-full text-sm">
+                  <Shield className="w-4 h-4" />
+                  Limited to 10 partners monthly
+                </div>
+                <div className="text-sm text-neutral-500">
+                  Next review in {daysUntilReview} days
+                </div>
               </motion.div>
             </div>
           </motion.div>
