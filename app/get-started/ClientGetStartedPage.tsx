@@ -1,5 +1,4 @@
 "use client"
-import AnimatedBackground from "@/components/animated-background"
 import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
 import { Button } from "@/components/ui/button"
@@ -15,7 +14,7 @@ import {
     successPop
 } from "@/utils/animation-variants"
 import { AnimatePresence, motion } from "framer-motion"
-import { CheckCircle, Clock, Share2, Shield, Sparkles, Star, Users, Zap } from "lucide-react"
+import { CheckCircle, Share2, Shield, Sparkles, Star, Users, Zap } from "lucide-react"
 import { useEffect, useRef, useState } from "react"
 
 interface FormData {
@@ -180,8 +179,8 @@ export default function ClientGetStartedPage() {
     },
     {
       icon: <Users className="h-5 w-5" />,
-      title: "Healthcare Innovators",
-      description: "Medical leaders transforming patient experiences with premium digital solutions"
+      title: "Service Innovators",
+      description: "Industry leaders transforming customer experiences with premium digital solutions"
     },
     {
       icon: <Zap className="h-5 w-5" />,
@@ -360,7 +359,7 @@ export default function ClientGetStartedPage() {
                   claim your spot in prism's exclusive circle
                 </h2>
                 <p className="mx-auto mt-4 max-w-[600px] text-neutral-600 lowercase">
-                  imagine a custom ux that boosts patient inquiries by solving real-world friction—join to see how we'll tailor it for you.
+                  imagine a custom ux that boosts customer inquiries by solving real-world friction—join to see how we'll tailor it for you.
                 </p>
               </motion.div>
 
@@ -560,7 +559,7 @@ export default function ClientGetStartedPage() {
                   are you ready to pioneer?
                 </h2>
                 <p className="mx-auto mt-4 max-w-[600px] text-neutral-600 lowercase">
-                  for trailblazers in tech and health poised to invest in design that redefines growth.
+                  for trailblazers across industries poised to invest in design that redefines growth.
                 </p>
               </motion.div>
 
