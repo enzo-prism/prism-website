@@ -20,7 +20,6 @@ import {
 } from "lucide-react"
 import Link from "next/link"
 import { useState } from "react"
-import VideoWithPoster from "@/components/video-with-poster"
 
 // Tech stack items with their categories
 const techStackItems = [
@@ -188,20 +187,18 @@ export default function PrismFlywheelClient() {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.5, duration: 0.8 }}
           >
-            <div className="relative w-full aspect-[9/16] rounded-xl overflow-hidden shadow-2xl">
-              <VideoWithPoster
-                videoId="1104840957"
-                posterSrc="/prism-flywheel-poster.png"
-                fallbackPosterSrc="/placeholder.jpg"
-                width={1080}
-                height={1920}
-                className="w-full h-full"
-                autoplay={true}
-                loop={true}
-                muted={true}
-                controls={false}
-                posterAlt="Prism Flywheel Visualization"
-                trackAnalytics={true}
+            <div className="relative w-full aspect-[9/16] rounded-xl overflow-hidden shadow-2xl bg-black">
+              <iframe
+                src="https://player.vimeo.com/video/1104840957?background=1&autoplay=1&loop=1&muted=1&controls=0&playsinline=1&title=0&byline=0&portrait=0"
+                title="Prism Flywheel Visualization"
+                className="absolute inset-0 w-full h-full"
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  border: 'none'
+                }}
+                allow="autoplay; fullscreen; picture-in-picture"
+                allowFullScreen
               />
             </div>
             
