@@ -398,41 +398,42 @@ export default function ClientPage() {
         {/* Who We Build For Carousel */}
         <WhoWeBuildForCarousel />
 
-        {/* Prism Flywheel CTA Section */}
-        <section className="py-16 md:py-24 bg-gradient-to-br from-purple-50 via-indigo-50 to-blue-50 dark:from-neutral-900 dark:via-purple-900/20 dark:to-indigo-900/20">
-          <div className="container mx-auto px-4 md:px-6">
-            <div className="mx-auto max-w-3xl text-center">
-              <div className="inline-flex items-center justify-center p-3 mb-6 bg-purple-100 dark:bg-purple-900/30 rounded-full">
-                <span className="text-2xl">⚙️</span>
+        {/* Prism Flywheel CTA Section - Minimal & Modern */}
+        <section className="py-20 sm:py-32 relative">
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-neutral-50/50 to-transparent dark:via-neutral-900/30" />
+          <div className="container mx-auto px-4 relative">
+            <div className="mx-auto max-w-2xl text-center space-y-8">
+              {/* Simple text-based accent */}
+              <div className="text-xs font-medium tracking-[0.3em] uppercase text-neutral-400">
+                flywheel
               </div>
-              <h2 className="text-3xl font-bold tracking-tighter lowercase sm:text-4xl md:text-5xl mb-6 text-neutral-900 dark:text-neutral-100">
-                unlock exponential growth with the prism flywheel
+              
+              {/* Refined typography hierarchy */}
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-light tracking-tight text-neutral-900 dark:text-neutral-100">
+                unlock exponential growth
               </h2>
-              <p className="text-lg md:text-xl text-neutral-600 dark:text-neutral-300 lowercase mb-8 max-w-2xl mx-auto">
-                discover our proprietary growth system that transforms code and content into compounding revenue. 
-                powered by frontier ai and thoughtful automation.
+              
+              {/* Cleaner description with better readability */}
+              <p className="text-base sm:text-lg text-neutral-600 dark:text-neutral-400 max-w-xl mx-auto leading-relaxed">
+                Our proprietary growth system transforms code and content into compounding revenue—powered by frontier AI and thoughtful automation.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+              
+              {/* Single, clear CTA */}
+              <div className="pt-4">
                 <Link href="/prism-flywheel">
                   <Button
-                    className="rounded-full px-8 py-6 text-lg lowercase bg-purple-600 hover:bg-purple-700 text-white hardware-hover touch-feedback scale-bounce"
-                    onClick={() => trackCTAClick("explore flywheel", "homepage flywheel cta")}
+                    className="group relative px-8 py-3 bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 font-medium text-sm rounded-full hover:scale-[1.02] transition-all duration-200"
+                    onClick={() => trackCTAClick("explore flywheel", "homepage flywheel cta minimal")}
                   >
-                    explore the flywheel <ArrowRight className="ml-2 h-5 w-5" />
-                  </Button>
-                </Link>
-                <Link href="/get-started">
-                  <Button
-                    variant="outline"
-                    className="rounded-full px-8 py-6 text-lg lowercase border-purple-600 text-purple-600 dark:border-purple-400 dark:text-purple-400 hardware-hover touch-feedback"
-                    onClick={() => trackCTAClick("get started secondary", "homepage flywheel cta")}
-                  >
-                    get started today
+                    Explore the Flywheel
+                    <ArrowRight className="inline-block ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
                   </Button>
                 </Link>
               </div>
-              <p className="text-sm text-neutral-500 dark:text-neutral-400 lowercase mt-6">
-                join 500+ visionaries building with prism's growth engine
+              
+              {/* Social proof - subtle and sophisticated */}
+              <p className="text-xs text-neutral-500 dark:text-neutral-500 pt-8">
+                Join 500+ visionaries building with Prism
               </p>
             </div>
           </div>
