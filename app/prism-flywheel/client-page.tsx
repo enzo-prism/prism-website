@@ -20,6 +20,7 @@ import {
 } from "lucide-react"
 import Link from "next/link"
 import { useState } from "react"
+import VideoWithPoster from "@/components/video-with-poster"
 
 // Tech stack items with their categories
 const techStackItems = [
@@ -180,79 +181,58 @@ export default function PrismFlywheelClient() {
             </motion.div>
           </motion.div>
 
-          {/* Interactive Flywheel Diagram */}
+          {/* Flywheel Video */}
           <motion.div 
-            className="mt-16 relative max-w-lg mx-auto"
+            className="mt-16 relative max-w-4xl mx-auto"
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.5, duration: 0.8 }}
           >
-            <div className="relative w-full aspect-square">
-              {/* Central hub */}
-              <div className="absolute inset-1/3 bg-gradient-to-br from-purple-600 to-indigo-600 rounded-full flex items-center justify-center shadow-2xl">
-                <span className="text-white font-bold text-xl lowercase">flywheel</span>
-              </div>
-              
-              {/* Phases around the circle */}
-              {flywheelPhases.map((phase, index) => {
-                const angle = (index * 90) - 90; // Start from top
-                const x = 50 + 40 * Math.cos(angle * Math.PI / 180);
-                const y = 50 + 40 * Math.sin(angle * Math.PI / 180);
-                
-                return (
-                  <motion.div
-                    key={phase.number}
-                    className={`absolute w-20 h-20 rounded-full bg-white shadow-lg flex items-center justify-center cursor-pointer ${phase.color}`}
-                    style={{
-                      left: `${x}%`,
-                      top: `${y}%`,
-                      transform: 'translate(-50%, -50%)'
-                    }}
-                    whileHover={{ scale: 1.2 }}
-                    onClick={() => setActivePhase(phase.number)}
-                  >
-                    <phase.icon className="h-8 w-8" />
-                  </motion.div>
-                )
-              })}
-              
-              {/* Rotating arrows */}
-              <motion.svg
-                className="absolute inset-0 w-full h-full"
-                animate={{ rotate: 360 }}
-                transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-              >
-                <circle
-                  cx="50%"
-                  cy="50%"
-                  r="40%"
-                  fill="none"
-                  stroke="url(#gradient)"
-                  strokeWidth="2"
-                  strokeDasharray="5,5"
-                />
-                <defs>
-                  <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stopColor="#8B5CF6" />
-                    <stop offset="100%" stopColor="#3B82F6" />
-                  </linearGradient>
-                </defs>
-              </motion.svg>
+            <div className="relative w-full rounded-xl overflow-hidden shadow-2xl">
+              <VideoWithPoster
+                videoId="1104840957"
+                posterSrc="/prism-flywheel-poster.png"
+                fallbackPosterSrc="/placeholder.jpg"
+                width={1920}
+                height={1080}
+                className="w-full h-full"
+                autoplay={true}
+                loop={true}
+                muted={true}
+                controls={false}
+                posterAlt="Prism Flywheel Visualization"
+                trackAnalytics={true}
+              />
+            </div>
+            
+            {/* Interactive phase indicators below video */}
+            <div className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4">
+              {flywheelPhases.map((phase) => (
+                <motion.div
+                  key={phase.number}
+                  className={`p-4 rounded-lg bg-white shadow-md hover:shadow-lg transition-shadow cursor-pointer ${phase.color}`}
+                  whileHover={{ scale: 1.05 }}
+                  onClick={() => setActivePhase(phase.number)}
+                >
+                  <phase.icon className="h-6 w-6 mb-2" />
+                  <h4 className="font-semibold text-sm lowercase">{phase.title}</h4>
+                </motion.div>
+              ))}
             </div>
 
-            {/* Phase details tooltip */}
+            {/* Phase details */}
             <AnimatePresence>
               {activePhase && (
                 <motion.div
-                  className="absolute top-full mt-4 left-0 right-0 bg-white p-4 rounded-lg shadow-xl"
+                  className="mt-4 bg-white p-6 rounded-lg shadow-xl"
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -10 }}
                 >
-                  <h4 className="font-bold lowercase">
-                    {flywheelPhases[activePhase - 1].title}
+                  <h4 className="font-bold text-lg lowercase mb-2">
+                    phase {activePhase}: {flywheelPhases[activePhase - 1].title}
                   </h4>
-                  <p className="text-sm text-neutral-600 lowercase mt-1">
+                  <p className="text-neutral-600 lowercase">
                     {flywheelPhases[activePhase - 1].details}
                   </p>
                 </motion.div>
