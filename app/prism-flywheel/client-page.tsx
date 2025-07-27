@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { trackCTAClick } from "@/utils/analytics"
 import { fadeInUp, staggerContainer, scrollRevealBlog } from "@/utils/animation-variants"
-import { AnimatePresence, motion, useInView } from "framer-motion"
+import { AnimatePresence, motion, useInView, Variants } from "framer-motion"
 import {
     ArrowRight,
     BarChart3,
@@ -22,7 +22,7 @@ import Link from "next/link"
 import { useState, useRef } from "react"
 
   // GPU-accelerated scroll reveal animation
-  const gpuScrollReveal = {
+  const gpuScrollReveal: Variants = {
     hidden: {
       opacity: 0,
       y: 60,
@@ -36,23 +36,23 @@ import { useState, useRef } from "react"
       filter: "blur(0px)",
       transition: {
         duration: 0.8,
-        ease: [0.6, -0.05, 0.01, 0.99],
+        ease: [0.6, -0.05, 0.01, 0.99] as const,
       },
     },
   }
 
   // Staggered card animations
-  const cardAnimation = {
+  const cardAnimation: Variants = {
     hidden: { opacity: 0, y: 40 },
-    visible: (i: number) => ({
+    visible: {
       opacity: 1,
       y: 0,
       transition: {
-        delay: i * 0.1,
+        staggerChildren: 0.1,
         duration: 0.6,
-        ease: "easeOut",
+        ease: "easeOut" as const,
       },
-    }),
+    },
   }
 
   // Tech stack items with their categories
@@ -254,12 +254,22 @@ export default function PrismFlywheelClient() {
             
             {/* Interactive phase indicators below video */}
             <div className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4">
-              {flywheelPhases.map((phase) => (
+              {flywheelPhases.map((phase, index) => (
                 <motion.div
                   key={phase.number}
                   className={`p-4 rounded-lg bg-white shadow-md hover:shadow-lg transition-shadow cursor-pointer ${phase.color}`}
-                  whileHover={{ scale: 1.05 }}
+                  whileHover={{ scale: 1.05, y: -5 }}
+                  whileTap={{ scale: 0.95 }}
                   onClick={() => setActivePhase(phase.number)}
+                  custom={index}
+                  initial="hidden"
+                  animate="visible"
+                  variants={cardAnimation}
+                  style={{
+                    transform: "translateZ(0)",
+                    willChange: "transform",
+                    backfaceVisibility: "hidden",
+                  }}
                 >
                   <phase.icon className="h-6 w-6 mb-2" />
                   <h4 className="font-semibold text-sm lowercase">{phase.title}</h4>
@@ -295,10 +305,10 @@ export default function PrismFlywheelClient() {
         className="py-16 md:py-24 bg-neutral-50"
         initial="hidden"
         animate={philosophyInView ? "visible" : "hidden"}
-        variants={scrollRevealBlog}
+        variants={gpuScrollReveal}
         style={{
           transform: "translateZ(0)",
-          willChange: "transform, opacity, filter",
+          willChange: philosophyInView ? "transform, opacity, filter" : "auto",
           backfaceVisibility: "hidden",
         }}
       >
@@ -390,10 +400,10 @@ export default function PrismFlywheelClient() {
         className="py-16 md:py-24"
         initial="hidden"
         animate={howItWorksInView ? "visible" : "hidden"}
-        variants={scrollRevealBlog}
+        variants={gpuScrollReveal}
         style={{
           transform: "translateZ(0)",
-          willChange: "transform, opacity, filter",
+          willChange: howItWorksInView ? "transform, opacity, filter" : "auto",
           backfaceVisibility: "hidden",
         }}
       >
@@ -463,10 +473,21 @@ export default function PrismFlywheelClient() {
             </motion.p>
           </motion.div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Tech Stack Section */}
-      <section className="py-16 md:py-24 bg-neutral-50">
+      <motion.section 
+        ref={techStackRef}
+        className="py-16 md:py-24 bg-neutral-50"
+        initial="hidden"
+        animate={techStackInView ? "visible" : "hidden"}
+        variants={gpuScrollReveal}
+        style={{
+          transform: "translateZ(0)",
+          willChange: techStackInView ? "transform, opacity, filter" : "auto",
+          backfaceVisibility: "hidden",
+        }}
+      >
         <div className="container mx-auto px-4 max-w-6xl">
           <motion.div
             initial="hidden"
@@ -529,10 +550,21 @@ export default function PrismFlywheelClient() {
             </motion.p>
           </motion.div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Data-Driven Optimization Section */}
-      <section className="py-16 md:py-24">
+      <motion.section 
+        ref={dataRef}
+        className="py-16 md:py-24"
+        initial="hidden"
+        animate={dataInView ? "visible" : "hidden"}
+        variants={gpuScrollReveal}
+        style={{
+          transform: "translateZ(0)",
+          willChange: dataInView ? "transform, opacity, filter" : "auto",
+          backfaceVisibility: "hidden",
+        }}
+      >
         <div className="container mx-auto px-4 max-w-6xl">
           <motion.div
             initial="hidden"
@@ -593,10 +625,21 @@ export default function PrismFlywheelClient() {
             </motion.div>
           </motion.div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Client Impact Section */}
-      <section className="py-16 md:py-24 bg-neutral-50">
+      <motion.section 
+        ref={impactRef}
+        className="py-16 md:py-24 bg-neutral-50"
+        initial="hidden"
+        animate={impactInView ? "visible" : "hidden"}
+        variants={gpuScrollReveal}
+        style={{
+          transform: "translateZ(0)",
+          willChange: impactInView ? "transform, opacity, filter" : "auto",
+          backfaceVisibility: "hidden",
+        }}
+      >
         <div className="container mx-auto px-4 max-w-6xl">
           <motion.div
             initial="hidden"
@@ -653,10 +696,21 @@ export default function PrismFlywheelClient() {
             </div>
           </motion.div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Learn & Build Section */}
-      <section className="py-16 md:py-24 bg-gradient-to-br from-purple-50 via-indigo-50 to-blue-50">
+      <motion.section 
+        ref={learnRef}
+        className="py-16 md:py-24 bg-gradient-to-br from-purple-50 via-indigo-50 to-blue-50"
+        initial="hidden"
+        animate={learnInView ? "visible" : "hidden"}
+        variants={gpuScrollReveal}
+        style={{
+          transform: "translateZ(0)",
+          willChange: learnInView ? "transform, opacity, filter" : "auto",
+          backfaceVisibility: "hidden",
+        }}
+      >
         <div className="container mx-auto px-4 max-w-6xl">
           <motion.div
             initial="hidden"
@@ -771,7 +825,7 @@ export default function PrismFlywheelClient() {
             </motion.div>
           </motion.div>
         </div>
-      </section>
+      </motion.section>
 
       {/* CTA Footer Section */}
       <section id="waitlist-form" className="py-16 md:py-24 bg-gradient-to-br from-neutral-900 to-neutral-800 text-white">
