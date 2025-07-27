@@ -187,17 +187,14 @@ export default function PrismFlywheelClient() {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.5, duration: 0.8 }}
           >
-            <div className="relative w-full aspect-[9/16] rounded-xl overflow-hidden shadow-2xl bg-black">
+            <div className="relative w-full aspect-square rounded-xl overflow-hidden shadow-2xl bg-black">
               <iframe
                 src="https://player.vimeo.com/video/1104840957?background=1&autoplay=1&loop=1&muted=1&controls=0&playsinline=1&title=0&byline=0&portrait=0"
                 title="Prism Flywheel Visualization"
                 className="absolute inset-0"
                 style={{
-                  width: '177.77%', // 16:9 video scaled to fill 9:16 container
-                  height: '177.77%',
-                  left: '50%',
-                  top: '50%',
-                  transform: 'translate(-50%, -50%)',
+                  width: '100%',
+                  height: '100%',
                   border: 'none'
                 }}
                 allow="autoplay; fullscreen; picture-in-picture"
