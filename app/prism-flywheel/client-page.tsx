@@ -183,18 +183,18 @@ export default function PrismFlywheelClient() {
 
           {/* Flywheel Video */}
           <motion.div 
-            className="mt-16 relative max-w-4xl mx-auto"
+            className="mt-16 relative max-w-2xl mx-auto"
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.5, duration: 0.8 }}
           >
-            <div className="relative w-full rounded-xl overflow-hidden shadow-2xl">
+            <div className="relative w-full aspect-[9/16] rounded-xl overflow-hidden shadow-2xl">
               <VideoWithPoster
                 videoId="1104840957"
                 posterSrc="/prism-flywheel-poster.png"
                 fallbackPosterSrc="/placeholder.jpg"
-                width={1920}
-                height={1080}
+                width={1080}
+                height={1920}
                 className="w-full h-full"
                 autoplay={true}
                 loop={true}
