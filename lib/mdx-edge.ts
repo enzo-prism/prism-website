@@ -9,6 +9,11 @@ const blogPosts = {
     category: "Business & AI",
     gradientClass: "bg-gradient-to-br from-orange-300/30 via-red-300/30 to-purple-300/30",
   },
+  'unlocking-smb-growth-hormozi-100m-leads': {
+    title: "Unlocking SMB Growth: Lessons from Alex Hormozi's $100M Leads (And Why AI is Your Secret Weapon Right Now)",
+    category: "Business & AI",
+    gradientClass: "bg-gradient-to-br from-purple-300/30 via-indigo-300/30 to-blue-300/30",
+  },
   'the-grind-that-builds-empires': {
     title: "The Grind That Builds Empires: Why Your Solitary Sweat Separates Legends from the Pack",
     category: "Motivation & Entrepreneurship",
