@@ -1,7 +1,6 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { Card } from "@/components/ui/card"
 import { trackCTAClick } from "@/utils/analytics"
 import { fadeInUp, staggerContainer } from "@/utils/animation-variants"
 import { AnimatePresence, motion, useInView, Variants } from "framer-motion"
@@ -9,9 +8,7 @@ import {
     ArrowRight,
     BarChart3,
     Brain,
-    CheckCircle,
     Code,
-    Database,
     Globe,
     Palette,
     Search,
@@ -333,6 +330,19 @@ export default function PrismFlywheelClient() {
                   is data-driven and every action creates lasting value.
                 </p>
 
+                {/* Elegant quote */}
+                <motion.blockquote 
+                  className="mt-8 pt-8 border-t border-neutral-200 dark:border-neutral-800"
+                  variants={fadeInUp}
+                >
+                  <p className="text-lg font-light italic text-neutral-700 dark:text-neutral-300 leading-relaxed">
+                    "You do not rise to the level of your goals. You fall to the level of your systems."
+                  </p>
+                  <cite className="block mt-3 text-sm font-normal not-italic text-neutral-500 dark:text-neutral-500">
+                    — James Clear, Atomic Habits
+                  </cite>
+                </motion.blockquote>
+
                 {/* Key principles */}
                 <div className="pt-8 space-y-6">
                   {[
@@ -401,14 +411,21 @@ export default function PrismFlywheelClient() {
           >
             {/* Section header */}
             <motion.div 
-              className="text-center"
+              className="text-center space-y-6"
               variants={fadeInUp}
             >
-              <h2 className="text-2xl md:text-3xl font-light text-neutral-900 dark:text-white">
-                How It Works
-              </h2>
-              <p className="mt-4 text-neutral-600 dark:text-neutral-400">
-                Four phases, infinite cycles of growth
+              <div>
+                <h2 className="text-2xl md:text-3xl font-light text-neutral-900 dark:text-white">
+                  How It Works
+                </h2>
+                <p className="mt-4 text-neutral-600 dark:text-neutral-400">
+                  Four phases, infinite cycles of growth
+                </p>
+              </div>
+              
+              {/* Subtle quote integration */}
+              <p className="text-sm font-light italic text-neutral-500 dark:text-neutral-500 max-w-lg mx-auto">
+                "Goals are good for setting a direction, but systems are best for making progress"
               </p>
             </motion.div>
 
@@ -743,6 +760,21 @@ export default function PrismFlywheelClient() {
                 </p>
               </motion.div>
             </div>
+
+            {/* Munger quote on compounding */}
+            <motion.div 
+              className="max-w-2xl mx-auto text-center"
+              variants={fadeInUp}
+            >
+              <blockquote className="space-y-3">
+                <p className="text-base font-light italic text-neutral-700 dark:text-neutral-300">
+                  "The first rule of compounding: Never interrupt it unnecessarily."
+                </p>
+                <cite className="block text-sm font-normal not-italic text-neutral-500 dark:text-neutral-500">
+                  — Charlie Munger
+                </cite>
+              </blockquote>
+            </motion.div>
           </motion.div>
         </div>
       </motion.section>
