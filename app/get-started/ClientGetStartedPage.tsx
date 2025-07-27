@@ -15,7 +15,7 @@ import {
     successPop
 } from "@/utils/animation-variants"
 import { AnimatePresence, motion } from "framer-motion"
-import { CheckCircle, Send, Star, Users, Zap } from "lucide-react"
+import { CheckCircle, Clock, Share2, Shield, Sparkles, Star, Users, Zap } from "lucide-react"
 import { useEffect, useRef, useState } from "react"
 
 interface FormData {
@@ -24,6 +24,7 @@ interface FormData {
   company: string
   website: string
   message: string
+  whyPrismExcites: string
 }
 
 export default function ClientGetStartedPage() {
@@ -35,7 +36,8 @@ export default function ClientGetStartedPage() {
     email: '',
     company: '',
     website: '',
-    message: ''
+    message: '',
+    whyPrismExcites: ''
   })
   const isMobile = useMobile()
   const videoRef = useRef<HTMLDivElement>(null)
@@ -95,13 +97,13 @@ export default function ClientGetStartedPage() {
         },
         body: JSON.stringify({
           ...formData,
-          source: 'waitlist',
+          source: 'exclusive-waitlist',
           timestamp: new Date().toISOString()
         }),
       })
 
       setSubmitStatus('success')
-      trackCTAClick('waitlist application submitted', 'get started page')
+      trackCTAClick('exclusive waitlist application submitted', 'get started page')
       
       // Reset form after success
       setTimeout(() => {
@@ -110,7 +112,8 @@ export default function ClientGetStartedPage() {
           email: '',
           company: '',
           website: '',
-          message: ''
+          message: '',
+          whyPrismExcites: ''
         })
       }, 2000)
     } catch (error) {
@@ -125,18 +128,18 @@ export default function ClientGetStartedPage() {
   const clientTypes = [
     {
       icon: <Star className="h-5 w-5" />,
-      title: "Innovative Startups",
-      description: "Tech companies with unique products solving real problems"
+      title: "Visionary Startups",
+      description: "Tech pioneers ready to redefine their industry through design excellence"
     },
     {
       icon: <Users className="h-5 w-5" />,
-      title: "Healthcare Practices",
-      description: "Medical and dental practices focused on patient growth"
+      title: "Healthcare Innovators",
+      description: "Medical leaders transforming patient experiences with premium digital solutions"
     },
     {
       icon: <Zap className="h-5 w-5" />,
-      title: "Growth-Focused Brands",
-      description: "Companies ready to scale with premium digital presence"
+      title: "Growth Trailblazers",
+      description: "Ambitious brands investing in design that drives measurable revenue"
     }
   ]
 
@@ -213,15 +216,37 @@ export default function ClientGetStartedPage() {
                   className="text-3xl font-bold tracking-tighter lowercase sm:text-4xl md:text-5xl lg:text-6xl"
                   variants={fadeInUp}
                 >
-                  we're at capacity
+                  elevate your brand
                 </motion.h1>
+                
+                <motion.h2 
+                  className="text-xl font-medium tracking-tight lowercase sm:text-2xl md:text-3xl text-neutral-700"
+                  variants={fadeInUp}
+                >
+                  secure early access to prism's revenue-driving design innovations
+                </motion.h2>
                 
                 <motion.p 
                   className="mx-auto mt-4 max-w-[700px] text-neutral-600 lowercase text-base sm:text-lg md:text-xl px-4"
                   variants={fadeInUp}
                 >
-                  prism is currently at full capacity, but we're accepting applications from exceptional companies that align with our vision.
+                  tired of generic digital tools that stall growth? prism crafts bespoke experiences for visionary startups and healthcare leaders.
                 </motion.p>
+
+                {/* Urgency indicators */}
+                <motion.div 
+                  className="flex flex-wrap items-center justify-center gap-4 mt-6"
+                  variants={fadeInUp}
+                >
+                  <div className="inline-flex items-center gap-2 px-4 py-2 bg-black text-white rounded-full text-sm font-medium">
+                    <Shield className="w-4 h-4" />
+                    limited to 10 partners monthly
+                  </div>
+                  <div className="inline-flex items-center gap-2 px-4 py-2 bg-yellow-100 rounded-full text-sm font-medium text-neutral-700">
+                    <Clock className="w-4 h-4 animate-pulse" />
+                    next review in 5 days
+                  </div>
+                </motion.div>
               </motion.div>
             </div>
           </motion.div>
@@ -241,10 +266,10 @@ export default function ClientGetStartedPage() {
             <div className="mx-auto max-w-5xl">
               <motion.div className="mb-12 text-center" variants={fadeInUp}>
                 <h2 className="text-3xl font-bold tracking-tighter lowercase sm:text-4xl md:text-5xl">
-                  who we work with
+                  who joins our exclusive circle
                 </h2>
                 <p className="mx-auto mt-4 max-w-[700px] text-neutral-600 lowercase text-lg">
-                  we partner with companies that share our commitment to excellence and innovation.
+                  born from a drive to fuse beauty and revenue in digital worlds, we're seeking collaborators ready to pioneer.
                 </p>
               </motion.div>
 
@@ -279,9 +304,9 @@ export default function ClientGetStartedPage() {
                 className="mt-12 text-center"
                 variants={fadeInUp}
               >
-                <div className="inline-flex items-center gap-2 px-4 py-2 bg-yellow-100 rounded-full text-sm font-medium text-neutral-700">
-                  <div className="w-2 h-2 bg-yellow-400 rounded-full animate-pulse" />
-                  limited spots available
+                <div className="inline-flex items-center gap-2 px-4 py-2 bg-green-100 rounded-full text-sm font-medium text-neutral-700">
+                  <Sparkles className="w-4 h-4" />
+                  priority consultations for first 50 applicants
                 </div>
               </motion.div>
             </div>
@@ -302,10 +327,10 @@ export default function ClientGetStartedPage() {
             <div className="mx-auto max-w-2xl">
               <motion.div className="mb-12 text-center" variants={fadeInUp}>
                 <h2 className="text-3xl font-bold tracking-tighter lowercase sm:text-4xl">
-                  apply for the waitlist
+                  claim your spot in prism's exclusive circle
                 </h2>
                 <p className="mx-auto mt-4 max-w-[600px] text-neutral-600 lowercase">
-                  tell us about your company and why you'd be a great fit for prism.
+                  imagine a custom ux that boosts patient inquiries by solving real-world friction—join to see how we'll tailor it for you.
                 </p>
               </motion.div>
 
@@ -326,9 +351,9 @@ export default function ClientGetStartedPage() {
                     >
                       <CheckCircle className="h-10 w-10 text-green-600" />
                     </motion.div>
-                    <h3 className="text-2xl font-bold lowercase mb-2">application received!</h3>
+                    <h3 className="text-2xl font-bold lowercase mb-2">welcome to the inner circle!</h3>
                     <p className="text-neutral-600 lowercase">
-                      we'll review your application and get back to you if there's a fit.
+                      your application for exclusive access has been received. we'll personally review it within 5 days.
                     </p>
                   </motion.div>
                 ) : (
@@ -407,7 +432,7 @@ export default function ClientGetStartedPage() {
 
                     <motion.div variants={fadeInUp}>
                       <label htmlFor="message" className="block text-sm font-medium text-neutral-700 lowercase mb-2">
-                        why would you be a great fit for prism? *
+                        your growth challenge *
                       </label>
                       <textarea
                         id="message"
@@ -415,9 +440,25 @@ export default function ClientGetStartedPage() {
                         required
                         value={formData.message}
                         onChange={handleInputChange}
-                        rows={5}
+                        rows={3}
                         className="w-full rounded-md border border-neutral-200 bg-white px-3 py-2 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-neutral-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                        placeholder="Tell us about your business, your goals, and why you think we'd work well together..."
+                        placeholder="What's the biggest growth challenge your business faces right now?"
+                      />
+                    </motion.div>
+
+                    <motion.div variants={fadeInUp}>
+                      <label htmlFor="whyPrismExcites" className="block text-sm font-medium text-neutral-700 lowercase mb-2">
+                        why prism excites you *
+                      </label>
+                      <textarea
+                        id="whyPrismExcites"
+                        name="whyPrismExcites"
+                        required
+                        value={formData.whyPrismExcites}
+                        onChange={handleInputChange}
+                        rows={3}
+                        className="w-full rounded-md border border-neutral-200 bg-white px-3 py-2 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-neutral-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                        placeholder="What excites you most about joining Prism's exclusive circle of innovators?"
                       />
                     </motion.div>
 
@@ -428,7 +469,7 @@ export default function ClientGetStartedPage() {
                       <Button
                         type="submit"
                         disabled={isSubmitting}
-                        className="w-full py-4 text-lg lowercase rounded-full"
+                        className="w-full py-4 text-lg lowercase rounded-full bg-black hover:bg-neutral-800"
                         size="lg"
                       >
                         {isSubmitting ? (
@@ -440,8 +481,8 @@ export default function ClientGetStartedPage() {
                           </motion.span>
                         ) : (
                           <>
-                            submit application
-                            <Send className="ml-2 h-5 w-5" />
+                            claim your spot
+                            <Sparkles className="ml-2 h-5 w-5" />
                           </>
                         )}
                       </Button>
@@ -465,7 +506,7 @@ export default function ClientGetStartedPage() {
                 variants={fadeInUp}
               >
                 <p className="text-sm text-neutral-500 lowercase">
-                  we review applications weekly and will contact you if there's a potential fit.
+                  curated access for 10 visionary partners monthly—apply to co-create excellence.
                 </p>
               </motion.div>
             </div>
@@ -486,8 +527,11 @@ export default function ClientGetStartedPage() {
             <div className="mx-auto max-w-3xl">
               <motion.div className="text-center mb-12" variants={fadeInUp}>
                 <h2 className="text-3xl font-bold tracking-tighter lowercase sm:text-4xl">
-                  what makes a great fit
+                  are you ready to pioneer?
                 </h2>
+                <p className="mx-auto mt-4 max-w-[600px] text-neutral-600 lowercase">
+                  for trailblazers in tech and health poised to invest in design that redefines growth.
+                </p>
               </motion.div>
 
               <motion.div 
@@ -500,11 +544,12 @@ export default function ClientGetStartedPage() {
                   variants={staggerContainer}
                 >
                   {[
-                    "You have a unique product or service that solves real problems",
-                    "You're committed to excellence and long-term growth",
-                    "You value premium design and user experience", 
-                    "You're ready to invest in your digital presence",
-                    "You appreciate collaborative partnerships over transactional relationships"
+                    "You're solving real problems with a product the world needs",
+                    "Excellence isn't just a goal—it's your standard",
+                    "You see design as an investment in exponential growth", 
+                    "You're ready to commit to a transformative digital presence",
+                    "You value deep partnerships over quick transactions",
+                    "You're excited to be part of something groundbreaking from day one"
                   ].map((item, index) => (
                     <motion.li 
                       key={index}
@@ -518,7 +563,67 @@ export default function ClientGetStartedPage() {
                   ))}
                 </motion.ul>
               </motion.div>
+
+              <motion.div 
+                className="mt-8 text-center"
+                variants={fadeInUp}
+              >
+                <p className="text-sm text-neutral-600 lowercase italic">
+                  "born from a drive to fuse beauty and revenue in digital worlds, we're seeking collaborators ready to pioneer."
+                </p>
+              </motion.div>
             </div>
+          </motion.div>
+        </motion.section>
+
+        {/* Social Sharing Section */}
+        <motion.section 
+          className="px-4 py-12 bg-white border-t border-neutral-100"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+        >
+          <motion.div 
+            className="container mx-auto px-4 md:px-6 text-center"
+            variants={staggerContainer}
+          >
+            <motion.div variants={fadeInUp}>
+              <Share2 className="h-6 w-6 mx-auto mb-3 text-neutral-400" />
+              <h3 className="text-lg font-medium lowercase mb-2">share with fellow innovators</h3>
+              <p className="text-sm text-neutral-500 lowercase mb-4">
+                know someone who'd be perfect for prism? share to unlock community insights.
+              </p>
+              <div className="flex flex-wrap justify-center gap-3">
+                <button 
+                  onClick={() => {
+                    trackCTAClick('share twitter', 'get started page')
+                    window.open('https://twitter.com/intent/tweet?text=Just%20applied%20to%20join%20@prism%27s%20exclusive%20circle%20of%20design%20innovators.%20Limited%20to%2010%20partners%20monthly.%20https://design-prism.com/get-started', '_blank')
+                  }}
+                  className="share-button-premium px-4 py-2 rounded-full text-sm font-medium lowercase transition-all"
+                >
+                  share on x
+                </button>
+                <button 
+                  onClick={() => {
+                    trackCTAClick('share linkedin', 'get started page')
+                    window.open('https://www.linkedin.com/sharing/share-offsite/?url=https://design-prism.com/get-started', '_blank')
+                  }}
+                  className="share-button-premium px-4 py-2 rounded-full text-sm font-medium lowercase transition-all"
+                >
+                  share on linkedin
+                </button>
+                <button 
+                  onClick={() => {
+                    trackCTAClick('copy link', 'get started page')
+                    navigator.clipboard.writeText('https://design-prism.com/get-started')
+                    alert('Link copied to clipboard!')
+                  }}
+                  className="share-button-premium px-4 py-2 rounded-full text-sm font-medium lowercase transition-all"
+                >
+                  copy link
+                </button>
+              </div>
+            </motion.div>
           </motion.div>
         </motion.section>
       </main>

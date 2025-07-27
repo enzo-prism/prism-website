@@ -506,3 +506,83 @@ export const scrollRevealBlog: Variants = {
     },
   },
 }
+
+// Premium animations for Get Started page
+export const luxuryFadeIn: Variants = {
+  initial: { 
+    opacity: 0, 
+    y: 30, 
+    filter: "blur(10px)" 
+  },
+  animate: { 
+    opacity: 1, 
+    y: 0, 
+    filter: "blur(0px)",
+    transition: { 
+      duration: 0.8, 
+      ease: [0.25, 0.1, 0.25, 1] 
+    }
+  }
+}
+
+export const iridescent: Variants = {
+  initial: {
+    backgroundPosition: "0% 50%",
+  },
+  animate: {
+    backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
+    transition: { 
+      duration: 5, 
+      repeat: Infinity, 
+      ease: "linear" 
+    }
+  }
+}
+
+export const premiumPulse: Variants = {
+  initial: {
+    scale: 1,
+    opacity: 1,
+  },
+  animate: {
+    scale: [1, 1.02, 1],
+    opacity: [1, 0.9, 1],
+    transition: {
+      duration: 2,
+      repeat: Infinity,
+      ease: "easeInOut",
+    }
+  }
+}
+
+export const exclusiveReveal: Variants = {
+  hidden: {
+    opacity: 0,
+    scale: 0.8,
+    rotateX: -30,
+  },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    rotateX: 0,
+    transition: {
+      duration: 0.7,
+      ease: [0.6, -0.05, 0.01, 0.99],
+    }
+  }
+}
+
+export const luxuryCardHover: Variants = {
+  initial: {
+    y: 0,
+    boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
+  },
+  hover: {
+    y: -8,
+    boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 10px 20px -5px rgba(0, 0, 0, 0.1)",
+    transition: {
+      duration: 0.3,
+      ease: "easeOut",
+    }
+  }
+}
