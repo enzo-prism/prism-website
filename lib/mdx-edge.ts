@@ -1,10 +1,14 @@
 // Edge-compatible functions for getting blog post metadata
 // This file provides a way to access blog post data without file system operations
 
-import { BlogPost } from '@/types/blog'
 
 // Import all blog posts statically
 const blogPosts = {
+  'unlocking-smb-growth-hormozi-100m-offers': {
+    title: "Unlocking SMB Growth: Lessons from Alex Hormozi's $100M Offers (And Why AI is Your Secret Weapon Right Now)",
+    category: "Business & AI",
+    gradientClass: "bg-gradient-to-br from-orange-300/30 via-red-300/30 to-purple-300/30",
+  },
   'the-grind-that-builds-empires': {
     title: "The Grind That Builds Empires: Why Your Solitary Sweat Separates Legends from the Pack",
     category: "Motivation & Entrepreneurship",
