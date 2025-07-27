@@ -25,6 +25,7 @@ export default function Navbar() {
     { emoji: "🖥️", label: "websites", href: "/websites" },
     { emoji: "📱", label: "apps", href: "/apps" },
     { emoji: "🎨", label: "designs", href: "/designs" },
+    { emoji: "⚙️", label: "flywheel", href: "/prism-flywheel" },
     { emoji: "❤️", label: "wall of love", href: "/wall-of-love" },
   ]
 
