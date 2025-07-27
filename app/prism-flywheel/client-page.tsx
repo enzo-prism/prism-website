@@ -346,7 +346,12 @@ export default function PrismFlywheelClient() {
                 {/* Key principles */}
                 <div className="pt-8 space-y-6">
                   {[
-                    { title: "Maximum Leverage", desc: "AI amplifies effort, not replaces it" },
+                    { 
+                      title: "Maximum Leverage", 
+                      desc: "AI amplifies effort, not replaces it",
+                      quote: "Leverage is a force multiplier for your judgment.",
+                      author: "Naval Ravikant"
+                    },
                     { title: "Compound Growth", desc: "Each cycle builds on the last" },
                     { title: "Custom Solutions", desc: "Tailored to your unique needs" }
                   ].map((item, index) => (
@@ -356,13 +361,23 @@ export default function PrismFlywheelClient() {
                       variants={fadeInUp}
                     >
                       <div className="w-1 h-12 bg-neutral-900 dark:bg-white opacity-20" />
-                      <div>
+                      <div className="flex-1">
                         <h3 className="font-medium text-neutral-900 dark:text-white mb-1">
                           {item.title}
                         </h3>
                         <p className="text-sm text-neutral-600 dark:text-neutral-400">
                           {item.desc}
                         </p>
+                        {item.quote && (
+                          <div className="mt-3 pl-4 border-l-2 border-neutral-200 dark:border-neutral-800">
+                            <p className="text-xs font-light italic text-neutral-600 dark:text-neutral-400">
+                              "{item.quote}"
+                            </p>
+                            <p className="text-xs text-neutral-500 dark:text-neutral-500 mt-1">
+                              — {item.author}
+                            </p>
+                          </div>
+                        )}
                       </div>
                     </motion.div>
                   ))}
@@ -387,19 +402,6 @@ export default function PrismFlywheelClient() {
                     Leverage
                   </div>
                 </div>
-                
-                {/* Naval quote on leverage */}
-                <motion.div 
-                  className="mt-8 max-w-xs"
-                  variants={fadeInUp}
-                >
-                  <p className="text-sm font-light italic text-neutral-600 dark:text-neutral-400 text-center">
-                    "Leverage is a force multiplier for your judgment."
-                  </p>
-                  <p className="text-xs text-neutral-500 dark:text-neutral-500 text-center mt-2">
-                    — Naval Ravikant
-                  </p>
-                </motion.div>
               </motion.div>
             </motion.div>
           </motion.div>
