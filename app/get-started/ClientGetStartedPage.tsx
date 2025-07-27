@@ -39,8 +39,55 @@ export default function ClientGetStartedPage() {
     message: '',
     whyPrismExcites: ''
   })
+  const [daysUntilReview, setDaysUntilReview] = useState(5)
   const isMobile = useMobile()
   const videoRef = useRef<HTMLDivElement>(null)
+
+  // Calculate days until next review (every Monday)
+  useEffect(() => {
+    const calculateDaysUntilReview = () => {
+      const today = new Date()
+      today.setHours(0, 0, 0, 0) // Normalize to start of day
+      const currentDay = today.getDay() // 0 = Sunday, 1 = Monday, etc.
+      
+      // If today is Monday (1), the next review is in 7 days
+      // Otherwise, calculate days until next Monday
+      let daysUntilMonday
+      if (currentDay === 1) {
+        daysUntilMonday = 7 // Next Monday
+      } else if (currentDay === 0) {
+        daysUntilMonday = 1 // Tomorrow (Monday)
+      } else {
+        daysUntilMonday = 8 - currentDay // Days until next Monday
+      }
+      
+      setDaysUntilReview(daysUntilMonday)
+    }
+
+    // Calculate immediately
+    calculateDaysUntilReview()
+
+    // Update at midnight each day
+    const scheduleNextUpdate = () => {
+      const now = new Date()
+      const tomorrow = new Date(now)
+      tomorrow.setDate(tomorrow.getDate() + 1)
+      tomorrow.setHours(0, 0, 0, 0)
+      
+      const msUntilMidnight = tomorrow.getTime() - now.getTime()
+      
+      return setTimeout(() => {
+        calculateDaysUntilReview()
+        // Schedule the next update
+        const nextTimeout = scheduleNextUpdate()
+        return () => clearTimeout(nextTimeout)
+      }, msUntilMidnight)
+    }
+    
+    const timeoutId = scheduleNextUpdate()
+    
+    return () => clearTimeout(timeoutId)
+  }, [])
 
   // Lazy load video
   useEffect(() => {
@@ -242,9 +289,15 @@ export default function ClientGetStartedPage() {
                     <Shield className="w-4 h-4" />
                     limited to 10 partners monthly
                   </div>
-                  <div className="inline-flex items-center gap-2 px-4 py-2 bg-yellow-100 rounded-full text-sm font-medium text-neutral-700">
-                    <Clock className="w-4 h-4 animate-pulse" />
-                    next review in 5 days
+                  <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium ${
+                    daysUntilReview === 0 
+                      ? 'bg-red-100 text-red-700' 
+                      : daysUntilReview === 1 
+                      ? 'bg-orange-100 text-orange-700' 
+                      : 'bg-yellow-100 text-neutral-700'
+                  }`}>
+                    <Clock className={`w-4 h-4 ${daysUntilReview <= 1 ? 'animate-spin' : 'animate-pulse'}`} />
+                    next review {daysUntilReview === 0 ? 'today' : daysUntilReview === 1 ? 'tomorrow' : `in ${daysUntilReview} days`}
                   </div>
                 </motion.div>
               </motion.div>
@@ -353,7 +406,7 @@ export default function ClientGetStartedPage() {
                     </motion.div>
                     <h3 className="text-2xl font-bold lowercase mb-2">welcome to the inner circle!</h3>
                     <p className="text-neutral-600 lowercase">
-                      your application for exclusive access has been received. we'll personally review it within 5 days.
+                      your application for exclusive access has been received. we'll personally review it {daysUntilReview === 0 ? 'today' : daysUntilReview === 1 ? 'tomorrow' : `within ${daysUntilReview} days`}.
                     </p>
                   </motion.div>
                 ) : (
