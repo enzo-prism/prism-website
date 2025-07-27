@@ -1,3 +1,5 @@
+import { sendFormSubmissionEmail } from "@/lib/email"
+import { supabaseAdmin, type FormSubmission } from "@/lib/supabase"
 import { NextResponse } from "next/server"
 
 interface PrismLeadData {
@@ -28,9 +30,9 @@ export async function POST(request: Request) {
   try {
     const data = await request.json()
 
-    // Check if this is a waitlist application
-    if (data.source === 'waitlist') {
-      // Handle waitlist application
+    // Check if this is a waitlist application or get-started form
+    if (data.source === 'waitlist' || data.source === 'exclusive-waitlist') {
+      // Handle waitlist/get-started application
       const waitlistData = data as WaitlistApplication
       
       // Validate required fields for waitlist
@@ -53,16 +55,78 @@ export async function POST(request: Request) {
         )
       }
 
-      // Store the waitlist application
-      prismLeads.push(waitlistData)
-      
-      // Log for monitoring
-      console.log("New waitlist application:", waitlistData)
+      // For get-started form, we need the additional field
+      if (data.source === 'exclusive-waitlist' && !data.whyPrismExcites) {
+        return NextResponse.json(
+          { error: "Missing required field: whyPrismExcites" },
+          { status: 400 }
+        )
+      }
 
-      return NextResponse.json({
-        success: true,
-        message: "Waitlist application received successfully"
-      })
+      try {
+        // Store in Supabase
+        const submission: Partial<FormSubmission> = {
+          name: waitlistData.name,
+          email: waitlistData.email.toLowerCase(),
+          company: waitlistData.company,
+          website: waitlistData.website || null,
+          message: waitlistData.message,
+          why_prism_excites: data.whyPrismExcites || '',
+          source: waitlistData.source,
+        }
+
+        const { data: insertedData, error: dbError } = await supabaseAdmin
+          .from('form_submissions')
+          .insert([submission])
+          .select()
+          .single()
+
+        if (dbError) {
+          console.error('Database error:', dbError)
+          throw dbError
+        }
+
+        // Send email notification for exclusive-waitlist submissions
+        if (data.source === 'exclusive-waitlist') {
+          try {
+            await sendFormSubmissionEmail({
+              name: waitlistData.name,
+              email: waitlistData.email,
+              company: waitlistData.company,
+              website: waitlistData.website,
+              message: waitlistData.message,
+              whyPrismExcites: data.whyPrismExcites,
+              submittedAt: insertedData.created_at || new Date().toISOString(),
+            })
+            console.log('Email notification sent successfully')
+          } catch (emailError) {
+            // Log email error but don't fail the submission
+            console.error('Email sending failed:', emailError)
+            // You might want to set up a retry queue here
+          }
+        }
+
+        // Still store in memory for backward compatibility
+        prismLeads.push(waitlistData)
+        
+        // Log for monitoring
+        console.log("New form submission stored:", insertedData)
+
+        return NextResponse.json({
+          success: true,
+          message: "Application received successfully",
+          id: insertedData.id
+        })
+      } catch (error) {
+        console.error('Error storing submission:', error)
+        // Fall back to in-memory storage if database fails
+        prismLeads.push(waitlistData)
+        
+        return NextResponse.json({
+          success: true,
+          message: "Application received (backup mode)"
+        })
+      }
     } else {
       // Handle original Prism AI lead format
       const leadData = data as PrismLeadData
