@@ -3,8 +3,8 @@
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { trackCTAClick } from "@/utils/analytics"
-import { fadeInUp, staggerContainer } from "@/utils/animation-variants"
-import { AnimatePresence, motion } from "framer-motion"
+import { fadeInUp, staggerContainer, scrollRevealBlog } from "@/utils/animation-variants"
+import { AnimatePresence, motion, useInView } from "framer-motion"
 import {
     ArrowRight,
     BarChart3,
@@ -19,10 +19,44 @@ import {
     Zap
 } from "lucide-react"
 import Link from "next/link"
-import { useState } from "react"
+import { useState, useRef } from "react"
 
-// Tech stack items with their categories
-const techStackItems = [
+  // GPU-accelerated scroll reveal animation
+  const gpuScrollReveal = {
+    hidden: {
+      opacity: 0,
+      y: 60,
+      scale: 0.95,
+      filter: "blur(4px)",
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      filter: "blur(0px)",
+      transition: {
+        duration: 0.8,
+        ease: [0.6, -0.05, 0.01, 0.99],
+      },
+    },
+  }
+
+  // Staggered card animations
+  const cardAnimation = {
+    hidden: { opacity: 0, y: 40 },
+    visible: (i: number) => ({
+      opacity: 1,
+      y: 0,
+      transition: {
+        delay: i * 0.1,
+        duration: 0.6,
+        ease: "easeOut",
+      },
+    }),
+  }
+
+  // Tech stack items with their categories
+  const techStackItems = [
   {
     category: "AI Development",
     icon: Brain,
@@ -106,6 +140,22 @@ const flywheelPhases = [
 export default function PrismFlywheelClient() {
   const [activePhase, setActivePhase] = useState<number | null>(null)
   const [hoveredTech, setHoveredTech] = useState<number | null>(null)
+  
+  // Refs for scroll animations
+  const philosophyRef = useRef(null)
+  const howItWorksRef = useRef(null)
+  const techStackRef = useRef(null)
+  const dataRef = useRef(null)
+  const impactRef = useRef(null)
+  const learnRef = useRef(null)
+  
+  // Intersection observers
+  const philosophyInView = useInView(philosophyRef, { once: true, margin: "-100px" })
+  const howItWorksInView = useInView(howItWorksRef, { once: true, margin: "-100px" })
+  const techStackInView = useInView(techStackRef, { once: true, margin: "-100px" })
+  const dataInView = useInView(dataRef, { once: true, margin: "-100px" })
+  const impactInView = useInView(impactRef, { once: true, margin: "-100px" })
+  const learnInView = useInView(learnRef, { once: true, margin: "-100px" })
 
   return (
     <div className="min-h-screen bg-white">
@@ -240,13 +290,21 @@ export default function PrismFlywheelClient() {
       </motion.section>
 
       {/* Philosophy Section */}
-      <section className="py-16 md:py-24 bg-neutral-50">
+      <motion.section 
+        ref={philosophyRef}
+        className="py-16 md:py-24 bg-neutral-50"
+        initial="hidden"
+        animate={philosophyInView ? "visible" : "hidden"}
+        variants={scrollRevealBlog}
+        style={{
+          transform: "translateZ(0)",
+          willChange: "transform, opacity, filter",
+          backfaceVisibility: "hidden",
+        }}
+      >
         <div className="container mx-auto px-4 max-w-6xl">
           <motion.div 
             className="grid md:grid-cols-2 gap-12 items-center"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
             variants={staggerContainer}
           >
             <motion.div variants={fadeInUp}>
@@ -324,10 +382,21 @@ export default function PrismFlywheelClient() {
             </motion.div>
           </motion.div>
         </div>
-      </section>
+      </motion.section>
 
       {/* How It Works Section */}
-      <section className="py-16 md:py-24">
+      <motion.section 
+        ref={howItWorksRef}
+        className="py-16 md:py-24"
+        initial="hidden"
+        animate={howItWorksInView ? "visible" : "hidden"}
+        variants={scrollRevealBlog}
+        style={{
+          transform: "translateZ(0)",
+          willChange: "transform, opacity, filter",
+          backfaceVisibility: "hidden",
+        }}
+      >
         <div className="container mx-auto px-4 max-w-6xl">
           <motion.div
             initial="hidden"
