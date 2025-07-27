@@ -1,28 +1,25 @@
 "use client"
 
-import { useState } from "react"
-import { motion, AnimatePresence } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
-import Link from "next/link"
-import { 
-  ArrowRight, 
-  Brain, 
-  Code, 
-  Zap, 
-  BarChart3, 
-  Users, 
-  Clock, 
-  Rocket,
-  Search,
-  Palette,
-  Globe,
-  Database,
-  TrendingUp,
-  CheckCircle
-} from "lucide-react"
-import { fadeInUp, staggerContainer, springScale } from "@/utils/animation-variants"
 import { trackCTAClick } from "@/utils/analytics"
+import { fadeInUp, staggerContainer } from "@/utils/animation-variants"
+import { AnimatePresence, motion } from "framer-motion"
+import {
+    ArrowRight,
+    BarChart3,
+    Brain,
+    CheckCircle,
+    Code,
+    Database,
+    Globe,
+    Palette,
+    Search,
+    TrendingUp,
+    Zap
+} from "lucide-react"
+import Link from "next/link"
+import { useState } from "react"
 
 // Tech stack items with their categories
 const techStackItems = [
@@ -608,6 +605,124 @@ export default function PrismFlywheelClient() {
                 </Card>
               </motion.div>
             </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Learn & Build Section */}
+      <section className="py-16 md:py-24 bg-gradient-to-br from-purple-50 via-indigo-50 to-blue-50">
+        <div className="container mx-auto px-4 max-w-6xl">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={staggerContainer}
+          >
+            <motion.h2 
+              className="text-3xl md:text-4xl font-bold text-center mb-4 lowercase"
+              variants={fadeInUp}
+            >
+              learn to build your own flywheel
+            </motion.h2>
+            <motion.p 
+              className="text-center text-neutral-600 mb-12 max-w-3xl mx-auto lowercase"
+              variants={fadeInUp}
+            >
+              ready to harness the power of the prism flywheel? dive into our resources 
+              and discover how to create your own compounding growth engine
+            </motion.p>
+
+            <div className="grid md:grid-cols-3 gap-8">
+              {/* Blog CTA */}
+              <motion.div variants={fadeInUp}>
+                <Card className="p-6 h-full hover:shadow-lg transition-shadow cursor-pointer group">
+                  <div className="flex items-center justify-center w-16 h-16 bg-purple-100 rounded-full mb-4 mx-auto group-hover:scale-110 transition-transform">
+                    <span className="text-2xl">✍️</span>
+                  </div>
+                  <h3 className="font-bold text-xl mb-3 lowercase text-center">blog insights</h3>
+                  <p className="text-neutral-600 mb-6 lowercase text-center">
+                    deep dives into flywheel mechanics, case studies, and step-by-step 
+                    guides to build your growth engine
+                  </p>
+                  <Link href="/blog">
+                    <Button 
+                      variant="outline"
+                      className="w-full rounded-full lowercase group-hover:bg-purple-600 group-hover:text-white transition-colors"
+                      onClick={() => trackCTAClick("explore blog", "flywheel-learn-section")}
+                    >
+                      read the guides
+                      <ArrowRight className="ml-2 h-4 w-4" />
+                    </Button>
+                  </Link>
+                </Card>
+              </motion.div>
+
+              {/* YouTube CTA */}
+              <motion.div variants={fadeInUp}>
+                <Card className="p-6 h-full hover:shadow-lg transition-shadow cursor-pointer group">
+                  <div className="flex items-center justify-center w-16 h-16 bg-red-100 rounded-full mb-4 mx-auto group-hover:scale-110 transition-transform">
+                    <span className="text-2xl">🎥</span>
+                  </div>
+                  <h3 className="font-bold text-xl mb-3 lowercase text-center">youtube tutorials</h3>
+                  <p className="text-neutral-600 mb-6 lowercase text-center">
+                    watch enzo break down the flywheel system with real examples 
+                    and live demonstrations
+                  </p>
+                  <a 
+                    href="https://www.youtube.com/@the_design_prism" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                  >
+                    <Button 
+                      variant="outline"
+                      className="w-full rounded-full lowercase group-hover:bg-red-600 group-hover:text-white transition-colors"
+                      onClick={() => trackCTAClick("watch youtube", "flywheel-learn-section")}
+                    >
+                      watch tutorials
+                      <ArrowRight className="ml-2 h-4 w-4" />
+                    </Button>
+                  </a>
+                </Card>
+              </motion.div>
+
+              {/* Instagram CTA */}
+              <motion.div variants={fadeInUp}>
+                <Card className="p-6 h-full hover:shadow-lg transition-shadow cursor-pointer group">
+                  <div className="flex items-center justify-center w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full mb-4 mx-auto group-hover:scale-110 transition-transform">
+                    <span className="text-2xl text-white">📸</span>
+                  </div>
+                  <h3 className="font-bold text-xl mb-3 lowercase text-center">instagram daily tips</h3>
+                  <p className="text-neutral-600 mb-6 lowercase text-center">
+                    daily flywheel insights, growth hacks, and behind-the-scenes 
+                    of building with prism
+                  </p>
+                  <a 
+                    href="https://www.instagram.com/the_design_prism/" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                  >
+                    <Button 
+                      variant="outline"
+                      className="w-full rounded-full lowercase group-hover:bg-gradient-to-r group-hover:from-purple-600 group-hover:to-pink-600 group-hover:text-white transition-all"
+                      onClick={() => trackCTAClick("follow instagram", "flywheel-learn-section")}
+                    >
+                      get daily tips
+                      <ArrowRight className="ml-2 h-4 w-4" />
+                    </Button>
+                  </a>
+                </Card>
+              </motion.div>
+            </div>
+
+            {/* Social Proof */}
+            <motion.div 
+              className="mt-12 text-center"
+              variants={fadeInUp}
+            >
+              <p className="text-sm text-neutral-500 lowercase">
+                join 24,500+ on youtube and 38,500+ on instagram learning the prism way
+              </p>
+            </motion.div>
           </motion.div>
         </div>
       </section>
