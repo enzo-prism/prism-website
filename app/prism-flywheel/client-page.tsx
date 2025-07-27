@@ -566,275 +566,299 @@ export default function PrismFlywheelClient() {
         </div>
       </section>
 
-      {/* Data-Driven Optimization Section */}
+      {/* Data-Driven Optimization Section - Minimal */}
       <motion.section 
         ref={dataRef}
-        className="py-16 md:py-24"
+        className="py-24 md:py-32 bg-neutral-50 dark:bg-neutral-900"
         initial="hidden"
         animate={dataInView ? "visible" : "hidden"}
         variants={gpuScrollReveal}
-        style={{
-          transform: "translateZ(0)",
-          willChange: dataInView ? "transform, opacity, filter" : "auto",
-          backfaceVisibility: "hidden",
-        }}
       >
-        <div className="container mx-auto px-4 max-w-6xl">
+        <div className="container mx-auto px-4 max-w-5xl">
           <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
             variants={staggerContainer}
-            className="text-center"
+            className="space-y-16"
           >
-            <motion.h2 
-              className="text-3xl md:text-4xl font-bold mb-4 lowercase"
-              variants={fadeInUp}
-            >
-              data at the core: informed decisions for sustained momentum
-            </motion.h2>
-            <motion.p 
-              className="text-neutral-600 max-w-3xl mx-auto mb-12 lowercase"
-              variants={fadeInUp}
-            >
-              every flywheel iteration is powered by analytics: ga4 tracks user journeys, 
-              gsc optimizes search presence, and hotjar reveals behavioral insights. we turn 
-              data into actionable leverage, ensuring your growth engine runs on facts, not 
-              guesswork—compounding efficiency and roi
-            </motion.p>
-
+            {/* Section header */}
             <motion.div 
-              className="grid md:grid-cols-3 gap-8"
+              className="text-center"
+              variants={fadeInUp}
+            >
+              <h2 className="text-2xl md:text-3xl font-light text-neutral-900 dark:text-white">
+                Data-Driven Decisions
+              </h2>
+              <p className="mt-4 text-neutral-600 dark:text-neutral-400 max-w-2xl mx-auto">
+                Transform insights into growth with intelligent analytics
+              </p>
+            </motion.div>
+
+            {/* Data metrics - minimal approach */}
+            <motion.div 
+              className="grid md:grid-cols-3 gap-x-16 gap-y-12"
               variants={staggerContainer}
             >
-              <motion.div variants={fadeInUp}>
-                <div className="bg-blue-100 p-6 rounded-lg mb-4">
-                  <BarChart3 className="h-12 w-12 text-blue-600 mx-auto" />
+              <motion.div 
+                className="text-center space-y-3"
+                variants={fadeInUp}
+              >
+                <div className="text-xs font-medium tracking-wider uppercase text-neutral-400">
+                  Analytics
                 </div>
-                <h3 className="font-bold mb-2 lowercase">analytics insights</h3>
-                <p className="text-sm text-neutral-600 lowercase">
-                  track user journeys and conversions with ga4
+                <h3 className="text-lg font-normal text-neutral-900 dark:text-white">
+                  User Journey Tracking
+                </h3>
+                <p className="text-sm text-neutral-600 dark:text-neutral-400">
+                  GA4 insights for conversion optimization
                 </p>
+                <div className="w-16 h-px bg-neutral-200 dark:bg-neutral-800 mx-auto" />
               </motion.div>
 
-              <motion.div variants={fadeInUp}>
-                <div className="bg-green-100 p-6 rounded-lg mb-4">
-                  <Search className="h-12 w-12 text-green-600 mx-auto" />
+              <motion.div 
+                className="text-center space-y-3"
+                variants={fadeInUp}
+              >
+                <div className="text-xs font-medium tracking-wider uppercase text-neutral-400">
+                  Visibility
                 </div>
-                <h3 className="font-bold mb-2 lowercase">search optimization</h3>
-                <p className="text-sm text-neutral-600 lowercase">
-                  maximize visibility with google search console
+                <h3 className="text-lg font-normal text-neutral-900 dark:text-white">
+                  Search Optimization
+                </h3>
+                <p className="text-sm text-neutral-600 dark:text-neutral-400">
+                  Google Search Console for maximum reach
                 </p>
+                <div className="w-16 h-px bg-neutral-200 dark:bg-neutral-800 mx-auto" />
               </motion.div>
 
-              <motion.div variants={fadeInUp}>
-                <div className="bg-purple-100 p-6 rounded-lg mb-4">
-                  <Database className="h-12 w-12 text-purple-600 mx-auto" />
+              <motion.div 
+                className="text-center space-y-3"
+                variants={fadeInUp}
+              >
+                <div className="text-xs font-medium tracking-wider uppercase text-neutral-400">
+                  Behavior
                 </div>
-                <h3 className="font-bold mb-2 lowercase">behavioral data</h3>
-                <p className="text-sm text-neutral-600 lowercase">
-                  understand user behavior with hotjar heatmaps
+                <h3 className="text-lg font-normal text-neutral-900 dark:text-white">
+                  User Understanding
+                </h3>
+                <p className="text-sm text-neutral-600 dark:text-neutral-400">
+                  Hotjar heatmaps reveal engagement patterns
                 </p>
+                <div className="w-16 h-px bg-neutral-200 dark:bg-neutral-800 mx-auto" />
               </motion.div>
             </motion.div>
+
+            {/* Bottom insight */}
+            <motion.p 
+              className="text-center text-sm text-neutral-500 dark:text-neutral-500"
+              variants={fadeInUp}
+            >
+              Facts drive decisions. Decisions drive growth.
+            </motion.p>
           </motion.div>
         </div>
       </motion.section>
 
-      {/* Client Impact Section */}
+      {/* Client Impact Section - Minimal Metrics */}
       <motion.section 
         ref={impactRef}
-        className="py-16 md:py-24 bg-neutral-50"
+        className="py-24 md:py-32"
         initial="hidden"
         animate={impactInView ? "visible" : "hidden"}
         variants={gpuScrollReveal}
-        style={{
-          transform: "translateZ(0)",
-          willChange: impactInView ? "transform, opacity, filter" : "auto",
-          backfaceVisibility: "hidden",
-        }}
       >
-        <div className="container mx-auto px-4 max-w-6xl">
+        <div className="container mx-auto px-4 max-w-5xl">
           <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
             variants={staggerContainer}
+            className="space-y-20"
           >
-            <motion.h2 
-              className="text-3xl md:text-4xl font-bold text-center mb-4 lowercase"
+            {/* Section header */}
+            <motion.div 
+              className="text-center max-w-3xl mx-auto"
               variants={fadeInUp}
             >
-              transform your business: from grind to growth
-            </motion.h2>
-            <motion.p 
-              className="text-center text-neutral-600 mb-12 max-w-3xl mx-auto lowercase"
-              variants={fadeInUp}
-            >
-              imagine your startup automating workflows with ai code, your healthcare practice 
-              filling schedules via optimized local profiles, or your brand creating content 
-              that converts. prism's flywheel delivers: 3x faster scaling, deeper client 
-              connections, and revenue that compounds
-            </motion.p>
+              <h2 className="text-2xl md:text-3xl font-light text-neutral-900 dark:text-white mb-6">
+                Transform Your Business
+              </h2>
+              <p className="text-neutral-600 dark:text-neutral-400 leading-relaxed">
+                From endless grind to sustainable growth. Automate workflows, optimize presence, 
+                and create content that converts—all through one intelligent system.
+              </p>
+            </motion.div>
 
-            <div className="grid md:grid-cols-3 gap-6">
-              <motion.div variants={fadeInUp}>
-                <Card className="p-6 text-center h-full">
-                  <div className="text-4xl font-bold text-purple-600 mb-2">3x</div>
-                  <h3 className="font-bold mb-2 lowercase">faster scaling</h3>
-                  <p className="text-sm text-neutral-600 lowercase">
-                    accelerate growth with automated systems
-                  </p>
-                </Card>
+            {/* Elegant metrics display */}
+            <div className="grid md:grid-cols-3 gap-12">
+              <motion.div 
+                className="text-center"
+                variants={fadeInUp}
+              >
+                <div className="mb-4">
+                  <span className="text-5xl md:text-6xl font-extralight text-neutral-900 dark:text-white">
+                    3×
+                  </span>
+                </div>
+                <h3 className="text-base font-medium text-neutral-900 dark:text-white mb-2">
+                  Faster Scaling
+                </h3>
+                <p className="text-sm text-neutral-600 dark:text-neutral-400">
+                  Accelerate with automation
+                </p>
               </motion.div>
 
-              <motion.div variants={fadeInUp}>
-                <Card className="p-6 text-center h-full">
-                  <div className="text-4xl font-bold text-blue-600 mb-2">200%</div>
-                  <h3 className="font-bold mb-2 lowercase">lead growth</h3>
-                  <p className="text-sm text-neutral-600 lowercase">
-                    code + content = exponential results
-                  </p>
-                </Card>
+              <motion.div 
+                className="text-center"
+                variants={fadeInUp}
+              >
+                <div className="mb-4">
+                  <span className="text-5xl md:text-6xl font-extralight text-neutral-900 dark:text-white">
+                    2×
+                  </span>
+                </div>
+                <h3 className="text-base font-medium text-neutral-900 dark:text-white mb-2">
+                  Lead Growth
+                </h3>
+                <p className="text-sm text-neutral-600 dark:text-neutral-400">
+                  Code meets content
+                </p>
               </motion.div>
 
-              <motion.div variants={fadeInUp}>
-                <Card className="p-6 text-center h-full">
-                  <div className="text-4xl font-bold text-green-600 mb-2">∞</div>
-                  <h3 className="font-bold mb-2 lowercase">compounding roi</h3>
-                  <p className="text-sm text-neutral-600 lowercase">
-                    every iteration builds lasting value
-                  </p>
-                </Card>
+              <motion.div 
+                className="text-center"
+                variants={fadeInUp}
+              >
+                <div className="mb-4">
+                  <span className="text-5xl md:text-6xl font-extralight text-neutral-900 dark:text-white">
+                    ∞
+                  </span>
+                </div>
+                <h3 className="text-base font-medium text-neutral-900 dark:text-white mb-2">
+                  Compound Returns
+                </h3>
+                <p className="text-sm text-neutral-600 dark:text-neutral-400">
+                  Value that multiplies
+                </p>
               </motion.div>
             </div>
           </motion.div>
         </div>
       </motion.section>
 
-      {/* Learn & Build Section */}
+      {/* Learn & Build Section - Minimal Resources */}
       <motion.section 
         ref={learnRef}
-        className="py-16 md:py-24 bg-gradient-to-br from-purple-50 via-indigo-50 to-blue-50"
+        className="py-24 md:py-32 bg-neutral-50 dark:bg-neutral-900"
         initial="hidden"
         animate={learnInView ? "visible" : "hidden"}
         variants={gpuScrollReveal}
-        style={{
-          transform: "translateZ(0)",
-          willChange: learnInView ? "transform, opacity, filter" : "auto",
-          backfaceVisibility: "hidden",
-        }}
       >
-        <div className="container mx-auto px-4 max-w-6xl">
+        <div className="container mx-auto px-4 max-w-5xl">
           <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
             variants={staggerContainer}
+            className="space-y-16"
           >
-            <motion.h2 
-              className="text-3xl md:text-4xl font-bold text-center mb-4 lowercase"
+            {/* Section header */}
+            <motion.div 
+              className="text-center"
               variants={fadeInUp}
             >
-              learn to build your own flywheel
-            </motion.h2>
-            <motion.p 
-              className="text-center text-neutral-600 mb-12 max-w-3xl mx-auto lowercase"
-              variants={fadeInUp}
-            >
-              ready to harness the power of the prism flywheel? dive into our resources 
-              and discover how to create your own compounding growth engine
-            </motion.p>
+              <h2 className="text-2xl md:text-3xl font-light text-neutral-900 dark:text-white">
+                Learn the System
+              </h2>
+              <p className="mt-4 text-neutral-600 dark:text-neutral-400 max-w-xl mx-auto">
+                Master the flywheel methodology through our curated resources
+              </p>
+            </motion.div>
 
-            <div className="grid md:grid-cols-3 gap-8">
-              {/* Blog CTA */}
-              <motion.div variants={fadeInUp}>
-                <Card className="p-6 h-full hover:shadow-lg transition-shadow cursor-pointer group">
-                  <div className="flex items-center justify-center w-16 h-16 bg-purple-100 rounded-full mb-4 mx-auto group-hover:scale-110 transition-transform">
-                    <span className="text-2xl">✍️</span>
-                  </div>
-                  <h3 className="font-bold text-xl mb-3 lowercase text-center">blog insights</h3>
-                  <p className="text-neutral-600 mb-6 lowercase text-center">
-                    deep dives into flywheel mechanics, case studies, and step-by-step 
-                    guides to build your growth engine
+            {/* Resource links - minimal approach */}
+            <div className="grid md:grid-cols-3 gap-12 md:gap-16">
+              {/* Blog */}
+              <motion.div 
+                className="space-y-4"
+                variants={fadeInUp}
+              >
+                <div className="space-y-2">
+                  <h3 className="text-lg font-normal text-neutral-900 dark:text-white">
+                    Written Guides
+                  </h3>
+                  <p className="text-sm text-neutral-600 dark:text-neutral-400">
+                    In-depth articles on flywheel mechanics and implementation strategies
                   </p>
-                  <Link href="/blog">
-                    <Button 
-                      variant="outline"
-                      className="w-full rounded-full lowercase group-hover:bg-purple-600 group-hover:text-white transition-colors"
-                      onClick={() => trackCTAClick("explore blog", "flywheel-learn-section")}
-                    >
-                      read the guides
-                      <ArrowRight className="ml-2 h-4 w-4" />
-                    </Button>
-                  </Link>
-                </Card>
+                </div>
+                <Link 
+                  href="/blog"
+                  className="inline-flex items-center text-sm text-neutral-900 dark:text-white hover:text-neutral-600 dark:hover:text-neutral-300 transition-colors group"
+                  onClick={() => trackCTAClick("read guides minimal", "flywheel-learn")}
+                >
+                  Read Articles
+                  <ArrowRight className="ml-1 h-3 w-3 transition-transform group-hover:translate-x-1" />
+                </Link>
               </motion.div>
 
-              {/* YouTube CTA */}
-              <motion.div variants={fadeInUp}>
-                <Card className="p-6 h-full hover:shadow-lg transition-shadow cursor-pointer group">
-                  <div className="flex items-center justify-center w-16 h-16 bg-red-100 rounded-full mb-4 mx-auto group-hover:scale-110 transition-transform">
-                    <span className="text-2xl">🎥</span>
-                  </div>
-                  <h3 className="font-bold text-xl mb-3 lowercase text-center">youtube tutorials</h3>
-                  <p className="text-neutral-600 mb-6 lowercase text-center">
-                    watch enzo break down the flywheel system with real examples 
-                    and live demonstrations
+              {/* YouTube */}
+              <motion.div 
+                className="space-y-4"
+                variants={fadeInUp}
+              >
+                <div className="space-y-2">
+                  <h3 className="text-lg font-normal text-neutral-900 dark:text-white">
+                    Video Tutorials
+                  </h3>
+                  <p className="text-sm text-neutral-600 dark:text-neutral-400">
+                    Watch practical demonstrations and real-world flywheel examples
                   </p>
-                  <a 
-                    href="https://www.youtube.com/@the_design_prism" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                  >
-                    <Button 
-                      variant="outline"
-                      className="w-full rounded-full lowercase group-hover:bg-red-600 group-hover:text-white transition-colors"
-                      onClick={() => trackCTAClick("watch youtube", "flywheel-learn-section")}
-                    >
-                      watch tutorials
-                      <ArrowRight className="ml-2 h-4 w-4" />
-                    </Button>
-                  </a>
-                </Card>
+                </div>
+                <a 
+                  href="https://www.youtube.com/@the_design_prism" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center text-sm text-neutral-900 dark:text-white hover:text-neutral-600 dark:hover:text-neutral-300 transition-colors group"
+                  onClick={() => trackCTAClick("watch youtube minimal", "flywheel-learn")}
+                >
+                  Watch Videos
+                  <ArrowRight className="ml-1 h-3 w-3 transition-transform group-hover:translate-x-1" />
+                </a>
               </motion.div>
 
-              {/* Instagram CTA */}
-              <motion.div variants={fadeInUp}>
-                <Card className="p-6 h-full hover:shadow-lg transition-shadow cursor-pointer group">
-                  <div className="flex items-center justify-center w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full mb-4 mx-auto group-hover:scale-110 transition-transform">
-                    <span className="text-2xl text-white">📸</span>
-                  </div>
-                  <h3 className="font-bold text-xl mb-3 lowercase text-center">instagram daily tips</h3>
-                  <p className="text-neutral-600 mb-6 lowercase text-center">
-                    daily flywheel insights, growth hacks, and behind-the-scenes 
-                    of building with prism
+              {/* Instagram */}
+              <motion.div 
+                className="space-y-4"
+                variants={fadeInUp}
+              >
+                <div className="space-y-2">
+                  <h3 className="text-lg font-normal text-neutral-900 dark:text-white">
+                    Daily Insights
+                  </h3>
+                  <p className="text-sm text-neutral-600 dark:text-neutral-400">
+                    Quick tips and behind-the-scenes content on flywheel implementation
                   </p>
-                  <a 
-                    href="https://www.instagram.com/the_design_prism/" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                  >
-                    <Button 
-                      variant="outline"
-                      className="w-full rounded-full lowercase group-hover:bg-gradient-to-r group-hover:from-purple-600 group-hover:to-pink-600 group-hover:text-white transition-all"
-                      onClick={() => trackCTAClick("follow instagram", "flywheel-learn-section")}
-                    >
-                      get daily tips
-                      <ArrowRight className="ml-2 h-4 w-4" />
-                    </Button>
-                  </a>
-                </Card>
+                </div>
+                <a 
+                  href="https://www.instagram.com/the_design_prism/" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center text-sm text-neutral-900 dark:text-white hover:text-neutral-600 dark:hover:text-neutral-300 transition-colors group"
+                  onClick={() => trackCTAClick("follow instagram minimal", "flywheel-learn")}
+                >
+                  Follow Daily
+                  <ArrowRight className="ml-1 h-3 w-3 transition-transform group-hover:translate-x-1" />
+                </a>
               </motion.div>
             </div>
 
-            {/* Social Proof */}
+            {/* Community note */}
             <motion.div 
-              className="mt-12 text-center"
+              className="text-center pt-8"
               variants={fadeInUp}
             >
-              <p className="text-sm text-neutral-500 lowercase">
-                join 24,500+ on youtube and 38,500+ on instagram learning the prism way
+              <p className="text-xs text-neutral-500 dark:text-neutral-500">
+                Join 24,500+ on YouTube and 38,500+ on Instagram
               </p>
             </motion.div>
           </motion.div>
