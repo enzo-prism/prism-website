@@ -398,6 +398,46 @@ export default function ClientPage() {
         {/* Who We Build For Carousel */}
         <WhoWeBuildForCarousel />
 
+        {/* Prism Flywheel CTA Section */}
+        <section className="py-16 md:py-24 bg-gradient-to-br from-purple-50 via-indigo-50 to-blue-50 dark:from-neutral-900 dark:via-purple-900/20 dark:to-indigo-900/20">
+          <div className="container mx-auto px-4 md:px-6">
+            <div className="mx-auto max-w-3xl text-center">
+              <div className="inline-flex items-center justify-center p-3 mb-6 bg-purple-100 dark:bg-purple-900/30 rounded-full">
+                <span className="text-2xl">⚙️</span>
+              </div>
+              <h2 className="text-3xl font-bold tracking-tighter lowercase sm:text-4xl md:text-5xl mb-6 text-neutral-900 dark:text-neutral-100">
+                unlock exponential growth with the prism flywheel
+              </h2>
+              <p className="text-lg md:text-xl text-neutral-600 dark:text-neutral-300 lowercase mb-8 max-w-2xl mx-auto">
+                discover our proprietary growth system that transforms code and content into compounding revenue. 
+                powered by frontier ai and thoughtful automation.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <Link href="/prism-flywheel">
+                  <Button
+                    className="rounded-full px-8 py-6 text-lg lowercase bg-purple-600 hover:bg-purple-700 text-white hardware-hover touch-feedback scale-bounce"
+                    onClick={() => trackCTAClick("explore flywheel", "homepage flywheel cta")}
+                  >
+                    explore the flywheel <ArrowRight className="ml-2 h-5 w-5" />
+                  </Button>
+                </Link>
+                <Link href="/get-started">
+                  <Button
+                    variant="outline"
+                    className="rounded-full px-8 py-6 text-lg lowercase border-purple-600 text-purple-600 dark:border-purple-400 dark:text-purple-400 hardware-hover touch-feedback"
+                    onClick={() => trackCTAClick("get started secondary", "homepage flywheel cta")}
+                  >
+                    get started today
+                  </Button>
+                </Link>
+              </div>
+              <p className="text-sm text-neutral-500 dark:text-neutral-400 lowercase mt-6">
+                join 500+ visionaries building with prism's growth engine
+              </p>
+            </div>
+          </div>
+        </section>
+
         {/* Testimonials Section */}
         <section 
           ref={testimonialsRef} 
