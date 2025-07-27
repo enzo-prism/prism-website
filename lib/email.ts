@@ -1,7 +1,7 @@
 import { Resend } from 'resend';
 
-// Initialize Resend with your API key
-const resend = new Resend(process.env.RESEND_API_KEY);
+// Initialize Resend with your API key (only if available)
+const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null;
 
 export interface FormSubmissionEmailData {
   name: string;
@@ -15,6 +15,11 @@ export interface FormSubmissionEmailData {
 
 export async function sendFormSubmissionEmail(data: FormSubmissionEmailData) {
   try {
+    if (!resend) {
+      console.warn('Email service not configured. Skipping email notification.');
+      return null;
+    }
+
     const { data: emailData, error } = await resend.emails.send({
       from: 'Prism Website <notifications@design-prism.com>',
       to: ['enzo@design-prism.com'],

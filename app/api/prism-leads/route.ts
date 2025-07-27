@@ -69,21 +69,30 @@ export async function POST(request: Request) {
           name: waitlistData.name,
           email: waitlistData.email.toLowerCase(),
           company: waitlistData.company,
-          website: waitlistData.website || null,
+          ...(waitlistData.website && { website: waitlistData.website }),
           message: waitlistData.message,
           why_prism_excites: data.whyPrismExcites || '',
           source: waitlistData.source,
         }
 
-        const { data: insertedData, error: dbError } = await supabaseAdmin
-          .from('form_submissions')
-          .insert([submission])
-          .select()
-          .single()
+        let insertedData = null
+        
+        if (supabaseAdmin) {
+          const { data, error: dbError } = await supabaseAdmin
+            .from('form_submissions')
+            .insert([submission])
+            .select()
+            .single()
 
-        if (dbError) {
-          console.error('Database error:', dbError)
-          throw dbError
+          if (dbError) {
+            console.error('Database error:', dbError)
+            throw dbError
+          }
+          
+          insertedData = data
+        } else {
+          console.warn('Database not configured. Storing in memory only.')
+          insertedData = { id: 'memory-' + Date.now(), ...submission, created_at: new Date().toISOString() }
         }
 
         // Send email notification for exclusive-waitlist submissions
