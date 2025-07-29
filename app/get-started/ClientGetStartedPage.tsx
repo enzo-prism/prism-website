@@ -6,15 +6,8 @@ import { Input } from "@/components/ui/input"
 import VideoWithPoster from "@/components/video-with-poster"
 import { useMobile } from "@/hooks/use-mobile"
 import { trackCTAClick } from "@/utils/analytics"
-import {
-    fadeInUp,
-    pageTransition,
-    springScale,
-    staggerContainer,
-    successPop
-} from "@/utils/animation-variants"
 import { AnimatePresence, motion } from "framer-motion"
-import { CheckCircle, Clock, Heart, Rocket, Share2, TrendingUp, Users, Zap } from "lucide-react"
+import { ArrowRight, CheckCircle, Clock, Heart, Rocket, Share2, TrendingUp, Users, Zap } from "lucide-react"
 import { useEffect, useRef, useState } from "react"
 
 interface FormData {
@@ -24,6 +17,27 @@ interface FormData {
   website: string
   growthChallenge: string
   whyPartnerWithPrism: string
+}
+
+// Simplified animation variants for elegant transitions
+const fadeIn = {
+  initial: { opacity: 0 },
+  animate: { opacity: 1 },
+  transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] }
+}
+
+const fadeInY = {
+  initial: { opacity: 0, y: 20 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] }
+}
+
+const staggerChildren = {
+  animate: {
+    transition: {
+      staggerChildren: 0.1
+    }
+  }
 }
 
 export default function ClientGetStartedPage() {
@@ -167,40 +181,30 @@ export default function ClientGetStartedPage() {
   ]
 
   return (
-    <motion.div 
-      className="flex min-h-screen flex-col"
-      initial="initial"
-      animate="animate"
-      exit="exit"
-      variants={pageTransition}
-    >
+    <div className="flex min-h-screen flex-col bg-white">
       <Navbar />
       <main className="flex-1">
-        {/* Hero Section with Video */}
-        <motion.section 
+        {/* Hero Section with Video - Minimalist approach */}
+        <section 
           ref={videoRef} 
-          className="relative px-4 py-16 md:py-24 lg:py-32 bg-gradient-to-b from-white via-neutral-50 to-white"
+          className="relative px-4 py-12 sm:py-16 md:py-20 lg:py-24"
         >
-          <motion.div 
-            className="container mx-auto px-4 md:px-6 max-w-6xl"
-            initial="initial"
-            animate="animate"
-          >
-            <div className="flex flex-col items-center space-y-8 text-center">
-              {/* Video */}
+          <div className="container mx-auto max-w-7xl">
+            <div className="flex flex-col items-center">
+              {/* Video - Cleaner presentation */}
               <motion.div 
-                className="relative"
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
+                className="relative mb-8 sm:mb-12"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
               >
                 {shouldLoadVideo ? (
-                  <div className="rounded-2xl overflow-hidden shadow-2xl">
+                  <div className="rounded-lg sm:rounded-xl overflow-hidden">
                     <VideoWithPoster
                       videoId="1097023041"
                       posterSrc="/prism%20get%20started.webp"
-                      width={isMobile ? 280 : 400}
-                      height={isMobile ? 280 : 400}
+                      width={isMobile ? 320 : 420}
+                      height={isMobile ? 320 : 420}
                       autoplay={true}
                       loop={true}
                       muted={true}
@@ -210,174 +214,160 @@ export default function ClientGetStartedPage() {
                     />
                   </div>
                 ) : (
-                  <div className={`${isMobile ? 'w-[280px] h-[280px]' : 'w-[400px] h-[400px]'} bg-neutral-100 rounded-2xl flex items-center justify-center`}>
-                    <div className="text-neutral-400 text-sm">Loading video...</div>
+                  <div className={`${isMobile ? 'w-[320px] h-[320px]' : 'w-[420px] h-[420px]'} bg-neutral-50 rounded-lg sm:rounded-xl flex items-center justify-center`}>
+                    <div className="text-neutral-400 text-sm">Loading...</div>
                   </div>
                 )}
               </motion.div>
               
-              {/* Main Headline and Value Prop */}
-              <div className="space-y-6 max-w-4xl">
+              {/* Typography - Clean and minimal */}
+              <div className="text-center space-y-6 max-w-4xl mx-auto">
                 <motion.h1 
-                  className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl text-neutral-900"
+                  className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light tracking-tight text-neutral-900"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, ease: [0.25, 0.1, 0.25, 1], delay: 0.1 }}
+                  transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
                 >
-                  Elevate Your Brand with Design That Actually Makes Money
+                  Elevate Your Brand with Design That{" "}
+                  <span className="font-normal">Actually Makes Money</span>
                 </motion.h1>
                 
                 <motion.p 
-                  className="text-xl sm:text-2xl text-neutral-700 max-w-3xl mx-auto leading-relaxed"
+                  className="text-base sm:text-lg md:text-xl text-neutral-600 max-w-3xl mx-auto leading-relaxed"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, ease: [0.25, 0.1, 0.25, 1], delay: 0.2 }}
+                  transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
                 >
                   Tired of beautiful websites that look great but don't convert? Or clunky tools that drive revenue but bore your users to tears? At Prism, we fuse stunning design with world-class tech to create digital experiences that skyrocket leads, conversions, and lifetime value (LTV)—no matter your industry.
                 </motion.p>
+
+                {/* Simplified CTA */}
+                <motion.div 
+                  className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
+                >
+                  <div className="flex items-center gap-2 text-sm text-neutral-900 font-medium">
+                    <Users className="w-4 h-4" />
+                    <span>Only 10 new clients per month</span>
+                  </div>
+                  <div className="hidden sm:block w-px h-4 bg-neutral-300" />
+                  <div className="flex items-center gap-2 text-sm text-neutral-600">
+                    <Clock className="w-4 h-4" />
+                    <span>Next review in {daysUntilReview} days</span>
+                  </div>
+                </motion.div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Social Proof Section - Clean and focused */}
+        <section className="px-4 py-12 sm:py-16 md:py-20 bg-neutral-50">
+          <div className="container mx-auto max-w-5xl">
+            <motion.div 
+              className="space-y-8"
+              initial="initial"
+              whileInView="animate"
+              viewport={{ once: true, amount: 0.3 }}
+              variants={staggerChildren}
+            >
+              <motion.p 
+                className="text-base sm:text-lg text-neutral-700 leading-relaxed text-center"
+                variants={fadeInY}
+              >
+                We've powered growth for dental practices (our biggest crew), a ski/bike shop turning seasonal browsers into year-round buyers, an online wellness community building sticky engagement, an alumni program fostering lifelong connections, a leadership consulting firm closing high-ticket deals effortlessly, and an M&A consultancy streamlining complex client journeys.
+              </motion.p>
+              
+              <motion.p 
+                className="text-lg sm:text-xl font-medium text-neutral-900 text-center"
+                variants={fadeInY}
+              >
+                Different worlds, same playbook: Beautiful, intuitive interfaces backed by smart tech that deliver measurable wins.
+              </motion.p>
+
+              <motion.div 
+                className="bg-white rounded-lg p-6 sm:p-8 md:p-10 text-center border border-neutral-200"
+                variants={fadeInY}
+              >
+                <p className="text-base sm:text-lg text-neutral-700">
+                  We're not for everyone. We're building an exclusive network of ambitious founders and leaders who want custom UX/UI that solves real problems, delights customers, and cranks up your key metrics.
+                </p>
+                <p className="text-xl sm:text-2xl font-medium text-neutral-900 mt-4">
+                  If you're ready to invest in design that pays you back 10x, this is your move.
+                </p>
+              </motion.div>
+            </motion.div>
+          </div>
+        </section>
+
+        {/* Who We're Looking For Section - Grid simplification */}
+        <section className="px-4 py-12 sm:py-16 md:py-20 bg-white">
+          <div className="container mx-auto max-w-6xl">
+            <motion.div
+              initial="initial"
+              whileInView="animate"
+              viewport={{ once: true, amount: 0.2 }}
+              variants={staggerChildren}
+            >
+              <motion.div className="text-center mb-12" variants={fadeInY}>
+                <h2 className="text-2xl sm:text-3xl md:text-4xl font-light tracking-tight text-neutral-900 mb-4">
+                  Who We're Looking For (And Why You'd Want In)
+                </h2>
+                <p className="text-base sm:text-lg text-neutral-600 max-w-3xl mx-auto">
+                  We partner with trailblazers who treat design like a revenue machine. Imagine unlocking the same growth hacks we've deployed across industries—tailored to your world:
+                </p>
+              </motion.div>
+
+              <div className="grid gap-6 md:grid-cols-3 mb-12">
+                {partnerTypes.map((type, index) => (
+                  <motion.div
+                    key={index}
+                    className="bg-white rounded-lg p-6 sm:p-8 border border-neutral-200 hover:border-neutral-300 transition-colors"
+                    variants={fadeInY}
+                  >
+                    <div className="flex items-center justify-center w-12 h-12 rounded-full bg-neutral-100 mb-6">
+                      {type.icon}
+                    </div>
+                    <h3 className="text-xl sm:text-2xl font-medium mb-3">{type.title}</h3>
+                    <p className="text-sm sm:text-base text-neutral-600 mb-4">{type.description}</p>
+                    <p className="text-sm text-neutral-500 italic">{type.example}</p>
+                  </motion.div>
+                ))}
               </div>
 
-              {/* Urgency and Exclusivity */}
               <motion.div 
-                className="flex flex-col sm:flex-row items-center gap-4 mt-8"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, ease: [0.25, 0.1, 0.25, 1], delay: 0.3 }}
+                className="text-center"
+                variants={fadeInY}
               >
-                <div className="flex items-center gap-2 px-5 py-2.5 bg-red-600 text-white rounded-full text-sm font-medium">
-                  <Users className="w-4 h-4" />
-                  Only 10 new clients per month
-                </div>
-                <div className="flex items-center gap-2 text-sm text-neutral-600">
-                  <Clock className="w-4 h-4" />
-                  Next application review in {daysUntilReview} days
+                <p className="text-base sm:text-lg text-neutral-700 mb-6 max-w-3xl mx-auto">
+                  No matter if you're a dental practice packing your schedule, a retail shop crushing e-comm, or a consultancy landing whales—we make it happen with data-backed design that increases leads, nails conversions, and maximizes LTV.
+                </p>
+                <div className="inline-flex items-center gap-2 text-sm font-medium text-neutral-700">
+                  <Heart className="w-4 h-4" />
+                  Priority access for the first 50 applicants
                 </div>
               </motion.div>
-            </div>
-          </motion.div>
-        </motion.section>
+            </motion.div>
+          </div>
+        </section>
 
-        {/* Social Proof Section */}
-        <motion.section 
-          className="relative px-4 py-16 md:py-20 bg-neutral-50"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
-        >
-          <motion.div 
-            className="container mx-auto px-4 md:px-6 max-w-6xl"
-            variants={staggerContainer}
-          >
-            <motion.div 
-              className="text-center mb-8"
-              variants={fadeInUp}
+        {/* Application Form Section - Clean and minimal */}
+        <section className="px-4 py-12 sm:py-16 md:py-20 bg-neutral-50">
+          <div className="container mx-auto max-w-2xl">
+            <motion.div
+              initial="initial"
+              whileInView="animate"
+              viewport={{ once: true, amount: 0.2 }}
+              variants={staggerChildren}
             >
-              <p className="text-lg text-neutral-700 leading-relaxed max-w-4xl mx-auto">
-                We've powered growth for dental practices (our biggest crew), a ski/bike shop turning seasonal browsers into year-round buyers, an online wellness community building sticky engagement, an alumni program fostering lifelong connections, a leadership consulting firm closing high-ticket deals effortlessly, and an M&A consultancy streamlining complex client journeys.
-              </p>
-              <p className="text-xl font-semibold text-neutral-900 mt-4">
-                Different worlds, same playbook: Beautiful, intuitive interfaces backed by smart tech that deliver measurable wins.
-              </p>
-            </motion.div>
-
-            <motion.div 
-              className="bg-white rounded-xl p-8 shadow-sm border border-neutral-200 text-center"
-              variants={springScale}
-            >
-              <p className="text-lg text-neutral-800 font-medium">
-                We're not for everyone. We're building an exclusive network of ambitious founders and leaders who want custom UX/UI that solves real problems, delights customers, and cranks up your key metrics.
-              </p>
-              <p className="text-2xl font-bold text-neutral-900 mt-4">
-                If you're ready to invest in design that pays you back 10x, this is your move.
-              </p>
-            </motion.div>
-          </motion.div>
-        </motion.section>
-
-        {/* Who We're Looking For Section */}
-        <motion.section 
-          className="relative px-4 py-16 md:py-24 bg-white"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
-        >
-          <motion.div 
-            className="container mx-auto px-4 md:px-6 max-w-6xl"
-            variants={staggerContainer}
-          >
-            <motion.div className="mb-12 text-center" variants={fadeInUp}>
-              <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
-                Who We're Looking For (And Why You'd Want In)
-              </h2>
-              <p className="mx-auto mt-4 max-w-3xl text-neutral-700 text-lg">
-                We partner with trailblazers who treat design like a revenue machine. Imagine unlocking the same growth hacks we've deployed across industries—tailored to your world:
-              </p>
-            </motion.div>
-
-            <motion.div 
-              className="grid gap-8 md:grid-cols-3"
-              variants={staggerContainer}
-            >
-              {partnerTypes.map((type, index) => (
-                <motion.div
-                  key={index}
-                  className="bg-gradient-to-b from-neutral-50 to-white rounded-xl p-8 shadow-lg border border-neutral-200"
-                  variants={springScale}
-                  whileHover={{ 
-                    scale: 1.03,
-                    boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1)",
-                  }}
-                >
-                  <motion.div 
-                    className="flex items-center justify-center w-14 h-14 rounded-full bg-gradient-to-br from-neutral-800 to-neutral-900 text-white mb-6"
-                    whileHover={{ rotate: 360 }}
-                    transition={{ duration: 0.5 }}
-                  >
-                    {type.icon}
-                  </motion.div>
-                  <h3 className="text-2xl font-bold mb-3">{type.title}</h3>
-                  <p className="text-neutral-700 mb-4">{type.description}</p>
-                  <p className="text-sm text-neutral-600 italic">{type.example}</p>
-                </motion.div>
-              ))}
-            </motion.div>
-
-            <motion.div 
-              className="mt-12 text-center"
-              variants={fadeInUp}
-            >
-              <p className="text-lg text-neutral-700 max-w-3xl mx-auto">
-                No matter if you're a dental practice packing your schedule, a retail shop crushing e-comm, or a consultancy landing whales—we make it happen with data-backed design that increases leads, nails conversions, and maximizes LTV.
-              </p>
-              <div className="inline-flex items-center gap-2 px-6 py-3 bg-green-100 rounded-full text-sm font-medium text-green-800 mt-6">
-                <Heart className="w-4 h-4" />
-                Priority access and consultations for the first 50 applicants
-              </div>
-            </motion.div>
-          </motion.div>
-        </motion.section>
-
-        {/* Application Form Section */}
-        <motion.section 
-          className="px-4 py-16 md:py-24 bg-gradient-to-b from-neutral-50 to-white"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
-        >
-          <motion.div 
-            className="container mx-auto px-4 md:px-6"
-            variants={staggerContainer}
-          >
-            <div className="mx-auto max-w-2xl">
-              <motion.div className="mb-12 text-center" variants={fadeInUp}>
-                <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl">
+              <motion.div className="text-center mb-10" variants={fadeInY}>
+                <h2 className="text-2xl sm:text-3xl md:text-4xl font-light tracking-tight text-neutral-900 mb-4">
                   Apply to Become a Prism Client
                 </h2>
-                <p className="mx-auto mt-4 max-w-[600px] text-neutral-700 text-lg">
-                  This isn't some generic signup. It's your fast-track application to partner with us on a custom project that transforms your digital game. We'll review your info, jump on a no-BS call if it's a fit, and co-build something that crushes your goals.
-                </p>
-                <p className="text-base font-medium text-neutral-600 mt-4">
-                  Tell us a bit about you:
+                <p className="text-base sm:text-lg text-neutral-600">
+                  This isn't some generic signup. It's your fast-track application to partner with us on a custom project that transforms your digital game.
                 </p>
               </motion.div>
 
@@ -385,22 +375,17 @@ export default function ClientGetStartedPage() {
                 {submitStatus === 'success' ? (
                   <motion.div
                     key="success"
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.8 }}
-                    variants={successPop}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -20 }}
                     className="text-center py-12"
                   >
-                    <motion.div
-                      className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-green-100 mb-6"
-                      animate={{ rotate: [0, 360] }}
-                      transition={{ duration: 0.5 }}
-                    >
-                      <CheckCircle className="h-10 w-10 text-green-600" />
-                    </motion.div>
-                    <h3 className="text-2xl font-bold mb-2">Welcome to the Inner Circle!</h3>
-                    <p className="text-neutral-700">
-                      Your application for exclusive access has been received. We'll personally review it {daysUntilReview === 0 ? 'today' : daysUntilReview === 1 ? 'tomorrow' : `within ${daysUntilReview} days`}.
+                    <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-green-50 mb-6">
+                      <CheckCircle className="h-8 w-8 text-green-600" />
+                    </div>
+                    <h3 className="text-xl sm:text-2xl font-medium mb-2">Welcome to the Inner Circle!</h3>
+                    <p className="text-neutral-600">
+                      Your application has been received. We'll review it within {daysUntilReview} days.
                     </p>
                   </motion.div>
                 ) : (
@@ -408,12 +393,12 @@ export default function ClientGetStartedPage() {
                     key="form"
                     onSubmit={handleSubmit}
                     className="space-y-6"
-                    variants={staggerContainer}
+                    variants={fadeInY}
                   >
-                    <motion.div className="grid gap-6 md:grid-cols-2" variants={fadeInUp}>
+                    <div className="grid gap-6 sm:grid-cols-2">
                       <div>
                         <label htmlFor="name" className="block text-sm font-medium text-neutral-700 mb-2">
-                          Your Name *
+                          Your Name
                         </label>
                         <Input
                           id="name"
@@ -422,14 +407,14 @@ export default function ClientGetStartedPage() {
                           required
                           value={formData.name}
                           onChange={handleInputChange}
-                          className="w-full"
+                          className="w-full border-neutral-200 focus:border-neutral-900 focus:ring-0"
                           placeholder="John Doe"
                         />
                       </div>
                       
                       <div>
                         <label htmlFor="email" className="block text-sm font-medium text-neutral-700 mb-2">
-                          Email Address *
+                          Email Address
                         </label>
                         <Input
                           id="email"
@@ -438,16 +423,16 @@ export default function ClientGetStartedPage() {
                           required
                           value={formData.email}
                           onChange={handleInputChange}
-                          className="w-full"
+                          className="w-full border-neutral-200 focus:border-neutral-900 focus:ring-0"
                           placeholder="john@company.com"
                         />
                       </div>
-                    </motion.div>
+                    </div>
 
-                    <motion.div className="grid gap-6 md:grid-cols-2" variants={fadeInUp}>
+                    <div className="grid gap-6 sm:grid-cols-2">
                       <div>
                         <label htmlFor="company" className="block text-sm font-medium text-neutral-700 mb-2">
-                          Company Name *
+                          Company Name
                         </label>
                         <Input
                           id="company"
@@ -456,14 +441,14 @@ export default function ClientGetStartedPage() {
                           required
                           value={formData.company}
                           onChange={handleInputChange}
-                          className="w-full"
+                          className="w-full border-neutral-200 focus:border-neutral-900 focus:ring-0"
                           placeholder="Acme Inc."
                         />
                       </div>
                       
                       <div>
                         <label htmlFor="website" className="block text-sm font-medium text-neutral-700 mb-2">
-                          Current Website (if any)
+                          Current Website
                         </label>
                         <Input
                           id="website"
@@ -471,15 +456,15 @@ export default function ClientGetStartedPage() {
                           type="url"
                           value={formData.website}
                           onChange={handleInputChange}
-                          className="w-full"
-                          placeholder="https://www.example.com"
+                          className="w-full border-neutral-200 focus:border-neutral-900 focus:ring-0"
+                          placeholder="https://example.com"
                         />
                       </div>
-                    </motion.div>
+                    </div>
 
-                    <motion.div variants={fadeInUp}>
+                    <div>
                       <label htmlFor="growthChallenge" className="block text-sm font-medium text-neutral-700 mb-2">
-                        Your Biggest Growth Challenge Right Now (Leads? Conversions? LTV?) *
+                        Your Biggest Growth Challenge
                       </label>
                       <textarea
                         id="growthChallenge"
@@ -488,14 +473,14 @@ export default function ClientGetStartedPage() {
                         value={formData.growthChallenge}
                         onChange={handleInputChange}
                         rows={4}
-                        className="w-full rounded-md border border-neutral-200 bg-white px-3 py-2 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-neutral-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                        placeholder="Tell us about your biggest growth challenge. Are you struggling to convert visitors to leads? Is your customer lifetime value too low? Be specific so we can tailor our approach."
+                        className="w-full rounded-md border border-neutral-200 bg-white px-3 py-2 text-sm placeholder:text-neutral-400 focus:border-neutral-900 focus:outline-none focus:ring-0 transition-colors"
+                        placeholder="Tell us about your biggest growth challenge. Are you struggling to convert visitors to leads? Is your customer lifetime value too low?"
                       />
-                    </motion.div>
+                    </div>
 
-                    <motion.div variants={fadeInUp}>
+                    <div>
                       <label htmlFor="whyPartnerWithPrism" className="block text-sm font-medium text-neutral-700 mb-2">
-                        Why Partnering with Prism Fires You Up *
+                        Why Partner with Prism?
                       </label>
                       <textarea
                         id="whyPartnerWithPrism"
@@ -504,166 +489,128 @@ export default function ClientGetStartedPage() {
                         value={formData.whyPartnerWithPrism}
                         onChange={handleInputChange}
                         rows={4}
-                        className="w-full rounded-md border border-neutral-200 bg-white px-3 py-2 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-neutral-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                        placeholder="What excites you most about partnering with Prism? What results are you hoping to achieve? Dream big—we love ambitious goals."
+                        className="w-full rounded-md border border-neutral-200 bg-white px-3 py-2 text-sm placeholder:text-neutral-400 focus:border-neutral-900 focus:outline-none focus:ring-0 transition-colors"
+                        placeholder="What excites you most about partnering with Prism? What results are you hoping to achieve?"
                       />
-                    </motion.div>
+                    </div>
 
-                    <motion.div 
-                      className="pt-4"
-                      variants={fadeInUp}
-                    >
+                    <div className="pt-2">
                       <Button
                         type="submit"
                         disabled={isSubmitting}
-                        className="w-full py-6 text-lg rounded-full bg-gradient-to-r from-neutral-800 to-neutral-900 hover:from-neutral-900 hover:to-black text-white font-medium"
-                        size="lg"
+                        className="w-full h-12 bg-neutral-900 hover:bg-neutral-800 text-white font-medium rounded-md transition-colors"
                       >
                         {isSubmitting ? (
-                          <motion.span
-                            animate={{ opacity: [0.5, 1, 0.5] }}
-                            transition={{ duration: 1.5, repeat: Infinity }}
-                          >
-                            Submitting Your Application...
-                          </motion.span>
+                          <span>Submitting...</span>
                         ) : (
                           <>
-                            Apply Now to Claim Your Edge
-                            <Rocket className="ml-2 h-5 w-5" />
+                            Submit Application
+                            <ArrowRight className="ml-2 h-4 w-4" />
                           </>
                         )}
                       </Button>
-                    </motion.div>
+                    </div>
 
                     {submitStatus === 'error' && (
-                      <motion.p 
-                        className="text-red-600 text-sm text-center"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                      >
+                      <p className="text-red-600 text-sm text-center">
                         Something went wrong. Please try again.
-                      </motion.p>
+                      </p>
                     )}
                   </motion.form>
                 )}
               </AnimatePresence>
 
-              <motion.div 
-                className="mt-12 text-center"
-                variants={fadeInUp}
+              <motion.p 
+                className="text-sm text-neutral-600 text-center mt-8"
+                variants={fadeInY}
               >
-                <p className="text-base text-neutral-700 font-medium">
-                  We're picky because we go all-in—curated clients mean deeper dives, faster ROI, and partnerships that last. Apply now to claim your edge.
-                </p>
-              </motion.div>
-            </div>
-          </motion.div>
-        </motion.section>
-
-        {/* Are You the Kind of Leader Section */}
-        <motion.section 
-          className="px-4 py-16 md:py-24 bg-neutral-900 text-white"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
-        >
-          <motion.div 
-            className="container mx-auto px-4 md:px-6"
-            variants={staggerContainer}
-          >
-            <div className="mx-auto max-w-4xl">
-              <motion.div className="text-center mb-12" variants={fadeInUp}>
-                <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
-                  Are You the Kind of Leader We Geek Out Over?
-                </h2>
-              </motion.div>
-
-              <motion.div 
-                className="bg-white/5 backdrop-blur rounded-xl p-8 md:p-12 border border-white/10"
-                variants={springScale}
-              >
-                <motion.ul 
-                  className="space-y-5"
-                  variants={staggerContainer}
-                >
-                  {leaderQualities.map((quality, index) => (
-                    <motion.li 
-                      key={index}
-                      className="flex items-start"
-                      variants={fadeInUp}
-                      whileHover={{ x: 5 }}
-                    >
-                      <CheckCircle className="mr-3 h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
-                      <span className="text-white/90 text-lg">{quality} {index === 0 && "(we've seen it across dentistry, retail, wellness, and consulting)"}</span>
-                    </motion.li>
-                  ))}
-                </motion.ul>
-              </motion.div>
-
-              <motion.div 
-                className="mt-12 text-center"
-                variants={fadeInUp}
-              >
-                <p className="text-xl text-white/80 italic font-light">
-                  Born from an obsession to blend beauty and revenue in digital worlds, we're on the hunt for partners ready to dominate.
-                </p>
-              </motion.div>
-            </div>
-          </motion.div>
-        </motion.section>
-
-        {/* Social Sharing Section */}
-        <motion.section 
-          className="px-4 py-12 bg-white border-t border-neutral-100"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
-        >
-          <motion.div 
-            className="container mx-auto px-4 md:px-6 text-center"
-            variants={staggerContainer}
-          >
-            <motion.div variants={fadeInUp}>
-              <Share2 className="h-8 w-8 mx-auto mb-4 text-neutral-400" />
-              <h3 className="text-xl font-semibold mb-2">Know a Fellow Operator Who'd Thrive Here?</h3>
-              <p className="text-base text-neutral-600 mb-6">
-                Share the link and unlock exclusive community insights—we're all about rising together.
-              </p>
-              <div className="flex flex-wrap justify-center gap-3">
-                <button 
-                  onClick={() => {
-                    trackCTAClick('share twitter', 'get started page')
-                    window.open('https://twitter.com/intent/tweet?text=Just%20applied%20to%20join%20@prism%27s%20exclusive%20circle%20of%20revenue-driving%20design%20innovators.%20Limited%20to%2010%20partners%20monthly.%20https://design-prism.com/get-started', '_blank')
-                  }}
-                  className="px-6 py-3 rounded-full text-sm font-medium bg-neutral-900 text-white hover:bg-neutral-800 transition-all"
-                >
-                  Share on X
-                </button>
-                <button 
-                  onClick={() => {
-                    trackCTAClick('share linkedin', 'get started page')
-                    window.open('https://www.linkedin.com/sharing/share-offsite/?url=https://design-prism.com/get-started', '_blank')
-                  }}
-                  className="px-6 py-3 rounded-full text-sm font-medium bg-blue-600 text-white hover:bg-blue-700 transition-all"
-                >
-                  Share on LinkedIn
-                </button>
-                <button 
-                  onClick={() => {
-                    trackCTAClick('copy link', 'get started page')
-                    navigator.clipboard.writeText('https://design-prism.com/get-started')
-                    alert('Link copied to clipboard!')
-                  }}
-                  className="px-6 py-3 rounded-full text-sm font-medium bg-neutral-200 text-neutral-800 hover:bg-neutral-300 transition-all"
-                >
-                  Copy Link
-                </button>
-              </div>
+                We're selective because we go all-in. Apply now to claim your edge.
+              </motion.p>
             </motion.div>
-          </motion.div>
-        </motion.section>
+          </div>
+        </section>
+
+        {/* Leader Qualities Section - Simplified dark section */}
+        <section className="px-4 py-12 sm:py-16 md:py-20 bg-neutral-900 text-white">
+          <div className="container mx-auto max-w-4xl">
+            <motion.div
+              initial="initial"
+              whileInView="animate"
+              viewport={{ once: true, amount: 0.2 }}
+              variants={staggerChildren}
+            >
+              <motion.h2 
+                className="text-2xl sm:text-3xl md:text-4xl font-light tracking-tight text-center mb-10"
+                variants={fadeInY}
+              >
+                Are You the Kind of Leader We Geek Out Over?
+              </motion.h2>
+
+              <motion.ul 
+                className="space-y-4 mb-10"
+                variants={staggerChildren}
+              >
+                {leaderQualities.map((quality, index) => (
+                  <motion.li 
+                    key={index}
+                    className="flex items-start"
+                    variants={fadeInY}
+                  >
+                    <CheckCircle className="mr-3 h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
+                    <span className="text-sm sm:text-base text-white/90">{quality} {index === 0 && "(we've seen it across dentistry, retail, wellness, and consulting)"}</span>
+                  </motion.li>
+                ))}
+              </motion.ul>
+
+              <motion.p 
+                className="text-center text-base sm:text-lg text-white/70 italic"
+                variants={fadeInY}
+              >
+                Born from an obsession to blend beauty and revenue in digital worlds, we're on the hunt for partners ready to dominate.
+              </motion.p>
+            </motion.div>
+          </div>
+        </section>
+
+        {/* Social Sharing Section - Clean and minimal */}
+        <section className="px-4 py-8 sm:py-12 bg-white border-t border-neutral-100">
+          <div className="container mx-auto max-w-2xl text-center">
+            <Share2 className="h-6 w-6 mx-auto mb-3 text-neutral-400" />
+            <h3 className="text-lg font-medium mb-4">Know Someone Who'd Thrive Here?</h3>
+            <div className="flex flex-wrap justify-center gap-3">
+              <button 
+                onClick={() => {
+                  trackCTAClick('share twitter', 'get started page')
+                  window.open('https://twitter.com/intent/tweet?text=Just%20applied%20to%20join%20@prism%27s%20exclusive%20circle%20of%20revenue-driving%20design%20innovators.%20Limited%20to%2010%20partners%20monthly.%20https://design-prism.com/get-started', '_blank')
+                }}
+                className="px-4 py-2 text-sm font-medium text-neutral-700 hover:text-neutral-900 transition-colors"
+              >
+                Share on X
+              </button>
+              <button 
+                onClick={() => {
+                  trackCTAClick('share linkedin', 'get started page')
+                  window.open('https://www.linkedin.com/sharing/share-offsite/?url=https://design-prism.com/get-started', '_blank')
+                }}
+                className="px-4 py-2 text-sm font-medium text-neutral-700 hover:text-neutral-900 transition-colors"
+              >
+                Share on LinkedIn
+              </button>
+              <button 
+                onClick={() => {
+                  trackCTAClick('copy link', 'get started page')
+                  navigator.clipboard.writeText('https://design-prism.com/get-started')
+                  alert('Link copied!')
+                }}
+                className="px-4 py-2 text-sm font-medium text-neutral-700 hover:text-neutral-900 transition-colors"
+              >
+                Copy Link
+              </button>
+            </div>
+          </div>
+        </section>
       </main>
       <Footer />
-    </motion.div>
+    </div>
   )
 }
