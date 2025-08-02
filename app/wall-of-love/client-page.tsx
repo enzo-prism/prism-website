@@ -1,9 +1,9 @@
 "use client"
 
-import Link from "next/link"
-import { ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { useEffect, useState, useRef, useCallback } from "react"
+import { ArrowRight } from "lucide-react"
+import Link from "next/link"
+import { useCallback, useEffect, useRef, useState } from "react"
 
 interface Quote {
   id: number
@@ -453,6 +453,12 @@ const quotesData: Quote[] = [
     client: "andriiikoo",
     company: "Instagram Community of Entrepreneurs",
   },
+  {
+    id: 77,
+    text: "literally listen to this every monday night ❤️",
+    client: "mr. mazamio",
+    company: "Instagram Community of Entrepreneurs",
+  },
 ]
 
 const renderFormattedText = (text: string) => {
@@ -474,14 +480,17 @@ const shuffleArray = (array: Quote[]): Quote[] => {
     ;[newArray[i], newArray[j]] = [newArray[j], newArray[i]]
   }
   
-  // Ensure the new testimonial (id: 76) appears in the first 10
-  const newTestimonialIndex = newArray.findIndex(q => q.id === 76)
-  if (newTestimonialIndex > 9) {
-    // Move it to a random position in the first 10
-    const newPosition = Math.floor(Math.random() * 10)
-    const [testimonial] = newArray.splice(newTestimonialIndex, 1)
-    newArray.splice(newPosition, 0, testimonial)
-  }
+  // Ensure the new testimonials (id: 76 and 77) appear in the first 10
+  const newTestimonialIds = [76, 77]
+  newTestimonialIds.forEach(id => {
+    const testimonialIndex = newArray.findIndex(q => q.id === id)
+    if (testimonialIndex > 9) {
+      // Move it to a random position in the first 10
+      const newPosition = Math.floor(Math.random() * 10)
+      const [testimonial] = newArray.splice(testimonialIndex, 1)
+      newArray.splice(newPosition, 0, testimonial)
+    }
+  })
   
   return newArray
 }
