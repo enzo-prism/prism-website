@@ -1,5 +1,5 @@
-import { NextResponse } from "next/server"
 import type { NextRequest } from "next/server"
+import { NextResponse } from "next/server"
 
 // Define a mapping of old paths to new paths
 const redirects: Record<string, string> = {
@@ -32,6 +32,18 @@ const redirects: Record<string, string> = {
   "/our-work/rebellious-aging-case-study": "/case-studies",
   "/our-work/grace-dental-case-study": "/case-studies",
   "/our-work/leadership-summit-case-study": "/case-studies",
+
+  // Old pages returning 404 - redirect to appropriate destinations
+  "/dr-ahmed-mataria-dental-car": "/case-studies", // Typo in URL - redirect to case studies
+  "/dr-chris-wong-successful-dental-practice-palo-alto": "/case-studies/dr-christopher-wong",
+  "/elevating-dental-compliance-will-gilmore": "/case-studies",
+  "/hello": "/get-started", // Old contact/booking page
+  "/michael-njo-resilience-mentorship-dentistry": "/case-studies",
+  "/mind": "/blog", // Likely old blog or content page
+  "/old-home": "/", // Old homepage
+  "/pod-3-katie-lee": "/podcast", // Old podcast episode
+  "/pod-7-teagan": "/podcast", // Old podcast episode
+  "/portfolio": "/case-studies", // Portfolio page referenced in sitemap but doesn't exist
 }
 
 // Track redirects for analytics
@@ -76,5 +88,16 @@ export const config = {
     "/refer",
     "/tools",
     "/our-work/:path*", // This will match all paths under /our-work/
+    // Old pages returning 404
+    "/dr-ahmed-mataria-dental-car",
+    "/dr-chris-wong-successful-dental-practice-palo-alto",
+    "/elevating-dental-compliance-will-gilmore",
+    "/hello",
+    "/michael-njo-resilience-mentorship-dentistry",
+    "/mind",
+    "/old-home",
+    "/pod-3-katie-lee",
+    "/pod-7-teagan",
+    "/portfolio",
   ],
 }
