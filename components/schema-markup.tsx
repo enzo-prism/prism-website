@@ -14,6 +14,7 @@ type Organization = {
     "@type": "ContactPoint"
     telephone: string
     contactType: string
+    email?: string
   }
 }
 
@@ -76,16 +77,16 @@ export function OrganizationSchema() {
       height: 60,
     },
     sameAs: [
-      "https://www.instagram.com/the_design_prism/",
-      "https://www.youtube.com/@the_design_prism",
-      "https://x.com/NosisTheGod",
+      "https://www.instagram.com/the_design_prism/?hl=en",
+      "https://www.linkedin.com/company/web-prism/",
       "https://www.tiktok.com/@the_design_prism",
-      "https://www.linkedin.com/company/web-prism/?viewAsMember=true",
+      "https://x.com/NosisTheGod",
     ],
     contactPoint: {
       "@type": "ContactPoint",
-      telephone: "+1-800-123-4567",
+      telephone: "+1-650-862-4069",
       contactType: "customer service",
+      email: "support@design-prism.com",
     },
   }
 
@@ -330,13 +331,16 @@ type LocalBusiness = {
   "@type": "LocalBusiness"
   "@id": string
   name: string
+  legalName?: string
   url: string
+  image?: string
   logo: {
     "@type": "ImageObject"
     url: string
     width: number
     height: number
   }
+  telephone?: string
   sameAs: string[]
   contactPoint: {
     "@type": "ContactPoint"
@@ -357,7 +361,28 @@ type LocalBusiness = {
     latitude: number
     longitude: number
   }
-  areaServed: string[]
+  areaServed: (string | {
+    "@type": "GeoCircle"
+    geoMidpoint: {
+      "@type": "GeoCoordinates"
+      latitude: number
+      longitude: number
+    }
+    geoRadius: string
+  })[]
+  serviceArea?: string
+  priceRange?: string
+  openingHoursSpecification?: {
+    "@type": "OpeningHoursSpecification"
+    dayOfWeek: string[]
+    opens: string
+    closes: string
+  }[]
+  description?: string
+  founder?: {
+    "@type": "Person"
+    name: string
+  }
   hasOfferCatalog: {
     "@type": "OfferCatalog"
     name: string
@@ -512,28 +537,76 @@ export function LocalBusinessSchema() {
   const localBusinessSchema: LocalBusiness = {
     "@type": "LocalBusiness",
     "@id": "https://design-prism.com/#localbusiness",
-    name: "Prism Agency - Beautiful Software That Grows Revenue",
+    name: "Prism",
+    legalName: "Design Prism LLC",
     url: "https://design-prism.com",
+    image: "https://design-prism.com/prism-opengraph.png",
     logo: {
       "@type": "ImageObject",
       url: "https://design-prism.com/Prism Logo.png",
       width: 600,
       height: 60,
     },
+    telephone: "+1-650-862-4069",
+    priceRange: "$1,000 – $3,000",
+    description: "Prism builds revenue-driving custom websites, apps and design systems for startups and local businesses.",
     sameAs: [
-      "https://www.instagram.com/the_design_prism/",
-      "https://www.youtube.com/@the_design_prism",
-      "https://x.com/NosisTheGod",
+      "https://www.instagram.com/the_design_prism/?hl=en",
+      "https://www.linkedin.com/company/web-prism/",
       "https://www.tiktok.com/@the_design_prism",
-      "https://www.linkedin.com/company/web-prism/?viewAsMember=true",
+      "https://x.com/NosisTheGod",
     ],
     contactPoint: {
       "@type": "ContactPoint",
-      telephone: "+1-800-123-4567",
+      telephone: "+1-650-862-4069",
       contactType: "customer service",
       email: "support@design-prism.com",
     },
-    areaServed: ["United States", "Canada", "Global"],
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: "1075 Space Park Way",
+      addressLocality: "Mountain View",
+      addressRegion: "CA",
+      postalCode: "94043",
+      addressCountry: "US",
+    },
+    geo: {
+      "@type": "GeoCoordinates",
+      latitude: 37.3861,
+      longitude: -122.0839,
+    },
+    openingHoursSpecification: [
+      {
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday",
+          "Sunday",
+        ],
+        opens: "00:00",
+        closes: "23:59",
+      },
+    ],
+    founder: {
+      "@type": "Person",
+      name: "Enzo Sison",
+    },
+    areaServed: [
+      {
+        "@type": "GeoCircle",
+        geoMidpoint: {
+          "@type": "GeoCoordinates",
+          latitude: 37.3861,
+          longitude: -122.0839,
+        },
+        geoRadius: "50000",
+      },
+    ],
+    serviceArea: "United States",
     hasOfferCatalog: {
       "@type": "OfferCatalog",
       name: "AI-Powered Digital Solutions",
