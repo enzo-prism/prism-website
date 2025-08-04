@@ -34,7 +34,7 @@ const redirects: Record<string, string> = {
   "/our-work/leadership-summit-case-study": "/case-studies",
 
   // Old pages returning 404 - redirect to appropriate destinations
-  "/dr-ahmed-mataria-dental-car": "/case-studies", // Typo in URL - redirect to case studies
+  "/dr-ahmed-mataria-dental-care-innovation": "/case-studies", // Old case study page
   "/dr-chris-wong-successful-dental-practice-palo-alto": "/case-studies/dr-christopher-wong",
   "/elevating-dental-compliance-will-gilmore": "/case-studies",
   "/hello": "/get-started", // Old contact/booking page
@@ -89,7 +89,7 @@ export const config = {
     "/tools",
     "/our-work/:path*", // This will match all paths under /our-work/
     // Old pages returning 404
-    "/dr-ahmed-mataria-dental-car",
+    "/dr-ahmed-mataria-dental-care-innovation",
     "/dr-chris-wong-successful-dental-practice-palo-alto",
     "/elevating-dental-compliance-will-gilmore",
     "/hello",
