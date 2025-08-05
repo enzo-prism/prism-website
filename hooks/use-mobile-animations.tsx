@@ -1,7 +1,7 @@
 "use client"
 
+import { UseInViewOptions, Variants } from "framer-motion"
 import { useEffect, useState } from "react"
-import { Variants } from "framer-motion"
 
 interface DeviceCapabilities {
   isMobile: boolean
@@ -156,7 +156,7 @@ export function useMobileAnimations() {
   }
 
   // Get viewport configuration for animations
-  const getViewportConfig = () => {
+  const getViewportConfig = (): UseInViewOptions => {
     const config = getAnimationConfig()
 
     if (capabilities.isLowEnd) {
