@@ -471,6 +471,154 @@ export const ctaButtonGlow: Variants = {
   },
 }
 
+// ==========================================
+// MOBILE-OPTIMIZED ANIMATION VARIANTS
+// ==========================================
+
+// Mobile fade in - simplified for performance
+export const mobileFadeIn: Variants = {
+  initial: {
+    opacity: 0,
+    y: 20,
+  },
+  animate: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.3,
+      ease: "easeOut",
+    },
+  },
+}
+
+// Mobile stagger container - reduced delay
+export const mobileStaggerContainer: Variants = {
+  initial: {},
+  animate: {
+    transition: {
+      staggerChildren: 0.05,
+      delayChildren: 0.1,
+    },
+  },
+}
+
+// Mobile card entrance - no scale, GPU-optimized
+export const mobileCardEntrance: Variants = {
+  initial: {
+    opacity: 0,
+    y: 30,
+  },
+  animate: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.25,
+      ease: "easeOut",
+    },
+  },
+}
+
+// Mobile tap feedback - subtle scale only
+export const mobileTap: Variants = {
+  tap: {
+    scale: 0.98,
+    transition: {
+      duration: 0.1,
+      ease: "easeOut",
+    },
+  },
+}
+
+// Mobile scroll reveal - optimized for viewport
+export const mobileScrollReveal: Variants = {
+  hidden: {
+    opacity: 0,
+    y: 20,
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.3,
+      ease: "easeOut",
+    },
+  },
+}
+
+// Mobile blog card - simplified hover
+export const mobileBlogCard: Variants = {
+  initial: {
+    opacity: 1,
+    y: 0,
+  },
+  tap: {
+    scale: 0.98,
+    transition: {
+      duration: 0.1,
+    },
+  },
+}
+
+// Mobile filter button - no complex morphing
+export const mobileFilterButton: Variants = {
+  inactive: {
+    opacity: 0.7,
+    scale: 1,
+  },
+  active: {
+    opacity: 1,
+    scale: 1,
+    transition: {
+      duration: 0.2,
+      ease: "easeOut",
+    },
+  },
+}
+
+// Mobile hero text - simple fade
+export const mobileHeroText: Variants = {
+  initial: {
+    opacity: 0,
+    y: 10,
+  },
+  animate: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.4,
+      ease: "easeOut",
+    },
+  },
+}
+
+// Mobile parallax disabled - static position
+export const mobileParallax: Variants = {
+  initial: {
+    y: 0,
+  },
+  animate: {
+    y: 0,
+  },
+}
+
+// Check if device is mobile/touch
+export const isMobileDevice = () => {
+  if (typeof window === "undefined") return false
+  return (
+    "ontouchstart" in window ||
+    navigator.maxTouchPoints > 0 ||
+    window.innerWidth <= 768
+  )
+}
+
+// Helper to get appropriate animation variant
+export const getAnimationVariant = (
+  desktopVariant: Variants,
+  mobileVariant: Variants
+): Variants => {
+  return isMobileDevice() ? mobileVariant : desktopVariant
+}
+
 // Loading shimmer effect for blog cards
 export const blogCardShimmer: Variants = {
   initial: {

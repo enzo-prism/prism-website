@@ -13,6 +13,8 @@ import {
   Zap,
   Award
 } from "lucide-react"
+import { mobileFadeIn, mobileTap } from "@/utils/animation-variants"
+import { useMobileAnimations } from "@/hooks/use-mobile-animations"
 
 interface MobileInfoCardProps {
   title?: string
@@ -85,20 +87,24 @@ export function MobileInfoCard({
   const selectedIcon = icon || variant === "tip" ? "lightbulb" : variant
   const IconComponent = iconMap[selectedIcon] || Info
   const styles = variantStyles[variant]
+  const { getViewportConfig } = useMobileAnimations()
+  const viewportConfig = getViewportConfig()
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20, scale: 0.95 }}
-      animate={{ opacity: 1, y: 0, scale: 1 }}
-      transition={{ duration: 0.5, ease: "easeOut" }}
-      whileHover={{ scale: 1.01 }}
+      variants={mobileFadeIn}
+      initial="initial"
+      whileInView="animate"
+      viewport={viewportConfig}
+      whileTap="tap"
       className={`
         relative overflow-hidden rounded-xl border-2 p-5 backdrop-blur-sm
         ${styles.container}
-        shadow-lg transition-all duration-300 hover:shadow-xl
+        shadow-lg mobile-gpu-accelerated
         touch-manipulation
         ${className}
       `}
+      data-scroll-animate
     >
       {/* Accent bar */}
       <div className={`absolute top-0 left-0 w-full h-1 ${styles.accent}`} />
@@ -113,51 +119,35 @@ export function MobileInfoCard({
         {/* Header */}
         <div className="flex items-start gap-4 mb-4">
           {/* Icon */}
-          <motion.div
-            initial={{ opacity: 0, rotate: -90, scale: 0.8 }}
-            animate={{ opacity: 1, rotate: 0, scale: 1 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
+          <div
             className={`
               flex-shrink-0 p-2 rounded-lg ${styles.icon}
               shadow-sm
             `}
           >
             <IconComponent className="h-5 w-5" />
-          </motion.div>
+          </div>
           
           {/* Title */}
           {title && (
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              className="flex-1"
-            >
+            <div className="flex-1">
               <h4 className={`text-base font-semibold ${styles.title} leading-tight`}>
                 {title}
               </h4>
-            </motion.div>
+            </div>
           )}
         </div>
         
         {/* Content */}
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          className={`${title ? "ml-13" : ""}`}
-        >
+        <div className={`${title ? "ml-13" : ""}`}>
           <p className={`${styles.content} leading-relaxed text-sm`}>
             {content}
           </p>
-        </motion.div>
+        </div>
       </div>
       
-      {/* Subtle glow effect */}
-      <motion.div
-        initial={{ opacity: 0, scale: 0.8 }}
-        animate={{ opacity: 0.3, scale: 1 }}
-        transition={{ duration: 1, delay: 0.4 }}
+      {/* Subtle glow effect - static on mobile for performance */}
+      <div
         className={`
           absolute -top-4 -right-4 w-16 h-16 rounded-full 
           ${styles.accent} blur-xl opacity-20

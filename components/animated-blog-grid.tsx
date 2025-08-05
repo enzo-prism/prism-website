@@ -2,7 +2,16 @@
 
 import React, { useRef } from "react"
 import { motion, useInView } from "framer-motion"
-import { staggeredGridContainer, staggeredGridEntrance, scrollRevealBlog } from "@/utils/animation-variants"
+import { 
+  staggeredGridContainer, 
+  staggeredGridEntrance, 
+  scrollRevealBlog,
+  mobileStaggerContainer,
+  mobileCardEntrance,
+  mobileScrollReveal,
+  getAnimationVariant
+} from "@/utils/animation-variants"
+import { useMobileAnimations } from "@/hooks/use-mobile-animations"
 import type { BlogFrontmatter } from "@/lib/mdx"
 
 interface BlogPost extends BlogFrontmatter {
@@ -19,32 +28,39 @@ interface AnimatedBlogGridProps {
 
 export default function AnimatedBlogGrid({ children, posts, className = "" }: AnimatedBlogGridProps) {
   const ref = useRef(null)
-  const isInView = useInView(ref, { once: true, margin: "-100px" })
+  const { getViewportConfig, animationConfig } = useMobileAnimations()
+  const viewportConfig = getViewportConfig()
+  const isInView = useInView(ref, viewportConfig)
+  
+  // Select appropriate animation variants based on device
+  const containerVariant = getAnimationVariant(staggeredGridContainer, mobileStaggerContainer)
+  const entranceVariant = getAnimationVariant(staggeredGridEntrance, mobileCardEntrance)
 
   return (
     <motion.div
       ref={ref}
       className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 ${className}`}
-      variants={staggeredGridContainer}
+      variants={containerVariant}
       initial="initial"
       animate={isInView ? "animate" : "initial"}
       style={{
-        // GPU acceleration
+        // GPU acceleration - simplified for mobile
         transform: "translateZ(0)",
-        willChange: "transform",
+        willChange: animationConfig.useGPU ? "transform" : "auto",
         contain: "layout style paint",
       }}
+      data-scroll-animate
     >
       {React.Children.map(children, (child, index) => (
         <motion.div
           key={index}
-          variants={staggeredGridEntrance}
+          variants={entranceVariant}
           custom={index}
-          className="gpu-accelerated"
+          className="mobile-gpu-accelerated"
           style={{
-            // Hardware acceleration
+            // Hardware acceleration - only when needed
             transform: "translateZ(0)",
-            willChange: "transform, opacity",
+            willChange: animationConfig.useGPU && isInView ? "transform, opacity" : "auto",
             backfaceVisibility: "hidden",
           }}
         >
@@ -58,29 +74,33 @@ export default function AnimatedBlogGrid({ children, posts, className = "" }: An
 // Enhanced grid with intersection observer for performance
 export function AnimatedBlogGridWithObserver({ children, posts, className = "" }: AnimatedBlogGridProps) {
   const ref = useRef(null)
-  const isInView = useInView(ref, { 
-    once: true, 
-    margin: "-50px",
-    amount: 0.2
-  })
+  const { getViewportConfig, animationConfig } = useMobileAnimations()
+  const viewportConfig = getViewportConfig()
+  const isInView = useInView(ref, viewportConfig)
+  
+  // Select appropriate animation variants
+  const revealVariant = getAnimationVariant(scrollRevealBlog, mobileScrollReveal)
+  const containerVariant = getAnimationVariant(staggeredGridContainer, mobileStaggerContainer)
+  const entranceVariant = getAnimationVariant(staggeredGridEntrance, mobileCardEntrance)
 
   return (
     <motion.div
       ref={ref}
       className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 ${className}`}
-      variants={scrollRevealBlog}
+      variants={revealVariant}
       initial="hidden"
       animate={isInView ? "visible" : "hidden"}
       style={{
-        // Performance optimizations
+        // Performance optimizations - simplified for mobile
         transform: "translateZ(0)",
-        willChange: isInView ? "transform, opacity, filter" : "auto",
+        willChange: animationConfig.useGPU && isInView ? "transform, opacity" : "auto",
         contain: "layout style paint",
         isolation: "isolate",
       }}
+      data-scroll-animate
     >
       <motion.div
-        variants={staggeredGridContainer}
+        variants={containerVariant}
         initial="initial"
         animate={isInView ? "animate" : "initial"}
         className="contents"
@@ -88,15 +108,15 @@ export function AnimatedBlogGridWithObserver({ children, posts, className = "" }
         {React.Children.map(children, (child, index) => (
           <motion.div
             key={index}
-            variants={staggeredGridEntrance}
+            variants={entranceVariant}
             custom={index}
-            className="gpu-accelerated"
+            className="mobile-gpu-accelerated"
             style={{
-              // Hardware layer promotion
+              // Hardware layer promotion - only when needed
               transform: "translateZ(0)",
-              willChange: "transform, opacity",
+              willChange: animationConfig.useGPU && isInView ? "transform, opacity" : "auto",
               backfaceVisibility: "hidden",
-              perspective: "1000px",
+              perspective: animationConfig.complexity === "full" ? "1000px" : "none",
             }}
           >
             {child}

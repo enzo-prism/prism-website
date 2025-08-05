@@ -161,18 +161,47 @@ export function optimizeScrollPerformance(): void {
 
   // Pause animations during scroll for better performance
   let scrollTimeout: ReturnType<typeof setTimeout> | null = null
+  let animationFrameId: number | null = null
+  let lastScrollY = 0
+  let scrollVelocity = 0
 
   const handleScroll = throttle(() => {
+    // Calculate scroll velocity
+    const currentScrollY = window.scrollY
+    scrollVelocity = Math.abs(currentScrollY - lastScrollY)
+    lastScrollY = currentScrollY
+
+    // Add appropriate classes based on scroll speed
     if (!body.classList.contains("is-scrolling")) {
       body.classList.add("is-scrolling")
     }
 
+    // Add velocity-based classes for different animation levels
+    if (scrollVelocity > 50) {
+      body.classList.add("is-scrolling-fast")
+      body.classList.remove("is-scrolling-slow")
+    } else if (scrollVelocity > 10) {
+      body.classList.add("is-scrolling-slow")
+      body.classList.remove("is-scrolling-fast")
+    }
+
+    // Cancel any pending animation frame
+    if (animationFrameId !== null) {
+      cancelAnimationFrame(animationFrameId)
+    }
+
+    // Clear existing timeout
     if (scrollTimeout !== null) {
       clearTimeout(scrollTimeout)
     }
 
+    // Debounce the removal of scrolling classes
     scrollTimeout = setTimeout(() => {
-      body.classList.remove("is-scrolling")
+      // Use requestAnimationFrame for smooth class removal
+      animationFrameId = requestAnimationFrame(() => {
+        body.classList.remove("is-scrolling", "is-scrolling-fast", "is-scrolling-slow")
+        animationFrameId = null
+      })
     }, 150)
   }, 16) // 60fps
 
