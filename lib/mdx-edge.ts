@@ -100,7 +100,7 @@ const blogPosts = {
     gradientClass: "bg-gradient-to-br from-purple-300/30 via-blue-300/30 to-cyan-300/30",
   },
   'how-i-ranked-1-google-24-hours-claude-code': {
-    title: "How I Ranked #1 on Google in 24 Hours (and Made $1000s) Using Claude Code",
+    title: "This Guy Ranked #1 on Google in 24 Hours Using AI (Here's What We Can Learn)",
     category: "SEO & AI",
     gradientClass: "bg-gradient-to-br from-orange-300/30 via-red-300/30 to-purple-300/30",
   },
