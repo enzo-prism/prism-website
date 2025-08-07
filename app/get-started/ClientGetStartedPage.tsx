@@ -74,6 +74,11 @@ export default function ClientGetStartedPage() {
   const [daysUntilReview] = useState<number>(calculateDaysUntilNextFirst)
   const isMobile = useMobile()
   const videoRef = useRef<HTMLDivElement>(null)
+  const formSectionRef = useRef<HTMLDivElement>(null)
+
+  const scrollToForm = () => {
+    formSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }
 
   // No effect needed; we compute once on mount using the user's local timezone
 
@@ -195,11 +200,11 @@ export default function ClientGetStartedPage() {
       <Navbar />
       <main className="flex-1">
         {/* Hero Section with Video - Minimalist approach */}
-        <section 
-          ref={videoRef} 
+        <section
+          ref={videoRef}
           className="relative px-4 py-12 sm:py-16 md:py-20 lg:py-24"
         >
-          <div className="container mx-auto max-w-7xl">
+          <div className="container mx-auto max-w-5xl">
             <div className="flex flex-col items-center">
               {/* Video - Cleaner presentation */}
               <motion.div 
@@ -231,9 +236,9 @@ export default function ClientGetStartedPage() {
               </motion.div>
               
               {/* Typography - Clean and minimal */}
-              <div className="text-center space-y-6 max-w-4xl mx-auto">
+              <div className="text-center space-y-6 max-w-[68ch] mx-auto">
                 <motion.h1 
-                  className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light tracking-tight text-neutral-900"
+                  className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extralight tracking-tight text-neutral-900"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
@@ -243,7 +248,7 @@ export default function ClientGetStartedPage() {
                 </motion.h1>
                 
                 <motion.p 
-                  className="text-base sm:text-lg md:text-xl text-neutral-600 max-w-3xl mx-auto leading-relaxed"
+                  className="text-base sm:text-lg md:text-xl text-neutral-600 mx-auto leading-relaxed"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
@@ -258,18 +263,24 @@ export default function ClientGetStartedPage() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
                 >
-                  <div className="flex items-center gap-2 text-sm text-neutral-900 font-medium">
-                    <Users className="w-4 h-4" />
-                    <span>Only 10 new clients per month</span>
-                  </div>
-                  <div className="hidden sm:block w-px h-4 bg-neutral-300" />
-                  <div className="flex items-center gap-2 text-sm text-neutral-600">
-                    <Clock className="w-4 h-4" />
-                    <span>
-                      {daysUntilReview === 0
-                        ? 'Next review today'
-                        : `Next review in ${daysUntilReview} ${daysUntilReview === 1 ? 'day' : 'days'}`}
-                    </span>
+                  <Button onClick={scrollToForm} className="h-11 px-6 rounded-full bg-neutral-900 hover:bg-neutral-800 text-white">
+                    Apply now
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Button>
+                  <div className="flex items-center gap-4 text-sm text-neutral-600">
+                    <div className="flex items-center gap-2">
+                      <Users className="w-4 h-4" />
+                      <span>10 new clients monthly</span>
+                    </div>
+                    <div className="hidden sm:block w-px h-4 bg-neutral-300" />
+                    <div className="flex items-center gap-2">
+                      <Clock className="w-4 h-4" />
+                      <span>
+                        {daysUntilReview === 0
+                          ? 'Next review today'
+                          : `Next review in ${daysUntilReview} ${daysUntilReview === 1 ? 'day' : 'days'}`}
+                      </span>
+                    </div>
                   </div>
                 </motion.div>
               </div>
@@ -277,9 +288,9 @@ export default function ClientGetStartedPage() {
           </div>
         </section>
 
-        {/* Social Proof Section - Clean and focused */}
-        <section className="px-4 py-12 sm:py-16 md:py-20 bg-neutral-50">
-          <div className="container mx-auto max-w-5xl">
+        {/* Value Proposition Section - Light and concise */}
+        <section className="px-4 py-12 sm:py-16 md:py-20 bg-neutral-50 border-t border-neutral-100">
+          <div className="container mx-auto max-w-3xl">
             <motion.div 
               className="space-y-8"
               initial="initial"
@@ -287,38 +298,31 @@ export default function ClientGetStartedPage() {
               viewport={{ once: true, amount: 0.3 }}
               variants={staggerChildren}
             >
-              <motion.p 
+              <motion.p
                 className="text-base sm:text-lg text-neutral-700 leading-relaxed text-center"
                 variants={fadeInY}
               >
-                We've powered growth for dental practices (our biggest crew), a ski/bike shop turning seasonal browsers into year-round buyers, an online wellness community building sticky engagement, an alumni program fostering lifelong connections, a leadership consulting firm closing high-ticket deals effortlessly, and an M&A consultancy streamlining complex client journeys.
-              </motion.p>
-              
-              <motion.p 
-                className="text-lg sm:text-xl font-medium text-neutral-900 text-center"
-                variants={fadeInY}
-              >
-                Different worlds, same playbook: Beautiful, intuitive interfaces backed by smart tech that deliver measurable wins.
+                We build calm, fast experiences that convert. Design that feels effortless. Tech that scales. Outcomes you can measure.
               </motion.p>
 
               <motion.div 
-                className="bg-white rounded-lg p-6 sm:p-8 md:p-10 text-center border border-neutral-200"
+                className="bg-white rounded-xl p-8 text-center border border-neutral-100"
                 variants={fadeInY}
               >
-                <p className="text-base sm:text-lg text-neutral-700">
-                  We're not for everyone. We're building an exclusive network of ambitious founders and leaders who want custom UX/UI that solves real problems, delights customers, and cranks up your key metrics.
+                <p className="text-lg sm:text-xl font-medium text-neutral-900">
+                  We partner with leaders who value clarity, craft, and compounding ROI.
                 </p>
-                <p className="text-xl sm:text-2xl font-medium text-neutral-900 mt-4">
-                  If you're ready to invest in design that pays you back 10x, this is your move.
+                <p className="text-base text-neutral-600 mt-3">
+                  A small, focused roster so every build gets elite attention.
                 </p>
               </motion.div>
             </motion.div>
           </div>
         </section>
 
-        {/* Who We're Looking For Section - Grid simplification */}
-        <section className="px-4 py-12 sm:py-16 md:py-20 bg-white">
-          <div className="container mx-auto max-w-6xl">
+        {/* Who We're Looking For Section - Minimal grid */}
+        <section className="px-4 py-12 sm:py-16 md:py-20 bg-white border-t border-neutral-100">
+          <div className="container mx-auto max-w-5xl">
             <motion.div
               initial="initial"
               whileInView="animate"
@@ -326,27 +330,26 @@ export default function ClientGetStartedPage() {
               variants={staggerChildren}
             >
               <motion.div className="text-center mb-12" variants={fadeInY}>
-                <h2 className="text-2xl sm:text-3xl md:text-4xl font-light tracking-tight text-neutral-900 mb-4">
-                  Who We're Looking For (And Why You'd Want In)
+                <h2 className="text-2xl sm:text-3xl md:text-4xl font-light tracking-tight text-neutral-900 mb-3">
+                  Who We Partner With
                 </h2>
-                <p className="text-base sm:text-lg text-neutral-600 max-w-3xl mx-auto">
-                  We partner with trailblazers who treat design like a revenue machine. Imagine unlocking the same growth hacks we've deployed across industries—tailored to your world:
+                <p className="text-base sm:text-lg text-neutral-600 max-w-[70ch] mx-auto">
+                  Builders who treat design like a revenue engine and want compounding gains, not one-off fixes.
                 </p>
               </motion.div>
 
-              <div className="grid gap-6 md:grid-cols-3 mb-12">
+              <div className="grid gap-6 md:grid-cols-3 mb-8">
                 {partnerTypes.map((type, index) => (
                   <motion.div
                     key={index}
-                    className="bg-white rounded-lg p-6 sm:p-8 border border-neutral-200 hover:border-neutral-300 transition-colors"
+                    className="bg-white rounded-xl p-6 border border-neutral-100 hover:border-neutral-200 transition-colors"
                     variants={fadeInY}
                   >
                     <div className="flex items-center justify-center w-12 h-12 rounded-full bg-neutral-100 mb-6">
                       {type.icon}
                     </div>
-                    <h3 className="text-xl sm:text-2xl font-medium mb-3">{type.title}</h3>
-                    <p className="text-sm sm:text-base text-neutral-600 mb-4">{type.description}</p>
-                    <p className="text-sm text-neutral-500 italic">{type.example}</p>
+                    <h3 className="text-xl sm:text-2xl font-medium mb-2">{type.title}</h3>
+                    <p className="text-sm sm:text-base text-neutral-600">{type.description}</p>
                   </motion.div>
                 ))}
               </div>
@@ -355,12 +358,12 @@ export default function ClientGetStartedPage() {
                 className="text-center"
                 variants={fadeInY}
               >
-                <p className="text-base sm:text-lg text-neutral-700 mb-6 max-w-3xl mx-auto">
-                  No matter if you're a dental practice packing your schedule, a retail shop crushing e-comm, or a consultancy landing whales—we make it happen with data-backed design that increases leads, nails conversions, and maximizes LTV.
+                <p className="text-base sm:text-lg text-neutral-700 mb-2 max-w-[70ch] mx-auto">
+                  Across industries, our playbook stays simple: clarity, speed, and conversion.
                 </p>
                 <div className="inline-flex items-center gap-2 text-sm font-medium text-neutral-700">
                   <Heart className="w-4 h-4" />
-                  Priority access for the first 50 applicants
+                  Priority access for early applicants
                 </div>
               </motion.div>
             </motion.div>
@@ -368,7 +371,7 @@ export default function ClientGetStartedPage() {
         </section>
 
         {/* Application Form Section - Clean and minimal */}
-        <section className="px-4 py-12 sm:py-16 md:py-20 bg-neutral-50">
+        <section ref={formSectionRef} className="px-4 py-12 sm:py-16 md:py-20 bg-neutral-50 border-t border-neutral-100">
           <div className="container mx-auto max-w-2xl">
             <motion.div
               initial="initial"
@@ -377,11 +380,11 @@ export default function ClientGetStartedPage() {
               variants={staggerChildren}
             >
               <motion.div className="text-center mb-10" variants={fadeInY}>
-                <h2 className="text-2xl sm:text-3xl md:text-4xl font-light tracking-tight text-neutral-900 mb-4">
-                  Apply to Become a Prism Client
+                <h2 className="text-2xl sm:text-3xl md:text-4xl font-light tracking-tight text-neutral-900 mb-2">
+                  Apply to Work with Prism
                 </h2>
                 <p className="text-base sm:text-lg text-neutral-600">
-                  This isn't some generic signup. It's your fast-track application to partner with us on a custom project that transforms your digital game.
+                  A short application to ensure we’re the right fit.
                 </p>
               </motion.div>
 
@@ -408,10 +411,10 @@ export default function ClientGetStartedPage() {
                   <motion.form 
                     key="form"
                     onSubmit={handleSubmit}
-                    className="space-y-6"
+                    className="space-y-6 bg-white rounded-xl p-6 border border-neutral-100"
                     variants={fadeInY}
                   >
-                    <div className="grid gap-6 sm:grid-cols-2">
+                    <div className="grid gap-6">
                       <div>
                         <label htmlFor="name" className="block text-sm font-medium text-neutral-700 mb-2">
                           Your Name
@@ -423,11 +426,11 @@ export default function ClientGetStartedPage() {
                           required
                           value={formData.name}
                           onChange={handleInputChange}
-                          className="w-full border-neutral-200 focus:border-neutral-900 focus:ring-0"
+                          className="w-full h-11 text-base border-neutral-200 focus:border-neutral-900 focus:ring-0"
                           placeholder="John Doe"
                         />
                       </div>
-                      
+
                       <div>
                         <label htmlFor="email" className="block text-sm font-medium text-neutral-700 mb-2">
                           Email Address
@@ -439,13 +442,13 @@ export default function ClientGetStartedPage() {
                           required
                           value={formData.email}
                           onChange={handleInputChange}
-                          className="w-full border-neutral-200 focus:border-neutral-900 focus:ring-0"
+                          className="w-full h-11 text-base border-neutral-200 focus:border-neutral-900 focus:ring-0"
                           placeholder="john@company.com"
                         />
                       </div>
                     </div>
 
-                    <div className="grid gap-6 sm:grid-cols-2">
+                    <div className="grid gap-6">
                       <div>
                         <label htmlFor="company" className="block text-sm font-medium text-neutral-700 mb-2">
                           Company Name
@@ -457,11 +460,11 @@ export default function ClientGetStartedPage() {
                           required
                           value={formData.company}
                           onChange={handleInputChange}
-                          className="w-full border-neutral-200 focus:border-neutral-900 focus:ring-0"
+                          className="w-full h-11 text-base border-neutral-200 focus:border-neutral-900 focus:ring-0"
                           placeholder="Acme Inc."
                         />
                       </div>
-                      
+
                       <div>
                         <label htmlFor="website" className="block text-sm font-medium text-neutral-700 mb-2">
                           Current Website
@@ -472,7 +475,7 @@ export default function ClientGetStartedPage() {
                           type="url"
                           value={formData.website}
                           onChange={handleInputChange}
-                          className="w-full border-neutral-200 focus:border-neutral-900 focus:ring-0"
+                          className="w-full h-11 text-base border-neutral-200 focus:border-neutral-900 focus:ring-0"
                           placeholder="https://example.com"
                         />
                       </div>
@@ -489,7 +492,7 @@ export default function ClientGetStartedPage() {
                         value={formData.growthChallenge}
                         onChange={handleInputChange}
                         rows={4}
-                        className="w-full rounded-md border border-neutral-200 bg-white px-3 py-2 text-sm placeholder:text-neutral-400 focus:border-neutral-900 focus:outline-none focus:ring-0 transition-colors"
+                        className="w-full rounded-md border border-neutral-200 bg-white px-3 py-2 text-base placeholder:text-neutral-400 focus:border-neutral-900 focus:outline-none focus:ring-0 transition-colors"
                         placeholder="Tell us about your biggest growth challenge. Are you struggling to convert visitors to leads? Is your customer lifetime value too low?"
                       />
                     </div>
@@ -505,7 +508,7 @@ export default function ClientGetStartedPage() {
                         value={formData.whyPartnerWithPrism}
                         onChange={handleInputChange}
                         rows={4}
-                        className="w-full rounded-md border border-neutral-200 bg-white px-3 py-2 text-sm placeholder:text-neutral-400 focus:border-neutral-900 focus:outline-none focus:ring-0 transition-colors"
+                        className="w-full rounded-md border border-neutral-200 bg-white px-3 py-2 text-base placeholder:text-neutral-400 focus:border-neutral-900 focus:outline-none focus:ring-0 transition-colors"
                         placeholder="What excites you most about partnering with Prism? What results are you hoping to achieve?"
                       />
                     </div>
@@ -525,6 +528,7 @@ export default function ClientGetStartedPage() {
                           </>
                         )}
                       </Button>
+                      <p className="mt-3 text-center text-xs text-neutral-500">We review applications on the 1st of every month.</p>
                     </div>
 
                     {submitStatus === 'error' && (
@@ -545,51 +549,8 @@ export default function ClientGetStartedPage() {
             </motion.div>
           </div>
         </section>
-
-        {/* Leader Qualities Section - Simplified dark section */}
-        <section className="px-4 py-12 sm:py-16 md:py-20 bg-neutral-900 text-white">
-          <div className="container mx-auto max-w-4xl">
-            <motion.div
-              initial="initial"
-              whileInView="animate"
-              viewport={{ once: true, amount: 0.2 }}
-              variants={staggerChildren}
-            >
-              <motion.h2 
-                className="text-2xl sm:text-3xl md:text-4xl font-light tracking-tight text-center mb-10"
-                variants={fadeInY}
-              >
-                Are You the Kind of Leader We Geek Out Over?
-              </motion.h2>
-
-              <motion.ul 
-                className="space-y-4 mb-10"
-                variants={staggerChildren}
-              >
-                {leaderQualities.map((quality, index) => (
-                  <motion.li 
-                    key={index}
-                    className="flex items-start"
-                    variants={fadeInY}
-                  >
-                    <CheckCircle className="mr-3 h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                    <span className="text-sm sm:text-base text-white/90">{quality} {index === 0 && "(we've seen it across dentistry, retail, wellness, and consulting)"}</span>
-                  </motion.li>
-                ))}
-              </motion.ul>
-
-              <motion.p 
-                className="text-center text-base sm:text-lg text-white/70 italic"
-                variants={fadeInY}
-              >
-                Born from an obsession to blend beauty and revenue in digital worlds, we're on the hunt for partners ready to dominate.
-              </motion.p>
-            </motion.div>
-          </div>
-        </section>
-
-        {/* Social Sharing Section - Clean and minimal */}
-        <section className="px-4 py-8 sm:py-12 bg-white border-t border-neutral-100">
+        {/* Social Sharing Section - Minimal */}
+        <section className="px-4 py-10 bg-white border-t border-neutral-100">
           <div className="container mx-auto max-w-2xl text-center">
             <Share2 className="h-6 w-6 mx-auto mb-3 text-neutral-400" />
             <h3 className="text-lg font-medium mb-4">Know Someone Who'd Thrive Here?</h3>
