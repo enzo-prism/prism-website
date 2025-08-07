@@ -518,14 +518,18 @@ input, textarea, select {
   /* Scroll-triggered animations */
   .reveal-up {
     opacity: 0;
-    transform: translateY(30px);
+    transform: translate3d(0, 30px, 0);
     transition: opacity 0.6s ease-out, transform 0.6s ease-out;
     will-change: opacity, transform;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    transform-style: preserve-3d;
+    contain: layout style paint;
   }
   
   .reveal-up.visible {
     opacity: 1;
-    transform: translateY(0);
+    transform: translate3d(0, 0, 0);
   }
   
   /* Blog-specific animations */
@@ -557,6 +561,10 @@ input, textarea, select {
     opacity: 0;
     transition: opacity 0.8s ease-out;
     will-change: opacity;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    transform: translateZ(0);
+    contain: layout style paint;
   }
   
   .reveal-fade.visible {
@@ -565,14 +573,45 @@ input, textarea, select {
   
   .reveal-scale {
     opacity: 0;
-    transform: scale(0.9);
+    transform: scale(0.9) translateZ(0);
     transition: opacity 0.6s ease-out, transform 0.6s ease-out;
     will-change: opacity, transform;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    contain: layout style paint;
   }
   
   .reveal-scale.visible {
     opacity: 1;
-    transform: scale(1);
+    transform: scale(1) translateZ(0);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal-up,
+    .reveal-up.visible,
+    .reveal-fade,
+    .reveal-fade.visible,
+    .reveal-scale,
+    .reveal-scale.visible {
+      transition: none !important;
+      transform: none !important;
+      opacity: 1 !important;
+    }
+  }
+
+  /* Mobile-specific fixes to prevent white flash on iOS during opacity fades */
+  @media (max-width: 768px) {
+    .reveal-up,
+    .reveal-up.visible,
+    .reveal-fade,
+    .reveal-fade.visible,
+    .reveal-scale,
+    .reveal-scale.visible {
+      opacity: 1 !important; /* keep backgrounds opaque; animate only transform/scale */
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+      transform: translateZ(0);
+    }
   }
   
   /* Enhanced process steps animations */

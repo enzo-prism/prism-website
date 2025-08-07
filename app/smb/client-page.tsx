@@ -13,7 +13,7 @@ export default function SMBClientPage() {
     <div className="flex min-h-screen flex-col">
       <PageViewTracker title="Prism — Small Business AI (GPT‑5)" />
       {/* Hero */}
-      <section className="relative min-h-[100vh] flex items-center justify-center overflow-hidden">
+      <section className="relative min-h-[100vh] flex items-center justify-center overflow-hidden" style={{ isolation: 'isolate' }}>
         {/* Elegant rainbow gradient video-like animation */}
         <div className="absolute inset-0 -z-10">
           {/* Base mesh gradient */}
@@ -34,7 +34,7 @@ export default function SMBClientPage() {
           {/* Soft rainbow overlay sweep */
           }
           <motion.div
-            className="absolute inset-0 opacity-60 mix-blend-screen"
+            className="absolute inset-0 opacity-60 mix-blend-screen pointer-events-none"
             style={{
               background:
                 "conic-gradient(from 0deg at 50% 50%, rgba(255,0,128,0.10), rgba(255,140,0,0.08), rgba(255,255,0,0.08), rgba(0,255,128,0.08), rgba(0,200,255,0.10), rgba(128,0,255,0.10), rgba(255,0,128,0.10))",
@@ -50,25 +50,25 @@ export default function SMBClientPage() {
           <div className="mx-auto max-w-3xl text-center">
             <motion.h1
               className="text-5xl sm:text-6xl md:text-7xl font-semibold tracking-tight lowercase"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, ease: "easeOut" }}
+              initial={{ y: 12 }}
+              animate={{ y: 0 }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
             >
               design, software, and data — powered by gpt‑5
             </motion.h1>
             <motion.p
               className="mt-4 text-neutral-600 md:text-xl lowercase"
-              initial={{ opacity: 0, y: 14 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.15, ease: "easeOut" }}
+              initial={{ y: 10 }}
+              animate={{ y: 0 }}
+              transition={{ duration: 0.6, delay: 0.08, ease: "easeOut" }}
             >
               we design, engineer, and analyze systems that grow leads, improve conversion, and increase lifetime value.
             </motion.p>
             <motion.div
               className="mt-8 flex items-center justify-center gap-3"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.25, ease: "easeOut" }}
+              initial={{ y: 10 }}
+              animate={{ y: 0 }}
+              transition={{ duration: 0.6, delay: 0.15, ease: "easeOut" }}
             >
               <Link href="/get-started">
                 <Button className="rounded-full px-8 py-6 text-base lowercase">
@@ -81,9 +81,9 @@ export default function SMBClientPage() {
             </motion.div>
             <motion.p
               className="mt-6 text-sm text-neutral-400 lowercase"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.6 }}
+              initial={{ y: 8 }}
+              animate={{ y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
             >
               more qualified leads • higher conversion rates • stronger ltv
             </motion.p>

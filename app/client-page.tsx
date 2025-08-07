@@ -326,9 +326,9 @@ export default function ClientPage() {
         {/* Services Overview */}
         <section 
           ref={servicesRef} 
-          className={`bg-neutral-50 py-16 md:py-24 ${servicesVisible ? 'reveal-up visible' : 'reveal-up'}`}
+          className={`bg-neutral-50 py-16 md:py-24`}
         >
-          <div className="container mx-auto px-4 md:px-6">
+          <div className={`container mx-auto px-4 md:px-6 ${servicesVisible ? 'reveal-up visible' : 'reveal-up'}`}>
             <div className="text-center mb-12">
               <h2 className="text-3xl font-bold tracking-tighter lowercase sm:text-4xl gpu-accelerated">services</h2>
               <p className="mx-auto mt-4 max-w-[700px] text-neutral-600 lowercase">
@@ -442,9 +442,9 @@ export default function ClientPage() {
         {/* Testimonials Section */}
         <section 
           ref={testimonialsRef} 
-          className={`py-16 md:py-24 bg-white dark:bg-neutral-900 ${testimonialsVisible ? 'reveal-fade visible' : 'reveal-fade'}`}
+          className={`py-16 md:py-24 bg-white dark:bg-neutral-900`}
         >
-          <div ref={testimonialsAnimRef} className="container mx-auto px-4 md:px-6">
+          <div ref={testimonialsAnimRef} className={`container mx-auto px-4 md:px-6 ${testimonialsVisible ? 'reveal-fade visible' : 'reveal-fade'}`}>
             <div className="mx-auto max-w-2xl space-y-6 text-center">
               <h2 className="text-3xl font-bold tracking-tighter lowercase sm:text-4xl text-neutral-900 dark:text-neutral-100 gpu-accelerated">
                 client feedback
@@ -493,9 +493,9 @@ export default function ClientPage() {
         {/* Featured Case Studies Section */}
         <section 
           ref={caseStudiesRef} 
-          className={`py-16 md:py-24 bg-neutral-50 dark:bg-neutral-800 ${caseStudiesVisible ? 'reveal-up visible' : 'reveal-up'}`}
+          className={`py-16 md:py-24 bg-neutral-50 dark:bg-neutral-800`}
         >
-          <div ref={caseStudiesAnimRef} className="container mx-auto px-4 md:px-6">
+          <div ref={caseStudiesAnimRef} className={`container mx-auto px-4 md:px-6 ${caseStudiesVisible ? 'reveal-up visible' : 'reveal-up'}`}>
             <div className="mb-12">
               <h2 className="text-3xl font-bold tracking-tighter lowercase sm:text-4xl gpu-accelerated">success stories</h2>
               <p className="mt-4 text-neutral-600 dark:text-neutral-300 lowercase md:text-lg">
