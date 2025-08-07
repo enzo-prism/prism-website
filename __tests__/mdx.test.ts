@@ -1,5 +1,6 @@
-import { getPost } from '../lib/mdx'
+jest.mock('server-only', () => ({}), { virtual: true })
 import BlogPostPage from '../app/blog/[slug]/page'
+import { getPost } from '../lib/mdx'
 
 jest.mock('next/navigation', () => ({
   notFound: jest.fn(() => { throw new Error('NEXT_NOT_FOUND') })

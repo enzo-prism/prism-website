@@ -53,7 +53,16 @@ const trackRedirect = (from: string, to: string) => {
 }
 
 export function middleware(request: NextRequest) {
-  const path = request.nextUrl.pathname
+  const url = request.nextUrl
+  const path = url.pathname
+
+  // 1) Canonicalize host: redirect www -> apex
+  const hostname = url.hostname
+  if (hostname === "www.design-prism.com") {
+    const canonical = new URL(url)
+    canonical.hostname = "design-prism.com"
+    return NextResponse.redirect(canonical, 301)
+  }
 
   // Check if the path is in our redirects map
   if (redirects[path]) {
@@ -64,10 +73,10 @@ export function middleware(request: NextRequest) {
     trackRedirect(path, destination)
 
     // Create a new URL for the redirect destination
-    const url = new URL(destination, request.url)
+    const destUrl = new URL(destination, request.url)
 
     // Return a 301 (permanent) redirect
-    return NextResponse.redirect(url, 301)
+    return NextResponse.redirect(destUrl, 301)
   }
 
   // If no redirect is needed, continue with the request
@@ -77,6 +86,10 @@ export function middleware(request: NextRequest) {
 // Configure the middleware to run on specific paths
 export const config = {
   matcher: [
+    // Skip Next.js internals and assets to avoid interfering with crawling and static resources
+    {
+      source: "/((?!_next/|favicon\\.ico|sitemap\\.xml|robots\\.txt|monitoring).*)",
+    },
     "/about",
     "/our-work",
     "/about-us",

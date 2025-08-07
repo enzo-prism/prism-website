@@ -5,13 +5,13 @@ export default function robots(): MetadataRoute.Robots {
     rules: [
       {
         userAgent: "*",
-        allow: "/",
-        disallow: ["/api/", "/_next/", "/thanks/", "/ig/"],
+        allow: ["/", "/_next/static/", "/_next/image/"],
+        disallow: ["/api/", "/thanks/", "/ig/"],
       },
       {
         userAgent: "Googlebot",
-        allow: "/",
-        disallow: ["/api/", "/_next/", "/thanks/"],
+        allow: ["/", "/_next/static/", "/_next/image/"],
+        disallow: ["/api/", "/thanks/"],
       },
     ],
     sitemap: "https://design-prism.com/sitemap.xml", // UPDATED
