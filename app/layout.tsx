@@ -6,7 +6,6 @@ import "./globals.css"
 import ErrorTracker from "@/components/error-tracker"
 import HotjarScript from "@/components/hotjar-script"
 import MCPHealthMonitor from "@/components/mcp-health-monitor"
-import MobileTabBar from "@/components/mobile/MobileTabBar"
 import RouteAwareStickyCTA from "@/components/mobile/RouteAwareStickyCTA"
 import PerformanceMonitor from "@/components/performance-monitor"
 import { LocalBusinessSchema, OrganizationSchema, WebsiteSchema } from "@/components/schema-markup"
@@ -186,7 +185,6 @@ export default function RootLayout({
         <SentryContextProvider>
           {children}
         </SentryContextProvider>
-        <MobileTabBar />
         <RouteAwareStickyCTA />
       </body>
     </html>
