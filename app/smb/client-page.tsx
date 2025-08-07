@@ -56,7 +56,7 @@ export default function SMBClientPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, ease: "easeOut" }}
             >
-              gpt‑5 for small business
+              design, software, and data — powered by gpt‑5
             </motion.h1>
             <motion.p
               className="mt-4 text-neutral-600 md:text-xl lowercase"
@@ -64,7 +64,7 @@ export default function SMBClientPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.15, ease: "easeOut" }}
             >
-              we set up, train, and tune ai that works like your best employee — across marketing, ops, and support.
+              we design, engineer, and analyze systems that grow leads, improve conversion, and increase lifetime value.
             </motion.p>
             <motion.div
               className="mt-8 flex items-center justify-center gap-3"
@@ -87,24 +87,24 @@ export default function SMBClientPage() {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.6 }}
             >
-              custom gpt‑5 playbooks • first wins in 14 days • built for local and online smb
+              more qualified leads • higher conversion rates • stronger ltv
             </motion.p>
           </div>
         </div>
       </section>
 
-      {/* Benefits */}
+      {/* Services & outcomes */}
       <section className="py-16 md:py-24 bg-neutral-50">
         <div className="container mx-auto px-4 md:px-6">
           <div className="mx-auto max-w-4xl text-center mb-12">
-            <h2 className="text-3xl sm:text-4xl font-bold tracking-tighter lowercase">what you get</h2>
-            <p className="mt-3 text-neutral-600 lowercase">ai woven through your business — not bolted on</p>
+            <h2 className="text-3xl sm:text-4xl font-bold tracking-tighter lowercase">services we deliver</h2>
+            <p className="mt-3 text-neutral-600 lowercase">the prism stack: design + software engineering + data analysis</p>
           </div>
           <div className="grid gap-6 md:grid-cols-3">
             {[
-              { emoji: "💬", title: "ai sales + support", desc: "reply in your voice, 24/7 across chat, email, and sms" },
-              { emoji: "📈", title: "growth playbooks", desc: "gpt‑5 content, offers, and automations that convert" },
-              { emoji: "🧠", title: "your data, trained", desc: "fine‑tuned on your products, policies, and tone" },
+              { emoji: "🎨", title: "design systems that convert", desc: "landing pages, flows, and brand systems that turn attention into leads" },
+              { emoji: "⚙️", title: "software engineering", desc: "custom apps and automations that personalize and remove friction" },
+              { emoji: "📊", title: "data analysis & experimentation", desc: "instrumentation, dashboards, and tests to lift conversion and ltv" },
             ].map((item, i) => (
               <div key={i} className="bg-white rounded-2xl p-6 shadow-sm border border-neutral-100 text-left">
                 <div className="text-2xl mb-3">{item.emoji}</div>
@@ -122,8 +122,8 @@ export default function SMBClientPage() {
           <div className="mx-auto max-w-3xl text-center bg-neutral-900 text-white rounded-2xl p-10 relative overflow-hidden">
             <div className="absolute inset-0 opacity-30" style={{ background: "radial-gradient(600px 400px at 50% 50%, rgba(255,255,255,0.15), transparent 60%)" }} />
             <div className="relative z-10">
-              <h3 className="text-2xl sm:text-3xl font-semibold tracking-tight lowercase">ready to fully leverage gpt‑5?</h3>
-              <p className="mt-3 text-neutral-300 lowercase">we’ll implement, integrate, and measure with you — start with a free consult.</p>
+              <h3 className="text-2xl sm:text-3xl font-semibold tracking-tight lowercase">grow leads, conversions, and ltv</h3>
+              <p className="mt-3 text-neutral-300 lowercase">design, software, and data — implemented and measured with you.</p>
               <div className="mt-6">
                 <Link href="/get-started">
                   <Button variant="secondary" className="rounded-full px-8 py-6 text-base lowercase">
