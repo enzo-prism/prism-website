@@ -1,8 +1,10 @@
+import { getAllPosts } from "@/lib/mdx"
 import type { MetadataRoute } from "next"
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://design-prism.com"
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  // Static core routes
   const routes: Array<{
     url: string
     lastModified: Date
@@ -94,6 +96,23 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.3,
     },
   ]
+
+  // Dynamic blog post routes
+  try {
+    const posts = await getAllPosts()
+    if (posts && posts.length > 0) {
+      for (const post of posts) {
+        routes.push({
+          url: `${baseUrl}/blog/${post.slug}`,
+          lastModified: new Date(post.date),
+          changeFrequency: "monthly",
+          priority: 0.7,
+        })
+      }
+    }
+  } catch {
+    // Fail silently; static routes will still be returned
+  }
 
   return routes.map((route) => ({
     url: route.url,

@@ -72,9 +72,9 @@ export function OrganizationSchema() {
     url: "https://design-prism.com",
     logo: {
       "@type": "ImageObject",
-      url: "https://design-prism.com/Prism Logo.png",
-      width: 600,
-      height: 60,
+      url: "https://design-prism.com/prism-opengraph.png",
+      width: 1200,
+      height: 630,
     },
     sameAs: [
       "https://www.instagram.com/the_design_prism/?hl=en",
@@ -543,9 +543,9 @@ export function LocalBusinessSchema() {
     image: "https://design-prism.com/prism-opengraph.png",
     logo: {
       "@type": "ImageObject",
-      url: "https://design-prism.com/Prism Logo.png",
-      width: 600,
-      height: 60,
+      url: "https://design-prism.com/prism-opengraph.png",
+      width: 1200,
+      height: 630,
     },
     telephone: "+1-650-862-4069",
     priceRange: "$1,000 – $3,000",
