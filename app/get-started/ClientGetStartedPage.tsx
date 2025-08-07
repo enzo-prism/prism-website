@@ -52,20 +52,30 @@ export default function ClientGetStartedPage() {
     growthChallenge: '',
     whyPartnerWithPrism: ''
   })
-  const [daysUntilReview, setDaysUntilReview] = useState(6)
+  // Calculate days until the next monthly review (on the 1st)
+  const calculateDaysUntilNextFirst = () => {
+    const now = new Date()
+    const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate())
+
+    // If today is the 1st, review is today
+    if (now.getDate() === 1) return 0
+
+    // Otherwise, compute the next month's 1st
+    const nextMonth = now.getMonth() + 1
+    const nextMonthYear = now.getFullYear() + (nextMonth > 11 ? 1 : 0)
+    const nextMonthIndex = nextMonth % 12
+    const nextFirst = new Date(nextMonthYear, nextMonthIndex, 1)
+
+    const msPerDay = 24 * 60 * 60 * 1000
+    const diffDays = Math.round((nextFirst.getTime() - startOfToday.getTime()) / msPerDay)
+    return Math.max(diffDays, 0)
+  }
+
+  const [daysUntilReview] = useState<number>(calculateDaysUntilNextFirst)
   const isMobile = useMobile()
   const videoRef = useRef<HTMLDivElement>(null)
 
-  // Calculate days until next review
-  useEffect(() => {
-    const calculateDaysUntilReview = () => {
-      const today = new Date()
-      const targetDate = new Date(today)
-      targetDate.setDate(today.getDate() + 6)
-      setDaysUntilReview(6)
-    }
-    calculateDaysUntilReview()
-  }, [])
+  // No effect needed; we compute once on mount using the user's local timezone
 
   // Lazy load video
   useEffect(() => {
@@ -255,7 +265,11 @@ export default function ClientGetStartedPage() {
                   <div className="hidden sm:block w-px h-4 bg-neutral-300" />
                   <div className="flex items-center gap-2 text-sm text-neutral-600">
                     <Clock className="w-4 h-4" />
-                    <span>Next review in {daysUntilReview} days</span>
+                    <span>
+                      {daysUntilReview === 0
+                        ? 'Next review today'
+                        : `Next review in ${daysUntilReview} ${daysUntilReview === 1 ? 'day' : 'days'}`}
+                    </span>
                   </div>
                 </motion.div>
               </div>
@@ -385,7 +399,9 @@ export default function ClientGetStartedPage() {
                     </div>
                     <h3 className="text-xl sm:text-2xl font-medium mb-2">Welcome to the Inner Circle!</h3>
                     <p className="text-neutral-600">
-                      Your application has been received. We'll review it within {daysUntilReview} days.
+                      {daysUntilReview === 0
+                        ? "Your application has been received. We'll review it today."
+                        : `Your application has been received. We'll review it within ${daysUntilReview} ${daysUntilReview === 1 ? 'day' : 'days'}.`}
                     </p>
                   </motion.div>
                 ) : (
