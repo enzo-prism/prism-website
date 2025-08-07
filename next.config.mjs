@@ -19,14 +19,6 @@ images: {
 },
   async redirects() {
     return [
-      // Host canonicalization (www -> apex)
-      {
-        source: '/:path*',
-        has: [{ type: 'host', value: 'www.design-prism.com' }],
-        destination: 'https://design-prism.com/:path*',
-        permanent: true,
-      },
-
       // Specific legacy mappings
       { source: '/dr-chris-wong', destination: '/case-studies/dr-christopher-wong', permanent: true },
       { source: '/our-work/chris-wong-case-study', destination: '/case-studies/dr-christopher-wong', permanent: true },
