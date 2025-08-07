@@ -17,6 +17,43 @@ images: {
   dangerouslyAllowSVG: true,
   contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
 },
+  async redirects() {
+    return [
+      // Host canonicalization (www -> apex)
+      {
+        source: '/:path*',
+        has: [{ type: 'host', value: 'www.design-prism.com' }],
+        destination: 'https://design-prism.com/:path*',
+        permanent: true,
+      },
+
+      // Specific legacy mappings
+      { source: '/dr-chris-wong', destination: '/case-studies/dr-christopher-wong', permanent: true },
+      { source: '/our-work/chris-wong-case-study', destination: '/case-studies/dr-christopher-wong', permanent: true },
+      { source: '/dr-chris-wong-successful-dental-practice-palo-alto', destination: '/case-studies/dr-christopher-wong', permanent: true },
+
+      // Consolidations
+      { source: '/about-us', destination: '/about', permanent: true },
+      { source: '/our-work', destination: '/case-studies', permanent: true },
+      { source: '/our-work/:path*', destination: '/case-studies', permanent: true },
+      { source: '/our-services', destination: '/', permanent: true },
+      { source: '/pod', destination: '/', permanent: true },
+      { source: '/refer', destination: '/get-started', permanent: true },
+      { source: '/tools', destination: '/services', permanent: true },
+      { source: '/portfolio', destination: '/case-studies', permanent: true },
+
+      // Old content -> closest current destinations
+      { source: '/dr-kris-hamamoto', destination: '/', permanent: true },
+      { source: '/dr-ahmed-mataria-dental-care-innovation', destination: '/case-studies', permanent: true },
+      { source: '/elevating-dental-compliance-will-gilmore', destination: '/case-studies', permanent: true },
+      { source: '/michael-njo-resilience-mentorship-dentistry', destination: '/case-studies', permanent: true },
+      { source: '/hello', destination: '/get-started', permanent: true },
+      { source: '/mind', destination: '/blog', permanent: true },
+      { source: '/old-home', destination: '/', permanent: true },
+      { source: '/pod-3-katie-lee', destination: '/podcast', permanent: true },
+      { source: '/pod-7-teagan', destination: '/podcast', permanent: true },
+    ]
+  },
 }
 
 export default withSentryConfig(nextConfig, {
