@@ -35,15 +35,13 @@ export default function SMBClientPage() {
           }
           <motion.div
             className="absolute inset-0 opacity-60 mix-blend-screen"
-            animate={{
-              background: [
-                "conic-gradient(from 0deg at 50% 50%, rgba(255,0,128,0.12), rgba(255,140,0,0.10), rgba(255,255,0,0.10), rgba(0,255,128,0.10), rgba(0,200,255,0.12), rgba(128,0,255,0.12), rgba(255,0,128,0.12))",
-                "conic-gradient(from 180deg at 50% 50%, rgba(255,0,128,0.12), rgba(255,140,0,0.10), rgba(255,255,0,0.10), rgba(0,255,128,0.10), rgba(0,200,255,0.12), rgba(128,0,255,0.12), rgba(255,0,128,0.12))",
-                "conic-gradient(from 360deg at 50% 50%, rgba(255,0,128,0.12), rgba(255,140,0,0.10), rgba(255,255,0,0.10), rgba(0,255,128,0.10), rgba(0,200,255,0.12), rgba(128,0,255,0.12), rgba(255,0,128,0.12))",
-              ],
+            style={{
+              background:
+                "conic-gradient(from 0deg at 50% 50%, rgba(255,0,128,0.10), rgba(255,140,0,0.08), rgba(255,255,0,0.08), rgba(0,255,128,0.08), rgba(0,200,255,0.10), rgba(128,0,255,0.10), rgba(255,0,128,0.10))",
+              willChange: "transform",
             }}
-            transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
-            style={{ willChange: "background" }}
+            animate={{ rotate: 360 }}
+            transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
           />
         </div>
 
