@@ -1,7 +1,7 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { ArrowRight } from "lucide-react"
+import { ArrowRight, Quote as QuoteIcon } from "lucide-react"
 import Link from "next/link"
 import { useCallback, useEffect, useRef, useState } from "react"
 
@@ -517,7 +517,7 @@ const TestimonialCard = ({ quote, index, cardRef }: {
         aria-label={`Testimonial from ${quote.client}`}
       >
         <div className="absolute -top-3 left-4 inline-flex h-8 w-8 items-center justify-center rounded-full bg-neutral-50 ring-1 ring-neutral-200">
-          <Quote className="h-4 w-4 text-neutral-400" aria-hidden="true" />
+          <QuoteIcon className="h-4 w-4 text-neutral-400" aria-hidden="true" />
         </div>
         <p className="mt-2 text-[15px] sm:text-base text-neutral-700 leading-relaxed tracking-tight">
           &ldquo;{renderFormattedText(quote.text)}&rdquo;
