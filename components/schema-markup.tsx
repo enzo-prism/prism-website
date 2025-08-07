@@ -275,7 +275,7 @@ export function ContactPageSchema() {
   const contactSchema = {
     "@context": "https://schema.org",
     "@type": "ContactPage",
-    url: "https://www.design-prism.com/contact",
+    url: "https://design-prism.com/contact",
     mainEntity: {
       "@type": "Organization",
       "@id": "https://design-prism.com/#organization",

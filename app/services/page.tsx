@@ -1,6 +1,6 @@
-import type { Metadata } from "next"
-import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
+import Navbar from "@/components/navbar"
+import type { Metadata } from "next"
 import ServicesClient from "./client-page"
 
 export const metadata: Metadata = {
@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Services - Prism",
     description: "Tailored design and growth solutions for small businesses. Choose from our flexible tiers and add-ons.",
-    url: "https://www.design-prism.com/services",
+    url: "https://design-prism.com/services",
     images: [
       {
         url: "/prism-opengraph.png",

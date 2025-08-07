@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Contact Us | Prism",
     description: "Get in touch with Prism. Find our email, Instagram, and scheduling link.",
-    url: "https://www.design-prism.com/contact", // Replace with your actual domain
+    url: "https://design-prism.com/contact", // Canonical non-www
     images: [
       {
         url: "/prism-opengraph.png", // Replace with your actual opengraph image
