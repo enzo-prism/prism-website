@@ -2,7 +2,15 @@
 
 import { Button } from "@/components/ui/button"
 import { trackCTAClick } from "@/utils/analytics"
-import { fadeInUp, staggerContainer } from "@/utils/animation-variants"
+import {
+    fadeInUp,
+    getAnimationVariant,
+    mobileFadeIn,
+    mobileScrollReveal,
+    mobileStaggerContainer,
+    mobileTap,
+    staggerContainer
+} from "@/utils/animation-variants"
 import { AnimatePresence, motion, useInView, Variants } from "framer-motion"
 import {
     ArrowRight,
@@ -168,12 +176,12 @@ export default function PrismFlywheelClient() {
             className="space-y-8"
             initial="initial"
             animate="animate"
-            variants={staggerContainer}
+            variants={getAnimationVariant(staggerContainer, mobileStaggerContainer)}
           >
             {/* Minimal heading */}
             <motion.div 
               className="text-center"
-              variants={fadeInUp}
+              variants={getAnimationVariant(fadeInUp, mobileFadeIn)}
             >
               <h1 className="text-3xl md:text-5xl lg:text-6xl font-light tracking-tight text-neutral-900 dark:text-white">
                 The Prism Flywheel
@@ -186,7 +194,7 @@ export default function PrismFlywheelClient() {
             {/* Clean description */}
             <motion.p 
               className="text-base md:text-lg text-center text-neutral-600 dark:text-neutral-400 max-w-2xl mx-auto leading-relaxed"
-              variants={fadeInUp}
+              variants={getAnimationVariant(fadeInUp, mobileFadeIn)}
             >
               Transform code and content into revenue through our AI-powered growth system. 
               Research, create, optimize, and scale—each cycle compounds your success.
@@ -195,7 +203,7 @@ export default function PrismFlywheelClient() {
             {/* Single elegant CTA */}
             <motion.div 
               className="text-center"
-              variants={fadeInUp}
+              variants={getAnimationVariant(fadeInUp, mobileFadeIn)}
             >
               <Link href="/get-started" onClick={() => trackCTAClick("get started", "hero-flywheel-minimal")}>
                 <Button 
@@ -226,6 +234,7 @@ export default function PrismFlywheelClient() {
                   height: '100%',
                   border: 'none'
                 }}
+                loading="lazy"
                 allow="autoplay; fullscreen; picture-in-picture"
                 allowFullScreen
               />
@@ -240,6 +249,9 @@ export default function PrismFlywheelClient() {
                     activePhase === phase.number ? 'opacity-100' : 'opacity-60 hover:opacity-100'
                   }`}
                   whileHover={{ y: -2 }}
+                  whileTap="tap"
+                  variants={mobileTap}
+                  aria-pressed={activePhase === phase.number}
                   onClick={() => setActivePhase(activePhase === phase.number ? null : phase.number)}
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -258,7 +270,7 @@ export default function PrismFlywheelClient() {
                       {phase.number}
                     </span>
                   </div>
-                  <span className="text-xs text-neutral-600 dark:text-neutral-400 font-medium">
+                  <span className="text-sm text-neutral-600 dark:text-neutral-400 font-medium">
                     {phase.title.split(' ')[0]}
                   </span>
                 </motion.button>
@@ -294,17 +306,17 @@ export default function PrismFlywheelClient() {
         className="py-24 md:py-32"
         initial="hidden"
         animate={philosophyInView ? "visible" : "hidden"}
-        variants={gpuScrollReveal}
+        variants={getAnimationVariant(gpuScrollReveal, mobileScrollReveal)}
       >
         <div className="container mx-auto px-4 max-w-5xl">
           <motion.div 
             className="space-y-16"
-            variants={staggerContainer}
+            variants={getAnimationVariant(staggerContainer, mobileStaggerContainer)}
           >
             {/* Section header */}
             <motion.div 
               className="text-center"
-              variants={fadeInUp}
+              variants={getAnimationVariant(fadeInUp, mobileFadeIn)}
             >
               <h2 className="text-2xl md:text-3xl font-light text-neutral-900 dark:text-white">
                 Our Philosophy
@@ -315,7 +327,7 @@ export default function PrismFlywheelClient() {
             {/* Content grid */}
             <motion.div 
               className="grid md:grid-cols-2 gap-16 items-start"
-              variants={fadeInUp}
+              variants={getAnimationVariant(fadeInUp, mobileFadeIn)}
             >
               {/* Text content */}
               <div className="space-y-6">
@@ -333,7 +345,7 @@ export default function PrismFlywheelClient() {
                 {/* Elegant quote */}
                 <motion.blockquote 
                   className="mt-8 pt-8 border-t border-neutral-200 dark:border-neutral-800"
-                  variants={fadeInUp}
+                  variants={getAnimationVariant(fadeInUp, mobileFadeIn)}
                 >
                   <p className="text-lg font-light italic text-neutral-700 dark:text-neutral-300 leading-relaxed">
                     "You do not rise to the level of your goals. You fall to the level of your systems."
@@ -358,7 +370,7 @@ export default function PrismFlywheelClient() {
                     <motion.div 
                       key={index}
                       className="flex items-start space-x-4"
-                      variants={fadeInUp}
+                      variants={getAnimationVariant(fadeInUp, mobileFadeIn)}
                     >
                       <div className="w-1 h-12 bg-neutral-900 dark:bg-white opacity-20" />
                       <div className="flex-1">
@@ -387,7 +399,7 @@ export default function PrismFlywheelClient() {
               {/* Visual element - Minimal equation */}
               <motion.div 
                 className="flex items-center justify-center md:justify-end"
-                variants={fadeInUp}
+                variants={getAnimationVariant(fadeInUp, mobileFadeIn)}
               >
                 <div className="text-center space-y-4">
                   <div className="text-4xl md:text-5xl font-light text-neutral-900 dark:text-white">
@@ -414,20 +426,20 @@ export default function PrismFlywheelClient() {
         className="py-24 md:py-32 bg-neutral-50 dark:bg-neutral-900"
         initial="hidden"
         animate={howItWorksInView ? "visible" : "hidden"}
-        variants={gpuScrollReveal}
+        variants={getAnimationVariant(gpuScrollReveal, mobileScrollReveal)}
       >
         <div className="container mx-auto px-4 max-w-4xl">
           <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
-            variants={staggerContainer}
+            variants={getAnimationVariant(staggerContainer, mobileStaggerContainer)}
             className="space-y-20"
           >
             {/* Section header */}
             <motion.div 
               className="text-center space-y-6"
-              variants={fadeInUp}
+              variants={getAnimationVariant(fadeInUp, mobileFadeIn)}
             >
               <div>
                 <h2 className="text-2xl md:text-3xl font-light text-neutral-900 dark:text-white">
@@ -447,25 +459,25 @@ export default function PrismFlywheelClient() {
             {/* Vertical timeline */}
             <div className="relative">
               {/* Central line */}
-              <div className="absolute left-8 md:left-1/2 top-0 bottom-0 w-px bg-neutral-200 dark:bg-neutral-800 md:-translate-x-1/2" />
+                  <div className="absolute left-8 md:left-1/2 top-0 bottom-0 w-px bg-neutral-200 dark:bg-neutral-800 md:-translate-x-1/2" />
 
               {/* Phase items */}
               <div className="space-y-16">
                 {flywheelPhases.map((phase, index) => (
-                  <motion.div
+                    <motion.div
                     key={phase.number}
                     className={`relative flex items-start ${
                       index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'
                     } flex-row`}
-                    variants={fadeInUp}
+                      variants={getAnimationVariant(fadeInUp, mobileFadeIn)}
                   >
                     {/* Number indicator */}
-                    <div className="absolute left-8 md:left-1/2 w-8 h-8 -ml-4 md:-ml-4 rounded-full bg-white dark:bg-neutral-950 border-2 border-neutral-900 dark:border-white flex items-center justify-center">
+                      <div className="absolute left-8 md:left-1/2 w-7 h-7 md:w-8 md:h-8 -ml-4 md:-ml-4 rounded-full bg-white dark:bg-neutral-950 border-2 border-neutral-900 dark:border-white flex items-center justify-center">
                       <span className="text-xs font-medium">{phase.number}</span>
                     </div>
 
                     {/* Content */}
-                    <div className={`ml-20 md:ml-0 flex-1 ${
+                      <div className={`ml-24 md:ml-0 flex-1 ${
                       index % 2 === 0 ? 'md:pr-12 md:text-right' : 'md:pl-12'
                     }`}>
                       <h3 className="text-lg font-medium text-neutral-900 dark:text-white mb-2">
@@ -486,7 +498,7 @@ export default function PrismFlywheelClient() {
             {/* Bottom CTA */}
             <motion.div 
               className="text-center pt-8"
-              variants={fadeInUp}
+              variants={getAnimationVariant(fadeInUp, mobileFadeIn)}
             >
               <Link href="/get-started">
                 <Button 
@@ -508,20 +520,20 @@ export default function PrismFlywheelClient() {
         className="py-24 md:py-32"
         initial="hidden"
         animate={techStackInView ? "visible" : "hidden"}
-        variants={gpuScrollReveal}
+        variants={getAnimationVariant(gpuScrollReveal, mobileScrollReveal)}
       >
         <div className="container mx-auto px-4 max-w-5xl">
           <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
-            variants={staggerContainer}
+            variants={getAnimationVariant(staggerContainer, mobileStaggerContainer)}
             className="space-y-16"
           >
             {/* Section header */}
             <motion.div 
               className="text-center space-y-6"
-              variants={fadeInUp}
+              variants={getAnimationVariant(fadeInUp, mobileFadeIn)}
             >
               <div>
                 <h2 className="text-2xl md:text-3xl font-light text-neutral-900 dark:text-white">
@@ -544,12 +556,12 @@ export default function PrismFlywheelClient() {
             </motion.div>
 
             {/* Minimal tech grid */}
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-x-12 gap-y-16">
+            <div className="md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-x-12 md:gap-y-16 flex gap-6 overflow-x-auto snap-x snap-mandatory [-webkit-overflow-scrolling:touch]">
               {techStackItems.map((item, index) => (
                 <motion.div
                   key={index}
-                  variants={fadeInUp}
-                  className="group"
+                  variants={getAnimationVariant(fadeInUp, mobileFadeIn)}
+                  className="group min-w-[82%] snap-start md:min-w-0"
                 >
                   <div className="space-y-3">
                     {/* Category label */}
@@ -577,7 +589,7 @@ export default function PrismFlywheelClient() {
             {/* Bottom note */}
             <motion.p 
               className="text-center text-sm text-neutral-500 dark:text-neutral-500"
-              variants={fadeInUp}
+              variants={getAnimationVariant(fadeInUp, mobileFadeIn)}
             >
               Custom-tailored for your unique growth trajectory
             </motion.p>
@@ -593,7 +605,7 @@ export default function PrismFlywheelClient() {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
-            variants={fadeInUp}
+            variants={getAnimationVariant(fadeInUp, mobileFadeIn)}
           >
             <h3 className="text-xl md:text-2xl font-light text-neutral-900 dark:text-white mb-6">
               Ready to compound your growth?
@@ -616,20 +628,20 @@ export default function PrismFlywheelClient() {
         className="py-24 md:py-32 bg-neutral-50 dark:bg-neutral-900"
         initial="hidden"
         animate={dataInView ? "visible" : "hidden"}
-        variants={gpuScrollReveal}
+        variants={getAnimationVariant(gpuScrollReveal, mobileScrollReveal)}
       >
         <div className="container mx-auto px-4 max-w-5xl">
           <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
-            variants={staggerContainer}
+            variants={getAnimationVariant(staggerContainer, mobileStaggerContainer)}
             className="space-y-16"
           >
             {/* Section header */}
             <motion.div 
               className="text-center"
-              variants={fadeInUp}
+              variants={getAnimationVariant(fadeInUp, mobileFadeIn)}
             >
               <h2 className="text-2xl md:text-3xl font-light text-neutral-900 dark:text-white">
                 Data-Driven Decisions
@@ -642,11 +654,11 @@ export default function PrismFlywheelClient() {
             {/* Data metrics - minimal approach */}
             <motion.div 
               className="grid md:grid-cols-3 gap-x-16 gap-y-12"
-              variants={staggerContainer}
+              variants={getAnimationVariant(staggerContainer, mobileStaggerContainer)}
             >
               <motion.div 
                 className="text-center space-y-3"
-                variants={fadeInUp}
+                variants={getAnimationVariant(fadeInUp, mobileFadeIn)}
               >
                 <div className="text-xs font-medium tracking-wider uppercase text-neutral-400">
                   Analytics
@@ -662,7 +674,7 @@ export default function PrismFlywheelClient() {
 
               <motion.div 
                 className="text-center space-y-3"
-                variants={fadeInUp}
+                variants={getAnimationVariant(fadeInUp, mobileFadeIn)}
               >
                 <div className="text-xs font-medium tracking-wider uppercase text-neutral-400">
                   Visibility
@@ -678,7 +690,7 @@ export default function PrismFlywheelClient() {
 
               <motion.div 
                 className="text-center space-y-3"
-                variants={fadeInUp}
+                variants={getAnimationVariant(fadeInUp, mobileFadeIn)}
               >
                 <div className="text-xs font-medium tracking-wider uppercase text-neutral-400">
                   Behavior
@@ -696,7 +708,7 @@ export default function PrismFlywheelClient() {
             {/* Bottom insight */}
             <motion.p 
               className="text-center text-sm text-neutral-500 dark:text-neutral-500"
-              variants={fadeInUp}
+              variants={getAnimationVariant(fadeInUp, mobileFadeIn)}
             >
               Facts drive decisions. Decisions drive growth.
             </motion.p>
@@ -710,20 +722,20 @@ export default function PrismFlywheelClient() {
         className="py-24 md:py-32"
         initial="hidden"
         animate={impactInView ? "visible" : "hidden"}
-        variants={gpuScrollReveal}
+        variants={getAnimationVariant(gpuScrollReveal, mobileScrollReveal)}
       >
         <div className="container mx-auto px-4 max-w-5xl">
           <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
-            variants={staggerContainer}
+            variants={getAnimationVariant(staggerContainer, mobileStaggerContainer)}
             className="space-y-20"
           >
             {/* Section header */}
             <motion.div 
               className="text-center max-w-3xl mx-auto"
-              variants={fadeInUp}
+              variants={getAnimationVariant(fadeInUp, mobileFadeIn)}
             >
               <h2 className="text-2xl md:text-3xl font-light text-neutral-900 dark:text-white mb-6">
                 Transform Your Business
@@ -738,7 +750,7 @@ export default function PrismFlywheelClient() {
             <div className="grid md:grid-cols-3 gap-12">
               <motion.div 
                 className="text-center"
-                variants={fadeInUp}
+                variants={getAnimationVariant(fadeInUp, mobileFadeIn)}
               >
                 <div className="mb-4">
                   <span className="text-5xl md:text-6xl font-extralight text-neutral-900 dark:text-white">
@@ -755,7 +767,7 @@ export default function PrismFlywheelClient() {
 
               <motion.div 
                 className="text-center"
-                variants={fadeInUp}
+                variants={getAnimationVariant(fadeInUp, mobileFadeIn)}
               >
                 <div className="mb-4">
                   <span className="text-5xl md:text-6xl font-extralight text-neutral-900 dark:text-white">
@@ -772,7 +784,7 @@ export default function PrismFlywheelClient() {
 
               <motion.div 
                 className="text-center"
-                variants={fadeInUp}
+                variants={getAnimationVariant(fadeInUp, mobileFadeIn)}
               >
                 <div className="mb-4">
                   <span className="text-5xl md:text-6xl font-extralight text-neutral-900 dark:text-white">
@@ -791,7 +803,7 @@ export default function PrismFlywheelClient() {
             {/* Munger quote on compounding */}
             <motion.div 
               className="max-w-2xl mx-auto text-center"
-              variants={fadeInUp}
+              variants={getAnimationVariant(fadeInUp, mobileFadeIn)}
             >
               <blockquote className="space-y-3">
                 <p className="text-base font-light italic text-neutral-700 dark:text-neutral-300">
@@ -812,20 +824,20 @@ export default function PrismFlywheelClient() {
         className="py-24 md:py-32 bg-neutral-50 dark:bg-neutral-900"
         initial="hidden"
         animate={learnInView ? "visible" : "hidden"}
-        variants={gpuScrollReveal}
+        variants={getAnimationVariant(gpuScrollReveal, mobileScrollReveal)}
       >
         <div className="container mx-auto px-4 max-w-5xl">
           <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
-            variants={staggerContainer}
+            variants={getAnimationVariant(staggerContainer, mobileStaggerContainer)}
             className="space-y-16"
           >
             {/* Section header */}
             <motion.div 
               className="text-center"
-              variants={fadeInUp}
+              variants={getAnimationVariant(fadeInUp, mobileFadeIn)}
             >
               <h2 className="text-2xl md:text-3xl font-light text-neutral-900 dark:text-white">
                 Learn the System
@@ -840,7 +852,7 @@ export default function PrismFlywheelClient() {
               {/* Blog */}
               <motion.div 
                 className="space-y-4"
-                variants={fadeInUp}
+                variants={getAnimationVariant(fadeInUp, mobileFadeIn)}
               >
                 <div className="space-y-2">
                   <h3 className="text-lg font-normal text-neutral-900 dark:text-white">
@@ -863,7 +875,7 @@ export default function PrismFlywheelClient() {
               {/* YouTube */}
               <motion.div 
                 className="space-y-4"
-                variants={fadeInUp}
+                variants={getAnimationVariant(fadeInUp, mobileFadeIn)}
               >
                 <div className="space-y-2">
                   <h3 className="text-lg font-normal text-neutral-900 dark:text-white">
@@ -888,7 +900,7 @@ export default function PrismFlywheelClient() {
               {/* Instagram */}
               <motion.div 
                 className="space-y-4"
-                variants={fadeInUp}
+                variants={getAnimationVariant(fadeInUp, mobileFadeIn)}
               >
                 <div className="space-y-2">
                   <h3 className="text-lg font-normal text-neutral-900 dark:text-white">
@@ -914,7 +926,7 @@ export default function PrismFlywheelClient() {
             {/* Community note */}
             <motion.div 
               className="text-center pt-8"
-              variants={fadeInUp}
+              variants={getAnimationVariant(fadeInUp, mobileFadeIn)}
             >
               <p className="text-xs text-neutral-500 dark:text-neutral-500">
                 Join 24,500+ on YouTube and 38,500+ on Instagram
