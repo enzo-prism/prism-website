@@ -138,7 +138,7 @@ export default function BlogPostLayout({
           {/* Content Section */}
           <div className="px-4 py-8">
             <BlogPostErrorBoundary>
-              <div className="prose-minimal">
+              <div className="prose-blog">
                 {children}
               </div>
             </BlogPostErrorBoundary>
@@ -217,9 +217,9 @@ export default function BlogPostLayout({
                       <span className="inline-block px-3 py-1 bg-neutral-100 rounded-full text-xs lowercase">
                         {category}
                       </span>
-                      <span className="text-sm text-neutral-500 lowercase">{date}</span>
+                      <span className="text-sm text-neutral-500 lowercase">{new Date(date).toLocaleDateString()}</span>
                     </div>
-                    <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight lowercase mb-4 leading-tight">
+                    <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight lowercase mb-4 leading-tight text-balance">
                       {title}
                     </h1>
                   </div>
