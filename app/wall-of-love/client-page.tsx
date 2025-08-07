@@ -1,7 +1,9 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { ArrowRight, Quote as QuoteIcon } from "lucide-react"
+import { mobileScrollReveal } from "@/utils/animation-variants"
+import { motion } from "framer-motion"
+import { ArrowRight } from "lucide-react"
 import Link from "next/link"
 import { useCallback, useEffect, useRef, useState } from "react"
 
@@ -502,33 +504,26 @@ const shuffleArray = (array: Quote[]): Quote[] => {
   return newArray
 }
 
-const TestimonialCard = ({ quote, index, cardRef }: {
-  quote: Quote;
-  index: number;
-  cardRef: (el: HTMLQuoteElement | null) => void;
-}) => {
+const TestimonialCard = ({ quote }: { quote: Quote }) => {
   return (
-    <div className="rounded-2xl bg-gradient-to-br from-neutral-200/60 to-white p-[1px]">
-      <blockquote
-        ref={cardRef}
-        data-index={index}
-        className="testimonial-card relative bg-white p-5 sm:p-6 rounded-2xl w-full border border-white shadow-sm transition-transform duration-300 sm:hover:shadow-md sm:hover:-translate-y-0.5 will-change-transform"
-        style={{ contain: "layout style paint" }}
-        aria-label={`Testimonial from ${quote.client}`}
-      >
-        <div className="absolute -top-3 left-4 inline-flex h-8 w-8 items-center justify-center rounded-full bg-neutral-50 ring-1 ring-neutral-200">
-          <QuoteIcon className="h-4 w-4 text-neutral-400" aria-hidden="true" />
-        </div>
-        <p className="mt-2 text-[15px] sm:text-base text-neutral-700 leading-relaxed tracking-tight">
-          &ldquo;{renderFormattedText(quote.text)}&rdquo;
-        </p>
-        <footer className="mt-4 flex items-center justify-end gap-2 text-right">
-          <p className="font-semibold text-sm sm:text-base text-neutral-900">{quote.client}</p>
-          <span className="text-neutral-300">•</span>
-          <p className="text-xs sm:text-sm text-neutral-500">{quote.company}</p>
-        </footer>
-      </blockquote>
-    </div>
+    <motion.blockquote
+      variants={mobileScrollReveal}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.2 }}
+      className="bg-white p-5 sm:p-6 rounded-2xl w-full border border-neutral-200/70 shadow-[0_1px_2px_rgba(0,0,0,0.04)]"
+      style={{ contain: "layout style paint" }}
+      aria-label={`Testimonial from ${quote.client}`}
+    >
+      <p className="text-[15px] sm:text-base text-neutral-700 leading-relaxed tracking-tight">
+        &ldquo;{renderFormattedText(quote.text)}&rdquo;
+      </p>
+      <footer className="mt-4 flex items-center justify-end gap-2 text-right">
+        <p className="font-semibold text-sm sm:text-base text-neutral-900">{quote.client}</p>
+        <span className="text-neutral-300">•</span>
+        <p className="text-xs sm:text-sm text-neutral-500">{quote.company}</p>
+      </footer>
+    </motion.blockquote>
   )
 }
 
@@ -544,19 +539,7 @@ export default function WallOfLoveClientPage() {
     return window.innerWidth < 768
   })
   const [isHydrated, setIsHydrated] = useState(false)
-  const cardRefs = useRef<WeakMap<HTMLQuoteElement, number>>(new WeakMap())
   const observerRef = useRef<IntersectionObserver | null>(null)
-  const [sourceFilter, setSourceFilter] = useState<"all" | "clients" | "community">("all")
-
-  const isCommunityQuote = useCallback((q: Quote) => q.company === "Instagram Community of Entrepreneurs", [])
-  const filterQuotesBySource = useCallback(
-    (source: "all" | "clients" | "community") => {
-      if (source === "community") return quotesData.filter(isCommunityQuote)
-      if (source === "clients") return quotesData.filter((q) => !isCommunityQuote(q))
-      return quotesData
-    },
-    [isCommunityQuote]
-  )
 
   const observerCallback = useCallback((entries: IntersectionObserverEntry[]) => {
     entries.forEach((entry) => {
@@ -569,17 +552,9 @@ export default function WallOfLoveClientPage() {
     })
   }, [isMobile, shuffledQuotes.length])
 
-  const setCardRef = useCallback((index: number) => {
-    return (el: HTMLQuoteElement | null) => {
-      if (el) {
-        cardRefs.current.set(el, index)
-      }
-    }
-  }, [])
-
   useEffect(() => {
     setIsHydrated(true)
-    setShuffledQuotes(shuffleArray(filterQuotesBySource(sourceFilter)))
+    setShuffledQuotes(shuffleArray(quotesData))
     
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 768)
@@ -589,15 +564,7 @@ export default function WallOfLoveClientPage() {
     window.addEventListener('resize', checkMobile, { passive: true })
     
     return () => window.removeEventListener('resize', checkMobile)
-  }, [filterQuotesBySource, sourceFilter])
-
-  useEffect(() => {
-    // Recompute when the filter changes after hydration
-    if (isHydrated) {
-      setShuffledQuotes(shuffleArray(filterQuotesBySource(sourceFilter)))
-      setVisibleCount(15)
-    }
-  }, [sourceFilter, filterQuotesBySource, isHydrated])
+  }, [])
 
   useEffect(() => {
     // Observer for load-more detection
@@ -658,41 +625,9 @@ export default function WallOfLoveClientPage() {
 
       <div className="bg-neutral-50 optimize-scrolling overflow-x-hidden">
         <main className="w-full max-w-2xl mx-auto px-4 py-12 sm:px-6 lg:px-8 sm:py-16">
-          <div className="mb-6 sm:mb-8 flex justify-center">
-            <div className="inline-flex items-center rounded-full bg-white p-1 shadow-sm ring-1 ring-neutral-200">
-              {([
-                { key: "all", label: "All" },
-                { key: "clients", label: "Clients" },
-                { key: "community", label: "Community" },
-              ] as const).map(({ key, label }) => {
-                const active = sourceFilter === key
-                return (
-                  <button
-                    key={key}
-                    type="button"
-                    onClick={() => setSourceFilter(key)}
-                    aria-pressed={active}
-                    className={
-                      `min-w-[86px] px-4 py-2 text-sm rounded-full transition-colors ` +
-                      (active
-                        ? "bg-neutral-900 text-white"
-                        : "text-neutral-700 hover:bg-neutral-100")
-                    }
-                  >
-                    {label}
-                  </button>
-                )
-              })}
-            </div>
-          </div>
           <div className="testimonial-container space-y-6 sm:space-y-8">
-            {(!isHydrated ? quotesData.slice(0, visibleCount) : shuffledQuotes.slice(0, visibleCount)).map((quote, index) => (
-              <TestimonialCard
-                key={quote.id}
-                quote={quote}
-                index={index}
-                cardRef={setCardRef(index)}
-              />
+            {(!isHydrated ? quotesData.slice(0, visibleCount) : shuffledQuotes.slice(0, visibleCount)).map((quote) => (
+              <TestimonialCard key={quote.id} quote={quote} />
             ))}
           </div>
           
