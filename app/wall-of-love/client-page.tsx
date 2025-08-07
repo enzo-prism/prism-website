@@ -466,7 +466,14 @@ const renderFormattedText = (text: string) => {
 
   return segments.map((segment, index) => {
     if (segment.startsWith("**") && segment.endsWith("**")) {
-      return <strong key={index}>{segment.substring(2, segment.length - 2)}</strong>
+      return (
+        <strong
+          key={index}
+          className="font-semibold text-neutral-900 underline decoration-amber-300/50 decoration-2 underline-offset-4"
+        >
+          {segment.substring(2, segment.length - 2)}
+        </strong>
+      )
     }
     return segment
   })
@@ -495,29 +502,33 @@ const shuffleArray = (array: Quote[]): Quote[] => {
   return newArray
 }
 
-const TestimonialCard = ({ quote, index, cardRef }: { 
-  quote: Quote; 
+const TestimonialCard = ({ quote, index, cardRef }: {
+  quote: Quote;
   index: number;
   cardRef: (el: HTMLQuoteElement | null) => void;
 }) => {
   return (
-    <blockquote
-      ref={cardRef}
-      data-index={index}
-      className="testimonial-card bg-white p-4 sm:p-6 rounded-xl shadow-md w-full transition-transform duration-200 hover:shadow-lg hover:-translate-y-1"
-      style={{
-        contain: "layout style paint",
-      }}
-      aria-label={`Testimonial from ${quote.client.toLowerCase()}`}
-    >
-      <p className="text-base sm:text-lg text-neutral-700 leading-relaxed mb-3 sm:mb-4">
-        &ldquo;{renderFormattedText(quote.text.toLowerCase())}&rdquo;
-      </p>
-      <footer className="text-right">
-        <p className="font-semibold text-sm sm:text-base text-neutral-800">{quote.client.toLowerCase()}</p>
-        <p className="text-xs sm:text-sm text-neutral-500">{quote.company.toLowerCase()}</p>
-      </footer>
-    </blockquote>
+    <div className="rounded-2xl bg-gradient-to-br from-neutral-200/60 to-white p-[1px]">
+      <blockquote
+        ref={cardRef}
+        data-index={index}
+        className="testimonial-card relative bg-white p-5 sm:p-6 rounded-2xl w-full border border-white shadow-sm transition-transform duration-300 sm:hover:shadow-md sm:hover:-translate-y-0.5 will-change-transform"
+        style={{ contain: "layout style paint" }}
+        aria-label={`Testimonial from ${quote.client}`}
+      >
+        <div className="absolute -top-3 left-4 inline-flex h-8 w-8 items-center justify-center rounded-full bg-neutral-50 ring-1 ring-neutral-200">
+          <Quote className="h-4 w-4 text-neutral-400" aria-hidden="true" />
+        </div>
+        <p className="mt-2 text-[15px] sm:text-base text-neutral-700 leading-relaxed tracking-tight">
+          &ldquo;{renderFormattedText(quote.text)}&rdquo;
+        </p>
+        <footer className="mt-4 flex items-center justify-end gap-2 text-right">
+          <p className="font-semibold text-sm sm:text-base text-neutral-900">{quote.client}</p>
+          <span className="text-neutral-300">•</span>
+          <p className="text-xs sm:text-sm text-neutral-500">{quote.company}</p>
+        </footer>
+      </blockquote>
+    </div>
   )
 }
 
@@ -535,6 +546,17 @@ export default function WallOfLoveClientPage() {
   const [isHydrated, setIsHydrated] = useState(false)
   const cardRefs = useRef<WeakMap<HTMLQuoteElement, number>>(new WeakMap())
   const observerRef = useRef<IntersectionObserver | null>(null)
+  const [sourceFilter, setSourceFilter] = useState<"all" | "clients" | "community">("all")
+
+  const isCommunityQuote = useCallback((q: Quote) => q.company === "Instagram Community of Entrepreneurs", [])
+  const filterQuotesBySource = useCallback(
+    (source: "all" | "clients" | "community") => {
+      if (source === "community") return quotesData.filter(isCommunityQuote)
+      if (source === "clients") return quotesData.filter((q) => !isCommunityQuote(q))
+      return quotesData
+    },
+    [isCommunityQuote]
+  )
 
   const observerCallback = useCallback((entries: IntersectionObserverEntry[]) => {
     entries.forEach((entry) => {
@@ -557,7 +579,7 @@ export default function WallOfLoveClientPage() {
 
   useEffect(() => {
     setIsHydrated(true)
-    setShuffledQuotes(shuffleArray(quotesData))
+    setShuffledQuotes(shuffleArray(filterQuotesBySource(sourceFilter)))
     
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 768)
@@ -567,7 +589,15 @@ export default function WallOfLoveClientPage() {
     window.addEventListener('resize', checkMobile, { passive: true })
     
     return () => window.removeEventListener('resize', checkMobile)
-  }, [])
+  }, [filterQuotesBySource, sourceFilter])
+
+  useEffect(() => {
+    // Recompute when the filter changes after hydration
+    if (isHydrated) {
+      setShuffledQuotes(shuffleArray(filterQuotesBySource(sourceFilter)))
+      setVisibleCount(15)
+    }
+  }, [sourceFilter, filterQuotesBySource, isHydrated])
 
   useEffect(() => {
     // Observer for load-more detection
@@ -597,7 +627,10 @@ export default function WallOfLoveClientPage() {
 
   return (
     <>
-      <section className="w-full py-16 md:py-24 lg:py-32 bg-white overflow-x-hidden">
+      <section className="relative w-full py-16 md:py-24 lg:py-32 bg-white overflow-x-hidden">
+        <div className="pointer-events-none absolute inset-0 -z-10 [mask-image:radial-gradient(ellipse_at_center,black,transparent_70%)]">
+          <div className="absolute left-1/2 top-1/2 h-[60vh] w-[90vw] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle_at_center,rgba(0,0,0,0.06),transparent_60%)]" />
+        </div>
         <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="max-w-2xl mx-auto space-y-6">
             <div className="text-5xl mb-4">❤️</div>
@@ -625,6 +658,33 @@ export default function WallOfLoveClientPage() {
 
       <div className="bg-neutral-50 optimize-scrolling overflow-x-hidden">
         <main className="w-full max-w-2xl mx-auto px-4 py-12 sm:px-6 lg:px-8 sm:py-16">
+          <div className="mb-6 sm:mb-8 flex justify-center">
+            <div className="inline-flex items-center rounded-full bg-white p-1 shadow-sm ring-1 ring-neutral-200">
+              {([
+                { key: "all", label: "All" },
+                { key: "clients", label: "Clients" },
+                { key: "community", label: "Community" },
+              ] as const).map(({ key, label }) => {
+                const active = sourceFilter === key
+                return (
+                  <button
+                    key={key}
+                    type="button"
+                    onClick={() => setSourceFilter(key)}
+                    aria-pressed={active}
+                    className={
+                      `min-w-[86px] px-4 py-2 text-sm rounded-full transition-colors ` +
+                      (active
+                        ? "bg-neutral-900 text-white"
+                        : "text-neutral-700 hover:bg-neutral-100")
+                    }
+                  >
+                    {label}
+                  </button>
+                )
+              })}
+            </div>
+          </div>
           <div className="testimonial-container space-y-6 sm:space-y-8">
             {(!isHydrated ? quotesData.slice(0, visibleCount) : shuffledQuotes.slice(0, visibleCount)).map((quote, index) => (
               <TestimonialCard
@@ -640,9 +700,10 @@ export default function WallOfLoveClientPage() {
             <div
               ref={loadMoreRef}
               className="h-20 flex items-center justify-center mt-8"
+              aria-live="polite"
             >
               <div className="flex items-center space-x-2 text-neutral-500">
-                <div className="w-5 h-5 border-2 border-neutral-300 border-t-neutral-600 rounded-full" />
+                <div className="w-5 h-5 border-2 border-neutral-300 border-t-neutral-600 rounded-full animate-spin" />
                 <span className="text-sm sm:text-base">Loading more testimonials...</span>
               </div>
             </div>
