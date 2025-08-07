@@ -1,18 +1,18 @@
 "use client"
 
-import Link from "next/link"
-import { ArrowLeft, Clock, Calendar, User, Share2 } from "lucide-react"
-import Navbar from "@/components/navbar"
-import Footer from "@/components/footer"
-import Breadcrumbs from "@/components/breadcrumbs"
-import ScrollProgressBar from "@/components/scroll-progress-bar"
-import { BlogPostSchema } from "@/components/schema-markup"
-import { cn } from "@/lib/utils"
-import CoreImage from "@/components/core-image"
 import { BlogPostErrorBoundary } from "@/components/blog-error-boundary"
 import AnimatedBlogWrapper from "@/components/blog/animated-blog-wrapper"
-import { useState, useEffect } from "react"
+import Breadcrumbs from "@/components/breadcrumbs"
+import CoreImage from "@/components/core-image"
+import Footer from "@/components/footer"
+import Navbar from "@/components/navbar"
+import { BlogPostSchema } from "@/components/schema-markup"
+import ScrollProgressBar from "@/components/scroll-progress-bar"
 import { useMobile } from "@/hooks/use-mobile"
+import { cn } from "@/lib/utils"
+import { ArrowLeft } from "lucide-react"
+import Link from "next/link"
+import { useEffect, useState } from "react"
 
 interface Props {
   children: React.ReactNode
@@ -202,6 +202,7 @@ export default function BlogPostLayout({
                         width={896}
                         height={504}
                         className="w-full h-full object-cover"
+                        sizes="(max-width: 1024px) 100vw, 896px"
                         priority={true}
                         trackingId={`blog_hero_${slug}`}
                         onLoadError={() => setHasImageError(true)}
@@ -224,7 +225,7 @@ export default function BlogPostLayout({
                   </div>
                   <BlogPostErrorBoundary>
                     <AnimatedBlogWrapper>
-                      <div className="prose-blog lowercase-prose">
+                      <div className="prose-blog">
                         {children}
                       </div>
                     </AnimatedBlogWrapper>

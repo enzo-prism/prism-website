@@ -1,7 +1,7 @@
 "use client"
 
-import { useEffect } from "react"
 import { initializeScrollOptimizations, isTouchDevice, optimizeTouchScrolling } from "@/utils/scroll-optimization"
+import { useEffect } from "react"
 
 export default function ScrollManager() {
   useEffect(() => {
@@ -24,19 +24,7 @@ export default function ScrollManager() {
         optimizeTouchScrolling(element as HTMLElement)
       })
 
-      // Prevent zoom on double tap for better UX
-      let lastTouchEnd = 0
-      document.addEventListener(
-        "touchend",
-        (e) => {
-          const now = new Date().getTime()
-          if (now - lastTouchEnd <= 300) {
-            e.preventDefault()
-          }
-          lastTouchEnd = now
-        },
-        { passive: false },
-      )
+      // Removed double-tap zoom prevention to allow accessibility-friendly zoom
 
       // Improve scroll momentum on iOS
       ;(document.body.style as any).webkitOverflowScrolling = "touch"

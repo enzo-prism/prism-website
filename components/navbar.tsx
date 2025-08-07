@@ -1,15 +1,15 @@
 "use client"
 
-import { useState } from "react"
+import { Menu, X } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { Menu, X } from "lucide-react"
+import { useState } from "react"
 
 import { Button } from "@/components/ui/button"
 import { useMobile } from "@/hooks/use-mobile"
-import CoreImage from "./core-image" // Assuming core-image.tsx is in the same components directory
+import { LOGO_CONFIG, PRIMARY_NAV_ITEMS } from "@/lib/constants"
 import { trackNavigation } from "@/utils/analytics"
-import { LOGO_CONFIG, LOGO_SIZES } from "@/lib/constants"
+import CoreImage from "./core-image"; // Assuming core-image.tsx is in the same components directory
 
 export default function Navbar() {
   const isMobile = useMobile()
@@ -20,19 +20,12 @@ export default function Navbar() {
     setIsMenuOpen(!isMenuOpen)
   }
 
-  const navItems = [
-    { emoji: "🏠", label: "home", href: "/" },
-    { emoji: "🖥️", label: "websites", href: "/websites" },
-    { emoji: "📱", label: "apps", href: "/apps" },
-    { emoji: "🎨", label: "designs", href: "/designs" },
-    { emoji: "⚙️", label: "flywheel", href: "/prism-flywheel" },
-    { emoji: "❤️", label: "wall of love", href: "/wall-of-love" },
-  ]
+  const navItems = PRIMARY_NAV_ITEMS
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="w-full max-w-7xl mx-auto flex h-16 items-center justify-between px-0">
-        <div className="flex items-center justify-between w-full px-4 md:px-0">
+      <div className="w-full max-w-7xl mx-auto flex h-14 md:h-16 items-center justify-between px-0">
+        <div className="flex items-center justify-between w-full px-3 md:px-0">
         <Link href="/" className="flex items-center gap-2" onClick={() => trackNavigation("logo", "/")}>
           {/* This div provides the dimensions and primary clipping */}
           <div className="relative h-8 w-8 overflow-hidden rounded-lg isolate">

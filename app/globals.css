@@ -190,11 +190,7 @@ body {
   }
 }
 
-/* Prevent zooming on mobile devices */
-html, body {
-  touch-action: manipulation;
-  overscroll-behavior: none;
-}
+/* Allow browser default zoom/gestures; scope touch-action to interactive elements only */
 
 /* Allow touch interactions on clickable elements */
 a, button, [role="button"], .mobile-blog-card {

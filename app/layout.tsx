@@ -1,14 +1,16 @@
-import type React from "react"
-import type { Metadata } from "next"
-import "./globals.css"
 import ScrollManager from "@/components/scroll-manager"
+import type { Metadata } from "next"
+import type React from "react"
+import "./globals.css"
 // Import the schema components
-import { OrganizationSchema, WebsiteSchema, LocalBusinessSchema } from "@/components/schema-markup"
-import HotjarScript from "@/components/hotjar-script"
-import SentryContextProvider from "@/components/sentry-context-provider"
 import ErrorTracker from "@/components/error-tracker"
+import HotjarScript from "@/components/hotjar-script"
 import MCPHealthMonitor from "@/components/mcp-health-monitor"
+import MobileTabBar from "@/components/mobile/MobileTabBar"
+import RouteAwareStickyCTA from "@/components/mobile/RouteAwareStickyCTA"
 import PerformanceMonitor from "@/components/performance-monitor"
+import { LocalBusinessSchema, OrganizationSchema, WebsiteSchema } from "@/components/schema-markup"
+import SentryContextProvider from "@/components/sentry-context-provider"
 
 
 export const metadata: Metadata = {
@@ -102,7 +104,7 @@ export default function RootLayout({
           }}
         />
         {/* End Google Tag Manager */}
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
         {/* Add mobile-specific meta tags for better scrolling */}
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -184,6 +186,8 @@ export default function RootLayout({
         <SentryContextProvider>
           {children}
         </SentryContextProvider>
+        <MobileTabBar />
+        <RouteAwareStickyCTA />
       </body>
     </html>
   )
