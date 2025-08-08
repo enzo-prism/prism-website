@@ -1,7 +1,19 @@
 import { getAllPosts } from "@/lib/mdx"
 import type { MetadataRoute } from "next"
 
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://www.design-prism.com"
+// Always normalize to the canonical host for sitemap links
+const CANONICAL_HOST = "www.design-prism.com"
+function normalizedOrigin(envUrl?: string): string {
+  try {
+    const u = new URL(envUrl || `https://${CANONICAL_HOST}`)
+    u.hostname = CANONICAL_HOST
+    u.protocol = "https:"
+    return u.origin
+  } catch {
+    return `https://${CANONICAL_HOST}`
+  }
+}
+const baseOrigin = normalizedOrigin(process.env.NEXT_PUBLIC_BASE_URL)
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Static core routes
@@ -12,85 +24,85 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: number
   }> = [
     {
-      url: baseUrl,
+      url: baseOrigin,
       lastModified: new Date(),
       changeFrequency: "yearly",
       priority: 1,
     },
     {
-      url: `${baseUrl}/smb`,
+      url: `${baseOrigin}/smb`,
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.85,
     },
     {
-      url: `${baseUrl}/about`,
+      url: `${baseOrigin}/about`,
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.8,
     },
     {
-      url: `${baseUrl}/services`,
+      url: `${baseOrigin}/services`,
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.8,
     },
     {
-      url: `${baseUrl}/case-studies`,
+      url: `${baseOrigin}/case-studies`,
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.8,
     },
     {
-      url: `${baseUrl}/contact`,
+      url: `${baseOrigin}/contact`,
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.8,
     },
     {
-      url: `${baseUrl}/blog`,
+      url: `${baseOrigin}/blog`,
       lastModified: new Date(),
       changeFrequency: "weekly",
       priority: 0.8,
     },
     {
-      url: `${baseUrl}/offers`,
+      url: `${baseOrigin}/offers`,
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.8,
     },
     {
-      url: `${baseUrl}/offers/summer-website-makeover`,
+      url: `${baseOrigin}/offers/summer-website-makeover`,
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.8,
     },
     {
-      url: `${baseUrl}/offers/ai-seo-boost`,
+      url: `${baseOrigin}/offers/ai-seo-boost`,
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.8,
     },
     {
-      url: `${baseUrl}/get-started`,
+      url: `${baseOrigin}/get-started`,
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.9,
     },
     {
-      url: `${baseUrl}/podcast`,
+      url: `${baseOrigin}/podcast`,
       lastModified: new Date(),
       changeFrequency: "weekly",
       priority: 0.7,
     },
     {
-      url: `${baseUrl}/privacy-policy`,
+      url: `${baseOrigin}/privacy-policy`,
       lastModified: new Date(),
       changeFrequency: "yearly",
       priority: 0.3,
     },
     {
-      url: `${baseUrl}/terms-of-service`,
+      url: `${baseOrigin}/terms-of-service`,
       lastModified: new Date(),
       changeFrequency: "yearly",
       priority: 0.3,
@@ -103,7 +115,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     if (posts && posts.length > 0) {
       for (const post of posts) {
         routes.push({
-          url: `${baseUrl}/blog/${post.slug}`,
+          url: `${baseOrigin}/blog/${post.slug}`,
           lastModified: new Date(post.date),
           changeFrequency: "monthly",
           priority: 0.7,
