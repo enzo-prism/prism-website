@@ -104,6 +104,11 @@ const blogPosts = {
     category: "SEO & AI",
     gradientClass: "bg-gradient-to-br from-orange-300/30 via-red-300/30 to-purple-300/30",
   },
+  'design-is-the-moat-in-the-ai-era-5-lessons-from-figma-revenue-2025': {
+    title: "Design Is the Moat in the AI Era | 5 Revenue Lessons",
+    category: "Design & Product",
+    gradientClass: "bg-gradient-to-br from-indigo-300/30 via-purple-300/30 to-sky-300/30",
+  },
 } as const
 
 export function getPostMetadataForOG(slug: string) {
