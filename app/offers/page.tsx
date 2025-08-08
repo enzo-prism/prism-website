@@ -1,8 +1,8 @@
-import type { Metadata } from "next"
-import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
+import Navbar from "@/components/navbar"
+import ScrollToTop from "@/components/scroll-to-top"; // Assuming you have this component
+import type { Metadata } from "next"
 import OffersClientPage from "./client-page"
-import ScrollToTop from "@/components/scroll-to-top" // Assuming you have this component
 
 export const metadata: Metadata = {
   title: "Current Offers",
@@ -11,7 +11,10 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Limited-Time Offers | Prism",
     description: "Exclusive offers on our web design, app development, and design services.",
-    url: "https://design-prism.com/offers", // Replace with your actual domain
+    url: "https://www.design-prism.com/offers",
+  },
+  alternates: {
+    canonical: "https://www.design-prism.com/offers",
   },
 }
 

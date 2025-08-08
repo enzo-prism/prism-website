@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Terms of Service - Prism Agency",
     description: "Terms of Service for Prism Agency - Read our terms and conditions for using our services.",
-    url: "https://design-prism.com/terms-of-service",
+    url: "https://www.design-prism.com/terms-of-service",
     images: [
       {
         url: "/prism-opengraph.png",
@@ -18,6 +18,9 @@ export const metadata: Metadata = {
         alt: "Prism Agency Terms of Service",
       },
     ],
+  },
+  alternates: {
+    canonical: "https://www.design-prism.com/terms-of-service",
   },
 }
 

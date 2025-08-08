@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Contact Us | Prism",
     description: "Get in touch with Prism. Find our email, Instagram, and scheduling link.",
-    url: "https://design-prism.com/contact", // Canonical non-www
+    url: "https://www.design-prism.com/contact",
     images: [
       {
         url: "/prism-opengraph.png", // Replace with your actual opengraph image
@@ -16,6 +16,9 @@ export const metadata: Metadata = {
         alt: "Prism Contact Page",
       },
     ],
+  },
+  alternates: {
+    canonical: "https://www.design-prism.com/contact",
   },
   twitter: {
     card: "summary_large_image",

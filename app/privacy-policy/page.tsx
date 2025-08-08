@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Privacy Policy - Prism Agency",
     description: "Privacy Policy for Prism Agency - Learn how we collect, use, and protect your personal information.",
-    url: "https://design-prism.com/privacy-policy",
+    url: "https://www.design-prism.com/privacy-policy",
     images: [
       {
         url: "/prism-opengraph.png",
@@ -18,6 +18,9 @@ export const metadata: Metadata = {
         alt: "Prism Agency Privacy Policy",
       },
     ],
+  },
+  alternates: {
+    canonical: "https://www.design-prism.com/privacy-policy",
   },
 }
 

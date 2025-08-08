@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     images: ["/prism-opengraph.png"],
   },
   alternates: {
-    canonical: "https://design-prism.com/podcast",
+    canonical: "https://www.design-prism.com/podcast",
   },
 }
 
