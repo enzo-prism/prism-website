@@ -11,5 +11,21 @@ export const metadata: Metadata = {
 }
 
 export default function AboutPage() {
-  return <AboutClientPage />
+  return (
+    <>
+      <section className="px-4 pt-8">
+        <div className="container mx-auto px-4 md:px-6 max-w-4xl">
+          <div className="prose prose-neutral max-w-none mb-6">
+            <h2 className="text-xl font-semibold lowercase">who we are</h2>
+            <p>
+              prism builds beautiful software—websites, apps, and content systems—that compounds into
+              revenue. we mix sharp design, clean code, and ai automation to help small teams punch
+              above their weight.
+            </p>
+          </div>
+        </div>
+      </section>
+      <AboutClientPage />
+    </>
+  )
 }

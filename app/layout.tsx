@@ -9,6 +9,7 @@ import MCPHealthMonitor from "@/components/mcp-health-monitor"
 import PerformanceMonitor from "@/components/performance-monitor"
 import { LocalBusinessSchema, OrganizationSchema, WebsiteSchema } from "@/components/schema-markup"
 import SentryContextProvider from "@/components/sentry-context-provider"
+import { GoogleAnalytics, GoogleTagManager } from "@next/third-parties/google"
 
 
 export const metadata: Metadata = {
@@ -75,33 +76,8 @@ export default function RootLayout({
   return (
     <html lang="en" className="m-0 p-0 w-full" suppressHydrationWarning>
       <head>
-        {/* Google Tag Manager - Deferred for better performance */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-            window.dataLayer = window.dataLayer || [];
-            // Defer GTM loading until after initial render
-            function loadGTM() {
-              (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-              new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-              j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-              'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-              })(window,document,'script','dataLayer','GTM-M37LLWHV');
-            }
-            // Load GTM after page load or on first user interaction
-            if (document.readyState === 'complete') {
-              setTimeout(loadGTM, 100);
-            } else {
-              window.addEventListener('load', () => setTimeout(loadGTM, 100));
-            }
-            // Fallback: load on first user interaction
-            ['scroll', 'click', 'keydown', 'touchstart'].forEach(event => {
-              document.addEventListener(event, loadGTM, { once: true, passive: true });
-            });
-            `
-          }}
-        />
-        {/* End Google Tag Manager */}
+        {/* Google Tag Manager (lightweight, external script) */}
+        <GoogleTagManager gtmId="GTM-M37LLWHV" />
         <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
         {/* Add mobile-specific meta tags for better scrolling */}
         <meta name="mobile-web-app-capable" content="yes" />
@@ -109,42 +85,8 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <meta name="format-detection" content="telephone=no" />
         <meta name="theme-color" content="#ffffff" />
-        {/* Google Analytics - Deferred for better performance */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            
-            // Defer GA loading
-            function loadGA() {
-              if (window.gaLoaded) return;
-              window.gaLoaded = true;
-              
-              const script = document.createElement('script');
-              script.async = true;
-              script.src = 'https://www.googletagmanager.com/gtag/js?id=G-9B141WTH4R';
-              document.head.appendChild(script);
-              
-              script.onload = function() {
-                gtag('js', new Date());
-                gtag('config', 'G-9B141WTH4R');
-              };
-            }
-            
-            // Load GA after page load or on first user interaction
-            if (document.readyState === 'complete') {
-              setTimeout(loadGA, 200);
-            } else {
-              window.addEventListener('load', () => setTimeout(loadGA, 200));
-            }
-            // Fallback: load on first user interaction
-            ['scroll', 'click', 'keydown', 'touchstart'].forEach(event => {
-              document.addEventListener(event, loadGA, { once: true, passive: true });
-            });
-            `
-          }}
-        />
+        {/* Google Analytics (external script) */}
+        <GoogleAnalytics gaId="G-9B141WTH4R" />
         {/* YouTube Embed Handler */}
         {/* YouTube embeds are now handled natively with iframe - no custom JavaScript needed */}
         {/* Preconnect to Vimeo for faster video loading */}
@@ -166,13 +108,8 @@ export default function RootLayout({
         if tailwind.config.ts is updated accordingly.
     */}
       <body className="m-0 p-0 w-full min-h-screen font-sans antialiased">
-        {/* Google Tag Manager (noscript) */}
-        <noscript
-          dangerouslySetInnerHTML={{
-            __html: `<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-M37LLWHV" height="0" width="0" style="display:none;visibility:hidden"></iframe>`,
-          }}
-        />
-        {/* End Google Tag Manager (noscript) */}
+      {/* Google Tag Manager noscript (keep minimal) */}
+      <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-M37LLWHV" height="0" width="0" style={{display:'none',visibility:'hidden'}} /></noscript>
         <OrganizationSchema />
         <WebsiteSchema />
         <LocalBusinessSchema />

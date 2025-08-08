@@ -30,6 +30,16 @@ export default function BlogPage({ posts }: { posts: BlogPost[] }) {
 
         {/* Blog Posts List with Filter Navigation */}
         <BlogListErrorBoundary>
+          <div className="container mx-auto px-4 md:px-6">
+            <div className="prose prose-neutral max-w-none mb-8">
+              <h2 className="text-xl font-semibold lowercase">what you'll learn here</h2>
+              <ul>
+                <li>ai search, seo flywheels, and conversion systems</li>
+                <li>case studies with concrete outcomes</li>
+                <li>actionable playbooks you can apply today</li>
+              </ul>
+            </div>
+          </div>
           <BlogPostsList posts={blogPosts} />
         </BlogListErrorBoundary>
 

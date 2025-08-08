@@ -29,5 +29,20 @@ export const metadata: Metadata = {
 }
 
 export default function ContactPage() {
-  return <ContactPageClient />
+  return (
+    <>
+      <section className="px-4 pt-8">
+        <div className="container mx-auto px-4 md:px-6 max-w-3xl">
+          <div className="prose prose-neutral max-w-none mb-6">
+            <h2 className="text-xl font-semibold lowercase">talk to us</h2>
+            <p>
+              questions, projects, or partnerships—drop a note and we’ll get back within one business
+              day. prefer social? instagram and x dms are open.
+            </p>
+          </div>
+        </div>
+      </section>
+      <ContactPageClient />
+    </>
+  )
 }
