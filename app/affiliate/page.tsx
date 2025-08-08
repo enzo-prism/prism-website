@@ -17,5 +17,20 @@ export const metadata: Metadata = {
 }
 
 export default function AffiliatePage() {
-  return <AffiliateClientPage />
+  return (
+    <>
+      <section className="px-4 pt-8">
+        <div className="container mx-auto px-4 md:px-6 max-w-3xl">
+          <div className="prose prose-neutral max-w-none mb-6">
+            <h2 className="text-xl font-semibold lowercase">how it works</h2>
+            <p>
+              refer a business, we scope and close the project, you earn 20% recurring commission.
+              payouts are monthly, with transparent tracking and zero minimums.
+            </p>
+          </div>
+        </div>
+      </section>
+      <AffiliateClientPage />
+    </>
+  )
 }
