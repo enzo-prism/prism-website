@@ -38,9 +38,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   // Compute concise SEO title (avoid layout template and long strings)
   const maxTitleLength = 60
   const rawTitle = frontmatter.title || "blog post"
-  const seoTitle = rawTitle.length > maxTitleLength
-    ? `${rawTitle.slice(0, maxTitleLength - 1)}…`
-    : rawTitle
+  const brandSuffix = " | Prism"
+  const seoTitle =
+    rawTitle.length + brandSuffix.length <= maxTitleLength
+      ? `${rawTitle}${brandSuffix}`
+      : rawTitle.length > maxTitleLength
+        ? `${rawTitle.slice(0, maxTitleLength - 1)}…`
+        : rawTitle
 
   return {
     title: { absolute: seoTitle },
