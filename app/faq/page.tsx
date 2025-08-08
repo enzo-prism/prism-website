@@ -1,7 +1,7 @@
-import type { Metadata } from "next"
-import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
+import Navbar from "@/components/navbar"
 import { FAQSchema } from "@/components/schema-markup"
+import type { Metadata } from "next"
 
 export const metadata: Metadata = {
   title: "Frequently Asked Questions - Prism Agency",
@@ -131,7 +131,7 @@ export default function FAQPage() {
                   Email Us
                 </a>
                 <a
-                  href="https://calendly.com/enzomarzorati/30min"
+                  href="/get-started"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"

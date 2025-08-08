@@ -1,11 +1,11 @@
 "use client"
 
-import { Mail, Instagram, CalendarDays, ArrowRight } from "lucide-react"
-import Link from "next/link"
-import { ContactPageSchema } from "@/components/schema-markup"
 import Navbar from "@/components/navbar"
+import { ContactPageSchema } from "@/components/schema-markup"
 import { Button } from "@/components/ui/button"
 import { trackCTAClick, trackNavigation } from "@/utils/analytics"
+import { ArrowRight, CalendarDays, Instagram, Mail } from "lucide-react"
+import Link from "next/link"
 
 export default function ContactPageClient() {
   const contactMethods = [
@@ -24,10 +24,10 @@ export default function ContactPageClient() {
     },
     {
       name: "Schedule a Call",
-      value: "Book a 30-min discovery call",
-      href: "https://calendly.com/enzomarzorati/30min",
+      value: "Book a 30‑min discovery call",
+      href: "/get-started",
       icon: <CalendarDays className="h-6 w-6 text-neutral-600" />,
-      target: "_blank",
+      target: "_self",
     },
   ]
 

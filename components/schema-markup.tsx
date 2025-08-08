@@ -286,7 +286,7 @@ export function ContactPageSchema() {
         "@type": "ContactPoint",
         telephone: "+1-800-123-4567",
         email: "support@design-prism.com",
-        url: "https://calendly.com/enzomarzorati/30min",
+        url: "https://www.design-prism.com/get-started",
         contactType: "customer service",
       },
     },
