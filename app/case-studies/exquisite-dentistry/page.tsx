@@ -2,11 +2,11 @@ import type { Metadata } from "next"
 import ExquisiteDentistryCaseStudy from "./client-page"
 
 export const metadata: Metadata = {
-  title: "aligning digital excellence with luxury care | exquisite dentistry case study",
+  title: "Exquisite Dentistry Case Study — Aligning Digital Excellence",
   description:
     "how prism elevated beverly hills’ exquisite dentistry’s online presence to match their premium in-person experience.",
   openGraph: {
-    title: "aligning digital excellence with luxury care | exquisite dentistry case study",
+    title: "Exquisite Dentistry Case Study — Aligning Digital Excellence",
     description:
       "how prism elevated beverly hills’ exquisite dentistry’s online presence to match their premium in-person experience.",
     images: [

@@ -35,8 +35,15 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     canonicalUrl = `${base}/blog/${slug}`
   }
 
+  // Compute concise SEO title (avoid layout template and long strings)
+  const maxTitleLength = 60
+  const rawTitle = frontmatter.title || "blog post"
+  const seoTitle = rawTitle.length > maxTitleLength
+    ? `${rawTitle.slice(0, maxTitleLength - 1)}…`
+    : rawTitle
+
   return {
-    title: frontmatter.title,
+    title: { absolute: seoTitle },
     description: frontmatter.description,
     openGraph: {
       ...frontmatter.openGraph,
