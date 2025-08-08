@@ -1,13 +1,13 @@
-import type { Metadata } from "next"
-import BlogPage from "./BlogPage"
 import { getAllPosts } from "@/lib/mdx"
+import type { Metadata } from "next"
 import { notFound } from 'next/navigation'
+import BlogPage from "./BlogPage"
 
 export const metadata: Metadata = {
   title: "blog",
   description: "thoughts on design, development, and digital strategy from the prism team.",
   alternates: {
-    canonical: "https://design-prism.com/blog",
+    canonical: "https://www.design-prism.com/blog",
   },
 }
 

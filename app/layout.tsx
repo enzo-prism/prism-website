@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     title: "prism - beautiful software that grows revenue",
     description:
       "prism agency creates beautiful websites, apps, and designs that shatter revenue goals for ambitious businesses. ai-powered digital solutions that convert visitors into customers.",
-    url: "https://design-prism.com",
+    url: "https://www.design-prism.com",
     siteName: "prism",
     images: [
       {
@@ -61,7 +61,7 @@ export const metadata: Metadata = {
     },
   },
   generator: "v0.dev",
-  metadataBase: new URL("https://design-prism.com"),
+  metadataBase: new URL("https://www.design-prism.com"),
   alternates: {
     canonical: "/",
   },

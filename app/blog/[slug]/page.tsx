@@ -1,6 +1,6 @@
-import type { Metadata } from 'next'
 import BlogPostLayout from '@/components/blog-post-layout'
 import { getAllPosts, getPost, renderPost } from '@/lib/mdx'
+import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 
 interface PageProps { params: Promise<{ slug: string }> }
@@ -20,15 +20,27 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const { frontmatter } = post
   
   // Use dynamic OG image if gradientClass is available
+  const base = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.design-prism.com'
   const ogImage = frontmatter.gradientClass
-    ? `${process.env.NEXT_PUBLIC_BASE_URL || 'https://design-prism.com'}/api/og/blog/${slug}`
+    ? `${base}/api/og/blog/${slug}`
     : frontmatter.openGraph?.images?.[0]?.url || frontmatter.image
   
+  // Normalize canonical to www host regardless of frontmatter
+  let canonicalUrl: string
+  try {
+    const u = new URL(frontmatter.canonical || `${base}/blog/${slug}`)
+    u.hostname = 'www.design-prism.com'
+    canonicalUrl = u.toString()
+  } catch {
+    canonicalUrl = `${base}/blog/${slug}`
+  }
+
   return {
     title: frontmatter.title,
     description: frontmatter.description,
     openGraph: {
       ...frontmatter.openGraph,
+      url: canonicalUrl,
       images: [
         {
           url: ogImage,
@@ -42,7 +54,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       ...frontmatter.twitter,
       images: [ogImage],
     },
-    alternates: { canonical: frontmatter.canonical },
+    alternates: { canonical: canonicalUrl },
   }
 }
 

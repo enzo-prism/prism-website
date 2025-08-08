@@ -1,7 +1,7 @@
 import { getAllPosts } from "@/lib/mdx"
 import type { MetadataRoute } from "next"
 
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://design-prism.com"
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://www.design-prism.com"
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Static core routes

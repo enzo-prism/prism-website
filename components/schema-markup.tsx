@@ -67,12 +67,12 @@ type Article = {
 export function OrganizationSchema() {
   const orgSchema: Organization = {
     "@type": "Organization",
-    "@id": "https://design-prism.com/#organization",
+    "@id": "https://www.design-prism.com/#organization",
     name: "Prism Agency",
-    url: "https://design-prism.com",
+    url: "https://www.design-prism.com",
     logo: {
       "@type": "ImageObject",
-      url: "https://design-prism.com/prism-opengraph.png",
+      url: "https://www.design-prism.com/prism-opengraph.png",
       width: 1200,
       height: 630,
     },
@@ -103,17 +103,17 @@ export function OrganizationSchema() {
 export function WebsiteSchema() {
   const websiteSchema: WebSite = {
     "@type": "WebSite",
-    "@id": "https://design-prism.com/#website",
-    url: "https://design-prism.com",
+    "@id": "https://www.design-prism.com/#website",
+    url: "https://www.design-prism.com",
     name: "Prism Agency - Beautiful Software That Grows Revenue",
     description:
       "Prism Agency creates beautiful websites, apps, and designs that shatter revenue goals for ambitious businesses. AI-powered digital solutions that convert visitors into customers.",
     publisher: {
-      "@id": "https://design-prism.com/#organization",
+      "@id": "https://www.design-prism.com/#organization",
     },
     potentialAction: {
       "@type": "SearchAction",
-      target: "https://design-prism.com/search?q={search_term_string}",
+       target: "https://www.design-prism.com/search?q={search_term_string}",
       "query-input": "required name=search_term_string",
     },
   }
@@ -176,7 +176,7 @@ export function BlogPostSchema({
       name: authorName,
     },
     publisher: {
-      "@id": "https://design-prism.com/#organization",
+      "@id": "https://www.design-prism.com/#organization",
     },
     datePublished: datePublished,
     dateModified: dateModified,
@@ -536,14 +536,14 @@ export function ServiceSchema({
 export function LocalBusinessSchema() {
   const localBusinessSchema: LocalBusiness = {
     "@type": "LocalBusiness",
-    "@id": "https://design-prism.com/#localbusiness",
+    "@id": "https://www.design-prism.com/#localbusiness",
     name: "Prism",
     legalName: "Design Prism LLC",
-    url: "https://design-prism.com",
-    image: "https://design-prism.com/prism-opengraph.png",
+    url: "https://www.design-prism.com",
+    image: "https://www.design-prism.com/prism-opengraph.png",
     logo: {
       "@type": "ImageObject",
-      url: "https://design-prism.com/prism-opengraph.png",
+      url: "https://www.design-prism.com/prism-opengraph.png",
       width: 1200,
       height: 630,
     },

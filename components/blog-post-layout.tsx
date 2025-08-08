@@ -51,7 +51,7 @@ export default function BlogPostLayout({
 }: Props) {
   const isMobile = useMobile()
   const effectiveGradient = gradientClass || 'bg-gradient-to-br from-indigo-300/30 via-purple-300/30 to-pink-300/30';
-  const effectiveImageUrl = image ? `https://design-prism.com${image}` : 'https://design-prism.com/prism-opengraph.png';
+  const effectiveImageUrl = image ? `https://www.design-prism.com${image}` : 'https://www.design-prism.com/prism-opengraph.png';
   
   const [hasImageError, setHasImageError] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
@@ -163,7 +163,7 @@ export default function BlogPostLayout({
         <BlogPostSchema
           title={title}
           description={description}
-          url={openGraph?.url || canonical || `https://design-prism.com/blog/${slug}`}
+          url={openGraph?.url || canonical || `https://www.design-prism.com/blog/${slug}`}
           imageUrl={effectiveImageUrl}
           datePublished={openGraph?.publishedTime || date}
           dateModified={openGraph?.modifiedTime || date}
@@ -240,7 +240,7 @@ export default function BlogPostLayout({
       <BlogPostSchema
         title={title}
         description={description}
-        url={openGraph?.url || canonical || `https://design-prism.com/blog/${slug}`}
+        url={openGraph?.url || canonical || `https://www.design-prism.com/blog/${slug}`}
         imageUrl={effectiveImageUrl}
         datePublished={openGraph?.publishedTime || date}
         dateModified={openGraph?.modifiedTime || date}

@@ -14,7 +14,7 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ["/api/", "/thanks/"],
       },
     ],
-    sitemap: "https://design-prism.com/sitemap.xml", // UPDATED
-    host: "https://design-prism.com", // UPDATED
+    sitemap: "https://www.design-prism.com/sitemap.xml",
+    host: "https://www.design-prism.com",
   }
 }
