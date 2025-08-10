@@ -26,19 +26,17 @@ import {
 import Link from "next/link"
 import { useRef, useState } from "react"
 
-  // GPU-accelerated scroll reveal animation
+  // GPU-accelerated scroll reveal animation (avoid CSS filter blur for Safari/mobile stability)
   const gpuScrollReveal: Variants = {
     hidden: {
       opacity: 0,
       y: 60,
       scale: 0.95,
-      filter: "blur(4px)",
     },
     visible: {
       opacity: 1,
       y: 0,
       scale: 1,
-      filter: "blur(0px)",
       transition: {
         duration: 0.8,
         ease: [0.6, -0.05, 0.01, 0.99] as const,
