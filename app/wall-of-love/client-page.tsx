@@ -1,13 +1,11 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel"
-import { useMobileAnimations } from "@/hooks/use-mobile-animations"
 import { mobileScrollReveal } from "@/utils/animation-variants"
-import { motion, type UseInViewOptions } from "framer-motion"
+import { motion } from "framer-motion"
 import { ArrowRight } from "lucide-react"
 import Link from "next/link"
-import { useCallback, useEffect, useMemo, useRef, useState } from "react"
+import { useState } from "react"
 
 interface Quote {
   id: number
@@ -673,13 +671,13 @@ const shuffleArray = (array: Quote[]): Quote[] => {
   return newArray
 }
 
-const TestimonialCard = ({ quote, viewport }: { quote: Quote; viewport: UseInViewOptions }) => {
+const TestimonialCard = ({ quote }: { quote: Quote }) => {
   return (
     <motion.blockquote
       variants={mobileScrollReveal}
       initial="hidden"
       whileInView="visible"
-      viewport={{ ...viewport, amount: 0.4, margin: "50px" }}
+      viewport={{ amount: 0.3, margin: "40px", once: true }}
       transition={{ duration: 0.25, ease: "easeOut" }}
       className="bg-neutral-50 p-4 sm:p-5 rounded-xl w-full border border-neutral-200 overflow-hidden"
       style={{
@@ -705,84 +703,7 @@ const TestimonialCard = ({ quote, viewport }: { quote: Quote; viewport: UseInVie
 }
 
 export default function WallOfLoveClientPage() {
-  const { getViewportConfig } = useMobileAnimations()
-  const viewport = getViewportConfig()
-  const [shuffledQuotes, setShuffledQuotes] = useState<Quote[]>([])
-  const [visibleCount, setVisibleCount] = useState(15) // Increased from 10 to 15
-  const loadMoreRef = useRef<HTMLDivElement>(null)
-  // Initialize with proper SSR-friendly default
-  const [isMobile, setIsMobile] = useState(() => {
-    if (typeof window === "undefined") {
-      return false // SSR default
-    }
-    return window.innerWidth < 768
-  })
-  const [isHydrated, setIsHydrated] = useState(false)
-  const observerRef = useRef<IntersectionObserver | null>(null)
-
-  const unpinnedQuotes = useMemo(() => {
-    const base = isHydrated ? shuffledQuotes : quotesData
-    return base.filter((q) => !q.pinned)
-  }, [isHydrated, shuffledQuotes])
-  const totalUnpinned = unpinnedQuotes.length
-
-  const observerCallback = useCallback((entries: IntersectionObserverEntry[]) => {
-    entries.forEach((entry) => {
-      const element = entry.target as HTMLElement
-      
-      // Handle load more detection
-      if (element === loadMoreRef.current && entry.isIntersecting) {
-        setVisibleCount(prev => Math.min(prev + (isMobile ? 5 : 8), totalUnpinned))
-      }
-    })
-  }, [isMobile, totalUnpinned])
-
-  useEffect(() => {
-    setIsHydrated(true)
-    // Avoid layout shift: use stable order on first paint, then shuffle after a frame
-    setShuffledQuotes(quotesData)
-    const raf = requestAnimationFrame(() => {
-      setShuffledQuotes(shuffleArray(quotesData))
-    })
-
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768)
-    }
-
-    checkMobile()
-    window.addEventListener('resize', checkMobile, { passive: true })
-
-    return () => {
-      window.removeEventListener('resize', checkMobile)
-      cancelAnimationFrame(raf)
-    }
-  }, [])
-
-  useEffect(() => {
-    // Observer for load-more detection
-    observerRef.current = new IntersectionObserver(
-      observerCallback,
-      { 
-        threshold: 0.1, 
-        rootMargin: "60px"
-      }
-    )
-
-    // Observe load more element if it exists
-    if (loadMoreRef.current) {
-      observerRef.current.observe(loadMoreRef.current)
-    }
-
-    return () => {
-      observerRef.current?.disconnect()
-    }
-  }, [observerCallback])
-
-  useEffect(() => {
-    if ('ontouchstart' in window) {
-      document.documentElement.style.setProperty('--touch-action', 'pan-y')
-    }
-  }, [])
+  // minimal vertical list – no carousels, observers, or shuffling
 
   return (
     <>
@@ -842,22 +763,15 @@ export default function WallOfLoveClientPage() {
       <div className="bg-neutral-50">
         <main className="w-full max-w-[720px] mx-auto px-4 py-8 sm:py-10">
           <div className="space-y-4 sm:space-y-5" style={{ transform: "translateZ(0)" }}>
-            {unpinnedQuotes.slice(0, visibleCount).map((quote) => (
-              <TestimonialCard key={quote.id} quote={quote} viewport={viewport} />
+            {quotesData.map((quote) => (
+              <TestimonialCard key={quote.id} quote={quote} />
             ))}
-            {/* Non-pinned takeaways list below testimonials */}
             <div className="space-y-4 sm:space-y-5 pt-6">
-              {takeawaysData.filter(t => !t.pinned).slice(0, 18).map((item) => (
+              {takeawaysData.map((item) => (
                 <TakeawayCard key={`takeaway-${item.id}`} item={item} />
               ))}
             </div>
           </div>
-          
-          {visibleCount < totalUnpinned && (
-            <div ref={loadMoreRef} className="h-12 flex items-center justify-center mt-6" aria-live="polite">
-              <div className="w-4 h-4 border-2 border-neutral-300 border-t-neutral-600 rounded-full animate-spin" />
-            </div>
-          )}
         </main>
       </div>
     </>
