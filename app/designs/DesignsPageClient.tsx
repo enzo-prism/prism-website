@@ -3,11 +3,18 @@
 import Footer from "@/components/footer"
 import GetStartedCTA from "@/components/GetStartedCTA"
 import PageViewTracker from "@/components/page-view-tracker"
+import {
+    Carousel,
+    CarouselContent,
+    CarouselItem,
+    CarouselNext,
+    CarouselPrevious,
+    type CarouselApi,
+} from "@/components/ui/carousel"
 import { useMobile } from "@/hooks/use-mobile"
-import { AnimatePresence, motion } from "framer-motion"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import dynamic from "next/dynamic"
-import { useCallback, useEffect, useRef, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 const Navbar = dynamic(() => import("@/components/navbar"), { ssr: false })
 
 // Quotes data
@@ -69,61 +76,21 @@ const slides = [
 ]
 
 
-const variants = {
-  enter: (direction: number) => {
-    return {
-      x: direction > 0 ? "100%" : "-100%",
-      opacity: 0,
-    }
-  },
-  center: {
-    zIndex: 1,
-    x: 0,
-    opacity: 1,
-  },
-  exit: (direction: number) => {
-    return {
-      zIndex: 0,
-      x: direction < 0 ? "100%" : "-100%", // Exits in the opposite direction of new slide entry
-      opacity: 0,
-    }
-  },
-}
-
-const swipeConfidenceThreshold = 10000
-const swipePower = (offset: number, velocity: number) => {
-  return Math.abs(offset) * velocity
-}
+// Simplified: use Embla via our Carousel instead of custom drag + spring transitions
 
 export default function DesignsPageClient() {
   const isMobile = useMobile()
   const [currentSlide, setCurrentSlide] = useState(0)
   const [shuffledSlides, setShuffledSlides] = useState([...slides])
-  const [direction, setDirection] = useState(0)
-  const [isDraggingVisual, setIsDraggingVisual] = useState(false)
-  const [draggedX, setDraggedX] = useState(0)
-
-  const slideContainerRef = useRef<HTMLDivElement>(null)
+  const [api, setApi] = useState<CarouselApi>()
 
   useEffect(() => {
     const shuffled = [...slides].sort(() => Math.random() - 0.5)
     setShuffledSlides(shuffled)
   }, [])
 
-  const paginate = useCallback(
-    (newDirection: number) => {
-      setDirection(newDirection)
-      if (newDirection > 0) {
-        setCurrentSlide((prev) => (prev === shuffledSlides.length - 1 ? 0 : prev + 1))
-      } else {
-        setCurrentSlide((prev) => (prev === 0 ? shuffledSlides.length - 1 : prev - 1))
-      }
-    },
-    [shuffledSlides.length],
-  )
-
-  const nextSlide = useCallback(() => paginate(1), [paginate])
-  const prevSlide = useCallback(() => paginate(-1), [paginate])
+  const nextSlide = useCallback(() => api?.scrollNext(), [api])
+  const prevSlide = useCallback(() => api?.scrollPrev(), [api])
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -133,6 +100,19 @@ export default function DesignsPageClient() {
     window.addEventListener("keydown", handleKeyDown)
     return () => window.removeEventListener("keydown", handleKeyDown)
   }, [nextSlide, prevSlide])
+
+  // Keep current slide index in sync with Embla
+  useEffect(() => {
+    if (!api) return
+    const onSelect = () => setCurrentSlide(api.selectedScrollSnap())
+    onSelect()
+    api.on("select", onSelect)
+    api.on("reInit", onSelect)
+    return () => {
+      api.off("select", onSelect)
+      api.off("reInit", onSelect)
+    }
+  }, [api])
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -156,89 +136,35 @@ export default function DesignsPageClient() {
           <div className="container mx-auto">
             <div className="flex flex-col items-center">
               {/* Image Slider */}
-              <div
-                className="w-full max-w-3xl relative" // Removed aspect-square from here
-                ref={slideContainerRef}
-                aria-live="polite"
-                aria-atomic="true"
-                aria-label={`Slide ${currentSlide + 1} of ${shuffledSlides.length}`}
-              >
-                {/* This div now controls the aspect ratio and overflow for the slides */}
-                <div className="relative aspect-square w-full overflow-hidden rounded-lg bg-white">
-                  <AnimatePresence initial={false} custom={direction}>
-                    <motion.div
-                      key={currentSlide}
-                      custom={direction}
-                      variants={variants}
-                      initial="enter"
-                      animate="center"
-                      exit="exit"
-                      transition={
-                        isMobile
-                          ? { x: { type: "tween", duration: 0.25, ease: "easeOut" }, opacity: { duration: 0.2 } }
-                          : { x: { type: "spring", stiffness: 260, damping: 28 }, opacity: { duration: 0.2 } }
-                      }
-                      drag="x"
-                      dragConstraints={{ left: 0, right: 0 }}
-                      dragElastic={0.18}
-                      dragMomentum={false}
-                      onDragStart={() => setIsDraggingVisual(true)}
-                      onDrag={(event, info) => setDraggedX(info.offset.x)}
-                      onDragEnd={(e, { offset, velocity }) => {
-                        setIsDraggingVisual(false)
-                        setDraggedX(0)
-                        const swipe = swipePower(offset.x, velocity.x)
-                        const slideWidth = slideContainerRef.current?.offsetWidth || window.innerWidth
-
-                        if (swipe < -swipeConfidenceThreshold || offset.x < -slideWidth / 3) {
-                          paginate(1)
-                        } else if (swipe > swipeConfidenceThreshold || offset.x > slideWidth / 3) {
-                          paginate(-1)
-                        }
-                      }}
-                      // Added absolute positioning and full width/height to fill the aspect-ratio container
-                      className="absolute inset-0 w-full h-full cursor-grab active:cursor-grabbing hardware-accelerated"
-                      style={{ touchAction: "pan-x", willChange: "transform" }}
-                    >
-                      <img
-                        src={shuffledSlides[currentSlide].image || "/placeholder.svg"}
-                        alt={`Design slide: ${shuffledSlides[currentSlide].quote}`}
-                        className="w-full h-full object-contain pointer-events-none"
-                        draggable="false"
-                      />
-                      {isDraggingVisual && draggedX < -10 && (
-                        <div className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/80 p-2 rounded-full shadow-md">
-                          <ChevronLeft className="h-6 w-6 text-black" />
+              <div className="w-full max-w-3xl relative">
+                <Carousel
+                  setApi={setApi}
+                  opts={{ loop: true, align: "center", containScroll: "trimSnaps" }}
+                  className="[&_*]:select-none"
+                >
+                  <CarouselContent>
+                    {shuffledSlides.map((slide) => (
+                      <CarouselItem key={slide.id}>
+                        <div className="relative aspect-square w-full overflow-hidden rounded-lg bg-white" style={{ touchAction: "pan-x" }}>
+                          <img
+                            src={slide.image}
+                            alt={`Design slide: ${slide.quote}`}
+                            className="w-full h-full object-contain pointer-events-none"
+                            draggable="false"
+                          />
                         </div>
-                      )}
-                      {isDraggingVisual && draggedX > 10 && (
-                        <div className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/80 p-2 rounded-full shadow-md">
-                          <ChevronRight className="h-6 w-6 text-black" />
-                        </div>
-                      )}
-                    </motion.div>
-                  </AnimatePresence>
-                </div>
+                      </CarouselItem>
+                    ))}
+                  </CarouselContent>
 
-                {/* Navigation Arrows - Only visible on non-mobile */}
-                {!isMobile && (
-                  <>
-                    <button
-                      onClick={prevSlide}
-                      className="absolute left-0 top-[calc(50%-2rem)] -translate-y-1/2 bg-white/80 p-2 rounded-full shadow-md hover:bg-white pointer-events-auto z-10 ml-2 disabled:opacity-50"
-                      aria-label="Previous slide"
-                    >
-                      <ChevronLeft className="h-6 w-6" />
-                    </button>
-                    <button
-                      onClick={nextSlide}
-                      className="absolute right-0 top-[calc(50%-2rem)] -translate-y-1/2 bg-white/80 p-2 rounded-full shadow-md hover:bg-white pointer-events-auto z-10 mr-2 disabled:opacity-50"
-                      aria-label="Next slide"
-                    >
-                      <ChevronRight className="h-6 w-6" />
-                    </button>
-                  </>
-                )}
+                  {/* Navigation Arrows - Only visible on non-mobile */}
+                  {!isMobile && (
+                    <>
+                      <CarouselPrevious className="bg-white/80 hover:bg-white" />
+                      <CarouselNext className="bg-white/80 hover:bg-white" />
+                    </>
+                  )}
+                </Carousel>
 
                 {/* Quote Text */}
                 <div className="mt-6 text-center max-w-xl mx-auto">
@@ -254,10 +180,8 @@ export default function DesignsPageClient() {
                     <button
                       key={index}
                       onClick={() => {
-                        if (index !== currentSlide) {
-                          setDirection(index > currentSlide ? 1 : -1)
-                          setCurrentSlide(index)
-                        }
+                        setCurrentSlide(index)
+                        api?.scrollTo(index)
                       }}
                       className={`h-2 rounded-full transition-all ${
                         currentSlide === index ? "w-6 bg-black" : "w-2 bg-gray-300"
