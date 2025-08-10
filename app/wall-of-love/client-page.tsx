@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button"
 // animations removed for a simpler, static page
 import { ArrowRight } from "lucide-react"
 import Link from "next/link"
-import { useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 
 interface Quote {
   id: number
@@ -22,6 +22,10 @@ interface Takeaway {
   pinned?: boolean
   requiresConsent?: boolean
 }
+
+type FeedItem =
+  | { kind: "quote"; data: Quote }
+  | { kind: "takeaway"; data: Takeaway }
 
 const quotesData: Quote[] = [
   {
@@ -567,43 +571,9 @@ const takeawaysData: Takeaway[] = [
   { id: 250, handle: "markmlvnvillarin", text: "It’s about you becoming not what you’re getting. hard🔥!" },
 ]
 
-const buildDmTemplate = (handle: string, text: string, requiresConsent?: boolean) => {
-  if (requiresConsent) {
-    return `Hi @${handle}! Your comment — “${text}” — really resonated. With your permission, we’d love to feature it on our Wall of Love (crediting your handle). May we include it? If yes, please reply “Yes, you have my consent.” Thank you!`
-  }
-  return `@${handle} appreciate you — this takeaway is powerful. Adding it to our inspiration board. 🙏`
-}
-
-const copyToClipboard = async (value: string) => {
-  try {
-    await navigator.clipboard.writeText(value)
-    return true
-  } catch {
-    try {
-      const textarea = document.createElement('textarea')
-      textarea.value = value
-      textarea.style.position = 'fixed'
-      textarea.style.left = '-9999px'
-      document.body.appendChild(textarea)
-      textarea.select()
-      document.execCommand('copy')
-      document.body.removeChild(textarea)
-      return true
-    } catch {
-      return false
-    }
-  }
-}
+// removed copy/DM helpers to simplify UI
 
 const TakeawayCard = ({ item }: { item: Takeaway }) => {
-  const [copied, setCopied] = useState(false)
-  const onCopy = async () => {
-    const ok = await copyToClipboard(buildDmTemplate(item.handle, item.text, item.requiresConsent))
-    if (ok) {
-      setCopied(true)
-      window.setTimeout(() => setCopied(false), 1500)
-    }
-  }
   return (
     <blockquote
       className="bg-neutral-50 p-4 sm:p-5 rounded-xl w-full border border-neutral-200 overflow-hidden"
@@ -615,9 +585,6 @@ const TakeawayCard = ({ item }: { item: Takeaway }) => {
           <p className="font-medium text-sm sm:text-[15px] text-neutral-900">@{item.handle}</p>
           <span className="text-neutral-300">•</span>
           <p className="text-xs sm:text-sm text-neutral-500">Instagram Community of Entrepreneurs</p>
-          <button onClick={onCopy} aria-label="Copy message" className="rounded-full border border-neutral-300 px-3 py-1.5 text-xs text-neutral-700 hover:bg-neutral-100 transition-colors">
-            {copied ? "copied" : "copy message"}
-          </button>
         </div>
       </footer>
     </blockquote>
@@ -642,27 +609,14 @@ const renderFormattedText = (text: string) => {
   })
 }
 
-// Fisher-Yates shuffle algorithm
-const shuffleArray = (array: Quote[]): Quote[] => {
-  const newArray = [...array]
-  for (let i = newArray.length - 1; i > 0; i--) {
+// Generic Fisher–Yates shuffle
+const shuffleArray = <T,>(array: T[]): T[] => {
+  const copy = array.slice()
+  for (let i = copy.length - 1; i > 0; i -= 1) {
     const j = Math.floor(Math.random() * (i + 1))
-    ;[newArray[i], newArray[j]] = [newArray[j], newArray[i]]
+    ;[copy[i], copy[j]] = [copy[j], copy[i]]
   }
-  
-  // Ensure the new testimonials (id: 76 and 77) appear in the first 10
-  const newTestimonialIds = [76, 77]
-  newTestimonialIds.forEach(id => {
-    const testimonialIndex = newArray.findIndex(q => q.id === id)
-    if (testimonialIndex > 9) {
-      // Move it to a random position in the first 10
-      const newPosition = Math.floor(Math.random() * 10)
-      const [testimonial] = newArray.splice(testimonialIndex, 1)
-      newArray.splice(newPosition, 0, testimonial)
-    }
-  })
-  
-  return newArray
+  return copy
 }
 
 const TestimonialCard = ({ quote }: { quote: Quote }) => {
@@ -686,6 +640,19 @@ const TestimonialCard = ({ quote }: { quote: Quote }) => {
 }
 
 export default function WallOfLoveClientPage() {
+  const combinedFeed: FeedItem[] = useMemo(
+    () => [
+      ...quotesData.map((q) => ({ kind: "quote", data: q } as FeedItem)),
+      ...takeawaysData.map((t) => ({ kind: "takeaway", data: t } as FeedItem)),
+    ],
+    []
+  )
+
+  const [feed, setFeed] = useState<FeedItem[]>(combinedFeed)
+
+  useEffect(() => {
+    setFeed(shuffleArray(combinedFeed))
+  }, [combinedFeed])
   // minimal vertical list – no carousels, observers, or shuffling
 
   return (
@@ -715,15 +682,14 @@ export default function WallOfLoveClientPage() {
 
       <div className="bg-neutral-50">
         <main className="w-full max-w-[720px] mx-auto px-4 py-8 sm:py-10">
-          <div className="space-y-4 sm:space-y-5" style={{ transform: "translateZ(0)" }}>
-            {quotesData.map((quote) => (
-              <TestimonialCard key={quote.id} quote={quote} />
-            ))}
-            <div className="space-y-4 sm:space-y-5 pt-6">
-              {takeawaysData.map((item) => (
-                <TakeawayCard key={`takeaway-${item.id}`} item={item} />
-              ))}
-            </div>
+          <div className="space-y-4 sm:space-y-5">
+            {feed.map((item) =>
+              item.kind === "quote" ? (
+                <TestimonialCard key={`quote-${item.data.id}`} quote={item.data} />
+              ) : (
+                <TakeawayCard key={`takeaway-${item.data.id}`} item={item.data} />
+              )
+            )}
           </div>
         </main>
       </div>
