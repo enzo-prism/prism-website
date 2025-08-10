@@ -1,15 +1,16 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
-import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
 import MinimalistVideoPlayer from "@/components/minimalist-video-player"
-import ScrollingTimeline from "@/components/scrolling-timeline"
 import PageViewTracker from "@/components/page-view-tracker"
+import { PersonSchema } from "@/components/schema-markup"
+import ScrollingTimeline from "@/components/scrolling-timeline"
 import { useMobile } from "@/hooks/use-mobile"
 import { trackVideoInteraction } from "@/utils/analytics"
+import dynamic from "next/dynamic"
 import Link from "next/link"
-import { PersonSchema } from "@/components/schema-markup"
+import { useEffect, useRef, useState } from "react"
+const Navbar = dynamic(() => import("@/components/navbar"), { ssr: false })
 
 export default function AboutClientPage() {
   const isMobile = useMobile()

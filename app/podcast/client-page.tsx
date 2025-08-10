@@ -1,14 +1,15 @@
 "use client"
 
-import { useState } from "react"
-import Link from "next/link"
-import { Youtube, ChevronDown, ChevronUp, ExternalLink } from "lucide-react"
-import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
+import GetStartedCTA from "@/components/GetStartedCTA"
 import PageViewTracker from "@/components/page-view-tracker"
 import { Button } from "@/components/ui/button"
 import { trackCTAClick, trackNavigation } from "@/utils/analytics"
-import GetStartedCTA from "@/components/GetStartedCTA"
+import { ChevronDown, ChevronUp, Youtube } from "lucide-react"
+import dynamic from "next/dynamic"
+import Link from "next/link"
+import { useState } from "react"
+const Navbar = dynamic(() => import("@/components/navbar"), { ssr: false })
 
 export default function PodcastClientPage() {
   const [expandedEpisode, setExpandedEpisode] = useState<string | null>(null)

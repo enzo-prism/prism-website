@@ -3,9 +3,21 @@
 import { LOGO_CONFIG } from "@/lib/constants"
 import { trackNavigation } from "@/utils/analytics"
 import Link from "next/link"
+import { useEffect, useState } from "react"
 import CoreImage from "./core-image"
 
 export default function Footer() {
+  const [isMounted, setIsMounted] = useState(false)
+  useEffect(() => setIsMounted(true), [])
+  if (!isMounted) {
+    return (
+      <footer className="border-t bg-gray-50/50">
+        <div className="container mx-auto px-4 py-8 md:px-6">
+          <p className="text-xs text-neutral-500 lowercase">prism © 2023-2025.</p>
+        </div>
+      </footer>
+    )
+  }
   // Navigation items matching the navbar
   const navItems = [
     { emoji: "🏠", label: "home", href: "/" },

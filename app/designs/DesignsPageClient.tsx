@@ -1,13 +1,14 @@
 "use client"
 
-import { useState, useEffect, useCallback, useRef } from "react"
-import { ChevronLeft, ChevronRight } from "lucide-react"
-import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
+import GetStartedCTA from "@/components/GetStartedCTA"
 import PageViewTracker from "@/components/page-view-tracker"
 import { useMobile } from "@/hooks/use-mobile"
-import { motion, AnimatePresence } from "framer-motion"
-import GetStartedCTA from "@/components/GetStartedCTA"
+import { AnimatePresence, motion } from "framer-motion"
+import { ChevronLeft, ChevronRight } from "lucide-react"
+import dynamic from "next/dynamic"
+import { useCallback, useEffect, useRef, useState } from "react"
+const Navbar = dynamic(() => import("@/components/navbar"), { ssr: false })
 
 // Quotes data
 const slides = [

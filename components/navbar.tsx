@@ -3,7 +3,7 @@
 import { Menu, X } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 import { Button } from "@/components/ui/button"
 import { useMobile } from "@/hooks/use-mobile"
@@ -12,6 +12,27 @@ import { trackNavigation } from "@/utils/analytics"
 import CoreImage from "./core-image"; // Assuming core-image.tsx is in the same components directory
 
 export default function Navbar() {
+  const [isMounted, setIsMounted] = useState(false)
+  useEffect(() => setIsMounted(true), [])
+  if (!isMounted) {
+    const navItems = PRIMARY_NAV_ITEMS
+    return (
+      <header className="w-full border-b bg-background">
+        <div className="w-full max-w-7xl mx-auto flex h-14 items-center justify-between px-3">
+          <Link href="/" className="flex items-center gap-2">
+            <span className="text-2xl font-bold lowercase text-foreground">prism</span>
+          </Link>
+          <nav className="hidden md:flex items-center gap-4">
+            {navItems.map((item) => (
+              <Link key={item.label} href={item.href} className="text-sm lowercase text-muted-foreground hover:text-foreground">
+                {item.label}
+              </Link>
+            ))}
+          </nav>
+        </div>
+      </header>
+    )
+  }
   const isMobile = useMobile()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const pathname = usePathname()

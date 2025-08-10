@@ -1,8 +1,9 @@
-import type { Metadata } from "next"
-import Navbar from "@/components/navbar"
-import Footer from "@/components/footer"
-import WallOfLoveClientPage from "./client-page"
 import { OrganizationSchema, WebsiteSchema } from "@/components/schema-markup"
+import type { Metadata } from "next"
+import dynamic from "next/dynamic"
+import WallOfLoveClientPage from "./client-page"
+const Navbar = dynamic(() => import("@/components/navbar"), { ssr: false })
+const Footer = dynamic(() => import("@/components/footer"), { ssr: false })
 
 export const metadata: Metadata = {
   title: "Wall of Love",

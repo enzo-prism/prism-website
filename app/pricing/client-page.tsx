@@ -1,15 +1,16 @@
 "use client"
 
-import { useState, useEffect } from "react"
-import { Star, BadgeCheck, Check, ArrowRight } from "lucide-react"
+import CoreImage from "@/components/core-image"
+import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import CoreImage from "@/components/core-image"
-import Link from "next/link"
-import { trackNavigation } from "@/utils/analytics"
 import { cn } from "@/lib/utils"
-import { OfferSchema } from "@/components/schema-markup"
+import { trackNavigation } from "@/utils/analytics"
+import { ArrowRight, BadgeCheck, Check, Star } from "lucide-react"
+import dynamic from "next/dynamic"
+import Link from "next/link"
+import { useEffect, useState } from "react"
+const OfferSchemaClient = dynamic(() => import("@/components/schema-markup").then(m => m.OfferSchema), { ssr: false })
 
 export default function PricingClient() {
   const [isAnnual, setIsAnnual] = useState(false)
@@ -431,8 +432,8 @@ export default function PricingClient() {
         </div>
       </div>
       
-      {/* Offer Schema Markup */}
-      <OfferSchema
+      {/* Offer Schema Markup (client-only) */}
+      <OfferSchemaClient
         offerId="starter-plan"
         name="Starter Plan"
         description="DIY playbooks for business owners who have time to implement digital marketing strategies themselves"
@@ -444,7 +445,7 @@ export default function PricingClient() {
         availability="InStock"
       />
       
-      <OfferSchema
+      <OfferSchemaClient
         offerId="pro-plan"
         name="Pro Plan"
         description="Done-for-you digital marketing services with guaranteed 2x online sales increase in 60 days"

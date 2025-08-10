@@ -1,19 +1,20 @@
 "use client"
 
-import Link from "next/link"
-import Image from "next/image"
-import { ArrowRight, ArrowLeft, ChevronRight } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import Navbar from "@/components/navbar"
-import Footer from "@/components/footer"
-import PageViewTracker from "@/components/page-view-tracker"
-import { CaseStudySchema } from "@/components/schema-markup"
-import { trackCTAClick } from "@/utils/analytics"
-import { useState, useEffect } from "react"
-import SocialShare from "@/components/social-share"
 import { ExquisiteChannelShareChart } from "@/components/case-studies/exquisite-channel-share-chart"
 import { ExquisiteSessionsGrowthChart } from "@/components/case-studies/exquisite-sessions-growth-chart"
 import { ExquisiteSpeedGauge } from "@/components/case-studies/exquisite-speed-gauge"
+import Footer from "@/components/footer"
+import PageViewTracker from "@/components/page-view-tracker"
+import { CaseStudySchema } from "@/components/schema-markup"
+import SocialShare from "@/components/social-share"
+import { Button } from "@/components/ui/button"
+import { trackCTAClick } from "@/utils/analytics"
+import { ArrowLeft, ArrowRight, ChevronRight } from "lucide-react"
+import dynamic from "next/dynamic"
+import Image from "next/image"
+import Link from "next/link"
+import { useEffect, useState } from "react"
+const Navbar = dynamic(() => import("@/components/navbar"), { ssr: false })
 
 export default function ExquisiteDentistryCaseStudy() {
   const [activeSection, setActiveSection] = useState("")

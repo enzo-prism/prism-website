@@ -1,15 +1,16 @@
 "use client"
 
-import { useState, useEffect } from "react"
-import { BadgeCheck, Check, ArrowRight } from "lucide-react"
+import { OfferSchema } from "@/components/schema-markup"
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
+import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
-import Link from "next/link"
-import { trackNavigation } from "@/utils/analytics"
 import { cn } from "@/lib/utils"
-import { OfferSchema, ServiceSchema } from "@/components/schema-markup"
+import { ArrowRight, BadgeCheck, Check } from "lucide-react"
+import dynamic from "next/dynamic"
+import Link from "next/link"
+import { useEffect, useState } from "react"
+const ServiceSchemaClient = dynamic(() => import("@/components/schema-markup").then(m => m.ServiceSchema), { ssr: false })
 
 export default function ServicesClient() {
   const [isAnnual, setIsAnnual] = useState(false)
@@ -321,8 +322,8 @@ export default function ServicesClient() {
         </section>
       </div>
 
-      {/* Schema Markup */}
-      <ServiceSchema
+      {/* Schema Markup (client-only) */}
+      <ServiceSchemaClient
         serviceId="design-services"
         name="Design and Growth Services"
         description="Tailored digital solutions for small businesses including websites, apps, and marketing."

@@ -1,12 +1,13 @@
 "use client"
 
-import Link from "next/link"
-import { ArrowRight } from "lucide-react"
-import Navbar from "@/components/navbar"
+import CaseStudyCard from "@/components/case-study-card"
 import Footer from "@/components/footer"
 import PageViewTracker from "@/components/page-view-tracker"
 import { trackCTAClick } from "@/utils/analytics"
-import CaseStudyCard from "@/components/case-study-card"
+import { ArrowRight } from "lucide-react"
+import dynamic from "next/dynamic"
+import Link from "next/link"
+const Navbar = dynamic(() => import("@/components/navbar"), { ssr: false })
 
 // Define the case study type
 interface CaseStudy {

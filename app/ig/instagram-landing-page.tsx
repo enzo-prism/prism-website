@@ -2,18 +2,19 @@
 
 import type React from "react"
 
-import { useState } from "react"
 import { ArrowRight, CheckCircle } from "lucide-react"
 import Image from "next/image"
+import { useState } from "react"
 
-import { Button } from "@/components/ui/button"
-import { trackFormSubmission } from "@/utils/analytics"
-import Navbar from "@/components/navbar"
+import BenefitsSwiper from "@/components/benefits-swiper"
 import Footer from "@/components/footer"
 import MinimalistVideoPlayer from "@/components/minimalist-video-player"
-import BenefitsSwiper from "@/components/benefits-swiper"
+import { Button } from "@/components/ui/button"
 import { useMobile } from "@/hooks/use-mobile"
+import { trackFormSubmission } from "@/utils/analytics"
 import { trackSkoolEmailSubmission } from "@/utils/skool-pixel"
+import dynamic from "next/dynamic"
+const Navbar = dynamic(() => import("@/components/navbar"), { ssr: false })
 
 export default function InstagramLandingPage() {
   const isMobile = useMobile()

@@ -1,13 +1,14 @@
 "use client"
 
-import Link from "next/link"
+import Footer from "@/components/footer"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { ArrowRight } from "lucide-react"
-import Navbar from "@/components/navbar"
-import Footer from "@/components/footer"
 import { trackCTAClick, trackPageView } from "@/utils/analytics"
+import { ArrowRight } from "lucide-react"
+import dynamic from "next/dynamic"
+import Link from "next/link"
 import { useEffect } from "react"
+const Navbar = dynamic(() => import("@/components/navbar"), { ssr: false })
 
 export default function AffiliateClientPage() {
   useEffect(() => {

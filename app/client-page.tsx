@@ -1,14 +1,14 @@
 "use client"
 
+import { Button } from "@/components/ui/button"
+import { useMobile } from "@/hooks/use-mobile"
 import { ArrowRight } from "lucide-react"
+import dynamic from "next/dynamic"
 import Link from "next/link"
 import { useEffect, useRef, useState } from "react"
 
-import Footer from "@/components/footer"
-import Navbar from "@/components/navbar"
-import { Button } from "@/components/ui/button"
-import { useMobile } from "@/hooks/use-mobile"
-import dynamic from "next/dynamic"
+const Footer = dynamic(() => import("@/components/footer"), { ssr: false })
+const Navbar = dynamic(() => import("@/components/navbar"), { ssr: false })
 
 // Dynamically import mobile-specific components to reduce initial bundle
 const MobileServicesTiles = dynamic(() => import("@/components/mobile-services-tiles"), {
@@ -27,12 +27,15 @@ const ScrollProgressBar = dynamic(() => import("@/components/scroll-progress-bar
 import CoreImage from "@/components/core-image"
 import GetStartedCTA from "@/components/GetStartedCTA"
 import PageViewTracker from "@/components/page-view-tracker"
-import { ServiceSchema } from "@/components/schema-markup"
 import VideoWithPoster from "@/components/video-with-poster"
 import WhoWeBuildForCarousel from "@/components/WhoWeBuildForCarousel"
 import { useRevealAnimation, useStaggeredReveal } from "@/hooks/use-reveal-animation"
 import { LOGO_CONFIG, LOGO_SIZES } from "@/lib/constants"
 import { trackCTAClick, trackNavigation, trackServiceCardClick } from "@/utils/analytics"
+// Render Service schema only on client to keep SSR HTML lean
+const ServiceSchemaClient = dynamic(() => import("@/components/schema-markup").then(m => m.ServiceSchema), {
+  ssr: false
+})
 
 export default function ClientPage() {
   const isMobile = useMobile() // Added this line
@@ -601,8 +604,8 @@ export default function ClientPage() {
       </main>
       <Footer />
       
-      {/* Service Schema Markup */}
-      <ServiceSchema
+      {/* Service Schema Markup (client-only to reduce SSR HTML) */}
+      <ServiceSchemaClient
         serviceId="website-development"
         name="Website Development"
         description="Custom website development services that drive business growth and enhance user experience"
@@ -616,7 +619,7 @@ export default function ClientPage() {
         }}
       />
       
-      <ServiceSchema
+      <ServiceSchemaClient
         serviceId="mobile-app-development"
         name="Mobile App Development"
         description="Native and cross-platform mobile app development for iOS and Android"
@@ -630,7 +633,7 @@ export default function ClientPage() {
         }}
       />
       
-      <ServiceSchema
+      <ServiceSchemaClient
         serviceId="digital-marketing"
         name="Digital Marketing"
         description="Comprehensive digital marketing services including SEO, content marketing, and social media"
@@ -644,7 +647,7 @@ export default function ClientPage() {
         }}
       />
       
-      <ServiceSchema
+      <ServiceSchemaClient
         serviceId="ui-ux-design"
         name="UI/UX Design"
         description="User interface and user experience design services for web and mobile applications"

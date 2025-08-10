@@ -1,18 +1,19 @@
 "use client"
 
 import { BlogPostErrorBoundary } from "@/components/blog-error-boundary"
-import AnimatedBlogWrapper from "@/components/blog/animated-blog-wrapper"
 import Breadcrumbs from "@/components/breadcrumbs"
 import CoreImage from "@/components/core-image"
-import Footer from "@/components/footer"
-import Navbar from "@/components/navbar"
 import { BlogPostSchema } from "@/components/schema-markup"
 import ScrollProgressBar from "@/components/scroll-progress-bar"
 import { useMobile } from "@/hooks/use-mobile"
 import { cn } from "@/lib/utils"
 import { ArrowLeft } from "lucide-react"
+import dynamic from "next/dynamic"
 import Link from "next/link"
 import { useEffect, useState } from "react"
+const AnimatedBlogWrapper = dynamic(() => import("@/components/blog/animated-blog-wrapper"), { ssr: false })
+const Footer = dynamic(() => import("@/components/footer"), { ssr: false })
+const Navbar = dynamic(() => import("@/components/navbar"), { ssr: false })
 
 interface Props {
   children: React.ReactNode

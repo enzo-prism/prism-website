@@ -1,16 +1,17 @@
 "use client"
 
-import Link from "next/link"
 import { ArrowRight, CheckCircle, CreditCard, FileText, Globe, Palette, Printer, Share2, User } from "lucide-react"
+import Link from "next/link"
 
-import { Button } from "@/components/ui/button"
-import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
-import { useMobile } from "@/hooks/use-mobile"
 import ScrollProgressBar from "@/components/scroll-progress-bar"
+import { Button } from "@/components/ui/button"
+import { useMobile } from "@/hooks/use-mobile"
+import dynamic from "next/dynamic"
+const Navbar = dynamic(() => import("@/components/navbar"), { ssr: false })
 
-import { trackCTAClick, trackNavigation } from "@/utils/analytics"
 import PageViewTracker from "@/components/page-view-tracker"
+import { trackCTAClick, trackNavigation } from "@/utils/analytics"
 
 const services = [
   { name: "logo or wordmark", icon: Palette },

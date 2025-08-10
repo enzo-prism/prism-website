@@ -7,7 +7,7 @@ import ErrorTracker from "@/components/error-tracker"
 import HotjarScript from "@/components/hotjar-script"
 import MCPHealthMonitor from "@/components/mcp-health-monitor"
 import PerformanceMonitor from "@/components/performance-monitor"
-import { LocalBusinessSchema, OrganizationSchema, WebsiteSchema } from "@/components/schema-markup"
+import { OrganizationSchema, WebsiteSchema } from "@/components/schema-markup"
 import SentryContextProvider from "@/components/sentry-context-provider"
 import { GoogleAnalytics, GoogleTagManager } from "@next/third-parties/google"
 
@@ -112,7 +112,6 @@ export default function RootLayout({
       <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-M37LLWHV" height="0" width="0" style={{display:'none',visibility:'hidden'}} /></noscript>
         <OrganizationSchema />
         <WebsiteSchema />
-        <LocalBusinessSchema />
         <ScrollManager />
         <HotjarScript />
         <ErrorTracker />

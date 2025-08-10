@@ -1,12 +1,13 @@
 "use client"
 
-import Link from "next/link"
-import { Mail, ArrowRight, MapPin, Clock, Briefcase, DollarSign } from "lucide-react"
-import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
 import PageViewTracker from "@/components/page-view-tracker"
 import { Button } from "@/components/ui/button"
 import { trackCTAClick, trackNavigation } from "@/utils/analytics"
+import { Briefcase, Clock, Mail, MapPin } from "lucide-react"
+import dynamic from "next/dynamic"
+import Link from "next/link"
+const Navbar = dynamic(() => import("@/components/navbar"), { ssr: false })
 
 export default function FrontEndDeveloperPage() {
   const responsibilities = [

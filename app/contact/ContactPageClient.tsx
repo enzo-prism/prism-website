@@ -1,11 +1,12 @@
 "use client"
 
-import Navbar from "@/components/navbar"
 import { ContactPageSchema } from "@/components/schema-markup"
 import { Button } from "@/components/ui/button"
 import { trackCTAClick, trackNavigation } from "@/utils/analytics"
 import { ArrowRight, CalendarDays, Instagram, Mail } from "lucide-react"
+import dynamic from "next/dynamic"
 import Link from "next/link"
+const Navbar = dynamic(() => import("@/components/navbar"), { ssr: false })
 
 export default function ContactPageClient() {
   const contactMethods = [

@@ -1,18 +1,19 @@
 "use client"
 
-import Link from "next/link"
-import { ArrowRight, ArrowLeft, ChevronRight } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import Navbar from "@/components/navbar"
+import { DrWongGrowthChart } from "@/components/case-studies/dr-wong-growth-chart"
+import { DrWongUserDemographicsChart } from "@/components/case-studies/dr-wong-user-demographics-chart"; // Import the new chart
 import Footer from "@/components/footer"
 import PageViewTracker from "@/components/page-view-tracker"
 import { CaseStudySchema } from "@/components/schema-markup"
-import { trackCTAClick } from "@/utils/analytics"
-import { useState, useEffect } from "react"
-import Image from "next/image"
-import { DrWongGrowthChart } from "@/components/case-studies/dr-wong-growth-chart"
-import { DrWongUserDemographicsChart } from "@/components/case-studies/dr-wong-user-demographics-chart" // Import the new chart
 import SocialShare from "@/components/social-share"
+import { Button } from "@/components/ui/button"
+import { trackCTAClick } from "@/utils/analytics"
+import { ArrowLeft, ArrowRight, ChevronRight } from "lucide-react"
+import dynamic from "next/dynamic"
+import Image from "next/image"
+import Link from "next/link"
+import { useEffect, useState } from "react"
+const Navbar = dynamic(() => import("@/components/navbar"), { ssr: false })
 
 export default function ChristopherWongCaseStudy() {
   const [activeSection, setActiveSection] = useState("")

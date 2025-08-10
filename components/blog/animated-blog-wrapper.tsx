@@ -1,8 +1,8 @@
 "use client"
 
-import { useEffect, useRef } from "react"
-import { motion, useScroll, useTransform } from "framer-motion"
 import { fadeInUp, staggerContainer } from "@/utils/animation-variants"
+import { motion, useScroll, useTransform } from "framer-motion"
+import { useEffect, useRef, useState } from "react"
 
 interface AnimatedBlogWrapperProps {
   children: React.ReactNode
@@ -10,6 +10,12 @@ interface AnimatedBlogWrapperProps {
 }
 
 export default function AnimatedBlogWrapper({ children, className = "" }: AnimatedBlogWrapperProps) {
+  const [isMounted, setIsMounted] = useState(false)
+  useEffect(() => setIsMounted(true), [])
+  // On SSR, render plain content with minimal wrappers to reduce HTML size
+  if (!isMounted) {
+    return <div className={className}>{children}</div>
+  }
   const containerRef = useRef<HTMLDivElement>(null)
   const { scrollYProgress } = useScroll({
     target: containerRef,
