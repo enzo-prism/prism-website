@@ -10,16 +10,10 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <>
-      {/* Desktop/tablet only near top */}
-      <div className="hidden md:block">
-        <WhatWeDo />
-      </div>
       <ClientPage />
 
-      {/* Mobile-only near bottom */}
-      <div className="block md:hidden">
-        <WhatWeDo className="pb-8" />
-      </div>
+      {/* Move What We Do near the bottom for all breakpoints */}
+      <WhatWeDo className="pb-8" />
     </>
   )
 }
