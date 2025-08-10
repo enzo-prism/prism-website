@@ -24,6 +24,14 @@ interface Quote {
   requiresConsent?: boolean
 }
 
+interface Takeaway {
+  id: number
+  handle: string
+  text: string
+  pinned?: boolean
+  requiresConsent?: boolean
+}
+
 const quotesData: Quote[] = [
   {
     id: 1,
@@ -513,6 +521,128 @@ const quotesData: Quote[] = [
   { id: 107, text: "Great find @the_design_prism 🔥", client: "t_bekian", company: "Instagram Community of Entrepreneurs" },
 ]
 
+const takeawaysData: Takeaway[] = [
+  { id: 200, handle: "sebastian.guyant", text: "damn, this reframing is incredible", pinned: true },
+  { id: 201, handle: "thomas__chapin", text: "Holy fuck did I need this", pinned: true },
+  { id: 202, handle: "i_m_y_r_s", text: "This side of Instagram is what keeping me in this app." },
+  { id: 203, handle: "aaronwbateman", text: "Not gonna lie… It’s been an hour and I’m still just listening to this on repeat." },
+  { id: 204, handle: "guest._.1234564", text: "That’s so logical. Hits Hard 💯" },
+  { id: 205, handle: "clauscataldi", text: "“I asked God for strength, and he gave me lots of challenges so i could grow stronger”", requiresConsent: true },
+  { id: 206, handle: "clauscataldi", text: "I re heard this like 20 times" },
+  { id: 207, handle: "rhys_wynne_", text: "This post was so good I’m locking in 🔥" },
+  { id: 208, handle: "mikethomasegan", text: "This hit different … I’m starting college again next week and I need to lock tf in." },
+  { id: 209, handle: "20_jin_07", text: "That changed so much in me…", pinned: true, requiresConsent: true },
+  { id: 210, handle: "ivanjohnson845", text: "Gotta keep this in my reel cycles" },
+  { id: 211, handle: "greegy_the_great", text: "I’m making this my morning alarm" },
+  { id: 212, handle: "jenelle.champagne", text: "Like this to bring me back —->>>>" },
+  { id: 213, handle: "muhammadkathrada", text: "Holy moly this took me and shook me" },
+  { id: 214, handle: "shadow.22052020", text: "I am…… flaberghasted…. it makes so much sense." },
+  { id: 215, handle: "icepeaklies", text: "i just realised I’d put the character i made into so much hardships than I ever was, this just tryly humbles me on how caring and merciful God is", pinned: true, requiresConsent: true },
+  { id: 216, handle: "lokpalmahajan", text: "Dont know how but sometimes you just hear some words Which was eagerly needed to be heard by you ❤️" },
+  { id: 217, handle: "keremtorgay", text: "Thank you for saving me", pinned: true, requiresConsent: true },
+  { id: 218, handle: "zanderzone40", text: "Insane (in a good way) take on this, and also this edit of vertical Gladiator is sick too, thanks g" },
+  { id: 219, handle: "elizabethmartinkirwan", text: "Amen!! Great perspective" },
+  { id: 220, handle: "johananeugene", text: "Deep deep deep stuff right here" },
+  { id: 221, handle: "abdulrehmaanhere", text: "Man I’m crying 😭 on the fact of uncertainty" },
+  { id: 222, handle: "spencer_kunkel", text: "Wow. Just wow" },
+  { id: 223, handle: "reellostproductions", text: "When you look at life from the veiw of the writer, you come to love the story.", requiresConsent: true },
+  { id: 224, handle: "brody_bongo", text: "Let’s say I want to use some of these lines for an upcoming short film I’m producing. If anyone could find the original writer (if not this account) so I could give them credit that’d be amazing!", requiresConsent: true },
+  { id: 225, handle: "isjebishbas", text: "It is to both overprepare someone and make them enjoy the overpreparing. This way they will overcome the obstacles in their way and keep on training for bigger obstacles.", pinned: true, requiresConsent: true },
+  { id: 226, handle: "focus.staymotivated", text: "Pay the toll to reach your goal" },
+  { id: 227, handle: "ntarmahemmanuelwisdom", text: "Great word, all the suffering is shaping us into the one we wanna be" },
+  { id: 228, handle: "719mula", text: "Jus had a long ahh day thank you🙏🏼" },
+  { id: 229, handle: "zippokinghk", text: "Jake the dog said it best. What’s the point in life if you get everything you want. In life you need problems to make us stronger.", pinned: true, requiresConsent: true },
+  { id: 230, handle: "hay_bail1", text: "This is so smart" },
+  { id: 231, handle: "spellcastingalien", text: "Alex Hormozi and Gladiator was not a mashup I knew I needed but damn" },
+  { id: 232, handle: "kdoodlz", text: "That’s actually incredible… flipped my whole perspective", pinned: true },
+  { id: 233, handle: "mulu_ferg11", text: "“If you knew you weren’t going to succeed it wouldn’t be worth doing” Damn.", requiresConsent: true },
+  { id: 234, handle: "ryankjamess", text: "I found the perfect video." },
+  { id: 235, handle: "hunter.domzalski", text: "Everything is more beautiful because one day we won’t be able to observe that beauty… Lastly I hope that while death waits, it doesn’t so patiently.", pinned: true, requiresConsent: true },
+  { id: 236, handle: "watrrdog", text: "Holy fuck…" },
+  { id: 237, handle: "victimhair_co", text: "This hits." },
+  { id: 238, handle: "garlic_soss", text: "Saw this on a right time." },
+  { id: 239, handle: "julien.jainrd5", text: "This is the best speech I have heard in a long time." },
+  { id: 240, handle: "frankj35", text: "I love this" },
+  { id: 241, handle: "jalbers10", text: "This hits. Deep" },
+  { id: 242, handle: "krishnasucksatlife", text: "Hits hard man" },
+  { id: 243, handle: "zemp_alessandro", text: "Thank you for this video, such powerful message👏" },
+  { id: 244, handle: "d.lothian", text: "I was gonna say, I would put them through the deepest love; and then i was like Oh Shit.", requiresConsent: true },
+  { id: 245, handle: "derekglatts", text: "According to Tolkien, the doom of men is mortality, but the doom of elves was immortality.", pinned: true, requiresConsent: true },
+  { id: 246, handle: "frontendbymaven", text: "Smh now I gotta watch gladiator again for the 10046 time" },
+  { id: 247, handle: "kennethyourmom", text: "they envy us because we are mortal, because any moment might be our last, everything is more beautiful, because we are doomed", requiresConsent: true },
+  { id: 248, handle: "thescottishkorean", text: "HOW ARE YOU SO RIGHT? WHY ARE YOU NOT MENTORING YOUNG MEN ALL OVER THE WORLD. YOU ARE BRILLIANT", pinned: true },
+  { id: 249, handle: "zippokinghk", text: "Jake the dog said it best. What’s the point in life if you get everything you want. In life you need problems to make us stronger.", requiresConsent: true },
+  // alt for 50th if avoiding duplicates
+  { id: 250, handle: "markmlvnvillarin", text: "It’s about you becoming not what you’re getting. hard🔥!" },
+]
+
+const buildDmTemplate = (handle: string, text: string, requiresConsent?: boolean) => {
+  if (requiresConsent) {
+    return `Hi @${handle}! Your comment — “${text}” — really resonated. With your permission, we’d love to feature it on our Wall of Love (crediting your handle). May we include it? If yes, please reply “Yes, you have my consent.” Thank you!`
+  }
+  return `@${handle} appreciate you — this takeaway is powerful. Adding it to our inspiration board. 🙏`
+}
+
+const copyToClipboard = async (value: string) => {
+  try {
+    await navigator.clipboard.writeText(value)
+    return true
+  } catch {
+    try {
+      const textarea = document.createElement('textarea')
+      textarea.value = value
+      textarea.style.position = 'fixed'
+      textarea.style.left = '-9999px'
+      document.body.appendChild(textarea)
+      textarea.select()
+      document.execCommand('copy')
+      document.body.removeChild(textarea)
+      return true
+    } catch {
+      return false
+    }
+  }
+}
+
+const TakeawayCard = ({ item }: { item: Takeaway }) => {
+  const [copied, setCopied] = useState(false)
+  const onCopy = async () => {
+    const ok = await copyToClipboard(buildDmTemplate(item.handle, item.text, item.requiresConsent))
+    if (ok) {
+      setCopied(true)
+      window.setTimeout(() => setCopied(false), 1500)
+    }
+  }
+  return (
+    <motion.blockquote
+      variants={mobileScrollReveal}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ amount: 0.2, once: true }}
+      transition={{ duration: 0.25, ease: "easeOut" }}
+      className="bg-white p-5 sm:p-6 rounded-2xl w-full border border-neutral-200/70 shadow-[0_1px_2px_rgba(0,0,0,0.04)] overflow-hidden"
+      aria-label={`Viewer takeaway from @${item.handle}`}
+    >
+      <p className="text-[15px] sm:text-base text-neutral-700 leading-relaxed tracking-tight">&ldquo;{item.text}&rdquo;</p>
+      <footer className="mt-4 flex items-center justify-between gap-2">
+        <div className="flex items-center gap-2 text-right">
+          {item.requiresConsent && (
+            <span className="inline-flex items-center rounded-full bg-amber-100 text-amber-800 px-2 py-0.5 text-xs">consent requested</span>
+          )}
+        </div>
+        <div className="ml-auto flex items-center gap-2 text-right">
+          <p className="font-semibold text-sm sm:text-base text-neutral-900">@{item.handle}</p>
+          <span className="text-neutral-300">•</span>
+          <p className="text-xs sm:text-sm text-neutral-500">Instagram Community of Entrepreneurs</p>
+          <Button size="sm" variant="outline" className="rounded-full" onClick={onCopy} aria-label="Copy DM template">
+            {item.requiresConsent ? (copied ? "copied" : "copy consent DM") : (copied ? "copied" : "copy reply")}
+          </Button>
+        </div>
+      </footer>
+    </motion.blockquote>
+  )
+}
+
 const renderFormattedText = (text: string) => {
   const segments = text.split(/(\*\*.*?\*\*)/g).filter(Boolean)
 
@@ -715,12 +845,38 @@ export default function WallOfLoveClientPage() {
         </div>
       </section>
 
+      {/* Viewer takeaways carousel */}
+      <section className="bg-neutral-50 border-t border-neutral-100">
+        <div className="w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pb-4 sm:pb-6">
+          <h2 className="text-xl sm:text-2xl font-semibold text-neutral-900 mb-4">viewer takeaways</h2>
+          <Carousel className="relative">
+            <CarouselContent>
+              {takeawaysData.filter(t => t.pinned).map((item) => (
+                <CarouselItem key={`takeaway-pinned-${item.id}`} className="basis-full sm:basis-1/2 lg:basis-1/3">
+                  <div className="pr-4">
+                    <TakeawayCard item={item} />
+                  </div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious className="hidden sm:flex" />
+            <CarouselNext className="hidden sm:flex" />
+          </Carousel>
+        </div>
+      </section>
+
       <div className="bg-neutral-50 optimize-scrolling overflow-x-hidden">
         <main className="w-full max-w-2xl mx-auto px-4 py-12 sm:px-6 lg:px-8 sm:py-16">
           <div className="testimonial-container space-y-6 sm:space-y-8" style={{ transform: "translateZ(0)" }}>
             {unpinnedQuotes.slice(0, visibleCount).map((quote) => (
               <TestimonialCard key={quote.id} quote={quote} viewport={viewport} />
             ))}
+            {/* Non-pinned takeaways list below testimonials */}
+            <div className="space-y-6 sm:space-y-8 pt-8">
+              {takeawaysData.filter(t => !t.pinned).slice(0, 18).map((item) => (
+                <TakeawayCard key={`takeaway-${item.id}`} item={item} />
+              ))}
+            </div>
           </div>
           
           {visibleCount < totalUnpinned && (
