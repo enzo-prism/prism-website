@@ -662,6 +662,7 @@ export default function WallOfLoveClientPage() {
           <div className="space-y-3">
             <div className="text-4xl">❤️</div>
             <h1 className="text-[32px] sm:text-[40px] font-semibold tracking-tight lowercase text-neutral-900">wall of love</h1>
+            <p className="text-[14px] sm:text-[15px] text-neutral-700 italic lowercase">impossible is temporary.</p>
             <div className="text-[13px] sm:text-[14px] text-neutral-600 lowercase flex items-center justify-center gap-3">
               <span>38.5k+ on instagram</span>
               <span className="text-neutral-300">•</span>
