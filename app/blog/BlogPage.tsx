@@ -1,12 +1,11 @@
 import { BlogListErrorBoundary } from "@/components/blog-error-boundary"
+import Footer from "@/components/footer"
 import MobileHeroSection from "@/components/mobile-hero-section"
+import Navbar from "@/components/navbar"
 import type { BlogFrontmatter } from "@/lib/mdx"
-import dynamic from "next/dynamic"
 import BlogCTAButton from "./BlogCTAButton"
 import BlogPageTracker from "./BlogPageTracker"
 import BlogPostsList from "./BlogPostsList"
-const Footer = dynamic(() => import("@/components/footer"), { ssr: false })
-const Navbar = dynamic(() => import("@/components/navbar"), { ssr: false })
 
 // Define the blog post type
 interface BlogPost extends BlogFrontmatter {
