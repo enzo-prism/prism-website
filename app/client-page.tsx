@@ -310,7 +310,7 @@ export default function ClientPage() {
                     rel="noopener noreferrer"
                     className="text-sm text-neutral-400 lowercase hover:text-neutral-600 hover:underline smooth-transform"
                   >
-                    38,500+ entrepreneurs follow us on Instagram
+                    39,000+ entrepreneurs follow us on Instagram
                   </a>
                   <a
                     href="https://www.youtube.com/@the_design_prism"

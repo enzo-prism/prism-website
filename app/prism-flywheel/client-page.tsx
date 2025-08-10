@@ -929,7 +929,7 @@ export default function PrismFlywheelClient() {
               variants={getAnimationVariant(fadeInUp, mobileFadeIn)}
             >
               <p className="text-xs text-neutral-500 dark:text-neutral-500">
-                Join 24,500+ on YouTube and 38,500+ on Instagram
+                Join 24,500+ on YouTube and 39,000+ on Instagram
               </p>
             </motion.div>
           </motion.div>
