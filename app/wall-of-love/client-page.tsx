@@ -612,7 +612,7 @@ const TakeawayCard = ({ item }: { item: Takeaway }) => {
       variants={mobileScrollReveal}
       initial="hidden"
       whileInView="visible"
-      viewport={{ amount: 0.2, once: true }}
+      viewport={{ amount: 0.4, margin: "50px", once: true }}
       transition={{ duration: 0.25, ease: "easeOut" }}
       className="bg-neutral-50 p-4 sm:p-5 rounded-xl w-full border border-neutral-200 overflow-hidden"
       aria-label={`Viewer takeaway from @${item.handle}`}
@@ -679,14 +679,13 @@ const TestimonialCard = ({ quote, viewport }: { quote: Quote; viewport: UseInVie
       variants={mobileScrollReveal}
       initial="hidden"
       whileInView="visible"
-      viewport={viewport}
+      viewport={{ ...viewport, amount: 0.4, margin: "50px" }}
       transition={{ duration: 0.25, ease: "easeOut" }}
-      className="bg-white p-5 sm:p-6 rounded-2xl w-full border border-neutral-200/70 shadow-[0_1px_2px_rgba(0,0,0,0.04)] overflow-hidden"
+      className="bg-neutral-50 p-4 sm:p-5 rounded-xl w-full border border-neutral-200 overflow-hidden"
       style={{
-        contain: "layout style paint",
+        contain: "paint style",
         willChange: "transform, opacity",
-        backfaceVisibility: "hidden",
-        WebkitBackfaceVisibility: "hidden",
+        transform: "translateZ(0)",
         WebkitTransform: "translateZ(0)",
       }}
       aria-label={`Testimonial from ${quote.client}`}
@@ -696,9 +695,9 @@ const TestimonialCard = ({ quote, viewport }: { quote: Quote; viewport: UseInVie
       </p>
       <footer className="mt-3 flex items-center justify-end gap-2 text-right">
         <div className="flex items-center gap-2">
-        <p className="font-medium text-sm sm:text-[15px] text-neutral-900">{quote.client}</p>
-        <span className="text-neutral-300">•</span>
-        <p className="text-xs sm:text-sm text-neutral-500">{quote.company}</p>
+          <p className="font-medium text-sm sm:text-[15px] text-neutral-900">{quote.client}</p>
+          <span className="text-neutral-300">•</span>
+          <p className="text-xs sm:text-sm text-neutral-500">{quote.company}</p>
         </div>
       </footer>
     </motion.blockquote>
@@ -740,16 +739,23 @@ export default function WallOfLoveClientPage() {
 
   useEffect(() => {
     setIsHydrated(true)
-    setShuffledQuotes(shuffleArray(quotesData))
-    
+    // Avoid layout shift: use stable order on first paint, then shuffle after a frame
+    setShuffledQuotes(quotesData)
+    const raf = requestAnimationFrame(() => {
+      setShuffledQuotes(shuffleArray(quotesData))
+    })
+
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 768)
     }
-    
+
     checkMobile()
     window.addEventListener('resize', checkMobile, { passive: true })
-    
-    return () => window.removeEventListener('resize', checkMobile)
+
+    return () => {
+      window.removeEventListener('resize', checkMobile)
+      cancelAnimationFrame(raf)
+    }
   }, [])
 
   useEffect(() => {
@@ -806,7 +812,7 @@ export default function WallOfLoveClientPage() {
         <div className="w-full max-w-[720px] mx-auto px-4 py-6 sm:py-8">
           <h2 className="text-[15px] sm:text-[16px] font-medium text-neutral-900 mb-3">what people are saying</h2>
           <Carousel>
-            <CarouselContent>
+            <CarouselContent className="[contain:content] will-change-transform">
               {quotesData.filter(q => q.pinned).map((quote) => (
                 <CarouselItem key={`pinned-${quote.id}`} className="basis-full">
                   <TestimonialCard quote={quote} viewport={{ amount: 0.2, once: true }} />
@@ -822,7 +828,7 @@ export default function WallOfLoveClientPage() {
         <div className="w-full max-w-[720px] mx-auto px-4 pb-4 sm:pb-6">
           <h2 className="text-[15px] sm:text-[16px] font-medium text-neutral-900 mb-3">viewer takeaways</h2>
           <Carousel>
-            <CarouselContent>
+            <CarouselContent className="[contain:content] will-change-transform">
               {takeawaysData.filter(t => t.pinned).map((item) => (
                 <CarouselItem key={`takeaway-pinned-${item.id}`} className="basis-full">
                   <TakeawayCard item={item} />
