@@ -14,25 +14,7 @@ import CoreImage from "./core-image"; // Assuming core-image.tsx is in the same 
 export default function Navbar() {
   const [isMounted, setIsMounted] = useState(false)
   useEffect(() => setIsMounted(true), [])
-  if (!isMounted) {
-    const navItems = PRIMARY_NAV_ITEMS
-    return (
-      <header className="w-full border-b bg-background">
-        <div className="w-full max-w-7xl mx-auto flex h-14 items-center justify-between px-3">
-          <Link href="/" className="flex items-center gap-2">
-            <span className="text-2xl font-bold lowercase text-foreground">prism</span>
-          </Link>
-          <nav className="hidden md:flex items-center gap-4">
-            {navItems.map((item) => (
-              <Link key={item.label} href={item.href} className="text-sm lowercase text-muted-foreground hover:text-foreground">
-                {item.label}
-              </Link>
-            ))}
-          </nav>
-        </div>
-      </header>
-    )
-  }
+  const navItems = PRIMARY_NAV_ITEMS
   const isMobile = useMobile()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const pathname = usePathname()
@@ -67,7 +49,15 @@ export default function Navbar() {
           <span className="text-2xl font-bold lowercase text-foreground">prism</span>
         </Link>
 
-        {isMobile ? (
+        {(!isMounted && (
+            <nav className="hidden md:flex items-center gap-4">
+              {navItems.map((item) => (
+                <Link key={item.label} href={item.href} className="text-sm lowercase text-muted-foreground hover:text-foreground">
+                  {item.label}
+                </Link>
+              ))}
+            </nav>
+          )) || (isMobile ? (
           <>
             <Button variant="ghost" size="icon" onClick={toggleMenu} aria-label="Toggle menu">
               {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}

@@ -12,10 +12,6 @@ interface AnimatedBlogWrapperProps {
 export default function AnimatedBlogWrapper({ children, className = "" }: AnimatedBlogWrapperProps) {
   const [isMounted, setIsMounted] = useState(false)
   useEffect(() => setIsMounted(true), [])
-  // On SSR, render plain content with minimal wrappers to reduce HTML size
-  if (!isMounted) {
-    return <div className={className}>{children}</div>
-  }
   const containerRef = useRef<HTMLDivElement>(null)
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -30,7 +26,10 @@ export default function AnimatedBlogWrapper({ children, className = "" }: Animat
     // Enable animations only when JS is available and animations are supported
     const supportsAnimations = !window.matchMedia('(prefers-reduced-motion: reduce)').matches
     
-    if (supportsAnimations && containerRef.current) {
+    if (!isMounted || !supportsAnimations || !containerRef.current) {
+      return
+    }
+    if (containerRef.current) {
       // Add animation support class to enable hidden initial state
       containerRef.current.classList.add("supports-animations")
       
@@ -53,7 +52,7 @@ export default function AnimatedBlogWrapper({ children, className = "" }: Animat
       return () => observer.disconnect()
     }
     // If animations aren't supported or are disabled, content remains visible by default
-  }, [])
+  }, [isMounted])
 
   return (
     <motion.div
@@ -64,6 +63,9 @@ export default function AnimatedBlogWrapper({ children, className = "" }: Animat
       animate="animate"
       variants={staggerContainer}
     >
+      {!isMounted ? (
+        <div className="relative z-10">{children}</div>
+      ) : (
       {/* Floating background elements */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         <motion.div
@@ -116,6 +118,7 @@ export default function AnimatedBlogWrapper({ children, className = "" }: Animat
       >
         {children}
       </motion.div>
+      )}
     </motion.div>
   )
 }
