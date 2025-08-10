@@ -48,7 +48,7 @@ export default function Navbar() {
           <span className="text-2xl font-bold lowercase text-foreground">prism</span>
         </Link>
 
-        {(!isMounted && (
+        { !isMounted ? (
             <nav className="hidden md:flex items-center gap-4">
               {navItems.map((item) => (
                 <Link key={item.label} href={item.href} className="text-sm lowercase text-muted-foreground hover:text-foreground">
@@ -56,54 +56,53 @@ export default function Navbar() {
                 </Link>
               ))}
             </nav>
-          )) || (isMobile ? (
-          <>
-            <Button variant="ghost" size="icon" onClick={toggleMenu} aria-label="Toggle menu">
-              {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-            </Button>
-
-            {isMenuOpen && (
-              <div className="absolute left-0 top-16 z-50 w-full bg-background px-4 py-4 shadow-md animate-in slide-in-from-top-4 duration-300">
-                <nav className="flex flex-col space-y-4">
-                  {navItems.map((item) => (
-                    <Link
-                      key={item.label}
-                      href={item.href}
-                      className={`flex items-center gap-2 rounded-md px-3 py-2 text-lg lowercase transition-colors hover:bg-muted ${
-                        pathname === item.href
-                          ? "font-semibold text-foreground bg-muted"
-                          : "text-muted-foreground hover:text-foreground"
-                      }`}
-                      onClick={() => {
-                        setIsMenuOpen(false)
-                        trackNavigation(item.label, item.href)
-                      }}
-                    >
-                      <span className="text-xl">{item.emoji}</span>
-                      <span>{item.label}</span>
-                    </Link>
-                  ))}
-                </nav>
-              </div>
-            )}
-          </>
-        ) : (
-          <nav className="flex items-center gap-6">
-            {navItems.map((item) => (
-              <Link
-                key={item.label}
-                href={item.href}
-                className={`flex items-center gap-1 text-sm font-medium lowercase transition-colors hover:text-primary ${
-                  pathname === item.href ? "text-primary" : "text-muted-foreground"
-                }`}
-                onClick={() => trackNavigation(item.label, item.href)}
-              >
-                <span className="text-base">{item.emoji}</span>
-                <span>{item.label}</span>
-              </Link>
-            ))}
-          </nav>
-        )}
+          ) : isMobile ? (
+            <>
+              <Button variant="ghost" size="icon" onClick={toggleMenu} aria-label="Toggle menu">
+                {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+              </Button>
+              {isMenuOpen && (
+                <div className="absolute left-0 top-16 z-50 w-full bg-background px-4 py-4 shadow-md animate-in slide-in-from-top-4 duration-300">
+                  <nav className="flex flex-col space-y-4">
+                    {navItems.map((item) => (
+                      <Link
+                        key={item.label}
+                        href={item.href}
+                        className={`flex items-center gap-2 rounded-md px-3 py-2 text-lg lowercase transition-colors hover:bg-muted ${
+                          pathname === item.href
+                            ? "font-semibold text-foreground bg-muted"
+                            : "text-muted-foreground hover:text-foreground"
+                        }`}
+                        onClick={() => {
+                          setIsMenuOpen(false)
+                          trackNavigation(item.label, item.href)
+                        }}
+                      >
+                        <span className="text-xl">{item.emoji}</span>
+                        <span>{item.label}</span>
+                      </Link>
+                    ))}
+                  </nav>
+                </div>
+              )}
+            </>
+          ) : (
+            <nav className="flex items-center gap-6">
+              {navItems.map((item) => (
+                <Link
+                  key={item.label}
+                  href={item.href}
+                  className={`flex items-center gap-1 text-sm font-medium lowercase transition-colors hover:text-primary ${
+                    pathname === item.href ? "text-primary" : "text-muted-foreground"
+                  }`}
+                  onClick={() => trackNavigation(item.label, item.href)}
+                >
+                  <span className="text-base">{item.emoji}</span>
+                  <span>{item.label}</span>
+                </Link>
+              ))}
+            </nav>
+          ) }
         </div>
       </div>
     </header>
