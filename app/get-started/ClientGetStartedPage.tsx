@@ -50,6 +50,8 @@ export default function ClientGetStartedPage() {
   const [shouldLoadVideo, setShouldLoadVideo] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
+  const [showStickyCTA, setShowStickyCTA] = useState(false)
+  const [showStep1Errors, setShowStep1Errors] = useState(false)
   const [formData, setFormData] = useState<FormData>({
     name: '',
     email: '',
@@ -95,6 +97,8 @@ export default function ClientGetStartedPage() {
   const isMobile = useMobile()
   const videoRef = useRef<HTMLDivElement>(null)
   const formSectionRef = useRef<HTMLDivElement>(null)
+  const nameInputRef = useRef<HTMLInputElement>(null)
+  const growthChallengeRef = useRef<HTMLTextAreaElement>(null)
 
   const scrollToForm = () => {
     formSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
@@ -131,7 +135,80 @@ export default function ClientGetStartedPage() {
       ...prev,
       [name]: value
     }))
+    if (showStep1Errors) {
+      // Re-validate on change if we are showing errors
+      validateStep1()
+    }
   }
+
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+  const urlRegex = /^(https?:\/\/)?([\w-]+\.)+[\w-]+(\/[^\s]*)?$/i
+  const [step1Errors, setStep1Errors] = useState<Partial<Record<keyof FormData, string>>>({})
+
+  const isStep1Valid = () => {
+    return (
+      formData.name.trim().length > 1 &&
+      emailRegex.test(formData.email.trim()) &&
+      formData.company.trim().length > 1 &&
+      urlRegex.test(formData.website.trim()) &&
+      !!formData.primaryGoal &&
+      !!formData.timeline &&
+      !!formData.budgetRange
+    )
+  }
+
+  const validateStep1 = () => {
+    const errors: Partial<Record<keyof FormData, string>> = {}
+    if (formData.name.trim().length <= 1) errors.name = 'Please enter your full name.'
+    if (!emailRegex.test(formData.email.trim())) errors.email = 'Enter a valid email address.'
+    if (formData.company.trim().length <= 1) errors.company = 'Enter your company name.'
+    if (!urlRegex.test(formData.website.trim())) errors.website = 'Enter a valid website URL.'
+    if (!formData.primaryGoal) errors.primaryGoal = 'Select a primary goal.'
+    if (!formData.timeline) errors.timeline = 'Select a timeline.'
+    if (!formData.budgetRange) errors.budgetRange = 'Select a budget range.'
+    setStep1Errors(errors)
+    return Object.keys(errors).length === 0
+  }
+
+  // Persist form progress locally (mobile-friendly safety)
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem('prism_get_started_form')
+      if (saved) {
+        const parsed = JSON.parse(saved) as Partial<FormData>
+        setFormData(prev => ({ ...prev, ...parsed }))
+      }
+    } catch {}
+    // Focus first field for convenience
+    setTimeout(() => nameInputRef.current?.focus(), 300)
+  }, [])
+
+  useEffect(() => {
+    const id = setTimeout(() => {
+      try {
+        localStorage.setItem('prism_get_started_form', JSON.stringify(formData))
+      } catch {}
+    }, 300)
+    return () => clearTimeout(id)
+  }, [formData])
+
+  // Sticky CTA visibility: show when the form is not visible, only on mobile, and no input is focused
+  useEffect(() => {
+    if (!isMobile) return
+    if (!formSectionRef.current) return
+    const formEl = formSectionRef.current
+    const observer = new IntersectionObserver(
+      entries => {
+        const entry = entries[0]
+        const activeTag = document.activeElement?.tagName.toLowerCase()
+        const keyboardLikelyOpen = activeTag === 'input' || activeTag === 'textarea' || activeTag === 'select'
+        setShowStickyCTA(!entry.isIntersecting && !keyboardLikelyOpen)
+      },
+      { threshold: 0.1 }
+    )
+    observer.observe(formEl)
+    return () => observer.disconnect()
+  }, [isMobile])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -179,6 +256,7 @@ export default function ClientGetStartedPage() {
           whyPartnerWithPrism: '',
           anythingElse: ''
         })
+        try { localStorage.removeItem('prism_get_started_form') } catch {}
       }, 2000)
     } catch (error) {
       console.error('Error submitting form:', error)
@@ -462,6 +540,7 @@ export default function ClientGetStartedPage() {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -20 }}
                     className="text-center py-12"
+                    role="status" aria-live="polite"
                     style={{ willChange: 'transform, opacity' }}
                   >
                     <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-green-50 mb-6">
@@ -490,64 +569,80 @@ export default function ClientGetStartedPage() {
                         className="space-y-6 bg-white rounded-xl p-6 border border-neutral-100"
                         onSubmit={(e) => {
                           e.preventDefault()
-                          // Basic validation for required Step 1 fields
-                          if (!formData.name || !formData.email || !formData.company || !formData.website || !formData.primaryGoal || !formData.timeline || !formData.budgetRange) {
-                            alert('Please complete all fields to continue.')
+                          setShowStep1Errors(true)
+                          const valid = validateStep1()
+                          if (!valid) {
+                            // focus first invalid field
+                            if (step1Errors.name) nameInputRef.current?.focus()
+                            else if (step1Errors.email) document.getElementById('email')?.focus()
+                            else if (step1Errors.company) document.getElementById('company')?.focus()
+                            else if (step1Errors.website) document.getElementById('website')?.focus()
+                            else if (step1Errors.primaryGoal) document.getElementsByName('primaryGoal')[0]?.focus()
+                            else if (step1Errors.timeline) document.getElementsByName('timeline')[0]?.focus()
+                            else if (step1Errors.budgetRange) document.getElementsByName('budgetRange')[0]?.focus()
                             return
                           }
                           setCurrentStep(2)
+                          setTimeout(() => growthChallengeRef.current?.focus(), 100)
                           formSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
                         }}
                       >
                         <div className="grid gap-6">
                           <div>
                             <label htmlFor="name" className="block text-sm font-medium text-neutral-700 mb-2">Your name</label>
-                            <Input id="name" name="name" type="text" required value={formData.name} onChange={handleInputChange} className="w-full h-11 text-base border-neutral-200 focus:border-neutral-900 focus:ring-0" placeholder="John Doe" />
+                            <Input id="name" name="name" type="text" autoComplete="name" ref={nameInputRef} required value={formData.name} onChange={handleInputChange} className="w-full h-11 text-base border-neutral-200 focus:border-neutral-900 focus:ring-0" placeholder="John Doe" aria-invalid={!!step1Errors.name} />
+                            {showStep1Errors && step1Errors.name && <p className="mt-1 text-sm text-red-600">{step1Errors.name}</p>}
                           </div>
                           <div>
                             <label htmlFor="email" className="block text-sm font-medium text-neutral-700 mb-2">Email</label>
-                            <Input id="email" name="email" type="email" required value={formData.email} onChange={handleInputChange} className="w-full h-11 text-base border-neutral-200 focus:border-neutral-900 focus:ring-0" placeholder="john@company.com" />
+                            <Input id="email" name="email" type="email" autoComplete="email" inputMode="email" required value={formData.email} onChange={handleInputChange} className="w-full h-11 text-base border-neutral-200 focus:border-neutral-900 focus:ring-0" placeholder="john@company.com" aria-invalid={!!step1Errors.email} />
+                            {showStep1Errors && step1Errors.email && <p className="mt-1 text-sm text-red-600">{step1Errors.email}</p>}
                           </div>
                           <div>
                             <label htmlFor="company" className="block text-sm font-medium text-neutral-700 mb-2">Company</label>
-                            <Input id="company" name="company" type="text" required value={formData.company} onChange={handleInputChange} className="w-full h-11 text-base border-neutral-200 focus:border-neutral-900 focus:ring-0" placeholder="Acme Inc." />
+                            <Input id="company" name="company" type="text" autoComplete="organization" required value={formData.company} onChange={handleInputChange} className="w-full h-11 text-base border-neutral-200 focus:border-neutral-900 focus:ring-0" placeholder="Acme Inc." aria-invalid={!!step1Errors.company} />
+                            {showStep1Errors && step1Errors.company && <p className="mt-1 text-sm text-red-600">{step1Errors.company}</p>}
                           </div>
                           <div>
                             <label htmlFor="website" className="block text-sm font-medium text-neutral-700 mb-2">Website (URL)</label>
-                            <Input id="website" name="website" type="url" required value={formData.website} onChange={handleInputChange} className="w-full h-11 text-base border-neutral-200 focus:border-neutral-900 focus:ring-0" placeholder="https://example.com" />
+                            <Input id="website" name="website" type="url" autoComplete="url" inputMode="url" required value={formData.website} onChange={handleInputChange} className="w-full h-11 text-base border-neutral-200 focus:border-neutral-900 focus:ring-0" placeholder="https://example.com" aria-invalid={!!step1Errors.website} />
+                            {showStep1Errors && step1Errors.website && <p className="mt-1 text-sm text-red-600">{step1Errors.website}</p>}
                           </div>
                           <div>
                             <label className="block text-sm font-medium text-neutral-700 mb-2">Primary goal</label>
-                            <select name="primaryGoal" value={formData.primaryGoal} onChange={handleInputChange} required className="w-full h-11 rounded-md border border-neutral-200 bg-white px-3 text-base focus:border-neutral-900 focus:outline-none focus:ring-0">
+                            <select name="primaryGoal" value={formData.primaryGoal} onChange={handleInputChange} required className="w-full h-11 rounded-md border border-neutral-200 bg-white px-3 text-base focus:border-neutral-900 focus:outline-none focus:ring-0" aria-invalid={!!step1Errors.primaryGoal}>
                               <option value="" disabled>Select one</option>
                               <option>More qualified leads</option>
                               <option>Higher conversion</option>
                               <option>Lift LTV</option>
                               <option>Full rebuild</option>
                             </select>
+                            {showStep1Errors && step1Errors.primaryGoal && <p className="mt-1 text-sm text-red-600">{step1Errors.primaryGoal}</p>}
                           </div>
                           <div>
                             <label className="block text-sm font-medium text-neutral-700 mb-2">Timeline</label>
-                            <select name="timeline" value={formData.timeline} onChange={handleInputChange} required className="w-full h-11 rounded-md border border-neutral-200 bg-white px-3 text-base focus:border-neutral-900 focus:outline-none focus:ring-0">
+                            <select name="timeline" value={formData.timeline} onChange={handleInputChange} required className="w-full h-11 rounded-md border border-neutral-200 bg-white px-3 text-base focus:border-neutral-900 focus:outline-none focus:ring-0" aria-invalid={!!step1Errors.timeline}>
                               <option value="" disabled>Select one</option>
                               <option>ASAP</option>
                               <option>30–60 days</option>
                               <option>60–90 days</option>
                               <option>Exploring</option>
                             </select>
+                            {showStep1Errors && step1Errors.timeline && <p className="mt-1 text-sm text-red-600">{step1Errors.timeline}</p>}
                           </div>
                           <div>
                             <label className="block text-sm font-medium text-neutral-700 mb-2">Budget range</label>
-                            <select name="budgetRange" value={formData.budgetRange} onChange={handleInputChange} required className="w-full h-11 rounded-md border border-neutral-200 bg-white px-3 text-base focus:border-neutral-900 focus:outline-none focus:ring-0">
+                            <select name="budgetRange" value={formData.budgetRange} onChange={handleInputChange} required className="w-full h-11 rounded-md border border-neutral-200 bg-white px-3 text-base focus:border-neutral-900 focus:outline-none focus:ring-0" aria-invalid={!!step1Errors.budgetRange}>
                               <option value="" disabled>Select one</option>
                               <option>Starter</option>
                               <option>Growth</option>
                               <option>Scale</option>
                             </select>
+                            {showStep1Errors && step1Errors.budgetRange && <p className="mt-1 text-sm text-red-600">{step1Errors.budgetRange}</p>}
                           </div>
                         </div>
                         <div className="pt-2">
-                          <Button type="submit" className="w-full h-12 bg-neutral-900 hover:bg-neutral-800 text-white font-medium rounded-md transition-colors">
+                          <Button type="submit" disabled={!isStep1Valid()} className="w-full h-12 bg-neutral-900 hover:bg-neutral-800 disabled:bg-neutral-300 disabled:cursor-not-allowed text-white font-medium rounded-md transition-colors">
                             Submit & continue
                             <ArrowRight className="ml-2 h-4 w-4" />
                           </Button>
@@ -558,7 +653,7 @@ export default function ClientGetStartedPage() {
                       <form onSubmit={handleSubmit} className="space-y-6 bg-white rounded-xl p-6 border border-neutral-100">
                         <div>
                           <label htmlFor="growthChallenge" className="block text-sm font-medium text-neutral-700 mb-2">Your biggest growth challenge (short paragraph)</label>
-                          <textarea id="growthChallenge" name="growthChallenge" value={formData.growthChallenge} onChange={handleInputChange} rows={4} className="w-full rounded-md border border-neutral-200 bg-white px-3 py-2 text-base placeholder:text-neutral-400 focus:border-neutral-900 focus:outline-none focus:ring-0 transition-colors" placeholder="Where does the funnel leak today?" />
+                          <textarea id="growthChallenge" name="growthChallenge" ref={growthChallengeRef} value={formData.growthChallenge} onChange={handleInputChange} rows={4} className="w-full rounded-md border border-neutral-200 bg-white px-3 py-2 text-base placeholder:text-neutral-400 focus:border-neutral-900 focus:outline-none focus:ring-0 transition-colors" placeholder="Where does the funnel leak today?" />
                         </div>
                         <div>
                           <label htmlFor="whyPartnerWithPrism" className="block text-sm font-medium text-neutral-700 mb-2">What excites you about partnering with Prism?</label>
@@ -670,6 +765,17 @@ export default function ClientGetStartedPage() {
           </div>
         </section>
       </main>
+      {/* Sticky mobile CTA */}
+      {isMobile && showStickyCTA && submitStatus !== 'success' && (
+        <div className="fixed bottom-0 left-0 right-0 z-30 sm:hidden">
+          <div className="mx-4 mb-4 rounded-full shadow-lg border border-neutral-200 bg-white p-2 pb-[env(safe-area-inset-bottom)]">
+            <Button onClick={scrollToForm} className="w-full h-12 rounded-full bg-neutral-900 hover:bg-neutral-800 text-white">
+              Apply now
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </Button>
+          </div>
+        </div>
+      )}
       <Footer />
     </div>
   )
