@@ -63,9 +63,6 @@ export default function AnimatedBlogWrapper({ children, className = "" }: Animat
       animate="animate"
       variants={staggerContainer}
     >
-      {!isMounted ? (
-        <div className="relative z-10">{children}</div>
-      ) : (
       {/* Floating background elements */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         <motion.div
@@ -118,7 +115,6 @@ export default function AnimatedBlogWrapper({ children, className = "" }: Animat
       >
         {children}
       </motion.div>
-      )}
     </motion.div>
   )
 }
