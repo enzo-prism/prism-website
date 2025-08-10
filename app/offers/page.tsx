@@ -1,9 +1,8 @@
+import Footer from "@/components/footer";
+import Navbar from "@/components/navbar";
 import ScrollToTop from "@/components/scroll-to-top"; // Assuming you have this component
 import type { Metadata } from "next";
-import dynamic from "next/dynamic";
 import OffersClientPage from "./client-page";
-const Footer = dynamic(() => import("@/components/footer"), { ssr: false });
-const Navbar = dynamic(() => import("@/components/navbar"), { ssr: false });
 
 export const metadata: Metadata = {
   title: "Current Offers",

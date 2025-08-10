@@ -1,12 +1,11 @@
+import Footer from "@/components/footer"
 import MinimalAppsList from "@/components/minimal-apps-list"
+import Navbar from "@/components/navbar"
 import PageViewTracker from "@/components/page-view-tracker"
 import ScrollProgressBar from "@/components/scroll-progress-bar"
 import { Button } from "@/components/ui/button"
 import type { Metadata } from "next"
-import dynamic from "next/dynamic"
 import Link from "next/link"
-const Navbar = dynamic(() => import("@/components/navbar"), { ssr: false })
-const Footer = dynamic(() => import("@/components/footer"), { ssr: false })
 
 export const metadata: Metadata = {
   title: "mobile app development portfolio & services | prism",

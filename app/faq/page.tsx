@@ -1,8 +1,7 @@
+import Footer from "@/components/footer"
+import Navbar from "@/components/navbar"
 import { FAQSchema } from "@/components/schema-markup"
 import type { Metadata } from "next"
-import dynamic from "next/dynamic"
-const Footer = dynamic(() => import("@/components/footer"), { ssr: false })
-const Navbar = dynamic(() => import("@/components/navbar"), { ssr: false })
 
 export const metadata: Metadata = {
   title: "Frequently Asked Questions - Prism Agency",

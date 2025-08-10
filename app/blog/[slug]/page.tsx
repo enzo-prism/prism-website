@@ -1,8 +1,7 @@
+import BlogPostLayout from '@/components/blog-post-layout'
 import { getAllPosts, getPost, renderPost } from '@/lib/mdx'
 import type { Metadata } from 'next'
-import dynamic from 'next/dynamic'
 import { notFound } from 'next/navigation'
-const BlogPostLayout = dynamic(() => import('@/components/blog-post-layout'), { ssr: false })
 
 interface PageProps { params: Promise<{ slug: string }> }
 

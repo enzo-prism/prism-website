@@ -1,9 +1,8 @@
 import Footer from "@/components/footer"
+import Navbar from "@/components/navbar"
 import { Button } from "@/components/ui/button"
 import { ArrowLeft } from "lucide-react"
-import dynamic from "next/dynamic"
 import Link from "next/link"
-const Navbar = dynamic(() => import("@/components/navbar"), { ssr: false })
 
 export default function NotFound() {
   return (
