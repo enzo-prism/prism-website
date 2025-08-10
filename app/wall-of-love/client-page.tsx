@@ -1,13 +1,7 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import {
-    Carousel,
-    CarouselContent,
-    CarouselItem,
-    CarouselNext,
-    CarouselPrevious,
-} from "@/components/ui/carousel"
+import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel"
 import { useMobileAnimations } from "@/hooks/use-mobile-animations"
 import { mobileScrollReveal } from "@/utils/animation-variants"
 import { motion, type UseInViewOptions } from "framer-motion"
@@ -620,18 +614,18 @@ const TakeawayCard = ({ item }: { item: Takeaway }) => {
       whileInView="visible"
       viewport={{ amount: 0.2, once: true }}
       transition={{ duration: 0.25, ease: "easeOut" }}
-      className="bg-white p-5 sm:p-6 rounded-2xl w-full border border-neutral-200/70 shadow-[0_1px_2px_rgba(0,0,0,0.04)] overflow-hidden"
+      className="bg-neutral-50 p-4 sm:p-5 rounded-xl w-full border border-neutral-200 overflow-hidden"
       aria-label={`Viewer takeaway from @${item.handle}`}
     >
-      <p className="text-[15px] sm:text-base text-neutral-700 leading-relaxed tracking-tight">&ldquo;{item.text}&rdquo;</p>
-      <footer className="mt-4 flex items-center justify-end gap-2 text-right">
+      <p className="text-[15px] sm:text-base text-neutral-800 leading-relaxed tracking-tight">&ldquo;{item.text}&rdquo;</p>
+      <footer className="mt-3 flex items-center justify-end gap-2 text-right">
         <div className="flex items-center gap-2">
-          <p className="font-semibold text-sm sm:text-base text-neutral-900">@{item.handle}</p>
+          <p className="font-medium text-sm sm:text-[15px] text-neutral-900">@{item.handle}</p>
           <span className="text-neutral-300">•</span>
           <p className="text-xs sm:text-sm text-neutral-500">Instagram Community of Entrepreneurs</p>
-          <Button size="sm" variant="outline" className="rounded-full" onClick={onCopy} aria-label="Copy DM template">
+          <button onClick={onCopy} aria-label="Copy message" className="rounded-full border border-neutral-300 px-3 py-1.5 text-xs text-neutral-700 hover:bg-neutral-100 transition-colors">
             {copied ? "copied" : "copy message"}
-          </Button>
+          </button>
         </div>
       </footer>
     </motion.blockquote>
@@ -697,12 +691,12 @@ const TestimonialCard = ({ quote, viewport }: { quote: Quote; viewport: UseInVie
       }}
       aria-label={`Testimonial from ${quote.client}`}
     >
-      <p className="text-[15px] sm:text-base text-neutral-700 leading-relaxed tracking-tight">
+      <p className="text-[15px] sm:text-base text-neutral-800 leading-relaxed tracking-tight">
         &ldquo;{renderFormattedText(quote.text)}&rdquo;
       </p>
-      <footer className="mt-4 flex items-center justify-end gap-2 text-right">
+      <footer className="mt-3 flex items-center justify-end gap-2 text-right">
         <div className="flex items-center gap-2">
-        <p className="font-semibold text-sm sm:text-base text-neutral-900">{quote.client}</p>
+        <p className="font-medium text-sm sm:text-[15px] text-neutral-900">{quote.client}</p>
         <span className="text-neutral-300">•</span>
         <p className="text-xs sm:text-sm text-neutral-500">{quote.company}</p>
         </div>
@@ -786,28 +780,20 @@ export default function WallOfLoveClientPage() {
 
   return (
     <>
-      <section className="relative w-full py-16 md:py-24 lg:py-32 bg-white overflow-x-hidden">
-        <div className="pointer-events-none absolute inset-0 -z-10 hidden sm:block [mask-image:radial-gradient(ellipse_at_center,black,transparent_70%)]">
-          <div className="absolute left-1/2 top-1/2 h-[60vh] w-[90vw] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle_at_center,rgba(0,0,0,0.06),transparent_60%)]" />
-        </div>
-        <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="max-w-2xl mx-auto space-y-6">
-            <div className="text-5xl mb-4">❤️</div>
-            <h1 className="text-4xl sm:text-5xl font-bold tracking-tight lowercase sm:text-6xl md:text-7xl text-neutral-900 break-words">
-              wall of love
-            </h1>
-            <div className="text-base sm:text-lg text-neutral-600 md:text-xl lowercase max-w-lg mx-auto space-y-1">
-              <p>38.5k+ followers on instagram</p>
-              <p>24.5k+ subscribers on youtube</p>
+      <section className="relative w-full py-10 sm:py-12 bg-white">
+        <div className="w-full max-w-[720px] mx-auto px-4 text-center">
+          <div className="space-y-3">
+            <div className="text-4xl">❤️</div>
+            <h1 className="text-[32px] sm:text-[40px] font-semibold tracking-tight lowercase text-neutral-900">wall of love</h1>
+            <div className="text-[13px] sm:text-[14px] text-neutral-600 lowercase flex items-center justify-center gap-3">
+              <span>38.5k+ on instagram</span>
+              <span className="text-neutral-300">•</span>
+              <span>24.5k+ on youtube</span>
             </div>
-            <div className="pt-2">
+            <div className="pt-1">
               <Link href="/get-started">
-                <Button
-                  size="lg"
-                  className="bg-neutral-900 hover:bg-neutral-800 text-white rounded-full px-6 sm:px-10 py-5 sm:py-7 text-base sm:text-lg lowercase shadow-md w-auto"
-                  aria-label="Hire Prism"
-                >
-                  hire prism <ArrowRight className="ml-2 h-4 sm:h-5 w-4 sm:w-5" />
+                <Button size="sm" className="bg-neutral-900 hover:bg-neutral-800 text-white rounded-full px-5 py-2.5 text-sm lowercase" aria-label="Hire Prism">
+                  hire prism <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
               </Link>
             </div>
@@ -817,52 +803,44 @@ export default function WallOfLoveClientPage() {
 
       {/* Featured pinned comments carousel */}
       <section className="bg-neutral-50 border-t border-neutral-100">
-        <div className="w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-12">
-          <h2 className="text-xl sm:text-2xl font-semibold text-neutral-900 mb-4">what people are saying</h2>
-          <Carousel className="relative">
+        <div className="w-full max-w-[720px] mx-auto px-4 py-6 sm:py-8">
+          <h2 className="text-[15px] sm:text-[16px] font-medium text-neutral-900 mb-3">what people are saying</h2>
+          <Carousel>
             <CarouselContent>
               {quotesData.filter(q => q.pinned).map((quote) => (
-                <CarouselItem key={`pinned-${quote.id}`} className="basis-full sm:basis-1/2 lg:basis-1/3">
-                  <div className="pr-4">
-                    <TestimonialCard quote={quote} viewport={{ amount: 0.2, once: true }} />
-                  </div>
+                <CarouselItem key={`pinned-${quote.id}`} className="basis-full">
+                  <TestimonialCard quote={quote} viewport={{ amount: 0.2, once: true }} />
                 </CarouselItem>
               ))}
             </CarouselContent>
-            <CarouselPrevious className="hidden sm:flex" />
-            <CarouselNext className="hidden sm:flex" />
           </Carousel>
         </div>
       </section>
 
       {/* Viewer takeaways carousel */}
       <section className="bg-neutral-50 border-t border-neutral-100">
-        <div className="w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pb-4 sm:pb-6">
-          <h2 className="text-xl sm:text-2xl font-semibold text-neutral-900 mb-4">viewer takeaways</h2>
-          <Carousel className="relative">
+        <div className="w-full max-w-[720px] mx-auto px-4 pb-4 sm:pb-6">
+          <h2 className="text-[15px] sm:text-[16px] font-medium text-neutral-900 mb-3">viewer takeaways</h2>
+          <Carousel>
             <CarouselContent>
               {takeawaysData.filter(t => t.pinned).map((item) => (
-                <CarouselItem key={`takeaway-pinned-${item.id}`} className="basis-full sm:basis-1/2 lg:basis-1/3">
-                  <div className="pr-4">
-                    <TakeawayCard item={item} />
-                  </div>
+                <CarouselItem key={`takeaway-pinned-${item.id}`} className="basis-full">
+                  <TakeawayCard item={item} />
                 </CarouselItem>
               ))}
             </CarouselContent>
-            <CarouselPrevious className="hidden sm:flex" />
-            <CarouselNext className="hidden sm:flex" />
           </Carousel>
         </div>
       </section>
 
-      <div className="bg-neutral-50 optimize-scrolling overflow-x-hidden">
-        <main className="w-full max-w-2xl mx-auto px-4 py-12 sm:px-6 lg:px-8 sm:py-16">
-          <div className="testimonial-container space-y-6 sm:space-y-8" style={{ transform: "translateZ(0)" }}>
+      <div className="bg-neutral-50">
+        <main className="w-full max-w-[720px] mx-auto px-4 py-8 sm:py-10">
+          <div className="space-y-4 sm:space-y-5" style={{ transform: "translateZ(0)" }}>
             {unpinnedQuotes.slice(0, visibleCount).map((quote) => (
               <TestimonialCard key={quote.id} quote={quote} viewport={viewport} />
             ))}
             {/* Non-pinned takeaways list below testimonials */}
-            <div className="space-y-6 sm:space-y-8 pt-8">
+            <div className="space-y-4 sm:space-y-5 pt-6">
               {takeawaysData.filter(t => !t.pinned).slice(0, 18).map((item) => (
                 <TakeawayCard key={`takeaway-${item.id}`} item={item} />
               ))}
@@ -870,15 +848,8 @@ export default function WallOfLoveClientPage() {
           </div>
           
           {visibleCount < totalUnpinned && (
-            <div
-              ref={loadMoreRef}
-              className="h-20 flex items-center justify-center mt-8"
-              aria-live="polite"
-            >
-              <div className="flex items-center space-x-2 text-neutral-500">
-                <div className="w-5 h-5 border-2 border-neutral-300 border-t-neutral-600 rounded-full animate-spin" />
-                <span className="text-sm sm:text-base">Loading more testimonials...</span>
-              </div>
+            <div ref={loadMoreRef} className="h-12 flex items-center justify-center mt-6" aria-live="polite">
+              <div className="w-4 h-4 border-2 border-neutral-300 border-t-neutral-600 rounded-full animate-spin" />
             </div>
           )}
         </main>
