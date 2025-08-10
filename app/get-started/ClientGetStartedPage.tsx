@@ -125,7 +125,7 @@ export default function ClientGetStartedPage() {
     return () => observer.disconnect()
   }, [shouldLoadVideo])
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target
     setFormData(prev => ({
       ...prev,
@@ -172,8 +172,12 @@ export default function ClientGetStartedPage() {
           email: '',
           company: '',
           website: '',
+          primaryGoal: '',
+          timeline: '',
+          budgetRange: '',
           growthChallenge: '',
-          whyPartnerWithPrism: ''
+          whyPartnerWithPrism: '',
+          anythingElse: ''
         })
       }, 2000)
     } catch (error) {
