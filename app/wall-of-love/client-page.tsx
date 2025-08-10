@@ -624,18 +624,13 @@ const TakeawayCard = ({ item }: { item: Takeaway }) => {
       aria-label={`Viewer takeaway from @${item.handle}`}
     >
       <p className="text-[15px] sm:text-base text-neutral-700 leading-relaxed tracking-tight">&ldquo;{item.text}&rdquo;</p>
-      <footer className="mt-4 flex items-center justify-between gap-2">
-        <div className="flex items-center gap-2 text-right">
-          {item.requiresConsent && (
-            <span className="inline-flex items-center rounded-full bg-amber-100 text-amber-800 px-2 py-0.5 text-xs">consent requested</span>
-          )}
-        </div>
-        <div className="ml-auto flex items-center gap-2 text-right">
+      <footer className="mt-4 flex items-center justify-end gap-2 text-right">
+        <div className="flex items-center gap-2">
           <p className="font-semibold text-sm sm:text-base text-neutral-900">@{item.handle}</p>
           <span className="text-neutral-300">•</span>
           <p className="text-xs sm:text-sm text-neutral-500">Instagram Community of Entrepreneurs</p>
           <Button size="sm" variant="outline" className="rounded-full" onClick={onCopy} aria-label="Copy DM template">
-            {item.requiresConsent ? (copied ? "copied" : "copy consent DM") : (copied ? "copied" : "copy reply")}
+            {copied ? "copied" : "copy message"}
           </Button>
         </div>
       </footer>
@@ -705,13 +700,8 @@ const TestimonialCard = ({ quote, viewport }: { quote: Quote; viewport: UseInVie
       <p className="text-[15px] sm:text-base text-neutral-700 leading-relaxed tracking-tight">
         &ldquo;{renderFormattedText(quote.text)}&rdquo;
       </p>
-      <footer className="mt-4 flex items-center justify-between gap-2">
-        {quote.requiresConsent && (
-          <span className="inline-flex items-center rounded-full bg-amber-100 text-amber-800 px-2 py-0.5 text-xs">
-            consent requested
-          </span>
-        )}
-        <div className="ml-auto flex items-center gap-2 text-right">
+      <footer className="mt-4 flex items-center justify-end gap-2 text-right">
+        <div className="flex items-center gap-2">
         <p className="font-semibold text-sm sm:text-base text-neutral-900">{quote.client}</p>
         <span className="text-neutral-300">•</span>
         <p className="text-xs sm:text-sm text-neutral-500">{quote.company}</p>
