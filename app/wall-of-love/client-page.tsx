@@ -1,18 +1,27 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
+import {
+    Carousel,
+    CarouselContent,
+    CarouselItem,
+    CarouselNext,
+    CarouselPrevious,
+} from "@/components/ui/carousel"
 import { useMobileAnimations } from "@/hooks/use-mobile-animations"
 import { mobileScrollReveal } from "@/utils/animation-variants"
 import { motion, type UseInViewOptions } from "framer-motion"
 import { ArrowRight } from "lucide-react"
 import Link from "next/link"
-import { useCallback, useEffect, useRef, useState } from "react"
+import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 
 interface Quote {
   id: number
   text: string
   client: string
   company: string
+  pinned?: boolean
+  requiresConsent?: boolean
 }
 
 const quotesData: Quote[] = [
@@ -263,6 +272,8 @@ const quotesData: Quote[] = [
     text: "This is one of the best videos I've ever watched. It's exactly what I always do when the doubts come to my head, I close my eyes and visualise the dream life I'm fighting for, refuel and go again",
     client: "sorin.7_",
     company: "Instagram Community of Entrepreneurs",
+    pinned: true,
+    requiresConsent: true,
   },
   {
     id: 45,
@@ -281,12 +292,15 @@ const quotesData: Quote[] = [
     text: "I'm here!!! It hits hard!!! Thank youuu",
     client: "ko_phy7",
     company: "Instagram Community of Entrepreneurs",
+    pinned: true,
   },
   {
     id: 48,
     text: "It's 3am now and I was talking to myself. This its hard rn. I needed this",
     client: "yann.ng14",
     company: "Instagram Community of Entrepreneurs",
+    pinned: true,
+    requiresConsent: true,
   },
   {
     id: 49,
@@ -347,6 +361,7 @@ const quotesData: Quote[] = [
     text: "Might be the realest and best piece of content I've seen in the last 5 years.",
     client: "helder_movement",
     company: "Instagram Community of Entrepreneurs",
+    pinned: true,
   },
   {
     id: 59,
@@ -377,6 +392,7 @@ const quotesData: Quote[] = [
     text: "Been exactly here hundreds of times. Preach.",
     client: "michaelrrcurtis",
     company: "Instagram Community of Entrepreneurs",
+    pinned: true,
   },
   {
     id: 64,
@@ -455,13 +471,46 @@ const quotesData: Quote[] = [
     text: "this video is life changing",
     client: "andriiikoo",
     company: "Instagram Community of Entrepreneurs",
+    pinned: true,
   },
   {
     id: 77,
-    text: "literally listen to this every monday night ❤️",
-    client: "mr. mazamio",
+    text: "Literally listen to this every Monday night ❤️",
+    client: "mr.mazamio",
     company: "Instagram Community of Entrepreneurs",
+    pinned: true,
   },
+  // Newly added from Instagram thread (deduped where already present)
+  { id: 78, text: "I watch this one almost everyday now. It’s just sooo good 😭", client: "_dev_khant", company: "Instagram Community of Entrepreneurs", pinned: true },
+  { id: 79, text: "Like this comment to help remind me I need to hear this !!!", client: "nickverne7", company: "Instagram Community of Entrepreneurs" },
+  { id: 80, text: "Felt it when he said ‘you make the logical decision instead of the emotional one’", client: "kenneththelim", company: "Instagram Community of Entrepreneurs" },
+  { id: 81, text: "Empowerment mode activated 💪✨", client: "hichamechetby", company: "Instagram Community of Entrepreneurs" },
+  { id: 82, text: "This is everything…I have always been my own cheerleader… Thank you", client: "juliastreasuresstore", company: "Instagram Community of Entrepreneurs" },
+  { id: 83, text: "By far the best monolog for small business owner’s. Thank you Pat everyone who wants to win needs to hear this. The start up owner now knows we have all been there.", client: "macmacguff", company: "Instagram Community of Entrepreneurs", requiresConsent: true },
+  { id: 84, text: "I have a big decision ahead of me, I have my college classes orientation tomorrow… do I wait… or do I tell them now that I don’t want to go to college", client: "whatifone_446", company: "Instagram Community of Entrepreneurs", pinned: true, requiresConsent: true },
+  { id: 85, text: "Bro described my exact situation sometimes it gets that bad I sit in the car for hours in silence stationary thinking", client: "louistizzy", company: "Instagram Community of Entrepreneurs" },
+  { id: 86, text: "Feelings into words couldn’t have been shot better than this video right here …..", client: "shuaib_khan", company: "Instagram Community of Entrepreneurs" },
+  { id: 87, text: "needed this", client: "fitnationmg", company: "Instagram Community of Entrepreneurs" },
+  { id: 88, text: "This is why I still have Instagram.", client: "notpharaoh_", company: "Instagram Community of Entrepreneurs" },
+  { id: 89, text: "Someone please like this, keep liking this so I can come back and watch it every single muthafuckin day. Thank you.", client: "himiam7", company: "Instagram Community of Entrepreneurs" },
+  { id: 90, text: "Fuck this hits home", client: "larsonbaldwinofficial", company: "Instagram Community of Entrepreneurs", pinned: true },
+  { id: 91, text: "Goosebumps….", client: "dishonshan", company: "Instagram Community of Entrepreneurs" },
+  { id: 92, text: "This came when I needed it.", client: "yasssirsaeed", company: "Instagram Community of Entrepreneurs" },
+  { id: 93, text: "Been there couple of times but never went to visualisation, made logical decision and I quit! After some months I feel if just hold onto it i would have achieved it🙌❤️", client: "rohan_kohter", company: "Instagram Community of Entrepreneurs", requiresConsent: true },
+  { id: 94, text: "My life right now 💀", client: "david__chinedu", company: "Instagram Community of Entrepreneurs" },
+  { id: 95, text: "Bro this is me", client: "mustapha.amajoud", company: "Instagram Community of Entrepreneurs" },
+  { id: 96, text: "Chills ran down my spine watching this, I know so well what he is talking about… Believe me it‘s worth it.", client: "etem_kalyon", company: "Instagram Community of Entrepreneurs", pinned: true },
+  { id: 97, text: "This one hits hard", client: "maciekmob", company: "Instagram Community of Entrepreneurs" },
+  { id: 98, text: "In the same exact situation rn, literally iin the car alone. driving.thinking", client: "journey_with_charlie", company: "Instagram Community of Entrepreneurs" },
+  { id: 99, text: "I really needed this", client: "onigbogiclassic", company: "Instagram Community of Entrepreneurs" },
+  { id: 100, text: "I can relate 💯", client: "ronaldthomson_", company: "Instagram Community of Entrepreneurs" },
+  { id: 101, text: "Perfect timing", client: "jordanlm08", company: "Instagram Community of Entrepreneurs" },
+  { id: 102, text: "Happened to me tonight. Pivotal moment", client: "sethbrower__", company: "Instagram Community of Entrepreneurs" },
+  { id: 103, text: "Been there. Epic video!", client: "keefe.carpenter", company: "Instagram Community of Entrepreneurs" },
+  { id: 104, text: "there is power in the words you say to yourself.", client: "birdsonaperch", company: "Instagram Community of Entrepreneurs" },
+  { id: 105, text: "Took an opportunity across country… Homeless for 5 months… I have a chance to go back home… But I can’t decide…", client: "isaiham", company: "Instagram Community of Entrepreneurs", pinned: true, requiresConsent: true },
+  { id: 106, text: "I’m in that moment right now.", client: "tobyolushola", company: "Instagram Community of Entrepreneurs" },
+  { id: 107, text: "Great find @the_design_prism 🔥", client: "t_bekian", company: "Instagram Community of Entrepreneurs" },
 ]
 
 const renderFormattedText = (text: string) => {
@@ -526,10 +575,17 @@ const TestimonialCard = ({ quote, viewport }: { quote: Quote; viewport: UseInVie
       <p className="text-[15px] sm:text-base text-neutral-700 leading-relaxed tracking-tight">
         &ldquo;{renderFormattedText(quote.text)}&rdquo;
       </p>
-      <footer className="mt-4 flex items-center justify-end gap-2 text-right">
+      <footer className="mt-4 flex items-center justify-between gap-2">
+        {quote.requiresConsent && (
+          <span className="inline-flex items-center rounded-full bg-amber-100 text-amber-800 px-2 py-0.5 text-xs">
+            consent requested
+          </span>
+        )}
+        <div className="ml-auto flex items-center gap-2 text-right">
         <p className="font-semibold text-sm sm:text-base text-neutral-900">{quote.client}</p>
         <span className="text-neutral-300">•</span>
         <p className="text-xs sm:text-sm text-neutral-500">{quote.company}</p>
+        </div>
       </footer>
     </motion.blockquote>
   )
@@ -551,16 +607,22 @@ export default function WallOfLoveClientPage() {
   const [isHydrated, setIsHydrated] = useState(false)
   const observerRef = useRef<IntersectionObserver | null>(null)
 
+  const unpinnedQuotes = useMemo(() => {
+    const base = isHydrated ? shuffledQuotes : quotesData
+    return base.filter((q) => !q.pinned)
+  }, [isHydrated, shuffledQuotes])
+  const totalUnpinned = unpinnedQuotes.length
+
   const observerCallback = useCallback((entries: IntersectionObserverEntry[]) => {
     entries.forEach((entry) => {
       const element = entry.target as HTMLElement
       
       // Handle load more detection
       if (element === loadMoreRef.current && entry.isIntersecting) {
-        setVisibleCount(prev => Math.min(prev + (isMobile ? 5 : 8), shuffledQuotes.length))
+        setVisibleCount(prev => Math.min(prev + (isMobile ? 5 : 8), totalUnpinned))
       }
     })
-  }, [isMobile, shuffledQuotes.length])
+  }, [isMobile, totalUnpinned])
 
   useEffect(() => {
     setIsHydrated(true)
@@ -633,15 +695,35 @@ export default function WallOfLoveClientPage() {
         </div>
       </section>
 
+      {/* Featured pinned comments carousel */}
+      <section className="bg-neutral-50 border-t border-neutral-100">
+        <div className="w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-12">
+          <h2 className="text-xl sm:text-2xl font-semibold text-neutral-900 mb-4">what people are saying</h2>
+          <Carousel className="relative">
+            <CarouselContent>
+              {quotesData.filter(q => q.pinned).map((quote) => (
+                <CarouselItem key={`pinned-${quote.id}`} className="basis-full sm:basis-1/2 lg:basis-1/3">
+                  <div className="pr-4">
+                    <TestimonialCard quote={quote} viewport={{ amount: 0.2, once: true }} />
+                  </div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious className="hidden sm:flex" />
+            <CarouselNext className="hidden sm:flex" />
+          </Carousel>
+        </div>
+      </section>
+
       <div className="bg-neutral-50 optimize-scrolling overflow-x-hidden">
         <main className="w-full max-w-2xl mx-auto px-4 py-12 sm:px-6 lg:px-8 sm:py-16">
           <div className="testimonial-container space-y-6 sm:space-y-8" style={{ transform: "translateZ(0)" }}>
-            {(!isHydrated ? quotesData.slice(0, visibleCount) : shuffledQuotes.slice(0, visibleCount)).map((quote) => (
+            {unpinnedQuotes.slice(0, visibleCount).map((quote) => (
               <TestimonialCard key={quote.id} quote={quote} viewport={viewport} />
             ))}
           </div>
           
-          {visibleCount < shuffledQuotes.length && (
+          {visibleCount < totalUnpinned && (
             <div
               ref={loadMoreRef}
               className="h-20 flex items-center justify-center mt-8"
