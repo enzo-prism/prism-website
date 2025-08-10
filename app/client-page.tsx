@@ -68,15 +68,22 @@ export default function ClientPage() {
   })
 
   // Calculate video scale based on viewport dimensions
+  // Avoid recalculating on mobile scroll-driven height changes which cause URL bar resize events
   useEffect(() => {
+    let lastWidth = window.innerWidth
+
     const calculateVideoScale = () => {
+      const currentWidth = window.innerWidth
+      // Ignore height-only resize events (mobile address bar show/hide)
+      if (isMobile && Math.abs(currentWidth - lastWidth) < 1) {
+        return
+      }
+
       // Video aspect ratio is 16:9
       const videoAspectRatio = 16 / 9
-      const viewportAspectRatio = window.innerWidth / window.innerHeight
-      
-      // Calculate the minimum scale needed to cover the viewport
+      const viewportAspectRatio = currentWidth / window.innerHeight
+
       let scale = 1
-      
       if (viewportAspectRatio < videoAspectRatio) {
         // Portrait orientation - scale based on width to fill height
         scale = videoAspectRatio / viewportAspectRatio
@@ -84,20 +91,25 @@ export default function ClientPage() {
         // Landscape orientation - scale based on height to fill width
         scale = viewportAspectRatio / videoAspectRatio
       }
-      
-      // Use minimal extra scale (5%) just to ensure no edge gaps
-      // For mobile, use even less extra scale
+
       const extraScale = isMobile ? 1.02 : 1.05
       setVideoScale(scale * extraScale)
+      lastWidth = currentWidth
     }
 
+    // Initial calc
     calculateVideoScale()
-    window.addEventListener('resize', calculateVideoScale)
-    window.addEventListener('orientationchange', calculateVideoScale)
-    
+
+    // On mobile, only recompute when width changes or orientation changes
+    const handleResize = () => calculateVideoScale()
+    const handleOrientation = () => calculateVideoScale()
+
+    window.addEventListener('resize', handleResize)
+    window.addEventListener('orientationchange', handleOrientation)
+
     return () => {
-      window.removeEventListener('resize', calculateVideoScale)
-      window.removeEventListener('orientationchange', calculateVideoScale)
+      window.removeEventListener('resize', handleResize)
+      window.removeEventListener('orientationchange', handleOrientation)
     }
   }, [isMobile])
 
@@ -221,7 +233,7 @@ export default function ClientPage() {
       <Navbar />
       <main className="flex-1">
         {/* Hero Section */}
-        <section ref={heroRef} className="hero-section relative min-h-[100vh] flex items-center justify-center overflow-hidden">
+        <section ref={heroRef} className="hero-section relative min-h-[100svh] flex items-center justify-center overflow-hidden">
           {/* Background video container with full coverage */}
           <div className="absolute inset-0 -z-20 gpu-layer">
             {/* Lightweight placeholder while video loads */}
