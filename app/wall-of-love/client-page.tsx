@@ -1,8 +1,7 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { mobileScrollReveal } from "@/utils/animation-variants"
-import { motion } from "framer-motion"
+// animations removed for a simpler, static page
 import { ArrowRight } from "lucide-react"
 import Link from "next/link"
 import { useState } from "react"
@@ -606,12 +605,7 @@ const TakeawayCard = ({ item }: { item: Takeaway }) => {
     }
   }
   return (
-    <motion.blockquote
-      variants={mobileScrollReveal}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ amount: 0.4, margin: "50px", once: true }}
-      transition={{ duration: 0.25, ease: "easeOut" }}
+    <blockquote
       className="bg-neutral-50 p-4 sm:p-5 rounded-xl w-full border border-neutral-200 overflow-hidden"
       aria-label={`Viewer takeaway from @${item.handle}`}
     >
@@ -626,7 +620,7 @@ const TakeawayCard = ({ item }: { item: Takeaway }) => {
           </button>
         </div>
       </footer>
-    </motion.blockquote>
+    </blockquote>
   )
 }
 
@@ -673,19 +667,8 @@ const shuffleArray = (array: Quote[]): Quote[] => {
 
 const TestimonialCard = ({ quote }: { quote: Quote }) => {
   return (
-    <motion.blockquote
-      variants={mobileScrollReveal}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ amount: 0.3, margin: "40px", once: true }}
-      transition={{ duration: 0.25, ease: "easeOut" }}
+    <blockquote
       className="bg-neutral-50 p-4 sm:p-5 rounded-xl w-full border border-neutral-200 overflow-hidden"
-      style={{
-        contain: "paint style",
-        willChange: "transform, opacity",
-        transform: "translateZ(0)",
-        WebkitTransform: "translateZ(0)",
-      }}
       aria-label={`Testimonial from ${quote.client}`}
     >
       <p className="text-[15px] sm:text-base text-neutral-800 leading-relaxed tracking-tight">
@@ -694,11 +677,11 @@ const TestimonialCard = ({ quote }: { quote: Quote }) => {
       <footer className="mt-3 flex items-center justify-end gap-2 text-right">
         <div className="flex items-center gap-2">
           <p className="font-medium text-sm sm:text-[15px] text-neutral-900">{quote.client}</p>
-          <span className="text-neutral-300">•</span>
-          <p className="text-xs sm:text-sm text-neutral-500">{quote.company}</p>
+        <span className="text-neutral-300">•</span>
+        <p className="text-xs sm:text-sm text-neutral-500">{quote.company}</p>
         </div>
       </footer>
-    </motion.blockquote>
+    </blockquote>
   )
 }
 
@@ -741,7 +724,7 @@ export default function WallOfLoveClientPage() {
               ))}
             </CarouselContent>
           </Carousel>
-        </div>
+          </div>
       </section>
 
       {/* Viewer takeaways carousel */}
@@ -757,7 +740,7 @@ export default function WallOfLoveClientPage() {
               ))}
             </CarouselContent>
           </Carousel>
-        </div>
+              </div>
       </section>
 
       <div className="bg-neutral-50">
