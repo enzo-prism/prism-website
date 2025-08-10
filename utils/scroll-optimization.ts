@@ -172,17 +172,20 @@ export function optimizeScrollPerformance(): void {
     lastScrollY = currentScrollY
 
     // Add appropriate classes based on scroll speed
-    if (!body.classList.contains("is-scrolling")) {
-      body.classList.add("is-scrolling")
-    }
+    // Avoid class churn on touch devices to reduce layout/paint thrash
+    if (!isTouchDevice()) {
+      if (!body.classList.contains("is-scrolling")) {
+        body.classList.add("is-scrolling")
+      }
 
-    // Add velocity-based classes for different animation levels
-    if (scrollVelocity > 50) {
-      body.classList.add("is-scrolling-fast")
-      body.classList.remove("is-scrolling-slow")
-    } else if (scrollVelocity > 10) {
-      body.classList.add("is-scrolling-slow")
-      body.classList.remove("is-scrolling-fast")
+      // Add velocity-based classes for different animation levels
+      if (scrollVelocity > 50) {
+        body.classList.add("is-scrolling-fast")
+        body.classList.remove("is-scrolling-slow")
+      } else if (scrollVelocity > 10) {
+        body.classList.add("is-scrolling-slow")
+        body.classList.remove("is-scrolling-fast")
+      }
     }
 
     // Cancel any pending animation frame
@@ -195,14 +198,16 @@ export function optimizeScrollPerformance(): void {
       clearTimeout(scrollTimeout)
     }
 
-    // Debounce the removal of scrolling classes
-    scrollTimeout = setTimeout(() => {
-      // Use requestAnimationFrame for smooth class removal
-      animationFrameId = requestAnimationFrame(() => {
-        body.classList.remove("is-scrolling", "is-scrolling-fast", "is-scrolling-slow")
-        animationFrameId = null
-      })
-    }, 150)
+    // Debounce the removal of scrolling classes (desktop only)
+    if (!isTouchDevice()) {
+      scrollTimeout = setTimeout(() => {
+        // Use requestAnimationFrame for smooth class removal
+        animationFrameId = requestAnimationFrame(() => {
+          body.classList.remove("is-scrolling", "is-scrolling-fast", "is-scrolling-slow")
+          animationFrameId = null
+        })
+      }, 150)
+    }
   }, 16) // 60fps
 
   addPassiveEventListener(window, "scroll", handleScroll)

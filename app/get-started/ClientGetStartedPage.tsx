@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import VideoWithPoster from "@/components/video-with-poster"
 import { useMobile } from "@/hooks/use-mobile"
+import { useMobileAnimations } from "@/hooks/use-mobile-animations"
 import { trackCTAClick } from "@/utils/analytics"
 import { AnimatePresence, motion } from "framer-motion"
 import { ArrowRight, CheckCircle, Clock, Heart, Rocket, Share2, TrendingUp, Users, Zap } from "lucide-react"
@@ -41,6 +42,7 @@ const staggerChildren = {
 }
 
 export default function ClientGetStartedPage() {
+  const { getViewportConfig } = useMobileAnimations()
   const [shouldLoadVideo, setShouldLoadVideo] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
@@ -212,6 +214,7 @@ export default function ClientGetStartedPage() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                style={{ willChange: 'transform, opacity' }}
               >
                 {shouldLoadVideo ? (
                   <div className="rounded-lg sm:rounded-xl overflow-hidden">
@@ -241,7 +244,8 @@ export default function ClientGetStartedPage() {
                   className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extralight tracking-tight text-neutral-900"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                  transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+                  style={{ willChange: 'transform, opacity' }}
                 >
                   Elevate Your Brand with Design That{" "}
                   <span className="font-normal">Actually Makes Money</span>
@@ -251,7 +255,8 @@ export default function ClientGetStartedPage() {
                   className="text-base sm:text-lg md:text-xl text-neutral-600 mx-auto leading-relaxed"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
+                  transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1], delay: 0.06 }}
+                  style={{ willChange: 'transform, opacity' }}
                 >
                   Tired of beautiful websites that look great but don't convert? Or clunky tools that drive revenue but bore your users to tears? At Prism, we fuse stunning design with world-class tech to create digital experiences that skyrocket leads, conversions, and lifetime value (LTV)—no matter your industry.
                 </motion.p>
@@ -261,7 +266,8 @@ export default function ClientGetStartedPage() {
                   className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
+                  transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1], delay: 0.12 }}
+                  style={{ willChange: 'transform, opacity' }}
                 >
                   <Button onClick={scrollToForm} className="h-11 px-6 rounded-full bg-neutral-900 hover:bg-neutral-800 text-white">
                     Apply now
@@ -295,7 +301,7 @@ export default function ClientGetStartedPage() {
               className="space-y-8"
               initial="initial"
               whileInView="animate"
-              viewport={{ once: true, amount: 0.3 }}
+              viewport={getViewportConfig()}
               variants={staggerChildren}
             >
               <motion.p
@@ -308,6 +314,7 @@ export default function ClientGetStartedPage() {
               <motion.div 
                 className="bg-white rounded-xl p-8 text-center border border-neutral-100"
                 variants={fadeInY}
+                style={{ willChange: 'transform, opacity' }}
               >
                 <p className="text-lg sm:text-xl font-medium text-neutral-900">
                   We partner with leaders who value clarity, craft, and compounding ROI.
@@ -326,7 +333,7 @@ export default function ClientGetStartedPage() {
             <motion.div
               initial="initial"
               whileInView="animate"
-              viewport={{ once: true, amount: 0.2 }}
+              viewport={getViewportConfig()}
               variants={staggerChildren}
             >
               <motion.div className="text-center mb-12" variants={fadeInY}>
@@ -344,6 +351,7 @@ export default function ClientGetStartedPage() {
                     key={index}
                     className="bg-white rounded-xl p-6 border border-neutral-100 hover:border-neutral-200 transition-colors"
                     variants={fadeInY}
+                    style={{ willChange: 'transform, opacity' }}
                   >
                     <div className="flex items-center justify-center w-12 h-12 rounded-full bg-neutral-100 mb-6">
                       {type.icon}
@@ -357,6 +365,7 @@ export default function ClientGetStartedPage() {
               <motion.div 
                 className="text-center"
                 variants={fadeInY}
+                style={{ willChange: 'transform, opacity' }}
               >
                 <p className="text-base sm:text-lg text-neutral-700 mb-2 max-w-[70ch] mx-auto">
                   Across industries, our playbook stays simple: clarity, speed, and conversion.
@@ -376,7 +385,7 @@ export default function ClientGetStartedPage() {
             <motion.div
               initial="initial"
               whileInView="animate"
-              viewport={{ once: true, amount: 0.2 }}
+              viewport={getViewportConfig()}
               variants={staggerChildren}
             >
               <motion.div className="text-center mb-10" variants={fadeInY}>
@@ -396,6 +405,7 @@ export default function ClientGetStartedPage() {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -20 }}
                     className="text-center py-12"
+                    style={{ willChange: 'transform, opacity' }}
                   >
                     <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-green-50 mb-6">
                       <CheckCircle className="h-8 w-8 text-green-600" />
@@ -413,6 +423,7 @@ export default function ClientGetStartedPage() {
                     onSubmit={handleSubmit}
                     className="space-y-6 bg-white rounded-xl p-6 border border-neutral-100"
                     variants={fadeInY}
+                    style={{ willChange: 'transform, opacity' }}
                   >
                     <div className="grid gap-6">
                       <div>
@@ -543,6 +554,7 @@ export default function ClientGetStartedPage() {
               <motion.p 
                 className="text-sm text-neutral-600 text-center mt-8"
                 variants={fadeInY}
+                style={{ willChange: 'transform, opacity' }}
               >
                 We're selective because we go all-in. Apply now to claim your edge.
               </motion.p>

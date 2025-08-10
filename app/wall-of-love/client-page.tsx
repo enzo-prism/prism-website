@@ -1,8 +1,9 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
+import { useMobileAnimations } from "@/hooks/use-mobile-animations"
 import { mobileScrollReveal } from "@/utils/animation-variants"
-import { motion } from "framer-motion"
+import { motion, type UseInViewOptions } from "framer-motion"
 import { ArrowRight } from "lucide-react"
 import Link from "next/link"
 import { useCallback, useEffect, useRef, useState } from "react"
@@ -504,15 +505,22 @@ const shuffleArray = (array: Quote[]): Quote[] => {
   return newArray
 }
 
-const TestimonialCard = ({ quote }: { quote: Quote }) => {
+const TestimonialCard = ({ quote, viewport }: { quote: Quote; viewport: UseInViewOptions }) => {
   return (
     <motion.blockquote
       variants={mobileScrollReveal}
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true, amount: 0.2 }}
-      className="bg-white p-5 sm:p-6 rounded-2xl w-full border border-neutral-200/70 shadow-[0_1px_2px_rgba(0,0,0,0.04)]"
-      style={{ contain: "layout style paint" }}
+      viewport={viewport}
+      transition={{ duration: 0.25, ease: "easeOut" }}
+      className="bg-white p-5 sm:p-6 rounded-2xl w-full border border-neutral-200/70 shadow-[0_1px_2px_rgba(0,0,0,0.04)] overflow-hidden"
+      style={{
+        contain: "layout style paint",
+        willChange: "transform, opacity",
+        backfaceVisibility: "hidden",
+        WebkitBackfaceVisibility: "hidden",
+        WebkitTransform: "translateZ(0)",
+      }}
       aria-label={`Testimonial from ${quote.client}`}
     >
       <p className="text-[15px] sm:text-base text-neutral-700 leading-relaxed tracking-tight">
@@ -528,6 +536,8 @@ const TestimonialCard = ({ quote }: { quote: Quote }) => {
 }
 
 export default function WallOfLoveClientPage() {
+  const { getViewportConfig } = useMobileAnimations()
+  const viewport = getViewportConfig()
   const [shuffledQuotes, setShuffledQuotes] = useState<Quote[]>([])
   const [visibleCount, setVisibleCount] = useState(15) // Increased from 10 to 15
   const loadMoreRef = useRef<HTMLDivElement>(null)
@@ -595,7 +605,7 @@ export default function WallOfLoveClientPage() {
   return (
     <>
       <section className="relative w-full py-16 md:py-24 lg:py-32 bg-white overflow-x-hidden">
-        <div className="pointer-events-none absolute inset-0 -z-10 [mask-image:radial-gradient(ellipse_at_center,black,transparent_70%)]">
+        <div className="pointer-events-none absolute inset-0 -z-10 hidden sm:block [mask-image:radial-gradient(ellipse_at_center,black,transparent_70%)]">
           <div className="absolute left-1/2 top-1/2 h-[60vh] w-[90vw] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle_at_center,rgba(0,0,0,0.06),transparent_60%)]" />
         </div>
         <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -625,9 +635,9 @@ export default function WallOfLoveClientPage() {
 
       <div className="bg-neutral-50 optimize-scrolling overflow-x-hidden">
         <main className="w-full max-w-2xl mx-auto px-4 py-12 sm:px-6 lg:px-8 sm:py-16">
-          <div className="testimonial-container space-y-6 sm:space-y-8">
+          <div className="testimonial-container space-y-6 sm:space-y-8" style={{ transform: "translateZ(0)" }}>
             {(!isHydrated ? quotesData.slice(0, visibleCount) : shuffledQuotes.slice(0, visibleCount)).map((quote) => (
-              <TestimonialCard key={quote.id} quote={quote} />
+              <TestimonialCard key={quote.id} quote={quote} viewport={viewport} />
             ))}
           </div>
           

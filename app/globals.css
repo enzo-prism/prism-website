@@ -35,6 +35,34 @@ body {
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+/* Mobile scroll performance: avoid blur on small screens */
+@media (max-width: 768px) {
+  .backdrop-blur { backdrop-filter: none !important; }
+}
+
+/* Pause CSS animations when body indicates heavy scrolling (desktop only usage) */
+body.is-scrolling .animation-paused,
+body.is-scrolling-fast .animation-paused {
+  animation-play-state: paused !important;
+}
+
+/* Hint GPU acceleration for motion elements */
+[style*="will-change"] {
+  transform: translateZ(0);
+}
+
+/* Prevent white flash during framer-motion whileInView on mobile */
+.testimonial-container > blockquote {
+  background-color: #fff;
+}
+
+@media (max-width: 768px) {
+  .testimonial-container > blockquote {
+    -webkit-transform: translateZ(0);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+}
 
 /* GPU Acceleration Utilities */
 @layer utilities {
