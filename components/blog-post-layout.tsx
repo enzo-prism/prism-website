@@ -1,17 +1,13 @@
 "use client"
 
 import { BlogPostErrorBoundary } from "@/components/blog-error-boundary"
-import Breadcrumbs from "@/components/breadcrumbs"
 import CoreImage from "@/components/core-image"
 import { BlogPostSchema } from "@/components/schema-markup"
-import ScrollProgressBar from "@/components/scroll-progress-bar"
-import { useMobile } from "@/hooks/use-mobile"
 import { cn } from "@/lib/utils"
 import { ArrowLeft } from "lucide-react"
 import dynamic from "next/dynamic"
 import Link from "next/link"
 import { useEffect, useState } from "react"
-const AnimatedBlogWrapper = dynamic(() => import("@/components/blog/animated-blog-wrapper"), { ssr: false })
 const Footer = dynamic(() => import("@/components/footer"), { ssr: false })
 const Navbar = dynamic(() => import("@/components/navbar"), { ssr: false })
 
@@ -50,22 +46,11 @@ export default function BlogPostLayout({
   openGraph,
   canonical,
 }: Props) {
-  const isMobile = useMobile()
   const effectiveGradient = gradientClass || 'bg-gradient-to-br from-indigo-300/30 via-purple-300/30 to-pink-300/30';
   const effectiveImageUrl = image ? `https://www.design-prism.com${image}` : 'https://www.design-prism.com/prism-opengraph.png';
   
   const [hasImageError, setHasImageError] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
-  const [showFloatingNav, setShowFloatingNav] = useState(false);
-
-  // Calculate reading time
-  const calculateReadingTime = (content: string) => {
-    const wordsPerMinute = 200;
-    const words = content.length / 5; // Rough estimate
-    return Math.ceil(words / wordsPerMinute);
-  };
-
-  const readingTime = calculateReadingTime(description);
 
   useEffect(() => {
     let ticking = false;
@@ -78,7 +63,6 @@ export default function BlogPostLayout({
           const progress = (scrollTop / docHeight) * 100;
           
           setScrollProgress(Math.min(progress, 100));
-          setShowFloatingNav(scrollTop > 300); // Show after scrolling 300px
           
           ticking = false;
         });
@@ -91,112 +75,34 @@ export default function BlogPostLayout({
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  if (isMobile) {
-    return (
-      <div className="flex min-h-screen flex-col bg-white">
-        {/* Minimal progress bar */}
-        <div className="fixed top-0 left-0 right-0 z-50 h-0.5 bg-neutral-200">
-          <div 
-            className="h-full bg-neutral-900 transition-all duration-300"
-            style={{ width: `${scrollProgress}%` }}
-          />
-        </div>
-
-        <main className="flex-1 pt-2">
-          {/* Simple Header */}
-          <div className="px-4 py-6 border-b border-neutral-100">
-            <Link
-              href="/blog"
-              className="inline-flex items-center text-neutral-600 hover:text-neutral-900 transition-colors mb-6"
-            >
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              <span className="text-sm">back to blog</span>
-            </Link>
-
-            {/* Category */}
-            <div className="mb-3">
-              <span className="text-xs text-neutral-500 uppercase tracking-wide">{category}</span>
-            </div>
-
-            {/* Title */}
-            <h1 className="text-2xl font-bold text-neutral-900 leading-tight mb-4">
-              {title}
-            </h1>
-
-            {/* Meta info */}
-            <div className="flex items-center gap-4 text-neutral-500 text-sm">
-              <span>{new Date(date).toLocaleDateString()}</span>
-              <span>•</span>
-              <span>{readingTime} min read</span>
-            </div>
-
-            {/* Description */}
-            <p className="text-neutral-600 text-base leading-relaxed mt-4 max-w-2xl">
-              {description}
-            </p>
-          </div>
-
-          {/* Content Section */}
-          <div className="px-4 py-8">
-            <BlogPostErrorBoundary>
-              <div className="prose-blog">
-                {children}
-              </div>
-            </BlogPostErrorBoundary>
-          </div>
-
-          {/* Simple Bottom Navigation */}
-          <div className="px-4 py-8 border-t border-neutral-100">
-            <div className="text-center">
-              <Link 
-                href="/blog"
-                className="inline-flex items-center text-neutral-600 hover:text-neutral-900 transition-colors"
-              >
-                <ArrowLeft className="w-4 h-4 mr-2" />
-                <span className="text-sm">back to all posts</span>
-              </Link>
-            </div>
-          </div>
-        </main>
-
-        <Footer />
-
-        <BlogPostSchema
-          title={title}
-          description={description}
-          url={openGraph?.url || canonical || `https://www.design-prism.com/blog/${slug}`}
-          imageUrl={effectiveImageUrl}
-          datePublished={openGraph?.publishedTime || date}
-          dateModified={openGraph?.modifiedTime || date}
-          authorName={openGraph?.authors?.[0] || "prism"}
+  return (
+    <div className="flex min-h-screen flex-col bg-white">
+      {/* Minimal progress bar */}
+      <div className="fixed top-0 left-0 right-0 z-50 h-0.5 bg-neutral-200">
+        <div
+          className="h-full bg-neutral-900 transition-all duration-300"
+          style={{ width: `${scrollProgress}%` }}
         />
       </div>
-    )
-  }
 
-  // Desktop layout (unchanged for now)
-  return (
-    <div className="flex min-h-screen flex-col">
-      <ScrollProgressBar />
-      <div className="pt-1">
-        <Navbar />
-        <Breadcrumbs items={[{ name: "blog", url: "/blog" }, { name: title, url: `/blog/${slug}` }]} />
-        <main className="flex-1">
-          <div className="w-full bg-gradient-to-b from-neutral-50 to-white py-8 sm:py-12 md:py-16">
-            <div className="container mx-auto px-4 sm:px-6">
-              <div className="max-w-4xl mx-auto">
-                <div className="mb-6">
-                  <Link
-                    href="/blog"
-                    className="inline-flex items-center text-sm text-neutral-600 hover:text-neutral-900 transition-colors lowercase touch-feedback min-h-[44px] px-2 -mx-2 rounded-md"
-                  >
-                    <ArrowLeft className="mr-2 h-4 w-4" />
-                    back to all posts
-                  </Link>
-                </div>
-                <article>
-                  <div className="relative w-full max-w-3xl mx-auto mb-6 sm:mb-8 md:mb-12 rounded-lg overflow-hidden">
-                    {image && !hasImageError ? (
+      <Navbar />
+      <main className="flex-1">
+        <div className="w-full py-6 sm:py-8 md:py-10">
+          <div className="container mx-auto px-4 sm:px-6">
+            <div className="max-w-3xl mx-auto">
+              <div className="mb-6">
+                <Link
+                  href="/blog"
+                  className="inline-flex items-center text-sm text-neutral-600 hover:text-neutral-900 transition-colors"
+                >
+                  <ArrowLeft className="mr-2 h-4 w-4" />
+                  back to all posts
+                </Link>
+              </div>
+              <article>
+                <header className="mb-6 sm:mb-8">
+                  {image && !hasImageError ? (
+                    <div className="rounded-lg overflow-hidden mb-6">
                       <CoreImage
                         src={image}
                         alt={title}
@@ -209,35 +115,36 @@ export default function BlogPostLayout({
                         onLoadError={() => setHasImageError(true)}
                         customErrorHandling={true}
                       />
-                    ) : (
-                      <div className={cn("aspect-[16/9] relative", effectiveGradient)} />
-                    )}
-                  </div>
-                  <div className="mb-8 sm:mb-10">
-                    <div className="flex flex-wrap items-center gap-3 mb-4">
-                      <span className="inline-block px-3 py-1 bg-neutral-100 rounded-full text-xs lowercase">
-                        {category}
-                      </span>
-                      <span className="text-sm text-neutral-500 lowercase">{new Date(date).toLocaleDateString()}</span>
                     </div>
-                    <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight lowercase mb-4 leading-tight text-balance">
-                      {title}
-                    </h1>
+                  ) : (
+                    <div className={cn("aspect-[16/9] rounded-lg overflow-hidden mb-6", effectiveGradient)} />
+                  )}
+                  <div className="flex items-center gap-3 mb-3">
+                    <span className="inline-block px-3 py-1 bg-neutral-100 rounded-full text-xs lowercase">
+                      {category}
+                    </span>
+                    <time className="text-sm text-neutral-500 lowercase" dateTime={new Date(date).toISOString()}>
+                      {new Intl.DateTimeFormat(undefined, { year: 'numeric', month: 'short', day: 'numeric' }).format(new Date(date))}
+                    </time>
                   </div>
-                  <BlogPostErrorBoundary>
-                    <AnimatedBlogWrapper>
-                      <div className="prose-blog">
-                        {children}
-                      </div>
-                    </AnimatedBlogWrapper>
-                  </BlogPostErrorBoundary>
-                </article>
-              </div>
+                  <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight lowercase leading-tight text-balance">
+                    {title}
+                  </h1>
+                  <p className="text-neutral-600 mt-3">
+                    {description}
+                  </p>
+                </header>
+                <BlogPostErrorBoundary>
+                  <div className="prose-blog">
+                    {children}
+                  </div>
+                </BlogPostErrorBoundary>
+              </article>
             </div>
           </div>
-        </main>
-        <Footer />
-      </div>
+        </div>
+      </main>
+      <Footer />
       <BlogPostSchema
         title={title}
         description={description}

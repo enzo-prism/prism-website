@@ -25,14 +25,7 @@ export default function SimpleBlogGrid({ children, className = "" }: SimpleBlogG
         lg:grid-cols-3
         ${className}
       `}
-      style={{
-        // GPU acceleration for smoother scrolling
-        transform: "translateZ(0)",
-        backfaceVisibility: "hidden",
-        perspective: "1000px",
-        willChange: "transform",
-        contain: "layout style paint"
-      }}
+      style={{ contain: "layout paint" }}
     >
       {children}
     </div>

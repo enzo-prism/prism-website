@@ -1,6 +1,5 @@
 import { BlogListErrorBoundary } from "@/components/blog-error-boundary"
 import Footer from "@/components/footer"
-import MobileHeroSection from "@/components/mobile-hero-section"
 import Navbar from "@/components/navbar"
 import type { BlogFrontmatter } from "@/lib/mdx"
 import BlogCTAButton from "./BlogCTAButton"
@@ -22,24 +21,16 @@ export default function BlogPage({ posts }: { posts: BlogPost[] }) {
       <BlogPageTracker />
       <Navbar />
       <main className="flex-1 relative">
-        {/* Mobile-Optimized Hero Section */}
-        <MobileHeroSection
-          title="insights & ideas"
-          subtitle="thoughts on design, development, and digital strategy from the prism team"
-        />
+        {/* Minimal hero */}
+        <section className="py-6 md:py-10 border-b border-neutral-100">
+          <div className="container mx-auto px-4 md:px-6">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight lowercase">insights & ideas</h1>
+            <p className="text-neutral-600 mt-2 lowercase">thoughts on design, development, and digital strategy from the prism team</p>
+          </div>
+        </section>
 
         {/* Blog Posts List with Filter Navigation */}
         <BlogListErrorBoundary>
-          <div className="container mx-auto px-4 md:px-6">
-            <div className="prose prose-neutral max-w-none mb-8">
-              <h2 className="text-xl font-semibold lowercase">what you'll learn here</h2>
-              <ul>
-                <li>ai search, seo flywheels, and conversion systems</li>
-                <li>case studies with concrete outcomes</li>
-                <li>actionable playbooks you can apply today</li>
-              </ul>
-            </div>
-          </div>
           <BlogPostsList posts={blogPosts} />
         </BlogListErrorBoundary>
 
