@@ -2,8 +2,8 @@
 
 import type React from "react"
 
-import { useState, useRef, useEffect, useCallback } from "react"
 import Link from "next/link"
+import { useCallback, useEffect, useRef, useState } from "react"
 
 // Import the tracking function at the top of the file
 import { trackServiceCardClick } from "@/utils/analytics"
@@ -157,9 +157,10 @@ export default function MobileServicesTiles() {
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
+        style={{ touchAction: 'pan-y' }}
       >
         <div
-          className="flex transition-transform duration-300 ease-in-out pause-on-scroll hardware-accelerated"
+          className="flex transition-transform duration-300 ease-in-out hardware-accelerated"
           style={{
             transform: `translateX(calc(-${currentIndex * 100}% + ${dragOffset}px))`,
             willChange: isDragging ? "transform" : "auto",

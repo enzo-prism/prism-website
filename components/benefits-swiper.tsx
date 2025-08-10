@@ -1,10 +1,10 @@
 "use client"
 
-import type React from "react"
-import { useState, useRef, useCallback, useEffect } from "react"
-import { ChevronLeft, ChevronRight } from "lucide-react"
 import { trackBenefitsInteraction } from "@/utils/analytics"
 import { throttle } from "@/utils/scroll-optimization"
+import { ChevronLeft, ChevronRight } from "lucide-react"
+import type React from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 
 interface BenefitItem {
   id: number
@@ -142,7 +142,7 @@ const BenefitsSwiper: React.FC = () => {
 
   return (
     <div className="relative w-full max-w-[90vw] mx-auto">
-      <div className="absolute top-1/2 left-0 right-0 -mt-6 flex justify-between z-10 px-1">
+      <div className="absolute top-1/2 left-0 right-0 -mt-6 flex justify-between z-10 px-1" style={{ touchAction: 'manipulation' }}>
         <button
           onClick={prevSlide}
           className="rounded-full bg-white p-2 shadow-md hover:bg-gray-50 transition-colors"
@@ -165,9 +165,10 @@ const BenefitsSwiper: React.FC = () => {
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
+        style={{ touchAction: 'pan-y' }}
       >
         <div
-          className={`flex ${isDragging ? "" : "transition-transform duration-300 ease-in-out"} pause-on-scroll hardware-accelerated`}
+          className={`flex ${isDragging ? "" : "transition-transform duration-300 ease-in-out"} hardware-accelerated`}
           style={{
             transform: `translateX(calc(-${currentIndex * 100}% + ${dragOffset}px))`,
             willChange: isDragging ? "transform" : "auto",

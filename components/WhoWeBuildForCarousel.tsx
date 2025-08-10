@@ -46,8 +46,8 @@ export default function WhoWeBuildForCarousel() {
           <p className="mt-2 text-neutral-600 dark:text-neutral-400 lowercase">systems that grow leads, sales, and ltv</p>
         </div>
         <div
-          className="flex overflow-x-auto scroll-smooth scrollbar-hide gap-4 md:gap-6 pb-4 -mx-4 px-4 md:mx-0 md:px-0"
-          style={{ scrollSnapType: 'x mandatory', WebkitOverflowScrolling: 'touch' }}
+          className="flex overflow-x-auto scrollbar-hide gap-4 md:gap-6 pb-4 -mx-4 px-4 md:mx-0 md:px-0"
+          style={{ scrollSnapType: 'x mandatory', WebkitOverflowScrolling: 'touch', touchAction: 'pan-y' }}
           role="list"
           aria-label="Industries we serve"
         >

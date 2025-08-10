@@ -373,6 +373,10 @@ input, textarea, select {
   /* Enhanced scroll performance classes */
   body.is-scrolling * {
     animation-play-state: paused !important;
+  }
+
+  /* Use this opt-in class on heavy elements if you still want to disable transitions while scrolling */
+  body.is-scrolling .disable-transitions-during-scroll {
     transition: none !important;
   }
   
