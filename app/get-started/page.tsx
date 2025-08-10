@@ -2,8 +2,8 @@ import type { Metadata } from "next"
 import ClientGetStartedPage from "./ClientGetStartedPage"
 
 export const metadata: Metadata = {
-  title: "Elevate Your Brand with Design That Makes Money | Prism",
-  description: "Tired of websites that don't convert? Prism fuses stunning design with world-class tech to skyrocket leads, conversions, and LTV. Limited to 10 new clients monthly.",
+  title: "Beautiful work. Measurable growth. | Prism",
+  description: "Prism fuses world-class design with engineering and analytics to lift leads, conversion rate, and LTV. Limited new client openings monthly. Applications reviewed on the 1st.",
   alternates: {
     canonical: "https://www.design-prism.com/get-started",
   },
