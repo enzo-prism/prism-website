@@ -670,8 +670,8 @@ export default function WallOfLoveClientPage() {
             </div>
             <div className="pt-1">
               <Link href="/get-started">
-                <Button size="sm" className="bg-neutral-900 hover:bg-neutral-800 text-white rounded-full px-5 py-2.5 text-sm lowercase" aria-label="Hire Prism">
-                  hire prism <ArrowRight className="ml-2 h-4 w-4" />
+                <Button size="sm" className="bg-neutral-900 hover:bg-neutral-800 text-white rounded-full px-5 py-2.5 text-sm lowercase" aria-label="apply">
+                  apply <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
               </Link>
             </div>
