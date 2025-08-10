@@ -711,37 +711,7 @@ export default function WallOfLoveClientPage() {
         </div>
       </section>
 
-      {/* Featured pinned comments carousel */}
-      <section className="bg-neutral-50 border-t border-neutral-100">
-        <div className="w-full max-w-[720px] mx-auto px-4 py-6 sm:py-8">
-          <h2 className="text-[15px] sm:text-[16px] font-medium text-neutral-900 mb-3">what people are saying</h2>
-          <Carousel>
-            <CarouselContent className="[contain:content] will-change-transform">
-              {quotesData.filter(q => q.pinned).map((quote) => (
-                <CarouselItem key={`pinned-${quote.id}`} className="basis-full">
-                  <TestimonialCard quote={quote} viewport={{ amount: 0.2, once: true }} />
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-          </Carousel>
-          </div>
-      </section>
-
-      {/* Viewer takeaways carousel */}
-      <section className="bg-neutral-50 border-t border-neutral-100">
-        <div className="w-full max-w-[720px] mx-auto px-4 pb-4 sm:pb-6">
-          <h2 className="text-[15px] sm:text-[16px] font-medium text-neutral-900 mb-3">viewer takeaways</h2>
-          <Carousel>
-            <CarouselContent className="[contain:content] will-change-transform">
-              {takeawaysData.filter(t => t.pinned).map((item) => (
-                <CarouselItem key={`takeaway-pinned-${item.id}`} className="basis-full">
-                  <TakeawayCard item={item} />
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-          </Carousel>
-              </div>
-      </section>
+      {/* simple vertical lists – carousels removed */}
 
       <div className="bg-neutral-50">
         <main className="w-full max-w-[720px] mx-auto px-4 py-8 sm:py-10">
