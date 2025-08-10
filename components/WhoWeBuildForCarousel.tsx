@@ -47,7 +47,7 @@ export default function WhoWeBuildForCarousel() {
         </div>
         <div
           className="flex overflow-x-auto scrollbar-hide gap-4 md:gap-6 pb-4 -mx-4 px-4 md:mx-0 md:px-0"
-          style={{ scrollSnapType: 'x mandatory', WebkitOverflowScrolling: 'touch', touchAction: 'pan-y' }}
+          style={{ scrollSnapType: 'x mandatory', WebkitOverflowScrolling: 'touch', touchAction: 'pan-x' }}
           role="list"
           aria-label="Industries we serve"
         >
