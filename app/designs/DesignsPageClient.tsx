@@ -173,13 +173,15 @@ export default function DesignsPageClient() {
                       initial="enter"
                       animate="center"
                       exit="exit"
-                      transition={{
-                        x: { type: "spring", stiffness: 300, damping: 30 },
-                        opacity: { duration: 0.2 },
-                      }}
+                      transition={
+                        isMobile
+                          ? { x: { type: "tween", duration: 0.25, ease: "easeOut" }, opacity: { duration: 0.2 } }
+                          : { x: { type: "spring", stiffness: 260, damping: 28 }, opacity: { duration: 0.2 } }
+                      }
                       drag="x"
                       dragConstraints={{ left: 0, right: 0 }}
-                      dragElastic={0.2}
+                      dragElastic={0.18}
+                      dragMomentum={false}
                       onDragStart={() => setIsDraggingVisual(true)}
                       onDrag={(event, info) => setDraggedX(info.offset.x)}
                       onDragEnd={(e, { offset, velocity }) => {
@@ -195,12 +197,13 @@ export default function DesignsPageClient() {
                         }
                       }}
                       // Added absolute positioning and full width/height to fill the aspect-ratio container
-                      className="absolute inset-0 w-full h-full cursor-grab active:cursor-grabbing"
+                      className="absolute inset-0 w-full h-full cursor-grab active:cursor-grabbing hardware-accelerated"
+                      style={{ touchAction: "pan-x", willChange: "transform" }}
                     >
                       <img
                         src={shuffledSlides[currentSlide].image || "/placeholder.svg"}
                         alt={`Design slide: ${shuffledSlides[currentSlide].quote}`}
-                        className="w-full h-full object-contain"
+                        className="w-full h-full object-contain pointer-events-none"
                         draggable="false"
                       />
                       {isDraggingVisual && draggedX < -10 && (
@@ -251,12 +254,10 @@ export default function DesignsPageClient() {
                     <button
                       key={index}
                       onClick={() => {
-                        if (index > currentSlide) {
-                          paginate(1)
-                        } else if (index < currentSlide) {
-                          paginate(-1)
+                        if (index !== currentSlide) {
+                          setDirection(index > currentSlide ? 1 : -1)
+                          setCurrentSlide(index)
                         }
-                        setCurrentSlide(index)
                       }}
                       className={`h-2 rounded-full transition-all ${
                         currentSlide === index ? "w-6 bg-black" : "w-2 bg-gray-300"
