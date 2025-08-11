@@ -109,6 +109,11 @@ const blogPosts = {
     category: "Design & Product",
     gradientClass: "bg-gradient-to-br from-indigo-300/30 via-purple-300/30 to-sky-300/30",
   },
+  'gpt5-two-levers-growth': {
+    title: 'GPT-5 and the Two Levers of Growth: Creativity on Tap, Execution at Speed',
+    category: 'AI & Growth',
+    gradientClass: 'bg-gradient-to-br from-emerald-300/30 via-sky-300/30 to-indigo-300/30',
+  },
 } as const
 
 export function getPostMetadataForOG(slug: string) {

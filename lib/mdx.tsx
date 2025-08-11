@@ -1,29 +1,30 @@
 // This module is server-side only, responsible for fetching and parsing blog content.
+import { VideoObjectSchema } from '@/components/schema-markup';
 import fs from "fs/promises"; // Node.js file system module for server-side operations
 import matter from "gray-matter"; // For parsing frontmatter from .mdx files
-import { MDXRemote } from "next-mdx-remote/rsc"
-import Image from "next/image"
+import { MDXRemote } from "next-mdx-remote/rsc";
+import Image from "next/image";
 import path from "path"; // Node.js path module for server-side path manipulation
-import React from "react"
+import React from "react";
 import "server-only"; // Ensures this module only runs on the server
 
 // Import blog components
-import AIMentionTracker from '@/components/blog/ai-mention-tracker'
-import AISearchComparison from '@/components/blog/ai-search-comparison'
-import AITrafficDeclineChart from '@/components/blog/ai-traffic-decline-chart'
-import AITrafficDistributionChart from '@/components/blog/ai-traffic-distribution-chart'
-import BrandTaglineGenerator from '@/components/blog/brand-tagline-generator'
-import StrategyCard from '@/components/blog/strategy-card'
-import StrategyTimelineChart from '@/components/blog/strategy-timeline-chart'
+import AIMentionTracker from '@/components/blog/ai-mention-tracker';
+import AISearchComparison from '@/components/blog/ai-search-comparison';
+import AITrafficDeclineChart from '@/components/blog/ai-traffic-decline-chart';
+import AITrafficDistributionChart from '@/components/blog/ai-traffic-distribution-chart';
+import BrandTaglineGenerator from '@/components/blog/brand-tagline-generator';
+import StrategyCard from '@/components/blog/strategy-card';
+import StrategyTimelineChart from '@/components/blog/strategy-timeline-chart';
 
 // Import mobile components for MDX
-import { MobileContentSection, MobileHeading, MobileList, MobileParagraph } from '@/components/mobile/MobileContentSection'
-import { MobileHeroCard } from '@/components/mobile/MobileHeroCard'
-import { MobileInfoCard } from '@/components/mobile/MobileInfoCard'
-import { MobileInteractiveWidget } from '@/components/mobile/MobileInteractiveWidget'
-import { MobileSectionDivider } from '@/components/mobile/MobileSectionDivider'
-import { MobileStatCard } from '@/components/mobile/MobileStatCard'
-import { MobileStrategyCard } from '@/components/mobile/MobileStrategyCard'
+import { MobileContentSection, MobileHeading, MobileList, MobileParagraph } from '@/components/mobile/MobileContentSection';
+import { MobileHeroCard } from '@/components/mobile/MobileHeroCard';
+import { MobileInfoCard } from '@/components/mobile/MobileInfoCard';
+import { MobileInteractiveWidget } from '@/components/mobile/MobileInteractiveWidget';
+import { MobileSectionDivider } from '@/components/mobile/MobileSectionDivider';
+import { MobileStatCard } from '@/components/mobile/MobileStatCard';
+import { MobileStrategyCard } from '@/components/mobile/MobileStrategyCard';
 
 export type BlogFrontmatter = {
   title: string
@@ -104,7 +105,7 @@ async function getAllPosts(): Promise<Array<{ slug: string } & BlogFrontmatter> 
   }
 }
 
-export { getAllPosts, getPost }
+export { getAllPosts, getPost };
 
 // Custom components for MDX rendering
 const mdxComponents = {
@@ -146,6 +147,8 @@ const mdxComponents = {
   MobileHeading,
   MobileSectionDivider,
   MobileInteractiveWidget,
+  // Structured data components
+  VideoObjectSchema,
   // Override potentially dangerous HTML elements
   script: () => null, // Block script tags
   iframe: ({ src, title, ...props }: React.IframeHTMLAttributes<HTMLIFrameElement>) => {
@@ -155,7 +158,7 @@ const mdxComponents = {
     if (!allowedDomains.some(domain => url.hostname.includes(domain))) {
       return null
     }
-    return <iframe src={src} title={title} {...props} />
+    return <iframe src={src} title={title} allowFullScreen {...props} />
   }
 }
 
