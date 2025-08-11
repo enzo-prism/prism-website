@@ -114,6 +114,11 @@ const blogPosts = {
     category: 'AI & Growth',
     gradientClass: 'bg-gradient-to-br from-emerald-300/30 via-sky-300/30 to-indigo-300/30',
   },
+  'content-that-converts-give-away-secrets-sell-implementation': {
+    title: 'Content That Converts: Give Away the Secrets, Sell the Implementation',
+    category: 'Content Strategy',
+    gradientClass: 'bg-gradient-to-br from-rose-300/30 via-amber-300/30 to-lime-300/30',
+  },
 } as const
 
 export function getPostMetadataForOG(slug: string) {
