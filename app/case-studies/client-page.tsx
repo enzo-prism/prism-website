@@ -51,6 +51,16 @@ export default function CaseStudiesPage() {
       description: "Full-stack digital overhaul: brand-new site, e-commerce build, analytics & growth program.",
       slug: "olympic-bootworks",
     },
+    {
+      id: "4",
+      title: "Post‑M&A Relaunch with Measurable Growth",
+      client: "Laguna Beach Dental Arts",
+      industry: "Dentistry",
+      location: "Laguna Beach, CA",
+      description:
+        "New brand, custom website, multi‑channel acquisition and end‑to‑end tracking working in tandem.",
+      slug: "laguna-beach-dental-arts",
+    },
   ]
 
   return (
