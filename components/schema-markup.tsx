@@ -209,18 +209,17 @@ export function CaseStudySchema({
   title: string
   description: string
   url: string
-  imageUrl: string
+  imageUrl?: string
   datePublished: string
   dateModified: string
   clientName: string
   outcome: string
 }) {
-  const caseStudySchema = {
+  const caseStudySchema: Record<string, any> = {
     "@context": "https://schema.org",
     "@type": "CaseStudy",
     headline: title,
     description,
-    image: imageUrl,
     author: {
       "@id": "https://design-prism.com/#organization",
     },
@@ -235,6 +234,10 @@ export function CaseStudySchema({
       "@id": url,
     },
     text: outcome,
+  }
+
+  if (imageUrl) {
+    caseStudySchema.image = imageUrl
   }
 
   return (

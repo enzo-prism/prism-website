@@ -8,14 +8,12 @@ import { Button } from "@/components/ui/button"
 import { trackCTAClick } from "@/utils/analytics"
 import { ArrowLeft, ArrowRight, ChevronRight } from "lucide-react"
 import dynamic from "next/dynamic"
-import Image from "next/image"
 import Link from "next/link"
 import { useEffect, useState } from "react"
 const Navbar = dynamic(() => import("@/components/navbar"), { ssr: false })
 
 export default function OlympicBootworksCaseStudy() {
   const [activeSection, setActiveSection] = useState("")
-  const [imageLoaded, setImageLoaded] = useState(false)
 
   // Track scroll position to highlight active section in table of contents
   useEffect(() => {
@@ -57,7 +55,7 @@ export default function OlympicBootworksCaseStudy() {
       <PageViewTracker title="Olympic Bootworks Case Study" />
       <Navbar />
       <main className="flex-1 bg-white">
-        {/* Minimal Hero Section with Featured Image */}
+        {/* Minimal Hero Section (text-only) */}
         <section className="border-b px-4 py-16 md:py-24">
           <div className="container mx-auto px-4 md:px-6 max-w-3xl">
             <div className="space-y-6">
@@ -68,36 +66,9 @@ export default function OlympicBootworksCaseStudy() {
               <p className="text-xl text-neutral-600 lowercase">
                 how we transformed olympic bootworks from a seasonal tahoe shop into a year-round digital powerhouse
               </p>
-            </div>
-
-            {/* Featured Image */}
-            <div className="mt-10 mb-6 relative">
-              <div className="bg-neutral-50 p-4 sm:p-6 rounded-lg shadow-sm">
-                <div className="flex justify-center">
-                  <div
-                    className={`max-w-full overflow-hidden transition-all duration-700 ${
-                      imageLoaded ? "opacity-100 transform-none" : "opacity-0 translate-y-4"
-                    }`}
-                  >
-                    <Image
-                      src="/olympic-bootworks.png"
-                      alt="Olympic Bootworks website transformation showing before and after"
-                      width={800}
-                      height={450}
-                      className="rounded-md max-w-full h-auto hover:scale-[1.02] transition-transform duration-300"
-                      priority
-                      onLoadingComplete={() => setImageLoaded(true)}
-                    />
-                  </div>
-                </div>
-                <p
-                  className={`text-center text-sm text-neutral-500 mt-4 lowercase italic transition-opacity duration-700 ${
-                    imageLoaded ? "opacity-100" : "opacity-0"
-                  }`}
-                >
-                  the transformation: from outdated squarespace template to custom e-commerce powerhouse
-                </p>
-              </div>
+              <p className="text-sm text-neutral-500 italic lowercase">
+                the transformation: from outdated squarespace template to custom e-commerce powerhouse
+              </p>
             </div>
           </div>
         </section>
@@ -254,12 +225,12 @@ export default function OlympicBootworksCaseStudy() {
                       <div className="text-2xl font-bold text-green-600 mt-2">100/100</div>
                     </div>
 
-                    <div className="bg-red-50 border border-red-200 p-4 rounded-md">
-                      <h3 className="font-medium mb-2 lowercase text-red-800">online presence</h3>
-                      <p className="text-red-700 text-sm">
+                    <div className="bg-white border border-neutral-200 p-4 rounded-md">
+                      <h3 className="font-medium mb-2 lowercase text-neutral-900">online presence</h3>
+                      <p className="text-neutral-600 text-sm">
                         Dated website, no e-commerce, poor mobile experience, zero analytics
                       </p>
-                      <div className="text-2xl font-bold text-red-600 mt-2">10/100</div>
+                      <div className="text-2xl font-bold text-neutral-900 mt-2">10/100</div>
                     </div>
                   </div>
 
@@ -403,25 +374,12 @@ export default function OlympicBootworksCaseStudy() {
                     </div>
                   </div>
 
-                  {/* Client Testimonial */}
-                  <div className="bg-blue-50 border-l-4 border-blue-400 p-6 rounded-r-lg my-8">
-                    <blockquote className="text-lg italic mb-4 lowercase">
-                      "the new site is night-and-day. customers keep telling us how easy it is to buy and book
-                      online—exactly what we needed while we focus on the slopes."
+                  {/* Client Testimonial (text-only) */}
+                  <div className="border-l-4 border-neutral-300 p-6 my-8 bg-neutral-50">
+                    <blockquote className="text-lg italic lowercase">
+                      "the new site is night-and-day. customers keep telling us how easy it is to buy and book online—exactly what we needed while we focus on the slopes."
                     </blockquote>
-                    <div className="flex items-center gap-4">
-                      <Image
-                        src="/buck-brown-olympic-bootworks.jpeg"
-                        alt="Buck Brown, founder of Olympic Bootworks"
-                        width={60}
-                        height={60}
-                        className="rounded-full"
-                      />
-                      <div>
-                        <div className="font-semibold lowercase">buck brown</div>
-                        <div className="text-neutral-600 text-sm lowercase">founder, olympic bootworks</div>
-                      </div>
-                    </div>
+                    <p className="mt-3 text-sm text-neutral-600 lowercase">— buck brown, founder of olympic bootworks</p>
                   </div>
                 </div>
               </section>
@@ -502,7 +460,6 @@ export default function OlympicBootworksCaseStudy() {
         <div className="mt-12">
           <SocialShare
             url="https://design-prism.com/case-studies/olympic-bootworks"
-            imageUrl="https://design-prism.com/olympic-bootworks.png"
             title="Olympic Bootworks Case Study"
             description="Discover how we crafted a digital presence for a premier ski boot fitting shop."
           />
@@ -513,7 +470,7 @@ export default function OlympicBootworksCaseStudy() {
         title="olympic bootworks case study - from 10/100 online to always-open revenue engine"
         description="discover how prism transformed olympic bootworks from a dated squarespace template to a lightning-fast e-commerce powerhouse with real-time inventory sync and 24/7 booking engine."
         url="https://design-prism.com/case-studies/olympic-bootworks"
-        imageUrl="https://design-prism.com/olympic-bootworks.png"
+        imageUrl={undefined as unknown as string}
         datePublished="2025-03-01T00:00:00.000Z"
         dateModified="2025-03-01T00:00:00.000Z"
         clientName="Olympic Bootworks"
