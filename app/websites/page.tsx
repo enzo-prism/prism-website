@@ -1,11 +1,11 @@
-import type { Metadata } from "next"
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
+import MinimalWebsiteList from "@/components/minimal-website-list"
+import Navbar from "@/components/navbar"
 import PageViewTracker from "@/components/page-view-tracker"
 import ScrollProgressBar from "@/components/scroll-progress-bar"
-import MinimalWebsiteList from "@/components/minimal-website-list"
+import { Button } from "@/components/ui/button"
+import type { Metadata } from "next"
+import Link from "next/link"
 
 export const metadata: Metadata = {
   title: "custom website design portfolio & services | prism",
@@ -71,6 +71,20 @@ const websiteProjects = [
     url: "https://www.coastperiodontics.com",
     category: "healthcare",
     description: "expert periodontal and implant care",
+  },
+  {
+    id: "13",
+    title: "grace dental santa rosa",
+    url: "https://www.tingjenjidds.com/",
+    category: "healthcare",
+    description: "exceptional family dental care in santa rosa",
+  },
+  {
+    id: "14",
+    title: "town centre dental",
+    url: "https://towncentredental.net/",
+    category: "healthcare",
+    description: "family dentistry with dr. gerard banaga in brentwood",
   },
 ]
 
