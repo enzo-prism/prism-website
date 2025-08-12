@@ -119,6 +119,11 @@ const blogPosts = {
     category: 'Content Strategy',
     gradientClass: 'bg-gradient-to-br from-rose-300/30 via-amber-300/30 to-lime-300/30',
   },
+  'inside-gpt5s-brain-system-prompt-secrets-first-movers': {
+    title: "Inside GPT-5’s Brain: System Prompt Secrets for First Movers",
+    category: 'AI & Growth',
+    gradientClass: 'bg-gradient-to-br from-emerald-300/30 via-sky-300/30 to-indigo-300/30',
+  },
 } as const
 
 export function getPostMetadataForOG(slug: string) {
