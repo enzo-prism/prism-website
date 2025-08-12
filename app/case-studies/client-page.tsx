@@ -61,6 +61,26 @@ export default function CaseStudiesPage() {
         "New brand, custom website, multi‑channel acquisition and end‑to‑end tracking working in tandem.",
       slug: "laguna-beach-dental-arts",
     },
+    {
+      id: "5",
+      title: "Family Dentistry Growth System",
+      client: "Town Centre Dental",
+      industry: "Dentistry",
+      location: "Brentwood, CA",
+      description:
+        "Modern website, clear services, streamlined booking, and end‑to‑end analytics.",
+      slug: "town-centre-dental",
+    },
+    {
+      id: "6",
+      title: "Post‑M&A Relaunch for a Family Dental Practice",
+      client: "Grace Dental Santa Rosa",
+      industry: "Dentistry",
+      location: "Santa Rosa, CA",
+      description:
+        "Brand refresh, custom site, multi‑channel acquisition, and tracking built for scale.",
+      slug: "grace-dental-santa-rosa",
+    },
   ]
 
   return (
