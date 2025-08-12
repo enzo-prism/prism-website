@@ -86,6 +86,13 @@ const websiteProjects = [
     category: "healthcare",
     description: "family dentistry with dr. gerard banaga in brentwood",
   },
+  {
+    id: "15",
+    title: "family first smile care",
+    url: "https://famfirstsmile.com/",
+    category: "healthcare",
+    description: "family‑focused dental care in los gatos",
+  },
 ]
 
 export default function WebsitesPage() {

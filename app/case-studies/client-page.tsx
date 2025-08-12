@@ -63,6 +63,16 @@ export default function CaseStudiesPage() {
     },
     {
       id: "5",
+      title: "Family‑Focused Website with Clear Conversion",
+      client: "Family First Smile Care",
+      industry: "Dentistry",
+      location: "Los Gatos, CA",
+      description:
+        "Services clarity, office comforts, and measurable conversion flows built for families.",
+      slug: "family-first-smile-care",
+    },
+    {
+      id: "6",
       title: "Family Dentistry Growth System",
       client: "Town Centre Dental",
       industry: "Dentistry",
@@ -72,7 +82,7 @@ export default function CaseStudiesPage() {
       slug: "town-centre-dental",
     },
     {
-      id: "6",
+      id: "7",
       title: "Post‑M&A Relaunch for a Family Dental Practice",
       client: "Grace Dental Santa Rosa",
       industry: "Dentistry",
