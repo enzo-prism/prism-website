@@ -1,18 +1,19 @@
 "use client"
 
-import { DrWongGrowthChart } from "@/components/case-studies/dr-wong-growth-chart"
+import { DrWongGrowthChart } from "@/components/case-studies/dr-wong-growth-chart";
 import { DrWongUserDemographicsChart } from "@/components/case-studies/dr-wong-user-demographics-chart"; // Import the new chart
-import Footer from "@/components/footer"
-import PageViewTracker from "@/components/page-view-tracker"
-import { CaseStudySchema } from "@/components/schema-markup"
-import SocialShare from "@/components/social-share"
-import { Button } from "@/components/ui/button"
-import { trackCTAClick } from "@/utils/analytics"
-import { ArrowLeft, ArrowRight, ChevronRight } from "lucide-react"
-import dynamic from "next/dynamic"
-import Image from "next/image"
-import Link from "next/link"
-import { useEffect, useState } from "react"
+import Footer from "@/components/footer";
+import PageViewTracker from "@/components/page-view-tracker";
+import { CaseStudySchema } from "@/components/schema-markup";
+import SocialShare from "@/components/social-share";
+import { Button } from "@/components/ui/button";
+import YouTubeVideoEmbed from "@/components/youtube-video-embed";
+import { trackCTAClick } from "@/utils/analytics";
+import { ArrowLeft, ArrowRight, ChevronRight } from "lucide-react";
+import dynamic from "next/dynamic";
+import Image from "next/image";
+import Link from "next/link";
+import { useEffect, useState } from "react";
 const Navbar = dynamic(() => import("@/components/navbar"), { ssr: false })
 
 export default function ChristopherWongCaseStudy() {
@@ -373,6 +374,13 @@ export default function ChristopherWongCaseStudy() {
                         passion for cars and basketball. The video received over 2,000 views from existing patients 
                         before their first appointment with the new doctor.
                       </p>
+                      <div className="mt-4">
+                        <YouTubeVideoEmbed
+                          videoId="HrksJeYb02Q"
+                          title="Dr. Christopher Wong — Patient Introduction"
+                          className="rounded-lg overflow-hidden"
+                        />
+                      </div>
                     </div>
 
                     <div>
