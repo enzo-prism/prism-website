@@ -3,6 +3,7 @@ import MinimalWebsiteList from "@/components/minimal-website-list"
 import Navbar from "@/components/navbar"
 import PageViewTracker from "@/components/page-view-tracker"
 import ScrollProgressBar from "@/components/scroll-progress-bar"
+import SeoTextSection from "@/components/seo-text-section"
 import { Button } from "@/components/ui/button"
 import type { Metadata } from "next"
 import Link from "next/link"
@@ -213,6 +214,16 @@ export default function WebsitesPage() {
             </Link>
           </div>
         </section>
+
+        {/* SEO supporting copy */}
+        <SeoTextSection title="custom website design & development">
+          <p>
+            we build fast, accessible, search‑friendly websites that turn traffic into pipeline. our
+            approach blends brand clarity, information architecture, and technical seo—clean markup,
+            semantic headings, structured data, and image performance—to help you rank and convert on
+            mobile. made with next.js and a design system you can iterate on.
+          </p>
+        </SeoTextSection>
 
       </main>
       <Footer />

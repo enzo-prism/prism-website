@@ -1,3 +1,4 @@
+import SeoTextSection from "@/components/seo-text-section"
 import type { Metadata } from "next"
 import ContactPageClient from "./ContactPageClient"
 
@@ -43,6 +44,15 @@ export default function ContactPage() {
         </div>
       </section>
       <ContactPageClient />
+
+      {/* SEO supporting copy */}
+      <SeoTextSection title="how to work with prism">
+        <p>
+          have a project in mind? we typically begin with a short discovery call to align on goals,
+          timelines, and scope. after that, we propose a plan with clear milestones—design, build,
+          content, and launch—so you always know what comes next.
+        </p>
+      </SeoTextSection>
     </>
   )
 }

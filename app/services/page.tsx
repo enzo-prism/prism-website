@@ -1,5 +1,6 @@
 import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
+import SeoTextSection from "@/components/seo-text-section"
 import type { Metadata } from "next"
 import ServicesClient from "./client-page"
 
@@ -27,6 +28,13 @@ export default function ServicesPage() {
       <Navbar />
       <main>
         <ServicesClient />
+        <SeoTextSection title="services overview">
+          <p>
+            choose a starting point—website, app, design system, or growth—and we tailor the engagement
+            to your goals. every plan includes research, weekly iterations, and analytics, with clear
+            deliverables and timelines.
+          </p>
+        </SeoTextSection>
       </main>
       <Footer />
     </>

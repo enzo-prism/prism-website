@@ -1,3 +1,4 @@
+import SeoTextSection from "@/components/seo-text-section"
 import type { Metadata } from "next"
 import ClientGetStartedPage from "./ClientGetStartedPage"
 
@@ -10,5 +11,16 @@ export const metadata: Metadata = {
 }
 
 export default function GetStartedPage() {
-  return <ClientGetStartedPage />
+  return (
+    <>
+      <ClientGetStartedPage />
+      <SeoTextSection title="our onboarding process">
+        <p>
+          onboarding is simple: we align on outcomes, define scope, and set milestones. you get a clear
+          plan covering research, design, development, content, qa, and launch—with analytics built in.
+          most projects ship in tight, weekly cycles so you see progress fast.
+        </p>
+      </SeoTextSection>
+    </>
+  )
 }

@@ -1,3 +1,4 @@
+import SeoTextSection from "@/components/seo-text-section"
 import type { Metadata } from "next"
 import DesignsPageClient from "./DesignsPageClient"
 
@@ -33,6 +34,15 @@ export default function DesignsPage() {
           </div>
         </div>
       </section>
+
+      {/* SEO supporting copy */}
+      <SeoTextSection title="graphic design & brand systems">
+        <p>
+          from logos and identity systems to pitch decks and social content, we create visual systems that
+          are consistent, legible, and conversion‑focused. every asset aligns with your positioning and
+          is optimized for mobile, ensuring your brand looks sharp from instagram to investor meetings.
+        </p>
+      </SeoTextSection>
     </>
   )
 }

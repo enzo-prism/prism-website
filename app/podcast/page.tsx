@@ -1,3 +1,4 @@
+import SeoTextSection from "@/components/seo-text-section"
 import type { Metadata } from "next"
 import PodcastClientPage from "./client-page"
 
@@ -17,5 +18,15 @@ export const metadata: Metadata = {
 }
 
 export default function PodcastPage() {
-  return <PodcastClientPage />
+  return (
+    <>
+      <PodcastClientPage />
+      <SeoTextSection title="about the prism podcast">
+        <p>
+          candid conversations with founders and operators about what actually works—pricing, hiring,
+          positioning, and growth. zero fluff, actionable lessons you can apply to your team this week.
+        </p>
+      </SeoTextSection>
+    </>
+  )
 }

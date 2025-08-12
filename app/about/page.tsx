@@ -1,3 +1,4 @@
+import SeoTextSection from "@/components/seo-text-section"
 import type { Metadata } from "next"
 import AboutClientPage from "./client-page"
 
@@ -26,6 +27,15 @@ export default function AboutPage() {
         </div>
       </section>
       <AboutClientPage />
+
+      {/* SEO supporting copy */}
+      <SeoTextSection title="about prism">
+        <p>
+          prism is a design‑led software studio. we build websites, apps, and content systems that look
+          beautiful and perform under load. our work spans healthcare, retail, and consumer—always with an
+          emphasis on measurable outcomes: faster pages, higher conversion, and clearer storytelling.
+        </p>
+      </SeoTextSection>
     </>
   )
 }

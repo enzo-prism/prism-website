@@ -1,6 +1,7 @@
 import { BlogListErrorBoundary } from "@/components/blog-error-boundary"
 import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
+import SeoTextSection from "@/components/seo-text-section"
 import type { BlogFrontmatter } from "@/lib/mdx"
 import BlogCTAButton from "./BlogCTAButton"
 import BlogPageTracker from "./BlogPageTracker"
@@ -46,6 +47,15 @@ export default function BlogPage({ posts }: { posts: BlogPost[] }) {
             </div>
           </div>
         </section>
+
+        {/* SEO supporting copy */}
+        <SeoTextSection title="prism blog: design, development, and growth">
+          <p>
+            we publish practical notes on product design, engineering, and modern seo—how to ship faster,
+            write clearer interfaces, and measure what matters. each post is written from real client work
+            and experiments, not theory.
+          </p>
+        </SeoTextSection>
       </main>
       <Footer />
     </div>

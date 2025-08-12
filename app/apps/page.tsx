@@ -3,6 +3,7 @@ import MinimalAppsList from "@/components/minimal-apps-list"
 import Navbar from "@/components/navbar"
 import PageViewTracker from "@/components/page-view-tracker"
 import ScrollProgressBar from "@/components/scroll-progress-bar"
+import SeoTextSection from "@/components/seo-text-section"
 import { Button } from "@/components/ui/button"
 import type { Metadata } from "next"
 import Link from "next/link"
@@ -168,6 +169,16 @@ export default function AppsPage() {
             </Link>
           </div>
         </section>
+
+        {/* SEO supporting copy - minimal prose */}
+        <SeoTextSection title="mobile app development services">
+          <p>
+            we design and ship production‑ready ios and android apps: architecture, ui, and deployment.
+            our team handles the full lifecycle—strategy, design, development, testing, app store
+            submission, and growth. whether you are validating an mvp or scaling an existing product, we
+            prioritize performance, accessibility, and a clean codebase you can maintain.
+          </p>
+        </SeoTextSection>
 
       </main>
       <Footer />

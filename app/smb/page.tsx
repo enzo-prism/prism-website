@@ -1,5 +1,6 @@
 import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
+import SeoTextSection from "@/components/seo-text-section"
 import type { Metadata } from "next"
 import SMBClientPage from "./client-page"
 
@@ -29,6 +30,13 @@ export default function SMBPage() {
       <Navbar />
       <main>
         <SMBClientPage />
+        <SeoTextSection title="small business ai setup">
+          <p>
+            we implement practical ai into small business workflows—lead handling, support replies,
+            content drafting, and measurement. our approach favors accuracy, governance, and simple
+            automations that save hours every week without adding risk.
+          </p>
+        </SeoTextSection>
       </main>
       <Footer />
     </>
