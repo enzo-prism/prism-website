@@ -361,11 +361,27 @@ export async function POST(request: Request) {
 export async function GET() {
   const waitlistCount = prismLeads.filter(lead => 'source' in lead && lead.source === 'waitlist').length
   const aiLeadsCount = prismLeads.filter(lead => 'websiteName' in lead).length
-  
+
+  let dbConnected = false
+  let dbError: string | null = null
+  try {
+    if (supabaseAdmin) {
+      const { error } = await supabaseAdmin.from('form_submissions').select('id').limit(1)
+      if (!error) dbConnected = true
+      else dbError = `${error.code || ''} ${error.message || ''}`.trim()
+    } else {
+      dbError = 'supabaseAdmin not initialized (check SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY)'
+    }
+  } catch (err: any) {
+    dbError = err?.message || 'unknown error'
+  }
+
   return NextResponse.json({
     totalLeads: prismLeads.length,
     waitlistApplications: waitlistCount,
     aiLeads: aiLeadsCount,
-    message: "Prism lead generation endpoint is active"
+    message: "Prism lead generation endpoint is active",
+    dbConnected,
+    ...(dbError ? { dbError } : {})
   })
 }
