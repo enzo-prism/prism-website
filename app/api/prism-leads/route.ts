@@ -79,6 +79,7 @@ export async function POST(request: Request) {
           email: String(email).toLowerCase(),
           company: String(company),
           website: String(website),
+          ...(phone ? { phone: String(phone) } : {}),
           message: selectionSummary,
           why_prism_excites: 'get-started-checkout',
           source: 'get-started-checkout',

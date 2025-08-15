@@ -42,6 +42,7 @@ CREATE TABLE IF NOT EXISTS form_submissions (
   email TEXT NOT NULL,
   company TEXT NOT NULL,
   website TEXT,
+  phone TEXT,
   message TEXT NOT NULL,
   why_prism_excites TEXT NOT NULL,
   source TEXT NOT NULL,

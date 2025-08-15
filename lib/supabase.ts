@@ -22,6 +22,7 @@ export interface FormSubmission {
   email: string
   company: string
   website?: string
+  phone?: string
   message: string
   why_prism_excites: string
   source: string
