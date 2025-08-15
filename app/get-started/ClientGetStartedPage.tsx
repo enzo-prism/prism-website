@@ -51,7 +51,6 @@ export default function ClientGetStartedPage() {
   const [shouldLoadVideo, setShouldLoadVideo] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
-  const [showStickyCTA, setShowStickyCTA] = useState(false)
   const [selectedPlan, setSelectedPlan] = useState<Plan>(null)
   const [searchSurge, setSearchSurge] = useState(false)
   const [contact, setContact] = useState<ContactData>({
@@ -165,23 +164,7 @@ export default function ClientGetStartedPage() {
     return () => clearTimeout(id)
   }, [contact, selectedPlan, searchSurge])
 
-  // Sticky CTA visibility: show when the form is not visible, only on mobile, and no input is focused
-  useEffect(() => {
-    if (!isMobile) return
-    if (!formSectionRef.current) return
-    const formEl = formSectionRef.current
-    const observer = new IntersectionObserver(
-      entries => {
-        const entry = entries[0]
-        const activeTag = document.activeElement?.tagName.toLowerCase()
-        const keyboardLikelyOpen = activeTag === 'input' || activeTag === 'textarea' || activeTag === 'select'
-        setShowStickyCTA(!entry.isIntersecting && !keyboardLikelyOpen)
-      },
-      { threshold: 0.1 }
-    )
-    observer.observe(formEl)
-    return () => observer.disconnect()
-  }, [isMobile])
+  // Sticky CTA removed for a simpler mobile experience
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -643,17 +626,7 @@ export default function ClientGetStartedPage() {
         </section>
         {/* Footer spacing CTA removed to keep flow minimal */}
       </main>
-      {/* Sticky mobile CTA */}
-      {isMobile && showStickyCTA && submitStatus !== 'success' && (
-        <div className="fixed bottom-0 left-0 right-0 z-30 sm:hidden">
-          <div className="mx-4 mb-4 rounded-full shadow-lg border border-neutral-200 bg-white p-2 pb-[env(safe-area-inset-bottom)]">
-            <Button onClick={scrollToForm} className="w-full h-12 rounded-full bg-neutral-900 hover:bg-neutral-800 text-white">
-              Start checkout
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </Button>
-          </div>
-        </div>
-      )}
+      {/* Sticky mobile CTA removed */}
       <Footer />
     </div>
   )
