@@ -1,6 +1,7 @@
 "use client"
 import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -353,16 +354,24 @@ export default function ClientGetStartedPage() {
                 <p className="text-base sm:text-lg text-neutral-700 max-w-[70ch] mx-auto leading-relaxed">
                   Here’s the clean, no‑jargon split. Think of Core vs Plus as how fast we push—not what we do.
                 </p>
-                <div className="mx-auto max-w-[70ch] text-left text-neutral-700 bg-white border border-neutral-100 rounded-xl p-6">
-                  <p className="font-medium text-neutral-900 mb-3">What’s always included (both plans)</p>
-                  <ul className="list-disc pl-5 space-y-2">
-                    <li>
-                      <span className="font-medium">30‑day Launch (one‑time project):</span> we fix the foundation—fast website, clean analytics, complete Google/Apple/Yelp profiles—then give you a simple dashboard and a 90‑day plan.
-                    </li>
-                    <li>
-                      <span className="font-medium">Autopilot each month:</span> you get a 1‑page plan to approve; we ship the work. Month‑to‑month. You own everything.
-                    </li>
-                  </ul>
+                <div className="mx-auto max-w-[70ch] text-left text-neutral-700 bg-white border border-neutral-100 rounded-xl">
+                  <Accordion type="single" collapsible>
+                    <AccordionItem value="included" className="px-6">
+                      <AccordionTrigger className="no-underline py-5 text-neutral-900">
+                        <span className="font-medium">What’s always included (both plans)</span>
+                      </AccordionTrigger>
+                      <AccordionContent>
+                        <ul className="list-disc pl-5 space-y-2">
+                          <li>
+                            <span className="font-medium">30‑day Launch (one‑time project):</span> we fix the foundation—fast website, clean analytics, complete Google/Apple/Yelp profiles—then give you a simple dashboard and a 90‑day plan.
+                          </li>
+                          <li>
+                            <span className="font-medium">Autopilot each month:</span> you get a 1‑page plan to approve; we ship the work. Month‑to‑month. You own everything.
+                          </li>
+                        </ul>
+                      </AccordionContent>
+                    </AccordionItem>
+                  </Accordion>
                 </div>
               </motion.div>
 
@@ -412,25 +421,31 @@ export default function ClientGetStartedPage() {
                             </CardHeader>
                             <CardContent className="space-y-4">
                               <p className="text-neutral-700">Best for: “Make it modern and keep it growing without taking over my life.”</p>
-                              <div className="space-y-2">
-                                <p className="font-medium text-neutral-900">Pace (each month):</p>
-                                <ul className="list-disc pl-5 space-y-1 text-neutral-700">
-                                  <li>3–4 meaningful moves shipped (content, conversion, listings, speed/crawl).</li>
-                                  <li>1–2 small experiments (e.g., headline/offer test).</li>
-                                  <li>Content cadence: 1 useful update or mini‑piece + local listings post weekly.</li>
-                                  <li>Review care: new reviews prompted; replies within 72 hours.</li>
-                                  <li>Checks: monthly KPI snapshot + “what we shipped & why.”</li>
-                                </ul>
-                              </div>
-                              <div className="space-y-2">
-                                <p className="font-medium text-neutral-900">A typical CORE month</p>
-                                <ul className="list-disc pl-5 space-y-1 text-neutral-700">
-                                  <li>Refresh a service page + add testimonials</li>
-                                  <li>Weekly Google Business Profile post + Apple showcase update</li>
-                                  <li>Fix a form friction point</li>
-                                  <li>Run a simple hero A/B test</li>
-                                </ul>
-                              </div>
+                              <Accordion type="single" collapsible>
+                                <AccordionItem value="core-pace">
+                                  <AccordionTrigger className="no-underline py-3 text-neutral-900">Pace (each month)</AccordionTrigger>
+                                  <AccordionContent>
+                                    <ul className="list-disc pl-5 space-y-1 text-neutral-700">
+                                      <li>3–4 meaningful moves shipped (content, conversion, listings, speed/crawl).</li>
+                                      <li>1–2 small experiments (e.g., headline/offer test).</li>
+                                      <li>Content cadence: 1 useful update or mini‑piece + local listings post weekly.</li>
+                                      <li>Review care: new reviews prompted; replies within 72 hours.</li>
+                                      <li>Checks: monthly KPI snapshot + “what we shipped & why.”</li>
+                                    </ul>
+                                  </AccordionContent>
+                                </AccordionItem>
+                                <AccordionItem value="core-month">
+                                  <AccordionTrigger className="no-underline py-3 text-neutral-900">A typical CORE month</AccordionTrigger>
+                                  <AccordionContent>
+                                    <ul className="list-disc pl-5 space-y-1 text-neutral-700">
+                                      <li>Refresh a service page + add testimonials</li>
+                                      <li>Weekly Google Business Profile post + Apple showcase update</li>
+                                      <li>Fix a form friction point</li>
+                                      <li>Run a simple hero A/B test</li>
+                                    </ul>
+                                  </AccordionContent>
+                                </AccordionItem>
+                              </Accordion>
                             </CardContent>
                             <CardFooter>
                               <Button onClick={() => setSelectedPlan('CORE')} className="w-full h-11 bg-neutral-900 hover:bg-neutral-800 text-white">
@@ -449,26 +464,32 @@ export default function ClientGetStartedPage() {
                             </CardHeader>
                             <CardContent className="space-y-4">
                               <p className="text-neutral-700">Best for: “We want momentum now—fill the schedule or push a high‑value service.”</p>
-                              <div className="space-y-2">
-                                <p className="font-medium text-neutral-900">Pace (each month):</p>
-                                <ul className="list-disc pl-5 space-y-1 text-neutral-700">
-                                  <li>5–7 meaningful moves shipped (more surface area, done sooner).</li>
-                                  <li>2–3 experiments (continuously testing copy/offers/landing variants).</li>
-                                  <li>Content cadence: 1 flagship asset most months (e.g., a full service page or case study) plus derivatives for site & listings.</li>
-                                  <li>Listings: 2× weekly posting rhythm + more photo/showcase updates.</li>
-                                  <li>Review care: replies within 48 hours; active Q&A seeding.</li>
-                                  <li>Priority: quicker turnaround on fixes, first dibs on on‑site days.</li>
-                                </ul>
-                              </div>
-                              <div className="space-y-2">
-                                <p className="font-medium text-neutral-900">A typical PLUS month</p>
-                                <ul className="list-disc pl-5 space-y-1 text-neutral-700">
-                                  <li>New “Dental Implants” page with FAQs, pricing/financing clarity, before/after proof</li>
-                                  <li>Two listing posts per week + fresh photo set and booking deep‑links</li>
-                                  <li>Landing/hero test and a follow‑up variant based on results</li>
-                                  <li>Internal‑links pass + speed tune to protect gains</li>
-                                </ul>
-                              </div>
+                              <Accordion type="single" collapsible>
+                                <AccordionItem value="plus-pace">
+                                  <AccordionTrigger className="no-underline py-3 text-neutral-900">Pace (each month)</AccordionTrigger>
+                                  <AccordionContent>
+                                    <ul className="list-disc pl-5 space-y-1 text-neutral-700">
+                                      <li>5–7 meaningful moves shipped (more surface area, done sooner).</li>
+                                      <li>2–3 experiments (continuously testing copy/offers/landing variants).</li>
+                                      <li>Content cadence: 1 flagship asset most months (e.g., a full service page or case study) plus derivatives for site & listings.</li>
+                                      <li>Listings: 2× weekly posting rhythm + more photo/showcase updates.</li>
+                                      <li>Review care: replies within 48 hours; active Q&A seeding.</li>
+                                      <li>Priority: quicker turnaround on fixes, first dibs on on‑site days.</li>
+                                    </ul>
+                                  </AccordionContent>
+                                </AccordionItem>
+                                <AccordionItem value="plus-month">
+                                  <AccordionTrigger className="no-underline py-3 text-neutral-900">A typical PLUS month</AccordionTrigger>
+                                  <AccordionContent>
+                                    <ul className="list-disc pl-5 space-y-1 text-neutral-700">
+                                      <li>New “Dental Implants” page with FAQs, pricing/financing clarity, before/after proof</li>
+                                      <li>Two listing posts per week + fresh photo set and booking deep‑links</li>
+                                      <li>Landing/hero test and a follow‑up variant based on results</li>
+                                      <li>Internal‑links pass + speed tune to protect gains</li>
+                                    </ul>
+                                  </AccordionContent>
+                                </AccordionItem>
+                              </Accordion>
                             </CardContent>
                             <CardFooter>
                               <Button onClick={() => setSelectedPlan('PLUS')} className="w-full h-11 bg-neutral-900 hover:bg-neutral-800 text-white">
@@ -482,11 +503,18 @@ export default function ClientGetStartedPage() {
                         {/* Add-on toggle */}
                         <div className="bg-white border border-neutral-100 rounded-xl p-6">
                           <div className="flex items-center justify-between">
-                          <div>
+                            <div className="flex-1 min-w-0">
                               <p className="font-medium text-neutral-900">Optional add‑on (either plan)</p>
-                              <p className="text-neutral-700 text-sm mt-1">Search Surge (Google Ads) +$1.5k/mo: we manage search campaigns and pair them with at least one landing test each month. (Ad spend is separate.)</p>
+                              <Accordion type="single" collapsible>
+                                <AccordionItem value="surge-details">
+                                  <AccordionTrigger className="no-underline py-2 text-neutral-900 text-sm">What is Search Surge?</AccordionTrigger>
+                                  <AccordionContent>
+                                    <p className="text-neutral-700 text-sm">Search Surge (Google Ads) +$1.5k/mo: we manage search campaigns and pair them with at least one landing test each month. (Ad spend is separate.)</p>
+                                  </AccordionContent>
+                                </AccordionItem>
+                              </Accordion>
                             </div>
-                            <div className="flex items-center gap-3">
+                            <div className="flex items-center gap-3 pl-4">
                               <Label htmlFor="surge">Search Surge</Label>
                               <Switch id="surge" checked={searchSurge} onCheckedChange={(checked) => setSearchSurge(!!checked)} />
                             </div>
@@ -494,21 +522,37 @@ export default function ClientGetStartedPage() {
                         </div>
 
                         {/* How to choose quickly */}
-                        <div className="bg-white border border-neutral-100 rounded-xl p-6">
-                          <p className="font-medium text-neutral-900 mb-2">How to choose quickly</p>
-                          <ul className="list-disc pl-5 space-y-1 text-neutral-700">
-                            <li>Pick CORE if you want dependable progress with minimal time from you.</li>
-                            <li>Pick PLUS if you want to accelerate (new service push, seasonal demand, new location) and you’re okay with us moving faster and testing more.</li>
-                          </ul>
+                        <div className="bg-white border border-neutral-100 rounded-xl">
+                          <Accordion type="single" collapsible>
+                            <AccordionItem value="choose-quickly" className="px-6">
+                              <AccordionTrigger className="no-underline py-5 text-neutral-900">
+                                <span className="font-medium">How to choose quickly</span>
+                              </AccordionTrigger>
+                              <AccordionContent>
+                                <ul className="list-disc pl-5 space-y-1 text-neutral-700">
+                                  <li>Pick CORE if you want dependable progress with minimal time from you.</li>
+                                  <li>Pick PLUS if you want to accelerate (new service push, seasonal demand, new location) and you’re okay with us moving faster and testing more.</li>
+                                </ul>
+                              </AccordionContent>
+                            </AccordionItem>
+                          </Accordion>
                         </div>
 
                         {/* Simple promises */}
-                        <div className="bg-white border border-neutral-100 rounded-xl p-6">
-                          <p className="font-medium text-neutral-900 mb-2">Simple promises (both plans)</p>
-                          <ul className="list-disc pl-5 space-y-1 text-neutral-700">
-                            <li>30‑Day Clarity: foundation fixed + baseline dashboard—or Month 2 is free.</li>
-                            <li>90‑Day Lift: if no lift in two leading indicators (e.g., calls, profile actions, site conversion), we add an extra month of lift work at no charge.</li>
-                          </ul>
+                        <div className="bg-white border border-neutral-100 rounded-xl">
+                          <Accordion type="single" collapsible>
+                            <AccordionItem value="promises" className="px-6">
+                              <AccordionTrigger className="no-underline py-5 text-neutral-900">
+                                <span className="font-medium">Simple promises (both plans)</span>
+                              </AccordionTrigger>
+                              <AccordionContent>
+                                <ul className="list-disc pl-5 space-y-1 text-neutral-700">
+                                  <li>30‑Day Clarity: foundation fixed + baseline dashboard—or Month 2 is free.</li>
+                                  <li>90‑Day Lift: if no lift in two leading indicators (e.g., calls, profile actions, site conversion), we add an extra month of lift work at no charge.</li>
+                                </ul>
+                              </AccordionContent>
+                            </AccordionItem>
+                          </Accordion>
                         </div>
 
                         <div className="pt-2">
