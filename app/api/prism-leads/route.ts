@@ -88,11 +88,27 @@ export async function POST(request: Request) {
         let insertedData = null
 
         if (supabaseAdmin) {
-          const { data: dbData, error: dbError } = await supabaseAdmin
+          let dbData = null
+          let dbError = null as any
+          // Attempt insert
+          const first = await supabaseAdmin
             .from('form_submissions')
             .insert([submission])
             .select()
             .single()
+          dbData = first.data
+          dbError = first.error
+
+          // If phone column doesn't exist, retry without it
+          if (dbError && (dbError.code === '42703' || /column\s+"?phone"?\s+does not exist/i.test(dbError.message || ''))) {
+            const { data: retryData, error: retryError } = await supabaseAdmin
+              .from('form_submissions')
+              .insert([{ ...submission, phone: undefined }])
+              .select()
+              .single()
+            dbData = retryData
+            dbError = retryError
+          }
 
           if (dbError) {
             console.error('Database error:', dbError)
