@@ -94,7 +94,6 @@ export default function ClientGetStartedPage() {
   const videoRef = useRef<HTMLDivElement>(null)
   const formSectionRef = useRef<HTMLDivElement>(null)
   const nameInputRef = useRef<HTMLInputElement>(null)
-  const continueButtonRef = useRef<HTMLButtonElement>(null)
 
   const scrollToForm = () => {
     formSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
@@ -225,16 +224,6 @@ export default function ClientGetStartedPage() {
 
   const basePrice = selectedPlan === 'CORE' ? 1500 : selectedPlan === 'PLUS' ? 2500 : 0
   const totalPrice = basePrice + (searchSurge ? 1500 : 0)
-
-  const handlePlanSelect = (plan: Plan) => {
-    setSelectedPlan(plan)
-    // Defer until state is applied and the button becomes enabled
-    setTimeout(() => {
-      continueButtonRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' })
-      // Focus shortly after scroll for keyboard users
-      setTimeout(() => continueButtonRef.current?.focus(), 250)
-    }, 50)
-  }
 
   return (
     <div className="flex min-h-screen flex-col bg-white">
@@ -408,7 +397,15 @@ export default function ClientGetStartedPage() {
                             <CardHeader>
                               <CardTitle className="flex items-center justify-between">
                                 <span>CORE — steady compounding</span>
-                                <span className="text-neutral-700 text-lg">$1.5k/mo</span>
+                                <span className="flex items-center gap-2">
+                                  {selectedPlan === 'CORE' && (
+                                    <span className="inline-flex items-center gap-1 text-xs font-medium text-green-700 bg-green-50 border border-green-200 rounded-full px-2 py-1">
+                                      <CheckCircle className="h-3.5 w-3.5" />
+                                      Selected
+                                    </span>
+                                  )}
+                                  <span className="text-neutral-700 text-lg">$1.5k/mo</span>
+                                </span>
                               </CardTitle>
                             </CardHeader>
                             <CardContent className="space-y-4">
@@ -440,7 +437,7 @@ export default function ClientGetStartedPage() {
                               </Accordion>
                             </CardContent>
                             <CardFooter>
-                              <Button onClick={() => handlePlanSelect('CORE')} className="w-full h-11 bg-neutral-900 hover:bg-neutral-800 text-white">
+                              <Button onClick={() => setSelectedPlan('CORE')} className="w-full h-11 bg-neutral-900 hover:bg-neutral-800 text-white">
                                 {selectedPlan === 'CORE' ? 'Selected' : 'Choose CORE'}
                                 <ArrowRight className="ml-2 h-4 w-4" />
                               </Button>
@@ -451,7 +448,15 @@ export default function ClientGetStartedPage() {
                             <CardHeader>
                               <CardTitle className="flex items-center justify-between">
                                 <span>PLUS — faster compounding</span>
-                                <span className="text-neutral-700 text-lg">$2.5k/mo</span>
+                                <span className="flex items-center gap-2">
+                                  {selectedPlan === 'PLUS' && (
+                                    <span className="inline-flex items-center gap-1 text-xs font-medium text-green-700 bg-green-50 border border-green-200 rounded-full px-2 py-1">
+                                      <CheckCircle className="h-3.5 w-3.5" />
+                                      Selected
+                                    </span>
+                                  )}
+                                  <span className="text-neutral-700 text-lg">$2.5k/mo</span>
+                                </span>
                               </CardTitle>
                             </CardHeader>
                             <CardContent className="space-y-4">
@@ -484,7 +489,7 @@ export default function ClientGetStartedPage() {
                               </Accordion>
                             </CardContent>
                             <CardFooter>
-                              <Button onClick={() => handlePlanSelect('PLUS')} className="w-full h-11 bg-neutral-900 hover:bg-neutral-800 text-white">
+                              <Button onClick={() => setSelectedPlan('PLUS')} className="w-full h-11 bg-neutral-900 hover:bg-neutral-800 text-white">
                                 {selectedPlan === 'PLUS' ? 'Selected' : 'Choose PLUS'}
                                 <ArrowRight className="ml-2 h-4 w-4" />
                               </Button>
@@ -569,7 +574,7 @@ export default function ClientGetStartedPage() {
                         </div>
 
                         <div className="pt-2">
-                          <Button ref={continueButtonRef} disabled={!isStep1Valid()} onClick={() => setCurrentStep(2)} className="w-full h-12 bg-neutral-900 hover:bg-neutral-800 disabled:bg-neutral-300 disabled:cursor-not-allowed text-white font-medium rounded-md transition-colors">
+                          <Button disabled={!isStep1Valid()} onClick={() => setCurrentStep(2)} className="w-full h-12 bg-neutral-900 hover:bg-neutral-800 disabled:bg-neutral-300 disabled:cursor-not-allowed text-white font-medium rounded-md transition-colors">
                             Continue
                             <ArrowRight className="ml-2 h-4 w-4" />
                           </Button>
