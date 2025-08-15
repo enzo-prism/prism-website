@@ -94,6 +94,7 @@ export default function ClientGetStartedPage() {
   const videoRef = useRef<HTMLDivElement>(null)
   const formSectionRef = useRef<HTMLDivElement>(null)
   const nameInputRef = useRef<HTMLInputElement>(null)
+  const continueButtonRef = useRef<HTMLButtonElement>(null)
 
   const scrollToForm = () => {
     formSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
@@ -225,6 +226,16 @@ export default function ClientGetStartedPage() {
   const basePrice = selectedPlan === 'CORE' ? 1500 : selectedPlan === 'PLUS' ? 2500 : 0
   const totalPrice = basePrice + (searchSurge ? 1500 : 0)
 
+  const handlePlanSelect = (plan: Plan) => {
+    setSelectedPlan(plan)
+    // Defer until state is applied and the button becomes enabled
+    setTimeout(() => {
+      continueButtonRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+      // Focus shortly after scroll for keyboard users
+      setTimeout(() => continueButtonRef.current?.focus(), 250)
+    }, 50)
+  }
+
   return (
     <div className="flex min-h-screen flex-col bg-white">
       <Navbar />
@@ -310,11 +321,7 @@ export default function ClientGetStartedPage() {
                   >
                     See case studies
                   </Button>
-                  <div className="flex items-center gap-3 text-sm text-neutral-600">
-                    <span>Month‑to‑month</span>
-                    <span className="hidden sm:block w-px h-4 bg-neutral-300" />
-                    <span>You own everything</span>
-                    <span className="hidden sm:block w-px h-4 bg-neutral-300" />
+                  <div className="flex items-center justify-center text-sm text-neutral-600">
                     <span>Requests reviewed on the 1st</span>
                   </div>
                 </motion.div>
@@ -433,7 +440,7 @@ export default function ClientGetStartedPage() {
                               </Accordion>
                             </CardContent>
                             <CardFooter>
-                              <Button onClick={() => setSelectedPlan('CORE')} className="w-full h-11 bg-neutral-900 hover:bg-neutral-800 text-white">
+                              <Button onClick={() => handlePlanSelect('CORE')} className="w-full h-11 bg-neutral-900 hover:bg-neutral-800 text-white">
                                 {selectedPlan === 'CORE' ? 'Selected' : 'Choose CORE'}
                                 <ArrowRight className="ml-2 h-4 w-4" />
                               </Button>
@@ -477,7 +484,7 @@ export default function ClientGetStartedPage() {
                               </Accordion>
                             </CardContent>
                             <CardFooter>
-                              <Button onClick={() => setSelectedPlan('PLUS')} className="w-full h-11 bg-neutral-900 hover:bg-neutral-800 text-white">
+                              <Button onClick={() => handlePlanSelect('PLUS')} className="w-full h-11 bg-neutral-900 hover:bg-neutral-800 text-white">
                                 {selectedPlan === 'PLUS' ? 'Selected' : 'Choose PLUS'}
                                 <ArrowRight className="ml-2 h-4 w-4" />
                               </Button>
@@ -562,7 +569,7 @@ export default function ClientGetStartedPage() {
                         </div>
 
                         <div className="pt-2">
-                          <Button disabled={!isStep1Valid()} onClick={() => setCurrentStep(2)} className="w-full h-12 bg-neutral-900 hover:bg-neutral-800 disabled:bg-neutral-300 disabled:cursor-not-allowed text-white font-medium rounded-md transition-colors">
+                          <Button ref={continueButtonRef} disabled={!isStep1Valid()} onClick={() => setCurrentStep(2)} className="w-full h-12 bg-neutral-900 hover:bg-neutral-800 disabled:bg-neutral-300 disabled:cursor-not-allowed text-white font-medium rounded-md transition-colors">
                             Continue
                             <ArrowRight className="ml-2 h-4 w-4" />
                           </Button>
