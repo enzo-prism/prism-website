@@ -15,6 +15,7 @@
     "mcp:validate": "npm run mcp:health && echo '✅ MCP servers are ready for Claude Code'",
     "diagnose:images": "npx ts-node scripts/image-system-diagnostic.ts",
     "verify:deploy": "npx ts-node scripts/verify-deployment.ts",
+    "diag:supabase": "node --loader ts-node/esm scripts/check-supabase.mjs || node scripts/check-supabase.mjs",
     "git:status": "node scripts/git-sync-monitor.js check",
     "git:report": "node scripts/git-sync-monitor.js report",
     "git:sync": "git fetch origin && npm run git:status",
