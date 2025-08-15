@@ -1,3 +1,6 @@
+// Ensure this route runs in the Node.js runtime so server env vars are available
+export const runtime = 'nodejs'
+export const dynamic = 'force-dynamic'
 import { sendFormSubmissionEmail } from "@/lib/email"
 import { supabaseAdmin, type FormSubmission } from "@/lib/supabase"
 import { NextResponse } from "next/server"
@@ -112,6 +115,9 @@ export async function POST(request: Request) {
 
           if (dbError) {
             console.error('Database error:', dbError)
+            // Extra context useful in hosted environments
+            console.error('Supabase URL:', process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL)
+            console.error('Key present:', !!process.env.SUPABASE_SERVICE_ROLE_KEY)
             throw dbError
           }
 
