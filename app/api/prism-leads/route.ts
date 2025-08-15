@@ -30,7 +30,119 @@ export async function POST(request: Request) {
   try {
     const data = await request.json()
 
-    // Check if this is a waitlist application or get-started form
+    // Checkout flow from /get-started
+    if (data.source === 'get-started-checkout') {
+      const {
+        plan,
+        addon_search_surge,
+        monthly_price,
+        name,
+        email,
+        company,
+        website,
+        phone
+      } = data as Record<string, unknown>
+
+      // Basic validation
+      const validPlan = plan === 'CORE' || plan === 'PLUS'
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+      if (!validPlan) {
+        return NextResponse.json({ error: 'Invalid plan selection' }, { status: 400 })
+      }
+      if (!name || typeof name !== 'string' || name.trim().length < 2) {
+        return NextResponse.json({ error: 'Invalid name' }, { status: 400 })
+      }
+      if (!email || typeof email !== 'string' || !emailRegex.test(email)) {
+        return NextResponse.json({ error: 'Invalid email' }, { status: 400 })
+      }
+      if (!company || typeof company !== 'string' || company.trim().length < 2) {
+        return NextResponse.json({ error: 'Invalid company' }, { status: 400 })
+      }
+      if (!website || typeof website !== 'string') {
+        return NextResponse.json({ error: 'Website is required' }, { status: 400 })
+      }
+
+      // Create a concise message that captures the selections
+      const selectionSummary = [
+        `Plan: ${plan}`,
+        `Add-on: Search Surge ${addon_search_surge ? 'ON (+$1.5k/mo)' : 'OFF'}`,
+        `Monthly price: $${Number(monthly_price || 0).toLocaleString()}/mo`,
+        phone && `Phone: ${phone}`,
+      ]
+        .filter(Boolean)
+        .join('\n')
+
+      try {
+        // Store in Supabase (reuse existing table columns)
+        const submission: Partial<FormSubmission> = {
+          name: String(name),
+          email: String(email).toLowerCase(),
+          company: String(company),
+          website: String(website),
+          message: selectionSummary,
+          why_prism_excites: 'get-started-checkout',
+          source: 'get-started-checkout',
+        }
+
+        let insertedData = null
+
+        if (supabaseAdmin) {
+          const { data: dbData, error: dbError } = await supabaseAdmin
+            .from('form_submissions')
+            .insert([submission])
+            .select()
+            .single()
+
+          if (dbError) {
+            console.error('Database error:', dbError)
+            throw dbError
+          }
+
+          insertedData = dbData
+        } else {
+          console.warn('Database not configured. Storing in memory only.')
+          insertedData = { id: 'memory-' + Date.now(), ...submission, created_at: new Date().toISOString() }
+        }
+
+        // Email notification
+        try {
+          await sendFormSubmissionEmail({
+            name: String(name),
+            email: String(email),
+            company: String(company),
+            website: String(website),
+            message: selectionSummary,
+            whyPrismExcites: 'get-started-checkout',
+            submittedAt: insertedData.created_at || new Date().toISOString(),
+          })
+          console.log('Email notification sent successfully')
+        } catch (emailError) {
+          console.error('Email sending failed:', emailError)
+        }
+
+        // Also store in memory for debugging parity
+        prismLeads.push({
+          name: String(name),
+          email: String(email),
+          company: String(company),
+          website: String(website),
+          message: selectionSummary,
+          source: 'get-started-checkout',
+          timestamp: new Date().toISOString(),
+        } as any)
+
+        return NextResponse.json({
+          success: true,
+          message: 'Checkout submission received successfully',
+          id: insertedData.id,
+        })
+      } catch (error) {
+        console.error('Error storing checkout submission:', error)
+        return NextResponse.json({ error: 'Failed to process submission' }, { status: 500 })
+      }
+    }
+
+    // Check if this is a waitlist application or legacy get-started form
     if (data.source === 'waitlist' || data.source === 'exclusive-waitlist') {
       // Handle waitlist/get-started application
       const waitlistData = data as WaitlistApplication

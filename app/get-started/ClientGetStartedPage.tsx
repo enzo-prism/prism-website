@@ -2,26 +2,26 @@
 import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
 import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Switch } from "@/components/ui/switch"
 import VideoWithPoster from "@/components/video-with-poster"
 import { useMobile } from "@/hooks/use-mobile"
 import { useMobileAnimations } from "@/hooks/use-mobile-animations"
 import { trackCTAClick } from "@/utils/analytics"
 import { AnimatePresence, motion } from "framer-motion"
-import { ArrowRight, CheckCircle, Clock, Rocket, Share2, TrendingUp, Users, Zap } from "lucide-react"
+import { ArrowRight, CheckCircle, Clock, Users } from "lucide-react"
 import { useEffect, useRef, useState } from "react"
 
-interface FormData {
+type Plan = 'CORE' | 'PLUS' | null
+
+interface ContactData {
   name: string
   email: string
   company: string
   website: string
-  primaryGoal: string
-  timeline: string
-  budgetRange: string
-  growthChallenge: string
-  whyPartnerWithPrism: string
-  anythingElse: string
+  phone: string
 }
 
 // Simplified animation variants for elegant transitions
@@ -51,20 +51,16 @@ export default function ClientGetStartedPage() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
   const [showStickyCTA, setShowStickyCTA] = useState(false)
-  const [showStep1Errors, setShowStep1Errors] = useState(false)
-  const [formData, setFormData] = useState<FormData>({
+  const [selectedPlan, setSelectedPlan] = useState<Plan>(null)
+  const [searchSurge, setSearchSurge] = useState(false)
+  const [contact, setContact] = useState<ContactData>({
     name: '',
     email: '',
     company: '',
     website: '',
-    primaryGoal: '',
-    timeline: '',
-    budgetRange: '',
-    growthChallenge: '',
-    whyPartnerWithPrism: '',
-    anythingElse: ''
+    phone: ''
   })
-  const [currentStep, setCurrentStep] = useState<1 | 2>(1)
+  const [currentStep, setCurrentStep] = useState<1 | 2 | 3>(1)
   // Calculate days until the next monthly review (on the 1st)
   const calculateDaysUntilNextFirst = () => {
     const now = new Date()
@@ -98,7 +94,6 @@ export default function ClientGetStartedPage() {
   const videoRef = useRef<HTMLDivElement>(null)
   const formSectionRef = useRef<HTMLDivElement>(null)
   const nameInputRef = useRef<HTMLInputElement>(null)
-  const growthChallengeRef = useRef<HTMLTextAreaElement>(null)
 
   const scrollToForm = () => {
     formSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
@@ -129,54 +124,31 @@ export default function ClientGetStartedPage() {
     return () => observer.disconnect()
   }, [shouldLoadVideo])
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleContactChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }))
-    if (showStep1Errors) {
-      // Re-validate on change if we are showing errors
-      validateStep1()
-    }
+    setContact(prev => ({ ...prev, [name]: value }))
   }
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-  const urlRegex = /^(https?:\/\/)?([\w-]+\.)+[\w-]+(\/[^\s]*)?$/i
-  const [step1Errors, setStep1Errors] = useState<Partial<Record<keyof FormData, string>>>({})
+  const urlRegex = /^(https?:\/\/)?([\w-]+\.)+[\w-]+(\/[\w\-\._~:\/?#\[\]@!$&'()*+,;=.]+)?$/i
 
-  const isStep1Valid = () => {
-    return (
-      formData.name.trim().length > 1 &&
-      emailRegex.test(formData.email.trim()) &&
-      formData.company.trim().length > 1 &&
-      urlRegex.test(formData.website.trim()) &&
-      !!formData.primaryGoal &&
-      !!formData.timeline &&
-      !!formData.budgetRange
-    )
-  }
-
-  const validateStep1 = () => {
-    const errors: Partial<Record<keyof FormData, string>> = {}
-    if (formData.name.trim().length <= 1) errors.name = 'Please enter your full name.'
-    if (!emailRegex.test(formData.email.trim())) errors.email = 'Enter a valid email address.'
-    if (formData.company.trim().length <= 1) errors.company = 'Enter your company name.'
-    if (!urlRegex.test(formData.website.trim())) errors.website = 'Enter a valid website URL.'
-    if (!formData.primaryGoal) errors.primaryGoal = 'Select a primary goal.'
-    if (!formData.timeline) errors.timeline = 'Select a timeline.'
-    if (!formData.budgetRange) errors.budgetRange = 'Select a budget range.'
-    setStep1Errors(errors)
-    return Object.keys(errors).length === 0
-  }
+  const isStep1Valid = () => selectedPlan !== null
+  const isStep2Valid = () => (
+    contact.name.trim().length > 1 &&
+    emailRegex.test(contact.email.trim()) &&
+    contact.company.trim().length > 1 &&
+    urlRegex.test(contact.website.trim())
+  )
 
   // Persist form progress locally (mobile-friendly safety)
   useEffect(() => {
     try {
-      const saved = localStorage.getItem('prism_get_started_form')
+      const saved = localStorage.getItem('prism_checkout_form')
       if (saved) {
-        const parsed = JSON.parse(saved) as Partial<FormData>
-        setFormData(prev => ({ ...prev, ...parsed }))
+        const parsed = JSON.parse(saved) as Partial<ContactData> & { plan?: Plan, searchSurge?: boolean }
+        setContact(prev => ({ ...prev, ...parsed }))
+        if (parsed.plan === 'CORE' || parsed.plan === 'PLUS') setSelectedPlan(parsed.plan)
+        if (typeof parsed.searchSurge === 'boolean') setSearchSurge(parsed.searchSurge)
       }
     } catch {}
     // Focus first field for convenience
@@ -186,11 +158,11 @@ export default function ClientGetStartedPage() {
   useEffect(() => {
     const id = setTimeout(() => {
       try {
-        localStorage.setItem('prism_get_started_form', JSON.stringify(formData))
+        localStorage.setItem('prism_checkout_form', JSON.stringify({ ...contact, plan: selectedPlan, searchSurge }))
       } catch {}
     }, 300)
     return () => clearTimeout(id)
-  }, [formData])
+  }, [contact, selectedPlan, searchSurge])
 
   // Sticky CTA visibility: show when the form is not visible, only on mobile, and no input is focused
   useEffect(() => {
@@ -221,42 +193,41 @@ export default function ClientGetStartedPage() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email: formData.email }),
+        body: JSON.stringify({ email: contact.email }),
       })
 
       if (!response.ok) throw new Error('Failed to submit')
 
       // Send to Prism leads endpoint
-      await fetch('/api/prism-leads', {
+      const res2 = await fetch('/api/prism-leads', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          ...formData,
-          source: 'exclusive-partnership-application',
-          timestamp: new Date().toISOString()
+          source: 'get-started-checkout',
+          plan: selectedPlan,
+          addon_search_surge: searchSurge,
+          monthly_price: (selectedPlan === 'CORE' ? 1500 : selectedPlan === 'PLUS' ? 2500 : 0) + (searchSurge ? 1500 : 0),
+          name: contact.name,
+          email: contact.email,
+          company: contact.company,
+          website: contact.website,
+          phone: contact.phone,
         }),
       })
 
+      if (!res2.ok) throw new Error('Failed to submit')
+
       setSubmitStatus('success')
-      trackCTAClick('exclusive partnership application submitted', 'get started page')
+      trackCTAClick('checkout submitted', 'get started page')
       
       // Reset form after success
       setTimeout(() => {
-        setFormData({
-          name: '',
-          email: '',
-          company: '',
-          website: '',
-          primaryGoal: '',
-          timeline: '',
-          budgetRange: '',
-          growthChallenge: '',
-          whyPartnerWithPrism: '',
-          anythingElse: ''
-        })
-        try { localStorage.removeItem('prism_get_started_form') } catch {}
+        setSelectedPlan(null)
+        setSearchSurge(false)
+        setContact({ name: '', email: '', company: '', website: '', phone: '' })
+        try { localStorage.removeItem('prism_checkout_form') } catch {}
       }, 2000)
     } catch (error) {
       console.error('Error submitting form:', error)
@@ -267,35 +238,8 @@ export default function ClientGetStartedPage() {
     }
   }
 
-  const partnerTypes = [
-    {
-      icon: <Rocket className="h-5 w-5" />,
-      title: "Visionary Startups",
-      description: "You're disrupting your space, but your site feels half-baked. We'll build a sleek, conversion-optimized machine that turns traffic into leads on autopilot.",
-      example: "Like the online wellness community we helped hit 2x sign-ups in months."
-    },
-    {
-      icon: <TrendingUp className="h-5 w-5" />,
-      title: "Service Innovators", 
-      description: "You're delivering premium value, but your digital flow is leaking money. We redesign for seamless experiences that boost inquiries and repeat business.",
-      example: "Think: The leadership consultants who saw 40% more bookings after our overhaul."
-    },
-    {
-      icon: <Zap className="h-5 w-5" />,
-      title: "Growth Trailblazers",
-      description: "Scaling hurts without the right tech backbone. We implement world-class tools wrapped in beautiful design to drive LTV through the roof.",
-      example: "Our M&A firm client? 3x conversions on their deal pipeline."
-    }
-  ]
-
-  const leaderQualities = [
-    "You're solving real problems with a service or product people actually crave",
-    "Excellence is your baseline—you obsess over details because they stack into massive gains",
-    "You view design and tech as high-ROI investments, not costs",
-    "You're committed to a digital presence that scales and sells, not just \"looks nice\"",
-    "You want true collaboration: Long-haul wins over quick fixes",
-    "You're hyped to join a crew pioneering beautiful, profitable tech—starting today"
-  ]
+  const basePrice = selectedPlan === 'CORE' ? 1500 : selectedPlan === 'PLUS' ? 2500 : 0
+  const totalPrice = basePrice + (searchSurge ? 1500 : 0)
 
   return (
     <div className="flex min-h-screen flex-col bg-white">
@@ -369,7 +313,7 @@ export default function ClientGetStartedPage() {
                   style={{ willChange: 'transform, opacity' }}
                 >
                   <Button onClick={scrollToForm} className="h-11 px-6 rounded-full bg-neutral-900 hover:bg-neutral-800 text-white">
-                    Apply to work with Prism
+                    Start checkout
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
                   <Button
@@ -385,7 +329,7 @@ export default function ClientGetStartedPage() {
                   <div className="flex items-center gap-4 text-sm text-neutral-600">
                     <div className="flex items-center gap-2"><Users className="w-4 h-4" /><span>Limited new client openings monthly</span></div>
                     <div className="hidden sm:block w-px h-4 bg-neutral-300" />
-                    <div className="flex items-center gap-2"><Clock className="w-4 h-4" /><span>Applications reviewed on the 1st</span></div>
+                    <div className="flex items-center gap-2"><Clock className="w-4 h-4" /><span>Requests reviewed on the 1st</span></div>
                   </div>
                 </motion.div>
               </div>
@@ -393,128 +337,7 @@ export default function ClientGetStartedPage() {
           </div>
         </section>
 
-        {/* Value Proposition Section - Light and concise */}
-        <section className="px-4 py-12 sm:py-16 md:py-20 bg-neutral-50 border-t border-neutral-100">
-          <div className="container mx-auto max-w-3xl">
-            <motion.div 
-              className="space-y-8"
-              initial="initial"
-              whileInView="animate"
-              viewport={getViewportConfig()}
-              variants={staggerChildren}
-            >
-              <motion.p
-                className="text-base sm:text-lg text-neutral-700 leading-relaxed text-center"
-                variants={fadeInY}
-              >
-                We build calm, fast experiences that convert.
-                <br />
-                Clarity that reduces friction. Speed that earns trust. Conversion journeys tied to real metrics.
-              </motion.p>
-
-              <motion.div 
-                className="bg-white rounded-xl p-8 text-center border border-neutral-100"
-                variants={fadeInY}
-                style={{ willChange: 'transform, opacity' }}
-              >
-                <p className="text-lg sm:text-xl font-medium text-neutral-900">
-                  We partner with leaders who value clarity, craft, and compounding ROI.
-                </p>
-                <p className="text-base text-neutral-600 mt-3">
-                  A small, focused roster so every build gets elite attention.
-                </p>
-              </motion.div>
-            </motion.div>
-          </div>
-        </section>
-
-        {/* Who We're Looking For Section - Minimal grid */}
-        <section className="px-4 py-12 sm:py-16 md:py-20 bg-white border-t border-neutral-100">
-          <div className="container mx-auto max-w-5xl">
-            <motion.div
-              initial="initial"
-              whileInView="animate"
-              viewport={getViewportConfig()}
-              variants={staggerChildren}
-            >
-              <motion.div className="text-center mb-12" variants={fadeInY}>
-                <h2 className="text-2xl sm:text-3xl md:text-4xl font-light tracking-tight text-neutral-900 mb-3">
-                  Who We Partner With
-                </h2>
-                <p className="text-base sm:text-lg text-neutral-600 max-w-[70ch] mx-auto">
-                  Across industries, the playbook stays simple: clarity, speed, conversion.
-                </p>
-              </motion.div>
-
-              <div className="grid gap-6 md:grid-cols-3 mb-8">
-                {partnerTypes.map((type, index) => (
-                  <motion.div
-                    key={index}
-                    className="bg-white rounded-xl p-6 border border-neutral-100 hover:border-neutral-200 transition-colors"
-                    variants={fadeInY}
-                    style={{ willChange: 'transform, opacity' }}
-                  >
-                    <div className="flex items-center justify-center w-12 h-12 rounded-full bg-neutral-100 mb-6">
-                      {type.icon}
-                    </div>
-                    <h3 className="text-xl sm:text-2xl font-medium mb-2">{type.title}</h3>
-                    <p className="text-sm sm:text-base text-neutral-600">{type.description}</p>
-                  </motion.div>
-                ))}
-              </div>
-
-              {/* Playbook */}
-              <motion.div className="mt-8" variants={fadeInY}>
-                <div className="bg-white rounded-xl p-6 md:p-8 border border-neutral-100">
-                  <h3 className="text-xl sm:text-2xl font-medium mb-4 text-neutral-900">The Prism Playbook</h3>
-                  <ol className="space-y-3 text-neutral-700 list-decimal list-inside">
-                    <li><span className="font-medium">Diagnose</span> — Audit UX, tech, data. Find the real bottlenecks.</li>
-                    <li><span className="font-medium">Design</span> — High-trust interfaces that make the next step obvious.</li>
-                    <li><span className="font-medium">Build</span> — Modern, scalable stack with performance baked in.</li>
-                    <li><span className="font-medium">Instrument</span> — GA/GSC + heatmaps + event tracking for visibility.</li>
-                    <li><span className="font-medium">Iterate</span> — Ship, measure, and compound gains monthly.</li>
-                  </ol>
-                  <div className="mt-6 flex items-center justify-center gap-3">
-                    <Button onClick={scrollToForm} className="h-10 px-5 rounded-full bg-neutral-900 hover:bg-neutral-800 text-white">
-                      See if we’re a fit → Apply
-                    </Button>
-                  </div>
-                </div>
-              </motion.div>
-            </motion.div>
-          </div>
-        </section>
-
-        {/* Why Prism */}
-        <section className="px-4 py-12 sm:py-16 md:py-20 bg-white border-t border-neutral-100">
-          <div className="container mx-auto max-w-4xl">
-            <motion.p
-              className="text-center text-base sm:text-lg text-neutral-700"
-              initial="initial"
-              whileInView="animate"
-              viewport={getViewportConfig()}
-              variants={fadeInY}
-            >
-              <span className="font-medium">Why Prism</span> — Design as a revenue engine • Engineering you can scale on • Measurement by default • A small, focused roster so every build gets elite attention
-            </motion.p>
-          </div>
-        </section>
-
-        {/* Intake Timing */}
-        <section className="px-4 py-12 sm:py-16 md:py-20 bg-neutral-50 border-t border-neutral-100">
-          <div className="container mx-auto max-w-3xl">
-            <motion.div initial="initial" whileInView="animate" viewport={getViewportConfig()} variants={staggerChildren}>
-              <motion.div className="text-center space-y-2" variants={fadeInY}>
-                <h3 className="text-xl sm:text-2xl font-medium text-neutral-900">Intake Timing</h3>
-                <p className="text-neutral-700">We accept a limited number of new projects each month.</p>
-                <p className="text-neutral-700">Applications are reviewed on the 1st. Apply now to be considered in the next cycle.</p>
-                <p className="text-neutral-600 text-sm">Next review: {nextReviewDate}</p>
-              </motion.div>
-            </motion.div>
-          </div>
-        </section>
-
-        {/* Application Form Section - Clean and minimal (Two-step) */}
+        {/* Plan selection + checkout flow */}
         <section ref={formSectionRef} className="px-4 py-12 sm:py-16 md:py-20 bg-neutral-50 border-t border-neutral-100">
           <div className="container mx-auto max-w-2xl">
             <motion.div
@@ -523,13 +346,24 @@ export default function ClientGetStartedPage() {
               viewport={getViewportConfig()}
               variants={staggerChildren}
             >
-              <motion.div className="text-center mb-10" variants={fadeInY}>
-                <h2 className="text-2xl sm:text-3xl md:text-4xl font-light tracking-tight text-neutral-900 mb-2">
-                  Apply to Work with Prism
+              <motion.div className="text-center mb-10 space-y-4" variants={fadeInY}>
+                <h2 className="text-2xl sm:text-3xl md:text-4xl font-light tracking-tight text-neutral-900">
+                  Choose your pace. Then checkout.
                 </h2>
-                <p className="text-base sm:text-lg text-neutral-600">
-                  A short, two-step application to ensure we’re the right fit.
+                <p className="text-base sm:text-lg text-neutral-700 max-w-[70ch] mx-auto leading-relaxed">
+                  Here’s the clean, no‑jargon split. Think of Core vs Plus as how fast we push—not what we do.
                 </p>
+                <div className="mx-auto max-w-[70ch] text-left text-neutral-700 bg-white border border-neutral-100 rounded-xl p-6">
+                  <p className="font-medium text-neutral-900 mb-3">What’s always included (both plans)</p>
+                  <ul className="list-disc pl-5 space-y-2">
+                    <li>
+                      <span className="font-medium">30‑day Launch (one‑time project):</span> we fix the foundation—fast website, clean analytics, complete Google/Apple/Yelp profiles—then give you a simple dashboard and a 90‑day plan.
+                    </li>
+                    <li>
+                      <span className="font-medium">Autopilot each month:</span> you get a 1‑page plan to approve; we ship the work. Month‑to‑month. You own everything.
+                    </li>
+                  </ul>
+                </div>
               </motion.div>
 
               <AnimatePresence mode="wait">
@@ -546,10 +380,8 @@ export default function ClientGetStartedPage() {
                     <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-green-50 mb-6">
                       <CheckCircle className="h-8 w-8 text-green-600" />
                     </div>
-                    <h3 className="text-xl sm:text-2xl font-medium mb-2">Thanks — we’ve got your application.</h3>
-                    <p className="text-neutral-600">
-                      We review all applications on the 1st. Next review: {nextReviewDate}
-                    </p>
+                    <h3 className="text-xl sm:text-2xl font-medium mb-2">Thanks — we’ve got your request.</h3>
+                    <p className="text-neutral-600">Reviewed on the 1st. Next review: {nextReviewDate}</p>
                   </motion.div>
                 ) : (
                   <motion.div key="form" variants={fadeInY} style={{ willChange: 'transform, opacity' }}>
@@ -557,122 +389,198 @@ export default function ClientGetStartedPage() {
                     <div className="flex justify-center mb-6 text-sm text-neutral-600">
                       <div className="inline-flex items-center gap-2">
                         <span className={`px-2 py-1 rounded-full ${currentStep === 1 ? 'bg-neutral-900 text-white' : 'bg-neutral-200 text-neutral-700'}`}>1</span>
-                        <span>Quick Fit</span>
+                        <span>Select plan</span>
                         <span className="mx-2">/</span>
                         <span className={`px-2 py-1 rounded-full ${currentStep === 2 ? 'bg-neutral-900 text-white' : 'bg-neutral-200 text-neutral-700'}`}>2</span>
-                        <span>Context</span>
+                        <span>Contact</span>
+                        <span className="mx-2">/</span>
+                        <span className={`px-2 py-1 rounded-full ${currentStep === 3 ? 'bg-neutral-900 text-white' : 'bg-neutral-200 text-neutral-700'}`}>3</span>
+                        <span>Review</span>
                       </div>
                     </div>
 
-                    {currentStep === 1 ? (
-                      <form
-                        className="space-y-6 bg-white rounded-xl p-6 border border-neutral-100"
-                        onSubmit={(e) => {
-                          e.preventDefault()
-                          setShowStep1Errors(true)
-                          const valid = validateStep1()
-                          if (!valid) {
-                            // focus first invalid field
-                            if (step1Errors.name) nameInputRef.current?.focus()
-                            else if (step1Errors.email) document.getElementById('email')?.focus()
-                            else if (step1Errors.company) document.getElementById('company')?.focus()
-                            else if (step1Errors.website) document.getElementById('website')?.focus()
-                            else if (step1Errors.primaryGoal) document.getElementsByName('primaryGoal')[0]?.focus()
-                            else if (step1Errors.timeline) document.getElementsByName('timeline')[0]?.focus()
-                            else if (step1Errors.budgetRange) document.getElementsByName('budgetRange')[0]?.focus()
-                            return
-                          }
-                          setCurrentStep(2)
-                          setTimeout(() => growthChallengeRef.current?.focus(), 100)
-                          formSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-                        }}
-                      >
-                        <div className="grid gap-6">
+                    {currentStep === 1 && (
+                      <div className="space-y-6">
+                        <div className="grid gap-4">
+                          {/* Plan Cards */}
+                          <Card className={`border ${selectedPlan === 'CORE' ? 'border-neutral-900' : 'border-neutral-200'} transition-colors`}>
+                            <CardHeader>
+                              <CardTitle className="flex items-center justify-between">
+                                <span>CORE — steady compounding</span>
+                                <span className="text-neutral-700 text-lg">$1.5k/mo</span>
+                              </CardTitle>
+                            </CardHeader>
+                            <CardContent className="space-y-4">
+                              <p className="text-neutral-700">Best for: “Make it modern and keep it growing without taking over my life.”</p>
+                              <div className="space-y-2">
+                                <p className="font-medium text-neutral-900">Pace (each month):</p>
+                                <ul className="list-disc pl-5 space-y-1 text-neutral-700">
+                                  <li>3–4 meaningful moves shipped (content, conversion, listings, speed/crawl).</li>
+                                  <li>1–2 small experiments (e.g., headline/offer test).</li>
+                                  <li>Content cadence: 1 useful update or mini‑piece + local listings post weekly.</li>
+                                  <li>Review care: new reviews prompted; replies within 72 hours.</li>
+                                  <li>Checks: monthly KPI snapshot + “what we shipped & why.”</li>
+                                </ul>
+                              </div>
+                              <div className="space-y-2">
+                                <p className="font-medium text-neutral-900">A typical CORE month</p>
+                                <ul className="list-disc pl-5 space-y-1 text-neutral-700">
+                                  <li>Refresh a service page + add testimonials</li>
+                                  <li>Weekly Google Business Profile post + Apple showcase update</li>
+                                  <li>Fix a form friction point</li>
+                                  <li>Run a simple hero A/B test</li>
+                                </ul>
+                              </div>
+                            </CardContent>
+                            <CardFooter>
+                              <Button onClick={() => setSelectedPlan('CORE')} className="w-full h-11 bg-neutral-900 hover:bg-neutral-800 text-white">
+                                {selectedPlan === 'CORE' ? 'Selected' : 'Choose CORE'}
+                                <ArrowRight className="ml-2 h-4 w-4" />
+                              </Button>
+                            </CardFooter>
+                          </Card>
+
+                          <Card className={`border ${selectedPlan === 'PLUS' ? 'border-neutral-900' : 'border-neutral-200'} transition-colors`}>
+                            <CardHeader>
+                              <CardTitle className="flex items-center justify-between">
+                                <span>PLUS — faster compounding</span>
+                                <span className="text-neutral-700 text-lg">$2.5k/mo</span>
+                              </CardTitle>
+                            </CardHeader>
+                            <CardContent className="space-y-4">
+                              <p className="text-neutral-700">Best for: “We want momentum now—fill the schedule or push a high‑value service.”</p>
+                              <div className="space-y-2">
+                                <p className="font-medium text-neutral-900">Pace (each month):</p>
+                                <ul className="list-disc pl-5 space-y-1 text-neutral-700">
+                                  <li>5–7 meaningful moves shipped (more surface area, done sooner).</li>
+                                  <li>2–3 experiments (continuously testing copy/offers/landing variants).</li>
+                                  <li>Content cadence: 1 flagship asset most months (e.g., a full service page or case study) plus derivatives for site & listings.</li>
+                                  <li>Listings: 2× weekly posting rhythm + more photo/showcase updates.</li>
+                                  <li>Review care: replies within 48 hours; active Q&A seeding.</li>
+                                  <li>Priority: quicker turnaround on fixes, first dibs on on‑site days.</li>
+                                </ul>
+                              </div>
+                              <div className="space-y-2">
+                                <p className="font-medium text-neutral-900">A typical PLUS month</p>
+                                <ul className="list-disc pl-5 space-y-1 text-neutral-700">
+                                  <li>New “Dental Implants” page with FAQs, pricing/financing clarity, before/after proof</li>
+                                  <li>Two listing posts per week + fresh photo set and booking deep‑links</li>
+                                  <li>Landing/hero test and a follow‑up variant based on results</li>
+                                  <li>Internal‑links pass + speed tune to protect gains</li>
+                                </ul>
+                              </div>
+                            </CardContent>
+                            <CardFooter>
+                              <Button onClick={() => setSelectedPlan('PLUS')} className="w-full h-11 bg-neutral-900 hover:bg-neutral-800 text-white">
+                                {selectedPlan === 'PLUS' ? 'Selected' : 'Choose PLUS'}
+                                <ArrowRight className="ml-2 h-4 w-4" />
+                              </Button>
+                            </CardFooter>
+                          </Card>
+                        </div>
+
+                        {/* Add-on toggle */}
+                        <div className="bg-white border border-neutral-100 rounded-xl p-6">
+                          <div className="flex items-center justify-between">
                           <div>
-                            <label htmlFor="name" className="block text-sm font-medium text-neutral-700 mb-2">Your name</label>
-                            <Input id="name" name="name" type="text" autoComplete="name" ref={nameInputRef} required value={formData.name} onChange={handleInputChange} className="w-full h-11 text-base border-neutral-200 focus:border-neutral-900 focus:ring-0" placeholder="John Doe" aria-invalid={!!step1Errors.name} />
-                            {showStep1Errors && step1Errors.name && <p className="mt-1 text-sm text-red-600">{step1Errors.name}</p>}
-                          </div>
-                          <div>
-                            <label htmlFor="email" className="block text-sm font-medium text-neutral-700 mb-2">Email</label>
-                            <Input id="email" name="email" type="email" autoComplete="email" inputMode="email" required value={formData.email} onChange={handleInputChange} className="w-full h-11 text-base border-neutral-200 focus:border-neutral-900 focus:ring-0" placeholder="john@company.com" aria-invalid={!!step1Errors.email} />
-                            {showStep1Errors && step1Errors.email && <p className="mt-1 text-sm text-red-600">{step1Errors.email}</p>}
-                          </div>
-                          <div>
-                            <label htmlFor="company" className="block text-sm font-medium text-neutral-700 mb-2">Company</label>
-                            <Input id="company" name="company" type="text" autoComplete="organization" required value={formData.company} onChange={handleInputChange} className="w-full h-11 text-base border-neutral-200 focus:border-neutral-900 focus:ring-0" placeholder="Acme Inc." aria-invalid={!!step1Errors.company} />
-                            {showStep1Errors && step1Errors.company && <p className="mt-1 text-sm text-red-600">{step1Errors.company}</p>}
-                          </div>
-                          <div>
-                            <label htmlFor="website" className="block text-sm font-medium text-neutral-700 mb-2">Website (URL)</label>
-                            <Input id="website" name="website" type="url" autoComplete="url" inputMode="url" required value={formData.website} onChange={handleInputChange} className="w-full h-11 text-base border-neutral-200 focus:border-neutral-900 focus:ring-0" placeholder="https://example.com" aria-invalid={!!step1Errors.website} />
-                            {showStep1Errors && step1Errors.website && <p className="mt-1 text-sm text-red-600">{step1Errors.website}</p>}
-                          </div>
-                          <div>
-                            <label className="block text-sm font-medium text-neutral-700 mb-2">Primary goal</label>
-                            <select name="primaryGoal" value={formData.primaryGoal} onChange={handleInputChange} required className="w-full h-11 rounded-md border border-neutral-200 bg-white px-3 text-base focus:border-neutral-900 focus:outline-none focus:ring-0" aria-invalid={!!step1Errors.primaryGoal}>
-                              <option value="" disabled>Select one</option>
-                              <option>More qualified leads</option>
-                              <option>Higher conversion</option>
-                              <option>Lift LTV</option>
-                              <option>Full rebuild</option>
-                            </select>
-                            {showStep1Errors && step1Errors.primaryGoal && <p className="mt-1 text-sm text-red-600">{step1Errors.primaryGoal}</p>}
-                          </div>
-                          <div>
-                            <label className="block text-sm font-medium text-neutral-700 mb-2">Timeline</label>
-                            <select name="timeline" value={formData.timeline} onChange={handleInputChange} required className="w-full h-11 rounded-md border border-neutral-200 bg-white px-3 text-base focus:border-neutral-900 focus:outline-none focus:ring-0" aria-invalid={!!step1Errors.timeline}>
-                              <option value="" disabled>Select one</option>
-                              <option>ASAP</option>
-                              <option>30–60 days</option>
-                              <option>60–90 days</option>
-                              <option>Exploring</option>
-                            </select>
-                            {showStep1Errors && step1Errors.timeline && <p className="mt-1 text-sm text-red-600">{step1Errors.timeline}</p>}
-                          </div>
-                          <div>
-                            <label className="block text-sm font-medium text-neutral-700 mb-2">Budget range</label>
-                            <select name="budgetRange" value={formData.budgetRange} onChange={handleInputChange} required className="w-full h-11 rounded-md border border-neutral-200 bg-white px-3 text-base focus:border-neutral-900 focus:outline-none focus:ring-0" aria-invalid={!!step1Errors.budgetRange}>
-                              <option value="" disabled>Select one</option>
-                              <option>Starter</option>
-                              <option>Growth</option>
-                              <option>Scale</option>
-                            </select>
-                            {showStep1Errors && step1Errors.budgetRange && <p className="mt-1 text-sm text-red-600">{step1Errors.budgetRange}</p>}
+                              <p className="font-medium text-neutral-900">Optional add‑on (either plan)</p>
+                              <p className="text-neutral-700 text-sm mt-1">Search Surge (Google Ads) +$1.5k/mo: we manage search campaigns and pair them with at least one landing test each month. (Ad spend is separate.)</p>
+                            </div>
+                            <div className="flex items-center gap-3">
+                              <Label htmlFor="surge">Search Surge</Label>
+                              <Switch id="surge" checked={searchSurge} onCheckedChange={(checked) => setSearchSurge(!!checked)} />
+                            </div>
                           </div>
                         </div>
+
+                        {/* How to choose quickly */}
+                        <div className="bg-white border border-neutral-100 rounded-xl p-6">
+                          <p className="font-medium text-neutral-900 mb-2">How to choose quickly</p>
+                          <ul className="list-disc pl-5 space-y-1 text-neutral-700">
+                            <li>Pick CORE if you want dependable progress with minimal time from you.</li>
+                            <li>Pick PLUS if you want to accelerate (new service push, seasonal demand, new location) and you’re okay with us moving faster and testing more.</li>
+                          </ul>
+                        </div>
+
+                        {/* Simple promises */}
+                        <div className="bg-white border border-neutral-100 rounded-xl p-6">
+                          <p className="font-medium text-neutral-900 mb-2">Simple promises (both plans)</p>
+                          <ul className="list-disc pl-5 space-y-1 text-neutral-700">
+                            <li>30‑Day Clarity: foundation fixed + baseline dashboard—or Month 2 is free.</li>
+                            <li>90‑Day Lift: if no lift in two leading indicators (e.g., calls, profile actions, site conversion), we add an extra month of lift work at no charge.</li>
+                          </ul>
+                        </div>
+
                         <div className="pt-2">
-                          <Button type="submit" disabled={!isStep1Valid()} className="w-full h-12 bg-neutral-900 hover:bg-neutral-800 disabled:bg-neutral-300 disabled:cursor-not-allowed text-white font-medium rounded-md transition-colors">
-                            Submit & continue
+                          <Button disabled={!isStep1Valid()} onClick={() => setCurrentStep(2)} className="w-full h-12 bg-neutral-900 hover:bg-neutral-800 disabled:bg-neutral-300 disabled:cursor-not-allowed text-white font-medium rounded-md transition-colors">
+                            Continue
                             <ArrowRight className="ml-2 h-4 w-4" />
                           </Button>
-                          <p className="mt-3 text-center text-xs text-neutral-500">Step 1 of 2 — 60–90 seconds</p>
+                          <p className="mt-3 text-center text-xs text-neutral-500">Step 1 of 3</p>
                         </div>
-                      </form>
-                    ) : (
-                      <form onSubmit={handleSubmit} className="space-y-6 bg-white rounded-xl p-6 border border-neutral-100">
-                        <div>
-                          <label htmlFor="growthChallenge" className="block text-sm font-medium text-neutral-700 mb-2">Your biggest growth challenge (short paragraph)</label>
-                          <textarea id="growthChallenge" name="growthChallenge" ref={growthChallengeRef} value={formData.growthChallenge} onChange={handleInputChange} rows={4} className="w-full rounded-md border border-neutral-200 bg-white px-3 py-2 text-base placeholder:text-neutral-400 focus:border-neutral-900 focus:outline-none focus:ring-0 transition-colors" placeholder="Where does the funnel leak today?" />
-                        </div>
-                        <div>
-                          <label htmlFor="whyPartnerWithPrism" className="block text-sm font-medium text-neutral-700 mb-2">What excites you about partnering with Prism?</label>
-                          <textarea id="whyPartnerWithPrism" name="whyPartnerWithPrism" value={formData.whyPartnerWithPrism} onChange={handleInputChange} rows={4} className="w-full rounded-md border border-neutral-200 bg-white px-3 py-2 text-base placeholder:text-neutral-400 focus:border-neutral-900 focus:outline-none focus:ring-0 transition-colors" placeholder="Share what great looks like." />
-                        </div>
-                        <div>
-                          <label htmlFor="anythingElse" className="block text-sm font-medium text-neutral-700 mb-2">Anything else we should know? (integrations, constraints, must-haves)</label>
-                          <textarea id="anythingElse" name="anythingElse" value={formData.anythingElse} onChange={handleInputChange} rows={3} className="w-full rounded-md border border-neutral-200 bg-white px-3 py-2 text-base placeholder:text-neutral-400 focus:border-neutral-900 focus:outline-none focus:ring-0 transition-colors" placeholder="Optional" />
+                          </div>
+                    )}
+
+                    {currentStep === 2 && (
+                      <div className="space-y-6 bg-white rounded-xl p-6 border border-neutral-100">
+                        <div className="grid gap-6">
+                          <div>
+                            <Label htmlFor="name" className="block text-sm font-medium text-neutral-700 mb-2">Your name</Label>
+                            <Input id="name" name="name" type="text" autoComplete="name" ref={nameInputRef} required value={contact.name} onChange={handleContactChange} className="w-full h-11 text-base border-neutral-200 focus:border-neutral-900 focus:ring-0" placeholder="Jane Smith" />
+                          </div>
+                          <div>
+                            <Label htmlFor="email" className="block text-sm font-medium text-neutral-700 mb-2">Email</Label>
+                            <Input id="email" name="email" type="email" autoComplete="email" inputMode="email" required value={contact.email} onChange={handleContactChange} className="w-full h-11 text-base border-neutral-200 focus:border-neutral-900 focus:ring-0" placeholder="jane@company.com" />
+                          </div>
+                          <div>
+                            <Label htmlFor="company" className="block text-sm font-medium text-neutral-700 mb-2">Company</Label>
+                            <Input id="company" name="company" type="text" autoComplete="organization" required value={contact.company} onChange={handleContactChange} className="w-full h-11 text-base border-neutral-200 focus:border-neutral-900 focus:ring-0" placeholder="Acme Inc." />
+                          </div>
+                          <div>
+                            <Label htmlFor="website" className="block text-sm font-medium text-neutral-700 mb-2">Website (URL)</Label>
+                            <Input id="website" name="website" type="url" autoComplete="url" inputMode="url" required value={contact.website} onChange={handleContactChange} className="w-full h-11 text-base border-neutral-200 focus:border-neutral-900 focus:ring-0" placeholder="https://example.com" />
+                          </div>
+                          <div>
+                            <Label htmlFor="phone" className="block text-sm font-medium text-neutral-700 mb-2">Phone (optional)</Label>
+                            <Input id="phone" name="phone" type="tel" autoComplete="tel" inputMode="tel" value={contact.phone} onChange={handleContactChange} className="w-full h-11 text-base border-neutral-200 focus:border-neutral-900 focus:ring-0" placeholder="+1 555 123 4567" />
+                          </div>
                         </div>
                         <div className="flex gap-3 pt-2">
                           <Button type="button" onClick={() => setCurrentStep(1)} className="h-12 bg-white text-neutral-900 border border-neutral-300 hover:bg-neutral-50 font-medium rounded-md w-1/2">Back</Button>
+                          <Button type="button" onClick={() => setCurrentStep(3)} disabled={!isStep2Valid()} className="h-12 bg-neutral-900 hover:bg-neutral-800 text-white font-medium rounded-md w-1/2 disabled:bg-neutral-300 disabled:cursor-not-allowed">Continue</Button>
+                        </div>
+                        <p className="mt-3 text-center text-xs text-neutral-500">Step 2 of 3</p>
+                      </div>
+                    )}
+
+                    {currentStep === 3 && (
+                      <form onSubmit={handleSubmit} className="space-y-6 bg-white rounded-xl p-6 border border-neutral-100">
+                        <div className="bg-neutral-50 rounded-lg p-4 border border-neutral-200">
+                          <p className="font-medium text-neutral-900 mb-2">Review</p>
+                          <ul className="text-neutral-700 text-sm space-y-1">
+                            <li>Plan: <span className="font-medium">{selectedPlan || '-'}</span></li>
+                            <li>Add‑on: <span className="font-medium">Search Surge {searchSurge ? 'ON (+$1.5k/mo)' : 'OFF'}</span></li>
+                            <li>Total monthly: <span className="font-medium">${totalPrice.toLocaleString()}/mo</span></li>
+                          </ul>
+                          <hr className="my-3 border-neutral-200" />
+                          <ul className="text-neutral-700 text-sm space-y-1">
+                            <li>Name: <span className="font-medium">{contact.name}</span></li>
+                            <li>Email: <span className="font-medium">{contact.email}</span></li>
+                            <li>Company: <span className="font-medium">{contact.company}</span></li>
+                            <li>Website: <span className="font-medium">{contact.website}</span></li>
+                            {contact.phone && <li>Phone: <span className="font-medium">{contact.phone}</span></li>}
+                          </ul>
+                        </div>
+                        <div className="flex gap-3 pt-2">
+                          <Button type="button" onClick={() => setCurrentStep(2)} className="h-12 bg-white text-neutral-900 border border-neutral-300 hover:bg-neutral-50 font-medium rounded-md w-1/2">Back</Button>
                           <Button type="submit" disabled={isSubmitting} className="h-12 bg-neutral-900 hover:bg-neutral-800 text-white font-medium rounded-md w-1/2">
-                            {isSubmitting ? 'Submitting…' : 'Submit application'}
+                            {isSubmitting ? 'Submitting…' : 'Submit request'}
                           </Button>
                         </div>
-                        <p className="mt-3 text-center text-xs text-neutral-500">We review applications on the 1st of every month.</p>
                         {submitStatus === 'error' && (
                           <p className="text-red-600 text-sm text-center">Something went wrong. Please try again.</p>
                         )}
+                        <p className="mt-3 text-center text-xs text-neutral-500">Step 3 of 3</p>
                       </form>
                     )}
                   </motion.div>
@@ -684,93 +592,19 @@ export default function ClientGetStartedPage() {
                 variants={fadeInY}
                 style={{ willChange: 'transform, opacity' }}
               >
-                We review all applications on the 1st. If there’s a strong fit, we’ll invite you to a 20-minute discovery call. If not, we’ll share useful next steps.
+                We review all requests on the 1st. If there’s a strong fit, we’ll invite you to a 20‑minute discovery call. If not, we’ll share useful next steps.
               </motion.p>
             </motion.div>
           </div>
         </section>
-
-        {/* FAQs */}
-        <section className="px-4 py-12 sm:py-16 md:py-20 bg-white border-t border-neutral-100">
-          <div className="container mx-auto max-w-3xl">
-            <div className="space-y-4">
-              <details className="bg-neutral-50 rounded-lg border border-neutral-200 p-4" open>
-                <summary className="cursor-pointer text-neutral-900 font-medium">What kind of results should we expect?</summary>
-                <p className="mt-2 text-neutral-700">We target measurable lifts in qualified leads, conversion rate, and LTV. Exact outcomes depend on your starting point, traffic quality, and offer.</p>
-              </details>
-              <details className="bg-neutral-50 rounded-lg border border-neutral-200 p-4">
-                <summary className="cursor-pointer text-neutral-900 font-medium">What does working together look like?</summary>
-                <p className="mt-2 text-neutral-700">Audit → design → build → instrument → iterate. Clear milestones, weekly updates, and dashboards you can check anytime.</p>
-              </details>
-              <details className="bg-neutral-50 rounded-lg border border-neutral-200 p-4">
-                <summary className="cursor-pointer text-neutral-900 font-medium">Do you take maintenance-only work?</summary>
-                <p className="mt-2 text-neutral-700">When the fit is right—especially if we’ve done the initial build.</p>
-              </details>
-              <details className="bg-neutral-50 rounded-lg border border-neutral-200 p-4">
-                <summary className="cursor-pointer text-neutral-900 font-medium">What if we’re not a fit?</summary>
-                <p className="mt-2 text-neutral-700">We’ll let you know quickly and share a short, actionable plan.</p>
-              </details>
-            </div>
-          </div>
-        </section>
-
-        {/* Final CTA */}
-        <section className="px-4 py-12 bg-neutral-50 border-t border-neutral-100">
-          <div className="container mx-auto max-w-3xl text-center">
-            <h3 className="text-2xl font-light tracking-tight text-neutral-900 mb-4">Ready to claim your edge?</h3>
-            <div className="flex justify-center mb-3">
-              <Button onClick={scrollToForm} className="h-11 px-6 rounded-full bg-neutral-900 hover:bg-neutral-800 text-white">
-                Apply to work with Prism
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </div>
-            <p className="text-sm text-neutral-600">Limited openings • Next review on the 1st</p>
-          </div>
-        </section>
-        {/* Social Sharing Section - Minimal */}
-        <section className="px-4 py-10 bg-white border-t border-neutral-100">
-          <div className="container mx-auto max-w-2xl text-center">
-            <Share2 className="h-6 w-6 mx-auto mb-3 text-neutral-400" />
-            <h3 className="text-lg font-medium mb-4">Know Someone Who'd Thrive Here?</h3>
-            <div className="flex flex-wrap justify-center gap-3">
-              <button 
-                onClick={() => {
-                  trackCTAClick('share twitter', 'get started page')
-                  window.open('https://twitter.com/intent/tweet?text=Just%20applied%20to%20join%20@prism%27s%20exclusive%20circle%20of%20revenue-driving%20design%20innovators.%20Limited%20to%2010%20partners%20monthly.%20https://design-prism.com/get-started', '_blank')
-                }}
-                className="px-4 py-2 text-sm font-medium text-neutral-700 hover:text-neutral-900 transition-colors"
-              >
-                Share on X
-              </button>
-              <button 
-                onClick={() => {
-                  trackCTAClick('share linkedin', 'get started page')
-                  window.open('https://www.linkedin.com/sharing/share-offsite/?url=https://design-prism.com/get-started', '_blank')
-                }}
-                className="px-4 py-2 text-sm font-medium text-neutral-700 hover:text-neutral-900 transition-colors"
-              >
-                Share on LinkedIn
-              </button>
-              <button 
-                onClick={() => {
-                  trackCTAClick('copy link', 'get started page')
-                  navigator.clipboard.writeText('https://design-prism.com/get-started')
-                  alert('Link copied!')
-                }}
-                className="px-4 py-2 text-sm font-medium text-neutral-700 hover:text-neutral-900 transition-colors"
-              >
-                Copy Link
-              </button>
-            </div>
-          </div>
-        </section>
+        {/* Footer spacing CTA removed to keep flow minimal */}
       </main>
       {/* Sticky mobile CTA */}
       {isMobile && showStickyCTA && submitStatus !== 'success' && (
         <div className="fixed bottom-0 left-0 right-0 z-30 sm:hidden">
           <div className="mx-4 mb-4 rounded-full shadow-lg border border-neutral-200 bg-white p-2 pb-[env(safe-area-inset-bottom)]">
             <Button onClick={scrollToForm} className="w-full h-12 rounded-full bg-neutral-900 hover:bg-neutral-800 text-white">
-              Apply now
+              Start checkout
               <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
           </div>
