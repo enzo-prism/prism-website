@@ -140,6 +140,12 @@ export default function ClientGetStartedPage() {
     urlRegex.test(contact.website.trim())
   )
 
+  const navigateToStep = (target: 1 | 2 | 3) => {
+    if (target === 2 && !isStep1Valid()) return
+    if (target === 3 && !(isStep1Valid() && isStep2Valid())) return
+    setCurrentStep(target)
+  }
+
   // Persist form progress locally (mobile-friendly safety)
   useEffect(() => {
     try {
@@ -163,6 +169,17 @@ export default function ClientGetStartedPage() {
     }, 300)
     return () => clearTimeout(id)
   }, [contact, selectedPlan, searchSurge])
+
+  // Enforce gating if a user changes inputs and invalidates previous steps
+  useEffect(() => {
+    if (currentStep >= 2 && !isStep1Valid()) {
+      setCurrentStep(1)
+      return
+    }
+    if (currentStep === 3 && !isStep2Valid()) {
+      setCurrentStep(2)
+    }
+  }, [currentStep, selectedPlan, contact])
 
   // Sticky CTA removed for a simpler mobile experience
 
@@ -574,7 +591,7 @@ export default function ClientGetStartedPage() {
                         </div>
 
                         <div className="pt-2">
-                          <Button disabled={!isStep1Valid()} onClick={() => setCurrentStep(2)} className="w-full h-12 bg-neutral-900 hover:bg-neutral-800 disabled:bg-neutral-300 disabled:cursor-not-allowed text-white font-medium rounded-md transition-colors">
+                          <Button disabled={!isStep1Valid()} onClick={() => navigateToStep(2)} className="w-full h-12 bg-neutral-900 hover:bg-neutral-800 disabled:bg-neutral-300 disabled:cursor-not-allowed text-white font-medium rounded-md transition-colors">
                             Continue
                             <ArrowRight className="ml-2 h-4 w-4" />
                           </Button>
@@ -608,8 +625,8 @@ export default function ClientGetStartedPage() {
                           </div>
                         </div>
                         <div className="flex gap-3 pt-2">
-                          <Button type="button" onClick={() => setCurrentStep(1)} className="h-12 bg-white text-neutral-900 border border-neutral-300 hover:bg-neutral-50 font-medium rounded-md w-1/2">Back</Button>
-                          <Button type="button" onClick={() => setCurrentStep(3)} disabled={!isStep2Valid()} className="h-12 bg-neutral-900 hover:bg-neutral-800 text-white font-medium rounded-md w-1/2 disabled:bg-neutral-300 disabled:cursor-not-allowed">Continue</Button>
+                          <Button type="button" onClick={() => navigateToStep(1)} className="h-12 bg-white text-neutral-900 border border-neutral-300 hover:bg-neutral-50 font-medium rounded-md w-1/2">Back</Button>
+                          <Button type="button" onClick={() => navigateToStep(3)} disabled={!isStep2Valid()} className="h-12 bg-neutral-900 hover:bg-neutral-800 text-white font-medium rounded-md w-1/2 disabled:bg-neutral-300 disabled:cursor-not-allowed">Continue</Button>
                         </div>
                         <p className="mt-3 text-center text-xs text-neutral-500">Step 2 of 3</p>
                       </div>
