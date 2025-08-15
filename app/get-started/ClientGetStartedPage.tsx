@@ -487,21 +487,42 @@ export default function ClientGetStartedPage() {
 
                         {/* Add-on toggle */}
                         <div className="bg-white border border-neutral-100 rounded-xl p-6">
-                          <div className="flex items-center justify-between">
-                            <div className="flex-1 min-w-0">
-                              <p className="font-medium text-neutral-900">Optional add‑on (either plan)</p>
+                          <div className="space-y-4">
+                            <p className="font-medium text-neutral-900">Optional add‑on (either plan)</p>
+
+                            {/* Mobile-first stacked layout */}
+                            <div className={`rounded-lg border ${searchSurge ? 'border-neutral-900' : 'border-neutral-200'} bg-neutral-50 p-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between`}>
+                              <div className="flex-1 min-w-0">
+                                <div id="surge-title" className="text-neutral-900 font-medium">Search Surge</div>
+                                <div className="text-neutral-600 text-sm mt-1">
+                                  Google Ads managed + monthly landing test
+                                  <span className="ml-1 text-neutral-500">(ad spend separate)</span>
+                                </div>
+                              </div>
+                              <div className="flex items-center justify-between sm:justify-end gap-3">
+                                <span className={`text-xs px-2 py-1 rounded-full ${searchSurge ? 'bg-neutral-900 text-white' : 'bg-neutral-200 text-neutral-800'}`}>+$1.5k/mo</span>
+                                <Switch
+                                  id="surge"
+                                  aria-labelledby="surge-title"
+                                  aria-describedby="surge-help"
+                                  checked={searchSurge}
+                                  onCheckedChange={(checked) => setSearchSurge(!!checked)}
+                                />
+                              </div>
+                            </div>
+
+                            {/* Details dropdown for those who want more context */}
+                            <div className="rounded-lg border border-neutral-100 bg-white">
                               <Accordion type="single" collapsible>
-                                <AccordionItem value="surge-details">
-                                  <AccordionTrigger className="no-underline py-2 text-neutral-900 text-sm">What is Search Surge?</AccordionTrigger>
+                                <AccordionItem value="surge-details" className="px-4">
+                                  <AccordionTrigger className="no-underline py-3 text-neutral-900 text-sm">Details</AccordionTrigger>
                                   <AccordionContent>
-                                    <p className="text-neutral-700 text-sm">Search Surge (Google Ads) +$1.5k/mo: we manage search campaigns and pair them with at least one landing test each month. (Ad spend is separate.)</p>
+                                    <p id="surge-help" className="text-neutral-700 text-sm leading-relaxed">
+                                      Search Surge (Google Ads) adds hands‑on campaign management and at least one landing test each month to accelerate qualified demand. Ad spend is billed separately.
+                                    </p>
                                   </AccordionContent>
                                 </AccordionItem>
                               </Accordion>
-                            </div>
-                            <div className="flex items-center gap-3 pl-4">
-                              <Label htmlFor="surge">Search Surge</Label>
-                              <Switch id="surge" checked={searchSurge} onCheckedChange={(checked) => setSearchSurge(!!checked)} />
                             </div>
                           </div>
                         </div>
