@@ -126,7 +126,7 @@ export default function DesignsPageClient() {
               designs
             </h1>
             <p className="text-lg sm:text-xl text-neutral-600 max-w-md font-light">
-              eye-catching visuals and brand identity solutions that make your business unforgettable.
+              “design is the silent ambassador of your brand.”
             </p>
           </div>
         </section>
