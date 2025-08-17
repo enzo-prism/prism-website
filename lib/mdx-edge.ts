@@ -124,6 +124,11 @@ const blogPosts = {
     category: 'AI & Growth',
     gradientClass: 'bg-gradient-to-br from-emerald-300/30 via-sky-300/30 to-indigo-300/30',
   },
+  'win-next-ai-distribution-wave-30-day-playbook': {
+    title: 'Win the Next AI Distribution Wave: A 30-Day, No-Fluff Playbook for Founders & Local Service Brands',
+    category: 'AI & Growth',
+    gradientClass: 'bg-gradient-to-br from-emerald-300/30 via-sky-300/30 to-indigo-300/30',
+  },
 } as const
 
 export function getPostMetadataForOG(slug: string) {
