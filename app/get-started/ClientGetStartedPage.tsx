@@ -95,6 +95,7 @@ export default function ClientGetStartedPage() {
   const formSectionRef = useRef<HTMLDivElement>(null)
   const nameInputRef = useRef<HTMLInputElement>(null)
   const stepAnchorRef = useRef<HTMLDivElement>(null)
+  const shouldAutoCenterRef = useRef(false)
 
   const scrollToForm = () => {
     formSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
@@ -141,9 +142,12 @@ export default function ClientGetStartedPage() {
     urlRegex.test(contact.website.trim())
   )
 
-  const navigateToStep = (target: 1 | 2 | 3) => {
+  const navigateToStep = (target: 1 | 2 | 3, options?: { autoCenter?: boolean }) => {
     if (target === 2 && !isStep1Valid()) return
     if (target === 3 && !(isStep1Valid() && isStep2Valid())) return
+    if (options?.autoCenter) {
+      shouldAutoCenterRef.current = true
+    }
     setCurrentStep(target)
   }
 
@@ -184,8 +188,10 @@ export default function ClientGetStartedPage() {
 
   // Sticky CTA removed for a simpler mobile experience
 
-  // Keep the active step centered in the viewport on step changes
+  // Only center the form when explicitly requested from Continue clicks
   useEffect(() => {
+    if (!shouldAutoCenterRef.current) return
+    shouldAutoCenterRef.current = false
     if (!stepAnchorRef.current) return
     const id = window.requestAnimationFrame(() => {
       stepAnchorRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'nearest' })
@@ -601,7 +607,7 @@ export default function ClientGetStartedPage() {
                         </div>
 
                         <div className="pt-2">
-                          <Button disabled={!isStep1Valid()} onClick={() => navigateToStep(2)} className="w-full h-12 bg-neutral-900 hover:bg-neutral-800 disabled:bg-neutral-300 disabled:cursor-not-allowed text-white font-medium rounded-md transition-colors">
+                          <Button disabled={!isStep1Valid()} onClick={() => navigateToStep(2, { autoCenter: true })} className="w-full h-12 bg-neutral-900 hover:bg-neutral-800 disabled:bg-neutral-300 disabled:cursor-not-allowed text-white font-medium rounded-md transition-colors">
                             Continue
                             <ArrowRight className="ml-2 h-4 w-4" />
                           </Button>
@@ -636,7 +642,7 @@ export default function ClientGetStartedPage() {
                         </div>
                         <div className="flex gap-3 pt-2">
                           <Button type="button" onClick={() => navigateToStep(1)} className="h-12 bg-white text-neutral-900 border border-neutral-300 hover:bg-neutral-50 font-medium rounded-md w-1/2">Back</Button>
-                          <Button type="button" onClick={() => navigateToStep(3)} disabled={!isStep2Valid()} className="h-12 bg-neutral-900 hover:bg-neutral-800 text-white font-medium rounded-md w-1/2 disabled:bg-neutral-300 disabled:cursor-not-allowed">Continue</Button>
+                          <Button type="button" onClick={() => navigateToStep(3, { autoCenter: true })} disabled={!isStep2Valid()} className="h-12 bg-neutral-900 hover:bg-neutral-800 text-white font-medium rounded-md w-1/2 disabled:bg-neutral-300 disabled:cursor-not-allowed">Continue</Button>
                         </div>
                         <p className="mt-3 text-center text-xs text-neutral-500">Step 2 of 3</p>
                       </div>
