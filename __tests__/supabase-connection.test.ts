@@ -42,7 +42,9 @@ describe('Supabase connection (server credentials)', () => {
   })
 
   ;(envConfigured ? test : test.skip)('can connect and select from form_submissions', async () => {
-    const admin = createClient(url, serviceKey, {
+    const safeUrl = url as string
+    const safeKey = serviceKey as string
+    const admin = createClient(safeUrl, safeKey, {
       auth: { autoRefreshToken: false, persistSession: false },
     })
 
@@ -61,7 +63,9 @@ describe('Supabase connection (server credentials)', () => {
   })
 
   ;(envConfigured ? test : test.skip)('can insert a dry-run record (rolled back via delete)', async () => {
-    const admin = createClient(url, serviceKey, {
+    const safeUrl = url as string
+    const safeKey = serviceKey as string
+    const admin = createClient(safeUrl, safeKey, {
       auth: { autoRefreshToken: false, persistSession: false },
     })
 
