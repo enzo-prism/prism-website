@@ -94,6 +94,7 @@ export default function ClientGetStartedPage() {
   const videoRef = useRef<HTMLDivElement>(null)
   const formSectionRef = useRef<HTMLDivElement>(null)
   const nameInputRef = useRef<HTMLInputElement>(null)
+  const stepAnchorRef = useRef<HTMLDivElement>(null)
 
   const scrollToForm = () => {
     formSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
@@ -182,6 +183,15 @@ export default function ClientGetStartedPage() {
   }, [currentStep, selectedPlan, contact])
 
   // Sticky CTA removed for a simpler mobile experience
+
+  // Keep the active step centered in the viewport on step changes
+  useEffect(() => {
+    if (!stepAnchorRef.current) return
+    const id = window.requestAnimationFrame(() => {
+      stepAnchorRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'nearest' })
+    })
+    return () => cancelAnimationFrame(id)
+  }, [currentStep])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -393,7 +403,7 @@ export default function ClientGetStartedPage() {
                 ) : (
                   <motion.div key="form" variants={fadeInY} style={{ willChange: 'transform, opacity' }}>
                     {/* Step indicator */}
-                    <div className="flex justify-center mb-6 text-sm text-neutral-600">
+                    <div ref={stepAnchorRef} className="flex justify-center mb-6 text-sm text-neutral-600">
                       <div className="inline-flex items-center gap-2">
                         <span className={`px-2 py-1 rounded-full ${currentStep === 1 ? 'bg-neutral-900 text-white' : 'bg-neutral-200 text-neutral-700'}`}>1</span>
                         <span>Select plan</span>
