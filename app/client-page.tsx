@@ -387,7 +387,7 @@ export default function ClientPage() {
                     <span className="text-2xl">🎨</span>
                   </div>
                   <h3 className="text-xl font-bold mb-3 lowercase">design</h3>
-                  <p className="text-neutral-600 lowercase">not just how it looks…but how it works, how it feels</p>
+                  <p className="text-neutral-600 lowercase">the silent ambassador of your brand</p>
                   <Link
                     href="/designs"
                     className="inline-flex items-center mt-4 text-sm font-medium text-neutral-900 hover:underline smooth-transform"

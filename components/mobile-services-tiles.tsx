@@ -35,7 +35,7 @@ export default function MobileServicesTiles() {
     {
       emoji: "🎨",
       title: "design",
-      description: "not just how it looks…but how it works, how it feels",
+      description: "the silent ambassador of your brand",
       href: "/designs",
     },
   ]
