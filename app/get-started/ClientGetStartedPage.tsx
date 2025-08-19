@@ -443,7 +443,7 @@ export default function ClientGetStartedPage() {
                 </p>
                 <div className="mt-auto">
                   <Link
-                    href="/ai"
+                    href="/prism-flywheel"
                     className="inline-flex items-center text-sm text-neutral-900 hover:underline"
                     onClick={() => trackCTAClick("view ai", "get-started features")}
                   >
