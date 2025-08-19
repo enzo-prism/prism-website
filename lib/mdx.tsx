@@ -28,6 +28,7 @@ import { MobileStrategyCard } from '@/components/mobile/MobileStrategyCard';
 
 export type BlogFrontmatter = {
   title: string
+  h1Title?: string
   description: string
   date: string
   category: string

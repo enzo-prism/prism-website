@@ -79,6 +79,7 @@ export default async function BlogPostPage({ params }: PageProps) {
     <BlogPostLayout
       slug={slug}
       title={frontmatter.title}
+      h1Title={frontmatter.h1Title}
       description={frontmatter.description}
       date={frontmatter.date}
       category={frontmatter.category}

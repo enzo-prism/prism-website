@@ -16,6 +16,7 @@ interface Props {
   children: React.ReactNode
   slug: string
   title: string
+  h1Title?: string
   description: string
   date: string
   category: string
@@ -39,6 +40,7 @@ export default function BlogPostLayout({
   children,
   slug,
   title,
+  h1Title,
   description,
   date,
   category,
@@ -129,7 +131,7 @@ export default function BlogPostLayout({
                     </time>
                   </div>
                   <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight lowercase leading-tight text-balance">
-                    {title}
+                    {h1Title || title}
                   </h1>
                   <p className="text-neutral-600 mt-3">
                     {description}
