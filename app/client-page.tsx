@@ -225,7 +225,7 @@ export default function ClientPage() {
       location: "Beverly Hills, CA",
       description: "Sophisticated online experience for premium care",
       extendedDescription: "exquisite dentistry needed a digital presence that matched their luxury in-office experience. we designed and developed a website that communicates premium quality through every interaction. using elegant animations, professional photography, and refined typography, we created an online experience that converts high-value patients seeking cosmetic and restorative dentistry.",
-      metrics: ["3x conversion rate", "85% mobile traffic", "50% reduction in bounce rate"],
+      metrics: ["85% mobile traffic", "50% reduction in bounce rate"],
       slug: "exquisite-dentistry",
     },
   ]
