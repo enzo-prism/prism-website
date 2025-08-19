@@ -12,7 +12,8 @@ import { useMobile } from "@/hooks/use-mobile"
 import { useMobileAnimations } from "@/hooks/use-mobile-animations"
 import { trackCTAClick } from "@/utils/analytics"
 import { AnimatePresence, motion } from "framer-motion"
-import { ArrowRight, CheckCircle } from "lucide-react"
+import { ArrowRight, BadgeCheck, CheckCircle, Palette, Search } from "lucide-react"
+import Link from "next/link"
 import { useEffect, useRef, useState } from "react"
 
 type Plan = 'CORE' | 'PLUS' | null
@@ -348,6 +349,109 @@ export default function ClientGetStartedPage() {
                   </div>
                 </motion.div>
               </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Standout Features */}
+        <section className="px-4 py-12 sm:py-16">
+          <div className="container mx-auto max-w-5xl">
+            <motion.div
+              className="text-center mb-10 space-y-3"
+              variants={fadeInY}
+              initial="initial"
+              whileInView="animate"
+              viewport={getViewportConfig()}
+            >
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-light tracking-tight text-neutral-900">
+                standout features
+              </h2>
+              <p className="text-base text-neutral-700 max-w-[70ch] mx-auto leading-relaxed">
+                proven systems that compound: trust that converts, design that differentiates, visibility in ai search.
+              </p>
+            </motion.div>
+
+            <div className="grid gap-6 md:grid-cols-3">
+              {/* Prism Proof */}
+              <motion.div
+                className="rounded-xl border border-neutral-200 bg-white p-6 flex flex-col"
+                variants={fadeInY}
+                initial="initial"
+                whileInView="animate"
+                viewport={getViewportConfig()}
+              >
+                <div className="mb-4 w-12 h-12 rounded-full bg-neutral-50 border border-neutral-200 flex items-center justify-center">
+                  <BadgeCheck className="h-6 w-6 text-neutral-900" />
+                </div>
+                <h3 className="text-lg font-medium text-neutral-900 mb-2 lowercase">prism proof</h3>
+                <p className="text-sm text-neutral-600 mb-4">
+                  quick, authentic patient stories turned into website blocks, search schema, and social clips—stacked monthly for compounding trust.
+                </p>
+                <div className="mt-auto">
+                  <Link
+                    href="/proof"
+                    className="inline-flex items-center text-sm text-neutral-900 hover:underline"
+                    onClick={() => trackCTAClick("view prism proof", "get-started features")}
+                  >
+                    learn more
+                    <ArrowRight className="ml-1 h-3 w-3" />
+                  </Link>
+                </div>
+              </motion.div>
+
+              {/* World-class design */}
+              <motion.div
+                className="rounded-xl border border-neutral-200 bg-white p-6 flex flex-col"
+                variants={fadeInY}
+                initial="initial"
+                whileInView="animate"
+                viewport={getViewportConfig()}
+              >
+                <div className="mb-4 w-12 h-12 rounded-full bg-neutral-50 border border-neutral-200 flex items-center justify-center">
+                  <Palette className="h-6 w-6 text-neutral-900" />
+                </div>
+                <h3 className="text-lg font-medium text-neutral-900 mb-2 lowercase">world‑class digital & print design</h3>
+                <p className="text-sm text-neutral-600 mb-4">
+                  a cohesive visual system—web, email, social, and in‑office print—built to persuade and remembered for taste.
+                </p>
+                <div className="mt-auto">
+                  <Link
+                    href="/designs"
+                    className="inline-flex items-center text-sm text-neutral-900 hover:underline"
+                    onClick={() => trackCTAClick("view designs", "get-started features")}
+                  >
+                    see design work
+                    <ArrowRight className="ml-1 h-3 w-3" />
+                  </Link>
+                </div>
+              </motion.div>
+
+              {/* Appear in AI search */}
+              <motion.div
+                className="rounded-xl border border-neutral-200 bg-white p-6 flex flex-col"
+                variants={fadeInY}
+                initial="initial"
+                whileInView="animate"
+                viewport={getViewportConfig()}
+              >
+                <div className="mb-4 w-12 h-12 rounded-full bg-neutral-50 border border-neutral-200 flex items-center justify-center">
+                  <Search className="h-6 w-6 text-neutral-900" />
+                </div>
+                <h3 className="text-lg font-medium text-neutral-900 mb-2 lowercase">appear in ai search</h3>
+                <p className="text-sm text-neutral-600 mb-4">
+                  structure content for llm answers and ai overviews—clean entities, clear intent, and schema that travels.
+                </p>
+                <div className="mt-auto">
+                  <Link
+                    href="/ai"
+                    className="inline-flex items-center text-sm text-neutral-900 hover:underline"
+                    onClick={() => trackCTAClick("view ai", "get-started features")}
+                  >
+                    how our ai works
+                    <ArrowRight className="ml-1 h-3 w-3" />
+                  </Link>
+                </div>
+              </motion.div>
             </div>
           </div>
         </section>
