@@ -29,6 +29,7 @@ export default function Footer() {
     { emoji: "🎙️", label: "podcast", href: "/podcast" },
     { emoji: "❤️", label: "wall of love", href: "/wall-of-love" },
     { emoji: "💰", label: "affiliate", href: "/affiliate" },
+    { emoji: "✅", label: "prism proof", href: "/proof" },
   ]
 
   return (
