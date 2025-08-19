@@ -10,6 +10,8 @@ interface CaseStudyCardProps {
   industry: string
   location: string
   description: string
+  extendedDescription?: string
+  metrics?: string[]
   slug: string
   compact?: boolean
 }
@@ -20,6 +22,8 @@ export default function CaseStudyCard({
   industry,
   location,
   description,
+  extendedDescription,
+  metrics,
   slug,
   compact = false,
 }: CaseStudyCardProps) {
@@ -39,6 +43,28 @@ export default function CaseStudyCard({
           <h3 className="text-lg font-bold lowercase">{title}</h3>
           <p className="text-neutral-600 lowercase">{client}</p>
           {!compact && <p className="text-neutral-600 lowercase">{description}</p>}
+          
+          {/* Extended description for better SEO */}
+          {extendedDescription && !compact && (
+            <p className="text-sm text-neutral-500 leading-relaxed lowercase">
+              {extendedDescription}
+            </p>
+          )}
+          
+          {/* Metrics showcase */}
+          {metrics && metrics.length > 0 && !compact && (
+            <div className="flex flex-wrap gap-2 pt-2">
+              {metrics.map((metric, index) => (
+                <span 
+                  key={index}
+                  className="text-xs px-2 py-1 bg-neutral-50 border border-neutral-200 rounded lowercase"
+                >
+                  {metric}
+                </span>
+              ))}
+            </div>
+          )}
+          
           <div className="flex items-center text-sm font-medium text-neutral-900 lowercase pt-2">
             read case study <ArrowRight className="ml-1 h-4 w-4" />
           </div>

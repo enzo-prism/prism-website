@@ -214,6 +214,8 @@ export default function ClientPage() {
       industry: "Dentistry",
       location: "Palo Alto, CA",
       description: "100% patient retention during practice transition",
+      extendedDescription: "when dr. wong acquired a dental practice in palo alto, he needed a digital presence that would retain existing patients while attracting new ones. we created a modern, trustworthy website that emphasized continuity of care and dr. wong's expertise. the result: zero patient churn during the transition and a 40% increase in new patient inquiries within the first quarter.",
+      metrics: ["100% patient retention", "40% increase in inquiries", "2x improvement in page speed"],
       slug: "dr-christopher-wong",
     },
     {
@@ -222,6 +224,8 @@ export default function ClientPage() {
       industry: "High-End Dentistry",
       location: "Beverly Hills, CA",
       description: "Sophisticated online experience for premium care",
+      extendedDescription: "exquisite dentistry needed a digital presence that matched their luxury in-office experience. we designed and developed a website that communicates premium quality through every interaction. using elegant animations, professional photography, and refined typography, we created an online experience that converts high-value patients seeking cosmetic and restorative dentistry.",
+      metrics: ["3x conversion rate", "85% mobile traffic", "50% reduction in bounce rate"],
       slug: "exquisite-dentistry",
     },
   ]
@@ -359,7 +363,18 @@ export default function ClientPage() {
                     <span className="text-2xl">🖥️</span>
                   </div>
                   <h3 className="text-xl font-bold mb-3 lowercase">websites</h3>
-                  <p className="text-neutral-600 lowercase">attract and convert more leads</p>
+                  <p className="text-neutral-600 lowercase mb-3">attract and convert more leads</p>
+                  <p className="text-sm text-neutral-500 leading-relaxed mb-4">
+                    custom websites built with modern frameworks like Next.js and React. we focus on speed, 
+                    seo optimization, and conversion rate optimization to ensure your site not only looks 
+                    stunning but also drives measurable business results. from landing pages to complex web 
+                    applications, we deliver pixel-perfect designs that load in under 2 seconds.
+                  </p>
+                  <ul className="text-sm text-neutral-600 space-y-1 mb-4">
+                    <li className="lowercase">• responsive design for all devices</li>
+                    <li className="lowercase">• search engine optimization built-in</li>
+                    <li className="lowercase">• analytics and conversion tracking</li>
+                  </ul>
                   <Link
                     href="/websites"
                     className="inline-flex items-center mt-4 text-sm font-medium text-neutral-900 hover:underline smooth-transform"
@@ -373,7 +388,18 @@ export default function ClientPage() {
                     <span className="text-2xl">📱</span>
                   </div>
                   <h3 className="text-xl font-bold mb-3 lowercase">apps</h3>
-                  <p className="text-neutral-600 lowercase">improve customer experience with delightful software</p>
+                  <p className="text-neutral-600 lowercase mb-3">improve customer experience with delightful software</p>
+                  <p className="text-sm text-neutral-500 leading-relaxed mb-4">
+                    native and cross-platform mobile applications that solve real business problems. using 
+                    react native and flutter, we create apps that feel natural on both ios and android. from 
+                    mvp development to enterprise solutions, we handle the entire app lifecycle including 
+                    design, development, testing, and app store deployment.
+                  </p>
+                  <ul className="text-sm text-neutral-600 space-y-1 mb-4">
+                    <li className="lowercase">• ios and android development</li>
+                    <li className="lowercase">• real-time features and notifications</li>
+                    <li className="lowercase">• app store optimization and launch</li>
+                  </ul>
                   <Link
                     href="/apps"
                     className="inline-flex items-center mt-4 text-sm font-medium text-neutral-900 hover:underline smooth-transform"
@@ -387,7 +413,18 @@ export default function ClientPage() {
                     <span className="text-2xl">🎨</span>
                   </div>
                   <h3 className="text-xl font-bold mb-3 lowercase">design</h3>
-                  <p className="text-neutral-600 lowercase">the silent ambassador of your brand</p>
+                  <p className="text-neutral-600 lowercase mb-3">the silent ambassador of your brand</p>
+                  <p className="text-sm text-neutral-500 leading-relaxed mb-4">
+                    comprehensive design services from brand identity to user interfaces. we create cohesive 
+                    visual systems that resonate with your target audience. our design process combines user 
+                    research, competitive analysis, and iterative testing to ensure every design decision is 
+                    backed by data and aligned with your business objectives.
+                  </p>
+                  <ul className="text-sm text-neutral-600 space-y-1 mb-4">
+                    <li className="lowercase">• brand identity and logo design</li>
+                    <li className="lowercase">• ui/ux design and prototyping</li>
+                    <li className="lowercase">• design systems and style guides</li>
+                  </ul>
                   <Link
                     href="/designs"
                     className="inline-flex items-center mt-4 text-sm font-medium text-neutral-900 hover:underline smooth-transform"
@@ -527,8 +564,10 @@ export default function ClientPage() {
                       industry={study.industry}
                       location={study.location}
                       description={study.description}
+                      extendedDescription={study.extendedDescription}
+                      metrics={study.metrics}
                       slug={study.slug}
-                      compact={true}
+                      compact={false}
                     />
                   </div>
                 ))}
