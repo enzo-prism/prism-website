@@ -1,9 +1,7 @@
 import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
-import { Button } from "@/components/ui/button"
-import { trackCTAClick } from "@/utils/analytics"
 import type { Metadata } from "next"
-import Link from "next/link"
+import ProofCTAs from "./ProofCTAs"
 
 export const metadata: Metadata = {
   title: "Prism Proof",
@@ -38,26 +36,8 @@ export default function ProofPage() {
               work to your day.
             </p>
 
-            {/* Top CTAs */}
-            <div className="mt-8 flex flex-col sm:flex-row gap-3">
-              <Link href="/get-started">
-                <Button
-                  className="rounded-full px-6 py-3 text-base lowercase"
-                  onClick={() => trackCTAClick("get prism proof", "proof hero")}
-                >
-                  get prism proof
-                </Button>
-              </Link>
-              <Link href="/case-studies" className="sm:ml-2">
-                <Button
-                  variant="outline"
-                  className="rounded-full px-6 py-3 text-base lowercase"
-                  onClick={() => trackCTAClick("see sample assets", "proof hero secondary")}
-                >
-                  see sample assets
-                </Button>
-              </Link>
-            </div>
+            {/* Top CTAs (client-only) */}
+            <ProofCTAs location="proof hero" className="mt-8" />
           </div>
         </section>
 
@@ -208,26 +188,8 @@ export default function ProofPage() {
               Secondary CTA: <strong>See sample assets</strong></p>
             </article>
 
-            {/* Bottom CTAs */}
-            <div className="mt-10 flex flex-col sm:flex-row gap-3">
-              <Link href="/get-started">
-                <Button
-                  className="rounded-full px-6 py-3 text-base lowercase"
-                  onClick={() => trackCTAClick("get prism proof", "proof bottom")}
-                >
-                  get prism proof
-                </Button>
-              </Link>
-              <Link href="/case-studies" className="sm:ml-2">
-                <Button
-                  variant="outline"
-                  className="rounded-full px-6 py-3 text-base lowercase"
-                  onClick={() => trackCTAClick("see sample assets", "proof bottom secondary")}
-                >
-                  see sample assets
-                </Button>
-              </Link>
-            </div>
+            {/* Bottom CTAs (client-only) */}
+            <ProofCTAs location="proof bottom" className="mt-10" />
           </div>
         </section>
       </main>
