@@ -1,6 +1,7 @@
 import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
 import type { Metadata } from "next"
+import Link from "next/link"
 import ProofCTAs from "./ProofCTAs"
 
 export const metadata: Metadata = {
@@ -169,6 +170,17 @@ export default function ProofPage() {
               </blockquote>
 
               <hr />
+
+              <h2>How Proof fits the Prism Flywheel</h2>
+              <ul>
+                <li><strong>Research &amp; Ideation</strong> – Identify post‑appointment timing and prompts that pull authentic stories.</li>
+                <li><strong>Creation &amp; Remixing</strong> – Capture a 60s video or quick form, then edit, transcribe, and package into multi‑format assets.</li>
+                <li><strong>Optimization &amp; Analysis</strong> – Place Proof on high‑intent pages, track engagement and conversion lift, refine monthly.</li>
+                <li><strong>Monetization &amp; Scaling</strong> – Distribute to site, search, and social; stack new stories each month to compound results.</li>
+              </ul>
+              <p>
+                Want the bigger picture? <Link href="/prism-flywheel">Explore the Prism Flywheel</Link>.
+              </p>
 
               <h2>FAQ</h2>
               <p><strong>How much time does my team spend?</strong><br />

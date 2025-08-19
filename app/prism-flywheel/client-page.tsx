@@ -413,6 +413,9 @@ export default function PrismFlywheelClient() {
                   Start Your Flywheel →
                 </Button>
               </Link>
+              <div className="mt-4 text-sm text-neutral-600 dark:text-neutral-400">
+                Want a concrete module? <Link href="/proof" className="underline" onClick={() => trackCTAClick("view proof", "how it works crosslink")}>See Prism Proof</Link>
+              </div>
             </div>
           </div>
         </div>
