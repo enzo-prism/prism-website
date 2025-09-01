@@ -9,6 +9,11 @@ const blogPosts = {
     category: "Business & AI",
     gradientClass: "bg-gradient-to-br from-orange-300/30 via-red-300/30 to-purple-300/30",
   },
+  'google-ads-ai-smb-acquisition-playbook': {
+    title: "Google Ads + AI: A Simple, Profitable Acquisition Playbook for SMBs",
+    category: "AI & Growth",
+    gradientClass: "bg-gradient-to-br from-emerald-300/30 via-sky-300/30 to-indigo-300/30",
+  },
   'unlocking-smb-growth-hormozi-100m-leads': {
     title: "Unlocking SMB Growth: Lessons from Alex Hormozi's $100M Leads (And Why AI is Your Secret Weapon Right Now)",
     category: "Business & AI",
