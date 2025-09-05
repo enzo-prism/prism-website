@@ -94,6 +94,27 @@ const websiteProjects = [
     category: "healthcare",
     description: "family‑focused dental care in los gatos",
   },
+  {
+    id: "16",
+    title: "rebellious aging",
+    url: "https://rebelwithsuz.com/",
+    category: "wellness",
+    description: "age boldly—confidence, style, and plant-based longevity",
+  },
+  {
+    id: "17",
+    title: "canary foundation",
+    url: "https://www.canaryfoundation.org/",
+    category: "nonprofit",
+    description: "early cancer detection research nonprofit",
+  },
+  {
+    id: "18",
+    title: "wine country root canal",
+    url: "https://www.winecountryrootcanal.com/",
+    category: "healthcare",
+    description: "santa rosa endodontics—gentle root canal therapy",
+  },
 ]
 
 export default function WebsitesPage() {
