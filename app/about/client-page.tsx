@@ -88,23 +88,6 @@ export default function AboutClientPage() {
             </div>
           </div>
         </section>
-
-        {/* Olympic Committee Badge above LA 2028 section */}
-        <section className="px-4 pt-6">
-          <div className="container mx-auto px-4 md:px-6 max-w-4xl">
-            <div className="flex justify-center">
-              <div className="w-20 h-20 md:w-24 md:h-24 rounded-full overflow-hidden border-2 border-neutral-200 bg-white p-2 shadow-sm">
-                <img
-                  src="/Philippine_Olympic_Committee.svg.png"
-                  alt="Philippine Olympic Committee"
-                  className="object-contain w-full h-full"
-                  loading="lazy"
-                />
-              </div>
-            </div>
-          </div>
-        </section>
-
         {/* LA 2028 Olympic Journey (moved below the single video section) */}
         <section className="px-4 py-12 md:py-16">
           <div className="container mx-auto px-4 md:px-6 max-w-4xl">
