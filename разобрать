@@ -1,0 +1,1 @@
+Created growth folder (add instagram.png, youtube.png, tiktok.png here).}]} code. There is JSON error because input should be apply_patch or shell command without string interpolation. I need to pass plain JSON which is done. The previous was correct. Lets fix. We used functions.shell with JSON containing command. Its fine. But the message inserted

@@ -10,28 +10,26 @@ import { useEffect, useRef, useState } from "react"
 const Footer = dynamic(() => import("@/components/footer"), { ssr: false })
 const Navbar = dynamic(() => import("@/components/navbar"), { ssr: false })
 
-// Dynamically import mobile-specific components to reduce initial bundle
-const MobileServicesTiles = dynamic(() => import("@/components/mobile-services-tiles"), {
-  ssr: false, // Only load on client side when needed
-  loading: () => <div className="w-full h-32 animate-pulse bg-gray-100 rounded-lg" />
-})
 // Lazy load below-the-fold components
-const CaseStudyCard = dynamic(() => import("@/components/case-study-card"), {
-  loading: () => <div className="w-full h-64 animate-pulse bg-gray-100 rounded-lg" />
-})
 const ScrollProgressBar = dynamic(() => import("@/components/scroll-progress-bar"), {
   ssr: false
 })
 
+// New homepage sections
+// Use SSR for these sections to improve first paint/SEO
+const ClientsSection = dynamic(() => import("@/components/home/Clients"))
+const GrowthResultsSlider = dynamic(() => import("@/components/home/GrowthResultsSlider"))
+const WebsitesFeatures = dynamic(() => import("@/components/home/WebsitesFeatures"))
+const SegmentsGrid = dynamic(() => import("@/components/home/SegmentsGrid"))
+
 // Import analytics functions directly for now (will optimize separately)
 import CoreImage from "@/components/core-image"
-import GetStartedCTA from "@/components/GetStartedCTA"
+// import GetStartedCTA from "@/components/GetStartedCTA" // removed from new homepage flow
 import PageViewTracker from "@/components/page-view-tracker"
-import VideoWithPoster from "@/components/video-with-poster"
-import WhoWeBuildForCarousel from "@/components/WhoWeBuildForCarousel"
-import { useRevealAnimation, useStaggeredReveal } from "@/hooks/use-reveal-animation"
+// import VideoWithPoster from "@/components/video-with-poster" // removed with testimonials section
+// import { useRevealAnimation } from "@/hooks/use-reveal-animation" // no longer used on simplified homepage
 import { LOGO_CONFIG, LOGO_SIZES } from "@/lib/constants"
-import { trackCTAClick, trackNavigation, trackServiceCardClick } from "@/utils/analytics"
+import { trackCTAClick, trackNavigation } from "@/utils/analytics"
 // Render Service schema only on client to keep SSR HTML lean
 const ServiceSchemaClient = dynamic(() => import("@/components/schema-markup").then(m => m.ServiceSchema), {
   ssr: false
@@ -44,28 +42,12 @@ export default function ClientPage() {
   const heroRef = useRef<HTMLElement>(null)
   
   // Lazy loading states for below-the-fold sections
-  const [shouldLoadCaseStudies, setShouldLoadCaseStudies] = useState(false)
-  const [shouldLoadTestimonials, setShouldLoadTestimonials] = useState(false)
-  const caseStudiesRef = useRef<HTMLElement>(null)
-  const testimonialsRef = useRef<HTMLElement>(null)
+  // removed case studies and testimonials sections
   
   // GPU-accelerated animation hooks
-  const { elementRef: servicesRef, isVisible: servicesVisible } = useRevealAnimation({ 
-    threshold: 0.2, 
-    delay: 100 
-  })
-  const { elementRef: testimonialsAnimRef, isVisible: testimonialsVisible } = useRevealAnimation({ 
-    threshold: 0.15, 
-    delay: 200 
-  })
-  const { elementRef: caseStudiesAnimRef, isVisible: caseStudiesVisible } = useRevealAnimation({ 
-    threshold: 0.1, 
-    delay: 150 
-  })
-  const { containerRef: serviceCardsRef, visibleItems: serviceCardsVisible } = useStaggeredReveal(3, {
-    threshold: 0.2,
-    delay: 150
-  })
+  // services section removed in new structure
+  // removed testimonials and case studies animations
+  // service cards staggered reveal removed in new structure
 
   // Calculate video scale based on viewport dimensions
   // Avoid recalculating on mobile scroll-driven height changes which cause URL bar resize events
@@ -161,74 +143,9 @@ export default function ClientPage() {
     }
   }, [shouldLoadVideo])
 
-  // Lazy load case studies section
-  useEffect(() => {
-    if (!caseStudiesRef.current) return
+  // removed observers for case studies and testimonials
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting && !shouldLoadCaseStudies) {
-            setShouldLoadCaseStudies(true)
-            observer.disconnect()
-          }
-        })
-      },
-      {
-        rootMargin: "300px", // Load 300px before coming into view
-        threshold: 0.1,
-      }
-    )
-
-    observer.observe(caseStudiesRef.current)
-    return () => observer.disconnect()
-  }, [shouldLoadCaseStudies])
-
-  // Lazy load testimonials section
-  useEffect(() => {
-    if (!testimonialsRef.current) return
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting && !shouldLoadTestimonials) {
-            setShouldLoadTestimonials(true)
-            observer.disconnect()
-          }
-        })
-      },
-      {
-        rootMargin: "200px", // Load 200px before coming into view
-        threshold: 0.1,
-      }
-    )
-
-    observer.observe(testimonialsRef.current)
-    return () => observer.disconnect()
-  }, [shouldLoadTestimonials])
-
-  const featuredCaseStudies = [
-    {
-      title: "Powering a Seamless Transition",
-      client: "Dr. Christopher B. Wong",
-      industry: "Dentistry",
-      location: "Palo Alto, CA",
-      description: "100% patient retention during practice transition",
-      extendedDescription: "when dr. wong acquired a dental practice in palo alto, he needed a digital presence that would retain existing patients while attracting new ones. we created a modern, trustworthy website that emphasized continuity of care and dr. wong's expertise. the result: zero patient churn during the transition and a 40% increase in new patient inquiries within the first quarter.",
-      metrics: ["100% patient retention", "40% increase in inquiries", "2x improvement in page speed"],
-      slug: "dr-christopher-wong",
-    },
-    {
-      title: "Aligning Digital Excellence with Luxury Care",
-      client: "Exquisite Dentistry",
-      industry: "High-End Dentistry",
-      location: "Beverly Hills, CA",
-      description: "Sophisticated online experience for premium care",
-      extendedDescription: "exquisite dentistry needed a digital presence that matched their luxury in-office experience. we designed and developed a website that communicates premium quality through every interaction. using elegant animations, professional photography, and refined typography, we created an online experience that converts high-value patients seeking cosmetic and restorative dentistry.",
-      metrics: ["85% mobile traffic", "50% reduction in bounce rate"],
-      slug: "exquisite-dentistry",
-    },
-  ]
+  // removed unused featuredCaseStudies data
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -302,299 +219,50 @@ export default function ClientPage() {
                   prism
                 </h1>
                 <p className="text-2xl font-medium text-neutral-500 lowercase sm:text-3xl md:text-4xl">
-                  impossible is temporary
+                  impossible is temporary.
                 </p>
                 <p className="mx-auto mt-4 max-w-[700px] text-neutral-600 lowercase md:text-xl">
-                  beautiful software that grows revenue.
+                  upgrade your online presence to grow and convert
                 </p>
               </div>
               <div className="flex flex-col items-center">
-                <div className="pt-6">
+                <div className="pt-6 flex items-center gap-3">
                   <Link href="/get-started">
                     <Button
                       className="rounded-full px-8 py-6 text-lg lowercase hardware-hover touch-feedback"
-                      onClick={() => trackCTAClick("get started", "hero section")}
+                      onClick={() => trackCTAClick("apply for prism", "hero section")}
                     >
-                      get started <ArrowRight className="ml-2 h-5 w-5" />
+                      apply for prism <ArrowRight className="ml-2 h-5 w-5" />
+                    </Button>
+                  </Link>
+                  <Link href="/wall-of-love">
+                    <Button
+                      variant="outline"
+                      className="rounded-full px-8 py-6 text-lg lowercase hardware-hover touch-feedback"
+                      onClick={() => trackCTAClick("reviews", "hero section")}
+                    >
+                      reviews
                     </Button>
                   </Link>
                 </div>
-                <div className="mt-6 flex flex-col items-center space-y-2">
-                  <a
-                    href="https://www.instagram.com/the_design_prism/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-sm text-neutral-400 lowercase hover:text-neutral-600 hover:underline smooth-transform"
-                  >
-                    39,000+ entrepreneurs follow us on Instagram
-                  </a>
-                  <a
-                    href="https://www.youtube.com/@the_design_prism"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-sm text-neutral-400 lowercase hover:text-neutral-600 hover:underline smooth-transform"
-                  >
-                    24,500+ subscribers on youtube
-                  </a>
-                </div>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Services Overview */}
-        <section 
-          ref={servicesRef} 
-          className={`bg-neutral-50 py-16 md:py-24`}
-        >
-          <div className={`container mx-auto px-4 md:px-6 ${servicesVisible ? 'reveal-up visible' : 'reveal-up'}`}>
-            <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold tracking-tighter lowercase sm:text-4xl gpu-accelerated">services</h2>
-              <p className="mx-auto mt-4 max-w-[700px] text-neutral-600 lowercase">
-                expertise in 3 areas to improve your online business
-              </p>
-            </div>
-            {isMobile ? (
-              <MobileServicesTiles />
-            ) : (
-              <div ref={serviceCardsRef} className="grid gap-10 md:grid-cols-3">
-                <div className={`bg-white rounded-xl p-8 shadow-sm hardware-hover border border-neutral-100 gpu-accelerated touch-feedback ${serviceCardsVisible[0] ? 'reveal-scale visible' : 'reveal-scale'}`}>
-                  <div className="mb-6 w-12 h-12 bg-neutral-50 rounded-full flex items-center justify-center elastic-scale">
-                    <span className="text-2xl">🖥️</span>
-                  </div>
-                  <h3 className="text-xl font-bold mb-3 lowercase">websites</h3>
-                  <p className="text-neutral-600 lowercase mb-3">attract and convert more leads</p>
-                  <p className="text-sm text-neutral-500 leading-relaxed mb-4">
-                    custom websites built with modern frameworks like Next.js and React. we focus on speed, 
-                    seo optimization, and conversion rate optimization to ensure your site not only looks 
-                    stunning but also drives measurable business results. from landing pages to complex web 
-                    applications, we deliver pixel-perfect designs that load in under 2 seconds.
-                  </p>
-                  <ul className="text-sm text-neutral-600 space-y-1 mb-4">
-                    <li className="lowercase">• responsive design for all devices</li>
-                    <li className="lowercase">• search engine optimization built-in</li>
-                    <li className="lowercase">• analytics and conversion tracking</li>
-                  </ul>
-                  <Link
-                    href="/websites"
-                    className="inline-flex items-center mt-4 text-sm font-medium text-neutral-900 hover:underline smooth-transform"
-                    onClick={() => trackServiceCardClick("websites", "/websites")}
-                  >
-                    Learn more <ArrowRight className="ml-1 h-3 w-3" />
-                  </Link>
-                </div>
-                <div className={`bg-white rounded-xl p-8 shadow-sm hardware-hover border border-neutral-100 gpu-accelerated touch-feedback ${serviceCardsVisible[1] ? 'reveal-scale visible' : 'reveal-scale'}`}>
-                  <div className="mb-6 w-12 h-12 bg-neutral-50 rounded-full flex items-center justify-center elastic-scale">
-                    <span className="text-2xl">📱</span>
-                  </div>
-                  <h3 className="text-xl font-bold mb-3 lowercase">apps</h3>
-                  <p className="text-neutral-600 lowercase mb-3">improve customer experience with delightful software</p>
-                  <p className="text-sm text-neutral-500 leading-relaxed mb-4">
-                    native and cross-platform mobile applications that solve real business problems. using 
-                    react native and flutter, we create apps that feel natural on both ios and android. from 
-                    mvp development to enterprise solutions, we handle the entire app lifecycle including 
-                    design, development, testing, and app store deployment.
-                  </p>
-                  <ul className="text-sm text-neutral-600 space-y-1 mb-4">
-                    <li className="lowercase">• ios and android development</li>
-                    <li className="lowercase">• real-time features and notifications</li>
-                    <li className="lowercase">• app store optimization and launch</li>
-                  </ul>
-                  <Link
-                    href="/apps"
-                    className="inline-flex items-center mt-4 text-sm font-medium text-neutral-900 hover:underline smooth-transform"
-                    onClick={() => trackServiceCardClick("apps", "/apps")}
-                  >
-                    Learn more <ArrowRight className="ml-1 h-3 w-3" />
-                  </Link>
-                </div>
-                <div className={`bg-white rounded-xl p-8 shadow-sm hardware-hover border border-neutral-100 gpu-accelerated touch-feedback ${serviceCardsVisible[2] ? 'reveal-scale visible' : 'reveal-scale'}`}>
-                  <div className="mb-6 w-12 h-12 bg-neutral-50 rounded-full flex items-center justify-center elastic-scale">
-                    <span className="text-2xl">🎨</span>
-                  </div>
-                  <h3 className="text-xl font-bold mb-3 lowercase">design</h3>
-                  <p className="text-neutral-600 lowercase mb-3">the silent ambassador of your brand</p>
-                  <p className="text-sm text-neutral-500 leading-relaxed mb-4">
-                    comprehensive design services from brand identity to user interfaces. we create cohesive 
-                    visual systems that resonate with your target audience. our design process combines user 
-                    research, competitive analysis, and iterative testing to ensure every design decision is 
-                    backed by data and aligned with your business objectives.
-                  </p>
-                  <ul className="text-sm text-neutral-600 space-y-1 mb-4">
-                    <li className="lowercase">• brand identity and logo design</li>
-                    <li className="lowercase">• ui/ux design and prototyping</li>
-                    <li className="lowercase">• design systems and style guides</li>
-                  </ul>
-                  <Link
-                    href="/designs"
-                    className="inline-flex items-center mt-4 text-sm font-medium text-neutral-900 hover:underline smooth-transform"
-                    onClick={() => trackServiceCardClick("designs", "/designs")}
-                  >
-                    Learn more <ArrowRight className="ml-1 h-3 w-3" />
-                  </Link>
-                </div>
-              </div>
-            )}
-          </div>
-        </section>
+        {/* New homepage sections per updated structure */}
+        <ClientsSection />
+        <GrowthResultsSlider />
+        <WebsitesFeatures />
+        <SegmentsGrid />
 
-        {/* Mid-Content CTA */}
-        <GetStartedCTA
-          heading="see a service that fits your needs?"
-          description="let's discuss your project and find the perfect solution to grow your business."
-          buttonText="let's discuss your project"
-          analyticsLabel="services section CTA"
-          variant="light"
-        />
+        {/* Additional content pruned per new simplified homepage */}
 
-        {/* Who We Build For Carousel */}
-        <WhoWeBuildForCarousel />
+        {/* Flywheel section removed */}
 
-        {/* Prism Flywheel CTA Section - Minimal & Modern */}
-        <section className="py-20 sm:py-32 relative">
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-neutral-50/50 to-transparent dark:via-neutral-900/30" />
-          <div className="container mx-auto px-4 relative">
-            <div className="mx-auto max-w-2xl text-center space-y-8">
-              {/* Simple text-based accent */}
-              <div className="text-xs font-medium tracking-[0.3em] uppercase text-neutral-400">
-                flywheel
-              </div>
-              
-              {/* Refined typography hierarchy */}
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-light tracking-tight text-neutral-900 dark:text-neutral-100">
-                unlock exponential growth
-              </h2>
-              
-              {/* Cleaner description with better readability */}
-              <p className="text-base sm:text-lg text-neutral-600 dark:text-neutral-400 max-w-xl mx-auto leading-relaxed">
-                Our proprietary growth system transforms code and content into compounding revenue—powered by frontier AI and thoughtful automation.
-              </p>
-              
-              {/* Single, clear CTA */}
-              <div className="pt-4">
-                <Link href="/prism-flywheel">
-                  <Button
-                    className="group relative px-8 py-3 bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 font-medium text-sm rounded-full hover:scale-[1.02] transition-all duration-200"
-                    onClick={() => trackCTAClick("explore flywheel", "homepage flywheel cta minimal")}
-                  >
-                    Explore the Flywheel
-                    <ArrowRight className="inline-block ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                  </Button>
-                </Link>
-              </div>
-              
-              {/* Social proof - subtle and sophisticated */}
-              <p className="text-xs text-neutral-500 dark:text-neutral-500 pt-8">
-                Join 500+ visionaries building with Prism
-              </p>
-            </div>
-          </div>
-        </section>
+        {/* Testimonials / Wall of Love section removed */}
 
-        {/* Testimonials Section */}
-        <section 
-          ref={testimonialsRef} 
-          className={`py-16 md:py-24 bg-white dark:bg-neutral-900`}
-        >
-          <div ref={testimonialsAnimRef} className={`container mx-auto px-4 md:px-6 ${testimonialsVisible ? 'reveal-fade visible' : 'reveal-fade'}`}>
-            <div className="mx-auto max-w-2xl space-y-6 text-center">
-              <h2 className="text-3xl font-bold tracking-tighter lowercase sm:text-4xl text-neutral-900 dark:text-neutral-100 gpu-accelerated">
-                client feedback
-              </h2>
-              <p className="text-neutral-600 dark:text-neutral-300 lowercase md:text-lg">
-                see why founders love prism ❤️
-              </p>
-              {/* Embedded client feedback video with poster - Lazy loaded */}
-              <div className="mt-6 flex justify-center">
-                {shouldLoadTestimonials ? (
-                  <div className="hardware-hover gpu-accelerated">
-                    <VideoWithPoster
-                      videoId="1095461781"
-                      posterSrc="/client feedback image.webp"
-                      fallbackPosterSrc="/instagram-video-thumbnail.png"
-                      width={360}
-                      height={360}
-                      autoplay={true}
-                      loop={true}
-                      muted={true}
-                      controls={false}
-                      posterAlt="Client feedback testimonials - See why founders love Prism"
-                      trackAnalytics={true}
-                    />
-                  </div>
-                ) : (
-                  <div className="w-[360px] h-[360px] bg-gray-100 rounded-lg shadow-md border border-neutral-200 flex items-center justify-center pulse-soft">
-                    <div className="text-gray-400">Loading video...</div>
-                  </div>
-                )}
-              </div>
-              <div className="pt-4">
-                <Link href="/wall-of-love">
-                  <Button
-                    className="rounded-full px-8 py-3 text-base lowercase hardware-hover touch-feedback"
-                    onClick={() => trackCTAClick("visit wall of love", "homepage cta")}
-                  >
-                    wall of love <ArrowRight className="ml-2 h-4 w-4" />
-                  </Button>
-                </Link>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Featured Case Studies Section */}
-        <section 
-          ref={caseStudiesRef} 
-          className={`py-16 md:py-24 bg-neutral-50 dark:bg-neutral-800`}
-        >
-          <div ref={caseStudiesAnimRef} className={`container mx-auto px-4 md:px-6 ${caseStudiesVisible ? 'reveal-up visible' : 'reveal-up'}`}>
-            <div className="mb-12">
-              <h2 className="text-3xl font-bold tracking-tighter lowercase sm:text-4xl gpu-accelerated">success stories</h2>
-              <p className="mt-4 text-neutral-600 dark:text-neutral-300 lowercase md:text-lg">
-                see how we've helped businesses achieve remarkable results
-              </p>
-            </div>
-            {shouldLoadCaseStudies ? (
-              <div className="grid gap-6 md:grid-cols-2">
-                {featuredCaseStudies.map((study, index) => (
-                  <div key={index} className="hardware-hover gpu-accelerated touch-feedback">
-                    <CaseStudyCard
-                      title={study.title}
-                      client={study.client}
-                      industry={study.industry}
-                      location={study.location}
-                      description={study.description}
-                      extendedDescription={study.extendedDescription}
-                      metrics={study.metrics}
-                      slug={study.slug}
-                      compact={false}
-                    />
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <div className="grid gap-6 md:grid-cols-2">
-                {[1, 2].map((placeholder) => (
-                  <div key={placeholder} className="bg-white rounded-lg p-6 shadow-sm pulse-soft">
-                    <div className="h-6 bg-gray-200 rounded mb-4"></div>
-                    <div className="h-4 bg-gray-200 rounded mb-2"></div>
-                    <div className="h-4 bg-gray-200 rounded mb-4 w-3/4"></div>
-                    <div className="h-16 bg-gray-200 rounded"></div>
-                  </div>
-                ))}
-              </div>
-            )}
-            <div className="mt-8 text-center">
-              <Link
-                href="/case-studies"
-                onClick={() => trackCTAClick("view all case studies", "homepage")}
-                className="inline-flex items-center text-neutral-900 dark:text-neutral-100 hover:underline smooth-transform"
-              >
-                view all case studies <ArrowRight className="ml-1 h-4 w-4" />
-              </Link>
-            </div>
-          </div>
-        </section>
+        {/* Featured Case Studies section removed */}
 
         {/* Bottom CTA Section */}
         <section className="bg-neutral-50 dark:bg-neutral-800 py-16 md:py-24">

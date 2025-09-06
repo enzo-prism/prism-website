@@ -66,6 +66,11 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/",
   },
+  viewport: {
+    width: "device-width",
+    initialScale: 1,
+    viewportFit: "cover",
+  },
 }
 
 export default function RootLayout({
@@ -78,7 +83,7 @@ export default function RootLayout({
       <head>
         {/* Google Tag Manager (lightweight, external script) */}
         <GoogleTagManager gtmId="GTM-M37LLWHV" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+        {/* viewport is defined via metadata.viewport to avoid duplicates */}
         {/* Add mobile-specific meta tags for better scrolling */}
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-capable" content="yes" />

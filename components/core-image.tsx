@@ -93,10 +93,8 @@ export default function CoreImage({
   // Generate a default fallback image URL if none provided
   const defaultFallback = `/placeholder.svg?height=${validHeight}&width=${validWidth}&query=${encodeURIComponent(alt || "image")}`
 
-  // Set the image source after component mount to avoid hydration mismatch
-  useEffect(() => {
-    setImgSrc(typeof src === "string" ? src : "")
-  }, [src])
+  // Note: do not eagerly set image source on mount for non-priority images.
+  // IntersectionObserver above will set imgSrc when the element is near viewport.
 
   // Generate blur placeholder for remote images
   const blurDataURL = generatePlaceholderSVG(validWidth, validHeight)

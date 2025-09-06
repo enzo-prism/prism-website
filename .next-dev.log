@@ -1,0 +1,1174 @@
+   ▲ Next.js 15.2.4
+   - Local:        http://localhost:3010
+   - Network:      http://10.0.0.62:3010
+   - Experiments (use with caution):
+     · clientTraceMetadata
+
+ ✓ Starting...
+ ○ Compiling /instrumentation ...
+ ✓ Compiled /instrumentation in 2.5s (1043 modules)
+ ✓ Ready in 4s
+ ○ Compiling / ...
+ ✓ Compiled / in 5.3s (3345 modules)
+ GET / 200 in 5891ms
+ ✓ Compiled in 893ms (724 modules)
+ GET / 200 in 53ms
+ ○ Compiling /wall-of-love ...
+ ✓ Compiled /wall-of-love in 786ms (3339 modules)
+ GET /wall-of-love 200 in 1196ms
+ GET / 200 in 76ms
+ ✓ Compiled in 820ms (1450 modules)
+ ✓ Compiled in 265ms (726 modules)
+ ✓ Compiled in 235ms (726 modules)
+ ✓ Compiled / in 393ms (2621 modules)
+ GET / 200 in 887ms
+ ✓ Compiled in 724ms (1450 modules)
+ ✓ Compiled in 268ms (726 modules)
+ ○ Compiling / ...
+ ✓ Compiled / in 546ms (2621 modules)
+ GET / 200 in 995ms
+ ○ Compiling /_not-found ...
+ ✓ Compiled /_not-found in 654ms (3337 modules)
+ GET /growth/instagram-nvidia-stanford.png 404 in 933ms
+ ⨯ The requested resource isn't a valid image for /growth/instagram-nvidia-stanford.png received text/html; charset=utf-8
+ ✓ Compiled in 379ms (727 modules)
+ GET / 200 in 66ms
+ ✓ Compiled in 864ms (3348 modules)
+ GET / 200 in 111ms
+ ✓ Compiled in 268ms (727 modules)
+ GET / 200 in 24ms
+ GET / 200 in 114ms
+ ✓ Compiled in 641ms (3348 modules)
+ GET / 200 in 81ms
+ ✓ Compiled in 579ms (3348 modules)
+ GET / 200 in 107ms
+ ✓ Compiled in 1063ms (3348 modules)
+ GET / 200 in 117ms
+ ✓ Compiled in 508ms (727 modules)
+ ✓ Compiled in 329ms (727 modules)
+ ✓ Compiled in 1454ms (3352 modules)
+ ✓ Compiled in 300ms (729 modules)
+ GET / 200 in 420ms
+ ○ Compiling /_not-found ...
+ ✓ Compiled /_not-found in 928ms (2626 modules)
+ GET /growth/instagram-nvidia-stanford.png 404 in 1196ms
+ ⨯ The requested resource isn't a valid image for /growth/instagram-nvidia-stanford.png received text/html; charset=utf-8
+ ✓ Compiled in 1510ms (3327 modules)
+ GET / 200 in 142ms
+ ✓ Compiled /_not-found in 358ms (2619 modules)
+ GET /growth/instagram-nvidia-stanford.png 404 in 647ms
+ ⨯ The requested resource isn't a valid image for /growth/instagram-nvidia-stanford.png received text/html; charset=utf-8
+ ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+ ✓ Compiled in 1677ms (3329 modules)
+ ⨯ ReferenceError: testimonialsRef is not defined
+    at ClientPage (app/client-page.tsx:329:15)
+  327 |         {/* Testimonials Section */}
+  328 |         <section 
+> 329 |           ref={testimonialsRef} 
+      |               ^
+  330 |           className={`py-16 md:py-24 bg-white dark:bg-neutral-900`}
+  331 |         >
+  332 |           <div ref={testimonialsAnimRef} className={`container mx-auto px-4 md:px-6 ${testimonialsVisible ? 'reveal-fade visible' : 'reveal-fade'}`}> {
+  digest: '467047954'
+}
+ GET / 500 in 1303ms
+ ✓ Compiled in 694ms (3329 modules)
+ GET / 200 in 177ms
+ ✓ Compiled /_not-found in 342ms (2613 modules)
+ GET /growth/instagram-nvidia-stanford.png 404 in 491ms
+ ⨯ The requested resource isn't a valid image for /growth/instagram-nvidia-stanford.png received text/html; charset=utf-8
+ ✓ Compiled in 326ms (719 modules)
+ GET / 200 in 26ms
+ GET / 200 in 45ms
+ GET / 200 in 37ms
+ ○ Compiling /get-started ...
+ ✓ Compiled /get-started in 2.2s (4171 modules)
+ GET /get-started 200 in 2342ms
+ GET /get-started 200 in 15ms
+ GET /get-started 200 in 13ms
+ GET / 200 in 12ms
+ ✓ Compiled /_not-found in 453ms (3040 modules)
+ GET /growth/instagram-nvidia-stanford.png 404 in 771ms
+ ⨯ The requested resource isn't a valid image for /growth/instagram-nvidia-stanford.png received text/html; charset=utf-8
+ ○ Compiling /wall-of-love ...
+ ✓ Compiled /wall-of-love in 553ms (3046 modules)
+ GET /wall-of-love 200 in 633ms
+ GET / 200 in 15ms
+ GET /growth/instagram-nvidia-stanford.png 404 in 160ms
+ ⨯ The requested resource isn't a valid image for /growth/instagram-nvidia-stanford.png received text/html; charset=utf-8
+ GET /get-started 200 in 15ms
+ GET / 200 in 8ms
+ GET /growth/instagram-nvidia-stanford.png 404 in 43ms
+ ⨯ The requested resource isn't a valid image for /growth/instagram-nvidia-stanford.png received text/html; charset=utf-8
+ ○ Compiling /case-studies/exquisite-dentistry ...
+ ✓ Compiled /case-studies/exquisite-dentistry in 2.2s (5213 modules)
+ GET /case-studies/exquisite-dentistry 200 in 2308ms
+ GET /case-studies/exquisite-dentistry 200 in 16ms
+ GET /case-studies/exquisite-dentistry 200 in 13ms
+ GET / 200 in 16ms
+ GET /growth/instagram-nvidia-stanford.png 404 in 117ms
+ ⨯ The requested resource isn't a valid image for /growth/instagram-nvidia-stanford.png received text/html; charset=utf-8
+ ✓ Compiled in 1330ms (4273 modules)
+ GET / 200 in 198ms
+ ✓ Compiled in 1306ms (4273 modules)
+ GET / 200 in 132ms
+ ✓ Compiled in 310ms (1663 modules)
+ GET / 200 in 16ms
+ GET / 200 in 238ms
+ ○ Compiling /_not-found ...
+ ✓ Compiled /_not-found in 764ms (2613 modules)
+ GET /growth/instagram-nvidia-stanford.png 404 in 1060ms
+ ⨯ The requested resource isn't a valid image for /growth/instagram-nvidia-stanford.png received text/html; charset=utf-8
+ ✓ Compiled in 492ms (1663 modules)
+ GET / 200 in 27ms
+ ✓ Compiled in 732ms (4276 modules)
+ GET / 200 in 102ms
+ ✓ Compiled in 339ms (1663 modules)
+ GET / 200 in 17ms
+ GET / 200 in 96ms
+ GET / 200 in 45ms
+ GET /growth/instagram-nvidia-stanford.png 404 in 50ms
+ ⨯ The requested resource isn't a valid image for /growth/instagram-nvidia-stanford.png received text/html; charset=utf-8
+ ○ Compiling /case-studies/dr-christopher-wong ...
+ ✓ Compiled /case-studies/dr-christopher-wong in 2.1s (4786 modules)
+ GET /case-studies/dr-christopher-wong 200 in 2361ms
+ ○ Compiling /case-studies/exquisite-dentistry ...
+ ✓ Compiled /case-studies/exquisite-dentistry in 515ms (3142 modules)
+ GET /case-studies/dr-christopher-wong 200 in 1068ms
+ GET /case-studies/exquisite-dentistry 200 in 1073ms
+ GET /case-studies/dr-christopher-wong 200 in 26ms
+ GET / 200 in 13ms
+ GET /growth/instagram-nvidia-stanford.png 404 in 197ms
+ ⨯ The requested resource isn't a valid image for /growth/instagram-nvidia-stanford.png received text/html; charset=utf-8
+ GET / 200 in 54ms
+ GET /growth/instagram-nvidia-stanford.png 404 in 36ms
+ ⨯ The requested resource isn't a valid image for /growth/instagram-nvidia-stanford.png received text/html; charset=utf-8
+ GET /case-studies/exquisite-dentistry 200 in 11ms
+ GET / 200 in 13ms
+ GET /growth/instagram-nvidia-stanford.png 404 in 33ms
+ ⨯ The requested resource isn't a valid image for /growth/instagram-nvidia-stanford.png received text/html; charset=utf-8
+ GET / 200 in 52ms
+ ✓ Compiled in 1580ms (4796 modules)
+ GET / 200 in 177ms
+ ✓ Compiled /_not-found in 399ms (3130 modules)
+ ⨯ Error: Cannot find module './1675.js'
+Require stack:
+- /Users/enzo/prism-website/.next/server/webpack-runtime.js
+- /Users/enzo/prism-website/.next/server/app/_not-found/page.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/require.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/load-components.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/build/utils.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/build/swc/options.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/build/swc/index.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/build/analysis/parse-module.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/build/analysis/get-page-static-info.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/lib/router-utils/setup-dev-bundler.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/lib/router-server.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/lib/start-server.js
+    at __webpack_require__.f.require (.next/server/webpack-runtime.js:201:28)
+    at <unknown> (.next/server/webpack-runtime.js:114:40)
+    at Array.reduce (<anonymous>)
+    at __webpack_require__.e (.next/server/webpack-runtime.js:113:67)
+    at Array.map (<anonymous>)
+    at __webpack_require__.X (.next/server/webpack-runtime.js:165:22)
+    at <unknown> (webpack://my-v0-project/external%20commonjs2%20%22events%22:1:0)
+    at Object.<anonymous> (webpack://my-v0-project/external%20commonjs2%20%22events%22:1:0)
+> 1 | module.exports = require("events"); {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array]
+}
+ ○ Compiling /_error ...
+ ✓ Compiled /_error in 1636ms (5472 modules)
+ ⨯ [Error: ENOENT: no such file or directory, open '/Users/enzo/prism-website/.next/server/next-font-manifest.json'] {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/Users/enzo/prism-website/.next/server/next-font-manifest.json',
+  page: '/'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open '/Users/enzo/prism-website/.next/server/next-font-manifest.json'] {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/Users/enzo/prism-website/.next/server/next-font-manifest.json'
+}
+[Error: ENOENT: no such file or directory, open '/Users/enzo/prism-website/.next/fallback-build-manifest.json'] {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/Users/enzo/prism-website/.next/fallback-build-manifest.json'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open '/Users/enzo/prism-website/.next/server/next-font-manifest.json'] {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/Users/enzo/prism-website/.next/server/next-font-manifest.json'
+}
+[Error: ENOENT: no such file or directory, open '/Users/enzo/prism-website/.next/server/next-font-manifest.json'] {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/Users/enzo/prism-website/.next/server/next-font-manifest.json',
+  page: '/'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open '/Users/enzo/prism-website/.next/server/next-font-manifest.json'] {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/Users/enzo/prism-website/.next/server/next-font-manifest.json'
+}
+[Error: ENOENT: no such file or directory, open '/Users/enzo/prism-website/.next/fallback-build-manifest.json'] {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/Users/enzo/prism-website/.next/fallback-build-manifest.json'
+}
+[Error: ENOENT: no such file or directory, open '/Users/enzo/prism-website/.next/fallback-build-manifest.json'] {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/Users/enzo/prism-website/.next/fallback-build-manifest.json'
+}
+ GET / 500 in 2203ms
+ GET / 500 in 231ms
+ ⨯ [Error: ENOENT: no such file or directory, open '/Users/enzo/prism-website/.next/server/next-font-manifest.json'] {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/Users/enzo/prism-website/.next/server/next-font-manifest.json',
+  page: '/'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open '/Users/enzo/prism-website/.next/server/next-font-manifest.json'] {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/Users/enzo/prism-website/.next/server/next-font-manifest.json'
+}
+[Error: ENOENT: no such file or directory, open '/Users/enzo/prism-website/.next/server/next-font-manifest.json'] {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/Users/enzo/prism-website/.next/server/next-font-manifest.json',
+  page: '/'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open '/Users/enzo/prism-website/.next/server/next-font-manifest.json'] {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/Users/enzo/prism-website/.next/server/next-font-manifest.json'
+}
+[Error: ENOENT: no such file or directory, open '/Users/enzo/prism-website/.next/fallback-build-manifest.json'] {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/Users/enzo/prism-website/.next/fallback-build-manifest.json'
+}
+ GET / 500 in 642ms
+ GET / 500 in 235ms
+ ⨯ [Error: ENOENT: no such file or directory, open '/Users/enzo/prism-website/.next/server/next-font-manifest.json'] {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/Users/enzo/prism-website/.next/server/next-font-manifest.json',
+  page: '/'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open '/Users/enzo/prism-website/.next/server/next-font-manifest.json'] {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/Users/enzo/prism-website/.next/server/next-font-manifest.json'
+}
+[Error: ENOENT: no such file or directory, open '/Users/enzo/prism-website/.next/server/next-font-manifest.json'] {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/Users/enzo/prism-website/.next/server/next-font-manifest.json',
+  page: '/'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open '/Users/enzo/prism-website/.next/server/next-font-manifest.json'] {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/Users/enzo/prism-website/.next/server/next-font-manifest.json'
+}
+[Error: ENOENT: no such file or directory, open '/Users/enzo/prism-website/.next/fallback-build-manifest.json'] {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/Users/enzo/prism-website/.next/fallback-build-manifest.json'
+}
+ GET / 500 in 470ms
+ GET / 500 in 225ms
+ GET / 200 in 171ms
+ ○ Compiling /_not-found ...
+ ✓ Compiled /designs in 1525ms (3646 modules)
+ ✓ Compiled in 1207ms (2175 modules)
+ GET /growth/instagram-nvidia-stanford.png 404 in 3539ms
+ ⨯ The requested resource isn't a valid image for /growth/instagram-nvidia-stanford.png received text/html; charset=utf-8
+ GET /wall-of-love 200 in 3903ms
+ GET /websites 200 in 3599ms
+ GET /apps 200 in 3599ms
+ GET /designs 200 in 3578ms
+ GET /get-started 200 in 3906ms
+ ○ Compiling /case-studies/dr-christopher-wong ...
+ ✓ Compiled /case-studies/dr-christopher-wong in 1646ms (5895 modules)
+ GET /case-studies/exquisite-dentistry 200 in 1694ms
+ GET /prism-flywheel 200 in 1710ms
+ GET /case-studies/dr-christopher-wong 200 in 1711ms
+ ○ Compiling /terms-of-service ...
+ ✓ Compiled /terms-of-service in 3.4s (5951 modules)
+ GET /privacy-policy 200 in 3027ms
+ GET /contact 200 in 3024ms
+ GET /careers 200 in 3024ms
+ GET /terms-of-service 200 in 3025ms
+ GET /about 200 in 3424ms
+ ○ Compiling /proof ...
+ ✓ Compiled /proof in 4.3s (6199 modules)
+ GET /offers 200 in 4565ms
+ GET /podcast 200 in 4564ms
+ GET /affiliate 200 in 4564ms
+ GET /proof 200 in 4564ms
+ GET /case-studies/dr-christopher-wong 200 in 3101ms
+Image with src "/dr-wong-polaroids.png" is using deprecated "onLoadingComplete" property. Please use the "onLoad" property instead.
+ GET /blog 200 in 5079ms
+ GET /_next/static/chunks/app-pages-internals.js 404 in 500ms
+ GET /_next/static/chunks/app/global-error.js 404 in 496ms
+ GET /_next/static/css/app/layout.css?v=1757182935603 404 in 30ms
+ GET /case-studies/dr-christopher-wong 200 in 515ms
+ GET /_next/static/chunks/main-app.js?v=1757182935603 404 in 118ms
+ GET /_next/static/chunks/app-pages-internals.js 404 in 118ms
+ GET /_next/static/chunks/app/layout.js 404 in 117ms
+ GET /_next/static/chunks/app/not-found.js 404 in 119ms
+ GET /_next/static/chunks/app/global-error.js 404 in 30ms
+ GET / 200 in 47ms
+ GET /_next/static/css/app/layout.css?v=1757182937693 404 in 34ms
+ GET /_next/static/chunks/main-app.js?v=1757182937693 404 in 129ms
+ GET /_next/static/chunks/app-pages-internals.js 404 in 129ms
+ GET /_next/static/chunks/app/global-error.js 404 in 128ms
+ GET /_next/static/chunks/app/not-found.js 404 in 129ms
+ GET /_next/static/chunks/app/layout.js 404 in 130ms
+ ✓ Compiled in 2.9s (5507 modules)
+ ✓ Compiled in 1200ms (5507 modules)
+ ✓ Compiled in 1092ms (5507 modules)
+ ✓ Compiled in 862ms (5507 modules)
+ ✓ Compiled in 945ms (5507 modules)
+ ✓ Compiled in 1818ms (5507 modules)
+ GET / 200 in 96ms
+ ○ Compiling /wall-of-love ...
+ ✓ Compiled /apps in 2.2s (3646 modules)
+ ✓ Compiled (3681 modules)
+ ⨯ Error: ENOENT: no such file or directory, open '/Users/enzo/prism-website/.next/server/vendor-chunks/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0.js'
+    at __webpack_require__.f.require (.next/server/webpack-runtime.js:201:28)
+    at <unknown> (.next/server/webpack-runtime.js:114:40)
+    at Array.reduce (<anonymous>)
+    at __webpack_require__.e (.next/server/webpack-runtime.js:113:67)
+    at Array.map (<anonymous>)
+    at __webpack_require__.X (.next/server/webpack-runtime.js:165:22)
+    at <unknown> (.next/server/app/wall-of-love/page.js:1128:47)
+    at Object.<anonymous> (.next/server/app/wall-of-love/page.js:1131:3) {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/Users/enzo/prism-website/.next/server/vendor-chunks/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0.js',
+  page: '/wall-of-love'
+}
+ ⨯ Error: ENOENT: no such file or directory, open '/Users/enzo/prism-website/.next/server/vendor-chunks/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0.js'
+    at __webpack_require__.f.require (.next/server/webpack-runtime.js:201:28)
+    at <unknown> (.next/server/webpack-runtime.js:114:40)
+    at Array.reduce (<anonymous>)
+    at __webpack_require__.e (.next/server/webpack-runtime.js:113:67)
+    at Array.map (<anonymous>)
+    at __webpack_require__.X (.next/server/webpack-runtime.js:165:22)
+    at <unknown> (.next/server/app/websites/page.js:1207:47)
+    at Object.<anonymous> (.next/server/app/websites/page.js:1210:3) {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/Users/enzo/prism-website/.next/server/vendor-chunks/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0.js',
+  page: '/websites'
+}
+ ⨯ Error: ENOENT: no such file or directory, open '/Users/enzo/prism-website/.next/server/vendor-chunks/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0.js'
+    at __webpack_require__.f.require (.next/server/webpack-runtime.js:201:28)
+    at <unknown> (.next/server/webpack-runtime.js:114:40)
+    at Array.reduce (<anonymous>)
+    at __webpack_require__.e (.next/server/webpack-runtime.js:113:67)
+    at Array.map (<anonymous>)
+    at __webpack_require__.X (.next/server/webpack-runtime.js:165:22)
+    at <unknown> (.next/server/app/designs/page.js:1183:47)
+    at Object.<anonymous> (.next/server/app/designs/page.js:1186:3) {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/Users/enzo/prism-website/.next/server/vendor-chunks/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0.js',
+  page: '/designs'
+}
+ ⨯ Error: ENOENT: no such file or directory, open '/Users/enzo/prism-website/.next/server/vendor-chunks/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0.js'
+    at __webpack_require__.f.require (.next/server/webpack-runtime.js:201:28)
+    at <unknown> (.next/server/webpack-runtime.js:114:40)
+    at Array.reduce (<anonymous>)
+    at __webpack_require__.e (.next/server/webpack-runtime.js:113:67)
+    at Array.map (<anonymous>)
+    at __webpack_require__.X (.next/server/webpack-runtime.js:165:22)
+    at <unknown> (.next/server/app/apps/page.js:1207:47)
+    at Object.<anonymous> (.next/server/app/apps/page.js:1210:3) {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/Users/enzo/prism-website/.next/server/vendor-chunks/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0.js',
+  page: '/apps'
+}
+ ⨯ Error: ENOENT: no such file or directory, open '/Users/enzo/prism-website/.next/server/vendor-chunks/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0.js'
+    at __webpack_require__.f.require (.next/server/webpack-runtime.js:201:28)
+    at <unknown> (.next/server/webpack-runtime.js:114:40)
+    at Array.reduce (<anonymous>)
+    at __webpack_require__.e (.next/server/webpack-runtime.js:113:67)
+    at Array.map (<anonymous>)
+    at __webpack_require__.X (.next/server/webpack-runtime.js:165:22)
+    at <unknown> (.next/server/app/get-started/page.js:1216:47)
+    at Object.<anonymous> (.next/server/app/get-started/page.js:1219:3) {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/Users/enzo/prism-website/.next/server/vendor-chunks/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0.js',
+  page: '/get-started'
+}
+ ○ Compiling /_error ...
+ ✓ Compiled /_error in 1592ms (6045 modules)
+ ⨯ Error: Cannot find module './1642.js'
+Require stack:
+- /Users/enzo/prism-website/.next/server/webpack-runtime.js
+- /Users/enzo/prism-website/.next/server/pages/_document.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/require.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/load-components.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/build/utils.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/build/swc/options.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/build/swc/index.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/build/analysis/parse-module.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/build/analysis/get-page-static-info.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/lib/router-utils/setup-dev-bundler.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/lib/router-server.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/lib/start-server.js
+    at __webpack_require__.f.require (.next/server/webpack-runtime.js:201:28)
+    at <unknown> (.next/server/webpack-runtime.js:114:40)
+    at Array.reduce (<anonymous>)
+    at __webpack_require__.e (.next/server/webpack-runtime.js:113:67)
+    at Array.map (<anonymous>)
+    at __webpack_require__.X (.next/server/webpack-runtime.js:165:22)
+    at <unknown> (webpack://my-v0-project/external%20commonjs%20%22react%22:1:0)
+    at Object.<anonymous> (webpack://my-v0-project/external%20commonjs%20%22react%22:1:0)
+> 1 | module.exports = require("react"); {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array]
+}
+ ⨯ Error: Cannot find module './1642.js'
+Require stack:
+- /Users/enzo/prism-website/.next/server/webpack-runtime.js
+- /Users/enzo/prism-website/.next/server/pages/_document.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/require.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/load-components.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/build/utils.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/build/swc/options.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/build/swc/index.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/build/analysis/parse-module.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/build/analysis/get-page-static-info.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/lib/router-utils/setup-dev-bundler.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/lib/router-server.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/lib/start-server.js
+    at __webpack_require__.f.require (.next/server/webpack-runtime.js:201:28)
+    at <unknown> (.next/server/webpack-runtime.js:114:40)
+    at Array.reduce (<anonymous>)
+    at __webpack_require__.e (.next/server/webpack-runtime.js:113:67)
+    at Array.map (<anonymous>)
+    at __webpack_require__.X (.next/server/webpack-runtime.js:165:22)
+    at <unknown> (webpack://my-v0-project/external%20commonjs%20%22react%22:1:0)
+    at Object.<anonymous> (webpack://my-v0-project/external%20commonjs%20%22react%22:1:0)
+> 1 | module.exports = require("react"); {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array]
+}
+ ⨯ Error: Cannot find module './1642.js'
+Require stack:
+- /Users/enzo/prism-website/.next/server/webpack-runtime.js
+- /Users/enzo/prism-website/.next/server/pages/_document.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/require.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/load-components.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/build/utils.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/build/swc/options.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/build/swc/index.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/build/analysis/parse-module.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/build/analysis/get-page-static-info.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/lib/router-utils/setup-dev-bundler.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/lib/router-server.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/lib/start-server.js
+    at __webpack_require__.f.require (.next/server/webpack-runtime.js:201:28)
+    at <unknown> (.next/server/webpack-runtime.js:114:40)
+    at Array.reduce (<anonymous>)
+    at __webpack_require__.e (.next/server/webpack-runtime.js:113:67)
+    at Array.map (<anonymous>)
+    at __webpack_require__.X (.next/server/webpack-runtime.js:165:22)
+    at <unknown> (webpack://my-v0-project/external%20commonjs%20%22react%22:1:0)
+    at Object.<anonymous> (webpack://my-v0-project/external%20commonjs%20%22react%22:1:0)
+> 1 | module.exports = require("react"); {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array]
+}
+ ⨯ Error: Cannot find module './1642.js'
+Require stack:
+- /Users/enzo/prism-website/.next/server/webpack-runtime.js
+- /Users/enzo/prism-website/.next/server/pages/_document.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/require.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/load-components.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/build/utils.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/build/swc/options.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/build/swc/index.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/build/analysis/parse-module.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/build/analysis/get-page-static-info.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/lib/router-utils/setup-dev-bundler.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/lib/router-server.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/lib/start-server.js
+    at __webpack_require__.f.require (.next/server/webpack-runtime.js:201:28)
+    at <unknown> (.next/server/webpack-runtime.js:114:40)
+    at Array.reduce (<anonymous>)
+    at __webpack_require__.e (.next/server/webpack-runtime.js:113:67)
+    at Array.map (<anonymous>)
+    at __webpack_require__.X (.next/server/webpack-runtime.js:165:22)
+    at <unknown> (webpack://my-v0-project/external%20commonjs%20%22react%22:1:0)
+    at Object.<anonymous> (webpack://my-v0-project/external%20commonjs%20%22react%22:1:0)
+> 1 | module.exports = require("react"); {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array]
+}
+ ⨯ Error: Cannot find module './1642.js'
+Require stack:
+- /Users/enzo/prism-website/.next/server/webpack-runtime.js
+- /Users/enzo/prism-website/.next/server/pages/_document.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/require.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/load-components.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/build/utils.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/build/swc/options.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/build/swc/index.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/build/analysis/parse-module.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/build/analysis/get-page-static-info.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/lib/router-utils/setup-dev-bundler.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/lib/router-server.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/lib/start-server.js
+    at __webpack_require__.f.require (.next/server/webpack-runtime.js:201:28)
+    at <unknown> (.next/server/webpack-runtime.js:114:40)
+    at Array.reduce (<anonymous>)
+    at __webpack_require__.e (.next/server/webpack-runtime.js:113:67)
+    at Array.map (<anonymous>)
+    at __webpack_require__.X (.next/server/webpack-runtime.js:165:22)
+    at <unknown> (webpack://my-v0-project/external%20commonjs%20%22react%22:1:0)
+    at Object.<anonymous> (webpack://my-v0-project/external%20commonjs%20%22react%22:1:0)
+> 1 | module.exports = require("react"); {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array]
+}
+Error: ENOENT: no such file or directory, open '/Users/enzo/prism-website/.next/server/vendor-chunks/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0.js'
+    at __webpack_require__.f.require (.next/server/webpack-runtime.js:201:28)
+    at <unknown> (.next/server/webpack-runtime.js:114:40)
+    at Array.reduce (<anonymous>)
+    at __webpack_require__.e (.next/server/webpack-runtime.js:113:67)
+    at Array.map (<anonymous>)
+    at __webpack_require__.X (.next/server/webpack-runtime.js:165:22)
+    at <unknown> (.next/server/app/wall-of-love/page.js:1128:47)
+    at Object.<anonymous> (.next/server/app/wall-of-love/page.js:1131:3) {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/Users/enzo/prism-website/.next/server/vendor-chunks/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0.js',
+  page: '/wall-of-love'
+}
+Error: ENOENT: no such file or directory, open '/Users/enzo/prism-website/.next/server/vendor-chunks/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0.js'
+    at __webpack_require__.f.require (.next/server/webpack-runtime.js:201:28)
+    at <unknown> (.next/server/webpack-runtime.js:114:40)
+    at Array.reduce (<anonymous>)
+    at __webpack_require__.e (.next/server/webpack-runtime.js:113:67)
+    at Array.map (<anonymous>)
+    at __webpack_require__.X (.next/server/webpack-runtime.js:165:22)
+    at <unknown> (.next/server/app/websites/page.js:1207:47)
+    at Object.<anonymous> (.next/server/app/websites/page.js:1210:3) {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/Users/enzo/prism-website/.next/server/vendor-chunks/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0.js',
+  page: '/websites'
+}
+Error: ENOENT: no such file or directory, open '/Users/enzo/prism-website/.next/server/vendor-chunks/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0.js'
+    at __webpack_require__.f.require (.next/server/webpack-runtime.js:201:28)
+    at <unknown> (.next/server/webpack-runtime.js:114:40)
+    at Array.reduce (<anonymous>)
+    at __webpack_require__.e (.next/server/webpack-runtime.js:113:67)
+    at Array.map (<anonymous>)
+    at __webpack_require__.X (.next/server/webpack-runtime.js:165:22)
+    at <unknown> (.next/server/app/designs/page.js:1183:47)
+    at Object.<anonymous> (.next/server/app/designs/page.js:1186:3) {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/Users/enzo/prism-website/.next/server/vendor-chunks/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0.js',
+  page: '/designs'
+}
+Error: ENOENT: no such file or directory, open '/Users/enzo/prism-website/.next/server/vendor-chunks/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0.js'
+    at __webpack_require__.f.require (.next/server/webpack-runtime.js:201:28)
+    at <unknown> (.next/server/webpack-runtime.js:114:40)
+    at Array.reduce (<anonymous>)
+    at __webpack_require__.e (.next/server/webpack-runtime.js:113:67)
+    at Array.map (<anonymous>)
+    at __webpack_require__.X (.next/server/webpack-runtime.js:165:22)
+    at <unknown> (.next/server/app/apps/page.js:1207:47)
+    at Object.<anonymous> (.next/server/app/apps/page.js:1210:3) {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/Users/enzo/prism-website/.next/server/vendor-chunks/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0.js',
+  page: '/apps'
+}
+Error: ENOENT: no such file or directory, open '/Users/enzo/prism-website/.next/server/vendor-chunks/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0.js'
+    at __webpack_require__.f.require (.next/server/webpack-runtime.js:201:28)
+    at <unknown> (.next/server/webpack-runtime.js:114:40)
+    at Array.reduce (<anonymous>)
+    at __webpack_require__.e (.next/server/webpack-runtime.js:113:67)
+    at Array.map (<anonymous>)
+    at __webpack_require__.X (.next/server/webpack-runtime.js:165:22)
+    at <unknown> (.next/server/app/get-started/page.js:1216:47)
+    at Object.<anonymous> (.next/server/app/get-started/page.js:1219:3) {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/Users/enzo/prism-website/.next/server/vendor-chunks/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0.js',
+  page: '/get-started'
+}
+ ⨯ Error: Cannot find module './1642.js'
+Require stack:
+- /Users/enzo/prism-website/.next/server/webpack-runtime.js
+- /Users/enzo/prism-website/.next/server/pages/_document.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/require.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/load-components.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/build/utils.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/build/swc/options.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/build/swc/index.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/build/analysis/parse-module.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/build/analysis/get-page-static-info.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/lib/router-utils/setup-dev-bundler.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/lib/router-server.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/lib/start-server.js
+    at __webpack_require__.f.require (.next/server/webpack-runtime.js:201:28)
+    at <unknown> (.next/server/webpack-runtime.js:114:40)
+    at Array.reduce (<anonymous>)
+    at __webpack_require__.e (.next/server/webpack-runtime.js:113:67)
+    at Array.map (<anonymous>)
+    at __webpack_require__.X (.next/server/webpack-runtime.js:165:22)
+    at <unknown> (webpack://my-v0-project/external%20commonjs%20%22react%22:1:0)
+    at Object.<anonymous> (webpack://my-v0-project/external%20commonjs%20%22react%22:1:0)
+> 1 | module.exports = require("react"); {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array]
+}
+ ⨯ Error: Cannot find module './1642.js'
+Require stack:
+- /Users/enzo/prism-website/.next/server/webpack-runtime.js
+- /Users/enzo/prism-website/.next/server/pages/_document.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/require.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/load-components.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/build/utils.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/build/swc/options.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/build/swc/index.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/build/analysis/parse-module.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/build/analysis/get-page-static-info.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/lib/router-utils/setup-dev-bundler.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/lib/router-server.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/lib/start-server.js
+    at __webpack_require__.f.require (.next/server/webpack-runtime.js:201:28)
+    at <unknown> (.next/server/webpack-runtime.js:114:40)
+    at Array.reduce (<anonymous>)
+    at __webpack_require__.e (.next/server/webpack-runtime.js:113:67)
+    at Array.map (<anonymous>)
+    at __webpack_require__.X (.next/server/webpack-runtime.js:165:22)
+    at <unknown> (webpack://my-v0-project/external%20commonjs%20%22react%22:1:0)
+    at Object.<anonymous> (webpack://my-v0-project/external%20commonjs%20%22react%22:1:0)
+> 1 | module.exports = require("react"); {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array]
+}
+ ⨯ Error: Cannot find module './1642.js'
+Require stack:
+- /Users/enzo/prism-website/.next/server/webpack-runtime.js
+- /Users/enzo/prism-website/.next/server/pages/_document.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/require.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/load-components.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/build/utils.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/build/swc/options.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/build/swc/index.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/build/analysis/parse-module.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/build/analysis/get-page-static-info.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/lib/router-utils/setup-dev-bundler.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/lib/router-server.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/lib/start-server.js
+    at __webpack_require__.f.require (.next/server/webpack-runtime.js:201:28)
+    at <unknown> (.next/server/webpack-runtime.js:114:40)
+    at Array.reduce (<anonymous>)
+    at __webpack_require__.e (.next/server/webpack-runtime.js:113:67)
+    at Array.map (<anonymous>)
+    at __webpack_require__.X (.next/server/webpack-runtime.js:165:22)
+    at <unknown> (webpack://my-v0-project/external%20commonjs%20%22react%22:1:0)
+    at Object.<anonymous> (webpack://my-v0-project/external%20commonjs%20%22react%22:1:0)
+> 1 | module.exports = require("react"); {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array]
+}
+ ⨯ Error: Cannot find module './1642.js'
+Require stack:
+- /Users/enzo/prism-website/.next/server/webpack-runtime.js
+- /Users/enzo/prism-website/.next/server/pages/_document.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/require.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/load-components.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/build/utils.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/build/swc/options.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/build/swc/index.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/build/analysis/parse-module.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/build/analysis/get-page-static-info.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/lib/router-utils/setup-dev-bundler.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/lib/router-server.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/lib/start-server.js
+    at __webpack_require__.f.require (.next/server/webpack-runtime.js:201:28)
+    at <unknown> (.next/server/webpack-runtime.js:114:40)
+    at Array.reduce (<anonymous>)
+    at __webpack_require__.e (.next/server/webpack-runtime.js:113:67)
+    at Array.map (<anonymous>)
+    at __webpack_require__.X (.next/server/webpack-runtime.js:165:22)
+    at <unknown> (webpack://my-v0-project/external%20commonjs%20%22react%22:1:0)
+    at Object.<anonymous> (webpack://my-v0-project/external%20commonjs%20%22react%22:1:0)
+> 1 | module.exports = require("react"); {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array]
+}
+ ⨯ Error: Cannot find module './1642.js'
+Require stack:
+- /Users/enzo/prism-website/.next/server/webpack-runtime.js
+- /Users/enzo/prism-website/.next/server/pages/_document.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/require.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/load-components.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/build/utils.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/build/swc/options.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/build/swc/index.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/build/analysis/parse-module.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/build/analysis/get-page-static-info.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/lib/router-utils/setup-dev-bundler.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/lib/router-server.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/lib/start-server.js
+    at __webpack_require__.f.require (.next/server/webpack-runtime.js:201:28)
+    at <unknown> (.next/server/webpack-runtime.js:114:40)
+    at Array.reduce (<anonymous>)
+    at __webpack_require__.e (.next/server/webpack-runtime.js:113:67)
+    at Array.map (<anonymous>)
+    at __webpack_require__.X (.next/server/webpack-runtime.js:165:22)
+    at <unknown> (webpack://my-v0-project/external%20commonjs%20%22react%22:1:0)
+    at Object.<anonymous> (webpack://my-v0-project/external%20commonjs%20%22react%22:1:0)
+> 1 | module.exports = require("react"); {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array]
+}
+[Error: ENOENT: no such file or directory, open '/Users/enzo/prism-website/.next/fallback-build-manifest.json'] {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/Users/enzo/prism-website/.next/fallback-build-manifest.json'
+}
+ GET /wall-of-love 500 in 5461ms
+ GET /wall-of-love 500 in 330ms
+[Error: ENOENT: no such file or directory, open '/Users/enzo/prism-website/.next/fallback-build-manifest.json'] {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/Users/enzo/prism-website/.next/fallback-build-manifest.json'
+}
+ GET /websites 500 in 4820ms
+ GET /websites 500 in 322ms
+[Error: ENOENT: no such file or directory, open '/Users/enzo/prism-website/.next/fallback-build-manifest.json'] {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/Users/enzo/prism-website/.next/fallback-build-manifest.json'
+}
+ GET /designs 500 in 4822ms
+ GET /designs 500 in 321ms
+[Error: ENOENT: no such file or directory, open '/Users/enzo/prism-website/.next/fallback-build-manifest.json'] {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/Users/enzo/prism-website/.next/fallback-build-manifest.json'
+}
+ GET /apps 500 in 4836ms
+ GET /apps 500 in 314ms
+[Error: ENOENT: no such file or directory, open '/Users/enzo/prism-website/.next/fallback-build-manifest.json'] {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/Users/enzo/prism-website/.next/fallback-build-manifest.json'
+}
+ GET /get-started 500 in 5493ms
+ GET /get-started 500 in 311ms
+ ○ Compiling /case-studies/dr-christopher-wong ...
+ ✓ Compiled /case-studies/dr-christopher-wong in 621ms (3785 modules)
+ ✓ Compiled (3796 modules)
+ ⨯ Error: ENOENT: no such file or directory, open '/Users/enzo/prism-website/.next/server/vendor-chunks/recharts@3.1.0_@types+react@19.1.8_react-dom@19.1.0_react@19.1.0__react-is@18.3.1_react@19.1.0_redux@5.0.1.js'
+    at __webpack_require__.f.require (.next/server/webpack-runtime.js:201:28)
+    at <unknown> (.next/server/webpack-runtime.js:114:40)
+    at Array.reduce (<anonymous>)
+    at __webpack_require__.e (.next/server/webpack-runtime.js:113:67)
+    at Array.map (<anonymous>)
+    at __webpack_require__.X (.next/server/webpack-runtime.js:165:22)
+    at <unknown> (.next/server/app/case-studies/exquisite-dentistry/page.js:1205:47)
+    at Object.<anonymous> (.next/server/app/case-studies/exquisite-dentistry/page.js:1208:3) {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/Users/enzo/prism-website/.next/server/vendor-chunks/recharts@3.1.0_@types+react@19.1.8_react-dom@19.1.0_react@19.1.0__react-is@18.3.1_react@19.1.0_redux@5.0.1.js',
+  page: '/case-studies/exquisite-dentistry'
+}
+ ⨯ Error: Cannot find module './1642.js'
+Require stack:
+- /Users/enzo/prism-website/.next/server/webpack-runtime.js
+- /Users/enzo/prism-website/.next/server/app/case-studies/exquisite-dentistry/page.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/require.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/load-components.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/build/utils.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/build/swc/options.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/build/swc/index.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/build/analysis/parse-module.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/build/analysis/get-page-static-info.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/lib/router-utils/setup-dev-bundler.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/lib/router-server.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/lib/start-server.js
+    at __webpack_require__.f.require (.next/server/webpack-runtime.js:201:28)
+    at <unknown> (.next/server/webpack-runtime.js:114:40)
+    at Array.reduce (<anonymous>)
+    at __webpack_require__.e (.next/server/webpack-runtime.js:113:67)
+    at Array.map (<anonymous>)
+    at __webpack_require__.X (.next/server/webpack-runtime.js:165:22)
+    at <unknown> (webpack://my-v0-project/external%20commonjs%20%22react%22:1:0)
+    at Object.<anonymous> (webpack://my-v0-project/external%20commonjs%20%22react%22:1:0)
+> 1 | module.exports = require("react"); {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array]
+}
+ ⨯ Error: ENOENT: no such file or directory, open '/Users/enzo/prism-website/.next/server/vendor-chunks/recharts@3.1.0_@types+react@19.1.8_react-dom@19.1.0_react@19.1.0__react-is@18.3.1_react@19.1.0_redux@5.0.1.js'
+    at __webpack_require__.f.require (.next/server/webpack-runtime.js:201:28)
+    at <unknown> (.next/server/webpack-runtime.js:114:40)
+    at Array.reduce (<anonymous>)
+    at __webpack_require__.e (.next/server/webpack-runtime.js:113:67)
+    at Array.map (<anonymous>)
+    at __webpack_require__.X (.next/server/webpack-runtime.js:165:22)
+    at <unknown> (.next/server/app/case-studies/dr-christopher-wong/page.js:1205:47)
+    at Object.<anonymous> (.next/server/app/case-studies/dr-christopher-wong/page.js:1208:3) {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/Users/enzo/prism-website/.next/server/vendor-chunks/recharts@3.1.0_@types+react@19.1.8_react-dom@19.1.0_react@19.1.0__react-is@18.3.1_react@19.1.0_redux@5.0.1.js',
+  page: '/case-studies/dr-christopher-wong'
+}
+ GET /prism-flywheel 200 in 1760ms
+ ⨯ Error: Cannot find module './1642.js'
+Require stack:
+- /Users/enzo/prism-website/.next/server/webpack-runtime.js
+- /Users/enzo/prism-website/.next/server/app/case-studies/exquisite-dentistry/page.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/require.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/load-components.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/build/utils.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/build/swc/options.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/build/swc/index.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/build/analysis/parse-module.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/build/analysis/get-page-static-info.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/lib/router-utils/setup-dev-bundler.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/lib/router-server.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/lib/start-server.js
+    at __webpack_require__.f.require (.next/server/webpack-runtime.js:201:28)
+    at <unknown> (.next/server/webpack-runtime.js:114:40)
+    at Array.reduce (<anonymous>)
+    at __webpack_require__.e (.next/server/webpack-runtime.js:113:67)
+    at Array.map (<anonymous>)
+    at __webpack_require__.X (.next/server/webpack-runtime.js:165:22)
+    at <unknown> (webpack://my-v0-project/external%20commonjs%20%22react%22:1:0)
+    at Object.<anonymous> (webpack://my-v0-project/external%20commonjs%20%22react%22:1:0)
+> 1 | module.exports = require("react"); {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array]
+}
+Error: ENOENT: no such file or directory, open '/Users/enzo/prism-website/.next/server/vendor-chunks/recharts@3.1.0_@types+react@19.1.8_react-dom@19.1.0_react@19.1.0__react-is@18.3.1_react@19.1.0_redux@5.0.1.js'
+    at __webpack_require__.f.require (.next/server/webpack-runtime.js:201:28)
+    at <unknown> (.next/server/webpack-runtime.js:114:40)
+    at Array.reduce (<anonymous>)
+    at __webpack_require__.e (.next/server/webpack-runtime.js:113:67)
+    at Array.map (<anonymous>)
+    at __webpack_require__.X (.next/server/webpack-runtime.js:165:22)
+    at <unknown> (.next/server/app/case-studies/exquisite-dentistry/page.js:1205:47)
+    at Object.<anonymous> (.next/server/app/case-studies/exquisite-dentistry/page.js:1208:3) {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/Users/enzo/prism-website/.next/server/vendor-chunks/recharts@3.1.0_@types+react@19.1.8_react-dom@19.1.0_react@19.1.0__react-is@18.3.1_react@19.1.0_redux@5.0.1.js',
+  page: '/case-studies/exquisite-dentistry'
+}
+ ⨯ Error: Cannot find module './1642.js'
+Require stack:
+- /Users/enzo/prism-website/.next/server/webpack-runtime.js
+- /Users/enzo/prism-website/.next/server/app/case-studies/exquisite-dentistry/page.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/require.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/load-components.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/build/utils.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/build/swc/options.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/build/swc/index.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/build/analysis/parse-module.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/build/analysis/get-page-static-info.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/lib/router-utils/setup-dev-bundler.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/lib/router-server.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/lib/start-server.js
+    at __webpack_require__.f.require (.next/server/webpack-runtime.js:201:28)
+    at <unknown> (.next/server/webpack-runtime.js:114:40)
+    at Array.reduce (<anonymous>)
+    at __webpack_require__.e (.next/server/webpack-runtime.js:113:67)
+    at Array.map (<anonymous>)
+    at __webpack_require__.X (.next/server/webpack-runtime.js:165:22)
+    at <unknown> (webpack://my-v0-project/external%20commonjs%20%22react%22:1:0)
+    at Object.<anonymous> (webpack://my-v0-project/external%20commonjs%20%22react%22:1:0)
+> 1 | module.exports = require("react"); {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array]
+}
+Error: ENOENT: no such file or directory, open '/Users/enzo/prism-website/.next/server/vendor-chunks/recharts@3.1.0_@types+react@19.1.8_react-dom@19.1.0_react@19.1.0__react-is@18.3.1_react@19.1.0_redux@5.0.1.js'
+    at __webpack_require__.f.require (.next/server/webpack-runtime.js:201:28)
+    at <unknown> (.next/server/webpack-runtime.js:114:40)
+    at Array.reduce (<anonymous>)
+    at __webpack_require__.e (.next/server/webpack-runtime.js:113:67)
+    at Array.map (<anonymous>)
+    at __webpack_require__.X (.next/server/webpack-runtime.js:165:22)
+    at <unknown> (.next/server/app/case-studies/dr-christopher-wong/page.js:1205:47)
+    at Object.<anonymous> (.next/server/app/case-studies/dr-christopher-wong/page.js:1208:3) {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/Users/enzo/prism-website/.next/server/vendor-chunks/recharts@3.1.0_@types+react@19.1.8_react-dom@19.1.0_react@19.1.0__react-is@18.3.1_react@19.1.0_redux@5.0.1.js',
+  page: '/case-studies/dr-christopher-wong'
+}
+ ⨯ Error: Cannot find module './1642.js'
+Require stack:
+- /Users/enzo/prism-website/.next/server/webpack-runtime.js
+- /Users/enzo/prism-website/.next/server/app/case-studies/exquisite-dentistry/page.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/require.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/load-components.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/build/utils.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/build/swc/options.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/build/swc/index.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/build/analysis/parse-module.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/build/analysis/get-page-static-info.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/lib/router-utils/setup-dev-bundler.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/lib/router-server.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/lib/start-server.js
+    at __webpack_require__.f.require (.next/server/webpack-runtime.js:201:28)
+    at <unknown> (.next/server/webpack-runtime.js:114:40)
+    at Array.reduce (<anonymous>)
+    at __webpack_require__.e (.next/server/webpack-runtime.js:113:67)
+    at Array.map (<anonymous>)
+    at __webpack_require__.X (.next/server/webpack-runtime.js:165:22)
+    at <unknown> (webpack://my-v0-project/external%20commonjs%20%22react%22:1:0)
+    at Object.<anonymous> (webpack://my-v0-project/external%20commonjs%20%22react%22:1:0)
+> 1 | module.exports = require("react"); {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array]
+}
+[Error: ENOENT: no such file or directory, open '/Users/enzo/prism-website/.next/fallback-build-manifest.json'] {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/Users/enzo/prism-website/.next/fallback-build-manifest.json'
+}
+ GET /case-studies/exquisite-dentistry 500 in 2138ms
+ GET /case-studies/exquisite-dentistry 500 in 227ms
+[Error: ENOENT: no such file or directory, open '/Users/enzo/prism-website/.next/fallback-build-manifest.json'] {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/Users/enzo/prism-website/.next/fallback-build-manifest.json'
+}
+ GET /case-studies/dr-christopher-wong 500 in 2215ms
+ GET /case-studies/dr-christopher-wong 500 in 226ms
+ ○ Compiling /terms-of-service ...
+ ✓ Compiled /terms-of-service in 1582ms (3808 modules)
+ ✓ Compiled (3832 modules)
+ GET /privacy-policy 200 in 2223ms
+ GET /careers 200 in 2223ms
+ GET /contact 200 in 2223ms
+ GET /terms-of-service 200 in 2223ms
+ GET /about 200 in 2471ms
+ ○ Compiling /proof ...
+ ✓ Compiled /proof in 810ms (3840 modules)
+ ✓ Compiled (4011 modules)
+ ⚠ Unsupported metadata viewport is configured in metadata export in /blog. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+ GET /podcast 200 in 2343ms
+ GET /affiliate 200 in 2344ms
+ GET /proof 200 in 2344ms
+ GET /offers 200 in 2345ms
+ GET /blog 200 in 2372ms
+ ○ Compiling /_not-found ...
+ ✓ Compiled /_not-found in 1016ms (4014 modules)
+ ⚠ Unsupported metadata viewport is configured in metadata export in /_next/static/chunks/app-pages-internals.js. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+ ⚠ Unsupported metadata viewport is configured in metadata export in /_next/static/chunks/app/blog/page.js. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+ ⚠ Unsupported metadata viewport is configured in metadata export in /_next/static/chunks/app/global-error.js. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+ GET /_next/static/chunks/app-pages-internals.js 404 in 1561ms
+ GET /_next/static/chunks/app/global-error.js 404 in 1561ms
+ GET /_next/static/chunks/app/blog/page.js 404 in 1562ms
+ ✓ Compiled in 867ms (2288 modules)
+ GET / 200 in 25ms
+ GET /case-studies/exquisite-dentistry 200 in 42ms
+ GET /case-studies/dr-christopher-wong 200 in 39ms
+ ⚠ Unsupported metadata viewport is configured in metadata export in /. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+ ⨯ Error: Cannot find module './_ssr_components_home_Clients_tsx.js'
+Require stack:
+- /Users/enzo/prism-website/.next/server/webpack-runtime.js
+- /Users/enzo/prism-website/.next/server/app/_not-found/page.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/require.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/load-components.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/build/utils.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/build/swc/options.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/build/swc/index.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/build/analysis/parse-module.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/build/analysis/get-page-static-info.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/lib/router-utils/setup-dev-bundler.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/lib/router-server.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/lib/start-server.js
+    at __webpack_require__.f.require (.next/server/webpack-runtime.js:270:28)
+    at <unknown> (.next/server/webpack-runtime.js:183:40)
+    at Array.reduce (<anonymous>)
+    at __webpack_require__.e (.next/server/webpack-runtime.js:182:67)
+    at ClientsSection.loadableGenerated.modules [as loader] (app/client-page.tsx:20:37)
+    at eval (../../../src/shared/lib/lazy-dynamic/loadable.tsx:43:31)
+  18 | // New homepage sections
+  19 | // Use SSR for these sections to improve first paint/SEO
+> 20 | const ClientsSection = dynamic(() => import("@/components/home/Clients"))
+     |                                     ^
+  21 | const GrowthResultsSlider = dynamic(() => import("@/components/home/GrowthResultsSlider"))
+  22 | const WebsitesFeatures = dynamic(() => import("@/components/home/WebsitesFeatures"))
+  23 | const SegmentsGrid = dynamic(() => import("@/components/home/SegmentsGrid")) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  digest: '2990349280'
+}
+ ⚠ Unsupported metadata viewport is configured in metadata export in /. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+ GET / 500 in 281ms
+ ⚠ Unsupported metadata viewport is configured in metadata export in /_next/static/css/app/layout.css. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+ GET /_next/static/css/app/layout.css?v=1757183638218 404 in 46ms
+ ⚠ Unsupported metadata viewport is configured in metadata export in /_next/static/chunks/main-app.js. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+ ⚠ Unsupported metadata viewport is configured in metadata export in /_next/static/chunks/app-pages-internals.js. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+ ⚠ Unsupported metadata viewport is configured in metadata export in /_next/static/chunks/app/global-error.js. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+ GET /_next/static/chunks/main-app.js 404 in 93ms
+ GET /_next/static/chunks/app/global-error.js 404 in 93ms
+ GET /_next/static/chunks/app-pages-internals.js 404 in 93ms
+ ⚠ Unsupported metadata viewport is configured in metadata export in /. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+ ⨯ Error: Cannot find module './_ssr_components_home_Clients_tsx.js'
+Require stack:
+- /Users/enzo/prism-website/.next/server/webpack-runtime.js
+- /Users/enzo/prism-website/.next/server/app/_not-found/page.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/require.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/load-components.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/build/utils.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/build/swc/options.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/build/swc/index.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/build/analysis/parse-module.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/build/analysis/get-page-static-info.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/lib/router-utils/setup-dev-bundler.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/lib/router-server.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/lib/start-server.js
+    at __webpack_require__.f.require (.next/server/webpack-runtime.js:270:28)
+    at <unknown> (.next/server/webpack-runtime.js:183:40)
+    at Array.reduce (<anonymous>)
+    at __webpack_require__.e (.next/server/webpack-runtime.js:182:67)
+    at ClientsSection.loadableGenerated.modules [as loader] (app/client-page.tsx:20:37)
+    at eval (../../../src/shared/lib/lazy-dynamic/loadable.tsx:43:31)
+  18 | // New homepage sections
+  19 | // Use SSR for these sections to improve first paint/SEO
+> 20 | const ClientsSection = dynamic(() => import("@/components/home/Clients"))
+     |                                     ^
+  21 | const GrowthResultsSlider = dynamic(() => import("@/components/home/GrowthResultsSlider"))
+  22 | const WebsitesFeatures = dynamic(() => import("@/components/home/WebsitesFeatures"))
+  23 | const SegmentsGrid = dynamic(() => import("@/components/home/SegmentsGrid")) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  digest: '2990349280'
+}
+ ⚠ Unsupported metadata viewport is configured in metadata export in /. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+ GET / 500 in 156ms
+ ⚠ Unsupported metadata viewport is configured in metadata export in /_next/static/css/app/layout.css. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+ ⚠ Unsupported metadata viewport is configured in metadata export in /_next/static/chunks/main-app.js. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+ ⚠ Unsupported metadata viewport is configured in metadata export in /_next/static/chunks/app-pages-internals.js. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+ ⚠ Unsupported metadata viewport is configured in metadata export in /_next/static/chunks/app/global-error.js. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+ GET /_next/static/css/app/layout.css?v=1757183642146 404 in 96ms
+ GET /_next/static/chunks/main-app.js 404 in 98ms
+ GET /_next/static/chunks/app/global-error.js 404 in 97ms
+ GET /_next/static/chunks/app-pages-internals.js 404 in 98ms
+ ✓ Compiled in 849ms (2288 modules)
+ ✓ Compiled in 442ms (2288 modules)
+ ⚠ Unsupported metadata viewport is configured in metadata export in /. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+ ⨯ Error: Cannot find module './_ssr_components_home_Clients_tsx.js'
+Require stack:
+- /Users/enzo/prism-website/.next/server/webpack-runtime.js
+- /Users/enzo/prism-website/.next/server/app/_not-found/page.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/require.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/load-components.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/build/utils.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/build/swc/options.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/build/swc/index.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/build/analysis/parse-module.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/build/analysis/get-page-static-info.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/lib/router-utils/setup-dev-bundler.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/lib/router-server.js
+- /Users/enzo/prism-website/node_modules/.pnpm/next@15.2.4_@babel+core@7.28.0_@opentelemetry+api@1.9.0_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/server/lib/start-server.js
+    at __webpack_require__.f.require (.next/server/webpack-runtime.js:270:28)
+    at <unknown> (.next/server/webpack-runtime.js:183:40)
+    at Array.reduce (<anonymous>)
+    at __webpack_require__.e (.next/server/webpack-runtime.js:182:67)
+    at ClientsSection.loadableGenerated.modules [as loader] (app/client-page.tsx:20:37)
+    at eval (../../../src/shared/lib/lazy-dynamic/loadable.tsx:43:31)
+  18 | // New homepage sections
+  19 | // Use SSR for these sections to improve first paint/SEO
+> 20 | const ClientsSection = dynamic(() => import("@/components/home/Clients"))
+     |                                     ^
+  21 | const GrowthResultsSlider = dynamic(() => import("@/components/home/GrowthResultsSlider"))
+  22 | const WebsitesFeatures = dynamic(() => import("@/components/home/WebsitesFeatures"))
+  23 | const SegmentsGrid = dynamic(() => import("@/components/home/SegmentsGrid")) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  digest: '2990349280'
+}
+ ⚠ Unsupported metadata viewport is configured in metadata export in /. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+ GET / 500 in 163ms
+ ⚠ Unsupported metadata viewport is configured in metadata export in /_next/static/css/app/layout.css. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+ GET /_next/static/css/app/layout.css?v=1757183776112 404 in 34ms
+ ⚠ Unsupported metadata viewport is configured in metadata export in /_next/static/chunks/main-app.js. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+ ⚠ Unsupported metadata viewport is configured in metadata export in /_next/static/chunks/app-pages-internals.js. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+ ⚠ Unsupported metadata viewport is configured in metadata export in /_next/static/chunks/app/global-error.js. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+ GET /_next/static/chunks/main-app.js 404 in 78ms
+ GET /_next/static/chunks/app-pages-internals.js 404 in 78ms
+ GET /_next/static/chunks/app/global-error.js 404 in 79ms
