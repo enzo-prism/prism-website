@@ -8,6 +8,7 @@ import ScrollingTimeline from "@/components/scrolling-timeline"
 import { useMobile } from "@/hooks/use-mobile"
 import { trackVideoInteraction } from "@/utils/analytics"
 import dynamic from "next/dynamic"
+import PoleVaultCarousel from "@/components/pole-vault-carousel"
 import Link from "next/link"
 import { useEffect, useRef, useState } from "react"
 const Navbar = dynamic(() => import("@/components/navbar"), { ssr: false })
@@ -54,7 +55,9 @@ export default function AboutClientPage() {
               <div className="space-y-3">
                 <div className="text-4xl">🌉</div>
                 <h1 className="text-4xl font-bold tracking-tighter lowercase sm:text-5xl md:text-6xl">our story</h1>
-                <p className="mx-auto mt-4 max-w-[700px] text-neutral-600 lowercase md:text-xl"></p>
+                <p className="mx-auto mt-4 max-w-[700px] text-neutral-600 lowercase md:text-xl">
+                  i built prism to pursue my passions for technology, business, and pole vaulting at the highest level
+                </p>
               </div>
             </div>
           </div>
@@ -66,25 +69,40 @@ export default function AboutClientPage() {
             <div className="mb-8 text-center"></div>
 
             <div className="flex justify-center">
-              <div className="w-full max-w-[400px]">
+              <figure className="w-full max-w-[400px]">
                 <MinimalistVideoPlayer
                   videoId="1085519114"
                   thumbnailSrc="/about-prism-thumbnail.png"
                   aspectRatio="9/16"
                   className="w-full rounded-xl shadow-lg"
                 />
-              </div>
+                <figcaption className="mt-6 text-center">
+                  <div className="flex justify-center mb-3">
+                    <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-neutral-200 bg-white p-1 shadow-sm">
+                      <img src="/enzo-avatar.png" alt="Enzo Sison" className="object-contain w-full h-full" />
+                    </div>
+                  </div>
+                  <p className="text-sm text-neutral-500 italic lowercase tracking-wide">enzo sison, founder of prism</p>
+                </figcaption>
+              </figure>
+            </div>
+          </div>
+        </section>
+
+        {/* LA 2028 Olympic Journey (moved below the single video section) */}
+        <section className="px-4 py-12 md:py-16">
+          <div className="container mx-auto px-4 md:px-6 max-w-4xl">
+            <div className="text-center mb-8 md:mb-10">
+              <h2 className="text-2xl md:text-3xl font-bold tracking-tighter normal-case">LA 2028 olympic journey</h2>
+              <p className="mx-auto mt-3 max-w-[720px] text-neutral-600 lowercase md:text-lg">
+                enzo is pursuing competing in the la 2028 olympics for the philippines in pole vaulting—a journey that
+                started in high school, continued through ncaa d1 at cal poly, and now continues on the international stage.
+              </p>
             </div>
 
-            <div className="flex justify-center mt-6">
-              <div className="text-center">
-                <div className="flex justify-center mb-3">
-                  <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-neutral-200 bg-white p-1 shadow-sm">
-                    <img src="/enzo-avatar.png" alt="Enzo Sison" className="object-contain w-full h-full" />
-                  </div>
-                </div>
-                <p className="text-sm text-neutral-500 italic lowercase tracking-wide">enzo sison, founder of prism</p>
-              </div>
+            {/* Minimal carousel of training/competition clips */}
+            <div className="flex justify-center">
+              <PoleVaultCarousel />
             </div>
           </div>
         </section>
