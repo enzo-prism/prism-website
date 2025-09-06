@@ -53,14 +53,18 @@ export default function PoleVaultCarousel() {
       <button
         aria-label="Previous"
         onClick={prev}
-        className="flex absolute left-2 sm:-left-4 top-1/2 -translate-y-1/2 z-10 rounded-full bg-white/80 backdrop-blur p-2 sm:p-2.5 shadow active:scale-95"
+        onTouchStart={(e) => e.stopPropagation()}
+        onTouchEnd={(e) => e.stopPropagation()}
+        className="flex absolute left-2 sm:-left-4 top-1/2 -translate-y-1/2 z-30 rounded-full bg-white/80 backdrop-blur p-2 sm:p-2.5 shadow active:scale-95"
       >
         <ChevronLeft className="h-5 w-5" />
       </button>
       <button
         aria-label="Next"
         onClick={next}
-        className="flex absolute right-2 sm:-right-4 top-1/2 -translate-y-1/2 z-10 rounded-full bg-white/80 backdrop-blur p-2 sm:p-2.5 shadow active:scale-95"
+        onTouchStart={(e) => e.stopPropagation()}
+        onTouchEnd={(e) => e.stopPropagation()}
+        className="flex absolute right-2 sm:-right-4 top-1/2 -translate-y-1/2 z-30 rounded-full bg-white/80 backdrop-blur p-2 sm:p-2.5 shadow active:scale-95"
       >
         <ChevronRight className="h-5 w-5" />
       </button>

@@ -27,19 +27,38 @@ export default function MinimalistVideoPlayer({
   const playerRef = useRef<any>(null)
   const containerRef = useRef<HTMLDivElement>(null)
   const controlsTimeoutRef = useRef<NodeJS.Timeout | null>(null)
+  // Track the latest requested video in case a change happens before player init
+  const pendingVideoIdRef = useRef<string | null>(null)
+  const currentVideoIdRef = useRef<string>(videoId)
+
+  // Keep a ref of the latest videoId so async callbacks don't use stale values
+  useEffect(() => {
+    currentVideoIdRef.current = videoId
+  }, [videoId])
 
   // Load Vimeo API
   useEffect(() => {
-    const script = document.createElement("script")
-    script.src = "https://player.vimeo.com/api/player.js"
-    script.async = true
-    script.onload = initializePlayer
-    document.body.appendChild(script)
+    // If Vimeo is already present, initialize immediately
+    if (typeof window !== 'undefined' && (window as any).Vimeo) {
+      initializePlayer()
+    } else {
+      const script = document.createElement("script")
+      script.src = "https://player.vimeo.com/api/player.js"
+      script.async = true
+      script.onload = initializePlayer
+      document.body.appendChild(script)
+
+      return () => {
+        if (document.body.contains(script)) {
+          document.body.removeChild(script)
+        }
+        if (controlsTimeoutRef.current) {
+          clearTimeout(controlsTimeoutRef.current)
+        }
+      }
+    }
 
     return () => {
-      if (document.body.contains(script)) {
-        document.body.removeChild(script)
-      }
       if (controlsTimeoutRef.current) {
         clearTimeout(controlsTimeoutRef.current)
       }
@@ -50,7 +69,7 @@ export default function MinimalistVideoPlayer({
     if (!window.Vimeo || !containerRef.current) return
 
     const options = {
-      id: videoId,
+      id: currentVideoIdRef.current,
       autopause: false,
       autoplay: false, // We'll handle autoplay manually after loading
       background: false,
@@ -84,7 +103,54 @@ export default function MinimalistVideoPlayer({
         trackVideoInteraction(videoId, `progress_${percent}`, `Video ${percent}% complete`)
       }
     })
+
+    // If a video change was requested before init, load it now
+    if (pendingVideoIdRef.current && pendingVideoIdRef.current !== options.id) {
+      const targetId = pendingVideoIdRef.current
+      pendingVideoIdRef.current = null
+      setIsVideoReady(false)
+      playerRef.current
+        .loadVideo(targetId)
+        .then(() => {
+          // Ensure mute state and remove overlay
+          playerRef.current.setVolume(isMuted ? 0 : 1)
+          setIsVideoReady(true)
+          return playerRef.current.play().catch(() => void 0)
+        })
+        .then(() => setIsPlaying(true))
+        .catch(() => {
+          setIsControlsVisible(true)
+        })
+    }
   }
+
+  // When the videoId prop changes, load the new video on the existing player
+  useEffect(() => {
+    const player = playerRef.current
+    if (!videoId) return
+    // If player not ready yet, queue the request
+    if (!player) {
+      pendingVideoIdRef.current = videoId
+      return
+    }
+    // reset state until the new video is ready
+    setIsVideoReady(false)
+    player
+      .loadVideo(videoId)
+      .then(() => {
+        // ensure mute state and autoplay remain consistent
+        player.setVolume(isMuted ? 0 : 1)
+        // Explicitly mark ready so overlay doesn't block if 'loaded' doesn't fire
+        setIsVideoReady(true)
+        return player.play().catch(() => void 0)
+      })
+      .then(() => setIsPlaying(true))
+      .catch(() => {
+        // If loadVideo fails for any reason, keep controls visible so the user can retry
+        setIsControlsVisible(true)
+      })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [videoId])
 
   const handleVideoLoaded = () => {
     setIsVideoReady(true)
