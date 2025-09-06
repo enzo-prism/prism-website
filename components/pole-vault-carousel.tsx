@@ -11,12 +11,12 @@ type Slide = {
 }
 
 const slides: Slide[] = [
-  { id: "1116465370", thumb: "/first-track-field-competition.jpeg", label: "san jose, ca" },
-  { id: "1116465409", thumb: "/first-pole-vault-competition.jpg", label: "santa barbara, ca" },
-  { id: "1116465400", thumb: "/first-pole-vault-competition.jpg", label: "fresno, ca" },
-  { id: "1116465387", thumb: "/first-pole-vault-competition.jpg", label: "manilla, philippines" },
-  { id: "1116471573", thumb: "/first-pole-vault-competition.jpg", label: "palo alto, ca" },
-  { id: "1116471566", thumb: "/first-pole-vault-competition.jpg", label: "new clark city, philippines" },
+  { id: "1116465370", thumb: "/white.svg", label: "san jose, ca" },
+  { id: "1116465409", thumb: "/white.svg", label: "santa barbara, ca" },
+  { id: "1116465400", thumb: "/white.svg", label: "fresno, ca" },
+  { id: "1116465387", thumb: "/white.svg", label: "manilla, philippines" },
+  { id: "1116471573", thumb: "/white.svg", label: "palo alto, ca" },
+  { id: "1116471566", thumb: "/white.svg", label: "new clark city, philippines" },
 ]
 
 export default function PoleVaultCarousel() {
