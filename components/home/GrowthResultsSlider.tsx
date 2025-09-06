@@ -69,36 +69,39 @@ export default function GrowthResultsSlider() {
   const current = slides[index]
 
   return (
-    <section className="py-16 md:py-24 bg-neutral-50">
+    <section className="py-16 md:py-24 bg-white">
       <div className="container mx-auto px-4 md:px-6">
         <div className="text-center mb-10 md:mb-12">
           <h2 className="text-3xl font-bold tracking-tighter lowercase sm:text-4xl">growth results</h2>
         </div>
 
         {/* Slider */}
-        <div className="mx-auto max-w-[420px] sm:max-w-[500px]">
+        <div className="mx-auto max-w-[390px] sm:max-w-[500px]">
           <div
             className="relative select-none"
             onTouchStart={onTouchStart}
             onTouchMove={onTouchMove}
             onTouchEnd={onTouchEnd}
           >
-            {/* iOS-style device frame */}
+            {/* Framed device chrome */}
             <div className="relative mx-auto w-full aspect-[9/19.5] bg-black rounded-[2rem] border-8 border-black shadow-2xl overflow-hidden">
-              {/* Notch */}
-              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-24 h-6 bg-black rounded-b-2xl" />
+              {/* Simple notch */}
+              <div aria-hidden className="absolute top-0 left-1/2 -translate-x-1/2 w-24 h-6 bg-black rounded-b-2xl" />
 
               {/* Slide image */}
-              <CoreImage
-                src={current.image}
-                alt={current.alt}
-                width={1000}
-                height={2000}
-                className="absolute inset-0 w-full h-full object-cover"
-                sizes="(max-width: 640px) 90vw, 500px"
-                fallbackSrc={`/placeholder.svg?height=1600&width=900&text=${encodeURIComponent(current.platform)}`}
-                quality={90}
-              />
+              <div className="absolute inset-0">
+                <CoreImage
+                  src={current.image}
+                  alt={current.alt}
+                  width={900}
+                  height={1600}
+                  className="w-full h-full object-contain"
+                  sizes="(max-width: 640px) 90vw, 500px"
+                  fallbackSrc={`/placeholder.svg?height=1600&width=900&text=${encodeURIComponent(current.platform)}`}
+                  quality={90}
+                  priority
+                />
+              </div>
             </div>
 
             {/* Controls */}

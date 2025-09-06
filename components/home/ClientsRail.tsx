@@ -8,12 +8,13 @@ import { CLIENTS } from "@/lib/clients"
 export default function ClientsRail() {
   const railRef = useRef<HTMLDivElement>(null)
   const [featuredIndex, setFeaturedIndex] = useState(0)
-  // Use a single, safe path without spaces to avoid optimizer issues
+  // Use the intended gradient set (A–D). These filenames contain spaces;
+  // CoreImage bypasses optimizer for such paths to avoid 400s.
   const GRADIENTS = [
-    "/client-gradient.jpg",
-    "/client-gradient.jpg",
-    "/client-gradient.jpg",
-    "/client-gradient.jpg",
+    "/gradient a.png",
+    "/gradient b.png",
+    "/gradient c.png",
+    "/gradient d.png",
   ] as const
 
   const scrollByAmount = (dir: "left" | "right") => {
