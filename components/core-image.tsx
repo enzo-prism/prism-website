@@ -125,22 +125,6 @@ export default function CoreImage({
     }
   }
 
-  // If image source is not set yet, show a placeholder
-  if (!imgSrc) {
-    return (
-      <div
-        style={{
-          width: typeof validWidth === "number" ? `${validWidth}px` : validWidth,
-          height: typeof validHeight === "number" ? `${validHeight}px` : validHeight,
-          backgroundColor: "#f3f4f6",
-        }}
-        className={`animate-pulse rounded-md ${className}`}
-        role="img"
-        aria-label={alt || "Loading image"}
-      />
-    )
-  }
-
   // Determine if this is a remote image and needs special handling
   const isRemote = typeof imgSrc === "string" && (imgSrc.startsWith("http://") || imgSrc.startsWith("https://"))
 
@@ -153,18 +137,50 @@ export default function CoreImage({
 
   // After the loading indicator and before rendering Image
   if (error && fallbackElement) {
-    return fallbackElement;
+    return fallbackElement
   }
 
+  // If consumer passes utility classes that imply full size, adjust placeholder sizing
+  const wantsFullSize = /(^|\s)w-full(\s|$)/.test(className) || /(^|\s)h-full(\s|$)/.test(className)
+
   return (
-    <div className="relative" ref={imageRef}>
-      {/* Loading indicator */}
-      {showLoadingIndicator && !loaded && !error && (
+    <div
+      className="relative"
+      ref={imageRef}
+      style={{
+        width: wantsFullSize ? '100%' : undefined,
+        height: wantsFullSize ? '100%' : undefined,
+      }}
+    >
+      {/* Placeholder while waiting for IntersectionObserver to set imgSrc */}
+      {!imgSrc && (
+        <div
+          style={{
+            width: wantsFullSize
+              ? "100%"
+              : typeof validWidth === "number" ? `${validWidth}px` : validWidth,
+            height: wantsFullSize
+              ? "100%"
+              : typeof validHeight === "number" ? `${validHeight}px` : validHeight,
+            backgroundColor: "#f3f4f6",
+          }}
+          className={`animate-pulse rounded-md ${className}`}
+          role="img"
+          aria-label={alt || "Loading image"}
+        />
+      )}
+
+      {/* Loading indicator overlay */}
+      {showLoadingIndicator && !loaded && !error && imgSrc && (
         <div
           className="absolute inset-0 flex items-center justify-center bg-neutral-100 rounded-md"
           style={{
-            width: typeof validWidth === "number" ? `${validWidth}px` : validWidth,
-            height: typeof validHeight === "number" ? `${validHeight}px` : validHeight,
+            width: wantsFullSize
+              ? "100%"
+              : typeof validWidth === "number" ? `${validWidth}px` : validWidth,
+            height: wantsFullSize
+              ? "100%"
+              : typeof validHeight === "number" ? `${validHeight}px` : validHeight,
           }}
         >
           <div className="h-8 w-8 animate-spin rounded-full border-4 border-neutral-300 border-t-neutral-600" />
@@ -172,27 +188,31 @@ export default function CoreImage({
       )}
 
       {/* Image component with proper configuration */}
-      <Image
-        src={error ? effectiveFallbackSrc : imgSrc}
-        alt={error ? fallbackAlt || `Fallback for ${alt}` : alt}
-        width={validWidth}
-        height={validHeight}
-        className={`${className} ${!loaded && !error ? "opacity-0" : "opacity-100"} transition-opacity duration-300 hardware-accelerated drop-shadow-md`}
-        priority={priority}
-        sizes={sizes || (validWidth < 640 ? "100vw" : validWidth < 1024 ? "50vw" : "33vw")}
-        quality={quality || 85}
-        placeholder="blur"
-        blurDataURL={blurDataURL}
-        onError={handleError}
-        onLoad={() => {
-          setLoaded(true)
-          // Log successful loads in development to help with debugging
-          if (process.env.NODE_ENV === "development") {
-            console.log(`Image loaded successfully: ${typeof src === "string" ? src : "object-source"}`)
-          }
-        }}
-        {...props}
-      />
+      {imgSrc && (
+        <Image
+          src={error ? effectiveFallbackSrc : imgSrc}
+          alt={error ? fallbackAlt || `Fallback for ${alt}` : alt}
+          width={validWidth}
+          height={validHeight}
+          className={`${className} ${!loaded && !error ? "opacity-0" : "opacity-100"} transition-opacity duration-300 hardware-accelerated drop-shadow-md`}
+          priority={priority}
+          sizes={sizes || (validWidth < 640 ? "100vw" : validWidth < 1024 ? "50vw" : "33vw")}
+          quality={quality || 85}
+          placeholder="blur"
+          blurDataURL={blurDataURL}
+          // Bypass Next.js optimizer for local files with spaces in the path
+          // to avoid INVALID_IMAGE_OPTIMIZE_REQUEST (e.g., "/gradient a.png")
+          unoptimized={typeof imgSrc === "string" && imgSrc.includes(" ")}
+          onError={handleError}
+          onLoad={() => {
+            setLoaded(true)
+            if (process.env.NODE_ENV === "development") {
+              console.log(`Image loaded successfully: ${typeof src === "string" ? src : "object-source"}`)
+            }
+          }}
+          {...props}
+        />
+      )}
     </div>
   )
 }
