@@ -33,6 +33,9 @@ images: {
       { source: '/refer', destination: '/get-started', permanent: true },
       { source: '/tools', destination: '/services', permanent: true },
       { source: '/portfolio', destination: '/case-studies', permanent: true },
+      // Friendly shortpaths for new nav structure
+      { source: '/design', destination: '/designs', permanent: true },
+      { source: '/growth', destination: '/prism-flywheel', permanent: true },
 
       // Old content -> closest current destinations
       { source: '/dr-kris-hamamoto', destination: '/', permanent: true },

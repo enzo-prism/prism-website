@@ -20,15 +20,25 @@ export const LOGO_SIZES = {
 export type NavChild = { label: string; href: string }
 export type NavItem = { label: string; href?: string; children?: NavChild[]; emoji?: string }
 
-// Updated primary navigation (flat list) to match recent design
+// Updated primary navigation to required structure
 export const NAV_ITEMS: NavItem[] = [
-  { emoji: "🏠", label: "home", href: "/" },
-  { emoji: "🖥️", label: "websites", href: "/websites" },
-  { emoji: "📱", label: "apps", href: "/apps" },
-  { emoji: "🎨", label: "designs", href: "/designs" },
-  { emoji: "🎁", label: "offers", href: "/offers" },
-  { emoji: "✍️", label: "blog", href: "/blog" },
-  { emoji: "🎙️", label: "podcast", href: "/podcast" },
-  { emoji: "❤️", label: "wall of love", href: "/wall-of-love" },
-  { emoji: "🚀", label: "apply", href: "/get-started" },
+  { label: "home", href: "/" },
+  { label: "about", href: "/about" },
+  {
+    label: "product",
+    children: [
+      { label: "websites", href: "/websites" },
+      { label: "design", href: "/design" },
+      { label: "growth", href: "/growth" },
+    ],
+  },
+  {
+    label: "growth guides",
+    children: [
+      { label: "blog", href: "/blog" },
+      { label: "podcast", href: "/podcast" },
+    ],
+  },
+  { label: "wall of love", href: "/wall-of-love" },
+  { label: "apply", href: "/get-started" },
 ]

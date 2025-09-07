@@ -23,6 +23,21 @@ export default function Navbar() {
     setIsMenuOpen(!isMenuOpen)
   }
 
+  // Normalize paths for active-state (aliases for spec vs. actual routes)
+  const aliasMap: Record<string, string> = {
+    '/design': '/designs',
+    '/growth': '/prism-flywheel',
+  }
+
+  const normalizeHref = (href: string) => aliasMap[href] ?? href
+  const isActivePath = (href?: string) => (href ? pathname === normalizeHref(href) : false)
+  const isParentActive = (item: NavItem) => {
+    if (item.href && isActivePath(item.href)) return true
+    if (item.children?.length) {
+      return item.children.some((c) => isActivePath(c.href))
+    }
+    return false
+  }
 
   const headerPositionClass = isMobile && pathname === "/" ? "fixed" : "sticky"
   return (
@@ -75,7 +90,7 @@ export default function Navbar() {
                           <Link
                             href={item.href}
                             className={`flex items-center gap-2 rounded-md px-3 py-2 text-lg lowercase transition-colors hover:bg-muted ${
-                              pathname === item.href
+                              isActivePath(item.href)
                                 ? "font-semibold text-foreground bg-muted"
                                 : "text-muted-foreground hover:text-foreground"
                             }`}
@@ -88,7 +103,7 @@ export default function Navbar() {
                             <span>{item.label}</span>
                           </Link>
                         ) : (
-                          <div className="flex items-center gap-2 px-3 py-2 text-lg lowercase text-foreground">
+                          <div className={`flex items-center gap-2 px-3 py-2 text-lg lowercase ${isParentActive(item) ? 'text-foreground' : 'text-muted-foreground'}`}>
                             {item.emoji ? <span className="text-xl" aria-hidden>{item.emoji}</span> : null}
                             <span>{item.label}</span>
                           </div>
@@ -100,7 +115,7 @@ export default function Navbar() {
                                 key={child.label}
                                 href={child.href}
                                 className={`block rounded-md px-3 py-2 text-base lowercase transition-colors hover:bg-muted ${
-                                  pathname === child.href
+                                  isActivePath(child.href)
                                     ? "font-medium text-foreground bg-muted"
                                     : "text-muted-foreground hover:text-foreground"
                                 }`}
@@ -128,7 +143,7 @@ export default function Navbar() {
                     <Link
                       href={item.href}
                       className={`flex items-center gap-1 text-sm font-medium lowercase transition-colors hover:text-primary ${
-                        pathname === item.href ? "text-primary" : "text-muted-foreground"
+                        isActivePath(item.href) ? "text-primary" : "text-muted-foreground"
                       }`}
                       onClick={() => trackNavigation(item.label, item.href!)}
                     >
@@ -137,7 +152,9 @@ export default function Navbar() {
                     </Link>
                   ) : (
                     <button
-                      className="flex items-center gap-1 text-sm font-medium lowercase text-muted-foreground hover:text-primary"
+                      className={`flex items-center gap-1 text-sm font-medium lowercase hover:text-primary ${
+                        isParentActive(item) ? 'text-primary' : 'text-muted-foreground'
+                      }`}
                       aria-haspopup="menu"
                       aria-expanded="false"
                     >
@@ -152,7 +169,9 @@ export default function Navbar() {
                           <Link
                             key={child.label}
                             href={child.href}
-                            className="block rounded-md px-3 py-2 text-sm lowercase text-neutral-700 hover:bg-neutral-50 hover:text-neutral-900"
+                            className={`block rounded-md px-3 py-2 text-sm lowercase hover:bg-neutral-50 ${
+                              isActivePath(child.href) ? 'text-neutral-900' : 'text-neutral-700 hover:text-neutral-900'
+                            }`}
                             onClick={() => trackNavigation(child.label, child.href)}
                           >
                             {child.label}
