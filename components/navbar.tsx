@@ -7,14 +7,14 @@ import { useEffect, useState } from "react"
 
 import { Button } from "@/components/ui/button"
 import { useMobile } from "@/hooks/use-mobile"
-import { LOGO_CONFIG, PRIMARY_NAV_ITEMS } from "@/lib/constants"
+import { LOGO_CONFIG, NAV_ITEMS, type NavItem } from "@/lib/constants"
 import { trackNavigation } from "@/utils/analytics"
 import CoreImage from "./core-image"; // Assuming core-image.tsx is in the same components directory
 
 export default function Navbar() {
   const [isMounted, setIsMounted] = useState(false)
   useEffect(() => setIsMounted(true), [])
-  const navItems = PRIMARY_NAV_ITEMS
+  const navItems = NAV_ITEMS
   const isMobile = useMobile()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const pathname = usePathname()
@@ -52,9 +52,13 @@ export default function Navbar() {
         { !isMounted ? (
             <nav className="hidden md:flex items-center gap-4">
               {navItems.map((item) => (
-                <Link key={item.label} href={item.href} className="text-sm lowercase text-muted-foreground hover:text-foreground">
-                  {item.label}
-                </Link>
+                item.href ? (
+                  <Link key={item.label} href={item.href} className="text-sm lowercase text-muted-foreground hover:text-foreground">
+                    {item.label}
+                  </Link>
+                ) : (
+                  <span key={item.label} className="text-sm lowercase text-muted-foreground">{item.label}</span>
+                )
               ))}
             </nav>
           ) : isMobile ? (
@@ -66,41 +70,98 @@ export default function Navbar() {
                 <div className="absolute left-0 top-16 z-50 w-full bg-background px-4 py-4 shadow-md animate-in slide-in-from-top-4 duration-300">
                   <nav className="flex flex-col space-y-4">
                     {navItems.map((item) => (
-                      <Link
-                        key={item.label}
-                        href={item.href}
-                        className={`flex items-center gap-2 rounded-md px-3 py-2 text-lg lowercase transition-colors hover:bg-muted ${
-                          pathname === item.href
-                            ? "font-semibold text-foreground bg-muted"
-                            : "text-muted-foreground hover:text-foreground"
-                        }`}
-                        onClick={() => {
-                          setIsMenuOpen(false)
-                          trackNavigation(item.label, item.href)
-                        }}
-                      >
-                        <span className="text-xl">{item.emoji}</span>
-                        <span>{item.label}</span>
-                      </Link>
+                      <div key={item.label} className="flex flex-col">
+                        {item.href ? (
+                          <Link
+                            href={item.href}
+                            className={`flex items-center gap-2 rounded-md px-3 py-2 text-lg lowercase transition-colors hover:bg-muted ${
+                              pathname === item.href
+                                ? "font-semibold text-foreground bg-muted"
+                                : "text-muted-foreground hover:text-foreground"
+                            }`}
+                            onClick={() => {
+                              setIsMenuOpen(false)
+                              trackNavigation(item.label, item.href!)
+                            }}
+                          >
+                            {item.emoji ? <span className="text-xl" aria-hidden>{item.emoji}</span> : null}
+                            <span>{item.label}</span>
+                          </Link>
+                        ) : (
+                          <div className="flex items-center gap-2 px-3 py-2 text-lg lowercase text-foreground">
+                            {item.emoji ? <span className="text-xl" aria-hidden>{item.emoji}</span> : null}
+                            <span>{item.label}</span>
+                          </div>
+                        )}
+                        {item.children && (
+                          <div className="pl-6 mt-1 space-y-1">
+                            {item.children.map((child) => (
+                              <Link
+                                key={child.label}
+                                href={child.href}
+                                className={`block rounded-md px-3 py-2 text-base lowercase transition-colors hover:bg-muted ${
+                                  pathname === child.href
+                                    ? "font-medium text-foreground bg-muted"
+                                    : "text-muted-foreground hover:text-foreground"
+                                }`}
+                                onClick={() => {
+                                  setIsMenuOpen(false)
+                                  trackNavigation(child.label, child.href)
+                                }}
+                              >
+                                {child.label}
+                              </Link>
+                            ))}
+                          </div>
+                        )}
+                      </div>
                     ))}
                   </nav>
                 </div>
               )}
             </>
           ) : (
-            <nav className="flex items-center gap-6">
+            <nav className="flex items-center gap-5">
               {navItems.map((item) => (
-                <Link
-                  key={item.label}
-                  href={item.href}
-                  className={`flex items-center gap-1 text-sm font-medium lowercase transition-colors hover:text-primary ${
-                    pathname === item.href ? "text-primary" : "text-muted-foreground"
-                  }`}
-                  onClick={() => trackNavigation(item.label, item.href)}
-                >
-                  <span className="text-base">{item.emoji}</span>
-                  <span>{item.label}</span>
-                </Link>
+                <div key={item.label} className="relative group">
+                  {item.href ? (
+                    <Link
+                      href={item.href}
+                      className={`flex items-center gap-1 text-sm font-medium lowercase transition-colors hover:text-primary ${
+                        pathname === item.href ? "text-primary" : "text-muted-foreground"
+                      }`}
+                      onClick={() => trackNavigation(item.label, item.href!)}
+                    >
+                      {item.emoji ? <span className="text-base" aria-hidden>{item.emoji}</span> : null}
+                      <span>{item.label}</span>
+                    </Link>
+                  ) : (
+                    <button
+                      className="flex items-center gap-1 text-sm font-medium lowercase text-muted-foreground hover:text-primary"
+                      aria-haspopup="menu"
+                      aria-expanded="false"
+                    >
+                      {item.emoji ? <span className="text-base" aria-hidden>{item.emoji}</span> : null}
+                      <span>{item.label}</span>
+                    </button>
+                  )}
+                  {item.children && (
+                    <div className="absolute left-1/2 -translate-x-1/2 top-full pt-2 z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-opacity duration-150">
+                      <div className="rounded-xl border bg-white shadow-lg p-2 min-w-[220px]">
+                        {item.children.map((child) => (
+                          <Link
+                            key={child.label}
+                            href={child.href}
+                            className="block rounded-md px-3 py-2 text-sm lowercase text-neutral-700 hover:bg-neutral-50 hover:text-neutral-900"
+                            onClick={() => trackNavigation(child.label, child.href)}
+                          >
+                            {child.label}
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
               ))}
             </nav>
           ) }

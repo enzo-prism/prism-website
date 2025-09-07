@@ -16,12 +16,19 @@ export const LOGO_SIZES = {
   small: { width: 40, height: 40 },
 } as const 
 
-// Primary navigation items (shared by top navbar and mobile tab bar)
-export const PRIMARY_NAV_ITEMS: Array<{ emoji: string; label: string; href: string }> = [
+// New primary navigation structure
+export type NavChild = { label: string; href: string }
+export type NavItem = { label: string; href?: string; children?: NavChild[]; emoji?: string }
+
+// Updated primary navigation (flat list) to match recent design
+export const NAV_ITEMS: NavItem[] = [
   { emoji: "🏠", label: "home", href: "/" },
   { emoji: "🖥️", label: "websites", href: "/websites" },
   { emoji: "📱", label: "apps", href: "/apps" },
   { emoji: "🎨", label: "designs", href: "/designs" },
-  { emoji: "⚙️", label: "flywheel", href: "/prism-flywheel" },
+  { emoji: "🎁", label: "offers", href: "/offers" },
+  { emoji: "✍️", label: "blog", href: "/blog" },
+  { emoji: "🎙️", label: "podcast", href: "/podcast" },
   { emoji: "❤️", label: "wall of love", href: "/wall-of-love" },
+  { emoji: "🚀", label: "apply", href: "/get-started" },
 ]
