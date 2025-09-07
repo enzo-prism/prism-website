@@ -47,7 +47,7 @@ const staggerChildren = {
   }
 }
 
-export default function ClientGetStartedPage() {
+export default function ClientGetStartedPage({ heroOnly = false }: { heroOnly?: boolean }) {
   const { getViewportConfig } = useMobileAnimations()
   const [shouldLoadVideo, setShouldLoadVideo] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -309,7 +309,7 @@ export default function ClientGetStartedPage() {
                   transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
                   style={{ willChange: 'transform, opacity' }}
                 >
-                  More leads. <span className="font-normal">Less effort.</span>
+                  Apply for Prism
                 </motion.h1>
                 
                 <motion.p 
@@ -319,41 +319,16 @@ export default function ClientGetStartedPage() {
                   transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1], delay: 0.06 }}
                   style={{ willChange: 'transform, opacity' }}
                 >
-                  We fix the foundation in 30 days, then compound results every month—without adding to your to‑do list.
+                  Fill out the Typeform below; our team will review your application and get back to you within 24 hours.
                 </motion.p>
 
-                {/* Simplified CTA */}
-                <motion.div 
-                  className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1], delay: 0.12 }}
-                  style={{ willChange: 'transform, opacity' }}
-                >
-                  <Button onClick={scrollToForm} className="h-11 px-6 rounded-full bg-neutral-900 hover:bg-neutral-800 text-white">
-                    View plans — Core & Plus
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </Button>
-                  <Button
-                    variant="outline"
-                    onClick={() => {
-                      trackCTAClick('see case studies', 'get started page')
-                      window.location.href = '/case-studies'
-                    }}
-                    className="h-11 px-6 rounded-full border-neutral-300 text-neutral-900 hover:bg-neutral-50"
-                  >
-                    See case studies
-                  </Button>
-                  <div className="flex items-center justify-center text-sm text-neutral-600">
-                    <span>Requests reviewed on the 1st</span>
-                  </div>
-                </motion.div>
+                {/* Hero CTAs removed per request */}
               </div>
             </div>
           </div>
         </section>
-
-        {/* Standout Features */}
+        {/* Additional sections hidden when heroOnly */}
+        {heroOnly ? null : (
         <section className="px-4 py-12 sm:py-16">
           <div className="container mx-auto max-w-5xl">
             <motion.div
@@ -455,8 +430,10 @@ export default function ClientGetStartedPage() {
             </div>
           </div>
         </section>
+        )}
 
         {/* Plan selection + checkout flow */}
+        {heroOnly ? null : (
         <section ref={formSectionRef} className="px-4 py-12 sm:py-16 md:py-20 bg-neutral-50 border-t border-neutral-100">
           <div className="container mx-auto max-w-2xl">
             <motion.div
@@ -796,10 +773,11 @@ export default function ClientGetStartedPage() {
             </motion.div>
           </div>
         </section>
+        )}
         {/* Footer spacing CTA removed to keep flow minimal */}
       </main>
       {/* Sticky mobile CTA removed */}
-      <Footer />
+      {heroOnly ? null : <Footer />}
     </div>
   )
 }
