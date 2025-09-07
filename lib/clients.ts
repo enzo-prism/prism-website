@@ -55,26 +55,30 @@ export const CLIENTS: ClientInfo[] = [
   },
   {
     title: "Belize Kids Foundation",
-    location: "Belize",
+    location: "San Pedro, Belize",
     image: "/belize-kids.png",
     website: "https://belizekids.org",
   },
   {
     title: "Leadership Summit",
+    location: "San Francisco, CA",
     image: "/liz-armato.png",
   },
   {
     title: "Rebellious Aging",
+    location: "Los Gatos, CA",
     image: "/suz-meinhardt.png",
     website: "https://rebelwithsuz.com/",
   },
   {
     title: "Canary Foundation",
+    location: "Palo Alto, CA",
     image: "/soft-gradient-portrait.svg",
     website: "https://www.canaryfoundation.org/",
   },
   {
     title: "Wine Country Root Canal",
+    location: "Santa Rosa, CA",
     image: "/soft-gradient-portrait.svg",
     website: "https://www.winecountryrootcanal.com/",
   },
@@ -86,19 +90,8 @@ export const CLIENTS: ClientInfo[] = [
   },
   {
     title: "sr4 Partners",
+    location: "Chicago, IL",
     image: "/soft-gradient-portrait.svg",
     website: "https://www.sr4partners.com/",
-  },
-  {
-    title: "Dr. Katie Lee",
-    image: "/dr-katie-lee.jpeg",
-  },
-  {
-    title: "Dr. Michael Njo",
-    image: "/dr-michael-njo.jpeg",
-  },
-  {
-    title: "Dr. Bryce Chun",
-    image: "/dr-bryce-chun.jpeg",
   },
 ]
