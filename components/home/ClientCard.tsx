@@ -18,19 +18,24 @@ export default function ClientCard({ title, location, image, href, website, obje
       role="group"
       aria-label={`${title}${location ? ` — ${location}` : ""}`}
     >
-      <CoreImage
-        src={image}
-        alt={`${title}${location ? ` — ${location}` : ""}`}
-        width={360}
-        height={640}
-        className="absolute inset-0 w-full h-full object-cover"
-        sizes="(max-width: 640px) 60vw, (max-width: 1024px) 30vw, 260px"
-        quality={90}
-        priority={priority}
-        style={objectPosition ? { objectPosition } : undefined}
-        fallbackSrc="/placeholder.svg?height=640&width=360&text=client"
-      />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/25 to-transparent" />
+      {/* Media and overlay wrapper inherits radius to guarantee matching corners on iOS */}
+      <div className="absolute inset-0 rounded-[inherit] overflow-hidden">
+        <CoreImage
+          src={image}
+          alt={`${title}${location ? ` — ${location}` : ""}`}
+          width={360}
+          height={640}
+          className="w-full h-full object-cover"
+          sizes="(max-width: 640px) 60vw, (max-width: 1024px) 30vw, 260px"
+          quality={90}
+          priority={priority}
+          style={objectPosition ? { objectPosition } : undefined}
+          fallbackSrc="/placeholder.svg?height=640&width=360&text=client"
+          inheritRadius
+          disableShadow
+        />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/60 via-black/25 to-transparent" />
+      </div>
       <div className="absolute bottom-0 left-0 right-0 p-3">
         <div className="text-white text-[15px] sm:text-base font-semibold leading-tight drop-shadow-sm truncate">
           {title}

@@ -13,6 +13,8 @@ interface CoreImageProps extends Omit<ImageProps, "onError" | "onLoadingComplete
   onLoadError?: () => void
   customErrorHandling?: boolean
   fallbackElement?: React.ReactNode
+  inheritRadius?: boolean
+  disableShadow?: boolean
 }
 
 /**
@@ -41,6 +43,8 @@ export default function CoreImage({
   onLoadError,
   customErrorHandling = false,
   fallbackElement,
+  inheritRadius = false,
+  disableShadow = false,
   ...props
 }: CoreImageProps) {
   const [error, setError] = useState(false)
@@ -150,6 +154,7 @@ export default function CoreImage({
       style={{
         width: wantsFullSize ? '100%' : undefined,
         height: wantsFullSize ? '100%' : undefined,
+        ...(inheritRadius ? { borderRadius: 'inherit', overflow: 'hidden' } : {}),
       }}
     >
       {/* Placeholder while waiting for IntersectionObserver to set imgSrc */}
@@ -163,8 +168,9 @@ export default function CoreImage({
               ? "100%"
               : typeof validHeight === "number" ? `${validHeight}px` : validHeight,
             backgroundColor: "#f3f4f6",
+            ...(inheritRadius ? { borderRadius: 'inherit', overflow: 'hidden' } : {}),
           }}
-          className={`animate-pulse rounded-md ${className}`}
+          className={`animate-pulse ${className}`}
           role="img"
           aria-label={alt || "Loading image"}
         />
@@ -173,7 +179,7 @@ export default function CoreImage({
       {/* Loading indicator overlay */}
       {showLoadingIndicator && !loaded && !error && imgSrc && (
         <div
-          className="absolute inset-0 flex items-center justify-center bg-neutral-100 rounded-md"
+          className="absolute inset-0 flex items-center justify-center bg-neutral-100"
           style={{
             width: wantsFullSize
               ? "100%"
@@ -181,6 +187,7 @@ export default function CoreImage({
             height: wantsFullSize
               ? "100%"
               : typeof validHeight === "number" ? `${validHeight}px` : validHeight,
+            ...(inheritRadius ? { borderRadius: 'inherit', overflow: 'hidden' } : {}),
           }}
         >
           <div className="h-8 w-8 animate-spin rounded-full border-4 border-neutral-300 border-t-neutral-600" />
@@ -194,7 +201,7 @@ export default function CoreImage({
           alt={error ? fallbackAlt || `Fallback for ${alt}` : alt}
           width={validWidth}
           height={validHeight}
-          className={`${className} ${!loaded && !error ? "opacity-0" : "opacity-100"} transition-opacity duration-300 hardware-accelerated drop-shadow-md`}
+          className={`${className} ${!loaded && !error ? "opacity-0" : "opacity-100"} transition-opacity duration-300 hardware-accelerated ${disableShadow ? '' : 'drop-shadow-md'}`}
           priority={priority}
           sizes={sizes || (validWidth < 640 ? "100vw" : validWidth < 1024 ? "50vw" : "33vw")}
           quality={quality || 85}
