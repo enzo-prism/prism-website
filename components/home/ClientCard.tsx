@@ -19,7 +19,7 @@ export default function ClientCard({ title, location, image, href, website, obje
       aria-label={`${title}${location ? ` — ${location}` : ""}`}
     >
       {/* Media and overlay wrapper inherits radius to guarantee matching corners on iOS */}
-      <div className="absolute inset-0 rounded-[inherit] overflow-hidden">
+      <div className="absolute inset-0 rounded-[inherit] overflow-hidden z-0">
         <CoreImage
           src={image}
           alt={`${title}${location ? ` — ${location}` : ""}`}
@@ -33,11 +33,13 @@ export default function ClientCard({ title, location, image, href, website, obje
           fallbackSrc="/placeholder.svg?height=640&width=360&text=client"
           inheritRadius
           disableShadow
+          showLoadingIndicator={false}
         />
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/60 via-black/25 to-transparent" />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/60 via-black/25 to-transparent z-10" />
       </div>
-      <div className="absolute bottom-0 left-0 right-0 p-3">
-        <div className="text-white text-[15px] sm:text-base font-semibold leading-tight drop-shadow-sm truncate">
+      {/* Ensure text is always painted above media on mobile */}
+      <div className="absolute bottom-0 left-0 right-0 p-3 z-20">
+        <div className="text-white text-[15px] sm:text-base font-semibold leading-tight truncate">
           {title}
         </div>
         {location ? (
