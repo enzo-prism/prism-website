@@ -108,28 +108,12 @@ export default function ClientShowcase() {
       image: "/liz-armato.png",
     },
     {
-      id: 12,
-      name: "dr. katie lee",
-      business: "author of saved by the mouth",
-      clientType: "podcast guest",
-      gradient: "bg-gradient-to-br from-emerald-200 to-emerald-400",
-      image: "/dr-katie-lee.jpeg",
-    },
-    {
       id: 13,
       name: "dr. arash abolfazlian",
       business: "crow canyon orthodontics",
       clientType: "podcast guest",
       gradient: "bg-gradient-to-br from-sky-200 to-sky-400",
       image: "/dr-arash-abolfazlian.png", // Ensured this line is clean
-    },
-    {
-      id: 14,
-      name: "dr. bryce chun",
-      business: "coast periodontics",
-      clientType: "website",
-      gradient: "bg-gradient-to-br from-fuchsia-200 to-fuchsia-400",
-      image: "/dr-bryce-chun.jpeg",
     },
     {
       id: 15,
