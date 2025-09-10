@@ -2,6 +2,7 @@
 import { useRevealAnimation } from '@/hooks/use-reveal-animation';
 import { trackNavigation } from '@/utils/analytics';
 import { useEffect, useState } from 'react';
+import { shuffleArray } from '@/utils/shuffle';
 
 const originalItems = [
   { emoji: '🪥', label: 'cosmetic dentist' },
@@ -18,16 +19,6 @@ const originalItems = [
   { emoji: '📦', label: 'e-commerce brands' },
   { emoji: '🏔️', label: 'executive leadership events' },
 ];
-
-// Fisher-Yates shuffle algorithm for true randomization
-function shuffleArray<T>(array: T[]): T[] {
-  const shuffled = [...array];
-  for (let i = shuffled.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-  }
-  return shuffled;
-}
 
 export default function WhoWeBuildForCarousel() {
   const { elementRef, isVisible } = useRevealAnimation({ threshold: 0.2, delay: 100 });

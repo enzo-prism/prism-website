@@ -1,12 +1,19 @@
 "use client"
 
-import { useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import ClientCard from "@/components/home/ClientCard"
 import { CLIENTS } from "@/lib/clients"
+import { shuffleArray } from "@/utils/shuffle"
 
 export default function ClientsRail() {
   const railRef = useRef<HTMLDivElement>(null)
+  const [shuffledClients, setShuffledClients] = useState(CLIENTS)
+
+  // Shuffle on client mount to avoid hydration mismatch
+  useEffect(() => {
+    setShuffledClients(shuffleArray(CLIENTS))
+  }, [])
   // Use the intended gradient set (A–D). These filenames contain spaces;
   // CoreImage bypasses optimizer for such paths to avoid 400s.
   const GRADIENTS = [
@@ -34,11 +41,11 @@ export default function ClientsRail() {
         role="list"
         aria-label="Client cards"
       >
-        {CLIENTS.map((client, i) => {
+        {shuffledClients.map((client, i) => {
           const gradientSrc = GRADIENTS[i % GRADIENTS.length]
           return (
             <div
-              key={`${client.title}-${i}`}
+              key={client.title}
               className="shrink-0 snap-start md:translate-y-0 first:ml-4 last:mr-4 w-[78vw] sm:w-[62vw] md:w-[260px]"
               role="listitem"
             >
