@@ -15,6 +15,7 @@ import { AnimatePresence, motion } from "framer-motion"
 import { ArrowRight, BadgeCheck, CheckCircle, Palette, Search } from "lucide-react"
 import Link from "next/link"
 import { useEffect, useRef, useState } from "react"
+import StepIndicator from "@/components/ui/step-indicator"
 
 type Plan = 'CORE' | 'PLUS' | null
 
@@ -62,35 +63,7 @@ export default function ClientGetStartedPage({ heroOnly = false }: { heroOnly?: 
     phone: ''
   })
   const [currentStep, setCurrentStep] = useState<1 | 2 | 3>(1)
-  // Calculate days until the next monthly review (on the 1st)
-  const calculateDaysUntilNextFirst = () => {
-    const now = new Date()
-    const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate())
-
-    // If today is the 1st, review is today
-    if (now.getDate() === 1) return 0
-
-    // Otherwise, compute the next month's 1st
-    const nextMonth = now.getMonth() + 1
-    const nextMonthYear = now.getFullYear() + (nextMonth > 11 ? 1 : 0)
-    const nextMonthIndex = nextMonth % 12
-    const nextFirst = new Date(nextMonthYear, nextMonthIndex, 1)
-
-    const msPerDay = 24 * 60 * 60 * 1000
-    const diffDays = Math.round((nextFirst.getTime() - startOfToday.getTime()) / msPerDay)
-    return Math.max(diffDays, 0)
-  }
-
-  const [daysUntilReview] = useState<number>(calculateDaysUntilNextFirst)
-  const formatNextFirstDate = () => {
-    const now = new Date()
-    const isFirstToday = now.getDate() === 1
-    const targetMonthIndex = isFirstToday ? now.getMonth() : (now.getMonth() === 11 ? 0 : now.getMonth() + 1)
-    const targetYear = isFirstToday ? now.getFullYear() : (now.getMonth() === 11 ? now.getFullYear() + 1 : now.getFullYear())
-    const nextFirst = new Date(targetYear, targetMonthIndex, 1)
-    return nextFirst.toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })
-  }
-  const nextReviewDate = formatNextFirstDate()
+  // 24-hour response: removed monthly review date logic
   const isMobile = useMobile()
   const videoRef = useRef<HTMLDivElement>(null)
   const formSectionRef = useRef<HTMLDivElement>(null)
@@ -309,7 +282,7 @@ export default function ClientGetStartedPage({ heroOnly = false }: { heroOnly?: 
                   transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
                   style={{ willChange: 'transform, opacity' }}
                 >
-                  Apply for Prism
+                  apply to work with prism
                 </motion.h1>
                 
                 <motion.p 
@@ -319,11 +292,55 @@ export default function ClientGetStartedPage({ heroOnly = false }: { heroOnly?: 
                   transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1], delay: 0.06 }}
                   style={{ willChange: 'transform, opacity' }}
                 >
-                  Fill out the Typeform below; our team will review your application and get back to you within 24 hours.
+                  we take on a limited number of clients and don’t sacrifice quality for volume. to make sure we’re a great fit and can make you successful, start with a short application. we respond within 24 hours on weekdays. if it’s a match, we’ll invite you to a 20‑minute consultation.
                 </motion.p>
 
                 {/* Hero CTAs removed per request */}
               </div>
+
+              {/* Capacity callout */}
+              <motion.div 
+                className="mt-6 w-full max-w-2xl mx-auto"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
+              >
+                <div className="mx-auto max-w-[60ch] text-sm text-neutral-700 bg-neutral-50 border border-neutral-200 rounded-lg px-4 py-3">
+                  <span className="font-medium text-neutral-900">limited capacity:</span> we onboard only a few new clients each month to protect quality.
+                </div>
+              </motion.div>
+
+              {/* Compact how-it-works steps */}
+              <motion.div 
+                className="mt-6 w-full max-w-3xl mx-auto"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1], delay: 0.15 }}
+              >
+                <div className="grid gap-3 sm:grid-cols-3">
+                  <div className="flex items-start gap-3 rounded-lg border border-neutral-200 bg-white p-4">
+                    <StepIndicator number={1} size="sm" variant="minimal" />
+                    <div>
+                      <p className="text-sm font-medium text-neutral-900 lowercase">apply</p>
+                      <p className="text-xs text-neutral-600 lowercase">2–3 minutes.</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-3 rounded-lg border border-neutral-200 bg-white p-4">
+                    <StepIndicator number={2} size="sm" variant="minimal" />
+                    <div>
+                      <p className="text-sm font-medium text-neutral-900 lowercase">fit review</p>
+                      <p className="text-xs text-neutral-600 lowercase">we assess fit and likelihood of success.</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-3 rounded-lg border border-neutral-200 bg-white p-4">
+                    <StepIndicator number={3} size="sm" variant="minimal" />
+                    <div>
+                      <p className="text-sm font-medium text-neutral-900 lowercase">consultation</p>
+                      <p className="text-xs text-neutral-600 lowercase">20‑minute call with the prism team.</p>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
             </div>
           </div>
         </section>
@@ -485,7 +502,7 @@ export default function ClientGetStartedPage({ heroOnly = false }: { heroOnly?: 
                       <CheckCircle className="h-8 w-8 text-green-600" />
                     </div>
                     <h3 className="text-xl sm:text-2xl font-medium mb-2">Thanks — we’ve got your request.</h3>
-                    <p className="text-neutral-600">Reviewed on the 1st. Next review: {nextReviewDate}</p>
+                    <p className="text-neutral-600">We’ll review and respond within 24 hours (weekdays).</p>
                   </motion.div>
                 ) : (
                   <motion.div key="form" variants={fadeInY} style={{ willChange: 'transform, opacity' }}>
@@ -768,7 +785,7 @@ export default function ClientGetStartedPage({ heroOnly = false }: { heroOnly?: 
                 variants={fadeInY}
                 style={{ willChange: 'transform, opacity' }}
               >
-                We review all requests on the 1st. If there’s a strong fit, we’ll invite you to a 20‑minute discovery call. If not, we’ll share useful next steps.
+                We respond within 24 hours on weekdays. If there’s a strong fit, we’ll invite you to a 20‑minute consultation. If not, we’ll share useful next steps.
               </motion.p>
             </motion.div>
           </div>
