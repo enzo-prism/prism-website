@@ -237,9 +237,9 @@ export default function ClientPage() {
                   <Link href="/get-started">
                     <Button
                       className="rounded-full px-8 py-6 text-lg lowercase hardware-hover touch-feedback"
-                      onClick={() => trackCTAClick("apply for prism", "hero section")}
+                      onClick={() => trackCTAClick("hire prism", "hero section")}
                     >
-                      apply for prism <ArrowRight className="ml-2 h-5 w-5" />
+                      hire prism <ArrowRight className="ml-2 h-5 w-5" />
                     </Button>
                   </Link>
                   <Link href="/wall-of-love">
