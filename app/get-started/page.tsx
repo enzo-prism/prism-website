@@ -1,6 +1,6 @@
 import type { Metadata } from "next"
 import ClientGetStartedPage from "./ClientGetStartedPage"
-import Script from "next/script"
+// removed Typeform embed script; page now links out to Typeform
 
 export const metadata: Metadata = {
   title: "Apply to Work with Prism | Prism",
@@ -14,13 +14,7 @@ export default function GetStartedPage() {
   return (
     <>
       <ClientGetStartedPage heroOnly />
-      {/* Embedded Typeform */}
-      <section className="px-4 py-8">
-        <div className="container mx-auto px-4 md:px-6 max-w-3xl">
-          <div data-tf-live="01K4GCKJ7ZVE7WMZAQ0N02Z6QB" />
-        </div>
-      </section>
-      <Script src="https://embed.typeform.com/next/embed.js" strategy="afterInteractive" />
+      {/* Typeform moved to external link via CTA button in the hero */}
     </>
   )
 }

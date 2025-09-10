@@ -341,6 +341,28 @@ export default function ClientGetStartedPage({ heroOnly = false }: { heroOnly?: 
                   </div>
                 </div>
               </motion.div>
+
+              {/* Apply button opens Typeform in new tab */}
+              <motion.div
+                className="mt-6 flex justify-center"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
+              >
+                <Button
+                  asChild
+                  className="rounded-full px-6 py-3 text-base lowercase hardware-hover touch-feedback"
+                  onClick={() => trackCTAClick('apply - typeform', 'get-started hero')}
+                >
+                  <a
+                    href="https://fxuqp40sseh.typeform.com/to/Hg2oLcss"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    apply now <ArrowRight className="ml-2 h-5 w-5" />
+                  </a>
+                </Button>
+              </motion.div>
             </div>
           </div>
         </section>
