@@ -116,14 +116,7 @@ export default function ClientPage() {
             // Check device memory if available (< 2GB = skip video)
             const hasLowMemory = 'deviceMemory' in navigator && (navigator as any).deviceMemory < 2
             
-            // On mobile, always allow video unless user explicitly prefers reduced motion
-            if (isMobile && !prefersReducedMotion) {
-              setShouldLoadVideo(true)
-              observer.disconnect()
-              return
-            }
-
-            // Otherwise (desktop/tablet), load video only on good conditions
+            // Load video only on good conditions
             if (!isSlowConnection && !prefersReducedMotion && !hasLowMemory) {
               setShouldLoadVideo(true)
               observer.disconnect()
