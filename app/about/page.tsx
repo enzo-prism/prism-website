@@ -2,9 +2,9 @@ import type { Metadata } from "next"
 import AboutClientPage from "./client-page"
 
 export const metadata: Metadata = {
-  title: "about",
+  title: "About Prism | Enzo Sison on Design, Growth & the LA 2028 Journey",
   description:
-    "learn about prism's journey, mission, and the team behind our digital agency creating websites, apps, and designs that drive results.",
+    "Meet founder Enzo Sison and the mission behind Prism, combining elite design craft, data-driven growth, and an Olympic mindset for every client engagement.",
   alternates: {
     canonical: "https://www.design-prism.com/about",
   },

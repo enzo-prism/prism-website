@@ -3,11 +3,13 @@ import type { Metadata } from "next"
 import ContactPageClient from "./ContactPageClient"
 
 export const metadata: Metadata = {
-  title: "Contact Us | Prism",
-  description: "Get in touch with Prism. Find our email, Instagram, and scheduling link.",
+  title: "Contact Prism | Schedule a Discovery Call or DM the Team",
+  description:
+    "Reach Prism via email, Instagram, or calendar to discuss website rebuilds, AI workflows, and growth projects, with replies in one business day.",
   openGraph: {
-    title: "Contact Us | Prism",
-    description: "Get in touch with Prism. Find our email, Instagram, and scheduling link.",
+    title: "Contact Prism | Schedule a Discovery Call or DM the Team",
+    description:
+      "Reach Prism via email, Instagram, or calendar to discuss website rebuilds, AI workflows, and growth projects, with replies in one business day.",
     url: "https://www.design-prism.com/contact",
     images: [
       {
@@ -23,8 +25,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Contact Us | Prism",
-    description: "Get in touch with Prism. Find our email, Instagram, and scheduling link.",
+    title: "Contact Prism | Schedule a Discovery Call or DM the Team",
+    description:
+      "Reach Prism via email, Instagram, or calendar to discuss website rebuilds, AI workflows, and growth projects, with replies in one business day.",
     images: ["/prism-opengraph.png"], // Replace with your actual opengraph image
   },
 }

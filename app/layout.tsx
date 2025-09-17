@@ -14,14 +14,15 @@ import { GoogleAnalytics, GoogleTagManager } from "@next/third-parties/google"
 
 export const metadata: Metadata = {
   title: {
-    template: "%s | prism",
-    default: "prism - beautiful software that grows revenue",
+    template: "%s | Prism",
+    default: "Prism | AI-Powered Web Design for Dental & Local Businesses",
   },
-  description: "prism agency creates beautiful websites, apps, and designs that shatter revenue goals for ambitious businesses. ai-powered digital solutions that convert visitors into customers.",
+  description:
+    "Prism designs conversion-focused websites and AI systems for dental practices and ambitious local brands, driving more patients, leads, and repeat revenue.",
   openGraph: {
-    title: "prism - beautiful software that grows revenue",
+    title: "Prism | AI-Powered Web Design for Dental & Local Businesses",
     description:
-      "prism agency creates beautiful websites, apps, and designs that shatter revenue goals for ambitious businesses. ai-powered digital solutions that convert visitors into customers.",
+      "Prism designs conversion-focused websites and AI systems for dental practices and ambitious local brands, driving more patients, leads, and repeat revenue.",
     url: "https://www.design-prism.com",
     siteName: "prism",
     images: [
@@ -37,9 +38,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "prism - beautiful software that grows revenue",
+    title: "Prism | AI-Powered Web Design for Dental & Local Businesses",
     description:
-      "prism agency creates beautiful websites, apps, and designs that shatter revenue goals for ambitious businesses. ai-powered digital solutions that convert visitors into customers.",
+      "Prism designs conversion-focused websites and AI systems for dental practices and ambitious local brands, driving more patients, leads, and repeat revenue.",
     images: ["/prism-opengraph.png"],
   },
   icons: {

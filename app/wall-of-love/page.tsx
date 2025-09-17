@@ -5,11 +5,13 @@ import type { Metadata } from "next"
 import WallOfLoveClientPage from "./client-page"
 
 export const metadata: Metadata = {
-  title: "Wall of Love",
-  description: "Hear what our clients have to say about Prism. Real testimonials from satisfied customers.",
+  title: "Testimonials | Dentists & Local Brands Working with Prism",
+  description:
+    "Explore feedback from dental practices, nonprofits, and local retailers that partner with Prism for high-performing websites and growth systems.",
   openGraph: {
-    title: "Wall of Love | Prism",
-    description: "Hear what our clients have to say about Prism. Real testimonials from satisfied customers.",
+    title: "Testimonials | Dentists & Local Brands Working with Prism",
+    description:
+      "Explore feedback from dental practices, nonprofits, and local retailers that partner with Prism for high-performing websites and growth systems.",
     url: "https://design-prism.com/wall-of-love",
     images: [
       {
@@ -24,8 +26,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Wall of Love | Prism",
-    description: "Hear what our clients have to say about Prism. Real testimonials from satisfied customers.",
+    title: "Testimonials | Dentists & Local Brands Working with Prism",
+    description:
+      "Explore feedback from dental practices, nonprofits, and local retailers that partner with Prism for high-performing websites and growth systems.",
     images: ["/prism-opengraph.png"],
   },
   alternates: {

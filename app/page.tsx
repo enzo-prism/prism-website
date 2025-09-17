@@ -2,8 +2,9 @@ import type { Metadata } from "next"
 import ClientPage from "./client-page"
 
 export const metadata: Metadata = {
-  title: "prism - beautiful software that grows revenue",
-  description: "prism agency creates beautiful websites, apps, and designs that shatter revenue goals for ambitious businesses. ai-powered digital solutions that convert visitors into customers.",
+  title: "Prism | AI-Powered Web Design for Dental & Local Businesses",
+  description:
+    "Prism designs conversion-focused websites and AI systems for dental practices and ambitious local brands, driving more patients, leads, and repeat revenue.",
 }
 
 export default function Home() {

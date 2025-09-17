@@ -5,8 +5,9 @@ import { notFound } from 'next/navigation'
 import BlogPage from "./BlogPage"
 
 export const metadata: Metadata = {
-  title: "blog",
-  description: "thoughts on design, development, and digital strategy from the prism team.",
+  title: "Prism Blog | Web Design, AI Marketing & Growth Experiments",
+  description:
+    "Actionable lessons from shipping websites, AI workflows, and conversion experiments for dentists and local businesses, field-tested not theory.",
   alternates: {
     canonical: "https://www.design-prism.com/blog",
   },

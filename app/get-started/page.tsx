@@ -3,8 +3,9 @@ import ClientGetStartedPage from "./ClientGetStartedPage"
 // removed Typeform embed script; page now links out to Typeform
 
 export const metadata: Metadata = {
-  title: "Apply to Work with Prism | Prism",
-  description: "Apply to work with Prism. We take on a limited number of clients to protect quality. Start with a short application; we respond within 24 hours on weekdays.",
+  title: "Apply to Work with Prism | Limited Spots for Growth Partners",
+  description:
+    "Share your goals so we can confirm fit. We onboard a handful of dental practices and local brands each month to protect quality and speed.",
   alternates: {
     canonical: "https://www.design-prism.com/get-started",
   },

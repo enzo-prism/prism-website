@@ -4,9 +4,9 @@ import type { Metadata } from "next"
 import PricingClient from "./client-page"
 
 export const metadata: Metadata = {
-  title: "pricing",
+  title: "Pricing | Transparent Web Design Plans for Dentists & SMBs",
   description:
-    "transparent pricing plans designed for business owners. choose between starter and pro plans to grow your business and attract more customers.",
+    "Compare design sprints, website subscriptions, and growth accelerator plans with clear deliverables, unlimited iterations, and analytics support.",
 }
 
 export default function PricingPage() {
