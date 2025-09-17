@@ -1,7 +1,7 @@
 "use client"
 
-import type { CSSProperties } from "react"
-import { useEffect, useMemo, useState } from "react"
+import { useCallback, useEffect, useMemo, useRef, useState } from "react"
+import { ChevronLeft, ChevronRight, MoveRight } from "lucide-react"
 import ClientCard from "@/components/home/ClientCard"
 import { CLIENTS } from "@/lib/clients"
 import { shuffleArray } from "@/utils/shuffle"
@@ -9,58 +9,81 @@ import { shuffleArray } from "@/utils/shuffle"
 const GRADIENTS = ["/gradient a.png", "/gradient b.png", "/gradient c.png", "/gradient d.png"] as const
 
 export default function ClientsRail() {
-  const [shuffledClients, setShuffledClients] = useState(CLIENTS)
-  const [reduceMotion, setReduceMotion] = useState(false)
+  const railRef = useRef<HTMLDivElement>(null)
+  const [clients, setClients] = useState(CLIENTS)
+  const [canScrollLeft, setCanScrollLeft] = useState(false)
+  const [canScrollRight, setCanScrollRight] = useState(false)
 
   useEffect(() => {
-    setShuffledClients(shuffleArray(CLIENTS))
+    setClients(shuffleArray(CLIENTS))
+  }, [])
+
+  const updateScrollState = useCallback(() => {
+    const rail = railRef.current
+    if (!rail) return
+    const { scrollLeft, scrollWidth, clientWidth } = rail
+    setCanScrollLeft(scrollLeft > 8)
+    setCanScrollRight(scrollLeft + clientWidth < scrollWidth - 8)
   }, [])
 
   useEffect(() => {
-    const media = window.matchMedia("(prefers-reduced-motion: reduce)")
-    const updatePreference = () => setReduceMotion(media.matches)
+    updateScrollState()
+  }, [clients, updateScrollState])
 
-    updatePreference()
-    media.addEventListener("change", updatePreference)
-    return () => media.removeEventListener("change", updatePreference)
-  }, [])
+  useEffect(() => {
+    const rail = railRef.current
+    if (!rail) return
 
-  const marqueeDuration = useMemo(() => `${Math.max(32, shuffledClients.length * 6)}s`, [shuffledClients.length])
+    updateScrollState()
 
-  const loopedClients = useMemo(
-    () => (reduceMotion ? shuffledClients : [...shuffledClients, ...shuffledClients]),
-    [reduceMotion, shuffledClients],
-  )
+    const handleScroll = () => updateScrollState()
+    const handleResize = () => updateScrollState()
 
-  const maskStyle: CSSProperties = {
-    maskImage: "linear-gradient(to right, transparent, black 10%, black 90%, transparent)",
-    WebkitMaskImage: "linear-gradient(to right, transparent, black 10%, black 90%, transparent)",
+    rail.addEventListener("scroll", handleScroll, { passive: true })
+    window.addEventListener("resize", handleResize)
+
+    return () => {
+      rail.removeEventListener("scroll", handleScroll)
+      window.removeEventListener("resize", handleResize)
+    }
+  }, [updateScrollState])
+
+  const scrollByAmount = (direction: "left" | "right") => {
+    const rail = railRef.current
+    if (!rail) return
+    const amount = Math.max(rail.clientWidth * 0.85, 320)
+    rail.scrollBy({ left: direction === "left" ? -amount : amount, behavior: "smooth" })
   }
 
+  const maskStyle = useMemo(() => {
+    const leftStop = canScrollLeft ? "0%" : "6%"
+    const rightStop = canScrollRight ? "100%" : "94%"
+    const leftColor = canScrollLeft ? "transparent" : "rgba(0,0,0,1)"
+    const rightColor = canScrollRight ? "transparent" : "rgba(0,0,0,1)"
+
+    return {
+      maskImage: `linear-gradient(to right, ${leftColor} ${leftStop}, black 12%, black 88%, ${rightColor} ${rightStop})`,
+      WebkitMaskImage: `linear-gradient(to right, ${leftColor} ${leftStop}, black 12%, black 88%, ${rightColor} ${rightStop})`,
+    } as const
+  }, [canScrollLeft, canScrollRight])
+
   return (
-    <div className="relative group">
-      <div
-        className="relative overflow-hidden py-1"
-        role="presentation"
-        style={maskStyle}
-      >
+    <div className="relative">
+      <div className="relative">
         <div
-          className={`flex w-max gap-4 ${
-            reduceMotion ? "" : "animate-clients-marquee group-hover:[animation-play-state:paused] will-change-transform"
-          }`}
+          ref={railRef}
+          className="flex gap-4 overflow-x-auto snap-x snap-mandatory px-4 md:px-6 py-1 scroll-smooth"
           role="list"
-          aria-label="Client cards"
-          style={reduceMotion ? undefined : ({ animationDuration: marqueeDuration } as CSSProperties)}
+          aria-label="Client stories"
+          style={maskStyle}
         >
-          {loopedClients.map((client, index) => {
-            const isDuplicate = !reduceMotion && index >= shuffledClients.length
+          {clients.map((client, index) => {
             const gradientSrc = GRADIENTS[index % GRADIENTS.length]
             return (
               <div
-                key={`${client.title}-${index}`}
-                className="shrink-0 md:translate-y-0 w-[78vw] sm:w-[62vw] md:w-[260px]"
-                role={isDuplicate ? undefined : "listitem"}
-                aria-hidden={isDuplicate}
+                key={client.title}
+                className="shrink-0 snap-start md:translate-y-0 w-[78vw] sm:w-[58vw] md:w-[260px] first:ml-1 md:first:ml-0"
+                role="listitem"
               >
                 <ClientCard
                   title={client.title}
@@ -69,13 +92,56 @@ export default function ClientsRail() {
                   href={client.href}
                   objectPosition={client.objectPosition}
                   priority={index < 3}
-                  interactive={!isDuplicate}
                   website={client.website}
                 />
               </div>
             )
           })}
+          <span className="sr-only">Swipe or scroll horizontally to view more clients</span>
         </div>
+
+        {canScrollLeft ? (
+          <div
+            className="pointer-events-none absolute inset-y-0 left-0 w-12 bg-gradient-to-r from-white to-transparent dark:from-neutral-950"
+            aria-hidden="true"
+          />
+        ) : null}
+        {canScrollRight ? (
+          <div
+            className="pointer-events-none absolute inset-y-0 right-0 w-12 bg-gradient-to-l from-white to-transparent dark:from-neutral-950"
+            aria-hidden="true"
+          />
+        ) : null}
+
+        <button
+          type="button"
+          aria-label="Scroll left"
+          onClick={() => scrollByAmount("left")}
+          disabled={!canScrollLeft}
+          className="hidden sm:flex absolute left-4 top-1/2 -translate-y-1/2 h-11 w-11 items-center justify-center rounded-full border bg-white/95 shadow-md transition hover:bg-white disabled:pointer-events-none disabled:opacity-40"
+        >
+          <ChevronLeft className="h-5 w-5" />
+        </button>
+        <button
+          type="button"
+          aria-label="Scroll right"
+          onClick={() => scrollByAmount("right")}
+          disabled={!canScrollRight}
+          className="hidden sm:flex absolute right-4 top-1/2 -translate-y-1/2 h-11 w-11 items-center justify-center rounded-full border bg-white/95 shadow-md transition hover:bg-white disabled:pointer-events-none disabled:opacity-40"
+        >
+          <ChevronRight className="h-5 w-5" />
+        </button>
+      </div>
+
+      <div className="mt-4 flex flex-col items-center gap-2 text-sm text-neutral-500 sm:flex-row sm:justify-center">
+        <div className="inline-flex items-center gap-2 rounded-full border border-neutral-200 bg-white px-4 py-1 text-xs font-medium uppercase tracking-wider text-neutral-600 shadow-sm dark:border-neutral-800 dark:bg-neutral-950 dark:text-neutral-200">
+          <span className="hidden sm:inline">Scroll</span>
+          <span className="sm:hidden">Swipe</span>
+          <MoveRight className="h-4 w-4" aria-hidden="true" />
+        </div>
+        <p className="text-center text-xs text-neutral-500 sm:text-sm dark:text-neutral-400">
+          explore the brands that trust prism
+        </p>
       </div>
     </div>
   )
