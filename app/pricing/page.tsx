@@ -20,6 +20,14 @@ export default function PricingPage() {
               start small or scale fast. every plan includes design, development, and analytics
               baked-in—so you can launch quickly and grow with confidence.
             </p>
+            <p>
+              We map deliverables to the stage of your practice or business, plug into your existing tools, and assign a dedicated pod that meets weekly. Billing stays predictable, scope is documented, and results are tracked in shared dashboards so you always know what earned the lift.
+            </p>
+            <ul>
+              <li><strong>Design Sprint:</strong> rapid branding, landing pages, and creative assets with unlimited revisions over a focused week.</li>
+              <li><strong>Site Essentials:</strong> subscription website rebuilds, continuous UX improvements, and baseline analytics for growing teams.</li>
+              <li><strong>Growth Accelerator:</strong> full-funnel optimization, campaign support, and AI-assisted operations for practices ready to scale.</li>
+            </ul>
           </div>
         </div>
       </section>

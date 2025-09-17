@@ -29,6 +29,21 @@ export default function SMBPage() {
     <>
       <Navbar />
       <main>
+        <SeoTextSection
+          title="ai that supports the humans on your team"
+          subtitle="we tailor gpt-5 and automation workflows to your business so every response, follow-up, and analysis feels on-brand and compliant."
+          variant="compact"
+          showDivider={false}
+        >
+          <p>
+            From lead handling to support and operations, we design lightweight agents and systems that plug into your existing stack. We collect proprietary context, write governance rules, and stand up dashboards that measure time saved and revenue won—keeping you in control while giving staff superpowers.
+          </p>
+          <ul>
+            <li><strong>Implementation:</strong> data clean-up, prompt libraries, and API integrations that launch quickly without heavy engineering.</li>
+            <li><strong>Training:</strong> team onboarding, playbooks, and QA rituals so output stays accurate as your offers evolve.</li>
+            <li><strong>Iteration:</strong> monthly experiments and reporting to expand use cases and compound the ROI.</li>
+          </ul>
+        </SeoTextSection>
         <SMBClientPage />
         <SeoTextSection title="small business ai setup">
           <p>
@@ -42,4 +57,3 @@ export default function SMBPage() {
     </>
   )
 }
-

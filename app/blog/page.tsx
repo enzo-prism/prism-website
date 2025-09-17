@@ -18,6 +18,21 @@ export default async function Blog() {
   if (!posts) notFound()
   return (
     <>
+      <SeoTextSection
+        title="field notes from active projects"
+        subtitle="we publish experiments, templates, and lessons learned while shipping websites, ai workflows, and growth systems for service businesses."
+        variant="compact"
+        showDivider={false}
+      >
+        <p>
+          Expect practical breakdowns rather than theory—how to rebuild funnel pages, wire analytics, brief AI copilots, and keep creative output high with a small team. Use the articles to run your own tests or share them with stakeholders who need the blueprint.
+        </p>
+        <ul>
+          <li><strong>Design & UX:</strong> interfaces that convert and scale across devices.</li>
+          <li><strong>AI & automation:</strong> playbooks for agents, internal tools, and operational leverage.</li>
+          <li><strong>Growth:</strong> measurement frameworks, retention systems, and campaign ideas you can deploy immediately.</li>
+        </ul>
+      </SeoTextSection>
       <BlogPage posts={posts} />
       <SeoTextSection title="prism blog: design, development, and growth">
         <p>
