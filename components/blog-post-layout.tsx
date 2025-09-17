@@ -22,6 +22,7 @@ interface Props {
   category: string
   gradientClass?: string
   image?: string
+  showHeroImage?: boolean
   openGraph?: {
     type?: string
     title?: string
@@ -46,6 +47,7 @@ export default function BlogPostLayout({
   category,
   gradientClass,
   image,
+  showHeroImage = true,
   openGraph,
   canonical,
 }: Props) {
@@ -104,7 +106,7 @@ export default function BlogPostLayout({
               </div>
               <article>
                 <header className="mb-6 sm:mb-8">
-                  {image && !hasImageError ? (
+                  {showHeroImage && image && !hasImageError ? (
                     <div className="rounded-lg overflow-hidden mb-6">
                       <CoreImage
                         src={image}

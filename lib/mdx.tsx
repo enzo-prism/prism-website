@@ -34,6 +34,7 @@ export type BlogFrontmatter = {
   category: string
   image?: string
   gradientClass: string
+  showHeroImage?: boolean
   openGraph?: Record<string, any>
   twitter?: Record<string, any>
   canonical?: string
@@ -66,6 +67,7 @@ async function getPost(slug: string): Promise<{ frontmatter: BlogFrontmatter; co
       category: data.category,
       image: data.image, // No fallback - let the layout component handle missing images
       gradientClass: data.gradientClass || 'bg-gradient-to-br from-blue-300/30 via-purple-300/30 to-pink-300/30',
+      showHeroImage: typeof data.showHeroImage === 'boolean' ? data.showHeroImage : true,
       openGraph: data.openGraph,
       twitter: data.twitter,
       canonical: data.canonical

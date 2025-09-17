@@ -85,6 +85,7 @@ export default async function BlogPostPage({ params }: PageProps) {
       category={frontmatter.category}
       gradientClass={frontmatter.gradientClass}
       image={frontmatter.image}
+      showHeroImage={frontmatter.showHeroImage}
       openGraph={frontmatter.openGraph}
       canonical={frontmatter.canonical}
     >

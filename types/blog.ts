@@ -6,6 +6,7 @@ export interface BlogPost {
   date?: string
   description?: string
   image?: string
+  showHeroImage?: boolean
   featured?: boolean
   compact?: boolean
 }
