@@ -1,10 +1,7 @@
 "use client"
 
-import dynamic from "next/dynamic"
 import Link from "next/link"
-
-// Lazy-load the new responsive rail
-const ClientsRail = dynamic(() => import("@/components/home/ClientsRail"), { ssr: false })
+import ClientsRail from "@/components/home/ClientsRail"
 
 export default function ClientsSection() {
   return (

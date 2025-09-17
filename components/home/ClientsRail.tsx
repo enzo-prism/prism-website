@@ -1,85 +1,82 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
-import { ChevronLeft, ChevronRight } from "lucide-react"
+import type { CSSProperties } from "react"
+import { useEffect, useMemo, useState } from "react"
 import ClientCard from "@/components/home/ClientCard"
 import { CLIENTS } from "@/lib/clients"
 import { shuffleArray } from "@/utils/shuffle"
 
-export default function ClientsRail() {
-  const railRef = useRef<HTMLDivElement>(null)
-  const [shuffledClients, setShuffledClients] = useState(CLIENTS)
+const GRADIENTS = ["/gradient a.png", "/gradient b.png", "/gradient c.png", "/gradient d.png"] as const
 
-  // Shuffle on client mount to avoid hydration mismatch
+export default function ClientsRail() {
+  const [shuffledClients, setShuffledClients] = useState(CLIENTS)
+  const [reduceMotion, setReduceMotion] = useState(false)
+
   useEffect(() => {
     setShuffledClients(shuffleArray(CLIENTS))
   }, [])
-  // Use the intended gradient set (A–D). These filenames contain spaces;
-  // CoreImage bypasses optimizer for such paths to avoid 400s.
-  const GRADIENTS = [
-    "/gradient a.png",
-    "/gradient b.png",
-    "/gradient c.png",
-    "/gradient d.png",
-  ] as const
 
-  const scrollByAmount = (dir: "left" | "right") => {
-    const rail = railRef.current
-    if (!rail) return
-    const amount = Math.max(rail.clientWidth * 0.85, 320)
-    rail.scrollBy({ left: dir === "left" ? -amount : amount, behavior: "smooth" })
+  useEffect(() => {
+    const media = window.matchMedia("(prefers-reduced-motion: reduce)")
+    const updatePreference = () => setReduceMotion(media.matches)
+
+    updatePreference()
+    media.addEventListener("change", updatePreference)
+    return () => media.removeEventListener("change", updatePreference)
+  }, [])
+
+  const marqueeDuration = useMemo(() => `${Math.max(32, shuffledClients.length * 6)}s`, [shuffledClients.length])
+
+  const loopedClients = useMemo(
+    () => (reduceMotion ? shuffledClients : [...shuffledClients, ...shuffledClients]),
+    [reduceMotion, shuffledClients],
+  )
+
+  const maskStyle: CSSProperties = {
+    maskImage: "linear-gradient(to right, transparent, black 10%, black 90%, transparent)",
+    WebkitMaskImage: "linear-gradient(to right, transparent, black 10%, black 90%, transparent)",
   }
 
-  // Simplified rail: single pass, native snap scrolling; no recentering or animation
-
   return (
-    <div className="relative">
-      {/* Horizontal rail with snap and responsive card widths */}
+    <div className="relative group">
       <div
-        ref={railRef}
-        className="flex gap-4 overflow-x-auto scrollbar-hide snap-x snap-mandatory px-0 py-1"
-        role="list"
-        aria-label="Client cards"
+        className="relative overflow-hidden py-1"
+        role="presentation"
+        style={maskStyle}
       >
-        {shuffledClients.map((client, i) => {
-          const gradientSrc = GRADIENTS[i % GRADIENTS.length]
-          return (
-            <div
-              key={client.title}
-              className="shrink-0 snap-start md:translate-y-0 first:ml-4 last:mr-4 w-[78vw] sm:w-[62vw] md:w-[260px]"
-              role="listitem"
-            >
-              <ClientCard
-                title={client.title}
-                location={client.location}
-                image={gradientSrc}
-                href={client.href}
-                objectPosition={client.objectPosition}
-                priority={i < 3}
-                website={client.website}
-              />
-            </div>
-          )
-        })}
+        <div
+          className={`flex w-max gap-4 ${
+            reduceMotion ? "" : "animate-clients-marquee group-hover:[animation-play-state:paused] will-change-transform"
+          }`}
+          role="list"
+          aria-label="Client cards"
+          style={reduceMotion ? undefined : ({ animationDuration: marqueeDuration } as CSSProperties)}
+        >
+          {loopedClients.map((client, index) => {
+            const isDuplicate = !reduceMotion && index >= shuffledClients.length
+            const gradientSrc = GRADIENTS[index % GRADIENTS.length]
+            return (
+              <div
+                key={`${client.title}-${index}`}
+                className="shrink-0 md:translate-y-0 w-[78vw] sm:w-[62vw] md:w-[260px]"
+                role={isDuplicate ? undefined : "listitem"}
+                aria-hidden={isDuplicate}
+              >
+                <ClientCard
+                  title={client.title}
+                  location={client.location}
+                  image={gradientSrc}
+                  href={client.href}
+                  objectPosition={client.objectPosition}
+                  priority={index < 3}
+                  interactive={!isDuplicate}
+                  website={client.website}
+                />
+              </div>
+            )
+          })}
+        </div>
       </div>
-
-      {/* Edge fades now handled by CSS mask on the scroll container */}
-
-      {/* Arrow controls */}
-      <button
-        aria-label="Scroll left"
-        className="hidden sm:flex absolute left-0 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white rounded-full p-2 shadow-md border z-10"
-        onClick={() => scrollByAmount("left")}
-      >
-        <ChevronLeft className="h-5 w-5" />
-      </button>
-      <button
-        aria-label="Scroll right"
-        className="hidden sm:flex absolute right-0 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white rounded-full p-2 shadow-md border z-10"
-        onClick={() => scrollByAmount("right")}
-      >
-        <ChevronRight className="h-5 w-5" />
-      </button>
     </div>
   )
 }

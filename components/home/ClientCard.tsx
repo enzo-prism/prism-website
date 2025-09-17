@@ -6,10 +6,20 @@ import type { ClientInfo } from "@/lib/clients"
 import { trackNavigation, trackExternalLinkClick } from "@/utils/analytics"
 
 type Props = ClientInfo & {
+  interactive?: boolean
   priority?: boolean
 }
 
-export default function ClientCard({ title, location, image, href, website, objectPosition, priority }: Props) {
+export default function ClientCard({
+  title,
+  location,
+  image,
+  href,
+  website,
+  objectPosition,
+  priority,
+  interactive = true,
+}: Props) {
   const url = website || href
   const content = (
     <div
@@ -51,7 +61,7 @@ export default function ClientCard({ title, location, image, href, website, obje
     </div>
   )
 
-  if (url) {
+  if (url && interactive) {
     const isExternal = /^https?:\/\//i.test(url)
     return (
       <Link

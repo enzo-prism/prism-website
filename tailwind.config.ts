@@ -129,10 +129,19 @@ const config: Config = {
             height: "0",
           },
         },
+        "clients-marquee": {
+          from: {
+            transform: "translateX(0)",
+          },
+          to: {
+            transform: "translateX(-50%)",
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "clients-marquee": "clients-marquee linear infinite",
       },
     },
   },
