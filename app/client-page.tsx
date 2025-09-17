@@ -5,7 +5,7 @@ import { useMobile } from "@/hooks/use-mobile"
 import { ArrowRight } from "lucide-react"
 import dynamic from "next/dynamic"
 import Link from "next/link"
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useMemo, useRef, useState } from "react"
 
 const Footer = dynamic(() => import("@/components/footer"), { ssr: false })
 const Navbar = dynamic(() => import("@/components/navbar"), { ssr: false })
@@ -38,8 +38,16 @@ const ServiceSchemaClient = dynamic(() => import("@/components/schema-markup").t
 export default function ClientPage() {
   const isMobile = useMobile() // Added this line
   const [shouldLoadVideo, setShouldLoadVideo] = useState(false)
+  const [videoSkipped, setVideoSkipped] = useState(false)
+  const [videoQuality, setVideoQuality] = useState<"360p" | "auto">("auto")
   const [videoScale, setVideoScale] = useState(1.5)
   const heroRef = useRef<HTMLElement>(null)
+  const resolvedVideoQuality = useMemo(() => {
+    if (videoQuality === "auto") {
+      return isMobile ? "540p" : "auto"
+    }
+    return videoQuality
+  }, [isMobile, videoQuality])
   
   // Lazy loading states for below-the-fold sections
   // removed case studies and testimonials sections
@@ -103,30 +111,29 @@ export default function ClientPage() {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting && !shouldLoadVideo) {
-            // Enhanced connection speed detection
             const connection = (navigator as any).connection
-            const isSlowConnection = 
-              connection?.effectiveType === "2g" || 
+            const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+            const hasLowMemory = "deviceMemory" in navigator && (navigator as any).deviceMemory < 2
+            const isConstrainedNetwork =
+              connection?.effectiveType === "2g" ||
               connection?.effectiveType === "slow-2g" ||
-              connection?.saveData
-            
-            // Check user motion preferences
-            const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-            
-            // Check device memory if available (< 2GB = skip video)
-            const hasLowMemory = 'deviceMemory' in navigator && (navigator as any).deviceMemory < 2
-            
-            // Load video only on good conditions
-            if (!isSlowConnection && !prefersReducedMotion && !hasLowMemory) {
-              setShouldLoadVideo(true)
+              connection?.saveData === true
+
+            if (prefersReducedMotion) {
+              setVideoSkipped(true)
               observer.disconnect()
-            } else {
-              console.log('[Performance] Skipping video due to:', {
-                slowConnection: isSlowConnection,
-                reducedMotion: prefersReducedMotion,
-                lowMemory: hasLowMemory
-              })
+              return
             }
+
+            if (isConstrainedNetwork || hasLowMemory) {
+              setVideoQuality("360p")
+            } else {
+              setVideoQuality("auto")
+            }
+
+            setVideoSkipped(false)
+            setShouldLoadVideo(true)
+            observer.disconnect()
           }
         })
       },
@@ -158,8 +165,9 @@ export default function ClientPage() {
           {/* Background video container with full coverage */}
           <div className="absolute inset-0 -z-20 gpu-layer">
             {/* Lightweight placeholder while video loads */}
-            <div 
-              className={`absolute inset-0 bg-gradient-to-br from-neutral-100 to-neutral-200 ${shouldLoadVideo ? 'opacity-0' : 'opacity-100'} gpu-fade hero-gradient-shift`}
+            <div
+              aria-hidden="true"
+              className={`absolute inset-0 bg-gradient-to-br from-neutral-100 via-neutral-50 to-neutral-200 ${shouldLoadVideo ? 'opacity-0' : 'opacity-100'} gpu-fade hero-gradient-shift`}
               style={{
                 backgroundImage: `radial-gradient(circle at 30% 50%, rgba(120, 119, 198, 0.1) 0%, transparent 50%),
                                   radial-gradient(circle at 70% 80%, rgba(255, 119, 198, 0.1) 0%, transparent 50%)`,
@@ -171,7 +179,7 @@ export default function ClientPage() {
             {shouldLoadVideo && (
               <div className="absolute inset-0 overflow-hidden gpu-accelerated">
                 <iframe
-                  src={`https://player.vimeo.com/video/1096693144?background=1&autoplay=1&loop=1&muted=1&controls=0&playsinline=1&quality=${isMobile ? '360p' : 'auto'}`}
+                  src={`https://player.vimeo.com/video/1096693144?background=1&autoplay=1&loop=1&muted=1&controls=0&playsinline=1&quality=${resolvedVideoQuality}`}
                   title="Prism hero background video"
                   className="gpu-fade"
                   style={{
@@ -189,13 +197,12 @@ export default function ClientPage() {
                   }}
                   allow="autoplay; fullscreen; picture-in-picture"
                   allowFullScreen
-                  loading="lazy"
                 />
               </div>
             )}
           </div>
           {/* White overlay for elegant contrast */}
-          <div className="absolute inset-0 bg-white/80 -z-10 gpu-layer" />
+          <div className="absolute inset-0 -z-10 bg-white/55 dark:bg-neutral-950/70 gpu-layer transition-opacity duration-500" />
 
           <div className="container relative mx-auto px-4 md:px-6 py-8 md:py-16">
             <div className="flex flex-col items-center space-y-4 md:space-y-6 text-center">
@@ -245,6 +252,11 @@ export default function ClientPage() {
                     </Button>
                   </Link>
                 </div>
+                {videoSkipped ? (
+                  <p className="mt-4 text-xs tracking-[0.24em] uppercase text-neutral-400">
+                    background motion disabled for accessibility
+                  </p>
+                ) : null}
               </div>
             </div>
           </div>
