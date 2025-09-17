@@ -29,21 +29,6 @@ export default function ServicesPage() {
     <>
       <Navbar />
       <main>
-        <SeoTextSection
-          title="why teams choose prism"
-          subtitle="we rebuild the digital experience end-to-end—research, design, engineering, analytics, and enablement—so your team ships faster and converts more."
-          variant="compact"
-          showDivider={false}
-        >
-          <p>
-            Whether you need a full website relaunch, a design sprint to unblock a launch, or a growth partner that monitors performance, we bring a dedicated crew that has shipped for dental practices, healthcare groups, retailers, and nonprofits. We align on measurable goals, publish a weekly cadence, and keep iterating until the dashboard proves the lift.
-          </p>
-          <ul>
-            <li><strong>Strategy & research:</strong> positioning, patient or customer journeys, and competitive analysis that inform every decision.</li>
-            <li><strong>Design & build:</strong> mobile-first UX, conversion copy, and fast front-end implementation that stays on brand.</li>
-            <li><strong>Growth enablement:</strong> analytics, CRM/phone integrations, and campaign support so your team can scale the results.</li>
-          </ul>
-        </SeoTextSection>
         <ServicesClient />
         <SeoTextSection title="services overview">
           <p>

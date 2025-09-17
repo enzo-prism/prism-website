@@ -1,6 +1,5 @@
 import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
-import SeoTextSection from "@/components/seo-text-section"
 import type { Metadata } from "next"
 import Link from "next/link"
 import ProofCTAs from "./ProofCTAs"
@@ -42,22 +41,6 @@ export default function ProofPage() {
             <ProofCTAs location="proof hero" className="mt-8" />
           </div>
         </section>
-
-        <SeoTextSection
-          title="why proof matters"
-          subtitle="patient testimonials are the trust currency for high-consideration services—our system captures, edits, and distributes them without adding work to your team."
-          variant="compact"
-          showDivider={false}
-        >
-          <p>
-            We combine automated outreach, guided capture flows, and monthly editing cycles to keep a steady stream of stories fueling your website, Google Business Profile, paid funnels, and nurture sequences. The result is a flywheel of social proof that increases treatment acceptance, reduces no-shows, and helps new patients choose you faster.
-          </p>
-          <ul>
-            <li><strong>Capture:</strong> mobile-friendly prompts with consent baked in.</li>
-            <li><strong>Transform:</strong> polished videos, quote blocks, schema, and snippets ready to publish.</li>
-            <li><strong>Distribute:</strong> systematic placement across hero sections, service pages, social, and email—with performance tracked monthly.</li>
-          </ul>
-        </SeoTextSection>
 
         {/* Body copy */}
         <section className="px-4 py-6">
@@ -226,3 +209,4 @@ export default function ProofPage() {
     </>
   )
 }
+

@@ -14,21 +14,6 @@ export const metadata: Metadata = {
 export default function CaseStudies() {
   return (
     <>
-      <SeoTextSection
-        title="how we turn complex challenges into measurable wins"
-        subtitle="dental groups, nonprofits, and local retailers rely on prism when they need to modernize digital experiences and prove ROI."
-        variant="compact"
-        showDivider={false}
-      >
-        <p>
-          Each engagement pairs deep discovery with focused execution. We rebuild or optimize websites, align messaging, implement analytics, and set up retention loops so momentum keeps compounding. The studies below spotlight the specific problems we solved, the systems we shipped, and the outcomes teams continue to see months after launch.
-        </p>
-        <ul>
-          <li><strong>Revenue levers:</strong> appointment funnels, membership conversions, and donor journeys.</li>
-          <li><strong>Operational upgrades:</strong> CRM and phone integrations, automated follow-ups, and AI-ready content.</li>
-          <li><strong>Creative systems:</strong> reusable design foundations, testimonial engines, and ongoing optimization rhythms.</li>
-        </ul>
-      </SeoTextSection>
       <CaseStudiesPage />
       <SeoTextSection title="case studies & outcomes">
         <p>

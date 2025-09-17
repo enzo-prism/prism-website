@@ -137,23 +137,6 @@ export default function WebsitesPage() {
           </div>
         </section>
 
-        <SeoTextSection
-          variant="compact"
-          showDivider={false}
-          title="built for patients, members, and modern search"
-          subtitle="every site we launch blends premium design with measurable performance for dentists, clinics, nonprofits, and local retailers."
-          className="pt-2"
-        >
-          <p>
-            We start with audience research and analytics reviews, then rebuild your website around the moments that drive calls, bookings, and purchases. Our team hand-codes responsive layouts, adds structured content for AI search, wires forms and phone tracking, and documents the playbook so your staff can update pages confidently after launch.
-          </p>
-          <ul>
-            <li><strong>Conversion-first UX:</strong> clear service pathways, proof, and CTAs built to guide visitors from curiosity to commitment.</li>
-            <li><strong>SEO foundations:</strong> technical cleanup, schema, and performance budgets that keep you visible across Google and emerging AI surfaces.</li>
-            <li><strong>Growth enablement:</strong> dashboards, CRM hookups, and content systems that make it easy to iterate without starting from scratch.</li>
-          </ul>
-        </SeoTextSection>
-
         {/* Portfolio List - Minimal and mobile-first */}
         <section className="pb-16 sm:pb-20">
           <div className="max-w-3xl mx-auto">

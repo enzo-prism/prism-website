@@ -43,14 +43,6 @@ export default function ContactPage() {
               questions, projects, or partnerships—drop a note and we’ll get back within one business
               day. prefer social? instagram and x dms are open.
             </p>
-            <p>
-              Share what you’re trying to solve—whether it’s a website rebuild, a creative sprint, or wiring analytics and AI into your operations. We’ll review your notes, study your current experience, and respond with next steps or a recommended call format.
-            </p>
-            <ul>
-              <li><strong>Discovery calls:</strong> 30 minutes to align on goals, measure baselines, and scope the path forward.</li>
-              <li><strong>Asynchronous audits:</strong> send context and we’ll record a walkthrough with ideas and quick wins.</li>
-              <li><strong>Partnership inquiries:</strong> agencies and specialists welcome—we collaborate often and love sharing value.</li>
-            </ul>
           </div>
         </div>
       </section>

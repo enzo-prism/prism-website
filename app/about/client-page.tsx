@@ -58,9 +58,6 @@ export default function AboutClientPage() {
                 <p className="mx-auto mt-4 max-w-[700px] text-neutral-600 lowercase md:text-xl">
                   i built prism to pursue my passions for technology, business, and pole vaulting at the highest level
                 </p>
-                <p className="mx-auto max-w-[720px] text-neutral-600 lowercase md:text-lg">
-                  today we help dentists and ambitious local founders bring that same focus to their companies—pairing world-class design with measurable growth systems so every launch, campaign, and experiment has a purpose.
-                </p>
               </div>
             </div>
           </div>

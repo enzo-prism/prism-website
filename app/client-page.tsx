@@ -6,7 +6,6 @@ import { ArrowRight } from "lucide-react"
 import dynamic from "next/dynamic"
 import Link from "next/link"
 import { useEffect, useMemo, useRef, useState } from "react"
-import SeoTextSection from "@/components/seo-text-section"
 
 const Footer = dynamic(() => import("@/components/footer"), { ssr: false })
 const Navbar = dynamic(() => import("@/components/navbar"), { ssr: false })
@@ -262,23 +261,6 @@ export default function ClientPage() {
             </div>
           </div>
         </section>
-
-        <SeoTextSection
-          showDivider={false}
-          variant="compact"
-          title="what we build"
-          subtitle="prism pairs obsessive design craft with measurable growth systems so service businesses scale beyond referrals."
-          className="pt-6"
-        >
-          <p>
-            We rebuild websites, install analytics, and wire AI-assisted workflows so dental practices and local brands convert more visitors without adding staff. Every engagement starts with research into patient or customer journeys, covers messaging, UX, and performance, and ends with launch support plus the dashboards that prove impact.
-          </p>
-          <ul>
-            <li><strong>Websites & apps:</strong> custom, mobile-first builds tuned for AI search, fast load times, and conversion paths.</li>
-            <li><strong>Growth systems:</strong> playbooks, measurement, and CRM/phone integrations that turn interest into booked revenue.</li>
-            <li><strong>Creative ops:</strong> ongoing design sprints, landing pages, and content support so teams keep shipping momentum.</li>
-          </ul>
-        </SeoTextSection>
 
         {/* New homepage sections per updated structure */}
         <ClientsSection />

@@ -1,6 +1,5 @@
 import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
-import SeoTextSection from "@/components/seo-text-section"
 import { OrganizationSchema, WebsiteSchema } from "@/components/schema-markup"
 import type { Metadata } from "next"
 import WallOfLoveClientPage from "./client-page"
@@ -43,21 +42,6 @@ export default function WallOfLovePage() {
       <OrganizationSchema />
       <WebsiteSchema />
       <Navbar />
-      <SeoTextSection
-        title="voices from the operators we serve"
-        subtitle="these notes and videos come from dentists, nonprofits, and founders who partnered with prism to rebuild their digital presence."
-        variant="compact"
-        showDivider={false}
-      >
-        <p>
-          Clients lean on us when they need more than a polished interface—they need measurable results. The testimonials highlight what changed in their day-to-day: faster launches, more qualified leads, smoother onboarding, and marketing that finally compounds.
-        </p>
-        <ul>
-          <li><strong>Healthcare:</strong> multi-location dental teams increasing treatment acceptance and recall.</li>
-          <li><strong>Community & nonprofit:</strong> organizations translating mission into digital experiences that drive action.</li>
-          <li><strong>Retail & services:</strong> specialty shops and consultants building trust and demand online.</li>
-        </ul>
-      </SeoTextSection>
       <WallOfLoveClientPage />
       <Footer />
     </>
