@@ -1,0 +1,352 @@
+import Footer from "@/components/footer"
+import FAQSection from "@/components/faq-section"
+import Navbar from "@/components/navbar"
+import PageViewTracker from "@/components/page-view-tracker"
+import ScrollToTop from "@/components/scroll-to-top"
+import { Button } from "@/components/ui/button"
+import { ArrowRight, Check } from "lucide-react"
+import type { Metadata } from "next"
+import Link from "next/link"
+
+export const metadata: Metadata = {
+  title: "Paid Ads Management for Local Brands | Prism",
+  description:
+    "Prism plans, builds, and optimizes Google, Meta, TikTok, and Yelp ads so you attract ready-to-buy customers without wasting spend.",
+  openGraph: {
+    title: "Paid Ads Management for Local Brands | Prism",
+    description:
+      "Prism plans, builds, and optimizes Google, Meta, TikTok, and Yelp ads so you attract ready-to-buy customers without wasting spend.",
+    url: "https://design-prism.com/ads",
+    images: [
+      {
+        url: "/prism-opengraph.png",
+        width: 1200,
+        height: 630,
+        alt: "Prism Ads Services",
+      },
+    ],
+  },
+  alternates: {
+    canonical: "https://design-prism.com/ads",
+  },
+}
+
+const whatYouGet = [
+  {
+    title: "Strategy that fits your goals",
+    description: "Clear targets, ideal customer profiles, and the fastest path to ROI.",
+  },
+  {
+    title: "High-performing creative",
+    description: "Thumb-stopping visuals and plain-English copy that turns interest into action.",
+  },
+  {
+    title: "Landing page alignment",
+    description: "Every click points to a tuned offer, so conversions stay high.",
+  },
+  {
+    title: "Full-funnel setup",
+    description: "Search, social, remarketing, and local intent working together.",
+  },
+  {
+    title: "Daily / weekly optimization",
+    description: "Shift budget to winners, pause what isn't working, and test new ideas.",
+  },
+  {
+    title: "Transparent reporting",
+    description: "Calls, form fills, booked appointments, and CPL, all in plain English.",
+  },
+]
+
+const budgetGuards = [
+  {
+    title: "No wasted clicks",
+    description: "Block bad searches, irrelevant audiences, and spam leads before they burn budget.",
+  },
+  {
+    title: "Show up when buyers are ready",
+    description: "Bids, schedules, and pacing tuned to peak-intent windows.",
+  },
+  {
+    title: "Right radius, right people",
+    description: "Smart geo-targeting and exclusions keep spend local and high quality.",
+  },
+  {
+    title: "Relentless A/B testing",
+    description: "Headlines, images, offers, and forms refined nonstop to lower cost per lead.",
+  },
+]
+
+const platforms = [
+  {
+    name: "Google Ads",
+    why: "High-intent searches when people need you now.",
+  },
+  {
+    name: "Facebook & Instagram",
+    why: "Precise audiences plus creative that builds demand and trust.",
+  },
+  {
+    name: "TikTok",
+    why: "Native, fast-moving creative that grabs attention and converts.",
+  },
+  {
+    name: "Yelp Ads",
+    why: "Bottom-of-funnel local buyers comparing options.",
+  },
+]
+
+const processSteps = [
+  {
+    step: "Discover",
+    description: "Goals, budget, ideal customers, and local market reality.",
+  },
+  {
+    step: "Build",
+    description: "Tracking, audiences, creative, and landing page improvements.",
+  },
+  {
+    step: "Launch",
+    description: "Start lean and gather signal quickly without wasting spend.",
+  },
+  {
+    step: "Optimize",
+    description: "Shift spend to winners and cut losers fast.",
+  },
+  {
+    step: "Report",
+    description: "Clear results and next steps with no jargon and no fluff.",
+  },
+]
+
+const outcomes = [
+  "Lower cost per lead through testing and tighter targeting.",
+  "Higher conversion rates with better offers and landing pages.",
+  "Cleaner pipeline by filtering out low-quality clicks and calls.",
+  "Full visibility into what's working so you can scale confidently.",
+]
+
+const handledForYou = [
+  "Ad account setup",
+  "Conversion tracking",
+  "Pixels & tags",
+  "Creative & copy",
+  "Offer testing",
+  "Negative keywords & exclusions",
+  "Geo-targeting",
+  "Remarketing",
+  "Call tracking",
+  "Weekly optimizations",
+  "Monthly summaries",
+]
+
+const faqItems = [
+  {
+    question: "How fast will I see results?",
+    answer:
+      "Search and Yelp tend to produce leads quickly. Paid social ramps as creative tests find winners. Most clients see meaningful signal in weeks, not months.",
+  },
+  {
+    question: "What budgets work best?",
+    answer:
+      "We recommend a starting budget by channel and market size. Spend scales only when performance proves it can sustain.",
+  },
+  {
+    question: "Can you use my existing accounts?",
+    answer:
+      "Yes. We can audit, clean up, and improve your current setup, or build fresh if you need a new start.",
+  },
+  {
+    question: "What if I already run ads?",
+    answer:
+      "Great. We'll keep what works, fix the waste, and test higher-converting variations so nothing good is lost.",
+  },
+]
+
+export default function AdsPage() {
+  return (
+    <div className="flex min-h-screen flex-col bg-white">
+      <PageViewTracker title="Prism - Paid Ads Services" />
+      <Navbar />
+
+      <main className="flex-1">
+        <section className="px-4 py-20 sm:py-24">
+          <div className="mx-auto max-w-4xl text-center">
+            <p className="text-sm font-medium uppercase tracking-[0.3em] text-neutral-400">
+              paid acquisition
+            </p>
+            <h1 className="mt-4 text-4xl font-semibold tracking-tight text-neutral-900 sm:text-5xl">
+              Ads that bring the right customers - not just clicks
+            </h1>
+            <p className="mt-6 text-base text-neutral-600 sm:text-lg">
+              We plan, create, and optimize ads across Google, Meta, TikTok, and Yelp so you reach the people most likely to buy without overspending.
+            </p>
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+              <Button asChild size="lg" className="rounded-full px-8">
+                <Link href="/get-started">
+                  Get a free ads plan
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Link>
+              </Button>
+              <Button asChild variant="outline" size="lg" className="rounded-full px-8">
+                <Link href="#budget-protection">See how we optimize budgets</Link>
+              </Button>
+            </div>
+          </div>
+        </section>
+
+        <section className="border-t border-neutral-100 bg-neutral-50 px-4 py-16 sm:py-20">
+          <div className="mx-auto max-w-5xl text-center">
+            <h2 className="text-3xl font-semibold lowercase text-neutral-900 sm:text-4xl">
+              what you get
+            </h2>
+            <p className="mt-3 text-neutral-600">
+              Everything built to drive qualified demand and prove ROI with no black box reporting.
+            </p>
+          </div>
+          <div className="mx-auto mt-12 grid max-w-5xl gap-6 sm:grid-cols-2">
+            {whatYouGet.map(item => (
+              <div key={item.title} className="rounded-2xl border border-neutral-200 bg-white p-6 text-left shadow-sm">
+                <h3 className="text-lg font-semibold text-neutral-900">{item.title}</h3>
+                <p className="mt-2 text-sm text-neutral-600">{item.description}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section id="budget-protection" className="px-4 py-16 sm:py-20">
+          <div className="mx-auto max-w-5xl">
+            <div className="mx-auto max-w-3xl text-center">
+              <h2 className="text-3xl font-semibold lowercase text-neutral-900 sm:text-4xl">
+                how we protect your budget
+              </h2>
+              <p className="mt-3 text-neutral-600">
+                Guardrails that keep every dollar focused on qualified buyers.
+              </p>
+            </div>
+            <div className="mt-12 grid gap-6 sm:grid-cols-2">
+              {budgetGuards.map(item => (
+                <div key={item.title} className="rounded-2xl border border-neutral-200 p-6 shadow-sm">
+                  <h3 className="text-lg font-semibold text-neutral-900">{item.title}</h3>
+                  <p className="mt-2 text-sm text-neutral-600">{item.description}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="border-t border-neutral-100 bg-neutral-50 px-4 py-16 sm:py-20">
+          <div className="mx-auto max-w-4xl text-center">
+            <h2 className="text-3xl font-semibold lowercase text-neutral-900 sm:text-4xl">
+              platforms we run (and why)
+            </h2>
+            <p className="mt-3 text-neutral-600">
+              Each channel supports a different stage of your buyer journey.
+            </p>
+          </div>
+          <div className="mx-auto mt-12 grid max-w-4xl gap-6 sm:grid-cols-2">
+            {platforms.map(platform => (
+              <div key={platform.name} className="rounded-2xl border border-neutral-200 bg-white p-6 text-left shadow-sm">
+                <span className="text-xs font-medium uppercase tracking-wide text-neutral-400">channel</span>
+                <h3 className="mt-2 text-xl font-semibold text-neutral-900">{platform.name}</h3>
+                <p className="mt-2 text-sm text-neutral-600">{platform.why}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section className="px-4 py-16 sm:py-20">
+          <div className="mx-auto max-w-4xl text-center">
+            <h2 className="text-3xl font-semibold lowercase text-neutral-900 sm:text-4xl">
+              our simple process
+            </h2>
+            <p className="mt-3 text-neutral-600">
+              Fast to launch, ruthless about signal, clear about next steps.
+            </p>
+          </div>
+          <div className="mx-auto mt-12 max-w-4xl space-y-4">
+            {processSteps.map((stage, index) => (
+              <div key={stage.step} className="flex flex-col gap-3 rounded-2xl border border-neutral-200 p-6 shadow-sm sm:flex-row sm:items-center">
+                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-neutral-900 text-sm font-semibold text-white">
+                  {index + 1}
+                </div>
+                <div>
+                  <h3 className="text-lg font-semibold text-neutral-900">{stage.step}</h3>
+                  <p className="mt-1 text-sm text-neutral-600">{stage.description}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section className="border-t border-neutral-100 bg-neutral-900 px-4 py-16 text-white sm:py-20">
+          <div className="mx-auto max-w-4xl text-center">
+            <h2 className="text-3xl font-semibold lowercase sm:text-4xl">outcomes you can expect</h2>
+            <p className="mt-3 text-neutral-300">
+              Performance you can see in your calendar, pipeline, and revenue.
+            </p>
+          </div>
+          <div className="mx-auto mt-12 grid max-w-4xl gap-6 sm:grid-cols-2">
+            {outcomes.map(outcome => (
+              <div key={outcome} className="flex items-start gap-3 rounded-2xl border border-white/10 bg-white/5 p-6 text-left">
+                <div className="mt-1 rounded-full bg-white/10 p-1">
+                  <Check className="h-4 w-4" />
+                </div>
+                <p className="text-sm text-neutral-100">{outcome}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section className="px-4 py-16 sm:py-20">
+          <div className="mx-auto max-w-4xl text-center">
+            <h2 className="text-3xl font-semibold lowercase text-neutral-900 sm:text-4xl">
+              what we handle for you
+            </h2>
+            <p className="mt-3 text-neutral-600">
+              Full-service coverage so you can stay focused on running the business.
+            </p>
+          </div>
+          <div className="mx-auto mt-10 flex max-w-4xl flex-wrap justify-center gap-3">
+            {handledForYou.map(item => (
+              <span key={item} className="rounded-full border border-neutral-200 bg-neutral-50 px-4 py-2 text-sm text-neutral-700">
+                {item}
+              </span>
+            ))}
+          </div>
+        </section>
+
+        <FAQSection
+          title="ads faq"
+          subtitle="Straight answers so you know exactly what happens once we launch."
+          items={faqItems}
+        />
+
+        <section className="border-t border-neutral-100 bg-neutral-50 px-4 py-20 sm:py-24">
+          <div className="mx-auto max-w-4xl text-center">
+            <h2 className="text-3xl font-semibold tracking-tight text-neutral-900 sm:text-4xl">
+              Ready to reach better customers?
+            </h2>
+            <p className="mt-4 text-neutral-600 sm:text-lg">
+              We'll map a simple plan to hit your goals, protect your budget, and grow what works.
+            </p>
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+              <Button asChild size="lg" className="rounded-full px-8">
+                <Link href="/get-started">
+                  Get a free ads plan
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Link>
+              </Button>
+              <Button asChild variant="outline" size="lg" className="rounded-full px-8">
+                <Link href="/contact">Talk to a strategist</Link>
+              </Button>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <Footer />
+      <ScrollToTop />
+    </div>
+  )
+}
