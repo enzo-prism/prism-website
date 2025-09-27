@@ -63,6 +63,7 @@ export const CLIENTS: ClientInfo[] = [
     title: "Practice Transitions Institute",
     location: "San Mateo, CA",
     image: "/Practice Transitions Institute.webp",
+    website: "https://practicetransitionsinstitute.com",
   },
   {
     title: "Leadership Summit",
