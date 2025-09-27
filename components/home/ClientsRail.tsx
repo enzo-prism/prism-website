@@ -1,12 +1,12 @@
 "use client"
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react"
-import { ChevronLeft, ChevronRight, MoveRight } from "lucide-react"
 import ClientCard from "@/components/home/ClientCard"
 import { CLIENTS } from "@/lib/clients"
 import { shuffleArray } from "@/utils/shuffle"
+import { ChevronLeft, ChevronRight, MoveRight } from "lucide-react"
+import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 
-const GRADIENTS = ["/gradient a.png", "/gradient b.png", "/gradient c.png", "/gradient d.png"] as const
+const FALLBACK_BACKGROUNDS = ["/gradient a.png", "/gradient b.png", "/gradient c.png", "/gradient d.png"] as const
 
 export default function ClientsRail() {
   const railRef = useRef<HTMLDivElement>(null)
@@ -78,7 +78,7 @@ export default function ClientsRail() {
           style={maskStyle}
         >
           {clients.map((client, index) => {
-            const gradientSrc = GRADIENTS[index % GRADIENTS.length]
+            const backgroundSrc = client.image ?? FALLBACK_BACKGROUNDS[index % FALLBACK_BACKGROUNDS.length]
             return (
               <div
                 key={client.title}
@@ -88,7 +88,7 @@ export default function ClientsRail() {
                 <ClientCard
                   title={client.title}
                   location={client.location}
-                  image={gradientSrc}
+                  image={backgroundSrc}
                   href={client.href}
                   objectPosition={client.objectPosition}
                   priority={index < 3}
