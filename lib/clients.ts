@@ -38,7 +38,7 @@ export const CLIENTS: ClientInfo[] = [
   {
     title: "Grace Dental Santa Rosa",
     location: "Santa Rosa, CA",
-    image: "/grace-dental.png",
+    image: "/Grace Dental Santa Rosa-2.webp",
     website: "https://www.tingjenjidds.com",
   },
   {
