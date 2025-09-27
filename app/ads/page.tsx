@@ -1,5 +1,5 @@
-import Footer from "@/components/footer"
 import FAQSection from "@/components/faq-section"
+import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
 import PageViewTracker from "@/components/page-view-tracker"
 import ScrollToTop from "@/components/scroll-to-top"
@@ -9,13 +9,13 @@ import type { Metadata } from "next"
 import Link from "next/link"
 
 export const metadata: Metadata = {
-  title: "Paid Ads Management for Local Brands | Prism",
+  title: "Paid Ads Management for Small Businesses | Prism",
   description:
-    "Prism plans, builds, and optimizes Google, Meta, TikTok, and Yelp ads so you attract ready-to-buy customers without wasting spend.",
+    "Prism plans, builds, and optimizes Google, Meta, TikTok, and Yelp ads so small businesses capture ready-to-buy local customers without wasted spend.",
   openGraph: {
-    title: "Paid Ads Management for Local Brands | Prism",
+    title: "Paid Ads Management for Small Businesses | Prism",
     description:
-      "Prism plans, builds, and optimizes Google, Meta, TikTok, and Yelp ads so you attract ready-to-buy customers without wasting spend.",
+      "Prism plans, builds, and optimizes Google, Meta, TikTok, and Yelp ads so small businesses capture ready-to-buy local customers without wasted spend.",
     url: "https://design-prism.com/ads",
     images: [
       {

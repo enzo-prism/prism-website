@@ -1,5 +1,5 @@
-import Footer from "@/components/footer"
 import FAQSection from "@/components/faq-section"
+import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
 import PageViewTracker from "@/components/page-view-tracker"
 import ScrollToTop from "@/components/scroll-to-top"
@@ -9,13 +9,13 @@ import type { Metadata } from "next"
 import Link from "next/link"
 
 export const metadata: Metadata = {
-  title: "Local Listing Optimization Services | Prism",
+  title: "Local Listing Optimization for Small Businesses | Prism",
   description:
-    "Prism keeps your Google, Apple, Yelp, Bing, Facebook, and Nextdoor listings accurate, conversion-ready, and ranking for the searches that matter.",
+    "Prism optimizes Google, Apple, Yelp, Bing, Facebook, and Nextdoor listings so small businesses stay accurate, rank higher, and convert more local searches into customers.",
   openGraph: {
-    title: "Local Listing Optimization Services | Prism",
+    title: "Local Listing Optimization for Small Businesses | Prism",
     description:
-      "Prism keeps your Google, Apple, Yelp, Bing, Facebook, and Nextdoor listings accurate, conversion-ready, and ranking for the searches that matter.",
+      "Prism optimizes Google, Apple, Yelp, Bing, Facebook, and Nextdoor listings so small businesses stay accurate, rank higher, and convert more local searches into customers.",
     url: "https://design-prism.com/local-listings",
     images: [
       {

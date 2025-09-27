@@ -15,14 +15,16 @@ import { GoogleAnalytics, GoogleTagManager } from "@next/third-parties/google"
 export const metadata: Metadata = {
   title: {
     template: "%s | Prism",
-    default: "Prism | AI-Powered Web Design for Dental & Local Businesses",
+    default:
+      "Prism | Websites, Ads & Local Listing Optimization for Small Businesses",
   },
   description:
-    "Prism designs conversion-focused websites and AI systems for dental practices and ambitious local brands, driving more patients, leads, and repeat revenue.",
+    "Prism builds high-converting websites, manages paid ads, and optimizes local listings so small businesses consistently attract qualified local customers.",
   openGraph: {
-    title: "Prism | AI-Powered Web Design for Dental & Local Businesses",
+    title:
+      "Prism | Websites, Ads & Local Listing Optimization for Small Businesses",
     description:
-      "Prism designs conversion-focused websites and AI systems for dental practices and ambitious local brands, driving more patients, leads, and repeat revenue.",
+      "Prism builds high-converting websites, manages paid ads, and optimizes local listings so small businesses consistently attract qualified local customers.",
     url: "https://www.design-prism.com",
     siteName: "prism",
     images: [
@@ -38,9 +40,10 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Prism | AI-Powered Web Design for Dental & Local Businesses",
+    title:
+      "Prism | Websites, Ads & Local Listing Optimization for Small Businesses",
     description:
-      "Prism designs conversion-focused websites and AI systems for dental practices and ambitious local brands, driving more patients, leads, and repeat revenue.",
+      "Prism builds high-converting websites, manages paid ads, and optimizes local listings so small businesses consistently attract qualified local customers.",
     images: ["/prism-opengraph.png"],
   },
   icons: {

@@ -11,13 +11,13 @@ import type { Metadata } from "next"
 import Link from "next/link"
 
 export const metadata: Metadata = {
-  title: "Dental & Small Business Website Portfolio | Prism",
+  title: "Small Business Website Portfolio & Local SEO Wins | Prism",
   description:
-    "See responsive, SEO-ready sites we launched for dentists, healthcare groups, nonprofits, and retailers, each optimized for AI search and conversions.",
+    "Explore the small business websites and local presence optimizations we launch to attract qualified leads and convert more local customers for clients like you.",
   openGraph: {
-    title: "Dental & Small Business Website Portfolio | Prism",
+    title: "Small Business Website Portfolio & Local SEO Wins | Prism",
     description:
-      "See responsive, SEO-ready sites we launched for dentists, healthcare groups, nonprofits, and retailers, each optimized for AI search and conversions.",
+      "Explore the small business websites and local presence optimizations we launch to attract qualified leads and convert more local customers for clients like you.",
     images: ["/prism-opengraph.png"],
   },
   alternates: {
