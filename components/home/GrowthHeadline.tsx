@@ -1,7 +1,7 @@
 "use client"
 
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion"
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 
 const ROTATION_INTERVAL = 3200
 const ROTATING_ITEMS = [
@@ -28,6 +28,15 @@ export default function GrowthHeadline() {
   }, [shouldReduceMotion])
 
   const activeItem = ROTATING_ITEMS[activeIndex] ?? ROTATING_ITEMS[0]
+  const pillWidth = useMemo(() => {
+    const longestLabel = ROTATING_ITEMS.reduce((longest, item) =>
+      item.label.length > longest.length ? item.label : longest,
+    ROTATING_ITEMS[0].label)
+
+    // Roughly map character count to `ch` width with extra space for emoji + padding
+    const chWidth = longestLabel.length + 4
+    return `${chWidth}ch`
+  }, [])
 
   return (
     <section className="bg-white py-16 text-center dark:bg-neutral-950 sm:py-20 md:py-24">
@@ -35,7 +44,14 @@ export default function GrowthHeadline() {
         <h2 className="text-balance text-3xl font-semibold leading-tight tracking-tight text-neutral-900 lowercase sm:text-4xl md:text-[clamp(2.75rem,4vw,3.5rem)] dark:text-neutral-50">
           <span className="flex flex-wrap items-center justify-center gap-2 sm:gap-3">
             <span
-              className="relative inline-flex min-h-[2.75rem] min-w-[9.5rem] items-center justify-center overflow-hidden"
+              className="relative inline-flex items-center justify-center overflow-hidden"
+              style={{
+                minWidth: pillWidth,
+                width: pillWidth,
+                maxWidth: pillWidth,
+                minHeight: "2.75rem",
+                height: "2.75rem",
+              }}
               aria-live="polite"
               aria-atomic="true"
               role="status"
@@ -43,10 +59,10 @@ export default function GrowthHeadline() {
               <AnimatePresence initial={false}>
                 <motion.span
                   key={activeItem.label}
-                  initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 8 }}
+                  initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 6 }}
                   animate={{ opacity: 1, y: 0 }}
-                  exit={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: -8 }}
-                  transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
+                  exit={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: -6 }}
+                  transition={{ duration: 0.38, ease: [0.4, 0, 0.2, 1] }}
                   className="absolute inset-0 flex items-center justify-center gap-2 rounded-full border border-neutral-200 bg-white px-5 py-1.5 text-base font-medium text-neutral-900 shadow-sm dark:border-neutral-700 dark:bg-neutral-100 dark:text-neutral-900"
                 >
                   <span aria-hidden="true" className="text-lg leading-none">
