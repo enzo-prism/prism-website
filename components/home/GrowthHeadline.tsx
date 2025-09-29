@@ -4,12 +4,10 @@ import { AnimatePresence, motion, useReducedMotion } from "framer-motion"
 import { useEffect, useState } from "react"
 
 const ROTATION_INTERVAL = 3200
-const ROTATING_WORDS = [
-  "websites",
-  "map app listings",
-  "google ads",
-  "instagram ads",
-  "tiktok ads",
+const ROTATING_ITEMS = [
+  { label: "websites", emoji: "📱" },
+  { label: "map listings", emoji: "📍" },
+  { label: "ads", emoji: "📣" },
 ]
 
 export default function GrowthHeadline() {
@@ -23,13 +21,13 @@ export default function GrowthHeadline() {
     }
 
     const interval = window.setInterval(() => {
-      setActiveIndex((current) => (current + 1) % ROTATING_WORDS.length)
+      setActiveIndex((current) => (current + 1) % ROTATING_ITEMS.length)
     }, ROTATION_INTERVAL)
 
     return () => window.clearInterval(interval)
   }, [shouldReduceMotion])
 
-  const activeWord = ROTATING_WORDS[activeIndex]
+  const activeItem = ROTATING_ITEMS[activeIndex] ?? ROTATING_ITEMS[0]
 
   return (
     <section className="bg-white py-16 text-center dark:bg-neutral-950 sm:py-20 md:py-24">
@@ -37,21 +35,24 @@ export default function GrowthHeadline() {
         <h2 className="text-balance text-3xl font-semibold leading-tight tracking-tight text-neutral-900 lowercase sm:text-4xl md:text-[clamp(2.75rem,4vw,3.5rem)] dark:text-neutral-50">
           <span className="flex flex-wrap items-center justify-center gap-2 sm:gap-3">
             <span
-              className="relative inline-flex min-w-[7.5rem] items-center justify-center overflow-hidden"
+              className="relative inline-flex min-h-[2.75rem] min-w-[9.5rem] items-center justify-center overflow-hidden"
               aria-live="polite"
               aria-atomic="true"
               role="status"
             >
-              <AnimatePresence mode="wait">
+              <AnimatePresence initial={false}>
                 <motion.span
-                  key={activeWord}
-                  initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
+                  key={activeItem.label}
+                  initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 8 }}
                   animate={{ opacity: 1, y: 0 }}
-                  exit={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: -10 }}
-                  transition={{ duration: 0.45, ease: [0.4, 0, 0.2, 1] }}
-                  className="inline-flex items-center justify-center rounded-full border border-neutral-200 bg-neutral-900 px-4 py-1.5 text-base font-medium text-white shadow-sm dark:border-neutral-800 dark:bg-neutral-100 dark:text-neutral-900"
+                  exit={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: -8 }}
+                  transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
+                  className="absolute inset-0 flex items-center justify-center gap-2 rounded-full border border-neutral-200 bg-white px-5 py-1.5 text-base font-medium text-neutral-900 shadow-sm dark:border-neutral-700 dark:bg-neutral-100 dark:text-neutral-900"
                 >
-                  {activeWord}
+                  <span aria-hidden="true" className="text-lg leading-none">
+                    {activeItem.emoji}
+                  </span>
+                  <span className="whitespace-nowrap">{activeItem.label}</span>
                 </motion.span>
               </AnimatePresence>
             </span>
