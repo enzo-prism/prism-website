@@ -22,6 +22,7 @@ const GrowthResultsSlider = dynamic(() => import("@/components/home/GrowthResult
 const WebsitesFeatures = dynamic(() => import("@/components/home/WebsitesFeatures"))
 const SegmentsGrid = dynamic(() => import("@/components/home/SegmentsGrid"))
 const CoreOfferingsSection = dynamic(() => import("@/components/home/CoreOfferingsSection"))
+const GrowthHeadline = dynamic(() => import("@/components/home/GrowthHeadline"))
 
 // Import analytics functions directly for now (will optimize separately)
 import CoreImage from "@/components/core-image"
@@ -262,6 +263,8 @@ export default function ClientPage() {
             </div>
           </div>
         </section>
+
+        <GrowthHeadline />
 
         {/* New homepage sections per updated structure */}
         <ClientsSection />
