@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { Badge } from "@/components/ui/badge"
 import StepIndicator from "@/components/ui/step-indicator"
 import { Switch } from "@/components/ui/switch"
 import VideoWithPoster from "@/components/video-with-poster"
@@ -297,15 +298,25 @@ export default function ClientGetStartedPage({ heroOnly = false }: { heroOnly?: 
 
                 {/* Free audit callout */}
                 <motion.div 
-                  className="mt-3 w-full max-w-2xl mx-auto"
+                  className="mt-4 w-full max-w-2xl mx-auto"
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1], delay: 0.08 }}
                 >
-                  <div className="mx-auto max-w-[60ch] text-sm text-neutral-700 bg-neutral-50 border border-neutral-200 rounded-lg px-4 py-3">
-                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1">
-                      <span><span className="font-medium text-neutral-900">free audit:</span> website, ads, or local listing</span>
-                      <span className="text-neutral-600">keep the insights even if we don’t work together</span>
+                  <div className="mx-auto max-w-[60ch] bg-neutral-50 border border-neutral-200 rounded-lg px-4 py-3">
+                    <div className="flex flex-wrap items-center justify-center gap-2">
+                      <Badge 
+                        variant="outline" 
+                        className="lowercase font-medium bg-white border-neutral-200 text-neutral-900"
+                      >
+                        <BadgeCheck className="mr-1.5 h-3.5 w-3.5" /> free audit: website, ads, or local listing
+                      </Badge>
+                      <Badge 
+                        variant="outline" 
+                        className="lowercase font-medium bg-white border-neutral-200 text-neutral-700"
+                      >
+                        <CheckCircle className="mr-1.5 h-3.5 w-3.5" /> keep the insights even if we don’t work together
+                      </Badge>
                     </div>
                   </div>
                 </motion.div>
