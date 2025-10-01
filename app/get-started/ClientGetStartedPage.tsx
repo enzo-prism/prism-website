@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import StepIndicator from "@/components/ui/step-indicator"
 import { Switch } from "@/components/ui/switch"
 import VideoWithPoster from "@/components/video-with-poster"
 import { useMobile } from "@/hooks/use-mobile"
@@ -15,7 +16,6 @@ import { AnimatePresence, motion } from "framer-motion"
 import { ArrowRight, BadgeCheck, CheckCircle, Palette, Search } from "lucide-react"
 import Link from "next/link"
 import { useEffect, useRef, useState } from "react"
-import StepIndicator from "@/components/ui/step-indicator"
 
 type Plan = 'CORE' | 'PLUS' | null
 
@@ -292,8 +292,23 @@ export default function ClientGetStartedPage({ heroOnly = false }: { heroOnly?: 
                   transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1], delay: 0.06 }}
                   style={{ willChange: 'transform, opacity' }}
                 >
-                  we take on a limited number of clients and don’t sacrifice quality for volume. to make sure we’re a great fit and can make you successful, start with a short application. we respond within 24 hours on weekdays. if it’s a match, we’ll invite you to a 20‑minute consultation.
+                  24 hour response to your application
                 </motion.p>
+
+                {/* Free audit callout */}
+                <motion.div 
+                  className="mt-3 w-full max-w-2xl mx-auto"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1], delay: 0.08 }}
+                >
+                  <div className="mx-auto max-w-[60ch] text-sm text-neutral-700 bg-neutral-50 border border-neutral-200 rounded-lg px-4 py-3">
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1">
+                      <span><span className="font-medium text-neutral-900">free audit:</span> website, ads, or local listing</span>
+                      <span className="text-neutral-600">keep the insights even if we don’t work together</span>
+                    </div>
+                  </div>
+                </motion.div>
 
                 {/* Hero CTAs removed per request */}
               </div>
@@ -524,7 +539,7 @@ export default function ClientGetStartedPage({ heroOnly = false }: { heroOnly?: 
                       <CheckCircle className="h-8 w-8 text-green-600" />
                     </div>
                     <h3 className="text-xl sm:text-2xl font-medium mb-2">Thanks — we’ve got your request.</h3>
-                    <p className="text-neutral-600">We’ll review and respond within 24 hours (weekdays).</p>
+                    <p className="text-neutral-600">we’ll respond within 24 hours and include a free audit.</p>
                   </motion.div>
                 ) : (
                   <motion.div key="form" variants={fadeInY} style={{ willChange: 'transform, opacity' }}>
@@ -807,7 +822,7 @@ export default function ClientGetStartedPage({ heroOnly = false }: { heroOnly?: 
                 variants={fadeInY}
                 style={{ willChange: 'transform, opacity' }}
               >
-                We respond within 24 hours on weekdays. If there’s a strong fit, we’ll invite you to a 20‑minute consultation. If not, we’ll share useful next steps.
+                24 hour response. free audit: website, ads, or local listing. keep the insights either way.
               </motion.p>
             </motion.div>
           </div>

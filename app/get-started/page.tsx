@@ -5,7 +5,7 @@ import ClientGetStartedPage from "./ClientGetStartedPage"
 export const metadata: Metadata = {
   title: "Apply to Work with Prism | Limited Spots for Growth Partners",
   description:
-    "Share your goals so we can confirm fit. We onboard a handful of dental practices and local brands each month to protect quality and speed.",
+    "24-hour response to your application. Free audit on your website, ads, or local listing—keep the insights even if we don’t work together.",
   alternates: {
     canonical: "https://www.design-prism.com/get-started",
   },
