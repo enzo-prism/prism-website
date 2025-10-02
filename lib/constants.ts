@@ -40,5 +40,6 @@ export const NAV_ITEMS: NavItem[] = [
     ],
   },
   { label: "wall of love", href: "/wall-of-love" },
+  { label: "contact", href: "/contact" },
   { label: "apply", href: "/get-started" },
 ]
