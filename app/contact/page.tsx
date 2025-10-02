@@ -1,4 +1,3 @@
-import SeoTextSection from "@/components/seo-text-section"
 import type { Metadata } from "next"
 import ContactPageClient from "./ContactPageClient"
 
@@ -34,28 +33,6 @@ export const metadata: Metadata = {
 
 export default function ContactPage() {
   return (
-    <>
-      <section className="px-4 pt-8">
-        <div className="container mx-auto px-4 md:px-6 max-w-3xl">
-          <div className="prose prose-neutral max-w-none mb-6">
-            <h2 className="text-xl font-semibold lowercase">talk to us</h2>
-            <p>
-              questions, projects, or partnerships—drop a note and we’ll get back within one business
-              day. prefer social? instagram and x dms are open.
-            </p>
-          </div>
-        </div>
-      </section>
-      <ContactPageClient />
-
-      {/* SEO supporting copy */}
-      <SeoTextSection title="how to work with prism">
-        <p>
-          have a project in mind? we typically begin with a short discovery call to align on goals,
-          timelines, and scope. after that, we propose a plan with clear milestones—design, build,
-          content, and launch—so you always know what comes next.
-        </p>
-      </SeoTextSection>
-    </>
+    <ContactPageClient />
   )
 }
