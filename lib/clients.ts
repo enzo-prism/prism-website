@@ -51,6 +51,7 @@ export const CLIENTS: ClientInfo[] = [
     title: "Olympic Bootworks",
     location: "Tahoe, CA",
     image: "/Olympic Bootworks.webp",
+    website: "https://www.olympicbootworks.com",
     href: "/case-studies/olympic-bootworks",
   },
   {
