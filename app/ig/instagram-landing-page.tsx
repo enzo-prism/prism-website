@@ -159,7 +159,7 @@ export default function InstagramLandingPage() {
                   </div>
                 </div>
                 <p className="text-sm text-neutral-500 italic lowercase tracking-wide">enzo Sison, founder of prism</p>
-                <p className="text-sm text-neutral-500 italic lowercase tracking-wide">39k+ instagram followers</p>
+                <p className="text-sm text-neutral-500 italic lowercase tracking-wide">40,000+ instagram followers</p>
                 <p className="text-sm text-neutral-500 italic lowercase tracking-wide">25k+ youtube subscribers</p>
               </div>
             </div>

@@ -771,7 +771,7 @@ export default function PrismFlywheelClient() {
             {/* Community note */}
             <div className="text-center pt-8">
               <p className="text-xs text-neutral-500 dark:text-neutral-500">
-                Join 24,500+ on YouTube and 39,000+ on Instagram
+                Join 24,500+ on YouTube and 40,000+ on Instagram
               </p>
             </div>
           </div>

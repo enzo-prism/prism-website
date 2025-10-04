@@ -1,7 +1,7 @@
 "use client"
 
-import Link from "next/link"
 import ClientsRail from "@/components/home/ClientsRail"
+import Link from "next/link"
 
 export default function ClientsSection() {
   return (
@@ -21,7 +21,7 @@ export default function ClientsSection() {
             rel="noopener noreferrer"
             className="text-sm text-neutral-500 lowercase hover:text-neutral-800 hover:underline"
           >
-            39k+ entrepreneurs follow us on instagram
+            40,000+ entrepreneurs follow us on instagram
           </Link>
           <Link
             href="https://www.youtube.com/@the_design_prism"
