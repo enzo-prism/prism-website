@@ -13,6 +13,96 @@ export type HottestContentItem = {
 
 export const HOTTEST_CONTENT: HottestContentItem[] = [
   {
+    slug: "ai-website-revamp",
+    title: "Turn AI Concepts Into Revenue",
+    platform: "instagram",
+    instagramUrl:
+      "https://www.instagram.com/reel/C3lchBGPTvX/?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==",
+    views: 264000,
+    likes: 13900,
+    shares: 3150,
+    summary:
+      "We walked through the exact AI-powered workflow Prism uses to relaunch a tired website into a lead magnet.",
+    insight:
+      "Led with a bold before-and-after split screen, then layered UI close-ups paced at 1.2x speed so viewers could pause on every proof point.",
+    highlighted: true,
+  },
+  {
+    slug: "brand-story-framework",
+    title: "Brand Story Framework",
+    platform: "instagram",
+    instagramUrl:
+      "https://www.instagram.com/reel/C3iOxkML_Sv/?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==",
+    views: 208000,
+    likes: 10100,
+    shares: 2740,
+    summary:
+      "We broke down the story spine that gets local founders remembered and referred after a single reel.",
+    insight:
+      "Hooked with an emotional cold open, mapped the three-act beat sheet visually, and closed with a copy snippet people could steal.",
+    highlighted: true,
+  },
+  {
+    slug: "micro-offer-hack",
+    title: "Micro-Offer Hack",
+    platform: "instagram",
+    instagramUrl:
+      "https://www.instagram.com/reel/C450Etixg4O/?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==",
+    views: 191000,
+    likes: 9800,
+    shares: 2410,
+    summary:
+      "We shared the $97 diagnostic funnel Prism deploys to turn browsers into booked consults in 72 hours.",
+    insight:
+      "Showed the funnel map first frame, zoomed into each step with captions, and added swipe-up proof to spike saves.",
+    highlighted: true,
+  },
+  {
+    slug: "viral-visual-hooks",
+    title: "Viral Visual Hooks",
+    platform: "instagram",
+    instagramUrl:
+      "https://www.instagram.com/reel/C8K67eQyhG5/?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==",
+    views: 236000,
+    likes: 12500,
+    shares: 2890,
+    summary:
+      "We demoed the motion design templates that help Prism clients stop thumbs within the first second.",
+    insight:
+      "Combined kinetic type with contrast overlays and added a side-by-side of raw vs. polished footage to make the impact obvious.",
+    highlighted: true,
+  },
+  {
+    slug: "google-reviews-loop",
+    title: "Google Reviews Loop",
+    platform: "instagram",
+    instagramUrl:
+      "https://www.instagram.com/reel/C6PGN29vpkr/?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==",
+    views: 177000,
+    likes: 8900,
+    shares: 2230,
+    summary:
+      "We unpacked the DM plus SMS strategy that pushed a service client from 24 to 400+ Google reviews.",
+    insight:
+      "Animated the message flow, surfaced real screenshots, and highlighted the automation steps with glowing callouts.",
+    highlighted: true,
+  },
+  {
+    slug: "community-content-engine",
+    title: "Community Content Engine",
+    platform: "instagram",
+    instagramUrl:
+      "https://www.instagram.com/reel/C5r4dAPLBMc/?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==",
+    views: 214000,
+    likes: 11300,
+    shares: 2660,
+    summary:
+      "We revealed how Prism turns Q&A from fan communities into a month of authority content in a weekend.",
+    insight:
+      "Showed the Trello-to-CapCut pipeline on screen, then overlaid retention stats to prove the format works.",
+    highlighted: true,
+  },
+  {
     slug: "instagram-growth-playbook",
     title: "Instagram Growth Playbook",
     platform: "instagram",
