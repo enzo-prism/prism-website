@@ -36,7 +36,10 @@ export default function InstagramEmbed({ url, className }: InstagramEmbedProps) 
   useEffect(() => {
     const processEmbeds = () => {
       try {
-        window.instgrm?.Embeds?.process()
+        const processFn = window.instgrm?.Embeds?.process
+        if (typeof processFn === "function") {
+          processFn()
+        }
       } catch (error) {
         console.error("[InstagramEmbed] failed to process embeds", error)
       }
