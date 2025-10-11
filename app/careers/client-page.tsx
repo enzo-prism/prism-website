@@ -18,9 +18,21 @@ export default function CareersClientPage() {
       type: "Contract",
       location: "Remote",
       duration: "Part-time (10-20 hrs/week)",
-      description: "Join our lean team building modern web apps with AI-first tooling. Work with Cursor, Replit, Vercel v0, and Lovable.dev.",
+      description:
+        "Join our lean team building modern web apps with AI-first tooling. Work with Cursor, Replit, Vercel v0, and Lovable.dev.",
       requirements: ["React/TypeScript expertise", "Cursor & Replit experience", "Mobile-first design skills"],
       slug: "front-end-developer"
+    },
+    {
+      id: "replit-builder",
+      title: "Contract Replit Builder",
+      type: "Contract",
+      location: "Remote",
+      duration: "Part-time (≈ 10-20 hrs/week)",
+      description:
+        "Help dentists and local businesses launch fast, beautiful websites entirely inside Replit using modern AI tooling.",
+      requirements: ["Replit Agent & Replit DB experience", "Clean HTML/CSS/JS or React code", "Detail-focused on performance"],
+      slug: "replit-builder"
     }
   ]
 
