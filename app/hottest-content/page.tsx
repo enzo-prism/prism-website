@@ -32,10 +32,28 @@ export default function HottestContentPage() {
             <h1 className="mt-4 text-4xl font-bold tracking-tighter lowercase sm:text-5xl">
               the reels that broke through
             </h1>
-            <p className="mt-4 text-neutral-600 lowercase md:text-lg">
-              experience the posts exactly how we shipped them—fully embedded from instagram so you get every caption,
-              comment, and social signal.
-            </p>
+            <div className="mt-4 space-y-4 text-neutral-600 lowercase md:text-lg">
+              <p>
+                we obsess over dropping the most valuable playbooks for founders — clips that teach more in 30 seconds
+                than most courses do in hours.
+              </p>
+              <p>
+                every strategy here is vetted. these are the exact tactics we use to grow prism and help our clients own
+                their online presence.
+              </p>
+              <p>
+                the mission is simple: give away so much insight that you want to come back, share it with your team, and
+                build louder than your competition.
+              </p>
+            </div>
+            <div className="mt-6 flex flex-wrap justify-center gap-3">
+              <Button variant="outline" className="rounded-full lowercase" asChild>
+                <Link href="/wall-of-love">see client wins</Link>
+              </Button>
+              <Button variant="secondary" className="rounded-full lowercase" asChild>
+                <Link href="/get-started">work with prism</Link>
+              </Button>
+            </div>
           </div>
 
           <div className="mt-12 grid gap-6 md:mt-16 md:grid-cols-2">
