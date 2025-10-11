@@ -1,3 +1,6 @@
+// Google Analytics configuration
+export const GA_MEASUREMENT_ID = "G-P9VY77PRC0"
+
 // Logo configuration
 export const LOGO_CONFIG = {
   src: "/Prism Logo.png",

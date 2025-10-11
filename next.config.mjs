@@ -15,7 +15,7 @@ images: {
   imageSizes: [16, 32, 48, 64, 96, 128, 256, 384], // Icon sizes
   minimumCacheTTL: 31536000, // 1 year cache for optimized images
   dangerouslyAllowSVG: true,
-  contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
+  contentSecurityPolicy: "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com; connect-src 'self' https://www.google-analytics.com; img-src 'self' data: https://www.google-analytics.com; frame-src 'self' https://www.googletagmanager.com;",
 },
   async redirects() {
     return [

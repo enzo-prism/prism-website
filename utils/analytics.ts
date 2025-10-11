@@ -1,7 +1,14 @@
 "use client"
 
-import { sendGAEvent } from "@next/third-parties/google"
-import { captureErrorWithContext, addBreadcrumb, isSentryInitialized } from "./sentry-helpers"
+import { GA_MEASUREMENT_ID } from "@/lib/constants"
+import { addBreadcrumb, captureErrorWithContext, isSentryInitialized } from "./sentry-helpers"
+
+declare global {
+  interface Window {
+    dataLayer?: Record<string, any>[]
+    gtag?: (...args: any[]) => void
+  }
+}
 
 // Custom event types
 export type EventType =
@@ -32,6 +39,9 @@ export type EventType =
  */
 export function trackEvent(eventName: EventType, params?: Record<string, any>) {
   try {
+    if (typeof window === "undefined") {
+      return
+    }
     // Add timestamp to all events
     const enhancedParams = {
       ...params,
@@ -40,7 +50,11 @@ export function trackEvent(eventName: EventType, params?: Record<string, any>) {
       page_title: typeof document !== "undefined" ? document.title : "",
     }
 
-    sendGAEvent(eventName, enhancedParams || {})
+    window.dataLayer = window.dataLayer || []
+    window.dataLayer.push({ event: eventName, ...enhancedParams })
+    if (typeof window.gtag === "function") {
+      window.gtag("event", eventName, { send_to: GA_MEASUREMENT_ID, ...enhancedParams })
+    }
     console.log(`[Analytics] Tracked event: ${eventName}`, enhancedParams)
   } catch (error) {
     console.error("[Analytics] Error tracking event:", error)

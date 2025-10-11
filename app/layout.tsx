@@ -9,7 +9,7 @@ import MCPHealthMonitor from "@/components/mcp-health-monitor"
 import PerformanceMonitor from "@/components/performance-monitor"
 import { OrganizationSchema, WebsiteSchema } from "@/components/schema-markup"
 import SentryContextProvider from "@/components/sentry-context-provider"
-import { GoogleAnalytics, GoogleTagManager } from "@next/third-parties/google"
+import { GA_MEASUREMENT_ID } from "@/lib/constants"
 
 
 export const metadata: Metadata = {
@@ -85,8 +85,22 @@ export default function RootLayout({
   return (
     <html lang="en" className="m-0 p-0 w-full" suppressHydrationWarning>
       <head>
-        {/* Google Tag Manager (lightweight, external script) */}
-        <GoogleTagManager gtmId="GTM-M37LLWHV" />
+        {/* Google tag (gtag.js) */}
+        <script
+          async
+          src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
+        ></script>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+
+              gtag('config', '${GA_MEASUREMENT_ID}');
+            `,
+          }}
+        />
         {/* viewport is defined via metadata.viewport to avoid duplicates */}
         {/* Add mobile-specific meta tags for better scrolling */}
         <meta name="mobile-web-app-capable" content="yes" />
@@ -94,8 +108,6 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <meta name="format-detection" content="telephone=no" />
         <meta name="theme-color" content="#ffffff" />
-        {/* Google Analytics (external script) */}
-        <GoogleAnalytics gaId="G-9B141WTH4R" />
         {/* YouTube Embed Handler */}
         {/* YouTube embeds are now handled natively with iframe - no custom JavaScript needed */}
         {/* Preconnect to Vimeo for faster video loading */}
@@ -117,8 +129,6 @@ export default function RootLayout({
         if tailwind.config.ts is updated accordingly.
     */}
       <body className="m-0 p-0 w-full min-h-screen font-sans antialiased">
-      {/* Google Tag Manager noscript (keep minimal) */}
-      <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-M37LLWHV" height="0" width="0" style={{display:'none',visibility:'hidden'}} /></noscript>
         <OrganizationSchema />
         <WebsiteSchema />
         <ScrollManager />
