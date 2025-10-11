@@ -32,10 +32,10 @@ export default function HottestContentSection() {
               our hottest content
             </Badge>
             <h2 className="text-3xl font-bold tracking-tighter lowercase sm:text-4xl">
-              social wins that moved the needle
+              masters of the attention economy
             </h2>
             <p className="text-neutral-600 lowercase md:text-lg">
-              embedded reels direct from instagram—see the proof without leaving the page.
+              prism makes content loved by millions
             </p>
           </div>
           <Button
