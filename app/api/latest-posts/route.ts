@@ -1,3 +1,5 @@
+export const runtime = "nodejs"
+export const dynamic = "force-dynamic"
 import { getAllPosts } from "@/lib/mdx"
 import { NextResponse } from "next/server"
 

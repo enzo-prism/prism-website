@@ -4,7 +4,7 @@ import SimpleBlogPostCard from "@/components/simple-blog-post-card"
 import { Badge } from "@/components/ui/badge"
 import { ArrowRight } from "lucide-react"
 import Link from "next/link"
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 
 type LatestPost = {
   slug: string
@@ -13,27 +13,39 @@ type LatestPost = {
   date: string
   category: string
   image: string | null
-  gradientClass: string
+  gradientClass?: string | null
 }
 
 const FALLBACK_IMAGE = "/blog/ai-digital-marketing.png"
 const FALLBACK_GRADIENT = "bg-gradient-to-br from-neutral-200 via-neutral-100 to-white"
+const MAX_RETRIES = 3
+const RETRY_DELAY_MS = 1500
 
 export default function LatestPostsSection() {
   const [posts, setPosts] = useState<LatestPost[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [hasError, setHasError] = useState(false)
+  const retryTimeout = useRef<NodeJS.Timeout | null>(null)
+  const currentController = useRef<AbortController | null>(null)
 
   useEffect(() => {
-    let isMounted = true
-    const controller = new AbortController()
+    let cancelled = false
 
-    const loadPosts = async () => {
+    const fetchPosts = async (attempt: number = 1) => {
+      if (cancelled) return
+
+      currentController.current?.abort()
+      const controller = new AbortController()
+      currentController.current = controller
+
       try {
-        const response = await fetch("/api/latest-posts", { signal: controller.signal })
+        const response = await fetch("/api/latest-posts", {
+          signal: controller.signal,
+          cache: "no-store",
+        })
 
         if (!response.ok) {
-          throw new Error(`Request failed: ${response.status}`)
+          throw new Error(`Request failed with status ${response.status}`)
         }
 
         const payload = await response.json()
@@ -42,30 +54,45 @@ export default function LatestPostsSection() {
           throw new Error("Invalid response payload")
         }
 
-        if (isMounted) {
-          setPosts(payload.posts)
+        if (!cancelled) {
+          setPosts(payload.posts.slice(0, 3))
+          setHasError(false)
         }
       } catch (error) {
-        if (!controller.signal.aborted && isMounted) {
-          console.error("[LatestPostsSection] failed to fetch posts", error)
+        if (controller.signal.aborted || cancelled) {
+          return
+        }
+
+        console.error("[LatestPostsSection] failed to fetch posts", error)
+
+        if (attempt < MAX_RETRIES) {
+          retryTimeout.current = setTimeout(() => fetchPosts(attempt + 1), RETRY_DELAY_MS * attempt)
+          return
+        }
+
+        if (!cancelled) {
           setHasError(true)
+          setPosts([])
         }
       } finally {
-        if (isMounted) {
+        if (!cancelled) {
           setIsLoading(false)
         }
       }
     }
 
-    loadPosts()
+    fetchPosts()
 
     return () => {
-      isMounted = false
-      controller.abort()
+      cancelled = true
+      currentController.current?.abort()
+      if (retryTimeout.current) {
+        clearTimeout(retryTimeout.current)
+      }
     }
   }, [])
 
-  const showFallback = hasError || (!isLoading && posts.length === 0)
+  const shouldShowFallback = hasError || (!isLoading && posts.length === 0)
 
   return (
     <section className="border-t border-neutral-100 dark:border-neutral-800 py-16 md:py-24">
@@ -105,9 +132,11 @@ export default function LatestPostsSection() {
               </div>
             ))}
           </div>
-        ) : showFallback ? (
+        ) : shouldShowFallback ? (
           <div className="rounded-2xl border border-dashed border-neutral-200 p-10 text-center">
-            <h3 className="mb-3 text-lg font-medium lowercase text-neutral-700">no posts available right now</h3>
+            <h3 className="mb-3 text-lg font-medium lowercase text-neutral-700">
+              no posts available right now
+            </h3>
             <p className="mb-5 text-sm lowercase text-neutral-500">
               check the blog to dig into our full library of marketing and product experiments.
             </p>
