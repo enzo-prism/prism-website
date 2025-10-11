@@ -403,58 +403,6 @@ export default function ClientGetStartedPage({ heroOnly = false }: { heroOnly?: 
               </div>
             </section>
 
-            <section className="bg-neutral-50 px-4 py-12 sm:py-16">
-              <div className="container mx-auto max-w-6xl">
-                <motion.div className="mx-auto mb-10 max-w-3xl text-center" variants={fadeInY} initial="initial" whileInView="animate" viewport={getViewportConfig()}>
-                  <h2 className="text-2xl font-light tracking-tight text-neutral-900 sm:text-3xl">
-                    see example reports
-                  </h2>
-                  <p className="text-base text-neutral-600">
-                    these walkthroughs show the exact format you’ll receive—live dashboards built in webflow that we update for you.
-                  </p>
-                </motion.div>
-
-                <motion.div
-                  className="grid gap-6 md:grid-cols-2"
-                  variants={staggerChildren}
-                  initial="initial"
-                  whileInView="animate"
-                  viewport={getViewportConfig()}
-                >
-                  {EXAMPLE_REPORTS.map(({ title, highlights, href }) => (
-                    <motion.div key={title} variants={fadeInY}>
-                      <Card className="h-full border-neutral-200 bg-white">
-                        <CardHeader>
-                          <CardTitle className="text-xl font-medium lowercase text-neutral-900">
-                            {title}
-                          </CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                          <ul className="space-y-3 text-sm text-neutral-600">
-                            {highlights.map((item) => (
-                              <li key={item} className="flex items-start gap-2">
-                                <BadgeCheck className="mt-0.5 h-4 w-4 text-neutral-900" />
-                                <span>{item}</span>
-                              </li>
-                            ))}
-                          </ul>
-                        </CardContent>
-                        <CardFooter>
-                          <Link
-                            href={href}
-                            className="inline-flex items-center text-sm font-medium text-neutral-900 underline-offset-4 hover:underline"
-                            onClick={() => trackCTAClick(`view example report - ${title}`, "get-started example reports")}
-                          >
-                            view report example <ExternalLink className="ml-1 h-4 w-4" />
-                          </Link>
-                        </CardFooter>
-                      </Card>
-                    </motion.div>
-                  ))}
-                </motion.div>
-              </div>
-            </section>
-
             <section className="px-4 py-16">
               <div className="container mx-auto max-w-3xl">
                 <div className="rounded-3xl bg-neutral-900 px-8 py-12 text-center text-white sm:px-12">
