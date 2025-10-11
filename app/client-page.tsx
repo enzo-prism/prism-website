@@ -250,7 +250,7 @@ export default function ClientPage() {
                   className="inline-flex items-center text-sm font-medium lowercase tracking-[0.32em] text-neutral-500 transition-colors hover:text-neutral-700"
                   onClick={() => trackNavigation("founders love prism", "/wall-of-love")}
                 >
-                  founders love prism <ArrowUpRight className="ml-3 h-4 w-4" />
+                  why founders love prism <ArrowUpRight className="ml-3 h-4 w-4" />
                 </Link>
                 {videoSkipped ? (
                   <p className="mt-4 text-xs tracking-[0.24em] uppercase text-neutral-400">
