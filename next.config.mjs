@@ -8,6 +8,9 @@ eslint: {
 typescript: {
   ignoreBuildErrors: false,
 },
+outputFileTracingIncludes: {
+  "/api/latest-posts": ["content/blog/**/*"],
+},
 // Enhanced image optimization configuration
 images: {
   formats: ['image/webp', 'image/avif'], // Enable modern image formats
