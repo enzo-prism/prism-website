@@ -235,22 +235,20 @@ export default function ClientPage() {
                 </p>
               </div>
               <div className="flex flex-col items-center">
-                <div className="pt-6 flex items-center gap-3">
+                <Link
+                  href="/wall-of-love"
+                  className="text-sm font-medium lowercase tracking-[0.32em] text-neutral-500 hover:text-neutral-700 transition-colors"
+                  onClick={() => trackNavigation("founders love prism", "/wall-of-love")}
+                >
+                  founders love prism
+                </Link>
+                <div className="pt-3">
                   <Link href="/get-started">
                     <Button
                       className="rounded-full px-8 py-6 text-lg lowercase hardware-hover touch-feedback"
-                      onClick={() => trackCTAClick("hire prism", "hero section")}
+                      onClick={() => trackCTAClick("analyze my online presence", "hero section")}
                     >
-                      hire prism <ArrowRight className="ml-2 h-5 w-5" />
-                    </Button>
-                  </Link>
-                  <Link href="/wall-of-love">
-                    <Button
-                      variant="outline"
-                      className="rounded-full px-8 py-6 text-lg lowercase hardware-hover touch-feedback"
-                      onClick={() => trackCTAClick("reviews", "hero section")}
-                    >
-                      reviews
+                      analyze my online presence <ArrowRight className="ml-2 h-5 w-5" />
                     </Button>
                   </Link>
                 </div>
