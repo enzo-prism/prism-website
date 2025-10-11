@@ -1,8 +1,9 @@
 import type { Metadata } from "next"
 import Link from "next/link"
-import dynamic from "next/dynamic"
 
 import InstagramEmbed from "@/components/instagram-embed"
+import Footer from "@/components/footer"
+import Navbar from "@/components/navbar"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
@@ -13,9 +14,6 @@ export const metadata: Metadata = {
   description:
     "See Prism’s top-performing Instagram reels exactly as they appeared on the platform. Live embeds with full context from the original posts.",
 }
-
-const Navbar = dynamic(() => import("@/components/navbar"), { ssr: false })
-const Footer = dynamic(() => import("@/components/footer"), { ssr: false })
 
 export default function HottestContentPage() {
   const uniqueContent = Array.from(
