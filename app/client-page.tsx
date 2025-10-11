@@ -23,6 +23,7 @@ const HottestContentSection = dynamic(() => import("@/components/home/HottestCon
 const WebsitesFeatures = dynamic(() => import("@/components/home/WebsitesFeatures"))
 const SegmentsGrid = dynamic(() => import("@/components/home/SegmentsGrid"))
 const CoreOfferingsSection = dynamic(() => import("@/components/home/CoreOfferingsSection"))
+const LatestPostsSection = dynamic(() => import("@/components/home/LatestPostsSection"), { ssr: false })
 const GrowthHeadline = dynamic(() => import("@/components/home/GrowthHeadline"))
 
 // Import analytics functions directly for now (will optimize separately)
@@ -270,6 +271,7 @@ export default function ClientPage() {
         <CoreOfferingsSection />
         <WebsitesFeatures />
         <SegmentsGrid />
+        <LatestPostsSection />
 
         {/* Additional content pruned per new simplified homepage */}
 
