@@ -1,19 +1,17 @@
 "use client"
 
 import Link from "next/link"
+
+import InstagramEmbed from "@/components/instagram-embed"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent } from "@/components/ui/card"
 import { HOTTEST_CONTENT } from "@/lib/hottest-content"
 import { trackCTAClick } from "@/utils/analytics"
 
 const highlightedContent = HOTTEST_CONTENT.filter((item) => item.highlighted)
 const fallbackContent = HOTTEST_CONTENT.filter((item) => !item.highlighted)
 const featuredContent = [...highlightedContent, ...fallbackContent].slice(0, 3)
-
-function formatMetric(value: number) {
-  return new Intl.NumberFormat("en", { notation: "compact", maximumFractionDigits: 1 }).format(value)
-}
 
 export default function HottestContentSection() {
   return (
@@ -28,7 +26,7 @@ export default function HottestContentSection() {
               social wins that moved the needle
             </h2>
             <p className="text-neutral-600 lowercase md:text-lg">
-              real posts, real metrics. these reels earned serious reach for our clients and community.
+              embedded reels direct from instagram—see the proof without leaving the page.
             </p>
           </div>
           <Button
@@ -42,44 +40,9 @@ export default function HottestContentSection() {
 
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {featuredContent.map((item) => (
-            <Card key={item.slug} className="flex flex-col justify-between border-neutral-200">
-              <CardHeader>
-                <Badge className="w-fit lowercase">{item.platform}</Badge>
-                <CardTitle className="text-2xl font-semibold lowercase">{item.title}</CardTitle>
-              </CardHeader>
-              <CardContent className="flex flex-1 flex-col justify-between gap-6">
-                <div className="space-y-4 text-neutral-600 lowercase">
-                  <p>{item.summary}</p>
-                  <div className="grid grid-cols-3 gap-3 text-center">
-                    <div className="rounded-lg bg-neutral-100 px-3 py-4">
-                      <div className="text-xs font-medium uppercase text-neutral-500 tracking-[0.2em]">views</div>
-                      <div className="text-xl font-semibold text-neutral-900">{formatMetric(item.views)}</div>
-                    </div>
-                    <div className="rounded-lg bg-neutral-100 px-3 py-4">
-                      <div className="text-xs font-medium uppercase text-neutral-500 tracking-[0.2em]">likes</div>
-                      <div className="text-xl font-semibold text-neutral-900">{formatMetric(item.likes)}</div>
-                    </div>
-                    <div className="rounded-lg bg-neutral-100 px-3 py-4">
-                      <div className="text-xs font-medium uppercase text-neutral-500 tracking-[0.2em]">shares</div>
-                      <div className="text-xl font-semibold text-neutral-900">{formatMetric(item.shares)}</div>
-                    </div>
-                  </div>
-                  {item.insight ? (
-                    <div className="rounded-lg border border-neutral-200 bg-white p-4 text-sm text-neutral-600">
-                      <p className="font-medium text-neutral-900">how we got these results</p>
-                      <p className="mt-2">{item.insight}</p>
-                    </div>
-                  ) : null}
-                </div>
-                <Button
-                  className="mt-4 w-full rounded-full lowercase"
-                  asChild
-                  onClick={() => trackCTAClick("open instagram post", `hottest content section | ${item.slug}`)}
-                >
-                  <a href={item.instagramUrl} target="_blank" rel="noopener noreferrer">
-                    open on instagram
-                  </a>
-                </Button>
+            <Card key={item.slug} className="overflow-hidden border-neutral-200">
+              <CardContent className="p-0">
+                <InstagramEmbed url={item.instagramUrl} className="w-full" />
               </CardContent>
             </Card>
           ))}
