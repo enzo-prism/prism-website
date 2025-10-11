@@ -28,7 +28,7 @@ export const NAV_ITEMS: NavItem[] = [
   { label: "home", href: "/" },
   { label: "about", href: "/about" },
   {
-    label: "product",
+    label: "services",
     children: [
       { label: "websites", href: "/websites" },
       { label: "ads", href: "/ads" },
