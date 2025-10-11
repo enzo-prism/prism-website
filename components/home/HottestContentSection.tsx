@@ -29,7 +29,7 @@ export default function HottestContentSection() {
         <div className="mb-12 flex flex-col items-start gap-4 md:flex-row md:items-center md:justify-between">
           <div className="max-w-2xl space-y-2">
             <Badge variant="outline" className="lowercase">
-              our hottest content
+              free business content
             </Badge>
             <h2 className="text-3xl font-bold tracking-tighter lowercase sm:text-4xl">
               masters of the attention economy
