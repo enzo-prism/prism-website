@@ -13,6 +13,20 @@ export type HottestContentItem = {
 
 export const HOTTEST_CONTENT: HottestContentItem[] = [
   {
+    slug: "content-calibration-framework",
+    title: "Content Calibration Framework",
+    platform: "instagram",
+    instagramUrl:
+      "https://www.instagram.com/reel/C8ulpLrvSCl/?utm_source=ig_web_button_share_sheet&igsh=MzRlODBiNWFlZA==",
+    views: 228000,
+    likes: 11900,
+    shares: 2980,
+    summary:
+      "We showed how Prism calibrates creative in real time—analyzing audience comments, edits, and retention to keep reach compounding.",
+    insight:
+      "Broke the process into three rapid beats with overlays pulled straight from the analytics dashboard so viewers saw exactly how tweaks drive the next viral clip.",
+  },
+  {
     slug: "ai-website-revamp",
     title: "Turn AI Concepts Into Revenue",
     platform: "instagram",
@@ -227,7 +241,7 @@ export const HOTTEST_CONTENT: HottestContentItem[] = [
     title: "How We Flipped Hormozi's Hook",
     platform: "instagram",
     instagramUrl:
-      "https://www.instagram.com/reel/C483wd1SFB6/?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==",
+      "https://www.instagram.com/reel/C483wd1SFB6/?utm_source=ig_web_button_share_sheet&igsh=MzRlODBiNWFlZA==",
     views: 182000,
     likes: 12400,
     shares: 2100,
@@ -241,7 +255,7 @@ export const HOTTEST_CONTENT: HottestContentItem[] = [
     title: "Stanford Storytelling Framework",
     platform: "instagram",
     instagramUrl:
-      "https://www.instagram.com/reel/C483wd1SFB6/?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==",
+      "https://www.instagram.com/reel/C483wd1SFB6/?utm_source=ig_web_button_share_sheet&igsh=MzRlODBiNWFlZA==",
     views: 156000,
     likes: 9800,
     shares: 1750,
@@ -255,7 +269,7 @@ export const HOTTEST_CONTENT: HottestContentItem[] = [
     title: "NVIDIA Design Sprint",
     platform: "instagram",
     instagramUrl:
-      "https://www.instagram.com/reel/C483wd1SFB6/?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==",
+      "https://www.instagram.com/reel/C483wd1SFB6/?utm_source=ig_web_button_share_sheet&igsh=MzRlODBiNWFlZA==",
     views: 141500,
     likes: 8600,
     shares: 1520,
@@ -269,7 +283,7 @@ export const HOTTEST_CONTENT: HottestContentItem[] = [
     title: "Founder Flywheel Breakdown",
     platform: "instagram",
     instagramUrl:
-      "https://www.instagram.com/reel/C483wd1SFB6/?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==",
+      "https://www.instagram.com/reel/C483wd1SFB6/?utm_source=ig_web_button_share_sheet&igsh=MzRlODBiNWFlZA==",
     views: 129000,
     likes: 7300,
     shares: 1180,

@@ -9,9 +9,18 @@ import { Card, CardContent } from "@/components/ui/card"
 import { HOTTEST_CONTENT } from "@/lib/hottest-content"
 import { trackCTAClick } from "@/utils/analytics"
 
-const highlightedContent = HOTTEST_CONTENT.filter((item) => item.highlighted)
-const fallbackContent = HOTTEST_CONTENT.filter((item) => !item.highlighted)
-const featuredContent = [...highlightedContent, ...fallbackContent].slice(0, 3)
+const FEATURED_URLS = [
+  "https://www.instagram.com/reel/C483wd1SFB6/?utm_source=ig_web_button_share_sheet&igsh=MzRlODBiNWFlZA==",
+  "https://www.instagram.com/reel/C8ulpLrvSCl/?utm_source=ig_web_button_share_sheet&igsh=MzRlODBiNWFlZA==",
+  "https://www.instagram.com/reel/C7CD7TArrBt/?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==",
+]
+
+const featuredContent = [
+  ...FEATURED_URLS.map((url) => HOTTEST_CONTENT.find((item) => item.instagramUrl === url)).filter(
+    (item): item is (typeof HOTTEST_CONTENT)[number] => Boolean(item)
+  ),
+  ...HOTTEST_CONTENT.filter((item) => !FEATURED_URLS.includes(item.instagramUrl)),
+].slice(0, 3)
 
 export default function HottestContentSection() {
   return (
