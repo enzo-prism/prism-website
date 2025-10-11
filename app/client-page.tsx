@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button"
 import { useMobile } from "@/hooks/use-mobile"
-import { ArrowRight } from "lucide-react"
+import { ArrowRight, ArrowUpRight } from "lucide-react"
 import dynamic from "next/dynamic"
 import Link from "next/link"
 import { useEffect, useMemo, useRef, useState } from "react"
@@ -235,24 +235,22 @@ export default function ClientPage() {
                   upgrade your online presence to grow and convert
                 </p>
               </div>
-              <div className="flex flex-col items-center">
+              <div className="flex flex-col items-center space-y-4">
+                <Link href="/get-started">
+                  <Button
+                    className="rounded-full px-8 py-6 text-lg lowercase hardware-hover touch-feedback"
+                    onClick={() => trackCTAClick("analyze my online presence", "hero section")}
+                  >
+                    analyze my online presence <ArrowRight className="ml-2 h-5 w-5" />
+                  </Button>
+                </Link>
                 <Link
                   href="/wall-of-love"
-                  className="text-sm font-medium lowercase tracking-[0.32em] text-neutral-500 hover:text-neutral-700 transition-colors"
+                  className="inline-flex items-center text-sm font-medium lowercase tracking-[0.32em] text-neutral-500 transition-colors hover:text-neutral-700"
                   onClick={() => trackNavigation("founders love prism", "/wall-of-love")}
                 >
-                  founders love prism
+                  founders love prism <ArrowUpRight className="ml-3 h-4 w-4" />
                 </Link>
-                <div className="pt-3">
-                  <Link href="/get-started">
-                    <Button
-                      className="rounded-full px-8 py-6 text-lg lowercase hardware-hover touch-feedback"
-                      onClick={() => trackCTAClick("analyze my online presence", "hero section")}
-                    >
-                      analyze my online presence <ArrowRight className="ml-2 h-5 w-5" />
-                    </Button>
-                  </Link>
-                </div>
                 {videoSkipped ? (
                   <p className="mt-4 text-xs tracking-[0.24em] uppercase text-neutral-400">
                     background motion disabled for accessibility
