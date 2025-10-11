@@ -176,7 +176,7 @@ export default function ClientGetStartedPage({ heroOnly = false }: { heroOnly?: 
                 {shouldLoadVideo ? (
                   <div className="overflow-hidden rounded-lg sm:rounded-xl">
                     <VideoWithPoster
-                      videoId="1097023041"
+                      videoId="1126507824"
                       posterSrc="/prism%20get%20started.webp"
                       width={isMobile ? 320 : 420}
                       height={isMobile ? 320 : 420}
