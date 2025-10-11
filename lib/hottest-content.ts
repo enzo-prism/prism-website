@@ -13,6 +13,81 @@ export type HottestContentItem = {
 
 export const HOTTEST_CONTENT: HottestContentItem[] = [
   {
+    slug: "instagram-growth-playbook",
+    title: "Instagram Growth Playbook",
+    platform: "instagram",
+    instagramUrl:
+      "https://www.instagram.com/reel/DFNzRiBpBsb/?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==",
+    views: 298000,
+    likes: 15400,
+    shares: 3500,
+    summary:
+      "We broke down the 5-part content machine Prism installs to keep reels trending every single week.",
+    insight:
+      "Opened with a moving headline overlay, layered in quick-cut testimonials, and ended with a replay-worthy checklist CTA.",
+    highlighted: true,
+  },
+  {
+    slug: "scripts-that-sell",
+    title: "Scripts That Sell",
+    platform: "instagram",
+    instagramUrl:
+      "https://www.instagram.com/reel/C5D6ZqvrO3v/?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==",
+    views: 221000,
+    likes: 11800,
+    shares: 2800,
+    summary:
+      "We revealed the scripting pattern that converts cold viewers into booked calls in under 45 seconds.",
+    insight:
+      "Front-loaded a pain-point hook, used curiosity gaps to keep attention, and inserted proof before the pitch.",
+    highlighted: true,
+  },
+  {
+    slug: "distribution-flywheel",
+    title: "Distribution Flywheel",
+    platform: "instagram",
+    instagramUrl:
+      "https://www.instagram.com/reel/C38kqAuyYPP/?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==",
+    views: 244000,
+    likes: 13500,
+    shares: 2970,
+    summary:
+      "We mapped how Prism repurposes a single founder interview into a multi-platform distribution engine.",
+    insight:
+      "Used motion graphics to visualize the loop, keeping watch rate high while the voiceover delivered the framework.",
+    highlighted: true,
+  },
+  {
+    slug: "local-service-reel",
+    title: "Local Service Reel Blueprint",
+    platform: "instagram",
+    instagramUrl:
+      "https://www.instagram.com/reel/C72aLmGyS8m/?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==",
+    views: 206000,
+    likes: 9900,
+    shares: 2550,
+    summary:
+      "We showcased the before-and-after playbook that helped a local service provider dominate their zip code.",
+    insight:
+      "Combined split-screen results with bold typography to make the payoff unmistakable in the first five seconds.",
+    highlighted: true,
+  },
+  {
+    slug: "hook-testing-system",
+    title: "Hook Testing System",
+    platform: "instagram",
+    instagramUrl:
+      "https://www.instagram.com/reel/C-L_cE0yy_R/?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==",
+    views: 233000,
+    likes: 12700,
+    shares: 3020,
+    summary:
+      "We detailed the testing circuit Prism uses to rank hook variations before they ever hit the feed.",
+    insight:
+      "Flashed the data dashboard every 3 seconds to build credibility while the narration unpacked the workflow.",
+    highlighted: true,
+  },
+  {
     slug: "youtube-shorts-growth-engine",
     title: "From Zero to 1M Views",
     platform: "instagram",
