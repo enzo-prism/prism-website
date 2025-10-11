@@ -23,6 +23,7 @@ import {
     Users,
 } from "lucide-react"
 import Link from "next/link"
+import Image from "next/image"
 import { useEffect, useRef, useState } from "react"
 
 const TYPEFORM_URL = "https://fxuqp40sseh.typeform.com/to/Hg2oLcss"
@@ -153,10 +154,6 @@ export default function ClientGetStartedPage({ heroOnly = false }: { heroOnly?: 
       icon: Timer,
       label: "ready within 48 hours",
     },
-    {
-      icon: Search,
-      label: "channels: web, listings, ai, ads",
-    },
   ]
 
   return (
@@ -177,22 +174,31 @@ export default function ClientGetStartedPage({ heroOnly = false }: { heroOnly?: 
                   <div className="overflow-hidden rounded-lg sm:rounded-xl">
                     <VideoWithPoster
                       videoId="1126507824"
-                      posterSrc="/prism%20get%20started.webp"
+                      posterSrc="/get%20started%20page%20art.webp"
                       width={isMobile ? 320 : 420}
                       height={isMobile ? 320 : 420}
                       autoplay
                       loop
                       muted
                       controls={false}
-                      posterAlt="Looping Prism animation"
+                      posterAlt="Prism get started hero artwork"
                       trackAnalytics
                     />
-                  </div>
-                ) : (
-                  <div className={`${isMobile ? "h-[320px] w-[320px]" : "h-[420px] w-[420px]"} flex items-center justify-center rounded-lg bg-neutral-50 sm:rounded-xl`}>
-                    <div className="text-neutral-400 text-sm">Loading...</div>
-                  </div>
-                )}
+                </div>
+              ) : (
+                <div
+                  className={`relative overflow-hidden rounded-lg sm:rounded-xl border border-neutral-200 ${isMobile ? "h-[320px] w-[320px]" : "h-[420px] w-[420px]"}`}
+                >
+                  <Image
+                    src="/get%20started%20page%20art.webp"
+                    alt="Prism get started hero artwork"
+                    fill
+                    className="object-cover"
+                    sizes={isMobile ? "320px" : "420px"}
+                    priority
+                  />
+                </div>
+              )}
               </motion.div>
 
               <div className="mx-auto max-w-[68ch] space-y-6 text-center">
