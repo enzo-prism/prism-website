@@ -15,7 +15,6 @@ Based on the analytics data and client requirements, we've implemented redirects
 | `/dr-chris-wong` | `/` | Redirecting to homepage (previously to case study) |
 | `/blog` | `/` | Blog section doesn't exist in new site structure |
 | `/pod` | `/` | Podcast section doesn't exist in new site structure |
-| `/refer` | `/get-started` | Referral program now part of get started flow |
 | `/our-work/*` | `/` | All case study pages redirected to homepage |
 
 ## SEO Impact

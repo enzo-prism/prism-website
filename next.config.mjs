@@ -33,7 +33,6 @@ images: {
       { source: '/our-work/:path*', destination: '/case-studies', permanent: true },
       { source: '/our-services', destination: '/', permanent: true },
       { source: '/pod', destination: '/', permanent: true },
-      { source: '/refer', destination: '/get-started', permanent: true },
       { source: '/tools', destination: '/services', permanent: true },
       { source: '/portfolio', destination: '/case-studies', permanent: true },
       // Friendly shortpaths for new nav structure
