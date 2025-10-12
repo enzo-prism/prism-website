@@ -97,6 +97,17 @@ export default function ContactPageClient() {
             })}
           </div>
 
+          <div className="space-y-2 border border-neutral-200/70 bg-neutral-50/60 p-5 rounded-2xl">
+            <span className="text-xs uppercase tracking-[0.35em] text-neutral-400">office</span>
+            <div className="text-sm text-neutral-600 lowercase">
+              <p>prism — design prism llc</p>
+              <p>1075 space park way</p>
+              <p>mountain view, ca 94043</p>
+              <p>united states</p>
+              <p className="mt-2">call / text: <a href="tel:+16508624069" className="underline decoration-neutral-300 hover:decoration-neutral-500">650 862 4069</a></p>
+            </div>
+          </div>
+
           <div className="space-y-3">
             <span className="text-xs uppercase tracking-[0.35em] text-neutral-400">connect</span>
             <ul className="flex flex-wrap gap-x-6 gap-y-2 text-sm lowercase text-neutral-500">
