@@ -551,7 +551,7 @@ export function LocalBusinessSchema() {
       height: 630,
     },
     telephone: "+1-650-862-4069",
-    priceRange: "$1,000 – $3,000",
+    priceRange: "$1,000 - $3,000",
     description: "Prism builds revenue-driving custom websites, apps and design systems for startups and local businesses.",
     sameAs: [
       "https://www.instagram.com/the_design_prism/?hl=en",
@@ -565,50 +565,25 @@ export function LocalBusinessSchema() {
       contactType: "customer service",
       email: "support@design-prism.com",
     },
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: "1075 Space Park Way",
-      addressLocality: "Mountain View",
-      addressRegion: "CA",
-      postalCode: "94043",
-      addressCountry: "US",
-    },
-    geo: {
-      "@type": "GeoCoordinates",
-      latitude: 37.3861,
-      longitude: -122.0839,
-    },
     openingHoursSpecification: [
       {
         "@type": "OpeningHoursSpecification",
-        dayOfWeek: [
-          "Monday",
-          "Tuesday",
-          "Wednesday",
-          "Thursday",
-          "Friday",
-          "Saturday",
-          "Sunday",
-        ],
-        opens: "00:00",
-        closes: "23:59",
+        dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+        opens: "08:00",
+        closes: "18:00",
+      },
+      {
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: ["Saturday", "Sunday"],
+        opens: "09:00",
+        closes: "16:00",
       },
     ],
     founder: {
       "@type": "Person",
       name: "Enzo Sison",
     },
-    areaServed: [
-      {
-        "@type": "GeoCircle",
-        geoMidpoint: {
-          "@type": "GeoCoordinates",
-          latitude: 37.3861,
-          longitude: -122.0839,
-        },
-        geoRadius: "50000",
-      },
-    ],
+    areaServed: ["United States"],
     serviceArea: "United States",
     hasOfferCatalog: {
       "@type": "OfferCatalog",

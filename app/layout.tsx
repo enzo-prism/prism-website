@@ -7,7 +7,7 @@ import ErrorTracker from "@/components/error-tracker"
 import HotjarScript from "@/components/hotjar-script"
 import MCPHealthMonitor from "@/components/mcp-health-monitor"
 import PerformanceMonitor from "@/components/performance-monitor"
-import { OrganizationSchema, WebsiteSchema } from "@/components/schema-markup"
+import { LocalBusinessSchema, OrganizationSchema, WebsiteSchema } from "@/components/schema-markup"
 import SentryContextProvider from "@/components/sentry-context-provider"
 import { GA_MEASUREMENT_ID } from "@/lib/constants"
 
@@ -131,6 +131,7 @@ export default function RootLayout({
       <body className="m-0 p-0 w-full min-h-screen font-sans antialiased">
         <OrganizationSchema />
         <WebsiteSchema />
+        <LocalBusinessSchema />
         <ScrollManager />
         <HotjarScript />
         <ErrorTracker />

@@ -23,7 +23,8 @@ import {
   Mail,
   Star,
 } from "lucide-react"
-import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
+
+const CONTACT_CTA_TEXT = "email or text us for next steps"
 
 const carouselTestimonialsData = [
   {
@@ -102,8 +103,8 @@ export default function SummerWebsiteMakeoverOpenAIStylePage() {
               size="lg"
               className="text-base px-8 py-3 group rounded-md bg-neutral-900 text-white hover:bg-neutral-700 dark:bg-neutral-100 dark:text-neutral-900 dark:hover:bg-neutral-300 transition-colors"
             >
-              <Link href="/get-started">
-                {FREE_AUDIT_CTA_TEXT}
+              <Link href="/contact">
+                {CONTACT_CTA_TEXT}
                 <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
               </Link>
             </Button>
@@ -258,8 +259,8 @@ export default function SummerWebsiteMakeoverOpenAIStylePage() {
               size="lg"
               className="text-base px-10 py-4 group rounded-md bg-neutral-900 text-white hover:bg-neutral-700 dark:bg-neutral-100 dark:text-neutral-900 dark:hover:bg-neutral-300 transition-colors"
             >
-              <Link href="/get-started">
-                {FREE_AUDIT_CTA_TEXT}
+              <Link href="/contact">
+                {CONTACT_CTA_TEXT}
                 <ArrowRight className="ml-3 h-5 w-5 transition-transform group-hover:translate-x-1" />
               </Link>
             </Button>
@@ -303,15 +304,15 @@ export default function SummerWebsiteMakeoverOpenAIStylePage() {
               Get a site that sells while you sleep.
             </p>
             <p className="text-lg text-neutral-600 dark:text-neutral-400 mb-12">
-              Claim your Summer Website Makeover before the last slots disappear.
+              Email or text us to lock in your Summer Website Makeover before the last slots disappear.
             </p>
             <Button
               asChild
               size="lg"
               className="text-base px-10 py-4 group rounded-md bg-neutral-900 text-white hover:bg-neutral-700 dark:bg-neutral-100 dark:text-neutral-900 dark:hover:bg-neutral-300 transition-colors mb-20"
             >
-              <Link href="/get-started">
-                {FREE_AUDIT_CTA_TEXT}
+              <Link href="/contact">
+                {CONTACT_CTA_TEXT}
                 <ArrowRight className="ml-3 h-5 w-5 transition-transform group-hover:translate-x-1" />
               </Link>
             </Button>

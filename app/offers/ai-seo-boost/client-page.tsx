@@ -7,11 +7,12 @@ import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel"
 import Link from "next/link"
-import { Search, Target, TrendingUp, Calendar, Star, Bot, Zap, Users, Clock } from "lucide-react"
+import { Search, Target, TrendingUp, Mail, Star, Bot, Zap, Users, Clock } from "lucide-react"
 import { trackCTAClick } from "@/utils/analytics"
-import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
 
 export default function AISEOBoostPage() {
+  const CONTACT_CTA_TEXT = "email or text us for next steps"
+
   const services = [
     {
       icon: Search,
@@ -97,14 +98,14 @@ export default function AISEOBoostPage() {
               Make ChatGPT, Gemini & Perplexity name-drop your brand first. Get recommended by AI bots 24/7.
             </p>
             <div className="mt-10">
-              <Link href="/get-started">
+              <Link href="/contact">
                 <Button 
                   size="lg"
                   className="bg-neutral-900 hover:bg-neutral-800 text-white rounded-full px-8 py-4 text-lg lowercase shadow-sm transition-all duration-200 mr-4"
-                  onClick={() => trackCTAClick(FREE_AUDIT_CTA_TEXT, "ai-seo-boost hero")}
+                  onClick={() => trackCTAClick(CONTACT_CTA_TEXT, "ai-seo-boost hero")}
                 >
-                  <Calendar className="mr-3 h-5 w-5" />
-                  {FREE_AUDIT_CTA_TEXT}
+                  <Mail className="mr-3 h-5 w-5" />
+                  {CONTACT_CTA_TEXT}
                 </Button>
               </Link>
             </div>
@@ -255,14 +256,14 @@ export default function AISEOBoostPage() {
             </div>
             
             <div className="space-y-6">
-              <Link href="/get-started">
+              <Link href="/contact">
                 <Button 
                   size="lg"
                   className="bg-neutral-900 hover:bg-neutral-800 text-white rounded-full px-12 py-6 text-xl lowercase shadow-sm transition-all duration-200"
-                  onClick={() => trackCTAClick(FREE_AUDIT_CTA_TEXT, "ai-seo-boost scarcity")}
+                  onClick={() => trackCTAClick(CONTACT_CTA_TEXT, "ai-seo-boost scarcity")}
                 >
                   <Zap className="mr-3 h-6 w-6" />
-                  {FREE_AUDIT_CTA_TEXT}
+                  {CONTACT_CTA_TEXT}
                 </Button>
               </Link>
               <p className="text-sm text-neutral-500 lowercase">
@@ -279,16 +280,16 @@ export default function AISEOBoostPage() {
               Ready to Dominate AI Search?
             </h2>
             <p className="text-xl text-neutral-600 lowercase max-w-3xl mx-auto mb-10 leading-relaxed">
-              Book a 15-minute call to see if your site qualifies for AI optimization. No obligation, just honest feedback.
+              Email or text our team and we&apos;ll respond within one business day with a tailored next step—no obligation.
             </p>
-            <Link href="/get-started">
+            <Link href="/contact">
               <Button 
                 size="lg"
                 className="bg-neutral-900 hover:bg-neutral-800 text-white rounded-full px-8 py-4 text-lg lowercase shadow-sm transition-all duration-200"
-                onClick={() => trackCTAClick(FREE_AUDIT_CTA_TEXT, "ai-seo-boost final cta")}
+                onClick={() => trackCTAClick(CONTACT_CTA_TEXT, "ai-seo-boost final cta")}
               >
-                <Calendar className="mr-3 h-5 w-5" />
-                {FREE_AUDIT_CTA_TEXT}
+                <Mail className="mr-3 h-5 w-5" />
+                {CONTACT_CTA_TEXT}
               </Button>
             </Link>
             <p className="text-xs text-neutral-400 mt-4 lowercase italic">

@@ -5,7 +5,6 @@ import StickyCTA from "./StickyCTA"
 
 const ALLOWED_ROUTES = new Set([
   "/get-started",
-  "/pricing",
   "/pricing-dental",
   "/services",
   "/",
@@ -17,5 +16,4 @@ export default function RouteAwareStickyCTA() {
   if (!ALLOWED_ROUTES.has(pathname)) return null
   return <StickyCTA />
 }
-
 

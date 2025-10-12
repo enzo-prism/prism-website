@@ -122,15 +122,6 @@ export default function CommunityFoundersPage() {
                     <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                   </Button>
                 </Link>
-                <Link href="/pricing">
-                  <Button
-                    size="lg"
-                    variant="outline"
-                    className="rounded-full px-7 py-3 text-base"
-                  >
-                    View Pricing
-                  </Button>
-                </Link>
               </div>
             </div>
           </div>
