@@ -8,6 +8,7 @@ import { IndustryResultsSchema } from "./schema-markup/IndustryResultsSchema"
 import { Button } from "@/components/ui/button"
 import { ArrowRight, Briefcase, ShoppingBag, Users, Stethoscope } from "lucide-react"
 import { trackEvent } from "@/utils/analytics"
+import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
 import { useRevealAnimation } from "@/hooks/use-reveal-animation"
 import { useMobile } from "@/hooks/use-mobile"
 
@@ -170,14 +171,16 @@ export default function IndustryResultsSection() {
             </p>
             <Button
               className="rounded-full px-8 py-3 lowercase"
-              onClick={() => trackEvent("cta_click", {
-                cta_text: "get started with prism",
-                cta_location: "industry_results_section"
-              })}
+              onClick={() =>
+                trackEvent("cta_click", {
+                  cta_text: FREE_AUDIT_CTA_TEXT,
+                  cta_location: "industry_results_section",
+                })
+              }
               asChild
             >
               <a href="/get-started">
-                get started with prism <ArrowRight className="ml-2 h-4 w-4" />
+                {FREE_AUDIT_CTA_TEXT} <ArrowRight className="ml-2 h-4 w-4" />
               </a>
             </Button>
           </div>

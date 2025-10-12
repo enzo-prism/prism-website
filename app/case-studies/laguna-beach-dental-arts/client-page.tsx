@@ -11,6 +11,7 @@ import { ArrowLeft, ArrowRight, ChevronRight } from "lucide-react"
 import dynamic from "next/dynamic"
 import Link from "next/link"
 import { useEffect, useState } from "react"
+import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
 const Navbar = dynamic(() => import("@/components/navbar"), { ssr: false })
 
 export default function LagunaBeachDentalArtsCaseStudy() {
@@ -259,16 +260,16 @@ export default function LagunaBeachDentalArtsCaseStudy() {
                     post‑m&a transitions demand clarity, speed, and measurement. we can help you keep momentum while
                     leveling up your digital presence.
                   </p>
-                  <div className="pt-6">
-                    <Link href="/get-started">
-                      <Button
-                        className="rounded-full px-8 py-6 text-lg lowercase"
-                        onClick={() => trackCTAClick("get started", "laguna beach dental arts case study")}
-                      >
-                        book a discovery call <ArrowRight className="ml-2 h-5 w-5" />
-                      </Button>
-                    </Link>
-                  </div>
+                <div className="pt-6">
+                  <Link href="/get-started">
+                    <Button
+                      className="rounded-full px-8 py-6 text-lg lowercase"
+                      onClick={() => trackCTAClick(FREE_AUDIT_CTA_TEXT, "laguna beach dental arts case study")}
+                    >
+                      {FREE_AUDIT_CTA_TEXT} <ArrowRight className="ml-2 h-5 w-5" />
+                    </Button>
+                  </Link>
+                </div>
                 </div>
               </section>
 
@@ -281,7 +282,7 @@ export default function LagunaBeachDentalArtsCaseStudy() {
                 </Link>
                 <Link href="/get-started">
                   <Button variant="outline" className="rounded-full lowercase">
-                    get started <ArrowRight className="ml-2 h-4 w-4" />
+                    {FREE_AUDIT_CTA_TEXT} <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
                 </Link>
               </div>
@@ -312,5 +313,3 @@ export default function LagunaBeachDentalArtsCaseStudy() {
     </div>
   )
 }
-
-

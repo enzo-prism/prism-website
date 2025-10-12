@@ -14,6 +14,7 @@ import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants";
 const Navbar = dynamic(() => import("@/components/navbar"), { ssr: false })
 
 export default function ChristopherWongCaseStudy() {
@@ -600,15 +601,15 @@ export default function ChristopherWongCaseStudy() {
                     struggling with patient acquisition, or simply ready to modernize your digital presence, we have 
                     the proven strategies to deliver results.
                   </p>
-                  <div className="pt-6">
-                    <Link href="/get-started">
-                      <Button
-                        className="rounded-full px-8 py-6 text-lg lowercase"
-                        onClick={() => trackCTAClick("get started", "case study bottom")}
-                      >
-                        get started <ArrowRight className="ml-2 h-5 w-5" />
-                      </Button>
-                    </Link>
+                <div className="pt-6">
+                  <Link href="/get-started">
+                    <Button
+                      className="rounded-full px-8 py-6 text-lg lowercase"
+                      onClick={() => trackCTAClick(FREE_AUDIT_CTA_TEXT, "case study bottom")}
+                    >
+                      {FREE_AUDIT_CTA_TEXT} <ArrowRight className="ml-2 h-5 w-5" />
+                    </Button>
+                  </Link>
                   </div>
                 </div>
               </section>
@@ -622,7 +623,7 @@ export default function ChristopherWongCaseStudy() {
                 </Link>
                 <Link href="/get-started">
                   <Button variant="outline" className="rounded-full lowercase">
-                    get started <ArrowRight className="ml-2 h-4 w-4" />
+                    {FREE_AUDIT_CTA_TEXT} <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
                 </Link>
               </div>

@@ -21,8 +21,8 @@ export async function sendFormSubmissionEmail(data: FormSubmissionEmailData) {
     }
 
     const { data: emailData, error } = await resend.emails.send({
-      from: 'Prism Website <notifications@design-prism.com>',
-      to: ['enzo@design-prism.com'],
+      from: 'Prism Website <support@design-prism.com>',
+      to: ['support@design-prism.com'],
       subject: `New Get Started Form Submission from ${data.name}`,
       html: generateEmailHtml(data),
       text: generateEmailText(data),

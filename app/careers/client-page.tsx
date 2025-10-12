@@ -146,7 +146,7 @@ export default function CareersClientPage() {
 
                 <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
                   <a
-                    href="mailto:careers@design-prism.com"
+                    href="mailto:support@design-prism.com"
                     onClick={() => trackCTAClick("careers email", "careers page")}
                   >
                     <Button
@@ -154,7 +154,7 @@ export default function CareersClientPage() {
                       className="bg-white text-neutral-900 hover:bg-neutral-100 rounded-full px-8 py-4 text-sm font-medium lowercase transition-all duration-200 hover:scale-105 shadow-lg"
                     >
                       <Mail className="mr-2 h-4 w-4" />
-                      careers@design-prism.com
+                      support@design-prism.com
                     </Button>
                   </a>
 

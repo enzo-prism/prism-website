@@ -297,10 +297,10 @@ export default function ReferPage() {
                   <p className="mt-4 text-xs text-neutral-400">
                     Questions? Email{" "}
                     <a
-                      href="mailto:hello@design-prism.com"
+                      href="mailto:support@design-prism.com"
                       className="font-medium text-primary underline-offset-2 hover:underline"
                     >
-                      hello@design-prism.com
+                      support@design-prism.com
                     </a>{" "}
                     and we’ll get back fast.
                   </p>

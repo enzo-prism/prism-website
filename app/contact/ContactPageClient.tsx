@@ -23,7 +23,7 @@ const primaryActions = [
   {
     id: "contact_apply",
     label: "hire prism",
-    detail: "submit an application",
+    detail: "claim your free audit & report",
     href: "/get-started",
   },
 ]

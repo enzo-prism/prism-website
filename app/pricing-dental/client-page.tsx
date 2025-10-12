@@ -11,6 +11,7 @@ import CoreImage from "@/components/core-image"
 import Link from "next/link"
 import { trackNavigation } from "@/utils/analytics"
 import { Globe, Calendar, Search, Target, Brain } from "lucide-react"
+import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
 
 export default function PricingDentalClient() {
   const [isAnnual, setIsAnnual] = useState(false)
@@ -348,7 +349,7 @@ export default function PricingDentalClient() {
           className="w-full md:w-auto px-8 py-6 text-base"
           onClick={() => trackNavigation("pricing_dental_bottom_cta", "/get-started")}
         >
-          <Link href="/get-started">get started today</Link>
+          <Link href="/get-started">{FREE_AUDIT_CTA_TEXT}</Link>
         </Button>
       </div>
     </div>

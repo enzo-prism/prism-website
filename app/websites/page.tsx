@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button"
 import { ArrowRight, Check } from "lucide-react"
 import type { Metadata } from "next"
 import Link from "next/link"
+import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
 
 export const metadata: Metadata = {
   title: "Small Business Website Portfolio & Local SEO Wins | Prism",
@@ -261,7 +262,7 @@ export default function WebsitesPage() {
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
               <Button asChild size="lg" className="rounded-full px-8">
                 <Link href="/get-started?service=website-design">
-                  Get a custom site plan
+                  {FREE_AUDIT_CTA_TEXT}
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>
@@ -418,7 +419,7 @@ export default function WebsitesPage() {
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
               <Button asChild size="lg" className="rounded-full px-8">
                 <Link href="/get-started?service=website-design">
-                  Get a custom site plan
+                  {FREE_AUDIT_CTA_TEXT}
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>

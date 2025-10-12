@@ -12,6 +12,7 @@ import PoleVaultCarousel from "@/components/pole-vault-carousel"
 import Link from "next/link"
 import { useEffect, useRef, useState } from "react"
 const Navbar = dynamic(() => import("@/components/navbar"), { ssr: false })
+import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
 
 export default function AboutClientPage() {
   const isMobile = useMobile()
@@ -199,7 +200,7 @@ export default function AboutClientPage() {
                     className="inline-flex items-center justify-center rounded-full bg-white text-neutral-900 px-8 py-4 text-sm font-medium hover:bg-neutral-100 lowercase transition-all duration-200 hover:scale-105 shadow-lg"
                     onClick={() => trackVideoInteraction("get_started_cta", "click", "About page CTA to get started")}
                   >
-                    schedule free consultation
+                    {FREE_AUDIT_CTA_TEXT}
                     <span className="ml-2">→</span>
                   </Link>
 

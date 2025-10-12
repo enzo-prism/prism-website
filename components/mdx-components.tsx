@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils"
+import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
 
 export const MDXComponents = {
   // Typography components
@@ -51,7 +52,7 @@ export const MDXComponents = {
   BlogCTA: ({ 
     title, 
     description, 
-    buttonText = "get started",
+    buttonText,
     href = "/get-started" 
   }: { 
     title: string; 
@@ -66,7 +67,7 @@ export const MDXComponents = {
         href={href}
         className="inline-flex items-center justify-center rounded-full bg-neutral-900 px-6 py-3 text-sm font-medium text-white hover:bg-neutral-800 dark:bg-white dark:hover:bg-neutral-200 dark:text-neutral-900 lowercase"
       >
-        {buttonText}
+        {href?.startsWith("/get-started") ? FREE_AUDIT_CTA_TEXT : buttonText ?? FREE_AUDIT_CTA_TEXT}
       </a>
     </div>
   ),

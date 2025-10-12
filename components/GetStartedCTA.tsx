@@ -6,11 +6,11 @@ import Link from "next/link"
 import { motion } from "framer-motion"
 import { trackCTAClick } from "@/utils/analytics"
 import { fadeInUp, springScale } from "@/utils/animation-variants"
+import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
 
 interface GetStartedCTAProps {
   heading: string
   description?: string
-  buttonText: string
   analyticsLabel: string
   variant?: "light" | "dark" | "gradient"
   className?: string
@@ -19,11 +19,12 @@ interface GetStartedCTAProps {
 export default function GetStartedCTA({
   heading,
   description,
-  buttonText,
   analyticsLabel,
   variant = "light",
   className = ""
 }: GetStartedCTAProps) {
+  const ctaText = FREE_AUDIT_CTA_TEXT
+
   const getBackgroundClasses = () => {
     switch (variant) {
       case "dark":
@@ -80,14 +81,14 @@ export default function GetStartedCTA({
             >
               <Link 
                 href="/get-started"
-                onClick={() => trackCTAClick(buttonText, analyticsLabel)}
+                onClick={() => trackCTAClick(ctaText, analyticsLabel)}
               >
                 <motion.div 
                   className="flex items-center"
                   whileHover={{ x: 5 }}
                   transition={{ type: "spring", stiffness: 400 }}
                 >
-                  {buttonText}
+                  {ctaText}
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </motion.div>
               </Link>

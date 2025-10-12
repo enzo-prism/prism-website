@@ -7,6 +7,7 @@ import { trackCTAClick } from "@/utils/analytics"
 import { ArrowRight } from "lucide-react"
 import dynamic from "next/dynamic"
 import Link from "next/link"
+import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
 const Navbar = dynamic(() => import("@/components/navbar"), { ssr: false })
 
 // Define the case study type
@@ -143,9 +144,9 @@ export default function CaseStudiesPage() {
                 <Link href="/get-started">
                   <button
                     className="inline-flex items-center justify-center rounded-full bg-neutral-900 px-6 py-3 text-sm font-medium text-white hover:bg-neutral-800 lowercase"
-                    onClick={() => trackCTAClick("get started", "case studies page")}
+                    onClick={() => trackCTAClick(FREE_AUDIT_CTA_TEXT, "case studies page")}
                   >
-                    get started <ArrowRight className="ml-2 h-4 w-4" />
+                    {FREE_AUDIT_CTA_TEXT} <ArrowRight className="ml-2 h-4 w-4" />
                   </button>
                 </Link>
               </div>

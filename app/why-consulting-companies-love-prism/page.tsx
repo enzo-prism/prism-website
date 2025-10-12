@@ -6,6 +6,7 @@ import Navbar from "@/components/navbar"
 import ScrollToTop from "@/components/scroll-to-top"
 import { Button } from "@/components/ui/button"
 import { ArrowRight, CheckCircle2 } from "lucide-react"
+import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
 
 const coreOutcomes = [
   {
@@ -128,7 +129,7 @@ export default function ConsultingCompaniesPage() {
               <div className="mt-10 flex justify-center">
                 <Link href="/get-started">
                   <Button size="lg" className="group rounded-full px-8 py-3 text-base">
-                    Get Started
+                    {FREE_AUDIT_CTA_TEXT}
                     <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
                   </Button>
                 </Link>
@@ -344,7 +345,7 @@ export default function ConsultingCompaniesPage() {
                     variant="outline"
                     className="rounded-full px-8 py-3 text-base"
                   >
-                    free audit + report
+                    {FREE_AUDIT_CTA_TEXT}
                   </Button>
                 </Link>
               </div>

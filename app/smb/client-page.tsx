@@ -7,6 +7,7 @@ import Link from "next/link"
 import AnimatedBackground from "@/components/animated-background"
 import PageViewTracker from "@/components/page-view-tracker"
 import { Button } from "@/components/ui/button"
+import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
 
 export default function SMBClientPage() {
   return (
@@ -72,7 +73,7 @@ export default function SMBClientPage() {
             >
               <Link href="/get-started">
                 <Button className="rounded-full px-8 py-6 text-base lowercase">
-                  get started <ArrowRight className="ml-2 h-4 w-4" />
+                  {FREE_AUDIT_CTA_TEXT} <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
               </Link>
               <Link href="/prism-flywheel" className="text-neutral-500 hover:text-neutral-900 lowercase">
@@ -125,7 +126,7 @@ export default function SMBClientPage() {
               <div className="mt-6">
                 <Link href="/get-started">
                   <Button variant="secondary" className="rounded-full px-8 py-6 text-base lowercase">
-                    book a free consult <ArrowRight className="ml-2 h-4 w-4" />
+                    {FREE_AUDIT_CTA_TEXT} <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
                 </Link>
               </div>
@@ -137,5 +138,3 @@ export default function SMBClientPage() {
     </div>
   )
 }
-
-

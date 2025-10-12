@@ -16,6 +16,7 @@ import {
 } from "lucide-react"
 import Link from "next/link"
 import { useState } from "react"
+import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
 
   // All scroll-in animations removed for stability and simplicity
 
@@ -141,11 +142,11 @@ export default function PrismFlywheelClient() {
             <div 
               className="text-center"
             >
-              <Link href="/get-started" onClick={() => trackCTAClick("get started", "hero-flywheel-minimal")}>
+              <Link href="/get-started" onClick={() => trackCTAClick(FREE_AUDIT_CTA_TEXT, "hero-flywheel-minimal")}>
                 <Button 
                   className="group px-8 py-3 bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 font-medium text-sm rounded-full hover:scale-[1.02] transition-all duration-200"
                 >
-                  Build Your Flywheel
+                  {FREE_AUDIT_CTA_TEXT}
                   <ArrowRight className="inline-block ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </Button>
               </Link>
@@ -408,9 +409,9 @@ export default function PrismFlywheelClient() {
                 <Button 
                   variant="ghost"
                   className="text-neutral-900 dark:text-white hover:bg-transparent border-b-2 border-transparent hover:border-neutral-900 dark:hover:border-white rounded-none px-0 py-2 transition-all"
-                  onClick={() => trackCTAClick("start flywheel", "how it works")}
+                  onClick={() => trackCTAClick(FREE_AUDIT_CTA_TEXT, "how it works")}
                 >
-                  Start Your Flywheel →
+                  {FREE_AUDIT_CTA_TEXT} →
                 </Button>
               </Link>
               <div className="mt-4 text-sm text-neutral-600 dark:text-neutral-400">
@@ -500,12 +501,12 @@ export default function PrismFlywheelClient() {
             <h3 className="text-xl md:text-2xl font-light text-neutral-900 dark:text-white mb-6">
               Ready to compound your growth?
             </h3>
-            <Link href="/get-started" onClick={() => trackCTAClick("explore flywheel minimal", "mid-page-flywheel")}>
+            <Link href="/get-started" onClick={() => trackCTAClick(FREE_AUDIT_CTA_TEXT, "mid-page-flywheel")}>
               <Button 
                 variant="outline"
                 className="border-neutral-900 dark:border-white text-neutral-900 dark:text-white hover:bg-neutral-900 hover:text-white dark:hover:bg-white dark:hover:text-neutral-900 rounded-full px-8 py-3 transition-all"
               >
-                Start Building
+                {FREE_AUDIT_CTA_TEXT}
               </Button>
             </Link>
           </div>
@@ -808,11 +809,11 @@ export default function PrismFlywheelClient() {
             </div>
 
             <div className="pt-4">
-              <Link href="/get-started" onClick={() => trackCTAClick("apply now minimal", "footer-flywheel")}>
+              <Link href="/get-started" onClick={() => trackCTAClick(FREE_AUDIT_CTA_TEXT, "footer-flywheel")}>
                 <Button 
                   className="bg-white text-neutral-900 hover:bg-neutral-100 font-medium text-sm px-10 py-4 rounded-full transition-all hover:scale-[1.02]"
                 >
-                  Apply for Your Flywheel
+                  {FREE_AUDIT_CTA_TEXT}
                 </Button>
               </Link>
             </div>

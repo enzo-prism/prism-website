@@ -12,6 +12,7 @@ const Navbar = dynamic(() => import("@/components/navbar"), { ssr: false })
 
 import PageViewTracker from "@/components/page-view-tracker"
 import { trackCTAClick, trackNavigation } from "@/utils/analytics"
+import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
 
 const services = [
   { name: "logo or wordmark", icon: Palette },
@@ -281,7 +282,7 @@ export default function OneTimeFeeClientPage() {
                   asChild
                 >
                   <Link href="/get-started">
-                    free consultation <ArrowRight className="ml-2 h-4 w-4" />
+                    {FREE_AUDIT_CTA_TEXT} <ArrowRight className="ml-2 h-4 w-4" />
                   </Link>
                 </Button>
               </div>

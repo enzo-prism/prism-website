@@ -165,7 +165,6 @@ export default function BlogPostLayout({
                       if (c.includes('business')) return 'we’ll help you choose one focus bet, design the experiments, and measure what matters.'
                       return 'work with prism to apply these steps to your brand—fast, focused, and measured.'
                     })()}
-                    buttonText="get started"
                     analyticsLabel={`blog_post_${slug}`}
                     variant="gradient"
                     className="border-t border-neutral-100"

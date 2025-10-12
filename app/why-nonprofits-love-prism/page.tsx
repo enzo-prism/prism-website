@@ -6,6 +6,7 @@ import Navbar from "@/components/navbar"
 import ScrollToTop from "@/components/scroll-to-top"
 import { Button } from "@/components/ui/button"
 import { CheckCircle2 } from "lucide-react"
+import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
 
 const coreOutcomes = [
   {
@@ -145,7 +146,7 @@ export default function NonprofitsPage() {
                     variant="outline"
                     className="rounded-full px-8 py-3 text-base"
                   >
-                    free audit + report
+                    {FREE_AUDIT_CTA_TEXT}
                   </Button>
                 </Link>
               </div>
@@ -360,7 +361,7 @@ export default function NonprofitsPage() {
                     variant="outline"
                     className="rounded-full px-8 py-3 text-base"
                   >
-                    free audit + report
+                    {FREE_AUDIT_CTA_TEXT}
                   </Button>
                 </Link>
               </div>

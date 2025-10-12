@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
 import { cn } from "@/lib/utils"
+import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
 import { trackNavigation } from "@/utils/analytics"
 import { ArrowRight, BadgeCheck, Check, Star } from "lucide-react"
 import dynamic from "next/dynamic"
@@ -425,7 +426,7 @@ export default function PricingClient() {
               onClick={() => trackNavigation("pricing_bottom_cta", "/get-started")}
             >
               <Link href="/get-started" className="flex items-center">
-                get started today <ArrowRight className="ml-2 h-5 w-5" />
+                {FREE_AUDIT_CTA_TEXT} <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
             </Button>
           </div>

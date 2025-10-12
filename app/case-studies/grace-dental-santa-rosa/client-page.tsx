@@ -10,6 +10,7 @@ import { ArrowLeft, ArrowRight, ChevronRight } from "lucide-react"
 import dynamic from "next/dynamic"
 import Link from "next/link"
 import { useEffect, useState } from "react"
+import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
 const Navbar = dynamic(() => import("@/components/navbar"), { ssr: false })
 
 export default function GraceDentalSantaRosaCaseStudy() {
@@ -157,7 +158,14 @@ export default function GraceDentalSantaRosaCaseStudy() {
                   <h2 className="text-2xl font-bold tracking-tighter lowercase">ready to relaunch with clarity?</h2>
                   <p className="text-neutral-600 lowercase max-w-2xl mx-auto">we’ll help you ship a brand, site, and acquisition stack that patients—and search engines—love.</p>
                   <div className="pt-6">
-                    <Link href="/get-started"><Button className="rounded-full px-8 py-6 text-lg lowercase" onClick={() => trackCTAClick("get started","grace dental santa rosa case study")}>book a discovery call <ArrowRight className="ml-2 h-5 w-5" /></Button></Link>
+                    <Link href="/get-started">
+                      <Button
+                        className="rounded-full px-8 py-6 text-lg lowercase"
+                        onClick={() => trackCTAClick(FREE_AUDIT_CTA_TEXT, "grace dental santa rosa case study")}
+                      >
+                        {FREE_AUDIT_CTA_TEXT} <ArrowRight className="ml-2 h-5 w-5" />
+                      </Button>
+                    </Link>
                   </div>
                 </div>
               </section>
@@ -165,7 +173,11 @@ export default function GraceDentalSantaRosaCaseStudy() {
               {/* Nav */}
               <div className="flex justify-between py-8">
                 <Link href="/case-studies"><Button variant="outline" className="rounded-full lowercase"><ArrowLeft className="mr-2 h-4 w-4" /> all case studies</Button></Link>
-                <Link href="/get-started"><Button variant="outline" className="rounded-full lowercase">get started <ArrowRight className="ml-2 h-4 w-4" /></Button></Link>
+                <Link href="/get-started">
+                  <Button variant="outline" className="rounded-full lowercase">
+                    {FREE_AUDIT_CTA_TEXT} <ArrowRight className="ml-2 h-4 w-4" />
+                  </Button>
+                </Link>
               </div>
 
               {/* Share */}
@@ -190,5 +202,3 @@ export default function GraceDentalSantaRosaCaseStudy() {
     </div>
   )
 }
-
-

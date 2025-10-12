@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button"
 import { trackCTAClick } from "@/utils/analytics"
+import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
 import Link from "next/link"
 
 interface ProofCTAsProps {
@@ -15,9 +16,9 @@ export default function ProofCTAs({ location, className = "" }: ProofCTAsProps) 
       <Link href="/get-started">
         <Button
           className="rounded-full px-6 py-3 text-base lowercase"
-          onClick={() => trackCTAClick("get prism proof", location)}
+          onClick={() => trackCTAClick(FREE_AUDIT_CTA_TEXT, location)}
         >
-          get prism proof
+          {FREE_AUDIT_CTA_TEXT}
         </Button>
       </Link>
       <Link href="/case-studies" className="sm:ml-2">
@@ -32,5 +33,4 @@ export default function ProofCTAs({ location, className = "" }: ProofCTAsProps) 
     </div>
   )
 }
-
 

@@ -23,6 +23,7 @@ import {
   Mail,
   Star,
 } from "lucide-react"
+import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
 
 const carouselTestimonialsData = [
   {
@@ -102,7 +103,7 @@ export default function SummerWebsiteMakeoverOpenAIStylePage() {
               className="text-base px-8 py-3 group rounded-md bg-neutral-900 text-white hover:bg-neutral-700 dark:bg-neutral-100 dark:text-neutral-900 dark:hover:bg-neutral-300 transition-colors"
             >
               <Link href="/get-started">
-                Book a 30-min Fit Call
+                {FREE_AUDIT_CTA_TEXT}
                 <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
               </Link>
             </Button>
@@ -258,7 +259,7 @@ export default function SummerWebsiteMakeoverOpenAIStylePage() {
               className="text-base px-10 py-4 group rounded-md bg-neutral-900 text-white hover:bg-neutral-700 dark:bg-neutral-100 dark:text-neutral-900 dark:hover:bg-neutral-300 transition-colors"
             >
               <Link href="/get-started">
-                Book a 30-min Fit Call
+                {FREE_AUDIT_CTA_TEXT}
                 <ArrowRight className="ml-3 h-5 w-5 transition-transform group-hover:translate-x-1" />
               </Link>
             </Button>
@@ -310,7 +311,7 @@ export default function SummerWebsiteMakeoverOpenAIStylePage() {
               className="text-base px-10 py-4 group rounded-md bg-neutral-900 text-white hover:bg-neutral-700 dark:bg-neutral-100 dark:text-neutral-900 dark:hover:bg-neutral-300 transition-colors mb-20"
             >
               <Link href="/get-started">
-                Book Your Fit Call Now
+                {FREE_AUDIT_CTA_TEXT}
                 <ArrowRight className="ml-3 h-5 w-5 transition-transform group-hover:translate-x-1" />
               </Link>
             </Button>
@@ -330,11 +331,11 @@ export default function SummerWebsiteMakeoverOpenAIStylePage() {
                   DM @the_design_prism
                 </a>
                 <a
-                  href="mailto:enzo@design-prism.com"
+                  href="mailto:support@design-prism.com"
                   className="flex items-center text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors group"
                 >
                   <Mail className="h-5 w-5 mr-2 text-neutral-500 dark:text-neutral-400 group-hover:text-neutral-700 dark:group-hover:text-neutral-200 transition-colors" />
-                  enzo@design-prism.com
+                  support@design-prism.com
                 </a>
               </div>
             </div>

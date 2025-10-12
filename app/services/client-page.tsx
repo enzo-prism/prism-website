@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
 import { cn } from "@/lib/utils"
+import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
 import { ArrowRight, BadgeCheck, Check } from "lucide-react"
 import dynamic from "next/dynamic"
 import Link from "next/link"
@@ -139,7 +140,7 @@ export default function ServicesClient() {
             </CardContent>
             <CardFooter className="p-6 pt-0">
               <Button asChild variant="outline" className="w-full"> 
-                <Link href="/get-started">Get Started</Link>
+                <Link href="/get-started">{FREE_AUDIT_CTA_TEXT}</Link>
               </Button>
             </CardFooter>
           </Card>
@@ -176,7 +177,7 @@ export default function ServicesClient() {
             </CardContent>
             <CardFooter className="p-6 pt-0">
               <Button asChild className="w-full bg-white text-gray-900 hover:bg-gray-100">
-                <Link href="/get-started">Get Started</Link>
+                <Link href="/get-started">{FREE_AUDIT_CTA_TEXT}</Link>
               </Button>
             </CardFooter>
           </Card>
@@ -316,7 +317,7 @@ export default function ServicesClient() {
           <div className="container mx-auto px-4">
             <h2 className="text-3xl font-bold mb-6">Ready to Grow?</h2>
             <Button size="lg" asChild className="px-8">
-              <Link href="/get-started">Get Started Today <ArrowRight className="ml-2 h-5 w-5" /></Link>
+              <Link href="/get-started">{FREE_AUDIT_CTA_TEXT} <ArrowRight className="ml-2 h-5 w-5" /></Link>
             </Button>
           </div>
         </section>

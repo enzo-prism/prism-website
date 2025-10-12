@@ -6,6 +6,7 @@ import { ArrowRight, Sparkles } from "lucide-react"
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion"
 import { trackCTAClick } from "@/utils/analytics"
 import { ctaButtonFloat, ctaButtonGlow } from "@/utils/animation-variants"
+import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
 
 export default function BlogCTAButton() {
   const ref = useRef<HTMLButtonElement>(null)
@@ -43,7 +44,7 @@ export default function BlogCTAButton() {
       <motion.button
         ref={ref}
         className="relative inline-flex items-center justify-center rounded-full bg-neutral-900 px-6 py-3 text-sm font-medium text-white lowercase overflow-hidden group"
-        onClick={() => trackCTAClick("get started", "blog page")}
+        onClick={() => trackCTAClick(FREE_AUDIT_CTA_TEXT, "blog page")}
         onMouseMove={handleMouseMove}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={handleMouseLeave}
@@ -139,7 +140,7 @@ export default function BlogCTAButton() {
             animate={isHovered ? { x: [0, 2, 0] } : {}}
             transition={{ duration: 0.5 }}
           >
-            get started
+            {FREE_AUDIT_CTA_TEXT}
           </motion.span>
           
           <motion.div

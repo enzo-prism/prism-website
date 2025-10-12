@@ -208,7 +208,6 @@ export default function DesignsPageClient() {
         <GetStartedCTA
           heading="inspired by what you see?"
           description="let's create something amazing together. from logos to complete brand identities, we'll bring your vision to life."
-          buttonText="start your design project"
           analyticsLabel="design portfolio CTA"
           variant="gradient"
         />

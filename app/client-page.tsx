@@ -33,7 +33,7 @@ import CoreImage from "@/components/core-image"
 import PageViewTracker from "@/components/page-view-tracker"
 // import VideoWithPoster from "@/components/video-with-poster" // removed with testimonials section
 // import { useRevealAnimation } from "@/hooks/use-reveal-animation" // no longer used on simplified homepage
-import { LOGO_CONFIG, LOGO_SIZES } from "@/lib/constants"
+import { FREE_AUDIT_CTA_TEXT, LOGO_CONFIG, LOGO_SIZES } from "@/lib/constants"
 import { trackCTAClick, trackNavigation } from "@/utils/analytics"
 // Render Service schema only on client to keep SSR HTML lean
 const ServiceSchemaClient = dynamic(() => import("@/components/schema-markup").then(m => m.ServiceSchema), {
@@ -253,9 +253,9 @@ export default function ClientPage() {
                 <Link href="/get-started">
                   <Button
                     className="rounded-full px-8 py-6 text-lg lowercase hardware-hover touch-feedback"
-                    onClick={() => trackCTAClick("analyze my online presence", "hero section")}
+                    onClick={() => trackCTAClick(FREE_AUDIT_CTA_TEXT, "hero section")}
                   >
-                    analyze my online presence <ArrowRight className="ml-2 h-5 w-5" />
+                    {FREE_AUDIT_CTA_TEXT} <ArrowRight className="ml-2 h-5 w-5" />
                   </Button>
                 </Link>
                 <Link

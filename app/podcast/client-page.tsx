@@ -262,7 +262,6 @@ export default function PodcastClientPage() {
         <GetStartedCTA
           heading="inspired by these success stories?"
           description="let's write yours next. from idea to execution, we'll help you build something remarkable."
-          buttonText="start your journey"
           analyticsLabel="podcast inspiration CTA"
           variant="light"
         />
@@ -294,7 +293,7 @@ export default function PodcastClientPage() {
                   spotify
                 </a>
                 <a
-                  href="mailto:podcast@design-prism.com"
+                  href="mailto:support@design-prism.com"
                   className="text-neutral-600 hover:text-neutral-900 lowercase transition-colors"
                   onClick={() => trackCTAClick("suggest guest", "podcast page")}
                 >

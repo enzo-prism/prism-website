@@ -86,8 +86,8 @@ export default function ThanksPageClient() {
           <p className="mt-2">
             If you have any questions, you can reply to the email I just sent you
             or email me directly at{" "}
-            <a href="mailto:hello@design-prism.com" className="underline hover:text-gray-700">
-              hello@design-prism.com
+            <a href="mailto:support@design-prism.com" className="underline hover:text-gray-700">
+              support@design-prism.com
             </a>
             .
           </p>

@@ -14,6 +14,7 @@ import dynamic from "next/dynamic"
 import Image from "next/image"
 import Link from "next/link"
 import { useEffect, useState } from "react"
+import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
 const Navbar = dynamic(() => import("@/components/navbar"), { ssr: false })
 
 export default function ExquisiteDentistryCaseStudy() {
@@ -203,7 +204,12 @@ export default function ExquisiteDentistryCaseStudy() {
                   <p>If your offline experience screams five-star but your website whispers two-star, let's talk.<br />➡ <strong>Book a 15-min strategy call</strong> or explore more success stories.</p>
                   <div className="pt-6">
                     <Link href="/get-started">
-                      <Button className="rounded-full px-8 py-6 text-lg" onClick={() => trackCTAClick("get started", "case study bottom")}>get started <ArrowRight className="ml-2 h-5 w-5" /></Button>
+                      <Button
+                        className="rounded-full px-8 py-6 text-lg"
+                        onClick={() => trackCTAClick(FREE_AUDIT_CTA_TEXT, "case study bottom")}
+                      >
+                        {FREE_AUDIT_CTA_TEXT} <ArrowRight className="ml-2 h-5 w-5" />
+                      </Button>
                     </Link>
                   </div>
                 </div>
@@ -222,7 +228,9 @@ export default function ExquisiteDentistryCaseStudy() {
                   <Button variant="outline" className="rounded-full"><ArrowLeft className="mr-2 h-4 w-4" /> all case studies</Button>
                 </Link>
                 <Link href="/get-started">
-                  <Button variant="outline" className="rounded-full">get started <ArrowRight className="ml-2 h-4 w-4" /></Button>
+                  <Button variant="outline" className="rounded-full">
+                    {FREE_AUDIT_CTA_TEXT} <ArrowRight className="ml-2 h-4 w-4" />
+                  </Button>
                 </Link>
               </div>
             </div>

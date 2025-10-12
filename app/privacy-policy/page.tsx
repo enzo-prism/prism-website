@@ -196,7 +196,7 @@ export default function PrivacyPolicyPage() {
                 </p>
                 <div className="bg-gray-50 p-6 rounded-lg">
                   <p className="text-gray-700 font-semibold mb-2">prism agency</p>
-                  <p className="text-gray-600">Email: <a href="mailto:privacy@design-prism.com" className="text-blue-600 hover:underline">privacy@design-prism.com</a></p>
+                  <p className="text-gray-600">Email: <a href="mailto:support@design-prism.com" className="text-blue-600 hover:underline">support@design-prism.com</a></p>
                   <p className="text-gray-600">Phone: <a href="tel:+1234567890" className="text-blue-600 hover:underline">(123) 456-7890</a></p>
                   <p className="text-gray-600">Website: <Link href="/" className="text-blue-600 hover:underline">design-prism.com</Link></p>
                 </div>

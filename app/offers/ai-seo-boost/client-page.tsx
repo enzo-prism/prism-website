@@ -9,6 +9,7 @@ import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious
 import Link from "next/link"
 import { Search, Target, TrendingUp, Calendar, Star, Bot, Zap, Users, Clock } from "lucide-react"
 import { trackCTAClick } from "@/utils/analytics"
+import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
 
 export default function AISEOBoostPage() {
   const services = [
@@ -100,10 +101,10 @@ export default function AISEOBoostPage() {
                 <Button 
                   size="lg"
                   className="bg-neutral-900 hover:bg-neutral-800 text-white rounded-full px-8 py-4 text-lg lowercase shadow-sm transition-all duration-200 mr-4"
-                  onClick={() => trackCTAClick("book discovery call", "ai-seo-boost hero")}
+                  onClick={() => trackCTAClick(FREE_AUDIT_CTA_TEXT, "ai-seo-boost hero")}
                 >
                   <Calendar className="mr-3 h-5 w-5" />
-                  Book Discovery Call
+                  {FREE_AUDIT_CTA_TEXT}
                 </Button>
               </Link>
             </div>
@@ -258,10 +259,10 @@ export default function AISEOBoostPage() {
                 <Button 
                   size="lg"
                   className="bg-neutral-900 hover:bg-neutral-800 text-white rounded-full px-12 py-6 text-xl lowercase shadow-sm transition-all duration-200"
-                  onClick={() => trackCTAClick("claim your spot", "ai-seo-boost scarcity")}
+                  onClick={() => trackCTAClick(FREE_AUDIT_CTA_TEXT, "ai-seo-boost scarcity")}
                 >
                   <Zap className="mr-3 h-6 w-6" />
-                  Claim Your Spot Now
+                  {FREE_AUDIT_CTA_TEXT}
                 </Button>
               </Link>
               <p className="text-sm text-neutral-500 lowercase">
@@ -284,10 +285,10 @@ export default function AISEOBoostPage() {
               <Button 
                 size="lg"
                 className="bg-neutral-900 hover:bg-neutral-800 text-white rounded-full px-8 py-4 text-lg lowercase shadow-sm transition-all duration-200"
-                onClick={() => trackCTAClick("book discovery call", "ai-seo-boost final cta")}
+                onClick={() => trackCTAClick(FREE_AUDIT_CTA_TEXT, "ai-seo-boost final cta")}
               >
                 <Calendar className="mr-3 h-5 w-5" />
-                Book Your Discovery Call
+                {FREE_AUDIT_CTA_TEXT}
               </Button>
             </Link>
             <p className="text-xs text-neutral-400 mt-4 lowercase italic">

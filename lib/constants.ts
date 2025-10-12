@@ -19,6 +19,8 @@ export const LOGO_SIZES = {
   small: { width: 40, height: 40 },
 } as const 
 
+export const FREE_AUDIT_CTA_TEXT = "claim your free audit & report"
+
 // New primary navigation structure
 export type NavChild = { label: string; href: string }
 export type NavItem = { label: string; href?: string; children?: NavChild[]; emoji?: string }
