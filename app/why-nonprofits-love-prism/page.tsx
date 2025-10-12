@@ -226,9 +226,6 @@ export default function NonprofitsPage() {
                   </li>
                 ))}
               </ul>
-              <div className="mt-8 rounded-2xl border border-neutral-200 bg-slate-50 px-5 py-4 text-sm italic text-neutral-700">
-                “Nonprofits tell us they’ve never experienced a smoother transition — it just works.”
-              </div>
             </div>
             <div className="rounded-3xl border border-slate-200 bg-slate-50/80 p-8 shadow-sm">
               <h3 className="text-lg font-semibold text-neutral-900">Transition support includes:</h3>
@@ -252,9 +249,6 @@ export default function NonprofitsPage() {
               </h2>
               <p className="mt-4 text-base text-neutral-200">
                 You’ll have direct access to Prism’s founder, Enzo — by call, text, or email anytime. We value communication, transparency, and trust above all else — because mission-driven work deserves partners who care just as much as you do.
-              </p>
-              <p className="mt-6 text-sm text-neutral-300">
-                “No tickets. No confusion. Just honest updates and fast results.”
               </p>
             </div>
           </div>

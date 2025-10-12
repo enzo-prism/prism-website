@@ -322,26 +322,7 @@ export default function DentalPracticesPage() {
           </div>
         </section>
 
-        {/* Section 6: Testimonials */}
-        <section className="border-t border-neutral-100 bg-neutral-900 text-white">
-          <div className="container mx-auto px-4 py-24">
-            <div className="mx-auto max-w-2xl text-center">
-              <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">
-                What dentists say about the switch
-              </h2>
-              <div className="mt-10 rounded-3xl border border-white/10 bg-white/10 px-6 py-10 text-left">
-                <p className="text-lg leading-relaxed text-neutral-50">
-                  “We were nervous to move from our old marketing company, but Prism made it unbelievably easy. No downtime, no stress — just better results.”
-                </p>
-                <p className="mt-6 text-sm font-semibold uppercase tracking-[0.3em] text-neutral-200">
-                  — Dr. [Name Placeholder]
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Section 7: Closing CTA */}
+        {/* Section 6: Closing CTA */}
         <section className="border-t border-neutral-100 bg-white">
           <div className="container mx-auto px-4 py-24">
             <div className="mx-auto max-w-2xl text-center">
@@ -357,13 +338,13 @@ export default function DentalPracticesPage() {
                     Talk to Prism
                   </Button>
                 </Link>
-                <Link href="/pricing">
+                <Link href="/get-started">
                   <Button
                     size="lg"
                     variant="outline"
                     className="rounded-full px-8 py-3 text-base"
                   >
-                    Explore Pricing
+                    Free Audit and Report
                   </Button>
                 </Link>
               </div>

@@ -226,9 +226,6 @@ export default function LocalShopOwnersPage() {
                   </li>
                 ))}
               </ul>
-              <div className="mt-8 rounded-2xl border border-neutral-200 bg-neutral-50 px-5 py-4 text-sm italic text-neutral-700">
-                “Our clients say the switch to Prism was the first time they didn’t lose sleep over a website or marketing change.”
-              </div>
             </div>
             <div className="rounded-3xl border border-neutral-200 bg-neutral-50/80 p-8 shadow-sm">
               <h3 className="text-lg font-semibold text-neutral-900">Transition checklist</h3>
