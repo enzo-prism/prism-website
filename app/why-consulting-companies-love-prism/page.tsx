@@ -335,7 +335,7 @@ export default function ConsultingCompaniesPage() {
               <div className="mt-10 flex flex-wrap justify-center gap-4">
                 <Link href="/contact">
                   <Button size="lg" className="rounded-full px-8 py-3 text-base">
-                    Talk to Prism
+                    talk to prism
                   </Button>
                 </Link>
                 <Link href="/get-started">
@@ -344,7 +344,7 @@ export default function ConsultingCompaniesPage() {
                     variant="outline"
                     className="rounded-full px-8 py-3 text-base"
                   >
-                    Free Audit and Report
+                    free audit + report
                   </Button>
                 </Link>
               </div>
