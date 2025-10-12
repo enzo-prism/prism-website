@@ -279,10 +279,10 @@ export default function ClientPage() {
         {/* New homepage sections per updated structure */}
         <ClientsSection />
         <GrowthResultsSlider />
+        <SegmentsGrid />
         <HottestContentSection />
         <CoreOfferingsSection />
         <WebsitesFeatures />
-        <SegmentsGrid />
         <LatestPostsSection />
 
         {/* We're Hiring Section */}
