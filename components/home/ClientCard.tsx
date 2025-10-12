@@ -20,7 +20,7 @@ export default function ClientCard({
   priority,
   interactive = true,
 }: Props) {
-  const url = website || href
+  const url = href || website
   const content = (
     <div
       className="relative rounded-[22px] overflow-hidden border border-white/10 shadow-sm"

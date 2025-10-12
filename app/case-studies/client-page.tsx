@@ -92,6 +92,106 @@ export default function CaseStudiesPage() {
         "Brand refresh, custom site, multi‑channel acquisition, and tracking built for scale.",
       slug: "grace-dental-santa-rosa",
     },
+    {
+      id: "8",
+      title: "Designing a Digital Home for Bold Aging",
+      client: "Rebellious Aging",
+      industry: "Online Community",
+      location: "Los Gatos, CA",
+      description:
+        "Foundational website refresh and local discovery groundwork for a movement that celebrates aging loudly.",
+      slug: "rebellious-aging",
+    },
+    {
+      id: "9",
+      title: "Endodontic Growth System Launch",
+      client: "Wine Country Root Canal",
+      industry: "Dentistry",
+      location: "Santa Rosa, CA",
+      description:
+        "Calming patient journey, local visibility, and analytics readiness for a specialty practice.",
+      slug: "wine-country-root-canal",
+    },
+    {
+      id: "10",
+      title: "Consulting Presence Refresh",
+      client: "sr4 Partners",
+      industry: "Consulting",
+      location: "Chicago, IL",
+      description:
+        "Messaging clarity and modular web design that support enterprise transformation engagements.",
+      slug: "sr4-partners",
+    },
+    {
+      id: "11",
+      title: "Making Complex IT Services Clear",
+      client: "Infobell IT",
+      industry: "IT Services",
+      location: "Global",
+      description:
+        "Approachable messaging, modular design, and analytics guardrails for managed it solutions.",
+      slug: "infobell-it",
+    },
+    {
+      id: "12",
+      title: "Mission-Driven Web Refresh",
+      client: "Canary Foundation",
+      industry: "Nonprofit",
+      location: "Palo Alto, CA",
+      description:
+        "Accessible storytelling and donor journeys that amplify early cancer detection work.",
+      slug: "canary-foundation",
+    },
+    {
+      id: "13",
+      title: "Story-First Nonprofit Hub",
+      client: "Belize Kids Foundation",
+      industry: "Nonprofit",
+      location: "San Pedro, Belize",
+      description:
+        "Program storytelling, supporter flows, and analytics groundwork that keep impact front and center.",
+      slug: "belize-kids-foundation",
+    },
+    {
+      id: "14",
+      title: "Private Retreat Storytelling",
+      client: "Canary Cove",
+      industry: "Hospitality",
+      location: "San Pedro, Belize",
+      description:
+        "Immersive visuals, concierge-ready booking flows, and analytics for a private island experience.",
+      slug: "canary-cove",
+    },
+    {
+      id: "15",
+      title: "Joyful Education Platform",
+      client: "We Are Saplings",
+      industry: "Education",
+      location: "Global",
+      description:
+        "Parent-friendly storytelling, enrollment journeys, and resource hubs for curiosity-led learning.",
+      slug: "we-are-saplings",
+    },
+    {
+      id: "16",
+      title: "Specialty Dental Foundations",
+      client: "Coast Periodontics & Laser Surgery",
+      industry: "Dentistry",
+      location: "San Luis Obispo, CA",
+      description:
+        "Reassuring website design, local presence support, and conversion tracking for a periodontic team.",
+      slug: "coast-periodontics-and-laser-surgery",
+    },
+    {
+      id: "17",
+      title: "Transition Consulting Launchpad",
+      client: "Practice Transitions Institute",
+      industry: "Consulting",
+      location: "San Mateo, CA",
+      description:
+        "Narrative clarity, modern website, and local visibility for a dental transition advisory firm.",
+      slug: "practice-transitions-institute",
+    },
   ]
 
   return (
