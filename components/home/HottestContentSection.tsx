@@ -17,12 +17,22 @@ const FEATURED_URLS = [
   "https://www.instagram.com/reel/C7CD7TArrBt/?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==",
 ]
 
-const featuredContent = [
-  ...FEATURED_URLS.map((url) => HOTTEST_CONTENT.find((item) => item.instagramUrl === url)).filter(
+const uniqueInstagramContent = (() => {
+  const seen = new Set<string>()
+  return HOTTEST_CONTENT.filter((item) => {
+    if (item.platform !== "instagram") return false
+    if (seen.has(item.instagramUrl)) return false
+    seen.add(item.instagramUrl)
+    return true
+  })
+})()
+
+const sliderContent = [
+  ...FEATURED_URLS.map((url) => uniqueInstagramContent.find((item) => item.instagramUrl === url)).filter(
     (item): item is (typeof HOTTEST_CONTENT)[number] => Boolean(item)
   ),
-  ...HOTTEST_CONTENT.filter((item) => !FEATURED_URLS.includes(item.instagramUrl)),
-].slice(0, 3)
+  ...uniqueInstagramContent.filter((item) => !FEATURED_URLS.includes(item.instagramUrl)),
+]
 
 export default function HottestContentSection() {
   const railRef = useRef<HTMLDivElement>(null)
@@ -111,7 +121,7 @@ export default function HottestContentSection() {
               aria-label="featured instagram content"
               style={maskStyle}
             >
-              {featuredContent.map((item) => (
+              {sliderContent.map((item) => (
                 <div
                   key={item.slug}
                   className="w-[88vw] shrink-0 snap-start sm:w-[58vw] md:w-[360px] lg:w-[380px]"
