@@ -79,11 +79,22 @@ export default function GrowthResultsSlider() {
   const scrollByAmount = (direction: "left" | "right") => {
     const rail = railRef.current
     if (!rail) return
-    const amount = Math.max(rail.clientWidth * 0.85, 320)
+    if (typeof window === "undefined") return
+    const firstCard = rail.firstElementChild as HTMLElement | null
+    let amount = Math.max(rail.clientWidth * 0.85, 320)
+
+    if (firstCard) {
+      const styles = window.getComputedStyle(rail)
+      const gapRaw = styles.columnGap || styles.gap || "0"
+      const gap = Number.parseFloat(gapRaw) || 0
+      amount = firstCard.getBoundingClientRect().width + gap
+    }
+
     rail.scrollBy({ left: direction === "left" ? -amount : amount, behavior: "smooth" })
   }
 
   const maskStyle = useMemo(() => {
+    if (!canScrollLeft && !canScrollRight) return undefined
     const leftStop = canScrollLeft ? "0%" : "6%"
     const rightStop = canScrollRight ? "100%" : "94%"
     const leftColor = canScrollLeft ? "transparent" : "rgba(0,0,0,1)"
@@ -115,7 +126,7 @@ export default function GrowthResultsSlider() {
               {slides.map((slide, index) => (
                 <div
                   key={`${slide.platform}-${slide.image}`}
-                  className="w-[82vw] shrink-0 snap-start sm:w-[58vw] md:w-[320px]"
+                  className="w-[82vw] shrink-0 snap-start sm:w-[58vw] md:w-[320px] first:ml-1 md:first:ml-0 last:mr-1 md:last:mr-0"
                   role="listitem"
                 >
                   <div className="space-y-4">
