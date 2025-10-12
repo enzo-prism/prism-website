@@ -22,6 +22,7 @@ const GrowthResultsSlider = dynamic(() => import("@/components/home/GrowthResult
 const HottestContentSection = dynamic(() => import("@/components/home/HottestContentSection"))
 const WebsitesFeatures = dynamic(() => import("@/components/home/WebsitesFeatures"))
 const SegmentsGrid = dynamic(() => import("@/components/home/SegmentsGrid"))
+const ReferralSection = dynamic(() => import("@/components/home/ReferralSection"))
 const CoreOfferingsSection = dynamic(() => import("@/components/home/CoreOfferingsSection"))
 const LatestPostsSection = dynamic(() => import("@/components/home/LatestPostsSection"), { ssr: false })
 const GrowthHeadline = dynamic(() => import("@/components/home/GrowthHeadline"))
@@ -280,6 +281,7 @@ export default function ClientPage() {
         <ClientsSection />
         <GrowthResultsSlider />
         <SegmentsGrid />
+        <ReferralSection />
         <HottestContentSection />
         <CoreOfferingsSection />
         <WebsitesFeatures />
