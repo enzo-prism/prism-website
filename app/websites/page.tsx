@@ -146,30 +146,31 @@ const whatWeDeliver = [
   },
 ]
 
-const industriesServed = [
+const audienceSegments = [
   {
-    name: "Dental & medical groups",
-    why: "Trust-building design, treatment pages, and HIPAA-minded conversions for patient growth.",
+    name: "Dental & medical teams",
+    description: "Conversion-backed treatment pages, patient journeys, and ADA-aware design to fill operatories.",
+    href: "/why-dental-practices-love-prism",
   },
   {
-    name: "Home & field services",
-    why: "Quote, booking, and service area pages that help you win the local comparison shopper.",
+    name: "Local shop owners",
+    description: "Product storytelling, local SEO structure, and promo blocks that drive in-store and online sales.",
+    href: "/why-local-shop-owners-love-prism",
   },
   {
-    name: "Professional services",
-    why: "Clear expertise, case studies, and lead capture that support high-consideration sales cycles.",
+    name: "Consulting & professional services",
+    description: "Case-study rich sites with thought leadership hubs and lead capture that start bigger engagements.",
+    href: "/why-consulting-companies-love-prism",
   },
   {
-    name: "Retail & ecommerce",
-    why: "Narrative-rich product storytelling plus fast PDPs that convert lookers into buyers.",
+    name: "Online community founders",
+    description: "Member onboarding, paywall-ready content, and event funnels that keep engagement high.",
+    href: "/why-online-community-founders-love-prism",
   },
   {
     name: "Nonprofits & education",
-    why: "Impact-driven storytelling, donation funnels, and event promotion that mobilize supporters.",
-  },
-  {
-    name: "Multi-location brands",
-    why: "Modular systems so each location stays on-brand while highlighting local proof and offers.",
+    description: "Mission-first storytelling, donation flows, and program pages that mobilize supporters.",
+    href: "/why-nonprofits-love-prism",
   },
 ]
 
@@ -303,19 +304,41 @@ export default function WebsitesPage() {
 
         <section className="border-t border-neutral-100 bg-neutral-50 px-4 py-16 sm:py-20">
           <div className="mx-auto max-w-5xl text-center">
-            <h2 className="text-3xl font-semibold lowercase text-neutral-900 sm:text-4xl">who we build for (and why)</h2>
+            <h2 className="text-3xl font-semibold lowercase text-neutral-900 sm:text-4xl">who we help</h2>
             <p className="mt-3 text-neutral-600">
-              Modular systems built for teams that need credibility, clarity, and measurable growth.
+              Growth-minded local teams across verticals that need a site built to convert, rank, and evolve fast.
             </p>
           </div>
           <div className="mx-auto mt-12 grid max-w-5xl gap-6 sm:grid-cols-2">
-            {industriesServed.map(industry => (
-              <div key={industry.name} className="rounded-2xl border border-neutral-200 bg-white p-6 text-left shadow-sm">
-                <span className="text-xs font-medium uppercase tracking-wide text-neutral-400">industry</span>
-                <h3 className="mt-2 text-xl font-semibold text-neutral-900">{industry.name}</h3>
-                <p className="mt-2 text-sm text-neutral-600">{industry.why}</p>
-              </div>
+            {audienceSegments.map(segment => (
+              <Link
+                key={segment.name}
+                href={segment.href}
+                className="group block rounded-2xl border border-neutral-200 bg-white p-6 text-left shadow-sm transition-colors hover:border-neutral-300 hover:bg-neutral-50"
+              >
+                <span className="text-xs font-medium uppercase tracking-wide text-neutral-400">segment</span>
+                <div className="mt-2">
+                  <h3 className="text-xl font-semibold text-neutral-900 group-hover:text-neutral-800">{segment.name}</h3>
+                  <p className="mt-2 text-sm text-neutral-600 group-hover:text-neutral-700">{segment.description}</p>
+                </div>
+                <span className="mt-4 inline-flex items-center text-sm font-medium text-neutral-900/70 group-hover:text-neutral-900">
+                  Explore why this works
+                  <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                </span>
+              </Link>
             ))}
+          </div>
+          <div className="mx-auto mt-12 max-w-4xl rounded-3xl border border-neutral-200 bg-white p-8 text-left shadow-sm sm:flex sm:items-center sm:justify-between sm:gap-8">
+            <div>
+              <span className="text-xs font-semibold uppercase tracking-[0.28em] text-neutral-400">referral program</span>
+              <h3 className="mt-3 text-2xl font-semibold lowercase text-neutral-900">know a team who needs a better website?</h3>
+              <p className="mt-3 text-sm text-neutral-600">
+                Share Prism’s referral program and we’ll send them a free analysis. If they launch with us, you earn a payout for the intro.
+              </p>
+            </div>
+            <Button asChild size="lg" className="mt-6 rounded-full px-8 sm:mt-0">
+              <Link href="/refer">refer a business</Link>
+            </Button>
           </div>
         </section>
 

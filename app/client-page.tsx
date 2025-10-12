@@ -356,15 +356,15 @@ export default function ClientPage() {
                 ready to hit your business goals?
               </h2>
               <p className="text-neutral-600 dark:text-neutral-300 lowercase md:text-lg">
-                book a meeting with enzo to discuss more
+                email support@design-prism.com to take the next steps
               </p>
               <div className="pt-6">
-                <Link href="/get-started">
+                <Link href="mailto:support@design-prism.com">
                   <Button
                     className="rounded-full px-8 py-6 text-lg lowercase hardware-hover touch-feedback scale-bounce"
-                    onClick={() => trackCTAClick("get started", "bottom cta")}
+                    onClick={() => trackCTAClick("email support", "bottom cta")}
                   >
-                    get started <ArrowRight className="ml-2 h-5 w-5" />
+                    email support <ArrowRight className="ml-2 h-5 w-5" />
                   </Button>
                 </Link>
               </div>

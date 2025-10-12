@@ -163,6 +163,34 @@ const faqItems = [
   },
 ]
 
+const audienceSegments = [
+  {
+    name: "Dental & medical teams",
+    description: "Fill chair time with compliant campaigns, call tracking, and landing pages tuned for patients.",
+    href: "/why-dental-practices-love-prism",
+  },
+  {
+    name: "Local shop owners",
+    description: "Hyper-local offers on Google, Meta, and Yelp that turn scrollers into foot traffic and orders.",
+    href: "/why-local-shop-owners-love-prism",
+  },
+  {
+    name: "Consulting & professional services",
+    description: "Lead-gen funnels that surface expertise, nurture prospects, and protect premium positioning.",
+    href: "/why-consulting-companies-love-prism",
+  },
+  {
+    name: "Online community founders",
+    description: "Acquisition loops that combine paid social and retargeting to expand engaged membership.",
+    href: "/why-online-community-founders-love-prism",
+  },
+  {
+    name: "Nonprofits & education",
+    description: "Mission-forward messaging, donor retargeting, and grant-friendly tracking that proves impact.",
+    href: "/why-nonprofits-love-prism",
+  },
+]
+
 export default function AdsPage() {
   return (
     <div className="flex min-h-screen flex-col bg-white">
@@ -252,6 +280,48 @@ export default function AdsPage() {
                 <p className="mt-2 text-sm text-neutral-600">{platform.why}</p>
               </div>
             ))}
+          </div>
+        </section>
+
+        <section className="px-4 py-16 sm:py-20">
+          <div className="mx-auto max-w-5xl text-center">
+            <h2 className="text-3xl font-semibold lowercase text-neutral-900 sm:text-4xl">
+              who we help scale with ads
+            </h2>
+            <p className="mt-3 text-neutral-600">
+              We partner with ambitious local teams that need predictable demand without wasting budget.
+            </p>
+          </div>
+          <div className="mx-auto mt-12 grid max-w-5xl gap-6 sm:grid-cols-2">
+            {audienceSegments.map(segment => (
+              <Link
+                key={segment.name}
+                href={segment.href}
+                className="group block rounded-2xl border border-neutral-200 bg-white p-6 text-left shadow-sm transition-colors hover:border-neutral-300 hover:bg-neutral-50"
+              >
+                <span className="text-xs font-medium uppercase tracking-wide text-neutral-400">segment</span>
+                <div className="mt-2">
+                  <h3 className="text-xl font-semibold text-neutral-900 group-hover:text-neutral-800">{segment.name}</h3>
+                  <p className="mt-2 text-sm text-neutral-600 group-hover:text-neutral-700">{segment.description}</p>
+                </div>
+                <span className="mt-4 inline-flex items-center text-sm font-medium text-neutral-900/70 group-hover:text-neutral-900">
+                  See how we support them
+                  <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                </span>
+              </Link>
+            ))}
+          </div>
+          <div className="mx-auto mt-12 max-w-4xl rounded-3xl border border-neutral-200 bg-white p-8 text-left shadow-sm sm:flex sm:items-center sm:justify-between sm:gap-8">
+            <div>
+              <span className="text-xs font-semibold uppercase tracking-[0.28em] text-neutral-400">referral program</span>
+              <h3 className="mt-3 text-2xl font-semibold lowercase text-neutral-900">know a team who needs better ads?</h3>
+              <p className="mt-3 text-sm text-neutral-600">
+                Point them to Prism’s referral program. We’ll audit their accounts, share the plan, and pay you when they launch.
+              </p>
+            </div>
+            <Button asChild size="lg" className="mt-6 rounded-full px-8 sm:mt-0">
+              <Link href="/refer">refer a business</Link>
+            </Button>
           </div>
         </section>
 

@@ -1,6 +1,5 @@
 "use client"
 
-import { ArrowRight } from "lucide-react"
 import Link from "next/link"
 
 import { Button } from "@/components/ui/button"
@@ -94,21 +93,16 @@ export default function CoreOfferingsSection() {
                   ))}
                 </ul>
               </div>
-              <div className="mt-10 flex items-center justify-between">
-                <Link
-                  href={offering.href}
-                  className="inline-flex items-center text-sm font-medium lowercase text-white/80 transition-all duration-200 hover:text-white"
-                  onClick={() => trackCTAClick(`learn more ${offering.trackingLabel}`, "core offerings section")}
-                >
-                  explore offering
-                  <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
-                </Link>
+              <div className="mt-10">
                 <Button
                   asChild
                   variant="secondary"
                   className="rounded-full bg-white/10 px-4 py-2 text-xs font-medium lowercase text-white backdrop-blur-sm transition-colors duration-200 hover:bg-white/20"
                 >
-                  <Link href={offering.href}>
+                  <Link
+                    href={offering.href}
+                    onClick={() => trackCTAClick(`view details ${offering.trackingLabel}`, "core offerings section")}
+                  >
                     view details
                   </Link>
                 </Button>
@@ -120,5 +114,3 @@ export default function CoreOfferingsSection() {
     </section>
   )
 }
-
-

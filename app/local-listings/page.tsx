@@ -174,6 +174,34 @@ const faqItems = [
   },
 ]
 
+const audienceSegments = [
+  {
+    name: "Dental & medical teams",
+    description: "HIPAA-aware intake flows, treatment highlights, and review engines that keep operatories full.",
+    href: "/why-dental-practices-love-prism",
+  },
+  {
+    name: "Local shop owners",
+    description: "Menu, product, and offer updates synced across Google, Yelp, and Apple to turn searches into visits.",
+    href: "/why-local-shop-owners-love-prism",
+  },
+  {
+    name: "Consulting & professional services",
+    description: "Thoughtfully managed profiles that reinforce credibility and capture high-intent calls.",
+    href: "/why-consulting-companies-love-prism",
+  },
+  {
+    name: "Online community founders",
+    description: "Event, meetup, and program listings that keep members engaged and invite new ones in.",
+    href: "/why-online-community-founders-love-prism",
+  },
+  {
+    name: "Nonprofits & education",
+    description: "Accurate info, volunteer spotlights, and donation CTAs that grow awareness in every neighborhood.",
+    href: "/why-nonprofits-love-prism",
+  },
+]
+
 export default function LocalListingsPage() {
   return (
     <div className="flex min-h-screen flex-col bg-white">
@@ -240,6 +268,48 @@ export default function LocalListingsPage() {
                 <p className="mt-2 text-sm text-neutral-600">{platform.why}</p>
               </div>
             ))}
+          </div>
+        </section>
+
+        <section className="border-t border-neutral-100 bg-neutral-50 px-4 py-16 sm:py-20">
+          <div className="mx-auto max-w-5xl text-center">
+            <h2 className="text-3xl font-semibold lowercase text-neutral-900 sm:text-4xl">
+              who we lift in the map pack
+            </h2>
+            <p className="mt-3 text-neutral-600">
+              Local teams that depend on accurate listings, real reviews, and consistent visibility in every neighborhood.
+            </p>
+          </div>
+          <div className="mx-auto mt-12 grid max-w-5xl gap-6 sm:grid-cols-2">
+            {audienceSegments.map(segment => (
+              <Link
+                key={segment.name}
+                href={segment.href}
+                className="group block rounded-2xl border border-neutral-200 bg-white p-6 text-left shadow-sm transition-colors hover:border-neutral-300 hover:bg-neutral-50"
+              >
+                <span className="text-xs font-medium uppercase tracking-wide text-neutral-400">segment</span>
+                <div className="mt-2">
+                  <h3 className="text-xl font-semibold text-neutral-900 group-hover:text-neutral-800">{segment.name}</h3>
+                  <p className="mt-2 text-sm text-neutral-600 group-hover:text-neutral-700">{segment.description}</p>
+                </div>
+                <span className="mt-4 inline-flex items-center text-sm font-medium text-neutral-900/70 group-hover:text-neutral-900">
+                  Learn how we support them
+                  <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                </span>
+              </Link>
+            ))}
+          </div>
+          <div className="mx-auto mt-12 max-w-4xl rounded-3xl border border-neutral-200 bg-white p-8 text-left shadow-sm sm:flex sm:items-center sm:justify-between sm:gap-8">
+            <div>
+              <span className="text-xs font-semibold uppercase tracking-[0.28em] text-neutral-400">referral program</span>
+              <h3 className="mt-3 text-2xl font-semibold lowercase text-neutral-900">know someone struggling with listings?</h3>
+              <p className="mt-3 text-sm text-neutral-600">
+                Send them to our referral program. We’ll run a listings audit, share next steps, and pay you when they partner with Prism.
+              </p>
+            </div>
+            <Button asChild size="lg" className="mt-6 rounded-full px-8 sm:mt-0">
+              <Link href="/refer">refer a business</Link>
+            </Button>
           </div>
         </section>
 
