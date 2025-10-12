@@ -6,6 +6,7 @@ import Navbar from "@/components/navbar"
 import ScrollToTop from "@/components/scroll-to-top"
 import { Button } from "@/components/ui/button"
 import { ArrowRight, CheckCircle2, Gift, Handshake, PhoneCall } from "lucide-react"
+import { CASE_STUDIES } from "@/lib/case-study-data"
 
 const TYPEFORM_URL = "https://fxuqp40sseh.typeform.com/to/ln0VzAjB"
 
@@ -43,35 +44,40 @@ const segmentHighlights = [
     title: "dentists",
     description:
       "Seamless transitions from outdated providers, more reviews, and steady new patient flow.",
-    href: "/why-dental-practices-love-prism"
+    href: "/why-dental-practices-love-prism",
+    caseStudies: ["dr-christopher-wong", "family-first-smile-care", "wine-country-root-canal"]
   },
   {
     emoji: "🏪",
     title: "local shop owners",
     description:
       "Listings, ads, and automations that keep foot traffic and repeat visits coming.",
-    href: "/why-local-shop-owners-love-prism"
+    href: "/why-local-shop-owners-love-prism",
+    caseStudies: ["olympic-bootworks", "laguna-beach-dental-arts", "canary-cove"]
   },
   {
     emoji: "📊",
     title: "consulting companies",
     description:
       "A trusted presence, streamlined lead flows, and insights that help firms scale.",
-    href: "/why-consulting-companies-love-prism"
+    href: "/why-consulting-companies-love-prism",
+    caseStudies: ["sr4-partners", "practice-transitions-institute"]
   },
   {
     emoji: "📱",
     title: "online community founders",
     description:
       "Design, technology, and data that keep communities growing without burning out the team.",
-    href: "/why-online-community-founders-love-prism"
+    href: "/why-online-community-founders-love-prism",
+    caseStudies: ["rebellious-aging", "we-are-saplings"]
   },
   {
     emoji: "❤️",
     title: "nonprofits",
     description:
       "Beautiful storytelling, donation flows, and automation that free teams to focus on impact.",
-    href: "/why-nonprofits-love-prism"
+    href: "/why-nonprofits-love-prism",
+    caseStudies: ["canary-foundation", "belize-kids-foundation"]
   }
 ]
 
@@ -123,6 +129,8 @@ export const metadata: Metadata = {
 }
 
 export default function ReferPage() {
+  const caseStudyMap = new Map(CASE_STUDIES.map((study) => [study.slug, study]))
+
   return (
     <>
       <Navbar />
@@ -231,7 +239,12 @@ export default function ReferPage() {
               </p>
             </div>
             <div className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {segmentHighlights.map((segment) => (
+              {segmentHighlights.map((segment) => {
+                const studies = (segment.caseStudies ?? [])
+                  .map((slug) => caseStudyMap.get(slug))
+                  .filter((study): study is NonNullable<typeof study> => Boolean(study))
+
+                return (
                 <article
                   key={segment.title}
                   className="group flex h-full flex-col justify-between rounded-3xl border border-neutral-200 bg-neutral-50/80 p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-md"
@@ -242,6 +255,26 @@ export default function ReferPage() {
                       <h3 className="text-lg font-semibold lowercase text-neutral-900">{segment.title}</h3>
                     </div>
                     <p className="mt-4 text-sm text-neutral-600">{segment.description}</p>
+                    {studies.length > 0 ? (
+                      <div className="mt-6 space-y-2">
+                        <p className="text-xs font-semibold uppercase tracking-[0.28em] text-neutral-500">
+                          proof to share
+                        </p>
+                        <ul className="space-y-2">
+                          {studies.map((study) => (
+                            <li key={study.slug}>
+                              <Link
+                                href={`/case-studies/${study.slug}`}
+                                className="inline-flex items-center text-sm font-medium text-primary"
+                              >
+                                {study.client}
+                                <ArrowRight className="ml-2 h-4 w-4 transition group-hover:translate-x-1" />
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    ) : null}
                   </div>
                   <Link
                     href={segment.href}
@@ -250,7 +283,8 @@ export default function ReferPage() {
                     see why <ArrowRight className="ml-2 h-4 w-4" />
                   </Link>
                 </article>
-              ))}
+                )
+              })}
             </div>
           </div>
         </section>

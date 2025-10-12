@@ -5,8 +5,9 @@ import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
 import ScrollToTop from "@/components/scroll-to-top"
 import { Button } from "@/components/ui/button"
-import { CheckCircle2 } from "lucide-react"
+import { ArrowRight, CheckCircle2 } from "lucide-react"
 import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
+import { CASE_STUDIES } from "@/lib/case-study-data"
 
 const coreOutcomes = [
   {
@@ -65,18 +66,7 @@ const improvementHighlights = [
   "Monthly insights help your team make data-driven decisions with ease."
 ]
 
-const nonprofitClients = [
-  {
-    organization: "Canary Foundation",
-    location: "Palo Alto, CA",
-    mission: "Advancing early cancer detection research and collaboration."
-  },
-  {
-    organization: "Belize Kids Foundation",
-    location: "San Pedro, Belize",
-    mission: "Providing education and health opportunities for children in Belize."
-  }
-]
+const nonprofitCaseStudies = CASE_STUDIES.filter((study) => study.segments.includes("nonprofit"))
 
 const stayingReasons = [
   { icon: "💼", text: "You own 100% of your website and data." },
@@ -301,15 +291,23 @@ export default function NonprofitsPage() {
               </p>
             </div>
             <div className="mt-12 grid gap-4 md:grid-cols-2">
-              {nonprofitClients.map((client) => (
-                <div
-                  key={client.organization}
-                  className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-md"
+              {nonprofitCaseStudies.map((study) => (
+                <Link
+                  key={study.slug}
+                  href={`/case-studies/${study.slug}`}
+                  className="group block rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
                 >
-                  <h3 className="text-lg font-semibold text-neutral-900">{client.organization}</h3>
-                  <p className="mt-2 text-sm text-neutral-600">{client.location}</p>
-                  <p className="mt-3 text-sm font-medium text-neutral-700">{client.mission}</p>
-                </div>
+                  <p className="text-xs font-semibold uppercase tracking-[0.28em] text-neutral-500">
+                    {study.industry}
+                  </p>
+                  <h3 className="mt-2 text-lg font-semibold text-neutral-900">{study.client}</h3>
+                  <p className="mt-2 text-sm text-neutral-600">{study.location}</p>
+                  <p className="mt-3 text-sm font-medium text-neutral-700">{study.description}</p>
+                  <span className="mt-5 inline-flex items-center text-sm font-semibold text-neutral-900">
+                    read case study
+                    <ArrowRight className="ml-2 h-4 w-4 transition group-hover:translate-x-1" />
+                  </span>
+                </Link>
               ))}
             </div>
           </div>

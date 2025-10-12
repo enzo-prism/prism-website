@@ -7,6 +7,7 @@ import ScrollToTop from "@/components/scroll-to-top"
 import { Button } from "@/components/ui/button"
 import { ArrowRight, CheckCircle2 } from "lucide-react"
 import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
+import { CASE_STUDIES } from "@/lib/case-study-data"
 
 const coreOutcomes = [
   {
@@ -66,18 +67,8 @@ const retentionBenefits = [
   { icon: "📊", text: "Transparent analytics — see what’s working at a glance" }
 ]
 
-const communityExamples = [
-  {
-    name: "Rebellious Aging",
-    description: "Empowering people to live boldly through mindset and health.",
-    bg: "from-rose-100 via-white to-rose-50"
-  },
-  {
-    name: "We Are Saplings",
-    description: "Helping families raise resilient kids through mindfulness and storytelling.",
-    bg: "from-emerald-100 via-white to-emerald-50"
-  }
-]
+const communityCaseStudies = CASE_STUDIES.filter((study) => study.segments.includes("community"))
+const communityGradientClasses = ["from-rose-100 via-white to-rose-50", "from-emerald-100 via-white to-emerald-50"]
 
 export const metadata: Metadata = {
   title: "Why Online Community Founders Love Prism",
@@ -297,20 +288,24 @@ export default function CommunityFoundersPage() {
               </p>
             </div>
             <div className="mt-12 grid gap-6 md:grid-cols-2">
-              {communityExamples.map((example) => (
-                <article
-                  key={example.name}
-                  className={`relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br ${example.bg} p-8 text-neutral-900 shadow-lg`}
+              {communityCaseStudies.map((study, index) => (
+                <Link
+                  key={study.slug}
+                  href={`/case-studies/${study.slug}`}
+                  className={`group relative block overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br ${communityGradientClasses[index % communityGradientClasses.length]} p-8 text-neutral-900 shadow-lg transition hover:-translate-y-1`}
                 >
                   <div className="absolute inset-0 bg-white/20 mix-blend-overlay" aria-hidden />
                   <div className="relative">
-                    <h3 className="text-2xl font-semibold">{example.name}</h3>
-                    <p className="mt-4 text-sm text-neutral-700">{example.description}</p>
-                    <div className="mt-6 text-sm font-medium text-neutral-600">
-                      Case studies coming soon →
-                    </div>
+                    <p className="text-xs font-semibold uppercase tracking-[0.28em] text-neutral-500">
+                      {study.industry}
+                    </p>
+                    <h3 className="mt-3 text-2xl font-semibold">{study.client}</h3>
+                    <p className="mt-4 text-sm text-neutral-700">{study.description}</p>
+                    <span className="mt-6 inline-flex items-center text-sm font-medium text-neutral-800">
+                      read the case study <ArrowRight className="ml-2 h-4 w-4 transition group-hover:translate-x-1" />
+                    </span>
                   </div>
-                </article>
+                </Link>
               ))}
             </div>
           </div>

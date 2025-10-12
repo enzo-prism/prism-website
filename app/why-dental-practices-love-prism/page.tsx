@@ -7,6 +7,7 @@ import ScrollToTop from "@/components/scroll-to-top"
 import { Button } from "@/components/ui/button"
 import { ArrowRight, CheckCircle2 } from "lucide-react"
 import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
+import { CASE_STUDIES } from "@/lib/case-study-data"
 
 const coreResults = [
   {
@@ -100,16 +101,7 @@ const stayingReasons = [
   { icon: "🧠", text: "AI-driven insights that help you grow faster" }
 ]
 
-const dentalClients = [
-  { practice: "Christopher B. Wong, DDS", location: "Palo Alto, CA", focus: "Family & Cosmetic Dentistry" },
-  { practice: "Exquisite Dentistry", location: "Beverly Hills, CA", focus: "Luxury Cosmetic Dentistry" },
-  { practice: "Wine Country Root Canal", location: "Santa Rosa, CA", focus: "Endodontic Specialist" },
-  { practice: "Town Centre Dental", location: "Brentwood, CA", focus: "Family & General Dentistry" },
-  { practice: "Family First Smile Care", location: "Los Gatos, CA", focus: "Preventive & Family Care" },
-  { practice: "Grace Dental", location: "Santa Rosa, CA", focus: "General & Restorative Dentistry" },
-  { practice: "Coast Periodontics & Laser Surgery", location: "San Luis Obispo, CA", focus: "Periodontics & Laser Therapy" },
-  { practice: "Laguna Beach Dental Arts", location: "Laguna Beach, CA", focus: "Cosmetic & General Dentistry" }
-]
+const dentalCaseStudies = CASE_STUDIES.filter((study) => study.segments.includes("dental"))
 
 export const metadata: Metadata = {
   title: "Why Dental Practices Love Prism",
@@ -309,15 +301,23 @@ export default function DentalPracticesPage() {
               </p>
             </div>
             <div className="mt-12 grid gap-4 md:grid-cols-2">
-              {dentalClients.map((client) => (
-                <div
-                  key={client.practice}
-                  className="rounded-2xl border border-neutral-100 bg-neutral-50/70 p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-md"
+              {dentalCaseStudies.map((study) => (
+                <Link
+                  key={study.slug}
+                  href={`/case-studies/${study.slug}`}
+                  className="group block rounded-2xl border border-neutral-100 bg-neutral-50/70 p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
                 >
-                  <h3 className="text-lg font-semibold text-neutral-900">{client.practice}</h3>
-                  <p className="mt-2 text-sm text-neutral-600">{client.location}</p>
-                  <p className="mt-3 text-sm font-medium text-neutral-700">{client.focus}</p>
-                </div>
+                  <p className="text-xs font-semibold uppercase tracking-[0.28em] text-neutral-500">
+                    {study.industry}
+                  </p>
+                  <h3 className="mt-2 text-lg font-semibold text-neutral-900">{study.client}</h3>
+                  <p className="mt-2 text-sm text-neutral-600">{study.location}</p>
+                  <p className="mt-3 text-sm font-medium text-neutral-700">{study.description}</p>
+                  <span className="mt-5 inline-flex items-center text-sm font-semibold text-neutral-900">
+                    read case study
+                    <ArrowRight className="ml-2 h-4 w-4 transition group-hover:translate-x-1" />
+                  </span>
+                </Link>
               ))}
             </div>
           </div>
