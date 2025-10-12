@@ -1,6 +1,6 @@
 "use client"
 
-import { useCallback, useRef, useState } from "react"
+import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import CoreImage from "@/components/core-image"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
@@ -42,31 +42,58 @@ const slides: Slide[] = [
 ]
 
 export default function GrowthResultsSlider() {
-  const [index, setIndex] = useState(0)
-  const touchStartX = useRef<number | null>(null)
-  const touchEndX = useRef<number | null>(null)
+  const railRef = useRef<HTMLDivElement>(null)
+  const [canScrollLeft, setCanScrollLeft] = useState(false)
+  const [canScrollRight, setCanScrollRight] = useState(false)
 
-  const next = useCallback(() => setIndex((i) => (i + 1) % slides.length), [])
-  const prev = useCallback(() => setIndex((i) => (i - 1 + slides.length) % slides.length), [])
+  const updateScrollState = useCallback(() => {
+    const rail = railRef.current
+    if (!rail) return
+    const { scrollLeft, scrollWidth, clientWidth } = rail
+    setCanScrollLeft(scrollLeft > 8)
+    setCanScrollRight(scrollLeft + clientWidth < scrollWidth - 8)
+  }, [])
 
-  const onTouchStart = (e: React.TouchEvent) => {
-    touchEndX.current = null
-    touchStartX.current = e.targetTouches[0].clientX
+  useEffect(() => {
+    updateScrollState()
+  }, [updateScrollState])
+
+  useEffect(() => {
+    const rail = railRef.current
+    if (!rail) return
+
+    updateScrollState()
+
+    const handleScroll = () => updateScrollState()
+    const handleResize = () => updateScrollState()
+
+    rail.addEventListener("scroll", handleScroll, { passive: true })
+    window.addEventListener("resize", handleResize)
+
+    return () => {
+      rail.removeEventListener("scroll", handleScroll)
+      window.removeEventListener("resize", handleResize)
+    }
+  }, [updateScrollState])
+
+  const scrollByAmount = (direction: "left" | "right") => {
+    const rail = railRef.current
+    if (!rail) return
+    const amount = Math.max(rail.clientWidth * 0.85, 320)
+    rail.scrollBy({ left: direction === "left" ? -amount : amount, behavior: "smooth" })
   }
 
-  const onTouchMove = (e: React.TouchEvent) => {
-    touchEndX.current = e.targetTouches[0].clientX
-  }
+  const maskStyle = useMemo(() => {
+    const leftStop = canScrollLeft ? "0%" : "6%"
+    const rightStop = canScrollRight ? "100%" : "94%"
+    const leftColor = canScrollLeft ? "transparent" : "rgba(0,0,0,1)"
+    const rightColor = canScrollRight ? "transparent" : "rgba(0,0,0,1)"
 
-  const onTouchEnd = () => {
-    if (touchStartX.current === null || touchEndX.current === null) return
-    const distance = touchStartX.current - touchEndX.current
-    const threshold = 50
-    if (distance > threshold) next()
-    if (distance < -threshold) prev()
-  }
-
-  const current = slides[index]
+    return {
+      maskImage: `linear-gradient(to right, ${leftColor} ${leftStop}, black 12%, black 88%, ${rightColor} ${rightStop})`,
+      WebkitMaskImage: `linear-gradient(to right, ${leftColor} ${leftStop}, black 12%, black 88%, ${rightColor} ${rightStop})`,
+    } as const
+  }, [canScrollLeft, canScrollRight])
 
   return (
     <section className="py-16 md:py-24 bg-white">
@@ -76,53 +103,77 @@ export default function GrowthResultsSlider() {
         </div>
 
         {/* Slider */}
-        <div className="mx-auto max-w-[390px] sm:max-w-[500px]">
-          <div
-            className="relative select-none"
-            onTouchStart={onTouchStart}
-            onTouchMove={onTouchMove}
-            onTouchEnd={onTouchEnd}
-          >
-            {/* Framed device chrome */}
-            <div className="relative mx-auto w-full aspect-[9/19.5] bg-black rounded-[2rem] border-8 border-black shadow-2xl overflow-hidden">
-              {/* Simple notch */}
-              <div aria-hidden className="absolute top-0 left-1/2 -translate-x-1/2 w-24 h-6 bg-black rounded-b-2xl" />
-
-              {/* Slide image */}
-              <div className="absolute inset-0">
-                <CoreImage
-                  src={current.image}
-                  alt={current.alt}
-                  width={900}
-                  height={1600}
-                  className="w-full h-full object-contain"
-                  sizes="(max-width: 640px) 90vw, 500px"
-                  fallbackSrc={`/placeholder.svg?height=1600&width=900&text=${encodeURIComponent(current.platform)}`}
-                  quality={90}
-                  priority
-                />
-              </div>
+        <div className="relative">
+          <div className="relative">
+            <div
+              ref={railRef}
+              className="flex snap-x snap-mandatory gap-4 overflow-x-auto px-2 py-1 scroll-smooth"
+              role="list"
+              aria-label="growth results"
+              style={maskStyle}
+            >
+              {slides.map((slide, index) => (
+                <div
+                  key={`${slide.platform}-${slide.image}`}
+                  className="w-[82vw] shrink-0 snap-start sm:w-[58vw] md:w-[320px]"
+                  role="listitem"
+                >
+                  <div className="space-y-4">
+                    <div className="relative w-full aspect-[9/19.5] overflow-hidden rounded-[2rem] border-8 border-black bg-black shadow-2xl">
+                      <div aria-hidden className="absolute left-1/2 top-0 h-6 w-24 -translate-x-1/2 rounded-b-2xl bg-black" />
+                      <div className="absolute inset-0">
+                        <CoreImage
+                          src={slide.image}
+                          alt={slide.alt}
+                          width={900}
+                          height={1600}
+                          className="h-full w-full object-contain"
+                          sizes="(max-width: 640px) 85vw, 320px"
+                          fallbackSrc={`/placeholder.svg?height=1600&width=900&text=${encodeURIComponent(slide.platform)}`}
+                          quality={90}
+                          priority={index < 2}
+                        />
+                      </div>
+                    </div>
+                    <p className="text-center text-sm text-neutral-600 lowercase">{slide.caption}</p>
+                  </div>
+                </div>
+              ))}
+              <span className="sr-only">Swipe horizontally to explore more growth results</span>
             </div>
 
-            {/* Controls */}
+            {canScrollLeft ? (
+              <div
+                className="pointer-events-none absolute inset-y-0 left-0 w-12 bg-gradient-to-r from-white to-transparent"
+                aria-hidden="true"
+              />
+            ) : null}
+            {canScrollRight ? (
+              <div
+                className="pointer-events-none absolute inset-y-0 right-0 w-12 bg-gradient-to-l from-white to-transparent"
+                aria-hidden="true"
+              />
+            ) : null}
+
             <button
-              aria-label="Previous"
-              onClick={prev}
-              className="absolute -left-3 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white rounded-full p-2 shadow-md"
+              type="button"
+              aria-label="Scroll left"
+              onClick={() => scrollByAmount("left")}
+              disabled={!canScrollLeft}
+              className="hidden sm:flex absolute left-0 top-1/2 -translate-y-1/2 h-10 w-10 translate-x-1 items-center justify-center rounded-full border bg-white/95 shadow-md transition hover:bg-white disabled:pointer-events-none disabled:opacity-40"
             >
               <ChevronLeft className="h-5 w-5" />
             </button>
             <button
-              aria-label="Next"
-              onClick={next}
-              className="absolute -right-3 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white rounded-full p-2 shadow-md"
+              type="button"
+              aria-label="Scroll right"
+              onClick={() => scrollByAmount("right")}
+              disabled={!canScrollRight}
+              className="hidden sm:flex absolute right-0 top-1/2 -translate-y-1/2 h-10 w-10 -translate-x-1 items-center justify-center rounded-full border bg-white/95 shadow-md transition hover:bg-white disabled:pointer-events-none disabled:opacity-40"
             >
               <ChevronRight className="h-5 w-5" />
             </button>
           </div>
-
-          {/* Caption */}
-          <p className="mt-4 text-center text-sm text-neutral-600 lowercase">{current.caption}</p>
         </div>
 
         {/* CTA */}
