@@ -275,6 +275,37 @@ export default function ClientPage() {
           </div>
         </section>
 
+        {/* ChatGPT CTA */}
+        <section className="border-t border-b border-neutral-200 bg-white/70 backdrop-blur">
+          <div className="container mx-auto px-4 py-12 md:py-16 text-center">
+            <span className="text-xs uppercase tracking-[0.4em] text-neutral-400">ai concierge</span>
+            <h2 className="mt-4 text-2xl md:text-3xl font-semibold tracking-tight text-neutral-900 lowercase">
+              ask chatgpt about prism
+            </h2>
+            <p className="mt-3 text-sm md:text-base text-neutral-600 lowercase max-w-xl mx-auto">
+              open our shared chatgpt conversation to get instant answers about websites, local listing optimization,
+              and ad management.
+            </p>
+            <div className="mt-6">
+              <Button
+                asChild
+                variant="outline"
+                className="rounded-full px-6 py-3 text-sm lowercase inline-flex items-center gap-2"
+              >
+                <Link
+                  href="https://chatgpt.com/share/68ec3e08-b094-8001-a859-d39fa42f4c03"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => trackCTAClick("ask chatgpt about prism", "homepage chatgpt cta")}
+                >
+                  ask chatgpt about prism
+                  <ArrowUpRight className="h-4 w-4" />
+                </Link>
+              </Button>
+            </div>
+          </div>
+        </section>
+
         <GrowthHeadline />
 
         {/* New homepage sections per updated structure */}
