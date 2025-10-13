@@ -219,7 +219,7 @@ export default function ClientGetStartedPage({ heroOnly = false }: { heroOnly?: 
                   transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1], delay: 0.06 }}
                   style={{ willChange: "transform, opacity" }}
                 >
-                  fill out the 2 minute form so we know where to look, what matters most, and where to send the report when it’s ready.
+                  fill out the form so we know where to kickoff our audit.
                 </motion.p>
 
                 <motion.div
