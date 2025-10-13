@@ -160,14 +160,6 @@ export default function ReferPage() {
                   </Button>
                   <p className="text-sm text-neutral-500 md:text-base">⚡️ takes 2 min</p>
                 </div>
-                <Button
-                  variant="outline"
-                  size="lg"
-                  className="rounded-full px-8 py-3 text-base"
-                  asChild
-                >
-                  <Link href="#how-it-works">see how it works</Link>
-                </Button>
               </div>
             </div>
           </div>
