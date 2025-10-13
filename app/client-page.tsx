@@ -53,6 +53,20 @@ export default function ClientPage() {
     }
     return videoQuality
   }, [isMobile, videoQuality])
+
+  useEffect(() => {
+    const scriptSrc = "https://cdn.lordicon.com/lordicon.js"
+    if (typeof window === "undefined") {
+      return
+    }
+    const existingScript = document.querySelector(`script[src="${scriptSrc}"]`)
+    if (!existingScript) {
+      const script = document.createElement("script")
+      script.src = scriptSrc
+      script.async = true
+      document.head.appendChild(script)
+    }
+  }, [])
   
   // Lazy loading states for below-the-fold sections
   // removed case studies and testimonials sections
@@ -277,31 +291,47 @@ export default function ClientPage() {
 
         {/* ChatGPT CTA */}
         <section className="border-t border-b border-neutral-200 bg-white/70 backdrop-blur">
-          <div className="container mx-auto px-4 py-12 md:py-16 text-center">
-            <span className="text-xs uppercase tracking-[0.4em] text-neutral-400">ai concierge</span>
-            <h2 className="mt-4 text-2xl md:text-3xl font-semibold tracking-tight text-neutral-900 lowercase">
-              ask chatgpt about prism
-            </h2>
-            <p className="mt-3 text-sm md:text-base text-neutral-600 lowercase max-w-xl mx-auto">
-              open our shared chatgpt conversation to get instant answers about websites, local listing optimization,
-              and ad management.
-            </p>
-            <div className="mt-6">
-              <Button
-                asChild
-                variant="outline"
-                className="rounded-full px-6 py-3 text-sm lowercase inline-flex items-center gap-2"
-              >
-                <Link
-                  href="https://chatgpt.com/share/68ec3e08-b094-8001-a859-d39fa42f4c03"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={() => trackCTAClick("ask chatgpt about prism", "homepage chatgpt cta")}
-                >
+          <div className="container mx-auto px-4 py-12 md:py-16">
+            <div className="mx-auto flex max-w-5xl flex-col items-center gap-8 md:flex-row md:items-center md:justify-between">
+              <div className="flex flex-col items-center text-center md:items-start md:text-left">
+                <span className="text-xs uppercase tracking-[0.4em] text-neutral-400">ai concierge</span>
+                <h2 className="mt-4 text-2xl font-semibold lowercase tracking-tight text-neutral-900 md:text-3xl">
                   ask chatgpt about prism
-                  <ArrowUpRight className="h-4 w-4" />
-                </Link>
-              </Button>
+                </h2>
+                <p className="mt-3 max-w-xl text-sm lowercase text-neutral-600 md:text-base">
+                  open our shared chatgpt conversation to get instant answers about websites, local listing
+                  optimization, and ad management.
+                </p>
+                <div className="mt-6">
+                  <Button
+                    asChild
+                    variant="outline"
+                    className="inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm lowercase"
+                  >
+                    <Link
+                      href="https://chatgpt.com/share/68ec3e08-b094-8001-a859-d39fa42f4c03"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={() => trackCTAClick("ask chatgpt about prism", "homepage chatgpt cta")}
+                    >
+                      ask chatgpt about prism
+                      <ArrowUpRight className="h-4 w-4" />
+                    </Link>
+                  </Button>
+                </div>
+              </div>
+              <div className="flex justify-center md:justify-end">
+                <div className="h-44 w-44 sm:h-52 sm:w-52 md:h-64 md:w-64">
+                  <lord-icon
+                    src="https://cdn.lordicon.com/jectmwqf.json"
+                    trigger="loop"
+                    delay="2000"
+                    colors="primary:#121331,secondary:#b4b4b4"
+                    aria-hidden="true"
+                    style={{ width: "100%", height: "100%" }}
+                  ></lord-icon>
+                </div>
+              </div>
             </div>
           </div>
         </section>
