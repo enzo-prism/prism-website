@@ -28,6 +28,12 @@ const slides: Slide[] = [
     alt: "Instagram reel insights for @hormozi showing reach and saves",
   },
   {
+    platform: "instagram",
+    image: "/growth/instagram-stats-6.png",
+    caption: "Instagram profile stats — community growth snapshot",
+    alt: "Instagram analytics screen highlighting profile growth metrics",
+  },
+  {
     platform: "tiktok",
     image: "/growth/tiktok-video-analysis.png",
     caption: "TikTok video analysis — key metrics",
