@@ -151,12 +151,15 @@ export default function ReferPage() {
                 <span className="font-semibold text-neutral-900">$1,000</span> when they become a Prism client.
                 Your intro starts with a quick Typeform and a free analysis for your friend.
               </p>
-              <div className="mt-10 flex flex-wrap justify-center gap-4">
-                <Button asChild size="lg" className="rounded-full px-8 py-3 text-base">
-                  <Link href={TYPEFORM_URL} target="_blank" rel="noopener noreferrer">
-                    refer a business <ArrowRight className="ml-2 h-4 w-4" />
-                  </Link>
-                </Button>
+              <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
+                <div className="flex flex-col items-center gap-2">
+                  <Button asChild size="lg" className="rounded-full px-8 py-3 text-base">
+                    <Link href={TYPEFORM_URL} target="_blank" rel="noopener noreferrer">
+                      refer a business <ArrowRight className="ml-2 h-4 w-4" />
+                    </Link>
+                  </Button>
+                  <p className="text-sm text-neutral-500 md:text-base">⚡️ takes 2 min</p>
+                </div>
                 <Button
                   variant="outline"
                   size="lg"
@@ -166,9 +169,6 @@ export default function ReferPage() {
                   <Link href="#how-it-works">see how it works</Link>
                 </Button>
               </div>
-              <p className="mt-4 text-sm text-neutral-500 md:text-base">
-                ⚡️ takes 2 min
-              </p>
             </div>
           </div>
         </section>
