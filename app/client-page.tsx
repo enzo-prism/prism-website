@@ -35,6 +35,7 @@ import PageViewTracker from "@/components/page-view-tracker"
 // import { useRevealAnimation } from "@/hooks/use-reveal-animation" // no longer used on simplified homepage
 import { FREE_AUDIT_CTA_TEXT, LOGO_CONFIG, LOGO_SIZES } from "@/lib/constants"
 import { trackCTAClick, trackNavigation } from "@/utils/analytics"
+import LordIcon from "@/components/lord-icon"
 // Render Service schema only on client to keep SSR HTML lean
 const ServiceSchemaClient = dynamic(() => import("@/components/schema-markup").then(m => m.ServiceSchema), {
   ssr: false
@@ -322,14 +323,14 @@ export default function ClientPage() {
               </div>
               <div className="flex justify-center md:justify-end">
                 <div className="h-44 w-44 sm:h-52 sm:w-52 md:h-64 md:w-64">
-                  <lord-icon
+                  <LordIcon
                     src="https://cdn.lordicon.com/jectmwqf.json"
                     trigger="loop"
                     delay="2000"
                     colors="primary:#121331,secondary:#b4b4b4"
                     aria-hidden="true"
                     style={{ width: "100%", height: "100%" }}
-                  ></lord-icon>
+                  />
                 </div>
               </div>
             </div>
