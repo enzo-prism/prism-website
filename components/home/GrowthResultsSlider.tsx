@@ -34,6 +34,12 @@ const slides: Slide[] = [
     alt: "TikTok analytics screenshot showing video analysis metrics",
   },
   {
+    platform: "tiktok",
+    image: "/growth/tiktok-stats-2.png",
+    caption: "TikTok stats — campaign performance snapshot",
+    alt: "TikTok analytics view highlighting performance metrics for a campaign",
+  },
+  {
     platform: "youtube",
     image: "/growth/youtube-analytics.png",
     caption: "YouTube analytics — subscribers and views",
