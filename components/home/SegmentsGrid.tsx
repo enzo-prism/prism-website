@@ -13,7 +13,7 @@ type Segment = {
 
 const segments: Segment[] = [
   {
-    emoji: "🌐",
+    emoji: "📱",
     title: "online community founders",
     summary: "Systems, design, and data so you can stay focused on people instead of platforms.",
     highlights: ["More reach, retention, and referrals", "Design, tech, and analytics working in sync"],
@@ -34,7 +34,7 @@ const segments: Segment[] = [
     href: "/why-dental-practices-love-prism",
   },
   {
-    emoji: "🏪",
+    emoji: "❤️",
     title: "local shop owners",
     summary: "Drive foot traffic and repeat visits while we manage your listings, ads, and tech stack.",
     highlights: ["Listings, SEO, and ads that work together", "Automated follow-ups that bring customers back"],
