@@ -166,6 +166,9 @@ export default function ReferPage() {
                   <Link href="#how-it-works">see how it works</Link>
                 </Button>
               </div>
+              <p className="mt-4 text-sm text-neutral-500 md:text-base">
+                ⚡️ takes 2 min
+              </p>
             </div>
           </div>
         </section>

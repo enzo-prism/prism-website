@@ -20,7 +20,7 @@ const segments: Segment[] = [
     href: "/why-online-community-founders-love-prism",
   },
   {
-    emoji: "📊",
+    emoji: "🤝",
     title: "consulting companies",
     summary: "Build trust, attract better-fit clients, and scale without adding operational drag.",
     highlights: ["Clarity that wins confident inquiries", "Automations that keep your firm running smooth"],
