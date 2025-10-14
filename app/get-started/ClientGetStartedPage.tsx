@@ -4,7 +4,15 @@ import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog"
 import VideoWithPoster from "@/components/video-with-poster"
 import { useMobile } from "@/hooks/use-mobile"
 import { useMobileAnimations } from "@/hooks/use-mobile-animations"
@@ -13,14 +21,15 @@ import { motion } from "framer-motion"
 import type { LucideIcon } from "lucide-react"
 import {
     ArrowRight,
-    BadgeCheck,
-    CheckCircle,
-    ExternalLink,
-    FileBarChart,
+    Globe2,
+    MapPin,
+    Megaphone,
     NotebookPen,
     Search,
+    Share2,
+    Sparkles,
     Timer,
-    Users,
+    X,
 } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
@@ -69,27 +78,6 @@ const STEPS: { title: string; description: string; icon: LucideIcon }[] = [
   },
 ]
 
-const INSIDE_REPORT: { title: string; description: string; icon: LucideIcon }[] = [
-  {
-    title: "visibility scoring",
-    description:
-      "map, organic, and ai overview presence with clarity on what’s working—and what’s missing—for each channel.",
-    icon: FileBarChart,
-  },
-  {
-    title: "conversion readiness",
-    description:
-      "hero copy, forms, offers, reviews, and social proof graded with concrete fixes to boost trust and response rates.",
-    icon: Users,
-  },
-  {
-    title: "priority actions",
-    description:
-      "a focused roadmap with the three highest leverage updates for the next 30 days, written so your team or ours can execute.",
-    icon: CheckCircle,
-  },
-]
-
 const EXAMPLE_REPORTS: { title: string; highlights: string[]; href: string }[] = [
   {
     title: "dental practice · coastal smiles",
@@ -111,12 +99,28 @@ const EXAMPLE_REPORTS: { title: string; highlights: string[]; href: string }[] =
   },
 ]
 
+type AnalysisHighlight = {
+  label: string
+  icon: LucideIcon
+  pillClass: string
+  iconClass: string
+  description: string
+  modal: {
+    title: string
+    why: string[]
+    summary: string
+  }
+}
+
 export default function ClientGetStartedPage({ heroOnly = false }: { heroOnly?: boolean }) {
   const { getViewportConfig } = useMobileAnimations()
   const [shouldLoadVideo, setShouldLoadVideo] = useState(false)
   const isMobile = useMobile()
   const videoRef = useRef<HTMLDivElement | null>(null)
   const formSectionRef = useRef<HTMLDivElement | null>(null)
+  const [activeHighlight, setActiveHighlight] = useState<AnalysisHighlight | null>(null)
+
+  const ActiveHighlightIcon = activeHighlight?.icon
 
   useEffect(() => {
     if (!videoRef.current) return
@@ -141,18 +145,90 @@ export default function ClientGetStartedPage({ heroOnly = false }: { heroOnly?: 
   }, [shouldLoadVideo])
 
   const handlePrimaryCTA = () => {
-    trackCTAClick("claim report - scroll", "get-started hero")
+    trackCTAClick("initiate analysis - scroll", "get-started hero")
     formSectionRef.current?.scrollIntoView({ behavior: "smooth", block: "start" })
   }
 
-  const reportBadges = [
+  const handleHighlightCTA = () => {
+    setActiveHighlight(null)
+    setTimeout(() => handlePrimaryCTA(), 0)
+  }
+
+  const analysisHighlights: AnalysisHighlight[] = [
     {
-      icon: BadgeCheck,
-      label: "custom audit for your brand",
+      icon: Globe2,
+      label: "SEO",
+      pillClass: "border-sky-200 bg-sky-50/80 text-sky-700",
+      iconClass: "text-sky-600",
+      description: "technical health, content coverage, and schema moves to grow organic reach.",
+      modal: {
+        title: "SEO (Search Engine Optimization)",
+        why: [
+          "SEO helps your business get discovered by people already searching for what you offer.",
+          "A well-optimized site means more visibility, more clicks, and more qualified leads without paying for ads.",
+        ],
+        summary: "In short: SEO makes sure people can find you first.",
+      },
     },
     {
-      icon: Timer,
-      label: "ready within 48 hours",
+      icon: Sparkles,
+      label: "AEO",
+      pillClass: "border-purple-200 bg-purple-50/80 text-purple-700",
+      iconClass: "text-purple-600",
+      description: "ai overview placements, answer boxes, and signals that secure ai search visibility.",
+      modal: {
+        title: "AEO (Answer Engine Optimization)",
+        why: [
+          "Voice assistants and AI chat tools are changing how people search.",
+          "AEO ensures your business shows up when people ask questions, not just when they type keywords.",
+        ],
+        summary: "In short: AEO prepares your business for the next generation of search.",
+      },
+    },
+    {
+      icon: Share2,
+      label: "Social Media",
+      pillClass: "border-pink-200 bg-pink-50/80 text-pink-700",
+      iconClass: "text-pink-600",
+      description: "profile consistency, content cadence, and engagement paths that drive inquiries.",
+      modal: {
+        title: "Social Media",
+        why: [
+          "Your social presence builds trust and keeps your brand top-of-mind.",
+          "The right strategy turns followers into fans, and fans into customers.",
+        ],
+        summary: "In short: Social media turns attention into connection.",
+      },
+    },
+    {
+      icon: Megaphone,
+      label: "Ads",
+      pillClass: "border-amber-200 bg-amber-50/80 text-amber-700",
+      iconClass: "text-amber-600",
+      description: "paid search and social diagnostics to surface wasted spend and high-performing angles.",
+      modal: {
+        title: "Ads",
+        why: [
+          "Ads accelerate growth by putting your message in front of the right people instantly.",
+          "When done well, they do more than drive clicks; they drive results.",
+        ],
+        summary: "In short: Ads turn visibility into momentum.",
+      },
+    },
+    {
+      icon: MapPin,
+      label: "Local Listings",
+      pillClass: "border-emerald-200 bg-emerald-50/80 text-emerald-700",
+      iconClass: "text-emerald-600",
+      description: "google business profile accuracy, reviews, and nap coverage to capture local demand.",
+      modal: {
+        title: "Local Listings",
+        why: [
+          "Your Google Business Profile, Yelp, and maps listings are often a customer's first impression.",
+          "Accurate, optimized listings help you appear in local searches and bring more people through your door.",
+        ],
+        summary: "In short: Local listings make sure you show up when it matters most.",
+      },
     },
   ]
 
@@ -160,6 +236,70 @@ export default function ClientGetStartedPage({ heroOnly = false }: { heroOnly?: 
     <div className="flex min-h-screen flex-col bg-white">
       <Navbar />
       <main className="flex-1">
+        <Dialog
+          open={Boolean(activeHighlight)}
+          onOpenChange={(open) => {
+            if (!open) setActiveHighlight(null)
+          }}
+        >
+          {activeHighlight ? (
+            <DialogContent className="px-6 py-7 sm:px-8">
+              <DialogClose asChild>
+                <button
+                  type="button"
+                  className="absolute right-5 top-5 inline-flex h-9 w-9 items-center justify-center rounded-full border border-neutral-200 text-neutral-500 transition hover:border-neutral-300 hover:text-neutral-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-900"
+                  aria-label="Close highlight details"
+                >
+                  <X className="h-4 w-4" />
+                </button>
+              </DialogClose>
+              <div className="flex flex-1 flex-col overflow-y-auto">
+                <DialogHeader className="gap-4 text-left">
+                  <div className={`flex h-12 w-12 items-center justify-center rounded-full border ${activeHighlight.pillClass}`}>
+                    {ActiveHighlightIcon ? (
+                      <ActiveHighlightIcon className={`h-6 w-6 ${activeHighlight.iconClass}`} />
+                    ) : null}
+                  </div>
+                  <DialogTitle>{activeHighlight.modal.title}</DialogTitle>
+                  <DialogDescription>
+                    why {activeHighlight.label} matters for growing online.
+                  </DialogDescription>
+                </DialogHeader>
+                <div className="mt-6 space-y-6">
+                  <div className="space-y-3">
+                    <p className="text-xs font-semibold uppercase tracking-[0.32em] text-neutral-400">
+                      why it matters
+                    </p>
+                    <ul className="list-disc space-y-2 pl-5 text-sm text-neutral-700">
+                      {activeHighlight.modal.why.map((line) => (
+                        <li key={line}>{line}</li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div className="rounded-2xl border border-neutral-200 bg-neutral-50 px-4 py-3 text-sm font-medium text-neutral-800">
+                    {activeHighlight.modal.summary}
+                  </div>
+                </div>
+              </div>
+              <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                <Button
+                  className="w-full rounded-full px-6 py-3 text-sm sm:w-auto"
+                  onClick={handleHighlightCTA}
+                >
+                  Start my analysis <ArrowRight className="ml-2 h-5 w-5" />
+                </Button>
+                <DialogClose asChild>
+                  <button
+                    type="button"
+                    className="w-full rounded-full border border-neutral-200 px-6 py-3 text-sm font-medium text-neutral-500 transition hover:border-neutral-300 hover:text-neutral-900 sm:w-auto"
+                  >
+                    Maybe later
+                  </button>
+                </DialogClose>
+              </div>
+            </DialogContent>
+          ) : null}
+        </Dialog>
         <section ref={videoRef} className="relative px-4 py-12 sm:py-16 md:py-20 lg:py-24">
           <div className="container mx-auto max-w-5xl">
             <div className="flex flex-col items-center">
@@ -209,7 +349,7 @@ export default function ClientGetStartedPage({ heroOnly = false }: { heroOnly?: 
                   transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
                   style={{ willChange: "transform, opacity" }}
                 >
-                  claim your free online presence report
+                  online presence analysis
                 </motion.h1>
 
                 <motion.p
@@ -219,25 +359,44 @@ export default function ClientGetStartedPage({ heroOnly = false }: { heroOnly?: 
                   transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1], delay: 0.06 }}
                   style={{ willChange: "transform, opacity" }}
                 >
-                  fill out the form so we know where to kickoff our audit.
+                  we audit your online presence + tell you the fastest way to grow
                 </motion.p>
 
                 <motion.div
-                  className="flex flex-wrap items-center justify-center gap-2"
+                  className="flex flex-col items-center gap-4"
                   initial={{ opacity: 0, y: 15 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1], delay: 0.12 }}
                 >
-                  {reportBadges.map(({ icon: Icon, label }) => (
-                    <Badge
-                      key={label}
-                      variant="outline"
-                      className="flex items-center gap-2 rounded-full border-neutral-200 bg-white px-4 py-2 text-sm lowercase text-neutral-900"
-                    >
-                      <Icon className="h-3.5 w-3.5" />
-                      {label}
-                    </Badge>
-                  ))}
+                  <span className="text-xs font-medium tracking-[0.32em] text-neutral-400">
+                    opportunities we'll uncover
+                  </span>
+                  <div className="flex flex-wrap items-center justify-center gap-2.5">
+                    {analysisHighlights.map((highlight) => {
+                      const { icon: Icon, label, pillClass, iconClass } = highlight
+                      return (
+                        <Badge
+                          key={label}
+                          asChild
+                          variant="outline"
+                          className={`flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-medium shadow-sm backdrop-blur transition hover:-translate-y-0.5 hover:shadow md:hover:-translate-y-1 ${pillClass} focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-900`}
+                        >
+                          <button
+                            type="button"
+                            onClick={() => {
+                              trackCTAClick(`view ${label.toLowerCase()} insight`, "get-started hero")
+                              setActiveHighlight(highlight)
+                            }}
+                            aria-label={`Learn why ${label} matters for growth`}
+                            className="flex items-center gap-2"
+                          >
+                            <Icon className={`h-4 w-4 ${iconClass}`} />
+                            {label}
+                          </button>
+                        </Badge>
+                      )
+                    })}
+                  </div>
                 </motion.div>
 
                 <motion.div
@@ -247,22 +406,22 @@ export default function ClientGetStartedPage({ heroOnly = false }: { heroOnly?: 
                   transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1], delay: 0.18 }}
                 >
                   <Button
-                    className="rounded-full px-8 py-3 text-base lowercase hardware-hover touch-feedback"
+                    className="rounded-full px-8 py-3 text-base hardware-hover touch-feedback"
                     onClick={handlePrimaryCTA}
                   >
-                    claim my report <ArrowRight className="ml-2 h-5 w-5" />
+                    Initiate Analysis <ArrowRight className="ml-2 h-5 w-5" />
                   </Button>
-                  <p className="text-xs uppercase tracking-[0.24em] text-neutral-400">
-                    report delivered within 48 hours
+                  <p className="text-sm text-neutral-500">
+                    Report delivered within 48 hours
                   </p>
                   <p className="text-sm text-neutral-500">
-                    need answers sooner?{" "}
+                    need answer sooner?{" "}
                     <Link
                       href="/contact"
                       className="font-medium text-neutral-900 underline-offset-4 hover:underline"
                       onClick={() => trackCTAClick("contact from hero", "get-started hero")}
                     >
-                      contact us directly
+                      Contact us directly
                     </Link>
                     .
                   </p>
@@ -278,10 +437,10 @@ export default function ClientGetStartedPage({ heroOnly = false }: { heroOnly?: 
               <div className="container mx-auto max-w-4xl space-y-10">
                 <motion.div className="space-y-3 text-center" variants={fadeInY} initial="initial" whileInView="animate" viewport={getViewportConfig()}>
                   <h2 className="text-2xl font-light tracking-tight text-neutral-900 sm:text-3xl">
-                    the form takes about two minutes
+                    share your info so we can start
                   </h2>
                   <p className="text-base text-neutral-600">
-                    your answers guide our audit. if you prefer, open the typeform in a new tab and we’ll still send the full report within 48 hours.
+                    takes 2 min
                   </p>
                 </motion.div>
 
@@ -371,40 +530,56 @@ export default function ClientGetStartedPage({ heroOnly = false }: { heroOnly?: 
               <div className="container mx-auto max-w-6xl">
                 <motion.div className="mx-auto mb-10 max-w-3xl text-center" variants={fadeInY} initial="initial" whileInView="animate" viewport={getViewportConfig()}>
                   <h2 className="text-2xl font-light tracking-tight text-neutral-900 sm:text-3xl">
-                    what’s inside your report
+                    where we uncover growth opportunities
                   </h2>
                   <p className="text-base text-neutral-600">
-                    the report is built as a private web page you can share with your leadership team. every section is clickable with the raw data behind it.
+                    every channel shows up in your private report with the data, wins, and next steps we surface.
                   </p>
                 </motion.div>
 
                 <motion.div
-                  className="grid gap-6 md:grid-cols-3"
+                  className="grid gap-6 md:grid-cols-2 lg:grid-cols-3"
                   variants={staggerChildren}
                   initial="initial"
                   whileInView="animate"
                   viewport={getViewportConfig()}
                 >
-                  {INSIDE_REPORT.map(({ title, description, icon: Icon }) => (
-                    <motion.div key={title} variants={fadeInY}>
-                      <Card className="h-full border-neutral-200 bg-white">
-                        <CardHeader className="flex flex-col gap-4">
-                          <div className="flex items-center justify-between">
-                            <Icon className="h-6 w-6 text-neutral-900" />
-                            <Badge variant="outline" className="rounded-full border-neutral-200 bg-white px-3 py-1 text-xs uppercase tracking-[0.24em] text-neutral-500">
-                              in the report
+                  {analysisHighlights.map((highlight) => {
+                    const { label, description, icon: Icon, pillClass, iconClass } = highlight
+                    return (
+                      <motion.div key={label} variants={fadeInY}>
+                        <Card className="h-full border-neutral-200 bg-white">
+                          <CardHeader className="flex flex-col gap-4">
+                            <Badge
+                              variant="outline"
+                              className={`w-fit items-center gap-2 rounded-full border px-4 py-2 text-sm font-medium shadow-sm ${pillClass}`}
+                            >
+                              <Icon className={`h-4 w-4 ${iconClass}`} />
+                              {label}
                             </Badge>
-                          </div>
-                          <CardTitle className="text-lg font-medium lowercase text-neutral-900">
-                            {title}
-                          </CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                          <p className="text-sm text-neutral-600">{description}</p>
-                        </CardContent>
-                      </Card>
-                    </motion.div>
-                  ))}
+                            <CardTitle className="text-lg font-medium text-neutral-900">
+                              {highlight.modal.title}
+                            </CardTitle>
+                          </CardHeader>
+                          <CardContent className="flex flex-col gap-4">
+                            <p className="text-sm text-neutral-600">{description}</p>
+                            <button
+                              type="button"
+                              onClick={() => {
+                                trackCTAClick(`view ${label.toLowerCase()} insight`, "get-started opportunities")
+                                setActiveHighlight(highlight)
+                              }}
+                              aria-label={`Learn why ${label} matters for growth`}
+                              className="inline-flex items-center gap-2 text-sm font-medium text-neutral-900 underline-offset-4 transition hover:underline"
+                            >
+                              Why it matters
+                              <ArrowRight className="h-4 w-4" />
+                            </button>
+                          </CardContent>
+                        </Card>
+                      </motion.div>
+                    )
+                  })}
                 </motion.div>
               </div>
             </section>
