@@ -107,7 +107,7 @@ export function WebsiteSchema() {
     url: "https://www.design-prism.com",
     name: "Prism Agency - Beautiful Software That Grows Revenue",
     description:
-      "Prism Agency creates beautiful websites, apps, and designs that shatter revenue goals for ambitious businesses. AI-powered digital solutions that convert visitors into customers.",
+      "Prism Agency builds high-converting websites, manages local listing optimization, and runs online ad campaigns that grow revenue for ambitious businesses.",
     publisher: {
       "@id": "https://www.design-prism.com/#organization",
     },
@@ -552,7 +552,7 @@ export function LocalBusinessSchema() {
     },
     telephone: "+1-650-862-4069",
     priceRange: "$1,000 - $3,000",
-    description: "Prism builds revenue-driving custom websites, apps and design systems for startups and local businesses.",
+    description: "Prism builds high-converting websites, manages local listing optimization, and runs online ad campaigns for growing businesses.",
     sameAs: [
       "https://www.instagram.com/the_design_prism/?hl=en",
       "https://www.linkedin.com/company/web-prism/",

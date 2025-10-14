@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { HOTTEST_CONTENT } from "@/lib/hottest-content"
 import { trackCTAClick } from "@/utils/analytics"
+import { useMobile } from "@/hooks/use-mobile"
 
 const FEATURED_URLS = [
   "https://www.instagram.com/reel/C483wd1SFB6/?utm_source=ig_web_button_share_sheet&igsh=MzRlODBiNWFlZA==",
@@ -38,6 +39,7 @@ export default function HottestContentSection() {
   const railRef = useRef<HTMLDivElement>(null)
   const [canScrollLeft, setCanScrollLeft] = useState(false)
   const [canScrollRight, setCanScrollRight] = useState(false)
+  const isMobile = useMobile()
 
   const updateScrollState = useCallback(() => {
     const rail = railRef.current
@@ -77,16 +79,16 @@ export default function HottestContentSection() {
   }
 
   const maskStyle = useMemo(() => {
-    const leftStop = canScrollLeft ? "0%" : "6%"
+    const leftStop = !isMobile && canScrollLeft ? "0%" : "6%"
     const rightStop = canScrollRight ? "100%" : "94%"
-    const leftColor = canScrollLeft ? "transparent" : "rgba(0,0,0,1)"
+    const leftColor = !isMobile && canScrollLeft ? "transparent" : "rgba(0,0,0,1)"
     const rightColor = canScrollRight ? "transparent" : "rgba(0,0,0,1)"
 
     return {
       maskImage: `linear-gradient(to right, ${leftColor} ${leftStop}, black 12%, black 88%, ${rightColor} ${rightStop})`,
       WebkitMaskImage: `linear-gradient(to right, ${leftColor} ${leftStop}, black 12%, black 88%, ${rightColor} ${rightStop})`,
     } as const
-  }, [canScrollLeft, canScrollRight])
+  }, [canScrollLeft, canScrollRight, isMobile])
 
   return (
     <section className="bg-neutral-50 py-16 md:py-24">
@@ -137,7 +139,7 @@ export default function HottestContentSection() {
               <span className="sr-only">Swipe horizontally to explore more featured content</span>
             </div>
 
-            {canScrollLeft ? (
+            {!isMobile && canScrollLeft ? (
               <div
                 className="pointer-events-none absolute inset-y-0 left-0 w-12 bg-gradient-to-r from-neutral-50 to-transparent"
                 aria-hidden="true"

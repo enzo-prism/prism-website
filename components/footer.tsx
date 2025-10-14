@@ -59,8 +59,8 @@ export default function Footer() {
               <span className="text-2xl font-bold lowercase">prism</span>
             </div>
             <p className="text-sm text-neutral-600 max-w-md leading-relaxed">
-              beautiful websites, apps, and designs that help your business grow. we create digital experiences that
-              convert visitors into customers.
+              websites, local listing optimization, and online ad management that grow your business. we turn online
+              searches into booked revenue.
             </p>
           </div>
 
