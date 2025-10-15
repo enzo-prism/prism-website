@@ -275,37 +275,6 @@ export default function ClientPage() {
           </div>
         </section>
 
-        {/* ChatGPT CTA */}
-        <section className="border-t border-b border-neutral-200 bg-white/70 backdrop-blur">
-          <div className="container mx-auto px-4 py-12 md:py-16">
-            <div className="mx-auto flex max-w-3xl flex-col items-center text-center">
-              <h2 className="text-2xl font-semibold lowercase tracking-tight text-neutral-900 md:text-3xl">
-                ask chatgpt about prism
-              </h2>
-              <p className="mt-3 max-w-xl text-sm lowercase text-neutral-600 md:text-base">
-                research prism services, client success stories, and compare to our competitors
-              </p>
-              <div className="mt-6">
-                <Button
-                  asChild
-                  variant="outline"
-                  className="inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm lowercase"
-                >
-                  <Link
-                    href="https://chatgpt.com/share/68ec3e08-b094-8001-a859-d39fa42f4c03"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={() => trackCTAClick("ask chatgpt about prism", "homepage chatgpt cta")}
-                  >
-                    ask chatgpt about prism
-                    <ArrowUpRight className="h-4 w-4" />
-                  </Link>
-                </Button>
-              </div>
-            </div>
-          </div>
-        </section>
-
         <GrowthHeadline />
 
         {/* New homepage sections per updated structure */}
@@ -431,6 +400,37 @@ export default function ClientPage() {
                     learn more about us <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
                 </Link>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ChatGPT CTA */}
+        <section className="border-t border-b border-neutral-200 bg-white/70 backdrop-blur">
+          <div className="container mx-auto px-4 py-12 md:py-16">
+            <div className="mx-auto flex max-w-3xl flex-col items-center text-center">
+              <h2 className="text-2xl font-semibold lowercase tracking-tight text-neutral-900 md:text-3xl">
+                ask chatgpt about prism
+              </h2>
+              <p className="mt-3 max-w-xl text-sm lowercase text-neutral-600 md:text-base">
+                research prism services, client success stories, and compare to our competitors
+              </p>
+              <div className="mt-6">
+                <Button
+                  asChild
+                  variant="outline"
+                  className="inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm lowercase"
+                >
+                  <Link
+                    href="https://chatgpt.com/share/68ec3e08-b094-8001-a859-d39fa42f4c03"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => trackCTAClick("ask chatgpt about prism", "homepage chatgpt cta")}
+                  >
+                    ask chatgpt about prism
+                    <ArrowUpRight className="h-4 w-4" />
+                  </Link>
+                </Button>
               </div>
             </div>
           </div>

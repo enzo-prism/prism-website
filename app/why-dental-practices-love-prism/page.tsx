@@ -223,7 +223,7 @@ export default function DentalPracticesPage() {
                     <ul className="mt-6 space-y-3 text-sm leading-relaxed text-neutral-100">
                       {favorite.bullets.map((bullet) => (
                         <li key={bullet} className="flex items-start gap-3">
-                          <CheckCircle2 className="mt-0.5 h-5 w-5 flex-shrink-0 text-primary" />
+                          <CheckCircle2 className="mt-0.5 h-5 w-5 flex-shrink-0 text-white" />
                           <span>{bullet}</span>
                         </li>
                       ))}
