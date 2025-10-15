@@ -262,6 +262,24 @@ export default function DentalPracticesPage() {
                 </div>
               ))}
             </div>
+            <div className="mt-12 rounded-3xl border border-neutral-200 bg-neutral-900 px-8 py-10 text-white shadow-xl md:px-12 md:py-12">
+              <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+                <div className="max-w-2xl">
+                  <h3 className="text-2xl font-semibold md:text-3xl">
+                    Own the inbox experience, not just the website.
+                  </h3>
+                  <p className="mt-3 text-sm leading-relaxed text-neutral-200 md:text-base">
+                    See how Prism configures custom email for dental practices so hiring platforms, patients, and partners trust every message — with deliverability and HIPAA-aware safeguards built in.
+                  </p>
+                </div>
+                <Link href="/custom-email-for-dental-practices">
+                  <Button className="group rounded-full bg-white px-7 py-3 text-base font-semibold text-neutral-900 hover:bg-white/90">
+                    Explore custom email
+                    <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                  </Button>
+                </Link>
+              </div>
+            </div>
           </div>
         </section>
 
