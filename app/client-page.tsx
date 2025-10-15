@@ -210,6 +210,7 @@ export default function ClientPage() {
                     transform: `translate(-50%, -50%) scale(${videoScale})`,
                     opacity: shouldLoadVideo ? 1 : 0,
                     objectFit: 'cover',
+                    filter: 'saturate(0.6) brightness(1.2)',
                     willChange: 'transform, opacity',
                   }}
                   allow="autoplay; fullscreen; picture-in-picture"
@@ -219,7 +220,7 @@ export default function ClientPage() {
             )}
           </div>
           {/* White overlay for elegant contrast */}
-          <div className="absolute inset-0 -z-10 bg-white/55 dark:bg-neutral-950/70 gpu-layer transition-opacity duration-500" />
+          <div className="absolute inset-0 -z-10 bg-white/85 dark:bg-neutral-950/85 gpu-layer transition-opacity duration-500" />
 
           <div className="container relative mx-auto px-4 md:px-6 py-8 md:py-16">
             <div className="flex flex-col items-center space-y-4 md:space-y-6 text-center">
