@@ -221,11 +221,19 @@ export default function PricingPageClient() {
   }, [mode, selectedPlan, selectedListings, selectedAdPackage, selectedContent, selectedBundle])
 
   const handleModeChange = (nextMode: PlannerMode) => {
+    if (nextMode === mode) return
+
     setMode(nextMode)
     setError(null)
+
     if (nextMode === "bundle") {
       setSelectedBundle("")
+      setSelectedPlan("")
+      setSelectedListings("")
+      setSelectedAdPackage("")
+      setSelectedContent("")
     } else {
+      setSelectedBundle("")
       setSelectedPlan("")
       setSelectedListings("")
       setSelectedAdPackage("")
@@ -677,12 +685,15 @@ function BundlePicker({ selectedBundle, onSelectBundle }: BundlePickerProps) {
       <div className="grid gap-4 md:grid-cols-2">
         {popularBundles.map((bundle) => {
           const isActive = selectedBundle === bundle.name
+          const extraClasses = isActive
+            ? "text-left backdrop-blur-sm"
+            : "text-left bg-white/80 border-neutral-200 backdrop-blur-sm"
           return (
             <button
               key={bundle.name}
               type="button"
               onClick={() => onSelectBundle(bundle.name)}
-              className={cardClasses(isActive, "bg-white/80 backdrop-blur-sm border-neutral-200 text-left")}
+              className={cardClasses(isActive, extraClasses)}
               aria-pressed={isActive}
             >
               <p className="text-xs uppercase tracking-wide text-neutral-400">bundle</p>
