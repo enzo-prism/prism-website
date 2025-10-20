@@ -26,6 +26,7 @@ export default function Footer() {
     { emoji: "🎨", label: "designs", href: "/designs" },
     { emoji: "📣", label: "ads", href: "/ads" },
     { emoji: "📍", label: "local listings", href: "/local-listings" },
+    { emoji: "💸", label: "pricing", href: "/pricing" },
     { emoji: "🎁", label: "offers", href: "/offers" },
     { emoji: "✍️", label: "blog", href: "/blog" },
     { emoji: "🎙️", label: "podcast", href: "/podcast" },

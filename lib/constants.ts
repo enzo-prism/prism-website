@@ -37,6 +37,7 @@ export const NAV_ITEMS: NavItem[] = [
       { label: "local listings", href: "/local-listings" },
     ],
   },
+  { label: "pricing", href: "/pricing" },
   {
     label: "growth guides",
     children: [
