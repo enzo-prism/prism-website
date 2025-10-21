@@ -40,11 +40,21 @@ const websitePlans = [
   },
 ]
 
-const localListingsHighlights = [
-  "Google Business Profile optimization and ongoing sync.",
-  "Apple Maps, Yelp, Bing, and niche directories managed for you.",
-  "Category, keyword, and service optimization aligned to your offers.",
-  "Review tracking with insights to boost reputation and response rates.",
+const foundationalUpgrades = [
+  {
+    value: "local-listings",
+    title: "Local Listings",
+    description:
+      "Google, Apple Maps, Yelp, Bing setup, NAP consistency, category optimization, review tracking",
+    price: "+$100/mo",
+  },
+  {
+    value: "custom-email",
+    title: "Custom Email Setup",
+    description:
+      "Branded email setup via Google Workspace or Outlook (e.g. john@yourdomain.com). Includes full setup, DNS config, and 1–3 inboxes.",
+    price: "+$50/mo",
+  },
 ]
 
 const adPackages = [
@@ -117,23 +127,6 @@ const summaryPoints = [
   "Add Listings, Ads, or Content whenever you are ready to scale further.",
 ]
 
-const localListingOptions = [
-  {
-    value: "add-local-listings",
-    title: "Add local listings visibility",
-    price: "+$100/mo",
-    description: "We keep your Google Business Profile and 40+ directories updated and calibrated.",
-    bullets: localListingsHighlights,
-  },
-  {
-    value: "no-local-listings",
-    title: "Skip listings for now",
-    price: "$0/mo",
-    description: "Stay focused on the site launch today and add listings when you need the coverage.",
-    bullets: [] as string[],
-  },
-]
-
 const adPackageOptions = [
   ...adPackages.map((pkg) => ({
     value: pkg.name,
@@ -171,7 +164,7 @@ type PlannerMode = "custom" | "bundle"
 export default function PricingPageClient() {
   const [mode, setMode] = useState<PlannerMode>("custom")
   const [selectedPlan, setSelectedPlan] = useState("")
-  const [selectedListings, setSelectedListings] = useState("")
+  const [selectedUpgrades, setSelectedUpgrades] = useState<string[]>([])
   const [selectedAdPackage, setSelectedAdPackage] = useState("")
   const [selectedContent, setSelectedContent] = useState("")
   const [selectedBundle, setSelectedBundle] = useState("")
@@ -186,8 +179,7 @@ export default function PricingPageClient() {
     { label: "ready-made bundle", value: "bundle" },
   ]
 
-  const isCustomComplete =
-    Boolean(selectedPlan) && Boolean(selectedListings) && Boolean(selectedAdPackage) && Boolean(selectedContent)
+  const isCustomComplete = Boolean(selectedPlan) && Boolean(selectedAdPackage) && Boolean(selectedContent)
 
   const canSubmit =
     email.trim().length > 0 &&
@@ -206,9 +198,9 @@ export default function PricingPageClient() {
     return [
       { label: "website plan", value: selectedPlan || "Choose a plan", complete: Boolean(selectedPlan) },
       {
-        label: "local listings",
-        value: selectedListings ? formatOptionLabel(selectedListings, localListingOptions) : "Select an option",
-        complete: Boolean(selectedListings),
+        label: "foundational upgrades",
+        value: formatSelectedUpgrades(selectedUpgrades, foundationalUpgrades),
+        complete: true,
       },
       {
         label: "ads package",
@@ -221,7 +213,7 @@ export default function PricingPageClient() {
         complete: Boolean(selectedContent),
       },
     ]
-  }, [mode, selectedPlan, selectedListings, selectedAdPackage, selectedContent, selectedBundle])
+  }, [mode, selectedPlan, selectedUpgrades, selectedAdPackage, selectedContent, selectedBundle])
 
   const handleModeChange = (nextMode: PlannerMode) => {
     if (nextMode === mode) return
@@ -232,13 +224,13 @@ export default function PricingPageClient() {
     if (nextMode === "bundle") {
       setSelectedBundle("")
       setSelectedPlan("")
-      setSelectedListings("")
+      setSelectedUpgrades([])
       setSelectedAdPackage("")
       setSelectedContent("")
     } else {
       setSelectedBundle("")
       setSelectedPlan("")
-      setSelectedListings("")
+      setSelectedUpgrades([])
       setSelectedAdPackage("")
       setSelectedContent("")
     }
@@ -356,7 +348,11 @@ export default function PricingPageClient() {
             {mode === "custom" ? (
               <>
                 <input type="hidden" name="website_plan" value={selectedPlan} />
-                <input type="hidden" name="local_listings" value={formatOptionLabel(selectedListings, localListingOptions)} />
+                <input
+                  type="hidden"
+                  name="foundational_upgrades"
+                  value={formatSelectedUpgrades(selectedUpgrades, foundationalUpgrades)}
+                />
                 <input type="hidden" name="ads_package" value={formatOptionLabel(selectedAdPackage, adPackageOptions)} />
                 <input type="hidden" name="content_package" value={formatOptionLabel(selectedContent, contentOptions)} />
 
@@ -366,9 +362,11 @@ export default function PricingPageClient() {
                     setSelectedPlan(value)
                     setError(null)
                   }}
-                  selectedListings={selectedListings}
-                  onSelectListings={(value) => {
-                    setSelectedListings(value)
+                  selectedUpgrades={selectedUpgrades}
+                  onToggleUpgrade={(value) => {
+                    setSelectedUpgrades((prev) =>
+                      prev.includes(value) ? prev.filter((item) => item !== value) : [...prev, value]
+                    )
                     setError(null)
                   }}
                   selectedAdPackage={selectedAdPackage}
@@ -512,6 +510,20 @@ export default function PricingPageClient() {
   )
 }
 
+function formatSelectedUpgrades(
+  values: string[],
+  options: { value: string; title: string; price: string }[]
+) {
+  if (!values.length) return "No upgrades added"
+  return values
+    .map((value) => {
+      const match = options.find((option) => option.value === value)
+      if (!match) return value
+      return `${match.title} – ${match.price}`
+    })
+    .join(", ")
+}
+
 function formatOptionLabel<T extends { value: string; title?: string; adSpend?: string; total?: string; platforms?: string; description?: string; price?: string }>(
   value: string,
   options: T[]
@@ -534,8 +546,8 @@ function formatOptionLabel<T extends { value: string; title?: string; adSpend?: 
 type CustomPlannerProps = {
   selectedPlan: string
   onSelectPlan: (value: string) => void
-  selectedListings: string
-  onSelectListings: (value: string) => void
+  selectedUpgrades: string[]
+  onToggleUpgrade: (value: string) => void
   selectedAdPackage: string
   onSelectAdPackage: (value: string) => void
   selectedContent: string
@@ -545,8 +557,8 @@ type CustomPlannerProps = {
 function CustomPlanner({
   selectedPlan,
   onSelectPlan,
-  selectedListings,
-  onSelectListings,
+  selectedUpgrades,
+  onToggleUpgrade,
   selectedAdPackage,
   onSelectAdPackage,
   selectedContent,
@@ -601,39 +613,54 @@ function CustomPlanner({
       <div className="space-y-6">
         <StepHeader
           step={2}
-          title="Add local listings (optional)"
-          description="Decide whether Prism should manage your local directory presence alongside the site."
+          title="🧱 Step 2 — Add Foundational Upgrades (optional)"
+          description="Layer in essential infrastructure now or add it later — everything stays flexible and month-to-month."
         />
-        <div className="grid gap-4 md:grid-cols-2">
-          {localListingOptions.map((option) => {
-            const isActive = selectedListings === option.value
-            return (
-              <button
-                key={option.value}
-                type="button"
-                onClick={() => onSelectListings(option.value)}
-                className={cardClasses(isActive)}
-                aria-pressed={isActive}
-              >
-                <div className="flex items-start justify-between gap-2">
-                  <p className="text-lg font-semibold text-inherit">{option.title}</p>
-                  <span className="text-lg font-semibold text-inherit">{option.price}</span>
-                </div>
-                <p className="mt-3 text-sm text-neutral-500">{option.description}</p>
-                {option.bullets.length > 0 ? (
-                  <ul className="mt-4 space-y-2 text-sm text-neutral-500">
-                    {option.bullets.map((bullet) => (
-                      <li key={bullet} className="flex items-start gap-2">
-                        <Check className="mt-[2px] h-4 w-4 flex-shrink-0 text-green-600" />
-                        <span>{bullet}</span>
-                      </li>
-                    ))}
-                  </ul>
-                ) : null}
-              </button>
-            )
-          })}
+        <div className="overflow-hidden rounded-2xl border border-neutral-200 bg-white shadow-sm">
+          <div className="grid grid-cols-1 gap-3 border-b border-neutral-200 bg-neutral-50 px-5 py-3 text-xs font-semibold uppercase tracking-[0.3em] text-neutral-500 sm:grid-cols-[1.3fr,2fr,0.8fr]">
+            <span>Add-On</span>
+            <span>Description</span>
+            <span className="sm:text-right">Monthly</span>
+          </div>
+          <div className="divide-y divide-neutral-200">
+            {foundationalUpgrades.map((upgrade) => {
+              const isActive = selectedUpgrades.includes(upgrade.value)
+              return (
+                <button
+                  key={upgrade.value}
+                  type="button"
+                  onClick={() => onToggleUpgrade(upgrade.value)}
+                  className={cn(
+                    "grid w-full gap-4 px-5 py-5 text-left transition sm:grid-cols-[1.3fr,2fr,0.8fr]",
+                    isActive
+                      ? "bg-neutral-900 text-white shadow-inner"
+                      : "bg-white text-neutral-900 hover:bg-neutral-50"
+                  )}
+                  aria-pressed={isActive}
+                >
+                  <div className="flex items-center gap-2">
+                    <span className="text-base font-semibold lowercase">{upgrade.title}</span>
+                    {isActive ? <Check className="h-4 w-4" aria-hidden="true" /> : null}
+                  </div>
+                  <span className={cn("text-sm", isActive ? "text-neutral-200" : "text-neutral-600")}>
+                    {upgrade.description}
+                  </span>
+                  <span
+                    className={cn(
+                      "text-base font-semibold sm:text-right",
+                      isActive ? "text-white" : "text-neutral-900"
+                    )}
+                  >
+                    {upgrade.price}
+                  </span>
+                </button>
+              )
+            })}
+          </div>
         </div>
+        <p className="rounded-2xl border border-dashed border-neutral-300 bg-neutral-50 px-5 py-4 text-sm text-neutral-600">
+          Example: Starter Site + Listings + Custom Email = $350/mo
+        </p>
       </div>
 
       <div className="space-y-6">
