@@ -181,7 +181,7 @@ export default function ModelsPageClient() {
                   </p>
                   <div className="mt-6 overflow-x-auto pb-2">
                     <div className="flex gap-3 sm:gap-4">
-                      {exampleShots.map((shot) => (
+                      {exampleShots.map((shot, index) => (
                         <div
                           key={shot.title}
                           className="min-w-[180px] rounded-2xl border border-white/20 bg-white/10 p-3 backdrop-blur transition hover:-translate-y-1 hover:border-white/30 sm:min-w-[220px] sm:p-4"
@@ -193,7 +193,7 @@ export default function ModelsPageClient() {
                               fill
                               className="object-cover opacity-70"
                               sizes="220px"
-                              priority={false}
+                              priority={index === 0}
                               fallbackSrc={shot.image}
                               trackingId={`models_example_${shot.title.replace(/\s+/g, "_").toLowerCase()}`}
                             />
