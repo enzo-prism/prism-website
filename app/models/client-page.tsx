@@ -54,22 +54,22 @@ const exampleShots = [
   {
     title: "Studio Laughs",
     caption: "Candid energy that converts.",
-    image: "/model, studio.webp",
+    image: "/model-studio.webp",
   },
   {
     title: "Chairside Confidence",
     caption: "Showcase the treatment experience.",
-    image: "/model, chair.webp",
+    image: "/model-chair.webp",
   },
   {
     title: "After-Glow Portraits",
     caption: "Highlight the whitening results.",
-    image: "/model, after photo.webp",
+    image: "/model-after-photo.webp",
   },
   {
     title: "Lifestyle Moments",
     caption: "Smiles that feel real and relatable.",
-    image: "/model, lifestyle.webp",
+    image: "/model-lifestyle.webp",
   },
 ]
 
