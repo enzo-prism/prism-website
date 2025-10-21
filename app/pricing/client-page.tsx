@@ -527,7 +527,7 @@ const isCustomComplete =
               size="lg"
               className="rounded-full px-8"
             >
-              <Link href="/wall-of-love">See client wins</Link>
+              <Link href="/wall-of-love">Open wall of love</Link>
             </Button>
           </div>
         </div>
