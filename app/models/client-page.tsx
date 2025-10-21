@@ -57,6 +57,20 @@ const exampleShots = [
   { title: "Lifestyle Moments", caption: "Smiles that feel real and relatable." },
 ]
 
+const dentalPartners = [
+  { name: "Exquisite Dentistry", href: "https://www.exquisitedentistryla.com" },
+  { name: "Laguna Beach Dental Arts", href: "https://www.lagunabeachdentalarts.com" },
+  { name: "Coast Periodontics & Laser Surgery", href: "https://www.coastperiodontics.com" },
+  { name: "Wine Country Root Canal", href: "https://www.winecountryrootcanal.com" },
+]
+
+const dentalPartners = [
+  { name: "Exquisite Dentistry", href: "https://www.exquisitedentistryla.com" },
+  { name: "Laguna Beach Dental Arts", href: "https://www.lagunabeachdentalarts.com" },
+  { name: "Coast Periodontics & Laser Surgery", href: "https://www.coastperiodontics.com" },
+  { name: "Wine Country Root Canal", href: "https://www.winecountryrootcanal.com" },
+]
+
 export default function ModelsPageClient() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSuccess, setIsSuccess] = useState(false)
@@ -129,28 +143,20 @@ export default function ModelsPageClient() {
 
         <section id="how-it-works" className="py-20">
           <div className="container mx-auto px-4 md:px-6">
-            <div className="grid gap-12 lg:grid-cols-[1.2fr,1fr]">
-              <div>
+            <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr),minmax(0,0.9fr)] lg:items-start xl:gap-20">
+              <div className="lg:max-w-xl">
                 <span className="text-xs uppercase tracking-[0.35em] text-neutral-400">how it works</span>
                 <h2 className="mt-4 text-3xl font-semibold lowercase sm:text-4xl">
                   from application to campaign-ready in four steps
                 </h2>
-                <div className="mt-10 space-y-6">
+                <p className="mt-3 text-sm text-neutral-500 sm:text-base">
+                  A short path from raising your hand to seeing your smile featured in real campaigns.
+                </p>
+                <ol className="relative mt-8 list-none space-y-4 sm:space-y-5 md:mt-10 md:space-y-6 md:before:hidden before:absolute before:left-[1.35rem] before:top-4 before:bottom-4 before:w-px before:bg-neutral-200 before:content-['']">
                   {howItWorks.map((step, index) => (
-                    <div
-                      key={step.title}
-                      className="flex items-start gap-4 rounded-2xl border border-neutral-200 bg-white p-6 shadow-sm"
-                    >
-                      <span className="flex h-10 w-10 items-center justify-center rounded-full bg-neutral-900 text-sm font-semibold uppercase tracking-wide text-white">
-                        {index + 1}
-                      </span>
-                      <div>
-                        <h3 className="text-lg font-medium lowercase text-neutral-900">{step.title}</h3>
-                        <p className="mt-2 text-sm text-neutral-600">{step.description}</p>
-                      </div>
-                    </div>
+                    <StepItem key={step.title} step={step} index={index} total={howItWorks.length} />
                   ))}
-                </div>
+                </ol>
               </div>
               <div className="space-y-6">
                 <div className="rounded-3xl border border-neutral-200 bg-neutral-900/90 p-6 text-white shadow-lg backdrop-blur">
@@ -158,12 +164,12 @@ export default function ModelsPageClient() {
                   <p className="mt-3 text-sm text-neutral-200">
                     See how your session turns into scroll-stopping content across Prism campaigns.
                   </p>
-                  <div className="mt-6 overflow-x-auto">
+                  <div className="mt-6 overflow-x-auto pb-2">
                     <div className="flex gap-4">
                       {exampleShots.map((shot) => (
                         <div
                           key={shot.title}
-                          className="min-w-[220px] rounded-2xl border border-white/20 bg-white/10 p-4 backdrop-blur"
+                          className="min-w-[220px] rounded-2xl border border-white/20 bg-white/10 p-4 backdrop-blur transition hover:-translate-y-1 hover:border-white/30"
                         >
                           <div className="relative h-40 w-full overflow-hidden rounded-xl bg-neutral-800">
                             <CoreImage
@@ -183,12 +189,41 @@ export default function ModelsPageClient() {
                       ))}
                     </div>
                   </div>
-                </div>
-                <div className="rounded-3xl border border-dashed border-neutral-200 bg-neutral-50 p-6 text-sm text-neutral-600">
-                  📥 Bonus: New applicants automatically flow into our internal Notion database, so the right
-                  opportunities reach the right talent fast.
+                  <p className="mt-3 text-xs uppercase tracking-[0.2em] text-neutral-400">
+                    swipe to explore sample frames
+                  </p>
                 </div>
               </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="border-t border-neutral-200 bg-neutral-50 py-16" id="partners">
+          <div className="container mx-auto px-4 md:px-6">
+            <div className="text-center">
+              <span className="text-xs uppercase tracking-[0.35em] text-neutral-400">dental brands</span>
+              <h2 className="mt-3 text-2xl font-semibold lowercase text-neutral-900 sm:text-3xl">
+                trusted by practices we support
+              </h2>
+            </div>
+            <div className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+              {dentalPartners.map((partner) => (
+                <a
+                  key={partner.name}
+                  href={partner.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="group rounded-2xl border border-neutral-200 bg-white px-5 py-4 text-sm lowercase text-neutral-700 transition hover:-translate-y-1 hover:border-neutral-900 hover:text-neutral-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900"
+                  onClick={() =>
+                    trackCTAClick(`partner_${partner.name.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`, partner.href)
+                  }
+                >
+                  <span className="font-medium text-neutral-900 transition group-hover:text-neutral-900">
+                    {partner.name}
+                  </span>
+                  <span className="mt-1 block text-xs uppercase tracking-[0.2em] text-neutral-400">visit site</span>
+                </a>
+              ))}
             </div>
           </div>
         </section>
@@ -454,6 +489,34 @@ function FormField({
       </span>
       {children}
     </label>
+  )
+}
+
+function StepItem({
+  step,
+  index,
+  total,
+}: {
+  step: { title: string; description: string }
+  index: number
+  total: number
+}) {
+  const isLast = index === total - 1
+  return (
+    <li
+      className={cn(
+        "group relative rounded-3xl border border-neutral-200 bg-white pl-14 pr-6 py-6 shadow-sm transition hover:-translate-y-1 hover:shadow-md focus-within:ring-2 focus-within:ring-neutral-900 sm:pl-16 sm:pr-8 md:flex md:items-start md:gap-5 md:pl-6 md:pr-6",
+        !isLast && "after:absolute after:left-[1.35rem] after:bottom-[-1.75rem] after:block after:h-6 after:w-px after:bg-neutral-200 after:content-[''] md:after:hidden",
+      )}
+    >
+      <span className="absolute left-6 top-6 flex h-8 w-8 items-center justify-center rounded-full bg-neutral-900 text-xs font-semibold uppercase tracking-wide text-white shadow-sm transition group-hover:bg-neutral-800 md:static md:h-9 md:w-9 md:shrink-0 md:rounded-full md:text-sm md:leading-none">
+        {index + 1}
+      </span>
+      <div className="mt-2 md:mt-0 md:flex-1">
+        <h3 className="text-lg font-medium lowercase text-neutral-900">{step.title}</h3>
+        <p className="mt-2 text-sm text-neutral-600">{step.description}</p>
+      </div>
+    </li>
   )
 }
 
