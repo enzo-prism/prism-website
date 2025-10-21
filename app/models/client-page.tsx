@@ -7,6 +7,7 @@ import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
 import PageViewTracker from "@/components/page-view-tracker"
 import CoreImage from "@/components/core-image"
+import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
@@ -158,8 +159,8 @@ export default function ModelsPageClient() {
 
         <section id="how-it-works" className="py-16 sm:py-20">
           <div className="container mx-auto px-4 md:px-6">
-            <div className="flex flex-col gap-10 lg:grid lg:grid-cols-[minmax(0,1fr),minmax(0,0.9fr)] lg:items-start xl:gap-20">
-              <div className="lg:max-w-xl">
+            <div className="flex flex-col gap-10 lg:flex-row lg:items-start xl:gap-16">
+              <div className="flex-1 lg:max-w-xl">
                 <span className="text-xs uppercase tracking-[0.35em] text-neutral-400">how it works</span>
                 <h2 className="mt-4 text-3xl font-semibold lowercase sm:text-4xl">
                   from application to campaign-ready in four steps
@@ -167,42 +168,47 @@ export default function ModelsPageClient() {
                 <p className="mt-3 text-sm text-neutral-500 sm:text-base">
                   A short path from raising your hand to seeing your smile featured in real campaigns.
                 </p>
-                <ol className="mt-8 space-y-3 sm:space-y-5 md:mt-10 md:space-y-6">
+                <div className="mt-8 space-y-4 sm:space-y-5 md:mt-10">
                   {howItWorks.map((step, index) => (
-                    <StepItem key={step.title} step={step} index={index} total={howItWorks.length} />
+                    <div
+                      key={step.title}
+                      className="flex items-start gap-4 rounded-2xl border border-neutral-200 bg-white p-4 shadow-sm transition hover:-translate-y-1 hover:shadow-md sm:rounded-3xl sm:p-5"
+                    >
+                      <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-neutral-900 text-xs font-semibold uppercase tracking-wide text-white sm:h-9 sm:w-9">
+                        {index + 1}
+                      </span>
+                      <div>
+                        <h3 className="text-base font-medium lowercase text-neutral-900 sm:text-lg">{step.title}</h3>
+                        <p className="mt-2 text-sm text-neutral-600">{step.description}</p>
+                      </div>
+                    </div>
                   ))}
-                </ol>
+                </div>
               </div>
-              <div className="space-y-6">
+              <div className="flex-1 space-y-6">
                 <div className="rounded-3xl border border-neutral-200 bg-neutral-900/90 p-4 text-white shadow-lg backdrop-blur sm:p-6">
                   <h3 className="text-xl font-semibold lowercase">from shoot to screen</h3>
                   <p className="mt-3 text-sm text-neutral-200">
                     See how your session turns into scroll-stopping content across Prism campaigns.
                   </p>
-                  <div className="mt-6 overflow-x-auto pb-2">
-                    <div className="flex gap-3 sm:gap-4">
-                      {exampleShots.map((shot, index) => (
-                        <div
-                          key={shot.title}
-                          className="min-w-[180px] rounded-2xl border border-white/20 bg-white/10 p-3 backdrop-blur transition hover:-translate-y-1 hover:border-white/30 sm:min-w-[220px] sm:p-4"
-                        >
-                          <div className="relative h-32 w-full overflow-hidden rounded-lg bg-neutral-800 sm:h-40 sm:rounded-xl">
-                            <CoreImage
-                              src={shot.image}
-                              alt={shot.title}
-                              fill
-                              className="object-cover opacity-70"
-                              sizes="220px"
-                              priority={index === 0}
-                              fallbackSrc={shot.image}
-                              trackingId={`models_example_${shot.title.replace(/\s+/g, "_").toLowerCase()}`}
-                            />
-                          </div>
-                          <h4 className="mt-3 text-sm font-semibold lowercase text-white">{shot.title}</h4>
-                          <p className="text-xs text-neutral-300">{shot.caption}</p>
-                        </div>
-                      ))}
-                    </div>
+                  <div className="mt-6 flex gap-3 overflow-x-auto pb-2 sm:gap-4">
+                    {exampleShots.map((shot, index) => (
+                      <figure
+                        key={shot.title}
+                        className="min-w-[180px] rounded-2xl border border-white/20 bg-white/10 p-3 backdrop-blur sm:min-w-[220px] sm:p-4"
+                      >
+                        <Image
+                          src={shot.image}
+                          alt={shot.title}
+                          width={220}
+                          height={280}
+                          priority={index === 0}
+                          className="h-40 w-full rounded-lg object-cover sm:h-48"
+                        />
+                        <figcaption className="mt-3 text-sm font-semibold lowercase text-white">{shot.title}</figcaption>
+                        <p className="text-xs text-neutral-300">{shot.caption}</p>
+                      </figure>
+                    ))}
                   </div>
                   <p className="mt-4 text-xs uppercase tracking-[0.2em] text-neutral-400">
                     swipe to explore sample frames
@@ -525,37 +531,6 @@ function FormField({
       </span>
       {children}
     </label>
-  )
-}
-
-function StepItem({
-  step,
-  index,
-  total,
-}: {
-  step: { title: string; description: string }
-  index: number
-  total: number
-}) {
-  const isLast = index === total - 1
-  return (
-    <li
-      className={cn(
-        "group relative rounded-2xl border border-neutral-200 bg-white px-4 py-5 shadow-sm transition hover:-translate-y-1 hover:shadow-md focus-within:ring-2 focus-within:ring-neutral-900 sm:rounded-3xl sm:pl-16 sm:pr-6 sm:py-6",
-        !isLast &&
-          "sm:after:absolute sm:after:left-[1.35rem] sm:after:top-full sm:after:block sm:after:h-6 sm:after:w-px sm:after:bg-neutral-200 sm:after:content-['']",
-      )}
-    >
-      <div className="flex items-start gap-3 sm:block">
-        <span className="flex h-6 w-6 items-center justify-center rounded-full bg-neutral-900 text-[10px] font-semibold uppercase tracking-wide text-white shadow-sm transition group-hover:bg-neutral-800 sm:absolute sm:left-6 sm:top-6 sm:h-8 sm:w-8 sm:text-xs">
-          {index + 1}
-        </span>
-        <div className="pt-0.5 sm:pl-10 sm:pt-1">
-          <h3 className="text-base font-medium lowercase text-neutral-900 sm:text-lg">{step.title}</h3>
-          <p className="mt-2 text-sm text-neutral-600">{step.description}</p>
-        </div>
-      </div>
-    </li>
   )
 }
 
