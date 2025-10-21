@@ -167,14 +167,14 @@ export default function ModelsPageClient() {
                 <p className="mt-3 text-sm text-neutral-500 sm:text-base">
                   A short path from raising your hand to seeing your smile featured in real campaigns.
                 </p>
-                <ol className="mt-8 space-y-4 sm:space-y-5 md:mt-10 md:space-y-6">
+                <ol className="mt-8 space-y-3 sm:space-y-5 md:mt-10 md:space-y-6">
                   {howItWorks.map((step, index) => (
                     <StepItem key={step.title} step={step} index={index} total={howItWorks.length} />
                   ))}
                 </ol>
               </div>
               <div className="space-y-6">
-                <div className="rounded-3xl border border-neutral-200 bg-neutral-900/90 p-5 text-white shadow-lg backdrop-blur sm:p-6">
+                <div className="rounded-3xl border border-neutral-200 bg-neutral-900/90 p-4 text-white shadow-lg backdrop-blur sm:p-6">
                   <h3 className="text-xl font-semibold lowercase">from shoot to screen</h3>
                   <p className="mt-3 text-sm text-neutral-200">
                     See how your session turns into scroll-stopping content across Prism campaigns.
@@ -184,9 +184,9 @@ export default function ModelsPageClient() {
                       {exampleShots.map((shot) => (
                         <div
                           key={shot.title}
-                          className="min-w-[200px] rounded-2xl border border-white/20 bg-white/10 p-3 backdrop-blur transition hover:-translate-y-1 hover:border-white/30 sm:min-w-[220px] sm:p-4"
+                          className="min-w-[180px] rounded-2xl border border-white/20 bg-white/10 p-3 backdrop-blur transition hover:-translate-y-1 hover:border-white/30 sm:min-w-[220px] sm:p-4"
                         >
-                          <div className="relative h-36 w-full overflow-hidden rounded-xl bg-neutral-800 sm:h-40">
+                          <div className="relative h-32 w-full overflow-hidden rounded-lg bg-neutral-800 sm:h-40 sm:rounded-xl">
                             <CoreImage
                               src={shot.image}
                               alt={shot.title}
@@ -541,16 +541,16 @@ function StepItem({
   return (
     <li
       className={cn(
-        "group relative rounded-2xl border border-neutral-200 bg-white p-5 shadow-sm transition hover:-translate-y-1 hover:shadow-md focus-within:ring-2 focus-within:ring-neutral-900 sm:rounded-3xl sm:pl-16 sm:pr-6 sm:py-6",
+        "group relative rounded-2xl border border-neutral-200 bg-white px-4 py-5 shadow-sm transition hover:-translate-y-1 hover:shadow-md focus-within:ring-2 focus-within:ring-neutral-900 sm:rounded-3xl sm:pl-16 sm:pr-6 sm:py-6",
         !isLast &&
           "sm:after:absolute sm:after:left-[1.35rem] sm:after:top-full sm:after:block sm:after:h-6 sm:after:w-px sm:after:bg-neutral-200 sm:after:content-['']",
       )}
     >
       <div className="flex items-start gap-3 sm:block">
-        <span className="flex h-7 w-7 items-center justify-center rounded-full bg-neutral-900 text-[11px] font-semibold uppercase tracking-wide text-white shadow-sm transition group-hover:bg-neutral-800 sm:absolute sm:left-6 sm:top-6 sm:h-8 sm:w-8 sm:text-xs">
+        <span className="flex h-6 w-6 items-center justify-center rounded-full bg-neutral-900 text-[10px] font-semibold uppercase tracking-wide text-white shadow-sm transition group-hover:bg-neutral-800 sm:absolute sm:left-6 sm:top-6 sm:h-8 sm:w-8 sm:text-xs">
           {index + 1}
         </span>
-        <div className="sm:pl-10 sm:pt-1">
+        <div className="pt-0.5 sm:pl-10 sm:pt-1">
           <h3 className="text-base font-medium lowercase text-neutral-900 sm:text-lg">{step.title}</h3>
           <p className="mt-2 text-sm text-neutral-600">{step.description}</p>
         </div>
