@@ -1,5 +1,6 @@
 import ScrollManager from "@/components/scroll-manager"
 import type { Metadata } from "next"
+import Script from "next/script"
 import type React from "react"
 import "./globals.css"
 // Import the schema components
@@ -7,6 +8,7 @@ import ErrorTracker from "@/components/error-tracker"
 import HotjarScript from "@/components/hotjar-script"
 import MCPHealthMonitor from "@/components/mcp-health-monitor"
 import PerformanceMonitor from "@/components/performance-monitor"
+import AnalyticsProvider from "@/components/analytics-provider"
 import { LocalBusinessSchema, OrganizationSchema, WebsiteSchema } from "@/components/schema-markup"
 import SentryContextProvider from "@/components/sentry-context-provider"
 import { GA_MEASUREMENT_ID } from "@/lib/constants"
@@ -84,18 +86,20 @@ export default function RootLayout({
     <html lang="en" className="m-0 p-0 w-full" suppressHydrationWarning>
       <head>
         {/* Google tag (gtag.js) */}
-        <script
-          async
+        <Script
+          id="ga-loader"
+          strategy="afterInteractive"
           src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
-        ></script>
-        <script
+        />
+        <Script
+          id="ga-config"
+          strategy="afterInteractive"
           dangerouslySetInnerHTML={{
             __html: `
               window.dataLayer = window.dataLayer || [];
               function gtag(){dataLayer.push(arguments);}
               gtag('js', new Date());
-
-              gtag('config', '${GA_MEASUREMENT_ID}');
+              gtag('config', '${GA_MEASUREMENT_ID}', { send_page_view: false });
             `,
           }}
         />
@@ -136,7 +140,7 @@ export default function RootLayout({
         <MCPHealthMonitor />
         <PerformanceMonitor />
         <SentryContextProvider>
-          {children}
+          <AnalyticsProvider>{children}</AnalyticsProvider>
         </SentryContextProvider>
       </body>
     </html>

@@ -54,9 +54,11 @@ export function trackEvent(eventName: EventType, params?: Record<string, any>) {
     window.dataLayer = window.dataLayer || []
     window.dataLayer.push({ event: eventName, ...enhancedParams })
     if (typeof window.gtag === "function") {
-      window.gtag("event", eventName, { send_to: GA_MEASUREMENT_ID, ...enhancedParams })
+      window.gtag("event", eventName, enhancedParams)
     }
-    console.log(`[Analytics] Tracked event: ${eventName}`, enhancedParams)
+    if (process.env.NODE_ENV === "development") {
+      console.log(`[Analytics] Tracked event: ${eventName}`, enhancedParams)
+    }
   } catch (error) {
     console.error("[Analytics] Error tracking event:", error)
   }
@@ -72,6 +74,7 @@ export function trackPageView(path: string, title: string) {
     page_path: path,
     page_title: title,
     page_referrer: typeof document !== "undefined" ? document.referrer : "",
+    page_location: typeof window !== "undefined" ? window.location.href : "",
   })
 }
 

@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react"
 import { usePathname, useSearchParams } from "next/navigation"
-import { trackPageView, trackEvent } from "@/utils/analytics"
+import { trackEvent } from "@/utils/analytics"
 
 interface EnhancedAnalyticsProps {
   title: string
@@ -11,35 +11,24 @@ interface EnhancedAnalyticsProps {
 export default function EnhancedAnalytics({ title }: EnhancedAnalyticsProps) {
   const pathname = usePathname()
   const searchParams = useSearchParams()
-  const isTracked = useRef(false)
   const previousPathname = useRef<string | null>(null)
 
   useEffect(() => {
-    // Track initial page view
-    if (!isTracked.current) {
-      trackPageView(pathname, title)
-      isTracked.current = true
-      previousPathname.current = pathname
-      return
-    }
-
-    // Track when pathname changes (client-side navigation)
-    if (previousPathname.current !== pathname) {
-      trackPageView(pathname, title)
-      previousPathname.current = pathname
-
-      // Track navigation event
+    const previous = previousPathname.current
+    if (previous !== pathname) {
       trackEvent("navigation", {
-        from_path: previousPathname.current,
+        from_path: previous || "(initial)",
         to_path: pathname,
-        navigation_type: "client_side",
+        navigation_type: previous ? "client_side" : "initial_load",
+        page_title: title,
       })
+      previousPathname.current = pathname
     }
   }, [pathname, title])
 
   // Track when search params change
   useEffect(() => {
-    if (previousPathname.current === pathname && isTracked.current) {
+    if (previousPathname.current === pathname) {
       trackEvent("search_params_change", {
         path: pathname,
         search_params: searchParams.toString(),
