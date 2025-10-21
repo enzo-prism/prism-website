@@ -3,6 +3,7 @@
 import { FormEvent, useMemo, useState } from "react"
 import { ArrowRight, Check } from "lucide-react"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 
 import StepIndicator from "@/components/ui/step-indicator"
 import { Button } from "@/components/ui/button"
@@ -177,6 +178,8 @@ export default function PricingPageClient() {
   const [email, setEmail] = useState("")
   const [notes, setNotes] = useState("")
   const [error, setError] = useState<string | null>(null)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const router = useRouter()
 
   const modeOptions: { label: string; value: PlannerMode }[] = [
     { label: "custom plan", value: "custom" },
@@ -241,26 +244,53 @@ export default function PricingPageClient() {
     }
   }
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+
     if (!email.trim()) {
-      event.preventDefault()
       setError("Enter your email so we can send your plan.")
       return
     }
 
     if (mode === "custom" && !isCustomComplete) {
-      event.preventDefault()
       setError("Pick an option for every step to finish your custom plan.")
       return
     }
 
     if (mode === "bundle" && !selectedBundle) {
-      event.preventDefault()
       setError("Select a bundle to continue.")
       return
     }
 
     setError(null)
+    setIsSubmitting(true)
+
+    const form = event.currentTarget
+    const formData = new FormData(form)
+
+    try {
+      const response = await fetch(form.action, {
+        method: "POST",
+        body: formData,
+        headers: { Accept: "application/json" },
+      })
+
+      if (response.ok) {
+        router.push("/pricing/thank-you")
+        return
+      }
+
+      const responseBody = await response.json().catch(() => null)
+      const message =
+        (responseBody && (responseBody.error || responseBody.message)) ||
+        "We couldn't send your plan. Try again or email support@design-prism.com."
+      setError(message)
+    } catch (submissionError) {
+      console.error("Error submitting pricing plan:", submissionError)
+      setError("We couldn't send your plan. Try again or email support@design-prism.com.")
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -410,9 +440,9 @@ export default function PricingPageClient() {
                 type="submit"
                 size="lg"
                 className="rounded-full px-8"
-                disabled={!canSubmit}
+                disabled={!canSubmit || isSubmitting}
               >
-                send my plan
+                {isSubmitting ? "sending..." : "send my plan"}
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
               <Button
