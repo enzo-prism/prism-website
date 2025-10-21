@@ -408,7 +408,7 @@ export default function ModelsPageClient() {
                 className="rounded-full bg-white text-neutral-900 hover:bg-neutral-100"
               >
                 <Link href="/services" onClick={() => trackCTAClick("dental_cta_models_footer", "/services")}>
-                  see how we help practices grow
+                  explore the prism services platform
                 </Link>
               </Button>
             </div>

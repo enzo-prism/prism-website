@@ -139,11 +139,11 @@ export default function OneTimeFeeClientPage() {
                   <Button
                     variant="outline"
                     className="rounded-full text-sm lowercase"
-                    onClick={() => trackNavigation("learn about subscriptions", "/services")}
+                    onClick={() => trackNavigation("explore services platform", "/services")}
                     asChild
                   >
                     <Link href="/services">
-                      view full services <ArrowRight className="ml-1 h-3 w-3" />
+                      explore our service platform <ArrowRight className="ml-1 h-3 w-3" />
                     </Link>
                   </Button>
                 </div>
