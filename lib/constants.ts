@@ -38,14 +38,5 @@ export const NAV_ITEMS: NavItem[] = [
     ],
   },
   { label: "pricing", href: "/pricing" },
-  {
-    label: "growth guides",
-    children: [
-      { label: "blog", href: "/blog" },
-      { label: "podcast", href: "/podcast" },
-    ],
-  },
-  { label: "wall of love", href: "/wall-of-love" },
   { label: "contact", href: "/contact" },
-  { label: "start", href: "/get-started" },
 ]
