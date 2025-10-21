@@ -193,54 +193,6 @@ export default function ModelsPageClient() {
           </div>
         </section>
 
-        <section className="border-y border-neutral-200 bg-white py-20">
-          <div className="container mx-auto px-4 md:px-6">
-            <div className="grid gap-12 lg:grid-cols-[1.1fr,0.9fr]">
-              <div className="space-y-6">
-                <span className="text-xs uppercase tracking-[0.35em] text-neutral-400">real results</span>
-                <h2 className="text-3xl font-semibold lowercase text-neutral-900 sm:text-4xl">
-                  real smiles. real campaigns. measurable lift.
-                </h2>
-                <div className="grid gap-6 md:grid-cols-2">
-                  <ResultCard
-                    title="before → after"
-                    description="Natural whitening transformation that keeps authenticity intact."
-                    emphatic="Verified consent on all smile showcases."
-                  />
-                  <ResultCard
-                    title="client spotlight"
-                    description="“It was such a fun experience — and my smile’s never looked better.”"
-                    emphatic="— Sofia, Prism Model & dental patient"
-                  />
-                </div>
-                <div className="rounded-3xl border border-neutral-200 bg-neutral-50 p-6 text-sm text-neutral-600">
-                  <p>
-                    Prism Models appear in website hero sections, paid ads, in-practice signage, and social campaigns
-                    across the country — giving dental teams fresh, authentic creative that converts.
-                  </p>
-                </div>
-              </div>
-              <div className="rounded-3xl border border-neutral-200 bg-neutral-900/95 p-6 text-white shadow-lg">
-                <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/10">
-                  <CoreImage
-                    src="/prism-opengraph.png"
-                    alt="Before and after whitening"
-                    width={800}
-                    height={600}
-                    className="h-full w-full object-cover opacity-80"
-                    fallbackSrc="/prism-opengraph.png"
-                    trackingId="models_real_results"
-                  />
-                </div>
-                <p className="mt-4 text-sm text-neutral-200">
-                  Tap into Prism’s creative engine — we handle casting, glam, production, and post, so every smile feels
-                  trustworthy and every story lands.
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
         <section id="apply" className="bg-neutral-50 py-20">
           <div className="container mx-auto px-4 md:px-6">
             <div className="mx-auto max-w-3xl rounded-3xl border border-neutral-200 bg-white p-8 shadow-sm sm:p-12">
@@ -482,15 +434,6 @@ function HeroSection() {
   )
 }
 
-function ResultCard({ title, description, emphatic }: { title: string; description: string; emphatic: string }) {
-  return (
-    <div className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm">
-      <h3 className="text-lg font-semibold lowercase text-neutral-900">{title}</h3>
-      <p className="mt-2 text-sm text-neutral-600">{description}</p>
-      <p className="mt-4 text-xs font-medium uppercase tracking-[0.2em] text-neutral-400">{emphatic}</p>
-    </div>
-  )
-}
 
 function FormField({
   label,
