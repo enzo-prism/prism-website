@@ -1,7 +1,8 @@
 import ScrollManager from "@/components/scroll-manager"
-import type { Metadata } from "next"
+import type { Metadata, Viewport } from "next"
 import Script from "next/script"
 import type React from "react"
+import { Suspense } from "react"
 import "./globals.css"
 // Import the schema components
 import ErrorTracker from "@/components/error-tracker"
@@ -70,11 +71,12 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/",
   },
-  viewport: {
-    width: "device-width",
-    initialScale: 1,
-    viewportFit: "cover",
-  },
+}
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
 }
 
 export default function RootLayout({
@@ -140,7 +142,9 @@ export default function RootLayout({
         <MCPHealthMonitor />
         <PerformanceMonitor />
         <SentryContextProvider>
-          <AnalyticsProvider>{children}</AnalyticsProvider>
+          <Suspense fallback={null}>
+            <AnalyticsProvider>{children}</AnalyticsProvider>
+          </Suspense>
         </SentryContextProvider>
       </body>
     </html>
