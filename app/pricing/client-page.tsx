@@ -38,6 +38,12 @@ const websitePlans = [
     bestFor: "multi-location or complex operations",
     price: "$900/mo",
   },
+  {
+    name: "no website build",
+    pages: "skip Step 1",
+    bestFor: "teams only adding upgrades, ads, or content",
+    price: "$0/mo",
+  },
 ]
 
 const NO_UPGRADE_VALUE = "no-upgrades"
