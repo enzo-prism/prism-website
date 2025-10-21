@@ -156,9 +156,9 @@ export default function ModelsPageClient() {
           </div>
         </section>
 
-        <section id="how-it-works" className="py-20">
+        <section id="how-it-works" className="py-16 sm:py-20">
           <div className="container mx-auto px-4 md:px-6">
-            <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr),minmax(0,0.9fr)] lg:items-start xl:gap-20">
+            <div className="flex flex-col gap-10 lg:grid lg:grid-cols-[minmax(0,1fr),minmax(0,0.9fr)] lg:items-start xl:gap-20">
               <div className="lg:max-w-xl">
                 <span className="text-xs uppercase tracking-[0.35em] text-neutral-400">how it works</span>
                 <h2 className="mt-4 text-3xl font-semibold lowercase sm:text-4xl">
