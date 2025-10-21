@@ -131,23 +131,25 @@ export default function ModelsPageClient() {
       <main className="flex-1">
         <HeroSection />
 
-        <section className="border-b border-neutral-200 bg-neutral-50 py-20" id="offer">
+        <section className="border-b border-neutral-200 bg-neutral-50 py-14 sm:py-20" id="offer">
           <div className="container mx-auto px-4 md:px-6">
             <div className="text-center">
               <h2 className="text-3xl font-semibold lowercase sm:text-4xl">what prism models receive</h2>
-              <p className="mt-4 text-neutral-600">
+              <p className="mt-3 text-sm text-neutral-600 sm:mt-4 sm:text-base">
                 Real perks for real people who bring confident smiles to life.
               </p>
             </div>
-            <div className="mt-12 grid gap-6 md:grid-cols-3">
+            <div className="mt-10 grid gap-5 sm:mt-12 sm:gap-6 md:grid-cols-3">
               {offerHighlights.map((highlight) => (
                 <div
                   key={highlight.title}
-                  className="rounded-3xl border border-neutral-200 bg-white p-8 shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
+                  className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg sm:p-8"
                 >
-                  <div className="text-3xl">{highlight.icon}</div>
-                  <h3 className="mt-4 text-xl font-semibold lowercase text-neutral-900">{highlight.title}</h3>
-                  <p className="mt-3 text-sm text-neutral-600">{highlight.description}</p>
+                  <div className="text-2xl sm:text-3xl">{highlight.icon}</div>
+                  <h3 className="mt-3 text-lg font-semibold lowercase text-neutral-900 sm:mt-4 sm:text-xl">
+                    {highlight.title}
+                  </h3>
+                  <p className="mt-2 text-sm text-neutral-600 sm:mt-3">{highlight.description}</p>
                 </div>
               ))}
             </div>
@@ -165,26 +167,26 @@ export default function ModelsPageClient() {
                 <p className="mt-3 text-sm text-neutral-500 sm:text-base">
                   A short path from raising your hand to seeing your smile featured in real campaigns.
                 </p>
-                <ol className="relative mt-8 list-none space-y-4 sm:space-y-5 md:mt-10 md:space-y-6 md:before:hidden before:absolute before:left-[1.35rem] before:top-4 before:bottom-4 before:w-px before:bg-neutral-200 before:content-['']">
+                <ol className="mt-8 space-y-4 sm:space-y-5 md:mt-10 md:space-y-6">
                   {howItWorks.map((step, index) => (
                     <StepItem key={step.title} step={step} index={index} total={howItWorks.length} />
                   ))}
                 </ol>
               </div>
               <div className="space-y-6">
-                <div className="rounded-3xl border border-neutral-200 bg-neutral-900/90 p-6 text-white shadow-lg backdrop-blur">
+                <div className="rounded-3xl border border-neutral-200 bg-neutral-900/90 p-5 text-white shadow-lg backdrop-blur sm:p-6">
                   <h3 className="text-xl font-semibold lowercase">from shoot to screen</h3>
                   <p className="mt-3 text-sm text-neutral-200">
                     See how your session turns into scroll-stopping content across Prism campaigns.
                   </p>
                   <div className="mt-6 overflow-x-auto pb-2">
-                    <div className="flex gap-4">
+                    <div className="flex gap-3 sm:gap-4">
                       {exampleShots.map((shot) => (
                         <div
                           key={shot.title}
-                          className="min-w-[220px] rounded-2xl border border-white/20 bg-white/10 p-4 backdrop-blur transition hover:-translate-y-1 hover:border-white/30"
+                          className="min-w-[200px] rounded-2xl border border-white/20 bg-white/10 p-3 backdrop-blur transition hover:-translate-y-1 hover:border-white/30 sm:min-w-[220px] sm:p-4"
                         >
-                          <div className="relative h-40 w-full overflow-hidden rounded-xl bg-neutral-800">
+                          <div className="relative h-36 w-full overflow-hidden rounded-xl bg-neutral-800 sm:h-40">
                             <CoreImage
                               src={shot.image}
                               alt={shot.title}
@@ -202,7 +204,7 @@ export default function ModelsPageClient() {
                       ))}
                     </div>
                   </div>
-                  <p className="mt-3 text-xs uppercase tracking-[0.2em] text-neutral-400">
+                  <p className="mt-4 text-xs uppercase tracking-[0.2em] text-neutral-400">
                     swipe to explore sample frames
                   </p>
                 </div>
@@ -211,15 +213,15 @@ export default function ModelsPageClient() {
           </div>
         </section>
 
-        <section className="border-t border-neutral-200 bg-neutral-50 py-16" id="partners">
+        <section className="border-t border-neutral-200 bg-neutral-50 py-14 sm:py-16" id="partners">
           <div className="container mx-auto px-4 md:px-6">
             <div className="text-center">
               <span className="text-xs uppercase tracking-[0.35em] text-neutral-400">dental brands</span>
-              <h2 className="mt-3 text-2xl font-semibold lowercase text-neutral-900 sm:text-3xl">
+              <h2 className="mt-2 text-xl font-semibold lowercase text-neutral-900 sm:mt-3 sm:text-3xl">
                 trusted by practices we support
               </h2>
             </div>
-            <div className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="mt-8 grid gap-3 sm:mt-10 sm:grid-cols-2 lg:grid-cols-4">
               {dentalPartners.map((partner) => {
                 const partnerId = `partner_${partner.name.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`
                 const isExternal = partner.href.startsWith("http")
@@ -239,32 +241,32 @@ export default function ModelsPageClient() {
                       href={partner.href}
                       target="_blank"
                       rel="noreferrer"
-                      className="group rounded-2xl border border-neutral-200 bg-white px-5 py-4 text-sm lowercase text-neutral-700 transition hover:-translate-y-1 hover:border-neutral-900 hover:text-neutral-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900"
-                      onClick={() => trackCTAClick(partnerId, partner.href)}
-                    >
-                      {CardContent}
-                    </a>
-                  )
+                    className="group rounded-2xl border border-neutral-200 bg-white px-4 py-4 text-sm lowercase text-neutral-700 transition hover:-translate-y-1 hover:border-neutral-900 hover:text-neutral-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900 sm:px-5"
+                    onClick={() => trackCTAClick(partnerId, partner.href)}
+                  >
+                    {CardContent}
+                  </a>
+                )
                 }
 
                 return (
                   <Link
                     key={partner.name}
                     href={partner.href}
-                    className="group rounded-2xl border border-neutral-200 bg-white px-5 py-4 text-sm lowercase text-neutral-700 transition hover:-translate-y-1 hover:border-neutral-900 hover:text-neutral-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900"
-                    onClick={() => trackCTAClick(partnerId, partner.href)}
-                  >
-                    {CardContent}
-                  </Link>
-                )
+                  className="group rounded-2xl border border-neutral-200 bg-white px-4 py-4 text-sm lowercase text-neutral-700 transition hover:-translate-y-1 hover:border-neutral-900 hover:text-neutral-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900 sm:px-5"
+                  onClick={() => trackCTAClick(partnerId, partner.href)}
+                >
+                  {CardContent}
+                </Link>
+              )
               })}
             </div>
           </div>
         </section>
 
-        <section id="apply" className="bg-neutral-50 py-20">
+        <section id="apply" className="bg-neutral-50 py-16 sm:py-20">
           <div className="container mx-auto px-4 md:px-6">
-            <div className="mx-auto max-w-3xl rounded-3xl border border-neutral-200 bg-white p-8 shadow-sm sm:p-12">
+            <div className="mx-auto max-w-3xl rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm sm:p-10 lg:p-12">
               <div className="text-center">
                 <span className="text-xs uppercase tracking-[0.35em] text-neutral-400">apply to join</span>
                 <h2 className="mt-3 text-3xl font-semibold lowercase text-neutral-900 sm:text-4xl">
@@ -276,12 +278,12 @@ export default function ModelsPageClient() {
                 </p>
               </div>
               <form
-                className="mt-10 space-y-6"
+                className="mt-8 space-y-5 sm:mt-10 sm:space-y-6"
                 action="https://formspree.io/f/mrbyvoqo"
                 method="POST"
                 onSubmit={handleSubmit}
               >
-                <div className="grid gap-6 sm:grid-cols-2">
+                <div className="grid gap-5 sm:grid-cols-2 sm:gap-6">
                   <FormField label="Name" name="name" required>
                     <Input id="models-name" name="name" placeholder="First and last name" required />
                   </FormField>
@@ -322,7 +324,7 @@ export default function ModelsPageClient() {
                   </FormField>
                 </div>
 
-                <div className="space-y-4 rounded-2xl border border-neutral-200 bg-neutral-50 p-5">
+                <div className="space-y-3.5 rounded-2xl border border-neutral-200 bg-neutral-50 p-4 sm:space-y-4 sm:p-5">
                   <CheckboxField
                     id="models-over-18"
                     label="I am 18 or older."
@@ -365,11 +367,11 @@ export default function ModelsPageClient() {
                   </p>
                 ) : null}
 
-                <div className="flex flex-wrap items-center gap-3">
+                <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
                   <Button type="submit" size="lg" className="rounded-full px-8" disabled={isSubmitting}>
                     {isSubmitting ? "sending..." : "apply now"}
                   </Button>
-                  <p className="text-xs text-neutral-500">
+                  <p className="text-xs text-neutral-500 sm:max-w-xs">
                     We review every application and respond within 7 business days when there’s a great fit.
                   </p>
                 </div>
@@ -378,9 +380,9 @@ export default function ModelsPageClient() {
           </div>
         </section>
 
-        <section className="border-t border-neutral-200 bg-white py-16">
+        <section className="border-t border-neutral-200 bg-white py-14 sm:py-16">
           <div className="container mx-auto px-4 md:px-6">
-            <div className="flex flex-col gap-6 rounded-3xl border border-neutral-200 bg-neutral-900 px-8 py-10 text-white shadow-sm md:flex-row md:items-center md:justify-between">
+            <div className="flex flex-col gap-6 rounded-3xl border border-neutral-200 bg-neutral-900 px-6 py-8 text-white shadow-sm sm:px-8 sm:py-10 md:flex-row md:items-center md:justify-between">
               <div>
                 <p className="text-xs uppercase tracking-[0.35em] text-neutral-400">
                   for dental practices
@@ -407,7 +409,7 @@ export default function ModelsPageClient() {
           </div>
         </section>
 
-        <section className="bg-neutral-900 py-16 text-white">
+        <section className="bg-neutral-900 py-14 text-white sm:py-16">
           <div className="container mx-auto px-4 md:px-6">
             <div className="flex flex-col items-center text-center">
               <h2 className="text-3xl font-semibold lowercase sm:text-4xl">
@@ -446,17 +448,17 @@ function HeroSection() {
         <div className="absolute inset-0 bg-gradient-to-br from-neutral-900 via-neutral-900/80 to-neutral-800 opacity-90" />
       </div>
       <div className="relative">
-        <div className="container mx-auto grid min-h-[70vh] items-center gap-12 px-4 py-20 md:grid-cols-[1.1fr,0.9fr] md:px-6">
-          <div className="space-y-6">
+        <div className="container mx-auto grid min-h-[60vh] items-center gap-8 px-4 py-16 sm:gap-12 sm:py-20 md:grid-cols-[1.1fr,0.9fr] md:px-6">
+          <div className="space-y-5 sm:space-y-6">
             <span className="text-xs uppercase tracking-[0.35em] text-neutral-400">prism models</span>
-            <h1 className="text-4xl font-semibold lowercase sm:text-5xl">
+            <h1 className="text-3xl font-semibold lowercase sm:text-5xl">
               Prism Models — Real People. Real Smiles. Real Growth.
             </h1>
             <p className="text-sm text-neutral-200 sm:text-base">
               We partner with real people who love being on camera to help our dental clients tell authentic stories.
               Join Prism Models to get complimentary whitening, professional photos, and paid creative opportunities.
             </p>
-            <div className="flex flex-wrap gap-3">
+            <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
               <Button
                 asChild
                 size="lg"
@@ -479,8 +481,8 @@ function HeroSection() {
             </div>
           </div>
           <div className="relative">
-            <div className="rounded-[36px] border border-white/20 bg-white/10 p-4 backdrop-blur">
-              <div className="relative h-full min-h-[320px] overflow-hidden rounded-[28px] border border-white/20">
+            <div className="rounded-[32px] border border-white/20 bg-white/10 p-3 backdrop-blur sm:rounded-[36px] sm:p-4">
+              <div className="relative h-full min-h-[260px] overflow-hidden rounded-[26px] border border-white/20 sm:min-h-[320px] sm:rounded-[28px]">
                 <CoreImage
                   src="/prism-opengraph.png"
                   alt="Prism models shoot"
@@ -491,7 +493,7 @@ function HeroSection() {
                   trackingId="models_hero_image"
                 />
               </div>
-              <div className="mt-4 space-y-2 text-sm text-neutral-200">
+              <div className="mt-4 space-y-1.5 text-xs text-neutral-200 sm:space-y-2 sm:text-sm">
                 <p>Be the face of confident smiles.</p>
                 <p className="text-neutral-400">Complimentary whitening + paid shoots for local talent.</p>
               </div>
@@ -539,16 +541,19 @@ function StepItem({
   return (
     <li
       className={cn(
-        "group relative rounded-3xl border border-neutral-200 bg-white pl-14 pr-6 py-6 shadow-sm transition hover:-translate-y-1 hover:shadow-md focus-within:ring-2 focus-within:ring-neutral-900 sm:pl-16 sm:pr-8 md:flex md:items-start md:gap-5 md:pl-6 md:pr-6",
-        !isLast && "after:absolute after:left-[1.35rem] after:bottom-[-1.75rem] after:block after:h-6 after:w-px after:bg-neutral-200 after:content-[''] md:after:hidden",
+        "group relative rounded-2xl border border-neutral-200 bg-white p-5 shadow-sm transition hover:-translate-y-1 hover:shadow-md focus-within:ring-2 focus-within:ring-neutral-900 sm:rounded-3xl sm:pl-16 sm:pr-6 sm:py-6",
+        !isLast &&
+          "sm:after:absolute sm:after:left-[1.35rem] sm:after:top-full sm:after:block sm:after:h-6 sm:after:w-px sm:after:bg-neutral-200 sm:after:content-['']",
       )}
     >
-      <span className="absolute left-6 top-6 flex h-8 w-8 items-center justify-center rounded-full bg-neutral-900 text-xs font-semibold uppercase tracking-wide text-white shadow-sm transition group-hover:bg-neutral-800 md:static md:h-9 md:w-9 md:shrink-0 md:rounded-full md:text-sm md:leading-none">
-        {index + 1}
-      </span>
-      <div className="mt-2 md:mt-0 md:flex-1">
-        <h3 className="text-lg font-medium lowercase text-neutral-900">{step.title}</h3>
-        <p className="mt-2 text-sm text-neutral-600">{step.description}</p>
+      <div className="flex items-start gap-3 sm:block">
+        <span className="flex h-7 w-7 items-center justify-center rounded-full bg-neutral-900 text-[11px] font-semibold uppercase tracking-wide text-white shadow-sm transition group-hover:bg-neutral-800 sm:absolute sm:left-6 sm:top-6 sm:h-8 sm:w-8 sm:text-xs">
+          {index + 1}
+        </span>
+        <div className="sm:pl-10 sm:pt-1">
+          <h3 className="text-base font-medium lowercase text-neutral-900 sm:text-lg">{step.title}</h3>
+          <p className="mt-2 text-sm text-neutral-600">{step.description}</p>
+        </div>
       </div>
     </li>
   )

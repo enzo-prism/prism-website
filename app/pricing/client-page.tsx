@@ -40,6 +40,8 @@ const websitePlans = [
   },
 ]
 
+const NO_UPGRADE_VALUE = "no-upgrades"
+
 const foundationalUpgrades = [
   {
     value: "local-listings",
@@ -54,6 +56,12 @@ const foundationalUpgrades = [
     description:
       "Branded email setup via Google Workspace or Outlook (e.g. john@yourdomain.com). Includes full setup, DNS config, and 1–3 inboxes.",
     price: "+$50/mo",
+  },
+  {
+    value: NO_UPGRADE_VALUE,
+    title: "No foundational upgrades",
+    description: "Stick with the base plan today and add upgrades whenever you need them.",
+    price: "$0/mo",
   },
 ]
 
@@ -179,7 +187,11 @@ export default function PricingPageClient() {
     { label: "ready-made bundle", value: "bundle" },
   ]
 
-  const isCustomComplete = Boolean(selectedPlan) && Boolean(selectedAdPackage) && Boolean(selectedContent)
+const isCustomComplete =
+  Boolean(selectedPlan) &&
+  selectedUpgrades.length > 0 &&
+  Boolean(selectedAdPackage) &&
+  Boolean(selectedContent)
 
   const canSubmit =
     email.trim().length > 0 &&
@@ -200,7 +212,7 @@ export default function PricingPageClient() {
       {
         label: "foundational upgrades",
         value: formatSelectedUpgrades(selectedUpgrades, foundationalUpgrades),
-        complete: true,
+        complete: selectedUpgrades.length > 0,
       },
       {
         label: "ads package",
@@ -364,9 +376,17 @@ export default function PricingPageClient() {
                   }}
                   selectedUpgrades={selectedUpgrades}
                   onToggleUpgrade={(value) => {
-                    setSelectedUpgrades((prev) =>
-                      prev.includes(value) ? prev.filter((item) => item !== value) : [...prev, value]
-                    )
+                    setSelectedUpgrades((prev) => {
+                      if (value === NO_UPGRADE_VALUE) {
+                        return prev.includes(value) ? [] : [NO_UPGRADE_VALUE]
+                      }
+
+                      const withoutNone = prev.filter((item) => item !== NO_UPGRADE_VALUE)
+                      if (withoutNone.includes(value)) {
+                        return withoutNone.filter((item) => item !== value)
+                      }
+                      return [...withoutNone, value]
+                    })
                     setError(null)
                   }}
                   selectedAdPackage={selectedAdPackage}
@@ -514,7 +534,8 @@ function formatSelectedUpgrades(
   values: string[],
   options: { value: string; title: string; price: string }[]
 ) {
-  if (!values.length) return "No upgrades added"
+  if (!values.length) return "No foundational upgrades selected"
+  if (values.includes(NO_UPGRADE_VALUE)) return "No foundational upgrades"
   return values
     .map((value) => {
       const match = options.find((option) => option.value === value)
@@ -610,12 +631,12 @@ function CustomPlanner({
         </div>
       </div>
 
-      <div className="space-y-6">
-        <StepHeader
-          step={2}
-          title="🧱 Step 2 — Add Foundational Upgrades (optional)"
-          description="Layer in essential infrastructure now or add it later — everything stays flexible and month-to-month."
-        />
+            <div className="space-y-6">
+              <StepHeader
+                step={2}
+                title="Step 2 — Add foundational upgrades (optional)"
+                description="Layer in essential infrastructure now or add it later — everything stays flexible and month-to-month."
+              />
         <div className="overflow-hidden rounded-2xl border border-neutral-200 bg-white shadow-sm">
           <div className="grid grid-cols-1 gap-3 border-b border-neutral-200 bg-neutral-50 px-5 py-3 text-xs font-semibold uppercase tracking-[0.3em] text-neutral-500 sm:grid-cols-[1.3fr,2fr,0.8fr]">
             <span>Add-On</span>
@@ -623,39 +644,39 @@ function CustomPlanner({
             <span className="sm:text-right">Monthly</span>
           </div>
           <div className="divide-y divide-neutral-200">
-            {foundationalUpgrades.map((upgrade) => {
-              const isActive = selectedUpgrades.includes(upgrade.value)
-              return (
-                <button
-                  key={upgrade.value}
-                  type="button"
-                  onClick={() => onToggleUpgrade(upgrade.value)}
+          {foundationalUpgrades.map((upgrade) => {
+            const isActive = selectedUpgrades.includes(upgrade.value)
+            return (
+              <button
+                key={upgrade.value}
+                type="button"
+                onClick={() => onToggleUpgrade(upgrade.value)}
+                className={cn(
+                  "grid w-full gap-4 px-5 py-5 text-left transition sm:grid-cols-[1.3fr,2fr,0.8fr]",
+                  isActive
+                    ? "bg-neutral-900 text-white shadow-inner"
+                    : "bg-white text-neutral-900 hover:bg-neutral-50"
+                )}
+                aria-pressed={isActive}
+              >
+                <div className="flex items-center gap-2">
+                  <span className="text-base font-semibold lowercase">{upgrade.title}</span>
+                  {isActive ? <Check className="h-4 w-4" aria-hidden="true" /> : null}
+                </div>
+                <span className={cn("text-sm", isActive ? "text-neutral-200" : "text-neutral-600")}>
+                  {upgrade.description}
+                </span>
+                <span
                   className={cn(
-                    "grid w-full gap-4 px-5 py-5 text-left transition sm:grid-cols-[1.3fr,2fr,0.8fr]",
-                    isActive
-                      ? "bg-neutral-900 text-white shadow-inner"
-                      : "bg-white text-neutral-900 hover:bg-neutral-50"
+                    "text-base font-semibold sm:text-right",
+                    isActive ? "text-white" : "text-neutral-900"
                   )}
-                  aria-pressed={isActive}
                 >
-                  <div className="flex items-center gap-2">
-                    <span className="text-base font-semibold lowercase">{upgrade.title}</span>
-                    {isActive ? <Check className="h-4 w-4" aria-hidden="true" /> : null}
-                  </div>
-                  <span className={cn("text-sm", isActive ? "text-neutral-200" : "text-neutral-600")}>
-                    {upgrade.description}
-                  </span>
-                  <span
-                    className={cn(
-                      "text-base font-semibold sm:text-right",
-                      isActive ? "text-white" : "text-neutral-900"
-                    )}
-                  >
-                    {upgrade.price}
-                  </span>
-                </button>
-              )
-            })}
+                  {upgrade.price}
+                </span>
+              </button>
+            )
+          })}
           </div>
         </div>
         <p className="rounded-2xl border border-dashed border-neutral-300 bg-neutral-50 px-5 py-4 text-sm text-neutral-600">
