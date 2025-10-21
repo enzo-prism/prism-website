@@ -13,7 +13,10 @@ const coreServices = [
       "Editable component library and CMS governance",
       "Launch support, hosting, and ongoing optimizations",
     ],
-    caseStudy: { label: "Laguna Beach Dental Arts", href: "/case-studies/laguna-beach-dental-arts" },
+    caseStudies: [
+      { label: "Laguna Beach Dental Arts", href: "/case-studies/laguna-beach-dental-arts" },
+      { label: "Family First Smile Care", href: "/case-studies/family-first-smile-care" },
+    ],
   },
   {
     name: "Local Presence & Reviews",
@@ -23,7 +26,10 @@ const coreServices = [
       "Review capture flows and response playbooks",
       "Local landing blocks, schema, and reporting dashboards",
     ],
-    caseStudy: { label: "Wine Country Root Canal", href: "/case-studies/wine-country-root-canal" },
+    caseStudies: [
+      { label: "Wine Country Root Canal", href: "/case-studies/wine-country-root-canal" },
+      { label: "Town Centre Dental", href: "/case-studies/town-centre-dental" },
+    ],
   },
   {
     name: "Paid Media & Creative",
@@ -33,7 +39,10 @@ const coreServices = [
       "High-performing creative, landing pages, and reporting",
       "Weekly optimizations and offer testing",
     ],
-    caseStudy: { label: "Dr. Christopher B. Wong", href: "/case-studies/dr-christopher-wong" },
+    caseStudies: [
+      { label: "Dr. Christopher B. Wong", href: "/case-studies/dr-christopher-wong" },
+      { label: "Exquisite Dentistry", href: "/case-studies/exquisite-dentistry" },
+    ],
   },
   {
     name: "Content & Communications",
@@ -43,7 +52,10 @@ const coreServices = [
       "Short-form video, blog, and email nurture production",
       "Asset library and automation-ready templates",
     ],
-    caseStudy: { label: "Grace Dental Santa Rosa", href: "/case-studies/grace-dental-santa-rosa" },
+    caseStudies: [
+      { label: "Grace Dental Santa Rosa", href: "/case-studies/grace-dental-santa-rosa" },
+      { label: "Rebellious Aging", href: "/case-studies/rebellious-aging" },
+    ],
   },
   {
     name: "Analytics, Automation & Support",
@@ -53,28 +65,37 @@ const coreServices = [
       "Automations for follow-up, reminders, and hand-offs",
       "Quarterly planning and priority shaping with the Prism team",
     ],
-    caseStudy: { label: "Practice Transitions Institute", href: "/case-studies/practice-transitions-institute" },
+    caseStudies: [
+      { label: "Practice Transitions Institute", href: "/case-studies/practice-transitions-institute" },
+      { label: "sr4 Partners", href: "/case-studies/sr4-partners" },
+    ],
   },
 ]
 
 const bundleExamples = [
   {
-    name: "Local Launch",
-    price: "~$780/mo",
-    description: "Perfect for brick-and-mortar practices opening a new location.",
-    includes: ["Starter website", "Local Listings", "Starter Ads"],
+    name: "Local Starter",
+    price: "$300/mo",
+    description: "Starter stack for new practices and solo operators.",
+    includes: ["Starter Site", "Local Listings"],
   },
   {
-    name: "Momentum",
-    price: "~$1,400/mo",
-    description: "Balanced mix for teams leveling up a flagship location.",
-    includes: ["Business website", "Local Listings", "Growth Ads", "Light Content"],
+    name: "Growth 10",
+    price: "$1,100/mo",
+    description: "Balanced mix for teams layering paid acquisition.",
+    includes: ["Business Site", "Local Listings", "Starter Ads"],
   },
   {
-    name: "Market Leader",
-    price: "~$3,600/mo",
-    description: "Full-funnel support for multi-location groups ready to dominate.",
-    includes: ["Pro website", "Listings", "Scale Ads", "Pro Content"],
+    name: "Content Pro",
+    price: "$1,400/mo",
+    description: "Adds ongoing content to move visitors from interest to trust.",
+    includes: ["Pro Site", "Local Listings", "Light Content"],
+  },
+  {
+    name: "Dominate Local",
+    price: "$3,600/mo",
+    description: "Full-funnel package for multi-location groups.",
+    includes: ["Pro Site", "Local Listings", "Scale Ads", "Pro Content"],
   },
 ]
 
@@ -179,10 +200,19 @@ export default function ServicesPage() {
                       </li>
                     ))}
                   </ul>
-                  <div className="mt-auto">
-                    <Link href={service.caseStudy.href} className="text-sm font-semibold lowercase text-neutral-900 underline decoration-neutral-300 underline-offset-4 hover:decoration-neutral-900">
-                      view {service.caseStudy.label}
-                    </Link>
+                  <div className="mt-auto space-y-2">
+                    <p className="text-xs uppercase tracking-[0.35em] text-neutral-400">case studies</p>
+                    <div className="flex flex-wrap gap-2">
+                      {service.caseStudies.map((caseStudy) => (
+                        <Link
+                          key={caseStudy.href}
+                          href={caseStudy.href}
+                          className="text-sm font-semibold lowercase text-neutral-900 underline decoration-neutral-300 underline-offset-4 hover:decoration-neutral-900"
+                        >
+                          {caseStudy.label}
+                        </Link>
+                      ))}
+                    </div>
                   </div>
                 </div>
               ))}
