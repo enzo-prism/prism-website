@@ -58,10 +58,14 @@ const exampleShots = [
 ]
 
 const dentalPartners = [
+  { name: "Dr. Christopher B. Wong", href: "/case-studies/dr-christopher-wong" },
   { name: "Exquisite Dentistry", href: "https://www.exquisitedentistryla.com" },
   { name: "Laguna Beach Dental Arts", href: "https://www.lagunabeachdentalarts.com" },
-  { name: "Coast Periodontics & Laser Surgery", href: "https://www.coastperiodontics.com" },
+  { name: "Family First Smile Care", href: "/case-studies/family-first-smile-care" },
+  { name: "Town Centre Dental", href: "/case-studies/town-centre-dental" },
+  { name: "Grace Dental Santa Rosa", href: "/case-studies/grace-dental-santa-rosa" },
   { name: "Wine Country Root Canal", href: "https://www.winecountryrootcanal.com" },
+  { name: "Coast Periodontics & Laser Surgery", href: "https://www.coastperiodontics.com" },
 ]
 
 export default function ModelsPageClient() {
@@ -200,23 +204,44 @@ export default function ModelsPageClient() {
               </h2>
             </div>
             <div className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-              {dentalPartners.map((partner) => (
-                <a
-                  key={partner.name}
-                  href={partner.href}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="group rounded-2xl border border-neutral-200 bg-white px-5 py-4 text-sm lowercase text-neutral-700 transition hover:-translate-y-1 hover:border-neutral-900 hover:text-neutral-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900"
-                  onClick={() =>
-                    trackCTAClick(`partner_${partner.name.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`, partner.href)
-                  }
-                >
-                  <span className="font-medium text-neutral-900 transition group-hover:text-neutral-900">
-                    {partner.name}
-                  </span>
-                  <span className="mt-1 block text-xs uppercase tracking-[0.2em] text-neutral-400">visit site</span>
-                </a>
-              ))}
+              {dentalPartners.map((partner) => {
+                const partnerId = `partner_${partner.name.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`
+                const isExternal = partner.href.startsWith("http")
+                const CardContent = (
+                  <>
+                    <span className="font-medium text-neutral-900 transition group-hover:text-neutral-900">
+                      {partner.name}
+                    </span>
+                    <span className="mt-1 block text-xs uppercase tracking-[0.2em] text-neutral-400">visit site</span>
+                  </>
+                )
+
+                if (isExternal) {
+                  return (
+                    <a
+                      key={partner.name}
+                      href={partner.href}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="group rounded-2xl border border-neutral-200 bg-white px-5 py-4 text-sm lowercase text-neutral-700 transition hover:-translate-y-1 hover:border-neutral-900 hover:text-neutral-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900"
+                      onClick={() => trackCTAClick(partnerId, partner.href)}
+                    >
+                      {CardContent}
+                    </a>
+                  )
+                }
+
+                return (
+                  <Link
+                    key={partner.name}
+                    href={partner.href}
+                    className="group rounded-2xl border border-neutral-200 bg-white px-5 py-4 text-sm lowercase text-neutral-700 transition hover:-translate-y-1 hover:border-neutral-900 hover:text-neutral-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900"
+                    onClick={() => trackCTAClick(partnerId, partner.href)}
+                  >
+                    {CardContent}
+                  </Link>
+                )
+              })}
             </div>
           </div>
         </section>
