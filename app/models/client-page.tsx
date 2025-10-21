@@ -64,13 +64,6 @@ const dentalPartners = [
   { name: "Wine Country Root Canal", href: "https://www.winecountryrootcanal.com" },
 ]
 
-const dentalPartners = [
-  { name: "Exquisite Dentistry", href: "https://www.exquisitedentistryla.com" },
-  { name: "Laguna Beach Dental Arts", href: "https://www.lagunabeachdentalarts.com" },
-  { name: "Coast Periodontics & Laser Surgery", href: "https://www.coastperiodontics.com" },
-  { name: "Wine Country Root Canal", href: "https://www.winecountryrootcanal.com" },
-]
-
 export default function ModelsPageClient() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSuccess, setIsSuccess] = useState(false)
