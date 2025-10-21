@@ -443,7 +443,7 @@ const isCustomComplete =
               </div>
               <div className="space-y-2">
                 <label htmlFor="pricing-notes" className="text-sm font-medium text-neutral-800">
-                  Notes or context (optional)
+                  Notes or context 
                 </label>
                 <textarea
                   id="pricing-notes"
@@ -640,7 +640,7 @@ function CustomPlanner({
             <div className="space-y-6">
               <StepHeader
                 step={2}
-                title="Step 2 — Add foundational upgrades (optional)"
+                title="Step 2 — Add foundational upgrades "
                 description="Layer in essential infrastructure now or add it later — everything stays flexible and month-to-month."
               />
         <div className="overflow-hidden rounded-2xl border border-neutral-200 bg-white shadow-sm">
@@ -727,7 +727,7 @@ function CustomPlanner({
       <div className="space-y-6">
         <StepHeader
           step={4}
-          title="Add content creation (optional)"
+          title="Add content creation "
           description="Layer in recurring written and video content handled by the same team shipping your site and ads."
         />
         <div className="grid gap-4 md:grid-cols-3">
