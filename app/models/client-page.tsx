@@ -51,10 +51,26 @@ const howItWorks = [
 ]
 
 const exampleShots = [
-  { title: "Studio Laughs", caption: "Candid energy that converts." },
-  { title: "Chairside Confidence", caption: "Showcase the treatment experience." },
-  { title: "After-Glow Portraits", caption: "Highlight the whitening results." },
-  { title: "Lifestyle Moments", caption: "Smiles that feel real and relatable." },
+  {
+    title: "Studio Laughs",
+    caption: "Candid energy that converts.",
+    image: "/model, studio.webp",
+  },
+  {
+    title: "Chairside Confidence",
+    caption: "Showcase the treatment experience.",
+    image: "/model, chair.webp",
+  },
+  {
+    title: "After-Glow Portraits",
+    caption: "Highlight the whitening results.",
+    image: "/model, after photo.webp",
+  },
+  {
+    title: "Lifestyle Moments",
+    caption: "Smiles that feel real and relatable.",
+    image: "/model, lifestyle.webp",
+  },
 ]
 
 const dentalPartners = [
@@ -170,13 +186,13 @@ export default function ModelsPageClient() {
                         >
                           <div className="relative h-40 w-full overflow-hidden rounded-xl bg-neutral-800">
                             <CoreImage
-                              src="/prism-opengraph.png"
+                              src={shot.image}
                               alt={shot.title}
                               fill
                               className="object-cover opacity-70"
                               sizes="220px"
                               priority={false}
-                              fallbackSrc="/prism-opengraph.png"
+                              fallbackSrc={shot.image}
                               trackingId={`models_example_${shot.title.replace(/\s+/g, "_").toLowerCase()}`}
                             />
                           </div>
