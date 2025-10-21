@@ -30,7 +30,7 @@ const websitePlans = [
     name: "business site",
     pages: "6–10 pages",
     bestFor: "growing local businesses",
-    price: "$400/mo",
+    price: "$500/mo",
   },
   {
     name: "pro site",

@@ -4,7 +4,7 @@ import SummerWebsiteMakeoverClientPage from "./client-page"
 export const metadata: Metadata = {
   title: "Summer Website Makeover Offer | Prism",
   description:
-    "Triple your traffic & conversions in 30 days with Prism's Summer Website Makeover. Full-stack rebuild, SEO, conversion optimization, and more. Guaranteed results.",
+    "Triple your traffic and conversions in 30 days with Prism's Summer Website Makeover—full-stack rebuild, SEO, and CRO with guaranteed results.",
   openGraph: {
     title: "☀️ Summer Website Makeover - Guaranteed Growth | Prism",
     description:

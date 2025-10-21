@@ -2,7 +2,7 @@ import type { Metadata } from "next"
 import PracticeTransitionsInstituteCaseStudy from "./client-page"
 
 export const metadata: Metadata = {
-  title: "Practice Transitions Institute Case Study — Consulting Launchpad",
+  title: "Practice Transitions Institute | Prism Case Study",
   description:
     "discover how prism is supporting practice transitions institute with a focused website, local presence, and results tracking.",
   openGraph: {

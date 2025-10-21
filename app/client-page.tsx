@@ -406,6 +406,37 @@ export default function ClientPage() {
           </div>
         </section>
 
+        {/* Book a Demo */}
+        <section className="border-t border-neutral-200 bg-neutral-900">
+          <div className="container mx-auto px-4 py-16 md:py-20">
+            <div className="mx-auto flex max-w-3xl flex-col items-center gap-6 text-center text-white">
+              <span className="text-xs uppercase tracking-[0.35em] text-neutral-400">book a demo</span>
+              <h2 className="text-3xl font-semibold lowercase tracking-tight md:text-4xl">
+                walk through prism in a live zoom session
+              </h2>
+              <p className="max-w-2xl text-sm lowercase text-neutral-300 md:text-base">
+                Reserve a short Zoom meeting with the Prism team. We demo our services, unpack how we can support your
+                growth, and answer every question — zero commitments required.
+              </p>
+              <Button
+                asChild
+                size="lg"
+                className="rounded-full bg-white text-neutral-900 hover:bg-neutral-100"
+              >
+                <a
+                  href="https://calendar.notion.so/meet/enzosison/client-meeting"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => trackCTAClick("book a demo", "homepage book demo")}
+                >
+                  book a zoom demo
+                  <ArrowUpRight className="ml-2 h-4 w-4" />
+                </a>
+              </Button>
+            </div>
+          </div>
+        </section>
+
         {/* ChatGPT CTA */}
         <section className="border-t border-b border-neutral-200 bg-white/70 backdrop-blur">
           <div className="container mx-auto px-4 py-12 md:py-16">

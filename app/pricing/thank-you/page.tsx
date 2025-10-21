@@ -7,11 +7,11 @@ import Link from "next/link"
 import { CheckCircle2 } from "lucide-react"
 
 export const metadata: Metadata = {
-  title: "Plan Sent | Prism Pricing",
+  title: "Plan Sent | Next Steps from Prism",
   description:
     "Thanks for sending your Prism pricing plan. We'll review your selections and follow up with next steps shortly.",
   openGraph: {
-    title: "Plan Sent | Prism Pricing",
+    title: "Plan Sent | Next Steps from Prism",
     description:
       "Thanks for sending your Prism pricing plan. We'll review your selections and follow up with next steps shortly.",
     images: ["/prism-opengraph.png"],
@@ -55,4 +55,3 @@ export default function PricingThankYouPage() {
     </div>
   )
 }
-

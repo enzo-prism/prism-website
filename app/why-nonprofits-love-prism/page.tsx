@@ -77,14 +77,14 @@ const stayingReasons = [
 ]
 
 export const metadata: Metadata = {
-  title: "Why Nonprofits Love Prism",
+  title: "Why Nonprofits Partner with Prism",
   description:
     "Prism helps nonprofits tell their story beautifully, attract donors and supporters, and manage technology effortlessly so they can focus on mission-driven work.",
   alternates: {
     canonical: "https://www.design-prism.com/why-nonprofits-love-prism"
   },
   openGraph: {
-    title: "Why Nonprofits Love Prism",
+    title: "Why Nonprofits Partner with Prism",
     description:
       "Share your mission, reach more people, and simplify your tech stack. Prism gives nonprofits modern tools, empathetic design, and effortless support.",
     url: "https://www.design-prism.com/why-nonprofits-love-prism",
@@ -94,7 +94,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Why Nonprofits Love Prism",
+    title: "Why Nonprofits Partner with Prism",
     description:
       "Prism amplifies nonprofit impact with beautiful storytelling, donor journeys, and technology that runs quietly in the background.",
     creator: "@designprism"

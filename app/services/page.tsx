@@ -5,15 +5,13 @@ import type { Metadata } from "next"
 import ServicesClient from "./client-page"
 
 export const metadata: Metadata = {
-  title:
-    "Websites, Ads & Local SEO Services for Small Businesses | Prism",
+  title: "Websites, Ads & Local SEO Services | Prism",
   description:
-    "Explore website rebuilds, paid ads management, and local listing optimization packages built to help small businesses win more local customers with measurable ROI.",
+    "Explore website rebuilds, paid ads management, and listing optimization packages that help small businesses win more customers with measurable ROI.",
   openGraph: {
-    title:
-      "Websites, Ads & Local SEO Services for Small Businesses | Prism",
+    title: "Websites, Ads & Local SEO Services | Prism",
     description:
-      "Explore website rebuilds, paid ads management, and local listing optimization packages built to help small businesses win more local customers with measurable ROI.",
+      "Explore website rebuilds, paid ads management, and listing optimization packages that help small businesses win more customers with measurable ROI.",
     url: "https://design-prism.com/services",
     images: [
       {

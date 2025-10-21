@@ -4,11 +4,11 @@ import type { Metadata } from "next"
 import Link from "next/link"
 
 export const metadata: Metadata = {
-  title: "Terms of Service",
-  description: "Terms of Service for Prism Agency - Read our terms and conditions for using our web development, app development, and digital marketing services.",
+  title: "Terms of Service | Prism Agency",
+  description: "Read Prism Agency’s terms and conditions for using our web development, app development, and digital marketing services.",
   openGraph: {
-    title: "Terms of Service - Prism Agency",
-    description: "Terms of Service for Prism Agency - Read our terms and conditions for using our services.",
+    title: "Terms of Service | Prism Agency",
+    description: "Read Prism Agency’s terms and conditions for using our services.",
     url: "https://www.design-prism.com/terms-of-service",
     images: [
       {

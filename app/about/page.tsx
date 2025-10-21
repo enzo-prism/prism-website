@@ -2,7 +2,7 @@ import type { Metadata } from "next"
 import AboutClientPage from "./client-page"
 
 export const metadata: Metadata = {
-  title: "About Prism | Enzo Sison on Design, Growth & the LA 2028 Journey",
+  title: "About Prism | Enzo Sison & Team",
   description:
     "Meet founder Enzo Sison and the mission behind Prism, combining elite design craft, data-driven growth, and an Olympic mindset for every client engagement.",
   alternates: {

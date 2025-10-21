@@ -15,14 +15,12 @@ import { GA_MEASUREMENT_ID } from "@/lib/constants"
 export const metadata: Metadata = {
   title: {
     template: "%s | Prism",
-    default:
-      "Prism | Websites, Ads & Local Listing Optimization for Small Businesses",
+    default: "Prism | Growth Engine for Local Brands",
   },
   description:
     "Prism builds high-converting websites, manages paid ads, and optimizes local listings so small businesses consistently attract qualified local customers.",
   openGraph: {
-    title:
-      "Prism | Websites, Ads & Local Listing Optimization for Small Businesses",
+    title: "Prism | Growth Engine for Local Brands",
     description:
       "Prism builds high-converting websites, manages paid ads, and optimizes local listings so small businesses consistently attract qualified local customers.",
     url: "https://www.design-prism.com",

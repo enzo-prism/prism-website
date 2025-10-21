@@ -100,14 +100,14 @@ const referralBenefits = [
 ]
 
 export const metadata: Metadata = {
-  title: "Refer a Business to Prism",
+  title: "Refer a Business to Prism & Earn",
   description:
     "Know someone who needs a better website, listings, or ad strategy? Refer them to Prism for a free analysis and earn up to $1,000 when they become a client.",
   alternates: {
     canonical: "https://www.design-prism.com/refer"
   },
   openGraph: {
-    title: "Refer a Business to Prism",
+    title: "Refer a Business to Prism & Earn",
     description:
       "Invite a business you care about to Prism. We deliver a free analysis — you earn up to $1,000 when they sign.",
     url: "https://www.design-prism.com/refer",
@@ -117,7 +117,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Refer a Business to Prism",
+    title: "Refer a Business to Prism & Earn",
     description:
       "Help a friend upgrade their marketing and earn up to $1,000 when they become a Prism client.",
     creator: "@designprism"

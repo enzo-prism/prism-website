@@ -12,7 +12,7 @@ import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
 export const metadata: Metadata = {
   title: "Local Listing Optimization for Small Businesses | Prism",
   description:
-    "Prism optimizes Google, Apple, Yelp, Bing, Facebook, and Nextdoor listings so small businesses stay accurate, rank higher, and convert more local searches into customers.",
+    "Prism optimizes Google, Apple, Yelp, Bing, Facebook, and Nextdoor listings so small businesses stay accurate, rank higher, and turn local searches into customers.",
   openGraph: {
     title: "Local Listing Optimization for Small Businesses | Prism",
     description:

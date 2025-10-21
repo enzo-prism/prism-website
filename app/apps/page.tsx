@@ -10,13 +10,13 @@ import Link from "next/link"
 import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
 
 export const metadata: Metadata = {
-  title: "mobile app development portfolio & services | prism",
+  title: "Mobile App Development Portfolio & Services | Prism",
   description:
-    "view our portfolio of custom mobile apps for restaurants, healthcare, and small businesses. interactive demos showcase native ios and android apps that boost customer engagement and streamline operations.",
+    "Explore custom mobile apps for restaurants, healthcare, and small businesses. Interactive demos highlight native iOS and Android builds that boost engagement.",
   openGraph: {
-    title: "mobile app development portfolio & services | prism",
+    title: "Mobile App Development Portfolio & Services | Prism",
     description:
-      "view our portfolio of custom mobile apps for restaurants, healthcare, and small businesses. interactive demos showcase native ios and android apps that boost customer engagement and streamline operations.",
+      "Explore custom mobile apps for restaurants, healthcare, and small businesses. Interactive demos highlight native iOS and Android builds that boost engagement.",
     images: ["/prism-opengraph.png"],
   },
   alternates: {

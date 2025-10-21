@@ -5,7 +5,7 @@ import ScrollToTop from "@/components/scroll-to-top"
 import PrismFlywheelClient from "./client-page"
 
 export const metadata: Metadata = {
-  title: "The Prism Flywheel: Powering Exponential Growth | Design Prism",
+  title: "Prism Flywheel | Powering Exponential Growth",
   description: "Discover Prism's Flywheel: A compounding system using frontier AI like Grok and Claude to build maximum leverage for your business growth.",
   keywords: [
     "AI-powered growth flywheel",

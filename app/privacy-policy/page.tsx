@@ -4,11 +4,11 @@ import type { Metadata } from "next"
 import Link from "next/link"
 
 export const metadata: Metadata = {
-  title: "Privacy Policy",
-  description: "Privacy Policy for Prism Agency - Learn how we collect, use, and protect your personal information when you use our services.",
+  title: "Privacy Policy | Prism Agency",
+  description: "Learn how Prism Agency collects, uses, and protects your personal information across our website and services.",
   openGraph: {
-    title: "Privacy Policy - Prism Agency",
-    description: "Privacy Policy for Prism Agency - Learn how we collect, use, and protect your personal information.",
+    title: "Privacy Policy | Prism Agency",
+    description: "Learn how Prism Agency collects, uses, and protects your personal information across our website and services.",
     url: "https://www.design-prism.com/privacy-policy",
     images: [
       {

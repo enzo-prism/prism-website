@@ -11,7 +11,7 @@ import { HOTTEST_CONTENT } from "@/lib/hottest-content"
 import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
 
 export const metadata: Metadata = {
-  title: "Our Hottest Content | Prism",
+  title: "Prism's Hottest Content Library",
   description:
     "See Prism’s top-performing Instagram reels exactly as they appeared on the platform. Live embeds with full context from the original posts.",
 }

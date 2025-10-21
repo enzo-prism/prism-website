@@ -5,11 +5,11 @@ import Link from "next/link"
 import ProofCTAs from "./ProofCTAs"
 
 export const metadata: Metadata = {
-  title: "Prism Proof | Patient Testimonial Engine for Dental Practices",
+  title: "Prism Proof | Testimonial Engine for Dentists",
   description:
     "Capture authentic patient stories once and repurpose them into case studies, schema, reels, and Google Business Profile posts that lift trust and acceptance.",
   openGraph: {
-    title: "Prism Proof | Patient Testimonial Engine for Dental Practices",
+    title: "Prism Proof | Testimonial Engine for Dentists",
     description:
       "Capture authentic patient stories once and repurpose them into case studies, schema, reels, and Google Business Profile posts that lift trust and acceptance.",
     url: "https://www.design-prism.com/proof",
@@ -209,4 +209,3 @@ export default function ProofPage() {
     </>
   )
 }
-
