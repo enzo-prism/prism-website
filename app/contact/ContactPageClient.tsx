@@ -5,6 +5,8 @@ import { trackNavigation } from "@/utils/analytics"
 import dynamic from "next/dynamic"
 import Link from "next/link"
 
+import { Button } from "@/components/ui/button"
+
 const Navbar = dynamic(() => import("@/components/navbar"), { ssr: false })
 
 const primaryActions = [
@@ -51,6 +53,11 @@ const socialLinks = [
   },
 ]
 
+const demoBooking = {
+  id: "contact_book_demo",
+  href: "https://calendar.notion.so/meet/enzosison/client-meeting",
+}
+
 export default function ContactPageClient() {
   return (
     <>
@@ -95,6 +102,27 @@ export default function ContactPageClient() {
                 </a>
               )
             })}
+          </div>
+
+          <div className="space-y-4 rounded-3xl border border-neutral-200 bg-neutral-50 px-6 py-8">
+            <div className="space-y-3">
+              <span className="text-xs uppercase tracking-[0.35em] text-neutral-400">book a demo</span>
+              <h2 className="text-3xl font-light lowercase text-neutral-900 sm:text-4xl">see prism in action</h2>
+              <p className="text-sm text-neutral-600 sm:text-base">
+                Grab a short Zoom session with the Prism team. We walk through our offering, answer every question, and
+                help you map next steps — no commitments required.
+              </p>
+            </div>
+            <Button asChild className="w-full rounded-full sm:w-auto" size="lg">
+              <a
+                href={demoBooking.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => trackNavigation(demoBooking.id, demoBooking.href)}
+              >
+                book a demo on zoom
+              </a>
+            </Button>
           </div>
 
           <div className="space-y-3">
