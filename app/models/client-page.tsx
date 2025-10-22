@@ -6,7 +6,6 @@ import Link from "next/link"
 import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
 import PageViewTracker from "@/components/page-view-tracker"
-import CoreImage from "@/components/core-image"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -272,26 +271,26 @@ export default function ModelsPageClient() {
 
         <section id="apply" className="bg-neutral-50 py-16 sm:py-20">
           <div className="container mx-auto px-4 md:px-6">
-            <div className="mx-auto max-w-3xl rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm sm:p-10 lg:p-12">
-              <div className="text-center">
+            <div className="mx-auto max-w-3xl rounded-3xl border border-neutral-200 bg-white p-7 shadow-md sm:rounded-[40px] sm:p-12 lg:p-14">
+              <div className="space-y-3 text-center sm:space-y-4">
                 <span className="text-xs uppercase tracking-[0.35em] text-neutral-400">apply to join</span>
-                <h2 className="mt-3 text-3xl font-semibold lowercase text-neutral-900 sm:text-4xl">
+                <h2 className="text-3xl font-semibold lowercase text-neutral-900 sm:text-4xl">
                   become the face of confident smiles
                 </h2>
-                <p className="mt-3 text-sm text-neutral-600">
+                <p className="text-sm text-neutral-600 sm:text-base">
                   Fill out the application below. We review every submission and reach out when there’s an opportunity in
                   your area.
                 </p>
               </div>
               <form
-                className="mt-8 space-y-5 sm:mt-10 sm:space-y-6"
+                className="mt-9 flex flex-col gap-6 sm:mt-12 sm:gap-8"
                 action="https://formspree.io/f/mrbyvoqo"
                 method="POST"
                 onSubmit={handleSubmit}
               >
-                <div className="grid gap-5 sm:grid-cols-2 sm:gap-6">
+                <div className="grid gap-6 sm:grid-cols-2 sm:gap-7 lg:gap-8">
                   <FormField label="Name" name="name" required>
-                    <Input id="models-name" name="name" placeholder="First and last name" required />
+                    <Input id="models-name" name="name" placeholder="First and last name" required className="h-11" />
                   </FormField>
                   <FormField label="Email" name="email" required>
                     <Input
@@ -301,22 +300,23 @@ export default function ModelsPageClient() {
                       placeholder="you@example.com"
                       autoComplete="email"
                       required
+                      className="h-11"
                     />
                   </FormField>
                   <FormField label="Phone (optional)" name="phone">
-                    <Input id="models-phone" type="tel" name="phone" placeholder="(555) 555-5555" />
+                    <Input id="models-phone" type="tel" name="phone" placeholder="(555) 555-5555" className="h-11" />
                   </FormField>
                   <FormField label="City / ZIP" name="location" required>
-                    <Input id="models-location" name="location" placeholder="San Jose, 95131" required />
+                    <Input id="models-location" name="location" placeholder="San Jose, 95131" required className="h-11" />
                   </FormField>
                   <FormField label="Instagram / TikTok handle (optional)" name="social">
-                    <Input id="models-social" name="social" placeholder="@yourhandle" />
+                    <Input id="models-social" name="social" placeholder="@yourhandle" className="h-11" />
                   </FormField>
                   <FormField label="Availability" name="availability" required>
                     <select
                       id="models-availability"
                       name="availability"
-                      className="h-10 w-full rounded-md border border-neutral-200 bg-white px-3 text-sm text-neutral-700 shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900"
+                      className="h-11 w-full rounded-md border border-neutral-200 bg-white px-3 text-sm text-neutral-700 shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900"
                       defaultValue=""
                       required
                     >
@@ -330,7 +330,7 @@ export default function ModelsPageClient() {
                   </FormField>
                 </div>
 
-                <div className="space-y-3.5 rounded-2xl border border-neutral-200 bg-neutral-50 p-4 sm:space-y-4 sm:p-5">
+                <div className="space-y-4 rounded-2xl border border-neutral-200 bg-neutral-50 p-5 sm:space-y-5 sm:p-6">
                   <CheckboxField
                     id="models-over-18"
                     label="I am 18 or older."
@@ -352,7 +352,7 @@ export default function ModelsPageClient() {
                     accept="image/*"
                     multiple
                     required
-                    className="cursor-pointer"
+                    className="h-11 cursor-pointer"
                   />
                 </FormField>
 
@@ -362,7 +362,7 @@ export default function ModelsPageClient() {
                     name="referral"
                     rows={3}
                     placeholder="Friend, social media, dental practice, etc."
-                    className="resize-none"
+                    className="resize-none leading-relaxed"
                   />
                 </FormField>
 
@@ -373,8 +373,8 @@ export default function ModelsPageClient() {
                   </p>
                 ) : null}
 
-                <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-                  <Button type="submit" size="lg" className="rounded-full px-8" disabled={isSubmitting}>
+                <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-6">
+                  <Button type="submit" size="lg" className="rounded-full px-10" disabled={isSubmitting}>
                     {isSubmitting ? "sending..." : "apply now"}
                   </Button>
                   <p className="text-xs text-neutral-500 sm:max-w-xs">
@@ -454,8 +454,8 @@ function HeroSection() {
         <div className="absolute inset-0 bg-gradient-to-br from-neutral-900 via-neutral-900/80 to-neutral-800 opacity-90" />
       </div>
       <div className="relative">
-        <div className="container mx-auto grid min-h-[60vh] items-center gap-8 px-4 py-16 sm:gap-12 sm:py-20 md:grid-cols-[1.1fr,0.9fr] md:px-6">
-          <div className="space-y-5 sm:space-y-6">
+        <div className="container mx-auto flex min-h-[60vh] flex-col justify-center gap-8 px-4 py-16 sm:gap-12 sm:py-20 md:px-6">
+          <div className="max-w-3xl space-y-5 sm:space-y-6">
             <span className="text-xs uppercase tracking-[0.35em] text-neutral-400">prism models</span>
             <h1 className="text-3xl font-semibold lowercase sm:text-5xl">
               Prism Models — Real People. Real Smiles. Real Growth.
@@ -486,25 +486,6 @@ function HeroSection() {
               </Button>
             </div>
           </div>
-          <div className="relative">
-            <div className="rounded-[32px] border border-white/20 bg-white/10 p-3 backdrop-blur sm:rounded-[36px] sm:p-4">
-              <div className="relative h-full min-h-[260px] overflow-hidden rounded-[26px] border border-white/20 sm:min-h-[320px] sm:rounded-[28px]">
-                <CoreImage
-                  src="/prism-opengraph.png"
-                  alt="Prism models shoot"
-                  width={900}
-                  height={1200}
-                  className="h-full w-full object-cover opacity-80"
-                  fallbackSrc="/prism-opengraph.png"
-                  trackingId="models_hero_image"
-                />
-              </div>
-              <div className="mt-4 space-y-1.5 text-xs text-neutral-200 sm:space-y-2 sm:text-sm">
-                <p>Be the face of confident smiles.</p>
-                <p className="text-neutral-400">Complimentary whitening + paid shoots for local talent.</p>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </section>
@@ -524,7 +505,7 @@ function FormField({
   required?: boolean
 }) {
   return (
-    <label className="space-y-2 text-sm text-neutral-700" htmlFor={`models-${name}`}>
+    <label className="flex flex-col gap-2.5 text-sm text-neutral-700 sm:gap-3" htmlFor={`models-${name}`}>
       <span className="flex items-center justify-between font-medium lowercase">
         {label}
         {required ? <span className="text-xs uppercase tracking-[0.2em] text-neutral-400">required</span> : null}
@@ -546,15 +527,15 @@ function CheckboxField({
   required?: boolean
 }) {
   return (
-    <div className="flex items-start gap-3">
+    <div className="flex items-start gap-4">
       <input
         type="checkbox"
         id={id}
         name={name}
         required={required}
-        className="mt-1 h-4 w-4 rounded border-neutral-300 text-neutral-900 focus:ring-2 focus:ring-neutral-900"
+        className="mt-0.5 h-4 w-4 rounded border-neutral-300 text-neutral-900 focus:ring-2 focus:ring-neutral-900"
       />
-      <label htmlFor={id} className={cn("text-sm text-neutral-700", required ? "font-medium" : undefined)}>
+      <label htmlFor={id} className={cn("text-sm leading-relaxed text-neutral-700", required ? "font-medium" : undefined)}>
         {label}
       </label>
     </div>
