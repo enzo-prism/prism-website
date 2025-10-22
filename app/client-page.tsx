@@ -251,14 +251,25 @@ export default function ClientPage() {
                 </p>
               </div>
               <div className="flex flex-col items-center space-y-4">
-                <Link href="/get-started">
-                  <Button
-                    className="rounded-full px-8 py-6 text-lg lowercase hardware-hover touch-feedback"
-                    onClick={() => trackCTAClick(FREE_AUDIT_CTA_TEXT, "hero section")}
-                  >
-                    {FREE_AUDIT_CTA_TEXT} <ArrowRight className="ml-2 h-5 w-5" />
-                  </Button>
-                </Link>
+                <div className="flex flex-col items-center gap-3 sm:flex-row">
+                  <Link href="/pricing">
+                    <Button
+                      className="rounded-full px-8 py-6 text-lg lowercase hardware-hover touch-feedback"
+                      onClick={() => trackCTAClick("view pricing", "hero section")}
+                    >
+                      view pricing <ArrowRight className="ml-2 h-5 w-5" />
+                    </Button>
+                  </Link>
+                  <Link href="/get-started">
+                    <Button
+                      variant="outline"
+                      className="rounded-full px-8 py-6 text-lg lowercase hardware-hover touch-feedback"
+                      onClick={() => trackCTAClick(FREE_AUDIT_CTA_TEXT, "hero section")}
+                    >
+                      {FREE_AUDIT_CTA_TEXT} <ArrowRight className="ml-2 h-5 w-5" />
+                    </Button>
+                  </Link>
+                </div>
                 <Link
                   href="/wall-of-love"
                   className="inline-flex items-center text-sm font-medium lowercase tracking-[0.32em] text-neutral-500 transition-colors hover:text-neutral-700"
