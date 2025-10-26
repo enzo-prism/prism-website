@@ -60,7 +60,7 @@ export default function InstagramLandingPage() {
             </div>
             <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center">
               <Button asChild size="lg" variant="inverted" className="rounded-full px-8 py-3 text-base font-semibold">
-                <Link href="/get-started">Work With Prism</Link>
+                <Link href="/pricing">Work With Prism</Link>
               </Button>
               <Button
                 asChild

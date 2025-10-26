@@ -37,7 +37,7 @@ export default function TikTokLandingPage() {
             <p className="text-sm uppercase tracking-[0.3em] text-neutral-400">Clips on TikTok. Clients in real life.</p>
             <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center">
               <Button asChild size="lg" variant="inverted" className="rounded-full px-8 py-3 text-base font-semibold">
-                <Link href="/get-started">→ Work With Prism</Link>
+                <Link href="/pricing">→ Work With Prism</Link>
               </Button>
               <Button
                 asChild
