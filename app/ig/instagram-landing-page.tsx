@@ -1,50 +1,36 @@
 "use client"
 
 import dynamic from "next/dynamic"
-import Image from "next/image"
+import Link from "next/link"
 
 import Footer from "@/components/footer"
 import { Button } from "@/components/ui/button"
-import { ArrowRight } from "lucide-react"
+import { ArrowRight, Check } from "lucide-react"
 
 const Navbar = dynamic(() => import("@/components/navbar"), { ssr: false })
 
-const principles = [
-  {
-    name: "Steve Jobs",
-    lesson: "Design every detail",
-    description:
-      "We obsess over the craft of each page so your website feels intentional, elegant, and unmistakably premium.",
-    emoji: "🎨",
-  },
-  {
-    name: "Jeff Bezos",
-    lesson: "Think long term",
-    description:
-      "We build for the roadmap ahead—fast, resilient foundations that evolve with your business instead of holding it back.",
-    emoji: "🚀",
-  },
-  {
-    name: "World-class founders",
-    lesson: "Share the playbook",
-    description:
-      "On Instagram we curate clips and insights so every entrepreneur can apply proven growth principles for free.",
-    emoji: "📡",
-  },
+const missionPoints = [
+  "Make growth simple and accessible",
+  "Fuse strategy with beautiful design",
+  "Help business owners win online, every day",
 ]
 
 const services = [
+  "Custom websites that convert",
+  "SEO + local listing optimization",
+  "Paid ad campaigns (Google, Meta, TikTok, Yelp)",
+  "Analytics + automation setup",
+]
+
+const testimonials = [
   {
-    title: "Custom website design",
-    description: "Minimal, conversion-ready experiences tailored to how your customers actually make decisions.",
+    quote:
+      "Our new site from Prism changed everything — we now look as good online as we do in person.",
+    author: "Dr. Chris Wong, Wong Dental",
   },
   {
-    title: "Growth-focused build",
-    description: "Modern technology, clear analytics, and content systems that keep momentum long after launch.",
-  },
-  {
-    title: "Ongoing partnership",
-    description: "We stay close, monitor performance, and keep refining so your digital presence compounds over time.",
+    quote: "They blend creative design with real business strategy.",
+    author: "sr4 Partners",
   },
 ]
 
@@ -53,110 +39,209 @@ export default function InstagramLandingPage() {
     <div className="flex min-h-screen flex-col bg-white text-neutral-900">
       <Navbar />
       <main className="flex-1">
-        <section className="px-6 py-20 md:py-28">
-          <div className="mx-auto flex max-w-4xl flex-col items-center text-center space-y-6">
-            <span className="text-xs font-semibold uppercase tracking-[0.3em] text-neutral-400">to our instagram family</span>
-            <h1 className="text-4xl font-semibold leading-tight tracking-tight sm:text-5xl md:text-6xl">
-              Thanks for supporting Prism on Instagram
+        <section className="relative overflow-hidden border-b border-neutral-200 bg-neutral-950 text-white">
+          <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.08),_transparent_60%)]" />
+          <div className="absolute inset-0 -z-10 bg-[conic-gradient(from_120deg,_rgba(255,255,255,0.12),_rgba(13,13,13,0.8))] opacity-40" />
+          <div className="mx-auto max-w-4xl px-6 py-24 sm:py-28 md:py-32">
+            <p className="text-xs font-semibold uppercase tracking-[0.35em] text-neutral-300">Prism on Instagram</p>
+            <h1 className="mt-6 text-4xl font-semibold leading-tight tracking-tight sm:text-5xl md:text-6xl">
+              From Instagram Inspiration to Real Growth
             </h1>
-            <p className="max-w-2xl text-lg text-neutral-600">
-              You found us through the stories, clips, and insights we share every day. This space is dedicated to you—the
-              builders, owners, and teams who are ready to turn inspiration into a website that actually grows the business.
-            </p>
-            <div className="flex flex-col items-center gap-4 sm:flex-row">
-              <Button asChild size="lg" className="rounded-full px-8 py-6 text-base">
-                <a href="/contact">
-                  Start a project <ArrowRight className="ml-2 h-5 w-5" />
-                </a>
-              </Button>
-              <Button asChild variant="outline" size="lg" className="rounded-full px-8 py-6 text-base">
-                <a href="/websites">View our work</a>
-              </Button>
+            <div className="mt-6 space-y-4 text-base text-neutral-200 sm:text-lg">
+              <p>You’ve seen the posts. Now build what they inspire.</p>
+              <p>
+                At Prism, we take the same insights we share on Instagram — from founders, designers, and business leaders —
+                and turn them into real growth for entrepreneurs and brands.
+              </p>
+              <p>
+                We design high-performing websites and systems that help business owners attract customers, grow faster, and
+                stand out online.
+              </p>
             </div>
-            <div className="flex items-center gap-3 rounded-full border border-neutral-200 px-4 py-2 text-sm text-neutral-500">
-              <div className="relative h-8 w-8 overflow-hidden rounded-full">
-                <Image alt="Prism Instagram" src="/favicon-small.png" fill className="object-cover" sizes="32px" />
-              </div>
-              <span>@buildwithprism • Daily lessons for modern founders</span>
+            <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center">
+              <Button asChild size="lg" className="rounded-full bg-white px-8 py-3 text-base font-semibold text-neutral-950">
+                <Link href="/get-started">Work With Prism</Link>
+              </Button>
+              <Button
+                asChild
+                size="lg"
+                variant="outline"
+                className="rounded-full border-white/40 px-8 py-3 text-base text-white hover:bg-white/10"
+              >
+                <Link href="/refer">Refer &amp; Earn</Link>
+              </Button>
             </div>
           </div>
         </section>
 
-        <section className="border-y border-neutral-100 bg-neutral-50 px-6 py-16 md:py-24">
-          <div className="mx-auto grid max-w-5xl gap-10 md:grid-cols-[1.1fr,1fr] md:items-center">
+        <section className="border-b border-neutral-200">
+          <div className="mx-auto max-w-5xl px-6 py-20 sm:py-24">
+            <div className="grid gap-12 md:grid-cols-[1.1fr,0.9fr] md:items-start">
+              <div className="space-y-6">
+                <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">Why We Share What We Share</h2>
+                <p className="text-base text-neutral-600 sm:text-lg">
+                  Prism’s Instagram isn’t just content — it’s a reflection of how we think.
+                </p>
+                <p className="text-base text-neutral-600 sm:text-lg">
+                  We share insights from the world’s best entrepreneurs and apply them directly to our clients’ businesses.
+                </p>
+              </div>
+              <div className="space-y-6 rounded-3xl border border-neutral-200 bg-neutral-50 p-8">
+                <p className="text-sm font-semibold uppercase tracking-[0.3em] text-neutral-500">The mission is simple</p>
+                <ul className="space-y-3 text-base text-neutral-700">
+                  {missionPoints.map((point) => (
+                    <li key={point} className="flex items-start gap-3">
+                      <span className="mt-1 flex h-6 w-6 items-center justify-center rounded-full bg-neutral-900/10 text-neutral-900">
+                        <ArrowRight className="h-4 w-4" />
+                      </span>
+                      <span>{point}</span>
+                    </li>
+                  ))}
+                </ul>
+                <Button
+                  asChild
+                  variant="link"
+                  className="px-0 text-base font-semibold text-neutral-900 hover:text-neutral-700"
+                >
+                  <Link href="/websites">See What We Build →</Link>
+                </Button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="border-b border-neutral-200 bg-neutral-50">
+          <div className="mx-auto max-w-5xl px-6 py-20 sm:py-24">
             <div className="space-y-6">
-              <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">Websites built for growth</h2>
-              <p className="text-lg text-neutral-600">
-                Prism is a studio of designers, strategists, and engineers dedicated to building digital experiences that
-                drive measurable growth. Every project blends clarity, aesthetics, and the long-term view your business
-                deserves.
+              <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">What We Do for Business Owners</h2>
+              <p className="max-w-2xl text-base text-neutral-600 sm:text-lg">
+                We help business owners build and scale their digital presence:
               </p>
-              <div className="grid gap-6 sm:grid-cols-3">
+              <ul className="grid gap-4 sm:grid-cols-2">
                 {services.map((service) => (
-                  <div key={service.title} className="rounded-2xl border border-neutral-200 bg-white p-5 text-left">
-                    <h3 className="text-sm font-semibold uppercase tracking-widest text-neutral-400">{service.title}</h3>
-                    <p className="mt-3 text-sm text-neutral-600">{service.description}</p>
+                  <li
+                    key={service}
+                    className="flex items-start gap-3 rounded-2xl border border-neutral-200 bg-white p-4 text-neutral-700"
+                  >
+                    <span className="mt-1 flex h-6 w-6 items-center justify-center rounded-full bg-neutral-900 text-white">
+                      <Check className="h-4 w-4" />
+                    </span>
+                    <span>{service}</span>
+                  </li>
+                ))}
+              </ul>
+              <p className="max-w-2xl text-base text-neutral-600 sm:text-lg">
+                You’ve seen the principles in action — now see what happens when we apply them to your business.
+              </p>
+              <Button asChild size="lg" className="mt-4 w-fit rounded-full px-8 py-3 text-base">
+                <Link href="/get-started">
+                  Start a Project <ArrowRight className="ml-2 h-5 w-5" />
+                </Link>
+              </Button>
+            </div>
+          </div>
+        </section>
+
+        <section className="border-b border-neutral-200">
+          <div className="mx-auto max-w-5xl px-6 py-20 sm:py-24">
+            <div className="grid gap-10 md:grid-cols-[1.1fr,0.9fr] md:items-center">
+              <div className="space-y-6">
+                <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">Where Design Meets Growth</h2>
+                <p className="text-base text-neutral-600 sm:text-lg">
+                  Every post we share — whether it’s a quote, insight, or story — reflects a principle we use every day at
+                  Prism.
+                </p>
+                <p className="text-base text-neutral-600 sm:text-lg">
+                  We don’t just post ideas about growth and design. We build it into every website, campaign, and system we
+                  create for our clients.
+                </p>
+              </div>
+              <div className="relative overflow-hidden rounded-3xl border border-neutral-200 bg-neutral-900 text-white">
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.12),_transparent_60%)]" />
+                <div className="relative grid divide-y divide-white/10 sm:grid-cols-2 sm:divide-y-0 sm:divide-x">
+                  <div className="flex flex-col gap-3 p-6">
+                    <p className="text-sm font-semibold uppercase tracking-[0.3em] text-white/60">Instagram Reels</p>
+                    <p className="text-base font-medium text-white sm:text-lg">
+                      Clip breakdowns, carousel scripts, and frameworks that spark the first click.
+                    </p>
                   </div>
+                  <div className="flex flex-col gap-3 p-6">
+                    <p className="text-sm font-semibold uppercase tracking-[0.3em] text-white/60">Prism Client Work</p>
+                    <p className="text-base font-medium text-white sm:text-lg">
+                      Launch-ready sites, campaigns, and systems built on those very principles.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="px-6 py-20 sm:py-24">
+          <div className="mx-auto max-w-5xl rounded-3xl bg-neutral-900 px-6 py-16 text-white sm:px-10">
+            <div className="grid gap-12 md:grid-cols-2">
+              <div className="space-y-4">
+                <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">Take the Next Step</h2>
+                <p className="text-base text-neutral-200">
+                  👉 If you’re a business owner:
+                  <br />
+                  Let’s design a website that helps your business grow.
+                </p>
+                <Button
+                  asChild
+                  size="lg"
+                  className="rounded-full bg-white px-8 py-3 text-base font-semibold text-neutral-950"
+                >
+                  <Link href="/get-started">Get Started</Link>
+                </Button>
+              </div>
+              <div className="space-y-4">
+                <p className="text-base text-neutral-200">
+                  💸 If you know one:
+                  <br />
+                  Earn up to $1,000 when you refer them to Prism.
+                </p>
+                <Button
+                  asChild
+                  size="lg"
+                  variant="outline"
+                  className="rounded-full border-white/40 px-8 py-3 text-base text-white hover:bg-white/10"
+                >
+                  <Link href="/refer">Refer &amp; Earn</Link>
+                </Button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="border-t border-neutral-200 bg-neutral-50">
+          <div className="mx-auto max-w-5xl px-6 py-20 sm:py-24">
+            <div className="space-y-6">
+              <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">Businesses Growing With Prism</h2>
+              <p className="text-base text-neutral-600 sm:text-lg">
+                Trusted by growing businesses, entrepreneurs, and creators.
+              </p>
+              <div className="grid gap-6 sm:grid-cols-2">
+                {testimonials.map((testimonial) => (
+                  <blockquote
+                    key={testimonial.author}
+                    className="flex h-full flex-col justify-between gap-6 rounded-3xl border border-neutral-200 bg-white p-6 sm:p-8"
+                  >
+                    <p className="text-base font-medium text-neutral-800 sm:text-lg">“{testimonial.quote}”</p>
+                    <cite className="text-sm font-semibold uppercase tracking-[0.3em] text-neutral-500">
+                      {testimonial.author}
+                    </cite>
+                  </blockquote>
                 ))}
               </div>
-            </div>
-            <div className="space-y-6 rounded-3xl border border-neutral-200 bg-white/80 p-8 shadow-sm backdrop-blur">
-              <p className="text-sm font-semibold uppercase tracking-[0.4em] text-neutral-400">why instagram matters</p>
-              <h3 className="text-2xl font-semibold tracking-tight">Where insight meets execution</h3>
-              <p className="text-neutral-600">
-                Instagram is our open notebook. We break down the same frameworks we deploy with clients—so when you decide
-                to work with us, we are already aligned on the mindset, the detail, and the pace required to win online.
-              </p>
-              <p className="text-sm text-neutral-500">
-                Follow along for daily micro-lessons and behind-the-scenes looks at how we craft websites that convert.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        <section className="px-6 py-16 md:py-24">
-          <div className="mx-auto max-w-5xl space-y-12">
-            <div className="space-y-4 text-center">
-              <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">Principles we amplify on Instagram</h2>
-              <p className="text-lg text-neutral-600">
-                The clips we share come from the operators we study daily. Their lessons guide our creative process and the
-                results we deliver for clients.
-              </p>
-            </div>
-            <div className="grid gap-6 md:grid-cols-3">
-              {principles.map((principle) => (
-                <div
-                  key={principle.name}
-                  className="flex flex-col gap-4 rounded-3xl border border-neutral-200 bg-white p-6 text-left shadow-sm"
-                >
-                  <span className="text-3xl">{principle.emoji}</span>
-                  <div className="space-y-1">
-                    <p className="text-xs font-semibold uppercase tracking-[0.35em] text-neutral-400">{principle.name}</p>
-                    <h3 className="text-xl font-semibold text-neutral-900">{principle.lesson}</h3>
-                  </div>
-                  <p className="text-sm text-neutral-600">{principle.description}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section className="px-6 pb-20">
-          <div className="mx-auto max-w-3xl rounded-3xl border border-neutral-200 bg-neutral-900 px-8 py-12 text-white">
-            <p className="text-xs font-semibold uppercase tracking-[0.4em] text-neutral-400">let's build together</p>
-            <h2 className="mt-4 text-3xl font-semibold sm:text-4xl">Ready to go deeper than the feed?</h2>
-            <p className="mt-4 text-base text-neutral-200">
-              When you become a Prism client, our team turns the philosophies you have seen on Instagram into a complete
-              digital presence—strategy, design, development, and growth systems that compound over time.
-            </p>
-            <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center">
-              <Button asChild size="lg" className="rounded-full bg-white px-8 py-6 text-base font-semibold text-neutral-900">
-                <a href="/contact">
-                  Book a discovery call <ArrowRight className="ml-2 h-5 w-5" />
-                </a>
-              </Button>
-              <Button asChild size="lg" variant="outline" className="rounded-full border-white/30 px-8 py-6 text-base text-white">
-                <a href="/services">Explore services</a>
+              <Button
+                asChild
+                variant="link"
+                className="px-0 text-base font-semibold text-neutral-900 hover:text-neutral-700"
+              >
+                <Link href="https://www.instagram.com/the_design_prism" target="_blank" rel="noreferrer">
+                  Follow along on Instagram → @the_design_prism
+                </Link>
               </Button>
             </div>
           </div>
