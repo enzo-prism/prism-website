@@ -7,165 +7,200 @@ import Navbar from "@/components/navbar"
 import ScrollToTop from "@/components/scroll-to-top"
 import { Button } from "@/components/ui/button"
 
-const pillars = [
-  {
-    title: "Translate momentum into momentum",
-    description:
-      "We audit your clips and comments, identify the sparks that resonate, and turn them into on-brand web journeys that capture intent."
-  },
-  {
-    title: "Design for clarity over noise",
-    description:
-      "From landing pages to lead capture, every surface is stripped to the essentials so visitors can act fast on the idea that brought them here."
-  },
-  {
-    title: "Measure what matters",
-    description:
-      "Dashboards focus on a handful of signals: the stories people repeat, the offers they choose, and the channels that keep CAC in check."
-  }
-]
-
-const rhythm = [
-  {
-    label: "Week 1",
-    description: "Align on the TikTok stories to activate and capture the metrics that define success."
-  },
-  {
-    label: "Weeks 2-3",
-    description: "Ship focused pages, flows, and follow-up that mirror the promise viewers heard in your clips."
-  },
-  {
-    label: "Week 4+",
-    description: "Tighten the loop with experiments, reporting, and refreshed narratives as new clips ship."
-  }
-]
-
-const proofPoints = [
-  {
-    quote:
-      "Prism helped us preserve the personality of our TikTok presence while making it effortless for viewers to become leads.",
-    author: "Sasha R., Founder"
-  },
-  {
-    quote:
-      "They focus on momentum instead of vanity. Every iteration connected directly to the metrics our team cares about.",
-    author: "Marco D., Growth Lead"
-  }
-]
-
 export default function TikTokLandingPage() {
   return (
     <div className="flex min-h-screen flex-col bg-white text-neutral-900">
       <Navbar />
       <ScrollToTop />
       <main className="flex-1">
-        <section className="border-b border-neutral-200 bg-neutral-50">
-          <div className="mx-auto max-w-5xl px-4 py-24 sm:py-28 md:py-32">
-            <p className="text-xs font-semibold uppercase tracking-[0.35em] text-neutral-500">Prism for TikTok</p>
-            <h1 className="mt-6 text-4xl font-semibold tracking-tight sm:text-5xl md:text-6xl">
-              Minimal systems for ideas that already resonate.
+        <section className="relative overflow-hidden border-b border-neutral-200 bg-neutral-950 text-white">
+          <div className="absolute inset-0">
+            <div className="absolute inset-0 bg-gradient-to-br from-neutral-900/90 via-neutral-900/80 to-neutral-950" />
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="h-[28rem] w-[28rem] rounded-full bg-neutral-700/20 blur-3xl" />
+            </div>
+            <div className="absolute -bottom-20 right-0 hidden h-80 w-80 rotate-12 rounded-3xl border border-white/10 bg-white/5 backdrop-blur xl:block" />
+          </div>
+          <div className="relative mx-auto flex max-w-5xl flex-col gap-8 px-4 py-24 sm:py-28 md:py-32">
+            <div className="flex flex-col gap-3 text-xs font-semibold uppercase tracking-[0.35em] text-neutral-300">
+              <span>Prism</span>
+              <span>TikTok to transformation</span>
+            </div>
+            <h1 className="max-w-3xl text-4xl font-semibold tracking-tight sm:text-5xl md:text-6xl">
+              From TikTok to Transformation.
             </h1>
-            <p className="mt-6 max-w-2xl text-base text-neutral-600 sm:text-lg">
-              You know which TikTok moments spark action. Prism builds the infrastructure that meets that attention with focus:
-              clean pages, intentional flows, and signals that show what to double down on next.
+            <p className="max-w-2xl text-base text-neutral-200 sm:text-lg">
+              You’ve seen the clips. Now build what they talk about. Prism turns the principles we share on TikTok into modern
+              systems that help founders and business owners attract customers, grow revenue, and stand out online.
             </p>
-            <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center">
-              <Button asChild size="lg" className="rounded-full px-8 py-3 text-base">
+            <p className="text-sm uppercase tracking-[0.3em] text-neutral-400">Clips on TikTok. Clients in real life.</p>
+            <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center">
+              <Button asChild size="lg" className="rounded-full bg-white px-8 py-3 text-base font-semibold text-neutral-950">
                 <Link href="/get-started">Work With Prism</Link>
               </Button>
               <Button
                 asChild
                 size="lg"
                 variant="outline"
-                className="rounded-full border-neutral-300 px-8 py-3 text-base text-neutral-900 hover:bg-neutral-100"
+                className="rounded-full border-white/40 px-8 py-3 text-base text-white hover:bg-white/10"
               >
-                <Link href="/refer">Refer &amp; Earn</Link>
+                <Link href="/refer">Earn for Referrals</Link>
               </Button>
             </div>
           </div>
         </section>
 
-        <section className="border-b border-neutral-200">
-          <div className="mx-auto max-w-5xl px-4 py-20 sm:py-24">
+        <section className="border-b border-neutral-200 bg-white">
+          <div className="mx-auto flex max-w-5xl flex-col gap-10 px-4 py-20 sm:py-24">
             <div className="max-w-2xl">
-              <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl">What focus feels like</h2>
-              <p className="mt-4 text-base text-neutral-600 sm:text-lg">
-                Our approach keeps the experience light, fast, and obvious. Every interaction supports the story already told in
-                your feed.
+              <p className="text-xs font-semibold uppercase tracking-[0.35em] text-neutral-400">Why Prism Exists</p>
+              <h2 className="mt-4 text-3xl font-semibold tracking-tight sm:text-4xl">Business growth meets great design.</h2>
+              <p className="mt-6 text-base text-neutral-600 sm:text-lg">
+                We believe business growth and great design go hand in hand. That’s why we study the best entrepreneurs every
+                day—and use those same lessons to build smarter systems for our clients.
               </p>
+              <p className="mt-4 text-base text-neutral-600 sm:text-lg">
+                The goal is simple:
+              </p>
+              <ul className="mt-4 space-y-3 text-base text-neutral-800 sm:text-lg">
+                <li>• Modern design that drives real revenue</li>
+                <li>• Marketing that’s actually measurable</li>
+                <li>• Websites that evolve as fast as business does</li>
+              </ul>
             </div>
-            <div className="mt-12 grid gap-8 sm:grid-cols-2">
-              {pillars.map((pillar) => (
-                <div key={pillar.title} className="flex flex-col gap-3 rounded-3xl border border-neutral-200 p-6 sm:p-8">
-                  <h3 className="text-xl font-semibold text-neutral-900">{pillar.title}</h3>
-                  <p className="text-sm text-neutral-600 sm:text-base">{pillar.description}</p>
-                </div>
-              ))}
+            <div>
+              <Button asChild variant="link" className="h-auto px-0 text-base font-semibold text-neutral-900">
+                <Link href="/websites">See What We Build →</Link>
+              </Button>
             </div>
           </div>
         </section>
 
         <section className="border-b border-neutral-200 bg-neutral-50">
-          <div className="mx-auto max-w-5xl px-4 py-20 sm:py-24">
+          <div className="mx-auto flex max-w-5xl flex-col gap-10 px-4 py-20 sm:py-24">
             <div className="max-w-2xl">
-              <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl">A calm rhythm for compounding results</h2>
-              <p className="mt-4 text-base text-neutral-600 sm:text-lg">
-                Simple cadences make it easier to sustain the energy that TikTok creates. We focus on a few decisive moves each
-                week.
+              <p className="text-xs font-semibold uppercase tracking-[0.35em] text-neutral-400">What We Do</p>
+              <h2 className="mt-4 text-3xl font-semibold tracking-tight sm:text-4xl">What we do for business owners.</h2>
+              <p className="mt-6 text-base text-neutral-600 sm:text-lg">
+                We help you build the digital foundation of your business:
+              </p>
+              <ul className="mt-6 space-y-3 text-base text-neutral-800 sm:text-lg">
+                <li>✅ Custom websites that convert</li>
+                <li>✅ SEO + local listing optimization</li>
+                <li>✅ Ad campaigns (Google, Meta, TikTok, Yelp)</li>
+                <li>✅ Analytics + automation setup</li>
+              </ul>
+              <p className="mt-6 text-base text-neutral-600 sm:text-lg">
+                Whether you’re just starting out or scaling up, Prism is your design-growth partner.
               </p>
             </div>
-            <div className="mt-10 grid gap-6 sm:grid-cols-3">
-              {rhythm.map((item) => (
-                <div key={item.label} className="flex flex-col gap-3 rounded-3xl border border-neutral-200 bg-white p-6">
-                  <p className="text-sm font-semibold uppercase tracking-[0.25em] text-neutral-500">{item.label}</p>
-                  <p className="text-sm text-neutral-600 sm:text-base">{item.description}</p>
+            <div>
+              <Button asChild size="lg" className="rounded-full bg-neutral-900 px-8 py-3 text-base text-white">
+                <Link href="/get-started">Start a Project</Link>
+              </Button>
+            </div>
+          </div>
+        </section>
+
+        <section className="border-b border-neutral-200 bg-white">
+          <div className="mx-auto grid max-w-5xl gap-12 px-4 py-20 sm:py-24 lg:grid-cols-2 lg:items-center">
+            <div className="space-y-6">
+              <p className="text-xs font-semibold uppercase tracking-[0.35em] text-neutral-400">Principles in Practice</p>
+              <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">Built on the principles we share.</h2>
+              <p className="text-base text-neutral-600 sm:text-lg">
+                Every insight we post on TikTok—from Bezos’ focus on customer obsession to Steve Jobs’ design philosophy—we
+                apply inside Prism to help our clients grow.
+              </p>
+              <p className="text-base text-neutral-600 sm:text-lg">
+                We don’t just share business advice. We build businesses with it.
+              </p>
+            </div>
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div className="relative aspect-[9/16] overflow-hidden rounded-3xl border border-neutral-200 bg-neutral-900/80">
+                <div className="absolute inset-0 flex items-center justify-center text-xs font-semibold uppercase tracking-[0.35em] text-neutral-400">
+                  TikTok Clip Placeholder
                 </div>
-              ))}
+              </div>
+              <div className="flex flex-col gap-4">
+                <div className="rounded-3xl border border-neutral-200 bg-white p-6 text-sm text-neutral-700 shadow-sm">
+                  <p className="font-semibold text-neutral-900">Founder Portfolio</p>
+                  <p className="mt-2">
+                    Modular service pages, clear calls to action, and analytics dashboards that keep customer obsession front
+                    and center.
+                  </p>
+                </div>
+                <div className="rounded-3xl border border-neutral-200 bg-white p-6 text-sm text-neutral-700 shadow-sm">
+                  <p className="font-semibold text-neutral-900">Prism Client Work</p>
+                  <p className="mt-2">Screenshots of Prism-built sites—from service businesses to local storefronts.</p>
+                </div>
+              </div>
             </div>
           </div>
         </section>
 
-        <section className="border-b border-neutral-200">
-          <div className="mx-auto max-w-5xl px-4 py-20 sm:py-24">
+        <section className="border-b border-neutral-200 bg-neutral-950 text-white">
+          <div className="mx-auto flex max-w-5xl flex-col gap-10 px-4 py-20 sm:py-24">
+            <div className="space-y-6">
+              <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">Ready to take the next step?</h2>
+              <div className="space-y-6 text-base sm:text-lg">
+                <div className="rounded-3xl border border-white/20 bg-white/5 p-6">
+                  <p className="text-sm font-semibold uppercase tracking-[0.3em] text-neutral-300">For Business Owners</p>
+                  <p className="mt-3 text-neutral-100">Let’s design a site that grows your business.</p>
+                  <div className="mt-4">
+                    <Button asChild size="lg" className="rounded-full bg-white px-6 py-3 text-base font-semibold text-neutral-950">
+                      <Link href="/get-started">Get Started →</Link>
+                    </Button>
+                  </div>
+                </div>
+                <div className="rounded-3xl border border-white/20 bg-white/5 p-6">
+                  <p className="text-sm font-semibold uppercase tracking-[0.3em] text-neutral-300">For Community Connectors</p>
+                  <p className="mt-3 text-neutral-100">Earn up to $1,000 when you refer a business owner.</p>
+                  <div className="mt-4">
+                    <Button
+                      asChild
+                      size="lg"
+                      variant="outline"
+                      className="rounded-full border-white/40 px-6 py-3 text-base text-white hover:bg-white/10"
+                    >
+                      <Link href="/refer">Refer &amp; Earn →</Link>
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="bg-white">
+          <div className="mx-auto flex max-w-5xl flex-col gap-12 px-4 py-20 sm:py-24">
             <div className="max-w-2xl">
-              <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl">Proof in the details</h2>
-              <p className="mt-4 text-base text-neutral-600 sm:text-lg">
-                Teams choose Prism when they want a measured partner. These are the themes we hear most often.
-              </p>
+              <p className="text-xs font-semibold uppercase tracking-[0.35em] text-neutral-400">Social Proof</p>
+              <h2 className="mt-4 text-3xl font-semibold tracking-tight sm:text-4xl">Trusted by local businesses and founders across the U.S.</h2>
             </div>
-            <div className="mt-12 grid gap-6 sm:grid-cols-2">
-              {proofPoints.map((point) => (
-                <blockquote
-                  key={point.quote}
-                  className="flex h-full flex-col justify-between gap-6 rounded-3xl border border-neutral-200 p-6 sm:p-8"
-                >
-                  <p className="text-base font-medium text-neutral-800 sm:text-lg">“{point.quote}”</p>
-                  <cite className="text-sm font-semibold uppercase tracking-[0.25em] text-neutral-500">{point.author}</cite>
-                </blockquote>
-              ))}
+            <div className="grid gap-6 sm:grid-cols-2">
+              <blockquote className="rounded-3xl border border-neutral-200 bg-neutral-50 p-6 sm:p-8">
+                <p className="text-base font-medium text-neutral-800 sm:text-lg">
+                  “Prism completely transformed our website and doubled our inquiries.”
+                </p>
+                <cite className="mt-4 block text-sm font-semibold uppercase tracking-[0.3em] text-neutral-500">
+                  Dr. Chris Wong, Wong Dental
+                </cite>
+              </blockquote>
+              <blockquote className="rounded-3xl border border-neutral-200 bg-neutral-50 p-6 sm:p-8">
+                <p className="text-base font-medium text-neutral-800 sm:text-lg">“They get design and growth — a rare combo.”</p>
+                <cite className="mt-4 block text-sm font-semibold uppercase tracking-[0.3em] text-neutral-500">sr4 Partners</cite>
+              </blockquote>
             </div>
-          </div>
-        </section>
-
-        <section className="bg-neutral-950 text-white">
-          <div className="mx-auto max-w-5xl px-4 py-20 sm:py-24">
-            <div className="flex flex-col gap-6 text-center">
-              <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">Ready when the next clip hits</h2>
-              <p className="mx-auto max-w-2xl text-sm text-neutral-300 sm:text-base">
-                Let’s pair your TikTok presence with a minimalist acquisition engine that feels as clean as it performs.
-              </p>
-              <div className="flex flex-col justify-center gap-3 sm:flex-row sm:items-center">
-                <Button asChild size="lg" className="rounded-full bg-white px-8 py-3 text-base font-semibold text-neutral-950">
-                  <Link href="/get-started">Start the project</Link>
-                </Button>
-                <Button
-                  asChild
-                  size="lg"
-                  variant="outline"
-                  className="rounded-full border-white/40 px-8 py-3 text-base text-white hover:bg-white/10"
-                >
-                  <Link href="/refer">Share Prism with a friend</Link>
-                </Button>
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div className="rounded-3xl border border-neutral-200 bg-neutral-900/5 p-6">
+                <p className="text-sm font-semibold uppercase tracking-[0.3em] text-neutral-500">TikTok Highlights</p>
+                <p className="mt-3 text-sm text-neutral-600">
+                  Embed or loop your top TikTok clips here to close the loop between social insights and real client wins.
+                </p>
+              </div>
+              <div className="rounded-3xl border border-neutral-200 bg-neutral-900/5 p-6">
+                <p className="text-sm font-semibold uppercase tracking-[0.3em] text-neutral-500">Client Metrics</p>
+                <p className="mt-3 text-sm text-neutral-600">Show before-and-after performance snapshots or testimonial reels.</p>
               </div>
             </div>
           </div>
