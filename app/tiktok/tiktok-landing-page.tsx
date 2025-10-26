@@ -3,6 +3,7 @@
 import Link from "next/link"
 
 import Footer from "@/components/footer"
+import FreeAnalysisSection from "@/components/free-analysis-section"
 import Navbar from "@/components/navbar"
 import ScrollToTop from "@/components/scroll-to-top"
 import { Button } from "@/components/ui/button"
@@ -139,6 +140,8 @@ export default function TikTokLandingPage() {
             </div>
           </div>
         </section>
+
+        <FreeAnalysisSection />
 
         <section className="border-b border-neutral-200 bg-neutral-950 text-white">
           <div className="mx-auto flex max-w-5xl flex-col gap-10 px-4 py-20 sm:py-24">
