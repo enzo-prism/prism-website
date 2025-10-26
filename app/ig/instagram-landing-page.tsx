@@ -4,6 +4,7 @@ import dynamic from "next/dynamic"
 import Link from "next/link"
 
 import Footer from "@/components/footer"
+import FreeAnalysisSection from "@/components/free-analysis-section"
 import { Button } from "@/components/ui/button"
 import { ArrowRight, Check } from "lucide-react"
 
@@ -176,6 +177,8 @@ export default function InstagramLandingPage() {
             </div>
           </div>
         </section>
+
+        <FreeAnalysisSection />
 
         <section className="px-6 py-20 sm:py-24">
           <div className="mx-auto max-w-5xl rounded-3xl bg-neutral-900 px-6 py-16 text-white sm:px-10">
