@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { motion } from "framer-motion"
+import { motion, type Variants } from "framer-motion"
 
 import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
@@ -44,7 +44,7 @@ const tiktokClips = [
   "https://www.tiktok.com/embed/v2/7289975386049350917"
 ]
 
-const fadeInUp = {
+const fadeInUp: Variants = {
   hidden: { opacity: 0, y: 24 },
   visible: {
     opacity: 1,
