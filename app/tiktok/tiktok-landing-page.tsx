@@ -50,14 +50,14 @@ export default function TikTokLandingPage() {
             </div>
             <p className="text-sm uppercase tracking-[0.3em] text-neutral-400">Clips on TikTok. Clients in real life.</p>
             <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center">
-              <Button asChild size="lg" className="rounded-full bg-white px-8 py-3 text-base font-semibold text-neutral-950">
+              <Button asChild size="lg" variant="inverted" className="rounded-full px-8 py-3 text-base font-semibold">
                 <Link href="/get-started">→ Work With Prism</Link>
               </Button>
               <Button
                 asChild
                 size="lg"
-                variant="outline"
-                className="rounded-full border-white/40 px-8 py-3 text-base text-white transition hover:bg-white/10"
+                variant="outline-inverted"
+                className="rounded-full px-8 py-3 text-base transition"
               >
                 <Link href="/refer">→ Earn for Referrals</Link>
               </Button>
@@ -163,7 +163,12 @@ export default function TikTokLandingPage() {
                   <p className="text-sm font-semibold uppercase tracking-[0.3em] text-neutral-300">If you’re a business owner</p>
                   <p className="mt-3 text-neutral-100">Let’s design a site that grows your business.</p>
                   <div className="mt-4">
-                    <Button asChild size="lg" className="rounded-full bg-white px-6 py-3 text-base font-semibold text-neutral-950">
+                    <Button
+                      asChild
+                      size="lg"
+                      variant="inverted"
+                      className="rounded-full px-6 py-3 text-base font-semibold"
+                    >
                       <Link href="/get-started">Get Started →</Link>
                     </Button>
                   </div>
@@ -175,8 +180,8 @@ export default function TikTokLandingPage() {
                     <Button
                       asChild
                       size="lg"
-                      variant="outline"
-                      className="rounded-full border-white/40 px-6 py-3 text-base text-white hover:bg-white/10"
+                      variant="outline-inverted"
+                      className="rounded-full px-6 py-3 text-base"
                     >
                       <Link href="/refer">Refer &amp; Earn →</Link>
                     </Button>
