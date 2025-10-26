@@ -10,6 +10,8 @@ import { ArrowRight, Check, Play } from "lucide-react"
 
 const Navbar = dynamic(() => import("@/components/navbar"), { ssr: false })
 
+const YOUTUBE_URL = "https://www.youtube.com/@the_design_prism"
+
 const playbooks = [
   "Website frameworks that convert visitors into leads",
   "SEO + local listing tactics that rank you higher",
@@ -64,13 +66,8 @@ export default function YouTubeLandingPage() {
               <Button asChild size="lg" variant="inverted" className="rounded-full px-8 py-3 text-base font-semibold">
                 <Link href="/pricing">Work With Prism</Link>
               </Button>
-              <Button
-                asChild
-                size="lg"
-                variant="outline-inverted"
-                className="rounded-full px-8 py-3 text-base"
-              >
-                <Link href="https://www.youtube.com/@the_design_prism" target="_blank" rel="noreferrer">
+              <Button asChild size="lg" variant="outline-inverted" className="rounded-full px-8 py-3 text-base">
+                <Link href={YOUTUBE_URL} target="_blank" rel="noreferrer">
                   Watch on YouTube
                 </Link>
               </Button>
@@ -172,15 +169,20 @@ export default function YouTubeLandingPage() {
                   </div>
                 </div>
                 <div className="flex items-center justify-between gap-4 border-t border-white/10 bg-white/5 px-6 py-4">
-                  <div className="flex items-center gap-3 text-sm font-semibold uppercase tracking-[0.3em] text-white/80">
-                    <Play className="h-4 w-4" />
-                    Subscribe on YouTube
-                  </div>
-                  <Button asChild size="sm" variant="outline-inverted" className="rounded-full border-white/40 px-4">
-                    <Link href="https://www.youtube.com/@the_design_prism" target="_blank" rel="noreferrer">
-                      Subscribe →
-                    </Link>
-                  </Button>
+                <Link
+                  href={YOUTUBE_URL}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="flex items-center gap-3 text-sm font-semibold uppercase tracking-[0.3em] text-white/80 transition hover:text-white"
+                >
+                  <Play className="h-4 w-4" />
+                  Subscribe on YouTube
+                </Link>
+                <Button asChild size="sm" variant="outline-inverted" className="rounded-full border-white/40 px-4">
+                  <Link href={YOUTUBE_URL} target="_blank" rel="noreferrer">
+                    Subscribe →
+                  </Link>
+                </Button>
                 </div>
               </div>
             </div>
