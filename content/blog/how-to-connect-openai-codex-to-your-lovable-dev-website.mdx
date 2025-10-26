@@ -1,0 +1,157 @@
+---
+title: "How to Connect OpenAI CodeX to Your Loveable.dev Website"
+description: "Follow Prism founder Enzo Sison's step-by-step workflow for moving your Loveable.dev project into OpenAI CodeX with GitHub syncing, internet-enabled prompting, and smooth pull requests."
+date: "2025-10-26"
+category: "AI & Growth"
+image: "/api/og/blog/how-to-connect-openai-codex-to-your-lovable-dev-website"
+gradientClass: "bg-gradient-to-br from-blue-300/30 via-indigo-300/30 to-slate-300/30"
+openGraph:
+  title: "How to Connect OpenAI CodeX to Your Loveable.dev Website"
+  description: "Learn how Prism links Loveable.dev projects to OpenAI CodeX for GitHub-based workflows, video walkthrough included."
+  url: "https://www.design-prism.com/blog/how-to-connect-openai-codex-to-your-lovable-dev-website"
+  siteName: "Prism"
+  images:
+    - url: "https://www.design-prism.com/api/og/blog/how-to-connect-openai-codex-to-your-lovable-dev-website"
+      width: 1200
+      height: 630
+      alt: "Workflow diagram showing Loveable.dev connected to OpenAI CodeX and GitHub"
+  locale: "en_US"
+  type: "article"
+  publishedTime: "2025-10-26T00:00:00.000Z"
+  authors: ["Enzo Sison"]
+twitter:
+  card: "summary_large_image"
+  title: "How to Connect OpenAI CodeX to Your Loveable.dev Website"
+  description: "Prism's proven workflow for pairing Loveable.dev with OpenAI CodeX so you can edit code with confidence."
+  images: ["https://www.design-prism.com/api/og/blog/how-to-connect-openai-codex-to-your-lovable-dev-website"]
+canonical: "https://www.design-prism.com/blog/how-to-connect-openai-codex-to-your-lovable-dev-website"
+---
+
+import YouTubeVideoEmbed from '@/components/youtube-video-embed'
+import { VideoObjectSchema } from '@/components/schema-markup'
+
+*By Enzo Sison — Founder of Prism*
+
+<VideoObjectSchema
+  videoId="how-to-connect-openai-codex-to-your-lovable-dev-website"
+  name="How to Connect OpenAI CodeX to Your Loveable.dev Website"
+  description="Enzo Sison walks through the exact workflow Prism uses to link Loveable.dev projects with OpenAI CodeX for GitHub-connected development."
+  thumbnailUrl="https://img.youtube.com/vi/e0iXGHZ1sBw/hqdefault.jpg"
+  uploadDate="2025-10-26T00:00:00.000Z"
+  contentUrl="https://youtu.be/e0iXGHZ1sBw"
+  embedUrl="https://www.youtube.com/embed/e0iXGHZ1sBw"
+  creatorName="Enzo Sison"
+/>
+
+> Video walkthrough included below.
+
+Loveable.dev gets your site from zero to launch-ready fast. But when you need fine-grained control over code, design tweaks, or integrations, you need a developer-grade workspace that still respects what Loveable already built. That’s why we pair Loveable with OpenAI CodeX for our Prism clients—it keeps the AI-powered speed while giving us GitHub-native editing and review.
+
+Here’s the exact process we use in-house so you can replicate it yourself.
+
+## ⚙️ Step 1: Prepare Your Loveable Project
+
+Before connecting anything, make sure Loveable has shipped at least one saved version of your site. That gives CodeX a stable codebase to work with.
+
+**Confirm you have:**
+
+- A generated Loveable.dev project that reflects your latest prompts.
+- At least one saved version of the code or design.
+
+## 🔗 Step 2: Connect Loveable to GitHub
+
+Inside the Loveable dashboard, open your project settings and follow the GitHub transfer flow:
+
+1. Click **Connect Project**.
+2. Choose **GitHub**.
+3. Pick the right organization.
+4. Hit **Transfer**.
+
+Loveable will provision a GitHub repository and surface the repo URL—copy it, because you’ll need it for CodeX.
+
+## 💻 Step 3: Set Up an OpenAI CodeX Environment
+
+With your repo live, hop into OpenAI CodeX (via chat.openai.com or your workspace):
+
+- Go to **Manage Environments**.
+- Click **Create New Environment**.
+- Choose **GitHub Repository** and select the Loveable-linked repo (in our walkthrough it’s `dental-referral-buddy`).
+- Confirm the environment name and defaults.
+
+## 🌐 Step 4: Enable Agent Internet Access
+
+During environment creation, toggle on **Agent Internet Access**. That allows CodeX to pull in current context or docs without you manually pasting links.
+
+Once everything looks right, click **Create Environment**.
+
+## 🧠 Step 5: Start Prompting Inside CodeX
+
+Open the environment and begin prompting. You now have the best of both worlds: Loveable’s generated foundation plus CodeX’s GitHub-aware AI editor.
+
+In our demo we prompted:
+
+```
+Change the site’s main color from green to blue.
+```
+
+CodeX identified the correct files, made the update, and pushed commits back to GitHub automatically—without undoing Loveable’s structure.
+
+## 🔁 Step 6: Create and Merge Your Pull Request
+
+When CodeX wraps a task, jump into GitHub. You’ll see a pull request waiting for review. Inspect the diff, request tweaks if needed, then merge.
+
+Because the repo stays synced with Loveable, those merged changes flow back into the builder shortly after.
+
+## ✅ Step 7: Verify in Loveable
+
+Return to your Loveable project and refresh. Your update (like that new blue primary color) should appear. If it doesn’t show immediately, give it a moment or refresh—Loveable sometimes caches versions before syncing the latest commit.
+
+## 💡 Why Combine Loveable and CodeX?
+
+Loveable.dev excels at rapid prototyping and visual collaboration. But as projects scale, we consistently see teams hit limits:
+
+- **Hidden code:** Key files stay inaccessible inside the builder.
+- **AI drift:** Loveable can overwrite or hallucinate components unexpectedly.
+- **No version control:** Collaboration gets risky without branches and reviews.
+
+CodeX solves the gap by layering GitHub-native editing, diffing, and agent-powered refactors on top of the Loveable output. You keep shipping fast while gaining the safety net of real version control.
+
+## 🧩 How Prism Uses This Stack
+
+At Prism we run dozens of client sites through this exact workflow across dental, consulting, and hospitality brands.
+
+- **Loveable.dev** handles first drafts, visual approvals, and quick copy tweaks with clients.
+- **OpenAI CodeX** delivers advanced SEO, performance tuning, bespoke integrations, and code-level polish.
+
+That division of labor lets us move faster without sacrificing technical quality.
+
+## 🛠️ Common Loveable Pitfalls (and How to Avoid Them)
+
+Over the past year we’ve seen recurring issues when teams stay purely inside Loveable:
+
+- AI hallucinations that delete or rewrite key sections.
+- Limited control over bug fixes or custom features.
+- A closed ecosystem that slows collaboration.
+
+Connecting to CodeX gives you an escape hatch—you can patch, extend, and optimize without abandoning Loveable’s speed.
+
+## 🎥 Watch the Walkthrough
+
+<YouTubeVideoEmbed
+  videoId="e0iXGHZ1sBw"
+  title="How to Connect OpenAI CodeX to Your Loveable.dev Website"
+/>
+
+## 💬 Final Thoughts
+
+If you’re building on Loveable.dev, adding CodeX is one of the smartest upgrades you can make. You’ll be able to:
+
+- Edit code safely with GitHub tracking every change.
+- Sync updates back to Loveable without manual exports.
+- Reduce AI missteps while shipping faster.
+
+Need a partner to set this up—or want Prism to handle the ongoing build? [Reach out here](https://www.design-prism.com/contact) and we’ll help you connect CodeX, optimize your stack, and keep your site performing like a top-tier digital asset.
+
+Together, we build smarter.
+
+— Enzo
