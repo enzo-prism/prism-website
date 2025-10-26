@@ -3,13 +3,13 @@ import type { Metadata } from "next"
 import TikTokLandingPage from "./tiktok-landing-page"
 
 export const metadata: Metadata = {
-  title: "Prism for TikTok Founders | design-prism.com",
+  title: "From TikTok to Transformation | Prism",
   description:
-    "Turn TikTok inspiration into a growth engine. Discover how Prism builds websites, SEO, ads, and analytics grounded in the clips you love.",
+    "You’ve seen the clips. Now build what they talk about. Prism turns TikTok insights into high-performing websites, marketing, and systems that drive growth.",
   openGraph: {
-    title: "Prism for TikTok Founders | design-prism.com",
+    title: "From TikTok to Transformation | Prism",
     description:
-      "You’ve seen the clips. Now build what they talk about. Partner with Prism for modern websites, SEO, ads, and analytics that convert attention into growth.",
+      "From TikTok to Transformation. Partner with Prism for modern websites, measurable marketing, and adaptive systems that convert attention into real growth.",
     url: "https://www.design-prism.com/tiktok",
     siteName: "Prism",
     locale: "en_US",
@@ -17,9 +17,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Prism for TikTok Founders",
+    title: "From TikTok to Transformation",
     description:
-      "You’ve seen the clips. Now build what they talk about. Partner with Prism for modern websites, SEO, ads, and analytics that convert attention into growth.",
+      "From TikTok to Transformation. Partner with Prism for modern websites, measurable marketing, and adaptive systems that convert attention into real growth.",
     creator: "@designprism"
   },
   alternates: {
