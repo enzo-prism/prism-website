@@ -1,358 +1,172 @@
 "use client"
 
 import Link from "next/link"
-import { motion, type Variants } from "framer-motion"
 
 import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
 import ScrollToTop from "@/components/scroll-to-top"
 import { Button } from "@/components/ui/button"
 
-const services = [
+const pillars = [
   {
-    title: "Websites that convert",
-    description: "Launch a responsive site with story, proof, and CTAs tuned for high-intent traffic."
+    title: "Translate momentum into momentum",
+    description:
+      "We audit your clips and comments, identify the sparks that resonate, and turn them into on-brand web journeys that capture intent."
   },
   {
-    title: "SEO that compounds",
-    description: "Own the keywords your clips spark. We build technical foundations and content engines that rank."
+    title: "Design for clarity over noise",
+    description:
+      "From landing pages to lead capture, every surface is stripped to the essentials so visitors can act fast on the idea that brought them here."
   },
   {
-    title: "Paid ads that scale",
-    description: "Deploy TikTok-to-site retargeting and multi-channel campaigns that protect CAC."
-  },
-  {
-    title: "Analytics that guide moves",
-    description: "Dashboards, attribution, and experiments that show which ideas drive pipeline."
+    title: "Measure what matters",
+    description:
+      "Dashboards focus on a handful of signals: the stories people repeat, the offers they choose, and the channels that keep CAC in check."
   }
 ]
 
-const testimonials = [
+const rhythm = [
   {
-    quote: "Prism turned our viral moments into reliable revenue. The speed and clarity beat every agency we tried.",
-    name: "Sasha R., Founder"
+    label: "Week 1",
+    description: "Align on the TikTok stories to activate and capture the metrics that define success."
   },
   {
-    quote: "They bridge creative ideas and performance. Within 45 days we had a new funnel, tracking, and 3x leads.",
-    name: "Marco D., Growth Lead"
+    label: "Weeks 2-3",
+    description: "Ship focused pages, flows, and follow-up that mirror the promise viewers heard in your clips."
+  },
+  {
+    label: "Week 4+",
+    description: "Tighten the loop with experiments, reporting, and refreshed narratives as new clips ship."
   }
 ]
 
-const tiktokClips = [
-  "https://www.tiktok.com/embed/v2/7315356331853198606",
-  "https://www.tiktok.com/embed/v2/7305248729557310766",
-  "https://www.tiktok.com/embed/v2/7289975386049350917"
-]
-
-const fadeInUp: Variants = {
-  hidden: { opacity: 0, y: 24 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.6, ease: "easeOut" }
+const proofPoints = [
+  {
+    quote:
+      "Prism helped us preserve the personality of our TikTok presence while making it effortless for viewers to become leads.",
+    author: "Sasha R., Founder"
+  },
+  {
+    quote:
+      "They focus on momentum instead of vanity. Every iteration connected directly to the metrics our team cares about.",
+    author: "Marco D., Growth Lead"
   }
-}
+]
 
 export default function TikTokLandingPage() {
   return (
-    <div className="bg-white text-neutral-900">
+    <div className="flex min-h-screen flex-col bg-white text-neutral-900">
       <Navbar />
       <ScrollToTop />
-      <main>
-        {/* Hero */}
-        <section className="relative overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-b from-white via-neutral-50 to-white" aria-hidden />
-          <div className="absolute inset-x-0 top-24 mx-auto hidden max-w-5xl px-4 md:block" aria-hidden>
-            <div className="relative rounded-3xl border border-white/40 bg-white/40 p-6 shadow-[0_40px_100px_-40px_rgba(15,23,42,0.35)] backdrop-blur">
-              <div className="grid grid-cols-3 gap-4">
-                {tiktokClips.map((clip, index) => (
-                  <div
-                    key={clip}
-                    className="relative aspect-[9/16] overflow-hidden rounded-2xl border border-white/50 bg-neutral-900/40 shadow-lg"
-                  >
-                    <iframe
-                      src={`${clip}?is_copy_url=1&is_from_webapp=v1`}
-                      title={`TikTok clip ${index + 1}`}
-                      loading="lazy"
-                      allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
-                      allowFullScreen
-                      className="h-full w-full"
-                    />
-                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-neutral-900/60 via-transparent to-neutral-900/20" />
-                  </div>
-                ))}
-              </div>
-              <div className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-r from-[#6366f1]/30 via-transparent to-[#ec4899]/30" />
+      <main className="flex-1">
+        <section className="border-b border-neutral-200 bg-neutral-50">
+          <div className="mx-auto max-w-5xl px-4 py-24 sm:py-28 md:py-32">
+            <p className="text-xs font-semibold uppercase tracking-[0.35em] text-neutral-500">Prism for TikTok</p>
+            <h1 className="mt-6 text-4xl font-semibold tracking-tight sm:text-5xl md:text-6xl">
+              Minimal systems for ideas that already resonate.
+            </h1>
+            <p className="mt-6 max-w-2xl text-base text-neutral-600 sm:text-lg">
+              You know which TikTok moments spark action. Prism builds the infrastructure that meets that attention with focus:
+              clean pages, intentional flows, and signals that show what to double down on next.
+            </p>
+            <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center">
+              <Button asChild size="lg" className="rounded-full px-8 py-3 text-base">
+                <Link href="/get-started">Work With Prism</Link>
+              </Button>
+              <Button
+                asChild
+                size="lg"
+                variant="outline"
+                className="rounded-full border-neutral-300 px-8 py-3 text-base text-neutral-900 hover:bg-neutral-100"
+              >
+                <Link href="/refer">Refer &amp; Earn</Link>
+              </Button>
             </div>
           </div>
-          <div className="container relative mx-auto flex min-h-[60vh] flex-col justify-center px-4 pb-24 pt-32 md:pb-32">
-            <motion.div
-              initial="hidden"
-              animate="visible"
-              variants={fadeInUp}
-              className="mx-auto flex max-w-2xl flex-col items-center text-center"
-            >
-              <span className="text-xs font-semibold uppercase tracking-[0.35em] text-neutral-500">
-                prism for tiktok
-              </span>
-              <div className="mt-6 w-full md:hidden">
-                <div className="relative overflow-hidden rounded-3xl border border-white/60 bg-neutral-900/80 p-4 shadow-lg">
-                  <div className="flex items-stretch gap-3">
-                    {tiktokClips.slice(0, 2).map((clip, index) => (
-                      <div
-                        key={`mobile-clip-${clip}`}
-                        className="relative w-1/2 overflow-hidden rounded-2xl border border-white/30"
-                      >
-                        <iframe
-                          src={`${clip}?is_copy_url=1&is_from_webapp=v1`}
-                          title={`TikTok clip mobile ${index + 1}`}
-                          loading="lazy"
-                          allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
-                          allowFullScreen
-                          className="aspect-[9/16] h-full w-full"
-                        />
-                      </div>
-                    ))}
-                  </div>
-                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-[#6366f1]/40 via-transparent to-[#ec4899]/40" />
+        </section>
+
+        <section className="border-b border-neutral-200">
+          <div className="mx-auto max-w-5xl px-4 py-20 sm:py-24">
+            <div className="max-w-2xl">
+              <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl">What focus feels like</h2>
+              <p className="mt-4 text-base text-neutral-600 sm:text-lg">
+                Our approach keeps the experience light, fast, and obvious. Every interaction supports the story already told in
+                your feed.
+              </p>
+            </div>
+            <div className="mt-12 grid gap-8 sm:grid-cols-2">
+              {pillars.map((pillar) => (
+                <div key={pillar.title} className="flex flex-col gap-3 rounded-3xl border border-neutral-200 p-6 sm:p-8">
+                  <h3 className="text-xl font-semibold text-neutral-900">{pillar.title}</h3>
+                  <p className="text-sm text-neutral-600 sm:text-base">{pillar.description}</p>
                 </div>
-              </div>
-              <h1 className="mt-6 text-4xl font-semibold tracking-tight md:text-5xl lg:text-6xl">
-                You’ve seen the clips. Now build what they talk about.
-              </h1>
-              <p className="mt-6 text-base text-neutral-600 md:text-lg">
-                Prism turns TikTok inspiration into measurable growth. We connect creative sparks to full-funnel systems that
-                convert attention into revenue.
-              </p>
-              <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center">
-                <Button asChild size="lg" className="rounded-full px-8 py-3 text-base">
-                  <Link href="/get-started">Work With Prism</Link>
-                </Button>
-                <Button
-                  asChild
-                  size="lg"
-                  variant="outline"
-                  className="rounded-full border-neutral-200 px-8 py-3 text-base text-neutral-900 hover:bg-neutral-100"
-                >
-                  <Link href="/refer">Refer &amp; Earn</Link>
-                </Button>
-              </div>
-            </motion.div>
-          </div>
-        </section>
-
-        {/* Why Prism Exists */}
-        <section className="border-y border-neutral-100 bg-neutral-50/50 py-20">
-          <div className="container mx-auto px-4">
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-80px" }}
-              variants={fadeInUp}
-              className="mx-auto max-w-3xl text-center"
-            >
-              <h2 className="text-2xl font-semibold tracking-tight md:text-3xl">Why Prism exists</h2>
-              <p className="mt-5 text-base text-neutral-600 md:text-lg">
-                TikTok teaches speed, authenticity, and relentless iteration. Most brands can’t translate that energy into their
-                marketing stack. Prism exists to bridge the gap — taking the playbook you binge and building the systems that keep
-                growth compounding long after the clip ends.
-              </p>
-            </motion.div>
-          </div>
-        </section>
-
-        {/* What We Do */}
-        <section className="py-20">
-          <div className="container mx-auto px-4">
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-80px" }}
-              variants={fadeInUp}
-              className="mx-auto max-w-2xl text-center"
-            >
-              <h2 className="text-2xl font-semibold tracking-tight md:text-3xl">What we do</h2>
-              <p className="mt-4 text-base text-neutral-600 md:text-lg">
-                We turn viral momentum into owned marketing assets that keep your calendar and pipeline full.
-              </p>
-            </motion.div>
-            <div className="mt-12 grid gap-6 md:grid-cols-2">
-              {services.map((service) => (
-                <motion.div
-                  key={service.title}
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true, margin: "-80px" }}
-                  variants={fadeInUp}
-                  className="group relative overflow-hidden rounded-3xl border border-neutral-100 bg-white p-8 shadow-sm transition-shadow duration-500 hover:shadow-xl"
-                >
-                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-[#6366f1]/0 via-transparent to-[#ec4899]/0 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-                  <h3 className="text-xl font-semibold text-neutral-900">{service.title}</h3>
-                  <p className="mt-4 text-sm text-neutral-600 md:text-base">{service.description}</p>
-                </motion.div>
               ))}
             </div>
           </div>
         </section>
 
-        {/* Principles Section */}
-        <section className="relative overflow-hidden py-20">
-          <div className="absolute inset-0 bg-gradient-to-br from-neutral-50 via-white to-neutral-100" aria-hidden />
-          <div className="container relative mx-auto px-4">
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-80px" }}
-              variants={fadeInUp}
-              className="grid gap-10 lg:grid-cols-[1.15fr_1fr] lg:items-center"
-            >
-              <div>
-                <h2 className="text-2xl font-semibold tracking-tight md:text-3xl">Built on the principles we share</h2>
-                <p className="mt-5 text-base text-neutral-600 md:text-lg">
-                  Every TikTok breakdown we publish becomes a deliverable. Speed of iteration. Clear data loops. Experiences that
-                  look as good as they convert. We build your stack with the same systems, tools, and creative discipline you’ve
-                  seen in our clips.
-                </p>
-                <div className="mt-8 flex flex-col gap-4 text-sm text-neutral-600 md:text-base">
-                  <div className="rounded-2xl border border-neutral-100 bg-white p-5 shadow-sm">
-                    <p className="font-semibold text-neutral-900">Clip insight → Live experiment</p>
-                    <p className="mt-2 text-neutral-600">
-                      We capture the experiment from TikTok and deploy it on your site, CRM, and ad stack in days — not months.
-                    </p>
-                  </div>
-                  <div className="rounded-2xl border border-neutral-100 bg-white p-5 shadow-sm">
-                    <p className="font-semibold text-neutral-900">Project library to reference</p>
-                    <p className="mt-2 text-neutral-600">
-                      Access annotated Looms, dashboards, and screenshots of real Prism builds so your team can learn by example.
-                    </p>
-                  </div>
+        <section className="border-b border-neutral-200 bg-neutral-50">
+          <div className="mx-auto max-w-5xl px-4 py-20 sm:py-24">
+            <div className="max-w-2xl">
+              <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl">A calm rhythm for compounding results</h2>
+              <p className="mt-4 text-base text-neutral-600 sm:text-lg">
+                Simple cadences make it easier to sustain the energy that TikTok creates. We focus on a few decisive moves each
+                week.
+              </p>
+            </div>
+            <div className="mt-10 grid gap-6 sm:grid-cols-3">
+              {rhythm.map((item) => (
+                <div key={item.label} className="flex flex-col gap-3 rounded-3xl border border-neutral-200 bg-white p-6">
+                  <p className="text-sm font-semibold uppercase tracking-[0.25em] text-neutral-500">{item.label}</p>
+                  <p className="text-sm text-neutral-600 sm:text-base">{item.description}</p>
                 </div>
-              </div>
-              <div className="relative">
-                <div className="rounded-3xl border border-white/40 bg-white/60 p-4 shadow-[0_40px_120px_-60px_rgba(15,23,42,0.45)] backdrop-blur">
-                  <div className="grid gap-4 md:grid-cols-2">
-                    <div className="relative aspect-[9/16] overflow-hidden rounded-2xl border border-neutral-200 bg-neutral-900/80">
-                      <iframe
-                        src={`${tiktokClips[0]}?is_copy_url=1&is_from_webapp=v1`}
-                        title="Featured TikTok clip"
-                        loading="lazy"
-                        allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
-                        allowFullScreen
-                        className="h-full w-full"
-                      />
-                    </div>
-                    <div className="flex flex-col gap-4">
-                      <div className="aspect-video overflow-hidden rounded-2xl border border-neutral-200 bg-neutral-900/90">
-                        <img
-                          src="https://images.prismic.io/design-prism/30b8a5c2-portfolio-dashboard.png?auto=compress,format"
-                          alt="Prism analytics dashboard"
-                          className="h-full w-full object-cover"
-                        />
-                      </div>
-                      <div className="aspect-video overflow-hidden rounded-2xl border border-neutral-200 bg-neutral-900/90">
-                        <img
-                          src="https://images.prismic.io/design-prism/4a0b7e9f-case-study-screenshot.png?auto=compress,format"
-                          alt="Prism project showcase"
-                          className="h-full w-full object-cover"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="pointer-events-none absolute -left-10 -top-10 h-32 w-32 rounded-full bg-[#6366f1]/20 blur-3xl" />
-                <div className="pointer-events-none absolute -right-6 bottom-0 h-36 w-36 rounded-full bg-[#ec4899]/20 blur-3xl" />
-              </div>
-            </motion.div>
+              ))}
+            </div>
           </div>
         </section>
 
-        {/* Ready */}
-        <section className="border-y border-neutral-100 bg-neutral-50/70 py-20">
-          <div className="container mx-auto px-4">
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-80px" }}
-              variants={fadeInUp}
-              className="mx-auto flex max-w-3xl flex-col items-center text-center"
-            >
-              <h2 className="text-2xl font-semibold tracking-tight md:text-3xl">Ready to take the next step?</h2>
-              <p className="mt-4 text-base text-neutral-600 md:text-lg">
-                Let’s turn fast-moving content into the systems that win clients, partners, and advocates.
+        <section className="border-b border-neutral-200">
+          <div className="mx-auto max-w-5xl px-4 py-20 sm:py-24">
+            <div className="max-w-2xl">
+              <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl">Proof in the details</h2>
+              <p className="mt-4 text-base text-neutral-600 sm:text-lg">
+                Teams choose Prism when they want a measured partner. These are the themes we hear most often.
               </p>
-              <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
-                <Button asChild size="lg" className="rounded-full px-8 py-3 text-base">
-                  <Link href="/get-started">Work With Prism</Link>
+            </div>
+            <div className="mt-12 grid gap-6 sm:grid-cols-2">
+              {proofPoints.map((point) => (
+                <blockquote
+                  key={point.quote}
+                  className="flex h-full flex-col justify-between gap-6 rounded-3xl border border-neutral-200 p-6 sm:p-8"
+                >
+                  <p className="text-base font-medium text-neutral-800 sm:text-lg">“{point.quote}”</p>
+                  <cite className="text-sm font-semibold uppercase tracking-[0.25em] text-neutral-500">{point.author}</cite>
+                </blockquote>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="bg-neutral-950 text-white">
+          <div className="mx-auto max-w-5xl px-4 py-20 sm:py-24">
+            <div className="flex flex-col gap-6 text-center">
+              <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">Ready when the next clip hits</h2>
+              <p className="mx-auto max-w-2xl text-sm text-neutral-300 sm:text-base">
+                Let’s pair your TikTok presence with a minimalist acquisition engine that feels as clean as it performs.
+              </p>
+              <div className="flex flex-col justify-center gap-3 sm:flex-row sm:items-center">
+                <Button asChild size="lg" className="rounded-full bg-white px-8 py-3 text-base font-semibold text-neutral-950">
+                  <Link href="/get-started">Start the project</Link>
                 </Button>
                 <Button
                   asChild
                   size="lg"
-                  variant="secondary"
-                  className="rounded-full bg-white px-8 py-3 text-base text-neutral-900 shadow-sm hover:bg-neutral-100"
+                  variant="outline"
+                  className="rounded-full border-white/40 px-8 py-3 text-base text-white hover:bg-white/10"
                 >
-                  <Link href="/refer">Refer &amp; Earn</Link>
+                  <Link href="/refer">Share Prism with a friend</Link>
                 </Button>
               </div>
-            </motion.div>
-          </div>
-        </section>
-
-        {/* Social Proof */}
-        <section className="py-20">
-          <div className="container mx-auto px-4">
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-80px" }}
-              variants={fadeInUp}
-              className="mx-auto max-w-2xl text-center"
-            >
-              <h2 className="text-2xl font-semibold tracking-tight md:text-3xl">Social proof</h2>
-              <p className="mt-4 text-base text-neutral-600 md:text-lg">
-                Founders, operators, and creators trust Prism to translate ideas into high-performance marketing ecosystems.
-              </p>
-            </motion.div>
-            <div className="mt-12 grid gap-8 lg:grid-cols-[1.2fr_1fr]">
-              <div className="grid gap-6 sm:grid-cols-2">
-                {testimonials.map((testimonial) => (
-                  <motion.blockquote
-                    key={testimonial.quote}
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true, margin: "-60px" }}
-                    variants={fadeInUp}
-                    className="relative flex h-full flex-col justify-between rounded-3xl border border-neutral-100 bg-white p-8 shadow-sm"
-                  >
-                    <p className="text-base font-medium text-neutral-800 md:text-lg">“{testimonial.quote}”</p>
-                    <cite className="mt-6 text-sm font-semibold uppercase tracking-[0.25em] text-neutral-500">
-                      {testimonial.name}
-                    </cite>
-                  </motion.blockquote>
-                ))}
-              </div>
-              <motion.div
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, margin: "-80px" }}
-                variants={fadeInUp}
-                className="space-y-4"
-              >
-                {tiktokClips.slice(0, 2).map((clip, index) => (
-                  <div
-                    key={`social-${clip}`}
-                    className="aspect-[9/16] overflow-hidden rounded-3xl border border-neutral-200 bg-neutral-900/80 shadow-lg"
-                  >
-                    <iframe
-                      src={`${clip}?is_copy_url=1&is_from_webapp=v1`}
-                      title={`TikTok testimonial ${index + 1}`}
-                      loading="lazy"
-                      allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
-                      allowFullScreen
-                      className="h-full w-full"
-                    />
-                  </div>
-                ))}
-              </motion.div>
             </div>
           </div>
         </section>
