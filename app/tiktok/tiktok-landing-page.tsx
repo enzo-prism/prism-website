@@ -20,10 +20,6 @@ export default function TikTokLandingPage() {
             <div className="pointer-events-none absolute left-1/2 top-16 h-[32rem] w-[32rem] -translate-x-1/2 rounded-full bg-neutral-700/20 blur-3xl" />
           </div>
           <div className="relative mx-auto flex max-w-5xl flex-col gap-8 px-4 pb-24 pt-24 sm:pt-28 md:pt-32">
-            <div className="flex flex-col gap-3 text-xs font-semibold uppercase tracking-[0.35em] text-neutral-300">
-              <span>Prism</span>
-              <span>From TikTok to transformation</span>
-            </div>
             <h1 className="max-w-3xl text-4xl font-semibold tracking-tight sm:text-5xl md:text-6xl">
               From TikTok to Transformation
             </h1>
