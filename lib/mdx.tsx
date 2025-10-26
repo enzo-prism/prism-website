@@ -42,38 +42,66 @@ export type BlogFrontmatter = {
 
 const BLOG_PATH = "content/blog"
 
+const CODEX_REGEX = /\bcode?x\b/gi
+
+function normalizeCodexWord(value: string) {
+  return value.replace(CODEX_REGEX, match =>
+    match.charAt(0) === match.charAt(0).toLowerCase() ? "codex" : "Codex",
+  )
+}
+
+function normalizeCodexCasing<T>(value: T): T {
+  if (typeof value === "string") {
+    return normalizeCodexWord(value) as T
+  }
+
+  if (Array.isArray(value)) {
+    return value.map(item => normalizeCodexCasing(item)) as unknown as T
+  }
+
+  if (value && typeof value === "object") {
+    return Object.fromEntries(
+      Object.entries(value as Record<string, unknown>).map(([key, val]) => [key, normalizeCodexCasing(val)]),
+    ) as T
+  }
+
+  return value
+}
+
 async function getPost(slug: string): Promise<{ frontmatter: BlogFrontmatter; content: string } | null> {
   const filePath = path.join(BLOG_PATH, `${slug}.mdx`)
   try {
     const rawFileContent = await fs.readFile(filePath, "utf8")
     const { data, content } = matter(rawFileContent)
-    
+    const normalizedData = normalizeCodexCasing(data)
+    const normalizedContent = normalizeCodexWord(content)
+
     // Validate required fields
-    if (!data.title || !data.description || !data.date || !data.category) {
+    if (!normalizedData.title || !normalizedData.description || !normalizedData.date || !normalizedData.category) {
       console.error(`[MDXLib] Post "${slug}" missing required fields:`, {
-        title: !!data.title,
-        description: !!data.description,
-        date: !!data.date,
-        category: !!data.category
+        title: !!normalizedData.title,
+        description: !!normalizedData.description,
+        date: !!normalizedData.date,
+        category: !!normalizedData.category
       })
       return null
     }
-    
+
     // Provide fallback for optional fields
     const frontmatter: BlogFrontmatter = {
-      title: data.title,
-      description: data.description,
-      date: data.date,
-      category: data.category,
-      image: data.image, // No fallback - let the layout component handle missing images
-      gradientClass: data.gradientClass || 'bg-gradient-to-br from-blue-300/30 via-purple-300/30 to-pink-300/30',
-      showHeroImage: typeof data.showHeroImage === 'boolean' ? data.showHeroImage : true,
-      openGraph: data.openGraph,
-      twitter: data.twitter,
-      canonical: data.canonical
+      title: normalizedData.title,
+      description: normalizedData.description,
+      date: normalizedData.date,
+      category: normalizedData.category,
+      image: normalizedData.image, // No fallback - let the layout component handle missing images
+      gradientClass: normalizedData.gradientClass || 'bg-gradient-to-br from-blue-300/30 via-purple-300/30 to-pink-300/30',
+      showHeroImage: typeof normalizedData.showHeroImage === 'boolean' ? normalizedData.showHeroImage : true,
+      openGraph: normalizedData.openGraph,
+      twitter: normalizedData.twitter,
+      canonical: normalizedData.canonical
     }
-    
-    return { frontmatter, content }
+
+    return { frontmatter, content: normalizedContent }
   } catch (error: unknown) {
     console.error(`[MDXLib] Failed to get post "${slug}" from "${filePath}":`, error)
     return null
