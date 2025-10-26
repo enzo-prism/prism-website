@@ -16,18 +16,8 @@ export default function TikTokLandingPage() {
         <section className="relative overflow-hidden border-b border-neutral-200 bg-neutral-950 text-white">
           <div className="absolute inset-0">
             <div className="absolute inset-0 bg-gradient-to-br from-neutral-900/95 via-neutral-900/85 to-neutral-950" />
-            <div className="absolute inset-0">
-              <div className="pointer-events-none absolute inset-y-0 right-[-20%] hidden w-2/3 rotate-6 bg-gradient-to-br from-white/10 via-white/0 to-white/5 blur-3xl lg:block" />
-              <div className="pointer-events-none absolute left-1/2 top-16 h-[32rem] w-[32rem] -translate-x-1/2 rounded-full bg-neutral-700/20 blur-3xl" />
-            </div>
-            <div className="absolute inset-x-0 bottom-0 flex justify-center px-4 pb-6">
-              <div className="relative hidden w-full max-w-4xl overflow-hidden rounded-3xl border border-white/15 bg-white/5 shadow-[0_40px_100px_-40px_rgba(0,0,0,0.6)] sm:block">
-                <div className="absolute inset-0 bg-gradient-to-tr from-neutral-900/60 via-neutral-900/30 to-neutral-900/70" />
-                <div className="relative flex aspect-[21/9] items-center justify-center text-center text-xs font-semibold uppercase tracking-[0.35em] text-white/70">
-                  TikTok highlight reel placeholder
-                </div>
-              </div>
-            </div>
+            <div className="pointer-events-none absolute inset-y-0 right-[-20%] hidden w-2/3 rotate-6 bg-gradient-to-br from-white/10 via-white/0 to-white/5 blur-3xl lg:block" />
+            <div className="pointer-events-none absolute left-1/2 top-16 h-[32rem] w-[32rem] -translate-x-1/2 rounded-full bg-neutral-700/20 blur-3xl" />
           </div>
           <div className="relative mx-auto flex max-w-5xl flex-col gap-8 px-4 pb-24 pt-24 sm:pt-28 md:pt-32">
             <div className="flex flex-col gap-3 text-xs font-semibold uppercase tracking-[0.35em] text-neutral-300">
@@ -129,26 +119,26 @@ export default function TikTokLandingPage() {
               <p className="text-base text-neutral-600 sm:text-lg">We don’t just share business advice. We build businesses with it.</p>
             </div>
             <div className="grid gap-4 sm:grid-cols-2">
-              <div className="relative aspect-[9/16] overflow-hidden rounded-3xl border border-neutral-200 bg-neutral-900/80">
-                <div className="absolute inset-0 bg-gradient-to-t from-neutral-900/80 via-neutral-900/20 to-neutral-900/70" />
-                <div className="absolute inset-0 flex items-center justify-center text-center text-xs font-semibold uppercase tracking-[0.35em] text-neutral-200">
-                  TikTok clip placeholder
-                </div>
+              <div className="rounded-3xl border border-neutral-200 bg-white p-6 text-sm text-neutral-700 shadow-sm">
+                <p className="font-semibold text-neutral-900">Strategy Sessions</p>
+                <p className="mt-2">
+                  We translate the lessons we share online into tailored roadmaps that focus on acquisition, retention, and
+                  lifetime value for your brand.
+                </p>
               </div>
-              <div className="flex flex-col gap-4">
-                <div className="rounded-3xl border border-neutral-200 bg-white p-6 text-sm text-neutral-700 shadow-sm">
-                  <p className="font-semibold text-neutral-900">Prism Client Work</p>
-                  <p className="mt-2">
-                    Screenshots of Prism-built sites—service businesses, local storefronts, and founder-led brands growing from
-                    TikTok insights.
-                  </p>
-                </div>
-                <div className="rounded-3xl border border-neutral-200 bg-white p-6 text-sm text-neutral-700 shadow-sm">
-                  <p className="font-semibold text-neutral-900">Principles in Action</p>
-                  <p className="mt-2">
-                    Show how our builds reflect the customer obsession, design discipline, and velocity we talk about on TikTok.
-                  </p>
-                </div>
+              <div className="rounded-3xl border border-neutral-200 bg-white p-6 text-sm text-neutral-700 shadow-sm">
+                <p className="font-semibold text-neutral-900">Design &amp; Build</p>
+                <p className="mt-2">
+                  Our team crafts conversion-first sites, automations, and analytics setups so you can see the direct impact of
+                  every launch.
+                </p>
+              </div>
+              <div className="rounded-3xl border border-neutral-200 bg-white p-6 text-sm text-neutral-700 shadow-sm sm:col-span-2">
+                <p className="font-semibold text-neutral-900">Optimization</p>
+                <p className="mt-2">
+                  After launch we iterate with experiments, fresh creative, and data reviews to keep you ahead of market shifts
+                  and customer expectations.
+                </p>
               </div>
             </div>
           </div>
@@ -214,14 +204,26 @@ export default function TikTokLandingPage() {
             </div>
             <div className="grid gap-4 sm:grid-cols-2">
               <div className="rounded-3xl border border-neutral-200 bg-neutral-900/5 p-6">
-                <p className="text-sm font-semibold uppercase tracking-[0.3em] text-neutral-500">TikTok Highlights</p>
+                <p className="text-sm font-semibold uppercase tracking-[0.3em] text-neutral-500">Case Studies</p>
                 <p className="mt-3 text-sm text-neutral-600">
-                  Embed a carousel or looping clips from your TikTok to bridge the gap between social insights and real client wins.
+                  Explore how founders, local businesses, and service teams use Prism to convert attention into measurable growth.
                 </p>
+                <div className="mt-4">
+                  <Button asChild variant="link" className="h-auto px-0 text-sm font-semibold text-neutral-900">
+                    <Link href="/case-studies">See the results →</Link>
+                  </Button>
+                </div>
               </div>
               <div className="rounded-3xl border border-neutral-200 bg-neutral-900/5 p-6">
-                <p className="text-sm font-semibold uppercase tracking-[0.3em] text-neutral-500">Client Metrics</p>
-                <p className="mt-3 text-sm text-neutral-600">Show before-and-after performance snapshots or testimonial reels.</p>
+                <p className="text-sm font-semibold uppercase tracking-[0.3em] text-neutral-500">Resources</p>
+                <p className="mt-3 text-sm text-neutral-600">
+                  Get playbooks on positioning, offers, and operations so you can apply proven systems even before we partner up.
+                </p>
+                <div className="mt-4">
+                  <Button asChild variant="link" className="h-auto px-0 text-sm font-semibold text-neutral-900">
+                    <Link href="/blog">Read the insights →</Link>
+                  </Button>
+                </div>
               </div>
             </div>
           </div>
