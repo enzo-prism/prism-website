@@ -66,7 +66,7 @@ export default function InstagramLandingPage() {
                 asChild
                 size="lg"
                 variant="outline"
-                className="rounded-full border-white/40 px-8 py-3 text-base text-white hover:bg-white/10"
+                className="rounded-full border-white/40 bg-transparent px-8 py-3 text-base text-white hover:bg-white/10 focus-visible:bg-white/20 active:bg-white/20"
               >
                 <Link href="/refer">Refer &amp; Earn</Link>
               </Button>
@@ -205,7 +205,7 @@ export default function InstagramLandingPage() {
                   asChild
                   size="lg"
                   variant="outline"
-                  className="rounded-full border-white/40 px-8 py-3 text-base text-white hover:bg-white/10"
+                  className="rounded-full border-white/40 bg-transparent px-8 py-3 text-base text-white hover:bg-white/10 focus-visible:bg-white/20 active:bg-white/20"
                 >
                   <Link href="/refer">Refer &amp; Earn</Link>
                 </Button>
