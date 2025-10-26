@@ -59,14 +59,14 @@ export default function InstagramLandingPage() {
               </p>
             </div>
             <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center">
-              <Button asChild size="lg" className="rounded-full bg-white px-8 py-3 text-base font-semibold text-neutral-950">
+              <Button asChild size="lg" variant="inverted" className="rounded-full px-8 py-3 text-base font-semibold">
                 <Link href="/get-started">Work With Prism</Link>
               </Button>
               <Button
                 asChild
                 size="lg"
-                variant="outline"
-                className="rounded-full border-white/40 px-8 py-3 text-base text-white hover:bg-white/10"
+                variant="outline-inverted"
+                className="rounded-full px-8 py-3 text-base"
               >
                 <Link href="/refer">Refer &amp; Earn</Link>
               </Button>
@@ -187,11 +187,7 @@ export default function InstagramLandingPage() {
                   <br />
                   Let’s design a website that helps your business grow.
                 </p>
-                <Button
-                  asChild
-                  size="lg"
-                  className="rounded-full bg-white px-8 py-3 text-base font-semibold text-neutral-950"
-                >
+                <Button asChild size="lg" variant="inverted" className="rounded-full px-8 py-3 text-base font-semibold">
                   <Link href="/get-started">Get Started</Link>
                 </Button>
               </div>
@@ -204,8 +200,8 @@ export default function InstagramLandingPage() {
                 <Button
                   asChild
                   size="lg"
-                  variant="outline"
-                  className="rounded-full border-white/40 px-8 py-3 text-base text-white hover:bg-white/10"
+                  variant="outline-inverted"
+                  className="rounded-full px-8 py-3 text-base"
                 >
                   <Link href="/refer">Refer &amp; Earn</Link>
                 </Button>
