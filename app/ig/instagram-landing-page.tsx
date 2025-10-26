@@ -44,7 +44,7 @@ export default function InstagramLandingPage() {
           <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.08),_transparent_60%)]" />
           <div className="absolute inset-0 -z-10 bg-[conic-gradient(from_120deg,_rgba(255,255,255,0.12),_rgba(13,13,13,0.8))] opacity-40" />
           <div className="mx-auto max-w-4xl px-6 py-24 sm:py-28 md:py-32">
-            <p className="text-xs font-semibold uppercase tracking-[0.35em] text-neutral-300">Prism on Instagram</p>
+            <p className="text-xs font-semibold uppercase tracking-[0.35em] text-neutral-300">impossible is temporary</p>
             <h1 className="mt-6 text-4xl font-semibold leading-tight tracking-tight sm:text-5xl md:text-6xl">
               From Instagram Inspiration to Real Growth
             </h1>
