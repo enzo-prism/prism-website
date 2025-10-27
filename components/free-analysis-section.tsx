@@ -5,8 +5,9 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 
 const benefits = [
-  "A 10-minute Loom teardown",
-  "Action steps for design, SEO, and growth",
+  "A 10-minute Loom video",
+  "Actionable fixes",
+  "A roadmap to faster growth",
 ]
 
 export default function FreeAnalysisSection() {
@@ -17,13 +18,13 @@ export default function FreeAnalysisSection() {
       <div className="relative mx-auto flex max-w-5xl flex-col gap-12 px-4 py-20 sm:px-6 sm:py-24">
         <div className="flex flex-col gap-4">
           <span className="w-fit rounded-full border border-white/20 bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.35em] text-white/70">
-            Free Growth Analysis
+            Free Website Analysis
           </span>
           <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">
-            Want to see what Prism would do for your business?
+            Get a free, personalized teardown of your current site.
           </h2>
           <p className="max-w-2xl text-base text-neutral-200 sm:text-lg">
-            We’ll review your site, find hidden opportunities, and show you how to turn attention into revenue.
+            We’ll show hidden opportunities and next steps to turn visitors into revenue.
           </p>
         </div>
         <div className="grid gap-10 lg:grid-cols-[1.1fr,0.9fr] lg:items-center">
@@ -40,7 +41,7 @@ export default function FreeAnalysisSection() {
           </div>
           <div className="rounded-3xl border border-white/15 bg-white/5 p-8 text-neutral-100 shadow-[0_20px_45px_-20px_rgba(0,0,0,0.7)]">
             <p className="text-base text-neutral-200 sm:text-lg">
-              Claim your complimentary review and get a clear plan to turn Instagram inspiration into growth.
+              Claim your free analysis and get a clear plan to turn visitors into revenue.
             </p>
             <div className="mt-6">
               <Button
@@ -49,7 +50,7 @@ export default function FreeAnalysisSection() {
                 variant="inverted"
                 className="w-full rounded-full px-8 py-3 text-base font-semibold text-neutral-950"
               >
-                <Link href="/get-started">Claim Your Free Analysis →</Link>
+                <Link href="/get-started">Claim Your Free Analysis</Link>
               </Button>
               <p className="mt-3 text-xs text-white/60">
                 We’ll respond within one business day.

@@ -13,17 +13,17 @@ const Navbar = dynamic(() => import("@/components/navbar"), { ssr: false })
 const YOUTUBE_URL = "https://www.youtube.com/@the_design_prism"
 
 const playbooks = [
-  "Website frameworks that convert visitors into leads",
-  "SEO + local listing tactics that rank you higher",
-  "Paid ad systems that scale profitably",
-  "AI automations that save hours and multiply output",
+  "Websites that turn clicks into customers",
+  "SEO + local listings that rank higher",
+  "Paid ads that scale profitably",
+  "AI automations that save time and increase output",
 ]
 
 const services = [
   "Custom websites built to convert",
-  "SEO + local listing optimization",
-  "Paid ad campaigns (Google, Meta, TikTok, Yelp)",
-  "Analytics + automation setup",
+  "Local SEO + listings that drive calls",
+  "Paid ads across Google, Meta, TikTok, and Yelp",
+  "Analytics and automation setup",
 ]
 
 const testimonials = [
@@ -52,24 +52,16 @@ export default function YouTubeLandingPage() {
               From YouTube Tactics to Real Growth
             </h1>
             <div className="mt-6 space-y-4 text-base text-neutral-200 sm:text-lg">
-              <p>You’ve watched the videos. Now put them to work.</p>
-              <p>
-                On YouTube, Prism breaks down the exact tactics we use to grow modern businesses — from website optimization
-                to ad systems to AI automation. Every video is a practical blueprint you can apply to your brand today.
-              </p>
-              <p>
-                At Prism, we don’t just talk strategy — we build it into websites, systems, and campaigns that help business
-                owners attract customers, grow faster, and scale profitably.
-              </p>
+              <p>You’ve seen the videos — now apply the playbooks.</p>
+              <p>On YouTube, Prism shares the same strategies we use to help real businesses grow.</p>
+              <p>From better websites to smarter ads and AI systems — every video is built to help you grow faster.</p>
             </div>
             <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center">
               <Button asChild size="lg" variant="inverted" className="rounded-full px-8 py-3 text-base font-semibold">
-                <Link href="/pricing">Work With Prism</Link>
+                <Link href="/pricing">👉 Work With Prism</Link>
               </Button>
               <Button asChild size="lg" variant="outline-inverted" className="rounded-full px-8 py-3 text-base">
-                <Link href={YOUTUBE_URL} target="_blank" rel="noreferrer">
-                  Watch on YouTube
-                </Link>
+                <Link href="/refer">💸 Refer &amp; Earn</Link>
               </Button>
             </div>
           </div>
@@ -79,13 +71,12 @@ export default function YouTubeLandingPage() {
           <div className="mx-auto max-w-5xl px-6 py-20 sm:py-24">
             <div className="grid gap-12 md:grid-cols-[1.1fr,0.9fr] md:items-start">
               <div className="space-y-6">
-                <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">Why We Share What We Share</h2>
-                <p className="text-base text-neutral-600 sm:text-lg">Prism’s YouTube isn’t about theories — it’s about results.</p>
+                <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">Why We Share</h2>
                 <p className="text-base text-neutral-600 sm:text-lg">
-                  We show you the same playbooks we use for our clients every day.
+                  Our videos aren’t theory — they’re the exact systems we build for clients.
                 </p>
                 <p className="text-base text-neutral-600 sm:text-lg">
-                  Every episode is designed to make modern growth simple — so you can apply it, not just watch it.
+                  We show what works, why it works, and how you can use it.
                 </p>
               </div>
               <div className="space-y-6 rounded-3xl border border-neutral-200 bg-neutral-50 p-8">
@@ -111,9 +102,9 @@ export default function YouTubeLandingPage() {
         <section className="border-b border-neutral-200 bg-neutral-50">
           <div className="mx-auto max-w-5xl px-6 py-20 sm:py-24">
             <div className="space-y-6">
-              <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">What We Do for Business Owners</h2>
+              <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">What We Do</h2>
               <p className="max-w-2xl text-base text-neutral-600 sm:text-lg">
-                We help founders and small teams apply what we teach — directly to their business:
+                We help founders and small teams apply what they learn from YouTube — directly to their business.
               </p>
               <ul className="grid gap-4 sm:grid-cols-2">
                 {services.map((service) => (
@@ -128,9 +119,6 @@ export default function YouTubeLandingPage() {
                   </li>
                 ))}
               </ul>
-              <p className="max-w-2xl text-base text-neutral-600 sm:text-lg">
-                The same systems you see in our YouTube videos — we implement for you.
-              </p>
               <Button asChild size="lg" className="mt-4 w-fit rounded-full px-8 py-3 text-base">
                 <Link href="/get-started">
                   Start a Project <ArrowRight className="ml-2 h-5 w-5" />
@@ -146,11 +134,9 @@ export default function YouTubeLandingPage() {
               <div className="space-y-6">
                 <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">Where Design Meets Growth</h2>
                 <p className="text-base text-neutral-600 sm:text-lg">
-                  Every tutorial, teardown, and walkthrough we post reflects a core principle at Prism: strategy and design are inseparable.
+                  Every tutorial and teardown combines clean design with smart strategy.
                 </p>
-                <p className="text-base text-neutral-600 sm:text-lg">
-                  Our content shows how to use beautiful, functional design as a lever for real business performance.
-                </p>
+                <p className="text-base text-neutral-600 sm:text-lg">Because growth looks better when it’s built right.</p>
               </div>
               <div className="relative overflow-hidden rounded-3xl border border-neutral-200 bg-neutral-900 text-white">
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.12),_transparent_60%)]" />
@@ -169,20 +155,20 @@ export default function YouTubeLandingPage() {
                   </div>
                 </div>
                 <div className="flex items-center justify-between gap-4 border-t border-white/10 bg-white/5 px-6 py-4">
-                <Link
-                  href={YOUTUBE_URL}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="flex items-center gap-3 text-sm font-semibold uppercase tracking-[0.3em] text-white/80 transition hover:text-white"
-                >
-                  <Play className="h-4 w-4" />
-                  Subscribe on YouTube
-                </Link>
-                <Button asChild size="sm" variant="outline-inverted" className="rounded-full border-white/40 px-4">
-                  <Link href={YOUTUBE_URL} target="_blank" rel="noreferrer">
-                    Subscribe →
+                  <Link
+                    href={YOUTUBE_URL}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="flex items-center gap-3 text-sm font-semibold uppercase tracking-[0.3em] text-white/80 transition hover:text-white"
+                  >
+                    <Play className="h-4 w-4" />
+                    Subscribe on YouTube →
                   </Link>
-                </Button>
+                  <Button asChild size="sm" variant="outline-inverted" className="rounded-full border-white/40 px-4">
+                    <Link href={YOUTUBE_URL} target="_blank" rel="noreferrer">
+                      Subscribe →
+                    </Link>
+                  </Button>
                 </div>
               </div>
             </div>
@@ -195,11 +181,9 @@ export default function YouTubeLandingPage() {
           <div className="mx-auto max-w-5xl rounded-3xl bg-neutral-900 px-6 py-16 text-white sm:px-10">
             <div className="grid gap-12 md:grid-cols-2">
               <div className="space-y-4">
-                <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">Take the Next Step</h2>
+                <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">Partner with Prism</h2>
                 <p className="text-base text-neutral-200">
-                  👉 If you’re a business owner:
-                  <br />
-                  Let’s design a system that turns your traffic into customers.
+                  👤 Business Owners: Let’s design a system that turns your traffic into customers.
                 </p>
                 <Button asChild size="lg" variant="inverted" className="rounded-full px-8 py-3 text-base font-semibold">
                   <Link href="/get-started">Get Started</Link>
@@ -207,9 +191,7 @@ export default function YouTubeLandingPage() {
               </div>
               <div className="space-y-4">
                 <p className="text-base text-neutral-200">
-                  💸 If you know one:
-                  <br />
-                  Earn up to $1,000 when you refer them to Prism.
+                  💸 Referrals: Earn up to $1,000 when you send a client our way.
                 </p>
                 <Button
                   asChild
@@ -227,8 +209,7 @@ export default function YouTubeLandingPage() {
         <section className="border-t border-neutral-200 bg-neutral-50">
           <div className="mx-auto max-w-5xl px-6 py-20 sm:py-24">
             <div className="space-y-6">
-              <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">Businesses Growing With Prism</h2>
-              <p className="text-base text-neutral-600 sm:text-lg">Trusted by growing businesses, entrepreneurs, and creators.</p>
+              <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">What Clients Say</h2>
               <div className="grid gap-6 sm:grid-cols-2">
                 {testimonials.map((testimonial) => (
                   <blockquote
