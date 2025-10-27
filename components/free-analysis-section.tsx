@@ -5,9 +5,9 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 
 const benefits = [
-  "A 10-minute Loom video",
-  "Actionable fixes",
-  "A roadmap to faster growth",
+  "A 10-minute Loom recording",
+  "Actionable recommendations",
+  "A clear path to more traffic and sales",
 ]
 
 export default function FreeAnalysisSection() {
@@ -21,15 +21,15 @@ export default function FreeAnalysisSection() {
             Free Website Analysis
           </span>
           <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">
-            Get a free, personalized teardown of your current site.
+            See what Prism would build for you — before you ever sign.
           </h2>
           <p className="max-w-2xl text-base text-neutral-200 sm:text-lg">
-            We’ll show hidden opportunities and next steps to turn visitors into revenue.
+            We’ll review your site, uncover growth opportunities, and map out next steps.
           </p>
         </div>
         <div className="grid gap-10 lg:grid-cols-[1.1fr,0.9fr] lg:items-center">
           <div className="space-y-4">
-            <p className="text-sm font-semibold uppercase tracking-[0.3em] text-white/70">You’ll get:</p>
+            <p className="text-sm font-semibold uppercase tracking-[0.3em] text-white/70">You’ll receive:</p>
             <ul className="space-y-4 text-base text-neutral-100 sm:text-lg">
               {benefits.map((benefit) => (
                 <li key={benefit} className="flex items-start gap-3">
@@ -41,7 +41,7 @@ export default function FreeAnalysisSection() {
           </div>
           <div className="rounded-3xl border border-white/15 bg-white/5 p-8 text-neutral-100 shadow-[0_20px_45px_-20px_rgba(0,0,0,0.7)]">
             <p className="text-base text-neutral-200 sm:text-lg">
-              Claim your free analysis and get a clear plan to turn visitors into revenue.
+              Claim your free analysis to see exactly how Prism can accelerate your growth.
             </p>
             <div className="mt-6">
               <Button
@@ -52,9 +52,7 @@ export default function FreeAnalysisSection() {
               >
                 <Link href="/get-started">Claim Your Free Analysis</Link>
               </Button>
-              <p className="mt-3 text-xs text-white/60">
-                We’ll respond within one business day.
-              </p>
+              <p className="mt-3 text-xs text-white/60">We’ll respond within one business day.</p>
             </div>
           </div>
         </div>
