@@ -5,6 +5,7 @@ import Link from "next/link"
 
 import Footer from "@/components/footer"
 import FreeAnalysisSection from "@/components/free-analysis-section"
+import PageViewTracker from "@/components/page-view-tracker"
 import { Button } from "@/components/ui/button"
 import { ArrowRight, Check, Play } from "lucide-react"
 
@@ -43,6 +44,7 @@ export default function YouTubeLandingPage() {
     <div className="flex min-h-screen flex-col bg-white text-neutral-900">
       <Navbar />
       <main className="flex-1">
+        <PageViewTracker title="YouTube Community" />
         <section className="relative overflow-hidden border-b border-neutral-200 bg-neutral-950 text-white">
           <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.08),_transparent_60%)]" />
           <div className="absolute inset-0 -z-10 bg-[conic-gradient(from_120deg,_rgba(255,255,255,0.12),_rgba(13,13,13,0.8))] opacity-40" />
