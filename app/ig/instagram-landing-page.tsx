@@ -136,7 +136,7 @@ export default function InstagramLandingPage() {
                   Let’s design a website that helps you grow.
                 </p>
                 <Button asChild size="lg" variant="inverted" className="rounded-full px-8 py-3 text-base font-semibold">
-                  <Link href="/get-started">Get Started</Link>
+                  <Link href="/pricing">Get Started</Link>
                 </Button>
               </div>
               <div className="space-y-4">
