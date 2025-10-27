@@ -149,7 +149,7 @@ export default function TikTokLandingPage() {
                       variant="inverted"
                       className="rounded-full px-6 py-3 text-base font-semibold"
                     >
-                      <Link href="/get-started">Get Started →</Link>
+                      <Link href="/pricing">Get Started →</Link>
                     </Button>
                   </div>
                 </div>
