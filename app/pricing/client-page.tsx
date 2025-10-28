@@ -1,16 +1,18 @@
 "use client"
 
-import { FormEvent, useMemo, useState } from "react"
+import { FormEvent, useEffect, useMemo, useRef, useState } from "react"
 import { ArrowRight, Check } from "lucide-react"
 import Link from "next/link"
+import Image from "next/image"
 import { useRouter } from "next/navigation"
 
-import HeroLoopingVideo from "@/components/HeroLoopingVideo"
+import VideoWithPoster from "@/components/video-with-poster"
 import StepIndicator from "@/components/ui/step-indicator"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
 import { cn } from "@/lib/utils"
+import { useMobile } from "@/hooks/use-mobile"
 
 const websitePlanFeatures = [
   "Premium analytics tracking across GA4, Tag Manager, Meta Pixel, and more.",
@@ -135,6 +137,11 @@ const popularBundles = [
   },
 ]
 
+const PRICING_VIDEO = {
+  id: "1126507824",
+  poster: "/get%20started%20page%20art.webp",
+}
+
 const summaryPoints = [
   "Everything is monthly recurring — simple, transparent pricing.",
   "Every site ships with speed, SEO, analytics, and AEO as the default.",
@@ -188,6 +195,45 @@ export default function PricingPageClient() {
   const [error, setError] = useState<string | null>(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const router = useRouter()
+  const isMobile = useMobile()
+  const heroVideoRef = useRef<HTMLDivElement | null>(null)
+  const [shouldLoadHeroVideo, setShouldLoadHeroVideo] = useState(false)
+
+  useEffect(() => {
+    if (shouldLoadHeroVideo) return
+
+    if (typeof IntersectionObserver === "undefined") {
+      setShouldLoadHeroVideo(true)
+      return
+    }
+
+    const target = heroVideoRef.current
+
+    if (!target) {
+      setShouldLoadHeroVideo(true)
+      return
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setShouldLoadHeroVideo(true)
+            observer.disconnect()
+          }
+        })
+      },
+      {
+        rootMargin: "200px",
+        threshold: 0.1,
+      }
+    )
+
+    observer.observe(target)
+    return () => observer.disconnect()
+  }, [shouldLoadHeroVideo])
+
+  const heroVideoDimension = isMobile ? 320 : 520
 
   const modeOptions: { label: string; value: PlannerMode }[] = [
     { label: "custom plan", value: "custom" },
@@ -308,7 +354,39 @@ const isCustomComplete =
     <>
       <section className="relative overflow-hidden px-4 pt-16 pb-20 sm:pt-20 sm:pb-24">
         <div className="mx-auto flex max-w-6xl flex-col items-center gap-12 sm:gap-14">
-          <HeroLoopingVideo />
+          <div ref={heroVideoRef} className="flex w-full justify-center">
+            {shouldLoadHeroVideo ? (
+              <VideoWithPoster
+                videoId={PRICING_VIDEO.id}
+                posterSrc={PRICING_VIDEO.poster}
+                width={heroVideoDimension}
+                height={heroVideoDimension}
+                autoplay
+                loop
+                muted
+                controls={false}
+                posterAlt="Prism growth engine preview"
+                className="!rounded-[1.75rem] !border-neutral-200 !shadow-xl sm:!rounded-[2.25rem]"
+                trackAnalytics
+              />
+            ) : (
+              <div
+                className={cn(
+                  "relative overflow-hidden rounded-[1.75rem] border border-neutral-200 shadow-lg sm:rounded-[2.25rem]",
+                  isMobile ? "h-[320px] w-[320px]" : "h-[520px] w-[520px]"
+                )}
+              >
+                <Image
+                  src={PRICING_VIDEO.poster}
+                  alt="Prism growth engine preview"
+                  fill
+                  className="object-cover"
+                  sizes={isMobile ? "320px" : "520px"}
+                  priority
+                />
+              </div>
+            )}
+          </div>
           <div className="mx-auto max-w-4xl text-center sm:px-6">
             <p className="text-sm font-medium uppercase tracking-[0.3em] text-neutral-400">
               pricing made simple
