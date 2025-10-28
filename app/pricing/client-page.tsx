@@ -4,6 +4,7 @@ import { FormEvent, useMemo, useState } from "react"
 import { ArrowRight, Check } from "lucide-react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
+import Image from "next/image"
 
 import StepIndicator from "@/components/ui/step-indicator"
 import { Button } from "@/components/ui/button"
@@ -141,6 +142,11 @@ const summaryPoints = [
   "Add Listings, Ads, or Content whenever you are ready to scale further.",
 ]
 
+const HERO_VIDEO_SRC =
+  "https://res.cloudinary.com/dhqpqfw6w/video/upload/v1761612491/surfer_loop_vduya4.mp4"
+const HERO_VIDEO_POSTER =
+  "https://res.cloudinary.com/dhqpqfw6w/image/upload/v1761612479/Frame_63_gbe1tk.png"
+
 const adPackageOptions = [
   ...adPackages.map((pkg) => ({
     value: pkg.name,
@@ -186,6 +192,9 @@ export default function PricingPageClient() {
   const [notes, setNotes] = useState("")
   const [error, setError] = useState<string | null>(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isHeroVideoReady, setIsHeroVideoReady] = useState(false)
+  const [heroVideoError, setHeroVideoError] = useState(false)
+  const [isHeroPosterLoaded, setIsHeroPosterLoaded] = useState(false)
   const router = useRouter()
 
   const modeOptions: { label: string; value: PlannerMode }[] = [
@@ -305,28 +314,78 @@ const isCustomComplete =
 
   return (
     <>
-      <section className="relative overflow-hidden px-4 py-20 sm:py-24">
-        <div className="mx-auto max-w-4xl text-center">
-          <p className="text-sm font-medium uppercase tracking-[0.3em] text-neutral-400">
-            pricing made simple
-          </p>
-          <h1 className="mt-4 text-4xl font-semibold tracking-tight text-neutral-900 sm:text-5xl">
-            Build your growth engine in a few guided clicks
-          </h1>
-          <p className="mt-6 text-base text-neutral-600 sm:text-lg">
-            Toggle between a custom mix or pre-built bundle, choose what you need, and send it to Prism instantly. We
-            follow up with next steps, onboarding, and timelines tailored to your selections.
-          </p>
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-            <Button asChild size="lg" className="rounded-full px-8">
-              <Link href="#pricing-builder">
-                start building
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Link>
-            </Button>
-            <Button asChild variant="outline" size="lg" className="rounded-full px-8">
-              <Link href="/contact">talk with the team</Link>
-            </Button>
+      <section className="relative overflow-hidden px-4 pt-16 pb-20 sm:pt-20 sm:pb-24">
+        <div className="mx-auto flex max-w-6xl flex-col items-center gap-12 sm:gap-14">
+          <div className="relative w-full overflow-hidden rounded-3xl border border-neutral-200 bg-neutral-950/5 shadow-lg">
+            <div className="relative aspect-[4/5] w-full sm:aspect-[16/9]">
+              <div
+                className={cn(
+                  "pointer-events-none absolute inset-0 z-20 overflow-hidden transition-opacity duration-700",
+                  isHeroVideoReady && !heroVideoError ? "opacity-0" : "opacity-100"
+                )}
+              >
+                <Image
+                  src={HERO_VIDEO_POSTER}
+                  alt="Surfer looping background preview"
+                  fill
+                  priority
+                  sizes="(min-width: 1280px) 1024px, (min-width: 768px) 80vw, 100vw"
+                  className="h-full w-full object-cover"
+                  onLoadingComplete={() => setIsHeroPosterLoaded(true)}
+                />
+                {!isHeroPosterLoaded && (
+                  <div className="absolute inset-0 animate-pulse bg-neutral-200" aria-hidden />
+                )}
+              </div>
+
+              {!heroVideoError && (
+                <video
+                  className={cn(
+                    "absolute inset-0 z-10 h-full w-full object-cover transition-opacity duration-700",
+                    isHeroVideoReady ? "opacity-100" : "opacity-0"
+                  )}
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  poster={HERO_VIDEO_POSTER}
+                  preload="auto"
+                  aria-hidden="true"
+                  onCanPlay={() => setIsHeroVideoReady(true)}
+                  onLoadedData={() => setIsHeroVideoReady(true)}
+                  onError={() => {
+                    setHeroVideoError(true)
+                    setIsHeroVideoReady(false)
+                  }}
+                >
+                  <source src={HERO_VIDEO_SRC} type="video/mp4" />
+                </video>
+              )}
+            </div>
+          </div>
+
+          <div className="mx-auto max-w-4xl text-center sm:px-6">
+            <p className="text-sm font-medium uppercase tracking-[0.3em] text-neutral-400">
+              pricing made simple
+            </p>
+            <h1 className="mt-4 text-4xl font-semibold tracking-tight text-neutral-900 sm:text-5xl">
+              Build your growth engine in a few guided clicks
+            </h1>
+            <p className="mt-6 text-base text-neutral-600 sm:text-lg">
+              Toggle between a custom mix or pre-built bundle, choose what you need, and send it to Prism instantly. We
+              follow up with next steps, onboarding, and timelines tailored to your selections.
+            </p>
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+              <Button asChild size="lg" className="rounded-full px-8">
+                <Link href="#pricing-builder">
+                  start building
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Link>
+              </Button>
+              <Button asChild variant="outline" size="lg" className="rounded-full px-8">
+                <Link href="/contact">talk with the team</Link>
+              </Button>
+            </div>
           </div>
         </div>
       </section>
