@@ -18,6 +18,7 @@ export default async function Blog() {
   if (!posts) notFound()
   return (
     <>
+      <h1 className="sr-only">Prism Blog | Web Design, AI Marketing & Growth Experiments</h1>
       <BlogPage posts={posts} />
       <SeoTextSection title="prism blog: design, development, and growth">
         <p>

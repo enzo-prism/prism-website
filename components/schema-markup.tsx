@@ -559,6 +559,19 @@ export function LocalBusinessSchema() {
       "https://www.tiktok.com/@the_design_prism",
       "https://x.com/NosisTheGod",
     ],
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: "548 Market St #62411",
+      addressLocality: "San Francisco",
+      addressRegion: "CA",
+      postalCode: "94104",
+      addressCountry: "US",
+    },
+    geo: {
+      "@type": "GeoCoordinates",
+      latitude: 37.7897,
+      longitude: -122.3942,
+    },
     contactPoint: {
       "@type": "ContactPoint",
       telephone: "+1-650-862-4069",

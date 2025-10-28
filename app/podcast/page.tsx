@@ -20,6 +20,7 @@ export const metadata: Metadata = {
 export default function PodcastPage() {
   return (
     <>
+      <h1 className="sr-only">Prism Podcast | Founders · Journeys · Lessons</h1>
       <PodcastClientPage />
       <SeoTextSection title="about the prism podcast">
         <p>

@@ -68,9 +68,6 @@ export const metadata: Metadata = {
   },
   generator: "v0.dev",
   metadataBase: new URL("https://www.design-prism.com"),
-  alternates: {
-    canonical: "/",
-  },
 }
 
 export const viewport: Viewport = {

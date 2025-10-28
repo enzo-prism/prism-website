@@ -14,6 +14,7 @@ export const metadata: Metadata = {
 export default function CaseStudies() {
   return (
     <>
+      <h1 className="sr-only">Case Studies: Dental & Local Business Growth Wins | Prism</h1>
       <CaseStudiesPage />
       <SeoTextSection title="case studies & outcomes">
         <p>
