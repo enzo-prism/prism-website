@@ -1,3 +1,5 @@
+import Link from "next/link"
+
 import { cn } from "@/lib/utils"
 
 const platformNames = {
@@ -23,15 +25,24 @@ export default function HeroSupportPill({ platform, className }: HeroSupportPill
   const platformLabel = platformNames[platform]
 
   return (
-    <div className={cn("relative w-full max-w-xl self-start", className)}>
-      <div className="absolute inset-0 rounded-2xl border border-white/15 bg-white/5 shadow-[0_24px_45px_-24px_rgba(0,0,0,0.6)] backdrop-blur">
+    <Link
+      href="/pricing"
+      className={cn(
+        "group relative block w-full max-w-xl self-start rounded-2xl transition focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-900",
+        className,
+      )}
+    >
+      <div className="absolute inset-0 rounded-2xl border border-white/15 bg-white/5 shadow-[0_24px_45px_-24px_rgba(0,0,0,0.6)] backdrop-blur transition opacity-95 group-hover:opacity-100 group-hover:shadow-[0_32px_55px_-26px_rgba(0,0,0,0.65)]">
         <div
           aria-hidden="true"
-          className={cn("absolute inset-0 rounded-2xl bg-gradient-to-r opacity-70", accentGradient[platform])}
+          className={cn(
+            "absolute inset-0 rounded-2xl bg-gradient-to-r opacity-70 transition group-hover:opacity-85",
+            accentGradient[platform],
+          )}
         />
         <div className="absolute inset-0 rounded-2xl border border-white/10 mix-blend-screen" aria-hidden="true" />
       </div>
-      <div className="relative rounded-2xl px-5 py-4 sm:px-6 sm:py-5">
+      <div className="relative rounded-2xl px-5 py-4 transition sm:px-6 sm:py-5 group-hover:translate-y-[-1px]">
         <div className="flex flex-wrap items-center gap-4 text-left text-sm leading-relaxed text-white">
           <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white/20 text-lg">
             <span role="img" aria-label="Heart">
@@ -46,6 +57,6 @@ export default function HeroSupportPill({ platform, className }: HeroSupportPill
           </div>
         </div>
       </div>
-    </div>
+    </Link>
   )
 }
