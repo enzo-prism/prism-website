@@ -316,6 +316,39 @@ export default function CustomEmailDentalPage() {
           </div>
         </section>
 
+        <section className="border-b border-neutral-100 bg-neutral-900 text-white">
+          <div className="container mx-auto px-4 py-20">
+            <div className="mx-auto max-w-4xl rounded-3xl border border-white/10 bg-white/5 p-12 text-center shadow-lg sm:p-16">
+              <p className="text-xs font-semibold uppercase tracking-[0.32em] text-neutral-300">
+                google workspace partner perk
+              </p>
+              <h2 className="mt-4 text-3xl font-semibold tracking-tight sm:text-4xl">
+                10% off your first year of Google Workspace
+              </h2>
+              <p className="mt-6 text-base text-neutral-100 sm:text-lg">
+                Prism is set up with Google to pass preferred pricing to our clients. When we launch your
+                custom domain email, you can enroll through our partner link and keep an extra 10% in your
+                pocket while we handle the setup, security hardening, and training.
+              </p>
+              <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
+                <Button asChild size="lg" className="rounded-full bg-white px-8 py-3 text-base font-semibold text-neutral-900 hover:bg-white/90">
+                  <a
+                    href="https://c.gle/APy2Ad08G18tc2DVKTvFnIX7ZsIi8C_16CofJocN9aFYsQDXBJRKDAH3FRQb6BfrqNgPv1Buz5DypvRjWF8E2rqpEvohTLTUWmLF6UOh4oCinNkIBx-wbk3wUX2jqxqDYiPNn4cWz4pfBlfNZT7je1YO"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Activate 10% off Google Workspace
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </a>
+                </Button>
+                <p className="max-w-md text-xs uppercase tracking-[0.28em] text-neutral-400">
+                  Link opens in a new tab · available for new workspace orgs only
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
         <section className="border-b border-neutral-100 bg-neutral-50/80">
           <div className="container mx-auto px-4 py-24">
             <div className="mx-auto max-w-3xl text-center">
