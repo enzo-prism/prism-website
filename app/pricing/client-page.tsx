@@ -4,8 +4,8 @@ import { FormEvent, useMemo, useState } from "react"
 import { ArrowRight, Check } from "lucide-react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import Image from "next/image"
 
+import HeroLoopingVideo from "@/components/HeroLoopingVideo"
 import StepIndicator from "@/components/ui/step-indicator"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -142,11 +142,6 @@ const summaryPoints = [
   "Add Listings, Ads, or Content whenever you are ready to scale further.",
 ]
 
-const HERO_VIDEO_SRC =
-  "https://res.cloudinary.com/dhqpqfw6w/video/upload/v1761612491/surfer_loop_vduya4.mp4"
-const HERO_VIDEO_POSTER =
-  "https://res.cloudinary.com/dhqpqfw6w/image/upload/v1761612479/Frame_63_gbe1tk.png"
-
 const adPackageOptions = [
   ...adPackages.map((pkg) => ({
     value: pkg.name,
@@ -192,9 +187,6 @@ export default function PricingPageClient() {
   const [notes, setNotes] = useState("")
   const [error, setError] = useState<string | null>(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [isHeroVideoReady, setIsHeroVideoReady] = useState(false)
-  const [heroVideoError, setHeroVideoError] = useState(false)
-  const [isHeroPosterLoaded, setIsHeroPosterLoaded] = useState(false)
   const router = useRouter()
 
   const modeOptions: { label: string; value: PlannerMode }[] = [
@@ -316,54 +308,7 @@ const isCustomComplete =
     <>
       <section className="relative overflow-hidden px-4 pt-16 pb-20 sm:pt-20 sm:pb-24">
         <div className="mx-auto flex max-w-6xl flex-col items-center gap-12 sm:gap-14">
-          <div className="relative w-full overflow-hidden rounded-3xl border border-neutral-200 bg-neutral-950/5 shadow-lg">
-            <div className="relative aspect-[4/5] w-full sm:aspect-[16/9]">
-              <div
-                className={cn(
-                  "pointer-events-none absolute inset-0 z-20 overflow-hidden transition-opacity duration-700",
-                  isHeroVideoReady && !heroVideoError ? "opacity-0" : "opacity-100"
-                )}
-              >
-                <Image
-                  src={HERO_VIDEO_POSTER}
-                  alt="Surfer looping background preview"
-                  fill
-                  priority
-                  sizes="(min-width: 1280px) 1024px, (min-width: 768px) 80vw, 100vw"
-                  className="h-full w-full object-cover"
-                  onLoadingComplete={() => setIsHeroPosterLoaded(true)}
-                />
-                {!isHeroPosterLoaded && (
-                  <div className="absolute inset-0 animate-pulse bg-neutral-200" aria-hidden />
-                )}
-              </div>
-
-              {!heroVideoError && (
-                <video
-                  className={cn(
-                    "absolute inset-0 z-10 h-full w-full object-cover transition-opacity duration-700",
-                    isHeroVideoReady ? "opacity-100" : "opacity-0"
-                  )}
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                  poster={HERO_VIDEO_POSTER}
-                  preload="auto"
-                  aria-hidden="true"
-                  onCanPlay={() => setIsHeroVideoReady(true)}
-                  onLoadedData={() => setIsHeroVideoReady(true)}
-                  onError={() => {
-                    setHeroVideoError(true)
-                    setIsHeroVideoReady(false)
-                  }}
-                >
-                  <source src={HERO_VIDEO_SRC} type="video/mp4" />
-                </video>
-              )}
-            </div>
-          </div>
-
+          <HeroLoopingVideo />
           <div className="mx-auto max-w-4xl text-center sm:px-6">
             <p className="text-sm font-medium uppercase tracking-[0.3em] text-neutral-400">
               pricing made simple

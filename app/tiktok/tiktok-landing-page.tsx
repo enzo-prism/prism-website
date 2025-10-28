@@ -4,6 +4,7 @@ import Link from "next/link"
 
 import Footer from "@/components/footer"
 import FreeAnalysisSection from "@/components/free-analysis-section"
+import HeroLoopingVideo from "@/components/HeroLoopingVideo"
 import Navbar from "@/components/navbar"
 import PageViewTracker from "@/components/page-view-tracker"
 import ScrollToTop from "@/components/scroll-to-top"
@@ -22,33 +23,40 @@ export default function TikTokLandingPage() {
             <div className="pointer-events-none absolute inset-y-0 right-[-20%] hidden w-2/3 rotate-6 bg-gradient-to-br from-white/10 via-white/0 to-white/5 blur-3xl lg:block" />
             <div className="pointer-events-none absolute left-1/2 top-16 h-[32rem] w-[32rem] -translate-x-1/2 rounded-full bg-neutral-700/20 blur-3xl" />
           </div>
-          <div className="relative mx-auto flex max-w-5xl flex-col gap-8 px-4 pb-24 pt-24 sm:pt-28 md:pt-32">
-            <h1 className="max-w-3xl text-4xl font-semibold tracking-tight sm:text-5xl md:text-6xl">
-              From TikTok to Transformation
-            </h1>
-            <div className="space-y-4 text-base text-neutral-200 sm:text-lg">
-              <p>You’ve seen the clips. Now build what they talk about.</p>
-              <p>
-                At Prism, we turn the same business principles you see on TikTok into real growth for founders and business
-                owners.
-              </p>
-              <p>
-                We design websites, systems, and campaigns that attract customers, drive revenue, and make your brand stand
-                out.
-              </p>
-            </div>
-            <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center">
-              <Button asChild size="lg" variant="inverted" className="rounded-full px-8 py-3 text-base font-semibold">
-                <Link href="/pricing">👉 Work With Prism</Link>
-              </Button>
-              <Button
-                asChild
-                size="lg"
-                variant="outline-inverted"
-                className="rounded-full px-8 py-3 text-base transition"
-              >
-                <Link href="/refer">💸 Refer &amp; Earn</Link>
-              </Button>
+          <div className="relative mx-auto max-w-6xl px-4 pb-24 pt-24 sm:pt-28 md:pt-32">
+            <div className="grid gap-10 lg:grid-cols-[1.05fr,0.95fr] lg:items-center xl:gap-16">
+              <HeroLoopingVideo className="border-white/20 bg-white/10 shadow-2xl shadow-black/40 backdrop-blur-sm" />
+              <div className="flex flex-col gap-8 text-left lg:ml-auto lg:max-w-[32rem]">
+                <div>
+                  <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl md:text-6xl">
+                    From TikTok to Transformation
+                  </h1>
+                  <div className="mt-6 space-y-4 text-base text-neutral-200 sm:text-lg">
+                    <p>You’ve seen the clips. Now build what they talk about.</p>
+                    <p>
+                      At Prism, we turn the same business principles you see on TikTok into real growth for founders and
+                      business owners.
+                    </p>
+                    <p>
+                      We design websites, systems, and campaigns that attract customers, drive revenue, and make your brand
+                      stand out.
+                    </p>
+                  </div>
+                </div>
+                <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+                  <Button asChild size="lg" variant="inverted" className="rounded-full px-8 py-3 text-base font-semibold">
+                    <Link href="/pricing">👉 Work With Prism</Link>
+                  </Button>
+                  <Button
+                    asChild
+                    size="lg"
+                    variant="outline-inverted"
+                    className="rounded-full px-8 py-3 text-base transition"
+                  >
+                    <Link href="/refer">💸 Refer &amp; Earn</Link>
+                  </Button>
+                </div>
+              </div>
             </div>
           </div>
         </section>

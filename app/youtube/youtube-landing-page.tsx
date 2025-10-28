@@ -5,6 +5,7 @@ import Link from "next/link"
 
 import Footer from "@/components/footer"
 import FreeAnalysisSection from "@/components/free-analysis-section"
+import HeroLoopingVideo from "@/components/HeroLoopingVideo"
 import PageViewTracker from "@/components/page-view-tracker"
 import { Button } from "@/components/ui/button"
 import { ArrowRight, Check, Play } from "lucide-react"
@@ -48,23 +49,32 @@ export default function YouTubeLandingPage() {
         <section className="relative overflow-hidden border-b border-neutral-200 bg-neutral-950 text-white">
           <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.08),_transparent_60%)]" />
           <div className="absolute inset-0 -z-10 bg-[conic-gradient(from_120deg,_rgba(255,255,255,0.12),_rgba(13,13,13,0.8))] opacity-40" />
-          <div className="mx-auto max-w-4xl px-6 py-24 sm:py-28 md:py-32">
-            <p className="text-xs font-semibold uppercase tracking-[0.35em] text-neutral-300">impossible is temporary</p>
-            <h1 className="mt-6 text-4xl font-semibold leading-tight tracking-tight sm:text-5xl md:text-6xl">
-              From YouTube Tactics to Real Growth
-            </h1>
-            <div className="mt-6 space-y-4 text-base text-neutral-200 sm:text-lg">
-              <p>You’ve seen the videos — now apply the playbooks.</p>
-              <p>On YouTube, Prism shares the same strategies we use to help real businesses grow.</p>
-              <p>From better websites to smarter ads and AI systems — every video is built to help you grow faster.</p>
-            </div>
-            <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center">
-              <Button asChild size="lg" variant="inverted" className="rounded-full px-8 py-3 text-base font-semibold">
-                <Link href="/pricing">👉 Work With Prism</Link>
-              </Button>
-              <Button asChild size="lg" variant="outline-inverted" className="rounded-full px-8 py-3 text-base">
-                <Link href="/refer">💸 Refer &amp; Earn</Link>
-              </Button>
+          <div className="mx-auto max-w-6xl px-6 pb-24 pt-24 sm:pt-28 md:pt-32">
+            <div className="grid gap-10 lg:grid-cols-[1.05fr,0.95fr] lg:items-center xl:gap-16">
+              <HeroLoopingVideo className="border-white/15 bg-white/10 shadow-2xl shadow-black/30 backdrop-blur-sm" />
+              <div className="flex flex-col gap-8 text-left lg:ml-auto lg:max-w-[32rem]">
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-[0.35em] text-neutral-300">
+                    impossible is temporary
+                  </p>
+                  <h1 className="mt-6 text-4xl font-semibold leading-tight tracking-tight sm:text-5xl md:text-6xl">
+                    From YouTube Tactics to Real Growth
+                  </h1>
+                  <div className="mt-6 space-y-4 text-base text-neutral-200 sm:text-lg">
+                    <p>You’ve seen the videos — now apply the playbooks.</p>
+                    <p>On YouTube, Prism shares the same strategies we use to help real businesses grow.</p>
+                    <p>From better websites to smarter ads and AI systems — every video is built to help you grow faster.</p>
+                  </div>
+                </div>
+                <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+                  <Button asChild size="lg" variant="inverted" className="rounded-full px-8 py-3 text-base font-semibold">
+                    <Link href="/pricing">👉 Work With Prism</Link>
+                  </Button>
+                  <Button asChild size="lg" variant="outline-inverted" className="rounded-full px-8 py-3 text-base">
+                    <Link href="/refer">💸 Refer &amp; Earn</Link>
+                  </Button>
+                </div>
+              </div>
             </div>
           </div>
         </section>
