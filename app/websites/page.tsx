@@ -217,6 +217,18 @@ const handledForYou = [
   "Post-launch support and training",
 ]
 
+const featuredArticle = {
+  title: "From broken WordPress site to a high-converting dental experience",
+  href: "/blog/from-broken-to-beautiful-dental-website-transformation",
+  summary:
+    "See how Prism rebuilt a dental practice’s neglected site into a calm, conversion-ready experience using Lovable for structure and Codex for engineering.",
+  insights: [
+    "Design principles that replaced clutter with clarity and storytelling.",
+    "SEO + AEO architecture so Google and AI engines surface the practice.",
+    "Operational mindset shifts that keep the site evolving after launch.",
+  ],
+}
+
 const faqItems = [
   {
     question: "How long does a website project take?",
@@ -300,6 +312,30 @@ export default function WebsitesPage() {
               </p>
             </div>
             <MinimalWebsiteList projects={websiteProjects} />
+          </div>
+        </section>
+
+        <section className="border-t border-neutral-100 bg-white px-4 py-16 sm:py-20">
+          <div className="mx-auto max-w-4xl">
+            <span className="text-xs font-semibold uppercase tracking-[0.28em] text-neutral-400">deep dive</span>
+            <div className="mt-4 rounded-3xl border border-neutral-200 bg-neutral-50 p-8 shadow-sm sm:p-10">
+              <h2 className="text-3xl font-semibold lowercase text-neutral-900 sm:text-4xl">{featuredArticle.title}</h2>
+              <p className="mt-4 text-sm leading-6 text-neutral-600 sm:text-base">{featuredArticle.summary}</p>
+              <ul className="mt-6 space-y-2 text-sm text-neutral-600">
+                {featuredArticle.insights.map(point => (
+                  <li key={point} className="flex items-start gap-2">
+                    <span className="mt-1 block h-1.5 w-1.5 rounded-full bg-neutral-900" />
+                    <span>{point}</span>
+                  </li>
+                ))}
+              </ul>
+              <Button asChild size="lg" className="mt-8 rounded-full px-8">
+                <Link href={featuredArticle.href}>
+                  Read the full transformation
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Link>
+              </Button>
+            </div>
           </div>
         </section>
 
