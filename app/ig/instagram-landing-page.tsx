@@ -3,9 +3,10 @@
 import dynamic from "next/dynamic"
 import Link from "next/link"
 
-import Footer from "@/components/footer"
 import FreeAnalysisSection from "@/components/free-analysis-section"
 import HeroLoopingVideo from "@/components/HeroLoopingVideo"
+import HeroSupportPill from "@/components/HeroSupportPill"
+import Footer from "@/components/footer"
 import PageViewTracker from "@/components/page-view-tracker"
 import { Button } from "@/components/ui/button"
 import { ArrowRight, Check } from "lucide-react"
@@ -39,6 +40,7 @@ export default function InstagramLandingPage() {
               <HeroLoopingVideo className="border-white/15 bg-white/10 shadow-2xl shadow-black/30 backdrop-blur-sm" />
               <div className="flex flex-col gap-8 text-left lg:ml-auto lg:max-w-[32rem]">
                 <div>
+                  <HeroSupportPill platform="instagram" className="mb-6 sm:mb-8" />
                   <h1 className="text-4xl font-semibold leading-tight tracking-tight sm:text-5xl md:text-6xl">
                     From Inspiration to Action
                   </h1>

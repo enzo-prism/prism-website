@@ -2,9 +2,10 @@
 
 import Link from "next/link"
 
-import Footer from "@/components/footer"
 import FreeAnalysisSection from "@/components/free-analysis-section"
 import HeroLoopingVideo from "@/components/HeroLoopingVideo"
+import HeroSupportPill from "@/components/HeroSupportPill"
+import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
 import PageViewTracker from "@/components/page-view-tracker"
 import ScrollToTop from "@/components/scroll-to-top"
@@ -28,6 +29,7 @@ export default function TikTokLandingPage() {
               <HeroLoopingVideo className="border-white/20 bg-white/10 shadow-2xl shadow-black/40 backdrop-blur-sm" />
               <div className="flex flex-col gap-8 text-left lg:ml-auto lg:max-w-[32rem]">
                 <div>
+                  <HeroSupportPill platform="tiktok" className="mb-6 sm:mb-8" />
                   <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl md:text-6xl">
                     From TikTok to Transformation
                   </h1>

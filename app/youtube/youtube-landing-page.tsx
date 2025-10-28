@@ -3,9 +3,10 @@
 import dynamic from "next/dynamic"
 import Link from "next/link"
 
-import Footer from "@/components/footer"
 import FreeAnalysisSection from "@/components/free-analysis-section"
 import HeroLoopingVideo from "@/components/HeroLoopingVideo"
+import HeroSupportPill from "@/components/HeroSupportPill"
+import Footer from "@/components/footer"
 import PageViewTracker from "@/components/page-view-tracker"
 import { Button } from "@/components/ui/button"
 import { ArrowRight, Check, Play } from "lucide-react"
@@ -54,6 +55,7 @@ export default function YouTubeLandingPage() {
               <HeroLoopingVideo className="border-white/15 bg-white/10 shadow-2xl shadow-black/30 backdrop-blur-sm" />
               <div className="flex flex-col gap-8 text-left lg:ml-auto lg:max-w-[32rem]">
                 <div>
+                  <HeroSupportPill platform="youtube" className="mb-4 sm:mb-6" />
                   <p className="text-xs font-semibold uppercase tracking-[0.35em] text-neutral-300">
                     impossible is temporary
                   </p>
