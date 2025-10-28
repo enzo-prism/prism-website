@@ -6,7 +6,6 @@ import Link from "next/link"
 import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
 import PageViewTracker from "@/components/page-view-tracker"
-import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
@@ -17,71 +16,64 @@ const offerHighlights = [
   {
     icon: "🦷",
     title: "Free Whitening",
-    description: "Get premium in-office whitening at one of our partner practices.",
+    description: "Get a professional whitening treatment from one of our trusted partner dentists.",
   },
   {
     icon: "📸",
     title: "Professional Photos & Video",
-    description: "Work with Prism’s creative team on real marketing projects for dental brands.",
+    description: "Work with Prism’s creative team on real projects for local dental brands.",
   },
   {
     icon: "💵",
     title: "Paid Shoots",
-    description: "Receive compensation for your time — plus content you can use in your portfolio.",
+    description: "Get compensated for your time and receive professional content for your own portfolio.",
   },
 ]
 
 const howItWorks = [
   {
+    icon: "1️⃣",
     title: "Apply Online",
-    description: "Fill out a short form with your info and photos.",
+    description: "Tell us a bit about yourself and upload a few photos.",
   },
   {
+    icon: "2️⃣",
     title: "Get Matched",
-    description: "We’ll pair you with a local dental practice for your shoot.",
+    description: "We’ll connect you with a local dental office for your session.",
   },
   {
-    title: "Whitening & Shoot Day",
-    description: "Enjoy complimentary whitening and a relaxed photo/video session.",
+    icon: "3️⃣",
+    title: "Whitening + Shoot Day",
+    description: "Enjoy your complimentary whitening and a relaxed photoshoot.",
   },
   {
+    icon: "4️⃣",
     title: "Get Paid & Featured",
-    description: "Earn compensation and see your smile featured in Prism campaigns.",
+    description: "Earn cash and see your smile in real Prism campaigns.",
   },
 ]
 
-const exampleShots = [
+const fromShootHighlights = [
   {
+    icon: "🖼️",
     title: "Studio Laughs",
-    caption: "Candid energy that converts.",
-    image: "/model-studio.webp",
+    description: "Candid moments that convert.",
   },
   {
+    icon: "💺",
     title: "Chairside Confidence",
-    caption: "Showcase the treatment experience.",
-    image: "/model-chair.webp",
+    description: "Capture real patient experiences.",
   },
   {
+    icon: "✨",
     title: "After-Glow Portraits",
-    caption: "Highlight the whitening results.",
-    image: "/model-after-photo.webp",
+    description: "Highlight whitening results.",
   },
   {
+    icon: "🌿",
     title: "Lifestyle Moments",
-    caption: "Smiles that feel real and relatable.",
-    image: "/model-lifestyle.webp",
+    description: "Show natural, everyday smiles.",
   },
-]
-
-const dentalPartners = [
-  { name: "Dr. Christopher B. Wong", href: "/case-studies/dr-christopher-wong" },
-  { name: "Exquisite Dentistry", href: "https://www.exquisitedentistryla.com" },
-  { name: "Laguna Beach Dental Arts", href: "https://www.lagunabeachdentalarts.com" },
-  { name: "Family First Smile Care", href: "/case-studies/family-first-smile-care" },
-  { name: "Town Centre Dental", href: "/case-studies/town-centre-dental" },
-  { name: "Grace Dental Santa Rosa", href: "/case-studies/grace-dental-santa-rosa" },
-  { name: "Wine Country Root Canal", href: "https://www.winecountryrootcanal.com" },
-  { name: "Coast Periodontics & Laser Surgery", href: "https://www.coastperiodontics.com" },
 ]
 
 export default function ModelsPageClient() {
@@ -134,9 +126,9 @@ export default function ModelsPageClient() {
         <section className="border-b border-neutral-200 bg-neutral-50 py-14 sm:py-20" id="offer">
           <div className="container mx-auto px-4 md:px-6">
             <div className="text-center">
-              <h2 className="text-3xl font-semibold lowercase sm:text-4xl">what prism models receive</h2>
+              <h2 className="text-3xl font-semibold lowercase sm:text-4xl">Why Join Prism Models</h2>
               <p className="mt-3 text-sm text-neutral-600 sm:mt-4 sm:text-base">
-                Real perks for real people who bring confident smiles to life.
+                Bring your smile to life — and get rewarded for it.
               </p>
             </div>
             <div className="mt-10 grid gap-5 sm:mt-12 sm:gap-6 md:grid-cols-3">
@@ -160,21 +152,18 @@ export default function ModelsPageClient() {
           <div className="container mx-auto px-4 md:px-6">
             <div className="flex flex-col gap-10 lg:flex-row lg:items-start xl:gap-16">
               <div className="flex-1 lg:max-w-xl">
-                <span className="text-xs uppercase tracking-[0.35em] text-neutral-400">how it works</span>
-                <h2 className="mt-4 text-3xl font-semibold lowercase sm:text-4xl">
-                  from application to campaign-ready in four steps
-                </h2>
+                <h2 className="text-3xl font-semibold lowercase sm:text-4xl">How It Works</h2>
                 <p className="mt-3 text-sm text-neutral-500 sm:text-base">
-                  A short path from raising your hand to seeing your smile featured in real campaigns.
+                  We make it simple from start to finish.
                 </p>
                 <div className="mt-8 space-y-4 sm:space-y-5 md:mt-10">
-                  {howItWorks.map((step, index) => (
+                  {howItWorks.map((step) => (
                     <div
                       key={step.title}
                       className="flex items-start gap-4 rounded-2xl border border-neutral-200 bg-white p-4 shadow-sm transition hover:-translate-y-1 hover:shadow-md sm:rounded-3xl sm:p-5"
                     >
-                      <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-neutral-900 text-xs font-semibold uppercase tracking-wide text-white sm:h-9 sm:w-9">
-                        {index + 1}
+                      <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-neutral-100 text-lg sm:h-9 sm:w-9">
+                        {step.icon}
                       </span>
                       <div>
                         <h3 className="text-base font-medium lowercase text-neutral-900 sm:text-lg">{step.title}</h3>
@@ -183,88 +172,40 @@ export default function ModelsPageClient() {
                     </div>
                   ))}
                 </div>
+                <div className="mt-8">
+                  <Button
+                    asChild
+                    size="lg"
+                    className="rounded-full bg-neutral-900 text-white hover:bg-neutral-800"
+                  >
+                    <Link href="#apply" onClick={() => trackCTAClick("models_how_it_works_apply", "#apply")}>
+                      → Apply Today
+                    </Link>
+                  </Button>
+                </div>
               </div>
               <div className="flex-1 space-y-6">
                 <div className="rounded-3xl border border-neutral-200 bg-neutral-900/90 p-4 text-white shadow-lg backdrop-blur sm:p-6">
-                  <h3 className="text-xl font-semibold lowercase">from shoot to screen</h3>
+                  <h3 className="text-xl font-semibold lowercase">From Shoot to Screen</h3>
                   <p className="mt-3 text-sm text-neutral-200">
-                    See how your session turns into scroll-stopping content across Prism campaigns.
+                    Your photos and videos are featured across real Prism campaigns — helping practices grow while
+                    showcasing confident, authentic smiles.
                   </p>
-                  <div className="mt-6 flex gap-3 overflow-x-auto pb-2 sm:gap-4">
-                    {exampleShots.map((shot, index) => (
-                      <figure
-                        key={shot.title}
-                        className="min-w-[180px] rounded-2xl border border-white/20 bg-white/10 p-3 backdrop-blur sm:min-w-[220px] sm:p-4"
+                  <ul className="mt-6 space-y-3">
+                    {fromShootHighlights.map((item) => (
+                      <li
+                        key={item.title}
+                        className="flex items-start gap-3 rounded-2xl border border-white/15 bg-white/5 p-4 text-sm text-neutral-100"
                       >
-                        <Image
-                          src={shot.image}
-                          alt={shot.title}
-                          width={220}
-                          height={280}
-                          priority={index === 0}
-                          className="h-40 w-full rounded-lg object-cover sm:h-48"
-                        />
-                        <figcaption className="mt-3 text-sm font-semibold lowercase text-white">{shot.title}</figcaption>
-                        <p className="text-xs text-neutral-300">{shot.caption}</p>
-                      </figure>
+                        <span className="mt-0.5 text-lg">{item.icon}</span>
+                        <span>
+                          <span className="font-semibold text-white">{item.title}</span> — {item.description}
+                        </span>
+                      </li>
                     ))}
-                  </div>
-                  <p className="mt-4 text-xs uppercase tracking-[0.2em] text-neutral-400">
-                    swipe to explore sample frames
-                  </p>
+                  </ul>
                 </div>
               </div>
-            </div>
-          </div>
-        </section>
-
-        <section className="border-t border-neutral-200 bg-neutral-50 py-14 sm:py-16" id="partners">
-          <div className="container mx-auto px-4 md:px-6">
-            <div className="text-center">
-              <span className="text-xs uppercase tracking-[0.35em] text-neutral-400">dental brands</span>
-              <h2 className="mt-2 text-xl font-semibold lowercase text-neutral-900 sm:mt-3 sm:text-3xl">
-                trusted by practices we support
-              </h2>
-            </div>
-            <div className="mt-8 grid gap-3 sm:mt-10 sm:grid-cols-2 lg:grid-cols-4">
-              {dentalPartners.map((partner) => {
-                const partnerId = `partner_${partner.name.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`
-                const isExternal = partner.href.startsWith("http")
-                const CardContent = (
-                  <>
-                    <span className="font-medium text-neutral-900 transition group-hover:text-neutral-900">
-                      {partner.name}
-                    </span>
-                    <span className="mt-1 block text-xs uppercase tracking-[0.2em] text-neutral-400">visit site</span>
-                  </>
-                )
-
-                if (isExternal) {
-                  return (
-                    <a
-                      key={partner.name}
-                      href={partner.href}
-                      target="_blank"
-                      rel="noreferrer"
-                    className="group rounded-2xl border border-neutral-200 bg-white px-4 py-4 text-sm lowercase text-neutral-700 transition hover:-translate-y-1 hover:border-neutral-900 hover:text-neutral-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900 sm:px-5"
-                    onClick={() => trackCTAClick(partnerId, partner.href)}
-                  >
-                    {CardContent}
-                  </a>
-                )
-                }
-
-                return (
-                  <Link
-                    key={partner.name}
-                    href={partner.href}
-                  className="group rounded-2xl border border-neutral-200 bg-white px-4 py-4 text-sm lowercase text-neutral-700 transition hover:-translate-y-1 hover:border-neutral-900 hover:text-neutral-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900 sm:px-5"
-                  onClick={() => trackCTAClick(partnerId, partner.href)}
-                >
-                  {CardContent}
-                </Link>
-              )
-              })}
             </div>
           </div>
         </section>
@@ -273,14 +214,12 @@ export default function ModelsPageClient() {
           <div className="container mx-auto px-4 md:px-6">
             <div className="mx-auto max-w-3xl rounded-3xl border border-neutral-200 bg-white p-7 shadow-md sm:rounded-[40px] sm:p-12 lg:p-14">
               <div className="space-y-3 text-center sm:space-y-4">
-                <span className="text-xs uppercase tracking-[0.35em] text-neutral-400">apply to join</span>
-                <h2 className="text-3xl font-semibold lowercase text-neutral-900 sm:text-4xl">
-                  become the face of confident smiles
-                </h2>
+                <h2 className="text-3xl font-semibold lowercase text-neutral-900 sm:text-4xl">Ready to Be Featured?</h2>
                 <p className="text-sm text-neutral-600 sm:text-base">
-                  Fill out the application below. We review every submission and reach out when there’s an opportunity in
-                  your area.
+                  Join hundreds of real people who’ve worked with Prism to create authentic, confident, and professional
+                  content — no modeling agency required.
                 </p>
+                <p className="text-sm font-semibold text-neutral-900 sm:text-base">→ Apply Now</p>
               </div>
               <form
                 className="mt-9 flex flex-col gap-6 sm:mt-12 sm:gap-8"
@@ -375,10 +314,10 @@ export default function ModelsPageClient() {
 
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-6">
                   <Button type="submit" size="lg" className="rounded-full px-10" disabled={isSubmitting}>
-                    {isSubmitting ? "sending..." : "apply now"}
+                    {isSubmitting ? "sending..." : "→ Apply Now"}
                   </Button>
                   <p className="text-xs text-neutral-500 sm:max-w-xs">
-                    We review every application and respond within 7 business days when there’s a great fit.
+                    We review all applications and reach out when there’s a great match in your area.
                   </p>
                 </div>
               </form>
@@ -391,15 +330,11 @@ export default function ModelsPageClient() {
             <div className="flex flex-col gap-6 rounded-3xl border border-neutral-200 bg-neutral-900 px-6 py-8 text-white shadow-sm sm:px-8 sm:py-10 md:flex-row md:items-center md:justify-between">
               <div>
                 <p className="text-xs uppercase tracking-[0.35em] text-neutral-400">
-                  for dental practices
+                  For Dental Practices
                 </p>
                 <h3 className="mt-3 text-2xl font-semibold lowercase">
-                  want fresh, authentic marketing content?
+                  Want custom photo and video content for your marketing?
                 </h3>
-                <p className="mt-2 max-w-xl text-sm text-neutral-300">
-                  Prism handles casting, creative direction, production, and delivery. We make it effortless to ship
-                  campaigns that feel true to your practice.
-                </p>
               </div>
               <Button
                 asChild
@@ -408,7 +343,7 @@ export default function ModelsPageClient() {
                 className="rounded-full bg-white text-neutral-900 hover:bg-neutral-100"
               >
                 <Link href="/services" onClick={() => trackCTAClick("dental_cta_models_footer", "/services")}>
-                  explore the prism services platform
+                  Explore Prism Services →
                 </Link>
               </Button>
             </div>
@@ -419,11 +354,11 @@ export default function ModelsPageClient() {
           <div className="container mx-auto px-4 md:px-6">
             <div className="flex flex-col items-center text-center">
               <h2 className="text-3xl font-semibold lowercase sm:text-4xl">
-                every great smile deserves to be seen
+                Real People. Real Smiles. Real Opportunities.
               </h2>
               <p className="mt-3 max-w-2xl text-sm text-neutral-300">
-                Showcase your confidence, support local dental teams, and build a portfolio you’re proud of. Prism
-                Models puts real people in front of the camera — no agencies required.
+                Join Prism Models for free whitening, professional photos, and paid creative work that helps dental
+                practices share authentic stories.
               </p>
               <Button
                 asChild
@@ -431,7 +366,7 @@ export default function ModelsPageClient() {
                 className="mt-6 rounded-full bg-white text-neutral-900 hover:bg-neutral-100"
               >
                 <Link href="#apply" onClick={() => trackCTAClick("models_footer_apply", "#apply")}>
-                  apply to join
+                  → Apply Now
                 </Link>
               </Button>
             </div>
@@ -456,13 +391,15 @@ function HeroSection() {
       <div className="relative">
         <div className="container mx-auto flex min-h-[60vh] flex-col justify-center gap-8 px-4 py-16 sm:gap-12 sm:py-20 md:px-6">
           <div className="max-w-3xl space-y-5 sm:space-y-6">
-            <span className="text-xs uppercase tracking-[0.35em] text-neutral-400">prism models</span>
-            <h1 className="text-3xl font-semibold lowercase sm:text-5xl">
-              Prism Models — Real People. Real Smiles. Real Growth.
-            </h1>
+            <h1 className="text-3xl font-semibold lowercase sm:text-5xl">Prism Models</h1>
+            <p className="text-lg font-medium text-neutral-200 sm:text-xl">
+              Real People. Real Smiles. Real Opportunities.
+            </p>
             <p className="text-sm text-neutral-200 sm:text-base">
-              We partner with real people who love being on camera to help our dental clients tell authentic stories.
-              Join Prism Models to get complimentary whitening, professional photos, and paid creative opportunities.
+              We work with everyday people who love being on camera to help our dental clients tell real stories.
+            </p>
+            <p className="text-sm text-neutral-200 sm:text-base">
+              Join Prism Models for free whitening, professional photos, and paid creative work that makes a real impact.
             </p>
             <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
               <Button
@@ -471,17 +408,7 @@ function HeroSection() {
                 className="rounded-full bg-white text-neutral-900 hover:bg-neutral-100"
               >
                 <Link href="#apply" onClick={() => trackCTAClick("models_hero_apply", "#apply")}>
-                  apply to join
-                </Link>
-              </Button>
-              <Button
-                asChild
-                variant="ghost"
-                size="lg"
-                className="rounded-full border border-white/40 bg-transparent text-white hover:bg-white/10"
-              >
-                <Link href="#how-it-works" onClick={() => trackCTAClick("models_hero_how_it_works", "#how-it-works")}>
-                  see how it works
+                  → Apply Now
                 </Link>
               </Button>
             </div>
