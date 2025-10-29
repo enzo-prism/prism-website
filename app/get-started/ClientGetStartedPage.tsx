@@ -5,6 +5,8 @@ import Navbar from "@/components/navbar"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Input } from "@/components/ui/input"
+import { Textarea } from "@/components/ui/textarea"
 import {
   Dialog,
   DialogClose,
@@ -35,7 +37,15 @@ import Link from "next/link"
 import Image from "next/image"
 import { useEffect, useRef, useState } from "react"
 
-const TYPEFORM_URL = "https://fxuqp40sseh.typeform.com/to/Hg2oLcss"
+const FORMSPREE_ENDPOINT = "https://formspree.io/f/mwpwbqpw"
+
+const CHECKBOX_OPTIONS = [
+  { label: "website", value: "website" },
+  { label: "local listings (google maps, apple maps, yelp, etc.)", value: "local listings" },
+  { label: "social media (instagram, youtube, linkedin, etc.)", value: "social media" },
+  { label: "ads (google ads, meta ads, tiktok ads, etc.)", value: "ads" },
+  { label: "online brand design", value: "brand design" }
+]
 
 const fadeIn = {
   initial: { opacity: 0 },
@@ -118,6 +128,8 @@ export default function ClientGetStartedPage({ heroOnly = false }: { heroOnly?: 
   const isMobile = useMobile()
   const videoRef = useRef<HTMLDivElement | null>(null)
   const formSectionRef = useRef<HTMLDivElement | null>(null)
+  const [formStatus, setFormStatus] = useState<"idle" | "submitting" | "success" | "error">("idle")
+  const [formError, setFormError] = useState<string | null>(null)
   const [activeHighlight, setActiveHighlight] = useState<AnalysisHighlight | null>(null)
 
   const ActiveHighlightIcon = activeHighlight?.icon
@@ -154,6 +166,39 @@ export default function ClientGetStartedPage({ heroOnly = false }: { heroOnly?: 
     setTimeout(() => handlePrimaryCTA(), 0)
   }
 
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    setFormError(null)
+    setFormStatus("idle")
+    const form = event.currentTarget
+    const formData = new FormData(form)
+    const targets = formData.getAll("analysisTargets[]")
+    if (!targets.length) {
+      setFormError("select at least one part of your online presence")
+      return
+    }
+    setFormStatus("submitting")
+    try {
+      const response = await fetch(FORMSPREE_ENDPOINT, {
+        method: "POST",
+        body: formData,
+        headers: {
+          Accept: "application/json",
+        },
+      })
+      if (!response.ok) {
+        throw new Error("request failed")
+      }
+      form.reset()
+      setFormStatus("success")
+      trackCTAClick("submitted formspree form", "get-started form")
+    } catch (error) {
+      console.error("form submission error", error)
+      setFormStatus("error")
+      setFormError("we couldn’t send the form. please try again in a moment.")
+    }
+  }
+
   const analysisHighlights: AnalysisHighlight[] = [
     {
       icon: Globe2,
@@ -162,7 +207,7 @@ export default function ClientGetStartedPage({ heroOnly = false }: { heroOnly?: 
       iconClass: "text-sky-600",
       description: "technical health, content coverage, and schema moves to grow organic reach.",
       modal: {
-        title: "SEO (Search Engine Optimization)",
+        title: "seo (search engine optimization)",
         why: [
           "SEO helps your business get discovered by people already searching for what you offer.",
           "A well-optimized site means more visibility, more clicks, and more qualified leads without paying for ads.",
@@ -177,7 +222,7 @@ export default function ClientGetStartedPage({ heroOnly = false }: { heroOnly?: 
       iconClass: "text-purple-600",
       description: "ai overview placements, answer boxes, and signals that secure ai search visibility.",
       modal: {
-        title: "AEO (Answer Engine Optimization)",
+        title: "aeo (answer engine optimization)",
         why: [
           "Voice assistants and AI chat tools are changing how people search.",
           "AEO ensures your business shows up when people ask questions, not just when they type keywords.",
@@ -192,7 +237,7 @@ export default function ClientGetStartedPage({ heroOnly = false }: { heroOnly?: 
       iconClass: "text-pink-600",
       description: "profile consistency, content cadence, and engagement paths that drive inquiries.",
       modal: {
-        title: "Social Media",
+        title: "social media",
         why: [
           "Your social presence builds trust and keeps your brand top-of-mind.",
           "The right strategy turns followers into fans, and fans into customers.",
@@ -207,7 +252,7 @@ export default function ClientGetStartedPage({ heroOnly = false }: { heroOnly?: 
       iconClass: "text-amber-600",
       description: "paid search and social diagnostics to surface wasted spend and high-performing angles.",
       modal: {
-        title: "Ads",
+        title: "ads",
         why: [
           "Ads accelerate growth by putting your message in front of the right people instantly.",
           "When done well, they do more than drive clicks; they drive results.",
@@ -222,7 +267,7 @@ export default function ClientGetStartedPage({ heroOnly = false }: { heroOnly?: 
       iconClass: "text-emerald-600",
       description: "google business profile accuracy, reviews, and nap coverage to capture local demand.",
       modal: {
-        title: "Local Listings",
+        title: "local listings",
         why: [
           "Your Google Business Profile, Yelp, and maps listings are often a customer's first impression.",
           "Accurate, optimized listings help you appear in local searches and bring more people through your door.",
@@ -451,35 +496,85 @@ export default function ClientGetStartedPage({ heroOnly = false }: { heroOnly?: 
                   whileInView="animate"
                   viewport={getViewportConfig()}
                 >
-                  <iframe
-                    src={`${TYPEFORM_URL}?typeform-medium=embed-snippet`}
-                    title="Prism online presence report form"
-                    className="h-[720px] w-full"
-                    allow="camera; microphone; autoplay; encrypted-media"
-                    loading="lazy"
-                  />
-                </motion.div>
+                  <form
+                    action={FORMSPREE_ENDPOINT}
+                    method="POST"
+                    onSubmit={handleSubmit}
+                    className="grid gap-8 p-6 sm:p-8"
+                    aria-live="polite"
+                  >
+                    <fieldset className="space-y-4">
+                      <legend className="text-base font-semibold text-neutral-800">
+                        what online parts of your business would you like us to analyze?
+                      </legend>
+                      <p className="text-sm text-neutral-600">
+                        choose all that apply.
+                      </p>
+                      <div className="grid gap-3">
+                        {CHECKBOX_OPTIONS.map((option) => (
+                          <label
+                            key={option.value}
+                            className="flex items-start gap-3 rounded-2xl border border-neutral-200 px-4 py-3 text-left text-sm text-neutral-700 transition hover:border-neutral-300"
+                          >
+                            <input
+                              type="checkbox"
+                              name="analysisTargets[]"
+                              value={option.value}
+                              className="mt-1 h-4 w-4 rounded border-neutral-300 text-neutral-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900"
+                            />
+                            <span className="leading-6 text-neutral-700">{option.label}</span>
+                          </label>
+                        ))}
+                      </div>
+                    </fieldset>
 
-                <motion.div
-                  className="flex flex-col items-center gap-3 text-sm text-neutral-600"
-                  variants={fadeInY}
-                  initial="initial"
-                  whileInView="animate"
-                  viewport={getViewportConfig()}
-                >
-                  <span>
-                    having trouble with the embed?{" "}
-                    <a
-                      href={TYPEFORM_URL}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="font-medium text-neutral-900 underline-offset-4 hover:underline"
-                      onClick={() => trackCTAClick("open typeform new tab", "get-started form")}
-                    >
-                      open the typeform in a new tab
-                    </a>
-                    .
-                  </span>
+                    <fieldset className="grid gap-4 md:grid-cols-2">
+                      <div className="space-y-2">
+                        <label htmlFor="website-url" className="text-sm font-medium text-neutral-700">
+                          website url
+                        </label>
+                        <Input id="website-url" name="websiteUrl" type="url" placeholder="https://yourwebsite.com" />
+                      </div>
+                      <div className="space-y-2">
+                        <label htmlFor="instagram-url" className="text-sm font-medium text-neutral-700">
+                          instagram url
+                        </label>
+                        <Input id="instagram-url" name="instagramUrl" type="url" placeholder="https://instagram.com/yourhandle" />
+                      </div>
+                    </fieldset>
+
+                    <div className="grid gap-4">
+                      <label htmlFor="email" className="text-sm font-medium text-neutral-700">
+                        email address to receive the report
+                      </label>
+                      <Input id="email" name="email" type="email" required placeholder="you@business.com" />
+                    </div>
+
+                    {formError ? (
+                      <div className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+                        {formError}
+                      </div>
+                    ) : null}
+
+                    {formStatus === "success" ? (
+                      <div className="rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm font-medium text-emerald-700">
+                        thank you! our team will get back to you via email within 24 hours.
+                      </div>
+                    ) : null}
+
+                    <div className="flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between">
+                      <p className="text-xs uppercase tracking-[0.28em] text-neutral-400">
+                        we review every submission manually
+                      </p>
+                      <Button
+                        type="submit"
+                        disabled={formStatus === "submitting"}
+                        className="rounded-full px-6 py-3 text-sm font-medium lowercase"
+                      >
+                        {formStatus === "submitting" ? "sending…" : "send my analysis request"}
+                      </Button>
+                    </div>
+                  </form>
                 </motion.div>
               </div>
             </section>
