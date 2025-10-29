@@ -543,13 +543,13 @@ export default function ClientGetStartedPage({ heroOnly = false }: { heroOnly?: 
                     <fieldset className="grid gap-4 md:grid-cols-2">
                       <div className="space-y-2">
                         <label htmlFor="website-url" className="text-sm font-medium text-neutral-700">
-                          website url
+                          website url <span className="text-neutral-400">(optional)</span>
                         </label>
                         <Input id="website-url" name="websiteUrl" type="text" inputMode="url" placeholder="https://yourwebsite.com" />
                       </div>
                       <div className="space-y-2">
                         <label htmlFor="instagram-url" className="text-sm font-medium text-neutral-700">
-                          instagram url
+                          instagram url <span className="text-neutral-400">(optional)</span>
                         </label>
                         <Input id="instagram-url" name="instagramUrl" type="text" inputMode="url" placeholder="https://instagram.com/yourhandle" />
                       </div>
