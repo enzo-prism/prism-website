@@ -155,26 +155,26 @@ const partnershipPoints = [
 ]
 
 export const metadata: Metadata = {
-  title: "Prism × Google Ads for Dentists | Compliant Dental Advertising in 2025",
+  title: "prism × google ads for dentists | compliant dental advertising in 2025",
   description:
-    "Prism helps dental practices attract more patients with fully compliant Google Ads. Learn how to structure campaigns for dental implants, Invisalign, and general dentistry while meeting Google’s Health Advertising policies.",
+    "prism helps dental practices attract more patients with fully compliant google ads. learn how to structure campaigns for dental implants, invisalign, and general dentistry while meeting google’s health advertising policies.",
   alternates: {
     canonical: "https://www.design-prism.com/google/dental-ads"
   },
   openGraph: {
-    title: "Prism × Google Ads for Dentists | Compliant Dental Advertising in 2025",
+    title: "prism × google ads for dentists | compliant dental advertising in 2025",
     description:
-      "Prism helps dental practices attract more patients with fully compliant Google Ads. Learn how to structure campaigns for dental implants, Invisalign, and general dentistry while meeting Google’s Health Advertising policies.",
+      "prism helps dental practices attract more patients with fully compliant google ads. learn how to structure campaigns for dental implants, invisalign, and general dentistry while meeting google’s health advertising policies.",
     url: "https://www.design-prism.com/google/dental-ads",
-    siteName: "Prism",
+    siteName: "prism",
     locale: "en_US",
     type: "website"
   },
   twitter: {
     card: "summary_large_image",
-    title: "Prism × Google Ads for Dentists | Compliant Dental Advertising in 2025",
+    title: "prism × google ads for dentists | compliant dental advertising in 2025",
     description:
-      "Prism helps dental practices attract more patients with fully compliant Google Ads. Learn how to structure campaigns for dental implants, Invisalign, and general dentistry while meeting Google’s Health Advertising policies."
+      "prism helps dental practices attract more patients with fully compliant google ads. learn how to structure campaigns for dental implants, invisalign, and general dentistry while meeting google’s health advertising policies."
   },
   robots: {
     index: true,
@@ -186,7 +186,7 @@ export default function GoogleDentalAdsPage() {
   return (
     <>
       <Navbar />
-      <main className="bg-white text-neutral-900">
+      <main className="bg-white text-neutral-900 lowercase">
         <section className="relative overflow-hidden rounded-b-[3rem] bg-neutral-950 text-white">
           <div
             aria-hidden
@@ -196,15 +196,15 @@ export default function GoogleDentalAdsPage() {
             <div className="h-full w-full bg-[radial-gradient(ellipse_at_center,_rgba(168,85,247,0.25),_rgba(30,64,175,0))]" />
           </div>
           <div className="relative">
-            <div className="container mx-auto flex max-w-4xl flex-col items-center gap-6 px-4 py-24 text-center md:gap-8 md:px-6 md:py-32">
-              <span className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.32em] text-white/70">
-                Prism × Google Ads for Dentists
+            <div className="container mx-auto flex max-w-4xl flex-col items-center gap-6 px-4 py-24 text-center lowercase md:gap-8 md:px-6 md:py-32">
+              <span className="inline-flex items-center gap-2 text-xs font-semibold tracking-[0.32em] text-white/70">
+                prism × google ads for dentists
               </span>
               <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl md:text-6xl">
-                Prism + Google Ads: Growing Dental Practices with Precision
+                prism + google ads: growing dental practices with precision
               </h1>
               <p className="max-w-3xl text-base text-white/80 sm:text-lg">
-                We help dental practices attract more high-value patients with Google Ads that follow every policy, convert
+                we help dental practices attract more high-value patients with google ads that follow every policy, convert
                 faster, and scale smarter — built for 2025 and beyond.
               </p>
               <div className="flex w-full flex-col gap-3 sm:flex-row sm:justify-center">
@@ -214,8 +214,8 @@ export default function GoogleDentalAdsPage() {
                   variant="inverted"
                   className="h-auto rounded-full px-8 py-4 text-base font-semibold"
                 >
-                  <Link href={GET_FREE_AUDIT_HREF}>
-                    Get a Free Audit <ArrowRight className="h-5 w-5" aria-hidden />
+                  <Link href={GET_FREE_AUDIT_HREF} className="lowercase">
+                    get a free audit <ArrowRight className="h-5 w-5" aria-hidden />
                   </Link>
                 </Button>
                 <Button
@@ -224,8 +224,8 @@ export default function GoogleDentalAdsPage() {
                   variant="outline-inverted"
                   className="h-auto rounded-full px-8 py-4 text-base font-semibold"
                 >
-                  <Link href={`#${STRUCTURE_SECTION_ID}`}>
-                    See How We Run Dental Ads <ArrowRight className="h-5 w-5" aria-hidden />
+                  <Link href={`#${STRUCTURE_SECTION_ID}`} className="lowercase">
+                    see how we run dental ads <ArrowRight className="h-5 w-5" aria-hidden />
                   </Link>
                 </Button>
               </div>

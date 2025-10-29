@@ -23,6 +23,7 @@ body {
   position: relative;
   overflow-y: auto;
   -webkit-overflow-scrolling: auto; /* Force native scrolling on Safari */
+  text-transform: lowercase !important;
 }
 
 /* Ensure no safe area padding interferes on mobile */
@@ -45,6 +46,11 @@ body {
 body.is-scrolling .animation-paused,
 body.is-scrolling-fast .animation-paused {
   animation-play-state: paused !important;
+}
+
+.uppercase,
+.capitalize {
+  text-transform: lowercase !important;
 }
 
 /* Hint GPU acceleration for motion elements */

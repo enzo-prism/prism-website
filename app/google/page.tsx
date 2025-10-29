@@ -68,26 +68,26 @@ const learningLinks = [
 ]
 
 export const metadata: Metadata = {
-  title: "Prism × Google | Google Workspace & Ads Partner for Local Businesses",
+  title: "prism × google | google workspace & ads partner for local businesses",
   description:
-    "Prism is a Google Partner helping small businesses grow through Google Workspace, Ads, Analytics, and Business Profile optimization. Get started or set up Workspace with a partner discount.",
+    "prism is a google partner helping small businesses grow through google workspace, ads, analytics, and business profile optimization. get started or set up workspace with a partner discount.",
   alternates: {
     canonical: "https://www.design-prism.com/google"
   },
   openGraph: {
-    title: "Prism × Google | Google Workspace & Ads Partner for Local Businesses",
+    title: "prism × google | google workspace & ads partner for local businesses",
     description:
-      "Prism is a Google Partner helping small businesses grow through Google Workspace, Ads, Analytics, and Business Profile optimization. Get started or set up Workspace with a partner discount.",
+      "prism is a google partner helping small businesses grow through google workspace, ads, analytics, and business profile optimization. get started or set up workspace with a partner discount.",
     url: "https://www.design-prism.com/google",
-    siteName: "Prism",
+    siteName: "prism",
     locale: "en_US",
     type: "website"
   },
   twitter: {
     card: "summary_large_image",
-    title: "Prism × Google | Google Workspace & Ads Partner for Local Businesses",
+    title: "prism × google | google workspace & ads partner for local businesses",
     description:
-      "Prism is a Google Partner helping small businesses grow through Google Workspace, Ads, Analytics, and Business Profile optimization. Get started or set up Workspace with a partner discount."
+      "prism is a google partner helping small businesses grow through google workspace, ads, analytics, and business profile optimization. get started or set up workspace with a partner discount."
   },
   robots: {
     index: true,
@@ -99,7 +99,7 @@ export default function GooglePage() {
   return (
     <>
       <Navbar />
-      <main className="bg-white text-neutral-900">
+      <main className="bg-white text-neutral-900 lowercase">
         <section className="relative overflow-hidden rounded-b-[3rem] bg-neutral-950 text-white">
           <div
             aria-hidden
@@ -109,17 +109,17 @@ export default function GooglePage() {
             <div className="h-full w-full bg-[radial-gradient(ellipse_at_center,_rgba(236,72,153,0.25),_rgba(76,29,149,0))]" />
           </div>
           <div className="relative">
-            <div className="container mx-auto flex max-w-4xl flex-col items-center gap-6 px-4 py-24 text-center md:gap-8 md:px-6 md:py-32">
-              <span className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.32em] text-white/70">
+            <div className="container mx-auto flex max-w-4xl flex-col items-center gap-6 px-4 py-24 text-center lowercase md:gap-8 md:px-6 md:py-32">
+              <span className="inline-flex items-center gap-2 text-xs font-semibold tracking-[0.32em] text-white/70">
                 <Sparkles className="h-4 w-4" aria-hidden />
-                Prism × Google
+                prism × google
               </span>
               <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl md:text-6xl">
-                Prism + Google: Growing Local Businesses with the World’s Best Tools
+                prism + google: growing local businesses with the world’s best tools
               </h1>
               <p className="text-base text-white/80 sm:text-lg">
-                We help small businesses and local practices grow faster by setting up, integrating, and optimizing Google
-                products — from Workspace to Ads — all under one roof.
+                we help small businesses and local practices grow faster by setting up, integrating, and optimizing google
+                products — from workspace to ads — all under one roof.
               </p>
               <div className="flex w-full flex-col gap-3 sm:flex-row sm:justify-center">
                 <Button
@@ -128,8 +128,8 @@ export default function GooglePage() {
                   variant="inverted"
                   className="h-auto rounded-full px-8 py-4 text-base font-semibold"
                 >
-                  <Link href={PRICING_HREF}>
-                    Get Started <ArrowRight className="h-5 w-5" aria-hidden />
+                  <Link href={PRICING_HREF} className="lowercase">
+                    get started <ArrowRight className="h-5 w-5" aria-hidden />
                   </Link>
                 </Button>
                 <Button
@@ -138,8 +138,8 @@ export default function GooglePage() {
                   variant="outline-inverted"
                   className="h-auto rounded-full px-8 py-4 text-base font-semibold"
                 >
-                  <Link href={GOOGLE_WORKSPACE_LINK} target="_blank" rel="noopener noreferrer">
-                    Set Up Google Workspace (with discount) <ArrowRight className="h-5 w-5" aria-hidden />
+                  <Link href={GOOGLE_WORKSPACE_LINK} target="_blank" rel="noopener noreferrer" className="lowercase">
+                    set up google workspace (with discount) <ArrowRight className="h-5 w-5" aria-hidden />
                   </Link>
                 </Button>
               </div>
@@ -147,22 +147,22 @@ export default function GooglePage() {
           </div>
         </section>
 
-        <section className="border-t border-neutral-200 bg-white">
+        <section className="border-t border-neutral-200 bg-white lowercase">
           <div className="container mx-auto flex flex-col gap-8 px-4 py-16 md:flex-row md:gap-12 md:px-6 lg:py-24">
             <div className="md:w-1/2">
-              <p className="text-xs font-semibold uppercase tracking-[0.28em] text-neutral-500">Why Google matters</p>
+              <p className="text-xs font-semibold tracking-[0.28em] text-neutral-500">why google matters</p>
               <h2 className="mt-3 text-3xl font-semibold text-neutral-900 md:text-4xl">
-                The foundation of modern business runs on Google.
+                the foundation of modern business runs on google.
               </h2>
             </div>
             <div className="flex flex-col gap-6 text-base text-neutral-600 sm:text-lg md:w-1/2">
               <p>
-                Every day, millions of businesses rely on Google products to operate, communicate, and grow. From Gmail and
-                Google Drive to Google Ads, Analytics, and Business Profiles, Google provides the infrastructure for small
+                every day, millions of businesses rely on google products to operate, communicate, and grow. from gmail and
+                google drive to google ads, analytics, and business profiles, google provides the infrastructure for small
                 businesses to look professional, stay organized, and attract customers.
               </p>
               <p>
-                At Prism, we help you make the most of these tools — integrating everything into one seamless system built
+                at prism, we help you make the most of these tools — integrating everything into one seamless system built
                 for performance, visibility, and growth.
               </p>
             </div>
