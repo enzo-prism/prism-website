@@ -22,6 +22,7 @@ import { trackCTAClick } from "@/utils/analytics"
 import { motion } from "framer-motion"
 import type { LucideIcon } from "lucide-react"
 import {
+    AlertCircle,
     ArrowRight,
     Globe2,
     MapPin,
@@ -186,10 +187,19 @@ export default function ClientGetStartedPage({ heroOnly = false }: { heroOnly?: 
     setFormError(null)
     setFormStatus("idle")
     const form = event.currentTarget
+    const firstInvalid = form.querySelector<HTMLElement>(":invalid")
+    if (firstInvalid) {
+      firstInvalid.focus()
+      setFormStatus("error")
+      setFormError("please fill out this field.")
+      return
+    }
+
     const formData = new FormData(form)
     const targets = formData.getAll("analysisTargets[]")
     if (!targets.length) {
       setFormError("select at least one part of your online presence")
+      setFormStatus("error")
       return
     }
     setFormStatus("submitting")
@@ -563,8 +573,9 @@ export default function ClientGetStartedPage({ heroOnly = false }: { heroOnly?: 
                     </div>
 
                     {formError ? (
-                      <div className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
-                        {formError}
+                      <div className="flex items-start gap-3 rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+                        <AlertCircle className="mt-0.5 h-4 w-4" aria-hidden />
+                        <span>{formError}</span>
                       </div>
                     ) : null}
 
