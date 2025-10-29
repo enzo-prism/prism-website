@@ -1,3 +1,4 @@
+import Image from "next/image"
 import type { Metadata } from "next"
 import Link from "next/link"
 import {
@@ -293,6 +294,16 @@ export default function GoogleDentalAdsPage() {
                   <span>Some targeting features — like remarketing or custom audiences — are restricted for health-related campaigns.</span>
                 </li>
               </ul>
+              <div className="rounded-3xl border border-white/10 bg-white/5 p-4 shadow-lg backdrop-blur">
+                <Image
+                  src="https://res.cloudinary.com/dhqpqfw6w/image/upload/v1761753033/Google_Ads_notification_qzgj35.png"
+                  alt="Google Ads health policy notification"
+                  width={1200}
+                  height={716}
+                  className="h-auto w-full rounded-2xl object-contain"
+                  sizes="(min-width: 1024px) 480px, (min-width: 768px) 70vw, 100vw"
+                />
+              </div>
               <p>
                 We build your campaigns with these rules in mind, so you stay compliant while reaching the right patients through
                 search intent, location targeting, and high-performing landing pages.
