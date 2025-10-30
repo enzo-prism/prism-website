@@ -537,7 +537,7 @@ function HeroSection() {
           <div className="max-w-3xl space-y-5 sm:space-y-6">
             <h1 className="text-3xl font-semibold lowercase text-neutral-900 sm:text-5xl">prism models</h1>
             <p className="text-lg font-medium text-neutral-700 sm:text-xl">
-              elite models for luxury cosmetic dental practices
+              elite models for cosmetic dental practice ads
             </p>
             <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
               <Button
