@@ -6,6 +6,16 @@ import { ArrowUpRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { trackCTAClick } from "@/utils/analytics"
 
+function DreamBusinessBanner() {
+  return (
+    <div className="mx-auto max-w-xl rounded-3xl border border-white/40 bg-white/85 px-6 py-6 text-center text-neutral-900 shadow-lg backdrop-blur-sm dark:border-neutral-800 dark:bg-neutral-900/85 dark:text-neutral-50">
+      <p className="text-lg font-semibold lowercase md:text-xl">
+        the business of your dreams is possible. we'll help you build it.
+      </p>
+    </div>
+  )
+}
+
 export default function ValuesSection() {
   return (
     <section className="relative overflow-hidden py-16 md:py-24">
@@ -33,6 +43,7 @@ export default function ValuesSection() {
                 our north star is simple — build things people love. 🤍
               </p>
             </div>
+            <DreamBusinessBanner />
             <div className="flex justify-center lg:justify-start">
               <Button
                 asChild
