@@ -225,8 +225,8 @@ export default function ClientPage() {
 
           <div className="container relative mx-auto px-4 md:px-6 py-8 md:py-16">
             <div className="flex flex-col items-center space-y-6 md:space-y-10 text-center">
-              <div className={`flex items-center justify-center gap-4 sm:gap-6 md:gap-8 ${!isMobile ? 'smooth-reveal' : ''}`}>
-                <div className="relative h-16 w-16 md:h-20 md:w-20 lg:h-24 lg:w-24">
+              <div className={`flex items-center justify-center gap-3 sm:gap-4 md:gap-6 ${!isMobile ? 'smooth-reveal' : ''}`}>
+                <div className="relative h-8 w-8 md:h-10 md:w-10 lg:h-12 lg:w-12">
                   <CoreImage
                     src={LOGO_CONFIG.src}
                     alt={LOGO_CONFIG.alt}
@@ -241,12 +241,15 @@ export default function ClientPage() {
                     showLoadingIndicator={true}
                   />
                 </div>
-                <h1 className={`text-5xl font-bold tracking-tighter lowercase sm:text-6xl md:text-7xl lg:text-8xl ${!isMobile ? 'gpu-accelerated' : ''}`}>
+                <h1 className={`text-3xl font-bold tracking-tighter lowercase sm:text-4xl md:text-5xl lg:text-6xl ${!isMobile ? 'gpu-accelerated' : ''}`}>
                   prism
                 </h1>
               </div>
               <p className="mx-auto max-w-[700px] text-neutral-600 lowercase md:text-xl">
-                we upgrade your online presence to grow and convert
+                we upgrade your online presence
+                <br className="sm:hidden" />
+                <span className="hidden sm:inline">{' '}</span>
+                to grow and convert
               </p>
               <div className="flex flex-col items-center space-y-6 md:space-y-8">
                 <div className="flex flex-col sm:flex-row items-center gap-4 md:gap-6">
