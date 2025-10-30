@@ -39,6 +39,7 @@ export default function ValuesSection() {
             <div className="flex justify-center lg:justify-start">
               <Button
                 asChild
+                variant="inverted"
                 className="rounded-full px-8 py-4 text-sm lowercase hardware-hover touch-feedback"
               >
                 <Link
