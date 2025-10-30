@@ -25,9 +25,6 @@ export default function ValuesSection() {
       <div className="container relative z-10 mx-auto px-4 md:px-6">
         <div className="mx-auto max-w-6xl">
           <div className="space-y-6 text-center lg:text-left">
-            <p className="text-sm font-medium tracking-[0.32em] text-neutral-300 lowercase dark:text-neutral-300">
-              our values
-            </p>
             <div className="space-y-4">
               <h2 className="text-3xl font-semibold tracking-tight lowercase text-neutral-50 sm:text-4xl md:text-5xl dark:text-neutral-50">
                 impossible is temporary.
