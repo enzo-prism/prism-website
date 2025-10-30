@@ -48,10 +48,10 @@ export default function ValuesSection() {
                 our values
               </p>
               <div className="space-y-4">
-                <h2 className="text-3xl font-semibold tracking-tight lowercase text-neutral-900 sm:text-4xl md:text-5xl dark:text-neutral-50">
+                <h2 className="text-3xl font-semibold tracking-tight lowercase text-neutral-50 sm:text-4xl md:text-5xl dark:text-neutral-50">
                   impossible is temporary.
                 </h2>
-                <p className="text-base text-neutral-600 lowercase md:text-lg dark:text-neutral-300">
+                <p className="text-base text-neutral-200 lowercase md:text-lg dark:text-neutral-200">
                   our north star is simple — build things people love. 🤍
                 </p>
               </div>
