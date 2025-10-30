@@ -26,67 +26,48 @@ const offerHighlights = [
     title: "paid shoots",
     description: "get compensated for your time and receive professional content for your own portfolio.",
   },
+  {
+    icon: "📅",
+    title: "flexible bookings",
+    description:
+      "get alerts when opportunities pop up, pass on the ones that don’t fit, and lock in sessions that work for you.",
+  },
 ]
 
 const howItWorks = [
   {
     icon: "1",
     title: "apply online",
-    description: "tell us a bit about yourself and upload a few photos.",
+    description: "📋 fill out the short application form to get started.",
   },
   {
     icon: "2",
-    title: "get matched",
-    description: "we’ll connect you with a local dental office for your session.",
+    title: "get approved",
+    description: "✅ if you’re a good fit, we’ll add you to the prism models list.",
   },
   {
     icon: "3",
-    title: "whitening + shoot day",
-    description: "enjoy your complimentary whitening and a relaxed photoshoot.",
+    title: "choose your session",
+    description: "🗓️ view available whitening appointments and pick one that fits your schedule.",
   },
   {
     icon: "4",
-    title: "get paid & featured",
-    description: "earn cash and see your smile in real prism campaigns.",
-  },
-]
-
-const fromShootHighlights = [
-  {
-    icon: "🖼️",
-    title: "studio laughs",
-    description: "candid moments that convert.",
+    title: "whitening day",
+    description: "✨ attend your appointment and enjoy your professional teeth whitening.",
   },
   {
-    icon: "💺",
-    title: "chairside confidence",
-    description: "capture real patient experiences.",
+    icon: "5",
+    title: "get paid",
+    description: "💵 receive payment from prism after your session.",
   },
   {
-    icon: "✨",
-    title: "after-glow portraits",
-    description: "highlight whitening results.",
-  },
-  {
-    icon: "🌿",
-    title: "lifestyle moments",
-    description: "show natural, everyday smiles.",
+    icon: "6",
+    title: "come back anytime",
+    description: "🔁 check the list again whenever you’re ready for your next whitening.",
   },
 ]
 
 const dentalPartners = [
-  {
-    name: "town centre dental",
-    location: "brentwood, ca",
-    doctor: "dr. gerard banaga",
-    url: "https://www.towncentredental.net",
-  },
-  {
-    name: "grace dental santa rosa",
-    location: "santa rosa, ca",
-    doctor: "dr. tingjen ji",
-    url: "https://www.tingjenjidds.com",
-  },
   {
     name: "exquisite dentistry",
     location: "beverly hills, ca",
@@ -110,6 +91,18 @@ const dentalPartners = [
     location: "los gatos, ca",
     doctor: "dr. tim j. chuang",
     url: "https://famfirstsmile.com",
+  },
+  {
+    name: "town centre dental",
+    location: "brentwood, ca",
+    doctor: "dr. gerard banaga",
+    url: "https://www.towncentredental.net",
+  },
+  {
+    name: "grace dental santa rosa",
+    location: "santa rosa, ca",
+    doctor: "dr. tingjen ji",
+    url: "https://www.tingjenjidds.com",
   },
 ]
 
@@ -202,16 +195,13 @@ export default function ModelsPageClient() {
           <div className="container mx-auto px-4 md:px-6">
             <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
               <div className="max-w-xl">
-                <p className="text-xs font-semibold tracking-[0.34em] text-neutral-400">
-                  dental partners
-                </p>
-                <h2 className="mt-2 text-2xl font-semibold lowercase text-neutral-900 sm:text-3xl">
-                  real practices trusting prism models for authentic patient stories
+                <h2 className="text-2xl font-semibold lowercase text-neutral-900 sm:text-3xl">
+                  dentists you can model for
                 </h2>
+                <p className="mt-2 text-sm text-neutral-500 sm:text-base">
+                  prism runs marketing for these dentists.
+                </p>
               </div>
-              <p className="text-sm text-neutral-500 sm:max-w-xs">
-                every shoot supports a dental team that wants real people at the center of their brand.
-              </p>
             </div>
             <div className="relative mt-8">
               <div className="pointer-events-none absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-white via-white/70 to-transparent" />
@@ -250,15 +240,12 @@ export default function ModelsPageClient() {
           <div className="container mx-auto px-4 md:px-6">
             <div className="text-center">
               <h2 className="text-3xl font-semibold lowercase sm:text-4xl">why join prism models</h2>
-              <p className="mt-3 text-sm text-neutral-600 sm:mt-4 sm:text-base">
-                bring your smile to life — and get rewarded for it.
-              </p>
             </div>
-            <div className="mt-10 grid gap-5 sm:mt-12 sm:gap-6 md:grid-cols-3">
+            <div className="mt-10 grid gap-5 sm:mt-12 sm:gap-6 md:grid-cols-2 md:gap-8">
               {offerHighlights.map((highlight) => (
                 <div
                   key={highlight.title}
-                  className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg sm:p-8"
+                  className="flex h-full flex-col rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg sm:p-8"
                 >
                   <div className="text-2xl sm:text-3xl">{highlight.icon}</div>
                   <h3 className="mt-3 text-lg font-semibold lowercase text-neutral-900 sm:mt-4 sm:text-xl">
@@ -272,63 +259,42 @@ export default function ModelsPageClient() {
         </section>
 
         <section id="how-it-works" className="py-16 sm:py-20">
-          <div className="container mx-auto px-4 md:px-6">
-            <div className="flex flex-col gap-10 lg:flex-row lg:items-start xl:gap-16">
-              <div className="flex-1 lg:max-w-xl">
-                <h2 className="text-3xl font-semibold lowercase sm:text-4xl">how it works</h2>
-                <p className="mt-3 text-sm text-neutral-500 sm:text-base">
-                  we make it simple from start to finish.
-                </p>
-                <div className="mt-8 space-y-4 sm:space-y-5 md:mt-10">
-                  {howItWorks.map((step) => (
-                    <div
-                      key={step.title}
-                      className="flex items-start gap-4 rounded-2xl border border-neutral-200 bg-white p-4 shadow-sm transition hover:-translate-y-1 hover:shadow-md sm:rounded-3xl sm:p-5"
-                    >
-                      <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-neutral-100 text-sm font-semibold text-neutral-900 sm:h-9 sm:w-9">
-                        {step.icon}
-                      </span>
-                      <div>
-                        <h3 className="text-base font-medium lowercase text-neutral-900 sm:text-lg">{step.title}</h3>
-                        <p className="mt-2 text-sm text-neutral-600">{step.description}</p>
-                      </div>
+          <div className="container mx-auto flex flex-col px-4 md:px-6">
+            <div className="mx-auto max-w-2xl text-center">
+              <h2 className="text-3xl font-semibold lowercase sm:text-4xl">how it works</h2>
+              <p className="mt-3 text-sm text-neutral-500 sm:text-base">
+                we make it simple from start to finish.
+              </p>
+            </div>
+            <div className="mt-10 grid gap-5 sm:gap-6 md:mt-12 md:grid-cols-2 xl:grid-cols-3">
+              {howItWorks.map((step) => (
+                <div
+                  key={step.title}
+                  className="group relative overflow-hidden rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-neutral-300 hover:shadow-lg sm:p-8"
+                >
+                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-white via-white to-neutral-50 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                  <div className="relative flex h-full flex-col gap-4">
+                    <span className="flex h-10 w-10 items-center justify-center rounded-full bg-neutral-900 text-sm font-semibold text-white transition-colors duration-300 group-hover:bg-neutral-800 sm:h-12 sm:w-12">
+                      {step.icon}
+                    </span>
+                    <div className="flex flex-col gap-2">
+                      <h3 className="text-lg font-semibold lowercase text-neutral-900 sm:text-xl">{step.title}</h3>
+                      <p className="text-sm text-neutral-600 sm:text-base">{step.description}</p>
                     </div>
-                  ))}
+                  </div>
                 </div>
-                <div className="mt-8">
-                  <Button
-                    asChild
-                    size="lg"
-                    className="rounded-full bg-neutral-900 text-white hover:bg-neutral-800"
-                  >
-                    <Link href="#apply" onClick={() => trackCTAClick("models_how_it_works_apply", "#apply")}>
-                      → apply today
-                    </Link>
-                  </Button>
-                </div>
-              </div>
-              <div className="flex-1 space-y-6">
-                <div className="rounded-3xl border border-neutral-200 bg-neutral-900/90 p-4 text-white shadow-lg backdrop-blur sm:p-6">
-                  <h3 className="text-xl font-semibold lowercase">from shoot to screen</h3>
-                  <p className="mt-3 text-sm text-neutral-200">
-                    your photos and videos are featured across real prism campaigns — helping practices grow while
-                    showcasing confident, authentic smiles.
-                  </p>
-                  <ul className="mt-6 space-y-3">
-                    {fromShootHighlights.map((item) => (
-                      <li
-                        key={item.title}
-                        className="flex items-start gap-3 rounded-2xl border border-white/15 bg-white/5 p-4 text-sm text-neutral-100"
-                      >
-                        <span className="mt-0.5 text-lg">{item.icon}</span>
-                        <span>
-                          <span className="font-semibold text-white">{item.title}</span> — {item.description}
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
+              ))}
+            </div>
+            <div className="mt-10 flex justify-center">
+              <Button
+                asChild
+                size="lg"
+                className="rounded-full bg-neutral-900 text-white hover:bg-neutral-800"
+              >
+                <Link href="#apply" onClick={() => trackCTAClick("models_how_it_works_apply", "#apply")}>
+                  → apply today
+                </Link>
+              </Button>
             </div>
           </div>
         </section>
@@ -354,7 +320,7 @@ export default function ModelsPageClient() {
                     <Input id="models-name" name="name" placeholder="first and last name" required className="h-11" />
                   </FormField>
                   <FormField label="city / state" name="location">
-                    <Input id="models-location" name="location" placeholder="san jose, ca" required className="h-11" />
+                    <Input id="models-location" name="location" placeholder="beverly hills, ca" required className="h-11" />
                   </FormField>
                   <div className="sm:col-span-2">
                     <FormField label="instagram username" name="social" optional>
@@ -565,13 +531,7 @@ function HeroSection() {
           <div className="max-w-3xl space-y-5 sm:space-y-6">
             <h1 className="text-3xl font-semibold lowercase sm:text-5xl">prism models</h1>
             <p className="text-lg font-medium text-neutral-200 sm:text-xl">
-              real people. real smiles. real opportunities.
-            </p>
-            <p className="text-sm text-neutral-200 sm:text-base">
-              we work with everyday people who love being on camera to help our dental clients tell real stories.
-            </p>
-            <p className="text-sm text-neutral-200 sm:text-base">
-              join prism models for free whitening, professional photos, and paid creative work that makes a real impact.
+              elite models for luxury cosmetic dental practices
             </p>
             <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
               <Button
