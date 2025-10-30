@@ -268,6 +268,13 @@ export default function ClientPage() {
                     </Button>
                   </Link>
                 </div>
+                <Link
+                  href="/wall-of-love"
+                  className="text-xs tracking-[0.24em] uppercase text-neutral-400 transition hover:text-neutral-600"
+                  onClick={() => trackNavigation("hero_reviews_cta", "/wall-of-love")}
+                >
+                  250+ reviews
+                </Link>
                 {videoSkipped ? (
                   <p className="mt-4 text-xs tracking-[0.24em] uppercase text-neutral-400">
                     background motion disabled for accessibility

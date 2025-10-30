@@ -781,22 +781,14 @@ export default function WallOfLoveClientPage() {
               <span className="text-neutral-300">•</span>
               <span>24.5k+ on youtube</span>
             </div>
-            <div className="pt-1 flex flex-wrap items-center justify-center gap-3">
-              <Link href="/contact">
+            <div className="pt-1 flex items-center justify-center">
+              <Link href="/pricing">
                 <Button
                   size="sm"
-                  className="bg-neutral-900 hover:bg-neutral-800 text-white rounded-full px-5 py-2.5 text-sm lowercase"
+                  className="rounded-full px-6 py-2.5 text-sm lowercase bg-neutral-900 text-white hover:bg-neutral-800"
+                  onClick={() => trackCTAClick("wall_of_love_pricing_cta", "/pricing")}
                 >
-                  talk to prism
-                </Button>
-              </Link>
-              <Link href="/get-started">
-                <Button
-                  size="sm"
-                  variant="outline"
-                  className="rounded-full px-5 py-2.5 text-sm lowercase"
-                >
-                  {FREE_AUDIT_CTA_TEXT} <ArrowRight className="ml-2 h-4 w-4" />
+                  let's make something you'll love <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
               </Link>
             </div>
