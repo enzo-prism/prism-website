@@ -6,18 +6,6 @@ import { ArrowUpRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { trackCTAClick } from "@/utils/analytics"
 
-function DreamBusinessBanner() {
-  return (
-    <div className="mx-auto flex max-w-xl items-center gap-3 px-1 text-neutral-900/75 lowercase md:text-base dark:text-neutral-100/80">
-      <span className="hidden h-px flex-1 bg-white/30 sm:block" aria-hidden="true" />
-      <p className="text-sm font-medium tracking-tight md:text-base">
-        the business of your dreams is possible. we'll help you build it.
-      </p>
-      <span className="hidden h-px flex-1 bg-white/30 sm:block" aria-hidden="true" />
-    </div>
-  )
-}
-
 export default function ValuesSection() {
   return (
     <section className="relative overflow-hidden py-16 md:py-24">
@@ -35,17 +23,25 @@ export default function ValuesSection() {
         aria-hidden="true"
       />
       <div className="container relative z-10 mx-auto px-4 md:px-6">
-        <div className="mx-auto max-w-6xl">
-          <div className="space-y-6 text-center lg:text-left">
-            <div className="space-y-4">
-              <h2 className="text-3xl font-semibold tracking-tight lowercase text-neutral-50 sm:text-4xl md:text-5xl dark:text-neutral-50">
-                impossible is temporary.
-              </h2>
-              <p className="text-base text-neutral-200 lowercase md:text-lg dark:text-neutral-200">
-                our north star is simple — build things people love. 🤍
-              </p>
+        <div className="mx-auto max-w-7xl">
+          <div className="grid gap-10 text-center lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:gap-16 lg:text-left">
+            <div className="space-y-6">
+              <div className="space-y-4">
+                <h2 className="text-3xl font-semibold tracking-tight lowercase text-neutral-50 sm:text-4xl md:text-5xl dark:text-neutral-50">
+                  impossible is temporary.
+                </h2>
+                <p className="text-base text-neutral-200 lowercase md:text-lg dark:text-neutral-200">
+                  our north star is simple — build things people love. 🤍
+                </p>
+              </div>
+              <div className="hidden h-px w-full bg-white/15 lg:block" aria-hidden="true" />
+              <div className="flex items-center justify-center gap-3 text-neutral-900/75 lowercase md:text-base dark:text-neutral-100/80 lg:justify-start">
+                <span className="hidden h-px flex-1 bg-white/20 lg:block" aria-hidden="true" />
+                <p className="text-sm font-medium tracking-tight md:text-base lg:flex-1">
+                  the business of your dreams is possible. we'll help you build it.
+                </p>
+              </div>
             </div>
-            <DreamBusinessBanner />
             <div className="flex justify-center lg:justify-start">
               <Button
                 asChild
