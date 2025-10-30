@@ -15,7 +15,7 @@ const valueHighlights = [
   {
     label: "entrepreneurs",
     headline: "content that teaches and inspires.",
-    description: "watch our content because it teaches, inspires, and gives them the tools to win.",
+    description: "they follow prism because our content gives them the tools to win.",
   },
   {
     label: "clients",
