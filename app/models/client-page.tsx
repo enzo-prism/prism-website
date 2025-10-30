@@ -518,26 +518,32 @@ export default function ModelsPageClient() {
 
 function HeroSection() {
   return (
-    <section className="relative overflow-hidden border-b border-neutral-200 bg-neutral-900 text-white">
+    <section className="relative overflow-hidden border-b border-neutral-200 bg-neutral-50 text-neutral-900">
       <div className="absolute inset-0">
-        <div
-          className="absolute inset-0 bg-cover bg-center opacity-70"
-          style={{ backgroundImage: "url('/client-gradient.jpg')" }}
+        <video
+          className="h-full w-full object-cover"
+          src="https://res.cloudinary.com/dhqpqfw6w/video/upload/v1761852734/models_2_x9gxtj.mp4"
+          autoPlay
+          loop
+          muted
+          playsInline
+          poster="/client-gradient.jpg"
+          aria-hidden="true"
         />
-        <div className="absolute inset-0 bg-gradient-to-br from-neutral-900 via-neutral-900/80 to-neutral-800 opacity-90" />
+        <div className="absolute inset-0 bg-white/75 backdrop-blur-sm" />
       </div>
       <div className="relative">
         <div className="container mx-auto flex min-h-[60vh] flex-col justify-center gap-8 px-4 py-16 sm:gap-12 sm:py-20 md:px-6">
           <div className="max-w-3xl space-y-5 sm:space-y-6">
-            <h1 className="text-3xl font-semibold lowercase sm:text-5xl">prism models</h1>
-            <p className="text-lg font-medium text-neutral-200 sm:text-xl">
+            <h1 className="text-3xl font-semibold lowercase text-neutral-900 sm:text-5xl">prism models</h1>
+            <p className="text-lg font-medium text-neutral-700 sm:text-xl">
               elite models for luxury cosmetic dental practices
             </p>
             <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
               <Button
                 asChild
                 size="lg"
-                className="rounded-full bg-white text-neutral-900 hover:bg-neutral-100"
+                className="rounded-full bg-neutral-900 text-white shadow-sm hover:bg-neutral-800"
               >
                 <Link href="#apply" onClick={() => trackCTAClick("models_hero_apply", "#apply")}>
                   → apply now
