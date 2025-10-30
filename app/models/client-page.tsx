@@ -15,6 +15,7 @@ const offerHighlights = [
     icon: "🦷",
     title: "free whitening",
     description: "get a professional whitening treatment from one of our trusted partner dentists.",
+    note: "a $300-$1,000+ value",
   },
   {
     icon: "📸",
@@ -252,6 +253,9 @@ export default function ModelsPageClient() {
                     {highlight.title}
                   </h3>
                   <p className="mt-2 text-sm text-neutral-600 sm:mt-3">{highlight.description}</p>
+                  {highlight.note ? (
+                    <p className="mt-auto pt-4 text-xs lowercase text-neutral-400">{highlight.note}</p>
+                  ) : null}
                 </div>
               ))}
             </div>
@@ -519,7 +523,15 @@ export default function ModelsPageClient() {
 function HeroSection() {
   return (
     <section className="relative overflow-hidden border-b border-neutral-200 bg-neutral-50 text-neutral-900">
-      <div className="absolute inset-0">
+      <div
+        className="absolute inset-0"
+        style={{
+          backgroundImage:
+            "url('https://res.cloudinary.com/dhqpqfw6w/image/upload/v1761853323/thumbnail_yscklx.webp')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      >
         <video
           className="h-full w-full object-cover"
           src="https://res.cloudinary.com/dhqpqfw6w/video/upload/v1761852734/models_2_x9gxtj.mp4"
@@ -527,10 +539,10 @@ function HeroSection() {
           loop
           muted
           playsInline
-          poster="/client-gradient.jpg"
+          poster="https://res.cloudinary.com/dhqpqfw6w/image/upload/v1761853323/thumbnail_yscklx.webp"
           aria-hidden="true"
         />
-        <div className="absolute inset-0 bg-white/75 backdrop-blur-sm" />
+        <div className="absolute inset-0 bg-white/75 backdrop-blur-[2px]" />
       </div>
       <div className="relative">
         <div className="container mx-auto flex min-h-[60vh] flex-col justify-center gap-8 px-4 py-16 sm:gap-12 sm:py-20 md:px-6">
