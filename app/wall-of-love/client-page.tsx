@@ -454,7 +454,7 @@ const quotesData: Quote[] = [
   },
   {
     id: 73,
-    text: "I can feel that 🤍",
+    text: "I can feel that ❤️",
     client: "himedakanchi",
     company: "Instagram Community of Entrepreneurs",
   },
@@ -479,7 +479,7 @@ const quotesData: Quote[] = [
   },
   {
     id: 77,
-    text: "Literally listen to this every Monday night 🤍",
+    text: "Literally listen to this every Monday night ❤️",
     client: "mr.mazamio",
     company: "Instagram Community of Entrepreneurs",
     pinned: true,
@@ -500,7 +500,7 @@ const quotesData: Quote[] = [
   { id: 90, text: "Fuck this hits home", client: "larsonbaldwinofficial", company: "Instagram Community of Entrepreneurs", pinned: true },
   { id: 91, text: "Goosebumps….", client: "dishonshan", company: "Instagram Community of Entrepreneurs" },
   { id: 92, text: "This came when I needed it.", client: "yasssirsaeed", company: "Instagram Community of Entrepreneurs" },
-  { id: 93, text: "Been there couple of times but never went to visualisation, made logical decision and I quit! After some months I feel if just hold onto it i would have achieved it🙌🤍", client: "rohan_kohter", company: "Instagram Community of Entrepreneurs", requiresConsent: true },
+  { id: 93, text: "Been there couple of times but never went to visualisation, made logical decision and I quit! After some months I feel if just hold onto it i would have achieved it🙌❤️", client: "rohan_kohter", company: "Instagram Community of Entrepreneurs", requiresConsent: true },
   { id: 94, text: "My life right now 💀", client: "david__chinedu", company: "Instagram Community of Entrepreneurs" },
   { id: 95, text: "Bro this is me", client: "mustapha.amajoud", company: "Instagram Community of Entrepreneurs" },
   { id: 96, text: "Chills ran down my spine watching this, I know so well what he is talking about… Believe me it‘s worth it.", client: "etem_kalyon", company: "Instagram Community of Entrepreneurs", pinned: true },
@@ -520,9 +520,9 @@ const quotesData: Quote[] = [
   { id: 110, text: "💯", client: "princeforbes_", company: "Instagram Community of Entrepreneurs" },
   { id: 111, text: "🔥", client: "ieeshan7", company: "Instagram Community of Entrepreneurs" },
   { id: 112, text: "🔥", client: "jadenbottarini", company: "Instagram Community of Entrepreneurs" },
-  { id: 113, text: "🤍🤍🤍🔥", client: "abo_3obd1312", company: "Instagram Community of Entrepreneurs" },
+  { id: 113, text: "❤️❤️❤️🔥", client: "abo_3obd1312", company: "Instagram Community of Entrepreneurs" },
   { id: 114, text: "🔥", client: "julian_mcalster", company: "Instagram Community of Entrepreneurs" },
-  { id: 115, text: "Love this 🤍", client: "thebiggestfx", company: "Instagram Community of Entrepreneurs" },
+  { id: 115, text: "Love this ❤️", client: "thebiggestfx", company: "Instagram Community of Entrepreneurs" },
   { id: 116, text: "It changed my mind", client: "moasis7abakar", company: "Instagram Community of Entrepreneurs" },
   { id: 117, text: "Amen 🙏🙌", client: "sammdima7", company: "Instagram Community of Entrepreneurs" },
   { id: 118, text: "💯", client: "chinosavage98", company: "Instagram Community of Entrepreneurs" },
@@ -535,7 +535,7 @@ const quotesData: Quote[] = [
   { id: 125, text: "🔥", client: "salviofrv", company: "Instagram Community of Entrepreneurs" },
   { id: 126, text: "🔥🔥", client: "singh_.331", company: "Instagram Community of Entrepreneurs" },
   { id: 127, text: "🔥👏👏👏😍", client: "rellik_ktl", company: "Instagram Community of Entrepreneurs" },
-  { id: 128, text: "🤍", client: "samuel_akecho", company: "Instagram Community of Entrepreneurs" },
+  { id: 128, text: "❤️", client: "samuel_akecho", company: "Instagram Community of Entrepreneurs" },
   { id: 129, text: "🔥", client: "eduardo_arenas__", company: "Instagram Community of Entrepreneurs" },
   { id: 130, text: "This is so real", client: "notbrandontref", company: "Instagram Community of Entrepreneurs" },
   { id: 131, text: "👏👏👏👏", client: "maryam.1358.m", company: "Instagram Community of Entrepreneurs" },
@@ -544,9 +544,9 @@ const quotesData: Quote[] = [
   { id: 134, text: "🙌", client: "kundan_kumar112", company: "Instagram Community of Entrepreneurs" },
   { id: 135, text: "👏👏👏", client: "zyvenai", company: "Instagram Community of Entrepreneurs" },
   { id: 136, text: "👏👏👏", client: "harri_son0", company: "Instagram Community of Entrepreneurs" },
-  { id: 137, text: "🤍‍🔥", client: "369tfn", company: "Instagram Community of Entrepreneurs" },
-  { id: 138, text: "🤍", client: "imagine_3333", company: "Instagram Community of Entrepreneurs" },
-  { id: 139, text: "🤍‍🩹", client: "deception_000", company: "Instagram Community of Entrepreneurs" },
+  { id: 137, text: "❤️‍🔥", client: "369tfn", company: "Instagram Community of Entrepreneurs" },
+  { id: 138, text: "❤️", client: "imagine_3333", company: "Instagram Community of Entrepreneurs" },
+  { id: 139, text: "❤️‍🩹", client: "deception_000", company: "Instagram Community of Entrepreneurs" },
   { id: 140, text: "🙌💯🔥", client: "rudyrl.98", company: "Instagram Community of Entrepreneurs" },
   { id: 141, text: "🔥", client: "nikotsironis", company: "Instagram Community of Entrepreneurs" },
   { id: 142, text: "🙌", client: "e.x422", company: "Instagram Community of Entrepreneurs" },
@@ -562,7 +562,7 @@ const quotesData: Quote[] = [
   { id: 152, text: "Men behind social media were just so extraordinary 🔥🔥🔥", client: "in.afnankhan", company: "Instagram Community of Entrepreneurs" },
   { id: 153, text: "Definitely needed this", client: "native._calabash", company: "Instagram Community of Entrepreneurs" },
   { id: 154, text: "I own 3 companies at 19. My name under my own LLC, you can too. Stop complaining and start doing.", client: "parckis_", company: "Instagram Community of Entrepreneurs" },
-  { id: 155, text: "God please allow me live long. Life is very sweet🤍", client: "fo____lu", company: "Instagram Community of Entrepreneurs" },
+  { id: 155, text: "God please allow me live long. Life is very sweet❤️", client: "fo____lu", company: "Instagram Community of Entrepreneurs" },
   { id: 156, text: "Exactly", client: "nicolasjribas01", company: "Instagram Community of Entrepreneurs" },
   { id: 157, text: "To call it a risk is to say you lack conviction. If you know it's going to work, there is no risk, only reward.", client: "youngillusion_", company: "Instagram Community of Entrepreneurs" },
   { id: 158, text: "What do you think about this!", client: "jenje_kane", company: "Instagram Community of Entrepreneurs" },
@@ -583,7 +583,7 @@ const quotesData: Quote[] = [
   { id: 173, text: "Top tier wisdom for generations", client: "guts00777", company: "Instagram Community of Entrepreneurs" },
   { id: 174, text: "That is hundred % right", client: "hanadhero95", company: "Instagram Community of Entrepreneurs" },
   { id: 175, text: "Using this mindset 🔥", client: "manifestationflo", company: "Instagram Community of Entrepreneurs" },
-  { id: 176, text: "Man,this is golden ✨️✨️🤍", client: "autosync", company: "Instagram Community of Entrepreneurs" },
+  { id: 176, text: "Man,this is golden ✨️✨️❤️", client: "autosync", company: "Instagram Community of Entrepreneurs" },
   { id: 177, text: "No risk no reward", client: "realkopssworld", company: "Instagram Community of Entrepreneurs" },
   { id: 178, text: "🔥🔥🔥🔥🔥🙌amen.", client: "jhumble666", company: "Instagram Community of Entrepreneurs" },
   { id: 179, text: "We have nothing to lose lads", client: "usman.ssg_", company: "Instagram Community of Entrepreneurs" },
@@ -645,7 +645,7 @@ const takeawaysData: Takeaway[] = [
   { id: 213, handle: "muhammadkathrada", text: "Holy moly this took me and shook me" },
   { id: 214, handle: "shadow.22052020", text: "I am…… flaberghasted…. it makes so much sense." },
   { id: 215, handle: "icepeaklies", text: "i just realised I’d put the character i made into so much hardships than I ever was, this just tryly humbles me on how caring and merciful God is", pinned: true, requiresConsent: true },
-  { id: 216, handle: "lokpalmahajan", text: "Dont know how but sometimes you just hear some words Which was eagerly needed to be heard by you 🤍" },
+  { id: 216, handle: "lokpalmahajan", text: "Dont know how but sometimes you just hear some words Which was eagerly needed to be heard by you ❤️" },
   { id: 217, handle: "keremtorgay", text: "Thank you for saving me", pinned: true, requiresConsent: true },
   { id: 218, handle: "zanderzone40", text: "Insane (in a good way) take on this, and also this edit of vertical Gladiator is sick too, thanks g" },
   { id: 219, handle: "elizabethmartinkirwan", text: "Amen!! Great perspective" },
@@ -773,7 +773,7 @@ export default function WallOfLoveClientPage() {
       <section className="relative w-full py-10 sm:py-12 bg-white">
         <div className="w-full max-w-[720px] mx-auto px-4 text-center">
           <div className="space-y-3">
-            <div className="text-4xl">🤍</div>
+            <div className="text-4xl">❤️</div>
             <h1 className="text-[32px] sm:text-[40px] font-semibold tracking-tight lowercase text-neutral-900">wall of love</h1>
             <p className="text-[14px] sm:text-[15px] text-neutral-700 italic lowercase">impossible is temporary.</p>
             <div className="text-[13px] sm:text-[14px] text-neutral-600 lowercase flex items-center justify-center gap-3">
