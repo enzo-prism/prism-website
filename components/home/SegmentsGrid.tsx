@@ -34,7 +34,7 @@ const segments: Segment[] = [
     href: "/why-dental-practices-love-prism",
   },
   {
-    emoji: "❤️",
+    emoji: "🤍",
     title: "local shop owners",
     summary: "Drive foot traffic and repeat visits while we manage your listings, ads, and tech stack.",
     highlights: ["Listings, SEO, and ads that work together", "Automated follow-ups that bring customers back"],

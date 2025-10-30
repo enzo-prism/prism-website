@@ -30,7 +30,7 @@ export default function Footer() {
     { emoji: "🎁", label: "offers", href: "/offers" },
     { emoji: "✍️", label: "blog", href: "/blog" },
     { emoji: "🎙️", label: "podcast", href: "/podcast" },
-    { emoji: "❤️", label: "wall of love", href: "/wall-of-love" },
+    { emoji: "🤍", label: "wall of love", href: "/wall-of-love" },
     { emoji: "✅", label: "prism proof", href: "/proof" },
     { emoji: "🤝", label: "contact", href: "/contact" },
     { emoji: "🚀", label: "start", href: "/get-started" },
@@ -142,7 +142,7 @@ export default function Footer() {
         <div className="border-t mt-8 pt-6 flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-xs text-neutral-500 lowercase">prism © 2023-2025. all rights reserved.</p>
           <div className="flex flex-col sm:flex-row items-center gap-4">
-            <p className="text-xs text-neutral-500 lowercase">made with ❤️ for growing businesses</p>
+            <p className="text-xs text-neutral-500 lowercase">made with 🤍 for growing businesses</p>
             <div className="flex items-center gap-x-3 text-sm">
               {" "}
               {/* Added text-sm for consistency if desired */}

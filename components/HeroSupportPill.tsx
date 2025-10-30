@@ -46,7 +46,7 @@ export default function HeroSupportPill({ platform, className }: HeroSupportPill
         <div className="flex flex-wrap items-center gap-4 text-left text-sm leading-relaxed text-white">
           <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white/20 text-lg">
             <span role="img" aria-label="Heart">
-              ❤️
+              🤍
             </span>
           </span>
           <div className="min-w-[12rem] flex-1 space-y-1">

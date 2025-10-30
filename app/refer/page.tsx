@@ -72,7 +72,7 @@ const segmentHighlights = [
     caseStudies: ["rebellious-aging", "we-are-saplings"]
   },
   {
-    emoji: "❤️",
+    emoji: "🤍",
     title: "nonprofits",
     description:
       "beautiful storytelling, donation flows, and automation that free teams to focus on impact.",

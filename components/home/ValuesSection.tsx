@@ -39,7 +39,7 @@ export default function ValuesSection() {
                   impossible is temporary.
                 </h2>
                 <p className="text-base text-neutral-600 lowercase md:text-lg dark:text-neutral-300">
-                  our north star is simple — build things people love. ❤️
+                  our north star is simple — build things people love. 🤍
                 </p>
               </div>
               <div className="flex justify-center lg:justify-start">
