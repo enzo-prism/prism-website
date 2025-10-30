@@ -28,7 +28,7 @@ export default function ValuesSection() {
   return (
     <section className="bg-neutral-50 py-16 dark:bg-neutral-950 md:py-24">
       <div className="container mx-auto px-4 md:px-6">
-        <div className="mx-auto max-w-5xl">
+        <div className="mx-auto max-w-6xl">
           <div className="grid gap-10 text-center lg:grid-cols-[1fr_1.1fr] lg:items-start lg:gap-16 lg:text-left">
             <div className="space-y-6">
               <p className="text-sm font-medium tracking-[0.32em] text-neutral-500 lowercase dark:text-neutral-400">
@@ -56,11 +56,13 @@ export default function ValuesSection() {
                 </Button>
               </div>
             </div>
-            <div className="grid gap-4 text-left sm:grid-cols-2 lg:grid-cols-3">
-              {valueHighlights.map((value) => (
+            <div className="grid gap-4 text-left sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3">
+              {valueHighlights.map((value, index) => (
                 <article
                   key={value.label}
-                  className="group relative flex h-full flex-col justify-between rounded-3xl border border-neutral-200/70 bg-white/70 p-6 text-neutral-600 shadow-sm transition-all duration-200 hover:-translate-y-1 hover:shadow-lg dark:border-neutral-800/70 dark:bg-neutral-900/70 dark:text-neutral-300"
+                  className={`group relative flex h-full flex-col justify-between rounded-3xl border border-neutral-200/70 bg-white/70 p-6 text-neutral-600 shadow-sm transition-all duration-200 hover:-translate-y-1 hover:shadow-lg dark:border-neutral-800/70 dark:bg-neutral-900/70 dark:text-neutral-300 ${
+                    index === valueHighlights.length - 1 ? "sm:col-span-2 lg:col-span-2 xl:col-span-1" : ""
+                  }`}
                 >
                   <div className="space-y-3">
                     <span className="text-xs font-medium tracking-[0.24em] text-neutral-500 lowercase dark:text-neutral-400">
