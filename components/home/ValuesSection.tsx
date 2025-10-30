@@ -35,7 +35,7 @@ export default function ValuesSection() {
                 </p>
               </div>
               <div className="hidden h-px w-full bg-white/15 lg:block" aria-hidden="true" />
-              <div className="flex items-center justify-center gap-3 text-neutral-900/75 lowercase md:text-base dark:text-neutral-100/80 lg:justify-start">
+              <div className="flex items-center justify-center gap-3 text-neutral-100/85 lowercase md:text-base dark:text-neutral-100/80 lg:justify-start">
                 <span className="hidden h-px flex-1 bg-white/20 lg:block" aria-hidden="true" />
                 <p className="text-sm font-medium tracking-tight md:text-base lg:flex-1">
                   the business of your dreams is possible. we'll help you build it.
