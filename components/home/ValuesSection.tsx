@@ -36,7 +36,10 @@ export default function ValuesSection() {
           aria-hidden="true"
         />
       </div>
-      <div className="absolute inset-0 -z-10 bg-white/85 backdrop-blur-sm dark:bg-neutral-950/85" aria-hidden="true" />
+      <div
+        className="absolute inset-0 -z-10 bg-gradient-to-br from-neutral-900/20 via-white/80 to-white/75 backdrop-blur-md dark:from-neutral-950/70 dark:via-neutral-950/80 dark:to-neutral-950/85"
+        aria-hidden="true"
+      />
       <div className="container relative z-10 mx-auto px-4 md:px-6">
         <div className="mx-auto max-w-6xl">
           <div className="grid gap-10 text-center lg:grid-cols-[1fr_1.1fr] lg:items-start lg:gap-16 lg:text-left">
