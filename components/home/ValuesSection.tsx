@@ -44,7 +44,7 @@ export default function ValuesSection() {
         <div className="mx-auto max-w-6xl">
           <div className="grid gap-10 text-center lg:grid-cols-[1fr_1.1fr] lg:items-start lg:gap-16 lg:text-left">
             <div className="space-y-6">
-              <p className="text-sm font-medium tracking-[0.32em] text-neutral-500 lowercase dark:text-neutral-400">
+              <p className="text-sm font-medium tracking-[0.32em] text-neutral-300 lowercase dark:text-neutral-300">
                 our values
               </p>
               <div className="space-y-4">
