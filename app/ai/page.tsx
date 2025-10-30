@@ -2,11 +2,11 @@ import type { Metadata } from "next"
 import PrismAIClient from "./prism-ai-client"
 
 export const metadata: Metadata = {
-  title: "Prism AI - Build Your Website with AI | Design Prism",
-  description: "Describe your dream website and let Prism AI build it for you. Get started in minutes.",
+  title: "prism ai - build your website with ai | design prism",
+  description: "describe your dream website and let prism ai build it for you. get started in minutes.",
   openGraph: {
-    title: "Prism AI - Build Your Website with AI",
-    description: "Describe your dream website and let Prism AI build it for you. Get started in minutes.",
+    title: "prism ai - build your website with ai",
+    description: "describe your dream website and let prism ai build it for you. get started in minutes.",
     url: "https://design-prism.com/ai",
     siteName: "Design Prism",
     images: [
@@ -22,8 +22,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Prism AI - Build Your Website with AI",
-    description: "Describe your dream website and let Prism AI build it for you.",
+    title: "prism ai - build your website with ai",
+    description: "describe your dream website and let prism ai build it for you.",
     images: ["/og-prism-ai.jpg"]
   }
 }

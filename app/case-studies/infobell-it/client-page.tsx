@@ -46,7 +46,7 @@ const cta = {
 
 const share = {
   url: "https://www.design-prism.com/case-studies/infobell-it",
-  title: "Infobell IT × Prism Case Study",
+  title: "infobell it × prism case study",
   description: "it services storytelling through modern web design and analytics setup.",
 }
 

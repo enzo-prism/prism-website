@@ -5,8 +5,8 @@ import ScrollToTop from "@/components/scroll-to-top"
 import PrismFlywheelClient from "./client-page"
 
 export const metadata: Metadata = {
-  title: "Prism Flywheel | Powering Exponential Growth",
-  description: "Discover Prism's Flywheel: A compounding system using frontier AI like Grok and Claude to build maximum leverage for your business growth.",
+  title: "prism flywheel | powering exponential growth",
+  description: "discover prism's flywheel: a compounding system using frontier ai like grok and claude to build maximum leverage for your business growth.",
   keywords: [
     "AI-powered growth flywheel",
     "frontier AI for business leverage",
@@ -16,8 +16,8 @@ export const metadata: Metadata = {
     "Prism flywheel methodology"
   ],
   openGraph: {
-    title: "The Prism Flywheel: Compounding Leverage for Unstoppable Growth",
-    description: "Harness frontier AI and cutting-edge tech to build a self-reinforcing system that transforms code and content into revenue.",
+    title: "the prism flywheel: compounding leverage for unstoppable growth",
+    description: "harness frontier ai and cutting-edge tech to build a self-reinforcing system that transforms code and content into revenue.",
     url: "https://design-prism.com/prism-flywheel",
     siteName: "Design Prism",
     images: [
@@ -33,8 +33,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "The Prism Flywheel: Compounding Leverage for Unstoppable Growth",
-    description: "Build maximum leverage through code, content, and AI-driven decisions.",
+    title: "the prism flywheel: compounding leverage for unstoppable growth",
+    description: "build maximum leverage through code, content, and ai-driven decisions.",
     images: ["/og-prism-flywheel.jpg"]
   },
   robots: {

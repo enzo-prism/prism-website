@@ -54,22 +54,22 @@ const NO_UPGRADE_VALUE = "no-upgrades"
 const foundationalUpgrades = [
   {
     value: "local-listings",
-    title: "Local Listings",
+    title: "local listings",
     description:
-      "Google, Apple Maps, Yelp, Bing setup, NAP consistency, category optimization, review tracking",
+      "google, apple maps, yelp, bing setup, nap consistency, category optimization, review tracking",
     price: "+$100/mo",
   },
   {
     value: "custom-email",
-    title: "Custom Email Setup",
+    title: "custom email setup",
     description:
-      "Branded email setup via Google Workspace or Outlook (e.g. john@yourdomain.com). Includes full setup, DNS config, and 1–3 inboxes.",
+      "branded email setup via google workspace or outlook (e.g. john@yourdomain.com). includes full setup, dns config, and 1–3 inboxes.",
     price: "+$50/mo",
   },
   {
     value: NO_UPGRADE_VALUE,
-    title: "No foundational upgrades",
-    description: "Stick with the base plan today and add upgrades whenever you need them.",
+    title: "no foundational upgrades",
+    description: "stick with the base plan today and add upgrades whenever you need them.",
     price: "$0/mo",
   },
 ]
@@ -159,7 +159,7 @@ const adPackageOptions = [
   })),
   {
     value: "no-paid-ads",
-    title: "No paid ads right now",
+    title: "no paid ads right now",
     adSpend: "$0",
     total: "$0/mo",
     platforms: "Stay organic — add ads when you are ready.",
@@ -175,8 +175,8 @@ const contentOptions = [
   })),
   {
     value: "no-content",
-    title: "No content production",
-    description: "Keep internal content for now and add production when you need more momentum.",
+    title: "no content production",
+    description: "keep internal content for now and add production when you need more momentum.",
     price: "$0/mo",
   },
 ]

@@ -3,9 +3,9 @@ import type { Metadata } from "next"
 import CaseStudiesPage from "./client-page"
 
 export const metadata: Metadata = {
-  title: "Case Studies: Dental & Local Business Growth Wins | Prism",
+  title: "case studies: dental & local business growth wins | prism",
   description:
-    "Discover how Prism lifts patient acquisition, retention, and online revenue through strategic redesigns, content systems, and analytics for real clients.",
+    "discover how prism lifts patient acquisition, retention, and online revenue through strategic redesigns, content systems, and analytics for real clients.",
   alternates: {
     canonical: "https://www.design-prism.com/case-studies",
   },

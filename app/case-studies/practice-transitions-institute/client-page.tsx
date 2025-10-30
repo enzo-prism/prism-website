@@ -46,7 +46,7 @@ const cta = {
 
 const share = {
   url: "https://www.design-prism.com/case-studies/practice-transitions-institute",
-  title: "Practice Transitions Institute × Prism Case Study",
+  title: "practice transitions institute × prism case study",
   description: "dental consulting storytelling with modern web design and local search readiness.",
 }
 

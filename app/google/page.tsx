@@ -17,27 +17,27 @@ const YOUTUBE_CHANNEL_URL = "https://www.youtube.com/@the_design_prism"
 
 const servicesHighlights = [
   {
-    title: "Google Workspace setup & optimization",
+    title: "google workspace setup & optimization",
     description:
-      "We help you set up professional email, shared drives, forms, and workflows — all under your own business domain. Get your team collaborating smarter, not harder.",
+      "we help you set up professional email, shared drives, forms, and workflows — all under your own business domain. get your team collaborating smarter, not harder.",
     ctaLabel: "Set up Workspace (with discount)",
     href: GOOGLE_WORKSPACE_LINK,
     external: true,
     icon: MailCheck
   },
   {
-    title: "Google marketing integration",
+    title: "google marketing integration",
     description:
-      "We connect and optimize your Google Business Profile, Google Ads, Analytics, and YouTube — ensuring every ad click and search result leads to measurable growth.",
+      "we connect and optimize your google business profile, google ads, analytics, and youtube — ensuring every ad click and search result leads to measurable growth.",
     ctaLabel: "View our plans",
     href: GOOGLE_MARKETING_PLANS_HREF,
     external: false,
     icon: Globe2
   },
   {
-    title: "Insights & automation",
+    title: "insights & automation",
     description:
-      "From automated reporting to conversion tracking, we use Google tools to make your marketing smarter and your operations more efficient.",
+      "from automated reporting to conversion tracking, we use google tools to make your marketing smarter and your operations more efficient.",
     ctaLabel: undefined,
     href: undefined,
     external: false,
@@ -54,14 +54,14 @@ const partnershipPoints = [
 
 const learningLinks = [
   {
-    title: "Our Blog",
-    description: "Guides on Google Ads, Business Profiles, Workspace, and analytics.",
+    title: "our blog",
+    description: "guides on google ads, business profiles, workspace, and analytics.",
     href: BLOG_HREF,
     external: false
   },
   {
-    title: "YouTube Channel",
-    description: "Walkthroughs and tutorials for building on Google tools.",
+    title: "youtube channel",
+    description: "walkthroughs and tutorials for building on google tools.",
     href: YOUTUBE_CHANNEL_URL,
     external: true
   }

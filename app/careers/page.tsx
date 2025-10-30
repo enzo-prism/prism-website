@@ -2,13 +2,13 @@ import type { Metadata } from "next"
 import CareersClientPage from "./client-page"
 
 export const metadata: Metadata = {
-  title: "Careers at Prism | Open Roles",
+  title: "careers at prism | open roles",
   description:
-    "Join our team at Prism. Explore career opportunities at our digital agency creating websites, apps, and designs that drive results.",
+    "join our team at prism. explore career opportunities at our digital agency creating websites, apps, and designs that drive results.",
   openGraph: {
-    title: "Careers at Prism | Open Roles",
+    title: "careers at prism | open roles",
     description:
-      "Join our team at Prism. Explore career opportunities at our digital agency creating websites, apps, and designs that drive results.",
+      "join our team at prism. explore career opportunities at our digital agency creating websites, apps, and designs that drive results.",
     images: ["/prism-opengraph.png"],
   },
   alternates: {

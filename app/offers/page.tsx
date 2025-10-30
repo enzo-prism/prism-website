@@ -5,12 +5,12 @@ import type { Metadata } from "next";
 import OffersClientPage from "./client-page";
 
 export const metadata: Metadata = {
-  title: "Special Offers for Prism Clients",
+  title: "special offers for prism clients",
   description:
-    "Browse the latest limited-time offers from Prism for websites, apps, and design support, all crafted to launch momentum quickly.",
+    "browse the latest limited-time offers from prism for websites, apps, and design support, all crafted to launch momentum quickly.",
   openGraph: {
-    title: "Special Offers for Prism Clients",
-    description: "Exclusive offers on our web design, app development, and design services.",
+    title: "special offers for prism clients",
+    description: "exclusive offers on our web design, app development, and design services.",
     url: "https://www.design-prism.com/offers",
   },
   alternates: {

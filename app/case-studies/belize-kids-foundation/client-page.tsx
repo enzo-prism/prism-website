@@ -46,7 +46,7 @@ const cta = {
 
 const share = {
   url: "https://www.design-prism.com/case-studies/belize-kids-foundation",
-  title: "Belize Kids Foundation × Prism Case Study",
+  title: "belize kids foundation × prism case study",
   description: "nonprofit storytelling infrastructure with website design and local presence support.",
 }
 

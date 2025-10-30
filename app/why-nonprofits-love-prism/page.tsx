@@ -12,18 +12,18 @@ import { CASE_STUDIES } from "@/lib/case-study-data"
 const coreOutcomes = [
   {
     icon: "💡",
-    title: "More awareness",
-    description: "Reach more people through better design, storytelling, and search visibility."
+    title: "more awareness",
+    description: "reach more people through better design, storytelling, and search visibility."
   },
   {
     icon: "💖",
-    title: "More engagement",
-    description: "Turn visitors into donors, volunteers, or advocates with thoughtful journeys."
+    title: "more engagement",
+    description: "turn visitors into donors, volunteers, or advocates with thoughtful journeys."
   },
   {
     icon: "⚙️",
-    title: "Less overhead",
-    description: "Automations and smart integrations reduce manual work for your team."
+    title: "less overhead",
+    description: "automations and smart integrations reduce manual work for your team."
   }
 ]
 
@@ -77,16 +77,16 @@ const stayingReasons = [
 ]
 
 export const metadata: Metadata = {
-  title: "Why Nonprofits Partner with Prism",
+  title: "why nonprofits partner with prism",
   description:
-    "Prism helps nonprofits tell their story beautifully, attract donors and supporters, and manage technology effortlessly so they can focus on mission-driven work.",
+    "prism helps nonprofits tell their story beautifully, attract donors and supporters, and manage technology effortlessly so they can focus on mission-driven work.",
   alternates: {
     canonical: "https://www.design-prism.com/why-nonprofits-love-prism"
   },
   openGraph: {
-    title: "Why Nonprofits Partner with Prism",
+    title: "why nonprofits partner with prism",
     description:
-      "Share your mission, reach more people, and simplify your tech stack. Prism gives nonprofits modern tools, empathetic design, and effortless support.",
+      "share your mission, reach more people, and simplify your tech stack. prism gives nonprofits modern tools, empathetic design, and effortless support.",
     url: "https://www.design-prism.com/why-nonprofits-love-prism",
     siteName: "Prism",
     locale: "en_US",
@@ -94,9 +94,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Why Nonprofits Partner with Prism",
+    title: "why nonprofits partner with prism",
     description:
-      "Prism amplifies nonprofit impact with beautiful storytelling, donor journeys, and technology that runs quietly in the background.",
+      "prism amplifies nonprofit impact with beautiful storytelling, donor journeys, and technology that runs quietly in the background.",
     creator: "@designprism"
   },
   robots: {

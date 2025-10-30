@@ -2,9 +2,9 @@ import type { Metadata } from "next"
 import InstagramLandingPage from "./instagram-landing-page"
 
 export const metadata: Metadata = {
-  title: "Instagram Community | Prism",
+  title: "instagram community | prism",
   description:
-    "Discover how Prism transforms entrepreneurial insight into growth-ready websites for ambitious businesses who found us on Instagram.",
+    "discover how prism transforms entrepreneurial insight into growth-ready websites for ambitious businesses who found us on instagram.",
 }
 
 export default function IGPage() {

@@ -15,64 +15,64 @@ import { trackCTAClick } from "@/utils/analytics"
 const offerHighlights = [
   {
     icon: "🦷",
-    title: "Free Whitening",
-    description: "Get a professional whitening treatment from one of our trusted partner dentists.",
+    title: "free whitening",
+    description: "get a professional whitening treatment from one of our trusted partner dentists.",
   },
   {
     icon: "📸",
-    title: "Professional Photos & Video",
-    description: "Work with Prism’s creative team on real projects for local dental brands.",
+    title: "professional photos & video",
+    description: "work with prism’s creative team on real projects for local dental brands.",
   },
   {
     icon: "💵",
-    title: "Paid Shoots",
-    description: "Get compensated for your time and receive professional content for your own portfolio.",
+    title: "paid shoots",
+    description: "get compensated for your time and receive professional content for your own portfolio.",
   },
 ]
 
 const howItWorks = [
   {
     icon: "1️⃣",
-    title: "Apply Online",
-    description: "Tell us a bit about yourself and upload a few photos.",
+    title: "apply online",
+    description: "tell us a bit about yourself and upload a few photos.",
   },
   {
     icon: "2️⃣",
-    title: "Get Matched",
-    description: "We’ll connect you with a local dental office for your session.",
+    title: "get matched",
+    description: "we’ll connect you with a local dental office for your session.",
   },
   {
     icon: "3️⃣",
-    title: "Whitening + Shoot Day",
-    description: "Enjoy your complimentary whitening and a relaxed photoshoot.",
+    title: "whitening + shoot day",
+    description: "enjoy your complimentary whitening and a relaxed photoshoot.",
   },
   {
     icon: "4️⃣",
-    title: "Get Paid & Featured",
-    description: "Earn cash and see your smile in real Prism campaigns.",
+    title: "get paid & featured",
+    description: "earn cash and see your smile in real prism campaigns.",
   },
 ]
 
 const fromShootHighlights = [
   {
     icon: "🖼️",
-    title: "Studio Laughs",
-    description: "Candid moments that convert.",
+    title: "studio laughs",
+    description: "candid moments that convert.",
   },
   {
     icon: "💺",
-    title: "Chairside Confidence",
-    description: "Capture real patient experiences.",
+    title: "chairside confidence",
+    description: "capture real patient experiences.",
   },
   {
     icon: "✨",
-    title: "After-Glow Portraits",
-    description: "Highlight whitening results.",
+    title: "after-glow portraits",
+    description: "highlight whitening results.",
   },
   {
     icon: "🌿",
-    title: "Lifestyle Moments",
-    description: "Show natural, everyday smiles.",
+    title: "lifestyle moments",
+    description: "show natural, everyday smiles.",
   },
 ]
 

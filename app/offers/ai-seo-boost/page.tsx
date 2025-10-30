@@ -2,13 +2,13 @@ import type { Metadata } from "next"
 import AISEOBoostClientPage from "./client-page"
 
 export const metadata: Metadata = {
-  title: "AI SEO Boost™ - Get Recommended by AI Bots | Prism",
+  title: "ai seo boost™ - get recommended by ai bots | prism",
   description:
-    "Make ChatGPT, Gemini & Perplexity name-drop your brand first. Specialized AI search optimization that gets you recommended by AI bots 24/7. 90-day guarantee.",
+    "make chatgpt, gemini & perplexity name-drop your brand first. specialized ai search optimization that gets you recommended by ai bots 24/7. 90-day guarantee.",
   openGraph: {
-    title: "🤖 AI SEO Boost™ - Own the AI Answer Box | Prism",
+    title: "🤖 ai seo boost™ - own the ai answer box | prism",
     description:
-      "Turn AI search engines into your 24/7 referral machine. Get recommended first by ChatGPT, Gemini & Perplexity with our specialized AI SEO optimization.",
+      "turn ai search engines into your 24/7 referral machine. get recommended first by chatgpt, gemini & perplexity with our specialized ai seo optimization.",
     images: [
       {
         url: "/offers/ai-seo-boost-card.png",

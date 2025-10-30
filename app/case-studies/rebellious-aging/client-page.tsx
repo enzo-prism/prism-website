@@ -46,7 +46,7 @@ const cta = {
 
 const share = {
   url: "https://www.design-prism.com/case-studies/rebellious-aging",
-  title: "Rebellious Aging × Prism Case Study",
+  title: "rebellious aging × prism case study",
   description: "community platform foundations with website refresh and local discovery groundwork.",
 }
 

@@ -18,6 +18,7 @@ const ScrollProgressBar = dynamic(() => import("@/components/scroll-progress-bar
 // New homepage sections
 // Use SSR for these sections to improve first paint/SEO
 const ClientsSection = dynamic(() => import("@/components/home/Clients"), { ssr: false })
+const ValuesSection = dynamic(() => import("@/components/home/ValuesSection"))
 const GrowthResultsSlider = dynamic(() => import("@/components/home/GrowthResultsSlider"))
 const HottestContentSection = dynamic(() => import("@/components/home/HottestContentSection"))
 const WebsitesFeatures = dynamic(() => import("@/components/home/WebsitesFeatures"))
@@ -223,35 +224,32 @@ export default function ClientPage() {
           <div className="absolute inset-0 -z-10 bg-white/85 dark:bg-neutral-950/85 gpu-layer transition-opacity duration-500" />
 
           <div className="container relative mx-auto px-4 md:px-6 py-8 md:py-16">
-            <div className="flex flex-col items-center space-y-4 md:space-y-6 text-center">
-              <div className={`relative mx-auto mb-4 md:mb-6 h-16 w-16 md:h-20 md:w-20 lg:h-24 lg:w-24 ${!isMobile ? 'logo-float' : ''}`}>
-                <CoreImage
-                  src={LOGO_CONFIG.src}
-                  alt={LOGO_CONFIG.alt}
-                  width={LOGO_SIZES.hero.width}
-                  height={LOGO_SIZES.hero.height}
-                  className={`object-contain ${LOGO_CONFIG.className} overflow-hidden`}
-                  sizes="(max-width: 768px) 64px, (max-width: 1200px) 80px, 96px"
-                  priority
-                  fallbackSrc={LOGO_CONFIG.fallbackSrc}
-                  trackingId="hero_logo"
-                  quality={90}
-                  showLoadingIndicator={true}
-                />
-              </div>
-              <div className={`space-y-3 ${!isMobile ? 'smooth-reveal' : ''}`}>
+            <div className="flex flex-col items-center space-y-6 md:space-y-10 text-center">
+              <div className={`flex items-center justify-center gap-4 sm:gap-6 md:gap-8 ${!isMobile ? 'smooth-reveal' : ''}`}>
+                <div className="relative h-16 w-16 md:h-20 md:w-20 lg:h-24 lg:w-24">
+                  <CoreImage
+                    src={LOGO_CONFIG.src}
+                    alt={LOGO_CONFIG.alt}
+                    width={LOGO_SIZES.hero.width}
+                    height={LOGO_SIZES.hero.height}
+                    className={`object-contain ${LOGO_CONFIG.className} overflow-hidden`}
+                    sizes="(max-width: 768px) 64px, (max-width: 1200px) 80px, 96px"
+                    priority
+                    fallbackSrc={LOGO_CONFIG.fallbackSrc}
+                    trackingId="hero_logo"
+                    quality={90}
+                    showLoadingIndicator={true}
+                  />
+                </div>
                 <h1 className={`text-5xl font-bold tracking-tighter lowercase sm:text-6xl md:text-7xl lg:text-8xl ${!isMobile ? 'gpu-accelerated' : ''}`}>
                   prism
                 </h1>
-                <p className="text-2xl font-medium text-neutral-500 lowercase sm:text-3xl md:text-4xl">
-                  impossible is temporary.
-                </p>
-                <p className="mx-auto mt-4 max-w-[700px] text-neutral-600 lowercase md:text-xl">
-                  upgrade your online presence to grow and convert
-                </p>
               </div>
-              <div className="flex flex-col items-center space-y-4">
-                <div className="flex flex-col items-center gap-3 sm:flex-row">
+              <p className="mx-auto max-w-[700px] text-neutral-600 lowercase md:text-xl">
+                we upgrade your online presence to grow and convert
+              </p>
+              <div className="flex flex-col items-center space-y-6 md:space-y-8">
+                <div className="flex flex-col sm:flex-row items-center gap-4 md:gap-6">
                   <Link href="/pricing">
                     <Button
                       className="rounded-full px-8 py-6 text-lg lowercase hardware-hover touch-feedback"
@@ -270,13 +268,6 @@ export default function ClientPage() {
                     </Button>
                   </Link>
                 </div>
-                <Link
-                  href="/wall-of-love"
-                  className="inline-flex items-center text-sm font-medium lowercase tracking-[0.32em] text-neutral-500 transition-colors hover:text-neutral-700"
-                  onClick={() => trackNavigation("founders love prism", "/wall-of-love")}
-                >
-                  why founders love prism <ArrowUpRight className="ml-3 h-4 w-4" />
-                </Link>
                 {videoSkipped ? (
                   <p className="mt-4 text-xs tracking-[0.24em] uppercase text-neutral-400">
                     background motion disabled for accessibility
@@ -291,6 +282,7 @@ export default function ClientPage() {
 
         {/* New homepage sections per updated structure */}
         <ClientsSection />
+        <ValuesSection />
         <GrowthResultsSlider />
         <SegmentsGrid />
         <ReferralSection />
@@ -490,7 +482,7 @@ export default function ClientPage() {
         areaServed={["United States", "Canada", "Global"]}
         offerDetails={{
           name: "Custom Website Development",
-          description: "Professional website development with modern design and functionality",
+          description: "professional website development with modern design and functionality",
           businessFunction: "http://purl.org/goodrelations/v1#Sell",
           priceRange: "$2,500 - $10,000"
         }}
@@ -504,7 +496,7 @@ export default function ClientPage() {
         areaServed={["United States", "Canada", "Global"]}
         offerDetails={{
           name: "Mobile App Development Services",
-          description: "End-to-end mobile app development from concept to launch",
+          description: "end-to-end mobile app development from concept to launch",
           businessFunction: "http://purl.org/goodrelations/v1#Sell",
           priceRange: "$5,000 - $25,000"
         }}
@@ -518,7 +510,7 @@ export default function ClientPage() {
         areaServed={["United States", "Canada", "Global"]}
         offerDetails={{
           name: "Digital Marketing Services",
-          description: "Data-driven digital marketing strategies to grow your online presence",
+          description: "data-driven digital marketing strategies to grow your online presence",
           businessFunction: "http://purl.org/goodrelations/v1#Sell",
           priceRange: "$1,000 - $5,000"
         }}
@@ -532,7 +524,7 @@ export default function ClientPage() {
         areaServed={["United States", "Canada", "Global"]}
         offerDetails={{
           name: "UI/UX Design Services",
-          description: "Beautiful and functional design that enhances user experience",
+          description: "beautiful and functional design that enhances user experience",
           businessFunction: "http://purl.org/goodrelations/v1#Sell",
           priceRange: "$1,500 - $8,000"
         }}

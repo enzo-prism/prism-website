@@ -46,7 +46,7 @@ const cta = {
 
 const share = {
   url: "https://www.design-prism.com/case-studies/we-are-saplings",
-  title: "We Are Saplings × Prism Case Study",
+  title: "we are saplings × prism case study",
   description: "education brand clarity with website design and onboarding pathways.",
 }
 

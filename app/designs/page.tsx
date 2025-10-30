@@ -3,13 +3,13 @@ import type { Metadata } from "next"
 import DesignsPageClient from "./DesignsPageClient"
 
 export const metadata: Metadata = {
-  title: "Graphic Design Portfolio & Creative Services | Prism",
+  title: "graphic design portfolio & creative services | prism",
   description:
-    "Browse award-winning logos, branding, marketing assets, and social graphics that show how intentional design elevates your brand and captures attention.",
+    "browse award-winning logos, branding, marketing assets, and social graphics that show how intentional design elevates your brand and captures attention.",
   openGraph: {
-    title: "Graphic Design Portfolio & Creative Services | Prism",
+    title: "graphic design portfolio & creative services | prism",
     description:
-      "Browse award-winning logos, branding, marketing assets, and social graphics that show how intentional design elevates your brand and captures attention.",
+      "browse award-winning logos, branding, marketing assets, and social graphics that show how intentional design elevates your brand and captures attention.",
     images: ["/prism-opengraph.png"],
   },
   alternates: {

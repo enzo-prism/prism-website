@@ -12,24 +12,24 @@ import { CASE_STUDIES } from "@/lib/case-study-data"
 const coreResults = [
   {
     icon: "📈",
-    title: "Steady growth",
-    description: "More new patients through SEO, ads, and conversion-focused design."
+    title: "steady growth",
+    description: "more new patients through seo, ads, and conversion-focused design."
   },
   {
     icon: "💬",
-    title: "More reviews and referrals",
-    description: "Authentic patient feedback fuels trust and organic word-of-mouth."
+    title: "more reviews and referrals",
+    description: "authentic patient feedback fuels trust and organic word-of-mouth."
   },
   {
     icon: "🤝",
-    title: "Less hassle",
-    description: "Seamless handoff from your old provider, handled 100% by our team."
+    title: "less hassle",
+    description: "seamless handoff from your old provider, handled 100% by our team."
   }
 ]
 
 const dentistFavorites = [
   {
-    title: "Seamless Transitions — No Downtime, No Headaches",
+    title: "seamless transitions — no downtime, no headaches",
     summary: "Switching from a previous provider can feel risky. We make it effortless.",
     bullets: [
       "We interface directly with your old website or marketing company on your behalf.",
@@ -41,7 +41,7 @@ const dentistFavorites = [
       "Dentists tell us this is the smoothest transition they’ve ever had from one provider to another."
   },
   {
-    title: "Direct Access & Exceptional Communication",
+    title: "direct access & exceptional communication",
     summary: "You’ll never feel like you’re talking to a support ticket again.",
     bullets: [
       "Work directly with Prism’s founder, Enzo — call, text, or email anytime.",
@@ -51,7 +51,7 @@ const dentistFavorites = [
     quote: "Our clients say the biggest relief after moving to Prism is finally having someone who picks up the phone."
   },
   {
-    title: "Continuous Innovation",
+    title: "continuous innovation",
     summary:
       "Most dental marketing companies use the same cookie-cutter templates and outdated SEO tricks. Prism doesn’t.",
     bullets: [
@@ -66,7 +66,7 @@ const dentistFavorites = [
 const connectedPresence = [
   {
     emoji: "🧭",
-    title: "Be Found Everywhere",
+    title: "be found everywhere",
     bullets: [
       "Local SEO & AEO to appear at the top of Google",
       "Fully optimized Google Business Profile",
@@ -75,7 +75,7 @@ const connectedPresence = [
   },
   {
     emoji: "🎨",
-    title: "Look Exceptional Online",
+    title: "look exceptional online",
     bullets: [
       "Modern, custom web design built for conversion",
       "Clear, educational service pages for every treatment",
@@ -84,7 +84,7 @@ const connectedPresence = [
   },
   {
     emoji: "💬",
-    title: "Turn Visitors into Patients",
+    title: "turn visitors into patients",
     bullets: [
       "Automated review collection and reminders",
       "Friction-free appointment forms and scheduling",
@@ -104,16 +104,16 @@ const stayingReasons = [
 const dentalCaseStudies = CASE_STUDIES.filter((study) => study.segments.includes("dental"))
 
 export const metadata: Metadata = {
-  title: "Why Dental Practices Love Prism",
+  title: "why dental practices love prism",
   description:
-    "Prism helps dental practices attract new patients, modernize their online presence, and transition away from outdated providers without downtime or stress.",
+    "prism helps dental practices attract new patients, modernize their online presence, and transition away from outdated providers without downtime or stress.",
   alternates: {
     canonical: "https://www.design-prism.com/why-dental-practices-love-prism"
   },
   openGraph: {
-    title: "Why Dental Practices Love Prism",
+    title: "why dental practices love prism",
     description:
-      "Grow your practice and worry less about marketing and technology. Prism handles seamless transitions, modern design, and patient acquisition.",
+      "grow your practice and worry less about marketing and technology. prism handles seamless transitions, modern design, and patient acquisition.",
     url: "https://www.design-prism.com/why-dental-practices-love-prism",
     siteName: "Prism",
     locale: "en_US",
@@ -121,9 +121,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Why Dental Practices Love Prism",
+    title: "why dental practices love prism",
     description:
-      "Prism helps dentists attract new patients, modernize their online presence, and move on from outdated providers without stress.",
+      "prism helps dentists attract new patients, modernize their online presence, and move on from outdated providers without stress.",
     creator: "@designprism"
   },
   robots: {

@@ -2,11 +2,11 @@ import type { Metadata } from "next"
 import CoastPeriodonticsCaseStudy from "./client-page"
 
 export const metadata: Metadata = {
-  title: "Coast Periodontics Case Study | Dental Growth",
+  title: "coast periodontics case study | dental growth",
   description:
     "see how prism is partnering with coast periodontics & laser surgery to deliver a calm website, local visibility, and conversion tracking essentials.",
   openGraph: {
-    title: "Coast Periodontics & Laser Surgery × Prism Case Study",
+    title: "coast periodontics & laser surgery × prism case study",
     description: "specialty dental growth groundwork with website design and local presence support.",
   },
 }

@@ -46,7 +46,7 @@ const cta = {
 
 const share = {
   url: "https://www.design-prism.com/case-studies/canary-cove",
-  title: "Canary Cove × Prism Case Study",
+  title: "canary cove × prism case study",
   description: "luxury retreat storytelling with modern web design and guest journey planning.",
 }
 

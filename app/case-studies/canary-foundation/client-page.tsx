@@ -46,7 +46,7 @@ const cta = {
 
 const share = {
   url: "https://www.design-prism.com/case-studies/canary-foundation",
-  title: "Canary Foundation × Prism Case Study",
+  title: "canary foundation × prism case study",
   description: "nonprofit storytelling with modern web design and supporter experience foundations.",
 }
 

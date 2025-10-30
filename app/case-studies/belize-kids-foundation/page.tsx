@@ -2,11 +2,11 @@ import type { Metadata } from "next"
 import BelizeKidsFoundationCaseStudy from "./client-page"
 
 export const metadata: Metadata = {
-  title: "Belize Kids Foundation Case Study — Nonprofit Story Hub",
+  title: "belize kids foundation case study — nonprofit story hub",
   description:
     "follow how prism is supporting belize kids foundation with a refreshed website, donor pathways, and local visibility groundwork.",
   openGraph: {
-    title: "Belize Kids Foundation × Prism Case Study",
+    title: "belize kids foundation × prism case study",
     description: "nonprofit storytelling infrastructure with website design and local presence support.",
   },
 }

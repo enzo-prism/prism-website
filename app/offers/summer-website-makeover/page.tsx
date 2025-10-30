@@ -2,13 +2,13 @@ import type { Metadata } from "next"
 import SummerWebsiteMakeoverClientPage from "./client-page"
 
 export const metadata: Metadata = {
-  title: "Summer Website Makeover Offer | Prism",
+  title: "summer website makeover offer | prism",
   description:
-    "Triple your traffic and conversions in 30 days with Prism's Summer Website Makeover—full-stack rebuild, SEO, and CRO with guaranteed results.",
+    "triple your traffic and conversions in 30 days with prism's summer website makeover—full-stack rebuild, seo, and cro with guaranteed results.",
   openGraph: {
-    title: "☀️ Summer Website Makeover - Guaranteed Growth | Prism",
+    title: "☀️ summer website makeover - guaranteed growth | prism",
     description:
-      "Let Prism transform your website into a 24/7 growth engine. 3x traffic & conversions in 30 days, or we work for free until we do.",
+      "let prism transform your website into a 24/7 growth engine. 3x traffic & conversions in 30 days, or we work for free until we do.",
     images: [
       {
         url: "/placeholder.svg?width=1200&height=630", // Replace with a specific offer image

@@ -10,13 +10,13 @@ import Link from "next/link"
 import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
 
 export const metadata: Metadata = {
-  title: "Local Listing Optimization for Small Businesses | Prism",
+  title: "local listing optimization for small businesses | prism",
   description:
-    "Prism optimizes Google, Apple, Yelp, Bing, Facebook, and Nextdoor listings so small businesses stay accurate, rank higher, and turn local searches into customers.",
+    "prism optimizes google, apple, yelp, bing, facebook, and nextdoor listings so small businesses stay accurate, rank higher, and turn local searches into customers.",
   openGraph: {
-    title: "Local Listing Optimization for Small Businesses | Prism",
+    title: "local listing optimization for small businesses | prism",
     description:
-      "Prism optimizes Google, Apple, Yelp, Bing, Facebook, and Nextdoor listings so small businesses stay accurate, rank higher, and convert more local searches into customers.",
+      "prism optimizes google, apple, yelp, bing, facebook, and nextdoor listings so small businesses stay accurate, rank higher, and convert more local searches into customers.",
     url: "https://design-prism.com/local-listings",
     images: [
       {
@@ -34,28 +34,28 @@ export const metadata: Metadata = {
 
 const whatYouGet = [
   {
-    title: "Accurate, consistent info everywhere",
-    description: "Name, address, phone, website, hours, service area, and categories aligned across platforms.",
+    title: "accurate, consistent info everywhere",
+    description: "name, address, phone, website, hours, service area, and categories aligned across platforms.",
   },
   {
-    title: "Conversion-ready profiles",
-    description: "Offers, services, photos, FAQs, and action buttons built to drive calls, directions, and bookings.",
+    title: "conversion-ready profiles",
+    description: "offers, services, photos, faqs, and action buttons built to drive calls, directions, and bookings.",
   },
   {
-    title: "Ranking boosts that last",
-    description: "Category tuning, service lists, attributes, and content that improve local relevance.",
+    title: "ranking boosts that last",
+    description: "category tuning, service lists, attributes, and content that improve local relevance.",
   },
   {
-    title: "Reviews that build trust",
-    description: "Simple review collection and fast, professional responses.",
+    title: "reviews that build trust",
+    description: "simple review collection and fast, professional responses.",
   },
   {
-    title: "Spam cleanup and duplicate removal",
-    description: "We fix messy listings and protect your brand.",
+    title: "spam cleanup and duplicate removal",
+    description: "we fix messy listings and protect your brand.",
   },
   {
-    title: "Transparent results",
-    description: "Track calls, messages, directions, and website clicks in plain English.",
+    title: "transparent results",
+    description: "track calls, messages, directions, and website clicks in plain english.",
   },
 ]
 
@@ -88,43 +88,43 @@ const platforms = [
 
 const rankingLevers = [
   {
-    title: "Relevance",
-    description: "Correct categories, services, and keywords so you match the right searches.",
+    title: "relevance",
+    description: "correct categories, services, and keywords so you match the right searches.",
   },
   {
-    title: "Prominence",
-    description: "Reviews, photos, and consistent data that build authority over time.",
+    title: "prominence",
+    description: "reviews, photos, and consistent data that build authority over time.",
   },
   {
-    title: "Proximity (done right)",
-    description: "Clean service-area and radius settings plus smart geo-targeted content.",
+    title: "proximity (done right)",
+    description: "clean service-area and radius settings plus smart geo-targeted content.",
   },
   {
-    title: "Engagement",
-    description: "Posts, Q&A, and offers that drive clicks, calls, and bookings.",
+    title: "engagement",
+    description: "posts, q&a, and offers that drive clicks, calls, and bookings.",
   },
 ]
 
 const processSteps = [
   {
     step: "Audit and Plan",
-    description: "Review every listing, find gaps, and set clear goals.",
+    description: "review every listing, find gaps, and set clear goals.",
   },
   {
     step: "Fix and Claim",
-    description: "Claim pages, remove duplicates, and correct bad data.",
+    description: "claim pages, remove duplicates, and correct bad data.",
   },
   {
     step: "Build to Convert",
-    description: "Categories, services, photos, FAQs, offers, and CTAs that turn views into action.",
+    description: "categories, services, photos, faqs, offers, and ctas that turn views into action.",
   },
   {
     step: "Review Engine",
-    description: "Easy ways for happy customers to leave reviews plus responsive follow-up.",
+    description: "easy ways for happy customers to leave reviews plus responsive follow-up.",
   },
   {
     step: "Maintain and Improve",
-    description: "Weekly checks, fresh content, seasonal hours, and ongoing optimizations.",
+    description: "weekly checks, fresh content, seasonal hours, and ongoing optimizations.",
   },
 ]
 
@@ -178,27 +178,27 @@ const faqItems = [
 const audienceSegments = [
   {
     name: "Dental & medical teams",
-    description: "HIPAA-aware intake flows, treatment highlights, and review engines that keep operatories full.",
+    description: "hipaa-aware intake flows, treatment highlights, and review engines that keep operatories full.",
     href: "/why-dental-practices-love-prism",
   },
   {
     name: "Local shop owners",
-    description: "Menu, product, and offer updates synced across Google, Yelp, and Apple to turn searches into visits.",
+    description: "menu, product, and offer updates synced across google, yelp, and apple to turn searches into visits.",
     href: "/why-local-shop-owners-love-prism",
   },
   {
     name: "Consulting & professional services",
-    description: "Thoughtfully managed profiles that reinforce credibility and capture high-intent calls.",
+    description: "thoughtfully managed profiles that reinforce credibility and capture high-intent calls.",
     href: "/why-consulting-companies-love-prism",
   },
   {
     name: "Online community founders",
-    description: "Event, meetup, and program listings that keep members engaged and invite new ones in.",
+    description: "event, meetup, and program listings that keep members engaged and invite new ones in.",
     href: "/why-online-community-founders-love-prism",
   },
   {
     name: "Nonprofits & education",
-    description: "Accurate info, volunteer spotlights, and donation CTAs that grow awareness in every neighborhood.",
+    description: "accurate info, volunteer spotlights, and donation ctas that grow awareness in every neighborhood.",
     href: "/why-nonprofits-love-prism",
   },
 ]

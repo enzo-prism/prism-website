@@ -12,13 +12,13 @@ import Link from "next/link"
 import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
 
 export const metadata: Metadata = {
-  title: "Small Business Website Portfolio & Local SEO Wins | Prism",
+  title: "small business website portfolio & local seo wins | prism",
   description:
-    "Explore the small business websites and local presence optimizations we launch to attract qualified leads and convert more local customers for clients like you.",
+    "explore the small business websites and local presence optimizations we launch to attract qualified leads and convert more local customers for clients like you.",
   openGraph: {
-    title: "Small Business Website Portfolio & Local SEO Wins | Prism",
+    title: "small business website portfolio & local seo wins | prism",
     description:
-      "Explore the small business websites and local presence optimizations we launch to attract qualified leads and convert more local customers for clients like you.",
+      "explore the small business websites and local presence optimizations we launch to attract qualified leads and convert more local customers for clients like you.",
     images: ["/prism-opengraph.png"],
   },
   alternates: {
@@ -122,55 +122,55 @@ const websiteProjects = [
 
 const whatWeDeliver = [
   {
-    title: "Brand-calibrated design",
-    description: "Modern UI that matches your visual identity and keeps every page cohesive.",
+    title: "brand-calibrated design",
+    description: "modern ui that matches your visual identity and keeps every page cohesive.",
   },
   {
-    title: "Conversion-first architecture",
-    description: "Clear flows, persuasive copy, and CTAs tuned to move visitors forward.",
+    title: "conversion-first architecture",
+    description: "clear flows, persuasive copy, and ctas tuned to move visitors forward.",
   },
   {
-    title: "Content & positioning",
-    description: "Messaging that explains what you do fast and differentiates your offers.",
+    title: "content & positioning",
+    description: "messaging that explains what you do fast and differentiates your offers.",
   },
   {
-    title: "Technical SEO built in",
-    description: "Schema, semantic markup, and internal linking ready for organic and AI search.",
+    title: "technical seo built in",
+    description: "schema, semantic markup, and internal linking ready for organic and ai search.",
   },
   {
-    title: "Speed & accessibility",
-    description: "Core Web Vitals optimized with fast hosting, compressed media, and WCAG-aware layouts.",
+    title: "speed & accessibility",
+    description: "core web vitals optimized with fast hosting, compressed media, and wcag-aware layouts.",
   },
   {
-    title: "Launch & handoff",
-    description: "Analytics, automations, and training so your team can confidently run the site day one.",
+    title: "launch & handoff",
+    description: "analytics, automations, and training so your team can confidently run the site day one.",
   },
 ]
 
 const audienceSegments = [
   {
     name: "Dental & medical teams",
-    description: "Conversion-backed treatment pages, patient journeys, and ADA-aware design to fill operatories.",
+    description: "conversion-backed treatment pages, patient journeys, and ada-aware design to fill operatories.",
     href: "/why-dental-practices-love-prism",
   },
   {
     name: "Local shop owners",
-    description: "Product storytelling, local SEO structure, and promo blocks that drive in-store and online sales.",
+    description: "product storytelling, local seo structure, and promo blocks that drive in-store and online sales.",
     href: "/why-local-shop-owners-love-prism",
   },
   {
     name: "Consulting & professional services",
-    description: "Case-study rich sites with thought leadership hubs and lead capture that start bigger engagements.",
+    description: "case-study rich sites with thought leadership hubs and lead capture that start bigger engagements.",
     href: "/why-consulting-companies-love-prism",
   },
   {
     name: "Online community founders",
-    description: "Member onboarding, paywall-ready content, and event funnels that keep engagement high.",
+    description: "member onboarding, paywall-ready content, and event funnels that keep engagement high.",
     href: "/why-online-community-founders-love-prism",
   },
   {
     name: "Nonprofits & education",
-    description: "Mission-first storytelling, donation flows, and program pages that mobilize supporters.",
+    description: "mission-first storytelling, donation flows, and program pages that mobilize supporters.",
     href: "/why-nonprofits-love-prism",
   },
 ]
@@ -178,23 +178,23 @@ const audienceSegments = [
 const processSteps = [
   {
     step: "Discover",
-    description: "Deep dive into goals, brand, users, and the content needed to win trust.",
+    description: "deep dive into goals, brand, users, and the content needed to win trust.",
   },
   {
     step: "Architect",
-    description: "Sitemap, wireframes, and messaging mapped to journeys across devices.",
+    description: "sitemap, wireframes, and messaging mapped to journeys across devices.",
   },
   {
     step: "Design",
-    description: "High-fidelity layouts, component library, and motion cues refined with your feedback.",
+    description: "high-fidelity layouts, component library, and motion cues refined with your feedback.",
   },
   {
     step: "Build",
-    description: "Next.js development, CMS setup, QA, and integrations tested in staging.",
+    description: "next.js development, cms setup, qa, and integrations tested in staging.",
   },
   {
     step: "Launch",
-    description: "Analytics, automations, training, and a punch list to keep improving post-launch.",
+    description: "analytics, automations, training, and a punch list to keep improving post-launch.",
   },
 ]
 
@@ -218,7 +218,7 @@ const handledForYou = [
 ]
 
 const featuredArticle = {
-  title: "From broken WordPress site to a high-converting dental experience",
+  title: "from broken wordpress site to a high-converting dental experience",
   href: "/blog/from-broken-to-beautiful-dental-website-transformation",
   summary:
     "See how Prism rebuilt a dental practice’s neglected site into a calm, conversion-ready experience using Lovable for structure and Codex for engineering.",

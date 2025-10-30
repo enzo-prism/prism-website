@@ -14,23 +14,23 @@ export default function CareersClientPage() {
   const currentJobs = [
     {
       id: "front-end-developer",
-      title: "Contract Front-End Developer",
+      title: "contract front-end developer",
       type: "Contract",
       location: "Remote",
       duration: "Part-time (10-20 hrs/week)",
       description:
-        "Join our lean team building modern web apps with AI-first tooling. Work with Cursor, Replit, Vercel v0, and Lovable.dev.",
+        "join our lean team building modern web apps with ai-first tooling. work with cursor, replit, vercel v0, and lovable.dev.",
       requirements: ["React/TypeScript expertise", "Cursor & Replit experience", "Mobile-first design skills"],
       slug: "front-end-developer"
     },
     {
       id: "replit-builder",
-      title: "Contract Replit Builder",
+      title: "contract replit builder",
       type: "Contract",
       location: "Remote",
       duration: "Part-time (≈ 10-20 hrs/week)",
       description:
-        "Help dentists and local businesses launch fast, beautiful websites entirely inside Replit using modern AI tooling.",
+        "help dentists and local businesses launch fast, beautiful websites entirely inside replit using modern ai tooling.",
       requirements: ["Replit Agent & Replit DB experience", "Clean HTML/CSS/JS or React code", "Detail-focused on performance"],
       slug: "replit-builder"
     }

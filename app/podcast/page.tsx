@@ -3,13 +3,13 @@ import type { Metadata } from "next"
 import PodcastClientPage from "./client-page"
 
 export const metadata: Metadata = {
-  title: "Prism Podcast | Founders · Journeys · Lessons",
+  title: "prism podcast | founders · journeys · lessons",
   description:
-    "Each episode, founder Enzo Sison sits down with builders in the arena to unpack wins, missteps, and frameworks you can apply to your business.",
+    "each episode, founder enzo sison sits down with builders in the arena to unpack wins, missteps, and frameworks you can apply to your business.",
   openGraph: {
-    title: "Prism Podcast | Founders · Journeys · Lessons",
+    title: "prism podcast | founders · journeys · lessons",
     description:
-      "Each episode, founder Enzo Sison sits down with builders in the arena to unpack wins, missteps, and frameworks you can apply to your business.",
+      "each episode, founder enzo sison sits down with builders in the arena to unpack wins, missteps, and frameworks you can apply to your business.",
     images: ["/prism-opengraph.png"],
   },
   alternates: {

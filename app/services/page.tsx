@@ -76,56 +76,56 @@ const bundleExamples = [
   {
     name: "Local Starter",
     price: "$300/mo",
-    description: "Starter stack for new practices and solo operators.",
+    description: "starter stack for new practices and solo operators.",
     includes: ["Starter Site", "Local Listings"],
   },
   {
     name: "Growth 10",
     price: "$1,100/mo",
-    description: "Balanced mix for teams layering paid acquisition.",
+    description: "balanced mix for teams layering paid acquisition.",
     includes: ["Business Site", "Local Listings", "Starter Ads"],
   },
   {
     name: "Content Pro",
     price: "$1,400/mo",
-    description: "Adds ongoing content to move visitors from interest to trust.",
+    description: "adds ongoing content to move visitors from interest to trust.",
     includes: ["Pro Site", "Local Listings", "Light Content"],
   },
   {
     name: "Dominate Local",
     price: "$3,600/mo",
-    description: "Full-funnel package for multi-location groups.",
+    description: "full-funnel package for multi-location groups.",
     includes: ["Pro Site", "Local Listings", "Scale Ads", "Pro Content"],
   },
 ]
 
 const workflow = [
   {
-    title: "Map the system",
-    description: "We audit every touchpoint — site, listings, paid media, email, and practice operations — so we know where to focus first.",
+    title: "map the system",
+    description: "we audit every touchpoint — site, listings, paid media, email, and practice operations — so we know where to focus first.",
   },
   {
-    title: "Build the core",
-    description: "Your website, analytics, and local presence are stabilized in a single project sprint, giving every other channel a reliable foundation.",
+    title: "build the core",
+    description: "your website, analytics, and local presence are stabilized in a single project sprint, giving every other channel a reliable foundation.",
   },
   {
-    title: "Layer the growth levers",
-    description: "Paid media, content, and automation join the mix as we hit traction milestones, with bundles tailored to your goals and budget.",
+    title: "layer the growth levers",
+    description: "paid media, content, and automation join the mix as we hit traction milestones, with bundles tailored to your goals and budget.",
   },
   {
-    title: "Optimize and report",
-    description: "Weekly measurements, quarterly planning, and shared dashboards keep the entire growth engine accountable and transparent.",
+    title: "optimize and report",
+    description: "weekly measurements, quarterly planning, and shared dashboards keep the entire growth engine accountable and transparent.",
   },
 ]
 
 export const metadata: Metadata = {
-  title: "Prism Services Platform",
+  title: "prism services platform",
   description:
-    "Prism unifies websites, local presence, paid media, content, and analytics. See how each service works together and the bundles clients launch with.",
+    "prism unifies websites, local presence, paid media, content, and analytics. see how each service works together and the bundles clients launch with.",
   openGraph: {
-    title: "Prism Services Platform",
+    title: "prism services platform",
     description:
-      "Prism unifies websites, local presence, paid media, content, and analytics. See how each service works together and the bundles clients launch with.",
+      "prism unifies websites, local presence, paid media, content, and analytics. see how each service works together and the bundles clients launch with.",
     url: "https://design-prism.com/services",
     images: [
       {

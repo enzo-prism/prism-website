@@ -25,43 +25,43 @@ import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
   {
     category: "AI Development",
     icon: Brain,
-    title: "Claude Code + Cursor",
-    description: "AI-assisted coding for rapid, error-free automation",
+    title: "claude code + cursor",
+    description: "ai-assisted coding for rapid, error-free automation",
     color: "from-purple-500 to-indigo-500"
   },
   {
     category: "AI Content",
     icon: Zap,
-    title: "ChatGPT + Grok + Google Gemini",
-    description: "Frontier LLMs for content ideation and semantic search",
+    title: "chatgpt + grok + google gemini",
+    description: "frontier llms for content ideation and semantic search",
     color: "from-blue-500 to-cyan-500"
   },
   {
     category: "Design & Visual",
     icon: Palette,
-    title: "Midjourney + Figma + Loveable",
-    description: "Visual AI and design tools for sleek, engaging assets",
+    title: "midjourney + figma + loveable",
+    description: "visual ai and design tools for sleek, engaging assets",
     color: "from-pink-500 to-rose-500"
   },
   {
     category: "Development",
     icon: Code,
-    title: "Notion + Replit + Vercel",
-    description: "Collaborative workspaces and deployment for scalable code",
+    title: "notion + replit + vercel",
+    description: "collaborative workspaces and deployment for scalable code",
     color: "from-green-500 to-emerald-500"
   },
   {
     category: "Research",
     icon: Search,
-    title: "Perplexity",
-    description: "Real-time AI research to fuel data-driven insights",
+    title: "perplexity",
+    description: "real-time ai research to fuel data-driven insights",
     color: "from-orange-500 to-amber-500"
   },
   {
     category: "Local Presence",
     icon: Globe,
-    title: "Google Business + Apple + Yelp + Zocdoc",
-    description: "Local SEO and booking integrations for healthcare/brand visibility",
+    title: "google business + apple + yelp + zocdoc",
+    description: "local seo and booking integrations for healthcare/brand visibility",
     color: "from-indigo-500 to-purple-500"
   }
 ]
@@ -70,32 +70,32 @@ import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
 const flywheelPhases = [
   {
     number: 1,
-    title: "Research & Ideation",
-    description: "Watch trends, clip insights, and remix with AI",
+    title: "research & ideation",
+    description: "watch trends, clip insights, and remix with ai",
     details: "Using Perplexity for real-time data and Grok for semantic analysis",
     icon: Search,
     color: "text-purple-600"
   },
   {
     number: 2,
-    title: "Creation & Remixing",
-    description: "Build content and code with frontier tools",
+    title: "creation & remixing",
+    description: "build content and code with frontier tools",
     details: "Claude Code and Cursor for rapid development, Midjourney for visuals",
     icon: Palette,
     color: "text-blue-600"
   },
   {
     number: 3,
-    title: "Optimization & Analysis",
-    description: "Refine with data",
+    title: "optimization & analysis",
+    description: "refine with data",
     details: "GA4 for traffic, Hotjar for user heatmaps, GSC for SEO insights",
     icon: BarChart3,
     color: "text-green-600"
   },
   {
     number: 4,
-    title: "Monetization & Scaling",
-    description: "Bundle value into products and scale",
+    title: "monetization & scaling",
+    description: "bundle value into products and scale",
     details: "Deploy via Vercel/Replit, connect locally with Google Business Profile",
     icon: TrendingUp,
     color: "text-orange-600"
@@ -281,13 +281,13 @@ export default function PrismFlywheelClient() {
                 <div className="pt-8 space-y-6">
                   {[
                     { 
-                      title: "Maximum Leverage", 
+                      title: "maximum leverage", 
                       desc: "AI amplifies effort, not replaces it",
                       quote: "Leverage is a force multiplier for your judgment.",
                       author: "Naval Ravikant"
                     },
-                    { title: "Compound Growth", desc: "Each cycle builds on the last" },
-                    { title: "Custom Solutions", desc: "Tailored to your unique needs" }
+                    { title: "compound growth", desc: "Each cycle builds on the last" },
+                    { title: "custom solutions", desc: "Tailored to your unique needs" }
                   ].map((item, index) => (
                     <div 
                       key={index}

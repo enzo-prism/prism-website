@@ -12,37 +12,37 @@ import { CASE_STUDIES } from "@/lib/case-study-data"
 const coreOutcomes = [
   {
     icon: "🎯",
-    title: "More people hear about your community",
-    description: "Launch funnels, content, and SEO that consistently put you in front of the right people."
+    title: "more people hear about your community",
+    description: "launch funnels, content, and seo that consistently put you in front of the right people."
   },
   {
     icon: "🤝",
-    title: "More people join and stay active",
-    description: "Design flows that welcome members, guide them to value fast, and keep engagement high."
+    title: "more people join and stay active",
+    description: "design flows that welcome members, guide them to value fast, and keep engagement high."
   },
   {
     icon: "💬",
-    title: "More people tell their friends to join",
-    description: "Systematize referrals so every delighted member becomes a signal boost for your mission."
+    title: "more people tell their friends to join",
+    description: "systematize referrals so every delighted member becomes a signal boost for your mission."
   }
 ]
 
 const deliveryPillars = [
   {
-    title: "World-class design",
-    description: "Every page and touchpoint feels cohesive, human, and true to your mission. We learn your voice, your visuals, and your values."
+    title: "world-class design",
+    description: "every page and touchpoint feels cohesive, human, and true to your mission. we learn your voice, your visuals, and your values."
   },
   {
-    title: "World-class tech",
-    description: "SEO, AEO, UX analytics, and AI-driven ad targeting operate together behind the scenes so every visit brings sharper insights."
+    title: "world-class tech",
+    description: "seo, aeo, ux analytics, and ai-driven ad targeting operate together behind the scenes so every visit brings sharper insights."
   },
   {
-    title: "Deep brand alignment",
-    description: "We immerse ourselves in your brand and audience to anticipate what they need next and build trust with every interaction."
+    title: "deep brand alignment",
+    description: "we immerse ourselves in your brand and audience to anticipate what they need next and build trust with every interaction."
   },
   {
-    title: "Data-driven iteration",
-    description: "Analytics guide every decision, so your platform keeps improving while you sleep — no guesswork, just momentum."
+    title: "data-driven iteration",
+    description: "analytics guide every decision, so your platform keeps improving while you sleep — no guesswork, just momentum."
   }
 ]
 
@@ -71,14 +71,14 @@ const communityCaseStudies = CASE_STUDIES.filter((study) => study.segments.inclu
 const communityGradientClasses = ["from-rose-100 via-white to-rose-50", "from-emerald-100 via-white to-emerald-50"]
 
 export const metadata: Metadata = {
-  title: "Why Online Community Founders Love Prism",
-  description: "See how Prism helps online community founders grow faster by uniting design, technology, and data so you can focus on your members.",
+  title: "why online community founders love prism",
+  description: "see how prism helps online community founders grow faster by uniting design, technology, and data so you can focus on your members.",
   alternates: {
     canonical: "https://www.design-prism.com/why-online-community-founders-love-prism"
   },
   openGraph: {
-    title: "Why Online Community Founders Love Prism",
-    description: "Build a thriving community without drowning in tech or design work. Prism handles systems, design, and data so you can stay focused on people.",
+    title: "why online community founders love prism",
+    description: "build a thriving community without drowning in tech or design work. prism handles systems, design, and data so you can stay focused on people.",
     url: "https://www.design-prism.com/why-online-community-founders-love-prism",
     siteName: "Prism",
     locale: "en_US",
@@ -86,8 +86,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Why Online Community Founders Love Prism",
-    description: "Prism helps community founders grow faster by handling systems, design, and data.",
+    title: "why online community founders love prism",
+    description: "prism helps community founders grow faster by handling systems, design, and data.",
     creator: "@designprism"
   },
   robots: {

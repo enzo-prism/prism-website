@@ -12,18 +12,18 @@ import { CASE_STUDIES } from "@/lib/case-study-data"
 const coreOutcomes = [
   {
     icon: "📍",
-    title: "More people finding you online",
-    description: "Accurate listings, fresh reviews, and local SEO that keeps you visible on Google, Apple, and beyond."
+    title: "more people finding you online",
+    description: "accurate listings, fresh reviews, and local seo that keeps you visible on google, apple, and beyond."
   },
   {
     icon: "🚪",
-    title: "More customers walking in",
-    description: "Smarter ads and stronger visibility turn online interest into in-store visits."
+    title: "more customers walking in",
+    description: "smarter ads and stronger visibility turn online interest into in-store visits."
   },
   {
     icon: "💬",
-    title: "More repeat business",
-    description: "Automated follow-ups, reminders, and offers keep customers coming back."
+    title: "more repeat business",
+    description: "automated follow-ups, reminders, and offers keep customers coming back."
   }
 ]
 
@@ -78,16 +78,16 @@ const stayingReasons = [
 ]
 
 export const metadata: Metadata = {
-  title: "Why Local Shop Owners Love Prism",
+  title: "why local shop owners love prism",
   description:
-    "Prism helps local shops stand out online, bring more people through the door, and run smoother — without tech headaches or outdated marketing systems.",
+    "prism helps local shops stand out online, bring more people through the door, and run smoother — without tech headaches or outdated marketing systems.",
   alternates: {
     canonical: "https://www.design-prism.com/why-local-shop-owners-love-prism"
   },
   openGraph: {
-    title: "Why Local Shop Owners Love Prism",
+    title: "why local shop owners love prism",
     description:
-      "More customers. Less tech stress. Prism manages your local SEO, listings, ads, and design so you can focus on running your shop.",
+      "more customers. less tech stress. prism manages your local seo, listings, ads, and design so you can focus on running your shop.",
     url: "https://www.design-prism.com/why-local-shop-owners-love-prism",
     siteName: "Prism",
     locale: "en_US",
@@ -95,9 +95,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Why Local Shop Owners Love Prism",
+    title: "why local shop owners love prism",
     description:
-      "Prism brings design, technology, and data together so local business owners can grow online and offline without the tech stress.",
+      "prism brings design, technology, and data together so local business owners can grow online and offline without the tech stress.",
     creator: "@designprism"
   },
   robots: {

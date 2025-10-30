@@ -46,7 +46,7 @@ const cta = {
 
 const share = {
   url: "https://www.design-prism.com/case-studies/sr4-partners",
-  title: "sr4 Partners × Prism Case Study",
+  title: "sr4 partners × prism case study",
   description: "consulting brand clarity through modern web design and analytics essentials.",
 }
 

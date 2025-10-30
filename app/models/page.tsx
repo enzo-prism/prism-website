@@ -2,13 +2,13 @@ import type { Metadata } from "next"
 import ModelsPageClient from "./client-page"
 
 export const metadata: Metadata = {
-  title: "Prism Models | Real People. Real Smiles. Real Opportunities.",
+  title: "prism models | real people. real smiles. real opportunities.",
   description:
-    "Join Prism Models for free whitening, professional photos, and paid creative projects that help dental practices tell real stories.",
+    "join prism models for free whitening, professional photos, and paid creative projects that help dental practices tell real stories.",
   openGraph: {
-    title: "Prism Models | Real People. Real Smiles. Real Opportunities.",
+    title: "prism models | real people. real smiles. real opportunities.",
     description:
-      "We work with everyday people who love being on camera so our dental clients can tell real stories. Complimentary whitening, professional shoots, and paid creative work.",
+      "we work with everyday people who love being on camera so our dental clients can tell real stories. complimentary whitening, professional shoots, and paid creative work.",
     images: ["/prism-opengraph.png"],
   },
   alternates: {

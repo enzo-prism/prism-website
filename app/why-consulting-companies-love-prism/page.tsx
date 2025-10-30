@@ -12,37 +12,37 @@ import { CASE_STUDIES } from "@/lib/case-study-data"
 const coreOutcomes = [
   {
     icon: "💡",
-    title: "More qualified leads who already trust you before the first call",
-    description: "Messaging, design, and proof points that build credibility the moment prospects land on your site."
+    title: "more qualified leads who already trust you before the first call",
+    description: "messaging, design, and proof points that build credibility the moment prospects land on your site."
   },
   {
     icon: "💬",
-    title: "Clearer communication of your value and expertise",
-    description: "Story-driven pages translate complex services into benefits that resonate with decision-makers."
+    title: "clearer communication of your value and expertise",
+    description: "story-driven pages translate complex services into benefits that resonate with decision-makers."
   },
   {
     icon: "🚀",
-    title: "Systems that help your business scale without added complexity",
-    description: "Automations and integrations reduce manual effort so you can take on more clients without burning out."
+    title: "systems that help your business scale without added complexity",
+    description: "automations and integrations reduce manual effort so you can take on more clients without burning out."
   }
 ]
 
 const deliveryPillars = [
   {
-    title: "Professional design that earns trust",
-    description: "Every page, form, and deck feels refined and consistent — crafted for consultants who compete on expertise."
+    title: "professional design that earns trust",
+    description: "every page, form, and deck feels refined and consistent — crafted for consultants who compete on expertise."
   },
   {
-    title: "Advanced automation & integrations",
-    description: "CRM, scheduling, email automation, analytics — fully connected and quietly working behind the scenes."
+    title: "advanced automation & integrations",
+    description: "crm, scheduling, email automation, analytics — fully connected and quietly working behind the scenes."
   },
   {
-    title: "SEO + AEO for authority building",
-    description: "Show up in Google and AI search for your specialties so prospects find you before they build internal solutions."
+    title: "seo + aeo for authority building",
+    description: "show up in google and ai search for your specialties so prospects find you before they build internal solutions."
   },
   {
-    title: "Data-driven iteration",
-    description: "Prism tracks what converts and ships improvements automatically, giving you a smarter site every month."
+    title: "data-driven iteration",
+    description: "prism tracks what converts and ships improvements automatically, giving you a smarter site every month."
   }
 ]
 
@@ -73,14 +73,14 @@ const consultingCaseStudies = CASE_STUDIES.filter((study) => study.segments.incl
 const consultingGradientClasses = ["from-blue-100 via-white to-blue-50", "from-amber-100 via-white to-amber-50"]
 
 export const metadata: Metadata = {
-  title: "Why Consulting Companies Love Prism",
-  description: "Discover how Prism helps consulting firms earn trust online, convert qualified leads, and automate growth while they focus on clients.",
+  title: "why consulting companies love prism",
+  description: "discover how prism helps consulting firms earn trust online, convert qualified leads, and automate growth while they focus on clients.",
   alternates: {
     canonical: "https://www.design-prism.com/why-consulting-companies-love-prism"
   },
   openGraph: {
-    title: "Why Consulting Companies Love Prism",
-    description: "Build trust, attract clients, and scale your impact without worrying about your website. Prism keeps your digital engine running.",
+    title: "why consulting companies love prism",
+    description: "build trust, attract clients, and scale your impact without worrying about your website. prism keeps your digital engine running.",
     url: "https://www.design-prism.com/why-consulting-companies-love-prism",
     siteName: "Prism",
     locale: "en_US",
@@ -88,8 +88,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Why Consulting Companies Love Prism",
-    description: "Prism helps consulting firms stand out online, capture qualified leads, and turn insights into measurable growth.",
+    title: "why consulting companies love prism",
+    description: "prism helps consulting firms stand out online, capture qualified leads, and turn insights into measurable growth.",
     creator: "@designprism"
   },
   robots: {

@@ -27,27 +27,27 @@ const REPORTS_SECTION_ID = "reports"
 
 const servicesHighlights = [
   {
-    title: "Search Campaigns That Convert",
+    title: "search campaigns that convert",
     description:
-      "We build and manage campaigns for every dental service you offer — cleanings, Invisalign, implants, whitening, and more. Your ads show when patients are searching, not scrolling.",
+      "we build and manage campaigns for every dental service you offer — cleanings, invisalign, implants, whitening, and more. your ads show when patients are searching, not scrolling.",
     ctaLabel: "Get a Free Audit",
     href: GET_FREE_AUDIT_HREF,
     icon: Target,
     external: false
   },
   {
-    title: "Compliant Campaign Architecture",
+    title: "compliant campaign architecture",
     description:
-      "We separate general and sensitive services so every campaign meets Google’s Health Advertising policies. You get maximum performance and full compliance.",
+      "we separate general and sensitive services so every campaign meets google’s health advertising policies. you get maximum performance and full compliance.",
     ctaLabel: "Learn About Policy Compliance",
     href: `#${POLICY_SECTION_ID}`,
     icon: ShieldCheck,
     external: false
   },
   {
-    title: "Smart Tracking & Reporting",
+    title: "smart tracking & reporting",
     description:
-      "We set up conversion tracking for calls, forms, and appointments — without violating privacy rules. You’ll know exactly where every lead comes from.",
+      "we set up conversion tracking for calls, forms, and appointments — without violating privacy rules. you’ll know exactly where every lead comes from.",
     ctaLabel: "See Sample Reports",
     href: `#${REPORTS_SECTION_ID}`,
     icon: BarChart3,
@@ -58,33 +58,33 @@ const servicesHighlights = [
 const structurePillars = [
   {
     emoji: "🦷",
-    title: "Split by Service Type",
+    title: "split by service type",
     description:
-      "General / Cosmetic — cleanings, whitening, Invisalign → full targeting enabled. Implants / Surgical — implants, extractions, TMJ → keyword + location targeting only."
+      "general / cosmetic — cleanings, whitening, invisalign → full targeting enabled. implants / surgical — implants, extractions, tmj → keyword + location targeting only."
   },
   {
     emoji: "🔍",
-    title: "Keyword-Driven Search",
+    title: "keyword-driven search",
     description:
-      "We target high-intent searches like “dentist near me,” “Invisalign dentist San Jose,” and “dental implants consultation.”"
+      "we target high-intent searches like “dentist near me,” “invisalign dentist san jose,” and “dental implants consultation.”"
   },
   {
     emoji: "⚙️",
-    title: "No Guesswork Targeting",
+    title: "no guesswork targeting",
     description:
-      "No remarketing or lookalike audiences on sensitive services. We lean on keyword intent and city-level targeting to stay compliant."
+      "no remarketing or lookalike audiences on sensitive services. we lean on keyword intent and city-level targeting to stay compliant."
   },
   {
     emoji: "📞",
-    title: "Conversion Optimization",
+    title: "conversion optimization",
     description:
-      "Landing pages built for action with clear calls to call, text, or book online — matched tracking for every lead source."
+      "landing pages built for action with clear calls to call, text, or book online — matched tracking for every lead source."
   },
   {
     emoji: "📊",
-    title: "Continuous Optimization",
+    title: "continuous optimization",
     description:
-      "Weekly search-term audits, negative keyword updates, and monthly performance reports to keep your spend efficient."
+      "weekly search-term audits, negative keyword updates, and monthly performance reports to keep your spend efficient."
   }
 ]
 

@@ -16,20 +16,20 @@ export default function AISEOBoostPage() {
   const services = [
     {
       icon: Search,
-      title: "AI Audit",
-      description: "Find where bots ignore you",
+      title: "ai audit",
+      description: "find where bots ignore you",
       detail: "Discover exactly how ChatGPT, Gemini & Perplexity currently see your brand"
     },
     {
       icon: Target,
-      title: "Optimization", 
-      description: "Make them recommend you",
+      title: "optimization", 
+      description: "make them recommend you",
       detail: "Strategic content & citation optimization for AI search engines"
     },
     {
       icon: TrendingUp,
-      title: "Results",
-      description: "2× AI traffic in 90 days",
+      title: "results",
+      description: "2× ai traffic in 90 days",
       detail: "Guaranteed increase in AI-generated referrals or we work for free"
     }
   ]
@@ -62,26 +62,26 @@ export default function AISEOBoostPage() {
   const problemPoints = [
     {
       icon: Bot,
-      title: "AI Bots Ignore Your Brand",
-      description: "ChatGPT, Gemini, and Perplexity recommend your competitors instead of you"
+      title: "ai bots ignore your brand",
+      description: "chatgpt, gemini, and perplexity recommend your competitors instead of you"
     },
     {
       icon: TrendingUp,
-      title: "Missing the AI Traffic Wave",
-      description: "40% of searches now go through AI - and you're not getting any of it"
+      title: "missing the ai traffic wave",
+      description: "40% of searches now go through ai - and you're not getting any of it"
     },
     {
       icon: Users,
-      title: "Your Customers Ask AI First",
-      description: "They trust AI recommendations more than traditional search results"
+      title: "your customers ask ai first",
+      description: "they trust ai recommendations more than traditional search results"
     }
   ]
 
   const resultMetrics = [
-    { metric: "2-5x", description: "Increase in AI-driven traffic" },
-    { metric: "90 days", description: "Timeline to see results" },
-    { metric: "100%", description: "Money-back guarantee" },
-    { metric: "24/7", description: "AI bots working for you" }
+    { metric: "2-5x", description: "increase in ai-driven traffic" },
+    { metric: "90 days", description: "timeline to see results" },
+    { metric: "100%", description: "money-back guarantee" },
+    { metric: "24/7", description: "ai bots working for you" }
   ]
 
   return (

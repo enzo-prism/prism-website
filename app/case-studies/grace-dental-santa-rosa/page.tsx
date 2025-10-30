@@ -2,11 +2,11 @@ import type { Metadata } from "next"
 import GraceDentalSantaRosaCaseStudy from "./client-page"
 
 export const metadata: Metadata = {
-  title: "Grace Dental Santa Rosa Case Study — Post‑M&A Relaunch",
+  title: "grace dental santa rosa case study — post‑m&a relaunch",
   description:
     "how we partnered with grace dental (tingjen ji, dds msd) to relaunch the brand and site, and stand up acquisition and tracking.",
   openGraph: {
-    title: "Grace Dental Santa Rosa × Prism — Case Study",
+    title: "grace dental santa rosa × prism — case study",
     description: "brand, website, acquisition channels, and tracking for an exceptional family dental practice",
     images: [],
   },

@@ -12,29 +12,29 @@ const TYPEFORM_URL = "https://fxuqp40sseh.typeform.com/to/ln0VzAjB"
 
 const processSteps = [
   {
-    title: "Share who needs support",
+    title: "share who needs support",
     description:
-      "Tell us who’s ready for better marketing — their name, email, and why they need help with a website, local listings, or ads."
+      "tell us who’s ready for better marketing — their name, email, and why they need help with a website, local listings, or ads."
   },
   {
-    title: "We reach out with a free analysis",
+    title: "we reach out with a free analysis",
     description:
-      "Our team contacts them directly, offering a complimentary teardown of their current experience and quick wins."
+      "our team contacts them directly, offering a complimentary teardown of their current experience and quick wins."
   },
   {
-    title: "They get a custom report",
+    title: "they get a custom report",
     description:
-      "We audit their site, listings, and ad presence, then deliver a report packed with insights they can act on immediately."
+      "we audit their site, listings, and ad presence, then deliver a report packed with insights they can act on immediately."
   },
   {
-    title: "Strategize together",
+    title: "strategize together",
     description:
-      "If they want more help, we schedule a focused 30-minute Zoom session to plan the roadmap and compile a tailored proposal."
+      "if they want more help, we schedule a focused 30-minute zoom session to plan the roadmap and compile a tailored proposal."
   },
   {
-    title: "You get rewarded",
+    title: "you get rewarded",
     description:
-      "When they sign with Prism, you receive up to $1,000 as a thank-you for making the connection."
+      "when they sign with prism, you receive up to $1,000 as a thank-you for making the connection."
   }
 ]
 
@@ -43,7 +43,7 @@ const segmentHighlights = [
     emoji: "🦷",
     title: "dentists",
     description:
-      "Seamless transitions from outdated providers, more reviews, and steady new patient flow.",
+      "seamless transitions from outdated providers, more reviews, and steady new patient flow.",
     href: "/why-dental-practices-love-prism",
     caseStudies: ["dr-christopher-wong", "family-first-smile-care", "wine-country-root-canal"]
   },
@@ -51,7 +51,7 @@ const segmentHighlights = [
     emoji: "🏪",
     title: "local shop owners",
     description:
-      "Listings, ads, and automations that keep foot traffic and repeat visits coming.",
+      "listings, ads, and automations that keep foot traffic and repeat visits coming.",
     href: "/why-local-shop-owners-love-prism",
     caseStudies: ["olympic-bootworks", "laguna-beach-dental-arts", "canary-cove"]
   },
@@ -59,7 +59,7 @@ const segmentHighlights = [
     emoji: "📊",
     title: "consulting companies",
     description:
-      "A trusted presence, streamlined lead flows, and insights that help firms scale.",
+      "a trusted presence, streamlined lead flows, and insights that help firms scale.",
     href: "/why-consulting-companies-love-prism",
     caseStudies: ["sr4-partners", "practice-transitions-institute"]
   },
@@ -67,7 +67,7 @@ const segmentHighlights = [
     emoji: "📱",
     title: "online community founders",
     description:
-      "Design, technology, and data that keep communities growing without burning out the team.",
+      "design, technology, and data that keep communities growing without burning out the team.",
     href: "/why-online-community-founders-love-prism",
     caseStudies: ["rebellious-aging", "we-are-saplings"]
   },
@@ -75,7 +75,7 @@ const segmentHighlights = [
     emoji: "❤️",
     title: "nonprofits",
     description:
-      "Beautiful storytelling, donation flows, and automation that free teams to focus on impact.",
+      "beautiful storytelling, donation flows, and automation that free teams to focus on impact.",
     href: "/why-nonprofits-love-prism",
     caseStudies: ["canary-foundation", "belize-kids-foundation"]
   }
@@ -84,32 +84,32 @@ const segmentHighlights = [
 const referralBenefits = [
   {
     icon: Gift,
-    title: "Earn up to $1,000",
-    description: "Collect a direct payment when your referral becomes a Prism client."
+    title: "earn up to $1,000",
+    description: "collect a direct payment when your referral becomes a prism client."
   },
   {
     icon: Handshake,
-    title: "Look out for your network",
-    description: "Introduce them to a partner that handles the heavy lifting with zero stress."
+    title: "look out for your network",
+    description: "introduce them to a partner that handles the heavy lifting with zero stress."
   },
   {
     icon: PhoneCall,
-    title: "Personal support",
-    description: "You’ll always have a human point of contact — reach us any time for updates."
+    title: "personal support",
+    description: "you’ll always have a human point of contact — reach us any time for updates."
   }
 ]
 
 export const metadata: Metadata = {
-  title: "Refer a Business to Prism & Earn",
+  title: "refer a business to prism & earn",
   description:
-    "Know someone who needs a better website, listings, or ad strategy? Refer them to Prism for a free analysis and earn up to $1,000 when they become a client.",
+    "know someone who needs a better website, listings, or ad strategy? refer them to prism for a free analysis and earn up to $1,000 when they become a client.",
   alternates: {
     canonical: "https://www.design-prism.com/refer"
   },
   openGraph: {
-    title: "Refer a Business to Prism & Earn",
+    title: "refer a business to prism & earn",
     description:
-      "Invite a business you care about to Prism. We deliver a free analysis — you earn up to $1,000 when they sign.",
+      "invite a business you care about to prism. we deliver a free analysis — you earn up to $1,000 when they sign.",
     url: "https://www.design-prism.com/refer",
     siteName: "Prism",
     locale: "en_US",
@@ -117,9 +117,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Refer a Business to Prism & Earn",
+    title: "refer a business to prism & earn",
     description:
-      "Help a friend upgrade their marketing and earn up to $1,000 when they become a Prism client.",
+      "help a friend upgrade their marketing and earn up to $1,000 when they become a prism client.",
     creator: "@designprism"
   },
   robots: {

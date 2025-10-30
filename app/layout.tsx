@@ -17,15 +17,15 @@ import { GA_MEASUREMENT_ID } from "@/lib/constants"
 
 export const metadata: Metadata = {
   title: {
-    template: "%s | Prism",
-    default: "Prism | Growth Engine for Local Brands",
+    template: "%s | prism",
+    default: "prism | growth engine for local brands",
   },
   description:
-    "Prism builds high-converting websites, manages paid ads, and optimizes local listings so small businesses consistently attract qualified local customers.",
+    "prism builds high-converting websites, manages paid ads, and optimizes local listings so small businesses consistently attract qualified local customers.",
   openGraph: {
-    title: "Prism | Growth Engine for Local Brands",
+    title: "prism | growth engine for local brands",
     description:
-      "Prism builds high-converting websites, manages paid ads, and optimizes local listings so small businesses consistently attract qualified local customers.",
+      "prism builds high-converting websites, manages paid ads, and optimizes local listings so small businesses consistently attract qualified local customers.",
     url: "https://www.design-prism.com",
     siteName: "prism",
     images: [
@@ -42,9 +42,9 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title:
-      "Prism | Websites, Ads & Local Listing Optimization for Small Businesses",
+      "prism | websites, ads & local listing optimization for small businesses",
     description:
-      "Prism builds high-converting websites, manages paid ads, and optimizes local listings so small businesses consistently attract qualified local customers.",
+      "prism builds high-converting websites, manages paid ads, and optimizes local listings so small businesses consistently attract qualified local customers.",
     images: ["/prism-opengraph.png"],
   },
   icons: {

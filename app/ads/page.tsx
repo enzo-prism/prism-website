@@ -10,13 +10,13 @@ import Link from "next/link"
 import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
 
 export const metadata: Metadata = {
-  title: "Paid Ads Management for Small Businesses | Prism",
+  title: "paid ads management for small businesses | prism",
   description:
-    "Prism plans, builds, and optimizes Google, Meta, TikTok, and Yelp ads so small businesses capture ready-to-buy local customers without wasted spend.",
+    "prism plans, builds, and optimizes google, meta, tiktok, and yelp ads so small businesses capture ready-to-buy local customers without wasted spend.",
   openGraph: {
-    title: "Paid Ads Management for Small Businesses | Prism",
+    title: "paid ads management for small businesses | prism",
     description:
-      "Prism plans, builds, and optimizes Google, Meta, TikTok, and Yelp ads so small businesses capture ready-to-buy local customers without wasted spend.",
+      "prism plans, builds, and optimizes google, meta, tiktok, and yelp ads so small businesses capture ready-to-buy local customers without wasted spend.",
     url: "https://design-prism.com/ads",
     images: [
       {
@@ -34,47 +34,47 @@ export const metadata: Metadata = {
 
 const whatYouGet = [
   {
-    title: "Strategy that fits your goals",
-    description: "Clear targets, ideal customer profiles, and the fastest path to ROI.",
+    title: "strategy that fits your goals",
+    description: "clear targets, ideal customer profiles, and the fastest path to roi.",
   },
   {
-    title: "High-performing creative",
-    description: "Thumb-stopping visuals and plain-English copy that turns interest into action.",
+    title: "high-performing creative",
+    description: "thumb-stopping visuals and plain-english copy that turns interest into action.",
   },
   {
-    title: "Landing page alignment",
-    description: "Every click points to a tuned offer, so conversions stay high.",
+    title: "landing page alignment",
+    description: "every click points to a tuned offer, so conversions stay high.",
   },
   {
-    title: "Full-funnel setup",
-    description: "Search, social, remarketing, and local intent working together.",
+    title: "full-funnel setup",
+    description: "search, social, remarketing, and local intent working together.",
   },
   {
-    title: "Daily / weekly optimization",
-    description: "Shift budget to winners, pause what isn't working, and test new ideas.",
+    title: "daily / weekly optimization",
+    description: "shift budget to winners, pause what isn't working, and test new ideas.",
   },
   {
-    title: "Transparent reporting",
-    description: "Calls, form fills, booked appointments, and CPL, all in plain English.",
+    title: "transparent reporting",
+    description: "calls, form fills, booked appointments, and cpl, all in plain english.",
   },
 ]
 
 const budgetGuards = [
   {
-    title: "No wasted clicks",
-    description: "Block bad searches, irrelevant audiences, and spam leads before they burn budget.",
+    title: "no wasted clicks",
+    description: "block bad searches, irrelevant audiences, and spam leads before they burn budget.",
   },
   {
-    title: "Show up when buyers are ready",
-    description: "Bids, schedules, and pacing tuned to peak-intent windows.",
+    title: "show up when buyers are ready",
+    description: "bids, schedules, and pacing tuned to peak-intent windows.",
   },
   {
-    title: "Right radius, right people",
-    description: "Smart geo-targeting and exclusions keep spend local and high quality.",
+    title: "right radius, right people",
+    description: "smart geo-targeting and exclusions keep spend local and high quality.",
   },
   {
-    title: "Relentless A/B testing",
-    description: "Headlines, images, offers, and forms refined nonstop to lower cost per lead.",
+    title: "relentless a/b testing",
+    description: "headlines, images, offers, and forms refined nonstop to lower cost per lead.",
   },
 ]
 
@@ -100,23 +100,23 @@ const platforms = [
 const processSteps = [
   {
     step: "Discover",
-    description: "Goals, budget, ideal customers, and local market reality.",
+    description: "goals, budget, ideal customers, and local market reality.",
   },
   {
     step: "Build",
-    description: "Tracking, audiences, creative, and landing page improvements.",
+    description: "tracking, audiences, creative, and landing page improvements.",
   },
   {
     step: "Launch",
-    description: "Start lean and gather signal quickly without wasting spend.",
+    description: "start lean and gather signal quickly without wasting spend.",
   },
   {
     step: "Optimize",
-    description: "Shift spend to winners and cut losers fast.",
+    description: "shift spend to winners and cut losers fast.",
   },
   {
     step: "Report",
-    description: "Clear results and next steps with no jargon and no fluff.",
+    description: "clear results and next steps with no jargon and no fluff.",
   },
 ]
 
@@ -167,27 +167,27 @@ const faqItems = [
 const audienceSegments = [
   {
     name: "Dental & medical teams",
-    description: "Fill chair time with compliant campaigns, call tracking, and landing pages tuned for patients.",
+    description: "fill chair time with compliant campaigns, call tracking, and landing pages tuned for patients.",
     href: "/why-dental-practices-love-prism",
   },
   {
     name: "Local shop owners",
-    description: "Hyper-local offers on Google, Meta, and Yelp that turn scrollers into foot traffic and orders.",
+    description: "hyper-local offers on google, meta, and yelp that turn scrollers into foot traffic and orders.",
     href: "/why-local-shop-owners-love-prism",
   },
   {
     name: "Consulting & professional services",
-    description: "Lead-gen funnels that surface expertise, nurture prospects, and protect premium positioning.",
+    description: "lead-gen funnels that surface expertise, nurture prospects, and protect premium positioning.",
     href: "/why-consulting-companies-love-prism",
   },
   {
     name: "Online community founders",
-    description: "Acquisition loops that combine paid social and retargeting to expand engaged membership.",
+    description: "acquisition loops that combine paid social and retargeting to expand engaged membership.",
     href: "/why-online-community-founders-love-prism",
   },
   {
     name: "Nonprofits & education",
-    description: "Mission-forward messaging, donor retargeting, and grant-friendly tracking that proves impact.",
+    description: "mission-forward messaging, donor retargeting, and grant-friendly tracking that proves impact.",
     href: "/why-nonprofits-love-prism",
   },
 ]

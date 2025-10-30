@@ -2,11 +2,11 @@ import type { Metadata } from "next"
 import LagunaBeachDentalArtsCaseStudy from "./client-page"
 
 export const metadata: Metadata = {
-  title: "Laguna Beach Dental Arts Case Study — Post‑M&A Relaunch",
+  title: "laguna beach dental arts case study — post‑m&a relaunch",
   description:
     "how we partnered with laguna beach dental arts post‑merger to relaunch the brand, ship a modern website, and stand up full‑funnel acquisition and tracking.",
   openGraph: {
-    title: "Laguna Beach Dental Arts × Prism — Case Study",
+    title: "laguna beach dental arts × prism — case study",
     description:
       "post‑m&a relaunch: brand, website, acquisition channels, and tracking — built for measurable growth",
     images: [],

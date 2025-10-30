@@ -5,13 +5,13 @@ import type { Metadata } from "next"
 import SMBClientPage from "./client-page"
 
 export const metadata: Metadata = {
-  title: "Small Business AI Services | GPT-5 Solutions by Prism",
+  title: "small business ai services | gpt-5 solutions by prism",
   description:
-    "Leverage GPT-5 across marketing, operations, and support. Prism sets up, trains, and tunes AI workflows tailored to your small business.",
+    "leverage gpt-5 across marketing, operations, and support. prism sets up, trains, and tunes ai workflows tailored to your small business.",
   openGraph: {
-    title: "Small Business AI Services | GPT-5 Solutions by Prism",
+    title: "small business ai services | gpt-5 solutions by prism",
     description:
-      "Leverage GPT-5 across marketing, operations, and support. Prism sets up, trains, and tunes AI workflows tailored to your small business.",
+      "leverage gpt-5 across marketing, operations, and support. prism sets up, trains, and tunes ai workflows tailored to your small business.",
     url: "https://design-prism.com/smb",
     images: [
       {

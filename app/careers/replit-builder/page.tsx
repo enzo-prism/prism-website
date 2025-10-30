@@ -2,13 +2,13 @@ import type { Metadata } from "next"
 import ReplitBuilderPage from "./client-page"
 
 export const metadata: Metadata = {
-  title: "Replit Builder Contract Role | Prism Careers",
+  title: "replit builder contract role | prism careers",
   description:
-    "Join our lean studio shipping fast, beautiful sites inside Replit. Use Replit Agent, Replit DB, and Vercel v0 in a remote contract role.",
+    "join our lean studio shipping fast, beautiful sites inside replit. use replit agent, replit db, and vercel v0 in a remote contract role.",
   openGraph: {
-    title: "Replit Builder Contract Role | Prism Careers",
+    title: "replit builder contract role | prism careers",
     description:
-      "Join our lean studio shipping fast, beautiful sites inside Replit. Use Replit Agent, Replit DB, and Vercel v0 in a remote contract role.",
+      "join our lean studio shipping fast, beautiful sites inside replit. use replit agent, replit db, and vercel v0 in a remote contract role.",
     images: ["/prism-opengraph.png"]
   },
   alternates: {

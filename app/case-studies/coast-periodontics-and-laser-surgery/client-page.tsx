@@ -46,7 +46,7 @@ const cta = {
 
 const share = {
   url: "https://www.design-prism.com/case-studies/coast-periodontics-and-laser-surgery",
-  title: "Coast Periodontics & Laser Surgery × Prism Case Study",
+  title: "coast periodontics & laser surgery × prism case study",
   description: "specialty dental growth groundwork with website design and local presence support.",
 }
 

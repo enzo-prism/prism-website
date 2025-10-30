@@ -4,9 +4,9 @@ import type { Metadata } from "next"
 import PricingDentalClient from "./client-page"
 
 export const metadata: Metadata = {
-  title: "Dental Marketing Pricing | Prism",
+  title: "dental marketing pricing | prism",
   description:
-    "Transparent pricing plans designed specifically for dental practices. Choose between starter and pro plans to grow your practice and attract more patients.",
+    "transparent pricing plans designed specifically for dental practices. choose between starter and pro plans to grow your practice and attract more patients.",
 }
 
 export default function PricingDentalPage() {

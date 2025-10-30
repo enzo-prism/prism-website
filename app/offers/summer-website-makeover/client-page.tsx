@@ -119,7 +119,7 @@ export default function SummerWebsiteMakeoverOpenAIStylePage() {
               {[
                 {
                   icon: Zap,
-                  title: "Full-Stack Site Rebuild",
+                  title: "full-stack site rebuild",
                   items: [
                     "Lightning-fast pages (90+ PageSpeed)",
                     "Mobile-first, accessibility-friendly design",
@@ -128,7 +128,7 @@ export default function SummerWebsiteMakeoverOpenAIStylePage() {
                 },
                 {
                   icon: TrendingUp,
-                  title: "Traffic Multiplier Engine",
+                  title: "traffic multiplier engine",
                   items: [
                     "On-page SEO, schema, and technical health fixes",
                     "Google Business Profile sync (where applicable)",
@@ -137,7 +137,7 @@ export default function SummerWebsiteMakeoverOpenAIStylePage() {
                 },
                 {
                   icon: Sparkles,
-                  title: "Conversion Booster Suite",
+                  title: "conversion booster suite",
                   items: [
                     "A/B-tested hero headline + CTA",
                     "Streamlined inquiry / checkout flow",
@@ -146,7 +146,7 @@ export default function SummerWebsiteMakeoverOpenAIStylePage() {
                 },
                 {
                   icon: BarChart,
-                  title: "Real-Time Prism Dashboard",
+                  title: "real-time prism dashboard",
                   items: ["Track visitors, leads, and sales 24/7", "Compare pre- vs. post-launch KPIs at a glance"],
                 },
               ].map((feature, idx) => {

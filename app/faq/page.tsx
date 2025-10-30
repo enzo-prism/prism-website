@@ -5,11 +5,11 @@ import type { Metadata } from "next"
 import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
 
 export const metadata: Metadata = {
-  title: "Frequently Asked Questions | Prism Agency",
-  description: "Get answers to common questions about Prism Agency’s web, app, and marketing services, including pricing, timelines, and our AI-powered approach.",
+  title: "frequently asked questions | prism agency",
+  description: "get answers to common questions about prism agency’s web, app, and marketing services, including pricing, timelines, and our ai-powered approach.",
   openGraph: {
-    title: "FAQ - Prism Agency",
-    description: "Common questions about web development, app development, and digital marketing services at Prism Agency.",
+    title: "faq - prism agency",
+    description: "common questions about web development, app development, and digital marketing services at prism agency.",
     url: "https://design-prism.com/faq",
     images: [
       {

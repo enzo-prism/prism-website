@@ -18,39 +18,39 @@ const tldrPoints = [
 
 const benefits = [
   {
-    title: "Look legit. Build trust.",
+    title: "look legit. build trust.",
     description:
-      "Emails from hello@yourpractice.com match your website and signage. It is a small signal that patients and partners notice, and hiring portals recognize it too.",
+      "emails from hello@yourpractice.com match your website and signage. it is a small signal that patients and partners notice, and hiring portals recognize it too.",
   },
   {
-    title: "Better hiring and vendor verification.",
+    title: "better hiring and vendor verification.",
     description:
-      "Platforms like Handshake prefer company-domain emails for faster employer validation. Generic mailboxes often face limited functionality or extra steps.",
+      "platforms like handshake prefer company-domain emails for faster employer validation. generic mailboxes often face limited functionality or extra steps.",
   },
   {
-    title: "Own the inbox, not the employee.",
+    title: "own the inbox, not the employee.",
     description:
-      "Create or remove accounts in minutes. Forward or archive safely when staff changes so resumes and treatment history never live in a personal Gmail.",
+      "create or remove accounts in minutes. forward or archive safely when staff changes so resumes and treatment history never live in a personal gmail.",
   },
   {
-    title: "Fewer deliverability headaches.",
+    title: "fewer deliverability headaches.",
     description:
-      "With SPF, DKIM, and DMARC in place, receiving servers can verify that your messages are real. That reduces spam flags and blocks spoofers that target clinics.",
+      "with spf, dkim, and dmarc in place, receiving servers can verify that your messages are real. that reduces spam flags and blocks spoofers that target clinics.",
   },
   {
-    title: "Security foundation for healthcare.",
+    title: "security foundation for healthcare.",
     description:
-      "Google Workspace or Microsoft 365 can be configured with BAAs and policies that support HIPAA compliance when used correctly. HHS allows email with reasonable safeguards.",
+      "google workspace or microsoft 365 can be configured with baas and policies that support hipaa compliance when used correctly. hhs allows email with reasonable safeguards.",
   },
   {
-    title: "Shared and role addresses that just work.",
+    title: "shared and role addresses that just work.",
     description:
-      "Use addresses like frontdesk@, billing@, care@, and jobs@ that route to the right people and can be reassigned as your team changes.",
+      "use addresses like frontdesk@, billing@, care@, and jobs@ that route to the right people and can be reassigned as your team changes.",
   },
   {
-    title: "Simple to use with the same apps.",
+    title: "simple to use with the same apps.",
     description:
-      "Prefer Gmail or Outlook? Keep the same interface, just with your own domain and the protections Prism configures behind the scenes.",
+      "prefer gmail or outlook? keep the same interface, just with your own domain and the protections prism configures behind the scenes.",
   },
 ]
 
@@ -75,7 +75,7 @@ const pricingOptions = [
   },
   {
     name: "Multi-location",
-    description: "Everything above plus org-wide policies and location-specific routing.",
+    description: "everything above plus org-wide policies and location-specific routing.",
   },
 ]
 
@@ -122,24 +122,24 @@ const sources = [
 ]
 
 export const metadata: Metadata = {
-  title: "Custom Email for Dental Practices",
+  title: "custom email for dental practices",
   description:
-    "Why name@yourpractice.com beats free mailboxes. Prism sets up secure, professional email so dental practices look legit, hire faster, and stay compliant.",
+    "why name@yourpractice.com beats free mailboxes. prism sets up secure, professional email so dental practices look legit, hire faster, and stay compliant.",
   alternates: {
     canonical: "https://www.design-prism.com/custom-email-for-dental-practices",
   },
   openGraph: {
-    title: "Custom Email for Dental Practices",
+    title: "custom email for dental practices",
     description:
-      "Give your dental practice a professional email foundation. Prism handles Workspace or 365 setup, deliverability, HIPAA safeguards, and team training.",
+      "give your dental practice a professional email foundation. prism handles workspace or 365 setup, deliverability, hipaa safeguards, and team training.",
     url: "https://www.design-prism.com/custom-email-for-dental-practices",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Custom Email for Dental Practices",
+    title: "custom email for dental practices",
     description:
-      "Own your inbox, build trust, and protect patient communication. Prism configures professional email that works for modern dental teams.",
+      "own your inbox, build trust, and protect patient communication. prism configures professional email that works for modern dental teams.",
   },
   robots: {
     index: true,

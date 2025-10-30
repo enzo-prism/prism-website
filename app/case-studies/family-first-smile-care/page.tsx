@@ -2,11 +2,11 @@ import type { Metadata } from "next"
 import FamilyFirstSmileCareCaseStudy from "./client-page"
 
 export const metadata: Metadata = {
-  title: "Family First Smile Care Case Study | Dental Website",
+  title: "family first smile care case study | dental website",
   description:
     "how we created a modern, patient‑friendly website for family first smile care with clear services, comfort highlights, and conversion paths.",
   openGraph: {
-    title: "Family First Smile Care × Prism — Case Study",
+    title: "family first smile care × prism — case study",
     description: "family‑focused website: services clarity, office amenities, and measurable conversion flows",
     images: [],
   },

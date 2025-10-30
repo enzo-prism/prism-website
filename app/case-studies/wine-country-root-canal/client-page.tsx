@@ -46,7 +46,7 @@ const cta = {
 
 const share = {
   url: "https://www.design-prism.com/case-studies/wine-country-root-canal",
-  title: "Wine Country Root Canal × Prism Case Study",
+  title: "wine country root canal × prism case study",
   description: "endodontic growth groundwork with website, local presence, and analytics readiness.",
 }
 
