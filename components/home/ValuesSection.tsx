@@ -37,7 +37,7 @@ export default function ValuesSection() {
         />
       </div>
       <div
-        className="absolute inset-0 -z-10 bg-gradient-to-br from-neutral-900/20 via-white/80 to-white/75 backdrop-blur-md dark:from-neutral-950/70 dark:via-neutral-950/80 dark:to-neutral-950/85"
+        className="absolute inset-0 -z-10 bg-gradient-to-br from-neutral-900/55 via-neutral-900/35 to-white/65 backdrop-blur-sm dark:from-neutral-950/75 dark:via-neutral-950/80 dark:to-neutral-950/88"
         aria-hidden="true"
       />
       <div className="container relative z-10 mx-auto px-4 md:px-6">
