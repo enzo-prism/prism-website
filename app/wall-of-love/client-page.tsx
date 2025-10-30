@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button"
 import { ArrowRight } from "lucide-react"
 import Link from "next/link"
 import { useEffect, useMemo, useState } from "react"
-import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
+import { trackCTAClick } from "@/utils/analytics"
 
 interface Quote {
   id: number
