@@ -8,10 +8,12 @@ import { trackCTAClick } from "@/utils/analytics"
 
 function DreamBusinessBanner() {
   return (
-    <div className="mx-auto max-w-xl rounded-3xl border border-white/40 bg-white/85 px-6 py-6 text-center text-neutral-900 shadow-lg backdrop-blur-sm dark:border-neutral-800 dark:bg-neutral-900/85 dark:text-neutral-50">
-      <p className="text-lg font-semibold lowercase md:text-xl">
+    <div className="mx-auto flex max-w-xl items-center gap-3 px-1 text-neutral-900/75 lowercase md:text-base dark:text-neutral-100/80">
+      <span className="hidden h-px flex-1 bg-white/30 sm:block" aria-hidden="true" />
+      <p className="text-sm font-medium tracking-tight md:text-base">
         the business of your dreams is possible. we'll help you build it.
       </p>
+      <span className="hidden h-px flex-1 bg-white/30 sm:block" aria-hidden="true" />
     </div>
   )
 }
