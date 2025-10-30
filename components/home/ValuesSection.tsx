@@ -26,8 +26,18 @@ const valueHighlights = [
 
 export default function ValuesSection() {
   return (
-    <section className="bg-neutral-50 py-16 dark:bg-neutral-950 md:py-24">
-      <div className="container mx-auto px-4 md:px-6">
+    <section className="relative overflow-hidden py-16 md:py-24">
+      <div className="absolute inset-0 -z-20">
+        <img
+          src="https://res.cloudinary.com/dhqpqfw6w/image/upload/v1761856728/garden_cejtbs.webp"
+          alt=""
+          className="h-full w-full object-cover"
+          loading="lazy"
+          aria-hidden="true"
+        />
+      </div>
+      <div className="absolute inset-0 -z-10 bg-white/85 backdrop-blur-sm dark:bg-neutral-950/85" aria-hidden="true" />
+      <div className="container relative z-10 mx-auto px-4 md:px-6">
         <div className="mx-auto max-w-6xl">
           <div className="grid gap-10 text-center lg:grid-cols-[1fr_1.1fr] lg:items-start lg:gap-16 lg:text-left">
             <div className="space-y-6">
