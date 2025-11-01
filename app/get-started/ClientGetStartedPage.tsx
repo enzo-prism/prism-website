@@ -709,6 +709,47 @@ export default function ClientGetStartedPage({ heroOnly = false }: { heroOnly?: 
 
             <section className="px-4 py-16">
               <div className="container mx-auto max-w-3xl">
+                <div className="rounded-3xl border border-neutral-200 bg-white px-8 py-12 shadow-sm sm:px-12">
+                  <p className="text-xs uppercase tracking-[0.32em] text-neutral-500">
+                    community initiative
+                  </p>
+                  <h2 className="mt-3 text-3xl font-light tracking-tight text-neutral-900 sm:text-4xl">
+                    we build one free website every month
+                  </h2>
+                  <p className="mt-4 text-base text-neutral-600">
+                    the prism scholarship supports community builders, nonprofits, and early founders who need a modern site but don&apos;t have the budget yet. apply in a few minutes and we&apos;ll review before the next pick.
+                  </p>
+                  <div className="mt-8 flex flex-wrap items-center gap-3">
+                    <Button
+                      asChild
+                      className="rounded-full px-8"
+                    >
+                      <Link
+                        href="/scholarship"
+                        onClick={() => trackCTAClick("view scholarship", "get-started scholarship block")}
+                      >
+                        apply to the scholarship <ArrowRight className="ml-2 h-5 w-5" />
+                      </Link>
+                    </Button>
+                    <Button
+                      asChild
+                      variant="outline"
+                      className="rounded-full px-8"
+                    >
+                      <Link
+                        href="/websites"
+                        onClick={() => trackCTAClick("view scholarship examples", "get-started scholarship block")}
+                      >
+                        see recent sites
+                      </Link>
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <section className="px-4 py-16">
+              <div className="container mx-auto max-w-3xl">
                 <div className="rounded-3xl bg-neutral-900 px-8 py-12 text-center text-white sm:px-12">
                   <h2 className="text-3xl font-light tracking-tight sm:text-4xl">
                     got an immediate question?

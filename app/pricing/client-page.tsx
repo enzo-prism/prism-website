@@ -586,6 +586,29 @@ const isCustomComplete =
       </section>
 
       <section className="px-4 py-16 sm:py-20">
+        <div className="mx-auto flex max-w-5xl flex-col gap-6 overflow-hidden rounded-3xl border border-neutral-200 bg-white p-10 shadow-sm sm:p-12">
+          <div className="space-y-4 text-center md:text-left">
+            <p className="text-xs uppercase tracking-[0.32em] text-neutral-500">community scholarship</p>
+            <h2 className="text-3xl font-semibold lowercase text-neutral-900 sm:text-4xl">
+              one free website every month
+            </h2>
+            <p className="text-base leading-relaxed text-neutral-600">
+              our scholarship program gifts a full Prism build to a community project, nonprofit, or early founder that needs momentum. share your story and we&apos;ll review it before the next selection.
+            </p>
+          </div>
+          <div className="flex flex-wrap items-center gap-3 md:justify-between">
+            <div className="rounded-2xl border border-neutral-200 bg-neutral-50 px-5 py-4 text-center text-neutral-800">
+              <p className="text-xs uppercase tracking-[0.32em] text-neutral-500">next pick review</p>
+              <p className="mt-2 text-lg font-semibold">first week of every month</p>
+            </div>
+            <Button asChild size="lg" className="rounded-full px-8 lowercase">
+              <Link href="/scholarship">apply to the scholarship</Link>
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      <section className="px-4 py-16 sm:py-20">
         <div className="mx-auto max-w-4xl rounded-3xl border border-neutral-200 bg-white p-10 text-center shadow-sm">
           <h2 className="text-3xl font-semibold lowercase text-neutral-900 sm:text-4xl">why teams pick prism</h2>
           <ul className="mt-6 space-y-4 text-left text-sm text-neutral-600">
