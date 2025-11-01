@@ -1,6 +1,6 @@
 "use client"
 
-import React from 'react';
+import { useMemo } from "react"
 
 interface YouTubeVideoEmbedProps {
   videoId: string
@@ -8,23 +8,23 @@ interface YouTubeVideoEmbedProps {
   className?: string
 }
 
-export default function YouTubeVideoEmbed({ 
-  videoId, 
-  title, 
-  className = "" 
-}: YouTubeVideoEmbedProps) {
+const buildEmbedUrl = (videoId: string) =>
+  `https://www.youtube.com/embed/${videoId}?rel=0&modestbranding=1&playsinline=1`
+
+export default function YouTubeVideoEmbed({ videoId, title, className }: YouTubeVideoEmbedProps) {
+  const src = useMemo(() => buildEmbedUrl(videoId), [videoId])
+
   return (
-    <div 
-      className={`relative w-full ${className}`} 
-      style={{ paddingBottom: "56.25%" /* 16:9 Aspect Ratio */ }}
-    >
-      <iframe
-        className="absolute top-0 left-0 w-full h-full rounded-xl border-0"
-        src={`https://www.youtube.com/embed/${videoId}`}
-        title={title}
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        allowFullScreen
-      />
+    <div className={className}>
+      <div className="relative w-full" style={{ paddingBottom: "56.25%" }}>
+        <iframe
+          className="absolute inset-0 h-full w-full"
+          src={src}
+          title={title}
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowFullScreen
+        />
+      </div>
     </div>
-  );
+  )
 }

@@ -1,4 +1,5 @@
 import BlogPostLayout from '@/components/blog-post-layout'
+import BlogEmailSignup from "@/components/blog-email-signup"
 import { getAllPosts, getPost, renderPost } from '@/lib/mdx'
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
@@ -90,6 +91,9 @@ export default async function BlogPostPage({ params }: PageProps) {
       canonical={frontmatter.canonical}
     >
       {content}
+      <div className="mt-16">
+        <BlogEmailSignup />
+      </div>
     </BlogPostLayout>
   )
 }

@@ -8,6 +8,9 @@ import ScrollToTop from "@/components/scroll-to-top"
 import { Button } from "@/components/ui/button"
 import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
 import DentalTrendsChart from "@/components/dental-trends-chart"
+import DentalClientsSection from "@/components/dental-clients-section"
+import VideoCarousel from "@/components/video-carousel"
+import HeroLoopingVideo from "@/components/HeroLoopingVideo"
 
 const lovePoints = [
   {
@@ -215,6 +218,132 @@ export default function DentalWebsitePage() {
           </div>
         </section>
 
+        <section className="bg-white px-4 py-16 sm:py-20">
+          <div className="container mx-auto max-w-5xl grid gap-10 md:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] md:items-center">
+            <div className="overflow-hidden rounded-3xl border border-neutral-200 bg-neutral-50 shadow-md">
+              <HeroLoopingVideo
+                videoSrc="https://res.cloudinary.com/dhqpqfw6w/video/upload/v1762028676/scheduling-dental-website_nehxuw.mp4"
+                posterSrc="https://res.cloudinary.com/dhqpqfw6w/image/upload/v1762028718/scheduling-dental-website_dnebtj.webp"
+                className="border-none shadow-none"
+                aspectClassName="aspect-[16/9]"
+                videoClassName="object-cover"
+              />
+            </div>
+            <div className="space-y-5">
+              <p className="text-sm font-medium uppercase tracking-[0.32em] text-neutral-500">frictionless scheduling</p>
+              <h2 className="text-3xl font-semibold tracking-tight text-neutral-900 sm:text-4xl">
+                booking flows that feel effortless for every patient
+              </h2>
+              <p className="text-base leading-relaxed text-neutral-600">
+                prism wires real-time availability, reminders, and two-way updates into your site so new and returning
+                patients can confirm visits without a phone call.
+              </p>
+              <ul className="space-y-3 text-sm text-neutral-600">
+                <li className="flex items-start gap-2">
+                  <CheckCircle2 className="mt-0.5 h-5 w-5 flex-shrink-0 text-emerald-500" aria-hidden />
+                  <span>synced with dentrix, open dental, and leading practice management tools.</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle2 className="mt-0.5 h-5 w-5 flex-shrink-0 text-emerald-500" aria-hidden />
+                  <span>automatic confirmations, reminders, and follow-up emails + sms when patients book.</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle2 className="mt-0.5 h-5 w-5 flex-shrink-0 text-emerald-500" aria-hidden />
+                  <span>availability updates instantly reflected across specialty landing pages and paid campaigns.</span>
+                </li>
+              </ul>
+              <div className="pt-2">
+                <Button asChild className="rounded-full px-6">
+                  <Link href="/get-started">
+                    explore scheduling options
+                    <ArrowRight className="ml-2 h-4 w-4" aria-hidden />
+                  </Link>
+                </Button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="px-4 py-16 sm:py-20">
+          <div className="container mx-auto max-w-5xl space-y-10">
+            <div className="overflow-hidden rounded-3xl border border-neutral-200 bg-neutral-50 shadow-md">
+              <HeroLoopingVideo
+                videoSrc="https://res.cloudinary.com/dhqpqfw6w/video/upload/v1762028436/dental-website_axxdfz.mp4"
+                posterSrc="https://res.cloudinary.com/dhqpqfw6w/image/upload/v1762028473/dental-website-thumbnail_bpbzex.webp"
+                className="border-none shadow-none"
+                aspectClassName="aspect-[16/9]"
+                videoClassName="object-cover"
+              />
+            </div>
+            <div className="mx-auto max-w-3xl text-center">
+              <p className="text-sm font-medium uppercase tracking-[0.32em] text-neutral-500">
+                hear from the dentists we work with
+              </p>
+              <h2 className="mt-4 text-3xl font-semibold tracking-tight text-neutral-900 sm:text-4xl">
+                interviews with enzo and our dental partners
+              </h2>
+              <p className="mt-4 text-base leading-relaxed text-neutral-600">
+                founders and front office teams share, in their own words, how prism reshaped their digital presence,
+                schedules, and patient experience.
+              </p>
+            </div>
+            <VideoCarousel
+              items={[
+                { videoId: "wCQrUajsnk8", title: "Dr. Teagan Willes Interview" },
+                { videoId: "HrksJeYb02Q", title: "Dr. Christopher Wong Interview" },
+                { videoId: "WIWxwdZflzo", title: "Dr. Ahmed Mataria Interview" },
+                { videoId: "IQJoQt4b2ls", title: "Dental Practice Success Story" },
+                { videoId: "FxuzACT-o2Q", title: "Dr. Katie Lee Interview" },
+                { videoId: "zL4Ax2bs9pU", title: "Dr. A Interview" },
+                { videoId: "jE6YAimUxMQ", title: "Melissa Front Desk Interview" },
+                { videoId: "5eB4Y27zkE8", title: "Ludmila Office Manager Interview" },
+              ]}
+            />
+          </div>
+        </section>
+
+        <section className="border-y border-neutral-100 bg-neutral-900 text-white px-4 py-16 sm:py-20">
+          <div className="container mx-auto flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
+            <div className="max-w-xl space-y-4">
+              <p className="text-xs font-medium uppercase tracking-[0.32em] text-white/60">beyond the website</p>
+              <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">
+                grow every channel your practice depends on
+              </h2>
+              <p className="text-sm leading-relaxed text-white/70">
+                prism handles more than beautiful dental sites—we run the ads, local listings, and review workflows that
+                keep chairs filled. curious how the full system works together?
+              </p>
+              <ul className="space-y-2 text-sm text-white/70">
+                <li className="flex items-start gap-2">
+                  <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-emerald-400" aria-hidden />
+                  <span>hyper-local google ads and meta campaigns tied to actual booked treatment.</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-emerald-400" aria-hidden />
+                  <span>50+ directories and ai search surfaced with accurate hours, services, and reviews.</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-emerald-400" aria-hidden />
+                  <span>ongoing optimization so your practice stays ahead of algorithm shifts.</span>
+                </li>
+              </ul>
+            </div>
+            <div className="space-y-4 rounded-3xl border border-white/10 bg-white/5 p-6 text-sm text-white/80 shadow-[0_30px_120px_-70px_rgba(15,23,42,0.8)] md:max-w-sm">
+              <p className="text-base font-semibold text-white">ready to see the whole growth engine?</p>
+              <p>
+                explore how prism helps dentists win more patients with ads, listings, and automated follow-up built on
+                top of your website.
+              </p>
+              <Button asChild className="w-full rounded-full bg-white text-neutral-900 hover:bg-neutral-100">
+                <Link href="/why-dental-practices-love-prism">
+                  see why dental practices love prism
+                  <ArrowRight className="ml-2 h-4 w-4" aria-hidden />
+                </Link>
+              </Button>
+            </div>
+          </div>
+        </section>
+
         <section className="px-4 py-16 sm:py-20">
           <div className="container mx-auto max-w-5xl space-y-10">
             <div className="mx-auto max-w-3xl text-center">
@@ -267,6 +396,8 @@ export default function DentalWebsitePage() {
             </div>
           </div>
         </section>
+
+        <DentalClientsSection />
 
         <section className="border-t border-neutral-100 bg-white px-4 py-16 sm:py-20">
           <div className="container mx-auto max-w-4xl">

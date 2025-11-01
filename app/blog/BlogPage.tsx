@@ -9,6 +9,7 @@ import BlogCTAButton from "./BlogCTAButton"
 import BlogPageTracker from "./BlogPageTracker"
 import BlogPostsList from "./BlogPostsList"
 import { useEffect } from "react"
+import BlogEmailSignup from "@/components/blog-email-signup"
 
 // Define the blog post type
 interface BlogPost extends BlogFrontmatter {
@@ -51,6 +52,8 @@ export default function BlogPage({ posts }: { posts: BlogPost[] }) {
         <BlogListErrorBoundary>
           <BlogPostsList posts={blogPosts} />
         </BlogListErrorBoundary>
+
+        <BlogEmailSignup />
 
         {/* CTA Section */}
         <section className="py-12 md:py-16 bg-neutral-50">

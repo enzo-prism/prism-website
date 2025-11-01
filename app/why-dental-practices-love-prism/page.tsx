@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button"
 import { ArrowRight, CheckCircle2 } from "lucide-react"
 import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
 import { CASE_STUDIES } from "@/lib/case-study-data"
+import VideoCarousel from "@/components/video-carousel"
 
 const coreResults = [
   {
@@ -164,11 +165,38 @@ export default function DentalPracticesPage() {
                     variant="outline"
                     className="rounded-full px-8 py-3 text-base"
                   >
-                    Talk to Prism
+                    talk to prism
                   </Button>
                 </Link>
               </div>
             </div>
+          </div>
+        </section>
+
+        <section className="px-4 py-16 sm:py-20">
+          <div className="container mx-auto max-w-5xl space-y-10">
+            <div className="mx-auto max-w-3xl text-center">
+              <p className="text-sm font-medium uppercase tracking-[0.32em] text-neutral-500">watch the conversations</p>
+              <h2 className="mt-4 text-3xl font-semibold tracking-tight text-neutral-900 sm:text-4xl">
+                enzo interviews dentists and their teams
+              </h2>
+              <p className="mt-4 text-base leading-relaxed text-neutral-600">
+                listen to the founders, office managers, and front-desk leaders who partner with prism share what changed
+                once their digital presence was rebuilt.
+              </p>
+            </div>
+            <VideoCarousel
+              items={[
+                { videoId: "wCQrUajsnk8", title: "Dr. Teagan Willes Interview" },
+                { videoId: "HrksJeYb02Q", title: "Dr. Christopher Wong Interview" },
+                { videoId: "WIWxwdZflzo", title: "Dr. Ahmed Mataria Interview" },
+                { videoId: "IQJoQt4b2ls", title: "Dental Practice Success Story" },
+                { videoId: "FxuzACT-o2Q", title: "Dr. Katie Lee Interview" },
+                { videoId: "zL4Ax2bs9pU", title: "Dr. A Interview" },
+                { videoId: "jE6YAimUxMQ", title: "Melissa Front Desk Interview" },
+                { videoId: "5eB4Y27zkE8", title: "Ludmila Office Manager Interview" },
+              ]}
+            />
           </div>
         </section>
 
@@ -274,10 +302,28 @@ export default function DentalPracticesPage() {
                 </div>
                 <Link href="/custom-email-for-dental-practices">
                   <Button className="group rounded-full bg-white px-7 py-3 text-base font-semibold text-neutral-900 hover:bg-white/90">
-                    Explore custom email
+                    explore custom email
                     <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
                   </Button>
                 </Link>
+              </div>
+            </div>
+
+            <div className="mt-10 rounded-3xl border border-neutral-200 bg-neutral-50 px-8 py-10 shadow-sm md:px-12 md:py-12">
+              <div className="mx-auto flex flex-col gap-4 text-center">
+                <p className="text-xs font-medium uppercase tracking-[0.32em] text-neutral-500">need a dedicated dental website blueprint?</p>
+                <h3 className="text-2xl font-semibold text-neutral-900 sm:text-3xl">see how prism builds conversion-first dental sites</h3>
+                <p className="text-sm leading-relaxed text-neutral-600">
+                  explore timelines, pricing, and the playbook we use to relaunch dental brands without downtime. the {`/dental-website`} page breaks down every component of our website system.
+                </p>
+                <div className="flex flex-wrap justify-center gap-3 pt-2">
+                  <Button asChild className="rounded-full px-6 py-3 text-sm font-semibold">
+                    <Link href="/dental-website">
+                      explore dental website capabilities
+                      <ArrowRight className="ml-2 h-4 w-4" aria-hidden />
+                    </Link>
+                  </Button>
+                </div>
               </div>
             </div>
           </div>

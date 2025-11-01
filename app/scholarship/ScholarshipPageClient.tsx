@@ -3,6 +3,7 @@
 import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
 import PageViewTracker from "@/components/page-view-tracker"
+import CommunityLinks from "@/components/community-links"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
@@ -180,6 +181,10 @@ export default function ScholarshipPageClient() {
                       see how we approach websites
                     </Link>
                   </div>
+                </div>
+                <div className="space-y-3">
+                  <p className="text-xs uppercase tracking-[0.32em] text-neutral-500">join the community</p>
+                  <CommunityLinks className="mt-1" />
                 </div>
               </div>
               <div className="rounded-3xl border border-neutral-200 bg-white/80 p-6 shadow-[0_24px_80px_-48px_rgba(15,23,42,0.35)] backdrop-blur">
