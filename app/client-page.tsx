@@ -60,8 +60,10 @@ export default function ClientPage() {
   
   useEffect(() => {
     const fallbackHero = document.getElementById("static-home-hero")
-    if (fallbackHero?.parentElement) {
-      fallbackHero.parentElement.removeChild(fallbackHero)
+    if (fallbackHero) {
+      fallbackHero.setAttribute("data-hydrated-hidden", "true")
+      fallbackHero.setAttribute("aria-hidden", "true")
+      fallbackHero.style.display = "none"
     }
   }, [])
 

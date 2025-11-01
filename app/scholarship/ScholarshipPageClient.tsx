@@ -80,7 +80,11 @@ export default function ScholarshipPageClient() {
 
   useEffect(() => {
     const hero = document.getElementById("static-scholarship-hero")
-    hero?.parentElement?.removeChild(hero)
+    if (hero) {
+      hero.setAttribute("data-hydrated-hidden", "true")
+      hero.setAttribute("aria-hidden", "true")
+      hero.style.display = "none"
+    }
   }, [])
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {

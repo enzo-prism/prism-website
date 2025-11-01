@@ -15,9 +15,17 @@ const Navbar = dynamic(() => import("@/components/navbar"), { ssr: false })
 export default function CaseStudiesPage() {
   useEffect(() => {
     const hero = document.getElementById("static-case-studies-hero")
-    hero?.parentElement?.removeChild(hero)
+    if (hero) {
+      hero.setAttribute("data-hydrated-hidden", "true")
+      hero.setAttribute("aria-hidden", "true")
+      hero.style.display = "none"
+    }
     const preview = document.getElementById("static-case-studies-preview")
-    preview?.parentElement?.removeChild(preview)
+    if (preview) {
+      preview.setAttribute("data-hydrated-hidden", "true")
+      preview.setAttribute("aria-hidden", "true")
+      preview.style.display = "none"
+    }
   }, [])
 
   return (

@@ -19,9 +19,17 @@ export default function PodcastClientPage() {
 
   useEffect(() => {
     const hero = document.getElementById("static-podcast-hero")
-    hero?.parentElement?.removeChild(hero)
+    if (hero) {
+      hero.setAttribute("data-hydrated-hidden", "true")
+      hero.setAttribute("aria-hidden", "true")
+      hero.style.display = "none"
+    }
     const preview = document.getElementById("static-podcast-preview")
-    preview?.parentElement?.removeChild(preview)
+    if (preview) {
+      preview.setAttribute("data-hydrated-hidden", "true")
+      preview.setAttribute("aria-hidden", "true")
+      preview.style.display = "none"
+    }
   }, [])
 
   const toggleEpisode = (episodeNumber: string) => {

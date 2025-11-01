@@ -21,9 +21,17 @@ export default function BlogPage({ posts }: { posts: BlogPost[] }) {
   const blogPosts = posts
   useEffect(() => {
     const hero = document.getElementById("static-blog-hero")
-    hero?.parentElement?.removeChild(hero)
+    if (hero) {
+      hero.setAttribute("data-hydrated-hidden", "true")
+      hero.setAttribute("aria-hidden", "true")
+      hero.style.display = "none"
+    }
     const preview = document.getElementById("static-blog-preview")
-    preview?.parentElement?.removeChild(preview)
+    if (preview) {
+      preview.setAttribute("data-hydrated-hidden", "true")
+      preview.setAttribute("aria-hidden", "true")
+      preview.style.display = "none"
+    }
   }, [])
 
   return (

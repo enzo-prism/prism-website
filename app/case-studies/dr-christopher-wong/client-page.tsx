@@ -23,7 +23,11 @@ export default function ChristopherWongCaseStudy() {
 
   useEffect(() => {
     const hero = document.getElementById("static-dr-wong-hero")
-    hero?.parentElement?.removeChild(hero)
+    if (hero) {
+      hero.setAttribute("data-hydrated-hidden", "true")
+      hero.setAttribute("aria-hidden", "true")
+      hero.style.display = "none"
+    }
   }, [])
 
   // Track scroll position to highlight active section in table of contents
