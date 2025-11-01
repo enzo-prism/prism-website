@@ -58,6 +58,13 @@ export default function ClientPage() {
   // Lazy loading states for below-the-fold sections
   // removed case studies and testimonials sections
   
+  useEffect(() => {
+    const fallbackHero = document.getElementById("static-home-hero")
+    if (fallbackHero?.parentElement) {
+      fallbackHero.parentElement.removeChild(fallbackHero)
+    }
+  }, [])
+
   // GPU-accelerated animation hooks
   // services section removed in new structure
   // removed testimonials and case studies animations

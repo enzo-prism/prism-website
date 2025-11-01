@@ -7,11 +7,19 @@ import { trackCTAClick } from "@/utils/analytics"
 import { ArrowRight } from "lucide-react"
 import dynamic from "next/dynamic"
 import Link from "next/link"
+import { useEffect } from "react"
 import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
 import { CASE_STUDIES } from "@/lib/case-study-data"
 const Navbar = dynamic(() => import("@/components/navbar"), { ssr: false })
 
 export default function CaseStudiesPage() {
+  useEffect(() => {
+    const hero = document.getElementById("static-case-studies-hero")
+    hero?.parentElement?.removeChild(hero)
+    const preview = document.getElementById("static-case-studies-preview")
+    preview?.parentElement?.removeChild(preview)
+  }, [])
+
   return (
     <div className="flex min-h-screen flex-col">
       <PageViewTracker title="Case Studies" />

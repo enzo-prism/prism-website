@@ -1,4 +1,5 @@
 import SeoTextSection from "@/components/seo-text-section"
+import { PODCAST_EPISODES } from "@/content/podcast/episodes"
 import type { Metadata } from "next"
 import PodcastClientPage from "./client-page"
 
@@ -20,7 +21,67 @@ export const metadata: Metadata = {
 export default function PodcastPage() {
   return (
     <>
-      <h1 className="sr-only">Prism Podcast | Founders · Journeys · Lessons</h1>
+      <section id="static-podcast-hero" className="bg-neutral-900 text-white">
+        <div className="mx-auto flex max-w-4xl flex-col gap-4 px-6 py-16 text-center">
+          <h1 className="text-4xl font-semibold tracking-tight">prism podcast</h1>
+          <p className="text-lg leading-relaxed text-white/80">
+            join founder enzo sison as he speaks with dentists, operators, and creative leaders who are actively scaling. expect honest stories, practical frameworks, and questions that uncover the moves behind their momentum.
+          </p>
+          <div className="flex flex-wrap justify-center gap-3 text-sm">
+            <a
+              href="https://www.youtube.com/@the_design_prism"
+              className="rounded-full bg-white px-6 py-3 font-semibold text-neutral-900 transition hover:bg-white/80"
+            >
+              watch on youtube
+            </a>
+            <a
+              href="https://podcasts.apple.com/us/podcast/the-prism-pod/id1745660200"
+              className="rounded-full border border-white/40 px-6 py-3 font-semibold text-white transition hover:border-white hover:bg-white/10"
+            >
+              listen on apple podcasts
+            </a>
+          </div>
+        </div>
+      </section>
+      <section id="static-podcast-preview" className="border-b border-neutral-200 bg-neutral-50">
+        <div className="mx-auto flex max-w-4xl flex-col gap-6 px-6 py-12">
+          <p className="text-sm font-medium uppercase tracking-[0.32em] text-neutral-500">recent episodes</p>
+          <ul className="grid gap-4 sm:grid-cols-2">
+            {PODCAST_EPISODES.slice(0, 4).map((episode) => (
+              <li key={episode.number} className="rounded-2xl border border-neutral-200 bg-white p-5 shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
+                <a href={episode.youtubeUrl} className="space-y-2" target="_blank" rel="noopener noreferrer">
+                  <span className="block text-xs uppercase tracking-[0.24em] text-neutral-400">episode {episode.number}</span>
+                  <span className="block text-lg font-semibold leading-snug text-neutral-900">{episode.guest}</span>
+                  <span className="block text-sm text-neutral-600">
+                    {episode.takeaways.join(" · ")}
+                  </span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+      <noscript>
+        <section className="px-6 py-12">
+          <div className="mx-auto max-w-4xl space-y-4 text-neutral-900">
+            <h2 className="text-2xl font-semibold tracking-tight">listen without javascript</h2>
+            <p>
+              prism podcast spotlights the lessons behind real growth stories. browse a few episodes below,
+              then subscribe on your preferred platform.
+            </p>
+            <ul className="list-disc space-y-2 pl-5">
+              {PODCAST_EPISODES.slice(0, 4).map((episode) => (
+                <li key={`noscript-${episode.number}`}>
+                  <a href={episode.youtubeUrl} className="underline">
+                    episode {episode.number}: {episode.guest}
+                  </a>{" "}
+                  — {episode.takeaways.join(" · ")}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      </noscript>
       <PodcastClientPage />
       <SeoTextSection title="about the prism podcast">
         <p>

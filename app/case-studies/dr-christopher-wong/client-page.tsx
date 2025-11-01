@@ -21,6 +21,11 @@ export default function ChristopherWongCaseStudy() {
   const [activeSection, setActiveSection] = useState("")
   const [imageLoaded, setImageLoaded] = useState(false)
 
+  useEffect(() => {
+    const hero = document.getElementById("static-dr-wong-hero")
+    hero?.parentElement?.removeChild(hero)
+  }, [])
+
   // Track scroll position to highlight active section in table of contents
   useEffect(() => {
     const handleScroll = () => {

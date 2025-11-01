@@ -1,7 +1,8 @@
 import SeoTextSection from "@/components/seo-text-section"
 import { getAllPosts } from "@/lib/mdx"
 import type { Metadata } from "next"
-import { notFound } from 'next/navigation'
+import Link from "next/link"
+import { notFound } from "next/navigation"
 import BlogPage from "./BlogPage"
 
 export const metadata: Metadata = {
@@ -18,7 +19,54 @@ export default async function Blog() {
   if (!posts) notFound()
   return (
     <>
-      <h1 className="sr-only">Prism Blog | Web Design, AI Marketing & Growth Experiments</h1>
+      <section id="static-blog-hero" className="bg-neutral-900 text-white">
+        <div className="mx-auto flex max-w-5xl flex-col gap-4 px-6 py-16">
+          <div>
+            <h1 className="text-4xl font-semibold tracking-tight">prism blog</h1>
+            <p className="mt-3 text-lg leading-relaxed text-white/80">
+              field notes from building high-converting websites, ai-infused marketing systems, and repeatable playbooks for local businesses. every article captures experiments we shipped for clients and the numbers that proved they worked.
+            </p>
+          </div>
+        </div>
+      </section>
+      <section id="static-blog-preview" className="border-b border-neutral-200 bg-neutral-50">
+        <div className="mx-auto flex max-w-5xl flex-col gap-6 px-6 py-12">
+          <p className="text-sm font-medium uppercase tracking-[0.32em] text-neutral-500">
+            recent insights
+          </p>
+          <ul className="grid gap-4 sm:grid-cols-2">
+            {posts.slice(0, 4).map((post) => (
+              <li key={post.slug} className="rounded-2xl border border-neutral-200 bg-white p-5 shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
+                <Link href={`/blog/${post.slug}`} className="space-y-2">
+                  <span className="block text-xs uppercase tracking-[0.24em] text-neutral-400">{post.category}</span>
+                  <span className="block text-lg font-semibold leading-snug text-neutral-900">{post.title}</span>
+                  <span className="block text-sm text-neutral-600">{post.description}</span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+      <noscript>
+        <section className="px-6 py-12">
+          <div className="mx-auto max-w-5xl space-y-4 text-neutral-900">
+            <h2 className="text-2xl font-semibold uppercase tracking-tight">prism blog highlights</h2>
+            <p>
+              recent stories cover ai-assisted seo, conversion-focused design, and growth experiments that helped local companies win more revenue. browse the articles below and keep reading at <a href="https://www.design-prism.com/blog">design-prism.com/blog</a>.
+            </p>
+            <ul className="list-disc space-y-2 pl-5">
+              {posts.slice(0, 4).map((post) => (
+                <li key={`noscript-${post.slug}`}>
+                  <a href={`/blog/${post.slug}`} className="underline">
+                    {post.title}
+                  </a>{" "}
+                  — {post.description}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      </noscript>
       <BlogPage posts={posts} />
       <SeoTextSection title="prism blog: design, development, and growth">
         <p>

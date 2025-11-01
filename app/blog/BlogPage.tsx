@@ -1,3 +1,5 @@
+'use client'
+
 import { BlogListErrorBoundary } from "@/components/blog-error-boundary"
 import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
@@ -6,6 +8,7 @@ import type { BlogFrontmatter } from "@/lib/mdx"
 import BlogCTAButton from "./BlogCTAButton"
 import BlogPageTracker from "./BlogPageTracker"
 import BlogPostsList from "./BlogPostsList"
+import { useEffect } from "react"
 
 // Define the blog post type
 interface BlogPost extends BlogFrontmatter {
@@ -16,6 +19,12 @@ interface BlogPost extends BlogFrontmatter {
 
 export default function BlogPage({ posts }: { posts: BlogPost[] }) {
   const blogPosts = posts
+  useEffect(() => {
+    const hero = document.getElementById("static-blog-hero")
+    hero?.parentElement?.removeChild(hero)
+    const preview = document.getElementById("static-blog-preview")
+    preview?.parentElement?.removeChild(preview)
+  }, [])
 
   return (
     <div className="flex min-h-screen flex-col">
