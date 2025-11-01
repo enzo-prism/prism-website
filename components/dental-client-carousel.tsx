@@ -12,34 +12,58 @@ type DentalClient = {
 
 const DENTAL_CLIENTS: DentalClient[] = [
   {
-    name: "Exquisite Dentistry",
-    location: "Beverly Hills, CA",
-    url: "https://www.exquisitesmiles.com",
-    focus: "luxury cosmetic + general dentistry",
-  },
-  {
-    name: "Laguna Beach Dental Arts",
-    location: "Laguna Beach, CA",
-    url: "https://www.lagunabeachdentalarts.com",
-    focus: "post-M&A relaunch, cosmetic & general",
-  },
-  {
     name: "Dr. Christopher B. Wong",
     location: "Palo Alto, CA",
-    url: "https://www.drchriswong.com",
+    url: "https://www.chriswongdds.com",
     focus: "seamless ownership transition",
-  },
-  {
-    name: "Family First Smile Care",
-    location: "Los Gatos, CA",
-    url: "https://www.familyfirstsmilecare.com",
-    focus: "family dentistry growth system",
   },
   {
     name: "Town Centre Dental",
     location: "Brentwood, CA",
     url: "https://www.towncentredental.net",
     focus: "modernized booking + analytics",
+  },
+  {
+    name: "Laguna Beach Dental Arts",
+    location: "Laguna Beach, CA",
+    url: "https://lagunabeachdentalarts.com",
+    focus: "post-M&A relaunch, cosmetic & general",
+  },
+  {
+    name: "Coast Periodontics",
+    location: "Redondo Beach, CA",
+    url: "http://coastperiodontics.com",
+    focus: "specialty periodontic growth system",
+  },
+  {
+    name: "Grace Dental",
+    location: "Santa Rosa, CA",
+    url: "https://www.tingjenjidds.com",
+    focus: "brand refresh & local acquisition",
+  },
+  {
+    name: "Exquisite Dentistry",
+    location: "Los Angeles, CA",
+    url: "https://exquisitedentistryla.com/",
+    focus: "luxury cosmetic + general dentistry",
+  },
+  {
+    name: "Wine Country Root Canal",
+    location: "Santa Rosa, CA",
+    url: "https://www.winecountryrootcanal.com/",
+    focus: "specialty endodontic launch",
+  },
+  {
+    name: "Family First Smile Care",
+    location: "Los Gatos, CA",
+    url: "https://famfirstsmile.com/",
+    focus: "family dentistry growth system",
+  },
+  {
+    name: "sr4 Partners",
+    location: "Chicago, IL",
+    url: "https://www.sr4partners.com/",
+    focus: "consulting operations partnership",
   },
 ]
 
