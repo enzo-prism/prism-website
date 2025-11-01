@@ -151,8 +151,8 @@ export default function BlogPostLayout({
                       const c = (category || '').toLowerCase()
                       if (c.includes('ai') && c.includes('growth')) return 'ready to be agent‑ready?'
                       if (c.includes('ai') && c.includes('marketing')) return 'turn ai exposure into booked revenue'
-                      if (c.includes('seo')) return 'recover organic traffic and convert it into leads'
-                      if (c.includes('design') || c.includes('product')) return 'ship a conversion‑focused site that moves metrics'
+                      if (c.includes('seo') || c.includes('search')) return 'recover organic traffic and convert it into leads'
+                      if (c.includes('design') || c.includes('product') || c.includes('development')) return 'ship a conversion‑focused site that moves metrics'
                       if (c.includes('entrepreneur')) return 'get a focused plan and ship in days, not months'
                       return 'want help executing this playbook?'
                     })()}
@@ -160,8 +160,8 @@ export default function BlogPostLayout({
                       const c = (category || '').toLowerCase()
                       if (c.includes('ai') && c.includes('growth')) return 'we’ll stand up your agent brief, wire the actions map, and ship your first 3 experiments in 30 days.'
                       if (c.includes('ai') && c.includes('marketing')) return 'we help you build the context moat, get agent‑discoverable, and instrument bookings end‑to‑end.'
-                      if (c.includes('seo')) return 'ai has compressed clicks—let’s rebuild your funnel with task‑first pages, rich context, and interactive wins.'
-                      if (c.includes('design') || c.includes('product')) return 'from strategy to shipped ui: fast pages, clear messaging, and measured outcomes.'
+                      if (c.includes('seo') || c.includes('search')) return 'ai has compressed clicks—let’s rebuild your funnel with task‑first pages, rich context, and interactive wins.'
+                      if (c.includes('design') || c.includes('product') || c.includes('development')) return 'from strategy to shipped ui: fast pages, clear messaging, and measured outcomes.'
                       if (c.includes('business')) return 'we’ll help you choose one focus bet, design the experiments, and measure what matters.'
                       return 'work with prism to apply these steps to your brand—fast, focused, and measured.'
                     })()}

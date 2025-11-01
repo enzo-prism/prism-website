@@ -26,10 +26,12 @@ const SIMPLIFIED_CATEGORIES = {
     'SEO & AI',
     'AI & Automation',
     'AI & Business Productivity',
-    'Business & AI'
+    'Business & AI',
+    'appear in ai search',
+    'ai powered web development'
   ],
   'Business': ['Business & Leadership', 'Motivation & Entrepreneurship', 'Business & AI'],
-  'Marketing': ['Content Marketing & SEO', 'ai & marketing', 'AI & Marketing', 'SEO & AI'],
+  'Marketing': ['Content Marketing & SEO', 'ai & marketing', 'AI & Marketing', 'SEO & AI', 'seo', 'appear in ai search'],
   'Design': ['Design & Product', 'ai & design']
 }
 

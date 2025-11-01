@@ -22,14 +22,14 @@ export default function DesignsPage() {
     <>
       <DesignsPageClient />
 
-      {/* Move "design with purpose" near the bottom for all breakpoints */}
       <section className="px-4 pt-8 pb-12">
         <div className="container mx-auto px-4 md:px-6 max-w-3xl">
           <div className="prose prose-neutral max-w-none">
-            <h2 className="text-xl font-semibold lowercase">design with purpose</h2>
+            <h2 className="text-2xl font-semibold tracking-tight text-neutral-900">design with purpose</h2>
+            <p>design is the connective tissue for every engagement we take on.</p>
             <p>
-              from brand identities to marketing assets, our work emphasizes clarity, usability, and
-              conversion—so every pixel pulls its weight.
+              we pair beauty with performance, aligning every asset to the outcomes you care about&mdash;so your website,
+              campaigns, and internal tools all speak in the same voice.
             </p>
           </div>
         </div>

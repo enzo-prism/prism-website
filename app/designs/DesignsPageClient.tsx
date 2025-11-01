@@ -1,7 +1,6 @@
 "use client"
 
 import Footer from "@/components/footer"
-import GetStartedCTA from "@/components/GetStartedCTA"
 import PageViewTracker from "@/components/page-view-tracker"
 import {
     Carousel,
@@ -14,6 +13,7 @@ import {
 import { useMobile } from "@/hooks/use-mobile"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import dynamic from "next/dynamic"
+import Link from "next/link"
 import { useCallback, useEffect, useState } from "react"
 const Navbar = dynamic(() => import("@/components/navbar"), { ssr: false })
 
@@ -122,12 +122,94 @@ export default function DesignsPageClient() {
         {/* Hero Section */}
         <section className="px-4 pt-24 pb-12 sm:pt-32 sm:pb-16">
           <div className="max-w-7xl mx-auto">
-            <h1 className="text-5xl sm:text-7xl lg:text-8xl font-light tracking-tight text-neutral-900 mb-6">
-              designs
-            </h1>
-            <p className="text-lg sm:text-xl text-neutral-600 max-w-md font-light">
-              “design is the silent ambassador of your brand.”
-            </p>
+            <div className="grid gap-12 lg:gap-16 md:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] items-stretch">
+              <div className="space-y-8">
+                <h1 className="text-4xl sm:text-5xl lg:text-6xl font-semibold leading-tight tracking-tight text-neutral-900">
+                  how design works at prism
+                </h1>
+                <figure className="space-y-3">
+                  <blockquote className="text-2xl sm:text-3xl font-light leading-snug text-neutral-900 italic">
+                    &ldquo;design isn&rsquo;t just how something looks, it&rsquo;s how it works.&rdquo;
+                  </blockquote>
+                  <figcaption className="text-sm font-medium uppercase tracking-[0.35em] text-neutral-500">
+                    &mdash; steve jobs
+                  </figcaption>
+                </figure>
+                <div className="space-y-5 text-base sm:text-lg leading-relaxed text-neutral-700">
+                  <p>
+                    design is the backbone of everything we do at prism &mdash; it connects every part of your business.
+                  </p>
+                  <p>
+                    from websites and ads to video, analytics, and automation, great design shapes how it all works together.
+                  </p>
+                  <p>
+                    we design with purpose &mdash; blending beauty, performance, and precision to create outcomes that move your brand forward.
+                  </p>
+                </div>
+              </div>
+
+              <aside className="relative overflow-hidden rounded-[28px] border border-neutral-200 bg-neutral-900 text-white shadow-[0_32px_80px_-40px_rgba(15,23,42,0.55)]">
+                <div
+                  className="pointer-events-none absolute inset-0 bg-gradient-to-br from-emerald-400/20 via-sky-500/10 to-indigo-400/25 opacity-80"
+                  aria-hidden="true"
+                />
+                <div className="relative flex h-full flex-col justify-between gap-8 p-8 sm:p-10 lg:p-12">
+                  <div className="space-y-5">
+                    <p className="text-xs uppercase tracking-[0.4em] text-white/70">connected by design</p>
+                    <p className="text-lg font-light text-white/90">
+                      every surface we ship is part of a linked system that keeps your story consistent and measurable.
+                    </p>
+                    <ul className="space-y-3 text-base sm:text-lg font-light text-white/90">
+                      {["websites", "ads", "video", "analytics", "automation"].map((label) => (
+                        <li key={label} className="flex items-center gap-3">
+                          <span className="h-2 w-2 rounded-full bg-white/60" aria-hidden="true" />
+                          <span className="tracking-wide">{label}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  <p className="text-sm sm:text-base leading-relaxed text-white/75">
+                    every element is crafted to move in sync, so your brand feels intentional across channels and devices.
+                  </p>
+                </div>
+              </aside>
+            </div>
+          </div>
+        </section>
+
+        {/* What We Design */}
+        <section className="px-4 py-16 sm:py-20 bg-neutral-50">
+          <div className="max-w-6xl mx-auto">
+            <div className="grid gap-12 lg:gap-16 md:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
+              <div className="space-y-6">
+                <h2 className="text-3xl sm:text-4xl font-semibold leading-tight text-neutral-900">
+                  what we design
+                </h2>
+                <p className="text-base sm:text-lg leading-relaxed text-neutral-700">
+                  great design ties everything together. our team builds visual systems that keep your brand consistent across every touchpoint.
+                </p>
+                <p className="text-sm uppercase tracking-[0.3em] text-neutral-500">we design:</p>
+              </div>
+              <div className="space-y-6">
+                <ul className="space-y-4 text-base sm:text-lg leading-relaxed text-neutral-800">
+                  {[
+                    "websites that convert visitors into loyal clients",
+                    "ads that attract attention and drive measurable results",
+                    "social media branding and posts that stay true to your voice",
+                    "business cards, brochures, and print that make a lasting impression",
+                    "internal assets like presentation decks and branded templates that keep your team aligned",
+                  ].map((item) => (
+                    <li key={item} className="flex items-start gap-3">
+                      <span className="mt-2 h-2.5 w-2.5 flex-shrink-0 rounded-full bg-neutral-900/70" aria-hidden="true" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+                <p className="text-base sm:text-lg leading-relaxed text-neutral-700">
+                  each piece is crafted to blend seamlessly, so your message looks &mdash; and feels &mdash; unified everywhere your brand lives.
+                </p>
+              </div>
+            </div>
           </div>
         </section>
 
@@ -205,12 +287,36 @@ export default function DesignsPageClient() {
         </section>
 
         {/* CTA Section */}
-        <GetStartedCTA
-          heading="inspired by what you see?"
-          description="let's create something amazing together. from logos to complete brand identities, we'll bring your vision to life."
-          analyticsLabel="design portfolio CTA"
-          variant="gradient"
-        />
+        <section className="px-4 pb-20 sm:pb-24">
+          <div className="max-w-4xl mx-auto rounded-[32px] border border-neutral-200 bg-neutral-900 text-white px-6 py-12 sm:px-10 sm:py-16 shadow-[0_32px_80px_-48px_rgba(15,23,42,0.65)] text-center space-y-6">
+            <div className="space-y-4">
+              <h2 className="text-3xl sm:text-4xl font-semibold leading-tight">ready to elevate your brand?</h2>
+              <p className="text-base sm:text-lg leading-relaxed text-white/70">
+                whether you&rsquo;re starting fresh or refining what you already have, we&rsquo;ll help you design a system that works as beautifully as it looks.
+              </p>
+            </div>
+            <div className="grid gap-4 sm:grid-cols-2">
+              <Link
+                href="/get-started"
+                className="group flex flex-col items-center justify-center rounded-2xl border border-white/10 bg-white text-neutral-900 px-6 py-6 transition-all duration-200 hover:-translate-y-1 hover:shadow-xl"
+              >
+                <span className="text-lg font-semibold">get started</span>
+                <span className="text-sm text-neutral-600 group-hover:text-neutral-800">
+                  begin your design journey
+                </span>
+              </Link>
+              <Link
+                href="/pricing"
+                className="group flex flex-col items-center justify-center rounded-2xl border border-white/40 bg-transparent px-6 py-6 transition-all duration-200 hover:-translate-y-1 hover:border-white hover:bg-white/10"
+              >
+                <span className="text-lg font-semibold text-white">see pricing</span>
+                <span className="text-sm text-white/70 group-hover:text-white">
+                  explore packages that fit your goals
+                </span>
+              </Link>
+            </div>
+          </div>
+        </section>
 
       </main>
       <Footer />
