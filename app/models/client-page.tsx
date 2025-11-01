@@ -199,9 +199,6 @@ export default function ModelsPageClient() {
                 <h2 className="text-2xl font-semibold lowercase text-neutral-900 sm:text-3xl">
                   dentists you can model for
                 </h2>
-                <p className="mt-2 text-sm text-neutral-500 sm:text-base">
-                  prism runs marketing for these dentists.
-                </p>
               </div>
             </div>
             <div className="relative mt-8">

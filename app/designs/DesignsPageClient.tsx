@@ -300,9 +300,9 @@ export default function DesignsPageClient() {
                 href="/get-started"
                 className="group flex flex-col items-center justify-center rounded-2xl border border-white/10 bg-white text-neutral-900 px-6 py-6 transition-all duration-200 hover:-translate-y-1 hover:shadow-xl"
               >
-                <span className="text-lg font-semibold">get started</span>
+                <span className="text-lg font-semibold">free design audit</span>
                 <span className="text-sm text-neutral-600 group-hover:text-neutral-800">
-                  begin your design journey
+                  claim your complimentary audit request
                 </span>
               </Link>
               <Link
