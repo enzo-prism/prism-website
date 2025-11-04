@@ -712,7 +712,7 @@ export default function GoogleDentalPatientFormsGuide() {
                   <article
                     key={step.id}
                     id={step.id}
-                    className="group relative flex h-full flex-col rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm transition hover:-translate-y-0.5 hover:border-neutral-300 hover:shadow-lg"
+                    className="group relative flex h-full flex-col rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm transition hover:-translate-y-0.5 hover:border-neutral-300 hover:shadow-lg sm:max-w-none"
                   >
                     <div className="flex items-center justify-between gap-3">
                       <span
