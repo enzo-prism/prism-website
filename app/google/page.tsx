@@ -14,6 +14,7 @@ const GOOGLE_WORKSPACE_LINK =
 const GOOGLE_MARKETING_PLANS_HREF = "/pricing"
 const BLOG_HREF = "/blog"
 const YOUTUBE_CHANNEL_URL = "https://www.youtube.com/@the_design_prism"
+const HIPAA_PATIENT_FORMS_GUIDE = "/google/dental-patient-forms"
 
 const servicesHighlights = [
   {
@@ -253,6 +254,49 @@ export default function GooglePage() {
                   Get Started <ArrowRight className="h-5 w-5" aria-hidden />
                 </Link>
               </Button>
+            </div>
+          </div>
+        </section>
+
+        <section className="border-t border-neutral-200 bg-neutral-50">
+          <div className="container mx-auto grid gap-10 px-4 py-16 md:grid-cols-[minmax(0,_320px),_1fr] md:px-6 lg:py-24">
+            <div className="flex flex-col gap-3">
+              <p className="text-xs font-semibold uppercase tracking-[0.28em] text-neutral-500">
+                hipaa patient intake
+              </p>
+              <h2 className="text-3xl font-semibold text-neutral-900 md:text-4xl">
+                make google workspace safe for dental forms.
+              </h2>
+            </div>
+            <div className="space-y-6 text-base text-neutral-700 sm:text-lg">
+              <p>
+                dental practices ask us how to collect new patient histories without leaving workspace. our implementation-grade
+                guide walks through baa execution, shared drive controls, dlp, and checklist tooling so your intake stays hipaa-ready.
+              </p>
+              <p>
+                we also include our partner discount so you can spin up workspace on the covered editions before you build the form.
+              </p>
+              <div className="flex w-full flex-col gap-3 sm:flex-row sm:items-center">
+                <Button
+                  asChild
+                  size="lg"
+                  className="h-auto w-full rounded-full px-8 py-4 text-base font-semibold sm:w-auto"
+                >
+                  <Link href={HIPAA_PATIENT_FORMS_GUIDE}>
+                    see the hipaa setup guide <ArrowRight className="h-5 w-5" aria-hidden />
+                  </Link>
+                </Button>
+                <Button
+                  asChild
+                  size="lg"
+                  variant="outline"
+                  className="h-auto w-full rounded-full px-8 py-4 text-base font-semibold sm:w-auto"
+                >
+                  <Link href={GOOGLE_WORKSPACE_LINK} target="_blank" rel="noopener noreferrer">
+                    claim the workspace discount <ArrowRight className="h-5 w-5" aria-hidden />
+                  </Link>
+                </Button>
+              </div>
             </div>
           </div>
         </section>
