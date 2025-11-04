@@ -139,7 +139,7 @@ const steps: StepDefinition[] = [
     icon: ShieldCheck,
     content: (
       <div className="space-y-4 text-base leading-relaxed text-neutral-700">
-        <ol className="list-decimal space-y-3 pl-5">
+        <ol className="list-decimal space-y-3 pl-4 sm:pl-5">
           <li>
             Sign in to{" "}
             <Link href="https://admin.google.com" target="_blank" rel="noopener noreferrer" className="underline">
@@ -207,7 +207,7 @@ const steps: StepDefinition[] = [
           <li>Add only essential team members (e.g., office manager, doctor). Apply least-privilege membership.</li>
           <li>
             Configure sharing settings:
-            <ul className="mt-2 list-disc space-y-2 pl-5">
+            <ul className="mt-2 list-disc space-y-2 pl-4 sm:pl-5">
               <li>Disable external sharing for the Shared Drive.</li>
               <li>Disable link sharing (“Anyone with the link”).</li>
               <li>Prevent download/print/copy for viewers when appropriate.</li>
@@ -238,7 +238,7 @@ const steps: StepDefinition[] = [
     icon: Fingerprint,
     content: (
       <div className="space-y-4 text-base leading-relaxed text-neutral-700">
-        <ul className="list-disc space-y-2 pl-5">
+        <ul className="list-disc space-y-2 pl-4 sm:pl-5">
           <li>Require 2-Step Verification for any staff with PHI access.</li>
           <li>Use Context-Aware Access (if your edition supports it) to limit PHI access to managed devices or trusted networks.</li>
           <li>Mandate strong passwords and enable suspicious login alerts.</li>
@@ -263,7 +263,7 @@ const steps: StepDefinition[] = [
     icon: Archive,
     content: (
       <div className="space-y-4 text-base leading-relaxed text-neutral-700">
-        <ul className="list-disc space-y-2 pl-5">
+        <ul className="list-disc space-y-2 pl-4 sm:pl-5">
           <li>Enable Google Vault (included in Business Plus and Enterprise plans).</li>
           <li>
             Create retention rules covering the <span className="italic">PHI – Intake</span> Shared Drive and relevant user
@@ -290,7 +290,7 @@ const steps: StepDefinition[] = [
     icon: FileSpreadsheet,
     content: (
       <div className="space-y-4 text-base leading-relaxed text-neutral-700">
-        <ol className="list-decimal space-y-3 pl-5">
+        <ol className="list-decimal space-y-3 pl-4 sm:pl-5">
           <li>
             Create the form from a Workspace account; name it “New Patient Intake” and structure sections such as Contact,
             Medical History, Medications, Allergies, and Consent.
@@ -305,7 +305,7 @@ const steps: StepDefinition[] = [
           </li>
           <li>
             <span className="font-semibold">Settings → Presentation &amp; Defaults</span>:
-            <ul className="mt-2 list-disc space-y-2 pl-5">
+            <ul className="mt-2 list-disc space-y-2 pl-4 sm:pl-5">
               <li>Avoid collecting patient email addresses unless disclosed and necessary.</li>
               <li>Do not “Limit to 1 response”; that forces Google sign-in and blocks most patients.</li>
               <li>Ensure the form is accessible to anyone with the link (patients are external) and not restricted to your domain.</li>
@@ -353,7 +353,7 @@ const steps: StepDefinition[] = [
     icon: Table,
     content: (
       <div className="space-y-4 text-base leading-relaxed text-neutral-700">
-        <ul className="list-disc space-y-2 pl-5">
+        <ul className="list-disc space-y-2 pl-4 sm:pl-5">
           <li>Keep the response Sheet inside the <span className="italic">PHI – Intake</span> Shared Drive.</li>
           <li>Share only with the intake group; disable link sharing entirely.</li>
           <li>Protect sensitive ranges (e.g., calculated fields, internal notes) with sheet protections.</li>
@@ -372,7 +372,7 @@ const steps: StepDefinition[] = [
     icon: MailWarning,
     content: (
       <div className="space-y-4 text-base leading-relaxed text-neutral-700">
-        <ul className="list-disc space-y-2 pl-5">
+        <ul className="list-disc space-y-2 pl-4 sm:pl-5">
           <li>Never email PHI in plaintext.</li>
           <li>Submission alerts should be PHI-free (“new intake received — open the Sheet”).</li>
           <li>
@@ -399,7 +399,7 @@ const steps: StepDefinition[] = [
     icon: ShieldAlert,
     content: (
       <div className="space-y-4 text-base leading-relaxed text-neutral-700">
-        <ul className="list-disc space-y-2 pl-5">
+        <ul className="list-disc space-y-2 pl-4 sm:pl-5">
           <li>
             Create Drive DLP rules that flag PHI identifiers (SSN, insurance IDs, DOB) and block external sharing from the
             Shared Drive.
@@ -425,7 +425,7 @@ const steps: StepDefinition[] = [
     icon: ClipboardCheck,
     content: (
       <div className="space-y-4 text-base leading-relaxed text-neutral-700">
-        <ul className="list-disc space-y-2 pl-5">
+        <ul className="list-disc space-y-2 pl-4 sm:pl-5">
           <li>Submit multiple dummy entries and confirm they land in the correct Sheet inside the Shared Drive.</li>
           <li>Attempt to access responses with a non-authorized account — access should be denied.</li>
           <li>Export audit logs and confirm activity appears in Admin reports and Vault.</li>
@@ -442,7 +442,7 @@ const steps: StepDefinition[] = [
     icon: Users,
     content: (
       <div className="space-y-4 text-base leading-relaxed text-neutral-700">
-        <ul className="list-disc space-y-2 pl-5">
+        <ul className="list-disc space-y-2 pl-4 sm:pl-5">
           <li>Staff access PHI only inside the locked Shared Drive and Sheet.</li>
           <li>No copy/paste of PHI into email, chat, or non-covered tools.</li>
           <li>When patients request the intake form, send the secure form link — not a PDF attachment.</li>
@@ -732,14 +732,17 @@ export default function GoogleDentalPatientFormsGuide() {
                         {step.badge}
                       </span>
                     </div>
-                    <div className="mt-5 flex gap-4">
+                    <div className="mt-5 flex flex-col gap-4 sm:flex-row sm:items-start">
                       <span
-                        className={clsx("flex h-12 w-12 flex-none items-center justify-center rounded-2xl", accent.icon)}
+                        className={clsx(
+                          "flex h-12 w-12 flex-none items-center justify-center rounded-2xl",
+                          accent.icon,
+                        )}
                         aria-hidden
                       >
                         <Icon className="h-5 w-5" />
                       </span>
-                      <div className="space-y-4">
+                      <div className="space-y-4 sm:flex-1">
                         <h3 className="text-lg font-semibold text-neutral-900">{step.title}</h3>
                         {step.content}
                       </div>
