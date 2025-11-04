@@ -61,14 +61,14 @@ export default function GuideTableOfContents({ sections }: GuideTableOfContentsP
   return (
     <>
       <div className="lg:hidden">
-        <div className="-mx-4 flex snap-x gap-2 overflow-x-auto px-4 pb-4 pt-2">
+        <div className="flex flex-wrap gap-2 pb-4 pt-2">
           {sections.map((section) => (
             <button
               type="button"
               key={section.id}
               onClick={() => scrollToSection(section.id)}
               className={clsx(
-                "snap-start rounded-full border px-4 py-2 text-sm font-medium transition",
+                "flex-1 min-w-[150px] rounded-full border px-4 py-2 text-sm font-medium transition",
                 activeId === section.id
                   ? "border-neutral-900 bg-neutral-900 text-white"
                   : "border-neutral-300 bg-white text-neutral-600 hover:border-neutral-400 hover:text-neutral-900",

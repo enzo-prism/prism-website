@@ -680,7 +680,7 @@ export default function GoogleDentalPatientFormsGuide() {
                     asChild
                     size="lg"
                     variant="outline"
-                    className="h-auto rounded-full px-6 py-3 text-sm font-semibold"
+                    className="h-auto w-full rounded-full px-6 py-3 text-sm font-semibold sm:w-auto"
                   >
                     <Link href={GOOGLE_WORKSPACE_LINK} target="_blank" rel="noopener noreferrer">
                       Buy Google Workspace <ArrowRight className="ml-2 h-4 w-4" aria-hidden />
