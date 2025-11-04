@@ -673,7 +673,7 @@ export default function GoogleDentalPatientFormsGuide() {
                   <div className="space-y-2">
                     <p className="text-xs font-semibold uppercase tracking-[0.24em] text-neutral-500">Need Google Workspace?</p>
                     <p className="text-base text-neutral-700">
-                      Start with a covered Workspace edition and keep all patient data inside the HIPAA-ready toolset we outline below.
+                      We negotiated a partner discount so you can launch a covered Workspace edition and keep every intake workflow inside the HIPAA-ready toolset we outline below.
                     </p>
                   </div>
                   <Button
