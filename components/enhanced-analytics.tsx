@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react"
 import { usePathname, useSearchParams } from "next/navigation"
-import { trackEvent } from "@/utils/analytics"
+import { trackEvent, trackPageView } from "@/utils/analytics"
 
 interface EnhancedAnalyticsProps {
   title: string
@@ -16,6 +16,7 @@ export default function EnhancedAnalytics({ title }: EnhancedAnalyticsProps) {
   useEffect(() => {
     const previous = previousPathname.current
     if (previous !== pathname) {
+      trackPageView(pathname, title)
       trackEvent("navigation", {
         from_path: previous || "(initial)",
         to_path: pathname,

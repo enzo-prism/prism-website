@@ -1,6 +1,6 @@
 "use client"
 
-import { GA_MEASUREMENT_ID } from "@/lib/constants"
+import { GA_MEASUREMENT_ID, IS_ANALYTICS_ENABLED } from "@/lib/constants"
 import { addBreadcrumb, captureErrorWithContext, isSentryInitialized } from "./sentry-helpers"
 
 declare global {
@@ -8,6 +8,10 @@ declare global {
     dataLayer?: Record<string, any>[]
     gtag?: (...args: any[]) => void
     rewardful?: (...args: any[]) => void
+    __PRISM_LAST_PAGEVIEW?: {
+      path: string
+      timestamp: number
+    }
   }
 }
 
@@ -39,25 +43,35 @@ export type EventType =
  * @param params Additional parameters to send with the event
  */
 export function trackEvent(eventName: EventType, params?: Record<string, any>) {
-  try {
-    if (typeof window === "undefined") {
-      return
-    }
-    // Add timestamp to all events
-    const enhancedParams = {
-      ...params,
-      event_time: new Date().toISOString(),
-      page_location: typeof window !== "undefined" ? window.location.href : "",
-      page_title: typeof document !== "undefined" ? document.title : "",
-    }
+  if (typeof window === "undefined") {
+    return
+  }
 
+  const pageLocation = window.location.href
+  const pageTitle = typeof document !== "undefined" ? document.title : ""
+
+  // Add timestamp to all events
+  const enhancedParams = {
+    ...params,
+    event_time: new Date().toISOString(),
+    page_location: pageLocation,
+    page_title: pageTitle,
+    page_path: window.location.pathname,
+  }
+
+  if (process.env.NODE_ENV === "development") {
+    console.log(`[Analytics] Tracked event: ${eventName}`, enhancedParams)
+  }
+
+  if (!IS_ANALYTICS_ENABLED) {
+    return
+  }
+
+  try {
     window.dataLayer = window.dataLayer || []
     window.dataLayer.push({ event: eventName, ...enhancedParams })
     if (typeof window.gtag === "function") {
       window.gtag("event", eventName, enhancedParams)
-    }
-    if (process.env.NODE_ENV === "development") {
-      console.log(`[Analytics] Tracked event: ${eventName}`, enhancedParams)
     }
   } catch (error) {
     console.error("[Analytics] Error tracking event:", error)
@@ -70,12 +84,41 @@ export function trackEvent(eventName: EventType, params?: Record<string, any>) {
  * @param title The title of the page
  */
 export function trackPageView(path: string, title: string) {
+  if (typeof window === "undefined") {
+    return
+  }
+
+  const normalizedPath = path || window.location.pathname || "/"
+  const now = Date.now()
+  const lastPageView = window.__PRISM_LAST_PAGEVIEW
+  if (lastPageView && lastPageView.path === normalizedPath && now - lastPageView.timestamp < 1000) {
+    return
+  }
+
+  window.__PRISM_LAST_PAGEVIEW = {
+    path: normalizedPath,
+    timestamp: now,
+  }
+
+  const pageTitle = title || (typeof document !== "undefined" ? document.title : normalizedPath)
+  const pageLocation = window.location.href
+  const pageReferrer = typeof document !== "undefined" ? document.referrer : ""
+
   trackEvent("page_view", {
-    page_path: path,
-    page_title: title,
-    page_referrer: typeof document !== "undefined" ? document.referrer : "",
-    page_location: typeof window !== "undefined" ? window.location.href : "",
+    page_path: normalizedPath,
+    page_title: pageTitle,
+    page_referrer: pageReferrer,
+    page_location: pageLocation,
   })
+
+  if (IS_ANALYTICS_ENABLED && typeof window.gtag === "function") {
+    window.gtag("config", GA_MEASUREMENT_ID, {
+      page_path: normalizedPath,
+      page_title: pageTitle,
+      page_location: pageLocation,
+      page_referrer: pageReferrer,
+    })
+  }
 }
 
 /**

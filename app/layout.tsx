@@ -12,7 +12,7 @@ import PerformanceMonitor from "@/components/performance-monitor"
 import AnalyticsProvider from "@/components/analytics-provider"
 import { LocalBusinessSchema, OrganizationSchema, WebsiteSchema } from "@/components/schema-markup"
 import SentryContextProvider from "@/components/sentry-context-provider"
-import { GA_MEASUREMENT_ID } from "@/lib/constants"
+import { GA_MEASUREMENT_ID, IS_ANALYTICS_ENABLED } from "@/lib/constants"
 
 
 export const metadata: Metadata = {
@@ -84,24 +84,28 @@ export default function RootLayout({
   return (
     <html lang="en" className="m-0 p-0 w-full" suppressHydrationWarning>
       <head>
-        {/* Google tag (gtag.js) */}
-        <Script
-          id="ga-loader"
-          strategy="afterInteractive"
-          src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
-        />
-        <Script
-          id="ga-config"
-          strategy="afterInteractive"
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', '${GA_MEASUREMENT_ID}', { send_page_view: false });
-            `,
-          }}
-        />
+        {IS_ANALYTICS_ENABLED && (
+          <>
+            {/* Google tag (gtag.js) */}
+            <Script
+              id="ga-loader"
+              strategy="afterInteractive"
+              src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
+            />
+            <Script
+              id="ga-config"
+              strategy="afterInteractive"
+              dangerouslySetInnerHTML={{
+                __html: `
+                  window.dataLayer = window.dataLayer || [];
+                  function gtag(){dataLayer.push(arguments);}
+                  gtag('js', new Date());
+                  gtag('config', '${GA_MEASUREMENT_ID}', { send_page_view: false });
+                `,
+              }}
+            />
+          </>
+        )}
         {/* viewport is defined via metadata.viewport to avoid duplicates */}
         {/* Add mobile-specific meta tags for better scrolling */}
         <meta name="mobile-web-app-capable" content="yes" />

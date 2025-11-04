@@ -1,5 +1,10 @@
 // Google Analytics configuration
-export const GA_MEASUREMENT_ID = "G-P9VY77PRC0"
+const FALLBACK_GA_MEASUREMENT_ID = "G-P9VY77PRC0"
+
+const envMeasurementId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID?.trim()
+
+export const GA_MEASUREMENT_ID = envMeasurementId && envMeasurementId.length > 0 ? envMeasurementId : FALLBACK_GA_MEASUREMENT_ID
+export const IS_ANALYTICS_ENABLED = process.env.NODE_ENV === "production" && Boolean(GA_MEASUREMENT_ID)
 
 // Logo configuration
 export const LOGO_CONFIG = {
