@@ -1,6 +1,6 @@
 # Form Submission Setup Guide
 
-This guide explains how to set up the backend storage and email notifications for the /get-started form.
+This guide explains how to set up the backend storage and email notifications for the `/get-started` form. If you’re configuring HIPAA-safe dental intake flows with Google Workspace, see our companion guide: [`google/dental-patient-forms`](../app/google/dental-patient-forms/page.tsx).
 
 ## Prerequisites
 
