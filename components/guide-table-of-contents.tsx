@@ -68,7 +68,7 @@ export default function GuideTableOfContents({ sections }: GuideTableOfContentsP
               key={section.id}
               onClick={() => scrollToSection(section.id)}
               className={clsx(
-                "w-full min-w-[150px] rounded-full border px-4 py-2 text-sm font-medium transition sm:w-auto",
+                "w-full rounded-full border px-4 py-2 text-sm font-medium transition sm:w-auto",
                 activeId === section.id
                   ? "border-neutral-900 bg-neutral-900 text-white"
                   : "border-neutral-300 bg-white text-neutral-600 hover:border-neutral-400 hover:text-neutral-900",

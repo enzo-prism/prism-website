@@ -853,7 +853,7 @@ export default function GoogleDentalPatientFormsGuide() {
               <p className="text-xs font-semibold tracking-[0.28em] text-neutral-500">REFERENCES</p>
               <h2 className="text-3xl font-semibold text-neutral-900 md:text-4xl">Bookmark the Source Material</h2>
             </div>
-            <ol className="mt-10 grid gap-4 list-none text-base leading-relaxed text-neutral-700 sm:grid-cols-2">
+            <ol className="mt-10 grid grid-cols-1 gap-4 list-none text-base leading-relaxed text-neutral-700 sm:grid-cols-2">
               {referenceLinks.map((ref) => (
                 <li
                   key={ref.href}
