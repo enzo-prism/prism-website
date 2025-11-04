@@ -853,13 +853,26 @@ export default function GoogleDentalPatientFormsGuide() {
               <p className="text-xs font-semibold tracking-[0.28em] text-neutral-500">REFERENCES</p>
               <h2 className="text-3xl font-semibold text-neutral-900 md:text-4xl">Bookmark the Source Material</h2>
             </div>
-            <ol className="mt-10 grid gap-4 text-base leading-relaxed text-neutral-700 sm:grid-cols-2">
+            <ol className="mt-10 grid gap-4 list-none text-base leading-relaxed text-neutral-700 sm:grid-cols-2">
               {referenceLinks.map((ref) => (
-                <li key={ref.href} className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm">
-                  <div className="flex flex-col gap-2">
-                    <span className="text-sm font-semibold uppercase tracking-[0.18em] text-neutral-500">{ref.label}</span>
-                    <p className="text-base text-neutral-800">{ref.description}</p>
-                    <Link href={ref.href} target="_blank" rel="noopener noreferrer" className="text-sm font-semibold text-sky-600 underline">
+                <li
+                  key={ref.href}
+                  className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg"
+                >
+                  <div className="flex flex-col gap-3">
+                    <div className="flex items-center justify-between gap-2">
+                      <span className="text-sm font-semibold uppercase tracking-[0.18em] text-neutral-500">{ref.label}</span>
+                      <span className="rounded-full border border-neutral-200 bg-neutral-50 px-3 py-1 text-xs font-semibold text-neutral-500">
+                        ref
+                      </span>
+                    </div>
+                    <p className="text-base text-neutral-800 sm:min-h-[48px]">{ref.description}</p>
+                    <Link
+                      href={ref.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="break-words text-sm font-semibold text-sky-600 underline"
+                    >
                       {ref.href}
                     </Link>
                   </div>
