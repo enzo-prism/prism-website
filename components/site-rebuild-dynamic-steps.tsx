@@ -66,7 +66,7 @@ export default function SiteRebuildDynamicSteps() {
 
   return (
     <>
-      <article id="step-2" className="space-y-6">
+      <article id="step-2" className="space-y-6 md:space-y-8">
         <div className="space-y-2">
           <p className="text-xs font-semibold uppercase tracking-[0.28em] text-neutral-500">step 2</p>
           <h3 className="text-2xl font-semibold lowercase text-neutral-900 sm:text-3xl">
@@ -77,125 +77,64 @@ export default function SiteRebuildDynamicSteps() {
             disk.
           </p>
         </div>
-        <div className="space-y-4">
+        <div className="space-y-4 md:space-y-6">
           <div className="rounded-2xl border border-neutral-200 bg-neutral-50 p-5 text-sm text-neutral-700 shadow-sm sm:text-base">
             <p className="font-semibold text-neutral-800">Install wget (if needed):</p>
-            <pre className="mt-3 overflow-x-auto rounded-xl bg-neutral-900 p-4 text-xs text-white sm:text-sm">
+            <pre className="mt-3 overflow-x-auto rounded-xl bg-neutral-900 p-4 text-xs text-white sm:p-5 sm:text-sm lg:text-base">
               <code>{`brew install wget`}</code>
             </pre>
           </div>
           <div className="rounded-2xl border border-neutral-200 bg-neutral-50 p-5 text-sm text-neutral-700 shadow-sm sm:text-base">
-            <p className="font-semibold text-neutral-800">Download the live site:</p>
-            <WgetCommandBuilder
-              value={inputValue}
-              onValueChange={setInputValue}
-              commandUrl={commandUrl}
-            />
-            <p className="mt-3 text-sm text-neutral-600">
-              <span className="font-semibold text-neutral-800">Flags in plain English:</span>
-            </p>
-            <ul className="mt-2 space-y-2 text-sm text-neutral-600 sm:text-base">
-              <li>
-                <span className="font-semibold text-neutral-800">-r</span> → recursive crawl so linked pages come with it.
-              </li>
-              <li>
-                <span className="font-semibold text-neutral-800">-l inf</span> → crawl depth stays open until links run out.
-              </li>
-              <li>
-                <span className="font-semibold text-neutral-800">-p</span> → pulls required assets like images, styles, and scripts.
-              </li>
-              <li>
-                <span className="font-semibold text-neutral-800">-E</span> → adds <code className="rounded bg-neutral-100 px-1 py-0.5">.html</code>{" "}
-                extensions so files open cleanly.
-              </li>
-              <li>
-                <span className="font-semibold text-neutral-800">-k</span> → rewrites links for offline use.
-              </li>
-              <li>
-                <span className="font-semibold text-neutral-800">-nc</span> → skips files you already downloaded.
-              </li>
-            </ul>
+            <div className="md:grid md:grid-cols-[minmax(0,_360px),_minmax(0,_1fr)] md:items-start md:gap-8">
+              <div className="space-y-4">
+                <p className="font-semibold text-neutral-800">Download the live site:</p>
+                <WgetCommandBuilder value={inputValue} onValueChange={setInputValue} commandUrl={commandUrl} />
+              </div>
+              <div className="mt-6 space-y-3 md:mt-0 md:border-l md:border-neutral-200 md:pl-8">
+                <p className="text-sm text-neutral-600 sm:text-base">
+                  <span className="font-semibold text-neutral-800">Flags in plain English:</span>
+                </p>
+                <ul className="space-y-2 text-sm text-neutral-600 sm:text-base md:grid md:grid-cols-2 md:gap-x-6 md:gap-y-3 md:space-y-0">
+                  <li className="md:flex md:items-start md:gap-2">
+                    <span className="font-semibold text-neutral-800">-r</span>
+                    <span className="md:leading-snug">→ recursive crawl so linked pages come with it.</span>
+                  </li>
+                  <li className="md:flex md:items-start md:gap-2">
+                    <span className="font-semibold text-neutral-800">-l inf</span>
+                    <span className="md:leading-snug">→ crawl depth stays open until links run out.</span>
+                  </li>
+                  <li className="md:flex md:items-start md:gap-2">
+                    <span className="font-semibold text-neutral-800">-p</span>
+                    <span className="md:leading-snug">→ pulls required assets like images, styles, and scripts.</span>
+                  </li>
+                  <li className="md:flex md:items-start md:gap-2">
+                    <span className="font-semibold text-neutral-800">-E</span>
+                    <span className="md:leading-snug">
+                      → adds <code className="rounded bg-neutral-100 px-1 py-0.5">.html</code> extensions so files open cleanly.
+                    </span>
+                  </li>
+                  <li className="md:flex md:items-start md:gap-2">
+                    <span className="font-semibold text-neutral-800">-k</span>
+                    <span className="md:leading-snug">→ rewrites links for offline use.</span>
+                  </li>
+                  <li className="md:flex md:items-start md:gap-2">
+                    <span className="font-semibold text-neutral-800">-nc</span>
+                    <span className="md:leading-snug">→ skips files you already downloaded.</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
           </div>
           <div className="rounded-2xl border border-neutral-200 bg-white p-5 text-sm text-neutral-600 shadow-sm sm:text-base">
             <p className="font-semibold text-neutral-800">Expected structure:</p>
-            <pre className="mt-3 overflow-x-auto rounded-xl bg-neutral-950 p-4 text-xs text-white sm:text-sm">
+            <pre className="mt-3 overflow-x-auto rounded-xl bg-neutral-950 p-4 text-xs text-white sm:p-5 sm:text-sm lg:text-base">
               <code>{folderStructureSnippet}</code>
             </pre>
           </div>
         </div>
       </article>
 
-      <article id="step-6" className="space-y-6">
-        <div className="space-y-2">
-          <p className="text-xs font-semibold uppercase tracking-[0.28em] text-neutral-500">step 6</p>
-          <h3 className="text-2xl font-semibold lowercase text-neutral-900 sm:text-3xl">run codex locally</h3>
-          <p className="text-base text-neutral-600">
-            With context in place, let Codex generate the rebuild in a fresh Next.js project.
-          </p>
-        </div>
-        <div className="space-y-4">
-          <div className="rounded-2xl border border-neutral-200 bg-neutral-50 p-5 text-sm text-neutral-700 shadow-sm sm:text-base">
-            <p className="font-semibold text-neutral-800">Export your OpenAI key first:</p>
-            <pre className="mt-3 overflow-x-auto rounded-xl bg-neutral-900 p-4 text-xs text-white sm:text-sm">
-              <code>{`export OPENAI_API_KEY="your_api_key_here"`}</code>
-            </pre>
-          </div>
-          <div className="rounded-2xl border border-neutral-200 bg-neutral-50 p-5 text-sm text-neutral-700 shadow-sm sm:text-base">
-            <p className="font-semibold text-neutral-800">Ask Codex for the rebuild:</p>
-            <pre className="mt-3 overflow-x-auto rounded-xl bg-neutral-900 p-4 text-xs text-white sm:text-sm">
-              <code>
-{`codex ask "Rebuild this website locally with the same text and structure using Next.js and Tailwind." \\
-  --with .codex/instructions.md .codex/current-site.md`}
-              </code>
-            </pre>
-            <p className="mt-3 text-sm text-neutral-600">
-              Codex writes directly into the current folder — expect directories like <code className="rounded bg-neutral-100 px-1 py-0.5">pages/</code>,{" "}
-              <code className="rounded bg-neutral-100 px-1 py-0.5">components/</code>, and <code className="rounded bg-neutral-100 px-1 py-0.5">public/</code>.
-            </p>
-          </div>
-        </div>
-      </article>
-
-      <article id="step-7" className="space-y-6">
-        <div className="space-y-2">
-          <p className="text-xs font-semibold uppercase tracking-[0.28em] text-neutral-500">step 7</p>
-          <h3 className="text-2xl font-semibold lowercase text-neutral-900 sm:text-3xl">
-            preview the rebuilt site on localhost
-          </h3>
-          <p className="text-base text-neutral-600">
-            Run the usual Next.js dev workflow and confirm the copy, layout, and routes match the original.
-          </p>
-        </div>
-        <pre className="overflow-x-auto rounded-2xl bg-neutral-950 p-5 text-sm text-white shadow-sm">
-          <code>
-{`npm install
-npm run dev`}
-          </code>
-        </pre>
-        <div className="rounded-2xl border border-neutral-200 bg-neutral-50 p-5 text-sm text-neutral-700 shadow-sm sm:text-base">
-          <p className="font-semibold text-neutral-800">Visit the local build:</p>
-          <pre className="mt-3 overflow-x-auto rounded-xl bg-neutral-900 p-4 text-xs text-white sm:text-sm">
-            <code>{`http://localhost:3000`}</code>
-          </pre>
-        </div>
-      </article>
-
-      <article id="folder-overview" className="space-y-6">
-        <div className="space-y-2">
-          <p className="text-xs font-semibold uppercase tracking-[0.28em] text-neutral-500">reference</p>
-          <h3 className="text-2xl font-semibold lowercase text-neutral-900 sm:text-3xl">
-            folder layout when you’re done
-          </h3>
-          <p className="text-base text-neutral-600">
-            Keep this snapshot intact — it&apos;s the fastest way to iterate on the rebuild, hand assets to teammates, or version control the work.
-          </p>
-        </div>
-        <pre className="overflow-x-auto rounded-2xl bg-neutral-950 p-5 text-sm text-white shadow-sm">
-          <code>{folderOverviewSnippet}</code>
-        </pre>
-      </article>
-
-      <article id="step-3" className="space-y-6">
+      <article id="step-3" className="space-y-6 md:space-y-8">
         <div className="space-y-2">
           <p className="text-xs font-semibold uppercase tracking-[0.28em] text-neutral-500">step 3</p>
           <h3 className="text-2xl font-semibold lowercase text-neutral-900 sm:text-3xl">
@@ -205,30 +144,32 @@ npm run dev`}
             Optional, but it helps Codex keep every headline and paragraph accurate.
           </p>
         </div>
-        <div className="space-y-4">
+        <div className="space-y-4 md:space-y-6">
           <div className="rounded-2xl border border-neutral-200 bg-neutral-50 p-5 text-sm text-neutral-700 shadow-sm sm:text-base">
             <p className="font-semibold text-neutral-800">Install ripgrep:</p>
-            <pre className="mt-3 overflow-x-auto rounded-xl bg-neutral-900 p-4 text-xs text-white sm:text-sm">
+            <pre className="mt-3 overflow-x-auto rounded-xl bg-neutral-900 p-4 text-xs text-white sm:p-5 sm:text-sm lg:text-base">
               <code>{`brew install ripgrep`}</code>
             </pre>
           </div>
           <div className="rounded-2xl border border-neutral-200 bg-neutral-50 p-5 text-sm text-neutral-700 shadow-sm sm:text-base">
-            <p className="font-semibold text-neutral-800">Extract headings and paragraphs:</p>
-            <pre className="mt-3 overflow-x-auto rounded-xl bg-neutral-900 p-4 text-xs text-white sm:text-sm">
-              <code>{ripgrepCommand}</code>
-            </pre>
-            <p className="mt-3 font-semibold text-neutral-800">Strip the HTML tags:</p>
-            <pre className="mt-3 overflow-x-auto rounded-xl bg-neutral-900 p-4 text-xs text-white sm:text-sm">
-              <code>{`sed -E 's/<[^>]+>//g' all_text_raw.html > all_text_raw.txt`}</code>
-            </pre>
-            <p className="mt-3 text-sm text-neutral-600">
-              Result: a clean <code className="rounded bg-neutral-100 px-1 py-0.5">all_text_raw.txt</code> file ready for Codex context.
-            </p>
+            <div className="space-y-4">
+              <p className="font-semibold text-neutral-800">Extract headings and paragraphs:</p>
+              <pre className="overflow-x-auto rounded-xl bg-neutral-900 p-4 text-xs text-white sm:p-5 sm:text-sm lg:text-base">
+                <code>{ripgrepCommand}</code>
+              </pre>
+              <p className="font-semibold text-neutral-800">Strip the HTML tags:</p>
+              <pre className="overflow-x-auto rounded-xl bg-neutral-900 p-4 text-xs text-white sm:p-5 sm:text-sm lg:text-base">
+                <code>{`sed -E 's/<[^>]+>//g' all_text_raw.html > all_text_raw.txt`}</code>
+              </pre>
+              <p className="text-sm text-neutral-600 sm:text-base">
+                Result: a clean <code className="rounded bg-neutral-100 px-1 py-0.5">all_text_raw.txt</code> file ready for Codex context.
+              </p>
+            </div>
           </div>
         </div>
       </article>
 
-      <article id="step-4" className="space-y-6">
+      <article id="step-4" className="space-y-6 md:space-y-8">
         <div className="space-y-2">
           <p className="text-xs font-semibold uppercase tracking-[0.28em] text-neutral-500">step 4</p>
           <h3 className="text-2xl font-semibold lowercase text-neutral-900 sm:text-3xl">
@@ -238,12 +179,12 @@ npm run dev`}
             A live <code className="rounded bg-neutral-100 px-1 py-0.5">sitemap.xml</code> gives Codex a definitive page list.
           </p>
         </div>
-        <pre className="overflow-x-auto rounded-2xl bg-neutral-950 p-5 text-sm text-white shadow-sm">
+        <pre className="overflow-x-auto rounded-2xl bg-neutral-950 p-5 text-sm text-white shadow-sm sm:text-base lg:text-lg">
           <code>{`curl -O ${sitemapCommand}`}</code>
         </pre>
       </article>
 
-      <article id="step-5" className="space-y-6">
+      <article id="step-5" className="space-y-6 md:space-y-8">
         <div className="space-y-2">
           <p className="text-xs font-semibold uppercase tracking-[0.28em] text-neutral-500">step 5</p>
           <h3 className="text-2xl font-semibold lowercase text-neutral-900 sm:text-3xl">
@@ -254,23 +195,97 @@ npm run dev`}
             and source text here.
           </p>
         </div>
-        <div className="space-y-4">
-          <pre className="overflow-x-auto rounded-2xl bg-neutral-950 p-5 text-sm text-white shadow-sm">
+        <div className="space-y-4 md:space-y-6">
+          <pre className="overflow-x-auto rounded-2xl bg-neutral-950 p-5 text-sm text-white shadow-sm sm:text-base lg:text-lg">
             <code>{`mkdir .codex`}</code>
           </pre>
           <div className="rounded-2xl border border-neutral-200 bg-neutral-50 p-5 text-sm text-neutral-700 shadow-sm sm:text-base">
-            <p className="font-semibold text-neutral-800">Add project instructions:</p>
-            <pre className="mt-3 overflow-x-auto rounded-xl bg-neutral-900 p-4 text-xs text-white sm:text-sm">
-              <code>{instructionsSnippet}</code>
+            <div className="space-y-4">
+              <p className="font-semibold text-neutral-800">Add project instructions:</p>
+              <pre className="overflow-x-auto rounded-xl bg-neutral-900 p-4 text-xs text-white sm:p-5 sm:text-sm lg:text-base">
+                <code>{instructionsSnippet}</code>
+              </pre>
+            </div>
+          </div>
+          <div className="rounded-2xl border border-neutral-200 bg-neutral-50 p-5 text-sm text-neutral-700 shadow-sm sm:text-base">
+            <div className="space-y-4">
+              <p className="font-semibold text-neutral-800">Copy extracted text for Codex:</p>
+              <pre className="overflow-x-auto rounded-xl bg-neutral-900 p-4 text-xs text-white sm:p-5 sm:text-sm lg:text-base">
+                <code>{`cp all_text_raw.txt .codex/current-site.md`}</code>
+              </pre>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article id="step-6" className="space-y-6 md:space-y-8">
+        <div className="space-y-2">
+          <p className="text-xs font-semibold uppercase tracking-[0.28em] text-neutral-500">step 6</p>
+          <h3 className="text-2xl font-semibold lowercase text-neutral-900 sm:text-3xl">run codex locally</h3>
+          <p className="text-base text-neutral-600">
+            With context in place, let Codex generate the rebuild in a fresh Next.js project.
+          </p>
+        </div>
+        <div className="space-y-4 md:space-y-6">
+          <div className="rounded-2xl border border-neutral-200 bg-neutral-50 p-5 text-sm text-neutral-700 shadow-sm sm:text-base">
+            <p className="font-semibold text-neutral-800">Export your OpenAI key first:</p>
+            <pre className="mt-3 overflow-x-auto rounded-xl bg-neutral-900 p-4 text-xs text-white sm:p-5 sm:text-sm lg:text-base">
+              <code>{`export OPENAI_API_KEY="your_api_key_here"`}</code>
             </pre>
           </div>
           <div className="rounded-2xl border border-neutral-200 bg-neutral-50 p-5 text-sm text-neutral-700 shadow-sm sm:text-base">
-            <p className="font-semibold text-neutral-800">Copy extracted text for Codex:</p>
-            <pre className="mt-3 overflow-x-auto rounded-xl bg-neutral-900 p-4 text-xs text-white sm:text-sm">
-              <code>{`cp all_text_raw.txt .codex/current-site.md`}</code>
+            <p className="font-semibold text-neutral-800">Ask Codex for the rebuild:</p>
+            <pre className="mt-3 overflow-x-auto rounded-xl bg-neutral-900 p-4 text-xs text-white sm:p-5 sm:text-sm lg:text-base">
+              <code>
+{`codex ask "Rebuild this website locally with the same text and structure using Next.js and Tailwind." \\
+  --with .codex/instructions.md .codex/current-site.md`}
+              </code>
             </pre>
+            <p className="mt-3 text-sm text-neutral-600 sm:text-base">
+              Codex writes directly into the current folder — expect directories like <code className="rounded bg-neutral-100 px-1 py-0.5">pages/</code>,{" "}
+              <code className="rounded bg-neutral-100 px-1 py-0.5">components/</code>, and <code className="rounded bg-neutral-100 px-1 py-0.5">public/</code>.
+            </p>
           </div>
         </div>
+      </article>
+
+      <article id="step-7" className="space-y-6 md:space-y-8">
+        <div className="space-y-2">
+          <p className="text-xs font-semibold uppercase tracking-[0.28em] text-neutral-500">step 7</p>
+          <h3 className="text-2xl font-semibold lowercase text-neutral-900 sm:text-3xl">
+            preview the rebuilt site on localhost
+          </h3>
+          <p className="text-base text-neutral-600">
+            Run the usual Next.js dev workflow and confirm the copy, layout, and routes match the original.
+          </p>
+        </div>
+        <pre className="overflow-x-auto rounded-2xl bg-neutral-950 p-5 text-sm text-white shadow-sm sm:text-base lg:text-lg">
+          <code>
+{`npm install
+npm run dev`}
+          </code>
+        </pre>
+        <div className="rounded-2xl border border-neutral-200 bg-neutral-50 p-5 text-sm text-neutral-700 shadow-sm sm:text-base">
+          <p className="font-semibold text-neutral-800">Visit the local build:</p>
+          <pre className="mt-3 overflow-x-auto rounded-xl bg-neutral-900 p-4 text-xs text-white sm:p-5 sm:text-sm lg:text-base">
+            <code>{`http://localhost:3000`}</code>
+          </pre>
+        </div>
+      </article>
+
+      <article id="folder-overview" className="space-y-6 md:space-y-8">
+        <div className="space-y-2">
+          <p className="text-xs font-semibold uppercase tracking-[0.28em] text-neutral-500">reference</p>
+          <h3 className="text-2xl font-semibold lowercase text-neutral-900 sm:text-3xl">
+            folder layout when you’re done
+          </h3>
+          <p className="text-base text-neutral-600">
+            Keep this snapshot intact — it&apos;s the fastest way to iterate on the rebuild, hand assets to teammates, or version control the work.
+          </p>
+        </div>
+        <pre className="overflow-x-auto rounded-2xl bg-neutral-950 p-5 text-sm text-white shadow-sm sm:text-base lg:text-lg">
+          <code>{folderOverviewSnippet}</code>
+        </pre>
       </article>
     </>
   )

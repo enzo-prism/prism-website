@@ -30,7 +30,7 @@ export default function WgetCommandBuilder({ value, onValueChange, commandUrl }:
 
   return (
     <div className="mt-3 space-y-3">
-      <label htmlFor="wget-command-url" className="text-sm font-semibold text-neutral-800">
+      <label htmlFor="wget-command-url" className="text-sm font-semibold text-neutral-800 sm:text-base">
         Enter your website URL
       </label>
       <input
@@ -40,13 +40,13 @@ export default function WgetCommandBuilder({ value, onValueChange, commandUrl }:
         placeholder={DEFAULT_URL}
         value={inputValue}
         onChange={(event) => setValue(event.target.value)}
-        className="w-full rounded-full border border-neutral-200 bg-white px-5 py-3 text-sm text-neutral-900 placeholder:text-neutral-400 focus:border-neutral-900 focus:outline-none focus:ring-1 focus:ring-neutral-900"
+        className="w-full rounded-full border border-neutral-200 bg-white px-5 py-3 text-sm text-neutral-900 placeholder:text-neutral-400 focus:border-neutral-900 focus:outline-none focus:ring-1 focus:ring-neutral-900 sm:text-base"
         aria-describedby="wget-command-helper"
       />
-      <p id="wget-command-helper" className="text-xs text-neutral-500">
+      <p id="wget-command-helper" className="text-xs text-neutral-500 sm:text-sm">
         The command below updates automatically with the URL you enter.
       </p>
-      <pre className="overflow-x-auto rounded-xl bg-neutral-900 p-4 text-xs text-white sm:text-sm">
+      <pre className="overflow-x-auto rounded-xl bg-neutral-900 p-4 text-xs text-white sm:p-5 sm:text-sm lg:text-base">
         <code>{`wget -r -l inf -p -E -k -nc ${resolvedCommandUrl}`}</code>
       </pre>
     </div>
