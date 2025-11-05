@@ -1,0 +1,117 @@
+---
+title: "google ads destination not working error: how to fix it fast"
+description: "ads paused with a destination not working policy? allow adsbot, clear security blocks, and appeal the review in minutes."
+date: "2025-11-05"
+category: "google ads troubleshooting"
+image: "/api/og/blog/google-ads-destination-not-working"
+gradientClass: "bg-gradient-to-br from-amber-200/40 via-rose-200/40 to-sky-200/40"
+openGraph:
+  title: "google ads destination not working error: how to fix it fast"
+  description: "diagnose why adsbot-google cannot crawl your landing page, lift the block, and get your campaigns running again."
+  url: "https://www.design-prism.com/blog/google-ads-destination-not-working"
+  siteName: "Prism"
+  images:
+    - url: "https://www.design-prism.com/api/og/blog/google-ads-destination-not-working"
+      width: 1200
+      height: 630
+      alt: "Browser window showing a crawler access warning for a google ads landing page"
+  locale: "en_US"
+  type: "article"
+  publishedTime: "2025-11-05T00:00:00.000Z"
+  authors: ["Enzo Sison"]
+twitter:
+  card: "summary_large_image"
+  title: "google ads destination not working error: how to fix it fast"
+  description: "why google pauses campaigns with destination not working and the exact steps prism uses to clear the policy."
+  images: ["https://www.design-prism.com/api/og/blog/google-ads-destination-not-working"]
+canonical: "https://www.design-prism.com/blog/google-ads-destination-not-working"
+---
+
+*By Enzo Sison -- Founder of Prism*
+
+## intro
+
+when a google ads campaign stops delivering with a "destination not working" notice, it means adsbot-google could not successfully load your landing page. the crawler treats that as a broken or unsafe experience and pauses the ads. once you understand what is blocking the bot, the fix is straightforward.
+
+<div className="my-8">
+  <Image
+    src="https://res.cloudinary.com/dhqpqfw6w/image/upload/v1762371279/destination_not_working_cskblq.webp"
+    alt="Troubleshooting steps for resolving the Google Ads destination not working policy"
+    width={1200}
+    height={675}
+    className="rounded-lg w-full h-auto"
+  />
+</div>
+
+## 1. what the error means
+
+google reviews every landing page with adsbot-google. if the bot runs into a block, endless redirect, timeout, or unreadable response, the campaign is flagged. you will usually see a message like:
+
+> "the ads are appropriately marked for the destination not working policy as the landing pages can't be crawled successfully."
+
+translation: the crawler could not reach your page, so google is protecting users until you resolve it.
+
+## 2. common causes
+
+- 🚫 robots.txt disallows adsbot or forgets to add an allow rule.
+- 🔐 firewalls and security plugins (cloudflare, wordfence, siteground security, etc.) block unknown bots by default.
+- 🧩 redirect chains or https errors send the crawler to a dead end.
+- 📱 mobile site returns different markup, or the m-dot version is missing.
+- ⚡ the server times out or heavy scripts crash during load.
+
+## 3. how to diagnose the problem
+
+google offers a crawler test to mimic adsbot. use it before you change anything:
+
+1. open the crawler test: [support.google.com/adspolicy/answer/6368661](https://support.google.com/adspolicy/answer/6368661)
+2. paste your landing page url.
+3. run both desktop and mobile scans.
+
+errors like "robot error" or "http 403" confirm the bot is blocked. a timeout means the page never finished loading.
+
+## 4. how to fix it
+
+### a. update robots.txt
+
+make sure the bot is explicitly allowed:
+
+```txt
+User-agent: AdsBot-Google
+Allow: /
+```
+
+### b. check your host or cdn
+
+if you rely on cloudflare, godaddy, wp engine, or similar services:
+
+- whitelist `adsbot-google` and `googlebot`.
+- temporarily disable bot protection, javascript challenge pages, or rate limiting.
+- confirm your ssl certificate is valid and unexpired.
+
+### c. test again
+
+rerun the adsbot test until both desktop and mobile versions respond with a clean load. if the crawl still fails, recheck redirects and server logs for 4xx or 5xx codes.
+
+## 5. appeal the policy decision
+
+once the page passes the crawler test:
+
+1. open your google ads account and head to **policy manager**.
+2. locate **destination not working**.
+3. click **appeal**, choose **i have fixed the issue**, and submit.
+
+google will re-crawl the landing page. if everything works, the policy clears and ads resume.
+
+## 6. quick tips
+
+- always use https in your ad urls.
+- keep redirects minimal, and avoid bouncing users to outside domains.
+- test desktop, tablet, and mobile landing pages before launching new campaigns.
+
+## conclusion
+
+destination errors look intimidating, but they simply mean google's crawler cannot reach your site. once you open the door for adsbot, appeal the policy, and confirm the page loads, your ads go back online. if you run campaigns for clients, add crawler tests to your pre-launch checklist so you never lose impressions over access issues again.
+
+## 💡 need help debugging ad destination issues?
+
+prism helps small businesses resolve google ads technical errors fast, from crawlability fixes and hosting tweaks to policy appeals. [get in touch with prism →](/get-started)
