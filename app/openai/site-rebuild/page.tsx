@@ -1,11 +1,12 @@
-import Link from "next/link"
 import type { Metadata } from "next"
+import Link from "next/link"
 
 import Footer from "@/components/footer"
 import GuideTableOfContents from "@/components/guide-table-of-contents"
 import Navbar from "@/components/navbar"
 import ScrollProgressBar from "@/components/scroll-progress-bar"
 import ScrollToTop from "@/components/scroll-to-top"
+import WgetCommandBuilder from "@/components/wget-command-builder"
 
 const guideSections = [
   { id: "overview", label: "Overview", emoji: "🧭" },
@@ -167,9 +168,7 @@ mkdir site-rebuild && cd site-rebuild`}
                   </div>
                   <div className="rounded-2xl border border-neutral-200 bg-neutral-50 p-5 text-sm text-neutral-700 shadow-sm sm:text-base">
                     <p className="font-semibold text-neutral-800">Download the live site:</p>
-                    <pre className="mt-3 overflow-x-auto rounded-xl bg-neutral-900 p-4 text-xs text-white sm:text-sm">
-                      <code>{`wget -r -l inf -p -E -k -nc https://example.com`}</code>
-                    </pre>
+                    <WgetCommandBuilder />
                     <p className="mt-3 text-sm text-neutral-600">
                       <span className="font-semibold text-neutral-800">Flags in plain English:</span>
                     </p>
