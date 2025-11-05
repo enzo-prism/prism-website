@@ -1,11 +1,12 @@
 import FAQSection from "@/components/faq-section"
 import Footer from "@/components/footer"
-import MinimalWebsiteList from "@/components/minimal-website-list"
 import Navbar from "@/components/navbar"
 import PageViewTracker from "@/components/page-view-tracker"
 import ScrollToTop from "@/components/scroll-to-top"
 import SeoTextSection from "@/components/seo-text-section"
+import WebsiteProjectsShowcase from "@/components/website-projects-showcase"
 import { Button } from "@/components/ui/button"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { ArrowRight, Check } from "lucide-react"
 import type { Metadata } from "next"
 import Link from "next/link"
@@ -175,6 +176,51 @@ const audienceSegments = [
   },
 ]
 
+const segmentPlaybooks = [
+  {
+    id: "dental",
+    name: "Dental & medical teams",
+    tagline: "conversion-backed patient journeys across services, providers, and locations.",
+    bullets: [
+      "service pages tuned for local intent, schema, and treatment differentiators.",
+      "pre-qualifying intake flows that sync with practice management software.",
+      "before-and-after galleries optimized for accessibility and speed.",
+    ],
+    spotlight: "fills schedule gaps and lifts case acceptance",
+    summary: "we blend education, automation, and reassurance so new and returning patients know which treatment to book and how to move forward.",
+    href: "/why-dental-practices-love-prism",
+    ctaLabel: "see dental playbook",
+  },
+  {
+    id: "retail",
+    name: "Local shop owners",
+    tagline: "blend in-store storytelling with local seo to drive repeat visits.",
+    bullets: [
+      "campaign-ready promo blocks that keep seasonal offers fresh.",
+      "location, hours, and review modules that reinforce trust in maps and search.",
+      "sms and email capture loops that turn browsers into loyal shoppers.",
+    ],
+    spotlight: "drives foot traffic and repeat purchases",
+    summary: "merchandising, content, and local signals work together so shoppers see what is new, where to find you, and why to choose you first.",
+    href: "/why-local-shop-owners-love-prism",
+    ctaLabel: "see retail approach",
+  },
+  {
+    id: "consulting",
+    name: "Consulting & services",
+    tagline: "stand up authority hubs and conversion paths for high-consideration work.",
+    bullets: [
+      "modular case study narratives that surface the transformation fast.",
+      "thought leadership hubs organized by offer, industry, and buyer role.",
+      "crm-integrated lead capture that triages inbound opportunities.",
+    ],
+    spotlight: "improves lead quality and close rates",
+    summary: "we showcase proof, frameworks, and expertise while routing every request into the right follow-up workflow for your team.",
+    href: "/why-consulting-companies-love-prism",
+    ctaLabel: "see consulting playbook",
+  },
+]
+
 const processSteps = [
   {
     step: "Discover",
@@ -307,11 +353,10 @@ export default function WebsitesPage() {
             <div className="mb-10 text-center">
               <h2 className="text-3xl font-semibold lowercase text-neutral-900 sm:text-4xl">recent launches</h2>
               <p className="mt-3 text-neutral-600">
-                A sampling of sites we designed, wrote, and built for teams across healthcare, retail,
-                nonprofit, and professional services.
+                A sampling of sites we designed, wrote, and built across healthcare, retail, nonprofit, and services—toggle the industries to see the matches.
               </p>
             </div>
-            <MinimalWebsiteList projects={websiteProjects} />
+            <WebsiteProjectsShowcase projects={websiteProjects} />
           </div>
         </section>
 
@@ -364,6 +409,62 @@ export default function WebsitesPage() {
                 </span>
               </Link>
             ))}
+          </div>
+          <div className="mx-auto mt-12 max-w-5xl rounded-3xl border border-neutral-200 bg-white p-6 text-left shadow-sm sm:p-8">
+            <div className="text-center sm:text-left">
+              <span className="text-xs font-semibold uppercase tracking-[0.28em] text-neutral-400">vertical playbooks</span>
+              <h3 className="mt-3 text-2xl font-semibold lowercase text-neutral-900 sm:text-3xl">
+                see how we tailor each launch
+              </h3>
+              <p className="mt-3 text-sm text-neutral-600">
+                switch tabs to explore the modules, messaging, and automations we prioritize for different business models.
+              </p>
+            </div>
+            <Tabs defaultValue={segmentPlaybooks[0]?.id} className="mt-6">
+              <TabsList className="mx-auto flex w-full flex-wrap justify-center gap-2 bg-neutral-100/80 p-1 sm:justify-start">
+                {segmentPlaybooks.map(playbook => (
+                  <TabsTrigger
+                    key={playbook.id}
+                    value={playbook.id}
+                    className="rounded-full px-4 py-1.5 text-sm font-medium text-neutral-600 data-[state=active]:bg-white data-[state=active]:text-neutral-900 data-[state=active]:shadow-sm"
+                  >
+                    {playbook.name}
+                  </TabsTrigger>
+                ))}
+              </TabsList>
+              {segmentPlaybooks.map(playbook => (
+                <TabsContent key={playbook.id} value={playbook.id} className="mt-6 focus-visible:outline-none">
+                  <div className="grid gap-6 sm:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)] sm:gap-8">
+                    <div>
+                      <p className="text-sm text-neutral-600">{playbook.tagline}</p>
+                      <ul className="mt-5 space-y-3 text-sm text-neutral-700">
+                        {playbook.bullets.map(point => (
+                          <li key={point} className="flex items-start gap-3">
+                            <span className="mt-1 inline-flex h-5 w-5 flex-none items-center justify-center rounded-full bg-neutral-900/10">
+                              <Check className="h-3 w-3" />
+                            </span>
+                            <span>{point}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div className="flex h-full flex-col justify-between rounded-2xl border border-neutral-200 bg-neutral-50 p-6">
+                      <div>
+                        <span className="text-xs font-semibold uppercase tracking-[0.28em] text-neutral-400">impact focus</span>
+                        <p className="mt-2 text-sm font-semibold text-neutral-900">{playbook.spotlight}</p>
+                        <p className="mt-3 text-sm text-neutral-600">{playbook.summary}</p>
+                      </div>
+                      <Button asChild variant="outline" className="mt-6 inline-flex items-center justify-center rounded-full px-6">
+                        <Link href={playbook.href}>
+                          {playbook.ctaLabel}
+                          <ArrowRight className="ml-2 h-4 w-4" />
+                        </Link>
+                      </Button>
+                    </div>
+                  </div>
+                </TabsContent>
+              ))}
+            </Tabs>
           </div>
           <div className="mx-auto mt-12 max-w-4xl rounded-3xl border border-neutral-200 bg-white p-8 text-left shadow-sm sm:flex sm:items-center sm:justify-between sm:gap-8">
             <div>
