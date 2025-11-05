@@ -1,0 +1,173 @@
+---
+title: "build a reusable shadcn + codex design system for every future project"
+description: "ship a single shadcn/ui template that codex pulls into every workspace so you stop rebuilding buttons, forms, and charts from scratch."
+date: "2025-11-05"
+category: "ai powered web development"
+image: "/api/og/blog/reusable-shadcn-codex-template"
+gradientClass: "bg-gradient-to-br from-indigo-200/40 via-sky-200/40 to-emerald-200/40"
+openGraph:
+  title: "build a reusable shadcn + codex design system for every future project"
+  description: "stand up a shadcn/ui template once, then let Codex reuse that system across new and existing projects without rebuilding components."
+  url: "https://www.design-prism.com/blog/reusable-shadcn-codex-template"
+  siteName: "Prism"
+  images:
+    - url: "https://www.design-prism.com/api/og/blog/reusable-shadcn-codex-template"
+      width: 1200
+      height: 630
+      alt: "shadcn ui components connected to Codex CLI template workflow diagram"
+  locale: "en_US"
+  type: "article"
+  publishedTime: "2025-11-05T00:00:00.000Z"
+  authors: ["Enzo Sison"]
+twitter:
+  card: "summary_large_image"
+  title: "build a reusable shadcn + codex design system for every future project"
+  description: "create one shadcn/ui template, point Codex at it, and every new build starts with your design system already wired."
+  images: ["https://www.design-prism.com/api/og/blog/reusable-shadcn-codex-template"]
+canonical: "https://www.design-prism.com/blog/reusable-shadcn-codex-template"
+---
+
+*By Enzo Sison — Founder of Prism*
+
+<section className="rounded-3xl border border-neutral-200 bg-neutral-50 p-8 shadow-sm flex flex-col gap-4">
+  <div>
+    <h2 className="text-2xl font-semibold leading-tight tracking-tight text-neutral-900 lowercase">turn your ui into a system — not a rebuild</h2>
+    <p className="mt-3 text-sm text-neutral-600">
+      in less than 15 minutes you can spin up a reusable shadcn/ui design system that codex automatically understands. build once, reuse everywhere, and stop recreating buttons, inputs, and tables for every engagement.
+    </p>
+  </div>
+  <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
+    <a
+      className="inline-flex items-center justify-center rounded-full bg-neutral-900 px-6 py-3 text-sm font-medium text-white transition hover:bg-neutral-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-900"
+      href="#ready-to-use-setup-script"
+    >
+      run the setup script
+    </a>
+    <a
+      className="inline-flex items-center justify-center rounded-full border border-neutral-900 px-6 py-3 text-sm font-medium text-neutral-900 transition hover:bg-neutral-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300"
+      href="https://github.com/enzo-prism/codex-template"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      explore our shadcn template
+    </a>
+  </div>
+  <p className="text-xs uppercase tracking-[0.3em] text-neutral-400">
+    save the system once. ship it on every build.
+  </p>
+</section>
+
+## why this matters
+
+### problem
+
+most teams still rebuild buttons, inputs, modals, and tables every time a new site, dashboard, or product idea lands on the roadmap. it burns hours and introduces tiny style inconsistencies that compound as projects stack up.
+
+### solution
+
+codex cli + shadcn/ui gives you a universal design foundation. by promoting a single template into a reusable codex context, every future project inherits the same responsive typography, spacing, and component logic—no more duplicate work, no more visual drift.
+
+## the minimal workflow
+
+no fluff. just the commands you need.
+
+### 1. create your local shadcn template
+
+```bash
+cd ~
+mkdir codex-template
+cd codex-template
+npx create-next-app@latest .
+npx shadcn@latest init
+npx shadcn@latest add button card input chart table dialog form
+```
+
+your `/components/ui` folder now holds production-ready primitives you can reuse everywhere.
+
+### 2. add your base colors
+
+open `app/globals.css` and append:
+
+```css
+@layer base {
+  :root {
+    --chart-1: oklch(0.646 0.222 41.116);
+    --chart-2: oklch(0.6 0.118 184.704);
+  }
+  .dark {
+    --chart-1: oklch(0.488 0.243 264.376);
+    --chart-2: oklch(0.696 0.17 162.48);
+  }
+}
+```
+
+those variables give codex predictable, brand-ready data visualizations without rebuilding chart palettes.
+
+### 3. save the template
+
+```bash
+mv codex-template codex-shadcn-template
+```
+
+ship it to github if you want teammates or agents to pull it remotely:
+
+```bash
+git init && git add .
+git commit -m "base shadcn template"
+git remote add origin https://github.com/<you>/codex-shadcn-template.git
+git push -u origin main
+```
+
+### 4. use it in new projects
+
+```bash
+codex init --template ~/codex-shadcn-template
+```
+
+or reference the hosted repo:
+
+```bash
+codex init --template https://github.com/<you>/codex-shadcn-template
+```
+
+add a shell alias so starting fresh takes one command:
+
+```bash
+alias codexnew='codex init --template ~/codex-shadcn-template'
+```
+
+### 5. use it in existing projects
+
+```bash
+cd ~/projects/my-website
+codex --context ~/codex-shadcn-template
+```
+
+then tell codex: “use the components from my shadcn template to rebuild the form and chart layouts.” it pulls in your button variants, form field patterns, and chart scaffolding automatically—no copy/paste marathons.
+
+## what you get
+
+- ✅ a universal design system (next.js + tailwind + shadcn/ui)
+- ✅ consistent components and tokens across projects
+- ✅ lightning-fast new project setup with `codex init`
+- ✅ seamless codex integration for agent-powered ui generation
+- ✅ a reusable design language your agency or dev team can scale
+
+## ready-to-use setup script (optional) {#ready-to-use-setup-script}
+
+if you want everything prewired, prism ships a ready-to-run `setup.sh` that provisions the template, syncs colors, and registers your codex alias automatically. reach out and we’ll drop it into your workspace—or simply ask codex to generate it inside your project using this article as context.
+
+<div className="mt-4">
+  <a
+    className="inline-flex items-center justify-center rounded-full bg-neutral-900 px-6 py-3 text-sm font-medium text-white transition hover:bg-neutral-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-900"
+    href="mailto:hello@design-prism.com?subject=Codex%20shadcn%20setup%20script"
+  >
+    get the setup script
+  </a>
+</div>
+
+## why prism shares this
+
+prism builds developer-ready design systems that connect design, ai, and code. standardizing around codex and shadcn lets every client website—from local businesses to national consulting firms—ship with consistent ui, faster turnaround, and fewer regressions. pairing this template with our [services](/services), the codex + lovable workflow we outlined in [how to connect openai codex to your lovable.dev website](/blog/how-to-connect-openai-codex-to-your-lovable-dev-website), and the repeatable growth loops inside the [prism flywheel](/prism-flywheel) keeps teams focused on outcomes, not scaffolding.
+
+design once. deploy everywhere. that’s the prism way.
