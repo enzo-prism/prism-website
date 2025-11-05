@@ -1,16 +1,17 @@
 "use client"
 
 import { BlogPostErrorBoundary } from "@/components/blog-error-boundary"
+import dynamic from "next/dynamic"
 import CoreImage from "@/components/core-image"
 import GetStartedCTA from "@/components/GetStartedCTA"
 import { BlogPostSchema } from "@/components/schema-markup"
 import { cn } from "@/lib/utils"
 import { ArrowLeft } from "lucide-react"
-import dynamic from "next/dynamic"
 import Link from "next/link"
 import { useEffect, useState } from "react"
 const Footer = dynamic(() => import("@/components/footer"), { ssr: false })
 const Navbar = dynamic(() => import("@/components/navbar"), { ssr: false })
+const BlogShareIcons = dynamic(() => import("@/components/blog/blog-share-icons"), { ssr: false })
 
 interface Props {
   children: React.ReactNode
@@ -80,6 +81,11 @@ export default function BlogPostLayout({
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const shareUrl =
+    openGraph?.url ||
+    canonical ||
+    `https://www.design-prism.com/blog/${slug}`
+
   return (
     <div className="flex min-h-screen flex-col bg-white">
       {/* Minimal progress bar */}
@@ -105,7 +111,7 @@ export default function BlogPostLayout({
                 </Link>
               </div>
               <article>
-                <header className="mb-6 sm:mb-8">
+                <header className="relative mb-6 sm:mb-8">
                   {showHeroImage && image && !hasImageError ? (
                     <div className="rounded-lg overflow-hidden mb-6">
                       <CoreImage
@@ -138,6 +144,10 @@ export default function BlogPostLayout({
                   <p className="text-neutral-600 mt-3">
                     {description}
                   </p>
+                  <div className="mt-5 flex flex-wrap items-center justify-start gap-2 border-t border-neutral-100 pt-5 sm:justify-between">
+                    <span className="text-xs uppercase tracking-[0.25em] text-neutral-400">pass it on</span>
+                    <BlogShareIcons url={shareUrl} title={title} />
+                  </div>
                 </header>
                 <BlogPostErrorBoundary>
                   <div className="prose-blog">
