@@ -1,4 +1,5 @@
 import type { Metadata } from "next"
+import Image from "next/image"
 import Link from "next/link"
 
 import Footer from "@/components/footer"
@@ -223,7 +224,7 @@ export default function DentalPracticesPage() {
         <section className="relative overflow-hidden border-b border-neutral-100">
           <div className="absolute inset-0 bg-gradient-to-b from-neutral-50 via-white to-white" aria-hidden />
           <div className="container relative mx-auto px-4 py-24 md:py-32">
-            <div className="mx-auto flex max-w-3xl flex-col items-center text-center">
+            <div className="mx-auto flex max-w-4xl flex-col items-center text-center">
               <p className="text-sm font-semibold text-neutral-500">🦷 Why Dentists Love Working with Prism</p>
               <h1 className="mt-6 text-4xl font-semibold tracking-tight md:text-5xl lg:text-6xl">
                 Grow your practice. Worry less about marketing and technology.
@@ -248,6 +249,25 @@ export default function DentalPracticesPage() {
                     <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
                   </Button>
                 </Link>
+              </div>
+            </div>
+            <div className="mt-14">
+              <div className="relative mx-auto max-w-5xl">
+                <div
+                  className="absolute inset-0 -z-10 rounded-[48px] bg-gradient-to-r from-blue-200/60 via-purple-200/60 to-pink-200/60 blur-3xl"
+                  aria-hidden
+                />
+                <div className="relative overflow-hidden rounded-[32px] border border-white/80 bg-white/80 shadow-2xl shadow-neutral-900/5">
+                  <Image
+                    src="https://res.cloudinary.com/dhqpqfw6w/image/upload/v1762536261/Screenshot_2025-11-07_at_9.22.02_AM_peemtq.webp"
+                    alt="Preview of the Prism dental practice experience"
+                    width={1920}
+                    height={1080}
+                    className="h-auto w-full object-cover"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 1100px"
+                    priority
+                  />
+                </div>
               </div>
             </div>
           </div>
