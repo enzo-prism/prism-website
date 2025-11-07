@@ -252,12 +252,12 @@ export default function DentalPracticesPage() {
               </div>
             </div>
             <div className="mt-14">
-              <div className="relative mx-auto max-w-5xl">
+              <div className="relative mx-auto max-w-xl md:max-w-2xl">
                 <div
-                  className="absolute inset-0 -z-10 rounded-[48px] bg-gradient-to-r from-blue-200/60 via-purple-200/60 to-pink-200/60 blur-3xl"
+                  className="absolute inset-0 -z-10 rounded-[36px] bg-gradient-to-r from-blue-200/50 via-purple-200/50 to-pink-200/50 blur-2xl"
                   aria-hidden
                 />
-                <div className="relative overflow-hidden rounded-[32px] border border-white/80 bg-white/80 shadow-2xl shadow-neutral-900/5">
+                <div className="relative overflow-hidden rounded-[28px] border border-white/80 bg-white/80 shadow-xl shadow-neutral-900/5">
                   <Image
                     src="https://res.cloudinary.com/dhqpqfw6w/image/upload/v1762536261/Screenshot_2025-11-07_at_9.22.02_AM_peemtq.webp"
                     alt="Preview of the Prism dental practice experience"
