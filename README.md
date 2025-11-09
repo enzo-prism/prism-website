@@ -67,3 +67,4 @@ Reference guides live in [`/docs`](./docs):
 - [Blog Content Architecture](./docs/blog-content-architecture.md) — MDX frontmatter, category taxonomy, RSS feed, and related posts.
 - [Blog Styling Guide](./docs/blog-styling-guide.md) — Markdown/MDX formatting expectations.
 - [Blog Performance Optimization](./docs/blog-performance-optimization.md) — GPU and layout tuning notes.
+- [Development Guide](./docs/development-guide.md) — Local workflow, Formspree integration, and the structure of key marketing pages.
