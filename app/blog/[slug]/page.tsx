@@ -76,6 +76,16 @@ export default async function BlogPostPage({ params }: PageProps) {
   if (!post) notFound()
   const { frontmatter } = post
   const content = await renderPost(slug)
+  const allPosts = (await getAllPosts()) ?? []
+  const relatedPosts = allPosts
+    .filter((p) => p.slug !== slug)
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+
+  const prioritized = [
+    ...relatedPosts.filter((p) => p.categorySlug === frontmatter.categorySlug),
+    ...relatedPosts.filter((p) => p.categorySlug !== frontmatter.categorySlug),
+  ]
+
   return (
     <BlogPostLayout
       slug={slug}
@@ -89,6 +99,7 @@ export default async function BlogPostPage({ params }: PageProps) {
       showHeroImage={frontmatter.showHeroImage}
       openGraph={frontmatter.openGraph}
       canonical={frontmatter.canonical}
+      relatedPosts={prioritized.slice(0, 3)}
     >
       {content}
       <div className="mt-16">

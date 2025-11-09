@@ -14,11 +14,16 @@ interface BlogPost extends BlogFrontmatter {
 
 export default function BlogPostsList({ posts }: { posts: BlogPost[] }) {
   const categories = useMemo(() => {
-    const unique = new Set(posts.map(p => p.category))
-    return ['All', ...Array.from(unique)]
+    const map = new Map<string, string>()
+    posts.forEach((post) => {
+      if (!map.has(post.categorySlug)) {
+        map.set(post.categorySlug, post.category)
+      }
+    })
+    return Array.from(map.entries()).map(([slug, label]) => ({ slug, label }))
   }, [posts])
 
-  const [selectedCategory, setSelectedCategory] = useState('All')
+  const [selectedCategory, setSelectedCategory] = useState('all')
   const [filteredPosts, setFilteredPosts] = useState(posts)
 
   return (

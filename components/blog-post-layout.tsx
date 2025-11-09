@@ -9,6 +9,7 @@ import { cn } from "@/lib/utils"
 import { ArrowLeft } from "lucide-react"
 import Link from "next/link"
 import { useEffect, useState } from "react"
+import SimpleBlogPostCard from "@/components/simple-blog-post-card"
 const Footer = dynamic(() => import("@/components/footer"), { ssr: false })
 const Navbar = dynamic(() => import("@/components/navbar"), { ssr: false })
 const BlogShareIcons = dynamic(() => import("@/components/blog/blog-share-icons"), { ssr: false })
@@ -36,6 +37,15 @@ interface Props {
     authors?: string[]
   }
   canonical?: string
+  relatedPosts?: Array<{
+    slug: string
+    title: string
+    description: string
+    date: string
+    category: string
+    gradientClass: string
+    image?: string
+  }>
 }
 
 export default function BlogPostLayout({
@@ -51,6 +61,7 @@ export default function BlogPostLayout({
   showHeroImage = true,
   openGraph,
   canonical,
+  relatedPosts = [],
 }: Props) {
   const effectiveGradient = gradientClass || 'bg-gradient-to-br from-indigo-300/30 via-purple-300/30 to-pink-300/30';
   const effectiveImageUrl = image ? `https://www.design-prism.com${image}` : 'https://www.design-prism.com/prism-opengraph.png';
@@ -144,8 +155,7 @@ export default function BlogPostLayout({
                   <p className="text-neutral-600 mt-3">
                     {description}
                   </p>
-                  <div className="mt-5 flex flex-wrap items-center justify-start gap-2 border-t border-neutral-100 pt-5 sm:justify-between">
-                    <span className="text-xs uppercase tracking-[0.25em] text-neutral-400">pass it on</span>
+                  <div className="mt-5 flex flex-wrap items-center justify-start gap-3">
                     <BlogShareIcons url={shareUrl} title={title} />
                   </div>
                 </header>
@@ -154,6 +164,33 @@ export default function BlogPostLayout({
                     {children}
                   </div>
                 </BlogPostErrorBoundary>
+
+                {relatedPosts.length > 0 && (
+                  <section className="mt-16 border border-neutral-100 rounded-2xl p-6 sm:p-8">
+                    <div className="flex flex-col gap-2 mb-6">
+                      <p className="text-xs font-semibold uppercase tracking-[0.35em] text-neutral-500">keep learning</p>
+                      <h2 className="text-2xl font-bold tracking-tight lowercase">related posts</h2>
+                      <p className="text-sm text-neutral-600 lowercase">
+                        more experiments and playbooks from the prism team.
+                      </p>
+                    </div>
+                    <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+                      {relatedPosts.map((related) => (
+                        <SimpleBlogPostCard
+                          key={related.slug}
+                          title={related.title}
+                          category={related.category}
+                          date={related.date}
+                          description={related.description}
+                          slug={related.slug}
+                          image={related.image ?? "/blog/ai-digital-marketing.png"}
+                          gradientClass={related.gradientClass}
+                          compact
+                        />
+                      ))}
+                    </div>
+                  </section>
+                )}
                 {/* Contextual CTA */}
                 <div className="mt-12">
                   <GetStartedCTA

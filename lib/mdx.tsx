@@ -32,6 +32,7 @@ export type BlogFrontmatter = {
   description: string
   date: string
   category: string
+  categorySlug: string
   image?: string
   gradientClass: string
   showHeroImage?: boolean
@@ -43,11 +44,21 @@ export type BlogFrontmatter = {
 const BLOG_PATH = "content/blog"
 
 const CODEX_REGEX = /\bcode?x\b/gi
+const DEFAULT_CATEGORY_SLUG = "general"
 
 function normalizeCodexWord(value: string) {
   return value.replace(CODEX_REGEX, match =>
     match.charAt(0) === match.charAt(0).toLowerCase() ? "codex" : "Codex",
   )
+}
+
+function slugify(value: string): string {
+  return value
+    .toLowerCase()
+    .replace(/&/g, "and")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    || DEFAULT_CATEGORY_SLUG
 }
 
 function normalizeCodexCasing<T>(value: T): T {
@@ -92,7 +103,8 @@ async function getPost(slug: string): Promise<{ frontmatter: BlogFrontmatter; co
       title: normalizedData.title,
       description: normalizedData.description,
       date: normalizedData.date,
-      category: normalizedData.category,
+      category: normalizedData.category.trim(),
+      categorySlug: slugify(normalizedData.category.trim()),
       image: normalizedData.image, // No fallback - let the layout component handle missing images
       gradientClass: normalizedData.gradientClass || 'bg-gradient-to-br from-blue-300/30 via-purple-300/30 to-pink-300/30',
       showHeroImage: typeof normalizedData.showHeroImage === 'boolean' ? normalizedData.showHeroImage : true,

@@ -26,6 +26,11 @@ export default async function Blog() {
             <p className="mt-3 text-lg leading-relaxed text-white/80">
               field notes from building high-converting websites, ai-infused marketing systems, and repeatable playbooks for local businesses. every article captures experiments we shipped for clients and the numbers that proved they worked.
             </p>
+            <div className="mt-4">
+              <Link href="/blog/feed.xml" className="text-sm font-medium text-white/80 underline-offset-4 hover:text-white">
+                subscribe via rss
+              </Link>
+            </div>
           </div>
         </div>
       </section>
@@ -53,6 +58,9 @@ export default async function Blog() {
             <h2 className="text-2xl font-semibold uppercase tracking-tight">prism blog highlights</h2>
             <p>
               recent stories cover ai-assisted seo, conversion-focused design, and growth experiments that helped local companies win more revenue. browse the articles below and keep reading at <a href="https://www.design-prism.com/blog">design-prism.com/blog</a>.
+            </p>
+            <p>
+              prefer feeds? follow the <a href="/blog/feed.xml">rss channel</a>.
             </p>
             <ul className="list-disc space-y-2 pl-5">
               {posts.slice(0, 4).map((post) => (
