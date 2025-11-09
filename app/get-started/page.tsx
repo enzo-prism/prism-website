@@ -22,12 +22,13 @@ export const metadata: Metadata = {
   },
 }
 
-export default function GetStartedPage({
+export default async function GetStartedPage({
   searchParams,
 }: {
-  searchParams: { plan?: string }
+  searchParams: Promise<{ plan?: string }>
 }) {
-  const selectedPlan = searchParams?.plan?.toLowerCase() ?? ""
+  const resolvedSearchParams = await searchParams
+  const selectedPlan = resolvedSearchParams?.plan?.toLowerCase() ?? ""
   const budgetValueMap: Record<string, string> = {
     launch: "<500",
     grow: "500-1000",
