@@ -173,6 +173,8 @@ const videoItems = [
   }
 ] as const
 
+type FeaturedHighlight = (typeof featuredCaseStudyDetails)[number]["highlight"]
+
 const featuredCaseStudies = featuredCaseStudyDetails
   .map(({ slug, highlight }) => {
     const match = CASE_STUDIES.find((study) => study.slug === slug)
@@ -185,7 +187,7 @@ const featuredCaseStudies = featuredCaseStudyDetails
       highlight
     }
   })
-  .filter((study): study is CaseStudyMeta & { highlight: string } => Boolean(study))
+  .filter((study): study is CaseStudyMeta & { highlight: FeaturedHighlight } => Boolean(study))
 
 export const metadata: Metadata = {
   title: "Why Dentists Love Working with Prism",
