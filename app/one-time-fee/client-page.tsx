@@ -278,10 +278,10 @@ export default function OneTimeFeeClientPage() {
                 <Button
                   variant="outline"
                   className="rounded-full px-6 py-3 text-base lowercase"
-                  onClick={() => trackNavigation("explore options consultation", "/get-started")}
+                  onClick={() => trackNavigation("explore options consultation", "/free-analysis")}
                   asChild
                 >
-                  <Link href="/get-started">
+                  <Link href="/free-analysis">
                     {FREE_AUDIT_CTA_TEXT} <ArrowRight className="ml-2 h-4 w-4" />
                   </Link>
                 </Button>

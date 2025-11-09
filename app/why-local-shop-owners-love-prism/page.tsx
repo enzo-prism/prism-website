@@ -131,7 +131,7 @@ export default function LocalShopOwnersPage() {
                     talk to prism
                   </Button>
                 </Link>
-                <Link href="/get-started">
+                <Link href="/free-analysis">
                   <Button
                     size="lg"
                     variant="outline"
@@ -357,7 +357,7 @@ export default function LocalShopOwnersPage() {
                     talk to prism
                   </Button>
                 </Link>
-                <Link href="/get-started">
+                <Link href="/free-analysis">
                   <Button
                     size="lg"
                     variant="outline"

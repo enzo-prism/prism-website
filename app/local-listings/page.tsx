@@ -223,7 +223,7 @@ export default function LocalListingsPage() {
             </p>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
               <Button asChild size="lg" className="rounded-full px-8">
-                <Link href="/get-started">
+                <Link href="/free-analysis">
                   {FREE_AUDIT_CTA_TEXT}
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
@@ -408,7 +408,7 @@ export default function LocalListingsPage() {
             </p>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
               <Button asChild size="lg" className="rounded-full px-8">
-                <Link href="/get-started">
+                <Link href="/free-analysis">
                   {FREE_AUDIT_CTA_TEXT}
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>

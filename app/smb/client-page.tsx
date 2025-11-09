@@ -71,7 +71,7 @@ export default function SMBClientPage() {
               animate={{ y: 0 }}
               transition={{ duration: 0.6, delay: 0.15, ease: "easeOut" }}
             >
-              <Link href="/get-started">
+              <Link href="/free-analysis">
                 <Button className="rounded-full px-8 py-6 text-base lowercase">
                   {FREE_AUDIT_CTA_TEXT} <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
@@ -124,7 +124,7 @@ export default function SMBClientPage() {
               <h3 className="text-2xl sm:text-3xl font-semibold tracking-tight lowercase">grow leads, conversions, and ltv</h3>
               <p className="mt-3 text-neutral-300 lowercase">design, software, and data — implemented and measured with you.</p>
               <div className="mt-6">
-                <Link href="/get-started">
+                <Link href="/free-analysis">
                   <Button variant="secondary" className="rounded-full px-8 py-6 text-base lowercase">
                     {FREE_AUDIT_CTA_TEXT} <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>

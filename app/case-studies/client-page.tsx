@@ -75,7 +75,7 @@ export default function CaseStudiesPage() {
               </h2>
               <p className="text-neutral-600 lowercase">let's discuss how we can help your business grow</p>
               <div className="pt-4">
-                <Link href="/get-started">
+                <Link href="/free-analysis">
                   <button
                     className="inline-flex items-center justify-center rounded-full bg-neutral-900 px-6 py-3 text-sm font-medium text-white hover:bg-neutral-800 lowercase"
                     onClick={() => trackCTAClick(FREE_AUDIT_CTA_TEXT, "case studies page")}

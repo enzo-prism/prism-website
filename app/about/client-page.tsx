@@ -196,7 +196,7 @@ export default function AboutClientPage() {
 
                 <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
                   <Link
-                    href="/get-started"
+                    href="/free-analysis"
                     className="inline-flex items-center justify-center rounded-full bg-white text-neutral-900 px-8 py-4 text-sm font-medium hover:bg-neutral-100 lowercase transition-all duration-200 hover:scale-105 shadow-lg"
                     onClick={() => trackVideoInteraction("get_started_cta", "click", "About page CTA to get started")}
                   >

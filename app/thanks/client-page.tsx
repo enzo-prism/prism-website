@@ -32,7 +32,7 @@ export default function ThanksPageClient() {
   const handleScheduleClick = () => {
     confetti()
     setTimeout(() => {
-      window.open("https://calendly.com/design-prism/kickoff", "_blank")
+      window.open("https://calendar.notion.so/meet/enzosison/sfux4ogo", "_blank")
     }, 500)
   }
 
@@ -65,9 +65,14 @@ export default function ThanksPageClient() {
         </p>
 
         <div className="flex flex-col gap-4 sm:flex-row sm:justify-center">
-          <Button size="lg" className="gap-2" onClick={handleScheduleClick}>
+          <Button
+            size="lg"
+            className="gap-2"
+            onClick={handleScheduleClick}
+            aria-label="Book Your 15-Minute Prism Site Kickoff Call"
+          >
             <Calendar className="h-5 w-5" />
-            Book Kickoff Call
+            Book Your 15-Minute Prism Site Kickoff Call
             <ArrowRight className="h-4 w-4" />
           </Button>
 
@@ -78,6 +83,11 @@ export default function ThanksPageClient() {
             </Button>
           </Link>
         </div>
+
+        <p className="text-sm text-gray-500">
+          Schedule a quick call to confirm your goals and launch your AI-powered website. You'll get a clear plan, asset
+          checklist, and next steps to go live this week.
+        </p>
       </div>
 
       {isLoaded && (

@@ -203,7 +203,7 @@ export default function ExquisiteDentistryCaseStudy() {
                   <h2 className="text-2xl font-bold tracking-tighter">Ready to Close the Digital Gap?</h2>
                   <p>If your offline experience screams five-star but your website whispers two-star, let's talk.<br />➡ <strong>Book a 15-min strategy call</strong> or explore more success stories.</p>
                   <div className="pt-6">
-                    <Link href="/get-started">
+                    <Link href="/free-analysis">
                       <Button
                         className="rounded-full px-8 py-6 text-lg"
                         onClick={() => trackCTAClick(FREE_AUDIT_CTA_TEXT, "case study bottom")}
@@ -227,7 +227,7 @@ export default function ExquisiteDentistryCaseStudy() {
                 <Link href="/case-studies">
                   <Button variant="outline" className="rounded-full"><ArrowLeft className="mr-2 h-4 w-4" /> all case studies</Button>
                 </Link>
-                <Link href="/get-started">
+                <Link href="/free-analysis">
                   <Button variant="outline" className="rounded-full">
                     {FREE_AUDIT_CTA_TEXT} <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>

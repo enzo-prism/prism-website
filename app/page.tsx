@@ -32,7 +32,7 @@ export default function Home() {
                 view pricing
               </Link>
               <Link
-                href="/get-started"
+                href="/free-analysis"
                 className="rounded-full border border-white/40 px-6 py-3 text-sm font-semibold text-white transition hover:border-white hover:bg-white/10"
               >
                 free design audit

@@ -430,7 +430,7 @@ export default function OlympicBootworksCaseStudy() {
                     let's talk.
                   </p>
                 <div className="pt-6">
-                  <Link href="/get-started">
+                  <Link href="/free-analysis">
                     <Button
                       className="rounded-full px-8 py-6 text-lg lowercase"
                       onClick={() => trackCTAClick(FREE_AUDIT_CTA_TEXT, "case study bottom")}
@@ -449,7 +449,7 @@ export default function OlympicBootworksCaseStudy() {
                     <ArrowLeft className="mr-2 h-4 w-4" /> all case studies
                   </Button>
                 </Link>
-                <Link href="/get-started">
+                <Link href="/free-analysis">
                   <Button variant="outline" className="rounded-full lowercase">
                     {FREE_AUDIT_CTA_TEXT} <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>

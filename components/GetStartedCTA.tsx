@@ -80,7 +80,7 @@ export default function GetStartedCTA({
               }`}
             >
               <Link 
-                href="/get-started"
+                href="/free-analysis"
                 onClick={() => trackCTAClick(ctaText, analyticsLabel)}
               >
                 <motion.div 
