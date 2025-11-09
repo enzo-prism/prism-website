@@ -56,23 +56,25 @@ export default function BlogShareIcons({ url, title, className }: BlogShareIcons
   }
 
   return (
-    <div className={cn("inline-flex items-center gap-1.5 rounded-full border border-neutral-200 bg-white/80 px-2 py-1 shadow-sm backdrop-blur", className)}>
-      <span className="inline-flex items-center gap-1 text-xs font-medium uppercase tracking-[0.2em] text-neutral-400">
-        <Share2 className="h-3 w-3" aria-hidden />
-        share
-      </span>
-      <div className="flex items-center gap-1.5">
+    <div
+      className={cn(
+        "inline-flex items-center gap-1.5 rounded-full border border-neutral-200 bg-white/90 px-1.5 py-1 shadow-sm backdrop-blur supports-[backdrop-filter]:bg-white/60",
+        className,
+      )}
+    >
+      <Share2 className="h-3.5 w-3.5 text-neutral-400 sm:h-4 sm:w-4" aria-hidden />
+      <div className="flex items-center gap-1.25">
         {shareTargets.map(target => (
           <Button
             key={target.name}
             type="button"
             variant="ghost"
             size="icon"
-            className="h-8 w-8 rounded-full border border-neutral-200 text-neutral-500 transition-colors hover:border-neutral-300 hover:bg-neutral-100 hover:text-neutral-800"
+            className="h-7 w-7 rounded-full border border-transparent text-neutral-500 transition-all hover:border-neutral-200 hover:bg-neutral-100 hover:text-neutral-900 sm:h-8 sm:w-8"
             aria-label={target.label}
             onClick={() => openShareWindow(target.buildUrl(url, title), target.name)}
           >
-            <target.icon className="h-3.5 w-3.5" aria-hidden />
+            <target.icon className="h-3 w-3 sm:h-3.5 sm:w-3.5" aria-hidden />
           </Button>
         ))}
         <div className="relative">
@@ -81,21 +83,21 @@ export default function BlogShareIcons({ url, title, className }: BlogShareIcons
             variant="ghost"
             size="icon"
             className={cn(
-              "h-8 w-8 rounded-full border border-neutral-200 text-neutral-500 transition-colors hover:border-neutral-300 hover:bg-neutral-100 hover:text-neutral-800",
-              copied && "border-neutral-900 bg-neutral-900 text-white",
+              "h-7 w-7 rounded-full border border-transparent text-neutral-500 transition-all hover:border-neutral-200 hover:bg-neutral-100 hover:text-neutral-900 sm:h-8 sm:w-8",
+              copied && "border-neutral-900 bg-neutral-900 text-white hover:bg-neutral-900 hover:text-white",
             )}
             aria-describedby={copied ? tooltipId : undefined}
             aria-label="copy link"
             onClick={handleCopy}
           >
-            <Link2 className="h-3.5 w-3.5" aria-hidden />
+            <Link2 className="h-3 w-3 sm:h-3.5 sm:w-3.5" aria-hidden />
           </Button>
           <span
             id={tooltipId}
             role="status"
             aria-live="polite"
             className={cn(
-              "pointer-events-none absolute -bottom-7 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-neutral-900 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-white opacity-0 transition-opacity",
+              "pointer-events-none absolute -bottom-7 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-neutral-900 px-2 py-0.5 text-[10px] font-medium uppercase tracking-[0.12em] text-white opacity-0 transition-opacity",
               copied && "opacity-100",
             )}
           >

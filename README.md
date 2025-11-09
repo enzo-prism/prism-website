@@ -59,3 +59,11 @@ For detailed MCP server setup and usage, see [MCP_SETUP.md](./MCP_SETUP.md).
 - `npm run start` - Start production server
 - `npm run lint` - Run ESLint
 - `npm test` - Run Jest tests
+
+### Documentation
+
+Reference guides live in [`/docs`](./docs):
+
+- [Blog Content Architecture](./docs/blog-content-architecture.md) — MDX frontmatter, category taxonomy, RSS feed, and related posts.
+- [Blog Styling Guide](./docs/blog-styling-guide.md) — Markdown/MDX formatting expectations.
+- [Blog Performance Optimization](./docs/blog-performance-optimization.md) — GPU and layout tuning notes.
