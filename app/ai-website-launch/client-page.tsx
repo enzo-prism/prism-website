@@ -1,13 +1,12 @@
 "use client"
 
-import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
-import { AlertTriangle, ArrowRight, CheckCircle2, Quote, Sparkles, Zap } from "lucide-react"
+import { AlertTriangle, ArrowRight, CheckCircle2, Sparkles, Zap } from "lucide-react"
 
+import ClientsRail from "@/components/home/ClientsRail"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { Card, CardHeader, CardTitle } from "@/components/ui/card"
 import { trackCTAClick, trackFormSubmission } from "@/utils/analytics"
 
 const painPoints = [
@@ -31,24 +30,6 @@ const valueList = [
   "Mobile & tablet responsiveness",
   "48–72 hour turnaround",
   "No subscriptions — you own it",
-]
-
-const proofItems = [
-  {
-    quote: "“Prism rebuilt our site in two days — and we started getting calls again.”",
-    person: "Dr. Ji",
-    role: "Grace Dental Santa Rosa",
-  },
-  {
-    quote: "“They handled everything. I just sent photos and went live.”",
-    person: "Tiff Woo",
-    role: "SR4 Partners",
-  },
-  {
-    quote: "“Finally a web company that actually delivers.”",
-    person: "Lax",
-    role: "Infobell IT",
-  },
 ]
 
 const comparisonRows = [
@@ -259,33 +240,19 @@ export default function AiWebsiteLaunchClientPage() {
         </div>
       </section>
 
-      {/* Proof Section */}
+      {/* Clients Carousel */}
       <section className="bg-slate-50 px-4 py-12 sm:py-16 lg:py-20">
-        <div className="mx-auto max-w-6xl space-y-8">
+        <div className="mx-auto max-w-6xl space-y-10">
           <header className="space-y-4 text-center">
-            <p className="text-sm font-semibold uppercase tracking-[0.35em] text-slate-500">proof</p>
-            <h2 className="text-3xl font-semibold sm:text-4xl">Real sites. Real businesses. Real results.</h2>
+            <p className="text-sm font-semibold uppercase tracking-[0.35em] text-slate-500">our clients</p>
+            <h2 className="text-3xl font-semibold sm:text-4xl">
+              Real brands, live Prism builds, measurable results.
+            </h2>
+            <p className="text-base text-slate-600 sm:text-lg">
+              Scroll through the practices, consultants, and local businesses launching in days—not months.
+            </p>
           </header>
-          <div className="grid gap-6 md:grid-cols-3">
-            {proofItems.map((item) => (
-              <Card key={item.person} className="h-full border-slate-200 bg-white">
-                <CardHeader className="space-y-4">
-                  <Quote className="h-6 w-6 text-slate-300" aria-hidden />
-                  <CardTitle className="text-lg font-semibold text-slate-900">{item.quote}</CardTitle>
-                  <p className="text-sm text-slate-600">
-                    {item.person} — {item.role}
-                  </p>
-                </CardHeader>
-              </Card>
-            ))}
-          </div>
-          <div className="text-center">
-            <Button asChild variant="secondary" size="lg" className="text-base">
-              <Link href="/proof" onClick={handleCtaClick("See more success stories", "proof section")}>
-                See more success stories →
-              </Link>
-            </Button>
-          </div>
+          <ClientsRail />
         </div>
       </section>
 
