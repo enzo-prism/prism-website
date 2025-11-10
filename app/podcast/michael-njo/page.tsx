@@ -6,6 +6,9 @@ import type { Metadata } from "next"
 import Link from "next/link"
 import { ArrowUpRight } from "lucide-react"
 
+const episodeYoutubeUrl = "https://youtu.be/0SS1C5d3m1w"
+const episodeEmbedUrl = "https://www.youtube.com/embed/0SS1C5d3m1w"
+
 const lessons = [
   {
     title: "\"You don't know what you don't know.\"",
@@ -73,6 +76,33 @@ export default function MichaelNjoPage() {
               They were disappointed yet supportive, asking only that he finish his degree and own whatever came next.
               That decision sparked a lifetime of courage, discipline, and purpose.
             </p>
+          </div>
+        </section>
+
+        <section className="border-b border-neutral-100 bg-neutral-50">
+          <div className="container mx-auto max-w-3xl px-4 py-12 sm:py-16 md:px-6">
+            <div className="space-y-8">
+              <div className="aspect-video overflow-hidden rounded-2xl shadow-xl ring-1 ring-neutral-900/5">
+                <iframe
+                  className="h-full w-full"
+                  src={`${episodeEmbedUrl}?rel=0`}
+                  title="Dr. Michael Njo, DDS - Prism Podcast Episode"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                />
+              </div>
+              <div className="text-center">
+                <p className="text-base text-neutral-600">Prefer to watch on YouTube?</p>
+                <Button
+                  asChild
+                  className="mt-4 rounded-full bg-red-600 px-8 py-5 text-base lowercase text-white shadow-lg hover:bg-red-700"
+                >
+                  <a href={episodeYoutubeUrl} target="_blank" rel="noopener noreferrer">
+                    watch episode on youtube
+                  </a>
+                </Button>
+              </div>
+            </div>
           </div>
         </section>
 
