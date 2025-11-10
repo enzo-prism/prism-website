@@ -350,7 +350,6 @@ export default function AiWebsiteLaunchClientPage() {
               target="_blank"
               rel="noreferrer noopener"
               onClick={handleCtaClick(upgradeCtaLabel, "optional upgrade")}
-              onSubmit={handleFormSubmit}
             >
               {upgradeCtaLabel}
             </a>
