@@ -8,14 +8,7 @@ This guide highlights the workflows we lean on most often while iterating on the
 - Run `pnpm lint` before committing so the shared Tailwind + ESLint rules stay consistent.
 
 ## Formspree Integration
-All marketing forms live under `components/forms/` and share the `useFormValidation` hook.
-
-```
-components/forms/
-├── ContactForm.tsx
-├── FreeAnalysisForm.tsx
-└── GetStartedForm.tsx
-```
+All marketing forms live under `components/forms/` (Contact, Free Analysis, Get Started) and share the `useFormValidation` hook. The new AI Website Launch landing page keeps its form in `app/ai-website-launch/client-page.tsx`, but mirrors the exact same submission pattern (client-side `fetch`, `Accept: application/json`, and redirect to `/thank-you`).
 
 Key details:
 - Forms post to Formspree via `fetch` with `Accept: application/json`. On success we push the user to `/thank-you` or `/analysis-thank-you` so our custom screens always render.
@@ -24,6 +17,11 @@ Key details:
 
 ## Thank-You Screens
 Custom confirmation routes live in `app/thank-you/` and `app/analysis-thank-you/`. Each page is a simple card layout (hero card, CTA card, contact info). If you add new flows, point them to one of these routes for consistency.
+
+### Analytics & Conversion Tracking
+- Global Google Analytics + Google Ads tagging happens in `app/layout.tsx`. Both IDs come from `lib/constants.ts` (`GA_MEASUREMENT_ID` and `GOOGLE_ADS_ID`), so set `NEXT_PUBLIC_GA_MEASUREMENT_ID` if you need to override the fallback GA property.
+- Any route-level conversion (e.g., `/thank-you`) should load its own `<Script>` that fires the relevant `gtag('event', 'conversion', { send_to: 'AW-…' })`. See `app/thank-you/page.tsx` for the exact snippet tied to `AW-11373090310/hBMrCMijk70bEIasjq8q`.
+- When building a new landing page with a Formspree form, make sure the success handler navigates to `/thank-you` so the Ads conversion snippet runs and the GA pageview records properly.
 
 ## Pricing Page Content
 - Pricing UI is in `app/pricing/client-page.tsx`.

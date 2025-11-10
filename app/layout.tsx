@@ -12,7 +12,7 @@ import PerformanceMonitor from "@/components/performance-monitor"
 import AnalyticsProvider from "@/components/analytics-provider"
 import { LocalBusinessSchema, OrganizationSchema, WebsiteSchema } from "@/components/schema-markup"
 import SentryContextProvider from "@/components/sentry-context-provider"
-import { GA_MEASUREMENT_ID, IS_ANALYTICS_ENABLED } from "@/lib/constants"
+import { GA_MEASUREMENT_ID, GOOGLE_ADS_ID, IS_ANALYTICS_ENABLED } from "@/lib/constants"
 
 
 export const metadata: Metadata = {
@@ -100,7 +100,8 @@ export default function RootLayout({
                   window.dataLayer = window.dataLayer || [];
                   function gtag(){dataLayer.push(arguments);}
                   gtag('js', new Date());
-                  gtag('config', '${GA_MEASUREMENT_ID}', { send_page_view: false });
+                  gtag('config', '${GA_MEASUREMENT_ID}');
+                  gtag('config', '${GOOGLE_ADS_ID}');
                 `,
               }}
             />

@@ -23,6 +23,7 @@ const { handleSubmit, getError, isSubmitting } = useFormValidation({
 - `components/forms/GetStartedForm.tsx`
 - `components/forms/FreeAnalysisForm.tsx`
 - `components/forms/ContactForm.tsx`
+- `app/ai-website-launch/client-page.tsx` (inline card form for the AI launch offer; uses the same fetch + redirect pattern without the shared hook so the form can live next to its layout code)
 
 All three use the hook above so users always land on `/thank-you` or `/analysis-thank-you`. They already include `_subject` + `_gotcha` honeypot fields; reuse those when cloning.
 
