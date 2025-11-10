@@ -57,7 +57,7 @@ export const metadata: Metadata = {
 
 export default function MichaelNjoPage() {
   return (
-    <>
+    <div className="allow-capitalization">
       <Navbar />
       <main className="bg-white text-neutral-900">
         <PageViewTracker title="Dr. Michael Njo Profile" />
@@ -221,6 +221,6 @@ export default function MichaelNjoPage() {
         </article>
       </main>
       <Footer />
-    </>
+    </div>
   )
 }

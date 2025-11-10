@@ -26,6 +26,13 @@ body {
   text-transform: lowercase !important;
 }
 
+.allow-capitalization,
+.allow-capitalization *,
+.allow-capitalization .uppercase,
+.allow-capitalization .capitalize {
+  text-transform: none !important;
+}
+
 /* Ensure no safe area padding interferes on mobile */
 @supports (padding: max(0px)) {
   body {
