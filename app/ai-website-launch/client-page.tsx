@@ -418,23 +418,6 @@ export default function AiWebsiteLaunchClientPage() {
               </div>
 
               <div className="space-y-2">
-                <label htmlFor="launch-industry" className="text-sm font-semibold text-slate-700">
-                  Industry
-                </label>
-                <select
-                  id="launch-industry"
-                  name="industry"
-                  className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-base text-slate-900 shadow-inner focus:border-slate-900 focus:outline-none focus:ring-2 focus:ring-slate-200"
-                  defaultValue="Dental"
-                >
-                  <option>Dental</option>
-                  <option>Consulting</option>
-                  <option>Local Business</option>
-                  <option>Other</option>
-                </select>
-              </div>
-
-              <div className="space-y-2">
                 <label htmlFor="launch-goals" className="text-sm font-semibold text-slate-700">
                   Goals
                 </label>
