@@ -32,8 +32,6 @@ export default function AnimatedHeroSection({
       ref={ref}
       className={`relative px-4 py-12 md:py-16 overflow-hidden ${className}`}
       style={{
-        // GPU acceleration
-        transform: "translateZ(0)",
         willChange: "transform",
         contain: "layout style paint",
       }}
@@ -43,7 +41,6 @@ export default function AnimatedHeroSection({
         className="absolute inset-0 opacity-30"
         style={{
           y: backgroundYSpring,
-          transform: "translateZ(0)",
         }}
       >
         <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50" />
@@ -97,7 +94,6 @@ export default function AnimatedHeroSection({
         className="container mx-auto px-4 md:px-6 relative z-10"
         style={{
           y: textYSpring,
-          transform: "translateZ(0)",
         }}
         variants={staggerContainer}
         initial="initial"
@@ -110,8 +106,6 @@ export default function AnimatedHeroSection({
               className="text-3xl font-bold tracking-tighter lowercase sm:text-4xl md:text-5xl"
               variants={textReveal}
               style={{
-                // GPU acceleration
-                transform: "translateZ(0)",
                 willChange: "transform",
               }}
             >

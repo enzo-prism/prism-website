@@ -179,7 +179,6 @@ function MobileElegantSteps() {
                   }}
                   variants={card3D}
                   style={{
-                    transform: "translateZ(0)",
                     willChange: "transform"
                   }}
                 >
@@ -305,7 +304,6 @@ export default function ElegantHowItWorks() {
         }}
         style={{
           backgroundSize: "200% 200%",
-          transform: "translateZ(0)",
           willChange: "background-position"
         }}
       />

@@ -165,15 +165,13 @@ export function optimizeScrollPerformance(): void {
   let lastScrollY = 0
   let scrollVelocity = 0
 
-  const handleScroll = throttle(() => {
-    // Calculate scroll velocity
-    const currentScrollY = window.scrollY
-    scrollVelocity = Math.abs(currentScrollY - lastScrollY)
-    lastScrollY = currentScrollY
+  if (!isTouchDevice()) {
+    const handleScroll = throttle(() => {
+      // Calculate scroll velocity
+      const currentScrollY = window.scrollY
+      scrollVelocity = Math.abs(currentScrollY - lastScrollY)
+      lastScrollY = currentScrollY
 
-    // Add appropriate classes based on scroll speed
-    // Avoid class churn on touch devices to reduce layout/paint thrash
-    if (!isTouchDevice()) {
       if (!body.classList.contains("is-scrolling")) {
         body.classList.add("is-scrolling")
       }
@@ -186,31 +184,27 @@ export function optimizeScrollPerformance(): void {
         body.classList.add("is-scrolling-slow")
         body.classList.remove("is-scrolling-fast")
       }
-    }
 
-    // Cancel any pending animation frame
-    if (animationFrameId !== null) {
-      cancelAnimationFrame(animationFrameId)
-    }
+      // Cancel any pending animation frame
+      if (animationFrameId !== null) {
+        cancelAnimationFrame(animationFrameId)
+      }
 
-    // Clear existing timeout
-    if (scrollTimeout !== null) {
-      clearTimeout(scrollTimeout)
-    }
+      // Clear existing timeout
+      if (scrollTimeout !== null) {
+        clearTimeout(scrollTimeout)
+      }
 
-    // Debounce the removal of scrolling classes (desktop only)
-    if (!isTouchDevice()) {
       scrollTimeout = setTimeout(() => {
-        // Use requestAnimationFrame for smooth class removal
         animationFrameId = requestAnimationFrame(() => {
           body.classList.remove("is-scrolling", "is-scrolling-fast", "is-scrolling-slow")
           animationFrameId = null
         })
       }, 150)
-    }
-  }, 16) // 60fps
+    }, 16) // 60fps
 
-  addPassiveEventListener(window, "scroll", handleScroll)
+    addPassiveEventListener(window, "scroll", handleScroll)
+  }
 }
 
 // Optimize touch scrolling for specific elements
@@ -393,7 +387,6 @@ export function initializeScrollOptimizations(): void {
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", () => {
       optimizeScrollPerformance()
-      preventZoomGestures()
       // Only prevent scroll bounce on actual touch devices
       if (isTouchDevice() && /iPad|iPhone|iPod/.test(navigator.userAgent)) {
         preventScrollBounce()
@@ -401,7 +394,6 @@ export function initializeScrollOptimizations(): void {
     })
   } else {
     optimizeScrollPerformance()
-    preventZoomGestures()
     // Only prevent scroll bounce on actual touch devices
     if (isTouchDevice() && /iPad|iPhone|iPod/.test(navigator.userAgent)) {
       preventScrollBounce()

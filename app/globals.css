@@ -53,11 +53,6 @@ body.is-scrolling-fast .animation-paused {
   text-transform: lowercase !important;
 }
 
-/* Hint GPU acceleration for motion elements */
-[style*="will-change"] {
-  transform: translateZ(0);
-}
-
 /* Prevent white flash during framer-motion whileInView on mobile */
 .testimonial-container > blockquote {
   background-color: #fff;
@@ -74,14 +69,12 @@ body.is-scrolling-fast .animation-paused {
 /* GPU Acceleration Utilities */
 @layer utilities {
   .gpu-accelerated {
-    transform: translateZ(0);
+    will-change: transform;
     backface-visibility: hidden;
     perspective: 1000px;
-    will-change: transform;
   }
   
   .gpu-layer {
-    transform: translate3d(0, 0, 0);
     will-change: transform, opacity;
   }
   
@@ -92,10 +85,8 @@ body.is-scrolling-fast .animation-paused {
   }
   
   .hardware-accelerated {
-    transform: translateZ(0);
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
-    -webkit-transform: translateZ(0);
     will-change: transform, opacity, filter;
   }
   
@@ -123,45 +114,6 @@ body.is-scrolling-fast .animation-paused {
     .gpu-accelerated {
       animation: none !important;
       transition: none !important;
-      transform: none !important;
-    }
-  }
-}
-
-/* Performance optimizations for mobile */
-@media (max-width: 768px) {
-  .gpu-accelerated,
-  .gpu-layer,
-  .hardware-accelerated {
-    transform: none;
-    will-change: auto;
-  }
-  
-  /* Remove conflicting transforms on mobile - let Framer Motion handle animations */
-  .testimonial-card {
-    backface-visibility: hidden;
-    perspective: 1000px;
-    /* Remove transform: translateZ(0) to prevent conflicts with Framer Motion */
-    contain: layout style paint;
-  }
-  
-  /* Optimize scrolling performance */
-  .testimonial-container {
-    -webkit-overflow-scrolling: touch;
-    overscroll-behavior-y: contain;
-    /* Remove transform to prevent conflicts */
-    contain: layout;
-  }
-  
-  /* Reduce animation complexity on low-end devices */
-  @media (hover: none) and (pointer: coarse) {
-    * {
-      animation-duration: 0.25s !important;
-      transition-duration: 0.15s !important;
-    }
-    
-    /* Disable hover effects on touch devices */
-    .testimonial-card:hover {
       transform: none !important;
     }
   }
@@ -332,27 +284,22 @@ input, textarea, select {
     transform-style: preserve-3d;
   }
   
-  .blog-grid-container {
-    contain: layout style paint;
-    transform: translateZ(0);
-    will-change: transform;
-  }
-  
-  .blog-filter-button {
-    transform: translateZ(0);
-    will-change: transform, background-color, color;
-    backface-visibility: hidden;
-  }
-  
-  .blog-hero-parallax {
-    transform: translateZ(0);
-    will-change: transform;
-    backface-visibility: hidden;
-    contain: layout style paint;
-  }
+.blog-grid-container {
+  contain: layout style paint;
+}
+
+.blog-filter-button {
+  will-change: transform, background-color, color;
+  backface-visibility: hidden;
+}
+
+.blog-hero-parallax {
+  will-change: transform;
+  backface-visibility: hidden;
+  contain: layout style paint;
+}
   
   .gpu-layer {
-    transform: translate3d(0, 0, 0);
     will-change: transform;
   }
   
@@ -384,7 +331,6 @@ input, textarea, select {
   
   /* Performance optimization utilities */
   .hardware-accelerated {
-    transform: translateZ(0);
     will-change: transform;
   }
   
@@ -401,11 +347,10 @@ input, textarea, select {
     scroll-snap-align: start;
   }
   
-  /* Critical CSS for above-the-fold content */
-  .hero-section {
-    contain: layout style paint;
-    transform: translateZ(0);
-  }
+/* Critical CSS for above-the-fold content */
+.hero-section {
+  contain: layout style paint;
+}
   
   /* Prevent layout shifts */
   .preserve-aspect {
@@ -440,11 +385,10 @@ input, textarea, select {
     -webkit-overflow-scrolling: touch;
   }
   
-  .mobile-gpu-accelerated {
-    transform: translateZ(0);
-    will-change: transform;
-    backface-visibility: hidden;
-  }
+.mobile-gpu-accelerated {
+  will-change: transform;
+  backface-visibility: hidden;
+}
   
   .mobile-battery-efficient {
     animation-play-state: paused;

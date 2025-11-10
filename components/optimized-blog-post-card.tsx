@@ -103,7 +103,6 @@ export default function OptimizedBlogPostCard({
               transition={{ duration: 0.4, ease: "easeOut" }}
               style={{
                 backgroundImage: `linear-gradient(135deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.2) 100%)`,
-                transform: "translateZ(0)"
               }}
             />
           </div>

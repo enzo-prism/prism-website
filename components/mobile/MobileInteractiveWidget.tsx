@@ -237,8 +237,6 @@ export function MobileInteractiveWidget({
       style={{
         x: mouseX,
         y: mouseY,
-        // GPU acceleration
-        transform: "translateZ(0)",
         willChange: "transform",
         backfaceVisibility: "hidden",
       }}

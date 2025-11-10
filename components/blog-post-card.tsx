@@ -79,8 +79,6 @@ export default function BlogPostCard({
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
         style={{
-          // GPU acceleration
-          transform: "translateZ(0)",
           willChange: "transform",
           backfaceVisibility: "hidden",
           perspective: "1000px",

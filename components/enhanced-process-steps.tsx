@@ -130,7 +130,6 @@ export default function EnhancedProcessSteps() {
                   rotateX: activeStep === step.number ? springRotateX : 0,
                   rotateY: activeStep === step.number ? springRotateY : 0,
                   transformStyle: "preserve-3d",
-                  transform: "translateZ(0)",
                   willChange: "transform",
                 }}
               >

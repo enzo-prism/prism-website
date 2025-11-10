@@ -23,12 +23,6 @@ export default function ScrollManager() {
       scrollableElements.forEach((element) => {
         optimizeTouchScrolling(element as HTMLElement)
       })
-
-      // Removed double-tap zoom prevention to allow accessibility-friendly zoom
-
-      // Improve scroll momentum on iOS
-      ;(document.body.style as any).webkitOverflowScrolling = "touch"
-      ;(document.documentElement.style as any).webkitOverflowScrolling = "touch"
     }
 
     // Optimize for different screen sizes

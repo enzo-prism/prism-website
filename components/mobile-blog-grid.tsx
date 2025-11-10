@@ -129,8 +129,6 @@ export default function MobileBlogGrid({ children, posts, className = "" }: Mobi
       initial="hidden"
       animate={isInView ? "visible" : "hidden"}
       style={{
-        // Optimized for mobile performance
-        transform: "translateZ(0)",
         willChange: isInView ? "transform, opacity" : "auto",
         contain: "layout style paint",
       }}
@@ -141,8 +139,6 @@ export default function MobileBlogGrid({ children, posts, className = "" }: Mobi
           variants={cardVariants}
           custom={index}
           style={{
-            // Mobile-optimized GPU acceleration
-            transform: "translateZ(0)",
             willChange: isInView ? "transform, opacity" : "auto",
             backfaceVisibility: "hidden",
             // Add proper touch targets for mobile
@@ -233,7 +229,6 @@ export function MobileBlogList({ children, posts, className = "" }: MobileBlogGr
       initial="hidden"
       animate={isInView ? "visible" : "hidden"}
       style={{
-        transform: "translateZ(0)",
         willChange: isInView ? "transform, opacity" : "auto",
         contain: "layout style paint",
       }}
@@ -244,7 +239,6 @@ export function MobileBlogList({ children, posts, className = "" }: MobileBlogGr
           variants={itemVariants}
           custom={index}
           style={{
-            transform: "translateZ(0)",
             willChange: isInView ? "transform, opacity" : "auto",
             backfaceVisibility: "hidden",
             minHeight: "120px", // Compact mobile cards
@@ -298,7 +292,6 @@ export function PerformantMobileBlogGrid({ children, posts, className = "" }: Mo
         animate={isInView ? { opacity: 1 } : { opacity: 0 }}
         transition={{ duration: 0.4 }}
         style={{
-          transform: "translateZ(0)",
           willChange: isInView ? "transform, opacity" : "auto",
           contain: "layout style paint",
         }}
@@ -314,7 +307,6 @@ export function PerformantMobileBlogGrid({ children, posts, className = "" }: Mo
               ease: "easeOut"
             }}
             style={{
-              transform: "translateZ(0)",
               willChange: isInView ? "transform, opacity" : "auto",
               backfaceVisibility: "hidden",
               minHeight: isMobile ? "180px" : "auto",
@@ -348,7 +340,6 @@ export function PerformantMobileBlogGrid({ children, posts, className = "" }: Mo
               min-h-[44px] min-w-[44px]
             "
             style={{
-              transform: "translateZ(0)",
               willChange: "transform",
             }}
           >

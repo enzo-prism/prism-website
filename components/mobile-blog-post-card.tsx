@@ -213,7 +213,6 @@ export function CompactMobileBlogPostCard({
         transition={{ duration: 0.4, ease: "easeOut" }}
         whileTap={reducedMotion ? {} : { scale: 0.98 }}
         style={{
-          transform: "translateZ(0)",
           willChange: "transform",
           backfaceVisibility: "hidden",
         }}

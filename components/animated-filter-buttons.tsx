@@ -93,8 +93,6 @@ function AnimatedFilterButton({
       style={{
         x: mouseXSpring,
         y: mouseYSpring,
-        // GPU acceleration
-        transform: "translateZ(0)",
         willChange: "transform",
         backfaceVisibility: "hidden",
       }}

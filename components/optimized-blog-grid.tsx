@@ -58,8 +58,6 @@ export default function OptimizedBlogGrid({ children, posts, className = "" }: O
         ${className}
       `}
       style={{
-        // GPU acceleration
-        transform: "translateZ(0)",
         backfaceVisibility: "hidden",
         WebkitBackfaceVisibility: "hidden",
         perspective: "1000px",
@@ -78,7 +76,6 @@ export default function OptimizedBlogGrid({ children, posts, className = "" }: O
             transition-opacity duration-500
           `}
           style={{
-            transform: "translate3d(0, 0, 0)",
             backfaceVisibility: "hidden",
             willChange: visibleChildren.has(index) ? "transform, opacity" : "auto"
           }}
@@ -154,7 +151,6 @@ export function VirtualizedBlogGrid({ children, posts, className = "" }: Optimiz
           top: visibleRange.start * itemHeight,
           left: 0,
           right: 0,
-          transform: "translateZ(0)",
           backfaceVisibility: "hidden",
           willChange: "transform"
         }}

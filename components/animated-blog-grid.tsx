@@ -44,8 +44,6 @@ export default function AnimatedBlogGrid({ children, posts, className = "" }: An
       initial="initial"
       animate={isInView ? "animate" : "initial"}
       style={{
-        // GPU acceleration - simplified for mobile
-        transform: "translateZ(0)",
         willChange: animationConfig.useGPU ? "transform" : "auto",
         contain: "layout style paint",
       }}
@@ -58,8 +56,6 @@ export default function AnimatedBlogGrid({ children, posts, className = "" }: An
           custom={index}
           className="mobile-gpu-accelerated"
           style={{
-            // Hardware acceleration - only when needed
-            transform: "translateZ(0)",
             willChange: animationConfig.useGPU && isInView ? "transform, opacity" : "auto",
             backfaceVisibility: "hidden",
           }}
@@ -91,8 +87,6 @@ export function AnimatedBlogGridWithObserver({ children, posts, className = "" }
       initial="hidden"
       animate={isInView ? "visible" : "hidden"}
       style={{
-        // Performance optimizations - simplified for mobile
-        transform: "translateZ(0)",
         willChange: animationConfig.useGPU && isInView ? "transform, opacity" : "auto",
         contain: "layout style paint",
         isolation: "isolate",
@@ -112,8 +106,6 @@ export function AnimatedBlogGridWithObserver({ children, posts, className = "" }
             custom={index}
             className="mobile-gpu-accelerated"
             style={{
-              // Hardware layer promotion - only when needed
-              transform: "translateZ(0)",
               willChange: animationConfig.useGPU && isInView ? "transform, opacity" : "auto",
               backfaceVisibility: "hidden",
               perspective: animationConfig.complexity === "full" ? "1000px" : "none",

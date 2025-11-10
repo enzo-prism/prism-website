@@ -64,7 +64,7 @@ export default function MichaelNjoPage() {
         <section className="border-b border-neutral-200 bg-neutral-950 text-white">
           <div className="container mx-auto max-w-4xl px-4 py-16 text-center sm:py-20 md:px-6">
             <p className="text-xs font-semibold uppercase tracking-[0.35em] text-white/70">podcast feature</p>
-            <h1 className="mt-6 text-4xl font-semibold lowercase tracking-tight sm:text-5xl md:text-6xl">
+            <h1 className="mt-6 text-4xl font-semibold tracking-tight sm:text-5xl md:text-6xl">
               Dr. Michael Njo, DDS
             </h1>
             <p className="mt-4 text-lg text-white/80 sm:text-xl">
@@ -95,7 +95,7 @@ export default function MichaelNjoPage() {
                 <p className="text-base text-neutral-600">Prefer to watch on YouTube?</p>
                 <Button
                   asChild
-                  className="mt-4 rounded-full bg-red-600 px-8 py-5 text-base lowercase text-white shadow-lg hover:bg-red-700"
+                  className="mt-4 rounded-full bg-red-600 px-8 py-5 text-base text-white shadow-lg hover:bg-red-700"
                 >
                   <a href={episodeYoutubeUrl} target="_blank" rel="noopener noreferrer">
                     watch episode on youtube
@@ -108,7 +108,7 @@ export default function MichaelNjoPage() {
 
         <article className="container mx-auto max-w-3xl px-4 py-16 sm:py-20 md:px-6">
           <section className="space-y-4">
-            <h2 className="text-2xl font-semibold lowercase tracking-tight">from engineering to dentistry</h2>
+            <h2 className="text-2xl font-semibold tracking-tight">from engineering to dentistry</h2>
             <p className="text-base leading-relaxed text-neutral-700">
               Michael shifted from civil engineering to psychology at the University of the Pacific, drawn to
               understanding people--their motivations, behavior, and growth. "Psychology shaped how I approach dentistry.
@@ -123,7 +123,7 @@ export default function MichaelNjoPage() {
           </section>
 
           <section className="mt-12 space-y-4">
-            <h2 className="text-2xl font-semibold lowercase tracking-tight">building a practice from the ground up</h2>
+            <h2 className="text-2xl font-semibold tracking-tight">building a practice from the ground up</h2>
             <p className="text-base leading-relaxed text-neutral-700">
               When Dr. Njo graduated, many classmates joined family practices. He did not have that option, so he built
               his future from scratch. "I went through every name in the phone book looking for opportunities," he
@@ -137,7 +137,7 @@ export default function MichaelNjoPage() {
           </section>
 
           <section className="mt-12 space-y-4">
-            <h2 className="text-2xl font-semibold lowercase tracking-tight">when adversity became a turning point</h2>
+            <h2 className="text-2xl font-semibold tracking-tight">when adversity became a turning point</h2>
             <p className="text-base leading-relaxed text-neutral-700">
               Years later, a severe neck injury threatened to end his clinical career. "It physically broke me, but
               emotionally made me stronger," he says. Facing the possibility of spinal fusion at 50, his neurologist
@@ -153,7 +153,7 @@ export default function MichaelNjoPage() {
           </section>
 
           <section className="mt-12 space-y-4">
-            <h2 className="text-2xl font-semibold lowercase tracking-tight">the power of mentorship</h2>
+            <h2 className="text-2xl font-semibold tracking-tight">the power of mentorship</h2>
             <p className="text-base leading-relaxed text-neutral-700">
               Mentorship is a constant thread throughout his story. Guided by leaders like Dr. Arthur Dugoni, Dr. Njo
               embraces the philosophy of "Time, Talent, and Treasure"--giving of yourself, your skills, and your
@@ -167,7 +167,7 @@ export default function MichaelNjoPage() {
           </section>
 
           <section className="mt-12">
-            <h2 className="text-2xl font-semibold lowercase tracking-tight">lessons for new dentists and entrepreneurs</h2>
+            <h2 className="text-2xl font-semibold tracking-tight">lessons for new dentists and entrepreneurs</h2>
             <p className="mt-4 text-base text-neutral-700">
               Asked what advice he gives to dentists starting out, Dr. Njo never hesitates:
             </p>
@@ -182,7 +182,7 @@ export default function MichaelNjoPage() {
           </section>
 
           <section className="mt-12 space-y-4">
-            <h2 className="text-2xl font-semibold lowercase tracking-tight">his philosophy today</h2>
+            <h2 className="text-2xl font-semibold tracking-tight">his philosophy today</h2>
             <p className="text-base leading-relaxed text-neutral-700">
               Dr. Njo's consulting philosophy centers on quality of life, work-life balance, and family. "When those are
               in balance, everything else becomes easier," he says. "My job now is to help others reach that same
@@ -191,7 +191,7 @@ export default function MichaelNjoPage() {
           </section>
 
           <section className="mt-12 space-y-6 rounded-2xl border border-neutral-200 bg-neutral-50 p-8">
-            <h2 className="text-2xl font-semibold lowercase tracking-tight text-neutral-900">in his own words</h2>
+            <h2 className="text-2xl font-semibold tracking-tight text-neutral-900">in his own words</h2>
             <p className="text-base leading-relaxed text-neutral-700">
               "Life gives you moments that will either break you or make you stronger. My injury broke me physically--but
               it made me stronger in every other way. Dentistry gave me a career; mentorship gave me purpose."

@@ -172,7 +172,6 @@ export default function AnimatedBackground({ performanceMode = "auto" }: Animate
           style={{
             background:
               "radial-gradient(circle at 20% 50%, rgba(120, 120, 120, 0.08) 0%, transparent 50%)",
-            transform: "translateZ(0)",
             willChange: "transform",
           }}
           animate={mode === "lite" ? { rotate: [0, 180, 360] } : { rotate: [0, 120, 240, 360] }}
@@ -186,7 +185,6 @@ export default function AnimatedBackground({ performanceMode = "auto" }: Animate
           ref={canvasRef}
           className="absolute inset-0 pointer-events-none"
           style={{
-            transform: "translateZ(0)",
             willChange: "transform",
           }}
         />
@@ -197,23 +195,21 @@ export default function AnimatedBackground({ performanceMode = "auto" }: Animate
         <>
           <motion.div
             className="absolute w-96 h-96 rounded-full"
-            style={{
-              background: "radial-gradient(circle, rgba(0, 0, 0, 0.05) 0%, transparent 70%)",
-              left: "10%",
-              top: "20%",
-              transform: "translateZ(0)",
-            }}
+          style={{
+            background: "radial-gradient(circle, rgba(0, 0, 0, 0.05) 0%, transparent 70%)",
+            left: "10%",
+            top: "20%",
+          }}
             animate={{ x: [0, 100, 0], y: [0, -50, 0], scale: [1, 1.1, 1] }}
             transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
           />
           <motion.div
             className="absolute w-64 h-64 rounded-full"
-            style={{
-              background: "radial-gradient(circle, rgba(0, 0, 0, 0.03) 0%, transparent 70%)",
-              right: "15%",
-              bottom: "30%",
-              transform: "translateZ(0)",
-            }}
+          style={{
+            background: "radial-gradient(circle, rgba(0, 0, 0, 0.03) 0%, transparent 70%)",
+            right: "15%",
+            bottom: "30%",
+          }}
             animate={{ x: [0, -80, 0], y: [0, 60, 0], scale: [1, 1.2, 1] }}
             transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 2 }}
           />
@@ -231,7 +227,6 @@ export default function AnimatedBackground({ performanceMode = "auto" }: Animate
             `,
             backgroundSize: "200% 200%",
             animation: "gradientShift 10s ease-in-out infinite",
-            transform: "translateZ(0)",
             willChange: "background-position",
           }}
         />

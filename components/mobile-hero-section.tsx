@@ -113,8 +113,6 @@ export default function MobileHeroSection({
       initial="hidden"
       animate={isInView ? "visible" : "hidden"}
       style={{
-        // Mobile-optimized GPU acceleration
-        transform: "translateZ(0)",
         willChange: isInView ? "transform, opacity" : "auto",
         contain: "layout style paint",
       }}
@@ -185,7 +183,6 @@ export default function MobileHeroSection({
                 className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold tracking-tighter lowercase leading-tight"
                 variants={textVariants}
                 style={{
-                  transform: "translateZ(0)",
                   willChange: isInView ? "transform, opacity" : "auto",
                 }}
               >
@@ -196,7 +193,6 @@ export default function MobileHeroSection({
               <motion.h1
                 className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold tracking-tighter lowercase leading-tight"
                 style={{
-                  transform: "translateZ(0)",
                   willChange: isInView ? "transform, opacity" : "auto",
                 }}
               >
@@ -220,7 +216,6 @@ export default function MobileHeroSection({
               className="text-neutral-600 lowercase text-base md:text-lg lg:text-xl max-w-2xl mx-auto md:mx-0 leading-relaxed"
               variants={textVariants}
               style={{
-                transform: "translateZ(0)",
                 willChange: isInView ? "transform, opacity" : "auto",
               }}
             >
@@ -288,7 +283,6 @@ export function MinimalMobileHeroSection({
       animate={isInView ? { opacity: 1 } : { opacity: 0 }}
       transition={{ duration: 0.6 }}
       style={{
-        transform: "translateZ(0)",
         willChange: isInView ? "opacity" : "auto",
       }}
     >

@@ -254,7 +254,6 @@ function MobileFilterButton({
       `}
       style={{
         scrollSnapAlign: 'start',
-        transform: "translateZ(0)",
         willChange: "transform",
         backfaceVisibility: "hidden",
       }}
@@ -348,7 +347,6 @@ export function CompactMobileFilterButtons({
               focus:outline-none focus:ring-2 focus:ring-neutral-500
             `}
             style={{
-              transform: "translateZ(0)",
               willChange: "transform",
             }}
           >
