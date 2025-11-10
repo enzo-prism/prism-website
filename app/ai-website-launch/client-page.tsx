@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation"
 import { useState } from "react"
-import { AlertTriangle, ArrowRight, CheckCircle2, Sparkles, Zap } from "lucide-react"
+import { AlertTriangle, CheckCircle2, Sparkles, Zap } from "lucide-react"
 
 import ClientsRail from "@/components/home/ClientsRail"
 import { Badge } from "@/components/ui/badge"
@@ -438,7 +438,6 @@ export default function AiWebsiteLaunchClientPage() {
                 disabled={isSubmitting}
               >
                 {isSubmitting ? "Sending..." : formButtonLabel}
-                <ArrowRight className="h-4 w-4" aria-hidden />
               </Button>
               {submitError ? (
                 <p className="text-center text-sm text-rose-600" role="alert">
