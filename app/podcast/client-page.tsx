@@ -161,19 +161,35 @@ export default function PodcastClientPage() {
                             ))}
                           </ul>
                         </div>
-                        <a
-                          href={episode.youtubeUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          onClick={() => trackCTAClick(`watch episode ${episode.number}`, "podcast page")}
-                        >
-                          <Button
-                            className="w-full bg-red-600 hover:bg-red-700 text-white rounded-full px-6 py-4 lowercase"
+                        <div className="flex flex-col gap-3 sm:flex-row">
+                          <a
+                            href={episode.youtubeUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="sm:flex-1"
+                            onClick={() => trackCTAClick(`watch episode ${episode.number}`, "podcast page")}
                           >
-                            <Youtube className="mr-2 h-4 w-4" />
-                            watch episode {episode.number}
-                          </Button>
-                        </a>
+                            <Button
+                              className="w-full bg-red-600 hover:bg-red-700 text-white rounded-full px-6 py-4 lowercase"
+                            >
+                              <Youtube className="mr-2 h-4 w-4" />
+                              watch episode {episode.number}
+                            </Button>
+                          </a>
+                          {episode.number === "05" && (
+                            <Button
+                              asChild
+                              className="w-full rounded-full border border-neutral-200 bg-white px-6 py-4 text-neutral-900 hover:bg-neutral-50 lowercase sm:flex-1"
+                            >
+                              <Link
+                                href="/podcast/michael-njo"
+                                onClick={() => trackNavigation("podcast_michael_njo_profile", "/podcast/michael-njo")}
+                              >
+                                read dr. michael njo's story
+                              </Link>
+                            </Button>
+                          )}
+                        </div>
                       </div>
                     </div>
                   )}
