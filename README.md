@@ -1,72 +1,62 @@
 # Prism website design
 
-*Automatically synced with your [v0.dev](https://v0.dev) deployments*
-
 [![Deployed on Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?style=for-the-badge&logo=vercel)](https://vercel.com/enzo-design-prisms-projects/v0-prism-website-design)
 [![Built with v0](https://img.shields.io/badge/Built%20with-v0.dev-black?style=for-the-badge)](https://v0.dev/chat/projects/8xmj81uf3fc)
 
-## Overview
+Next.js App Router project that powers the Prism marketing site, blog, and landing page experiments. The codebase stays in sync with [v0.dev](https://v0.dev) chats and ships automatically via Vercel.
 
-This repository will stay in sync with your deployed chats on [v0.dev](https://v0.dev).
-Any changes you make to your deployed app will be automatically pushed to this repository from [v0.dev](https://v0.dev).
+---
+
+## Quick start
+
+1. **Install prerequisites** – Node.js 18+, [pnpm](https://pnpm.io/), and git.
+2. **Install dependencies** – `pnpm install`.
+3. **Set up environment variables** – `cp .env.example .env.local` and fill in the values listed in [`docs/environment-setup.md`](./docs/environment-setup.md).
+4. **Run the dev server** – `pnpm dev` (defaults to `http://localhost:3000`).
+5. **Optional quality gates** – `pnpm lint && pnpm typecheck && pnpm test` before opening a PR.
+
+The repo assumes pnpm; npm/yarn installs will fall out of sync.
+
+## Quality & diagnosis scripts
+
+| Command | Purpose |
+| --- | --- |
+| `pnpm lint` | ESLint + Tailwind conventions. |
+| `pnpm typecheck` | TypeScript project-wide type safety. |
+| `pnpm test` | Jest + Testing Library suite. |
+| `pnpm build` | Production Next.js build (use before Vercel deploys). |
+| `pnpm verify:deploy` | Runs `scripts/verify-deployment.ts` to ensure required env vars and image config exist. |
+| `pnpm diag:supabase` | Confirms Supabase URL + service key are available. |
+
+## Project structure
+
+- `app/` – Next.js App Router routes (marketing pages, blog, forms, API routes).
+- `components/` – Reusable UI primitives plus blog-specific elements.
+- `content/` – MDX blog posts consumed by `lib/mdx.tsx`.
+- `lib/` – Business logic (Supabase client, constants, MDX helpers, email util).
+- `scripts/` – Diagnostics (deployment verifier, Supabase checks, MCP helpers).
+- `docs/` – Workflow guides (blog architecture, development, forms, etc.).
+
+## Documentation map
+
+- [`docs/development-guide.md`](./docs/development-guide.md) – Local workflow, forms, analytics, CTA routing.
+- [`docs/blog-content-architecture.md`](./docs/blog-content-architecture.md) – MDX taxonomy and RSS/OG behavior.
+- [`docs/blog-styling-guide.md`](./docs/blog-styling-guide.md) – Typography and casing expectations for articles.
+- [`docs/blog-performance-optimization.md`](./docs/blog-performance-optimization.md) – GPU/layout advice for heavy sections.
+- [`docs/forms.md`](./docs/forms.md) – Shared Formspree hooks and thank-you routing.
+- [`docs/pages-overview.md`](./docs/pages-overview.md) – Where to edit pricing, contact, free-analysis flows.
+- [`docs/environment-setup.md`](./docs/environment-setup.md) – Environment variable reference and verification checklist.
 
 ## Deployment
 
-Your project is live at:
+- Merges to `main` auto-deploy through Vercel (`https://vercel.com/enzo-design-prisms-projects/v0-prism-website-design`).
+- v0.dev remains the design/control plane; updates published from v0 sync back into this repo.
+- For preview builds open a PR—Vercel posts a preview URL for QA.
 
-**[https://vercel.com/enzo-design-prisms-projects/v0-prism-website-design](https://vercel.com/enzo-design-prisms-projects/v0-prism-website-design)**
+## Need-to-knows
 
-## Build your app
+- Analytics defaults to GA4 property `G-P9VY77PRC0` unless `NEXT_PUBLIC_GA_MEASUREMENT_ID` is set.
+- `/api/prism-leads` writes to Supabase and optionally triggers Resend emails; without those env vars it logs a warning and no-ops.
+- Blog OG images are generated dynamically via `/api/og/blog/[slug]`; add new slugs to `lib/mdx-edge.ts` when introducing MDX posts.
 
-Continue building your app on:
-
-**[https://v0.dev/chat/projects/8xmj81uf3fc](https://v0.dev/chat/projects/8xmj81uf3fc)**
-
-## How It Works
-
-1. Create and modify your project using [v0.dev](https://v0.dev)
-2. Deploy your chats from the v0 interface
-3. Changes are automatically pushed to this repository
-4. Vercel deploys the latest version from this repository
-
-## Development Setup
-
-### Prerequisites
-- Node.js 18+ 
-- npm or yarn
-- Claude Code (for enhanced development workflow)
-
-### MCP Server Integration
-This project is configured with MCP (Model Context Protocol) servers for enhanced Claude Code functionality:
-
-- **GitHub**: Repository management and collaboration
-- **Supabase**: Database operations and analytics  
-- **Sentry**: Error monitoring and debugging
-- **Figma**: Design collaboration and asset management
-
-### Quick Start
-1. Clone the repository
-2. Install dependencies: `npm install`
-3. Set up environment variables: `cp .env.example .env`
-4. Fill in your API tokens in `.env`
-5. Start development server: `npm run dev`
-
-For detailed MCP server setup and usage, see [MCP_SETUP.md](./MCP_SETUP.md).
-
-### Available Scripts
-- `npm run dev` - Start development server
-- `npm run build` - Build for production
-- `npm run start` - Start production server
-- `npm run lint` - Run ESLint
-- `npm test` - Run Jest tests
-
-### Documentation
-
-Reference guides live in [`/docs`](./docs):
-
-- [Blog Content Architecture](./docs/blog-content-architecture.md) — MDX frontmatter, category taxonomy, RSS feed, and related posts.
-- [Blog Styling Guide](./docs/blog-styling-guide.md) — Markdown/MDX formatting expectations.
-- [Blog Performance Optimization](./docs/blog-performance-optimization.md) — GPU and layout tuning notes.
-- [Development Guide](./docs/development-guide.md) — Local workflow, Formspree integration, and key page structure.
-- [Form & Thank-You Flow](./docs/forms.md) — How shared forms submit via Formspree and redirect to custom thank-you pages.
-- [Marketing Pages Overview](./docs/pages-overview.md) — Where to edit pricing, contact, free analysis, and thank-you screens.
+Happy shipping! Keep docs updated when new flows (forms, env vars, integrations) are introduced so the next person can get productive quickly.

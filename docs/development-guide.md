@@ -36,5 +36,10 @@ Custom confirmation routes live in `app/thank-you/` and `app/analysis-thank-you/
 ## CTA Routing
 Any CTA labeled “free analysis” should point to `/free-analysis`. When you add a new CTA, double-check the href so we don’t regress to `/get-started` accidentally.
 
+## Typography & Casing
+- The global stylesheet forces the brand’s lowercase aesthetic via `body { text-transform: lowercase !important; }`.
+- Pages that need natural capitalization should wrap their content in `.allow-capitalization` (e.g., `<main className="allow-capitalization ...">`) which resets `text-transform` to `none`.
+- This override is scoped, so you can mix lowercase-first sections with standard sentences without touching the global rule.
+
 ## Deployment
 Merges to `main` deploy automatically via Vercel. If you need a preview, open a PR – the CI pipeline will comment with the URL.
