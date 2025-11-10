@@ -89,6 +89,11 @@ const blogPosts = {
     category: "SEO & AI",
     gradientClass: "bg-gradient-to-br from-emerald-300/30 via-sky-300/30 to-indigo-300/30",
   },
+  'google-maps-visibility-playbook-2025': {
+    title: "Google maps visibility checklist for local businesses (2025)",
+    category: "Local SEO",
+    gradientClass: "bg-gradient-to-br from-sky-300/30 via-emerald-300/30 to-indigo-300/30",
+  },
   'riding-the-ai-wave': {
     title: "Riding the ai wave",
     category: "AI Trends",
