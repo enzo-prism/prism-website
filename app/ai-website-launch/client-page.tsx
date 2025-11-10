@@ -405,7 +405,7 @@ export default function AiWebsiteLaunchClientPage() {
 
               <div className="space-y-2">
                 <label htmlFor="launch-website" className="text-sm font-semibold text-slate-700">
-                  Current Website
+                  Current Website <span className="font-normal text-slate-500">(optional)</span>
                 </label>
                 <input
                   id="launch-website"
