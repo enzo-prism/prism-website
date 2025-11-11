@@ -21,6 +21,8 @@ If any of these steps fail locally, fix them before opening a PR. The CI build l
 - **Dynamic imports & "use client" boundaries** – Any new shared component in `components/` that uses hooks must include a `"use client"` pragma or be imported with `dynamic(..., { ssr: false })`. Lint passes but the Next build will fail during the React Server Components graph evaluation.
 - **Third-party build scripts** – Vercel ignores install scripts (`@sentry/cli`, `sharp`, etc.) unless you grant them via `pnpm approve-builds`. If you add dependencies with post-install hooks, run `pnpm approve-builds` once locally, then commit the generated policy file.
 - **Environment variables** – Production builds default to `.env.production`. Missing Supabase or Resend keys do not stop the build but disable API routes, so sanity-check `docs/environment-setup.md` before enabling new integrations.
+- **Framer Motion version drift** – We’re on `framer-motion@12`, which removed some legacy props (`whileFocusWithin`, etc.). When porting snippets, wrap focus/hover logic in state (see `components/animations/ripple-highlight.tsx`) instead of relying on deprecated props, otherwise `pnpm typecheck` will fail.
+- **Style prop collisions** – Hooks like `useParallaxMouse` return `style` objects. Spread them *inside* a single `style={{ ...parallaxStyle, ...localStyles }}` rather than attaching both `style={...}` and `{...hook}` to the same element—TypeScript flags duplicate props during the build (the animated gradient hero recently broke for this reason).
 
 ## Deployment checklist
 1. Rebase on `main` and resolve conflicts.
