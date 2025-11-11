@@ -406,7 +406,7 @@ export default function AiWebsiteLaunchClientPage() {
                 <div className="relative z-10">
                   <p className="text-sm uppercase tracking-[0.35em] text-slate-500">price anchor</p>
                   <p className="mt-4 text-lg font-medium text-slate-700">
-                    Other agencies charge $2 000–$5 000 for the same results. We charge $400 one-time. Why? Because AI
+                    Other agencies charge $2,000–$5,000 for the same results. We charge $400 one-time. Why? Because AI
                     makes it faster — and we pass those savings straight to you.
                   </p>
                   <RippleHighlight asChild fullWidth>
