@@ -1,12 +1,17 @@
 "use client"
 
+import { motion, type Variants, useReducedMotion } from "framer-motion"
 import { useRouter } from "next/navigation"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { AlertTriangle, CheckCircle2, Sparkles, Zap } from "lucide-react"
 
+import AnimatedGradient from "@/components/animations/animated-gradient"
+import RippleHighlight from "@/components/animations/ripple-highlight"
 import ClientsRail from "@/components/home/ClientsRail"
+import RevealOnScroll from "@/components/reveal-on-scroll"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
+import { useParallaxMouse } from "@/hooks/use-parallax-mouse"
 import { trackCTAClick, trackFormSubmission } from "@/utils/analytics"
 
 const painPoints = [
@@ -62,10 +67,60 @@ const valueCtaLabel = "Get My AI Website →"
 const upgradeCtaLabel = "Book a 15-Minute Growth Call →"
 const formButtonLabel = "Generate My Site Plan →"
 
+const heroContainerVariants = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.15,
+    },
+  },
+} as const
+
+const fadeInUp = {
+  hidden: { opacity: 0, y: 24 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: [0.19, 1, 0.22, 1] },
+  },
+} as const
+
+const staggerContainer: Variants = {
+  hidden: { opacity: 0, y: 24 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, ease: [0.19, 1, 0.22, 1], staggerChildren: 0.08 },
+  },
+}
+
+const staggerChild: Variants = {
+  hidden: { opacity: 0, y: 16 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.4, ease: [0.19, 1, 0.22, 1] },
+  },
+}
+
 export default function AiWebsiteLaunchClientPage() {
   const router = useRouter()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitError, setSubmitError] = useState<string | null>(null)
+  const prefersReducedMotion = useReducedMotion()
+  const formParallax = useParallaxMouse(10)
+  const [isTouchDevice, setIsTouchDevice] = useState(false)
+
+  useEffect(() => {
+    if (typeof window === "undefined") return
+    const query = window.matchMedia("(pointer: coarse)")
+    const update = () => setIsTouchDevice(query.matches)
+    update()
+    query.addEventListener?.("change", update)
+    return () => query.removeEventListener?.("change", update)
+  }, [])
+
+  const allowLoopAnimations = !(prefersReducedMotion || isTouchDevice)
 
   const handleCtaClick = (label: string, location: string) => () => {
     trackCTAClick(label, location)
@@ -102,33 +157,62 @@ export default function AiWebsiteLaunchClientPage() {
   return (
     <div className="bg-white text-slate-900">
       {/* Hero */}
-      <section className="border-b border-slate-200 bg-white">
-        <div className="mx-auto max-w-4xl space-y-8 px-4 py-12 sm:py-16 lg:py-24">
-          <Badge
-            variant="outline"
-            className="border-slate-200 bg-white text-slate-600 uppercase tracking-[0.22em] text-xs sm:text-sm sm:tracking-[0.3em]"
+      <section className="relative overflow-hidden border-b border-slate-200 bg-white">
+        <AnimatedGradient
+          className="absolute inset-x-0 top-0 h-[130%]"
+          colors={["#bae6fd", "#c4b5fd"]}
+          opacity={0.25}
+          blur={220}
+          parallaxIntensity={6}
+        />
+        <div className="relative mx-auto max-w-4xl space-y-8 px-4 py-12 sm:py-16 lg:py-24">
+          <motion.div
+            variants={heroContainerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.6 }}
+            className="space-y-6 text-center sm:text-left"
           >
-            ai launch offer
-          </Badge>
-          <div className="space-y-5 text-center sm:text-left">
-            <h1 className="text-[clamp(2.1rem,6vw,3.6rem)] font-semibold leading-tight sm:text-5xl lg:text-6xl">
-              Launch a stunning, high-performing website in 48 hours — built by AI, perfected by experts.
-            </h1>
-            <p className="text-base text-slate-600 sm:text-lg">
-              You don&apos;t need another quote, meeting, or six-week project. You need a site that looks incredible,
-              loads fast, and actually brings you leads. Prism builds and launches it in days — for a flat $400.
-            </p>
-          </div>
-          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-start">
-            <Button asChild size="lg" className="text-base w-full sm:w-auto">
-              <a href={`#${CTA_TARGET_ID}`} onClick={handleCtaClick(heroCtaLabel, "hero section")}>
-                {heroCtaLabel}
-              </a>
-            </Button>
-            <p className="text-sm text-slate-500 text-center sm:text-left">
-              Trusted by 50+ businesses in California — from dentists to consultants to local shops.
-            </p>
-          </div>
+            <motion.div variants={fadeInUp} className="relative inline-flex items-center justify-center sm:justify-start">
+              <motion.span
+                aria-hidden
+                className="absolute inset-0 rounded-full bg-gradient-to-r from-sky-200/50 to-indigo-200/40 blur-xl"
+                animate={allowLoopAnimations ? { opacity: [0.5, 0.9, 0.5], scale: [0.95, 1.05, 0.95] } : undefined}
+                transition={allowLoopAnimations ? { duration: 4, repeat: Infinity, ease: "easeInOut" } : undefined}
+              />
+              <Badge
+                variant="outline"
+                className="relative border-slate-200 bg-white text-slate-600 uppercase tracking-[0.22em] text-xs sm:text-sm sm:tracking-[0.3em]"
+              >
+                ai launch offer
+              </Badge>
+            </motion.div>
+            <motion.div variants={fadeInUp} className="space-y-4">
+              <h1 className="text-[clamp(2.1rem,6vw,3.6rem)] font-semibold leading-tight sm:text-5xl lg:text-6xl">
+                Launch a stunning, high-performing website in 48 hours — built by AI, perfected by experts.
+              </h1>
+              <p className="text-base text-slate-600 sm:text-lg">
+                You don&apos;t need another quote, meeting, or six-week project. You need a site that looks incredible,
+                loads fast, and actually brings you leads. Prism builds and launches it in days — for a flat $400.
+              </p>
+            </motion.div>
+            <motion.div variants={fadeInUp} className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-start">
+              <RippleHighlight asChild fullWidth className="sm:w-auto">
+                <Button asChild size="lg" className="text-base w-full sm:w-auto">
+                  <a href={`#${CTA_TARGET_ID}`} onClick={handleCtaClick(heroCtaLabel, "hero section")}>
+                    {heroCtaLabel}
+                  </a>
+                </Button>
+              </RippleHighlight>
+              <motion.p
+                className="text-center text-sm text-slate-500 sm:text-left"
+                animate={allowLoopAnimations ? { opacity: [0.7, 1, 0.7] } : undefined}
+                transition={allowLoopAnimations ? { duration: 5, repeat: Infinity, ease: "easeInOut" } : undefined}
+              >
+                Trusted by 50+ businesses in California — from dentists to consultants to local shops.
+              </motion.p>
+            </motion.div>
+          </motion.div>
         </div>
       </section>
 
@@ -161,26 +245,55 @@ export default function AiWebsiteLaunchClientPage() {
           <div className="space-y-6">
             <p className="text-sm font-semibold uppercase tracking-[0.35em] text-slate-500">speed run</p>
             <h2 className="text-3xl font-semibold text-slate-900 sm:text-4xl">From zero to launch in 48 hours.</h2>
-            <ol className="space-y-4">
-              {howItWorksSteps.map((step, index) => (
-                <li key={step} className="flex gap-4 rounded-3xl border border-slate-200 bg-slate-50 p-5">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white text-lg font-semibold text-slate-900 shadow-inner">
-                    {index + 1}️⃣
-                  </div>
-                  <p className="flex-1 text-lg text-slate-700">{step}</p>
-                </li>
-              ))}
-            </ol>
+            <div className="relative pl-3">
+              {!prefersReducedMotion ? (
+                <motion.span
+                  aria-hidden
+                  className="pointer-events-none absolute left-9 top-6 hidden h-[calc(100%-40px)] w-px bg-gradient-to-b from-slate-200 via-slate-300 to-transparent sm:block"
+                  initial={{ height: 0 }}
+                  whileInView={{ height: "calc(100% - 40px)" }}
+                  transition={{ duration: 1, ease: "easeOut" }}
+                  viewport={{ once: true, amount: 0.3 }}
+                />
+              ) : null}
+              <motion.ol
+                className="space-y-4"
+                variants={staggerContainer}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.3 }}
+              >
+                {howItWorksSteps.map((step, index) => (
+                  <motion.li
+                    key={step}
+                    className="flex gap-4 rounded-3xl border border-slate-200 bg-slate-50 p-5"
+                    variants={staggerChild}
+                  >
+                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white text-lg font-semibold text-slate-900 shadow-inner">
+                      {index + 1}️⃣
+                    </div>
+                    <p className="flex-1 text-lg text-slate-700">{step}</p>
+                  </motion.li>
+                ))}
+              </motion.ol>
+            </div>
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-              <Button asChild size="lg" className="text-base w-full sm:w-auto">
-                <a href={`#${CTA_TARGET_ID}`} onClick={handleCtaClick(howItWorksCtaLabel, "how it works")}>
-                  {howItWorksCtaLabel}
-                </a>
-              </Button>
+              <RippleHighlight asChild fullWidth className="sm:w-auto">
+                <Button asChild size="lg" className="text-base w-full sm:w-auto">
+                  <a href={`#${CTA_TARGET_ID}`} onClick={handleCtaClick(howItWorksCtaLabel, "how it works")}>
+                    {howItWorksCtaLabel}
+                  </a>
+                </Button>
+              </RippleHighlight>
               <p className="text-sm text-slate-500">No contracts. No hidden fees. Just momentum.</p>
             </div>
           </div>
-          <div className="rounded-[32px] border border-slate-200 bg-slate-50 p-6 sm:p-8">
+          <motion.div
+            className="rounded-[32px] border border-slate-200 bg-slate-50 p-6 sm:p-8"
+            animate={allowLoopAnimations ? { scale: [1, 1.01, 1], y: [0, -4, 0] } : undefined}
+            transition={allowLoopAnimations ? { duration: 6, repeat: Infinity, ease: "easeInOut" } : undefined}
+            whileHover={prefersReducedMotion ? undefined : { scale: 1.015 }}
+          >
             <div className="flex items-center gap-3 text-slate-600">
               <Zap className="h-5 w-5" aria-hidden />
               <span className="text-sm uppercase tracking-[0.35em]">intake preview</span>
@@ -189,7 +302,7 @@ export default function AiWebsiteLaunchClientPage() {
               We translate your 3-minute intake into layouts, copy, and tracking so you can react before anything goes
               live. Every step is captured in your project doc so nothing slips.
             </p>
-            <div className="mt-8 rounded-2xl border border-slate-200 bg-white p-6">
+            <div className="mt-8 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
               <div className="flex items-start gap-4">
                 <Sparkles className="h-6 w-6 text-emerald-500" aria-hidden />
                 <div>
@@ -202,7 +315,7 @@ export default function AiWebsiteLaunchClientPage() {
                 </div>
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </section>
 
@@ -214,27 +327,58 @@ export default function AiWebsiteLaunchClientPage() {
             <div className="flex flex-col gap-6 lg:flex-row lg:justify-between">
               <div className="lg:pr-8">
                 <h2 className="text-3xl font-semibold sm:text-4xl">A complete, done-for-you site for just $400.</h2>
-                <ul className="mt-6 grid gap-3 text-lg text-slate-700 sm:grid-cols-2">
+                <motion.ul
+                  className="mt-6 grid gap-3 text-lg text-slate-700 sm:grid-cols-2"
+                  variants={staggerContainer}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, amount: 0.2 }}
+                >
                   {valueList.map((item) => (
-                    <li key={item} className="flex items-start gap-3 rounded-2xl border border-slate-100 bg-slate-50 p-4">
+                    <motion.li
+                      key={item}
+                      className="flex items-start gap-3 rounded-2xl border border-slate-100 bg-slate-50 p-4 shadow-sm"
+                      variants={staggerChild}
+                      whileHover={
+                        prefersReducedMotion ? undefined : { y: -4, boxShadow: "0px 18px 40px rgba(15,23,42,0.08)" }
+                      }
+                    >
                       <CheckCircle2 className="mt-0.5 h-5 w-5 text-emerald-500" aria-hidden />
                       <span>{item}</span>
-                    </li>
+                    </motion.li>
                   ))}
-                </ul>
+                </motion.ul>
               </div>
-              <div className="rounded-3xl border border-slate-100 bg-slate-50 p-6 text-slate-900 lg:max-w-sm">
-                <p className="text-sm uppercase tracking-[0.35em] text-slate-500">price anchor</p>
-                <p className="mt-4 text-lg font-medium text-slate-700">
-                  Other agencies charge $2 000–$5 000 for the same results. We charge $400 one-time. Why? Because AI
-                  makes it faster — and we pass those savings straight to you.
-                </p>
-                <Button asChild size="lg" className="mt-6 w-full text-base">
-                  <a href={`#${CTA_TARGET_ID}`} onClick={handleCtaClick(valueCtaLabel, "what you get")}>
-                    {valueCtaLabel}
-                  </a>
-                </Button>
-              </div>
+              <motion.div
+                className="relative overflow-hidden rounded-3xl border border-slate-100 bg-slate-50 p-6 text-slate-900 lg:max-w-sm"
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.3 }}
+                whileHover={prefersReducedMotion ? undefined : { y: -6 }}
+              >
+                {allowLoopAnimations ? (
+                  <motion.span
+                    aria-hidden
+                    className="pointer-events-none absolute inset-0 bg-gradient-to-r from-sky-100 via-white to-indigo-100 opacity-40"
+                    animate={{ rotate: 360 }}
+                    transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                  />
+                ) : null}
+                <div className="relative z-10">
+                  <p className="text-sm uppercase tracking-[0.35em] text-slate-500">price anchor</p>
+                  <p className="mt-4 text-lg font-medium text-slate-700">
+                    Other agencies charge $2 000–$5 000 for the same results. We charge $400 one-time. Why? Because AI
+                    makes it faster — and we pass those savings straight to you.
+                  </p>
+                  <RippleHighlight asChild fullWidth>
+                    <Button asChild size="lg" className="mt-6 w-full text-base">
+                      <a href={`#${CTA_TARGET_ID}`} onClick={handleCtaClick(valueCtaLabel, "what you get")}>
+                        {valueCtaLabel}
+                      </a>
+                    </Button>
+                  </RippleHighlight>
+                </div>
+              </motion.div>
             </div>
           </div>
         </div>
@@ -243,15 +387,26 @@ export default function AiWebsiteLaunchClientPage() {
       {/* Clients Carousel */}
       <section className="bg-slate-50 px-4 py-12 sm:py-16 lg:py-20">
         <div className="mx-auto max-w-6xl space-y-10">
-          <header className="space-y-4 text-center">
+          <RevealOnScroll className="space-y-4 text-center">
             <p className="text-sm font-semibold uppercase tracking-[0.35em] text-slate-500">our clients</p>
-            <h2 className="text-3xl font-semibold sm:text-4xl">
-              Real brands, live Prism builds, measurable results.
-            </h2>
+            <div className="space-y-3">
+              <h2 className="text-3xl font-semibold sm:text-4xl">
+                Real brands, live Prism builds, measurable results.
+              </h2>
+              <div className="flex justify-center">
+                <motion.span
+                  className="inline-block h-0.5 rounded-full bg-slate-300"
+                  initial={{ width: 0 }}
+                  whileInView={{ width: 96 }}
+                  viewport={{ once: true, amount: 0.6 }}
+                  transition={{ duration: 0.8, ease: "easeOut" }}
+                />
+              </div>
+            </div>
             <p className="text-base text-slate-600 sm:text-lg">
               Scroll through the practices, consultants, and local businesses launching in days—not months.
             </p>
-          </header>
+          </RevealOnScroll>
           <ClientsRail />
         </div>
       </section>
@@ -259,23 +414,29 @@ export default function AiWebsiteLaunchClientPage() {
       {/* Comparison Table */}
       <section className="bg-white px-4 py-12 sm:py-16 lg:py-20">
         <div className="mx-auto max-w-5xl space-y-6">
-          <header className="space-y-3 text-center">
+          <RevealOnScroll className="space-y-3 text-center">
             <p className="text-sm font-semibold uppercase tracking-[0.35em] text-slate-500">compare</p>
             <h2 className="text-3xl font-semibold sm:text-4xl">
               Because we removed everything you hate about web design.
             </h2>
-          </header>
-          <div className="space-y-4 md:hidden">
+          </RevealOnScroll>
+          <motion.div
+            className="space-y-4 md:hidden"
+            variants={staggerContainer}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.4 }}
+          >
             {comparisonRows.map((row) => (
-              <div key={row.oldWay} className="rounded-3xl border border-slate-200 bg-white p-5">
+              <motion.div key={row.oldWay} className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm" variants={staggerChild}>
                 <p className="text-xs uppercase tracking-[0.4em] text-slate-500">old way</p>
                 <p className="mt-2 text-base font-medium text-slate-600">{row.oldWay}</p>
                 <p className="mt-4 text-xs uppercase tracking-[0.4em] text-emerald-600">prism way</p>
                 <p className="mt-2 text-lg font-semibold text-slate-900">{row.prismWay}</p>
-              </div>
+              </motion.div>
             ))}
-          </div>
-          <div className="hidden overflow-hidden rounded-3xl border border-slate-200 md:block">
+          </motion.div>
+          <RevealOnScroll className="hidden overflow-hidden rounded-3xl border border-slate-200 md:block">
             <table className="min-w-full divide-y divide-slate-200">
               <thead className="bg-slate-900 text-white">
                 <tr>
@@ -289,14 +450,14 @@ export default function AiWebsiteLaunchClientPage() {
               </thead>
               <tbody className="divide-y divide-slate-200 bg-white text-lg">
                 {comparisonRows.map((row) => (
-                  <tr key={row.oldWay} className="hover:bg-slate-50">
+                  <tr key={row.oldWay} className="transition-colors hover:bg-slate-50">
                     <td className="px-6 py-5 text-slate-600">{row.oldWay}</td>
                     <td className="px-6 py-5 font-semibold text-slate-900">{row.prismWay}</td>
                   </tr>
                 ))}
               </tbody>
             </table>
-          </div>
+          </RevealOnScroll>
         </div>
       </section>
 
@@ -311,16 +472,18 @@ export default function AiWebsiteLaunchClientPage() {
               clients start with Launch, then scale when the leads start rolling in.
             </p>
           </div>
-          <Button asChild size="lg" className="mt-6 w-full text-base sm:w-auto">
-            <a
-              href={GROWTH_CALL_LINK}
-              target="_blank"
-              rel="noreferrer noopener"
-              onClick={handleCtaClick(upgradeCtaLabel, "optional upgrade")}
-            >
-              {upgradeCtaLabel}
-            </a>
-          </Button>
+          <RippleHighlight asChild fullWidth className="sm:w-auto">
+            <Button asChild size="lg" className="mt-6 w-full text-base sm:w-auto">
+              <a
+                href={GROWTH_CALL_LINK}
+                target="_blank"
+                rel="noreferrer noopener"
+                onClick={handleCtaClick(upgradeCtaLabel, "optional upgrade")}
+              >
+                {upgradeCtaLabel}
+              </a>
+            </Button>
+          </RippleHighlight>
         </div>
       </section>
 
@@ -339,21 +502,34 @@ export default function AiWebsiteLaunchClientPage() {
                   Just results.
                 </p>
               </div>
-              <div className="rounded-3xl border border-slate-200 bg-slate-100 p-6">
+              <motion.div
+                className="relative overflow-hidden rounded-3xl border border-slate-200 bg-slate-100 p-6"
+                animate={allowLoopAnimations ? { backgroundPositionX: ["0%", "100%"] } : undefined}
+                transition={allowLoopAnimations ? { duration: 8, repeat: Infinity, ease: "linear" } : undefined}
+                style={
+                  allowLoopAnimations
+                    ? { backgroundImage: "linear-gradient(120deg, rgba(255,255,255,0.2), rgba(148,163,184,0.2), rgba(255,255,255,0.2))", backgroundSize: "200% 100%" }
+                    : undefined
+                }
+              >
                 <p className="text-sm font-semibold uppercase tracking-[0.35em] text-slate-500">what happens next</p>
                 <ul className="mt-4 space-y-3 text-sm text-slate-600">
                   <li>We confirm your intake within 1 business day.</li>
                   <li>You review your preview link and share tweaks.</li>
                   <li>We launch, connect tracking, and hand off assets.</li>
                 </ul>
-              </div>
+              </motion.div>
             </div>
 
-            <form
+            <motion.form
               action={FORM_ENDPOINT}
               method="POST"
               className="space-y-5 rounded-[28px] border border-slate-200 bg-white/90 p-5 shadow-lg shadow-slate-200 sm:p-6"
               onSubmit={handleFormSubmit}
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              style={prefersReducedMotion ? undefined : formParallax.style}
             >
               <input
                 type="hidden"
@@ -430,15 +606,17 @@ export default function AiWebsiteLaunchClientPage() {
                 />
               </div>
 
-              <Button
-                type="submit"
-                size="lg"
-                className="w-full text-base"
-                onClick={handleCtaClick(formButtonLabel, "final form")}
-                disabled={isSubmitting}
-              >
-                {isSubmitting ? "Sending..." : formButtonLabel}
-              </Button>
+              <RippleHighlight asChild fullWidth>
+                <Button
+                  type="submit"
+                  size="lg"
+                  className="w-full text-base"
+                  onClick={handleCtaClick(formButtonLabel, "final form")}
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? "Sending..." : formButtonLabel}
+                </Button>
+              </RippleHighlight>
               {submitError ? (
                 <p className="text-center text-sm text-rose-600" role="alert">
                   {submitError}
@@ -447,7 +625,7 @@ export default function AiWebsiteLaunchClientPage() {
               <p className="text-center text-xs text-slate-500">
                 Form submits securely via Formspree. You’ll hit our thank-you page with next steps instantly.
               </p>
-            </form>
+            </motion.form>
           </div>
         </div>
       </section>

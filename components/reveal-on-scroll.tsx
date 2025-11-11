@@ -18,15 +18,24 @@ export default function RevealOnScroll({
   delay = 0,
   y = 32,
   className,
+  initial,
+  whileInView,
+  transition,
+  viewport,
   ...motionProps
 }: RevealOnScrollProps) {
+  const defaultInitial = { opacity: 0, y }
+  const defaultWhileInView = { opacity: 1, y: 0 }
+  const defaultTransition = { duration: 0.6, delay }
+  const defaultViewport = { once: true, amount: 0.2 }
+
   return (
     <motion.div
       className={cn(className)}
-      initial={{ opacity: 0, y }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.6, delay }}
+      initial={initial ?? defaultInitial}
+      whileInView={whileInView ?? defaultWhileInView}
+      viewport={viewport ?? defaultViewport}
+      transition={transition ?? defaultTransition}
       {...motionProps}
     >
       {children}

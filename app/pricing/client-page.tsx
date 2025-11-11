@@ -1,16 +1,11 @@
 "use client"
 
+import { motion } from "framer-motion"
 import Link from "next/link"
-import {
-  BarChart3,
-  Check,
-  Globe,
-  MonitorSmartphone,
-  Search,
-  Sparkles,
-  Zap,
-} from "lucide-react"
+import { BarChart3, MonitorSmartphone, Sparkles } from "lucide-react"
 
+import AnimatedGradient from "@/components/animations/animated-gradient"
+import RippleHighlight from "@/components/animations/ripple-highlight"
 import ClientsSection from "@/components/home/Clients"
 import RevealOnScroll from "@/components/reveal-on-scroll"
 import { Button } from "@/components/ui/button"
@@ -20,6 +15,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion"
+import { floatLoop, hoverTilt } from "@/lib/animations"
 import { cn } from "@/lib/utils"
 
 const pricingTiers = [
@@ -27,7 +23,8 @@ const pricingTiers = [
     name: "Launch",
     emoji: "🚀",
     price: "$400 one-time",
-    description: "Your new website live in 48–72 hours — designed to attract leads and prove ROI fast.",
+    description:
+      "Your new website live in 48–72 hours — designed to attract leads and prove ROI fast.",
     cta: "Start My Build →",
     href: "/get-started?plan=launch",
     accent: "from-amber-400 to-pink-500",
@@ -36,7 +33,8 @@ const pricingTiers = [
     name: "Grow",
     emoji: "🌱",
     price: "$900/mo",
-    description: "Keep climbing the rankings. Ongoing SEO and content optimization that keeps leads coming in month after month.",
+    description:
+      "Keep climbing the rankings. Ongoing SEO and content optimization that keeps leads coming in month after month.",
     cta: "Apply for Growth Plan →",
     href: "/get-started?plan=grow",
     accent: "from-sky-500 to-indigo-600",
@@ -46,22 +44,25 @@ const pricingTiers = [
     name: "Scale",
     emoji: "📈",
     price: "from $1,500/mo",
-    description: "For teams ready to dominate search and ads. Full funnel automation, analytics, and ad management to scale revenue — not just traffic.",
+    description:
+      "For teams ready to dominate search and ads. Full funnel automation, analytics, and ad management to scale revenue — not just traffic.",
     cta: "Book Discovery Call →",
     href: "/get-started?plan=scale",
     accent: "from-emerald-400 to-teal-600",
   },
-]
+] as const
 
 const features = [
   {
     title: "Launch smarter",
-    description: "Built with AI plus human design reviews for pixel-perfect layouts and tuned SEO from day one.",
+    description:
+      "Built with AI plus human design reviews for pixel-perfect layouts and tuned SEO from day one.",
     icon: Sparkles,
   },
   {
     title: "Track everything",
-    description: "GA4, Meta Pixel, and lead capture events wired in before you approve the build.",
+    description:
+      "GA4, Meta Pixel, and lead capture events wired in before you approve the build.",
     icon: BarChart3,
   },
   {
@@ -69,7 +70,22 @@ const features = [
     description: "Domain, SSL, and forms handled for you so launch day literally takes one click.",
     icon: MonitorSmartphone,
   },
-]
+] as const
+
+const useCaseItems = [
+  { icon: "💬", label: "Service Website" },
+  { icon: "🛍️", label: "E-commerce Store" },
+  { icon: "🦷", label: "Local Business" },
+  { icon: "📞", label: "Booking & Scheduling" },
+  { icon: "📰", label: "Blog / Resource Hub" },
+  { icon: "💼", label: "Careers & Hiring" },
+  { icon: "🤖", label: "AI Chat Support" },
+  { icon: "🎨", label: "Portfolio" },
+  { icon: "🎤", label: "Event / Conference" },
+  { icon: "🧠", label: "Founder Story" },
+  { icon: "📣", label: "Landing Page" },
+  { icon: "⏳", label: "Waitlist / Launch" },
+] as const
 
 const faqs = [
   {
@@ -92,7 +108,9 @@ const faqs = [
     answer:
       "Absolutely. Scale engagements include paid media, automation, and analytics consulting. Tell us what you need inside the intake form and we'll shape a custom scope.",
   },
-]
+] as const
+
+type PricingTier = (typeof pricingTiers)[number]
 
 export default function PricingPageClient() {
   return (
@@ -157,49 +175,89 @@ function PricingSection() {
           </p>
         </RevealOnScroll>
         <div className="grid gap-8 md:grid-cols-3">
-          {pricingTiers.map((tier) => (
-            <RevealOnScroll key={tier.name}>
-              <div
-                className={cn(
-                  "flex h-full flex-col rounded-3xl border border-black/20 bg-white p-6 shadow-[8px_8px_0_0_#00000010]",
-                  tier.featured && "bg-black text-white"
-                )}
-              >
-                <div className="space-y-3">
-                  <p
-                    className={cn(
-                      "text-sm font-semibold uppercase tracking-[0.3em] text-black/60",
-                      tier.featured && "text-white/70"
-                    )}
-                  >
-                    <span className="mr-2 text-base" aria-hidden>
-                      {tier.emoji}
-                    </span>
-                    {tier.name}
-                  </p>
-                  <p className={cn("text-3xl font-semibold", tier.featured && "text-white")}>{tier.price}</p>
-                  <p className={cn("text-base text-black/70", tier.featured && "text-white/80")}>{tier.description}</p>
-                </div>
-                <div className="mt-8 flex flex-1 flex-col gap-5">
-                  <Button
-                    asChild
-                    className={cn(
-                      "w-full rounded-xl border text-base font-semibold transition",
-                      tier.featured
-                        ? "border-white bg-white text-black hover:bg-white/90"
-                        : "border-black bg-black text-white hover:bg-black/90"
-                    )}
-                  >
-                    <Link href={tier.href}>{tier.cta}</Link>
-                  </Button>
-                </div>
-              </div>
-            </RevealOnScroll>
+          {pricingTiers.map((tier, index) => (
+            <PricingCard key={tier.name} tier={tier} index={index} />
           ))}
         </div>
       </div>
     </section>
   )
+}
+
+function PricingCard({ tier, index }: { tier: PricingTier; index: number }) {
+  const hasArrow = tier.cta.includes("→")
+  const ctaLabel = hasArrow ? tier.cta.replace("→", "").trim() : tier.cta
+
+  const content = (
+    <motion.article
+      className={cn(
+        "flex h-full flex-col rounded-3xl border border-black/20 bg-white/90 p-6 shadow-[8px_8px_0_0_#00000010] transition-shadow",
+        tier.featured && "bg-black text-white shadow-[12px_12px_0_0_#00000015]"
+      )}
+      variants={hoverTilt}
+      initial="rest"
+      whileHover="hover"
+      whileTap="hover"
+    >
+      <div className="space-y-3">
+        <div className="flex items-center gap-2">
+          <motion.span
+            aria-hidden
+            className="text-base"
+            animate={floatLoop(6, 5 + index * 0.3, index * 0.2)}
+          >
+            {tier.emoji}
+          </motion.span>
+          <p
+            className={cn(
+              "text-sm font-semibold uppercase tracking-[0.3em] text-black/60",
+              tier.featured && "text-white/70"
+            )}
+          >
+            {tier.name}
+          </p>
+        </div>
+        <p className={cn("text-3xl font-semibold", tier.featured && "text-white")}>{tier.price}</p>
+        <p className={cn("text-base text-black/70", tier.featured && "text-white/80")}>{tier.description}</p>
+      </div>
+      <div className="mt-8 flex flex-1 flex-col gap-5">
+        <Button
+          asChild
+          className={cn(
+            "w-full rounded-xl border text-base font-semibold transition",
+            tier.featured
+              ? "border-white bg-white text-black hover:bg-white/90"
+              : "border-black bg-black text-white hover:bg-black/90"
+          )}
+        >
+          <Link href={tier.href}>
+            <span className="inline-flex items-center gap-2">
+              {ctaLabel}
+              {hasArrow && (
+                <motion.span
+                  aria-hidden
+                  animate={{ x: [0, 6, 0] }}
+                  transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
+                >
+                  →
+                </motion.span>
+              )}
+            </span>
+          </Link>
+        </Button>
+      </div>
+    </motion.article>
+  )
+
+  if (tier.featured) {
+    return (
+      <div className="rounded-3xl bg-gradient-to-br from-sky-500 to-indigo-600 p-[2px] shadow-lg">
+        {content}
+      </div>
+    )
+  }
+
+  return content
 }
 
 function KickoffCTASection() {
@@ -217,19 +275,21 @@ function KickoffCTASection() {
         </RevealOnScroll>
         <RevealOnScroll delay={0.2}>
           <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
-            <Button
-              asChild
-              className="w-full rounded-2xl border border-black bg-black px-8 py-6 text-base font-semibold text-white hover:bg-black/90 sm:w-auto"
-            >
-              <Link
-                href="https://calendar.notion.so/meet/enzosison/sfux4ogo"
-                target="_blank"
-                rel="noreferrer"
-                aria-label="Book Your 15-Minute Prism Site Kickoff Call"
+            <RippleHighlight fullWidth className="sm:w-auto">
+              <Button
+                asChild
+                className="w-full rounded-2xl border border-black bg-black px-8 py-6 text-base font-semibold text-white hover:bg-black/90 sm:w-auto"
               >
-                Book Your 15-Minute Prism Site Kickoff Call
-              </Link>
-            </Button>
+                <Link
+                  href="https://calendar.notion.so/meet/enzosison/sfux4ogo"
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="Book Your 15-Minute Prism Site Kickoff Call"
+                >
+                  Book Your 15-Minute Prism Site Kickoff Call
+                </Link>
+              </Button>
+            </RippleHighlight>
           </div>
         </RevealOnScroll>
       </div>
@@ -251,11 +311,21 @@ function FeatureSection() {
         <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {features.map((feature, index) => (
             <RevealOnScroll key={feature.title} delay={index * 0.05}>
-              <div className="h-full rounded-3xl border border-black/15 bg-white p-6 shadow-[6px_6px_0_0_#0000000A]">
-                <feature.icon className="h-10 w-10 text-black" aria-hidden />
+              <motion.div
+                className="h-full rounded-3xl border border-black/15 bg-white p-6 shadow-[6px_6px_0_0_#0000000A]"
+                whileHover={{ y: -6 }}
+                transition={{ type: "spring", stiffness: 200, damping: 18 }}
+              >
+                <motion.div
+                  aria-hidden
+                  className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-black/5"
+                  animate={floatLoop(8, 7 + index * 0.4)}
+                >
+                  <feature.icon className="h-6 w-6 text-black" />
+                </motion.div>
                 <h3 className="mt-4 text-xl font-semibold">{feature.title}</h3>
                 <p className="mt-3 text-sm text-black/70">{feature.description}</p>
-              </div>
+              </motion.div>
             </RevealOnScroll>
           ))}
         </div>
@@ -265,21 +335,6 @@ function FeatureSection() {
 }
 
 function WebsiteUseCasesSection() {
-  const items = [
-    { icon: "💬", label: "Service Website" },
-    { icon: "🛍️", label: "E-commerce Store" },
-    { icon: "🦷", label: "Local Business" },
-    { icon: "📞", label: "Booking & Scheduling" },
-    { icon: "📰", label: "Blog / Resource Hub" },
-    { icon: "💼", label: "Careers & Hiring" },
-    { icon: "🤖", label: "AI Chat Support" },
-    { icon: "🎨", label: "Portfolio" },
-    { icon: "🎤", label: "Event / Conference" },
-    { icon: "🧠", label: "Founder Story" },
-    { icon: "📣", label: "Landing Page" },
-    { icon: "⏳", label: "Waitlist / Launch" },
-  ]
-
   return (
     <section className="bg-zinc-50 py-24 text-black dark:bg-zinc-900 dark:text-white">
       <div className="mx-auto max-w-6xl px-6">
@@ -287,23 +342,32 @@ function WebsiteUseCasesSection() {
           <p className="text-sm font-semibold uppercase tracking-[0.3em] text-zinc-500 dark:text-zinc-400">
             Website Use Cases
           </p>
-          <h2 className="mt-3 text-3xl font-semibold sm:text-4xl">
-            Built for every kind of business.
-          </h2>
+          <h2 className="mt-3 text-3xl font-semibold sm:text-4xl">Built for every kind of business.</h2>
           <p className="mt-4 text-base text-zinc-600 dark:text-zinc-300">
             Whether you’re booking clients, selling products, growing a team, or telling your story — Prism builds
             launch-ready websites that convert, automate, and scale your brand in days, not weeks.
           </p>
         </RevealOnScroll>
         <div className="mt-12 grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
-          {items.map((item) => (
-            <RevealOnScroll key={item.label} delay={0.05}>
-              <div className="flex aspect-square flex-col items-center justify-center rounded-2xl border border-zinc-200 bg-white text-center text-sm font-semibold text-zinc-800 shadow-sm transition hover:-translate-y-1 hover:shadow-md dark:border-zinc-800 dark:bg-zinc-800 dark:text-white dark:hover:shadow-zinc-900/20">
-                <span aria-hidden className="text-3xl">
+          {useCaseItems.map((item, itemIndex) => (
+            <RevealOnScroll key={item.label} delay={itemIndex * 0.02}>
+              <motion.div
+                className="group flex aspect-square flex-col items-center justify-center rounded-2xl border border-zinc-200 bg-white text-center text-sm font-semibold text-zinc-800 shadow-sm transition dark:border-zinc-800 dark:bg-zinc-800 dark:text-white"
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true, amount: 0.3 }}
+                whileHover={{ y: -6, boxShadow: "0px 12px 25px rgba(0,0,0,0.08)" }}
+                transition={{ type: "spring", stiffness: 200, damping: 18 }}
+              >
+                <motion.span
+                  aria-hidden
+                  className="text-3xl"
+                  animate={floatLoop(4, 5 + itemIndex * 0.2)}
+                >
                   {item.icon}
-                </span>
+                </motion.span>
                 <span className="mt-3 text-xs sm:text-sm">{item.label}</span>
-              </div>
+              </motion.div>
             </RevealOnScroll>
           ))}
         </div>
@@ -314,8 +378,15 @@ function WebsiteUseCasesSection() {
 
 function HandoffSection() {
   return (
-    <section className="bg-neutral-950 py-16 text-white sm:py-24">
-      <div className="mx-auto flex max-w-4xl flex-col gap-6 px-6 text-center sm:gap-8">
+    <section className="relative overflow-hidden bg-neutral-950 py-16 text-white sm:py-24">
+      <AnimatedGradient
+        className="absolute inset-0"
+        colors={["#0ea5e9", "#8b5cf6"]}
+        opacity={0.25}
+        blur={220}
+        parallaxIntensity={6}
+      />
+      <div className="relative mx-auto flex max-w-4xl flex-col gap-6 px-6 text-center sm:gap-8">
         <RevealOnScroll>
           <div className="inline-flex items-center justify-center gap-2 rounded-full border border-white/20 px-4 py-1 text-xs font-semibold uppercase tracking-[0.3em] text-white/70">
             ⚙️ The smoothest switch you'll ever make
@@ -337,9 +408,18 @@ function HandoffSection() {
           </p>
         </RevealOnScroll>
         <RevealOnScroll delay={0.25}>
-          <div className="rounded-3xl border border-white/10 bg-white/5 p-5 text-base font-semibold text-white shadow-lg">
+          <motion.div
+            className="rounded-3xl border border-white/10 bg-white/10 p-5 text-base font-semibold text-white shadow-lg"
+            animate={{ backgroundPositionX: ["0%", "100%"] }}
+            transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+            style={{
+              backgroundImage:
+                "linear-gradient(120deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05), rgba(255,255,255,0.15))",
+              backgroundSize: "200% 200%",
+            }}
+          >
             💡 Your only job? Approve the design and watch the leads start coming in.
-          </div>
+          </motion.div>
         </RevealOnScroll>
       </div>
     </section>
@@ -360,8 +440,8 @@ function FAQSection() {
         <RevealOnScroll delay={0.1}>
           <Accordion type="single" collapsible className="rounded-3xl border border-black/15 bg-white">
             {faqs.map((faq) => (
-              <AccordionItem key={faq.question} value={faq.question}>
-                <AccordionTrigger className="px-6 text-left text-lg font-semibold text-black">
+              <AccordionItem key={faq.question} value={faq.question} className="border-black/10">
+                <AccordionTrigger className="px-6 text-left text-lg font-semibold text-black transition-colors hover:text-black">
                   {faq.question}
                 </AccordionTrigger>
                 <AccordionContent className="px-6 text-base text-black/70">{faq.answer}</AccordionContent>
@@ -376,20 +456,29 @@ function FAQSection() {
 
 function FinalCTA() {
   return (
-    <section className="border-t border-black/10 bg-black py-16 text-white">
-      <div className="mx-auto flex max-w-5xl flex-col gap-6 px-6 text-center">
+    <section className="relative overflow-hidden border-t border-black/10 bg-black py-16 text-white">
+      <AnimatedGradient
+        className="absolute inset-y-0 left-0 w-full"
+        colors={["#facc15", "#34d399"]}
+        opacity={0.18}
+        blur={180}
+        parallaxIntensity={5}
+      />
+      <div className="relative mx-auto flex max-w-5xl flex-col gap-6 px-6 text-center">
         <RevealOnScroll>
           <p className="text-2xl font-semibold">🚀 Launch your new AI-powered site this week — starting at $400.</p>
         </RevealOnScroll>
         <RevealOnScroll delay={0.1}>
           <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
-            <Button
-              asChild
-              size="lg"
-              className="w-full rounded-full border border-white bg-white px-8 py-6 text-base font-semibold text-black hover:bg-white/90 sm:w-auto"
-            >
-              <Link href="/get-started">Get started</Link>
-            </Button>
+            <RippleHighlight fullWidth className="sm:w-auto">
+              <Button
+                asChild
+                size="lg"
+                className="w-full rounded-full border border-white bg-white px-8 py-6 text-base font-semibold text-black hover:bg-white/90 sm:w-auto"
+              >
+                <Link href="/get-started">Get started</Link>
+              </Button>
+            </RippleHighlight>
           </div>
         </RevealOnScroll>
       </div>
