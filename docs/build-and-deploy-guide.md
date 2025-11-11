@@ -23,6 +23,7 @@ If any of these steps fail locally, fix them before opening a PR. The CI build l
 - **Environment variables** – Production builds default to `.env.production`. Missing Supabase or Resend keys do not stop the build but disable API routes, so sanity-check `docs/environment-setup.md` before enabling new integrations.
 - **Framer Motion version drift** – We’re on `framer-motion@12`, which removed some legacy props (`whileFocusWithin`, etc.). When porting snippets, wrap focus/hover logic in state (see `components/animations/ripple-highlight.tsx`) instead of relying on deprecated props, otherwise `pnpm typecheck` will fail.
 - **Style prop collisions** – Hooks like `useParallaxMouse` return `style` objects. Spread them *inside* a single `style={{ ...parallaxStyle, ...localStyles }}` rather than attaching both `style={...}` and `{...hook}` to the same element—TypeScript flags duplicate props during the build (the animated gradient hero recently broke for this reason).
+- **Blend-mode glows** – Elements that rely on `mix-blend-screen` (e.g., the “ai launch offer” halo) disappear if the base layer is pure white. When reusing the glow pattern, either keep a slightly tinted background behind the badge or drop the blend mode entirely so the glow remains visible in production screenshots/builds.
 
 ## Deployment checklist
 1. Rebase on `main` and resolve conflicts.
