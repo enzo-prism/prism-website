@@ -194,9 +194,17 @@ export default function AiWebsiteLaunchClientPage() {
             <motion.div variants={fadeInUp} className="relative inline-flex items-center justify-center sm:justify-start">
               <motion.span
                 aria-hidden
-                className="absolute inset-0 rounded-full bg-gradient-to-r from-sky-200/50 to-indigo-200/40 blur-xl"
-                animate={allowLoopAnimations ? { opacity: [0.5, 0.9, 0.5], scale: [0.95, 1.05, 0.95] } : undefined}
-                transition={allowLoopAnimations ? { duration: 4, repeat: Infinity, ease: "easeInOut" } : undefined}
+                className="pointer-events-none absolute inset-0 rounded-full bg-gradient-to-r from-sky-300/70 via-white/30 to-indigo-400/70 blur-2xl mix-blend-screen"
+                style={{ boxShadow: "0 0 60px rgba(59,130,246,0.35)" }}
+                animate={
+                  allowLoopAnimations
+                    ? {
+                        opacity: [0.55, 1, 0.55],
+                        scale: [0.9, 1.08, 0.9],
+                      }
+                    : undefined
+                }
+                transition={allowLoopAnimations ? { duration: 5.5, repeat: Infinity, ease: "easeInOut" } : undefined}
               />
               <Badge
                 variant="outline"
