@@ -45,6 +45,7 @@ The repo assumes pnpm; npm/yarn installs will fall out of sync.
 - [`docs/blog-performance-optimization.md`](./docs/blog-performance-optimization.md) – GPU/layout advice for heavy sections.
 - [`docs/forms.md`](./docs/forms.md) – Shared Formspree hooks and thank-you routing.
 - [`docs/pages-overview.md`](./docs/pages-overview.md) – Where to edit pricing, contact, free-analysis flows.
+- [`docs/build-and-deploy-guide.md`](./docs/build-and-deploy-guide.md) – Build tooling expectations plus the local/CI checklist.
 - [`docs/environment-setup.md`](./docs/environment-setup.md) – Environment variable reference and verification checklist.
 
 ## Deployment

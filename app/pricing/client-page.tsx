@@ -28,6 +28,7 @@ const pricingTiers = [
     cta: "Start My Build →",
     href: "/get-started?plan=launch",
     accent: "from-amber-400 to-pink-500",
+    featured: false,
   },
   {
     name: "Grow",
@@ -49,6 +50,7 @@ const pricingTiers = [
     cta: "Book Discovery Call →",
     href: "/get-started?plan=scale",
     accent: "from-emerald-400 to-teal-600",
+    featured: false,
   },
 ] as const
 
