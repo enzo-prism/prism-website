@@ -197,14 +197,21 @@ export default function AiWebsiteLaunchClientPage() {
                 className="pointer-events-none absolute inset-0 rounded-full bg-gradient-to-r from-sky-300/70 via-white/30 to-indigo-400/70 blur-2xl mix-blend-screen"
                 style={{ boxShadow: "0 0 60px rgba(59,130,246,0.35)" }}
                 animate={
-                  allowLoopAnimations
+                  prefersReducedMotion
                     ? {
-                        opacity: [0.55, 1, 0.55],
-                        scale: [0.9, 1.08, 0.9],
+                        opacity: [0.7, 0.85, 0.7],
                       }
-                    : undefined
+                    : {
+                        opacity: [0.55, 1, 0.55],
+                        scale: [0.92, 1.08, 0.92],
+                        rotate: [-1.2, 1.2, -1.2],
+                      }
                 }
-                transition={allowLoopAnimations ? { duration: 5.5, repeat: Infinity, ease: "easeInOut" } : undefined}
+                transition={{
+                  duration: prefersReducedMotion ? 6.2 : 5.5,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
               />
               <Badge
                 variant="outline"
