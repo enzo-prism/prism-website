@@ -199,18 +199,18 @@ export default function AiWebsiteLaunchClientPage() {
                 animate={
                   prefersReducedMotion
                     ? {
-                        opacity: [0.7, 0.85, 0.7],
+                        opacity: [0.85, 0.95, 0.9],
                       }
                     : {
-                        opacity: [0.55, 1, 0.55],
-                        scale: [0.92, 1.08, 0.92],
-                        rotate: [-1.2, 1.2, -1.2],
+                        opacity: [0.85, 1, 0.9],
+                        scale: [0.96, 1.05, 0.98],
+                        rotate: [-1, 1, -0.5],
                       }
                 }
                 transition={{
-                  duration: prefersReducedMotion ? 6.2 : 5.5,
+                  duration: prefersReducedMotion ? 8 : 6,
                   repeat: Infinity,
-                  ease: "easeInOut",
+                  ease: [0.42, 0, 0.58, 1],
                 }}
               />
               <Badge
