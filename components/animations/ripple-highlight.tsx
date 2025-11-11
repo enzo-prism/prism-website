@@ -24,6 +24,7 @@ export default function RippleHighlight({
   const Comp = asChild ? Slot : "div"
   const prefersReducedMotion = useReducedMotion()
   const [isTouch, setIsTouch] = useState(false)
+  const [isFocusWithin, setIsFocusWithin] = useState(false)
 
   useEffect(() => {
     if (typeof window === "undefined") return
@@ -45,8 +46,15 @@ export default function RippleHighlight({
       )}
       initial="rest"
       whileHover={disableEffect ? undefined : "hover"}
-      animate="rest"
-      whileFocusWithin={disableEffect ? undefined : "hover"}
+      animate={disableEffect ? "rest" : isFocusWithin ? "hover" : "rest"}
+      onFocusCapture={() => {
+        if (!disableEffect) setIsFocusWithin(true)
+      }}
+      onBlurCapture={(event) => {
+        if (!disableEffect && !event.currentTarget.contains(event.relatedTarget as Node | null)) {
+          setIsFocusWithin(false)
+        }
+      }}
     >
       {!disableEffect ? (
         <>
