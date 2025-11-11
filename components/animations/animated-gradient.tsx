@@ -38,6 +38,7 @@ export default function AnimatedGradient({
   }, [])
 
   const parallax = useParallaxMouse({ intensity: parallaxIntensity, disableOnTouch: disableParallaxOnTouch })
+  const parallaxStyle = parallax?.style ?? {}
 
   const allowAnimation = !(prefersReducedMotion || (disableParallaxOnTouch && isTouchDevice))
 
@@ -60,10 +61,10 @@ export default function AnimatedGradient({
       <motion.div
         className="absolute inset-[-30%]"
         style={{
+          ...parallaxStyle,
           background: `radial-gradient(circle at 20% 20%, ${colors[0]}, transparent 60%), radial-gradient(circle at 80% 0%, ${colors[1]}, transparent 55%)`,
           filter: `blur(${blur}px)`,
         }}
-        {...parallax}
       />
     </motion.div>
   )
