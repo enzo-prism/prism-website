@@ -1,8 +1,8 @@
 "use client"
 
-import { motion, type Variants, useReducedMotion } from "framer-motion"
+import { motion, type Variants, useInView, useReducedMotion } from "framer-motion"
 import { useRouter } from "next/navigation"
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { AlertTriangle, CheckCircle2, Sparkles, Zap } from "lucide-react"
 
 import AnimatedGradient from "@/components/animations/animated-gradient"
@@ -13,6 +13,7 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { useParallaxMouse } from "@/hooks/use-parallax-mouse"
 import { trackCTAClick, trackFormSubmission } from "@/utils/analytics"
+import { cn } from "@/lib/utils"
 
 const painPoints = [
   "You’re tired of waiting weeks and still not getting what you paid for.",
@@ -110,6 +111,9 @@ export default function AiWebsiteLaunchClientPage() {
   const prefersReducedMotion = useReducedMotion()
   const formParallax = useParallaxMouse(10)
   const [isTouchDevice, setIsTouchDevice] = useState(false)
+  const [activeStep, setActiveStep] = useState(0)
+  const howItWorksRef = useRef<HTMLDivElement | null>(null)
+  const isHowItWorksInView = useInView(howItWorksRef, { once: false, amount: 0.4 })
 
   useEffect(() => {
     if (typeof window === "undefined") return
@@ -121,6 +125,20 @@ export default function AiWebsiteLaunchClientPage() {
   }, [])
 
   const allowLoopAnimations = !(prefersReducedMotion || isTouchDevice)
+  useEffect(() => {
+    if (!allowLoopAnimations) return
+    if (!isHowItWorksInView) return
+    const interval = window.setInterval(() => {
+      setActiveStep((prev) => (prev + 1) % howItWorksSteps.length)
+    }, 3600)
+    return () => window.clearInterval(interval)
+  }, [allowLoopAnimations, isHowItWorksInView])
+
+  useEffect(() => {
+    if (!isHowItWorksInView) {
+      setActiveStep(0)
+    }
+  }, [isHowItWorksInView])
 
   const handleCtaClick = (label: string, location: string) => () => {
     trackCTAClick(label, location)
@@ -242,7 +260,7 @@ export default function AiWebsiteLaunchClientPage() {
       {/* How it works */}
       <section className="bg-white px-4 py-12 sm:py-16 lg:py-20">
         <div className="mx-auto max-w-6xl space-y-10 rounded-[32px] border border-slate-200 bg-white px-4 py-10 sm:px-8 lg:grid lg:grid-cols-[1.1fr,0.9fr] lg:items-center lg:gap-12 lg:space-y-0">
-          <div className="space-y-6">
+          <div className="space-y-6" ref={howItWorksRef}>
             <p className="text-sm font-semibold uppercase tracking-[0.35em] text-slate-500">speed run</p>
             <h2 className="text-3xl font-semibold text-slate-900 sm:text-4xl">From zero to launch in 48 hours.</h2>
             <div className="relative pl-3">
@@ -263,18 +281,44 @@ export default function AiWebsiteLaunchClientPage() {
                 whileInView="visible"
                 viewport={{ once: true, amount: 0.3 }}
               >
-                {howItWorksSteps.map((step, index) => (
-                  <motion.li
-                    key={step}
-                    className="flex gap-4 rounded-3xl border border-slate-200 bg-slate-50 p-5"
-                    variants={staggerChild}
-                  >
-                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white text-lg font-semibold text-slate-900 shadow-inner">
-                      {index + 1}️⃣
-                    </div>
-                    <p className="flex-1 text-lg text-slate-700">{step}</p>
-                  </motion.li>
-                ))}
+                {howItWorksSteps.map((step, index) => {
+                  const isActive = activeStep === index
+                  return (
+                    <motion.li
+                      key={step}
+                      className="flex gap-4 rounded-3xl border border-slate-200 bg-slate-50 p-5 shadow-sm"
+                      variants={staggerChild}
+                      animate={
+                        isActive
+                          ? {
+                              backgroundColor: "rgba(255,255,255,1)",
+                              scale: 1.015,
+                              boxShadow: "0 25px 55px rgba(15,23,42,0.12)",
+                              borderColor: "rgba(15,23,42,0.18)",
+                            }
+                          : {
+                              backgroundColor: "rgba(248,250,252,1)",
+                              scale: 1,
+                              boxShadow: "0 12px 30px rgba(15,23,42,0.04)",
+                              borderColor: "rgba(148,163,184,0.35)",
+                            }
+                      }
+                      transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
+                    >
+                      <div
+                        className={cn(
+                          "flex h-12 w-12 items-center justify-center rounded-2xl text-lg font-semibold transition-colors",
+                          isActive
+                            ? "bg-slate-900 text-white shadow-lg shadow-slate-900/30"
+                            : "bg-white text-slate-900 shadow-inner"
+                        )}
+                      >
+                        {index + 1}️⃣
+                      </div>
+                      <p className="flex-1 text-lg text-slate-700">{step}</p>
+                    </motion.li>
+                  )
+                })}
               </motion.ol>
             </div>
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
