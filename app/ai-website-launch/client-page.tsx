@@ -253,10 +253,26 @@ export default function AiWebsiteLaunchClientPage() {
           </header>
           <ul className="grid gap-3 sm:gap-4 sm:grid-cols-2">
             {painPoints.map((point) => (
-              <li key={point} className="flex gap-3 rounded-3xl border border-slate-200 bg-white p-4 sm:p-5">
-                <AlertTriangle className="mt-1 h-5 w-5 text-rose-500" aria-hidden />
+              <motion.li
+                key={point}
+                className="group flex gap-3 rounded-3xl border border-slate-200 bg-white p-4 shadow-sm transition-colors sm:p-5"
+                whileHover={
+                  prefersReducedMotion
+                    ? undefined
+                    : {
+                        y: -4,
+                        boxShadow: "0px 18px 38px rgba(15,23,42,0.08)",
+                        borderColor: "rgba(244,63,94,0.35)",
+                      }
+                }
+                transition={{ duration: 0.35, ease: [0.33, 1, 0.68, 1] }}
+              >
+                <AlertTriangle
+                  className="mt-1 h-5 w-5 text-rose-500 transition-colors group-hover:text-rose-600"
+                  aria-hidden
+                />
                 <p className="text-sm leading-relaxed text-slate-700 sm:text-base">{point}</p>
-              </li>
+              </motion.li>
             ))}
           </ul>
           <p className="rounded-2xl border border-slate-200 bg-white p-6 text-lg font-medium text-slate-800">
@@ -337,10 +353,37 @@ export default function AiWebsiteLaunchClientPage() {
                   </a>
                 </Button>
               </RippleHighlight>
-              <p className="text-sm text-slate-500">No contracts. No hidden fees. Just momentum.</p>
+              <motion.div
+                className="relative inline-flex justify-center sm:justify-start"
+                whileHover={
+                  prefersReducedMotion
+                    ? undefined
+                    : {
+                        scale: 1.02,
+                      }
+                }
+              >
+                <motion.span
+                  aria-hidden
+                  className="absolute inset-x-0 bottom-0 h-px bg-slate-400"
+                  initial={{ scaleX: 0 }}
+                  whileHover={prefersReducedMotion ? undefined : { scaleX: 1 }}
+                  transition={{ duration: 0.4, ease: "easeOut" }}
+                  style={{ transformOrigin: "left" }}
+                />
+                <p className="text-sm text-slate-500">No contracts. No hidden fees. Just momentum.</p>
+              </motion.div>
             </div>
           </div>
-          <div className="rounded-[32px] border border-slate-200 bg-slate-50 p-6 sm:p-8">
+          <motion.div
+            className="group rounded-[32px] border border-slate-200 bg-slate-50 p-6 sm:p-8"
+            whileHover={
+              prefersReducedMotion
+                ? undefined
+                : { y: -4, boxShadow: "0 30px 60px rgba(15,23,42,0.12)", borderColor: "rgba(99,102,241,0.4)" }
+            }
+            transition={{ duration: 0.4, ease: [0.33, 1, 0.68, 1] }}
+          >
             <div className="flex items-center gap-3 text-slate-600">
               <Zap className="h-5 w-5" aria-hidden />
               <span className="text-sm uppercase tracking-[0.35em]">intake preview</span>
@@ -362,7 +405,7 @@ export default function AiWebsiteLaunchClientPage() {
                 </div>
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </section>
 
@@ -384,13 +427,22 @@ export default function AiWebsiteLaunchClientPage() {
                   {valueList.map((item) => (
                     <motion.li
                       key={item}
-                      className="flex items-start gap-3 rounded-2xl border border-slate-100 bg-slate-50 p-4 shadow-sm"
+                      className="group flex items-start gap-3 rounded-2xl border border-slate-100 bg-slate-50 p-4 shadow-sm"
                       variants={staggerChild}
                       whileHover={
-                        prefersReducedMotion ? undefined : { y: -4, boxShadow: "0px 18px 40px rgba(15,23,42,0.08)" }
+                        prefersReducedMotion
+                          ? undefined
+                          : {
+                              y: -4,
+                              boxShadow: "0px 18px 40px rgba(15,23,42,0.08)",
+                              backgroundColor: "rgba(255,255,255,1)",
+                            }
                       }
                     >
-                      <CheckCircle2 className="mt-0.5 h-5 w-5 text-emerald-500" aria-hidden />
+                      <CheckCircle2
+                        className="mt-0.5 h-5 w-5 text-emerald-500 transition-transform group-hover:rotate-6"
+                        aria-hidden
+                      />
                       <span>{item}</span>
                     </motion.li>
                   ))}
@@ -401,12 +453,16 @@ export default function AiWebsiteLaunchClientPage() {
                 initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.3 }}
-                whileHover={prefersReducedMotion ? undefined : { y: -6 }}
+                whileHover={
+                  prefersReducedMotion
+                    ? undefined
+                    : { y: -6, boxShadow: "0 30px 60px rgba(15,23,42,0.14)", borderColor: "rgba(99,102,241,0.45)" }
+                }
               >
                 {allowLoopAnimations ? (
                   <motion.span
                     aria-hidden
-                    className="pointer-events-none absolute inset-0 bg-gradient-to-r from-sky-100 via-white to-indigo-100 opacity-40"
+                    className="pointer-events-none absolute inset-[-20%] rounded-[40px] bg-gradient-to-r from-sky-100 via-white to-indigo-100 opacity-40"
                     animate={{ rotate: 360 }}
                     transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
                   />
@@ -474,8 +530,22 @@ export default function AiWebsiteLaunchClientPage() {
             whileInView="visible"
             viewport={{ once: true, amount: 0.4 }}
           >
-            {comparisonRows.map((row) => (
-              <motion.div key={row.oldWay} className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm" variants={staggerChild}>
+                {comparisonRows.map((row) => (
+                  <motion.div
+                    key={row.oldWay}
+                    className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm"
+                    variants={staggerChild}
+                    whileHover={
+                      prefersReducedMotion
+                        ? undefined
+                        : { scale: 1.01, borderColor: "rgba(59,130,246,0.4)", boxShadow: "0 20px 45px rgba(15,23,42,0.08)" }
+                    }
+                    whileTap={
+                      prefersReducedMotion
+                        ? undefined
+                        : { scale: 0.995 }
+                    }
+                  >
                 <p className="text-xs uppercase tracking-[0.4em] text-slate-500">old way</p>
                 <p className="mt-2 text-base font-medium text-slate-600">{row.oldWay}</p>
                 <p className="mt-4 text-xs uppercase tracking-[0.4em] text-emerald-600">prism way</p>
@@ -510,7 +580,15 @@ export default function AiWebsiteLaunchClientPage() {
 
       {/* Optional upgrade */}
       <section className="px-4 py-12 sm:py-16 lg:py-20">
-        <div className="mx-auto max-w-5xl rounded-[32px] border border-slate-200 bg-slate-50 px-6 py-10 sm:px-10">
+        <motion.div
+          className="mx-auto max-w-5xl rounded-[32px] border border-slate-200 bg-slate-50 px-6 py-10 sm:px-10"
+          whileHover={
+            prefersReducedMotion
+              ? undefined
+              : { boxShadow: "0 40px 80px rgba(15,23,42,0.12)", borderColor: "rgba(15,23,42,0.2)", y: -4 }
+          }
+          transition={{ duration: 0.45, ease: [0.33, 1, 0.68, 1] }}
+        >
           <p className="text-sm font-semibold uppercase tracking-[0.35em] text-slate-500">optional upgrade</p>
           <div className="mt-6 space-y-4">
             <h2 className="text-3xl font-semibold text-slate-900">Want traffic, not just a website?</h2>
@@ -531,7 +609,7 @@ export default function AiWebsiteLaunchClientPage() {
               </a>
             </Button>
           </RippleHighlight>
-        </div>
+        </motion.div>
       </section>
 
       {/* Final CTA + Form */}
