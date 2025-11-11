@@ -288,12 +288,7 @@ export default function AiWebsiteLaunchClientPage() {
               <p className="text-sm text-slate-500">No contracts. No hidden fees. Just momentum.</p>
             </div>
           </div>
-          <motion.div
-            className="rounded-[32px] border border-slate-200 bg-slate-50 p-6 sm:p-8"
-            animate={allowLoopAnimations ? { scale: [1, 1.01, 1], y: [0, -4, 0] } : undefined}
-            transition={allowLoopAnimations ? { duration: 6, repeat: Infinity, ease: "easeInOut" } : undefined}
-            whileHover={prefersReducedMotion ? undefined : { scale: 1.015 }}
-          >
+          <div className="rounded-[32px] border border-slate-200 bg-slate-50 p-6 sm:p-8">
             <div className="flex items-center gap-3 text-slate-600">
               <Zap className="h-5 w-5" aria-hidden />
               <span className="text-sm uppercase tracking-[0.35em]">intake preview</span>
@@ -315,7 +310,7 @@ export default function AiWebsiteLaunchClientPage() {
                 </div>
               </div>
             </div>
-          </motion.div>
+          </div>
         </div>
       </section>
 
