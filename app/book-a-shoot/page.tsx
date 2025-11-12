@@ -17,24 +17,24 @@ export default function BookAShootPage() {
     <>
       <Navbar />
       <main className="bg-white text-neutral-900">
-        <section className="border-b border-neutral-200 bg-neutral-50 px-4 py-16 sm:py-24">
+        <section className="border-b border-neutral-200 bg-neutral-50 px-4 py-12 sm:py-20">
           <div className="container mx-auto max-w-3xl text-center">
             <p className="text-sm font-semibold uppercase tracking-[0.28em] text-neutral-500">book a shoot</p>
             <h1 className="mt-2 text-4xl font-semibold tracking-tight text-neutral-900">pick two windows and we&apos;ll lock it in.</h1>
             <p className="mt-4 text-base text-neutral-600">
               share your email plus two one-hour windows that work for the shoot. our team replies with a confirmation and prep checklist.
             </p>
-            <div className="mt-6 flex flex-wrap justify-center gap-4 text-xs font-semibold uppercase tracking-[0.3em] text-neutral-400">
+            <div className="mt-6 flex flex-col items-center gap-2 text-xs font-semibold uppercase tracking-[0.3em] text-neutral-400">
               <Link href="/dental-photography" className="hover:text-neutral-900">
                 overview
               </Link>
-              <span>/</span>
+              <span className="text-neutral-200">―――</span>
               <Link href="/dental-photography/office-team" className="hover:text-neutral-900">
-                office + team
+                office + team (bookable)
               </Link>
-              <span>/</span>
+              <span className="text-neutral-200">―――</span>
               <Link href="/dental-photography/before-after" className="hover:text-neutral-900">
-                before + after system
+                before + after guide
               </Link>
             </div>
           </div>
@@ -60,17 +60,17 @@ export default function BookAShootPage() {
 
                 <div className="space-y-2">
                   <p className="text-sm font-medium text-neutral-800">preferred day #1</p>
-                  <div className="grid gap-4 sm:grid-cols-2">
+                  <div className="grid gap-4 md:grid-cols-2">
                     <input
                       type="date"
                       name="day_one_date"
                       required
-                      className="rounded-2xl border border-neutral-200 bg-neutral-50 px-4 py-3 text-sm text-neutral-900 focus:border-neutral-900 focus:outline-none"
+                      className="rounded-2xl border border-neutral-200 bg-neutral-50 px-4 py-3 text-base text-neutral-900 focus:border-neutral-900 focus:outline-none sm:text-sm"
                     />
                     <select
                       name="day_one_time"
                       required
-                      className="rounded-2xl border border-neutral-200 bg-neutral-50 px-4 py-3 text-sm text-neutral-900 focus:border-neutral-900 focus:outline-none"
+                      className="rounded-2xl border border-neutral-200 bg-neutral-50 px-4 py-3 text-base text-neutral-900 focus:border-neutral-900 focus:outline-none sm:text-sm"
                     >
                       <option value="">best one-hour window</option>
                       <option value="08:00">8:00 – 9:00 AM</option>
@@ -87,17 +87,17 @@ export default function BookAShootPage() {
 
                 <div className="space-y-2">
                   <p className="text-sm font-medium text-neutral-800">preferred day #2</p>
-                  <div className="grid gap-4 sm:grid-cols-2">
+                  <div className="grid gap-4 md:grid-cols-2">
                     <input
                       type="date"
                       name="day_two_date"
                       required
-                      className="rounded-2xl border border-neutral-200 bg-neutral-50 px-4 py-3 text-sm text-neutral-900 focus:border-neutral-900 focus:outline-none"
+                      className="rounded-2xl border border-neutral-200 bg-neutral-50 px-4 py-3 text-base text-neutral-900 focus:border-neutral-900 focus:outline-none sm:text-sm"
                     />
                     <select
                       name="day_two_time"
                       required
-                      className="rounded-2xl border border-neutral-200 bg-neutral-50 px-4 py-3 text-sm text-neutral-900 focus:border-neutral-900 focus:outline-none"
+                      className="rounded-2xl border border-neutral-200 bg-neutral-50 px-4 py-3 text-base text-neutral-900 focus:border-neutral-900 focus:outline-none sm:text-sm"
                     >
                       <option value="">best one-hour window</option>
                       <option value="08:00">8:00 – 9:00 AM</option>

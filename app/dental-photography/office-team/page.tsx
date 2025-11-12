@@ -71,8 +71,20 @@ export default function OfficeTeamPhotographyPage() {
     <>
       <Navbar />
       <main className="bg-white text-neutral-900">
-        <section className="relative overflow-hidden border-b border-neutral-200 bg-neutral-950 text-white">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.12),_transparent_55%)]" aria-hidden />
+        <section className="relative overflow-hidden border-b border-neutral-200 text-white">
+          <div className="absolute inset-0">
+            <video
+              className="h-full w-full object-cover"
+              src="https://res.cloudinary.com/dhqpqfw6w/video/upload/v1761852734/models_2_x9gxtj.mp4"
+              autoPlay
+              loop
+              muted
+              playsInline
+              poster="https://res.cloudinary.com/dhqpqfw6w/image/upload/v1761853323/thumbnail_yscklx.webp"
+              aria-hidden="true"
+            />
+            <div className="absolute inset-0 bg-neutral-950/80" aria-hidden />
+          </div>
           <div className="container relative mx-auto px-4 py-24 md:py-32">
             <div className="mx-auto flex max-w-3xl flex-col items-center text-center">
               <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-4 py-1 text-xs uppercase tracking-[0.28em] text-neutral-200">
@@ -85,8 +97,8 @@ export default function OfficeTeamPhotographyPage() {
                 give us a date and we&apos;ll capture portraits, lobby vibes, and candid team moments that plug straight into your website, ads, and
                 recruiting funnels.
               </p>
-              <div className="mt-8 flex flex-wrap justify-center gap-3">
-                <Button asChild size="lg" className="rounded-full px-8 py-3 text-base lowercase transition hover:scale-105">
+              <div className="mt-8 flex w-full flex-wrap justify-center gap-3">
+                <Button asChild size="lg" className="w-full rounded-full px-8 py-3 text-base lowercase transition hover:scale-105 sm:w-auto">
                   <Link href="/book-a-shoot">
                     book a shoot
                     <Calendar className="ml-2 h-4 w-4" />
@@ -118,7 +130,7 @@ export default function OfficeTeamPhotographyPage() {
                       </div>
                       <h3 className="mt-2 text-2xl font-semibold text-neutral-900">{shoot.practice}</h3>
                     </div>
-                    <Button asChild variant="outline" className="rounded-full px-6 py-2 text-sm lowercase">
+                    <Button asChild variant="outline" className="w-full rounded-full px-6 py-2 text-sm lowercase sm:w-auto">
                       <Link href="/book-a-shoot">
                         book something like this
                         <ArrowRight className="ml-2 h-4 w-4" aria-hidden />
@@ -126,17 +138,17 @@ export default function OfficeTeamPhotographyPage() {
                     </Button>
                   </div>
 
-                  <Carousel className="mt-8">
-                    <CarouselContent>
+                  <Carousel className="mt-8 px-1 sm:px-0">
+                    <CarouselContent className="-ml-2">
                       {shoot.shots.map((shot, index) => (
-                        <CarouselItem key={`${shoot.practice}-${index}`} className="sm:basis-1/2 lg:basis-1/3">
+                        <CarouselItem key={`${shoot.practice}-${index}`} className="pl-2 sm:basis-1/2 lg:basis-1/3">
                           <div className="overflow-hidden rounded-2xl border border-neutral-200 bg-neutral-50">
                             <Image
                               src={shot.src}
                               alt={shot.alt}
                               width={1200}
                               height={800}
-                              className="h-64 w-full object-cover"
+                              className="h-52 w-full object-cover sm:h-64"
                               priority={index === 0}
                             />
                           </div>
@@ -164,7 +176,7 @@ export default function OfficeTeamPhotographyPage() {
                 every photo from the shoot feeds straight into your Apple Business Connect listing. the result: a premium, credible first impression when
                 patients search on their iPhone.
               </p>
-              <Button asChild variant="ghost" className="mt-6 w-fit px-4 py-2 text-sm lowercase text-neutral-900">
+              <Button asChild variant="ghost" className="mt-6 w-full px-4 py-2 text-sm lowercase text-neutral-900 sm:w-fit">
                 <Link href="/local-listings">
                   learn more about listings
                   <ArrowRight className="ml-2 h-4 w-4" aria-hidden />

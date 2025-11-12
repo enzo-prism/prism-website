@@ -53,13 +53,13 @@ export default function BeforeAfterPhotographyPage() {
                 follow this 0 -> 100% guide to set up gear, space, scripts, and file workflows so your practice captures pro-grade before-and-afters that wow patients and fuel every marketing touchpoint.
               </p>
               <div className="mt-8 flex flex-wrap justify-center gap-3">
-                <Button asChild size="lg" className="rounded-full px-8 py-3 text-base lowercase">
+                <Button asChild size="lg" className="w-full rounded-full px-8 py-3 text-base lowercase sm:w-auto">
                   <Link href="#guide-tabs">
                     jump to the protocol
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Link>
                 </Button>
-                <Button asChild variant="outline-inverted" size="lg" className="rounded-full px-8 py-3 text-base lowercase">
+                <Button asChild variant="outline-inverted" size="lg" className="w-full rounded-full px-8 py-3 text-base lowercase sm:w-auto">
                   <Link href="/dental-photography">
                     see all services
                     <ArrowRight className="ml-2 h-4 w-4" />
