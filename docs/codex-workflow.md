@@ -1,0 +1,82 @@
+# Codex workflow playbook
+
+Guidance for future Codex sessions so we can ship faster without rediscovering context every time.
+
+## 1. Stack refresher
+
+- **Framework** – Next.js App Router + TypeScript, deployed via Vercel.
+- **Styling** – Tailwind classes inline; no styled-components.
+- **UI kit** – `components/ui/*` (Button, Carousel, etc.). Import from there instead of re‑implementing.
+- **Forms** – Most marketing forms post to [Formspree](https://formspree.io/). Keep actions and field names explicit so PMs can read submissions quickly.
+
+## 2. Dental photography surfaces
+
+We now have four tightly coupled routes – keep their navigation in sync.
+
+| Route | Purpose | Key links |
+| --- | --- | --- |
+| `/dental-photography` | Hub with background video hero, summary cards, and cross-links. | Buttons must point to `/dental-photography/office-team` and `/dental-photography/before-after`; secondary CTAs can reference `/book-a-shoot` when relevant. |
+| `/dental-photography/office-team` | Bookable service showcasing recent shoots + Apple Maps proof. | All primary CTAs go to `/book-a-shoot`. Apple Maps block links to `/local-listings`. |
+| `/dental-photography/before-after` | DIY equipment + workflow guide (no booking). | Keep “jump to the protocol” anchor and link back to `/dental-photography` when offering services. |
+| `/book-a-shoot` | Formspree capture for shoot scheduling. | Links back to the other pages so visitors can revisit context. |
+
+When adding new sections:
+
+1. Update the hub hero buttons if the destination changes.
+2. Mirror links on subpages so the triangle (hub ⇄ subpages ⇄ booking) stays intact.
+3. Mention whether a page is “bookable” vs “guide” so we don’t mislead visitors.
+
+## 3. Background video hero pattern
+
+Use the same structure as `/dental-photography` and `/models`:
+
+```tsx
+<section className="relative overflow-hidden ...">
+  <div className="absolute inset-0">
+    <video src="...mp4" autoPlay loop muted playsInline poster="...webp" />
+    <div className="absolute inset-0 bg-neutral-950/80" />
+  </div>
+  <div className="container relative ...">
+    {/* text + CTAs */}
+  </div>
+</section>
+```
+
+Tailwind overlay (`bg-neutral-950/80`) keeps text readable. Use Cloudinary URLs for both the MP4 and poster.
+
+## 4. Carousel shorthand
+
+For horizontal galleries (office-team recent shoots, proof sections):
+
+```tsx
+<Carousel>
+  <CarouselContent>
+    {items.map((item) => (
+      <CarouselItem key={item.src} className="sm:basis-1/2 lg:basis-1/3">
+        <div className="rounded-2xl border ...">
+          <Image ... />
+        </div>
+      </CarouselItem>
+    ))}
+  </CarouselContent>
+  <CarouselPrevious className="hidden sm:flex ..." />
+  <CarouselNext className="hidden sm:flex ..." />
+</Carousel>
+```
+
+Keep captions optional; if omitted, remove the text block so cards stay compact.
+
+## 5. Booking form conventions
+
+- **Endpoint** – `https://formspree.io/f/xjkjkggn`. Formspree requires POST + `Accept: application/json` (handled automatically by browsers when using plain HTML forms).
+- **Fields** – Always collect email, at least two date fields, and the preferred one‑hour window (`<select>`). Optional notes field lives at the bottom.
+- **Copy** – Reinforce when someone should use the office-team booking form vs. the DIY guide.
+
+## 6. Quick checklist for future changes
+
+1. **Update navigation triangles** – whenever you add a CTA or remove one on these pages, make sure visitors can still reach every related route in ≤1 click.
+2. **Keep imagery remote** – prefer Cloudinary links (`res.cloudinary.com/...`) over local `/public` assets for fast iteration.
+3. **Run lint if touching shared components** – `pnpm lint` catches Tailwind ordering issues.
+4. **Document new flows** – drop short notes in this file or `docs/forms.md` whenever we add a Formspree endpoint or new data fields.
+
+Following this playbook should keep Codex contributors productive without re-learning the project every session.

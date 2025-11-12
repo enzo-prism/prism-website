@@ -47,6 +47,7 @@ The repo assumes pnpm; npm/yarn installs will fall out of sync.
 - [`docs/pages-overview.md`](./docs/pages-overview.md) – Where to edit pricing, contact, free-analysis flows.
 - [`docs/build-and-deploy-guide.md`](./docs/build-and-deploy-guide.md) – Build tooling expectations plus the local/CI checklist.
 - [`docs/environment-setup.md`](./docs/environment-setup.md) – Environment variable reference and verification checklist.
+- [`docs/codex-workflow.md`](./docs/codex-workflow.md) – Codex-specific playbook for editing the dental-photography surfaces and booking form.
 
 ## Deployment
 
