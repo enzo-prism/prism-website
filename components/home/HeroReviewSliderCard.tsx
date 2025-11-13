@@ -2,7 +2,15 @@
 
 import Link from "next/link"
 import { useCallback, useEffect, useMemo, useState } from "react"
-import { AnimatePresence, animate, motion, type Variants, useMotionValue } from "framer-motion"
+import {
+  AnimatePresence,
+  animate,
+  motion,
+  type Variants,
+  useMotionTemplate,
+  useMotionValue,
+  useTransform,
+} from "framer-motion"
 
 import { cn } from "@/lib/utils"
 import { getHeroReviews, renderFormattedText, type Quote } from "@/content/wall-of-love-data"
@@ -21,8 +29,9 @@ export default function HeroReviewSliderCard({ className }: HeroReviewSliderCard
   const [isPaused, setIsPaused] = useState(false)
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false)
   const [direction, setDirection] = useState<1 | -1>(1)
-  const [progress, setProgress] = useState(0)
   const progressValue = useMotionValue(0)
+  const progressAngle = useTransform(progressValue, (latest) => Math.min(360, latest * 360))
+  const pieGradient = useMotionTemplate`conic-gradient(transparent 0deg ${progressAngle}deg, currentColor ${progressAngle}deg 360deg)`
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)")
@@ -73,16 +82,8 @@ export default function HeroReviewSliderCard({ className }: HeroReviewSliderCard
   }, [prefersReducedMotion, isPaused, reviews.length, activeIndex, goToNext])
 
   useEffect(() => {
-    const unsubscribe = progressValue.on("change", (latest) => {
-      setProgress(latest)
-    })
-    return unsubscribe
-  }, [progressValue])
-
-  useEffect(() => {
     if (prefersReducedMotion || reviews.length <= 1) {
       progressValue.set(0)
-      setProgress(0)
       return
     }
 
@@ -106,8 +107,6 @@ export default function HeroReviewSliderCard({ className }: HeroReviewSliderCard
   }
 
   const currentReview = reviews[activeIndex]
-  const elapsedAngle = Math.min(360, progress * 360)
-  const pieGradient = `conic-gradient(transparent 0deg ${elapsedAngle}deg, currentColor ${elapsedAngle}deg 360deg)`
   const shouldReduceMotion = prefersReducedMotion
 
   const quoteVariants: Variants = {
@@ -175,7 +174,7 @@ export default function HeroReviewSliderCard({ className }: HeroReviewSliderCard
       </AnimatePresence>
 
       <div className="mt-5 flex items-center justify-center" aria-hidden="true">
-        <span
+        <motion.span
           className="h-3 w-3 rounded-full border border-neutral-900/40 bg-white/70 text-neutral-900 transition-all duration-200 dark:border-white/40 dark:bg-neutral-800 dark:text-white"
           style={{ backgroundImage: pieGradient }}
         />
