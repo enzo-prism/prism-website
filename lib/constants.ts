@@ -40,8 +40,6 @@ export const NAV_ITEMS: NavItem[] = [
     children: [
       { label: "websites", href: "/websites" },
       { label: "seo", href: "/seo" },
-      { label: "on-page seo", href: "/seo/on-page" },
-      { label: "off-page seo", href: "/seo/off-page" },
       { label: "ads", href: "/ads" },
       { label: "local listings", href: "/local-listings" },
     ],
