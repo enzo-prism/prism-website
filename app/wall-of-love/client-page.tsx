@@ -38,24 +38,6 @@ const TakeawayCard = ({ item }: { item: Takeaway }) => {
   )
 }
 
-const renderFormattedText = (text: string) => {
-  const segments = text.split(/(\*\*.*?\*\*)/g).filter(Boolean)
-
-  return segments.map((segment, index) => {
-    if (segment.startsWith("**") && segment.endsWith("**")) {
-      return (
-        <strong
-          key={index}
-          className="font-semibold text-neutral-900 underline decoration-amber-300/50 decoration-2 underline-offset-4"
-        >
-          {segment.substring(2, segment.length - 2)}
-        </strong>
-      )
-    }
-    return segment
-  })
-}
-
 // Generic Fisher–Yates shuffle
 const shuffleArray = <T,>(array: T[]): T[] => {
   const copy = array.slice()
