@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
 import Link from "next/link"
+import { getStaticHeroReview, renderFormattedText } from "@/content/wall-of-love-data"
 import ClientPage from "./client-page"
 
 export const metadata: Metadata = {
@@ -12,6 +13,8 @@ export const metadata: Metadata = {
 }
 
 export default function Home() {
+  const staticHeroReview = getStaticHeroReview()
+
   return (
     <>
       <section
@@ -57,6 +60,24 @@ export default function Home() {
                 analytics instrumentation so every channel shows its contribution to new revenue.
               </li>
             </ul>
+            {staticHeroReview ? (
+              <div className="mt-8 rounded-2xl border border-white/20 bg-white/10 px-5 py-4 text-white/90 backdrop-blur-sm">
+                <p className="text-base leading-relaxed">
+                  &ldquo;{renderFormattedText(staticHeroReview.text)}&rdquo;
+                </p>
+                <div className="mt-3 text-sm text-white/70">
+                  <span className="font-semibold text-white">{staticHeroReview.client}</span>
+                  <span className="mx-2 text-white/40">•</span>
+                  <span>{staticHeroReview.company}</span>
+                </div>
+                <Link
+                  href="/wall-of-love"
+                  className="mt-4 inline-flex items-center gap-2 text-xs uppercase tracking-[0.32em] text-white/70 transition hover:text-white"
+                >
+                  explore the wall of love
+                </Link>
+              </div>
+            ) : null}
           </div>
         </div>
       </section>

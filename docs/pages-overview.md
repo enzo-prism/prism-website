@@ -14,6 +14,11 @@ Quick reference for the pages we edit most often.
 - Simple hero, form card, kickoff-call button, and contact info.
 - Uses `ContactForm` for all validation/submission logic.
 
+## Homepage (`app/client-page.tsx`)
+- Animated hero pairs the background video with `HeroReviewSliderCard` (components/home/HeroReviewSliderCard.tsx). The slider pulls curated quotes from `/wall-of-love`, auto-rotates every ~6s, and pauses when hovered or when `prefers-reduced-motion` is enabled. When editing the hero, keep this component intact so the “read 200+ more” CTA remains above the fold.
+- A static `<section id="static-home-hero">` in `app/page.tsx` mirrors the hero content for SSR/JS-disabled visitors. Update both files if you change the copy or CTA labels so bots and users see the same messaging.
+- All testimonial copy for the slider now lives in `content/wall-of-love-data.tsx`; update that file (and respect the `heroSpotlight` flag) instead of duplicating data inside `app/client-page.tsx`.
+
 ## Thank-you routes
 - `app/thank-you/page.tsx`
 - `app/analysis-thank-you/page.tsx`
