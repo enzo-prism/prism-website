@@ -70,32 +70,32 @@ export default function PricingDentalClient() {
   return (
     <>
       <div className="container mx-auto px-4 py-8 md:py-24">
-      <div className="mx-auto max-w-3xl text-center">
-        <h1 className="mb-3 text-3xl font-bold tracking-tight md:text-5xl">pricing for dental practices</h1>
-        <p className="mb-6 md:mb-8 text-base md:text-xl text-muted-foreground">
-          transparent pricing designed to grow your practice and deliver measurable results.
-        </p>
+        <div className="mx-auto max-w-3xl text-center">
+          <h1 className="mb-3 text-3xl font-bold tracking-tight md:text-5xl">pricing for dental practices</h1>
+          <p className="mb-6 md:mb-8 text-base md:text-xl text-muted-foreground">
+            transparent pricing designed to grow your practice and deliver measurable results.
+          </p>
 
-        <div className="mb-8 md:mb-12 flex flex-wrap items-center justify-center space-x-2">
-          <Label htmlFor="billing-toggle" className="text-sm font-medium">
-            monthly
-          </Label>
-          <Switch
-            id="billing-toggle"
-            checked={isAnnual}
-            onCheckedChange={handlePricingToggle}
-            aria-label="Toggle annual billing"
-            className="mx-2 data-[state=checked]:bg-primary"
-          />
-          <Label htmlFor="billing-toggle" className="flex items-center space-x-2 text-sm font-medium">
-            <span>annual</span>
-            <Badge variant="outline" className="bg-green-50 text-green-700">
-              save
-            </Badge>
-          </Label>
-        </div>
+          <div className="mb-8 md:mb-12 flex flex-wrap items-center justify-center space-x-2">
+            <Label htmlFor="billing-toggle" className="text-sm font-medium">
+              monthly
+            </Label>
+            <Switch
+              id="billing-toggle"
+              checked={isAnnual}
+              onCheckedChange={handlePricingToggle}
+              aria-label="Toggle annual billing"
+              className="mx-2 data-[state=checked]:bg-primary"
+            />
+            <Label htmlFor="billing-toggle" className="flex items-center space-x-2 text-sm font-medium">
+              <span>annual</span>
+              <Badge variant="outline" className="bg-green-50 text-green-700">
+                save
+              </Badge>
+            </Label>
+          </div>
 
-        <div className="grid gap-8 md:grid-cols-2">
+          <div className="grid gap-8 md:grid-cols-2">
           {/* Starter Plan */}
           <Card className="flex flex-col border-2 border-neutral-200 transition-all hover:border-neutral-300">
             <CardHeader className="pb-4 pt-5 md:pb-6 md:pt-6">
@@ -252,6 +252,7 @@ export default function PricingDentalClient() {
           </Card>
         </div>
       </div>
+    </div>
 
       {/* Results Section */}
       <div className="mx-auto mt-16 md:mt-24 max-w-4xl">

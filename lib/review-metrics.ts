@@ -11,7 +11,7 @@ export const AGGREGATE_RATING = {
 
 export function buildAggregateRating() {
   return {
-    "@type": "AggregateRating",
+    "@type": "AggregateRating" as const,
     ...AGGREGATE_RATING,
   }
 }

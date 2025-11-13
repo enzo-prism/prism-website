@@ -40,9 +40,9 @@ export default function FrontEndDeveloperPage() {
   ]
 
   const headquarters = {
-    "@type": "Place",
+    "@type": "Place" as const,
     address: {
-      "@type": "PostalAddress",
+      "@type": "PostalAddress" as const,
       streetAddress: "548 Market St #62411",
       addressLocality: "San Francisco",
       addressRegion: "CA",
