@@ -2,13 +2,14 @@
 
 import Link from "next/link"
 import { useCallback, useEffect, useMemo, useState } from "react"
-import { AnimatePresence, animate, motion, useMotionValue } from "framer-motion"
+import { AnimatePresence, animate, motion, type Variants, useMotionValue } from "framer-motion"
 
 import { cn } from "@/lib/utils"
 import { getHeroReviews, renderFormattedText, type Quote } from "@/content/wall-of-love-data"
 import { trackNavigation } from "@/utils/analytics"
 
 const AUTO_ROTATE_INTERVAL = 6000
+const QUOTE_TRANSITION_EASE: [number, number, number, number] = [0.4, 0, 0.2, 1]
 
 type HeroReviewSliderCardProps = {
   className?: string
@@ -109,7 +110,7 @@ export default function HeroReviewSliderCard({ className }: HeroReviewSliderCard
   const pieGradient = `conic-gradient(transparent 0deg ${elapsedAngle}deg, currentColor ${elapsedAngle}deg 360deg)`
   const shouldReduceMotion = prefersReducedMotion
 
-  const quoteVariants = {
+  const quoteVariants: Variants = {
     initial: (dir: number) => ({
       opacity: 0,
       y: shouldReduceMotion ? 0 : dir * 12,
@@ -121,7 +122,7 @@ export default function HeroReviewSliderCard({ className }: HeroReviewSliderCard
       filter: "blur(0px)",
       transition: {
         duration: 0.45,
-        ease: [0.4, 0, 0.2, 1],
+        ease: QUOTE_TRANSITION_EASE,
       },
     },
     exit: (dir: number) => ({
@@ -130,7 +131,7 @@ export default function HeroReviewSliderCard({ className }: HeroReviewSliderCard
       filter: shouldReduceMotion ? "blur(0px)" : "blur(4px)",
       transition: {
         duration: 0.35,
-        ease: [0.4, 0, 0.2, 1],
+        ease: QUOTE_TRANSITION_EASE,
       },
     }),
   }
