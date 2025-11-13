@@ -117,7 +117,7 @@ type PricingTier = (typeof pricingTiers)[number]
 
 export default function PricingPageClient() {
   return (
-    <div className="bg-white text-black" style={{ textTransform: "none" }}>
+    <div className="bg-white text-black" style={{ textTransform: "lowercase" }}>
       <HeroSection />
       <PricingSection />
       <KickoffCTASection />
@@ -170,7 +170,7 @@ function PricingSection() {
     <section id="plans" className="bg-white py-24 sm:py-32">
       <div className="mx-auto flex max-w-6xl flex-col gap-10 px-6">
         <RevealOnScroll className="text-center">
-          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-black/60">pricing tiers</p>
+          <p className="text-sm font-semibold tracking-[0.2em] text-black/60">pricing tiers</p>
           <h2 className="mt-3 text-3xl font-semibold sm:text-4xl">Pick your plan — we handle everything.</h2>
           <p className="mt-4 text-base text-black/70">
             Every site is tuned to convert and ready to grow from day one.
@@ -210,12 +210,12 @@ function PricingCard({ tier, index }: { tier: PricingTier; index: number }) {
           >
             {tier.emoji}
           </motion.span>
-          <p
-            className={cn(
-              "text-sm font-semibold uppercase tracking-[0.3em] text-black/60",
-              tier.featured && "text-white/70"
-            )}
-          >
+            <p
+              className={cn(
+                "text-sm font-semibold tracking-[0.3em] text-black/60",
+                tier.featured && "text-white/70"
+              )}
+            >
             {tier.name}
           </p>
         </div>
@@ -267,7 +267,7 @@ function KickoffCTASection() {
     <section id="kickoff-call" className="border-y border-black/10 bg-white py-16 text-black sm:py-20">
       <div className="mx-auto flex max-w-4xl flex-col gap-6 px-6 text-center">
         <RevealOnScroll>
-          <p className="text-sm font-semibold uppercase tracking-[0.3em] text-black/60">next steps</p>
+          <p className="text-sm font-semibold tracking-[0.3em] text-black/60">next steps</p>
         </RevealOnScroll>
         <RevealOnScroll delay={0.1}>
           <h2 className="text-3xl font-semibold leading-snug sm:text-4xl">Let’s align your goals, your numbers, and your launch timeline.</h2>
@@ -304,7 +304,7 @@ function FeatureSection() {
     <section className="bg-white py-24 sm:py-32">
       <div className="mx-auto max-w-6xl px-6">
         <RevealOnScroll className="max-w-2xl">
-          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-black/60">everything included</p>
+          <p className="text-sm font-semibold tracking-[0.2em] text-black/60">everything included</p>
           <h2 className="mt-4 text-3xl font-semibold sm:text-4xl">Design that elevates your brand. Systems that grow it.</h2>
           <p className="mt-4 text-base text-black/70">
             Launch with confidence knowing your brand story, SEO signals, and analytics are dialed in — all with premium design and white-glove delivery from start to finish.
@@ -341,7 +341,7 @@ function WebsiteUseCasesSection() {
     <section className="bg-zinc-50 py-24 text-black dark:bg-zinc-900 dark:text-white">
       <div className="mx-auto max-w-6xl px-6">
         <RevealOnScroll className="text-center">
-          <p className="text-sm font-semibold uppercase tracking-[0.3em] text-zinc-500 dark:text-zinc-400">
+          <p className="text-sm font-semibold tracking-[0.3em] text-zinc-500 dark:text-zinc-400">
             Website Use Cases
           </p>
           <h2 className="mt-3 text-3xl font-semibold sm:text-4xl">Websites built to win business — not just sit online.</h2>
@@ -389,7 +389,7 @@ function HandoffSection() {
       />
       <div className="relative mx-auto flex max-w-4xl flex-col gap-6 px-6 text-center sm:gap-8">
         <RevealOnScroll>
-          <div className="inline-flex items-center justify-center gap-2 rounded-full border border-white/20 px-4 py-1 text-xs font-semibold uppercase tracking-[0.3em] text-white/70">
+          <div className="inline-flex items-center justify-center gap-2 rounded-full border border-white/20 px-4 py-1 text-xs font-semibold tracking-[0.3em] text-white/70">
             ⚙️ The smoothest switch you'll ever make
           </div>
         </RevealOnScroll>
@@ -428,7 +428,7 @@ function FAQSection() {
     <section className="bg-white py-24 sm:py-32">
       <div className="mx-auto flex max-w-5xl flex-col gap-8 px-6">
         <RevealOnScroll className="text-center">
-          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-black/60">faq</p>
+          <p className="text-sm font-semibold tracking-[0.2em] text-black/60">faq</p>
           <h2 className="mt-3 text-3xl font-semibold sm:text-4xl">Still have questions?</h2>
           <p className="mt-4 text-base text-black/70">
             Here are the answers we share most often when teams compare plans or timelines.

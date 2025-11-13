@@ -16,14 +16,14 @@ We now have four tightly coupled routes – keep their navigation in sync.
 | Route | Purpose | Key links |
 | --- | --- | --- |
 | `/dental-photography` | Hub with background video hero, summary cards, and cross-links. | Buttons must point to `/dental-photography/office-team` and `/dental-photography/before-after`; secondary CTAs can reference `/book-a-shoot` when relevant. |
-| `/dental-photography/office-team` | Bookable service showcasing recent shoots + Apple Maps proof. | All primary CTAs go to `/book-a-shoot`. Apple Maps block links to `/local-listings`. |
-| `/dental-photography/before-after` | DIY equipment + workflow guide (no booking). | Keep “jump to the protocol” anchor and link back to `/dental-photography` when offering services. |
+| `/dental-photography/office-team` | Bookable service showcasing recent shoots + Apple Maps proof. | All primary CTAs go to `/book-a-shoot`. Apple Maps block links to `/local-listings`. The recent-shoots slider now lives in `app/dental-photography/office-team/recent-shoots-section.tsx`; update the `recentShoots` data + optional `website` URL there so the “visit website” / progress bar behave. Keep the dark proof section linking to `/dental-photography/before-after`. |
+| `/dental-photography/before-after` | DIY equipment + workflow guide (no booking). | Keep “jump to the protocol” anchor and the CTA that routes to `/dental-photography/office-team` so visitors can move from the guide to the done-for-you service. |
 | `/book-a-shoot` | Formspree capture for shoot scheduling. | Links back to the other pages so visitors can revisit context. |
 
 When adding new sections:
 
 1. Update the hub hero buttons if the destination changes.
-2. Mirror links on subpages so the triangle (hub ⇄ subpages ⇄ booking) stays intact.
+2. Mirror links on subpages so the triangle (hub ⇄ subpages ⇄ booking) stays intact and the new `/before-after ⇄ /office-team` loop keeps working.
 3. Mention whether a page is “bookable” vs “guide” so we don’t mislead visitors.
 
 ## 3. Background video hero pattern
