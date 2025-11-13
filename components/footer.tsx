@@ -6,204 +6,169 @@ import Link from "next/link"
 import { useEffect, useState } from "react"
 import CoreImage from "./core-image"
 
+const footerSections = [
+  {
+    title: "solutions",
+    items: [
+      { label: "Websites", href: "/websites" },
+      { label: "Dental photography", href: "/dental-photography" },
+      { label: "Local listings", href: "/local-listings" },
+      { label: "Ads", href: "/ads" },
+      { label: "Apps", href: "/apps" },
+      { label: "Offers", href: "/offers" },
+    ],
+  },
+  {
+    title: "proof",
+    items: [
+      { label: "Case studies", href: "/case-studies" },
+      { label: "Success stories", href: "/success-stories" },
+      { label: "Wall of love", href: "/wall-of-love" },
+      { label: "Prism proof", href: "/proof" },
+      { label: "Refer a partner", href: "/refer" },
+    ],
+  },
+  {
+    title: "resources",
+    items: [
+      { label: "Blog", href: "/blog" },
+      { label: "Podcast", href: "/podcast" },
+      { label: "Growth library", href: "/growth" },
+      { label: "AI website launch", href: "/ai-website-launch" },
+      { label: "Dental playbooks", href: "/why-dental-practices-love-prism" },
+    ],
+  },
+  {
+    title: "get started",
+    items: [
+      { label: "Pricing", href: "/pricing" },
+      { label: "Free analysis", href: "/free-analysis" },
+      { label: "Book a shoot", href: "/book-a-shoot" },
+      { label: "Contact", href: "/contact" },
+      { label: "Get started", href: "/get-started" },
+    ],
+  },
+]
+
+const socialLinks = [
+  { label: "Instagram", href: "https://www.instagram.com/the_design_prism/", id: "instagram" },
+  { label: "YouTube", href: "https://www.youtube.com/@the_design_prism", id: "youtube" },
+  { label: "X", href: "https://x.com/NosisTheGod", id: "twitter_x" },
+  { label: "TikTok", href: "https://www.tiktok.com/@the_design_prism", id: "tiktok" },
+  {
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/company/web-prism/?viewAsMember=true",
+    id: "linkedin",
+  },
+]
+
 export default function Footer() {
   const [isMounted, setIsMounted] = useState(false)
   useEffect(() => setIsMounted(true), [])
   if (!isMounted) {
     return (
-      <footer className="border-t bg-gray-50/50">
+      <footer className="border-t bg-white">
         <div className="container mx-auto px-4 py-8 md:px-6">
           <p className="text-xs text-neutral-500 lowercase">prism © 2023-2025.</p>
         </div>
       </footer>
     )
   }
-  // Navigation items matching the navbar
-  const navItems = [
-    { emoji: "🏠", label: "home", href: "/" },
-    { emoji: "🖥️", label: "websites", href: "/websites" },
-    { emoji: "📱", label: "apps", href: "/apps" },
-    { emoji: "🎨", label: "designs", href: "/designs" },
-    { emoji: "📣", label: "ads", href: "/ads" },
-    { emoji: "📍", label: "local listings", href: "/local-listings" },
-    { emoji: "💸", label: "pricing", href: "/pricing" },
-    { emoji: "🎁", label: "offers", href: "/offers" },
-    { emoji: "✍️", label: "blog", href: "/blog" },
-    { emoji: "🎙️", label: "podcast", href: "/podcast" },
-    { emoji: "🤍", label: "wall of love", href: "/wall-of-love" },
-    { emoji: "✅", label: "prism proof", href: "/proof" },
-    { emoji: "🤝", label: "contact", href: "/contact" },
-    { emoji: "🚀", label: "start", href: "/get-started" },
-  ]
 
   return (
-    <footer className="border-t bg-gray-50/50">
+    <footer className="border-t bg-white">
       <div className="container mx-auto px-4 py-12 md:px-6">
-        {/* Main footer content */}
-        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
-          {/* Brand section */}
-          <div className="lg:col-span-2">
-            <div className="flex items-center gap-2 mb-4">
-              <div className="relative h-8 w-8 overflow-hidden rounded-lg isolate">
+        <div className="flex flex-col gap-10 lg:flex-row lg:items-start lg:justify-between">
+          <div className="max-w-md space-y-4">
+            <div className="flex items-center gap-2">
+              <div className="relative h-8 w-8 overflow-hidden rounded-lg">
                 <CoreImage
                   src={LOGO_CONFIG.src}
                   alt={LOGO_CONFIG.alt}
                   width={32}
                   height={32}
-                  className={`object-contain w-full h-full ${LOGO_CONFIG.className} overflow-hidden`}
+                  className={`h-full w-full object-contain ${LOGO_CONFIG.className}`}
                   priority
                   fallbackSrc={LOGO_CONFIG.fallbackSrc}
                   trackingId="footer_logo"
                   quality={90}
                 />
               </div>
-              <span className="text-2xl font-bold lowercase">prism</span>
+              <span className="text-2xl font-semibold lowercase">prism</span>
             </div>
-            <p className="text-sm text-neutral-600 max-w-md leading-relaxed">
-              websites, local listing optimization, and online ad management that grow your business. we turn online
-              searches into booked revenue.
+            <p className="text-sm text-neutral-600">
+              Growth studio for dental practices, local shops, and community brands. Websites, photography, and ad ops
+              run by one integrated team.
+            </p>
+            <p className="text-xs uppercase tracking-[0.3em] text-neutral-400">
+              silicon valley · serving teams nationwide
             </p>
           </div>
 
-          {/* Navigation section */}
-          <div>
-            <h3 className="font-semibold text-sm uppercase tracking-wide text-neutral-900 mb-4">explore</h3>
-            <nav className="flex flex-col space-y-3">
-              {navItems.map((item) => {
-                const handleClick = (e: React.MouseEvent) => {
-                  trackNavigation(`footer_${item.label}`, item.href)
-                  
-                  // Handle smooth scrolling for hash links
-                  if (item.href.startsWith('/#')) {
-                    e.preventDefault()
-                    const elementId = item.href.substring(2)
-                    const element = document.getElementById(elementId)
-                    if (element) {
-                      element.scrollIntoView({ behavior: 'smooth', block: 'start' })
-                    } else {
-                      // If element not found, navigate to homepage first
-                      window.location.href = item.href
-                    }
-                  }
-                }
-
-                return (
-                  <Link
-                    key={item.label}
-                    href={item.href}
-                    className="flex items-center gap-2 text-sm text-neutral-600 hover:text-neutral-900 transition-colors"
-                    onClick={handleClick}
-                  >
-                    <span className="text-base">{item.emoji}</span>
-                    <span className="lowercase">{item.label}</span>
-                  </Link>
-                )
-              })}
-            </nav>
+          <div className="grid flex-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+            {footerSections.map((section) => (
+              <div key={section.title}>
+                <p className="text-xs font-semibold uppercase tracking-[0.3em] text-neutral-400">{section.title}</p>
+                <ul className="mt-4 space-y-2 text-sm text-neutral-600">
+                  {section.items.map((item) => (
+                    <li key={item.href}>
+                      <Link
+                        href={item.href}
+                        className="transition-colors hover:text-neutral-900"
+                        onClick={() => trackNavigation(`footer_${section.title}_${item.label}`, item.href)}
+                      >
+                        {item.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
           </div>
+        </div>
 
-          {/* Legal section */}
-          <div>
-            <h3 className="font-semibold text-sm uppercase tracking-wide text-neutral-900 mb-4">legal</h3>
-            <div className="flex flex-col space-y-3">
+        <div className="mt-10 flex flex-col gap-4 border-t border-neutral-100 pt-6 md:flex-row md:items-center md:justify-between">
+          <div className="space-y-1 text-xs text-neutral-500">
+            <p>prism © 2023-2025. all rights reserved.</p>
+            <div className="flex gap-4">
               <Link
                 href="/privacy-policy"
-                className="text-sm text-neutral-600 hover:text-neutral-900 transition-colors lowercase"
+                className="hover:text-neutral-900"
                 onClick={() => trackNavigation("footer_privacy_policy", "/privacy-policy")}
               >
-                privacy policy
+                privacy
               </Link>
               <Link
                 href="/terms-of-service"
-                className="text-sm text-neutral-600 hover:text-neutral-900 transition-colors lowercase"
+                className="hover:text-neutral-900"
                 onClick={() => trackNavigation("footer_terms_of_service", "/terms-of-service")}
               >
-                terms of service
-              </Link>
-              <Link
-                href="/contact"
-                className="text-sm text-neutral-600 hover:text-neutral-900 transition-colors lowercase"
-                onClick={() => trackNavigation("footer_contact", "/contact")}
-              >
-                contact
+                terms
               </Link>
               <Link
                 href="/careers"
-                className="text-sm text-neutral-600 hover:text-neutral-900 transition-colors lowercase"
+                className="hover:text-neutral-900"
                 onClick={() => trackNavigation("footer_careers", "/careers")}
               >
                 careers
               </Link>
             </div>
           </div>
-        </div>
 
-        {/* Bottom section */}
-        <div className="border-t mt-8 pt-6 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-xs text-neutral-500 lowercase">prism © 2023-2025. all rights reserved.</p>
-          <div className="flex flex-col sm:flex-row items-center gap-4">
-            <p className="text-xs text-neutral-500 lowercase">made with 🤍 for growing businesses</p>
-            <div className="flex items-center gap-x-3 text-sm">
-              {" "}
-              {/* Added text-sm for consistency if desired */}
+          <div className="flex flex-wrap gap-x-4 gap-y-2 text-sm text-neutral-500">
+            {socialLinks.map((social) => (
               <Link
-                href="https://www.instagram.com/the_design_prism/"
+                key={social.id}
+                href={social.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Prism Agency on Instagram"
-                onClick={() =>
-                  trackNavigation("footer_social_instagram", "https://www.instagram.com/the_design_prism/")
-                }
-                className="text-neutral-500 hover:text-neutral-900 transition-colors lowercase"
+                aria-label={`Prism on ${social.label}`}
+                className="hover:text-neutral-900"
+                onClick={() => trackNavigation(`footer_social_${social.id}`, social.href)}
               >
-                Instagram
+                {social.label}
               </Link>
-              <Link
-                href="https://www.youtube.com/@the_design_prism"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Prism Agency on YouTube"
-                onClick={() => trackNavigation("footer_social_youtube", "https://www.youtube.com/@the_design_prism")}
-                className="text-neutral-500 hover:text-neutral-900 transition-colors lowercase"
-              >
-                YouTube
-              </Link>
-              <Link
-                href="https://x.com/NosisTheGod"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Prism Agency on X (formerly Twitter)"
-                onClick={() => trackNavigation("footer_social_twitter_x", "https://x.com/NosisTheGod")}
-                className="text-neutral-500 hover:text-neutral-900 transition-colors lowercase"
-              >
-                X
-              </Link>
-              <Link
-                href="https://www.tiktok.com/@the_design_prism"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Prism Agency on TikTok"
-                onClick={() => trackNavigation("footer_social_tiktok", "https://www.tiktok.com/@the_design_prism")}
-                className="text-neutral-500 hover:text-neutral-900 transition-colors lowercase"
-              >
-                TikTok
-              </Link>
-              <Link
-                href="https://www.linkedin.com/company/web-prism/?viewAsMember=true"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Prism Agency on LinkedIn"
-                onClick={() =>
-                  trackNavigation(
-                    "footer_social_linkedin",
-                    "https://www.linkedin.com/company/web-prism/?viewAsMember=true",
-                  )
-                }
-                className="text-neutral-500 hover:text-neutral-900 transition-colors lowercase"
-              >
-                LinkedIn
-              </Link>
-            </div>
+            ))}
           </div>
         </div>
       </div>

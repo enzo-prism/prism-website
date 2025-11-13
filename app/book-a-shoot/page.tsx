@@ -44,6 +44,11 @@ export default function BookAShootPage() {
           <div className="container mx-auto max-w-3xl">
             <div className="rounded-3xl border border-neutral-200 bg-white p-8 shadow-sm">
               <form action="https://formspree.io/f/xjkjkggn" method="POST" className="space-y-6">
+                <input
+                  type="hidden"
+                  name="_redirect"
+                  value="https://www.design-prism.com/book-a-shoot/thank-you"
+                />
                 <div className="space-y-2">
                   <label htmlFor="email" className="text-sm font-medium text-neutral-800">
                     your email

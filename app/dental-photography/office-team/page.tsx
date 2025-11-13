@@ -115,15 +115,15 @@ export default function OfficeTeamPhotographyPage() {
         <section className="border-y border-neutral-200 bg-neutral-900 px-4 py-16 text-white sm:py-20">
           <div className="container mx-auto flex max-w-5xl flex-col items-center gap-6 rounded-3xl border border-white/10 bg-neutral-950 px-6 py-12 text-center sm:px-10">
             <span className="inline-flex items-center gap-2 rounded-full border border-white/30 px-3 py-1 text-xs font-semibold uppercase tracking-[0.32em] text-white/70">
-              proof
+              gear
             </span>
-            <h3 className="text-3xl font-semibold tracking-tight sm:text-4xl">see the exact before & afters</h3>
+            <h3 className="text-3xl font-semibold tracking-tight sm:text-4xl">gear for patient before &amp; after photos</h3>
             <p className="text-base text-white/80 sm:text-lg">
-              Walk through full case studies that pair original photos with the refreshed website, ads, and listings they power.
+              See the exact lighting, macro, and retractors we pack so your team can capture clinical-grade progress shots between Prism visits.
             </p>
             <Button asChild variant="inverted" size="lg" className="w-full rounded-full px-8 py-3 text-base lowercase sm:w-auto">
               <Link href="/dental-photography/before-after">
-                view before & afters
+                view the guide
                 <ArrowRight className="ml-2 h-4 w-4" aria-hidden />
               </Link>
             </Button>
