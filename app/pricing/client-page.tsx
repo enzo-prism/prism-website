@@ -24,7 +24,7 @@ const pricingTiers = [
     emoji: "🚀",
     price: "$400 one-time",
     description:
-      "Your new website live in 48–72 hours — designed to attract leads and prove ROI fast.",
+      "Launch fast and convert immediately with a polished site built in 48–72 hours to prove ROI, attract better clients, and spark referrals on day one.",
     cta: "Start My Build →",
     href: "/get-started?plan=launch",
     accent: "from-amber-400 to-pink-500",
@@ -35,7 +35,7 @@ const pricingTiers = [
     emoji: "🌱",
     price: "$900/mo",
     description:
-      "Keep climbing the rankings. Ongoing SEO and content optimization that keeps leads coming in month after month.",
+      "Grow your traffic and increase your pipeline with consistent SEO, fresh content, and monthly optimization that compounds into higher rankings and stronger lifetime value.",
     cta: "Apply for Growth Plan →",
     href: "/get-started?plan=grow",
     accent: "from-sky-500 to-indigo-600",
@@ -46,7 +46,7 @@ const pricingTiers = [
     emoji: "📈",
     price: "from $1,500/mo",
     description:
-      "For teams ready to dominate search and ads. Full funnel automation, analytics, and ad management to scale revenue — not just traffic.",
+      "Scale demand, revenue, and operations with full-funnel tracking, paid ads management, automations, and analytics tuned to turn clicks into loyal advocates.",
     cta: "Book Discovery Call →",
     href: "/get-started?plan=scale",
     accent: "from-emerald-400 to-teal-600",
@@ -58,18 +58,19 @@ const features = [
   {
     title: "Launch smarter",
     description:
-      "Built with AI plus human design reviews for pixel-perfect layouts and tuned SEO from day one.",
+      "Built with intention, reviewed with precision. Every page is designed to convert with thoughtful layouts, compelling messaging, and SEO baked into the foundation so you rank faster and close stronger.",
     icon: Sparkles,
   },
   {
     title: "Track everything",
     description:
-      "GA4, Meta Pixel, and lead capture events wired in before you approve the build.",
+      "Know what’s working — down to the click. GA4, Meta Pixel, lead tracking, call tracking, and event data are wired in before launch so you can see exactly where revenue comes from.",
     icon: BarChart3,
   },
   {
     title: "Go live effortlessly",
-    description: "Domain, SSL, and forms handled for you so launch day literally takes one click.",
+    description:
+      "Launch day should feel simple — and it will. We handle domains, SSL, forms, hosting, DNS, migrations, and integrations so you go live without touching a technical step.",
     icon: MonitorSmartphone,
   },
 ] as const
@@ -81,7 +82,7 @@ const useCaseItems = [
   { icon: "📞", label: "Booking & Scheduling" },
   { icon: "📰", label: "Blog / Resource Hub" },
   { icon: "💼", label: "Careers & Hiring" },
-  { icon: "🤖", label: "AI Chat Support" },
+  { icon: "🗨️", label: "Smart Chat Support" },
   { icon: "🎨", label: "Portfolio" },
   { icon: "🎤", label: "Event / Conference" },
   { icon: "🧠", label: "Founder Story" },
@@ -137,11 +138,10 @@ function HeroSection() {
         <RevealOnScroll delay={0.1}>
           <div className="space-y-6">
             <h1 className="text-4xl font-semibold leading-tight tracking-tight sm:text-5xl lg:text-6xl">
-              Forget the endless back-and-forth.
+              Your website should grow your business — not drain your time.
             </h1>
             <p className="text-lg text-black/70 sm:text-xl">
-              No more chasing designers, rewriting copy, or waiting weeks. Prism ships AI-powered websites that drive real
-              business—more leads, more conversions, and clients who can’t stop referring you.
+              No more redesign headaches, slow freelancers, or guessing what converts. Prism builds clean, high-performing websites designed to increase leads, boost conversions, and strengthen long-term customer value.
             </p>
           </div>
         </RevealOnScroll>
@@ -152,7 +152,7 @@ function HeroSection() {
               size="lg"
               className="w-full rounded-full border border-black bg-black px-8 py-6 text-base font-semibold text-white hover:bg-black/90 sm:w-auto"
             >
-              <a href="#plans">Get Your AI Site Started →</a>
+              <a href="#plans">Start Your Website →</a>
             </Button>
             <span className="inline-flex items-center gap-2 rounded-full border border-black/20 px-5 py-3 text-sm font-semibold text-black/80 shadow-sm">
               <span aria-hidden className="text-base">⏱️</span>
@@ -270,10 +270,10 @@ function KickoffCTASection() {
           <p className="text-sm font-semibold uppercase tracking-[0.3em] text-black/60">next steps</p>
         </RevealOnScroll>
         <RevealOnScroll delay={0.1}>
-          <h2 className="text-3xl font-semibold leading-snug sm:text-4xl">Ready to launch?</h2>
+          <h2 className="text-3xl font-semibold leading-snug sm:text-4xl">Let’s align your goals, your numbers, and your launch timeline.</h2>
         </RevealOnScroll>
         <RevealOnScroll delay={0.15}>
-          <p className="text-base text-black/70">Book a 15-minute kickoff call to align scope and timelines.</p>
+          <p className="text-base text-black/70">Book a 15-minute kickoff call and we’ll map your brand, revenue targets, and the fastest path to launch.</p>
         </RevealOnScroll>
         <RevealOnScroll delay={0.2}>
           <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
@@ -305,9 +305,9 @@ function FeatureSection() {
       <div className="mx-auto max-w-6xl px-6">
         <RevealOnScroll className="max-w-2xl">
           <p className="text-sm font-semibold uppercase tracking-[0.2em] text-black/60">everything included</p>
-          <h2 className="mt-4 text-3xl font-semibold sm:text-4xl">AI precision with white-glove delivery.</h2>
+          <h2 className="mt-4 text-3xl font-semibold sm:text-4xl">Design that elevates your brand. Systems that grow it.</h2>
           <p className="mt-4 text-base text-black/70">
-            Launch confident knowing the story, SEO signals, and analytics stack are ready the moment you hit publish.
+            Launch with confidence knowing your brand story, SEO signals, and analytics are dialed in — all with premium design and white-glove delivery from start to finish.
           </p>
         </RevealOnScroll>
         <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -344,10 +344,9 @@ function WebsiteUseCasesSection() {
           <p className="text-sm font-semibold uppercase tracking-[0.3em] text-zinc-500 dark:text-zinc-400">
             Website Use Cases
           </p>
-          <h2 className="mt-3 text-3xl font-semibold sm:text-4xl">Built for every kind of business.</h2>
+          <h2 className="mt-3 text-3xl font-semibold sm:text-4xl">Websites built to win business — not just sit online.</h2>
           <p className="mt-4 text-base text-zinc-600 dark:text-zinc-300">
-            Whether you’re booking clients, selling products, growing a team, or telling your story — Prism builds
-            launch-ready websites that convert, automate, and scale your brand in days, not weeks.
+            Whether you're booking clients, selling products, hiring talent, or building your personal brand, Prism builds websites that convert better, nurture trust faster, and position you as the top choice in your market.
           </p>
         </RevealOnScroll>
         <div className="mt-12 grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
@@ -395,19 +394,15 @@ function HandoffSection() {
           </div>
         </RevealOnScroll>
         <RevealOnScroll delay={0.1}>
-          <h2 className="text-3xl font-semibold sm:text-4xl">Switching shouldn’t feel like surgery.</h2>
+          <h2 className="text-3xl font-semibold sm:text-4xl">Switching shouldn’t cost you momentum.</h2>
         </RevealOnScroll>
         <RevealOnScroll delay={0.15}>
           <p className="text-base text-white/80">
-            Leaving your old web agency shouldn’t mean lost logins, broken analytics, or mystery hosting invoices. Prism
-            takes over everything—domains, hosting, analytics, DNS, forms, content—the whole backend mess.
+            We take over everything — hosting, domains, content, analytics, DNS, forms, and old logins — and rebuild it into a clean, modern system designed for performance and growth.
           </p>
         </RevealOnScroll>
         <RevealOnScroll delay={0.2}>
-          <p className="text-sm text-white/70">
-            We handle the migration, optimization, and launch so you never touch the technical stuff (or need to know what
-            DNS stands for).
-          </p>
+          <p className="text-sm text-white/70">Your only job? Approve the design and watch the leads increase.</p>
         </RevealOnScroll>
         <RevealOnScroll delay={0.25}>
           <motion.div
@@ -420,7 +415,7 @@ function HandoffSection() {
               backgroundSize: "200% 200%",
             }}
           >
-            💡 Your only job? Approve the design and watch the leads start coming in.
+            💡 Approve the final preview and watch qualified leads ramp up.
           </motion.div>
         </RevealOnScroll>
       </div>
@@ -468,7 +463,7 @@ function FinalCTA() {
       />
       <div className="relative mx-auto flex max-w-5xl flex-col gap-6 px-6 text-center">
         <RevealOnScroll>
-          <p className="text-2xl font-semibold">🚀 Launch your new AI-powered site this week — starting at $400.</p>
+          <p className="text-2xl font-semibold">🚀 Launch a website that grows your business — starting at $400.</p>
         </RevealOnScroll>
         <RevealOnScroll delay={0.1}>
           <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
