@@ -6,49 +6,63 @@ import Link from "next/link"
 import { useEffect, useState } from "react"
 import CoreImage from "./core-image"
 
-const footerSections = [
+type FooterItem = {
+  label: string
+  href?: string
+}
+
+type FooterSection = {
+  title: string
+  items: FooterItem[]
+}
+
+const homeLink: FooterItem = { label: "Home", href: "/" }
+
+const footerSections: FooterSection[] = [
   {
-    title: "solutions",
+    title: "Core services",
     items: [
-      { label: "Websites", href: "/websites" },
-      { label: "Dental photography", href: "/dental-photography" },
-      { label: "Local listings", href: "/local-listings" },
+      { label: "Website", href: "/websites" },
       { label: "Ads", href: "/ads" },
-      { label: "Apps", href: "/apps" },
-      { label: "Offers", href: "/offers" },
+      { label: "Map listings", href: "/local-listings" },
     ],
   },
   {
-    title: "proof",
+    title: "Customers we serve",
     items: [
-      { label: "Case studies", href: "/case-studies" },
-      { label: "Success stories", href: "/success-stories" },
-      { label: "Wall of love", href: "/wall-of-love" },
-      { label: "Prism proof", href: "/proof" },
-      { label: "Refer a partner", href: "/refer" },
+      { label: "Dentists", href: "/why-dental-practices-love-prism" },
+      { label: "Consulting companies", href: "/why-consulting-companies-love-prism" },
+      { label: "Annual leadership events" },
+      { label: "Online communities", href: "/why-online-community-founders-love-prism" },
+      { label: "Education companies" },
+      { label: "Private vacation rentals" },
+      { label: "Nonprofits", href: "/why-nonprofits-love-prism" },
     ],
   },
   {
-    title: "resources",
+    title: "Results",
+    items: [
+      { label: "Wall of love", href: "/wall-of-love" },
+      { label: "Case studies", href: "/case-studies" },
+    ],
+  },
+  {
+    title: "Resources",
     items: [
       { label: "Blog", href: "/blog" },
       { label: "Podcast", href: "/podcast" },
-      { label: "Growth library", href: "/growth" },
-      { label: "AI website launch", href: "/ai-website-launch" },
-      { label: "Dental playbooks", href: "/why-dental-practices-love-prism" },
     ],
   },
   {
-    title: "get started",
+    title: "About",
     items: [
+      { label: "Our story", href: "/about" },
       { label: "Pricing", href: "/pricing" },
-      { label: "Free analysis", href: "/free-analysis" },
-      { label: "Book a shoot", href: "/book-a-shoot" },
-      { label: "Contact", href: "/contact" },
-      { label: "Get started", href: "/get-started" },
     ],
   },
 ]
+
+const navSections: FooterSection[] = [{ title: "Home", items: [homeLink] }, ...footerSections]
 
 const socialLinks = [
   { label: "Instagram", href: "https://www.instagram.com/the_design_prism/", id: "instagram" },
@@ -96,29 +110,44 @@ export default function Footer() {
               </div>
               <span className="text-2xl font-semibold lowercase">prism</span>
             </div>
-            <p className="text-sm text-neutral-600">
-              Growth studio for dental practices, local shops, and community brands. Websites, photography, and ad ops
-              run by one integrated team.
-            </p>
-            <p className="text-xs uppercase tracking-[0.3em] text-neutral-400">
-              silicon valley · serving teams nationwide
-            </p>
+            <p className="text-sm text-neutral-600">impossible is temporary.</p>
+            <p className="text-xs uppercase tracking-[0.3em] text-neutral-400">silicon valley</p>
+            <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+              <Link
+                href={homeLink.href!}
+                className="inline-flex w-full items-center justify-center rounded-full border border-neutral-200 px-5 py-2 text-sm font-medium lowercase text-neutral-700 transition hover:border-neutral-900 hover:text-neutral-900 sm:w-auto"
+                onClick={() => trackNavigation("footer_home", homeLink.href!)}
+              >
+                go to homepage
+              </Link>
+              <Link
+                href="/contact"
+                className="inline-flex w-full items-center justify-center rounded-full border border-neutral-900 bg-neutral-900 px-5 py-2 text-sm font-semibold lowercase text-white transition hover:bg-neutral-800 sm:w-auto"
+                onClick={() => trackNavigation("footer_contact_cta", "/contact")}
+              >
+                contact prism
+              </Link>
+            </div>
           </div>
 
           <div className="grid flex-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
-            {footerSections.map((section) => (
+            {navSections.map((section) => (
               <div key={section.title}>
                 <p className="text-xs font-semibold uppercase tracking-[0.3em] text-neutral-400">{section.title}</p>
                 <ul className="mt-4 space-y-2 text-sm text-neutral-600">
                   {section.items.map((item) => (
-                    <li key={item.href}>
-                      <Link
-                        href={item.href}
-                        className="transition-colors hover:text-neutral-900"
-                        onClick={() => trackNavigation(`footer_${section.title}_${item.label}`, item.href)}
-                      >
-                        {item.label}
-                      </Link>
+                    <li key={item.label}>
+                      {item.href ? (
+                        <Link
+                          href={item.href}
+                          className="transition-colors hover:text-neutral-900"
+                          onClick={() => trackNavigation(`footer_${section.title}_${item.label}`, item.href!)}
+                        >
+                          {item.label}
+                        </Link>
+                      ) : (
+                        <span className="text-neutral-400">{item.label}</span>
+                      )}
                     </li>
                   ))}
                 </ul>

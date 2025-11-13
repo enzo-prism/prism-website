@@ -17,7 +17,7 @@ export default function ScholarshipPage() {
         <div className="mx-auto flex max-w-5xl flex-col gap-4 px-6 py-16">
           <h1 className="text-4xl font-semibold tracking-tight">prism community website scholarship</h1>
           <p className="text-lg leading-relaxed text-white/80">
-            every month we gift a custom website to someone building something that elevates their neighborhood. tell us about your project and we will reach out if you are selected for the next build window.
+            every month we gift a custom website to one founder with a bold idea. tell us what you&apos;re building and we&apos;ll reach out if you&apos;re selected for the next build window.
           </p>
         </div>
       </section>

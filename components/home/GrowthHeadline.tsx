@@ -1,6 +1,7 @@
 "use client"
 
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion"
+import { Eye, TrendingUp, Users2 } from "lucide-react"
 import { useEffect, useLayoutEffect, useRef, useState } from "react"
 
 const ROTATION_INTERVAL = 3200
@@ -81,8 +82,22 @@ export default function GrowthHeadline() {
         </h2>
 
         <p className="max-w-2xl text-balance text-base text-neutral-500 lowercase md:text-lg dark:text-neutral-300">
-          every channel we touch is engineered to capture attention, build trust, and convert curious visitors into loyal customers.
+          design and engineering that boosts impressions, conversions, and referrals.
         </p>
+        <div className="flex flex-wrap items-center justify-center gap-5 text-neutral-400">
+          <span className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.3em]">
+            <Eye className="h-4 w-4" aria-hidden />
+            impressions
+          </span>
+          <span className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.3em]">
+            <TrendingUp className="h-4 w-4" aria-hidden />
+            conversions
+          </span>
+          <span className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.3em]">
+            <Users2 className="h-4 w-4" aria-hidden />
+            referrals
+          </span>
+        </div>
       </div>
 
       <div ref={measureRef} className="fixed -top-[9999px] left-0 flex gap-4">
@@ -100,4 +115,3 @@ export default function GrowthHeadline() {
     </section>
   )
 }
-

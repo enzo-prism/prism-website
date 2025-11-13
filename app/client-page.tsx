@@ -34,7 +34,7 @@ import CoreImage from "@/components/core-image"
 import PageViewTracker from "@/components/page-view-tracker"
 // import VideoWithPoster from "@/components/video-with-poster" // removed with testimonials section
 // import { useRevealAnimation } from "@/hooks/use-reveal-animation" // no longer used on simplified homepage
-import { FREE_AUDIT_CTA_TEXT, LOGO_CONFIG, LOGO_SIZES } from "@/lib/constants"
+import { LOGO_CONFIG, LOGO_SIZES } from "@/lib/constants"
 import { trackCTAClick, trackNavigation } from "@/utils/analytics"
 // Render Service schema only on client to keep SSR HTML lean
 const ServiceSchemaClient = dynamic(() => import("@/components/schema-markup").then(m => m.ServiceSchema), {
@@ -255,10 +255,7 @@ export default function ClientPage() {
                 </h1>
               </div>
               <p className="mx-auto max-w-[700px] text-neutral-600 lowercase md:text-xl">
-                we upgrade your online presence
-                <br className="sm:hidden" />
-                <span className="hidden sm:inline">{' '}</span>
-                to grow and convert
+                impossible is temporary.
               </p>
               <div className="flex flex-col items-center space-y-6 md:space-y-8">
                 <div className="flex flex-col sm:flex-row items-center gap-4 md:gap-6">
@@ -270,14 +267,15 @@ export default function ClientPage() {
                       view pricing <ArrowRight className="ml-2 h-5 w-5" />
                     </Button>
                   </Link>
-                  <Link href="/free-analysis">
-                    <Button
-                      variant="outline"
-                      className="rounded-full px-8 py-6 text-lg lowercase hardware-hover touch-feedback"
-                      onClick={() => trackCTAClick(FREE_AUDIT_CTA_TEXT, "hero section")}
-                    >
-                      {FREE_AUDIT_CTA_TEXT} <ArrowRight className="ml-2 h-5 w-5" />
-                    </Button>
+                  <Link
+                    href="/scholarship"
+                    className="text-xs tracking-[0.24em] uppercase text-neutral-400 transition hover:text-neutral-600"
+                    onClick={() => trackCTAClick("apply for scholarship", "hero section")}
+                  >
+                    <span aria-hidden="true" className="mr-2 text-base">
+                      🎓
+                    </span>
+                    apply for scholarship
                   </Link>
                 </div>
                 <Link

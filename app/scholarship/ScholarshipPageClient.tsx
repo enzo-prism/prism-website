@@ -146,12 +146,8 @@ export default function ScholarshipPageClient() {
             <div className="grid gap-10 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
               <div className="space-y-6">
                 <p className="text-sm uppercase tracking-[0.28em] text-neutral-500">monthly pick</p>
-                <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">
-                  next website is chosen when this countdown hits zero
-                </h2>
-                <p className="text-base leading-relaxed text-neutral-600">
-                  once a month we invite a community member into a two-week build sprint. we cover strategy, design, development, and launch—free of charge. share your story and we will review it alongside the other submissions.
-                </p>
+                <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">one founder, one free website each month.</h2>
+                <p className="text-base leading-relaxed text-neutral-600">tell us your idea.</p>
                 <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
                   {countdownBlocks.map((item) => (
                     <div
@@ -183,7 +179,7 @@ export default function ScholarshipPageClient() {
                   </div>
                 </div>
                 <div className="space-y-3">
-                  <p className="text-xs uppercase tracking-[0.32em] text-neutral-500">join the community</p>
+                  <p className="text-xs uppercase tracking-[0.32em] text-neutral-500">apply</p>
                   <CommunityLinks className="mt-1" />
                 </div>
               </div>
