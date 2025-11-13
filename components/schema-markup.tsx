@@ -1,3 +1,5 @@
+import { canonicalUrl } from "@/lib/canonical"
+
 type Organization = {
   "@type": "Organization"
   "@id": string
@@ -135,7 +137,7 @@ export function BreadcrumbSchema({ items }: { items: { name: string; url: string
       "@type": "ListItem",
       position: index + 1,
       name: item.name,
-      item: item.url,
+      item: canonicalUrl(item.url),
     })),
   }
 

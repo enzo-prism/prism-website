@@ -10,6 +10,7 @@ import { ArrowLeft } from "lucide-react"
 import Link from "next/link"
 import { useEffect, useState } from "react"
 import SimpleBlogPostCard from "@/components/simple-blog-post-card"
+import Breadcrumbs from "@/components/breadcrumbs"
 const Footer = dynamic(() => import("@/components/footer"), { ssr: false })
 const Navbar = dynamic(() => import("@/components/navbar"), { ssr: false })
 const BlogShareIcons = dynamic(() => import("@/components/blog/blog-share-icons"), { ssr: false })
@@ -111,6 +112,13 @@ export default function BlogPostLayout({
       <main className="flex-1">
         <div className="w-full py-6 sm:py-8 md:py-10">
           <div className="container mx-auto px-4 sm:px-6">
+            <Breadcrumbs
+              items={[
+                { name: "home", url: "/" },
+                { name: "blog", url: "/blog" },
+                { name: title, url: shareUrl },
+              ]}
+            />
             <div className="max-w-3xl mx-auto">
               <div className="mb-6">
                 <Link
