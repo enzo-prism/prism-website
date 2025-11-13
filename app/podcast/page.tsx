@@ -2,6 +2,7 @@ import SeoTextSection from "@/components/seo-text-section"
 import { PODCAST_EPISODES } from "@/content/podcast/episodes"
 import type { Metadata } from "next"
 import PodcastClientPage from "./client-page"
+import { PodcastEpisodeSchema, PodcastSeriesSchema } from "@/components/schema-markup"
 
 export const metadata: Metadata = {
   title: "prism podcast | founders · journeys · lessons",
@@ -19,6 +20,8 @@ export const metadata: Metadata = {
 }
 
 export default function PodcastPage() {
+  const seriesId = "prism-podcast"
+
   return (
     <>
       <section id="static-podcast-hero" className="bg-neutral-900 text-white">
@@ -89,6 +92,49 @@ export default function PodcastPage() {
           positioning, and growth. zero fluff, actionable lessons you can apply to your team this week.
         </p>
       </SeoTextSection>
+      <PodcastSeriesSchema
+        seriesId={seriesId}
+        name="Prism Podcast"
+        description="Interviews with dentists, operators, and creative leaders about building trustworthy local brands."
+        url="https://www.design-prism.com/podcast"
+        image="https://www.design-prism.com/prism-opengraph.png"
+        sameAs={[
+          "https://www.youtube.com/@the_design_prism",
+          "https://podcasts.apple.com/us/podcast/the-prism-pod/id1745660200",
+          "https://open.spotify.com/show/1VvDo110AVVbOYdgZgzoKb?si=a41c116896ff4f80",
+        ]}
+      />
+      {PODCAST_EPISODES.map((episode) => {
+        const videoId = extractYouTubeId(episode.youtubeUrl)
+        return (
+          <PodcastEpisodeSchema
+            key={episode.number}
+            episodeId={`prism-podcast-${episode.number}`}
+            seriesId={seriesId}
+            name={`Episode ${episode.number}: ${episode.guest}`}
+            description={episode.takeaways.join(" · ")}
+            url={`https://www.design-prism.com/podcast#episode-${episode.number}`}
+            videoUrl={videoId ? `https://www.youtube.com/embed/${videoId}` : episode.youtubeUrl}
+            thumbnailUrl={videoId ? `https://img.youtube.com/vi/${videoId}/hqdefault.jpg` : undefined}
+            datePublished={episode.publishedAt}
+          />
+        )
+      })}
     </>
   )
+}
+
+function extractYouTubeId(url: string) {
+  try {
+    const parsed = new URL(url)
+    if (parsed.hostname.includes("youtu.be")) {
+      return parsed.pathname.replace("/", "")
+    }
+    if (parsed.searchParams.has("v")) {
+      return parsed.searchParams.get("v") || undefined
+    }
+    return parsed.pathname.split("/").pop()
+  } catch {
+    return undefined
+  }
 }

@@ -4,7 +4,7 @@ import Link from "next/link"
 import { SeoHero } from "@/components/seo/seo-hero"
 import { SeoSection } from "@/components/seo/seo-section"
 import { seoOnPageContent } from "@/content/seo"
-import { ServiceSchema } from "@/components/schema-markup"
+import { HowToSchema, ServiceSchema } from "@/components/schema-markup"
 
 export const metadata: Metadata = {
   title: "on-page seo services | prism",
@@ -28,20 +28,6 @@ export const metadata: Metadata = {
 
 export default function SeoOnPagePage() {
   const { hero, intro, pillars, closing, closingBullets } = seoOnPageContent
-  const howToSchema = {
-    "@context": "https://schema.org",
-    "@type": "HowTo",
-    name: "On-page SEO implementation",
-    description: intro,
-    step: pillars.map((pillar) => ({
-      "@type": "HowToStep",
-      name: pillar.title,
-      itemListElement: pillar.bullets?.map((bullet) => ({
-        "@type": "HowToDirection",
-        text: bullet,
-      })),
-    })),
-  }
 
   return (
     <>
@@ -112,7 +98,14 @@ export default function SeoOnPagePage() {
         serviceType="SEO services"
         areaServed="United States"
       />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }} />
+      <HowToSchema
+        name="On-page SEO implementation"
+        description={intro}
+        steps={pillars.map((pillar) => ({
+          name: pillar.title,
+          text: pillar.bullets?.join(" ") || pillar.description || "",
+        }))}
+      />
     </>
   )
 }

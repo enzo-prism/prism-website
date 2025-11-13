@@ -8,6 +8,7 @@ import { ArrowRight, Check } from "lucide-react"
 import type { Metadata } from "next"
 import Link from "next/link"
 import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
+import { ServiceSchema } from "@/components/schema-markup"
 
 export const metadata: Metadata = {
   title: "local listing optimization for small businesses | prism",
@@ -204,6 +205,14 @@ const audienceSegments = [
 ]
 
 export default function LocalListingsPage() {
+  const aggregateRating = {
+    "@type": "AggregateRating" as const,
+    ratingValue: "4.9",
+    reviewCount: "200",
+    bestRating: "5",
+    worstRating: "1",
+  }
+
   return (
     <div className="flex min-h-screen flex-col bg-white">
       <PageViewTracker title="Prism - Local Listing Optimization" />
@@ -423,6 +432,20 @@ export default function LocalListingsPage() {
 
       <Footer />
       <ScrollToTop />
+      <ServiceSchema
+        serviceId="local-listings-service"
+        name="Local listing optimization"
+        description="listings, review flows, and reporting that keep brick-and-mortar teams visible everywhere patients search."
+        serviceType="Local SEO"
+        areaServed="United States"
+        offerDetails={{
+          name: "Local presence plans",
+          description: "Managed listings across Google, Apple, Yelp, Bing, and industry directories with messaging and reporting.",
+          businessFunction: "http://purl.org/goodrelations/v1#ProvideService",
+          priceRange: "$600/mo - $2,500/mo",
+        }}
+        aggregateRating={aggregateRating}
+      />
     </div>
   )
 }

@@ -12,6 +12,24 @@ import Link from "next/link"
 import { trackNavigation } from "@/utils/analytics"
 import { Globe, Calendar, Search, Target, Brain } from "lucide-react"
 import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
+import { ProductSchema } from "@/components/schema-markup"
+
+const dentalPlans = [
+  {
+    id: "dental-starter",
+    name: "starter dental marketing",
+    description: "playbooks and templates for owners who implement with their own team.",
+    monthlyPrice: "1000",
+    annualPrice: "11000",
+  },
+  {
+    id: "dental-pro",
+    name: "pro dental marketing",
+    description: "done-for-you growth engine with website, ads, listings, and automation.",
+    monthlyPrice: "3000",
+    annualPrice: "32000",
+  },
+]
 
 export default function PricingDentalClient() {
   const [isAnnual, setIsAnnual] = useState(false)
@@ -50,7 +68,8 @@ export default function PricingDentalClient() {
   ]
 
   return (
-    <div className="container mx-auto px-4 py-8 md:py-24">
+    <>
+      <div className="container mx-auto px-4 py-8 md:py-24">
       <div className="mx-auto max-w-3xl text-center">
         <h1 className="mb-3 text-3xl font-bold tracking-tight md:text-5xl">pricing for dental practices</h1>
         <p className="mb-6 md:mb-8 text-base md:text-xl text-muted-foreground">
@@ -352,6 +371,38 @@ export default function PricingDentalClient() {
           <Link href="/get-started">{FREE_AUDIT_CTA_TEXT}</Link>
         </Button>
       </div>
-    </div>
+      <DentalPricingStructuredData />
+    </>
+  )
+}
+
+function DentalPricingStructuredData() {
+  return (
+    <>
+      {dentalPlans.map((plan) => (
+        <ProductSchema
+          key={plan.id}
+          productId={plan.id}
+          name={plan.name}
+          description={plan.description}
+          url="https://www.design-prism.com/pricing-dental"
+          offer={{
+            name: plan.name,
+            description: plan.description,
+            price: plan.monthlyPrice,
+            priceCurrency: "USD",
+            priceRange: `$${plan.monthlyPrice}/mo or $${plan.annualPrice}/yr`,
+            availability: "https://schema.org/InStock",
+          }}
+          aggregateRating={{
+            "@type": "AggregateRating",
+            ratingValue: "4.9",
+            reviewCount: "200",
+            bestRating: "5",
+            worstRating: "1",
+          }}
+        />
+      ))}
+    </>
   )
 }

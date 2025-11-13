@@ -4,7 +4,7 @@ import { BlogPostErrorBoundary } from "@/components/blog-error-boundary"
 import dynamic from "next/dynamic"
 import CoreImage from "@/components/core-image"
 import GetStartedCTA from "@/components/GetStartedCTA"
-import { BlogPostSchema } from "@/components/schema-markup"
+import { BlogPostSchema, HowToSchema } from "@/components/schema-markup"
 import { cn } from "@/lib/utils"
 import { ArrowLeft } from "lucide-react"
 import Link from "next/link"
@@ -47,6 +47,14 @@ interface Props {
     gradientClass: string
     image?: string
   }>
+  howTo?: {
+    title: string
+    description: string
+    totalTime?: string
+    steps: { title: string; text: string }[]
+    supplies?: string[]
+    tools?: string[]
+  }
 }
 
 export default function BlogPostLayout({
@@ -63,6 +71,7 @@ export default function BlogPostLayout({
   openGraph,
   canonical,
   relatedPosts = [],
+  howTo,
 }: Props) {
   const effectiveGradient = gradientClass || 'bg-gradient-to-br from-indigo-300/30 via-purple-300/30 to-pink-300/30';
   const effectiveImageUrl = image ? `https://www.design-prism.com${image}` : 'https://www.design-prism.com/prism-opengraph.png';
@@ -240,6 +249,19 @@ export default function BlogPostLayout({
         dateModified={openGraph?.modifiedTime || date}
         authorName={openGraph?.authors?.[0] || "prism"}
       />
+      {howTo ? (
+        <HowToSchema
+          name={howTo.title}
+          description={howTo.description}
+          totalTime={howTo.totalTime}
+          supplies={howTo.supplies}
+          tools={howTo.tools}
+          steps={howTo.steps.map((step) => ({
+            name: step.title,
+            text: step.text,
+          }))}
+        />
+      ) : null}
     </div>
   )
 }

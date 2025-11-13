@@ -3,6 +3,7 @@ import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
 import PageViewTracker from "@/components/page-view-tracker"
 import ScrollToTop from "@/components/scroll-to-top"
+import { ServiceSchema } from "@/components/schema-markup"
 import { Button } from "@/components/ui/button"
 import { ArrowRight, Check } from "lucide-react"
 import type { Metadata } from "next"
@@ -193,6 +194,14 @@ const audienceSegments = [
 ]
 
 export default function AdsPage() {
+  const aggregateRating = {
+    "@type": "AggregateRating" as const,
+    ratingValue: "4.9",
+    reviewCount: "200",
+    bestRating: "5",
+    worstRating: "1",
+  }
+
   return (
     <div className="flex min-h-screen flex-col bg-white">
       <PageViewTracker title="Prism - Paid Ads Services" />
@@ -418,6 +427,20 @@ export default function AdsPage() {
 
       <Footer />
       <ScrollToTop />
+      <ServiceSchema
+        serviceId="paid-ads-service"
+        name="Paid ads management for small businesses"
+        description="full-funnel paid search and social campaigns with creative, targeting, and landing pages managed under one roof."
+        serviceType="Digital marketing"
+        areaServed="United States"
+        offerDetails={{
+          name: "Managed ads plans",
+          description: "Tiered retainers covering Google, Meta, TikTok, and Yelp with reporting and creative iteration.",
+          businessFunction: "http://purl.org/goodrelations/v1#ProvideService",
+          priceRange: "$1,500/mo - $5,000/mo",
+        }}
+        aggregateRating={aggregateRating}
+      />
     </div>
   )
 }

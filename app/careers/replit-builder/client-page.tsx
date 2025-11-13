@@ -7,6 +7,7 @@ import { trackCTAClick, trackNavigation } from "@/utils/analytics"
 import { Briefcase, Clock, Mail, MapPin } from "lucide-react"
 import dynamic from "next/dynamic"
 import Link from "next/link"
+import { JobPostingSchema } from "@/components/schema-markup"
 const Navbar = dynamic(() => import("@/components/navbar"), { ssr: false })
 
 export default function ReplitBuilderPage() {
@@ -39,6 +40,32 @@ export default function ReplitBuilderPage() {
     "PDF résumé (max 2 pages)",
     "Links to your Replit profile and at least one live site you’ve built on Replit"
   ]
+
+  const headquarters = {
+    "@type": "Place",
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: "548 Market St #62411",
+      addressLocality: "San Francisco",
+      addressRegion: "CA",
+      postalCode: "94104",
+      addressCountry: "US"
+    }
+  }
+
+  const applicantLocations = [
+    {
+      "@type": "Country" as const,
+      name: "United States"
+    }
+  ]
+
+  const datePosted = "2024-11-18T00:00:00.000Z"
+  const validThrough = (() => {
+    const base = new Date(datePosted)
+    base.setMonth(base.getMonth() + 2)
+    return base.toISOString()
+  })()
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -221,6 +248,19 @@ export default function ReplitBuilderPage() {
         </section>
       </main>
       <Footer />
+      <JobPostingSchema
+        jobId="replit-builder"
+        title="contract replit builder"
+        description="help dentists and local businesses launch modern, fast websites entirely inside replit."
+        employmentType="CONTRACTOR"
+        datePosted={datePosted}
+        validThrough={validThrough}
+        url="https://www.design-prism.com/careers/replit-builder"
+        jobLocation={headquarters}
+        applicantLocations={applicantLocations}
+        responsibilities={responsibilities}
+        qualifications={requirements}
+      />
     </div>
   )
 }

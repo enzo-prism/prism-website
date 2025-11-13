@@ -5,9 +5,12 @@ import { Button } from "@/components/ui/button"
 import type { Metadata } from "next"
 import Link from "next/link"
 import { ArrowUpRight } from "lucide-react"
+import { PodcastEpisodeSchema, VideoObjectSchema } from "@/components/schema-markup"
 
 const episodeYoutubeUrl = "https://youtu.be/0SS1C5d3m1w"
 const episodeEmbedUrl = "https://www.youtube.com/embed/0SS1C5d3m1w"
+const episodeThumbnail = "https://img.youtube.com/vi/0SS1C5d3m1w/hqdefault.jpg"
+const episodePublishedAt = "2024-06-05T00:00:00.000Z"
 
 const lessons = [
   {
@@ -221,6 +224,24 @@ export default function MichaelNjoPage() {
         </article>
       </main>
       <Footer />
+      <PodcastEpisodeSchema
+        episodeId="prism-podcast-05"
+        seriesId="prism-podcast"
+        name="Episode 05: Dr. Michael Njo"
+        description="Dr. Michael Njo on reinvention, patient experience, and guiding dentists through Practice Transitions Institute."
+        url="https://www.design-prism.com/podcast/michael-njo"
+        videoUrl={episodeEmbedUrl}
+        thumbnailUrl={episodeThumbnail}
+        datePublished={episodePublishedAt}
+      />
+      <VideoObjectSchema
+        videoId="prism-podcast-michael-njo"
+        name="Prism Podcast — Dr. Michael Njo"
+        description="Dr. Michael Njo shares lessons on discipline, mentorship, and evolving a practice."
+        thumbnailUrl={episodeThumbnail}
+        uploadDate={episodePublishedAt}
+        embedUrl={episodeEmbedUrl}
+      />
     </div>
   )
 }

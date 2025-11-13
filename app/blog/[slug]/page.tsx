@@ -100,6 +100,7 @@ export default async function BlogPostPage({ params }: PageProps) {
       openGraph={frontmatter.openGraph}
       canonical={frontmatter.canonical}
       relatedPosts={prioritized.slice(0, 3)}
+      howTo={frontmatter.howTo}
     >
       {content}
       <div className="mt-16">

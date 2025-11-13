@@ -1,4 +1,5 @@
 import { canonicalUrl } from "@/lib/canonical"
+import { buildAggregateRating } from "@/lib/review-metrics"
 
 type Organization = {
   "@type": "Organization"
@@ -64,6 +65,14 @@ type Article = {
     "@type": "WebPage"
     "@id": string
   }
+}
+
+type AggregateRating = {
+  "@type": "AggregateRating"
+  ratingValue: string
+  reviewCount: string
+  bestRating?: string
+  worstRating?: string
 }
 
 export function OrganizationSchema() {
@@ -399,6 +408,7 @@ type LocalBusiness = {
       }
     }[]
   }
+  aggregateRating?: AggregateRating
 }
 
 type Offer = {
@@ -472,6 +482,165 @@ type CreativeWork = {
   keywords?: string[]
 }
 
+type JobPosting = {
+  "@type": "JobPosting"
+  "@id": string
+  title: string
+  description: string
+  identifier: {
+    "@type": "PropertyValue"
+    name: string
+    value: string
+  }
+  datePosted: string
+  validThrough: string
+  employmentType: string
+  hiringOrganization: {
+    "@type": "Organization"
+    name: string
+    url: string
+    sameAs?: string[]
+    logo?: string
+  }
+  jobLocationType?: string
+  jobLocation?: {
+    "@type": "Place"
+    address: {
+      "@type": "PostalAddress"
+      streetAddress?: string
+      addressLocality: string
+      addressRegion: string
+      postalCode: string
+      addressCountry: string
+    }
+  }
+  applicantLocationRequirements?: {
+    "@type": "Country" | "AdministrativeArea"
+    name: string
+  }[]
+  baseSalary?: {
+    "@type": "MonetaryAmount"
+    currency: string
+    value: {
+      "@type": "QuantitativeValue"
+      value?: number
+      unitText?: string
+    }
+  }
+  responsibilities?: string[]
+  qualifications?: string[]
+  directApply?: boolean
+  url: string
+}
+
+type Product = {
+  "@type": "Product"
+  "@id": string
+  name: string
+  description: string
+  brand: {
+    "@type": "Brand"
+    name: string
+  }
+  sku?: string
+  url: string
+  offers: Offer
+  aggregateRating?: AggregateRating
+}
+
+type PodcastSeries = {
+  "@type": "PodcastSeries"
+  "@id": string
+  name: string
+  description: string
+  url: string
+  image?: string
+  sameAs?: string[]
+  inLanguage?: string
+  author: {
+    "@type": "Person" | "Organization"
+    name: string
+  }
+  publisher?: {
+    "@type": "Organization"
+    name: string
+  }
+}
+
+type PodcastEpisode = {
+  "@type": "PodcastEpisode"
+  "@id": string
+  partOfSeries: {
+    "@id": string
+  }
+  name: string
+  description: string
+  url: string
+  datePublished?: string
+  duration?: string
+  associatedMedia?: {
+    "@type": "MediaObject"
+    contentUrl?: string
+    embedUrl?: string
+    thumbnailUrl?: string
+  }
+}
+
+type SoftwareApplication = {
+  "@type": "SoftwareApplication"
+  "@id": string
+  name: string
+  description: string
+  applicationCategory: string
+  operatingSystem: string[]
+  url: string
+  offers?: Offer
+  aggregateRating?: AggregateRating
+}
+
+type Dataset = {
+  "@type": "Dataset"
+  "@id": string
+  name: string
+  description: string
+  url: string
+  creator: {
+    "@type": "Organization"
+    name: string
+    url: string
+  }
+  variableMeasured?: string[]
+  keywords?: string[]
+  distribution?: {
+    "@type": "DataDownload"
+    contentUrl: string
+    encodingFormat?: string
+  }[]
+}
+
+type HowToStep = {
+  "@type": "HowToStep"
+  position: number
+  name: string
+  text: string
+}
+
+type HowTo = {
+  "@type": "HowTo"
+  name: string
+  description: string
+  step: HowToStep[]
+  totalTime?: string
+  supply?: {
+    "@type": "HowToSupply"
+    name: string
+  }[]
+  tool?: {
+    "@type": "HowToTool"
+    name: string
+  }[]
+}
+
 // Service Schema Components
 export function ServiceSchema({
   serviceId,
@@ -480,6 +649,7 @@ export function ServiceSchema({
   serviceType,
   areaServed,
   offerDetails,
+  aggregateRating,
 }: {
   serviceId: string
   name: string
@@ -494,6 +664,7 @@ export function ServiceSchema({
     priceCurrency?: string
     priceRange?: string
   }
+  aggregateRating?: AggregateRating
 }) {
   const serviceSchema: Service = {
     "@type": "Service",
@@ -523,6 +694,7 @@ export function ServiceSchema({
           : {}),
       },
     }),
+    ...(aggregateRating && { aggregateRating }),
   }
 
   return (
@@ -634,6 +806,7 @@ export function LocalBusinessSchema() {
         },
       ],
     },
+    aggregateRating: buildAggregateRating(),
   }
 
   return (
@@ -848,6 +1021,482 @@ export function CreativeWorkSchema({
         __html: JSON.stringify({
           "@context": "https://schema.org",
           ...creativeWorkSchema,
+        }),
+      }}
+    />
+  )
+}
+
+export function JobPostingSchema({
+  jobId,
+  title,
+  description,
+  employmentType,
+  datePosted,
+  validThrough,
+  url,
+  jobLocation,
+  applicantLocations,
+  baseSalary,
+  responsibilities = [],
+  qualifications = [],
+  jobLocationType = "TELECOMMUTE",
+  directApply = true,
+}: {
+  jobId: string
+  title: string
+  description: string
+  employmentType: string
+  datePosted: string
+  validThrough: string
+  url: string
+  jobLocation?: {
+    "@type": "Place"
+    address: {
+      "@type": "PostalAddress"
+      streetAddress?: string
+      addressLocality: string
+      addressRegion: string
+      postalCode: string
+      addressCountry: string
+    }
+  }
+  applicantLocations?: {
+    "@type": "Country" | "AdministrativeArea"
+    name: string
+  }[]
+  baseSalary?: {
+    currency: string
+    amount?: number
+    unitText?: string
+  }
+  responsibilities?: string[]
+  qualifications?: string[]
+  jobLocationType?: string
+  directApply?: boolean
+}) {
+  const schema: JobPosting = {
+    "@type": "JobPosting",
+    "@id": `https://design-prism.com/#${jobId}`,
+    title,
+    description,
+    identifier: {
+      "@type": "PropertyValue",
+      name: "Prism",
+      value: jobId,
+    },
+    datePosted,
+    validThrough,
+    employmentType,
+    hiringOrganization: {
+      "@type": "Organization",
+      name: "Prism",
+      url: "https://www.design-prism.com",
+      sameAs: [
+        "https://www.instagram.com/the_design_prism/?hl=en",
+        "https://www.linkedin.com/company/web-prism/",
+        "https://x.com/NosisTheGod",
+      ],
+      logo: "https://www.design-prism.com/prism-opengraph.png",
+    },
+    ...(jobLocationType && { jobLocationType }),
+    ...(jobLocation && { jobLocation }),
+    ...(applicantLocations && applicantLocations.length > 0 && {
+      applicantLocationRequirements: applicantLocations,
+    }),
+    ...(baseSalary && {
+      baseSalary: {
+        "@type": "MonetaryAmount",
+        currency: baseSalary.currency,
+        value: {
+          "@type": "QuantitativeValue",
+          ...(baseSalary.amount && { value: baseSalary.amount }),
+          ...(baseSalary.unitText && { unitText: baseSalary.unitText }),
+        },
+      },
+    }),
+    ...(responsibilities.length > 0 && { responsibilities }),
+    ...(qualifications.length > 0 && { qualifications }),
+    directApply,
+    url,
+  }
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{
+        __html: JSON.stringify({
+          "@context": "https://schema.org",
+          ...schema,
+        }),
+      }}
+    />
+  )
+}
+
+export function ProductSchema({
+  productId,
+  name,
+  description,
+  sku,
+  url,
+  offer,
+  aggregateRating,
+}: {
+  productId: string
+  name: string
+  description: string
+  sku?: string
+  url: string
+  offer: {
+    name?: string
+    description?: string
+    price?: string
+    priceCurrency?: string
+    priceRange?: string
+    businessFunction?: string
+    availability?: string
+    validFrom?: string
+  }
+  aggregateRating?: AggregateRating
+}) {
+  const offerSchema: Offer = {
+    "@type": "Offer",
+    "@id": `https://design-prism.com/#${productId}-offer`,
+    name: offer.name || `${name} offer`,
+    description: offer.description || description,
+    businessFunction: offer.businessFunction || "http://purl.org/goodrelations/v1#ProvideService",
+    seller: {
+      "@id": "https://design-prism.com/#organization",
+    },
+    itemOffered: {
+      "@type": "Service",
+      name,
+      description,
+    },
+    priceSpecification: {
+      "@type": "PriceSpecification",
+      ...(offer.price && { price: offer.price }),
+      ...(offer.priceCurrency && { priceCurrency: offer.priceCurrency }),
+      ...(offer.priceRange && { priceRange: offer.priceRange }),
+    },
+    availability: offer.availability || "https://schema.org/InStock",
+    ...(offer.validFrom && { validFrom: offer.validFrom }),
+  }
+
+  const productSchema: Product = {
+    "@type": "Product",
+    "@id": `https://design-prism.com/#${productId}`,
+    name,
+    description,
+    brand: {
+      "@type": "Brand",
+      name: "Prism",
+    },
+    ...(sku && { sku }),
+    url,
+    offers: offerSchema,
+    ...(aggregateRating && { aggregateRating }),
+  }
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{
+        __html: JSON.stringify({
+          "@context": "https://schema.org",
+          ...productSchema,
+        }),
+      }}
+    />
+  )
+}
+
+export function PodcastSeriesSchema({
+  seriesId,
+  name,
+  description,
+  url,
+  image,
+  sameAs,
+  inLanguage = "en-US",
+  publisherName = "Prism",
+}: {
+  seriesId: string
+  name: string
+  description: string
+  url: string
+  image?: string
+  sameAs?: string[]
+  inLanguage?: string
+  publisherName?: string
+}) {
+  const seriesSchema: PodcastSeries = {
+    "@type": "PodcastSeries",
+    "@id": `https://design-prism.com/#${seriesId}`,
+    name,
+    description,
+    url,
+    ...(image && { image }),
+    ...(sameAs && { sameAs }),
+    inLanguage,
+    author: {
+      "@type": "Person",
+      name: "Enzo Sison",
+    },
+    publisher: {
+      "@type": "Organization",
+      name: publisherName,
+    },
+  }
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{
+        __html: JSON.stringify({
+          "@context": "https://schema.org",
+          ...seriesSchema,
+        }),
+      }}
+    />
+  )
+}
+
+export function PodcastEpisodeSchema({
+  episodeId,
+  seriesId,
+  name,
+  description,
+  url,
+  audioUrl,
+  videoUrl,
+  thumbnailUrl,
+  datePublished,
+  duration,
+}: {
+  episodeId: string
+  seriesId: string
+  name: string
+  description: string
+  url: string
+  audioUrl?: string
+  videoUrl?: string
+  thumbnailUrl?: string
+  datePublished?: string
+  duration?: string
+}) {
+  const episodeSchema: PodcastEpisode = {
+    "@type": "PodcastEpisode",
+    "@id": `https://design-prism.com/#${episodeId}`,
+    partOfSeries: {
+      "@id": `https://design-prism.com/#${seriesId}`,
+    },
+    name,
+    description,
+    url,
+    ...(datePublished && { datePublished }),
+    ...(duration && { duration }),
+    ...(audioUrl || videoUrl
+      ? {
+          associatedMedia: {
+            "@type": "MediaObject",
+            ...(audioUrl && { contentUrl: audioUrl }),
+            ...(videoUrl && { embedUrl: videoUrl }),
+            ...(thumbnailUrl && { thumbnailUrl }),
+          },
+        }
+      : {}),
+  }
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{
+        __html: JSON.stringify({
+          "@context": "https://schema.org",
+          ...episodeSchema,
+        }),
+      }}
+    />
+  )
+}
+
+export function SoftwareApplicationSchema({
+  appId,
+  name,
+  description,
+  applicationCategory,
+  operatingSystems,
+  url,
+  offer,
+  aggregateRating,
+}: {
+  appId: string
+  name: string
+  description: string
+  applicationCategory: string
+  operatingSystems: string[]
+  url: string
+  offer?: {
+    price?: string
+    priceCurrency?: string
+    priceRange?: string
+  }
+  aggregateRating?: AggregateRating
+}) {
+  const appSchema: SoftwareApplication = {
+    "@type": "SoftwareApplication",
+    "@id": `https://design-prism.com/#${appId}`,
+    name,
+    description,
+    applicationCategory,
+    operatingSystem: operatingSystems,
+    url,
+    ...(offer && {
+      offers: {
+        "@type": "Offer",
+        "@id": `https://design-prism.com/#${appId}-offer`,
+        name: `${name} access`,
+        description,
+        businessFunction: "http://purl.org/goodrelations/v1#ProvideService",
+        seller: {
+          "@id": "https://design-prism.com/#organization",
+        },
+        itemOffered: {
+          "@type": "Service",
+          name,
+          description,
+        },
+        priceSpecification: {
+          "@type": "PriceSpecification",
+          ...(offer.price && { price: offer.price }),
+          ...(offer.priceCurrency && { priceCurrency: offer.priceCurrency }),
+          ...(offer.priceRange && { priceRange: offer.priceRange }),
+        },
+        availability: "https://schema.org/InStock",
+      },
+    }),
+    ...(aggregateRating && { aggregateRating }),
+  }
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{
+        __html: JSON.stringify({
+          "@context": "https://schema.org",
+          ...appSchema,
+        }),
+      }}
+    />
+  )
+}
+
+export function DatasetSchema({
+  datasetId,
+  name,
+  description,
+  url,
+  keywords,
+  variableMeasured,
+  distribution,
+}: {
+  datasetId: string
+  name: string
+  description: string
+  url: string
+  keywords?: string[]
+  variableMeasured?: string[]
+  distribution?: {
+    contentUrl: string
+    encodingFormat?: string
+  }[]
+}) {
+  const dataset: Dataset = {
+    "@type": "Dataset",
+    "@id": `https://design-prism.com/#${datasetId}`,
+    name,
+    description,
+    url,
+    creator: {
+      "@type": "Organization",
+      name: "Prism",
+      url: "https://www.design-prism.com",
+    },
+    ...(keywords && { keywords }),
+    ...(variableMeasured && { variableMeasured }),
+    ...(distribution && {
+      distribution: distribution.map((item) => ({
+        "@type": "DataDownload",
+        contentUrl: item.contentUrl,
+        ...(item.encodingFormat && { encodingFormat: item.encodingFormat }),
+      })),
+    }),
+  }
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{
+        __html: JSON.stringify({
+          "@context": "https://schema.org",
+          ...dataset,
+        }),
+      }}
+    />
+  )
+}
+
+export function HowToSchema({
+  name,
+  description,
+  steps,
+  totalTime,
+  supplies,
+  tools,
+}: {
+  name: string
+  description: string
+  steps: { name: string; text: string }[]
+  totalTime?: string
+  supplies?: string[]
+  tools?: string[]
+}) {
+  const schema: HowTo = {
+    "@type": "HowTo",
+    name,
+    description,
+    step: steps.map((step, index) => ({
+      "@type": "HowToStep",
+      position: index + 1,
+      name: step.name,
+      text: step.text,
+    })),
+    ...(totalTime && { totalTime }),
+    ...(supplies &&
+      supplies.length > 0 && {
+        supply: supplies.map((item) => ({
+          "@type": "HowToSupply",
+          name: item,
+        })),
+      }),
+    ...(tools &&
+      tools.length > 0 && {
+        tool: tools.map((item) => ({
+          "@type": "HowToTool",
+          name: item,
+        })),
+      }),
+  }
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{
+        __html: JSON.stringify({
+          "@context": "https://schema.org",
+          ...schema,
         }),
       }}
     />

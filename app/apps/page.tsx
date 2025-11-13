@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button"
 import type { Metadata } from "next"
 import Link from "next/link"
 import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
+import { SoftwareApplicationSchema } from "@/components/schema-markup"
 
 export const metadata: Metadata = {
   title: "mobile app development portfolio & services | prism",
@@ -31,6 +32,7 @@ const appProjects = [
     url: "https://growthprism.app",
     description: "real-time analytics and insights for growing businesses",
     category: "business",
+    platforms: ["Web"],
   },
   {
     id: "2",
@@ -38,6 +40,7 @@ const appProjects = [
     url: "https://peaksurf.club",
     description: "surf forecasts, tide data, and community features",
     category: "lifestyle",
+    platforms: ["iOS", "Android", "Web"],
   },
   {
     id: "3",
@@ -45,6 +48,7 @@ const appProjects = [
     url: "https://pv-schedule.com",
     description: "athletic performance tracking and event scheduling",
     category: "sports",
+    platforms: ["Web"],
   },
   {
     id: "4",
@@ -52,6 +56,7 @@ const appProjects = [
     url: "https://sisonyum.com",
     description: "private restaurant reviews and dining recommendations",
     category: "food",
+    platforms: ["Web"],
   },
   {
     id: "5",
@@ -59,6 +64,7 @@ const appProjects = [
     url: "https://www.grinddeck.com/",
     description: "gamified productivity with rewards and achievements",
     category: "productivity",
+    platforms: ["iOS", "Android"],
   },
 ]
 
@@ -183,6 +189,17 @@ export default function AppsPage() {
 
       </main>
       <Footer />
+      {appProjects.map((project) => (
+        <SoftwareApplicationSchema
+          key={`app-schema-${project.id}`}
+          appId={`app-${project.id}`}
+          name={project.title}
+          description={project.description}
+          applicationCategory={project.category}
+          operatingSystems={project.platforms}
+          url={project.url}
+        />
+      ))}
     </div>
   )
 }

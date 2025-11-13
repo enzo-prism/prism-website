@@ -11,6 +11,7 @@ import { ArrowRight, Check } from "lucide-react"
 import type { Metadata } from "next"
 import Link from "next/link"
 import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
+import { ServiceSchema } from "@/components/schema-markup"
 
 export const metadata: Metadata = {
   title: "small business website portfolio & local seo wins | prism",
@@ -299,6 +300,14 @@ const faqItems = [
 ]
 
 export default function WebsitesPage() {
+  const aggregateRating = {
+    "@type": "AggregateRating" as const,
+    ratingValue: "4.9",
+    reviewCount: "200",
+    bestRating: "5",
+    worstRating: "1",
+  }
+
   return (
     <div className="flex min-h-screen flex-col bg-white">
       <PageViewTracker title="Websites Portfolio & Services" />
@@ -579,6 +588,20 @@ export default function WebsitesPage() {
 
       <Footer />
       <ScrollToTop />
+      <ServiceSchema
+        serviceId="websites-service"
+        name="Website design & development"
+        description="strategy, copy, and custom development for small business websites that convert local demand."
+        serviceType="Website design"
+        areaServed="United States"
+        offerDetails={{
+          name: "Website service bundles",
+          description: "Launch packages that include design, build, hosting, analytics, and CRO support.",
+          businessFunction: "http://purl.org/goodrelations/v1#ProvideService",
+          priceRange: "$4,000 - $25,000",
+        }}
+        aggregateRating={aggregateRating}
+      />
     </div>
   )
 }

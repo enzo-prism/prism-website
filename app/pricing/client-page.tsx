@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/accordion"
 import { floatLoop, hoverTilt } from "@/lib/animations"
 import { cn } from "@/lib/utils"
-import { FAQSchema, OfferSchema } from "@/components/schema-markup"
+import { FAQSchema, ProductSchema } from "@/components/schema-markup"
 
 const pricingTiers = [
   {
@@ -492,18 +492,27 @@ function PricingStructuredData() {
       {pricingTiers.map((tier) => {
         const numericPrice = tier.price.replace(/[^\d.]/g, "")
         return (
-          <OfferSchema
-            key={`pricing-offer-${tier.name.toLowerCase()}`}
-            offerId={`pricing-${tier.name.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}
-            name={`${tier.name} plan`}
+          <ProductSchema
+            key={`pricing-product-${tier.name.toLowerCase()}`}
+            productId={`pricing-${tier.name.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}
+            name={`${tier.name} website plan`}
             description={tier.description}
-            businessFunction="http://purl.org/goodrelations/v1#Sell"
-            serviceName={`${tier.name} website plan`}
-            serviceDescription={tier.description}
-            price={numericPrice.length ? numericPrice : undefined}
-            priceCurrency="USD"
-            priceRange={tier.price}
-            availability="InStock"
+            url="https://www.design-prism.com/pricing"
+            offer={{
+              name: `${tier.name} plan`,
+              description: tier.description,
+              price: numericPrice.length ? numericPrice : undefined,
+              priceCurrency: "USD",
+              priceRange: tier.price,
+              availability: "https://schema.org/InStock",
+            }}
+            aggregateRating={{
+              "@type": "AggregateRating",
+              ratingValue: "4.9",
+              reviewCount: "200",
+              bestRating: "5",
+              worstRating: "1",
+            }}
           />
         )
       })}

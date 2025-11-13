@@ -8,6 +8,7 @@ import { trackCTAClick, trackNavigation } from "@/utils/analytics"
 import { ArrowRight, Briefcase, Clock, Mail, MapPin } from "lucide-react"
 import dynamic from "next/dynamic"
 import Link from "next/link"
+import { JobPostingSchema } from "@/components/schema-markup"
 const Navbar = dynamic(() => import("@/components/navbar"), { ssr: false })
 
 export default function CareersClientPage() {
@@ -21,7 +22,8 @@ export default function CareersClientPage() {
       description:
         "join our lean team building modern web apps with ai-first tooling. work with cursor, replit, vercel v0, and lovable.dev.",
       requirements: ["React/TypeScript expertise", "Cursor & Replit experience", "Mobile-first design skills"],
-      slug: "front-end-developer"
+      slug: "front-end-developer",
+      datePosted: "2024-11-15"
     },
     {
       id: "replit-builder",
@@ -32,9 +34,41 @@ export default function CareersClientPage() {
       description:
         "help dentists and local businesses launch fast, beautiful websites entirely inside replit using modern ai tooling.",
       requirements: ["Replit Agent & Replit DB experience", "Clean HTML/CSS/JS or React code", "Detail-focused on performance"],
-      slug: "replit-builder"
+      slug: "replit-builder",
+      datePosted: "2024-11-18"
     }
   ]
+
+  const headquarters = {
+    "@type": "Place",
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: "548 Market St #62411",
+      addressLocality: "San Francisco",
+      addressRegion: "CA",
+      postalCode: "94104",
+      addressCountry: "US"
+    }
+  }
+
+  const applicantLocations = [
+    {
+      "@type": "Country" as const,
+      name: "United States"
+    }
+  ]
+
+  const computeValidThrough = (start: string) => {
+    const base = new Date(start || new Date().toISOString())
+    base.setMonth(base.getMonth() + 2)
+    return base.toISOString()
+  }
+
+  const normalizeEmploymentType = (value: string) => {
+    if (value.toLowerCase().includes("contract")) return "CONTRACTOR"
+    if (value.toLowerCase().includes("part-time")) return "PART_TIME"
+    return "FULL_TIME"
+  }
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -182,6 +216,21 @@ export default function CareersClientPage() {
         </section>
       </main>
       <Footer />
+      {currentJobs.map(job => (
+        <JobPostingSchema
+          key={`job-posting-${job.id}`}
+          jobId={job.id}
+          title={job.title}
+          description={job.description}
+          employmentType={normalizeEmploymentType(job.type)}
+          datePosted={`${job.datePosted}T00:00:00.000Z`}
+          validThrough={computeValidThrough(job.datePosted)}
+          url={`https://www.design-prism.com/careers/${job.slug}`}
+          jobLocation={headquarters}
+          applicantLocations={applicantLocations}
+          qualifications={job.requirements}
+        />
+      ))}
     </div>
   )
 }

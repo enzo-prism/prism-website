@@ -39,6 +39,14 @@ export type BlogFrontmatter = {
   openGraph?: Record<string, any>
   twitter?: Record<string, any>
   canonical?: string
+  howTo?: {
+    title: string
+    description: string
+    totalTime?: string
+    steps: { title: string; text: string }[]
+    supplies?: string[]
+    tools?: string[]
+  }
 }
 
 const BLOG_PATH = "content/blog"
@@ -110,7 +118,8 @@ async function getPost(slug: string): Promise<{ frontmatter: BlogFrontmatter; co
       showHeroImage: typeof normalizedData.showHeroImage === 'boolean' ? normalizedData.showHeroImage : true,
       openGraph: normalizedData.openGraph,
       twitter: normalizedData.twitter,
-      canonical: normalizedData.canonical
+      canonical: normalizedData.canonical,
+      howTo: normalizedData.howTo
     }
 
     return { frontmatter, content: normalizedContent }
