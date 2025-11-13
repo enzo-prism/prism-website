@@ -72,6 +72,24 @@ export default function BeforeAfterPhotographyPage() {
 
         <GuideTabs />
 
+        <section className="border-t border-neutral-200 bg-neutral-50 px-4 py-16 sm:py-20">
+          <div className="container mx-auto flex max-w-5xl flex-col gap-6 rounded-3xl border border-neutral-200 bg-white px-6 py-12 text-center shadow-sm sm:px-10">
+            <span className="inline-flex items-center gap-2 rounded-full bg-neutral-900/5 px-3 py-1 text-xs font-semibold uppercase tracking-[0.32em] text-neutral-600">
+              team coverage
+            </span>
+            <h2 className="text-3xl font-semibold tracking-tight text-neutral-900 sm:text-4xl">let prism capture the office, team, and candid moments</h2>
+            <p className="text-base text-neutral-600 sm:text-lg">
+              When you need more than before-and-afters, our on-location crew photographs the lobby, ops, and staff so every touchpoint feels cohesive.
+            </p>
+            <Button asChild size="lg" className="w-full rounded-full px-8 py-3 text-base lowercase sm:w-auto">
+              <Link href="/dental-photography/office-team">
+                explore office &amp; team shoots
+                <ArrowRight className="ml-2 h-4 w-4" aria-hidden />
+              </Link>
+            </Button>
+          </div>
+        </section>
+
         <PageViewTracker title="Prism - Before & After Photography" />
       </main>
       <Footer />

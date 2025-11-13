@@ -250,7 +250,7 @@ export default function GetStartedForm({ defaultBudgetValue = "", selectedPlan }
           className="w-full rounded-2xl bg-slate-900 py-6 text-base font-semibold"
           disabled={isSubmitting}
         >
-          {isSubmitting ? "Submitting..." : "Generate My AI Site Plan →"}
+          {isSubmitting ? "Submitting..." : "Craft My Website Plan"}
         </Button>
         {submitError ? <p className="text-sm text-rose-600">{submitError}</p> : null}
         <p className="text-xs text-slate-500">

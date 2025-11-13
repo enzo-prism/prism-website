@@ -162,7 +162,7 @@ export default function DentalPhotographyPage() {
                 pro photos that make every prism deliverable hit harder.
               </h1>
               <p className="mt-6 max-w-2xl text-base text-neutral-200 md:text-lg">
-                we shoot cinematic photo and video inside your practice so websites feel bespoke, ads look premium, local listings stay fresh, and social media never runs out of material.
+                we shoot cinematic photos inside your practice so websites feel bespoke, ads look premium, local listings stay fresh, and social media never runs out of material.
               </p>
               <div className="mt-8 flex flex-wrap justify-center gap-3">
                 <Button asChild variant="outline-inverted" size="lg" className="rounded-full px-8 py-3 text-base lowercase">

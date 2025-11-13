@@ -1,14 +1,14 @@
 import Image from "next/image"
 import type { Metadata } from "next"
 import Link from "next/link"
-import { Apple, ArrowRight, Calendar, Camera } from "lucide-react"
+import { Apple, ArrowRight, Calendar } from "lucide-react"
 
 import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
 import PageViewTracker from "@/components/page-view-tracker"
 import ScrollToTop from "@/components/scroll-to-top"
 import { Button } from "@/components/ui/button"
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel"
+import RecentShootsSection from "./recent-shoots-section"
 
 export const metadata: Metadata = {
   title: "office & team photography for dental practices | prism",
@@ -39,6 +39,7 @@ const recentShoots = [
     practice: "Christopher B. Wong, DDS",
     location: "San Francisco, CA",
     date: "June 2024",
+    website: "https://www.chriswongdds.com",
     summary: "Team portraits, operatory vibes, and candid patient journey moments captured in a single afternoon.",
     shots: [
       { src: "https://res.cloudinary.com/dhqpqfw6w/image/upload/v1762989227/Post-4_cbdv72.webp", alt: "Christopher B. Wong DDS office" },
@@ -109,58 +110,23 @@ export default function OfficeTeamPhotographyPage() {
           </div>
         </section>
 
-        <section className="px-4 py-16 sm:py-20">
-          <div className="container mx-auto max-w-6xl">
-            <div className="mb-10 text-center">
-              <p className="text-sm font-semibold uppercase tracking-[0.32em] text-neutral-500">recent shoots</p>
-              <h2 className="mt-3 text-3xl font-semibold tracking-tight text-neutral-900 sm:text-4xl">see what practices walk away with</h2>
-              <p className="mt-4 text-base text-neutral-600">
-                swipe through the latest office & team sessions—everything below is already live on websites, listings, and socials.
-              </p>
-            </div>
+        <RecentShootsSection shoots={recentShoots} />
 
-            <div className="space-y-10">
-              {recentShoots.map((shoot) => (
-                <div key={shoot.practice} className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm md:p-8">
-                  <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-                    <div>
-                      <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.3em] text-neutral-500">
-                        <Camera className="h-4 w-4" aria-hidden />
-                        on-location
-                      </div>
-                      <h3 className="mt-2 text-2xl font-semibold text-neutral-900">{shoot.practice}</h3>
-                    </div>
-                    <Button asChild variant="outline" className="w-full rounded-full px-6 py-2 text-sm lowercase sm:w-auto">
-                      <Link href="/book-a-shoot">
-                        book something like this
-                        <ArrowRight className="ml-2 h-4 w-4" aria-hidden />
-                      </Link>
-                    </Button>
-                  </div>
-
-                  <Carousel className="mt-8 px-1 sm:px-0">
-                    <CarouselContent className="-ml-2">
-                      {shoot.shots.map((shot, index) => (
-                        <CarouselItem key={`${shoot.practice}-${index}`} className="pl-2 sm:basis-1/2 lg:basis-1/3">
-                          <div className="overflow-hidden rounded-2xl border border-neutral-200 bg-neutral-50">
-                            <Image
-                              src={shot.src}
-                              alt={shot.alt}
-                              width={1200}
-                              height={800}
-                              className="h-52 w-full object-cover sm:h-64"
-                              priority={index === 0}
-                            />
-                          </div>
-                        </CarouselItem>
-                      ))}
-                    </CarouselContent>
-                    <CarouselPrevious className="hidden sm:flex text-neutral-600 hover:text-neutral-900" />
-                    <CarouselNext className="hidden sm:flex text-neutral-600 hover:text-neutral-900" />
-                  </Carousel>
-                </div>
-              ))}
-            </div>
+        <section className="border-y border-neutral-200 bg-neutral-900 px-4 py-16 text-white sm:py-20">
+          <div className="container mx-auto flex max-w-5xl flex-col items-center gap-6 rounded-3xl border border-white/10 bg-neutral-950 px-6 py-12 text-center sm:px-10">
+            <span className="inline-flex items-center gap-2 rounded-full border border-white/30 px-3 py-1 text-xs font-semibold uppercase tracking-[0.32em] text-white/70">
+              proof
+            </span>
+            <h3 className="text-3xl font-semibold tracking-tight sm:text-4xl">see the exact before & afters</h3>
+            <p className="text-base text-white/80 sm:text-lg">
+              Walk through full case studies that pair original photos with the refreshed website, ads, and listings they power.
+            </p>
+            <Button asChild variant="inverted" size="lg" className="w-full rounded-full px-8 py-3 text-base lowercase sm:w-auto">
+              <Link href="/dental-photography/before-after">
+                view before & afters
+                <ArrowRight className="ml-2 h-4 w-4" aria-hidden />
+              </Link>
+            </Button>
           </div>
         </section>
 
