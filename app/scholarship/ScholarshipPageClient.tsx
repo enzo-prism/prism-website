@@ -3,7 +3,6 @@
 import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
 import PageViewTracker from "@/components/page-view-tracker"
-import CommunityLinks from "@/components/community-links"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
@@ -12,7 +11,7 @@ import { useEffect, useMemo, useRef, useState } from "react"
 
 const DEFAULT_FORM_ENDPOINT = "https://formspree.io/f/mwpwwjek"
 const FORM_ENDPOINT = process.env.NEXT_PUBLIC_SCHOLARSHIP_FORM_ENDPOINT || DEFAULT_FORM_ENDPOINT
-const BASE_APPLICATIONS = 24
+const BASE_APPLICATIONS = 1
 
 const REFERRAL_OPTIONS = [
   "instagram",
@@ -60,19 +59,29 @@ function formatCountdown(target: Date): CountdownState {
 export default function ScholarshipPageClient() {
   const formRef = useRef<HTMLFormElement | null>(null)
   const [countdownTarget] = useState(() => getNextSelectionDate())
-  const [countdown, setCountdown] = useState<CountdownState>(() => formatCountdown(countdownTarget))
-  const [applicationsCount, setApplicationsCount] = useState(() => {
-    if (typeof window === "undefined") return BASE_APPLICATIONS
-    const stored = window.localStorage.getItem("prism-scholarship-applications")
-    return stored ? Number(stored) : BASE_APPLICATIONS
+  const [countdown, setCountdown] = useState<CountdownState>({
+    days: "00",
+    hours: "00",
+    minutes: "00",
+    seconds: "00",
   })
+  const [applicationsCount, setApplicationsCount] = useState(BASE_APPLICATIONS)
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle")
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
   useEffect(() => {
+    setCountdown(formatCountdown(countdownTarget))
     const timer = setInterval(() => setCountdown(formatCountdown(countdownTarget)), 1000)
     return () => clearInterval(timer)
   }, [countdownTarget])
+
+  useEffect(() => {
+    if (typeof window === "undefined") return
+    const stored = window.localStorage.getItem("prism-scholarship-applications")
+    if (stored) {
+      setApplicationsCount(Number(stored))
+    }
+  }, [])
 
   useEffect(() => {
     if (typeof window === "undefined") return
@@ -178,10 +187,6 @@ export default function ScholarshipPageClient() {
                     </Link>
                   </div>
                 </div>
-                <div className="space-y-3">
-                  <p className="text-xs uppercase tracking-[0.32em] text-neutral-500">apply</p>
-                  <CommunityLinks className="mt-1" />
-                </div>
               </div>
               <div className="rounded-3xl border border-neutral-200 bg-white/80 p-6 shadow-[0_24px_80px_-48px_rgba(15,23,42,0.35)] backdrop-blur">
                 <form ref={formRef} onSubmit={handleSubmit} className="space-y-5">
@@ -207,7 +212,7 @@ export default function ScholarshipPageClient() {
                   </div>
                   <div className="space-y-2">
                     <label htmlFor="referral" className="text-sm font-medium lowercase text-neutral-600">
-                      where did you hear about prism?
+                      how did you first hear about prism?
                     </label>
                     <select
                       id="referral"
