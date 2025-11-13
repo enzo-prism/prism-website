@@ -66,13 +66,21 @@ For horizontal galleries (office-team recent shoots, proof sections):
 
 Keep captions optional; if omitted, remove the text block so cards stay compact.
 
-## 5. Booking form conventions
+## 5. Mobile polish patterns
+
+- **Hero CTAs** – default buttons to `w-full sm:w-auto` so they stack on phones and sit inline on tablets/desktop.
+- **Video overlays** – always pair the background video with a `bg-neutral-950/80` (or similar) overlay for readability.
+- **Carousel gutters** – add `px-1` to the carousel container and `pl-2` to `CarouselItem` so edge slides don’t hug the viewport.
+- **Card padding** – stick with `p-5` on cards and add `space-y-2` for headings/text so they breathe on smaller screens.
+- **Apple Maps / proof sections** – use `flex-col lg:flex-row` so the proof image stacks below the copy on mobile.
+
+## 6. Booking form conventions
 
 - **Endpoint** – `https://formspree.io/f/xjkjkggn`. Formspree requires POST + `Accept: application/json` (handled automatically by browsers when using plain HTML forms).
 - **Fields** – Always collect email, at least two date fields, and the preferred one‑hour window (`<select>`). Optional notes field lives at the bottom.
 - **Copy** – Reinforce when someone should use the office-team booking form vs. the DIY guide.
 
-## 6. Quick checklist for future changes
+## 7. Quick checklist for future changes
 
 1. **Update navigation triangles** – whenever you add a CTA or remove one on these pages, make sure visitors can still reach every related route in ≤1 click.
 2. **Keep imagery remote** – prefer Cloudinary links (`res.cloudinary.com/...`) over local `/public` assets for fast iteration.

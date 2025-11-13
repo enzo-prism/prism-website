@@ -50,7 +50,7 @@ export default function BeforeAfterPhotographyPage() {
                 build a before + after system your team can run every day.
               </h1>
               <p className="mt-6 max-w-3xl text-base text-neutral-200 md:text-lg">
-                follow this 0 -> 100% guide to set up gear, space, scripts, and file workflows so your practice captures pro-grade before-and-afters that wow patients and fuel every marketing touchpoint.
+                follow this 0 to 100% guide to set up gear, space, scripts, and file workflows so your practice captures pro-grade before-and-afters that wow patients and fuel every marketing touchpoint.
               </p>
               <div className="mt-8 flex flex-wrap justify-center gap-3">
                 <Button asChild size="lg" className="w-full rounded-full px-8 py-3 text-base lowercase sm:w-auto">
