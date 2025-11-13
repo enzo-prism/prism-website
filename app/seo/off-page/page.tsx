@@ -58,6 +58,12 @@ export default function SeoOffPagePage() {
       >
         <div className="flex flex-wrap gap-3">
           <Link
+            href="/seo"
+            className="inline-flex items-center rounded-full border border-neutral-200 px-6 py-3 text-sm font-semibold lowercase text-neutral-700"
+          >
+            back to seo overview
+          </Link>
+          <Link
             href="/seo/on-page"
             className="inline-flex items-center rounded-full border border-neutral-900 px-6 py-3 text-sm font-semibold lowercase text-neutral-900"
           >

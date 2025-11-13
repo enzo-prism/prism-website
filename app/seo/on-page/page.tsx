@@ -70,6 +70,12 @@ export default function SeoOnPagePage() {
         </ul>
         <div className="flex flex-wrap gap-3 pt-6">
           <Link
+            href="/seo"
+            className="inline-flex items-center rounded-full border border-neutral-200 px-6 py-3 text-sm font-semibold lowercase text-neutral-700"
+          >
+            back to seo overview
+          </Link>
+          <Link
             href="/seo/off-page"
             className="inline-flex items-center rounded-full border border-neutral-900 px-6 py-3 text-sm font-semibold lowercase text-neutral-900"
           >
