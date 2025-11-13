@@ -15,6 +15,7 @@ import {
 import { cn } from "@/lib/utils"
 import { getHeroReviews, renderFormattedText, type Quote } from "@/content/wall-of-love-data"
 import { trackNavigation } from "@/utils/analytics"
+import { sanitizeReviewText } from "@/lib/schema-helpers"
 
 const AUTO_ROTATE_INTERVAL = 6000
 const QUOTE_TRANSITION_EASE: [number, number, number, number] = [0.4, 0, 0.2, 1]
@@ -32,6 +33,29 @@ export default function HeroReviewSliderCard({ className }: HeroReviewSliderCard
   const progressValue = useMotionValue(0)
   const progressAngle = useTransform(progressValue, (latest) => Math.min(360, latest * 360))
   const pieGradient = useMotionTemplate`conic-gradient(transparent 0deg ${progressAngle}deg, currentColor ${progressAngle}deg 360deg)`
+  const heroReviewForSchema = useMemo(() => reviews.find((quote) => quote.heroSpotlight) ?? reviews[0], [reviews])
+  const heroReviewSchema = useMemo(() => {
+    if (!heroReviewForSchema) return null
+    return JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Review",
+      author: {
+        "@type": "Person",
+        name: heroReviewForSchema.client,
+      },
+      reviewBody: sanitizeReviewText(heroReviewForSchema.text),
+      itemReviewed: {
+        "@type": "Organization",
+        "@id": "https://www.design-prism.com/#organization",
+        name: "Prism",
+      },
+      publisher: {
+        "@type": "Organization",
+        "@id": "https://www.design-prism.com/#organization",
+        name: "Prism",
+      },
+    })
+  }, [heroReviewForSchema])
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)")
@@ -189,6 +213,9 @@ export default function HeroReviewSliderCard({ className }: HeroReviewSliderCard
           read 200+ more
         </Link>
       </div>
+      {heroReviewSchema ? (
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: heroReviewSchema }} />
+      ) : null}
     </div>
   )
 }

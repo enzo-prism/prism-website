@@ -4,6 +4,7 @@ import type { Metadata } from "next"
 import { SeoHero } from "@/components/seo/seo-hero"
 import { SeoSection } from "@/components/seo/seo-section"
 import { seoOverviewContent } from "@/content/seo"
+import { ServiceSchema } from "@/components/schema-markup"
 
 export const metadata: Metadata = {
   title: "seo that compounds | prism",
@@ -145,6 +146,20 @@ export default function SeoPage() {
           no gimmicks. no hacks. just a strong, modern seo foundation that compounds over time.
         </div>
       </SeoSection>
+
+      <ServiceSchema
+        serviceId="seo-service"
+        name="SEO systems and management"
+        description="Prism pairs on-page structure with off-page authority so your business keeps showing up, earning clicks, and converting."
+        serviceType="SEO services"
+        areaServed="United States"
+        offerDetails={{
+          name: "SEO packages",
+          description: "Foundation, Growth, and Domination tiers that layer content, schema, and ongoing optimization.",
+          businessFunction: "http://purl.org/goodrelations/v1#Sell",
+          priceRange: "$300/mo - $3,600/mo",
+        }}
+      />
     </>
   )
 }

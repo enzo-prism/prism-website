@@ -6,6 +6,7 @@ import Navbar from "@/components/navbar"
 import PageViewTracker from "@/components/page-view-tracker"
 import RevealOnScroll from "@/components/reveal-on-scroll"
 import { Button } from "@/components/ui/button"
+import { ContactPageSchema } from "@/components/schema-markup"
 
 export const metadata: Metadata = {
   title: "Contact | prism",
@@ -72,6 +73,7 @@ export default function ContactPage() {
         </section>
       </main>
       <Footer />
+      <ContactPageSchema />
     </div>
   )
 }

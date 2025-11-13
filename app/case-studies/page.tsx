@@ -14,6 +14,21 @@ export const metadata: Metadata = {
 }
 
 export default function CaseStudies() {
+  const caseStudiesItemList = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    itemListElement: CASE_STUDIES.slice(0, 10).map((study, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      item: {
+        "@type": "CreativeWork",
+        name: study.title,
+        description: study.description,
+        url: `https://www.design-prism.com/case-studies/${study.slug}`,
+      },
+    })),
+  }
+
   return (
     <>
       <section id="static-case-studies-hero" className="bg-neutral-900 text-white">
@@ -70,6 +85,7 @@ export default function CaseStudies() {
           traffic. each study highlights the decisions and systems that created lasting results.
         </p>
       </SeoTextSection>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(caseStudiesItemList) }} />
     </>
   )
 }

@@ -3,6 +3,8 @@ import Navbar from "@/components/navbar"
 import { OrganizationSchema, WebsiteSchema } from "@/components/schema-markup"
 import type { Metadata } from "next"
 import WallOfLoveClientPage from "./client-page"
+import { quotesData } from "@/content/wall-of-love-data"
+import { sanitizeReviewText } from "@/lib/schema-helpers"
 
 export const metadata: Metadata = {
   title: "testimonials | dentists & local brands working with prism",
@@ -37,6 +39,28 @@ export const metadata: Metadata = {
 }
 
 export default function WallOfLovePage() {
+  const reviewListSchema = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    itemListElement: quotesData.slice(0, 50).map((quote, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      item: {
+        "@type": "Review",
+        author: {
+          "@type": "Person",
+          name: quote.client,
+        },
+        reviewBody: sanitizeReviewText(quote.text),
+        itemReviewed: {
+          "@type": "Organization",
+          "@id": "https://www.design-prism.com/#organization",
+          name: "Prism",
+        },
+      },
+    })),
+  }
+
   return (
     <>
       <OrganizationSchema />
@@ -44,6 +68,7 @@ export default function WallOfLovePage() {
       <Navbar />
       <WallOfLoveClientPage />
       <Footer />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(reviewListSchema) }} />
     </>
   )
 }

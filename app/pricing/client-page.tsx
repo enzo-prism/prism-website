@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/accordion"
 import { floatLoop, hoverTilt } from "@/lib/animations"
 import { cn } from "@/lib/utils"
+import { FAQSchema, OfferSchema } from "@/components/schema-markup"
 
 const pricingTiers = [
   {
@@ -127,6 +128,7 @@ export default function PricingPageClient() {
       <ClientsSection />
       <FAQSection />
       <FinalCTA />
+      <PricingStructuredData />
     </div>
   )
 }
@@ -480,5 +482,32 @@ function FinalCTA() {
         </RevealOnScroll>
       </div>
     </section>
+  )
+}
+
+function PricingStructuredData() {
+  const faqItems = faqs.map((faq) => ({ question: faq.question, answer: faq.answer }))
+  return (
+    <>
+      {pricingTiers.map((tier) => {
+        const numericPrice = tier.price.replace(/[^\d.]/g, "")
+        return (
+          <OfferSchema
+            key={`pricing-offer-${tier.name.toLowerCase()}`}
+            offerId={`pricing-${tier.name.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}
+            name={`${tier.name} plan`}
+            description={tier.description}
+            businessFunction="http://purl.org/goodrelations/v1#Sell"
+            serviceName={`${tier.name} website plan`}
+            serviceDescription={tier.description}
+            price={numericPrice.length ? numericPrice : undefined}
+            priceCurrency="USD"
+            priceRange={tier.price}
+            availability="InStock"
+          />
+        )
+      })}
+      <FAQSchema questions={faqItems} />
+    </>
   )
 }

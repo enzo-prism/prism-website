@@ -4,6 +4,7 @@ import Link from "next/link"
 import { SeoHero } from "@/components/seo/seo-hero"
 import { SeoSection } from "@/components/seo/seo-section"
 import { seoOffPageContent } from "@/content/seo"
+import { ServiceSchema } from "@/components/schema-markup"
 
 export const metadata: Metadata = {
   title: "off-page seo systems | prism",
@@ -27,6 +28,20 @@ export const metadata: Metadata = {
 
 export default function SeoOffPagePage() {
   const { hero, intro, levers, closing } = seoOffPageContent
+  const howToSchema = {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    name: "Off-page SEO systems",
+    description: intro,
+    step: levers.map((lever) => ({
+      "@type": "HowToStep",
+      name: lever.title,
+      itemListElement: lever.bullets?.map((bullet) => ({
+        "@type": "HowToDirection",
+        text: bullet,
+      })),
+    })),
+  }
 
   return (
     <>
@@ -77,6 +92,15 @@ export default function SeoOffPagePage() {
           </Link>
         </div>
       </SeoSection>
+
+      <ServiceSchema
+        serviceId="seo-off-page"
+        name="Off-page SEO"
+        description={hero.subtitle}
+        serviceType="SEO services"
+        areaServed="United States"
+      />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }} />
     </>
   )
 }

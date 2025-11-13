@@ -17,6 +17,20 @@ export const metadata: Metadata = {
 export default async function Blog() {
   const posts = await getAllPosts()
   if (!posts) notFound()
+  const blogItemList = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    itemListElement: posts.slice(0, 10).map((post, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      item: {
+        "@type": "BlogPosting",
+        headline: post.title,
+        description: post.description,
+        url: `https://www.design-prism.com/blog/${post.slug}`,
+      },
+    })),
+  }
   return (
     <>
       <section id="static-blog-hero" className="bg-neutral-900 text-white">
@@ -83,6 +97,7 @@ export default async function Blog() {
           and experiments, not theory.
         </p>
       </SeoTextSection>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(blogItemList) }} />
     </>
   )
 }

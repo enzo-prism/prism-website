@@ -3,6 +3,7 @@ import type { Metadata } from "next"
 
 import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
+import { ServiceSchema } from "@/components/schema-markup"
 
 const coreServices = [
   {
@@ -117,6 +118,8 @@ const workflow = [
     description: "weekly measurements, quarterly planning, and shared dashboards keep the entire growth engine accountable and transparent.",
   },
 ]
+
+const slugify = (value: string) => value.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)+/g, "")
 
 export const metadata: Metadata = {
   title: "prism services platform",
@@ -299,6 +302,16 @@ export default function ServicesPage() {
         </section>
       </main>
       <Footer />
+      {coreServices.map((service) => (
+        <ServiceSchema
+          key={`service-schema-${slugify(service.name)}`}
+          serviceId={slugify(service.name)}
+          name={service.name}
+          description={service.summary}
+          serviceType={service.name}
+          areaServed="United States"
+        />
+      ))}
     </>
   )
 }
