@@ -21,12 +21,21 @@ import { sanitizeReviewText } from "@/lib/schema-helpers"
 const AUTO_ROTATE_INTERVAL = 6000
 const QUOTE_TRANSITION_EASE: [number, number, number, number] = [0.4, 0, 0.2, 1]
 
+const shuffleQuotes = (quotes: Quote[]) => {
+  const next = quotes.slice()
+  for (let i = next.length - 1; i > 0; i -= 1) {
+    const j = Math.floor(Math.random() * (i + 1))
+    ;[next[i], next[j]] = [next[j], next[i]]
+  }
+  return next
+}
+
 type HeroReviewSliderCardProps = {
   className?: string
 }
 
 export default function HeroReviewSliderCard({ className }: HeroReviewSliderCardProps) {
-  const initialPool = useMemo(() => getHomepageHeroReviewPool(), [])
+  const initialPool = useMemo(() => shuffleQuotes(getHomepageHeroReviewPool()), [])
   const [reviewPool, setReviewPool] = useState<Quote[]>(initialPool)
   const [activeIndex, setActiveIndex] = useState(0)
   const [isPaused, setIsPaused] = useState(false)
@@ -82,7 +91,7 @@ export default function HeroReviewSliderCard({ className }: HeroReviewSliderCard
   }, [])
 
   useEffect(() => {
-    const pool = getHomepageHeroReviewPool()
+    const pool = shuffleQuotes(getHomepageHeroReviewPool())
     if (!pool.length) {
       setReviewPool([])
       setActiveIndex(0)
