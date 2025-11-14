@@ -12,8 +12,10 @@ type VideoSchemaMetadata = {
   thumbnailUrl: string | string[]
   uploadDate: string
   duration?: string
-  contentUrl?: string
-  embedUrl?: string
+  contentUrl: string
+  embedUrl: string
+  width?: number
+  height?: number
   creatorName?: string
   seekToActionTarget?: string
 }
@@ -184,8 +186,10 @@ export default function VideoPlayer({ src, poster, title, caption, className, sc
           thumbnailUrl={schema.thumbnailUrl}
           uploadDate={schema.uploadDate}
           duration={schema.duration}
-          contentUrl={schema.contentUrl ?? src}
+          contentUrl={schema.contentUrl}
           embedUrl={schema.embedUrl}
+          width={schema.width}
+          height={schema.height}
           creatorName={schema.creatorName}
           seekToActionTarget={schema.seekToActionTarget}
         />

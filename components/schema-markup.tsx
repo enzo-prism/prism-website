@@ -443,8 +443,10 @@ type VideoObject = {
   thumbnailUrl: string | string[]
   uploadDate: string
   duration?: string
-  contentUrl?: string
+  contentUrl: string
   embedUrl?: string
+  width?: number
+  height?: number
   publisher: {
     "@id": string
   }
@@ -727,6 +729,8 @@ export function VideoSchema({
   duration,
   contentUrl,
   embedUrl,
+  width,
+  height,
   publisherId = "https://design-prism.com/#organization",
   creatorName,
   seekToActionTarget,
@@ -738,7 +742,9 @@ export function VideoSchema({
   uploadDate: string
   duration?: string
   contentUrl: string
-  embedUrl?: string
+  embedUrl: string
+  width?: number
+  height?: number
   publisherId?: string
   creatorName?: string
   seekToActionTarget?: string
@@ -751,11 +757,12 @@ export function VideoSchema({
     thumbnailUrl,
     uploadDate,
     contentUrl,
+    embedUrl,
     publisher: {
       "@id": publisherId,
     },
     ...(duration && { duration }),
-    ...(embedUrl && { embedUrl }),
+    ...(typeof width === "number" && typeof height === "number" && { width, height }),
     ...(creatorName && { creator: { "@type": "Person", name: creatorName } }),
   }
 

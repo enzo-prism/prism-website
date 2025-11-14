@@ -184,6 +184,7 @@ export default function DesignsPageClient() {
             <VideoPlayer
               className="mt-4"
               src="https://res.cloudinary.com/dhqpqfw6w/video/upload/v1763152551/design-1_ftpmsw.mp4"
+              poster="https://res.cloudinary.com/dhqpqfw6w/video/upload/so_0/design-1_ftpmsw.jpg"
               title="Founder Enzo Sison on design as the silent multiplier"
               caption="Enzo explains why inconsistent design erodes trust, how Prism builds cohesive systems across every touchpoint, and how sharper visuals lift awareness, conversion, and loyalty without hiring an internal team."
               schema={{
@@ -192,10 +193,12 @@ export default function DesignsPageClient() {
                 description:
                   "Enzo Sison shares why design is the silent multiplier, how Prism creates cohesive, premium systems across sites, listings, ads, and assets, and how that elevates awareness, conversion, and lifetime value.",
                 thumbnailUrl: "https://res.cloudinary.com/dhqpqfw6w/video/upload/so_0/design-1_ftpmsw.jpg",
-                uploadDate: "2025-01-24",
+                uploadDate: "2025-01-24T00:00:00Z",
                 duration: "PT60S",
                 contentUrl: "https://res.cloudinary.com/dhqpqfw6w/video/upload/v1763152551/design-1_ftpmsw.mp4",
                 embedUrl: "https://www.design-prism.com/designs#founder-vsl",
+                width: 1920,
+                height: 1080,
                 creatorName: "Enzo Sison",
               }}
             />

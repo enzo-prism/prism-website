@@ -370,10 +370,12 @@ export default async function WebsitesPage() {
                   description:
                     "Enzo Sison explains why most small-business websites leave money on the table and how Prism’s fast, conversion-focused builds improve discovery, conversion, and retention.",
                   thumbnailUrl: "https://res.cloudinary.com/dhqpqfw6w/video/upload/so_0/prism_websites_vsl_2_ojqiku.jpg",
-                  uploadDate: "2025-01-24",
+                  uploadDate: "2025-01-24T00:00:00Z",
                   duration: "PT60S",
                   contentUrl: "https://res.cloudinary.com/dhqpqfw6w/video/upload/v1763160814/prism_websites_vsl_2_ojqiku.mp4",
                   embedUrl: "https://www.design-prism.com/websites#founder-vsl",
+                  width: 1920,
+                  height: 1080,
                   creatorName: "Enzo Sison",
                 }}
               />

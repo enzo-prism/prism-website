@@ -267,10 +267,12 @@ export default function AiWebsiteLaunchClientPage() {
               description:
                 "Enzo Sison explains how Prism turns slow, confusing sites into fast, conversion-focused experiences that improve discovery, conversion, and retention.",
               thumbnailUrl: "https://res.cloudinary.com/dhqpqfw6w/video/upload/so_0/prism_websites_vsl_2_ojqiku.jpg",
-              uploadDate: "2025-01-24",
+              uploadDate: "2025-01-24T00:00:00Z",
               duration: "PT38S",
               contentUrl: "https://res.cloudinary.com/dhqpqfw6w/video/upload/v1763160814/prism_websites_vsl_2_ojqiku.mp4",
               embedUrl: "https://www.design-prism.com/ai-website-launch#founder-vsl",
+              width: 1920,
+              height: 1080,
               creatorName: "Enzo Sison",
             }}
           />
