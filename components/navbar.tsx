@@ -9,9 +9,9 @@ import { Button } from "@/components/ui/button"
 import { useMobile } from "@/hooks/use-mobile"
 import { LOGO_CONFIG, NAV_ITEMS, type NavItem } from "@/lib/constants"
 import { trackNavigation } from "@/utils/analytics"
-import CoreImage from "./core-image"; // Assuming core-image.tsx is in the same components directory
+import CoreImage from "./core-image"
 
-type IconRenderer = (props: { className?: string }) => JSX.Element
+type IconRenderer = (props: { className?: string }) => React.ReactElement
 
 export default function Navbar() {
   const [isMounted, setIsMounted] = useState(false)
