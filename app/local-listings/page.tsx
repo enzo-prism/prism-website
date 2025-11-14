@@ -12,6 +12,7 @@ import Link from "next/link"
 import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
 import { ServiceSchema } from "@/components/schema-markup"
 import { getAllPosts } from "@/lib/mdx"
+import VideoPlayer from "@/components/video-player"
 
 export const metadata: Metadata = {
   title: "local listing optimization for small businesses | prism",
@@ -266,6 +267,33 @@ export default async function LocalListingsPage() {
                 <Link href="#process">See our process</Link>
               </Button>
             </div>
+          </div>
+        </section>
+
+        <section className="px-4 py-12 sm:py-16">
+          <div id="local-listings-founder-vsl" className="mx-auto max-w-3xl text-left">
+            <p className="text-center text-xs font-semibold uppercase tracking-[0.28em] text-neutral-400">hear from our founder</p>
+            <VideoPlayer
+              className="mt-4"
+              src="https://res.cloudinary.com/dhqpqfw6w/video/upload/v1763162481/local_listings_di9gy7.mp4"
+              poster="https://res.cloudinary.com/dhqpqfw6w/video/upload/so_0/local_listings_di9gy7.jpg"
+              title="Founder Enzo Sison on owning your local listings"
+              caption="Enzo explains why your Google Business Profile is the real first impression, how Prism refreshes every listing (Google, Apple, Yelp, Bing, and more), and how better listings boost visibility, calls, and loyal regulars."
+              schema={{
+                id: "https://www.design-prism.com/local-listings#founder-vsl",
+                name: "Founder Enzo Sison on local listing domination",
+                description:
+                  "Enzo Sison covers why outdated listings kill trust and how Prism rebuilds Google, Apple, Yelp, and Bing profiles—photos, services, descriptions, posts, and reviews—to lift visibility, conversions, and repeat business.",
+                thumbnailUrl: "https://res.cloudinary.com/dhqpqfw6w/video/upload/so_0/local_listings_di9gy7.jpg",
+                uploadDate: "2025-01-24T00:00:00Z",
+                duration: "PT60S",
+                contentUrl: "https://res.cloudinary.com/dhqpqfw6w/video/upload/v1763162481/local_listings_di9gy7.mp4",
+                embedUrl: "https://www.design-prism.com/local-listings#founder-vsl",
+                width: 1920,
+                height: 1080,
+                creatorName: "Enzo Sison",
+              }}
+            />
           </div>
         </section>
 

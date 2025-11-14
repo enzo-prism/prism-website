@@ -1,6 +1,6 @@
 "use client"
 
-import { Menu, X } from "lucide-react"
+import { MapPin, Megaphone, Menu, MonitorSmartphone, Search, X } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useEffect, useState } from "react"
@@ -10,6 +10,8 @@ import { useMobile } from "@/hooks/use-mobile"
 import { LOGO_CONFIG, NAV_ITEMS, type NavItem } from "@/lib/constants"
 import { trackNavigation } from "@/utils/analytics"
 import CoreImage from "./core-image"; // Assuming core-image.tsx is in the same components directory
+
+type IconRenderer = (props: { className?: string }) => JSX.Element
 
 export default function Navbar() {
   const [isMounted, setIsMounted] = useState(false)
@@ -40,6 +42,17 @@ export default function Navbar() {
   }
 
   const headerPositionClass = isMobile && pathname === "/" ? "fixed" : "sticky"
+  const serviceIconMap: Record<string, IconRenderer> = {
+    websites: MonitorSmartphone,
+    seo: Search,
+    ads: Megaphone,
+    "local listings": MapPin,
+  }
+  const getNavIcon = (label?: string) => {
+    if (!label) return null
+    const Icon = serviceIconMap[label.toLowerCase()]
+    return Icon ? <Icon className="h-4 w-4 text-neutral-400" aria-hidden /> : null
+  }
   return (
     <header className={`${headerPositionClass} top-0 z-50 w-full border-b bg-background/95 md:backdrop-blur supports-[backdrop-filter]:bg-background/60`}>
       <div className="w-full max-w-7xl mx-auto flex h-14 md:h-16 items-center justify-between px-0">
@@ -114,7 +127,7 @@ export default function Navbar() {
                               <Link
                                 key={child.label}
                                 href={child.href}
-                                className={`block rounded-md px-3 py-2 text-base lowercase transition-colors hover:bg-muted ${
+                                className={`flex items-center gap-2 rounded-md px-3 py-2 text-base lowercase transition-colors hover:bg-muted ${
                                   isActivePath(child.href)
                                     ? "font-medium text-foreground bg-muted"
                                     : "text-muted-foreground hover:text-foreground"
@@ -124,6 +137,7 @@ export default function Navbar() {
                                   trackNavigation(child.label, child.href)
                                 }}
                               >
+                                {getNavIcon(child.label)}
                                 {child.label}
                               </Link>
                             ))}
@@ -162,23 +176,24 @@ export default function Navbar() {
                       <span>{item.label}</span>
                     </button>
                   )}
-                  {item.children && (
-                    <div className="absolute left-1/2 -translate-x-1/2 top-full pt-2 z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-opacity duration-150">
-                      <div className="rounded-xl border bg-white shadow-lg p-2 min-w-[220px]">
-                        {item.children.map((child) => (
-                          <Link
-                            key={child.label}
-                            href={child.href}
-                            className={`block rounded-md px-3 py-2 text-sm lowercase hover:bg-neutral-50 ${
-                              isActivePath(child.href) ? 'text-neutral-900' : 'text-neutral-700 hover:text-neutral-900'
-                            }`}
-                            onClick={() => trackNavigation(child.label, child.href)}
-                          >
-                            {child.label}
-                          </Link>
-                        ))}
-                      </div>
-                    </div>
+                        {item.children && (
+                          <div className="absolute left-1/2 -translate-x-1/2 top-full pt-2 z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-opacity duration-150">
+                            <div className="rounded-xl border bg-white shadow-lg p-2 min-w-[220px]">
+                              {item.children.map((child) => (
+                                <Link
+                                  key={child.label}
+                                  href={child.href}
+                                  className={`flex items-center gap-2 rounded-md px-3 py-2 text-sm lowercase hover:bg-neutral-50 ${
+                                    isActivePath(child.href) ? 'text-neutral-900' : 'text-neutral-700 hover:text-neutral-900'
+                                  }`}
+                                  onClick={() => trackNavigation(child.label, child.href)}
+                                >
+                                  {getNavIcon(child.label)}
+                                  {child.label}
+                                </Link>
+                              ))}
+                            </div>
+                          </div>
                   )}
                 </div>
               ))}
