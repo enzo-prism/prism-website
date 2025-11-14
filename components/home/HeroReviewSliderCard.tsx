@@ -37,10 +37,10 @@ export default function HeroReviewSliderCard({ className }: HeroReviewSliderCard
   const isPausedRef = useRef(isPaused)
   const progressAngle = useTransform(progressValue, (latest) => Math.min(360, latest * 360))
   const pieGradient = useMotionTemplate`conic-gradient(transparent 0deg ${progressAngle}deg, currentColor ${progressAngle}deg 360deg)`
-  const heroReviewForSchema = useMemo(
-    () => reviewPool.find((quote) => quote.heroSpotlight) ?? reviewPool[0],
-    [reviewPool]
-  )
+  const heroReviewForSchema = useMemo(() => {
+    if (reviewPool.length === 0) return null
+    return reviewPool.find((quote) => quote.heroSpotlight) ?? reviewPool[0]
+  }, [reviewPool])
   const heroReviewSchema = useMemo(() => {
     if (!heroReviewForSchema) return null
     return JSON.stringify({
@@ -79,6 +79,47 @@ export default function HeroReviewSliderCard({ className }: HeroReviewSliderCard
 
     mediaQuery.addListener(updatePreference)
     return () => mediaQuery.removeListener(updatePreference)
+  }, [])
+
+  useEffect(() => {
+    const pool = getHomepageHeroReviewPool()
+    if (!pool.length) {
+      setReviewPool([])
+      setActiveIndex(0)
+      return
+    }
+
+    const storageKey = "prism-hero-review"
+    let index: number | null = null
+
+    if (typeof window !== "undefined") {
+      try {
+        const stored = window.localStorage.getItem(storageKey)
+        if (stored !== null) {
+          const parsed = Number.parseInt(stored, 10)
+          if (!Number.isNaN(parsed)) {
+            index = parsed % pool.length
+          }
+        }
+      } catch {
+        index = null
+      }
+    }
+
+    if (index === null) {
+      index = Math.floor(Math.random() * pool.length)
+    }
+
+    if (typeof window !== "undefined") {
+      try {
+        window.localStorage.setItem(storageKey, String(index))
+      } catch {
+        // ignore
+      }
+    }
+
+    setReviewPool(pool)
+    setActiveIndex(index)
   }, [])
 
   useEffect(() => {
@@ -168,13 +209,9 @@ export default function HeroReviewSliderCard({ className }: HeroReviewSliderCard
     }
   }, [isPaused, prefersReducedMotion, reviewPool.length, progressValue, startProgressAnimation])
 
-  if (reviewPool.length === 0) {
-    return null
-  }
-
-  const currentReview = reviewPool[activeIndex]
+  const currentReview = reviewPool[activeIndex] ?? null
   const shouldReduceMotion = prefersReducedMotion
-  const currentReviewLength = currentReview.text.length
+  const currentReviewLength = currentReview?.text.length ?? 0
   const quoteTransitionDuration = useMemo(() => {
     if (shouldReduceMotion) {
       return 0.2
@@ -265,46 +302,9 @@ export default function HeroReviewSliderCard({ className }: HeroReviewSliderCard
   const pauseRotation = () => setIsPaused(true)
   const resumeRotation = () => setIsPaused(false)
 
-  useEffect(() => {
-    const pool = getHomepageHeroReviewPool()
-    if (!pool.length) {
-      setReviewPool([])
-      setActiveIndex(0)
-      return
-    }
-
-    const storageKey = "prism-hero-review"
-    let index: number | null = null
-
-    if (typeof window !== "undefined") {
-      try {
-        const stored = window.localStorage.getItem(storageKey)
-        if (stored !== null) {
-          const parsed = Number.parseInt(stored, 10)
-          if (!Number.isNaN(parsed)) {
-            index = parsed % pool.length
-          }
-        }
-      } catch {
-        index = null
-      }
-    }
-
-    if (index === null) {
-      index = Math.floor(Math.random() * pool.length)
-    }
-
-    if (typeof window !== "undefined") {
-      try {
-        window.localStorage.setItem(storageKey, String(index))
-      } catch {
-        // ignore
-      }
-    }
-
-    setReviewPool(pool)
-    setActiveIndex(index)
-  }, [])
+  if (!currentReview) {
+    return null
+  }
 
   return (
     <div
