@@ -9,6 +9,7 @@ import SimpleBlogGrid from "@/components/simple-blog-grid"
 import SimpleBlogPostCard from "@/components/simple-blog-post-card"
 import { Button } from "@/components/ui/button"
 import { getAllPosts } from "@/lib/mdx"
+import VideoPlayer from "@/components/video-player"
 
 export const metadata: Metadata = {
   title: "seo that compounds | prism",
@@ -52,6 +53,17 @@ export default async function SeoPage() {
   return (
     <>
       <SeoHero {...hero} />
+      <section className="px-4 py-16 sm:py-20">
+        <div className="mx-auto max-w-3xl text-left">
+          <p className="text-center text-xs font-semibold uppercase tracking-[0.28em] text-neutral-400">hear from our founder</p>
+          <VideoPlayer
+            className="mt-4"
+            src="https://res.cloudinary.com/dhqpqfw6w/video/upload/v1763150128/seo_vsl_prism_website_oqk1xm.mp4"
+            title="Founder Enzo Sison on intentional seo that compounds"
+            caption="Enzo explains why SEO isn’t about tricks—it’s about becoming the obvious answer when buyers are ready. He covers how Prism builds the foundation (on-page clarity, technical structure, schema, AI-search readiness, and location intent), ties it to the metrics that matter (awareness, conversion, lifetime value), and shares why pairing SEO with dialed-in websites and listings plus month-to-month ownership gives you compounding traffic without hiring a full team."
+          />
+        </div>
+      </section>
 
       <SeoSection
         eyebrow="how seo works today"
