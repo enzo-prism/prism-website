@@ -261,8 +261,8 @@ export default function SiteRebuildDynamicSteps() {
         </div>
         <pre className="overflow-x-auto rounded-2xl bg-neutral-950 p-5 text-sm text-white shadow-sm sm:text-base lg:text-lg">
           <code>
-{`npm install
-npm run dev`}
+{`pnpm install
+pnpm dev`}
           </code>
         </pre>
         <div className="rounded-2xl border border-neutral-200 bg-neutral-50 p-5 text-sm text-neutral-700 shadow-sm sm:text-base">

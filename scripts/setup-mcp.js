@@ -173,10 +173,10 @@ async function installDependencies() {
   } catch (error) {
     log('Installing dotenv...', 'yellow');
     try {
-      execSync('npm install dotenv', { stdio: 'inherit' });
+      execSync('pnpm add dotenv', { stdio: 'inherit' });
       log('✅ dotenv installed', 'green');
     } catch (installError) {
-      log('❌ Failed to install dotenv. Please run: npm install dotenv', 'red');
+      log('❌ Failed to install dotenv. Please run: pnpm add dotenv', 'red');
       return false;
     }
   }
@@ -242,7 +242,7 @@ async function main() {
     } else {
       log('\n⚠️  Partial setup completed', 'yellow');
       log('Please configure your tokens and run the health check:', 'yellow');
-      log('npm run mcp:health', 'cyan');
+      log('pnpm mcp:health', 'cyan');
     }
     
   } catch (error) {

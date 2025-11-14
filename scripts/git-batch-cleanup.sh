@@ -76,7 +76,7 @@ echo "
 🎉 Git repository cleanup completed!
 
 Next steps:
-1. Run 'npm run git:status' to verify sync health
+1. Run 'pnpm git:status' to verify sync health
 2. The git hooks are now installed and monitoring
-3. Use 'npm run git:sync' regularly to maintain sync
+3. Use 'pnpm git:sync' regularly to maintain sync
 "

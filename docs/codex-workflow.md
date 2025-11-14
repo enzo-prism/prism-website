@@ -1,5 +1,7 @@
 # Codex workflow playbook
 
+> **Reference order** – README.md and AGENTS.md define the canonical rules for tooling, architecture, and documentation. This playbook inherits from them; if you spot a mismatch, update this file to match the canonical docs.
+
 Guidance for future Codex sessions so we can ship faster without rediscovering context every time.
 
 ## 1. Stack refresher
@@ -7,7 +9,7 @@ Guidance for future Codex sessions so we can ship faster without rediscovering c
 - **Framework** – Next.js App Router + TypeScript, deployed via Vercel.
 - **Styling** – Tailwind classes inline; no styled-components.
 - **UI kit** – `components/ui/*` (Button, Carousel, etc.). Import from there instead of re‑implementing.
-- **Forms** – Most marketing forms post to [Formspree](https://formspree.io/). Keep actions and field names explicit so PMs can read submissions quickly.
+- **Forms** – Marketing forms post to [Formspree](https://formspree.io/) using the shared `useFormValidation` hook (HTML5 validation + client-side fetch + redirect). Keep actions and field names explicit so PMs can read submissions quickly.
 
 ## 2. Dental photography surfaces
 
@@ -85,6 +87,12 @@ Keep captions optional; if omitted, remove the text block so cards stay compact.
 1. **Update navigation triangles** – whenever you add a CTA or remove one on these pages, make sure visitors can still reach every related route in ≤1 click.
 2. **Keep imagery remote** – prefer Cloudinary links (`res.cloudinary.com/...`) over local `/public` assets for fast iteration.
 3. **Run lint if touching shared components** – `pnpm lint` catches Tailwind ordering issues.
-4. **Document new flows** – drop short notes in this file or `docs/forms.md` whenever we add a Formspree endpoint or new data fields.
+4. **Document new flows** – drop short notes in this file or `docs/forms.md` whenever we add a Formspree endpoint or new data fields, instead of creating new top-level docs.
+
+## 8. Homepage hero slider rules
+
+- The hero review slider only surfaces one quote at a time from a curated list. Those records live in `content/wall-of-love-data.tsx` under `HOMEPAGE_HERO_REVIEW_IDS`. When marketing wants a different quote, add the testimonial to `quotesData` (if missing), ensure it doesn’t require consent, and append its ID to that array.
+- Randomization now happens client-side to avoid hydration mismatches. The server always renders the first curated review; on the client we pick a random one and store its index in `localStorage` under `prism-hero-review`. If you change this logic, keep SSR deterministic (no `Math.random()` on the server) and guard any browser APIs with `typeof window !== "undefined"`.
+- If the curated pool ever empties (e.g., IDs removed), the helper falls back to the first 10 consent-safe quotes. This prevents crashes in builds. When editing, keep this fallback in mind and prefer editing the curated list instead of reworking the slider.
 
 Following this playbook should keep Codex contributors productive without re-learning the project every session.

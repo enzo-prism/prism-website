@@ -17,7 +17,7 @@
 ### Documentation & Scripts
 - ✅ Updated `MCP_SETUP.md` with Cursor-specific instructions
 - ✅ Enhanced health check script to support `.env.local`
-- ✅ Created GitHub MCP test script (`npm run mcp:test-github`)
+- ✅ Created GitHub MCP test script (`pnpm mcp:test-github`)
 - ✅ Updated `CLAUDE.md` with comprehensive MCP commands
 
 ### Cursor Integration
@@ -58,13 +58,13 @@
 
 ```bash
 # Test environment setup
-npm run mcp:health
+pnpm mcp:health
 
 # Test GitHub MCP specifically
-npm run mcp:test-github
+pnpm mcp:test-github
 
 # Validate all MCP configurations
-npm run mcp:validate
+pnpm mcp:validate
 
 # Switch to Docker-based configuration
 cp .mcp.docker.json .mcp.json

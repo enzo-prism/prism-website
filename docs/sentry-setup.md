@@ -94,7 +94,7 @@ To test that Sentry is working correctly:
 
 1. **Client-side error test**: Add a button that throws an error
 2. **Server-side error test**: Create an API route that throws an error
-3. **Build error test**: Run `npm run build` to ensure source maps upload correctly
+3. **Build error test**: Run `pnpm build` to ensure source maps upload correctly
 
 ### Using MCP Commands
 From your development environment, you can:

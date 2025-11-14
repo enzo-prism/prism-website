@@ -10,7 +10,7 @@ This document covers maintenance procedures, updates, and troubleshooting for MC
 - [ ] **Rotate GitHub Personal Access Token**
   - Generate new token with same permissions
   - Update `.env` file
-  - Test connectivity with `npm run mcp:health`
+  - Test connectivity with `pnpm mcp:health`
   - Revoke old token
 
 - [ ] **Review Supabase Access Token**
@@ -37,7 +37,7 @@ This document covers maintenance procedures, updates, and troubleshooting for MC
 #### Health Monitoring
 - [ ] **Run Comprehensive Health Check**
   ```bash
-  npm run mcp:validate
+  pnpm mcp:validate
   ```
 
 - [ ] **Test All MCP Server Functions**
@@ -51,10 +51,10 @@ This document covers maintenance procedures, updates, and troubleshooting for MC
 Run automated health check:
 ```bash
 # Quick health check
-npm run mcp:health
+pnpm mcp:health
 
 # Full validation
-npm run mcp:validate
+pnpm mcp:validate
 ```
 
 Monitor for:
@@ -77,7 +77,7 @@ docker images ghcr.io/github/github-mcp-server
 docker pull ghcr.io/github/github-mcp-server:latest
 
 # Test updated version
-npm run mcp:health
+pnpm mcp:health
 ```
 
 ### Supabase MCP Server Updates
@@ -90,7 +90,7 @@ The Supabase MCP server is installed via NPX with the `@latest` tag:
 npm view @supabase/mcp-server-supabase version
 
 # Test after updates
-npm run mcp:health
+pnpm mcp:health
 ```
 
 ### Sentry MCP Server Updates
@@ -102,7 +102,7 @@ The Sentry MCP server is remote and automatically maintained:
 curl -s https://mcp.sentry.dev/mcp
 
 # Run health check
-npm run mcp:health
+pnpm mcp:health
 ```
 
 ### Figma MCP Server Updates
@@ -131,7 +131,7 @@ curl http://127.0.0.1:3845/health
 **Diagnosis:**
 ```bash
 # Run health check to identify failing server
-npm run mcp:health
+pnpm mcp:health
 
 # Test specific connections
 curl -H "Authorization: token $GITHUB_PERSONAL_ACCESS_TOKEN" https://api.github.com/user
@@ -183,7 +183,7 @@ curl -H "Authorization: token $GITHUB_PERSONAL_ACCESS_TOKEN" \
 **Diagnosis:**
 ```bash
 # Test token validity
-npm run mcp:health
+pnpm mcp:health
 
 # Check token permissions (GitHub)
 curl -H "Authorization: token $GITHUB_PERSONAL_ACCESS_TOKEN" \
@@ -289,7 +289,7 @@ node -e "console.log(JSON.stringify(require('./.mcp.json'), null, 2))"
 #### Monitoring Commands
 ```bash
 # Quick performance check
-time npm run mcp:health
+time pnpm mcp:health
 
 # Detailed connection testing
 time curl -w "%{time_total}\n" -H "Authorization: token $GITHUB_PERSONAL_ACCESS_TOKEN" https://api.github.com/user
@@ -322,7 +322,7 @@ cp .env.example .env
 # Manually fill in tokens
 
 # Validate recovery
-npm run mcp:validate
+pnpm mcp:validate
 ```
 
 #### Token Recovery

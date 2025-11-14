@@ -9,13 +9,24 @@ Next.js App Router project that powers the Prism marketing site, blog, and landi
 
 ## Quick start
 
-1. **Install prerequisites** – Node.js 18+, [pnpm](https://pnpm.io/), and git.
+1. **Install prerequisites** – Node.js 18.x LTS (per Next.js support), [pnpm](https://pnpm.io/), and git.
 2. **Install dependencies** – `pnpm install`.
 3. **Set up environment variables** – `cp .env.example .env.local` and fill in the values listed in [`docs/environment-setup.md`](./docs/environment-setup.md).
 4. **Run the dev server** – `pnpm dev` (defaults to `http://localhost:3000`).
 5. **Optional quality gates** – `pnpm lint && pnpm typecheck && pnpm test` before opening a PR.
 
+> **Canonical instructions**  
+> README.md and AGENTS.md are the single source of truth for technical guidance. Any conflicting direction elsewhere (including CLAUDE.md, legacy playbooks, or scripts) is deprecated until updated to match these files.
+
 The repo assumes pnpm; npm/yarn installs will fall out of sync.
+
+### Stack guardrails
+
+- **Runtime** – Node 18.x LTS. Upgrade only after Next.js + Vercel builds are validated on the new version.
+- **Package manager** – pnpm 10.x via `corepack enable`. All commands should use `pnpm`; references to `npm run …` are outdated.
+- **Architecture** – Marketing forms post to Formspree using the shared `useFormValidation` hook (HTML5 validation + client-side `fetch` + thank-you redirect). We do **not** use React Hook Form, Zod, or server actions/mechanical Supabase inserts for these flows today. If this changes, update this section immediately.
+- **Documentation** – When you add a new flow or change behavior, edit the relevant file under `/docs` (or this README/AGENTS if the rule is global). Do *not* add new top-level docs without approval; prefer updating existing guides.
+- **Environment variables** – Required vars are limited to those listed in [docs/environment-setup.md](./docs/environment-setup.md) and `.env.example` (GA overrides, Supabase credentials, Resend key, optional site URLs). Do not list vars that aren’t implemented in code.
 
 ## Quality & diagnosis scripts
 

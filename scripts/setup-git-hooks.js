@@ -45,7 +45,7 @@ echo "📝 Detected tool: $TOOL"
 
 # Check for sync issues
 node scripts/git-sync-monitor.js check --quiet || {
-    echo "⚠️  Sync issues detected. Run 'npm run git:sync' to resolve."
+    echo "⚠️  Sync issues detected. Run 'pnpm git:sync' to resolve."
     exit 1
 }
 
@@ -72,8 +72,8 @@ case "$TOOL" in
 esac
 
 # Run linting if package.json exists
-if [ -f "package.json" ] && command -v npm > /dev/null 2>&1; then
-    if npm run lint --if-present > /dev/null 2>&1; then
+if [ -f "package.json" ] && command -v pnpm > /dev/null 2>&1; then
+    if pnpm run --if-present lint > /dev/null 2>&1; then
         echo "✅ Linting passed"
     else
         echo "⚠️  Linting issues detected (continuing anyway for v0.dev compatibility)"
@@ -122,7 +122,7 @@ case "$branch" in
         # Extra validations for main branch
         if [ -f "package.json" ]; then
             echo "🔧 Running build check..."
-            if npm run build --if-present > /dev/null 2>&1; then
+            if pnpm run --if-present build > /dev/null 2>&1; then
                 echo "✅ Build successful"
             else
                 echo "❌ Build failed. Fix issues before pushing to main."
@@ -147,9 +147,9 @@ echo "✅ Pre-push checks completed"
 
 echo "🔄 Post-merge cleanup..."
 
-# Check if package.json changed (might need npm install)
+  # Check if package.json changed (might need pnpm install)
 if git diff-tree -r --name-only HEAD@{1} HEAD | grep -q "package.json"; then
-    echo "📦 package.json changed, you might want to run 'npm install'"
+    echo "📦 package.json changed, you might want to run 'pnpm install'"
 fi
 
 # Check if dependencies changed
@@ -159,7 +159,7 @@ fi
 
 # Update sync status
 node scripts/git-sync-monitor.js check --quiet > /dev/null 2>&1 || {
-    echo "ℹ️  Run 'npm run git:status' to check repository health"
+    echo "ℹ️  Run 'pnpm git:status' to check repository health"
 }
 
 echo "✅ Post-merge tasks completed"

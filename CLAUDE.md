@@ -1,6 +1,7 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+> **Canonical reference**  
+> README.md + AGENTS.md define the authoritative rules for this repo (tooling, architecture, documentation, env vars). Treat this file as supplemental; if anything here conflicts with README/AGENTS, follow those files and update this doc.
 
 ## Project Overview
 **Prism Website** - A Next.js 15.2.4 marketing website for a design/development agency, automatically synced with v0.dev and deployed on Vercel.
@@ -9,28 +10,28 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ```bash
 # Development
-npm run dev          # Start dev server (port 3000)
-npm run build        # Build for production
-npm run lint         # Run ESLint
-npm run typecheck    # Run TypeScript type checking
-npm test             # Run all tests
+pnpm dev          # Start dev server (port 3000)
+pnpm build        # Build for production
+pnpm lint         # Run ESLint
+pnpm typecheck    # Run TypeScript type checking
+pnpm test         # Run all tests
 
 # Running specific tests
-npm test -- __tests__/path/to/test.ts
-npm test -- --testNamePattern="pattern"
-npm test -- --watch
+pnpm test -- __tests__/path/to/test.ts
+pnpm test -- --testNamePattern="pattern"
+pnpm test -- --watch
 
 # Diagnostics
-npm run diagnose:images  # Image system diagnostics
-npm run verify:deploy    # Pre-deployment checks
+pnpm diagnose:images  # Image system diagnostics
+pnpm verify:deploy    # Pre-deployment checks
 
 # MCP Server Management
-npm run mcp:health      # Check MCP server status
-npm run mcp:validate    # Validate MCP configuration
+pnpm mcp:health      # Check MCP server status
+pnpm mcp:validate    # Validate MCP configuration
 
 # Git Sync (v0.dev/Cursor/Claude coordination)
-npm run git:status      # Check sync health
-npm run git:cleanup     # Clean stale branches
+pnpm git:status      # Check sync health
+pnpm git:cleanup     # Clean stale branches
 ```
 
 ## High-Level Architecture
@@ -38,7 +39,7 @@ npm run git:cleanup     # Clean stale branches
 ### Core Application Flow
 1. **Page Rendering**: Server Components (default) → Client hydration → Interactive features
 2. **Content Pipeline**: MDX files → gray-matter parsing → next-mdx-remote rendering → Dynamic imports
-3. **Form Processing**: React Hook Form + Zod → Server actions → Supabase storage
+3. **Form Processing**: Formspree endpoints + `useFormValidation` hook → Client-side fetch + redirect → Thank-you routes (Supabase writes happen in `/api/prism-leads` when configured)
 4. **Error Handling**: Try/catch → Sentry capture → Error boundaries with fallback UI
 5. **Image Loading**: Custom Image component → Next.js optimization → Retry logic → Fallbacks
 
@@ -47,14 +48,14 @@ npm run git:cleanup     # Clean stale branches
 **Server vs Client Components**
 - Server Components by default (no "use client" directive)
 - Client Components for interactivity (onClick, useState, useEffect)
-- Form submissions use server actions
+- Form submissions use client-side fetch logic (Formspree + redirects) inside Client Components; keep SSR deterministic elsewhere
 - Dynamic imports for heavy client components
 
 **Image Optimization System**
 - Custom Image component (`/components/image.tsx`) with error handling and retry logic
 - Automatic WebP/AVIF conversion, 1-year cache TTL
 - Image utilities in `/utils/image-utils.ts`
-- Run `npm run diagnose:images` for diagnostics
+- Run `pnpm diagnose:images` for diagnostics
 
 **Content Management**
 - MDX blog posts in `/content/blog/` with front matter
@@ -82,9 +83,9 @@ npm run git:cleanup     # Clean stale branches
 ## Critical Patterns
 
 **Development Rules**
-- NEVER create files unless absolutely necessary - prefer editing existing files
-- NEVER proactively create documentation files (*.md) unless explicitly requested
-- Do what has been asked; nothing more, nothing less
+- Update existing docs (README/AGENTS or a relevant `/docs/*.md`) whenever you change flows or add functionality; do not create new top-level docs without approval.
+- Prefer editing existing components/utilities over creating duplicates.
+- Stay scoped to the requested change.
 
 **TypeScript**
 - Path alias: `@/*` maps to root
@@ -93,16 +94,19 @@ npm run git:cleanup     # Clean stale branches
 
 **Components**
 - Use existing UI components from `/components/ui`
-- Always use custom Image component from `/components/image.tsx`
+- Always use the custom Image component from `/components/image.tsx`
 - Implement loading and error states
 - Hardware-accelerated animations only
 
 **Required Environment Variables**
+See `.env.example` / `docs/environment-setup.md` for the complete list. The critical values today are:
 ```bash
-GITHUB_PERSONAL_ACCESS_TOKEN=    # MCP GitHub
-SUPABASE_ACCESS_TOKEN=          # MCP Supabase
-RESEND_API_KEY=                 # Email service
-NEXT_PUBLIC_POSTHOG_KEY=        # Analytics
+NEXT_PUBLIC_BASE_URL=                # canonical host
+SUPABASE_URL=                        # Supabase project URL (required for lead storage)
+SUPABASE_SERVICE_ROLE_KEY=           # Supabase service role key
+NEXT_PUBLIC_SUPABASE_URL=            # browser-safe Supabase URL (optional mirror)
+RESEND_API_KEY=                      # Email notifications (optional)
+NEXT_PUBLIC_GA_MEASUREMENT_ID=       # Optional GA override
 ```
 
 ## Blog Post Structure
@@ -128,11 +132,11 @@ MDX posts in `/content/blog/` require front matter with: title, description, dat
 ## Quick Debugging
 
 **Common Issues**
-- Module not found: Run `npm install`
-- Type errors: Run `npm run typecheck`
-- Image failures: Check custom Image component, run `npm run diagnose:images`
+- Module not found: Run `pnpm install`
+- Type errors: Run `pnpm typecheck`
+- Image failures: Check the custom Image component, run `pnpm diagnose:images`
 - Test failures: Verify MDX mock is working
-- Git sync issues: Run `npm run git:status` and follow recommendations
+- Git sync issues: Run `pnpm git:status` and follow recommendations
 
 **v0.dev Deployment**
 - Project: https://v0.dev/chat/projects/8xmj81uf3fc

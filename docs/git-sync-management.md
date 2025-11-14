@@ -33,9 +33,9 @@ This system solves the recurring git synchronization issues between v0.dev, Curs
 
 **Usage**:
 ```bash
-npm run git:status    # Quick health check
-npm run git:report    # Detailed report
-npm run git:sync      # Fetch and check status
+pnpm git:status    # Quick health check
+pnpm git:report    # Detailed report
+pnpm git:sync      # Fetch and check status
 ```
 
 **Sample Output**:
@@ -68,8 +68,8 @@ Remote Branches: 25
 
 **Usage**:
 ```bash
-npm run git:cleanup-dry    # Preview what would be deleted
-npm run git:cleanup        # Interactive cleanup
+pnpm git:cleanup-dry    # Preview what would be deleted
+pnpm git:cleanup        # Interactive cleanup
 ./scripts/git-batch-cleanup.sh    # Fast batch cleanup
 ```
 
@@ -102,8 +102,8 @@ npm run git:cleanup        # Interactive cleanup
 
 **Installation**:
 ```bash
-npm run git:hooks-install    # Install hooks
-npm run git:hooks-remove     # Remove hooks
+pnpm git:hooks-install    # Install hooks
+pnpm git:hooks-remove     # Remove hooks
 ```
 
 ## Workflow Coordination
@@ -130,27 +130,27 @@ npm run git:hooks-remove     # Remove hooks
 
 ### Morning Sync Check
 ```bash
-npm run git:sync
+pnpm git:sync
 # Review any issues and follow recommendations
 ```
 
 ### Before Starting Work
 ```bash
-npm run git:status
+pnpm git:status
 # Ensure repository is clean and synced
 ```
 
 ### Weekly Maintenance
 ```bash
-npm run git:cleanup-dry    # Review branches to be cleaned
-npm run git:cleanup        # Clean up stale branches
+pnpm git:cleanup-dry    # Review branches to be cleaned
+pnpm git:cleanup        # Clean up stale branches
 ```
 
 ### Emergency Sync Fix
 ```bash
 git fetch origin
 git reset --hard origin/main    # WARNING: Loses local changes
-npm run git:status              # Verify clean state
+pnpm git:status              # Verify clean state
 ```
 
 ## Automation and Monitoring
@@ -160,7 +160,7 @@ The sync monitor can be run periodically to catch issues early:
 
 ```bash
 # Add to cron for hourly checks
-0 * * * * cd /path/to/project && npm run git:status >> sync.log 2>&1
+0 * * * * cd /path/to/project && pnpm git:status >> sync.log 2>&1
 ```
 
 ### CI/CD Integration
@@ -169,7 +169,7 @@ Add sync checks to your deployment pipeline:
 ```yaml
 # GitHub Actions example
 - name: Check Git Sync Health
-  run: npm run git:status
+  run: pnpm git:status
 ```
 
 ### Slack/Discord Notifications
@@ -189,14 +189,14 @@ fi
 
 #### "Repository not in sync"
 ```bash
-npm run git:sync
+pnpm git:sync
 # Follow the recommendations provided
 ```
 
 #### "Too many remote branches"
 ```bash
-npm run git:cleanup-dry    # Preview cleanup
-npm run git:cleanup        # Execute cleanup
+pnpm git:cleanup-dry    # Preview cleanup
+pnpm git:cleanup        # Execute cleanup
 ```
 
 #### "Commits ahead of remote" 
@@ -221,8 +221,8 @@ git commit --no-verify     # Bypass hooks temporarily
 
 #### Hooks not working
 ```bash
-npm run git:hooks-remove
-npm run git:hooks-install  # Reinstall hooks
+pnpm git:hooks-remove
+pnpm git:hooks-install  # Reinstall hooks
 ```
 
 ## Best Practices
@@ -231,7 +231,7 @@ npm run git:hooks-install  # Reinstall hooks
 
 1. **Check sync status before starting work**
    ```bash
-   npm run git:sync
+   pnpm git:sync
    ```
 
 2. **Use appropriate branches**
@@ -240,7 +240,7 @@ npm run git:hooks-install  # Reinstall hooks
    - v0.dev: Automatic branch naming
 
 3. **Regular cleanup**
-   - Weekly: `npm run git:cleanup`
+   - Weekly: `pnpm git:cleanup`
    - Monthly: `./scripts/git-batch-cleanup.sh`
 
 4. **Monitor repository health**
