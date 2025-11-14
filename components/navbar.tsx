@@ -1,6 +1,7 @@
 "use client"
 
 import { MapPin, Megaphone, Menu, MonitorSmartphone, Search, X } from "lucide-react"
+import type { LucideIcon } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useEffect, useState } from "react"
@@ -10,8 +11,6 @@ import { useMobile } from "@/hooks/use-mobile"
 import { LOGO_CONFIG, NAV_ITEMS, type NavItem } from "@/lib/constants"
 import { trackNavigation } from "@/utils/analytics"
 import CoreImage from "./core-image"
-
-type IconRenderer = (props: { className?: string }) => React.ReactElement
 
 export default function Navbar() {
   const [isMounted, setIsMounted] = useState(false)
@@ -42,7 +41,7 @@ export default function Navbar() {
   }
 
   const headerPositionClass = isMobile && pathname === "/" ? "fixed" : "sticky"
-  const serviceIconMap: Record<string, IconRenderer> = {
+  const serviceIconMap: Record<string, LucideIcon> = {
     websites: MonitorSmartphone,
     seo: Search,
     ads: Megaphone,
