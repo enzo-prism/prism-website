@@ -129,15 +129,6 @@ export default function BlogPostLayout({
               ]}
             />
             <div className="max-w-3xl mx-auto">
-              <div className="mb-6">
-                <Link
-                  href="/blog"
-                  className="inline-flex items-center text-sm text-neutral-600 hover:text-neutral-900 transition-colors"
-                >
-                  <ArrowLeft className="mr-2 h-4 w-4" />
-                  back to all posts
-                </Link>
-              </div>
               <article>
                 <header className="relative mb-6 sm:mb-8">
                   {showHeroImage && image && !hasImageError ? (
