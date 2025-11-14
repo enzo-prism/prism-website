@@ -3,12 +3,15 @@ import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
 import PageViewTracker from "@/components/page-view-tracker"
 import ScrollToTop from "@/components/scroll-to-top"
+import SimpleBlogGrid from "@/components/simple-blog-grid"
+import SimpleBlogPostCard from "@/components/simple-blog-post-card"
 import { ServiceSchema } from "@/components/schema-markup"
 import { Button } from "@/components/ui/button"
 import { ArrowRight, Check } from "lucide-react"
 import type { Metadata } from "next"
 import Link from "next/link"
 import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
+import { getAllPosts } from "@/lib/mdx"
 
 export const metadata: Metadata = {
   title: "paid ads management for small businesses | prism",
@@ -193,7 +196,7 @@ const audienceSegments = [
   },
 ]
 
-export default function AdsPage() {
+export default async function AdsPage() {
   const aggregateRating = {
     "@type": "AggregateRating" as const,
     ratingValue: "4.9",
@@ -201,6 +204,28 @@ export default function AdsPage() {
     bestRating: "5",
     worstRating: "1",
   }
+  const allPosts = (await getAllPosts()) ?? []
+  const adsBlogPosts = allPosts
+    .filter(post => {
+      const slug = post.slug.toLowerCase()
+      const category = (post.category ?? "").toLowerCase()
+      const description = (post.description ?? "").toLowerCase()
+      return (
+        slug.includes("ads") ||
+        slug.includes("ad-") ||
+        slug.includes("ppc") ||
+        slug.includes("paid") ||
+        slug.includes("marketing") ||
+        category.includes("ads") ||
+        category.includes("ppc") ||
+        category.includes("marketing") ||
+        description.includes("ads") ||
+        description.includes("ppc") ||
+        description.includes("marketing") ||
+        description.includes("campaign")
+      )
+    })
+    .slice(0, 3)
 
   return (
     <div className="flex min-h-screen flex-col bg-white">
@@ -395,6 +420,39 @@ export default function AdsPage() {
             ))}
           </div>
         </section>
+
+        {adsBlogPosts.length > 0 ? (
+          <section className="border-t border-neutral-100 bg-neutral-50 px-4 py-16 sm:py-20">
+            <div className="mx-auto max-w-4xl text-center">
+              <span className="text-xs font-semibold uppercase tracking-[0.28em] text-neutral-400">from the blog</span>
+              <h2 className="mt-3 text-3xl font-semibold lowercase text-neutral-900 sm:text-4xl">ads & growth notes</h2>
+              <p className="mt-3 text-neutral-600">
+                Playbooks on dialing in offers, tightening targeting, and scaling paid channels responsibly.
+              </p>
+            </div>
+            <div className="mx-auto mt-10 max-w-6xl">
+              <SimpleBlogGrid posts={adsBlogPosts}>
+                {adsBlogPosts.map(post => (
+                  <SimpleBlogPostCard
+                    key={post.slug}
+                    title={post.title}
+                    category={post.category}
+                    date={post.date}
+                    description={post.description}
+                    slug={post.slug}
+                    image={post.image || "/blog/ai-digital-marketing.png"}
+                    gradientClass={post.gradientClass}
+                  />
+                ))}
+              </SimpleBlogGrid>
+            </div>
+            <div className="mt-10 text-center">
+              <Button asChild variant="outline" className="rounded-full px-8">
+                <Link href="/blog">browse all articles</Link>
+              </Button>
+            </div>
+          </section>
+        ) : null}
 
         <FAQSection
           title="ads faq"

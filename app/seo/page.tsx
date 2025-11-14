@@ -5,6 +5,10 @@ import { SeoHero } from "@/components/seo/seo-hero"
 import { SeoSection } from "@/components/seo/seo-section"
 import { seoOverviewContent } from "@/content/seo"
 import { ServiceSchema } from "@/components/schema-markup"
+import SimpleBlogGrid from "@/components/simple-blog-grid"
+import SimpleBlogPostCard from "@/components/simple-blog-post-card"
+import { Button } from "@/components/ui/button"
+import { getAllPosts } from "@/lib/mdx"
 
 export const metadata: Metadata = {
   title: "seo that compounds | prism",
@@ -26,8 +30,24 @@ export const metadata: Metadata = {
   },
 }
 
-export default function SeoPage() {
+export default async function SeoPage() {
   const { hero, scoringQuestions, seoModes, onPagePreview, offPagePreview, packages, benefits } = seoOverviewContent
+  const allPosts = (await getAllPosts()) ?? []
+  const seoBlogPosts = allPosts
+    .filter((post) => {
+      const slug = post.slug.toLowerCase()
+      const category = (post.category ?? "").toLowerCase()
+      const description = (post.description ?? "").toLowerCase()
+      return (
+        slug.includes("seo") ||
+        slug.includes("search") ||
+        category.includes("seo") ||
+        category.includes("search") ||
+        description.includes("seo") ||
+        description.includes("search")
+      )
+    })
+    .slice(0, 3)
 
   return (
     <>
@@ -146,6 +166,39 @@ export default function SeoPage() {
           no gimmicks. no hacks. just a strong, modern seo foundation that compounds over time.
         </div>
       </SeoSection>
+
+      {seoBlogPosts.length > 0 ? (
+        <section className="border-t border-neutral-100 bg-neutral-50 px-4 py-16 sm:py-20">
+          <div className="mx-auto max-w-4xl text-center">
+            <span className="text-xs font-semibold uppercase tracking-[0.28em] text-neutral-400">from the blog</span>
+            <h2 className="mt-3 text-3xl font-semibold lowercase text-neutral-900 sm:text-4xl">seo playbooks</h2>
+            <p className="mt-3 text-neutral-600">
+              Practical breakdowns on ranking in ai search, tightening local signals, and protecting traffic.
+            </p>
+          </div>
+          <div className="mx-auto mt-10 max-w-6xl">
+            <SimpleBlogGrid posts={seoBlogPosts}>
+              {seoBlogPosts.map((post) => (
+                <SimpleBlogPostCard
+                  key={post.slug}
+                  title={post.title}
+                  category={post.category}
+                  date={post.date}
+                  description={post.description}
+                  slug={post.slug}
+                  image={post.image || "/blog/ai-digital-marketing.png"}
+                  gradientClass={post.gradientClass}
+                />
+              ))}
+            </SimpleBlogGrid>
+          </div>
+          <div className="mt-10 text-center">
+            <Button asChild variant="outline" className="rounded-full px-8">
+              <Link href="/blog">browse all articles</Link>
+            </Button>
+          </div>
+        </section>
+      ) : null}
 
       <ServiceSchema
         serviceId="seo-service"

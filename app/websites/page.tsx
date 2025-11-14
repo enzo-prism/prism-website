@@ -4,6 +4,8 @@ import Navbar from "@/components/navbar"
 import PageViewTracker from "@/components/page-view-tracker"
 import ScrollToTop from "@/components/scroll-to-top"
 import SeoTextSection from "@/components/seo-text-section"
+import SimpleBlogGrid from "@/components/simple-blog-grid"
+import SimpleBlogPostCard from "@/components/simple-blog-post-card"
 import WebsiteProjectsShowcase from "@/components/website-projects-showcase"
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
@@ -11,6 +13,7 @@ import { ArrowRight, Check } from "lucide-react"
 import type { Metadata } from "next"
 import Link from "next/link"
 import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
+import { getAllPosts } from "@/lib/mdx"
 import { ServiceSchema } from "@/components/schema-markup"
 
 export const metadata: Metadata = {
@@ -299,7 +302,7 @@ const faqItems = [
   },
 ]
 
-export default function WebsitesPage() {
+export default async function WebsitesPage() {
   const aggregateRating = {
     "@type": "AggregateRating" as const,
     ratingValue: "4.9",
@@ -307,6 +310,21 @@ export default function WebsitesPage() {
     bestRating: "5",
     worstRating: "1",
   }
+  const allPosts = (await getAllPosts()) ?? []
+  const websiteBlogPosts = allPosts
+    .filter(post => {
+      const slug = post.slug.toLowerCase()
+      const category = (post.category ?? "").toLowerCase()
+      const description = (post.description ?? "").toLowerCase()
+      return (
+        slug.includes("website") ||
+        description.includes("website") ||
+        category.includes("website") ||
+        category.includes("web development") ||
+        category.includes("web design")
+      )
+    })
+    .slice(0, 3)
 
   return (
     <div className="flex min-h-screen flex-col bg-white">
@@ -546,6 +564,41 @@ export default function WebsitesPage() {
             ))}
           </div>
         </section>
+
+        {websiteBlogPosts.length > 0 ? (
+          <section className="border-t border-neutral-100 bg-neutral-50 px-4 py-16 sm:py-20">
+            <div className="mx-auto max-w-4xl text-center">
+              <span className="text-xs font-semibold uppercase tracking-[0.28em] text-neutral-400">from the blog</span>
+              <h2 className="mt-3 text-3xl font-semibold lowercase text-neutral-900 sm:text-4xl">
+                website strategy notes
+              </h2>
+              <p className="mt-3 text-neutral-600">
+                Fresh playbooks on architecting, writing, and maintaining sites that convert.
+              </p>
+            </div>
+            <div className="mx-auto mt-10 max-w-6xl">
+              <SimpleBlogGrid posts={websiteBlogPosts}>
+                {websiteBlogPosts.map(post => (
+                  <SimpleBlogPostCard
+                    key={post.slug}
+                    title={post.title}
+                    category={post.category}
+                    date={post.date}
+                    description={post.description}
+                    slug={post.slug}
+                    image={post.image || "/blog/ai-digital-marketing.png"}
+                    gradientClass={post.gradientClass}
+                  />
+                ))}
+              </SimpleBlogGrid>
+            </div>
+            <div className="mt-10 text-center">
+              <Button asChild variant="outline" className="rounded-full px-8">
+                <Link href="/blog">browse all articles</Link>
+              </Button>
+            </div>
+          </section>
+        ) : null}
 
         <FAQSection
           title="website design faq"
