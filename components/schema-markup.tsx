@@ -742,7 +742,7 @@ export function VideoSchema({
   uploadDate: string
   duration?: string
   contentUrl: string
-  embedUrl: string
+  embedUrl?: string
   width?: number
   height?: number
   publisherId?: string
@@ -757,10 +757,10 @@ export function VideoSchema({
     thumbnailUrl,
     uploadDate,
     contentUrl,
-    embedUrl,
     publisher: {
       "@id": publisherId,
     },
+    ...(embedUrl && { embedUrl }),
     ...(duration && { duration }),
     ...(typeof width === "number" && typeof height === "number" && { width, height }),
     ...(creatorName && { creator: { "@type": "Person", name: creatorName } }),
