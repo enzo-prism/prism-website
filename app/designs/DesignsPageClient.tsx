@@ -2,13 +2,14 @@
 
 import Footer from "@/components/footer"
 import PageViewTracker from "@/components/page-view-tracker"
+import VideoPlayer from "@/components/video-player"
 import {
-    Carousel,
-    CarouselContent,
-    CarouselItem,
-    CarouselNext,
-    CarouselPrevious,
-    type CarouselApi,
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+  type CarouselApi,
 } from "@/components/ui/carousel"
 import { useMobile } from "@/hooks/use-mobile"
 import { ChevronLeft, ChevronRight } from "lucide-react"
@@ -174,6 +175,30 @@ export default function DesignsPageClient() {
                 </div>
               </aside>
             </div>
+          </div>
+        </section>
+
+        <section className="px-4 py-12 sm:py-16">
+          <div id="designs-founder-vsl" className="mx-auto max-w-3xl text-left">
+            <p className="text-center text-xs font-semibold uppercase tracking-[0.28em] text-neutral-400">hear from our founder</p>
+            <VideoPlayer
+              className="mt-4"
+              src="https://res.cloudinary.com/dhqpqfw6w/video/upload/v1763152551/design-1_ftpmsw.mp4"
+              title="Founder Enzo Sison on design as the silent multiplier"
+              caption="Enzo explains why inconsistent design erodes trust, how Prism builds cohesive systems across every touchpoint, and how sharper visuals lift awareness, conversion, and loyalty without hiring an internal team."
+              schema={{
+                id: "https://www.design-prism.com/designs#founder-vsl",
+                name: "Founder Enzo Sison on design as the silent multiplier",
+                description:
+                  "Enzo Sison shares why design is the silent multiplier, how Prism creates cohesive, premium systems across sites, listings, ads, and assets, and how that elevates awareness, conversion, and lifetime value.",
+                thumbnailUrl: "https://res.cloudinary.com/dhqpqfw6w/video/upload/so_0/design-1_ftpmsw.jpg",
+                uploadDate: "2025-01-24",
+                duration: "PT60S",
+                contentUrl: "https://res.cloudinary.com/dhqpqfw6w/video/upload/v1763152551/design-1_ftpmsw.mp4",
+                embedUrl: "https://www.design-prism.com/designs#founder-vsl",
+                creatorName: "Enzo Sison",
+              }}
+            />
           </div>
         </section>
 
