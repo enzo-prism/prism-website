@@ -37,20 +37,17 @@ canonical: "https://www.design-prism.com/blog/reusable-shadcn-codex-template"
     </p>
   </div>
   <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
-    <a
-      className="inline-flex items-center justify-center rounded-full bg-neutral-900 px-6 py-3 text-sm font-medium text-white transition hover:bg-neutral-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-900"
-      href="#ready-to-use-setup-script"
-    >
+    <CTAButton href="#ready-to-use-setup-script">
       run the setup script
-    </a>
-    <a
-      className="inline-flex items-center justify-center rounded-full border border-neutral-900 px-6 py-3 text-sm font-medium text-neutral-900 transition hover:bg-neutral-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-300"
+    </CTAButton>
+    <CTAButton
       href="https://github.com/enzo-prism/codex-template"
       target="_blank"
       rel="noopener noreferrer"
+      variant="secondary"
     >
       explore our shadcn template
-    </a>
+    </CTAButton>
   </div>
   <p className="text-xs uppercase tracking-[0.3em] text-neutral-400">
     save the system once. ship it on every build.
@@ -159,14 +156,12 @@ then tell codex: "use the components from my shadcn template to rebuild the form
 
 if you want everything prewired, prism ships a ready-to-run `setup.sh` that provisions the template, syncs colors, and registers your codex alias automatically. reach out and we will drop it into your workspace - or simply ask codex to generate it inside your project using this article as context.
 
-<div className="mt-4">
-  <a
-    className="inline-flex items-center justify-center rounded-full bg-neutral-900 px-6 py-3 text-sm font-medium text-white transition hover:bg-neutral-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-900"
-    href="mailto:hello@design-prism.com?subject=Codex%20shadcn%20setup%20script"
-  >
-    get the setup script
-  </a>
-</div>
+<CTAButton
+  href="mailto:hello@design-prism.com?subject=Codex%20shadcn%20setup%20script"
+  className="mt-4"
+>
+  get the setup script
+</CTAButton>
 
 ## why prism shares this
 

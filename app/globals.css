@@ -1355,12 +1355,16 @@ input, textarea, select {
 }
 
 /* Links styling */
-.prose-blog a {
+.prose-blog a:not(.mdx-cta) {
   @apply text-neutral-900 dark:text-neutral-100 underline decoration-neutral-500 dark:decoration-neutral-500 underline-offset-2 transition-colors;
 }
 
-.prose-blog a:hover {
+.prose-blog a:not(.mdx-cta):hover {
   @apply decoration-neutral-700 dark:decoration-neutral-300;
+}
+
+.prose-blog a.mdx-cta {
+  text-decoration: none;
 }
 
 /* Blockquotes */

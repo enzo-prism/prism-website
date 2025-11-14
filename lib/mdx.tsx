@@ -1,5 +1,6 @@
 // This module is server-side only, responsible for fetching and parsing blog content.
 import { VideoObjectSchema } from '@/components/schema-markup';
+import MDXComponents from "@/components/mdx-components";
 import fs from "fs/promises"; // Node.js file system module for server-side operations
 import matter from "gray-matter"; // For parsing frontmatter from .mdx files
 import { MDXRemote } from "next-mdx-remote/rsc";
@@ -161,6 +162,7 @@ export { getAllPosts, getPost };
 
 // Custom components for MDX rendering
 const mdxComponents = {
+  ...MDXComponents,
   // Next.js Image component for optimized images
   Image,
   // Simple YouTube embed for MDX content

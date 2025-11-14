@@ -139,6 +139,11 @@ const blogPosts = {
     category: 'AI & Growth',
     gradientClass: 'bg-gradient-to-br from-emerald-300/30 via-sky-300/30 to-indigo-300/30',
   },
+  'reusable-shadcn-codex-template': {
+    title: 'build a reusable shadcn + codex design system for every future project',
+    category: 'ai powered web development',
+    gradientClass: 'bg-gradient-to-br from-indigo-200/40 via-sky-200/40 to-emerald-200/40',
+  },
 } as const
 
 export function getPostMetadataForOG(slug: string) {

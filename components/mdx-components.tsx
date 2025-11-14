@@ -1,22 +1,68 @@
+import type { ReactNode } from "react"
 import { cn } from "@/lib/utils"
 import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
 
+type CTAButtonProps = {
+  href: string
+  children: ReactNode
+  variant?: "primary" | "secondary"
+  target?: string
+  rel?: string
+  className?: string
+  block?: boolean
+}
+
+const CTAButton = ({
+  href,
+  children,
+  variant = "primary",
+  target,
+  rel,
+  className,
+  block = false,
+}: CTAButtonProps) => {
+  const isExternal = href?.startsWith("http")
+  const resolvedTarget = target ?? (isExternal ? "_blank" : undefined)
+  const resolvedRel = rel ?? (resolvedTarget === "_blank" ? "noopener noreferrer" : undefined)
+
+  const variantClasses =
+    variant === "secondary"
+      ? "mdx-cta mdx-cta-secondary border border-neutral-900 text-neutral-900 hover:bg-neutral-100 focus-visible:outline-neutral-400 dark:border-white dark:text-white dark:hover:bg-white/10"
+      : "mdx-cta bg-neutral-900 text-white hover:bg-neutral-800 focus-visible:outline-neutral-900 dark:bg-white dark:text-neutral-900 dark:hover:bg-neutral-100"
+
+  return (
+    <a
+      href={href}
+      target={resolvedTarget}
+      rel={resolvedRel}
+      className={cn(
+        "inline-flex items-center justify-center rounded-full px-6 py-3 text-sm font-semibold transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2",
+        variantClasses,
+        block && "w-full sm:w-auto",
+        className,
+      )}
+    >
+      {children}
+    </a>
+  )
+}
+
 export const MDXComponents = {
   // Typography components
-  Lead: ({ children, className }: { children: React.ReactNode; className?: string }) => (
+  Lead: ({ children, className }: { children: ReactNode; className?: string }) => (
     <p className={cn("text-lg leading-relaxed text-neutral-700 dark:text-neutral-300", className)}>
       {children}
     </p>
   ),
   
   // List components
-  CheckList: ({ children }: { children: React.ReactNode }) => (
+  CheckList: ({ children }: { children: ReactNode }) => (
     <ul className="space-y-3 my-6">
       {children}
     </ul>
   ),
   
-  CheckItem: ({ children }: { children: React.ReactNode }) => (
+  CheckItem: ({ children }: { children: ReactNode }) => (
     <li className="flex gap-3">
       <span className="text-green-500 mt-0.5">✓</span>
       <span>{children}</span>
@@ -28,7 +74,7 @@ export const MDXComponents = {
     children, 
     type = "info" 
   }: { 
-    children: React.ReactNode; 
+    children: ReactNode; 
     type?: "info" | "warning" | "success" | "error" 
   }) => {
     const styles = {
@@ -48,6 +94,7 @@ export const MDXComponents = {
   // Section divider
   Divider: () => <hr className="my-12 border-neutral-200 dark:border-neutral-800" />,
   
+  CTAButton,
   // CTA component
   BlogCTA: ({ 
     title, 
@@ -63,12 +110,9 @@ export const MDXComponents = {
     <div className="my-12 p-8 bg-neutral-50 dark:bg-neutral-900 rounded-xl border border-neutral-200 dark:border-neutral-800">
       <h3 className="text-xl font-bold mb-2 lowercase">{title}</h3>
       <p className="text-neutral-600 dark:text-neutral-400 mb-6 lowercase">{description}</p>
-      <a 
-        href={href}
-        className="inline-flex items-center justify-center rounded-full bg-neutral-900 px-6 py-3 text-sm font-medium text-white hover:bg-neutral-800 dark:bg-white dark:hover:bg-neutral-200 dark:text-neutral-900 lowercase"
-      >
+      <CTAButton href={href}>
         {href?.startsWith("/get-started") ? FREE_AUDIT_CTA_TEXT : buttonText ?? FREE_AUDIT_CTA_TEXT}
-      </a>
+      </CTAButton>
     </div>
   ),
   
@@ -98,7 +142,7 @@ export const MDXComponents = {
     children, 
     cols = 2 
   }: { 
-    children: React.ReactNode; 
+    children: ReactNode; 
     cols?: 2 | 3 | 4;
   }) => (
     <div className={cn(
@@ -117,7 +161,7 @@ export const MDXComponents = {
     children 
   }: { 
     title?: string; 
-    children: React.ReactNode;
+    children: ReactNode;
   }) => (
     <div className="border border-neutral-200 dark:border-neutral-800 p-4 rounded-lg">
       {title && <h4 className="font-semibold mb-2 lowercase">{title}</h4>}
