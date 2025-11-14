@@ -279,7 +279,6 @@ export const quotesData: Quote[] = [
     client: "sorin.7_",
     company: "Instagram Community of Entrepreneurs",
     pinned: true,
-    requiresConsent: true,
   },
   {
     id: 45,
@@ -498,13 +497,14 @@ export const quotesData: Quote[] = [
   { id: 84, text: "I have a big decision ahead of me, I have my college classes orientation tomorrow… do I wait… or do I tell them now that I don’t want to go to college", client: "whatifone_446", company: "Instagram Community of Entrepreneurs", pinned: true, requiresConsent: true },
   { id: 85, text: "Bro described my exact situation sometimes it gets that bad I sit in the car for hours in silence stationary thinking", client: "louistizzy", company: "Instagram Community of Entrepreneurs" },
   { id: 86, text: "Feelings into words couldn’t have been shot better than this video right here …..", client: "shuaib_khan", company: "Instagram Community of Entrepreneurs" },
+  { id: 251, text: "This hits. Deep.", client: "@jalbers10", company: "Instagram Community of Entrepreneurs" },
   { id: 87, text: "needed this", client: "fitnationmg", company: "Instagram Community of Entrepreneurs" },
   { id: 88, text: "This is why I still have Instagram.", client: "notpharaoh_", company: "Instagram Community of Entrepreneurs" },
   { id: 89, text: "Someone please like this, keep liking this so I can come back and watch it every single muthafuckin day. Thank you.", client: "himiam7", company: "Instagram Community of Entrepreneurs" },
   { id: 90, text: "Fuck this hits home", client: "larsonbaldwinofficial", company: "Instagram Community of Entrepreneurs", pinned: true },
   { id: 91, text: "Goosebumps….", client: "dishonshan", company: "Instagram Community of Entrepreneurs" },
   { id: 92, text: "This came when I needed it.", client: "yasssirsaeed", company: "Instagram Community of Entrepreneurs" },
-  { id: 93, text: "Been there couple of times but never went to visualisation, made logical decision and I quit! After some months I feel if just hold onto it i would have achieved it🙌❤️", client: "rohan_kohter", company: "Instagram Community of Entrepreneurs", requiresConsent: true },
+  { id: 93, text: "Been there couple of times but never went to visualisation, made logical decision and I quit! After some months I feel if just hold onto it i would have achieved it🙌❤️", client: "rohan_kohter", company: "Instagram Community of Entrepreneurs" },
   { id: 94, text: "My life right now 💀", client: "david__chinedu", company: "Instagram Community of Entrepreneurs" },
   { id: 95, text: "Bro this is me", client: "mustapha.amajoud", company: "Instagram Community of Entrepreneurs" },
   { id: 96, text: "Chills ran down my spine watching this, I know so well what he is talking about… Believe me it‘s worth it.", client: "etem_kalyon", company: "Instagram Community of Entrepreneurs", pinned: true, heroSpotlight: true },
@@ -630,6 +630,7 @@ export const quotesData: Quote[] = [
   { id: 216, text: "👏", client: "vani7561", company: "Instagram Community of Entrepreneurs" },
   { id: 217, text: "Just wow 👏", client: "zorwealth", company: "Instagram Community of Entrepreneurs" },
   { id: 218, text: "This is beautiful man 🙏🏼", client: "danielekimian", company: "Instagram Community of Entrepreneurs" },
+  { id: 252, text: "Man I’m crying 😭 on the fact of uncertainty", client: "@abdulrehmaanhere", company: "Instagram Community of Entrepreneurs" },
 ]
 
 export const takeawaysData: Takeaway[] = [
@@ -715,18 +716,30 @@ const heroReviewSequence =
       ? [...pinnedHeroCandidates, ...secondaryHeroCandidates]
       : consentSafeQuotes
 
-const ensurePositiveLimit = (limit: number) => (Number.isFinite(limit) && limit > 0 ? Math.floor(limit) : 1)
+const HOMEPAGE_HERO_REVIEW_IDS = [44, 15, 16, 82, 86, 93, 211, 218, 251, 252]
+const homepageHeroReviewSet = new Set(HOMEPAGE_HERO_REVIEW_IDS)
 
-export function getHeroReviews(limit = 5): Quote[] {
+const ensurePositiveLimit = (limit: number, fallback = 1) =>
+  Number.isFinite(limit) && limit > 0 ? Math.floor(limit) : fallback
+
+const normalizeOffset = (offset: number, length: number) => {
+  if (length === 0) return 0
+  const normalized = Number.isFinite(offset) ? Math.floor(offset) : 0
+  return ((normalized % length) + length) % length
+}
+
+export function getHeroReviews(limit = 5, options?: { offset?: number }): Quote[] {
   if (heroReviewSequence.length === 0) {
     return []
   }
 
   const safeLimit = ensurePositiveLimit(limit)
+  const offset = normalizeOffset(options?.offset ?? 0, heroReviewSequence.length)
   const results: Quote[] = []
 
   for (let index = 0; index < safeLimit; index += 1) {
-    results.push(heroReviewSequence[index % heroReviewSequence.length])
+    const position = (offset + index) % heroReviewSequence.length
+    results.push(heroReviewSequence[position])
   }
 
   return results
@@ -734,4 +747,16 @@ export function getHeroReviews(limit = 5): Quote[] {
 
 export function getStaticHeroReview(): Quote | undefined {
   return getHeroReviews(1)[0]
+}
+
+export function getHeroReviewCount() {
+  return heroReviewSequence.length
+}
+
+export function getHomepageHeroReviewPool() {
+  const curated = consentSafeQuotes.filter((quote) => homepageHeroReviewSet.has(quote.id))
+  if (curated.length > 0) {
+    return curated
+  }
+  return consentSafeQuotes.slice(0, 10)
 }
