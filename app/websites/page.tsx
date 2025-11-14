@@ -363,7 +363,7 @@ export default async function WebsitesPage() {
                 src="https://res.cloudinary.com/dhqpqfw6w/video/upload/v1763160814/prism_websites_vsl_2_ojqiku.mp4"
                 poster="https://res.cloudinary.com/dhqpqfw6w/video/upload/so_0/prism_websites_vsl_2_ojqiku.jpg"
                 title="Founder Enzo Sison on fixing slow, confusing websites"
-                caption="In this VSL, Enzo breaks down how load times, weak messaging, and scattered SEO quietly kill growth—and how Prism’s clean, fast, conversion-focused sites lift discovery, conversions, and retention with flexible engagement options."
+                caption="Enzo explains how slow load times, unclear messaging, and disorganized SEO choke growth—and how Prism’s fast, conversion-ready websites boost visibility, drive more inquiries, and keep customers coming back."
                 schema={{
                   id: "https://www.design-prism.com/websites#founder-vsl",
                   name: "Founder Enzo Sison on fixing slow, confusing websites",
