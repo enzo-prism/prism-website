@@ -990,7 +990,7 @@ export function VideoObjectSchema({
   embedUrl?: string
   creatorName?: string
 }) {
-  const videoSchema: VideoObject = {
+  const videoSchema: Partial<VideoObject> & { "@type": "VideoObject"; "@id": string } = {
     "@type": "VideoObject",
     "@id": `https://design-prism.com/#${videoId}`,
     name,
