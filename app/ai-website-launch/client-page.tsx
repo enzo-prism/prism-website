@@ -257,7 +257,8 @@ export default function AiWebsiteLaunchClientPage() {
           </p>
           <VideoPlayer
             className="mt-4"
-            src="https://res.cloudinary.com/dhqpqfw6w/video/upload/v1763147570/websites_vsl_prism_website_ppmhra.mp4"
+            src="https://res.cloudinary.com/dhqpqfw6w/video/upload/v1763160814/prism_websites_vsl_2_ojqiku.mp4"
+            poster="https://res.cloudinary.com/dhqpqfw6w/video/upload/so_0/prism_websites_vsl_2_ojqiku.jpg"
             title="Founder Enzo Sison on fixing slow, confusing websites"
             caption="Enzo explains how slow load times, unclear messaging, and disorganized SEO choke growth—and how Prism’s fast, conversion-ready websites boost visibility, drive more inquiries, and keep customers coming back."
             schema={{
@@ -265,10 +266,10 @@ export default function AiWebsiteLaunchClientPage() {
               name: "Founder Enzo Sison on fixing slow, confusing websites",
               description:
                 "Enzo Sison explains how Prism turns slow, confusing sites into fast, conversion-focused experiences that improve discovery, conversion, and retention.",
-              thumbnailUrl: "https://res.cloudinary.com/dhqpqfw6w/video/upload/so_0/websites_vsl_prism_website_ppmhra.jpg",
+              thumbnailUrl: "https://res.cloudinary.com/dhqpqfw6w/video/upload/so_0/prism_websites_vsl_2_ojqiku.jpg",
               uploadDate: "2025-01-24",
               duration: "PT38S",
-              contentUrl: "https://res.cloudinary.com/dhqpqfw6w/video/upload/v1763147570/websites_vsl_prism_website_ppmhra.mp4",
+              contentUrl: "https://res.cloudinary.com/dhqpqfw6w/video/upload/v1763160814/prism_websites_vsl_2_ojqiku.mp4",
               embedUrl: "https://www.design-prism.com/ai-website-launch#founder-vsl",
               creatorName: "Enzo Sison",
             }}
