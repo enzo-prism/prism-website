@@ -275,6 +275,15 @@ export default function AiWebsiteLaunchClientPage() {
           />
           <p className="mt-3 text-center text-xs font-semibold uppercase tracking-[0.3em] text-neutral-400">0:38</p>
         </div>
+        <div className="mx-auto mt-8 max-w-3xl rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+          <p className="text-sm font-semibold uppercase tracking-[0.28em] text-slate-400 text-center">
+            Founder Enzo Sison on fixing slow, confusing websites
+          </p>
+          <p className="mt-4 text-sm text-slate-700 sm:text-base text-center">
+            Enzo explains how slow load times, unclear messaging, and disorganized SEO choke growth—and how Prism’s
+            fast, conversion-ready websites boost visibility, drive more inquiries, and keep customers coming back.
+          </p>
+        </div>
       </section>
 
       {/* Pain Section */}
