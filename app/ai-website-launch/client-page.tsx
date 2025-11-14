@@ -9,6 +9,7 @@ import AnimatedGradient from "@/components/animations/animated-gradient"
 import RippleHighlight from "@/components/animations/ripple-highlight"
 import ClientsRail from "@/components/home/ClientsRail"
 import RevealOnScroll from "@/components/reveal-on-scroll"
+import VideoPlayer from "@/components/video-player"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { useParallaxMouse } from "@/hooks/use-parallax-mouse"
@@ -246,6 +247,33 @@ export default function AiWebsiteLaunchClientPage() {
               </motion.p>
             </motion.div>
           </motion.div>
+        </div>
+      </section>
+
+      <section className="px-4 py-12 sm:py-16">
+        <div id="ai-launch-founder-vsl" className="mx-auto max-w-3xl text-left">
+          <p className="text-center text-xs font-semibold uppercase tracking-[0.28em] text-neutral-400">
+            hear from our founder
+          </p>
+          <VideoPlayer
+            className="mt-4"
+            src="https://res.cloudinary.com/dhqpqfw6w/video/upload/v1763147570/websites_vsl_prism_website_ppmhra.mp4"
+            title="Founder Enzo Sison on fixing slow, confusing websites"
+            caption="In this VSL, Enzo breaks down how load times, weak messaging, and scattered SEO quietly kill growth—and how Prism’s clean, fast, conversion-focused sites lift discovery, conversions, and retention with flexible engagement options."
+            schema={{
+              id: "https://www.design-prism.com/ai-website-launch#founder-vsl",
+              name: "Founder Enzo Sison on fixing slow, confusing websites",
+              description:
+                "Enzo Sison explains how Prism turns slow, confusing sites into fast, conversion-focused experiences that improve discovery, conversion, and retention.",
+              thumbnailUrl: "https://res.cloudinary.com/dhqpqfw6w/video/upload/so_0/websites_vsl_prism_website_ppmhra.jpg",
+              uploadDate: "2025-01-24",
+              duration: "PT38S",
+              contentUrl: "https://res.cloudinary.com/dhqpqfw6w/video/upload/v1763147570/websites_vsl_prism_website_ppmhra.mp4",
+              embedUrl: "https://www.design-prism.com/ai-website-launch#founder-vsl",
+              creatorName: "Enzo Sison",
+            }}
+          />
+          <p className="mt-3 text-center text-xs font-semibold uppercase tracking-[0.3em] text-neutral-400">0:38</p>
         </div>
       </section>
 

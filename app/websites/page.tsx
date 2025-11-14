@@ -360,7 +360,8 @@ export default async function WebsitesPage() {
               <p className="text-center text-xs font-semibold uppercase tracking-[0.28em] text-neutral-400">hear from our founder</p>
               <VideoPlayer
                 className="mt-4"
-                src="https://res.cloudinary.com/dhqpqfw6w/video/upload/v1763147570/websites_vsl_prism_website_ppmhra.mp4"
+                src="https://res.cloudinary.com/dhqpqfw6w/video/upload/v1763160814/prism_websites_vsl_2_ojqiku.mp4"
+                poster="https://res.cloudinary.com/dhqpqfw6w/video/upload/so_0/prism_websites_vsl_2_ojqiku.jpg"
                 title="Founder Enzo Sison on fixing slow, confusing websites"
                 caption="In this VSL, Enzo breaks down how load times, weak messaging, and scattered SEO quietly kill growth—and how Prism’s clean, fast, conversion-focused sites lift discovery, conversions, and retention with flexible engagement options."
                 schema={{
@@ -368,10 +369,10 @@ export default async function WebsitesPage() {
                   name: "Founder Enzo Sison on fixing slow, confusing websites",
                   description:
                     "Enzo Sison explains why most small-business websites leave money on the table and how Prism’s fast, conversion-focused builds improve discovery, conversion, and retention.",
-                  thumbnailUrl: "https://res.cloudinary.com/dhqpqfw6w/video/upload/so_0/websites_vsl_prism_website_ppmhra.jpg",
+                  thumbnailUrl: "https://res.cloudinary.com/dhqpqfw6w/video/upload/so_0/prism_websites_vsl_2_ojqiku.jpg",
                   uploadDate: "2025-01-24",
                   duration: "PT60S",
-                  contentUrl: "https://res.cloudinary.com/dhqpqfw6w/video/upload/v1763147570/websites_vsl_prism_website_ppmhra.mp4",
+                  contentUrl: "https://res.cloudinary.com/dhqpqfw6w/video/upload/v1763160814/prism_websites_vsl_2_ojqiku.mp4",
                   embedUrl: "https://www.design-prism.com/websites#founder-vsl",
                   creatorName: "Enzo Sison",
                 }}
