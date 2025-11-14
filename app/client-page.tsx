@@ -233,8 +233,8 @@ export default function ClientPage() {
           {/* White overlay for elegant contrast */}
           <div className="absolute inset-0 -z-10 bg-white/85 dark:bg-neutral-950/85 gpu-layer transition-opacity duration-500" />
 
-          <div className="container relative mx-auto px-4 md:px-6 py-8 md:py-16">
-            <div className="flex flex-col items-center space-y-6 md:space-y-10 text-center">
+          <div className="container relative mx-auto px-4 md:px-6 py-10 md:py-20">
+            <div className="flex flex-col items-center text-center gap-8 sm:gap-10">
               <div className={`flex items-center justify-center gap-3 sm:gap-4 md:gap-6 ${!isMobile ? 'smooth-reveal' : ''}`}>
                 <div className="relative h-8 w-8 md:h-10 md:w-10 lg:h-12 lg:w-12">
                   <CoreImage
@@ -255,11 +255,8 @@ export default function ClientPage() {
                   prism
                 </h1>
               </div>
-              <p className="mx-auto max-w-[700px] text-neutral-600 lowercase md:text-xl">
-                impossible is temporary.
-              </p>
-              <div className="flex flex-col items-center space-y-6 md:space-y-8">
-                <div className="flex flex-col sm:flex-row items-center gap-4 md:gap-6">
+              <div className="flex flex-col items-center w-full gap-6 sm:gap-7">
+                <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6">
                   <Link href="/pricing">
                     <Button
                       className="rounded-full px-8 py-6 text-lg lowercase hardware-hover touch-feedback"
