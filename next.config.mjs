@@ -56,6 +56,50 @@ images: {
       { source: '/old-home', destination: '/', permanent: true },
       { source: '/pod-3-katie-lee', destination: '/podcast', permanent: true },
       { source: '/pod-7-teagan', destination: '/podcast', permanent: true },
+
+      // 2025 legacy cleanup
+      { source: '/affiliate', destination: '/refer', permanent: true },
+      { source: '/shop', destination: '/offers', permanent: true },
+      { source: '/search', destination: '/blog', permanent: true },
+      { source: '/blog/brand-strategy', destination: '/blog', permanent: true },
+      { source: '/resources', destination: '/proof', permanent: true },
+      { source: '/blog/custom-website-development', destination: '/blog', permanent: true },
+      { source: '/blog/ai-digital-marketing', destination: '/blog', permanent: true },
+      { source: '/blog/conversion-rate-optimization', destination: '/blog', permanent: true },
+      {
+        source: '/prism-guides/authenticity-wins-a-dentists-guide-to-photos-on-google-business-profile-yelp',
+        destination: '/blog',
+        permanent: true,
+      },
+      { source: '/prism-guides/purpose-drives-dentistry', destination: '/blog', permanent: true },
+      { source: '/prism-guides/digital-dental-blueprint', destination: '/blog', permanent: true },
+      { source: '/prism-guides/referral-strategies', destination: '/blog', permanent: true },
+      { source: '/resources/design', destination: '/services', permanent: true },
+      { source: '/dental-clinic-website-design', destination: '/services', permanent: true },
+      { source: '/pod-2-arash', destination: '/podcast', permanent: true },
+      { source: '/blog/mobile-app-ux', destination: '/blog', permanent: true },
+      { source: '/mission', destination: '/about', permanent: true },
+      { source: '/free-resources-prism', destination: '/proof', permanent: true },
+
+      // Canonical host enforcement for key system pages
+      {
+        source: '/privacy-policy',
+        has: [{ type: 'host', value: 'design-prism.com' }],
+        destination: 'https://www.design-prism.com/privacy-policy',
+        permanent: true,
+      },
+      {
+        source: '/terms-of-service',
+        has: [{ type: 'host', value: 'design-prism.com' }],
+        destination: 'https://www.design-prism.com/terms-of-service',
+        permanent: true,
+      },
+      {
+        source: '/podcast',
+        has: [{ type: 'host', value: 'design-prism.com' }],
+        destination: 'https://www.design-prism.com/podcast',
+        permanent: true,
+      },
     ]
   },
 }
