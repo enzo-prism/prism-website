@@ -3,7 +3,7 @@
 Keep Prism's Next.js builds predictable by following this checklist whenever you touch UI code or ship to Vercel.
 
 ## Required toolchain
-- **Node.js** 18.x LTS (Next.js 15 is not yet tested on Node 20 in this repo).
+- **Node.js** 22.x LTS (Vercel discontinued Node 18 builds, so match 22 locally).
 - **pnpm 10.x** – Vercel auto-detects `pnpm-lock.yaml` v9 format and pins to pnpm 10 during deploys, so match that locally via `corepack enable`.
 - **macOS/Linux shell** – scripts rely on POSIX utilities (grep, sed) and may fail on Windows CMD.
 

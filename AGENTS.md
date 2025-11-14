@@ -6,7 +6,7 @@ Use this guide to stay aligned with the Prism website codebase. Keep updates inc
 > AGENTS.md and README.md are the master authority for technical rules (tooling, architecture, docs, and env vars). Any conflicting rule elsewhere—including CLAUDE.md, git-sync docs, or older playbooks—is deprecated until it matches these files.
 
 ## Canonical guardrails
-- **Runtime** – Node.js 18.x LTS only. Validate locally before upgrading Next/Vercel to newer Node releases.
+- **Runtime** – Node.js 22.x (Vercel requires 22; keep local dev pinned here to avoid deploy failures).
 - **Package manager** – pnpm 10.x (sync via `corepack enable`). All commands should use `pnpm`; if you see `npm run …` in legacy docs, treat it as outdated.
 - **Architecture snapshot** – Marketing forms rely on Formspree endpoints plus the shared `useFormValidation` hook (HTML5 validation + client-side `fetch` + redirect to `/thank-you` routes). We currently do **not** use React Hook Form, Zod, or server actions on these flows. Update this note if the stack changes.
 - **Documentation policy** – When you add or change behavior, update the relevant existing file under `/docs` (or this AGENTS/README pair for global policies). Do *not* introduce new top-level docs without approval; prefer editing the canonical guides.
