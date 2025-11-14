@@ -1,11 +1,12 @@
 "use client"
 
 import Link from "next/link"
-import { useCallback, useEffect, useMemo, useState } from "react"
+import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import {
   AnimatePresence,
   animate,
   motion,
+  type AnimationPlaybackControls,
   type Variants,
   useMotionTemplate,
   useMotionValue,
@@ -13,7 +14,7 @@ import {
 } from "framer-motion"
 
 import { cn } from "@/lib/utils"
-import { getHeroReviews, renderFormattedText, type Quote } from "@/content/wall-of-love-data"
+import { getHomepageHeroReviewPool, renderFormattedText, type Quote } from "@/content/wall-of-love-data"
 import { trackNavigation } from "@/utils/analytics"
 import { sanitizeReviewText } from "@/lib/schema-helpers"
 
@@ -25,15 +26,21 @@ type HeroReviewSliderCardProps = {
 }
 
 export default function HeroReviewSliderCard({ className }: HeroReviewSliderCardProps) {
-  const reviews = useMemo<Quote[]>(() => getHeroReviews(6), [])
+  const initialPool = useMemo(() => getHomepageHeroReviewPool(), [])
+  const [reviewPool, setReviewPool] = useState<Quote[]>(initialPool)
   const [activeIndex, setActiveIndex] = useState(0)
   const [isPaused, setIsPaused] = useState(false)
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false)
   const [direction, setDirection] = useState<1 | -1>(1)
   const progressValue = useMotionValue(0)
+  const progressControls = useRef<AnimationPlaybackControls | null>(null)
+  const isPausedRef = useRef(isPaused)
   const progressAngle = useTransform(progressValue, (latest) => Math.min(360, latest * 360))
   const pieGradient = useMotionTemplate`conic-gradient(transparent 0deg ${progressAngle}deg, currentColor ${progressAngle}deg 360deg)`
-  const heroReviewForSchema = useMemo(() => reviews.find((quote) => quote.heroSpotlight) ?? reviews[0], [reviews])
+  const heroReviewForSchema = useMemo(
+    () => reviewPool.find((quote) => quote.heroSpotlight) ?? reviewPool[0],
+    [reviewPool]
+  )
   const heroReviewSchema = useMemo(() => {
     if (!heroReviewForSchema) return null
     return JSON.stringify({
@@ -74,27 +81,32 @@ export default function HeroReviewSliderCard({ className }: HeroReviewSliderCard
     return () => mediaQuery.removeListener(updatePreference)
   }, [])
 
+  useEffect(() => {
+    isPausedRef.current = isPaused
+  }, [isPaused])
+
   const determineDirection = useCallback(
     (current: number, next: number) => {
       if (current === next) return 1
-      if (current === reviews.length - 1 && next === 0) return 1
-      if (current === 0 && next === reviews.length - 1) return -1
+      if (reviewPool.length === 0) return 1
+      if (current === reviewPool.length - 1 && next === 0) return 1
+      if (current === 0 && next === reviewPool.length - 1) return -1
       return next > current ? 1 : -1
     },
-    [reviews.length]
+    [reviewPool.length]
   )
 
   const goToNext = useCallback(() => {
     setActiveIndex((current) => {
-      if (reviews.length === 0) return current
-      const next = (current + 1) % reviews.length
+      if (reviewPool.length === 0) return current
+      const next = (current + 1) % reviewPool.length
       setDirection(determineDirection(current, next))
       return next
     })
-  }, [determineDirection, reviews.length])
+  }, [determineDirection, reviewPool.length])
 
   useEffect(() => {
-    if (prefersReducedMotion || isPaused || reviews.length <= 1) {
+    if (prefersReducedMotion || isPaused || reviewPool.length <= 1) {
       return
     }
 
@@ -103,35 +115,77 @@ export default function HeroReviewSliderCard({ className }: HeroReviewSliderCard
       window.clearTimeout(timeout)
     }
     // Re-run when activeIndex changes so the timeout restarts for each slide
-  }, [prefersReducedMotion, isPaused, reviews.length, activeIndex, goToNext])
+  }, [prefersReducedMotion, isPaused, reviewPool.length, activeIndex, goToNext])
+
+  const startProgressAnimation = useCallback(
+    (fromValue: number) => {
+      progressControls.current?.stop()
+      const remainingDuration = Math.max(0.01, (1 - fromValue) * (AUTO_ROTATE_INTERVAL / 1000))
+      progressControls.current = animate(progressValue, 1, {
+        duration: remainingDuration,
+        ease: "linear",
+      })
+    },
+    [progressValue]
+  )
 
   useEffect(() => {
-    if (prefersReducedMotion || reviews.length <= 1) {
+    if (prefersReducedMotion || reviewPool.length <= 1) {
+      progressValue.set(0)
+      return
+    }
+
+    progressControls.current?.stop()
+    progressValue.set(0)
+
+    if (isPausedRef.current) {
+      return
+    }
+
+    startProgressAnimation(0)
+
+    return () => {
+      progressControls.current?.stop()
+    }
+  }, [activeIndex, prefersReducedMotion, reviewPool.length, progressValue, startProgressAnimation])
+
+  useEffect(() => {
+    if (prefersReducedMotion || reviewPool.length <= 1) {
+      progressControls.current?.stop()
       progressValue.set(0)
       return
     }
 
     if (isPaused) {
+      progressControls.current?.stop()
       return
     }
 
-    progressValue.set(0)
-    const controls = animate(progressValue, 1, {
-      duration: AUTO_ROTATE_INTERVAL / 1000,
-      ease: "linear",
-    })
+    startProgressAnimation(progressValue.get())
 
     return () => {
-      controls.stop()
+      progressControls.current?.stop()
     }
-  }, [activeIndex, prefersReducedMotion, isPaused, reviews.length, progressValue])
+  }, [isPaused, prefersReducedMotion, reviewPool.length, progressValue, startProgressAnimation])
 
-  if (reviews.length === 0) {
+  if (reviewPool.length === 0) {
     return null
   }
 
-  const currentReview = reviews[activeIndex]
+  const currentReview = reviewPool[activeIndex]
   const shouldReduceMotion = prefersReducedMotion
+  const currentReviewLength = currentReview.text.length
+  const quoteTransitionDuration = useMemo(() => {
+    if (shouldReduceMotion) {
+      return 0.2
+    }
+
+    const normalizedLength = Math.min(currentReviewLength / 320, 1)
+    return 0.35 + normalizedLength * 0.2
+  }, [currentReviewLength, shouldReduceMotion])
+  const childTransitionDuration = Math.max(0.2, quoteTransitionDuration - 0.15)
+  const childStagger = shouldReduceMotion ? 0 : 0.05
+  const authorDelay = shouldReduceMotion ? 0 : 0.08
 
   const quoteVariants: Variants = {
     initial: (dir: number) => ({
@@ -144,8 +198,10 @@ export default function HeroReviewSliderCard({ className }: HeroReviewSliderCard
       y: 0,
       filter: "blur(0px)",
       transition: {
-        duration: 0.45,
+        duration: quoteTransitionDuration,
         ease: QUOTE_TRANSITION_EASE,
+        staggerChildren: childStagger,
+        delayChildren: childStagger,
       },
     },
     exit: (dir: number) => ({
@@ -153,14 +209,102 @@ export default function HeroReviewSliderCard({ className }: HeroReviewSliderCard
       y: shouldReduceMotion ? 0 : dir * -10,
       filter: shouldReduceMotion ? "blur(0px)" : "blur(4px)",
       transition: {
-        duration: 0.35,
+        duration: Math.max(0.2, quoteTransitionDuration - 0.1),
         ease: QUOTE_TRANSITION_EASE,
       },
     }),
   }
 
+  const quoteTextVariants: Variants = {
+    initial: {
+      opacity: 0,
+      y: shouldReduceMotion ? 0 : 6,
+    },
+    animate: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: childTransitionDuration,
+        ease: QUOTE_TRANSITION_EASE,
+      },
+    },
+    exit: {
+      opacity: 0,
+      y: shouldReduceMotion ? 0 : -4,
+      transition: {
+        duration: Math.max(0.16, childTransitionDuration - 0.05),
+        ease: QUOTE_TRANSITION_EASE,
+      },
+    },
+  }
+
+  const quoteAuthorVariants: Variants = {
+    initial: {
+      opacity: 0,
+      y: shouldReduceMotion ? 0 : 6,
+    },
+    animate: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: childTransitionDuration,
+        ease: QUOTE_TRANSITION_EASE,
+        delay: authorDelay,
+      },
+    },
+    exit: {
+      opacity: 0,
+      y: shouldReduceMotion ? 0 : -4,
+      transition: {
+        duration: Math.max(0.16, childTransitionDuration - 0.05),
+        ease: QUOTE_TRANSITION_EASE,
+      },
+    },
+  }
+
   const pauseRotation = () => setIsPaused(true)
   const resumeRotation = () => setIsPaused(false)
+
+  useEffect(() => {
+    const pool = getHomepageHeroReviewPool()
+    if (!pool.length) {
+      setReviewPool([])
+      setActiveIndex(0)
+      return
+    }
+
+    const storageKey = "prism-hero-review"
+    let index: number | null = null
+
+    if (typeof window !== "undefined") {
+      try {
+        const stored = window.localStorage.getItem(storageKey)
+        if (stored !== null) {
+          const parsed = Number.parseInt(stored, 10)
+          if (!Number.isNaN(parsed)) {
+            index = parsed % pool.length
+          }
+        }
+      } catch {
+        index = null
+      }
+    }
+
+    if (index === null) {
+      index = Math.floor(Math.random() * pool.length)
+    }
+
+    if (typeof window !== "undefined") {
+      try {
+        window.localStorage.setItem(storageKey, String(index))
+      } catch {
+        // ignore
+      }
+    }
+
+    setReviewPool(pool)
+    setActiveIndex(index)
+  }, [])
 
   return (
     <div
@@ -190,19 +334,42 @@ export default function HeroReviewSliderCard({ className }: HeroReviewSliderCard
           aria-live="polite"
           role="status"
         >
-          <p className="text-base leading-relaxed text-neutral-900 dark:text-white">
+          <motion.p
+            variants={quoteTextVariants}
+            className="text-base leading-relaxed text-neutral-900 dark:text-white"
+          >
             &ldquo;{renderFormattedText(currentReview.text)}&rdquo;
-          </p>
-          <p className="mt-4 text-sm font-semibold text-neutral-900 dark:text-white">{currentReview.client}</p>
+          </motion.p>
+          <motion.p
+            variants={quoteAuthorVariants}
+            className="mt-4 text-sm font-semibold text-neutral-900 dark:text-white"
+          >
+            {currentReview.client}
+          </motion.p>
         </motion.div>
       </AnimatePresence>
 
-      <div className="mt-5 flex items-center justify-center" aria-hidden="true">
-        <motion.span
-          className="h-3 w-3 rounded-full border border-neutral-900/40 bg-white/70 text-neutral-900 transition-all duration-200 dark:border-white/40 dark:bg-neutral-800 dark:text-white"
-          style={{ backgroundImage: pieGradient }}
-        />
-      </div>
+      {!shouldReduceMotion ? (
+        <div className="mt-5 flex items-center justify-center" aria-hidden="true">
+          <motion.span
+            className="h-3 w-3 rounded-full border border-neutral-900/40 bg-white/70 text-neutral-900 transition-all duration-200 dark:border-white/40 dark:bg-neutral-800 dark:text-white"
+            style={{ backgroundImage: pieGradient }}
+          />
+        </div>
+      ) : null}
+
+      {shouldReduceMotion ? (
+        <div className="mt-5 flex justify-center">
+          <button
+            type="button"
+            onClick={goToNext}
+            disabled={reviewPool.length <= 1}
+            className="rounded-full border border-neutral-300 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.28em] text-neutral-700 transition hover:border-neutral-400 hover:text-neutral-900 disabled:cursor-not-allowed disabled:border-neutral-200 disabled:text-neutral-400 dark:border-white/15 dark:text-neutral-100 dark:hover:border-white/30 dark:hover:text-white dark:disabled:border-white/10 dark:disabled:text-neutral-500"
+          >
+            show another story
+          </button>
+        </div>
+      ) : null}
 
       <div className="mt-4 flex justify-center">
         <Link
