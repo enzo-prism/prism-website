@@ -259,11 +259,11 @@ export default function AiWebsiteLaunchClientPage() {
             className="mt-4"
             src="https://res.cloudinary.com/dhqpqfw6w/video/upload/v1763160814/prism_websites_vsl_2_ojqiku.mp4"
             poster="https://res.cloudinary.com/dhqpqfw6w/video/upload/so_0/prism_websites_vsl_2_ojqiku.jpg"
-            title="Founder Enzo Sison on fixing slow, confusing websites"
+            title="Founder Enzo Sison explains Prism Websites"
             caption="Enzo explains how slow load times, unclear messaging, and disorganized SEO choke growth—and how Prism’s fast, conversion-ready websites boost visibility, drive more inquiries, and keep customers coming back."
             schema={{
               id: "https://www.design-prism.com/ai-website-launch#founder-vsl",
-              name: "Founder Enzo Sison on fixing slow, confusing websites",
+              name: "Founder Enzo Sison explains Prism Websites",
               description:
                 "Enzo Sison explains how Prism turns slow, confusing sites into fast, conversion-focused experiences that improve discovery, conversion, and retention.",
               thumbnailUrl: "https://res.cloudinary.com/dhqpqfw6w/video/upload/so_0/prism_websites_vsl_2_ojqiku.jpg",
@@ -280,7 +280,7 @@ export default function AiWebsiteLaunchClientPage() {
         </div>
         <div className="mx-auto mt-8 max-w-3xl rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
           <p className="text-sm font-semibold uppercase tracking-[0.28em] text-slate-400 text-center">
-            Founder Enzo Sison on fixing slow, confusing websites
+            Founder Enzo Sison explains Prism Websites
           </p>
           <p className="mt-4 text-sm text-slate-700 sm:text-base text-center">
             Enzo explains how slow load times, unclear messaging, and disorganized SEO choke growth—and how Prism’s
