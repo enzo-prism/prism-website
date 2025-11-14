@@ -440,7 +440,7 @@ type VideoObject = {
   "@id": string
   name: string
   description: string
-  thumbnailUrl: string
+  thumbnailUrl: string | string[]
   uploadDate: string
   duration?: string
   contentUrl?: string
@@ -451,6 +451,14 @@ type VideoObject = {
   creator?: {
     "@type": "Person"
     name: string
+  }
+  potentialAction?: {
+    "@type": "WatchAction" | "SeekToAction"
+    target: string | {
+      "@type": "EntryPoint"
+      urlTemplate: string
+    }
+    "startOffset-input"?: string
   }
 }
 
@@ -704,6 +712,76 @@ export function ServiceSchema({
         __html: JSON.stringify({
           "@context": "https://schema.org",
           ...serviceSchema,
+        }),
+      }}
+    />
+  )
+}
+
+export function VideoSchema({
+  id,
+  name,
+  description,
+  thumbnailUrl,
+  uploadDate,
+  duration,
+  contentUrl,
+  embedUrl,
+  publisherId = "https://design-prism.com/#organization",
+  creatorName,
+  seekToActionTarget,
+}: {
+  id: string
+  name: string
+  description: string
+  thumbnailUrl: string | string[]
+  uploadDate: string
+  duration?: string
+  contentUrl: string
+  embedUrl?: string
+  publisherId?: string
+  creatorName?: string
+  seekToActionTarget?: string
+}) {
+  const videoSchema: VideoObject = {
+    "@type": "VideoObject",
+    "@id": id,
+    name,
+    description,
+    thumbnailUrl,
+    uploadDate,
+    contentUrl,
+    publisher: {
+      "@id": publisherId,
+    },
+    ...(duration && { duration }),
+    ...(embedUrl && { embedUrl }),
+    ...(creatorName && { creator: { "@type": "Person", name: creatorName } }),
+  }
+
+  if (seekToActionTarget) {
+    videoSchema.potentialAction = {
+      "@type": "SeekToAction",
+      target: {
+        "@type": "EntryPoint",
+        urlTemplate: seekToActionTarget,
+      },
+      "startOffset-input": "required name=seek_to_second_number",
+    }
+  } else if (embedUrl) {
+    videoSchema.potentialAction = {
+      "@type": "WatchAction",
+      target: embedUrl,
+    }
+  }
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{
+        __html: JSON.stringify({
+          "@context": "https://schema.org",
+          ...videoSchema,
         }),
       }}
     />

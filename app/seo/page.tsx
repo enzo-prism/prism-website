@@ -54,13 +54,25 @@ export default async function SeoPage() {
     <>
       <SeoHero {...hero} />
       <section className="px-4 py-16 sm:py-20">
-        <div className="mx-auto max-w-3xl text-left">
+        <div id="seo-founder-vsl" className="mx-auto max-w-3xl text-left">
           <p className="text-center text-xs font-semibold uppercase tracking-[0.28em] text-neutral-400">hear from our founder</p>
           <VideoPlayer
             className="mt-4"
             src="https://res.cloudinary.com/dhqpqfw6w/video/upload/v1763150128/seo_vsl_prism_website_oqk1xm.mp4"
             title="Founder Enzo Sison on intentional seo that compounds"
             caption="Enzo explains why SEO isn’t about tricks—it’s about becoming the obvious answer when buyers are ready. He covers how Prism builds the foundation (on-page clarity, technical structure, schema, AI-search readiness, and location intent), ties it to the metrics that matter (awareness, conversion, lifetime value), and shares why pairing SEO with dialed-in websites and listings plus month-to-month ownership gives you compounding traffic without hiring a full team."
+            schema={{
+              id: "https://www.design-prism.com/seo#founder-vsl",
+              name: "Founder Enzo Sison on SEO that compounds",
+              description:
+                "Enzo Sison explains why SEO is about being the obvious answer when buyers search, how Prism builds the technical and content foundation, and how that work compounds across awareness, conversion, and lifetime value.",
+              thumbnailUrl: "https://res.cloudinary.com/dhqpqfw6w/video/upload/so_0/seo_vsl_prism_website_oqk1xm.jpg",
+              uploadDate: "2025-01-24",
+              duration: "PT60S",
+              contentUrl: "https://res.cloudinary.com/dhqpqfw6w/video/upload/v1763150128/seo_vsl_prism_website_oqk1xm.mp4",
+              embedUrl: "https://www.design-prism.com/seo#founder-vsl",
+              creatorName: "Enzo Sison",
+            }}
           />
         </div>
       </section>

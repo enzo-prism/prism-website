@@ -3,12 +3,28 @@
 import { Pause, Play } from "lucide-react"
 import { useEffect, useRef, useState } from "react"
 
+import { VideoSchema } from "@/components/schema-markup"
+
+type VideoSchemaMetadata = {
+  id: string
+  name: string
+  description: string
+  thumbnailUrl: string | string[]
+  uploadDate: string
+  duration?: string
+  contentUrl?: string
+  embedUrl?: string
+  creatorName?: string
+  seekToActionTarget?: string
+}
+
 type VideoPlayerProps = {
   src: string
   poster?: string
   title?: string
   caption?: string
   className?: string
+  schema?: VideoSchemaMetadata
 }
 
 const formatTime = (value: number) => {
@@ -20,7 +36,7 @@ const formatTime = (value: number) => {
   return `${minutes}:${seconds.toString().padStart(2, "0")}`
 }
 
-export default function VideoPlayer({ src, poster, title, caption, className }: VideoPlayerProps) {
+export default function VideoPlayer({ src, poster, title, caption, className, schema }: VideoPlayerProps) {
   const videoRef = useRef<HTMLVideoElement>(null)
   const [isPlaying, setIsPlaying] = useState(false)
   const [duration, setDuration] = useState(0)
@@ -111,53 +127,69 @@ export default function VideoPlayer({ src, poster, title, caption, className }: 
     .join(" ")
 
   return (
-    <div className={containerClass}>
-      <div className="relative aspect-video w-full overflow-hidden rounded-2xl bg-black">
-        <video
-          ref={videoRef}
-          src={src}
-          poster={poster}
-          playsInline
-          preload="metadata"
-          className="h-full w-full object-cover"
-          aria-label={title ?? "Video player"}
-          onClick={togglePlayback}
-        />
-      </div>
-      {title ? (
-        <p className="mt-4 text-base font-semibold text-neutral-900">{title}</p>
-      ) : null}
-      {caption ? (
-        <p className="mt-1 text-sm text-neutral-600">
-          {caption}
-        </p>
-      ) : null}
-      <div className="mt-6 flex flex-col gap-4 sm:flex-row sm:items-center">
-        <button
-          type="button"
-          onClick={togglePlayback}
-          className="inline-flex items-center justify-center gap-2 rounded-full bg-neutral-900 px-5 py-2 text-sm font-semibold text-white transition hover:bg-neutral-800"
-          aria-pressed={isPlaying}
-          aria-label={isPlaying ? "Pause video" : "Play video"}
-        >
-          {isPlaying ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4" />}
-          {isPlaying ? "Pause" : "Play"}
-        </button>
-        <div className="flex w-full flex-1 items-center gap-3">
-          <span className="text-xs font-medium text-neutral-500">{formatTime(currentTime)}</span>
-          <input
-            type="range"
-            min={0}
-            max={100}
-            step={0.1}
-            value={progress}
-            onChange={event => handleSeek(Number(event.target.value))}
-            className="flex-1 cursor-pointer accent-neutral-900"
-            aria-label="Video timeline"
+    <>
+      <div className={containerClass}>
+        <div className="relative aspect-video w-full overflow-hidden rounded-2xl bg-black">
+          <video
+            ref={videoRef}
+            src={src}
+            poster={poster}
+            playsInline
+            preload="metadata"
+            className="h-full w-full object-cover"
+            aria-label={title ?? "Video player"}
+            onClick={togglePlayback}
           />
-          <span className="text-xs font-medium text-neutral-500">{formatTime(duration)}</span>
+        </div>
+        {title ? (
+          <p className="mt-4 text-base font-semibold text-neutral-900">{title}</p>
+        ) : null}
+        {caption ? (
+          <p className="mt-1 text-sm text-neutral-600">
+            {caption}
+          </p>
+        ) : null}
+        <div className="mt-6 flex flex-col gap-4 sm:flex-row sm:items-center">
+          <button
+            type="button"
+            onClick={togglePlayback}
+            className="inline-flex items-center justify-center gap-2 rounded-full bg-neutral-900 px-5 py-2 text-sm font-semibold text-white transition hover:bg-neutral-800"
+            aria-pressed={isPlaying}
+            aria-label={isPlaying ? "Pause video" : "Play video"}
+          >
+            {isPlaying ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4" />}
+            {isPlaying ? "Pause" : "Play"}
+          </button>
+          <div className="flex w-full flex-1 items-center gap-3">
+            <span className="text-xs font-medium text-neutral-500">{formatTime(currentTime)}</span>
+            <input
+              type="range"
+              min={0}
+              max={100}
+              step={0.1}
+              value={progress}
+              onChange={event => handleSeek(Number(event.target.value))}
+              className="flex-1 cursor-pointer accent-neutral-900"
+              aria-label="Video timeline"
+            />
+            <span className="text-xs font-medium text-neutral-500">{formatTime(duration)}</span>
+          </div>
         </div>
       </div>
-    </div>
+      {schema ? (
+        <VideoSchema
+          id={schema.id}
+          name={schema.name}
+          description={schema.description}
+          thumbnailUrl={schema.thumbnailUrl}
+          uploadDate={schema.uploadDate}
+          duration={schema.duration}
+          contentUrl={schema.contentUrl ?? src}
+          embedUrl={schema.embedUrl}
+          creatorName={schema.creatorName}
+          seekToActionTarget={schema.seekToActionTarget}
+        />
+      ) : null}
+    </>
   )
 }
