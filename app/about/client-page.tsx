@@ -67,9 +67,6 @@ export default function AboutClientPage() {
         {/* Video Section */}
         <section ref={videoRef} className="px-4 py-12 bg-neutral-50 sm:py-16">
           <div className="container mx-auto max-w-3xl px-4 md:px-6 text-left">
-            <p className="text-center text-xs font-semibold uppercase tracking-[0.28em] text-neutral-400">
-              hear from our founder
-            </p>
             <VideoPlayer
               className="mt-4"
               src="https://res.cloudinary.com/dhqpqfw6w/video/upload/v1763168589/pricing-1_suz6es.mp4"
