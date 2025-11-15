@@ -135,43 +135,6 @@ export default function AboutClientPage() {
           </div>
         </section>
 
-        {/* CTA Section */}
-        <section className="px-4 py-16 md:py-24">
-          <div className="container mx-auto px-4 md:px-6 max-w-4xl">
-            <div className="bg-gradient-to-br from-neutral-900 to-neutral-800 rounded-2xl p-8 md:p-12 text-center text-white relative overflow-hidden">
-              {/* Background decoration */}
-              <div className="absolute inset-0 bg-gradient-to-br from-neutral-900/50 to-transparent"></div>
-              <div className="absolute top-4 right-4 text-6xl opacity-10">✨</div>
-              <div className="absolute bottom-4 left-4 text-4xl opacity-10">🚀</div>
-
-              <div className="relative z-10">
-                <h2 className="text-3xl font-bold tracking-tighter lowercase sm:text-4xl mb-4">
-                  ready to start your project?
-                </h2>
-                <p className="mx-auto max-w-[600px] text-neutral-300 lowercase mb-8 md:text-lg">
-                  let's discuss how we can help bring your digital vision to life. schedule a free consultation to get
-                  started.
-                </p>
-
-                <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                  <Link
-                    href="/free-analysis"
-                    className="inline-flex items-center justify-center rounded-full bg-white text-neutral-900 px-8 py-4 text-sm font-medium hover:bg-neutral-100 lowercase transition-all duration-200 hover:scale-105 shadow-lg"
-                    onClick={() => trackVideoInteraction("get_started_cta", "click", "About page CTA to get started")}
-                  >
-                    {FREE_AUDIT_CTA_TEXT}
-                    <span className="ml-2">→</span>
-                  </Link>
-
-                  <div className="flex items-center gap-2 text-neutral-400 text-sm lowercase">
-                    <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
-                    no commitment required
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
       </main>
       <Footer />
       
