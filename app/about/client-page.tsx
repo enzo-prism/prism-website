@@ -1,7 +1,7 @@
 "use client"
 
 import Footer from "@/components/footer"
-import MinimalistVideoPlayer from "@/components/minimalist-video-player"
+import VideoPlayer from "@/components/video-player"
 import PageViewTracker from "@/components/page-view-tracker"
 import { PersonSchema } from "@/components/schema-markup"
 import ScrollingTimeline from "@/components/scrolling-timeline"
@@ -65,28 +65,32 @@ export default function AboutClientPage() {
         </section>
 
         {/* Video Section */}
-        <section ref={videoRef} className="px-4 py-8 md:py-12 bg-neutral-50">
-          <div className="container mx-auto px-4 md:px-6 max-w-4xl">
-            <div className="mb-8 text-center"></div>
-
-            <div className="flex justify-center">
-              <figure className="w-full max-w-[400px]">
-                <MinimalistVideoPlayer
-                  videoId="1085519114"
-                  thumbnailSrc="/about-prism-thumbnail.png"
-                  aspectRatio="9/16"
-                  className="w-full rounded-xl shadow-lg"
-                />
-                <figcaption className="mt-6 text-center">
-                  <div className="flex justify-center mb-3">
-                    <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-neutral-200 bg-white p-1 shadow-sm">
-                      <img src="/enzo-avatar.png" alt="Enzo Sison" className="object-contain w-full h-full" />
-                    </div>
-                  </div>
-                  <p className="text-sm text-neutral-500 italic lowercase tracking-wide">enzo sison, founder of prism</p>
-                </figcaption>
-              </figure>
-            </div>
+        <section ref={videoRef} className="px-4 py-12 bg-neutral-50 sm:py-16">
+          <div className="container mx-auto max-w-3xl px-4 md:px-6 text-left">
+            <p className="text-center text-xs font-semibold uppercase tracking-[0.28em] text-neutral-400">
+              hear from our founder
+            </p>
+            <VideoPlayer
+              className="mt-4"
+              src="https://res.cloudinary.com/dhqpqfw6w/video/upload/v1763168589/pricing-1_suz6es.mp4"
+              poster="/about-prism-thumbnail.png"
+              title="Founder Enzo Sison on Prism’s story"
+              caption="Enzo shares the mission behind Prism, how design, technology, and athletics shape the work, and why every project is built to perform like an Olympic run."
+              schema={{
+                id: "https://www.design-prism.com/about#founder-vsl",
+                name: "Founder Enzo Sison on Prism’s story",
+                description:
+                  "Enzo Sison explains the inspiration for Prism, blending elite design, growth systems, and an Olympic mindset to serve ambitious teams.",
+                thumbnailUrl: "https://res.cloudinary.com/dhqpqfw6w/video/upload/so_0/pricing-1_suz6es.jpg",
+                uploadDate: "2025-01-24T00:00:00Z",
+                duration: "PT60S",
+                contentUrl: "https://res.cloudinary.com/dhqpqfw6w/video/upload/v1763168589/pricing-1_suz6es.mp4",
+                embedUrl: "https://www.design-prism.com/about#founder-vsl",
+                width: 1920,
+                height: 1080,
+                creatorName: "Enzo Sison",
+              }}
+            />
           </div>
         </section>
         {/* LA 2028 Olympic Journey (moved below the single video section) */}
