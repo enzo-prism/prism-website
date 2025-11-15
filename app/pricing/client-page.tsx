@@ -194,7 +194,7 @@ function PricingSection() {
               src="https://res.cloudinary.com/dhqpqfw6w/video/upload/v1763166554/pricing_ymfnqy.mp4"
               poster="https://res.cloudinary.com/dhqpqfw6w/video/upload/so_0/pricing_ymfnqy.jpg"
               title="Founder Enzo Sison on Prism pricing"
-              caption="Enzo explains how the Launch, Grow, and Scale plans work—what’s included, how pricing stays transparent, and how each tier helps teams launch fast and keep improving."
+              caption="enzo explains the 3 options"
               schema={{
                 id: "https://www.design-prism.com/pricing#founder-vsl",
                 name: "Founder Enzo Sison on Prism pricing",
