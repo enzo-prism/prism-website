@@ -71,11 +71,11 @@ export default function AboutClientPage() {
               className="mt-4"
               src="https://res.cloudinary.com/dhqpqfw6w/video/upload/v1763168589/pricing-1_suz6es.mp4"
               poster="https://res.cloudinary.com/dhqpqfw6w/video/upload/so_0/pricing-1_suz6es.jpg"
-              title="Founder Enzo Sison on Prism’s story"
+              title="Enzo Sison"
               caption="Enzo shares the mission behind Prism, how design, technology, and athletics shape the work, and why every project is built to perform like an Olympic run."
               schema={{
                 id: "https://www.design-prism.com/about#founder-vsl",
-                name: "Founder Enzo Sison on Prism’s story",
+                name: "Enzo Sison",
                 description:
                   "Enzo Sison explains the inspiration for Prism, blending elite design, growth systems, and an Olympic mindset to serve ambitious teams.",
                 thumbnailUrl: "https://res.cloudinary.com/dhqpqfw6w/video/upload/so_0/pricing-1_suz6es.jpg",
