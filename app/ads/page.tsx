@@ -6,6 +6,7 @@ import ScrollToTop from "@/components/scroll-to-top"
 import SimpleBlogGrid from "@/components/simple-blog-grid"
 import SimpleBlogPostCard from "@/components/simple-blog-post-card"
 import { ServiceSchema } from "@/components/schema-markup"
+import VideoPlayer from "@/components/video-player"
 import { Button } from "@/components/ui/button"
 import { ArrowRight, Check } from "lucide-react"
 import type { Metadata } from "next"
@@ -255,6 +256,33 @@ export default async function AdsPage() {
                 <Link href="#budget-protection">See how we optimize budgets</Link>
               </Button>
             </div>
+          </div>
+        </section>
+
+        <section className="px-4 py-12 sm:py-16">
+          <div id="ads-founder-vsl" className="mx-auto max-w-3xl text-left">
+            <p className="text-center text-xs font-semibold uppercase tracking-[0.28em] text-neutral-400">hear from our founder</p>
+            <VideoPlayer
+              className="mt-4"
+              src="https://res.cloudinary.com/dhqpqfw6w/video/upload/v1763165529/Untitled_xmscby.mp4"
+              poster="https://res.cloudinary.com/dhqpqfw6w/video/upload/so_0/Untitled_xmscby.jpg"
+              title="Founder Enzo Sison on Prism Ads"
+              caption="Enzo shares how Prism plans, builds, and optimizes Google, Meta, TikTok, and Yelp campaigns so local businesses get more calls, form fills, and store visits without wasting spend."
+              schema={{
+                id: "https://www.design-prism.com/ads#founder-vsl",
+                name: "Founder Enzo Sison on Prism Ads",
+                description:
+                  "Enzo Sison explains Prism’s paid ads system—strategy, creative, offers, and nonstop optimization across Google, Meta, TikTok, and Yelp—to drive more calls, clicks, and loyal customers.",
+                thumbnailUrl: "https://res.cloudinary.com/dhqpqfw6w/video/upload/so_0/Untitled_xmscby.jpg",
+                uploadDate: "2025-01-24T00:00:00Z",
+                duration: "PT60S",
+                contentUrl: "https://res.cloudinary.com/dhqpqfw6w/video/upload/v1763165529/Untitled_xmscby.mp4",
+                embedUrl: "https://www.design-prism.com/ads#founder-vsl",
+                width: 1920,
+                height: 1080,
+                creatorName: "Enzo Sison",
+              }}
+            />
           </div>
         </section>
 
