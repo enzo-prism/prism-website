@@ -73,7 +73,7 @@ export default function AboutClientPage() {
             <VideoPlayer
               className="mt-4"
               src="https://res.cloudinary.com/dhqpqfw6w/video/upload/v1763168589/pricing-1_suz6es.mp4"
-              poster="/about-prism-thumbnail.png"
+              poster="https://res.cloudinary.com/dhqpqfw6w/video/upload/so_0/pricing-1_suz6es.jpg"
               title="Founder Enzo Sison on Prism’s story"
               caption="Enzo shares the mission behind Prism, how design, technology, and athletics shape the work, and why every project is built to perform like an Olympic run."
               schema={{
