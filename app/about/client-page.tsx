@@ -135,48 +135,6 @@ export default function AboutClientPage() {
           </div>
         </section>
 
-        {/* Mission Section */}
-        <section className="px-4 py-16 md:py-24 bg-neutral-50">
-          <div className="container mx-auto px-4 md:px-6 max-w-4xl">
-            <div className="grid gap-12 md:grid-cols-2 items-center">
-              <div>
-                <h2 className="text-3xl font-bold tracking-tighter lowercase sm:text-4xl mb-6">our mission</h2>
-                <div className="space-y-4">
-                  <p className="text-neutral-600 lowercase">
-                    we believe that digital excellence should be accessible to businesses of all sizes. our mission is
-                    to create websites, apps, and designs that not only look beautiful but drive real business results.
-                  </p>
-                  <p className="text-neutral-600 lowercase">
-                    we're committed to helping our clients navigate the ever-changing digital landscape with solutions
-                    that are both innovative and effective.
-                  </p>
-                </div>
-              </div>
-              <div className="bg-white p-8 rounded-xl shadow-sm border">
-                <div className="text-4xl mb-4">💡</div>
-                <h3 className="text-xl font-bold mb-3 lowercase">our values</h3>
-                <ul className="space-y-3 text-neutral-600 lowercase">
-                  <li className="flex items-start">
-                    <span className="mr-2 text-xl">🚀</span>
-                    <span>excellence in everything we create</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="mr-2 text-xl">🤝</span>
-                    <span>partnerships, not just projects</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="mr-2 text-xl">📊</span>
-                    <span>data-driven decisions</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="mr-2 text-xl">🔄</span>
-                    <span>continuous innovation</span>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
         {/* CTA Section */}
         <section className="px-4 py-16 md:py-24">
           <div className="container mx-auto px-4 md:px-6 max-w-4xl">
