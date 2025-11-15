@@ -57,7 +57,7 @@ export default function AboutClientPage() {
                 <div className="text-4xl">🌉</div>
                 <h1 className="text-4xl font-bold tracking-tighter lowercase sm:text-5xl md:text-6xl">our story</h1>
                 <p className="mx-auto mt-4 max-w-[700px] text-neutral-600 lowercase md:text-xl">
-                  enzo sison built prism to pursue his passions for tech, business, and athletics at the highest level
+                  enzo sison built prism to pursue his passions for tech, business, and athletics at the highest level — and to connect with others chasing excellence in their own fields.
                 </p>
               </div>
             </div>
