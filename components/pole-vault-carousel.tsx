@@ -47,6 +47,8 @@ export default function PoleVaultCarousel() {
         thumbnailSrc={current.thumb}
         aspectRatio="9/16"
         className="w-full"
+        forceMuted
+        showMuteToggle={false}
       />
 
       {/* Controls (mobile + desktop) */}

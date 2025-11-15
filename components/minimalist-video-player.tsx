@@ -12,6 +12,8 @@ interface MinimalistVideoPlayerProps {
   aspectRatio?: string
   thumbnailSrc: string
   className?: string
+  forceMuted?: boolean
+  showMuteToggle?: boolean
 }
 
 export default function MinimalistVideoPlayer({
@@ -19,6 +21,8 @@ export default function MinimalistVideoPlayer({
   aspectRatio = "9/16",
   thumbnailSrc,
   className = "",
+  forceMuted = false,
+  showMuteToggle = true,
 }: MinimalistVideoPlayerProps) {
   const [isVideoReady, setIsVideoReady] = useState(false)
   const [isPlaying, setIsPlaying] = useState(false)
@@ -88,7 +92,14 @@ export default function MinimalistVideoPlayer({
     playerRef.current.on("pause", () => setIsPlaying(false))
     playerRef.current.on("ended", () => setIsPlaying(false))
     playerRef.current.on("volumechange", (event: { volume: number }) => {
-      setIsMuted(event.volume === 0)
+      if (forceMuted) {
+        setIsMuted(true)
+        if (event.volume !== 0) {
+          playerRef.current?.setVolume(0)
+        }
+      } else {
+        setIsMuted(event.volume === 0)
+      }
     })
 
     playerRef.current.on("ended", () => {
@@ -113,7 +124,7 @@ export default function MinimalistVideoPlayer({
         .loadVideo(targetId)
         .then(() => {
           // Ensure mute state and remove overlay
-          playerRef.current.setVolume(isMuted ? 0 : 1)
+          playerRef.current.setVolume(forceMuted || isMuted ? 0 : 1)
           setIsVideoReady(true)
           return playerRef.current.play().catch(() => void 0)
         })
@@ -139,7 +150,7 @@ export default function MinimalistVideoPlayer({
       .loadVideo(videoId)
       .then(() => {
         // ensure mute state and autoplay remain consistent
-        player.setVolume(isMuted ? 0 : 1)
+        player.setVolume(forceMuted || isMuted ? 0 : 1)
         // Explicitly mark ready so overlay doesn't block if 'loaded' doesn't fire
         setIsVideoReady(true)
         return player.play().catch(() => void 0)
@@ -172,6 +183,9 @@ export default function MinimalistVideoPlayer({
   }
 
   const toggleMute = () => {
+    if (forceMuted || !showMuteToggle) {
+      return
+    }
     if (isMuted) {
       playerRef.current?.setVolume(1)
       trackVideoInteraction(videoId, "unmute", "Video unmuted")
@@ -181,6 +195,13 @@ export default function MinimalistVideoPlayer({
     }
     setIsMuted(!isMuted)
   }
+
+  useEffect(() => {
+    if (forceMuted) {
+      setIsMuted(true)
+      playerRef.current?.setVolume(0)
+    }
+  }, [forceMuted])
 
   const showControls = () => {
     setIsControlsVisible(true)
@@ -195,6 +216,8 @@ export default function MinimalistVideoPlayer({
       setIsControlsVisible(false)
     }, 3000)
   }
+
+  const shouldShowMuteButton = showMuteToggle && !forceMuted
 
   return (
     <div
@@ -228,9 +251,9 @@ export default function MinimalistVideoPlayer({
 
       {/* Minimalist controls overlay */}
       <div
-        className={`absolute bottom-0 left-0 right-0 flex items-center justify-between p-4 transition-opacity duration-300 ${
-          isControlsVisible ? "opacity-100" : "opacity-0"
-        }`}
+        className={`absolute bottom-0 left-0 right-0 flex items-center ${
+          shouldShowMuteButton ? "justify-between" : "justify-start"
+        } p-4 transition-opacity duration-300 ${isControlsVisible ? "opacity-100" : "opacity-0"}`}
       >
         <button
           onClick={togglePlay}
@@ -240,13 +263,15 @@ export default function MinimalistVideoPlayer({
           {isPlaying ? <Pause className="h-5 w-5" /> : <Play className="h-5 w-5" />}
         </button>
 
-        <button
-          onClick={toggleMute}
-          className="rounded-full bg-black bg-opacity-50 p-2 text-white transition-colors hover:bg-opacity-70"
-          aria-label={isMuted ? "Unmute" : "Mute"}
-        >
-          {isMuted ? <VolumeX className="h-5 w-5" /> : <Volume2 className="h-5 w-5" />}
-        </button>
+        {shouldShowMuteButton ? (
+          <button
+            onClick={toggleMute}
+            className="rounded-full bg-black bg-opacity-50 p-2 text-white transition-colors hover:bg-opacity-70"
+            aria-label={isMuted ? "Unmute" : "Mute"}
+          >
+            {isMuted ? <VolumeX className="h-5 w-5" /> : <Volume2 className="h-5 w-5" />}
+          </button>
+        ) : null}
       </div>
     </div>
   )
