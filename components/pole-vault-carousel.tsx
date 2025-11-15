@@ -14,7 +14,7 @@ const slides: Slide[] = [
   { id: "1116465370", thumb: "/white.svg", label: "san jose, ca" },
   { id: "1116465409", thumb: "/white.svg", label: "santa barbara, ca" },
   { id: "1116465400", thumb: "/white.svg", label: "fresno, ca" },
-  { id: "1116465387", thumb: "/white.svg", label: "manilla, philippines" },
+  { id: "1116465387", thumb: "/white.svg", label: "manila, philippines" },
   { id: "1116471573", thumb: "/white.svg", label: "palo alto, ca" },
   { id: "1116471566", thumb: "/white.svg", label: "new clark city, philippines" },
 ]
