@@ -126,6 +126,36 @@ const connectedPresenceHighlights = [
   }
 ] as const
 
+const dentalPhotographyHighlights = [
+  {
+    title: "1-day capture",
+    description: "Team portraits, candid chairside shots, and lobby details handled in a single shoot day."
+  },
+  {
+    title: "Ready for every channel",
+    description: "Delivery includes crops for your website hero, ads, local listings, and recruiting funnels."
+  },
+  {
+    title: "Built-in coordination",
+    description: "We manage the shot list, staff reminders, and cloud delivery so you can stay focused on patients."
+  }
+] as const
+
+const beforeAfterGuideHighlights = [
+  {
+    title: "Step-by-step protocol",
+    description: "Camera settings, lighting guidance, and positioning tips so every shoot feels consistent."
+  },
+  {
+    title: "Gear list with links",
+    description: "Shop the exact flashes, reflectors, and mirrors we recommend for natural-looking results."
+  },
+  {
+    title: "Patient-ready handoff",
+    description: "Embed-ready galleries and before/after templates keep your clinical team and marketing synced."
+  }
+] as const
+
 const featuredCaseStudyDetails = [
   { slug: "dr-christopher-wong", highlight: "100% patient retention during transition" },
   { slug: "exquisite-dentistry", highlight: "Sophisticated digital experience" },
@@ -466,6 +496,113 @@ export default function DentalPracticesPage() {
                       className="group rounded-full px-8 py-3 text-base"
                     >
                       {CTA_SECONDARY_LABEL}
+                      <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                    </Button>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="border-t border-neutral-100 bg-neutral-900 text-white">
+          <div className="container mx-auto px-4 py-24">
+            <div className="grid items-center gap-12 lg:grid-cols-2">
+              <div>
+                <p className="text-sm font-semibold uppercase tracking-[0.32em] text-white/70">On-site storytelling</p>
+                <h2 className="mt-4 text-3xl font-semibold tracking-tight md:text-4xl">
+                  Show the photography patients actually want to see
+                </h2>
+                <p className="mt-4 text-base text-white/80">
+                  Our dedicated office &amp; team photography day captures real operatories, candid care moments, and welcoming lobby vibes so
+                  your entire funnel feels consistent. The full breakdown lives on our <Link href="/dental-photography/office-team" className="underline decoration-white/40 underline-offset-4 hover:decoration-white">office &amp; team photography page</Link>
+                  , where you can tour recent shoots and see how the Apple Maps proof works.
+                </p>
+                <p className="mt-4 text-base text-white/80">
+                  Use those assets across your website, paid campaigns, local listings, and recruiting touchpoints without juggling multiple vendors.
+                  Prism plans the shot list, handles scheduling with your staff, and delivers the files sized for every channel.
+                </p>
+                <div className="mt-10 flex flex-wrap gap-4">
+                  <Link href="/dental-photography/office-team">
+                    <Button
+                      size="lg"
+                      variant="inverted"
+                      className="group rounded-full px-8 py-3 text-base"
+                    >
+                      Explore office &amp; team photography
+                      <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                    </Button>
+                  </Link>
+                  <Link href="/book-a-shoot">
+                    <Button
+                      size="lg"
+                      variant="outline-inverted"
+                      className="group rounded-full px-8 py-3 text-base"
+                    >
+                      Book a shoot
+                      <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                    </Button>
+                  </Link>
+                </div>
+              </div>
+              <div className="rounded-3xl border border-white/15 bg-white/5 p-8">
+                <p className="text-xs font-semibold uppercase tracking-[0.32em] text-white/70">What you get</p>
+                <ul className="mt-6 space-y-5">
+                  {dentalPhotographyHighlights.map((highlight) => (
+                    <li
+                      key={highlight.title}
+                      className="rounded-2xl border border-white/10 bg-neutral-900/30 p-5"
+                    >
+                      <p className="text-lg font-semibold text-white">{highlight.title}</p>
+                      <p className="mt-2 text-sm text-white/80">{highlight.description}</p>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="border-t border-neutral-100 bg-white">
+          <div className="container mx-auto px-4 py-24">
+            <div className="grid items-center gap-16 lg:grid-cols-2">
+              <div className="rounded-3xl border border-neutral-200 bg-neutral-50 p-8">
+                <p className="text-xs font-semibold uppercase tracking-[0.32em] text-neutral-500">What the guide covers</p>
+                <ul className="mt-6 space-y-5">
+                  {beforeAfterGuideHighlights.map((highlight) => (
+                    <li key={highlight.title} className="rounded-2xl border border-neutral-200 bg-white p-5">
+                      <p className="text-lg font-semibold text-neutral-900">{highlight.title}</p>
+                      <p className="mt-2 text-sm text-neutral-600">{highlight.description}</p>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div>
+                <p className="text-sm font-semibold uppercase tracking-[0.32em] text-neutral-500">Before &amp; after mastery</p>
+                <h2 className="mt-4 text-3xl font-semibold tracking-tight md:text-4xl">
+                  DIY capture workflow for every clinical team
+                </h2>
+                <p className="mt-4 text-base text-neutral-600">
+                  When you’re not ready for an on-site production day, Prism still equips you with a repeatable protocol. The <Link href="/dental-photography/before-after" className="underline decoration-neutral-300 underline-offset-4 transition hover:decoration-neutral-600">before + after photography guide</Link>
+                  shows your team exactly how to stage, light, and document cases without slowing down the schedule.
+                </p>
+                <p className="mt-4 text-base text-neutral-600">
+                  Follow the tabs for gear, lighting, and workflow tips, then drop the finished assets straight into your website, social, and consult decks. If you need Prism on-site after trying the guide, you can move into the office &amp; team service without re-learning a new system.
+                </p>
+                <div className="mt-10 flex flex-wrap gap-4">
+                  <Link href="/dental-photography/before-after">
+                    <Button size="lg" className="group rounded-full px-8 py-3 text-base">
+                      Explore the guide
+                      <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                    </Button>
+                  </Link>
+                  <Link href="/dental-photography/office-team">
+                    <Button
+                      size="lg"
+                      variant="outline"
+                      className="group rounded-full px-8 py-3 text-base"
+                    >
+                      Book Prism on-site
                       <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
                     </Button>
                   </Link>
