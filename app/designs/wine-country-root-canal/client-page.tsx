@@ -382,12 +382,20 @@ export default function WineCountryRootCanalDesignReview() {
                 <p className="text-xs font-semibold uppercase tracking-[0.35em] text-neutral-500">logo design board</p>
                 <h1 className="text-4xl font-semibold leading-tight sm:text-5xl">wine country root canal</h1>
                 <p className="text-base text-neutral-600 sm:text-lg">Dr. Anderson</p>
-                <Link
-                  href="/case-studies/wine-country-root-canal"
-                  className="inline-flex items-center text-sm font-semibold text-neutral-900 underline decoration-neutral-300 underline-offset-4"
-                >
-                  view latest case study
-                </Link>
+                <div className="flex flex-wrap gap-3">
+                  <Link
+                    href="/case-studies/wine-country-root-canal"
+                    className="inline-flex items-center rounded-full border border-neutral-300 px-5 py-2 text-sm font-semibold text-neutral-900 transition hover:border-neutral-900"
+                  >
+                    view case study
+                  </Link>
+                  <Link
+                    href="#vote"
+                    className="inline-flex items-center rounded-full bg-neutral-900 px-5 py-2 text-sm font-semibold text-white transition hover:bg-neutral-800"
+                  >
+                    vote on design
+                  </Link>
+                </div>
               </div>
               <div className="relative overflow-hidden rounded-[28px] border border-neutral-200 bg-neutral-900 shadow-2xl shadow-black/20">
                 <Image
@@ -404,7 +412,7 @@ export default function WineCountryRootCanalDesignReview() {
           </div>
         </section>
 
-        <section className="px-4 py-16">
+        <section id="vote" className="px-4 py-16">
           <div className="mx-auto max-w-6xl space-y-6">
             <div className="space-y-2">
               <h2 className="text-3xl font-semibold text-neutral-900">design inspiration</h2>
