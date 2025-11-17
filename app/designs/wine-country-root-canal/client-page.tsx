@@ -376,7 +376,7 @@ export default function WineCountryRootCanalDesignReview() {
           </div>
         </section>
 
-        <section className="px-4 pb-12">
+        <section className="px-4 py-16">
           <div className="mx-auto max-w-6xl space-y-6">
             <div className="space-y-2">
               <h2 className="text-3xl font-semibold text-neutral-900">design inspiration</h2>
