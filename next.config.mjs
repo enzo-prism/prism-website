@@ -23,9 +23,21 @@ images: {
       protocol: 'https',
       hostname: 'res.cloudinary.com',
     },
+    {
+      protocol: 'https',
+      hostname: 'wholesale.azdentall.com',
+    },
+    {
+      protocol: 'https',
+      hostname: 'dentiphoto.com',
+    },
+    {
+      protocol: 'https',
+      hostname: 'dentalaccessories.org',
+    },
   ],
   contentSecurityPolicy:
-    "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com; connect-src 'self' https://www.google-analytics.com; img-src 'self' data: https://www.google-analytics.com https://res.cloudinary.com; media-src 'self' https://res.cloudinary.com; frame-src 'self' https://www.googletagmanager.com;",
+    "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com; connect-src 'self' https://www.google-analytics.com; img-src 'self' data: https://www.google-analytics.com https://res.cloudinary.com https://wholesale.azdentall.com https://dentiphoto.com https://dentalaccessories.org; media-src 'self' https://res.cloudinary.com https://wholesale.azdentall.com https://dentiphoto.com https://dentalaccessories.org; frame-src 'self' https://www.googletagmanager.com;",
 },
   async redirects() {
     return [

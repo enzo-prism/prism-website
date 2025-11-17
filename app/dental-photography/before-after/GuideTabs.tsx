@@ -1,5 +1,6 @@
 "use client"
 
+import Image from "next/image"
 import Link from "next/link"
 import { useMemo, useState } from "react"
 import { ArrowRight, Camera, CheckCircle2, ClipboardList, FileText, Lightbulb, ListChecks, ShieldCheck, Sparkles } from "lucide-react"
@@ -13,6 +14,7 @@ interface ProductCard {
   subtitle?: string
   price?: string
   description: string
+  image?: string
   link?: {
     href: string
     label: string
@@ -84,6 +86,7 @@ const tiers: Record<TierId, TierContent> = {
         price: "~$49.45",
         description:
           "Shadow-free lighting with adjustable brightness. Works for extraoral and intraoral photos, lightweight and consistent enough that anyone can use it.",
+        image: "https://wholesale.azdentall.com/cdn/shop/products/10_e5816172-00e2-421e-bfd2-d2b0bd5edfc0.jpg?v=1689929865&width=600",
         link: {
           href: "https://wholesale.azdentall.com/products/dental-oral-photography-led-lamp-flash-light-with-three-foot-bracket",
           label: "wholesale.azdentall.com"
@@ -96,6 +99,7 @@ const tiers: Record<TierId, TierContent> = {
         price: "$99.90",
         description:
           "Use the practice’s existing iPhone or Android and add a clip-on macro lens. Fast for staff, no complicated settings, and incredible close-ups with proper lighting.",
+        image: "https://dentiphoto.com/cdn/shop/products/Sa1199fe5bd554b9e880e209f52153f7bN.jpg?v=1733984014&width=700",
         link: {
           href: "https://dentiphoto.com/products/120mm-macro-lens",
           label: "dentiphoto.com"
@@ -108,6 +112,7 @@ const tiers: Record<TierId, TierContent> = {
         price: "$229.95",
         description:
           "If a practice already owns a DSLR, pair it with a turnkey kit that covers retractors, mirrors, contrastors, LED attachments, and a carry case.",
+        image: "https://dentalaccessories.org/cdn/shop/products/UltimateBundleKitfinal_3.jpg?v=1615480709&width=550",
         link: {
           href: "https://dentalaccessories.org/products/dental-photography-ultimate-bundle-kit",
           label: "dentalaccessories.org"
@@ -338,6 +343,19 @@ export default function GuideTabs() {
                         <p className="text-xs font-semibold uppercase tracking-[0.32em] text-neutral-500">{product.title}</p>
                         {product.subtitle && <h5 className="mt-2 text-lg font-semibold text-neutral-900">{product.subtitle}</h5>}
                         {product.price && <p className="text-sm font-medium text-neutral-700">{product.price}</p>}
+                        {product.image && (
+                          <div className="mt-4 rounded-2xl border border-neutral-100 bg-neutral-50 p-4">
+                            <div className="relative aspect-square w-full overflow-hidden rounded-xl bg-white">
+                              <Image
+                                src={product.image}
+                                alt={product.subtitle ?? product.title}
+                                fill
+                                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 400px"
+                                className="object-contain p-2"
+                              />
+                            </div>
+                          </div>
+                        )}
                         <p className="mt-3 text-sm text-neutral-600">{product.description}</p>
                         {product.link && (
                           <Link
