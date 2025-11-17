@@ -21,7 +21,24 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } f
 
 const Navbar = dynamic(() => import("@/components/navbar"), { ssr: false })
 
-const logoConcepts = [
+type LogoSection = {
+  heading: string
+  body?: string | string[]
+  subsections?: {
+    label: string
+    items: string[]
+  }[]
+}
+
+type LogoConcept = {
+  title: string
+  summary: string
+  image: string
+  variant: "light" | "dark"
+  sections: LogoSection[]
+}
+
+const logoConcepts: LogoConcept[] = [
   {
     title: "Concept 01 · Horizon Field / Relief Line",
     summary:
@@ -32,19 +49,24 @@ const logoConcepts = [
     sections: [
       {
         heading: "Visual treatment",
-        body: [
-          "Icon",
-          "Ultra-wide horizontal rectangle – almost panoramic.",
-          "House is positioned left-of-center, fairly small relative to the canvas:",
-          "Front wall white.",
-          "Side wall muted blue-green.",
-          "Roof bright warm red.",
-          "Foreground is a sweeping green field with a darker shadow sweeping diagonally, pointing toward the building.",
-          "Background is a layered band of ochre fields, then a vast pale blue sky with a subtle grain.",
-          "Style",
-          "Extremely minimal detail – no fences, no trees, no extra buildings.",
-          "The negative space is the hero: the house occupies only a small portion; the landscape and sky do the emotional work.",
-          "The diagonal field shadow and horizontal horizon lines create a dynamic but still tranquil composition.",
+        subsections: [
+          {
+            label: "Icon",
+            items: [
+              "Ultra-wide horizontal rectangle – almost panoramic.",
+              "House is positioned left-of-center, fairly small relative to the canvas: front wall white, side wall muted blue-green, roof bright warm red.",
+              "Foreground is a sweeping green field with a darker shadow sweeping diagonally, pointing toward the building.",
+              "Background is a layered band of ochre fields, then a vast pale blue sky with a subtle grain.",
+            ],
+          },
+          {
+            label: "Style",
+            items: [
+              "Extremely minimal detail – no fences, no trees, no extra buildings.",
+              "Negative space leads: landscape and sky carry the emotion while the house stays small.",
+              "Diagonal field shadow plus horizon lines keep the composition dynamic yet calm.",
+            ],
+          },
         ],
       },
       {
@@ -102,19 +124,25 @@ const logoConcepts = [
     sections: [
       {
         heading: "Visual treatment",
-        body: [
-          "Icon",
-          "Horizontal rectangle format – feels like one of his paintings, not a generic logo.",
-          "A single barn viewed from a slight angle:",
-          "Front wall nearly frontal, roof and side receding gently to the right.",
-          "Proportions are tall enough that the barn body clearly reads as a “tooth” when abstracted.",
-          "Ground is a soft band of greens and ochres; behind it a narrow horizontal band of warm rusty-orange; above that, a large expanse of muted teal sky.",
-          "A single narrow doorway punctures the front wall — a simple dark vertical rectangle.",
-          "Style",
-          "Completely flat planes of color with a soft stippled texture (if you keep the texture, it will echo his canvases; if you vectorize, it becomes very clean).",
-          "No outlines at all; shapes are defined by edges of color only.",
-          "Zero decorative detail: no wood grain, no fencing, no clouds, no extra buildings.",
-          "Composition is centered and stable, with the barn slightly left-of-center so the eye moves across the roofline.",
+        subsections: [
+          {
+            label: "Icon",
+            items: [
+              "Horizontal rectangle format – feels like one of his paintings, not a generic logo.",
+              "Single barn viewed from a slight angle: front wall nearly frontal, roof and side receding gently to the right.",
+              "Tall enough proportions that the barn body clearly reads as a tooth when abstracted.",
+              "Ground is a soft band of greens and ochres; behind it a narrow horizontal band of rust; above that a large expanse of muted teal sky.",
+              "A single narrow doorway punctures the front wall—a simple dark vertical rectangle.",
+            ],
+          },
+          {
+            label: "Style",
+            items: [
+              "Completely flat planes of color with a soft stippled texture (or vectorized for a cleaner look).",
+              "No outlines or decorative details; shapes are defined purely by color edges.",
+              "Centered, stable composition with the barn slightly left-of-center so the eye moves across the roofline.",
+            ],
+          },
         ],
       },
       {
@@ -172,19 +200,24 @@ const logoConcepts = [
     sections: [
       {
         heading: "Visual treatment",
-        body: [
-          "Icon",
-          "Horizontal rectangle with generous negative space around the central house.",
-          "The building is more geometric and iconic:",
-          "A near-square front wall.",
-          "A steep triangular roof slanting back to the right.",
-          "A block attached on the right, extending the form.",
-          "The entire structure sits on a thin band of golden–ochre ground; background is a pale blue–gray sky.",
-          "One narrow dark doorway in the center of the front wall.",
-          "Style",
-          "Very clean, almost poster-like: sharper edges, stronger contrast than Concept 1.",
-          "Pure flat blocks of color, zero texturing, zero detail besides the door.",
-          "Feels more like a logo-ready symbol than a painting: the house silhouette is bold and reads instantly at small sizes.",
+        subsections: [
+          {
+            label: "Icon",
+            items: [
+              "Horizontal rectangle with generous negative space around the central house.",
+              "Geometric silhouette: near-square front wall, steep triangular roof slanting back, block attached on the right.",
+              "Structure sits on a thin band of golden–ochre ground with a pale blue–gray sky behind.",
+              "Single dark doorway centered on the front wall.",
+            ],
+          },
+          {
+            label: "Style",
+            items: [
+              "Very clean, poster-like treatment with sharp edges and high contrast.",
+              "Pure flat blocks of color, zero texture or detail beyond the door.",
+              "Feels like a logo-ready symbol—the shape reads instantly even at small sizes.",
+            ],
+          },
         ],
       },
       {
@@ -240,18 +273,23 @@ const logoConcepts = [
     sections: [
       {
         heading: "Visual treatment",
-        body: [
-          "Icon",
-          "Central oval fills most of the square; inside the oval is a simple house/barn on a warm orange field with a muted olive sky.",
-          "The building:",
-          "Front wall on the right, side volume on the left.",
-          "Roof in slate gray, walls in off-white.",
-          "Three tall black door/window slits on the left volume, one door on the right.",
-          "The oval crops out any horizon line except a thin stripe of ground, focusing attention on the structure itself.",
-          "Style",
-          "The oval frame instantly feels like a seal, award, or coin, making it very brandable.",
-          "Shapes remain extremely minimal: no trim, no texture beyond subtle canvas feel, no additional scenery.",
-          "The repeated vertical slits create a rhythm, making the design feel orderly and methodical, like multiple canals in a tooth.",
+        subsections: [
+          {
+            label: "Icon",
+            items: [
+              "Central oval fills most of the square; inside sits a simple barn on a warm orange field with a muted olive sky.",
+              "Front wall on the right, side volume on the left with three tall black slits plus a single right-hand door.",
+              "The oval crops out any horizon line except a thin stripe of ground to keep focus on the structure.",
+            ],
+          },
+          {
+            label: "Style",
+            items: [
+              "Oval frame instantly feels like a seal or medallion—very brandable.",
+              "Shapes stay extremely minimal: no trim, no texture beyond a subtle canvas feel, no extra scenery.",
+              "Repeating vertical slits create rhythm and reference multiple canals.",
+            ],
+          },
         ],
       },
       {
