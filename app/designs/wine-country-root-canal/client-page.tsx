@@ -455,8 +455,17 @@ export default function WineCountryRootCanalDesignReview() {
 
         <section className="px-4 py-16">
           <div className="mx-auto max-w-6xl space-y-8">
-            <div className="space-y-3">
-              <h2 className="text-3xl font-semibold text-neutral-900">logo concepts</h2>
+            <div className="flex flex-wrap items-center justify-between gap-4">
+              <div className="space-y-3">
+                <h2 className="text-3xl font-semibold text-neutral-900">logo concepts</h2>
+              </div>
+              <Button
+                type="button"
+                className="rounded-full bg-neutral-900 px-5 py-2 text-sm font-semibold text-white transition hover:bg-neutral-800"
+                onClick={() => setIsVoteOpen(true)}
+              >
+                vote on design
+              </Button>
             </div>
             <div className="grid gap-6 md:grid-cols-2">
               {logoConcepts.map((concept) => {
