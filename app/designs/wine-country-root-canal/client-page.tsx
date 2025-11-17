@@ -3,7 +3,7 @@
 import Image from "next/image"
 import Link from "next/link"
 import dynamic from "next/dynamic"
-import { useState, useRef } from "react"
+import { useState } from "react"
 import axios from "axios"
 
 import Footer from "@/components/footer"
@@ -351,7 +351,6 @@ export default function WineCountryRootCanalDesignReview() {
   const [voterName, setVoterName] = useState("")
   const [notes, setNotes] = useState("")
   const [voteStatus, setVoteStatus] = useState<"idle" | "error" | "success">("idle")
-  const voteSectionRef = useRef<HTMLElement | null>(null)
 
   const handleVoteSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -371,6 +370,12 @@ export default function WineCountryRootCanalDesignReview() {
     }
   }
 
+  const scrollToVoteSection = () => {
+    if (typeof window === "undefined") return
+    const voteSection = document.getElementById("vote")
+    voteSection?.scrollIntoView({ behavior: "smooth", block: "center" })
+  }
+
   return (
     <div className="flex min-h-screen flex-col bg-neutral-50 text-neutral-900">
       <PageViewTracker title="Wine Country Root Canal Design Review" />
@@ -387,7 +392,7 @@ export default function WineCountryRootCanalDesignReview() {
                   <Button
                     type="button"
                     className="rounded-full bg-neutral-900 px-5 py-2 text-sm font-semibold text-white transition hover:bg-neutral-800"
-                    onClick={() => voteSectionRef.current?.scrollIntoView({ behavior: "smooth", block: "center" })}
+                    onClick={scrollToVoteSection}
                   >
                     vote on design
                   </Button>
@@ -408,7 +413,7 @@ export default function WineCountryRootCanalDesignReview() {
           </div>
         </section>
 
-        <section id="vote" className="px-4 py-16" ref={voteSectionRef}>
+        <section id="vote" className="px-4 py-16">
           <div className="mx-auto max-w-6xl space-y-6">
             <div className="space-y-2">
               <h2 className="text-3xl font-semibold text-neutral-900">design inspiration</h2>
