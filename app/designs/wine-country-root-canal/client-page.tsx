@@ -3,6 +3,7 @@
 import Image from "next/image"
 import Link from "next/link"
 import dynamic from "next/dynamic"
+import { useState } from "react"
 
 import Footer from "@/components/footer"
 import PageViewTracker from "@/components/page-view-tracker"
@@ -13,6 +14,8 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel"
+import { Textarea } from "@/components/ui/textarea"
+import { Button } from "@/components/ui/button"
 
 const Navbar = dynamic(() => import("@/components/navbar"), { ssr: false })
 
@@ -342,6 +345,19 @@ const inspirationImages = [
 
 
 export default function WineCountryRootCanalDesignReview() {
+  const [selectedConcept, setSelectedConcept] = useState<string>("")
+  const [notes, setNotes] = useState("")
+  const [voteStatus, setVoteStatus] = useState<"idle" | "error" | "success">("idle")
+
+  const handleVoteSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    if (!selectedConcept) {
+      setVoteStatus("error")
+      return
+    }
+    setVoteStatus("success")
+  }
+
   return (
     <div className="flex min-h-screen flex-col bg-neutral-50 text-neutral-900">
       <PageViewTracker title="Wine Country Root Canal Design Review" />
@@ -449,6 +465,67 @@ export default function WineCountryRootCanalDesignReview() {
                 )
               })}
             </div>
+          </div>
+        </section>
+
+        <section className="px-4 py-16">
+          <div className="mx-auto max-w-4xl rounded-[32px] border border-neutral-200 bg-white p-6 shadow-sm sm:p-10">
+            <div className="space-y-2">
+              <p className="text-xs font-semibold uppercase tracking-[0.35em] text-neutral-500">vote</p>
+              <h2 className="text-3xl font-semibold text-neutral-900">pick the direction</h2>
+              <p className="text-sm text-neutral-600">Choose your favorite concept and drop notes for the creative team.</p>
+            </div>
+            <form onSubmit={handleVoteSubmit} className="mt-8 space-y-6">
+              <div className="space-y-3">
+                <p className="text-sm font-semibold text-neutral-900">concept</p>
+                <div className="grid gap-3 sm:grid-cols-2">
+                  {logoConcepts.map((concept) => (
+                    <label
+                      key={concept.title}
+                      className={`flex cursor-pointer items-center gap-3 rounded-2xl border px-4 py-3 text-sm font-medium transition hover:border-neutral-900 ${
+                        selectedConcept === concept.title ? "border-neutral-900 bg-neutral-900/5" : "border-neutral-200"
+                      }`}
+                    >
+                      <input
+                        type="radio"
+                        name="concept"
+                        value={concept.title}
+                        className="h-4 w-4 border-neutral-400 text-neutral-900 focus:ring-neutral-900"
+                        checked={selectedConcept === concept.title}
+                        onChange={(event) => {
+                          setSelectedConcept(event.target.value)
+                          if (voteStatus !== "idle") setVoteStatus("idle")
+                        }}
+                      />
+                      <span>{concept.title}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <label htmlFor="notes" className="text-sm font-semibold text-neutral-900">
+                  notes
+                </label>
+                <Textarea
+                  id="notes"
+                  placeholder="Drop reactions, tweaks, or questions here…"
+                  value={notes}
+                  onChange={(event) => setNotes(event.target.value)}
+                />
+              </div>
+
+              {voteStatus === "error" && (
+                <p className="text-sm font-semibold text-red-600">Please select a concept before submitting.</p>
+              )}
+              {voteStatus === "success" && (
+                <p className="text-sm font-semibold text-emerald-600">Thanks! We’ve logged your vote.</p>
+              )}
+
+              <Button type="submit" className="rounded-full px-8 py-3 text-base font-semibold">
+                submit vote
+              </Button>
+            </form>
           </div>
         </section>
 
