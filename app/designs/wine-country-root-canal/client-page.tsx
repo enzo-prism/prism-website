@@ -381,9 +381,6 @@ export default function WineCountryRootCanalDesignReview() {
             <div className="space-y-2">
               <p className="text-xs font-semibold uppercase tracking-[0.35em] text-neutral-500">design inspiration</p>
               <h2 className="text-3xl font-semibold text-neutral-900">what informed the marks</h2>
-              <p className="text-sm text-neutral-600">
-                References from paintings, barns, and Sonoma skies that shaped the palette, geometry, and mood.
-              </p>
             </div>
             <Carousel opts={{ align: "start", dragFree: true }} className="relative">
               <CarouselContent>
