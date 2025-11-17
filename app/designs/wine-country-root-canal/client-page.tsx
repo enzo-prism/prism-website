@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/carousel"
 import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
 
 const Navbar = dynamic(() => import("@/components/navbar"), { ssr: false })
 
@@ -347,6 +348,7 @@ const inspirationImages = [
 
 export default function WineCountryRootCanalDesignReview() {
   const [selectedConcept, setSelectedConcept] = useState<string>("")
+  const [voterName, setVoterName] = useState("")
   const [notes, setNotes] = useState("")
   const [voteStatus, setVoteStatus] = useState<"idle" | "error" | "success">("idle")
 
@@ -358,6 +360,7 @@ export default function WineCountryRootCanalDesignReview() {
     }
     try {
       await axios.post("https://formspree.io/f/mldayroq", {
+        name: voterName,
         concept: selectedConcept,
         notes,
       })
@@ -497,6 +500,7 @@ export default function WineCountryRootCanalDesignReview() {
                   className="rounded-full border-neutral-300 text-neutral-900"
                   onClick={() => {
                     setSelectedConcept("")
+                    setVoterName("")
                     setNotes("")
                     setVoteStatus("idle")
                   }}
@@ -531,6 +535,21 @@ export default function WineCountryRootCanalDesignReview() {
                       </label>
                     ))}
                   </div>
+                </div>
+
+                <div className="space-y-2">
+                  <label htmlFor="voter-name" className="text-sm font-semibold text-neutral-900">
+                    name (optional)
+                  </label>
+                  <Input
+                    id="voter-name"
+                    placeholder="Dr. Anderson"
+                    value={voterName}
+                    onChange={(event) => {
+                      setVoterName(event.target.value)
+                      if (voteStatus !== "idle") setVoteStatus("idle")
+                    }}
+                  />
                 </div>
 
                 <div className="space-y-2">
