@@ -224,7 +224,15 @@ export default function WineCountryRootCanalDesignReview() {
                       </div>
                     </div>
                     <h3 className={`mt-4 text-xl font-semibold ${copyColor}`}>{concept.title}</h3>
-                    <p className={`mt-2 text-sm ${descriptionColor}`}>{concept.description}</p>
+                    <p className={`mt-2 text-sm ${descriptionColor}`}>{concept.summary}</p>
+                    <div className="mt-4 space-y-4">
+                      {concept.sections.map((section) => (
+                        <div key={`${concept.title}-${section.heading}`} className="space-y-1">
+                          <p className={`text-xs font-semibold uppercase tracking-[0.3em] ${copyColor}`}>{section.heading}</p>
+                          <p className={`text-sm leading-relaxed ${descriptionColor}`}>{section.body}</p>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 )
               })}
