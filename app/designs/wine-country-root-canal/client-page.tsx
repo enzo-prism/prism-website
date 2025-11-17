@@ -4,7 +4,6 @@ import Image from "next/image"
 import Link from "next/link"
 import dynamic from "next/dynamic"
 import { useState } from "react"
-import axios from "axios"
 
 import Footer from "@/components/footer"
 import PageViewTracker from "@/components/page-view-tracker"
@@ -361,11 +360,21 @@ export default function WineCountryRootCanalDesignReview() {
       return
     }
     try {
-      await axios.post("https://formspree.io/f/mldayroq", {
-        name: voterName,
-        concept: selectedConcept,
-        notes,
+      const response = await fetch("https://formspree.io/f/mldayroq", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: voterName,
+          concept: selectedConcept,
+          notes,
+        }),
       })
+
+      if (!response.ok) throw new Error("Failed to submit vote")
+
       setVoteStatus("success")
     } catch {
       setVoteStatus("error")
