@@ -12,35 +12,143 @@ const Navbar = dynamic(() => import("@/components/navbar"), { ssr: false })
 const logoConcepts = [
   {
     title: "Concept 01 · Sonoma horizon",
-    description:
-      "A calm horizon bar nods to the rolling vineyards surrounding the practice. The softened serif keeps the medical mark premium while the warm amber line hints at sedation comfort.",
+    summary:
+      "A panoramic field with a tiny home under a vast sky mirrors the relief patients feel after treatment.",
     image:
       "https://res.cloudinary.com/dhqpqfw6w/image/upload/v1763392232/u6213582198_minimalist_flat-color_logo_horizontal_landscape_c_47d1ef8c-986b-4116-851a-a6b2d43ec68f_0_zhmoeq.png",
     variant: "light",
+    sections: [
+      {
+        heading: "Core idea",
+        body:
+          "A small house on a gentle slope with an endless sky symbolizes relief after pain: a single tooth restored within the broader context of someone’s life.",
+      },
+      {
+        heading: "Visual treatment",
+        body:
+          "The ultra-wide rectangle leaves huge negative space so the landscape carries the emotion. The diagonal shadow leads the eye toward the home, echoing the patient’s path to the practice.",
+      },
+      {
+        heading: "Meaning cues",
+        body:
+          "The tiny structure represents the tooth, the sweeping shadow reads as the canal path or patient journey, and the sky communicates anxiety lifting once treatment is complete.",
+      },
+      {
+        heading: "Color & type",
+        body:
+          "Bands of ochre, orange, and vineyard greens create a wine-country palette while the house uses a memorable triad of white, blue-green, and red. It pairs well with a refined serif or humanist sans set alongside or beneath the illustration.",
+      },
+      {
+        heading: "Why it fits",
+        body:
+          "Dr. Anderson’s emphasis on education and long-term relationships shines through in this calm, human composition. It whispers reassurance instead of shouting clinical precision.",
+      },
+    ],
   },
   {
     title: "Concept 02 · Architectural monogram",
-    description:
-      "A single-line barn icon references the Anderson family’s agricultural roots. The negative space forms a canal path, reinforcing precision dentistry without literal tooth imagery.",
+    summary:
+      "A solitary barn stands firm in a wide field, acting as a metaphor for a single tooth that’s been stabilized by endodontic care.",
     image:
       "https://res.cloudinary.com/dhqpqfw6w/image/upload/v1763392232/u6213582198_minimalist_flat_vector_logo_icon_of_a_simple_barn_bfcfd0d7-719f-487d-a74b-74f1994212fb_1_vxgtxa.png",
     variant: "dark",
+    sections: [
+      {
+        heading: "Core idea",
+        body:
+          "One quiet barn in a field equals one restored tooth—standing strong after precise, specialist work.",
+      },
+      {
+        heading: "Visual treatment",
+        body:
+          "Flat planes of teal sky, ochre band, and muted greens frame an angled barn with a single dark doorway. The slight perspective hints at the internal complexity of the canals.",
+      },
+      {
+        heading: "Meaning cues",
+        body:
+          "The tall face becomes a crown, the narrow doorway reads as the canal opening, and the orange strip behind the barn suggests inflammation that has now been contained.",
+      },
+      {
+        heading: "Color & type",
+        body:
+          "Cool teal and off-white deliver clinical trust, while olive and rust anchor the mark in Sonoma. The wordmark can stack below, aligning its width to the barn for a unified column.",
+      },
+      {
+        heading: "Why it fits",
+        body:
+          "It feels slow, controlled, and serious—mirroring Dr. Anderson’s decades-long specialization and his desire to give anxious patients calm, stable outcomes.",
+      },
+    ],
   },
   {
     title: "Concept 03 · Elevated crest",
-    description:
-      "Stacked typography with a centered crest balances clinical trust and boutique hospitality. The geometric barn outline keeps things modern while the script accent nods to handoffs from referring dentists.",
+    summary:
+      "A bold geometric house with an orange roof reads instantly as a rebuilt structure—perfect for a root-canal success story.",
     image:
       "https://res.cloudinary.com/dhqpqfw6w/image/upload/v1763392232/u6213582198_minimalist_flat-color_logo_icon_of_a_simple_barn__4115452d-3c6e-460e-ab12-33ea0b84a2e3_1_papyu5.png",
     variant: "light",
+    sections: [
+      {
+        heading: "Core idea",
+        body:
+          "An upright house sitting on a thin band of soil represents a tooth restored to full strength with a bright crown on top.",
+      },
+      {
+        heading: "Visual treatment",
+        body:
+          "Sharply cut blocks, high contrast, and zero texture make this feel like a logo-ready symbol. The centered doorway highlights precision access to the canal.",
+      },
+      {
+        heading: "Meaning cues",
+        body:
+          "The square façade equals structural stability, the orange roof acts as the restorative crown, and the single dark door becomes the canal opening in the most literal way.",
+      },
+      {
+        heading: "Color & type",
+        body:
+          "Cool blue-gray sky, golden soil, crisp whites, and burnt orange bridge clinical cleanliness with wine-country warmth. Pair it with a modern serif or humanist sans stacked in two lines.",
+      },
+      {
+        heading: "Why it fits",
+        body:
+          "Dr. Anderson’s methodical planning and emphasis on long-term outcomes are expressed through the neat geometry and bold clarity of this mark.",
+      },
+    ],
   },
   {
     title: "Concept 04 · Circular seal",
-    description:
-      "A seal-style badge with grape-leaf etching creates a keepsake moment for patient packets. The outer ring holds Sonoma copy while the inner icon spotlights the micro-endodontic tools.",
+    summary:
+      "An oval emblem frames a protected home, creating a seal that feels official enough for reports, referral pads, or patient keepsakes.",
     image:
       "https://res.cloudinary.com/dhqpqfw6w/image/upload/v1763392232/u6213582198_minimalist_flat-color_logo_emblem_circular_badge__fd88e535-2f33-437a-b9bd-9e2a413b7d84_1_htuezo.png",
     variant: "light",
+    sections: [
+      {
+        heading: "Core idea",
+        body:
+          "A barn-like building encapsulated in an oval feels like a specialized home for the tooth—safe, sealed, and cared for.",
+      },
+      {
+        heading: "Visual treatment",
+        body:
+          "The oval crop removes distractions and focuses on the structure, with repeating vertical slits that rhythmically echo multiple canals.",
+      },
+      {
+        heading: "Meaning cues",
+        body:
+          "The frame communicates containment and infection control, while the quartet of doorways mirrors multiple canal systems being treated thoroughly.",
+      },
+      {
+        heading: "Color & type",
+        body:
+          "Olive sky, burnt orange ground, off-white walls, and charcoal accents offer a heritage-winery vibe without resorting to clichés. The seal can sit with a high-contrast serif or be wrapped with text for stickers and reports.",
+      },
+      {
+        heading: "Why it fits",
+        body:
+          "This is the most formal of the concepts—perfect for a specialist who writes reports, teaches, and needs a mark that feels like a stamp of quality for referring dentists.",
+      },
+    ],
   },
 ]
 
