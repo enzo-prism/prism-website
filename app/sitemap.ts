@@ -56,6 +56,8 @@ function segmentRoutes(base: string): StaticRouteInput[] {
     "offers",
     "offers/summer-website-makeover",
     "offers/ai-seo-boost",
+    "designs",
+    "designs/wine-country-root-canal",
     "proof",
     "wall-of-love",
     "refer",

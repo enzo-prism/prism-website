@@ -60,6 +60,7 @@ Each uses card-based layouts: confirmation message + kickoff-call CTA + contact 
 ## Designs (`app/designs/DesignsPageClient.tsx`)
 - The hero, quote slider, CTA blocks, and the founder VSL all live inside the client component.
 - The video section appears directly after the hero copy so it inherits the same styling as the `/websites` embed.
+- Client-specific review hubs live alongside the main page. Example: `/designs/wine-country-root-canal` contains a hero recap, deliverables grid, timeline, checklist, and CTA so Dr. Anderson’s team can review assets async.
 
 ## About (`app/about/client-page.tsx`)
 - Uses `VideoPlayer` for the founder message plus the Olympic journey carousel, mission section, and CTA.
