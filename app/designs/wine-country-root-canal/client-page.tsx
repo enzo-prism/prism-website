@@ -347,7 +347,6 @@ export default function WineCountryRootCanalDesignReview() {
         <section className="px-4 py-16">
           <div className="mx-auto max-w-6xl space-y-8">
             <div className="space-y-3">
-              <p className="text-xs font-semibold uppercase tracking-[0.35em] text-neutral-500">logo exploration</p>
               <h2 className="text-3xl font-semibold text-neutral-900">four angles on the mark</h2>
               <p className="text-base text-neutral-600 sm:text-lg">
                 Each study keeps the tone premium, calm, and rooted in Sonoma—pick the direction that feels most like the practice.
