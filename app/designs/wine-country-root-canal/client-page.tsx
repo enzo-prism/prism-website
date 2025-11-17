@@ -484,57 +484,76 @@ export default function WineCountryRootCanalDesignReview() {
               <h2 className="text-3xl font-semibold text-neutral-900">pick the direction</h2>
               <p className="text-sm text-neutral-600">Choose your favorite concept and drop notes for the creative team.</p>
             </div>
-            <form onSubmit={handleVoteSubmit} className="mt-8 space-y-6">
-              <div className="space-y-3">
-                <p className="text-sm font-semibold text-neutral-900">concept</p>
-                <div className="grid gap-3 sm:grid-cols-2">
-                  {logoConcepts.map((concept) => (
-                    <label
-                      key={concept.title}
-                      className={`flex cursor-pointer items-center gap-3 rounded-2xl border px-4 py-3 text-sm font-medium transition hover:border-neutral-900 ${
-                        selectedConcept === concept.title ? "border-neutral-900 bg-neutral-900/5" : "border-neutral-200"
-                      }`}
-                    >
-                      <input
-                        type="radio"
-                        name="concept"
-                        value={concept.title}
-                        className="h-4 w-4 border-neutral-400 text-neutral-900 focus:ring-neutral-900"
-                        checked={selectedConcept === concept.title}
-                        onChange={(event) => {
-                          setSelectedConcept(event.target.value)
-                          if (voteStatus !== "idle") setVoteStatus("idle")
-                        }}
-                      />
-                      <span>{concept.title}</span>
-                    </label>
-                  ))}
+            {voteStatus === "success" ? (
+              <div className="mt-10 space-y-4 rounded-3xl border border-neutral-200 bg-neutral-50 p-6 text-center">
+                <p className="text-xs font-semibold uppercase tracking-[0.35em] text-neutral-500">thank you</p>
+                <h3 className="text-2xl font-semibold text-neutral-900">vote received</h3>
+                <p className="text-sm text-neutral-600">
+                  We’ll review your notes and follow up with revised directions. Feel free to share more context anytime.
+                </p>
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="rounded-full border-neutral-300 text-neutral-900"
+                  onClick={() => {
+                    setSelectedConcept("")
+                    setNotes("")
+                    setVoteStatus("idle")
+                  }}
+                >
+                  submit another vote
+                </Button>
+              </div>
+            ) : (
+              <form onSubmit={handleVoteSubmit} className="mt-8 space-y-6">
+                <div className="space-y-3">
+                  <p className="text-sm font-semibold text-neutral-900">concept</p>
+                  <div className="grid gap-3 sm:grid-cols-2">
+                    {logoConcepts.map((concept) => (
+                      <label
+                        key={concept.title}
+                        className={`flex cursor-pointer items-center gap-3 rounded-2xl border px-4 py-3 text-sm font-medium transition hover:border-neutral-900 ${
+                          selectedConcept === concept.title ? "border-neutral-900 bg-neutral-900/5" : "border-neutral-200"
+                        }`}
+                      >
+                        <input
+                          type="radio"
+                          name="concept"
+                          value={concept.title}
+                          className="h-4 w-4 border-neutral-400 text-neutral-900 focus:ring-neutral-900"
+                          checked={selectedConcept === concept.title}
+                          onChange={(event) => {
+                            setSelectedConcept(event.target.value)
+                            if (voteStatus !== "idle") setVoteStatus("idle")
+                          }}
+                        />
+                        <span>{concept.title}</span>
+                      </label>
+                    ))}
+                  </div>
                 </div>
-              </div>
 
-              <div className="space-y-2">
-                <label htmlFor="notes" className="text-sm font-semibold text-neutral-900">
-                  notes
-                </label>
-                <Textarea
-                  id="notes"
-                  placeholder="Drop reactions, tweaks, or questions here…"
-                  value={notes}
-                  onChange={(event) => setNotes(event.target.value)}
-                />
-              </div>
+                <div className="space-y-2">
+                  <label htmlFor="notes" className="text-sm font-semibold text-neutral-900">
+                    notes
+                  </label>
+                  <Textarea
+                    id="notes"
+                    placeholder="Drop reactions, tweaks, or questions here…"
+                    value={notes}
+                    onChange={(event) => setNotes(event.target.value)}
+                  />
+                </div>
 
-              {voteStatus === "error" && (
-                <p className="text-sm font-semibold text-red-600">Please select a concept before submitting.</p>
-              )}
-              {voteStatus === "success" && (
-                <p className="text-sm font-semibold text-emerald-600">Thanks! We’ve logged your vote.</p>
-              )}
+                {voteStatus === "error" && (
+                  <p className="text-sm font-semibold text-red-600">Please select a concept before submitting.</p>
+                )}
 
-              <Button type="submit" className="rounded-full px-8 py-3 text-base font-semibold">
-                submit vote
-              </Button>
-            </form>
+                <Button type="submit" className="rounded-full px-8 py-3 text-base font-semibold">
+                  submit vote
+                </Button>
+              </form>
+            )}
           </div>
         </section>
 
