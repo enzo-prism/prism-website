@@ -384,12 +384,6 @@ export default function WineCountryRootCanalDesignReview() {
                 <p className="text-base text-neutral-600 sm:text-lg">Dr. Anderson</p>
                 <div className="flex flex-wrap gap-3">
                   <Link
-                    href="/case-studies/wine-country-root-canal"
-                    className="inline-flex items-center rounded-full border border-neutral-300 px-5 py-2 text-sm font-semibold text-neutral-900 transition hover:border-neutral-900"
-                  >
-                    view case study
-                  </Link>
-                  <Link
                     href="#vote"
                     className="inline-flex items-center rounded-full bg-neutral-900 px-5 py-2 text-sm font-semibold text-white transition hover:bg-neutral-800"
                   >
