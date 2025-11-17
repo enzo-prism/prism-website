@@ -1,9 +1,8 @@
 "use client"
 
 import Image from "next/image"
-import Link from "next/link"
 import dynamic from "next/dynamic"
-import { useState } from "react"
+import { useState, type ComponentType } from "react"
 
 import Footer from "@/components/footer"
 import PageViewTracker from "@/components/page-view-tracker"
@@ -20,37 +19,34 @@ import { Input } from "@/components/ui/input"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog"
 import {
   Building2,
-  Palette,
-  PenTool,
-  Compass,
-  Paintbrush,
-  PencilRuler,
-  Sparkles,
-  Droplets,
-  Type as TypeIcon,
-  ShieldCheck,
-  MapPin,
-  FileText,
   Brush,
   ClipboardList,
-  Mail,
   CreditCard,
+  FileText,
+  Globe,
+  Mail,
+  MapPin,
+  MonitorSmartphone,
+  Palette,
+  PenTool,
   Receipt,
   Share2,
-  Globe,
-  MonitorSmartphone,
+  ShieldCheck,
+  Sparkles,
+  Type as TypeIcon,
 } from "lucide-react"
 
 const Navbar = dynamic(() => import("@/components/navbar"), { ssr: false })
 
 type LogoSection = {
   heading: string
+  body?: string | string[]
   paragraphs?: string[]
   bullets?: string[]
-  icon?: React.ComponentType<{ className?: string }>
+  icon?: ComponentType<{ className?: string }>
   subsections?: {
     label: string
-    icon?: React.ComponentType<{ className?: string }>
+    icon?: ComponentType<{ className?: string }>
     items: string[]
   }[]
 }
@@ -61,6 +57,19 @@ type LogoConcept = {
   image: string
   variant: "light" | "dark"
   sections: LogoSection[]
+}
+
+type LogoUsageSection = {
+  label: string
+  bullets: string[]
+}
+
+type LogoUsageDetail = {
+  title: string
+  priorityLabel: string
+  description: string
+  icon: ComponentType<{ className?: string }>
+  sections: LogoUsageSection[]
 }
 
 const logoConcepts: LogoConcept[] = [
@@ -96,43 +105,51 @@ const logoConcepts: LogoConcept[] = [
           },
         ],
       },
-    {
+      {
         heading: "Meaning cues",
         icon: MapPin,
-        bullets: [
-          "Tiny house in big landscape = your tooth in the larger story of health (small moment, large life).",
-          "Sweeping shadow = path to the practice (patient journey from discomfort to relief or a stylized canal path).",
-          "Huge sky = anxiety dissipating; open pale space mirrors the release of tension post-treatment.",
-          "House scale = specialist focus; small but precise, like Dr. Anderson’s work inside a tooth.",
+        body: [
+          "Tiny house in big landscape = your tooth in the bigger picture of health.",
+          "A root canal is a small, intense moment in a much larger life; this composition respects that perspective while still focusing attention on the treated tooth (the house).",
+          "Sweeping shadow = path to the practice.",
+          "The dark diagonal that leads toward the house can be read as:",
+          "The patient’s journey from discomfort toward relief.",
+          "Or a stylized root/canal path guiding toward the treated structure.",
+          "Huge sky = anxiety dissipating.",
+          "The sheer amount of open, pale sky embodies the release of tension after treatment; you’re no longer “boxed in” by pain.",
+          "House scale = specialist focus.",
+          "It’s small but precise, like the highly specialized work he does inside a tooth.",
         ],
       },
       {
         heading: "Color",
         icon: Palette,
-        bullets: [
+        body: [
           "Sky: Very light blue, almost gray – reassuring, non-aggressive.",
-          "Horizon bands: warm ochre and deeper orange nodding to wine, soil, and Sonoma warmth.",
-          "Field: Multiple greens from bright to deep for vineyard energy.",
-          "House: White front, blue-green side, red roof – memorable triad for the hero moment.",
+          "Distant horizon band: Thin line of warm yellow/ochre.",
+          "Mid band: Deeper orange strip, echoing wine, warmth, and Sonoma soil.",
+          "Field: Multiple greens, from bright to deep, adding life and a vineyard feel.",
+          "House: White front, blue–green side, red roof – a triad that’s memorable and friendly without feeling childish.",
+          "This is the most open and emotional palette of the four – great for a primary website hero.",
         ],
-        paragraphs: ["This is the most open, emotional palette of the four—ideal for a primary hero."],
       },
       {
         heading: "Type",
         icon: TypeIcon,
-        bullets: [
-          "Centered wordmark spanning the house + shadow width for symmetric pages.",
-          "Right-aligned wordmark for headers to keep the house as a visual anchor on the left.",
-          "Refined serif or clean humanist sans both work depending on how contemporary you want the brand to feel.",
+        body: [
+          "Because the image is so wide, it pairs well with a centered or right-aligned wordmark:",
+          "Option A: Place WINE COUNTRY ROOT CANAL centered underneath, spanning roughly the same width as the house + dark shadow region.",
+          "Option B: Place the wordmark to the right of the image for a site header, keeping the house on the left as a visual anchor.",
+          "A refined serif still makes sense here, but a clean humanist sans would also work if you want the brand to feel slightly more contemporary.",
         ],
       },
       {
         heading: "Why this reflects the practice",
         icon: ShieldCheck,
-        bullets: [
-          "Positions the practice within a broader landscape, mirroring Dr. Anderson’s focus on education and relationship-driven care.",
-          "Soft, calm, non-threatening atmosphere eases fearful patients.",
-          "Minimal geometry + expansive space echo his technical precision and preventive, whole-health philosophy.",
+        body: [
+          "Dr. Anderson emphasizes education, communication, and long-term relationships – this composition looks like the practice is part of a larger landscape rather than a sterile box. It makes the brand feel human and grounded.",
+          "For patients who are fearful, this scene is soft, calm, and non-threatening. It doesn’t scream “surgery”; it whispers “you’ll be okay”.",
+          "The clear, minimal geometry matches his technical precision, while the expansive space mirrors his philosophy of preventive care and whole-health thinking, not just single procedures.",
         ],
       },
     ],
@@ -161,7 +178,7 @@ const logoConcepts: LogoConcept[] = [
           },
           {
             label: "Style",
-            icon: Paintbrush,
+            icon: Sparkles,
             items: [
               "Completely flat planes of color with a soft stippled texture (or vectorized for a cleaner look).",
               "No outlines or decorative details; shapes are defined purely by color edges.",
@@ -172,39 +189,49 @@ const logoConcepts: LogoConcept[] = [
       },
       {
         heading: "Meaning cues",
-        bullets: [
-          "Solitary barn = single structural tooth saved and stabilized by specialty care.",
-          "Slight perspective hints at internal complexity (multiple canals) despite calm exterior.",
-          "Tall vertical face + narrow door stand in for crown + canal pathway.",
-          "Open landscape + huge sky mirror the relief patients feel once pain and anxiety subside.",
-          "Warm orange band nods to contained inflammation—present in the history, now controlled.",
+        icon: MapPin,
+        body: [
+          "Solitary barn = single tooth.",
+          "One structure, isolated and structurally sound, mirrors the idea of saving one compromised tooth and giving it a second life instead of extracting it.",
+          "Slight perspective = depth and complexity.",
+          "Endodontics is not flat, simple dentistry; the angled view hints there’s more going on internally (root structure, canals) even though the outside looks calm.",
+          "Tall vertical face + narrow door = canal pathway.",
+          "The long rectangular façade acts like the crown of a tooth; the dark narrow door reads as the cleaned and filled canal opening.",
+          "Open landscape + huge sky = relief.",
+          "Patients come in tight with anxiety and pain; the open field and big sky symbolize the feeling of relief and breathing room after treatment.",
+          "Warm orange band = underlying inflammation that’s been contained.",
+          "The orange strip behind the barn can be read as the “resolved” area of infection – present in the history, but now controlled beneath a solid structure.",
         ],
       },
       {
         heading: "Color",
-        bullets: [
+        icon: Palette,
+        body: [
           "Sky: Muted teal/blue–green, calming and clinical without looking cold or hospital-like.",
           "Field: Strips of yellow–green and olive, tying directly into Sonoma vineyards and rural landscapes.",
           "Back band: Rust/orange – a nod to wine, soil, and warmth.",
           "Barn: Soft off-white with a subtle gray–blue shadow side; roof in olive/gray.",
+          "This palette lands between medical trust (cool teal, off-white) and wine country warmth (orange/olive).",
         ],
-        paragraphs: ["Palette lands between medical trust (cool teal/off-white) and wine-country warmth (orange/olive)."],
       },
       {
         heading: "Type",
-        bullets: [
-          "Wordmark directly below icon keeps a unified column.",
-          "Top line: WINE COUNTRY in refined serif, lightly letterspaced small caps.",
-          "Second line: ROOT CANAL same serif, slightly larger/bolder.",
+        icon: TypeIcon,
+        body: [
+          "Place the wordmark directly below:",
+          "Top line: WINE COUNTRY in a refined serif, lightly letterspaced, all caps or small caps.",
+          "Second line: ROOT CANAL same serif, slightly larger and bolder.",
+          "For a stacked lockup, you can align the text width to match the barn body width so the logo feels like one unified column.",
         ],
       },
       {
         heading: "Why this reflects the practice",
-        bullets: [
-          "Quiet, serious composition mirrors decades of specialization and precision.",
-          "Slow, controlled mood echoes careful diagnosis and infection-control ethos.",
-          "Rural cues keep the brand grounded in wine country without clichés.",
-          "Reassuring tone aligns with his goal of reducing anxiety and building trust.",
+        icon: ShieldCheck,
+        body: [
+          "Dr. Anderson’s story is about specialization, precision, and stability over decades of work. This barn is not cute or gimmicky; it’s quiet and serious, just like an endodontic specialist should be.",
+          "The composition feels slow and controlled — mirroring his emphasis on careful diagnosis, infection control, and meticulous treatment.",
+          "The barn and field root the brand in Wine Country without forcing grapes or cliché vine graphics.",
+          "The mood is reassuring and non-threatening, which aligns with his desire to reduce anxiety and build long-term trust with patients.",
         ],
       },
     ],
@@ -232,7 +259,7 @@ const logoConcepts: LogoConcept[] = [
           },
           {
             label: "Style",
-            icon: PencilRuler,
+            icon: Sparkles,
             items: [
               "Very clean, poster-like treatment with sharp edges and high contrast.",
               "Pure flat blocks of color, zero texture or detail beyond the door.",
@@ -243,39 +270,47 @@ const logoConcepts: LogoConcept[] = [
       },
       {
         heading: "Meaning cues",
-        bullets: [
-          "Compact, upright house = restored functional tooth with balanced structure.",
-          "Orange roof = crown/restoration placed after root canal work.",
-          "Single dark door = canal access point, centered to highlight precision.",
-          "Pale sky + clean geometry = clarity and expertise, reflecting clinical rigor.",
+        icon: MapPin,
+        body: [
+          "Compact, upright house = restored functional tooth.",
+          "The totally symmetrical front face suggests stability and symmetry — like a tooth that’s been structurally reinforced with a root canal and restoration.",
+          "Orange roof = crown / restoration.",
+          "The bright roof can be read as the “new crown” placed after a root canal, sitting on a solid underlying structure.",
+          "Single dark door = canal access.",
+          "Again, a single vertical element acts as a symbolic canal, but here it’s right in the center – highlighting precision and central access through the tooth.",
+          "Pale sky + clean geometry = clarity and expertise.",
+          "This feels clinical in a good way: neat, minimal, no clutter, reflecting Dr. Anderson’s focus on diagnosis, technology, and methodical care.",
         ],
       },
       {
         heading: "Color",
-        bullets: [
-          "Sky: Very light, cool blue–gray—neutral backdrop.",
-          "Ground: Warm golden–ochre referencing vineyard soil.",
-          "House body: Crisp off-white to mirror sterile environments.",
-          "Roof: Strong burnt orange for warmth, wine, vitality.",
-          "Door: Deep charcoal for contrast.",
+        icon: Palette,
+        body: [
+          "Sky: Very light, cool blue–gray – almost neutral, keeps focus on the house.",
+          "Ground: Warm golden–ochre – subtle nod to vineyard soil/wheat fields.",
+          "House body: Crisp off-white or almost white – tying to cleanliness and sterile environment.",
+          "Roof: Strong burnt orange – warmth, wine, vitality.",
+          "Door: Deep charcoal – strong contrast.",
+          "This palette straddles clinic white and wine-country warmth, expressing both safety and regional identity.",
         ],
-        paragraphs: ["Palette bridges clinic white and wine-country warmth for safety + regional identity."],
       },
       {
         heading: "Type",
-        bullets: [
-          "Bold, minimal icon pairs with equally clean wordmark.",
-          "WINE COUNTRY in modern serif or humanist sans, small caps, letterspaced.",
-          "ROOT CANAL underneath in same family, slightly heavier.",
-          "Horizontal lockup: icon left, two-line wordmark right with aligned baselines.",
+        icon: TypeIcon,
+        body: [
+          "Because this design is bold and minimal, the wordmark can be similarly clean:",
+          "WINE COUNTRY in a modern serif or humanist sans, small caps, letterspaced.",
+          "ROOT CANAL directly underneath in the same family, slightly heavier.",
+          "A horizontal lockup works well: icon left, two-line wordmark right, baseline aligned with the bottom of the house.",
         ],
       },
       {
         heading: "Why this reflects the practice",
-        bullets: [
-          "Communicates comprehensive planning and long-term outcomes—built to last.",
-          "Cool clinical tones + vivid warm roof mirror his mix of technical skill and humanity.",
-          "Straightforward, serious, design-first approach matches his academic rigor.",
+        icon: ShieldCheck,
+        body: [
+          "Dr. Anderson focuses heavily on comprehensive planning and long-term outcomes. This house reads like something built to last, not a temporary fix.",
+          "The fusing of cool clinical tones with a vivid warm roof matches his blend of technical skill and approachable humanity.",
+          "It’s straightforward and not clever for the sake of being clever – aligning with his serious academic background and continuing education, while still being visually appealing.",
         ],
       },
     ],
@@ -302,7 +337,7 @@ const logoConcepts: LogoConcept[] = [
           },
           {
             label: "Style",
-            icon: Paintbrush,
+            icon: Sparkles,
             items: [
               "Oval frame instantly feels like a seal or medallion—very brandable.",
               "Shapes stay extremely minimal: no trim, no texture beyond a subtle canvas feel, no extra scenery.",
@@ -313,174 +348,360 @@ const logoConcepts: LogoConcept[] = [
       },
       {
         heading: "Meaning cues",
-        bullets: [
-          "Oval = protection and containment—safe boundary mirroring infection-control emphasis.",
-          "Multiple vertical slits = multiple canals located and treated.",
-          "House/barn silhouette keeps the care local and grounded.",
-          "Warm ground + muted sky balance empathy and clinical rationality.",
+        icon: MapPin,
+        body: [
+          "Oval = protection and containment.",
+          "It’s as if the building—and by extension the tooth—is cocooned within a safe boundary, aligning with his emphasis on infection control and safety standards (ADA, OSHA, CDC).",
+          "Multiple vertical slits = multiple canals.",
+          "The left block with three dark slits plus the single right door can be read as multiple roots/canals that have been located and treated.",
+          "House/barn silhouette = local, grounded care.",
+          "It’s rural, not corporate. That reinforces the idea of a small, specialized practice deeply connected to its community.",
+          "Warm ground, muted sky = calm and warmth together.",
+          "A calm olive sky suggests clinical rationality; warm orange ground suggests empathy and relief.",
         ],
       },
       {
         heading: "Color",
-        bullets: [
-          "Sky: Soft muted olive/khaki—sophisticated, never cold.",
-          "Ground: Burnt orange for warmth and wine-country DNA.",
-          "Building body: Off-white with muted cool gray.",
-          "Roof/doors: Dark teal or charcoal.",
+        icon: Palette,
+        body: [
+          "Sky: Soft muted olive/khaki – sophisticated, not cold.",
+          "Ground: Burnt orange – warmth and “wine country” baked in.",
+          "Building body: Off-white and muted cool gray.",
+          "Roof and doors/windows: Dark teal or charcoal.",
+          "This combination gives a heritage-winery vibe without resorting to grapes or literal wine imagery.",
         ],
-        paragraphs: ["Combination delivers a heritage-winery vibe without literal grape motifs."],
       },
       {
         heading: "Type",
-        bullets: [
-          "Treat oval emblem as primary mark with wordmark paired underneath or to the side.",
-          "High-contrast serif reminiscent of the “SELECTED SOLD ARTWORKS” heading style.",
-          "Alternate circular version could wrap the text around the emblem for referral pads or stickers.",
+        icon: TypeIcon,
+        body: [
+          "Treat the oval emblem as the primary mark, with the wordmark paired underneath or to the side:",
+          "For a classical look, set WINE COUNTRY ROOT CANAL in a high-contrast serif similar to the “SELECTED SOLD ARTWORKS” heading style.",
+          "You can create an alternate circular version where the text wraps around the oval to make a full seal (for referral pads, wax stamp, stickers).",
         ],
       },
       {
         heading: "Why this reflects the practice",
-        bullets: [
-          "Feels like a professional seal of quality, aligning with Dr. Anderson’s credentials and teaching.",
-          "Vertical slits + structure echo multi-canal work and thoroughness.",
-          "Communicates safety and containment, reassuring anxious patients.",
-          "Ideal for use on reports, letters, or educational collateral.",
+        icon: ShieldCheck,
+        body: [
+          "This concept feels like a professional seal of quality, which pairs well with Dr. Anderson’s credentials, memberships, and teaching.",
+          "The multiple vertical slits and structured façade echo the complex multi-canal work he does daily.",
+          "It visually communicates safety, containment, and thoroughness, which matters a lot for anxious patients contemplating endodontic treatment.",
+          "It’s also the closest to a formal emblem you could use on reports, letters to referring dentists, and educational material.",
         ],
       },
     ],
   },
 ]
 
-type LogoPlacement = {
-  title: string
-  priority: "high" | "medium"
-  description: string
-  placements: string[]
-  impact: string
-  icon: React.ComponentType<{ className?: string }>
-}
-
-const logoPlacements: LogoPlacement[] = [
+const logoUsageDetails: LogoUsageDetail[] = [
   {
-    title: "Website (header, footer, favicon)",
-    priority: "high",
-    description: "The primary brand hub — patients decide in seconds whether it feels legitimate.",
-    placements: [
-      "Header: horizontal lockup (SVG) shown on every page",
-      "Footer: reinforces the brand and aids visual recall",
-      "Favicon: simplified icon-only mark for retina clarity",
-    ],
-    impact: "Establishes trust immediately and ensures consistency across every page visit.",
+    title: "Website (high impact — #1 priority)",
+    priorityLabel: "⭐ 1 · high impact",
+    description: "The website is the apex of Dr. Anderson’s brand.",
     icon: MonitorSmartphone,
+    sections: [
+      {
+        label: "Header (most important)",
+        bullets: [
+          "Consistent across all pages",
+          "Needs a horizontal lockup",
+          "Use a clean vector SVG so it stays crisp on retina screens",
+        ],
+      },
+      {
+        label: "Impact",
+        bullets: ["Builds immediate trust. Patients decide “is this legit?” in 3 seconds."],
+      },
+      {
+        label: "Footer",
+        bullets: ["Reinforces brand authority", "Helps with visual recall"],
+      },
+      {
+        label: "Favicon",
+        bullets: [
+          "Needs a simple single-icon version, not the full lockup",
+          "Usually just the barn / seal icon without words",
+        ],
+      },
+    ],
   },
   {
-    title: "Google & Apple Maps listings",
-    priority: "high",
-    description: "Maps drive the majority of specialist discovery; polished imagery wins click-throughs.",
-    placements: [
-      "Google Business Profile: logo field + branded cover image",
-      "Apple Business Connect: logo field",
-    ],
-    impact: "Differentiates from generic dental listings and boosts visits to the website.",
+    title: "Google Maps listing + Apple Maps",
+    priorityLabel: "⭐ 2 · massive ROI",
+    description: "Patients overwhelmingly discover specialists via Maps.",
     icon: MapPin,
+    sections: [
+      {
+        label: "Where it shows up",
+        bullets: [
+          "Google Business Profile — Logo field",
+          "Google Business Profile — Cover image (wide landscape hero with brand colors)",
+          "Apple Business Connect — Logo field",
+        ],
+      },
+      {
+        label: "Impact",
+        bullets: [
+          "Immediately differentiates from generic dental offices",
+          "Increases click-through rate to the website",
+          "Aligns what patients see after searching “root canal Santa Rosa”",
+        ],
+      },
+    ],
   },
   {
-    title: "Referral packets & reports",
-    priority: "high",
-    description: "Referring dentists see the brand in every packet, reinforcing reliability.",
-    placements: [
-      "Referral forms, fax covers, radiograph reports",
-      "Welcome and thank-you letters to referring offices",
-      "Case update sheets sent post-treatment",
+    title: "Yelp · Healthgrades · Zocdoc",
+    priorityLabel: "⭐ 3 · comparison platforms",
+    description: "Any profile where patients compare providers should match the brand.",
+    icon: Globe,
+    sections: [
+      {
+        label: "Standards",
+        bullets: [
+          "Square version of the logo",
+          "Consistent color palette",
+          "Clean, readable image",
+        ],
+      },
+      {
+        label: "Impact",
+        bullets: ["Brand consistency builds trust and moves more appointment requests."],
+      },
     ],
-    impact: "Communicates organization and premium care — vital for specialist trust.",
-    icon: FileText,
   },
   {
-    title: "In-office signage & art",
-    priority: "medium",
-    description: "Physical environment should mirror the calm, curated barn aesthetic.",
-    placements: [
-      "Reception signage or wall print",
-      "Treatment room art prints",
-      "Hallway signage and directional cues",
-    ],
-    impact: "Sets a calming tone for anxious patients and reinforces the story of intentional care.",
-    icon: Brush,
-  },
-  {
-    title: "Patient & practice forms",
-    priority: "medium",
-    description: "Digital + paper forms stay on brand to project precision and competence.",
-    placements: [
-      "Medical history, consent, financial policies",
-      "Post-op instructions and PDF exports",
-      "Online booking or intake portals",
-    ],
-    impact: "A unified look across paperwork signals professionalism at every touchpoint.",
-    icon: ClipboardList,
-  },
-  {
-    title: "Email signatures & templates",
-    priority: "medium",
-    description: "Every email should carry a subtle mark of the brand.",
-    placements: [
-      "Horizontal logo in signatures",
-      "Branded dividers or accent colors in templates",
-    ],
-    impact: "Keeps communications polished for both patients and referring dentists.",
-    icon: Mail,
-  },
-  {
-    title: "Business/appointment cards",
-    priority: "medium",
-    description: "Physical leave-behinds keep the brand in the referral loop.",
-    placements: [
-      "Front: icon + wordmark",
-      "Back: clean contact info",
-    ],
-    impact: "Helps referring offices pass along a premium-feeling reminder.",
+    title: "Appointment cards + business cards",
+    priorityLabel: "⭐ 4 · physical touchpoints",
+    description: "Physical materials still matter for a specialist.",
     icon: CreditCard,
+    sections: [
+      {
+        label: "Placement",
+        bullets: ["Front: icon + wordmark", "Back: clear contact info, keep it minimal"],
+      },
+      {
+        label: "Impact",
+        bullets: ["Referring dentists hand these to patients — the brand enters the referral loop."],
+      },
+    ],
   },
   {
-    title: "Invoices, receipts, and treatment reports",
-    priority: "medium",
-    description: "Even operational paperwork should feel intentional.",
-    placements: [
-      "Logo (mono or black/white) on invoices and receipts",
-      "Logo + brand colors on CBCT PDFs, post-op reports, before/after scans",
+    title: "Referring dentist packets",
+    priorityLabel: "⭐ 5 · critical for specialists",
+    description: "This is Dr. Anderson’s highest-leverage growth channel.",
+    icon: FileText,
+    sections: [
+      {
+        label: "What carries the logo",
+        bullets: [
+          "Referral forms + fax cover sheets",
+          "Printed radiograph reports",
+          "Welcome letters, thank-you notes, and case update sheets",
+        ],
+      },
+      {
+        label: "Impact",
+        bullets: [
+          "Dentists perceive specialists with strong branding as organized, reliable, and premium.",
+        ],
+      },
     ],
-    impact: "Communicates thoroughness and competence in every interaction.",
-    icon: Receipt,
   },
   {
-    title: "Social media & knowledge panel",
-    priority: "medium",
-    description: "Consistent avatars and covers amplify brand recognition across profiles.",
-    placements: [
-      "Square icon for profile photos",
-      "Wide banner for Facebook/LinkedIn cover images",
-      "Matching imagery improves Google knowledge panel visuals",
+    title: "Patient forms (digital + paper)",
+    priorityLabel: "⭐ 6 · paperwork",
+    description: "Every touchpoint should feel unified.",
+    icon: ClipboardList,
+    sections: [
+      {
+        label: "Include the logo on",
+        bullets: [
+          "Medical history, consent, and financial policy documents",
+          "Post-op instructions and PDF exports",
+          "Online forms or booking portals",
+        ],
+      },
+      {
+        label: "Format tip",
+        bullets: ["Use a clean black-and-white version of the mark."],
+      },
+      {
+        label: "Impact",
+        bullets: ["Professional paperwork reinforces competence."],
+      },
     ],
-    impact: "Creates a cohesive visual footprint even if social usage is minimal.",
+  },
+  {
+    title: "In-office art + wall signage",
+    priorityLabel: "⭐ 7 · environmental design",
+    description: "This is where the barn artwork aesthetic becomes a strategic asset.",
+    icon: Brush,
+    sections: [
+      {
+        label: "Best placements",
+        bullets: [
+          "Reception desk wall — large sign or wall print",
+          "Treatment room art prints with the barn emblem",
+          "Hallway signage",
+        ],
+      },
+      {
+        label: "Impact",
+        bullets: [
+          "Patients feel the space is curated, intentional, and calming — exactly the tone an endodontist wants.",
+        ],
+      },
+    ],
+  },
+  {
+    title: "Email signature + templates",
+    priorityLabel: "⭐ 8 · every send",
+    description: "Every email should carry the brand.",
+    icon: Mail,
+    sections: [
+      {
+        label: "How to apply",
+        bullets: ["Small horizontal logo", "SVG or PNG assets", "Use brand colors for dividers or accents"],
+      },
+      {
+        label: "Impact",
+        bullets: ["Referring dentists and patients see a consistent, high-level identity."],
+      },
+    ],
+  },
+  {
+    title: "Social media profiles",
+    priorityLabel: "⭐ 9 · consistency",
+    description: "Even if usage is light, the visuals should match the website.",
     icon: Share2,
+    sections: [
+      {
+        label: "Assets to prep",
+        bullets: [
+          "Facebook profile photo: square icon",
+          "Facebook cover: wide banner with logo + brand palette",
+          "LinkedIn profile + cover: match the Facebook treatment",
+        ],
+      },
+      {
+        label: "Impact",
+        bullets: [
+          "Google’s Knowledge Panel starts pulling consistent imagery, giving a major brand lift.",
+        ],
+      },
+    ],
   },
   {
-    title: "Exterior signage & apparel",
-    priority: "medium",
-    description: "Optional but powerful for in-person recognition.",
-    placements: [
-      "Exterior sign or door decal with monochrome barn icon",
-      "Scrubs/jackets embroidery with icon + wordmark",
+    title: "Printed + digital treatment reports",
+    priorityLabel: "⭐ 10 · specialist proof",
+    description: "Especially relevant for referring dentists.",
+    icon: FileText,
+    sections: [
+      {
+        label: "Where it appears",
+        bullets: ["CBCT imaging PDFs", "Post-operative reports", "Before/after scan printouts"],
+      },
+      {
+        label: "Impact",
+        bullets: ["Branding here communicates competence more than anywhere else."],
+      },
     ],
-    impact: "Reassures arriving patients and extends the brand into daily operations.",
+  },
+  {
+    title: "Invoices + receipts",
+    priorityLabel: "⭐ 11 · operations",
+    description: "Even these should follow the brand.",
+    icon: Receipt,
+    sections: [
+      {
+        label: "Execution",
+        bullets: ["Small black-and-white logo", "Clean, minimal formatting"],
+      },
+      {
+        label: "Impact",
+        bullets: ["Makes the practice feel high-end and organized."],
+      },
+    ],
+  },
+  {
+    title: "Office signage (exterior)",
+    priorityLabel: "⭐ 12 · arrival",
+    description: "If zoning allows, extend the logo outside.",
     icon: Building2,
+    sections: [
+      {
+        label: "Placements",
+        bullets: [
+          "Mounted exterior sign with barn icon + name",
+          "Door decal with hours and a monochrome logo",
+        ],
+      },
+      {
+        label: "Impact",
+        bullets: ["Patients instantly know they’re in the right place, reducing anxiety."],
+      },
+    ],
+  },
+  {
+    title: "Scrubs · jackets · embroidered items",
+    priorityLabel: "⭐ 13 · team polish",
+    description: "Optional, but strong brand reinforcement.",
+    icon: ShieldCheck,
+    sections: [
+      {
+        label: "Guideline",
+        bullets: [
+          "Clean embroidered barn icon + “Wine Country Root Canal” in small type",
+        ],
+      },
+      {
+        label: "Impact",
+        bullets: ["Professional, approachable, and memorable."],
+      },
+    ],
+  },
+  {
+    title: "Postcards + follow-up mailers",
+    priorityLabel: "⭐ 14 · patient touchbacks",
+    description: "Even minimal mailers should match the brand.",
+    icon: Mail,
+    sections: [
+      {
+        label: "Uses",
+        bullets: [
+          "Recall cards (“Call us if you experience pain”)",
+          "Thank-you cards",
+          "Use a small version of the logo for both",
+        ],
+      },
+    ],
+  },
+  {
+    title: "Website favicons for third-party tools",
+    priorityLabel: "⭐ 15 · ecosystem",
+    description: "Extend the icon into every external portal.",
+    icon: Globe,
+    sections: [
+      {
+        label: "Where to update",
+        bullets: [
+          "Online booking portals",
+          "Typeform appointment links",
+          "Insurance portals and other third-party tools",
+        ],
+      },
+      {
+        label: "Impact",
+        bullets: ["Ensures consistency across the full web footprint."],
+      },
+    ],
   },
 ]
 
 const usageSummary = [
   "Website header + favicon",
-  "Google Maps / Apple Maps profiles",
+  "Google Maps / Apple Maps",
   "Referral packet materials",
   "In-office signage + art",
   "Patient forms + post-op instructions",
@@ -489,6 +710,7 @@ const usageSummary = [
   "Business / appointment cards",
   "Printed treatment reports",
   "Invoices + receipts",
+  "Everything else is optional",
 ]
 
 const inspirationImages = [
@@ -660,6 +882,7 @@ export default function WineCountryRootCanalDesignReview() {
                     ? "bg-neutral-900 border-neutral-800 text-white"
                     : "bg-white border-neutral-200 text-neutral-900"
                 const frameBorder = concept.variant === "dark" ? "border-neutral-800" : "border-neutral-100"
+                const detailBorder = concept.variant === "dark" ? "border-white/20" : "border-neutral-200/70"
                 return (
                   <div key={concept.title} className={`rounded-3xl border p-6 shadow-sm ${cardBg}`}>
                     <div className={`relative overflow-hidden rounded-2xl border ${frameBorder} ${frameBg}`}>
@@ -676,43 +899,64 @@ export default function WineCountryRootCanalDesignReview() {
                     <h3 className={`mt-4 text-xl font-semibold ${copyColor}`}>{concept.title}</h3>
                     <p className={`mt-2 text-sm ${descriptionColor}`}>{concept.summary}</p>
                     <div className="mt-4 space-y-4">
-                      {concept.sections.map((section) => (
-                        <div key={`${concept.title}-${section.heading}`} className="space-y-2 rounded-2xl border border-neutral-200/40 p-4">
-                          <div className="flex items-center gap-2">
-                            {section.icon ? (
-                              <section.icon className={`h-4 w-4 ${descriptionColor}`} aria-hidden />
-                            ) : null}
-                            <p className={`text-xs font-semibold uppercase tracking-[0.3em] ${copyColor}`}>{section.heading}</p>
-                          </div>
-                          {section.paragraphs?.map((paragraph) => (
-                            <p key={paragraph} className={`text-sm leading-relaxed ${descriptionColor}`}>
-                              {paragraph}
-                            </p>
-                          ))}
-                          {section.bullets && (
-                            <ul className={`list-disc space-y-1 pl-4 text-sm leading-relaxed ${descriptionColor}`}>
-                              {section.bullets.map((bullet) => (
-                                <li key={bullet}>{bullet}</li>
-                              ))}
-                            </ul>
-                          )}
-                          {section.subsections?.map((subsection) => (
-                            <div key={subsection.label} className="space-y-1">
-                              <div className="flex items-center gap-2">
-                                {subsection.icon ? (
-                                  <subsection.icon className={`h-4 w-4 ${descriptionColor}`} aria-hidden />
-                                ) : null}
-                                <p className={`text-xs font-semibold uppercase tracking-[0.3em] ${descriptionColor}`}>{subsection.label}</p>
-                              </div>
+                      {concept.sections.map((section) => {
+                        const paragraphs =
+                          section.paragraphs ??
+                          (Array.isArray(section.body)
+                            ? section.body
+                            : section.body
+                              ? [section.body]
+                              : [])
+                        return (
+                          <div
+                            key={`${concept.title}-${section.heading}`}
+                            className={`space-y-2 rounded-2xl border ${detailBorder} p-4`}
+                          >
+                            <div className="flex items-center gap-2">
+                              {section.icon ? (
+                                <section.icon className={`h-4 w-4 ${descriptionColor}`} aria-hidden />
+                              ) : null}
+                              <p className={`text-xs font-semibold uppercase tracking-[0.3em] ${copyColor}`}>
+                                {section.heading}
+                              </p>
+                            </div>
+                            {paragraphs.map((paragraph, index) => (
+                              <p
+                                key={`${section.heading}-paragraph-${index}`}
+                                className={`text-sm leading-relaxed ${descriptionColor}`}
+                              >
+                                {paragraph}
+                              </p>
+                            ))}
+                            {section.bullets && (
                               <ul className={`list-disc space-y-1 pl-4 text-sm leading-relaxed ${descriptionColor}`}>
-                                {subsection.items.map((item) => (
-                                  <li key={item}>{item}</li>
+                                {section.bullets.map((bullet, index) => (
+                                  <li key={`${section.heading}-bullet-${index}`}>{bullet}</li>
                                 ))}
                               </ul>
-                            </div>
-                          ))}
-                        </div>
-                      ))}
+                            )}
+                            {section.subsections?.map((subsection) => (
+                              <div key={`${section.heading}-${subsection.label}`} className="space-y-1">
+                                <div className="flex items-center gap-2">
+                                  {subsection.icon ? (
+                                    <subsection.icon className={`h-4 w-4 ${descriptionColor}`} aria-hidden />
+                                  ) : null}
+                                  <p
+                                    className={`text-xs font-semibold uppercase tracking-[0.3em] ${descriptionColor}`}
+                                  >
+                                    {subsection.label}
+                                  </p>
+                                </div>
+                                <ul className={`list-disc space-y-1 pl-4 text-sm leading-relaxed ${descriptionColor}`}>
+                                  {subsection.items.map((item, index) => (
+                                    <li key={`${subsection.label}-${index}`}>{item}</li>
+                                  ))}
+                                </ul>
+                              </div>
+                            ))}
+                          </div>
+                        )
+                      })}
                     </div>
                   </div>
                 )
@@ -721,48 +965,54 @@ export default function WineCountryRootCanalDesignReview() {
           </div>
         </section>
 
-        <section className="px-4 py-16 bg-neutral-50">
-          <div className="mx-auto max-w-6xl space-y-8">
-            <div className="flex flex-col gap-3">
-              <p className="text-xs font-semibold uppercase tracking-[0.35em] text-neutral-500">logo usage</p>
-              <h2 className="text-3xl font-semibold text-neutral-900">where the brand lives</h2>
+        <section className="bg-neutral-50 px-4 py-16">
+          <div className="mx-auto max-w-6xl space-y-10">
+            <div className="space-y-4">
+              <p className="text-xs font-semibold uppercase tracking-[0.35em] text-neutral-500">
+                logo usage guidance
+              </p>
+              <h2 className="text-3xl font-semibold text-neutral-900">where the logo should live</h2>
               <p className="text-sm text-neutral-600">
-                Anchor the new logo across every touchpoint so the experience feels intentional online and in-office.
+                Below is a complete breakdown of where the logo should appear, why it matters, and what format each placement needs.
               </p>
             </div>
             <div className="grid gap-6 md:grid-cols-2">
-              {logoPlacements.map((placement) => (
+              {logoUsageDetails.map((detail) => (
                 <div
-                  key={placement.title}
-                  className="flex flex-col gap-4 rounded-3xl border border-neutral-200 bg-white p-5 shadow-sm"
+                  key={detail.title}
+                  className="flex flex-col gap-4 rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm"
                 >
                   <div className="flex items-center gap-3">
-                    <placement.icon className="h-5 w-5 text-neutral-600" aria-hidden />
+                    <detail.icon className="h-6 w-6 text-neutral-700" aria-hidden />
                     <div>
                       <p className="text-xs font-semibold uppercase tracking-[0.35em] text-neutral-500">
-                        {placement.priority === "high" ? "high impact" : "steady impact"}
+                        {detail.priorityLabel}
                       </p>
-                      <h3 className="text-xl font-semibold text-neutral-900">{placement.title}</h3>
+                      <h3 className="text-xl font-semibold text-neutral-900">{detail.title}</h3>
                     </div>
                   </div>
-                  <p className="text-sm text-neutral-600">{placement.description}</p>
-                  <div>
-                    <p className="text-xs font-semibold uppercase tracking-[0.35em] text-neutral-500">where it goes</p>
-                    <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-neutral-700">
-                      {placement.placements.map((item) => (
-                        <li key={item}>{item}</li>
-                      ))}
-                    </ul>
-                  </div>
-                  <div>
-                    <p className="text-xs font-semibold uppercase tracking-[0.35em] text-neutral-500">impact</p>
-                    <p className="text-sm text-neutral-700">{placement.impact}</p>
+                  <p className="text-sm text-neutral-600">{detail.description}</p>
+                  <div className="space-y-3">
+                    {detail.sections.map((section) => (
+                      <div key={`${detail.title}-${section.label}`} className="space-y-1">
+                        <p className="text-xs font-semibold uppercase tracking-[0.3em] text-neutral-500">
+                          {section.label}
+                        </p>
+                        <ul className="list-disc space-y-1 pl-5 text-sm text-neutral-700">
+                          {section.bullets.map((bullet, index) => (
+                            <li key={`${section.label}-${index}`}>{bullet}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    ))}
                   </div>
                 </div>
               ))}
             </div>
             <div className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm">
-              <p className="text-xs font-semibold uppercase tracking-[0.35em] text-neutral-500">high-impact summary</p>
+              <p className="text-xs font-semibold uppercase tracking-[0.35em] text-neutral-500">
+                ⭐ summary (high-impact uses ranked)
+              </p>
               <ol className="mt-4 list-decimal space-y-2 pl-5 text-sm text-neutral-700">
                 {usageSummary.map((item) => (
                   <li key={item}>{item}</li>
