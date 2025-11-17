@@ -22,7 +22,7 @@ export default function WineCountryRootCanalDesignReview() {
                 <p className="text-xs font-semibold uppercase tracking-[0.35em] text-neutral-500">design board</p>
                 <h1 className="text-4xl font-semibold leading-tight sm:text-5xl">wine country root canal</h1>
                 <p className="text-base text-neutral-600 sm:text-lg">
-                  One board for every deliverable—site polish, patient packets, and referral assets—so the team can react fast.
+                  One board for every deliverable—site polish, patient packets, and referral assets—so Dr. Anderson can react fast.
                 </p>
                 <Link
                   href="/case-studies/wine-country-root-canal"
