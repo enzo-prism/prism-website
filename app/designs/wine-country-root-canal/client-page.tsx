@@ -373,7 +373,9 @@ export default function WineCountryRootCanalDesignReview() {
   const scrollToVoteSection = () => {
     if (typeof window === "undefined") return
     const voteSection = document.getElementById("vote")
-    voteSection?.scrollIntoView({ behavior: "smooth", block: "center" })
+    if (!voteSection) return
+    const offset = voteSection.getBoundingClientRect().top + window.scrollY - window.innerHeight / 2 + voteSection.clientHeight / 2
+    window.scrollTo({ top: offset, behavior: "smooth" })
   }
 
   return (
