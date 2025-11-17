@@ -116,11 +116,6 @@ export default function WineCountryRootCanalDesignReview() {
                   priority
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-neutral-950/80 via-transparent to-transparent" aria-hidden />
-                <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
-                  <p className="text-xs uppercase tracking-[0.35em] text-white/70">live on web</p>
-                  <p className="text-lg font-semibold">Endodontic experience in Sonoma County</p>
-                  <p className="text-sm text-white/80">Updated hero + flow launched Feb 7</p>
-                </div>
               </div>
             </div>
           </div>
