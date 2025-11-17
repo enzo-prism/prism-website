@@ -348,9 +348,6 @@ export default function WineCountryRootCanalDesignReview() {
           <div className="mx-auto max-w-6xl space-y-8">
             <div className="space-y-3">
               <h2 className="text-3xl font-semibold text-neutral-900">logo concepts</h2>
-              <p className="text-base text-neutral-600 sm:text-lg">
-                Each study keeps the tone premium, calm, and rooted in Sonoma—pick the direction that feels most like the practice.
-              </p>
             </div>
             <div className="grid gap-6 md:grid-cols-2">
               {logoConcepts.map((concept) => {
