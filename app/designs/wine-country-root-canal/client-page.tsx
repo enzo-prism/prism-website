@@ -16,13 +16,15 @@ const logoConcepts = [
       "A calm horizon bar nods to the rolling vineyards surrounding the practice. The softened serif keeps the medical mark premium while the warm amber line hints at sedation comfort.",
     image:
       "https://res.cloudinary.com/dhqpqfw6w/image/upload/v1763392232/u6213582198_minimalist_flat-color_logo_horizontal_landscape_c_47d1ef8c-986b-4116-851a-a6b2d43ec68f_0_zhmoeq.png",
+    variant: "light",
   },
   {
     title: "Concept 02 · Architectural monogram",
     description:
       "A single-line barn icon references the Anderson family’s agricultural roots. The negative space forms a canal path, reinforcing precision dentistry without literal tooth imagery.",
     image:
-      "https://res.cloudinary.com/dhqpqfw6w/image/upload/v1763392232/u6213582198_minimalist_flat_vector_logo_icon_of_a_simple_barn_bfcfd0d7-719f-487d-a74f-74f1994212fb_1_vxgtxa.png",
+      "https://res.cloudinary.com/dhqpqfw6w/image/upload/v1763392232/u6213582198_minimalist_flat_vector_logo_icon_of_a_simple_barn_bfcfd0d7-719f-487d-a74b-74f1994212fb_1_vxgtxa.png",
+    variant: "dark",
   },
   {
     title: "Concept 03 · Elevated crest",
@@ -30,6 +32,7 @@ const logoConcepts = [
       "Stacked typography with a centered crest balances clinical trust and boutique hospitality. The geometric barn outline keeps things modern while the script accent nods to handoffs from referring dentists.",
     image:
       "https://res.cloudinary.com/dhqpqfw6w/image/upload/v1763392232/u6213582198_minimalist_flat-color_logo_icon_of_a_simple_barn__4115452d-3c6e-460e-ab12-33ea0b84a2e3_1_papyu5.png",
+    variant: "light",
   },
   {
     title: "Concept 04 · Circular seal",
@@ -37,8 +40,10 @@ const logoConcepts = [
       "A seal-style badge with grape-leaf etching creates a keepsake moment for patient packets. The outer ring holds Sonoma copy while the inner icon spotlights the micro-endodontic tools.",
     image:
       "https://res.cloudinary.com/dhqpqfw6w/image/upload/v1763392232/u6213582198_minimalist_flat-color_logo_emblem_circular_badge__fd88e535-2f33-437a-b9bd-9e2a413b7d84_1_htuezo.png",
+    variant: "light",
   },
 ]
+
 
 export default function WineCountryRootCanalDesignReview() {
   return (
@@ -87,23 +92,34 @@ export default function WineCountryRootCanalDesignReview() {
               </p>
             </div>
             <div className="grid gap-6 md:grid-cols-2">
-              {logoConcepts.map((concept) => (
-                <div key={concept.title} className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm">
-                  <div className="relative overflow-hidden rounded-2xl border border-neutral-100 bg-neutral-50">
-                    <div className="relative aspect-[5/3] w-full">
-                      <Image
-                        src={concept.image}
-                        alt={concept.title}
-                        fill
-                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 540px"
-                        className="object-contain p-6"
-                      />
+              {logoConcepts.map((concept) => {
+                const frameBg =
+                  concept.variant === "dark" ? "bg-neutral-900" : "bg-neutral-50"
+                const copyColor = concept.variant === "dark" ? "text-white" : "text-neutral-900"
+                const descriptionColor = concept.variant === "dark" ? "text-white/70" : "text-neutral-600"
+                const cardBg =
+                  concept.variant === "dark"
+                    ? "bg-neutral-900 border-neutral-800 text-white"
+                    : "bg-white border-neutral-200 text-neutral-900"
+                const frameBorder = concept.variant === "dark" ? "border-neutral-800" : "border-neutral-100"
+                return (
+                  <div key={concept.title} className={`rounded-3xl border p-6 shadow-sm ${cardBg}`}>
+                    <div className={`relative overflow-hidden rounded-2xl border ${frameBorder} ${frameBg}`}>
+                      <div className="relative aspect-[5/3] w-full">
+                        <Image
+                          src={concept.image}
+                          alt={concept.title}
+                          fill
+                          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 540px"
+                          className="object-contain p-6"
+                        />
+                      </div>
                     </div>
+                    <h3 className={`mt-4 text-xl font-semibold ${copyColor}`}>{concept.title}</h3>
+                    <p className={`mt-2 text-sm ${descriptionColor}`}>{concept.description}</p>
                   </div>
-                  <h3 className="mt-4 text-xl font-semibold text-neutral-900">{concept.title}</h3>
-                  <p className="mt-2 text-sm text-neutral-600">{concept.description}</p>
-                </div>
-              ))}
+                )
+              })}
             </div>
           </div>
         </section>
