@@ -46,9 +46,9 @@ const logoConcepts = [
     ],
   },
   {
-    title: "Concept 02 · Architectural monogram",
+    title: "Concept 02 · Standing Barn / Endodontic Pillar",
     summary:
-      "A solitary barn stands firm in a wide field, acting as a metaphor for a single tooth that’s been stabilized by endodontic care.",
+      "A solitary barn stands calm and unshakable in the middle of an open field. It becomes a metaphor for a single, strong tooth that’s been saved and stabilized by expert root canal care.",
     image:
       "https://res.cloudinary.com/dhqpqfw6w/image/upload/v1763392232/u6213582198_minimalist_flat_vector_logo_icon_of_a_simple_barn_bfcfd0d7-719f-487d-a74b-74f1994212fb_1_vxgtxa.png",
     variant: "dark",
@@ -56,27 +56,67 @@ const logoConcepts = [
       {
         heading: "Core idea",
         body:
-          "One quiet barn in a field equals one restored tooth—standing strong after precise, specialist work.",
+          "A solitary barn stands calm and unshakable in the middle of an open field. It becomes a metaphor for a single, strong tooth that’s been saved and stabilized by expert root canal care.",
       },
       {
         heading: "Visual treatment",
-        body:
-          "Flat planes of teal sky, ochre band, and muted greens frame an angled barn with a single dark doorway. The slight perspective hints at the internal complexity of the canals.",
+        body: [
+          "Icon",
+          "Horizontal rectangle format – feels like one of his paintings, not a generic logo.",
+          "A single barn viewed from a slight angle:",
+          "Front wall nearly frontal, roof and side receding gently to the right.",
+          "Proportions are tall enough that the barn body clearly reads as a “tooth” when abstracted.",
+          "Ground is a soft band of greens and ochres; behind it a narrow horizontal band of warm rusty-orange; above that, a large expanse of muted teal sky.",
+          "A single narrow doorway punctures the front wall — a simple dark vertical rectangle.",
+          "Style",
+          "Completely flat planes of color with a soft stippled texture (if you keep the texture, it will echo his canvases; if you vectorize, it becomes very clean).",
+          "No outlines at all; shapes are defined by edges of color only.",
+          "Zero decorative detail: no wood grain, no fencing, no clouds, no extra buildings.",
+          "Composition is centered and stable, with the barn slightly left-of-center so the eye moves across the roofline.",
+        ],
       },
       {
         heading: "Meaning cues",
-        body:
-          "The tall face becomes a crown, the narrow doorway reads as the canal opening, and the orange strip behind the barn suggests inflammation that has now been contained.",
+        body: [
+          "Solitary barn = single tooth.",
+          "One structure, isolated and structurally sound, mirrors the idea of saving one compromised tooth and giving it a second life instead of extracting it.",
+          "Slight perspective = depth and complexity.",
+          "Endodontics is not flat, simple dentistry; the angled view hints there’s more going on internally (root structure, canals) even though the outside looks calm.",
+          "Tall vertical face + narrow door = canal pathway.",
+          "The long rectangular façade acts like the crown of a tooth; the dark narrow door reads as the cleaned and filled canal opening.",
+          "Open landscape + huge sky = relief.",
+          "Patients come in tight with anxiety and pain; the open field and big sky symbolize the feeling of relief and breathing room after treatment.",
+          "Warm orange band = underlying inflammation that’s been contained.",
+          "The orange strip behind the barn can be read as the “resolved” area of infection – present in the history, but now controlled beneath a solid structure.",
+        ],
       },
       {
-        heading: "Color & type",
-        body:
-          "Cool teal and off-white deliver clinical trust, while olive and rust anchor the mark in Sonoma. The wordmark can stack below, aligning its width to the barn for a unified column.",
+        heading: "Color",
+        body: [
+          "Sky: Muted teal/blue–green, calming and clinical without looking cold or hospital-like.",
+          "Field: Strips of yellow–green and olive, tying directly into Sonoma vineyards and rural landscapes.",
+          "Back band: Rust/orange – a nod to wine, soil, and warmth.",
+          "Barn: Soft off-white with a subtle gray–blue shadow side; roof in olive/gray.",
+          "This palette lands between medical trust (cool teal, off-white) and wine country warmth (orange/olive).",
+        ],
       },
       {
-        heading: "Why it fits",
-        body:
-          "It feels slow, controlled, and serious—mirroring Dr. Anderson’s decades-long specialization and his desire to give anxious patients calm, stable outcomes.",
+        heading: "Type",
+        body: [
+          "Place the wordmark directly below:",
+          "Top line: WINE COUNTRY in a refined serif, lightly letterspaced, all caps or small caps.",
+          "Second line: ROOT CANAL same serif, slightly larger and bolder.",
+          "For a stacked lockup, you can align the text width to match the barn body width so the logo feels like one unified column.",
+        ],
+      },
+      {
+        heading: "Why this reflects the practice",
+        body: [
+          "Dr. Anderson’s story is about specialization, precision, and stability over decades of work. This barn is not cute or gimmicky; it’s quiet and serious, just like an endodontic specialist should be.",
+          "The composition feels slow and controlled — mirroring his emphasis on careful diagnosis, infection control, and meticulous treatment.",
+          "The barn and field root the brand in Wine Country without forcing grapes or cliché vine graphics.",
+          "The mood is reassuring and non-threatening, which aligns with his desire to reduce anxiety and build long-term trust with patients.",
+        ],
       },
     ],
   },
