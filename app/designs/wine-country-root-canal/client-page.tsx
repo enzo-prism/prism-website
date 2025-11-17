@@ -319,9 +319,7 @@ export default function WineCountryRootCanalDesignReview() {
               <div className="space-y-6">
                 <p className="text-xs font-semibold uppercase tracking-[0.35em] text-neutral-500">logo design board</p>
                 <h1 className="text-4xl font-semibold leading-tight sm:text-5xl">wine country root canal</h1>
-                <p className="text-base text-neutral-600 sm:text-lg">
-                  One board for every deliverable—site polish, patient packets, and referral assets—so Dr. Anderson can react fast.
-                </p>
+                <p className="text-base text-neutral-600 sm:text-lg">Dr. Anderson</p>
                 <Link
                   href="/case-studies/wine-country-root-canal"
                   className="inline-flex items-center text-sm font-semibold text-neutral-900 underline decoration-neutral-300 underline-offset-4"
