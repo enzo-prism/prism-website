@@ -11,9 +11,9 @@ const Navbar = dynamic(() => import("@/components/navbar"), { ssr: false })
 
 const logoConcepts = [
   {
-    title: "Concept 01 · Sonoma horizon",
+    title: "Concept 01 · Horizon Field / Relief Line",
     summary:
-      "A panoramic field with a tiny home under a vast sky mirrors the relief patients feel after treatment.",
+      "A small house sits on a gentle green slope under a huge sky, with a long, clean horizon line. The composition becomes a metaphor for relief after pain, calm after crisis, and a specialist who operates with perspective and care.",
     image:
       "https://res.cloudinary.com/dhqpqfw6w/image/upload/v1763392232/u6213582198_minimalist_flat-color_logo_horizontal_landscape_c_47d1ef8c-986b-4116-851a-a6b2d43ec68f_0_zhmoeq.png",
     variant: "light",
@@ -21,27 +21,67 @@ const logoConcepts = [
       {
         heading: "Core idea",
         body:
-          "A small house on a gentle slope with an endless sky symbolizes relief after pain: a single tooth restored within the broader context of someone’s life.",
+          "A small house sits on a gentle green slope under a huge sky, with a long, clean horizon line. The composition becomes a metaphor for relief after pain, calm after crisis, and a specialist who operates with perspective and care.",
       },
       {
         heading: "Visual treatment",
-        body:
-          "The ultra-wide rectangle leaves huge negative space so the landscape carries the emotion. The diagonal shadow leads the eye toward the home, echoing the patient’s path to the practice.",
+        body: [
+          "Icon",
+          "Ultra-wide horizontal rectangle – almost panoramic.",
+          "House is positioned left-of-center, fairly small relative to the canvas:",
+          "Front wall white.",
+          "Side wall muted blue-green.",
+          "Roof bright warm red.",
+          "Foreground is a sweeping green field with a darker shadow sweeping diagonally, pointing toward the building.",
+          "Background is a layered band of ochre fields, then a vast pale blue sky with a subtle grain.",
+          "Style",
+          "Extremely minimal detail – no fences, no trees, no extra buildings.",
+          "The negative space is the hero: the house occupies only a small portion; the landscape and sky do the emotional work.",
+          "The diagonal field shadow and horizontal horizon lines create a dynamic but still tranquil composition.",
+        ],
       },
       {
         heading: "Meaning cues",
-        body:
-          "The tiny structure represents the tooth, the sweeping shadow reads as the canal path or patient journey, and the sky communicates anxiety lifting once treatment is complete.",
+        body: [
+          "Tiny house in big landscape = your tooth in the bigger picture of health.",
+          "A root canal is a small, intense moment in a much larger life; this composition respects that perspective while still focusing attention on the treated tooth (the house).",
+          "Sweeping shadow = path to the practice.",
+          "The dark diagonal that leads toward the house can be read as:",
+          "The patient’s journey from discomfort toward relief.",
+          "Or a stylized root/canal path guiding toward the treated structure.",
+          "Huge sky = anxiety dissipating.",
+          "The sheer amount of open, pale sky embodies the release of tension after treatment; you’re no longer “boxed in” by pain.",
+          "House scale = specialist focus.",
+          "It’s small but precise, like the highly specialized work he does inside a tooth.",
+        ],
       },
       {
-        heading: "Color & type",
-        body:
-          "Bands of ochre, orange, and vineyard greens create a wine-country palette while the house uses a memorable triad of white, blue-green, and red. It pairs well with a refined serif or humanist sans set alongside or beneath the illustration.",
+        heading: "Color",
+        body: [
+          "Sky: Very light blue, almost gray – reassuring, non-aggressive.",
+          "Distant horizon band: Thin line of warm yellow/ochre.",
+          "Mid band: Deeper orange strip, echoing wine, warmth, and Sonoma soil.",
+          "Field: Multiple greens, from bright to deep, adding life and a vineyard feel.",
+          "House: White front, blue–green side, red roof – a triad that’s memorable and friendly without feeling childish.",
+          "This is the most open and emotional palette of the four – great for a primary website hero.",
+        ],
       },
       {
-        heading: "Why it fits",
-        body:
-          "Dr. Anderson’s emphasis on education and long-term relationships shines through in this calm, human composition. It whispers reassurance instead of shouting clinical precision.",
+        heading: "Type",
+        body: [
+          "Because the image is so wide, it pairs well with a centered or right-aligned wordmark:",
+          "Option A: Place WINE COUNTRY ROOT CANAL centered underneath, spanning roughly the same width as the house + dark shadow region.",
+          "Option B: Place the wordmark to the right of the image for a site header, keeping the house on the left as a visual anchor.",
+          "A refined serif still makes sense here, but a clean humanist sans would also work if you want the brand to feel slightly more contemporary.",
+        ],
+      },
+      {
+        heading: "Why this reflects the practice",
+        body: [
+          "Dr. Anderson emphasizes education, communication, and long-term relationships – this composition looks like the practice is part of a larger landscape rather than a sterile box. It makes the brand feel human and grounded.",
+          "For patients who are fearful, this scene is soft, calm, and non-threatening. It doesn’t scream “surgery”; it whispers “you’ll be okay”.",
+          "The clear, minimal geometry matches his technical precision, while the expansive space mirrors his philosophy of preventive care and whole-health thinking, not just single procedures.",
+        ],
       },
     ],
   },
