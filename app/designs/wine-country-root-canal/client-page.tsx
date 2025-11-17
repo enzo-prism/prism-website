@@ -6,6 +6,13 @@ import dynamic from "next/dynamic"
 
 import Footer from "@/components/footer"
 import PageViewTracker from "@/components/page-view-tracker"
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel"
 
 const Navbar = dynamic(() => import("@/components/navbar"), { ssr: false })
 
@@ -306,6 +313,33 @@ const logoConcepts = [
   },
 ]
 
+const inspirationImages = [
+  {
+    src: "https://res.cloudinary.com/dhqpqfw6w/image/upload/v1763394748/1_lzhlya.png",
+    alt: "wine country moodboard tile 1",
+  },
+  {
+    src: "https://res.cloudinary.com/dhqpqfw6w/image/upload/v1763394748/2_ygtro6.png",
+    alt: "wine country moodboard tile 2",
+  },
+  {
+    src: "https://res.cloudinary.com/dhqpqfw6w/image/upload/v1763394749/3_rt6iaz.png",
+    alt: "wine country moodboard tile 3",
+  },
+  {
+    src: "https://res.cloudinary.com/dhqpqfw6w/image/upload/v1763394749/4_pt1jjj.png",
+    alt: "wine country moodboard tile 4",
+  },
+  {
+    src: "https://res.cloudinary.com/dhqpqfw6w/image/upload/v1763394749/6_gx3jyg.png",
+    alt: "wine country moodboard tile 5",
+  },
+  {
+    src: "https://res.cloudinary.com/dhqpqfw6w/image/upload/v1763394750/5_c4bhrw.png",
+    alt: "wine country moodboard tile 6",
+  },
+]
+
 
 export default function WineCountryRootCanalDesignReview() {
   return (
@@ -339,6 +373,40 @@ export default function WineCountryRootCanalDesignReview() {
                 <div className="absolute inset-0 bg-gradient-to-t from-neutral-950/80 via-transparent to-transparent" aria-hidden />
               </div>
             </div>
+          </div>
+        </section>
+
+        <section className="px-4 pb-12">
+          <div className="mx-auto max-w-6xl space-y-6">
+            <div className="space-y-2">
+              <p className="text-xs font-semibold uppercase tracking-[0.35em] text-neutral-500">design inspiration</p>
+              <h2 className="text-3xl font-semibold text-neutral-900">what informed the marks</h2>
+              <p className="text-sm text-neutral-600">
+                References from paintings, barns, and Sonoma skies that shaped the palette, geometry, and mood.
+              </p>
+            </div>
+            <Carousel opts={{ align: "start", dragFree: true }} className="relative">
+              <CarouselContent>
+                {inspirationImages.map((image, index) => (
+                  <CarouselItem key={image.alt} className="basis-full sm:basis-1/2 lg:basis-1/3">
+                    <div className="mr-4 overflow-hidden rounded-3xl border border-neutral-200 bg-white p-4 shadow-sm">
+                      <div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl bg-neutral-50">
+                        <Image
+                          src={image.src}
+                          alt={image.alt}
+                          fill
+                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 400px"
+                          className="object-cover"
+                          priority={index === 0}
+                        />
+                      </div>
+                    </div>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPrevious className="hidden md:flex" />
+              <CarouselNext className="hidden md:flex" />
+            </Carousel>
           </div>
         </section>
 
