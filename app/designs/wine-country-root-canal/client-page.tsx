@@ -194,9 +194,9 @@ const logoConcepts = [
     ],
   },
   {
-    title: "Concept 04 · Circular seal",
+    title: "Concept 04 · Oval Seal / Protected Home",
     summary:
-      "An oval emblem frames a protected home, creating a seal that feels official enough for reports, referral pads, or patient keepsakes.",
+      "A barn-like building sits inside an oval frame, creating a seal or medallion that feels like a protected “home” for your tooth – an emblem of specialized endodontic care in Wine Country.",
     image:
       "https://res.cloudinary.com/dhqpqfw6w/image/upload/v1763392232/u6213582198_minimalist_flat-color_logo_emblem_circular_badge__fd88e535-2f33-437a-b9bd-9e2a413b7d84_1_htuezo.png",
     variant: "light",
@@ -204,27 +204,63 @@ const logoConcepts = [
       {
         heading: "Core idea",
         body:
-          "A barn-like building encapsulated in an oval feels like a specialized home for the tooth—safe, sealed, and cared for.",
+          "A barn-like building sits inside an oval frame, creating a seal or medallion that feels like a protected “home” for your tooth – an emblem of specialized endodontic care in Wine Country.",
       },
       {
         heading: "Visual treatment",
-        body:
-          "The oval crop removes distractions and focuses on the structure, with repeating vertical slits that rhythmically echo multiple canals.",
+        body: [
+          "Icon",
+          "Central oval fills most of the square; inside the oval is a simple house/barn on a warm orange field with a muted olive sky.",
+          "The building:",
+          "Front wall on the right, side volume on the left.",
+          "Roof in slate gray, walls in off-white.",
+          "Three tall black door/window slits on the left volume, one door on the right.",
+          "The oval crops out any horizon line except a thin stripe of ground, focusing attention on the structure itself.",
+          "Style",
+          "The oval frame instantly feels like a seal, award, or coin, making it very brandable.",
+          "Shapes remain extremely minimal: no trim, no texture beyond subtle canvas feel, no additional scenery.",
+          "The repeated vertical slits create a rhythm, making the design feel orderly and methodical, like multiple canals in a tooth.",
+        ],
       },
       {
         heading: "Meaning cues",
-        body:
-          "The frame communicates containment and infection control, while the quartet of doorways mirrors multiple canal systems being treated thoroughly.",
+        body: [
+          "Oval = protection and containment.",
+          "It’s as if the building—and by extension the tooth—is cocooned within a safe boundary, aligning with his emphasis on infection control and safety standards (ADA, OSHA, CDC).",
+          "Multiple vertical slits = multiple canals.",
+          "The left block with three dark slits plus the single right door can be read as multiple roots/canals that have been located and treated.",
+          "House/barn silhouette = local, grounded care.",
+          "It’s rural, not corporate. That reinforces the idea of a small, specialized practice deeply connected to its community.",
+          "Warm ground, muted sky = calm and warmth together.",
+          "A calm olive sky suggests clinical rationality; warm orange ground suggests empathy and relief.",
+        ],
       },
       {
-        heading: "Color & type",
-        body:
-          "Olive sky, burnt orange ground, off-white walls, and charcoal accents offer a heritage-winery vibe without resorting to clichés. The seal can sit with a high-contrast serif or be wrapped with text for stickers and reports.",
+        heading: "Color",
+        body: [
+          "Sky: Soft muted olive/khaki – sophisticated, not cold.",
+          "Ground: Burnt orange – warmth and “wine country” baked in.",
+          "Building body: Off-white and muted cool gray.",
+          "Roof and doors/windows: Dark teal or charcoal.",
+          "This combination gives a heritage-winery vibe without resorting to grapes or literal wine imagery.",
+        ],
       },
       {
-        heading: "Why it fits",
-        body:
-          "This is the most formal of the concepts—perfect for a specialist who writes reports, teaches, and needs a mark that feels like a stamp of quality for referring dentists.",
+        heading: "Type",
+        body: [
+          "Treat the oval emblem as the primary mark, with the wordmark paired underneath or to the side:",
+          "For a classical look, set WINE COUNTRY ROOT CANAL in a high-contrast serif similar to the “SELECTED SOLD ARTWORKS” heading style.",
+          "You can create an alternate circular version where the text wraps around the oval to make a full seal (for referral pads, wax stamp, stickers).",
+        ],
+      },
+      {
+        heading: "Why this reflects the practice",
+        body: [
+          "This concept feels like a professional seal of quality, which pairs well with Dr. Anderson’s credentials, memberships, and teaching.",
+          "The multiple vertical slits and structured façade echo the complex multi-canal work he does daily.",
+          "It visually communicates safety, containment, and thoroughness, which matters a lot for anxious patients contemplating endodontic treatment.",
+          "It’s also the closest to a formal emblem you could use on reports, letters to referring dentists, and educational material.",
+        ],
       },
     ],
   },
