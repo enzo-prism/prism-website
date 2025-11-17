@@ -17,7 +17,7 @@ const buttonVariants = cva(
         inverted:
           "bg-white text-neutral-950 hover:bg-white/90 hover:text-neutral-900 focus-visible:ring-neutral-200",
         "outline-inverted":
-          "border border-white/40 bg-transparent text-white hover:bg-white/10 hover:text-white focus-visible:ring-white/60",
+          "border border-white/40 bg-transparent text-white hover:bg-white/10 hover:text-white focus-visible:bg-white/20 focus-visible:text-white focus-visible:ring-white/60 active:bg-white/20 active:text-white",
         secondary:
           "bg-secondary text-secondary-foreground hover:bg-secondary/80",
         ghost: "hover:bg-accent hover:text-accent-foreground",
