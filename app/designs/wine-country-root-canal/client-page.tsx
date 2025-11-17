@@ -31,11 +31,6 @@ const logoConcepts = [
     variant: "light",
     sections: [
       {
-        heading: "Core idea",
-        body:
-          "A small house sits on a gentle green slope under a huge sky, with a long, clean horizon line. The composition becomes a metaphor for relief after pain, calm after crisis, and a specialist who operates with perspective and care.",
-      },
-      {
         heading: "Visual treatment",
         body: [
           "Icon",
@@ -105,11 +100,6 @@ const logoConcepts = [
       "https://res.cloudinary.com/dhqpqfw6w/image/upload/v1763392232/u6213582198_minimalist_flat_vector_logo_icon_of_a_simple_barn_bfcfd0d7-719f-487d-a74b-74f1994212fb_1_vxgtxa.png",
     variant: "dark",
     sections: [
-      {
-        heading: "Core idea",
-        body:
-          "A solitary barn stands calm and unshakable in the middle of an open field. It becomes a metaphor for a single, strong tooth that’s been saved and stabilized by expert root canal care.",
-      },
       {
         heading: "Visual treatment",
         body: [
@@ -181,11 +171,6 @@ const logoConcepts = [
     variant: "light",
     sections: [
       {
-        heading: "Core idea",
-        body:
-          "A simple house stands upright on a warm field with a vivid orange roof, representing a rebuilt, stable tooth and a patient who’s regained confidence.",
-      },
-      {
         heading: "Visual treatment",
         body: [
           "Icon",
@@ -253,11 +238,6 @@ const logoConcepts = [
       "https://res.cloudinary.com/dhqpqfw6w/image/upload/v1763392232/u6213582198_minimalist_flat-color_logo_emblem_circular_badge__fd88e535-2f33-437a-b9bd-9e2a413b7d84_1_htuezo.png",
     variant: "light",
     sections: [
-      {
-        heading: "Core idea",
-        body:
-          "A barn-like building sits inside an oval frame, creating a seal or medallion that feels like a protected “home” for your tooth – an emblem of specialized endodontic care in Wine Country.",
-      },
       {
         heading: "Visual treatment",
         body: [
