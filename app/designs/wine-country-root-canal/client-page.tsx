@@ -3,7 +3,7 @@
 import Image from "next/image"
 import Link from "next/link"
 import dynamic from "next/dynamic"
-import { ArrowRight, CalendarDays, CheckCircle2, Circle, Clock3 } from "lucide-react"
+import { ArrowRight, CheckCircle2 } from "lucide-react"
 
 import Footer from "@/components/footer"
 import PageViewTracker from "@/components/page-view-tracker"
@@ -47,43 +47,6 @@ const deliverables = [
     ],
   },
 ]
-
-const timelineMilestones = [
-  {
-    date: "Jan 24",
-    label: "Kickoff + priorities",
-    status: "complete",
-    detail: "Kickoff with Dr. Anderson + Dr. Van Tassell on hero and referral priorities.",
-  },
-  {
-    date: "Feb 07",
-    label: "Website refresh locked",
-    status: "complete",
-    detail: "Homepage, nav, and analytics guardrails approved + deployed.",
-  },
-  {
-    date: "Feb 18",
-    label: "Patient education draft",
-    status: "in-progress",
-    detail: "Copy/layout in review. Need photo uploads + sedation notes.",
-  },
-  {
-    date: "Feb 27",
-    label: "Referral kit rollout",
-    status: "up-next",
-    detail: "GP kit + tiles lined up for late-Feb review.",
-  },
-]
-
-const StatusIcon = ({ status }: { status: string }) => {
-  if (status === "complete") {
-    return <CheckCircle2 className="h-4 w-4 text-emerald-500" aria-hidden />
-  }
-  if (status === "in-progress" || status === "in-review") {
-    return <Clock3 className="h-4 w-4 text-amber-500" aria-hidden />
-  }
-  return <Circle className="h-4 w-4 text-neutral-400" aria-hidden />
-}
 
 export default function WineCountryRootCanalDesignReview() {
   return (
@@ -159,37 +122,6 @@ export default function WineCountryRootCanalDesignReview() {
                       open latest <ArrowRight className="ml-2 h-3.5 w-3.5" aria-hidden />
                     </Link>
                   )}
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section id="timeline" className="bg-neutral-900 px-4 py-16 text-white">
-          <div className="mx-auto max-w-6xl space-y-8">
-            <div className="flex flex-col gap-3">
-              <p className="text-xs font-semibold uppercase tracking-[0.35em] text-white/60">2 · progress tracker</p>
-              <h2 className="text-3xl font-semibold">timeline</h2>
-              <p className="text-base text-white/80 sm:text-lg">Shipped · in motion · up next.</p>
-            </div>
-            <div className="space-y-6">
-              {timelineMilestones.map((milestone) => (
-                <div
-                  key={milestone.label}
-                  className="flex flex-col gap-3 rounded-3xl border border-white/15 bg-white/5 p-6 sm:flex-row sm:items-center sm:justify-between"
-                >
-                  <div className="flex items-center gap-3 text-sm uppercase tracking-[0.35em] text-white/70">
-                    <CalendarDays className="h-4 w-4" aria-hidden />
-                    {milestone.date}
-                  </div>
-                  <div className="flex-1">
-                    <p className="text-xl font-semibold">{milestone.label}</p>
-                    <p className="mt-2 text-sm text-white/80">{milestone.detail}</p>
-                  </div>
-                  <div className="flex items-center gap-2 rounded-full border border-white/20 px-3 py-1 text-sm font-medium capitalize">
-                    <StatusIcon status={milestone.status} />
-                    {milestone.status.replace("-", " ")}
-                  </div>
                 </div>
               ))}
             </div>
