@@ -19,6 +19,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog"
 import {
+  Building2,
   Palette,
   PenTool,
   Compass,
@@ -29,6 +30,15 @@ import {
   Type as TypeIcon,
   ShieldCheck,
   MapPin,
+  FileText,
+  Brush,
+  ClipboardList,
+  Mail,
+  CreditCard,
+  Receipt,
+  Share2,
+  Globe,
+  MonitorSmartphone,
 } from "lucide-react"
 
 const Navbar = dynamic(() => import("@/components/navbar"), { ssr: false })
@@ -341,6 +351,146 @@ const logoConcepts: LogoConcept[] = [
   },
 ]
 
+type LogoPlacement = {
+  title: string
+  priority: "high" | "medium"
+  description: string
+  placements: string[]
+  impact: string
+  icon: React.ComponentType<{ className?: string }>
+}
+
+const logoPlacements: LogoPlacement[] = [
+  {
+    title: "Website (header, footer, favicon)",
+    priority: "high",
+    description: "The primary brand hub — patients decide in seconds whether it feels legitimate.",
+    placements: [
+      "Header: horizontal lockup (SVG) shown on every page",
+      "Footer: reinforces the brand and aids visual recall",
+      "Favicon: simplified icon-only mark for retina clarity",
+    ],
+    impact: "Establishes trust immediately and ensures consistency across every page visit.",
+    icon: MonitorSmartphone,
+  },
+  {
+    title: "Google & Apple Maps listings",
+    priority: "high",
+    description: "Maps drive the majority of specialist discovery; polished imagery wins click-throughs.",
+    placements: [
+      "Google Business Profile: logo field + branded cover image",
+      "Apple Business Connect: logo field",
+    ],
+    impact: "Differentiates from generic dental listings and boosts visits to the website.",
+    icon: MapPin,
+  },
+  {
+    title: "Referral packets & reports",
+    priority: "high",
+    description: "Referring dentists see the brand in every packet, reinforcing reliability.",
+    placements: [
+      "Referral forms, fax covers, radiograph reports",
+      "Welcome and thank-you letters to referring offices",
+      "Case update sheets sent post-treatment",
+    ],
+    impact: "Communicates organization and premium care — vital for specialist trust.",
+    icon: FileText,
+  },
+  {
+    title: "In-office signage & art",
+    priority: "medium",
+    description: "Physical environment should mirror the calm, curated barn aesthetic.",
+    placements: [
+      "Reception signage or wall print",
+      "Treatment room art prints",
+      "Hallway signage and directional cues",
+    ],
+    impact: "Sets a calming tone for anxious patients and reinforces the story of intentional care.",
+    icon: Brush,
+  },
+  {
+    title: "Patient & practice forms",
+    priority: "medium",
+    description: "Digital + paper forms stay on brand to project precision and competence.",
+    placements: [
+      "Medical history, consent, financial policies",
+      "Post-op instructions and PDF exports",
+      "Online booking or intake portals",
+    ],
+    impact: "A unified look across paperwork signals professionalism at every touchpoint.",
+    icon: ClipboardList,
+  },
+  {
+    title: "Email signatures & templates",
+    priority: "medium",
+    description: "Every email should carry a subtle mark of the brand.",
+    placements: [
+      "Horizontal logo in signatures",
+      "Branded dividers or accent colors in templates",
+    ],
+    impact: "Keeps communications polished for both patients and referring dentists.",
+    icon: Mail,
+  },
+  {
+    title: "Business/appointment cards",
+    priority: "medium",
+    description: "Physical leave-behinds keep the brand in the referral loop.",
+    placements: [
+      "Front: icon + wordmark",
+      "Back: clean contact info",
+    ],
+    impact: "Helps referring offices pass along a premium-feeling reminder.",
+    icon: CreditCard,
+  },
+  {
+    title: "Invoices, receipts, and treatment reports",
+    priority: "medium",
+    description: "Even operational paperwork should feel intentional.",
+    placements: [
+      "Logo (mono or black/white) on invoices and receipts",
+      "Logo + brand colors on CBCT PDFs, post-op reports, before/after scans",
+    ],
+    impact: "Communicates thoroughness and competence in every interaction.",
+    icon: Receipt,
+  },
+  {
+    title: "Social media & knowledge panel",
+    priority: "medium",
+    description: "Consistent avatars and covers amplify brand recognition across profiles.",
+    placements: [
+      "Square icon for profile photos",
+      "Wide banner for Facebook/LinkedIn cover images",
+      "Matching imagery improves Google knowledge panel visuals",
+    ],
+    impact: "Creates a cohesive visual footprint even if social usage is minimal.",
+    icon: Share2,
+  },
+  {
+    title: "Exterior signage & apparel",
+    priority: "medium",
+    description: "Optional but powerful for in-person recognition.",
+    placements: [
+      "Exterior sign or door decal with monochrome barn icon",
+      "Scrubs/jackets embroidery with icon + wordmark",
+    ],
+    impact: "Reassures arriving patients and extends the brand into daily operations.",
+    icon: Building2,
+  },
+]
+
+const usageSummary = [
+  "Website header + favicon",
+  "Google Maps / Apple Maps profiles",
+  "Referral packet materials",
+  "In-office signage + art",
+  "Patient forms + post-op instructions",
+  "Email signature + templates",
+  "Social media profiles",
+  "Business / appointment cards",
+  "Printed treatment reports",
+  "Invoices + receipts",
+]
+
 const inspirationImages = [
   {
     src: "https://res.cloudinary.com/dhqpqfw6w/image/upload/v1763394748/1_lzhlya.png",
@@ -567,6 +717,57 @@ export default function WineCountryRootCanalDesignReview() {
                   </div>
                 )
               })}
+            </div>
+          </div>
+        </section>
+
+        <section className="px-4 py-16 bg-neutral-50">
+          <div className="mx-auto max-w-6xl space-y-8">
+            <div className="flex flex-col gap-3">
+              <p className="text-xs font-semibold uppercase tracking-[0.35em] text-neutral-500">logo usage</p>
+              <h2 className="text-3xl font-semibold text-neutral-900">where the brand lives</h2>
+              <p className="text-sm text-neutral-600">
+                Anchor the new logo across every touchpoint so the experience feels intentional online and in-office.
+              </p>
+            </div>
+            <div className="grid gap-6 md:grid-cols-2">
+              {logoPlacements.map((placement) => (
+                <div
+                  key={placement.title}
+                  className="flex flex-col gap-4 rounded-3xl border border-neutral-200 bg-white p-5 shadow-sm"
+                >
+                  <div className="flex items-center gap-3">
+                    <placement.icon className="h-5 w-5 text-neutral-600" aria-hidden />
+                    <div>
+                      <p className="text-xs font-semibold uppercase tracking-[0.35em] text-neutral-500">
+                        {placement.priority === "high" ? "high impact" : "steady impact"}
+                      </p>
+                      <h3 className="text-xl font-semibold text-neutral-900">{placement.title}</h3>
+                    </div>
+                  </div>
+                  <p className="text-sm text-neutral-600">{placement.description}</p>
+                  <div>
+                    <p className="text-xs font-semibold uppercase tracking-[0.35em] text-neutral-500">where it goes</p>
+                    <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-neutral-700">
+                      {placement.placements.map((item) => (
+                        <li key={item}>{item}</li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div>
+                    <p className="text-xs font-semibold uppercase tracking-[0.35em] text-neutral-500">impact</p>
+                    <p className="text-sm text-neutral-700">{placement.impact}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm">
+              <p className="text-xs font-semibold uppercase tracking-[0.35em] text-neutral-500">high-impact summary</p>
+              <ol className="mt-4 list-decimal space-y-2 pl-5 text-sm text-neutral-700">
+                {usageSummary.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ol>
             </div>
           </div>
         </section>
