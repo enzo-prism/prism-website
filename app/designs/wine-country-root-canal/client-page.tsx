@@ -379,7 +379,7 @@ export default function WineCountryRootCanalDesignReview() {
         <section className="px-4 pb-12">
           <div className="mx-auto max-w-6xl space-y-6">
             <div className="space-y-2">
-              <h2 className="text-3xl font-semibold text-neutral-900">what informed the marks</h2>
+              <h2 className="text-3xl font-semibold text-neutral-900">design inspiration</h2>
             </div>
             <Carousel opts={{ align: "start", dragFree: true }} className="relative">
               <CarouselContent>
