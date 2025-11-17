@@ -4,6 +4,7 @@ import Image from "next/image"
 import Link from "next/link"
 import dynamic from "next/dynamic"
 import { useState } from "react"
+import axios from "axios"
 
 import Footer from "@/components/footer"
 import PageViewTracker from "@/components/page-view-tracker"
@@ -349,13 +350,21 @@ export default function WineCountryRootCanalDesignReview() {
   const [notes, setNotes] = useState("")
   const [voteStatus, setVoteStatus] = useState<"idle" | "error" | "success">("idle")
 
-  const handleVoteSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleVoteSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     if (!selectedConcept) {
       setVoteStatus("error")
       return
     }
-    setVoteStatus("success")
+    try {
+      await axios.post("https://formspree.io/f/mldayroq", {
+        concept: selectedConcept,
+        notes,
+      })
+      setVoteStatus("success")
+    } catch {
+      setVoteStatus("error")
+    }
   }
 
   return (
