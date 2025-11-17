@@ -384,16 +384,13 @@ export default function WineCountryRootCanalDesignReview() {
                 <h1 className="text-4xl font-semibold leading-tight sm:text-5xl">wine country root canal</h1>
                 <p className="text-base text-neutral-600 sm:text-lg">Dr. Anderson</p>
                 <div className="flex flex-wrap gap-3">
-                  <Link
-                    href="#vote"
-                    className="inline-flex items-center rounded-full bg-neutral-900 px-5 py-2 text-sm font-semibold text-white transition hover:bg-neutral-800"
-                    onClick={(event) => {
-                      event.preventDefault()
-                      voteSectionRef.current?.scrollIntoView({ behavior: "smooth", block: "center" })
-                    }}
+                  <Button
+                    type="button"
+                    className="rounded-full bg-neutral-900 px-5 py-2 text-sm font-semibold text-white transition hover:bg-neutral-800"
+                    onClick={() => voteSectionRef.current?.scrollIntoView({ behavior: "smooth", block: "center" })}
                   >
                     vote on design
-                  </Link>
+                  </Button>
                 </div>
               </div>
               <div className="relative overflow-hidden rounded-[28px] border border-neutral-200 bg-neutral-900 shadow-2xl shadow-black/20">
