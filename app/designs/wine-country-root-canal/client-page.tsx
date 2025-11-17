@@ -3,50 +3,11 @@
 import Image from "next/image"
 import Link from "next/link"
 import dynamic from "next/dynamic"
-import { ArrowRight, CheckCircle2 } from "lucide-react"
 
 import Footer from "@/components/footer"
 import PageViewTracker from "@/components/page-view-tracker"
-import { Button } from "@/components/ui/button"
 
 const Navbar = dynamic(() => import("@/components/navbar"), { ssr: false })
-
-const deliverables = [
-  {
-    title: "Homepage + hero treatments",
-    phase: "approved",
-    description:
-      "Live hero narrative, sub-navigation, and CTA system aligning Dr. Anderson’s tone with the calming finish of the operatories.",
-    image: "/Wine Country Root Canal.webp",
-    reviewUrl: "/case-studies/wine-country-root-canal",
-    notes: [
-      "Strengthened trust badges + chairside photography to mirror sedation-first messaging.",
-      "Clarified CTA structure (call + request visit) for anxious, high-intent referrals.",
-    ],
-  },
-  {
-    title: "Patient readiness guide",
-    phase: "in QA",
-    description:
-      "Educational booklet + email capsules outlining the day-of experience for patients and referring dentists.",
-    image: "/designs/journey-step.jpeg",
-    notes: [
-      "Needs final chairside photo inserts from Anderson team.",
-      "Motion mockups ready for review inside Canva workspace.",
-    ],
-  },
-  {
-    title: "Referral-ready social tiles",
-    phase: "drafting",
-    description:
-      "Square + story assets spotlighting advanced imaging, sedation comfort, and fast turnaround for Sonoma County GPs.",
-    image: "/designs/the-way-is-training.png",
-    notes: [
-      "Copy cues pulled from Dr. Anderson + Dr. Van Tassell interviews.",
-      "Awaiting final type approval before batching 12-count set.",
-    ],
-  },
-]
 
 export default function WineCountryRootCanalDesignReview() {
   return (
@@ -63,11 +24,12 @@ export default function WineCountryRootCanalDesignReview() {
                 <p className="text-base text-neutral-600 sm:text-lg">
                   One board for every deliverable—site polish, patient packets, and referral assets—so the team can react fast.
                 </p>
-                <div className="flex flex-col gap-3 sm:flex-row">
-                  <Button asChild size="lg" className="rounded-full px-8 py-3 text-base">
-                    <Link href="#deliverables">review files</Link>
-                  </Button>
-                </div>
+                <Link
+                  href="/case-studies/wine-country-root-canal"
+                  className="inline-flex items-center text-sm font-semibold text-neutral-900 underline decoration-neutral-300 underline-offset-4"
+                >
+                  view latest case study
+                </Link>
               </div>
               <div className="relative overflow-hidden rounded-[28px] border border-neutral-200 bg-neutral-900 shadow-2xl shadow-black/20">
                 <Image
@@ -80,50 +42,6 @@ export default function WineCountryRootCanalDesignReview() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-neutral-950/80 via-transparent to-transparent" aria-hidden />
               </div>
-            </div>
-          </div>
-        </section>
-
-        <section id="deliverables" className="px-4 py-16">
-          <div className="mx-auto max-w-6xl space-y-8">
-            <div className="flex flex-col gap-3">
-              <p className="text-xs font-semibold uppercase tracking-[0.35em] text-neutral-500">1 · deliverables</p>
-              <h2 className="text-3xl font-semibold">current files</h2>
-              <p className="text-base text-neutral-600 sm:text-lg">Latest draft + quick notes in each card.</p>
-            </div>
-            <div className="grid gap-6 md:grid-cols-3">
-              {deliverables.map((item) => (
-                <div key={item.title} className="rounded-3xl border border-neutral-200 bg-white p-5 shadow-sm">
-                  <div className="inline-flex items-center rounded-full bg-neutral-900/5 px-3 py-1 text-xs font-semibold uppercase tracking-[0.3em] text-neutral-600">
-                    {item.phase}
-                  </div>
-                  <div className="mt-4 overflow-hidden rounded-2xl border border-neutral-100 bg-neutral-50">
-                    <div className="relative aspect-[4/3] w-full">
-                      <Image src={item.image} alt={item.title} fill className="object-cover" sizes="(max-width: 768px) 100vw, 33vw" />
-                    </div>
-                  </div>
-                  <h3 className="mt-4 text-xl font-semibold">{item.title}</h3>
-                  <p className="mt-2 text-sm text-neutral-600">{item.description}</p>
-                  <ul className="mt-4 space-y-2 text-sm text-neutral-700">
-                    {item.notes.map((note) => (
-                      <li key={note} className="flex items-start gap-2">
-                        <CheckCircle2 className="mt-0.5 h-4 w-4 text-neutral-400" aria-hidden />
-                        <span>{note}</span>
-                      </li>
-                    ))}
-                  </ul>
-                  {item.reviewUrl && (
-                    <Link
-                      href={item.reviewUrl}
-                      target={item.reviewUrl.startsWith("http") ? "_blank" : undefined}
-                      rel={item.reviewUrl.startsWith("http") ? "noreferrer" : undefined}
-                      className="mt-4 inline-flex items-center text-sm font-semibold text-neutral-900 underline decoration-neutral-300 underline-offset-4"
-                    >
-                      open latest <ArrowRight className="ml-2 h-3.5 w-3.5" aria-hidden />
-                    </Link>
-                  )}
-                </div>
-              ))}
             </div>
           </div>
         </section>
