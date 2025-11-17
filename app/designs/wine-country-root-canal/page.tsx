@@ -4,7 +4,7 @@ import WineCountryRootCanalDesignReview from "./client-page"
 export const metadata: Metadata = {
   title: "Wine Country Root Canal design review | Prism",
   description:
-    "Review the live design system, collateral, and next steps for Dr. Anderson’s team. Prism’s design board centralizes feedback, files, and rollout notes.",
+    "Review the live design system, collateral, and next steps for Dr. Anderson. Prism’s design board centralizes feedback, files, and rollout notes.",
   openGraph: {
     title: "Wine Country Root Canal design review | Prism",
     description:
