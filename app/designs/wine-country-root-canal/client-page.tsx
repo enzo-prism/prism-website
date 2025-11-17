@@ -832,28 +832,36 @@ export default function WineCountryRootCanalDesignReview() {
             <div className="space-y-2">
               <h2 className="text-3xl font-semibold text-neutral-900">design inspiration</h2>
             </div>
-            <Carousel opts={{ align: "start", dragFree: true }} className="relative">
-              <CarouselContent>
-                {inspirationImages.map((image, index) => (
-                  <CarouselItem key={image.alt} className="basis-full sm:basis-1/2 lg:basis-1/3">
-                    <div className="mr-4 overflow-hidden rounded-3xl border border-neutral-200 bg-white p-4 shadow-sm">
-                      <div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl bg-neutral-50">
-                        <Image
-                          src={image.src}
-                          alt={image.alt}
-                          fill
-                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 400px"
-                          className="object-cover"
-                          priority={index === 0}
-                        />
+            <div className="relative">
+              <Carousel
+                opts={{ align: "start", dragFree: true }}
+                className="w-full"
+              >
+                <CarouselContent className="-ml-4">
+                  {inspirationImages.map((image, index) => (
+                    <CarouselItem
+                      key={image.alt}
+                      className="pl-4 basis-full sm:basis-1/2 lg:basis-1/3"
+                    >
+                      <div className="overflow-hidden rounded-3xl border border-neutral-200 bg-white p-4 shadow-sm">
+                        <div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl bg-neutral-50">
+                          <Image
+                            src={image.src}
+                            alt={image.alt}
+                            fill
+                            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 360px"
+                            className="object-cover"
+                            priority={index === 0}
+                          />
+                        </div>
                       </div>
-                    </div>
-                  </CarouselItem>
-                ))}
-              </CarouselContent>
-              <CarouselPrevious className="hidden md:flex" />
-              <CarouselNext className="hidden md:flex" />
-            </Carousel>
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
+                <CarouselPrevious className="absolute left-0 top-1/2 -translate-y-1/2 bg-white/80 shadow-md hover:bg-white" />
+                <CarouselNext className="absolute right-0 top-1/2 -translate-y-1/2 bg-white/80 shadow-md hover:bg-white" />
+              </Carousel>
+            </div>
           </div>
         </section>
 
