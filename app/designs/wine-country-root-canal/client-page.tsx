@@ -23,7 +23,8 @@ const Navbar = dynamic(() => import("@/components/navbar"), { ssr: false })
 
 type LogoSection = {
   heading: string
-  body?: string | string[]
+  paragraphs?: string[]
+  bullets?: string[]
   subsections?: {
     label: string
     items: string[]
@@ -71,45 +72,37 @@ const logoConcepts: LogoConcept[] = [
       },
       {
         heading: "Meaning cues",
-        body: [
-          "Tiny house in big landscape = your tooth in the bigger picture of health.",
-          "A root canal is a small, intense moment in a much larger life; this composition respects that perspective while still focusing attention on the treated tooth (the house).",
-          "Sweeping shadow = path to the practice.",
-          "The dark diagonal that leads toward the house can be read as:",
-          "The patient’s journey from discomfort toward relief.",
-          "Or a stylized root/canal path guiding toward the treated structure.",
-          "Huge sky = anxiety dissipating.",
-          "The sheer amount of open, pale sky embodies the release of tension after treatment; you’re no longer “boxed in” by pain.",
-          "House scale = specialist focus.",
-          "It’s small but precise, like the highly specialized work he does inside a tooth.",
+        bullets: [
+          "Tiny house in big landscape = your tooth in the larger story of health (small moment, large life).",
+          "Sweeping shadow = path to the practice (patient journey from discomfort to relief or a stylized canal path).",
+          "Huge sky = anxiety dissipating; open pale space mirrors the release of tension post-treatment.",
+          "House scale = specialist focus; small but precise, like Dr. Anderson’s work inside a tooth.",
         ],
       },
       {
         heading: "Color",
-        body: [
+        bullets: [
           "Sky: Very light blue, almost gray – reassuring, non-aggressive.",
-          "Distant horizon band: Thin line of warm yellow/ochre.",
-          "Mid band: Deeper orange strip, echoing wine, warmth, and Sonoma soil.",
-          "Field: Multiple greens, from bright to deep, adding life and a vineyard feel.",
-          "House: White front, blue–green side, red roof – a triad that’s memorable and friendly without feeling childish.",
-          "This is the most open and emotional palette of the four – great for a primary website hero.",
+          "Horizon bands: warm ochre and deeper orange nodding to wine, soil, and Sonoma warmth.",
+          "Field: Multiple greens from bright to deep for vineyard energy.",
+          "House: White front, blue-green side, red roof – memorable triad for the hero moment.",
         ],
+        paragraphs: ["This is the most open, emotional palette of the four—ideal for a primary hero."],
       },
       {
         heading: "Type",
-        body: [
-          "Because the image is so wide, it pairs well with a centered or right-aligned wordmark:",
-          "Option A: Place WINE COUNTRY ROOT CANAL centered underneath, spanning roughly the same width as the house + dark shadow region.",
-          "Option B: Place the wordmark to the right of the image for a site header, keeping the house on the left as a visual anchor.",
-          "A refined serif still makes sense here, but a clean humanist sans would also work if you want the brand to feel slightly more contemporary.",
+        bullets: [
+          "Centered wordmark spanning the house + shadow width for symmetric pages.",
+          "Right-aligned wordmark for headers to keep the house as a visual anchor on the left.",
+          "Refined serif or clean humanist sans both work depending on how contemporary you want the brand to feel.",
         ],
       },
       {
         heading: "Why this reflects the practice",
-        body: [
-          "Dr. Anderson emphasizes education, communication, and long-term relationships – this composition looks like the practice is part of a larger landscape rather than a sterile box. It makes the brand feel human and grounded.",
-          "For patients who are fearful, this scene is soft, calm, and non-threatening. It doesn’t scream “surgery”; it whispers “you’ll be okay”.",
-          "The clear, minimal geometry matches his technical precision, while the expansive space mirrors his philosophy of preventive care and whole-health thinking, not just single procedures.",
+        bullets: [
+          "Positions the practice within a broader landscape, mirroring Dr. Anderson’s focus on education and relationship-driven care.",
+          "Soft, calm, non-threatening atmosphere eases fearful patients.",
+          "Minimal geometry + expansive space echo his technical precision and preventive, whole-health philosophy.",
         ],
       },
     ],
@@ -147,45 +140,39 @@ const logoConcepts: LogoConcept[] = [
       },
       {
         heading: "Meaning cues",
-        body: [
-          "Solitary barn = single tooth.",
-          "One structure, isolated and structurally sound, mirrors the idea of saving one compromised tooth and giving it a second life instead of extracting it.",
-          "Slight perspective = depth and complexity.",
-          "Endodontics is not flat, simple dentistry; the angled view hints there’s more going on internally (root structure, canals) even though the outside looks calm.",
-          "Tall vertical face + narrow door = canal pathway.",
-          "The long rectangular façade acts like the crown of a tooth; the dark narrow door reads as the cleaned and filled canal opening.",
-          "Open landscape + huge sky = relief.",
-          "Patients come in tight with anxiety and pain; the open field and big sky symbolize the feeling of relief and breathing room after treatment.",
-          "Warm orange band = underlying inflammation that’s been contained.",
-          "The orange strip behind the barn can be read as the “resolved” area of infection – present in the history, but now controlled beneath a solid structure.",
+        bullets: [
+          "Solitary barn = single structural tooth saved and stabilized by specialty care.",
+          "Slight perspective hints at internal complexity (multiple canals) despite calm exterior.",
+          "Tall vertical face + narrow door stand in for crown + canal pathway.",
+          "Open landscape + huge sky mirror the relief patients feel once pain and anxiety subside.",
+          "Warm orange band nods to contained inflammation—present in the history, now controlled.",
         ],
       },
       {
         heading: "Color",
-        body: [
+        bullets: [
           "Sky: Muted teal/blue–green, calming and clinical without looking cold or hospital-like.",
           "Field: Strips of yellow–green and olive, tying directly into Sonoma vineyards and rural landscapes.",
           "Back band: Rust/orange – a nod to wine, soil, and warmth.",
           "Barn: Soft off-white with a subtle gray–blue shadow side; roof in olive/gray.",
-          "This palette lands between medical trust (cool teal, off-white) and wine country warmth (orange/olive).",
         ],
+        paragraphs: ["Palette lands between medical trust (cool teal/off-white) and wine-country warmth (orange/olive)."],
       },
       {
         heading: "Type",
-        body: [
-          "Place the wordmark directly below:",
-          "Top line: WINE COUNTRY in a refined serif, lightly letterspaced, all caps or small caps.",
-          "Second line: ROOT CANAL same serif, slightly larger and bolder.",
-          "For a stacked lockup, you can align the text width to match the barn body width so the logo feels like one unified column.",
+        bullets: [
+          "Wordmark directly below icon keeps a unified column.",
+          "Top line: WINE COUNTRY in refined serif, lightly letterspaced small caps.",
+          "Second line: ROOT CANAL same serif, slightly larger/bolder.",
         ],
       },
       {
         heading: "Why this reflects the practice",
-        body: [
-          "Dr. Anderson’s story is about specialization, precision, and stability over decades of work. This barn is not cute or gimmicky; it’s quiet and serious, just like an endodontic specialist should be.",
-          "The composition feels slow and controlled — mirroring his emphasis on careful diagnosis, infection control, and meticulous treatment.",
-          "The barn and field root the brand in Wine Country without forcing grapes or cliché vine graphics.",
-          "The mood is reassuring and non-threatening, which aligns with his desire to reduce anxiety and build long-term trust with patients.",
+        bullets: [
+          "Quiet, serious composition mirrors decades of specialization and precision.",
+          "Slow, controlled mood echoes careful diagnosis and infection-control ethos.",
+          "Rural cues keep the brand grounded in wine country without clichés.",
+          "Reassuring tone aligns with his goal of reducing anxiety and building trust.",
         ],
       },
     ],
@@ -222,43 +209,39 @@ const logoConcepts: LogoConcept[] = [
       },
       {
         heading: "Meaning cues",
-        body: [
-          "Compact, upright house = restored functional tooth.",
-          "The totally symmetrical front face suggests stability and symmetry — like a tooth that’s been structurally reinforced with a root canal and restoration.",
-          "Orange roof = crown / restoration.",
-          "The bright roof can be read as the “new crown” placed after a root canal, sitting on a solid underlying structure.",
-          "Single dark door = canal access.",
-          "Again, a single vertical element acts as a symbolic canal, but here it’s right in the center – highlighting precision and central access through the tooth.",
-          "Pale sky + clean geometry = clarity and expertise.",
-          "This feels clinical in a good way: neat, minimal, no clutter, reflecting Dr. Anderson’s focus on diagnosis, technology, and methodical care.",
+        bullets: [
+          "Compact, upright house = restored functional tooth with balanced structure.",
+          "Orange roof = crown/restoration placed after root canal work.",
+          "Single dark door = canal access point, centered to highlight precision.",
+          "Pale sky + clean geometry = clarity and expertise, reflecting clinical rigor.",
         ],
       },
       {
         heading: "Color",
-        body: [
-          "Sky: Very light, cool blue–gray – almost neutral, keeps focus on the house.",
-          "Ground: Warm golden–ochre – subtle nod to vineyard soil/wheat fields.",
-          "House body: Crisp off-white or almost white – tying to cleanliness and sterile environment.",
-          "Roof: Strong burnt orange – warmth, wine, vitality.",
-          "Door: Deep charcoal – strong contrast.",
-          "This palette straddles clinic white and wine-country warmth, expressing both safety and regional identity.",
+        bullets: [
+          "Sky: Very light, cool blue–gray—neutral backdrop.",
+          "Ground: Warm golden–ochre referencing vineyard soil.",
+          "House body: Crisp off-white to mirror sterile environments.",
+          "Roof: Strong burnt orange for warmth, wine, vitality.",
+          "Door: Deep charcoal for contrast.",
         ],
+        paragraphs: ["Palette bridges clinic white and wine-country warmth for safety + regional identity."],
       },
       {
         heading: "Type",
-        body: [
-          "Because this design is bold and minimal, the wordmark can be similarly clean:",
-          "WINE COUNTRY in a modern serif or humanist sans, small caps, letterspaced.",
-          "ROOT CANAL directly underneath in the same family, slightly heavier.",
-          "A horizontal lockup works well: icon left, two-line wordmark right, baseline aligned with the bottom of the house.",
+        bullets: [
+          "Bold, minimal icon pairs with equally clean wordmark.",
+          "WINE COUNTRY in modern serif or humanist sans, small caps, letterspaced.",
+          "ROOT CANAL underneath in same family, slightly heavier.",
+          "Horizontal lockup: icon left, two-line wordmark right with aligned baselines.",
         ],
       },
       {
         heading: "Why this reflects the practice",
-        body: [
-          "Dr. Anderson focuses heavily on comprehensive planning and long-term outcomes. This house reads like something built to last, not a temporary fix.",
-          "The fusing of cool clinical tones with a vivid warm roof matches his blend of technical skill and approachable humanity.",
-          "It’s straightforward and not clever for the sake of being clever – aligning with his serious academic background and continuing education, while still being visually appealing.",
+        bullets: [
+          "Communicates comprehensive planning and long-term outcomes—built to last.",
+          "Cool clinical tones + vivid warm roof mirror his mix of technical skill and humanity.",
+          "Straightforward, serious, design-first approach matches his academic rigor.",
         ],
       },
     ],
@@ -294,42 +277,38 @@ const logoConcepts: LogoConcept[] = [
       },
       {
         heading: "Meaning cues",
-        body: [
-          "Oval = protection and containment.",
-          "It’s as if the building—and by extension the tooth—is cocooned within a safe boundary, aligning with his emphasis on infection control and safety standards (ADA, OSHA, CDC).",
-          "Multiple vertical slits = multiple canals.",
-          "The left block with three dark slits plus the single right door can be read as multiple roots/canals that have been located and treated.",
-          "House/barn silhouette = local, grounded care.",
-          "It’s rural, not corporate. That reinforces the idea of a small, specialized practice deeply connected to its community.",
-          "Warm ground, muted sky = calm and warmth together.",
-          "A calm olive sky suggests clinical rationality; warm orange ground suggests empathy and relief.",
+        bullets: [
+          "Oval = protection and containment—safe boundary mirroring infection-control emphasis.",
+          "Multiple vertical slits = multiple canals located and treated.",
+          "House/barn silhouette keeps the care local and grounded.",
+          "Warm ground + muted sky balance empathy and clinical rationality.",
         ],
       },
       {
         heading: "Color",
-        body: [
-          "Sky: Soft muted olive/khaki – sophisticated, not cold.",
-          "Ground: Burnt orange – warmth and “wine country” baked in.",
-          "Building body: Off-white and muted cool gray.",
-          "Roof and doors/windows: Dark teal or charcoal.",
-          "This combination gives a heritage-winery vibe without resorting to grapes or literal wine imagery.",
+        bullets: [
+          "Sky: Soft muted olive/khaki—sophisticated, never cold.",
+          "Ground: Burnt orange for warmth and wine-country DNA.",
+          "Building body: Off-white with muted cool gray.",
+          "Roof/doors: Dark teal or charcoal.",
         ],
+        paragraphs: ["Combination delivers a heritage-winery vibe without literal grape motifs."],
       },
       {
         heading: "Type",
-        body: [
-          "Treat the oval emblem as the primary mark, with the wordmark paired underneath or to the side:",
-          "For a classical look, set WINE COUNTRY ROOT CANAL in a high-contrast serif similar to the “SELECTED SOLD ARTWORKS” heading style.",
-          "You can create an alternate circular version where the text wraps around the oval to make a full seal (for referral pads, wax stamp, stickers).",
+        bullets: [
+          "Treat oval emblem as primary mark with wordmark paired underneath or to the side.",
+          "High-contrast serif reminiscent of the “SELECTED SOLD ARTWORKS” heading style.",
+          "Alternate circular version could wrap the text around the emblem for referral pads or stickers.",
         ],
       },
       {
         heading: "Why this reflects the practice",
-        body: [
-          "This concept feels like a professional seal of quality, which pairs well with Dr. Anderson’s credentials, memberships, and teaching.",
-          "The multiple vertical slits and structured façade echo the complex multi-canal work he does daily.",
-          "It visually communicates safety, containment, and thoroughness, which matters a lot for anxious patients contemplating endodontic treatment.",
-          "It’s also the closest to a formal emblem you could use on reports, letters to referring dentists, and educational material.",
+        bullets: [
+          "Feels like a professional seal of quality, aligning with Dr. Anderson’s credentials and teaching.",
+          "Vertical slits + structure echo multi-canal work and thoroughness.",
+          "Communicates safety and containment, reassuring anxious patients.",
+          "Ideal for use on reports, letters, or educational collateral.",
         ],
       },
     ],
@@ -522,9 +501,30 @@ export default function WineCountryRootCanalDesignReview() {
                     <p className={`mt-2 text-sm ${descriptionColor}`}>{concept.summary}</p>
                     <div className="mt-4 space-y-4">
                       {concept.sections.map((section) => (
-                        <div key={`${concept.title}-${section.heading}`} className="space-y-1">
+                        <div key={`${concept.title}-${section.heading}`} className="space-y-2">
                           <p className={`text-xs font-semibold uppercase tracking-[0.3em] ${copyColor}`}>{section.heading}</p>
-                          <p className={`text-sm leading-relaxed ${descriptionColor}`}>{section.body}</p>
+                          {section.paragraphs?.map((paragraph) => (
+                            <p key={paragraph} className={`text-sm leading-relaxed ${descriptionColor}`}>
+                              {paragraph}
+                            </p>
+                          ))}
+                          {section.bullets && (
+                            <ul className={`list-disc space-y-1 pl-4 text-sm leading-relaxed ${descriptionColor}`}>
+                              {section.bullets.map((bullet) => (
+                                <li key={bullet}>{bullet}</li>
+                              ))}
+                            </ul>
+                          )}
+                          {section.subsections?.map((subsection) => (
+                            <div key={subsection.label} className="space-y-1">
+                              <p className={`text-xs font-semibold uppercase tracking-[0.3em] ${descriptionColor}`}>{subsection.label}</p>
+                              <ul className={`list-disc space-y-1 pl-4 text-sm leading-relaxed ${descriptionColor}`}>
+                                {subsection.items.map((item) => (
+                                  <li key={item}>{item}</li>
+                                ))}
+                              </ul>
+                            </div>
+                          ))}
                         </div>
                       ))}
                     </div>
