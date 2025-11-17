@@ -18,6 +18,18 @@ import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog"
+import {
+  Palette,
+  PenTool,
+  Compass,
+  Paintbrush,
+  PencilRuler,
+  Sparkles,
+  Droplets,
+  Type as TypeIcon,
+  ShieldCheck,
+  MapPin,
+} from "lucide-react"
 
 const Navbar = dynamic(() => import("@/components/navbar"), { ssr: false })
 
@@ -25,8 +37,10 @@ type LogoSection = {
   heading: string
   paragraphs?: string[]
   bullets?: string[]
+  icon?: React.ComponentType<{ className?: string }>
   subsections?: {
     label: string
+    icon?: React.ComponentType<{ className?: string }>
     items: string[]
   }[]
 }
@@ -53,6 +67,7 @@ const logoConcepts: LogoConcept[] = [
         subsections: [
           {
             label: "Icon",
+            icon: PenTool,
             items: [
               "Ultra-wide horizontal rectangle – almost panoramic.",
               "House is positioned left-of-center, fairly small relative to the canvas: front wall white, side wall muted blue-green, roof bright warm red.",
@@ -62,6 +77,7 @@ const logoConcepts: LogoConcept[] = [
           },
           {
             label: "Style",
+            icon: Sparkles,
             items: [
               "Extremely minimal detail – no fences, no trees, no extra buildings.",
               "Negative space leads: landscape and sky carry the emotion while the house stays small.",
@@ -70,8 +86,9 @@ const logoConcepts: LogoConcept[] = [
           },
         ],
       },
-      {
+    {
         heading: "Meaning cues",
+        icon: MapPin,
         bullets: [
           "Tiny house in big landscape = your tooth in the larger story of health (small moment, large life).",
           "Sweeping shadow = path to the practice (patient journey from discomfort to relief or a stylized canal path).",
@@ -81,6 +98,7 @@ const logoConcepts: LogoConcept[] = [
       },
       {
         heading: "Color",
+        icon: Palette,
         bullets: [
           "Sky: Very light blue, almost gray – reassuring, non-aggressive.",
           "Horizon bands: warm ochre and deeper orange nodding to wine, soil, and Sonoma warmth.",
@@ -91,6 +109,7 @@ const logoConcepts: LogoConcept[] = [
       },
       {
         heading: "Type",
+        icon: TypeIcon,
         bullets: [
           "Centered wordmark spanning the house + shadow width for symmetric pages.",
           "Right-aligned wordmark for headers to keep the house as a visual anchor on the left.",
@@ -99,6 +118,7 @@ const logoConcepts: LogoConcept[] = [
       },
       {
         heading: "Why this reflects the practice",
+        icon: ShieldCheck,
         bullets: [
           "Positions the practice within a broader landscape, mirroring Dr. Anderson’s focus on education and relationship-driven care.",
           "Soft, calm, non-threatening atmosphere eases fearful patients.",
@@ -120,6 +140,7 @@ const logoConcepts: LogoConcept[] = [
         subsections: [
           {
             label: "Icon",
+            icon: PenTool,
             items: [
               "Horizontal rectangle format – feels like one of his paintings, not a generic logo.",
               "Single barn viewed from a slight angle: front wall nearly frontal, roof and side receding gently to the right.",
@@ -130,6 +151,7 @@ const logoConcepts: LogoConcept[] = [
           },
           {
             label: "Style",
+            icon: Paintbrush,
             items: [
               "Completely flat planes of color with a soft stippled texture (or vectorized for a cleaner look).",
               "No outlines or decorative details; shapes are defined purely by color edges.",
@@ -190,6 +212,7 @@ const logoConcepts: LogoConcept[] = [
         subsections: [
           {
             label: "Icon",
+            icon: PenTool,
             items: [
               "Horizontal rectangle with generous negative space around the central house.",
               "Geometric silhouette: near-square front wall, steep triangular roof slanting back, block attached on the right.",
@@ -199,6 +222,7 @@ const logoConcepts: LogoConcept[] = [
           },
           {
             label: "Style",
+            icon: PencilRuler,
             items: [
               "Very clean, poster-like treatment with sharp edges and high contrast.",
               "Pure flat blocks of color, zero texture or detail beyond the door.",
@@ -259,6 +283,7 @@ const logoConcepts: LogoConcept[] = [
         subsections: [
           {
             label: "Icon",
+            icon: PenTool,
             items: [
               "Central oval fills most of the square; inside sits a simple barn on a warm orange field with a muted olive sky.",
               "Front wall on the right, side volume on the left with three tall black slits plus a single right-hand door.",
@@ -267,6 +292,7 @@ const logoConcepts: LogoConcept[] = [
           },
           {
             label: "Style",
+            icon: Paintbrush,
             items: [
               "Oval frame instantly feels like a seal or medallion—very brandable.",
               "Shapes stay extremely minimal: no trim, no texture beyond a subtle canvas feel, no extra scenery.",
@@ -501,8 +527,13 @@ export default function WineCountryRootCanalDesignReview() {
                     <p className={`mt-2 text-sm ${descriptionColor}`}>{concept.summary}</p>
                     <div className="mt-4 space-y-4">
                       {concept.sections.map((section) => (
-                        <div key={`${concept.title}-${section.heading}`} className="space-y-2">
-                          <p className={`text-xs font-semibold uppercase tracking-[0.3em] ${copyColor}`}>{section.heading}</p>
+                        <div key={`${concept.title}-${section.heading}`} className="space-y-2 rounded-2xl border border-neutral-200/40 p-4">
+                          <div className="flex items-center gap-2">
+                            {section.icon ? (
+                              <section.icon className={`h-4 w-4 ${descriptionColor}`} aria-hidden />
+                            ) : null}
+                            <p className={`text-xs font-semibold uppercase tracking-[0.3em] ${copyColor}`}>{section.heading}</p>
+                          </div>
                           {section.paragraphs?.map((paragraph) => (
                             <p key={paragraph} className={`text-sm leading-relaxed ${descriptionColor}`}>
                               {paragraph}
@@ -517,7 +548,12 @@ export default function WineCountryRootCanalDesignReview() {
                           )}
                           {section.subsections?.map((subsection) => (
                             <div key={subsection.label} className="space-y-1">
-                              <p className={`text-xs font-semibold uppercase tracking-[0.3em] ${descriptionColor}`}>{subsection.label}</p>
+                              <div className="flex items-center gap-2">
+                                {subsection.icon ? (
+                                  <subsection.icon className={`h-4 w-4 ${descriptionColor}`} aria-hidden />
+                                ) : null}
+                                <p className={`text-xs font-semibold uppercase tracking-[0.3em] ${descriptionColor}`}>{subsection.label}</p>
+                              </div>
                               <ul className={`list-disc space-y-1 pl-4 text-sm leading-relaxed ${descriptionColor}`}>
                                 {subsection.items.map((item) => (
                                   <li key={item}>{item}</li>
