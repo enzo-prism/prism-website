@@ -351,6 +351,7 @@ export default function WineCountryRootCanalDesignReview() {
   const [voterName, setVoterName] = useState("")
   const [notes, setNotes] = useState("")
   const [voteStatus, setVoteStatus] = useState<"idle" | "error" | "success">("idle")
+  const voteSectionRef = useRef<HTMLElement | null>(null)
 
   const handleVoteSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -386,6 +387,10 @@ export default function WineCountryRootCanalDesignReview() {
                   <Link
                     href="#vote"
                     className="inline-flex items-center rounded-full bg-neutral-900 px-5 py-2 text-sm font-semibold text-white transition hover:bg-neutral-800"
+                    onClick={(event) => {
+                      event.preventDefault()
+                      voteSectionRef.current?.scrollIntoView({ behavior: "smooth", block: "center" })
+                    }}
                   >
                     vote on design
                   </Link>
@@ -406,7 +411,7 @@ export default function WineCountryRootCanalDesignReview() {
           </div>
         </section>
 
-        <section id="vote" className="px-4 py-16">
+        <section id="vote" className="px-4 py-16" ref={voteSectionRef}>
           <div className="mx-auto max-w-6xl space-y-6">
             <div className="space-y-2">
               <h2 className="text-3xl font-semibold text-neutral-900">design inspiration</h2>
