@@ -374,8 +374,8 @@ export default function WineCountryRootCanalDesignReview() {
     if (typeof window === "undefined") return
     const voteSection = document.getElementById("vote")
     if (!voteSection) return
-    const offset = voteSection.getBoundingClientRect().top + window.scrollY - window.innerHeight / 2 + voteSection.clientHeight / 2
-    window.scrollTo({ top: offset, behavior: "smooth" })
+    window.location.hash = "vote"
+    voteSection.scrollIntoView({ behavior: "smooth", block: "center" })
   }
 
   return (
@@ -415,7 +415,7 @@ export default function WineCountryRootCanalDesignReview() {
           </div>
         </section>
 
-        <section id="vote" className="px-4 py-16">
+        <section id="vote" className="px-4 py-16 scroll-mt-32">
           <div className="mx-auto max-w-6xl space-y-6">
             <div className="space-y-2">
               <h2 className="text-3xl font-semibold text-neutral-900">design inspiration</h2>
