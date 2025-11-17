@@ -121,9 +121,9 @@ const logoConcepts = [
     ],
   },
   {
-    title: "Concept 03 · Elevated crest",
+    title: "Concept 03 · Upright House / Restored Structure",
     summary:
-      "A bold geometric house with an orange roof reads instantly as a rebuilt structure—perfect for a root-canal success story.",
+      "A simple house stands upright on a warm field with a vivid orange roof, representing a rebuilt, stable tooth and a patient who’s regained confidence.",
     image:
       "https://res.cloudinary.com/dhqpqfw6w/image/upload/v1763392232/u6213582198_minimalist_flat-color_logo_icon_of_a_simple_barn__4115452d-3c6e-460e-ab12-33ea0b84a2e3_1_papyu5.png",
     variant: "light",
@@ -131,27 +131,65 @@ const logoConcepts = [
       {
         heading: "Core idea",
         body:
-          "An upright house sitting on a thin band of soil represents a tooth restored to full strength with a bright crown on top.",
+          "A simple house stands upright on a warm field with a vivid orange roof, representing a rebuilt, stable tooth and a patient who’s regained confidence.",
       },
       {
         heading: "Visual treatment",
-        body:
-          "Sharply cut blocks, high contrast, and zero texture make this feel like a logo-ready symbol. The centered doorway highlights precision access to the canal.",
+        body: [
+          "Icon",
+          "Horizontal rectangle with generous negative space around the central house.",
+          "The building is more geometric and iconic:",
+          "A near-square front wall.",
+          "A steep triangular roof slanting back to the right.",
+          "A block attached on the right, extending the form.",
+          "The entire structure sits on a thin band of golden–ochre ground; background is a pale blue–gray sky.",
+          "One narrow dark doorway in the center of the front wall.",
+          "Style",
+          "Very clean, almost poster-like: sharper edges, stronger contrast than Concept 1.",
+          "Pure flat blocks of color, zero texturing, zero detail besides the door.",
+          "Feels more like a logo-ready symbol than a painting: the house silhouette is bold and reads instantly at small sizes.",
+        ],
       },
       {
         heading: "Meaning cues",
-        body:
-          "The square façade equals structural stability, the orange roof acts as the restorative crown, and the single dark door becomes the canal opening in the most literal way.",
+        body: [
+          "Compact, upright house = restored functional tooth.",
+          "The totally symmetrical front face suggests stability and symmetry — like a tooth that’s been structurally reinforced with a root canal and restoration.",
+          "Orange roof = crown / restoration.",
+          "The bright roof can be read as the “new crown” placed after a root canal, sitting on a solid underlying structure.",
+          "Single dark door = canal access.",
+          "Again, a single vertical element acts as a symbolic canal, but here it’s right in the center – highlighting precision and central access through the tooth.",
+          "Pale sky + clean geometry = clarity and expertise.",
+          "This feels clinical in a good way: neat, minimal, no clutter, reflecting Dr. Anderson’s focus on diagnosis, technology, and methodical care.",
+        ],
       },
       {
-        heading: "Color & type",
-        body:
-          "Cool blue-gray sky, golden soil, crisp whites, and burnt orange bridge clinical cleanliness with wine-country warmth. Pair it with a modern serif or humanist sans stacked in two lines.",
+        heading: "Color",
+        body: [
+          "Sky: Very light, cool blue–gray – almost neutral, keeps focus on the house.",
+          "Ground: Warm golden–ochre – subtle nod to vineyard soil/wheat fields.",
+          "House body: Crisp off-white or almost white – tying to cleanliness and sterile environment.",
+          "Roof: Strong burnt orange – warmth, wine, vitality.",
+          "Door: Deep charcoal – strong contrast.",
+          "This palette straddles clinic white and wine-country warmth, expressing both safety and regional identity.",
+        ],
       },
       {
-        heading: "Why it fits",
-        body:
-          "Dr. Anderson’s methodical planning and emphasis on long-term outcomes are expressed through the neat geometry and bold clarity of this mark.",
+        heading: "Type",
+        body: [
+          "Because this design is bold and minimal, the wordmark can be similarly clean:",
+          "WINE COUNTRY in a modern serif or humanist sans, small caps, letterspaced.",
+          "ROOT CANAL directly underneath in the same family, slightly heavier.",
+          "A horizontal lockup works well: icon left, two-line wordmark right, baseline aligned with the bottom of the house.",
+        ],
+      },
+      {
+        heading: "Why this reflects the practice",
+        body: [
+          "Dr. Anderson focuses heavily on comprehensive planning and long-term outcomes. This house reads like something built to last, not a temporary fix.",
+          "The fusing of cool clinical tones with a vivid warm roof matches his blend of technical skill and approachable humanity.",
+          "It’s straightforward and not clever for the sake of being clever – aligning with his serious academic background and continuing education, while still being visually appealing.",
+        ],
       },
     ],
   },
