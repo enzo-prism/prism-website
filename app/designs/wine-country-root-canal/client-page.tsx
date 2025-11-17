@@ -104,16 +104,6 @@ export default function WineCountryRootCanalDesignReview() {
                   <Button asChild size="lg" className="rounded-full px-8 py-3 text-base">
                     <Link href="#deliverables">review files</Link>
                   </Button>
-                  <Button
-                    asChild
-                    size="lg"
-                    variant="outline"
-                    className="rounded-full border-neutral-300 px-8 py-3 text-base text-neutral-900"
-                  >
-                    <Link href="mailto:support@design-prism.com?subject=Wine%20Country%20Root%20Canal%20feedback">
-                      send feedback
-                    </Link>
-                  </Button>
                 </div>
               </div>
               <div className="relative overflow-hidden rounded-[28px] border border-neutral-200 bg-neutral-900 shadow-2xl shadow-black/20">
