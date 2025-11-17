@@ -3,6 +3,7 @@ import Link from "next/link"
 
 import { SeoHero } from "@/components/seo/seo-hero"
 import { SeoSection } from "@/components/seo/seo-section"
+import VideoPlayer from "@/components/video-player"
 import { seoOnPageContent } from "@/content/seo"
 import { HowToSchema, ServiceSchema } from "@/components/schema-markup"
 
@@ -28,10 +29,40 @@ export const metadata: Metadata = {
 
 export default function SeoOnPagePage() {
   const { hero, intro, pillars, closing, closingBullets } = seoOnPageContent
+  const videoSectionId = "on-page-seo-video"
+  const videoSrc = "https://res.cloudinary.com/dhqpqfw6w/video/upload/v1763420060/on-page_seo_zvif3p.mp4"
+  const videoPoster = "https://res.cloudinary.com/dhqpqfw6w/video/upload/v1763420060/on-page_seo_zvif3p.jpg"
+  const videoDescription =
+    "Enzo breaks down why Prism's on-page work starts with intent-mapped content, technical clarity, and schema so the site becomes the best possible answer."
 
   return (
     <>
       <SeoHero {...hero} />
+
+      <SeoSection
+        id={videoSectionId}
+        eyebrow="watch"
+        title="enzo explains our on-page approach"
+        description="hear directly from enzo on why we obsess over information architecture, content clarity, and technical polish before layering any off-page proof."
+      >
+        <VideoPlayer
+          src={videoSrc}
+          poster={videoPoster}
+          title="Enzo on building perfect on-page answers"
+          caption="How Prism thinks through content structure, schema, and UX so every visit feels like an obvious next step."
+          className="w-full"
+          schema={{
+            id: `https://design-prism.com/#${videoSectionId}`,
+            name: "Enzo explains Prism's on-page SEO approach",
+            description: videoDescription,
+            thumbnailUrl: videoPoster,
+            uploadDate: "2025-05-24T00:00:00Z",
+            contentUrl: videoSrc,
+            embedUrl: `https://www.design-prism.com/seo/on-page#${videoSectionId}`,
+            creatorName: "Enzo Perez",
+          }}
+        />
+      </SeoSection>
 
       <SeoSection
         eyebrow="intro"

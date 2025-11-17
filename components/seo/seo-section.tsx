@@ -9,11 +9,12 @@ export type SeoSectionProps = {
   kicker?: string
   children?: ReactNode
   className?: string
+  id?: string
 }
 
-export function SeoSection({ eyebrow, title, description, kicker, children, className }: SeoSectionProps) {
+export function SeoSection({ eyebrow, title, description, kicker, children, className, id }: SeoSectionProps) {
   return (
-    <section className={cn("border-b border-neutral-100 py-16 sm:py-20", className)}>
+    <section id={id} className={cn("border-b border-neutral-100 py-16 sm:py-20", className)}>
       <div className="container mx-auto max-w-5xl px-4 md:px-6">
         {eyebrow ? (
           <p className="text-xs uppercase tracking-[0.35em] text-neutral-400">{eyebrow}</p>
