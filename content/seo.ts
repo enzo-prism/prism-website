@@ -16,6 +16,24 @@ export type SeoHeroContent = {
   secondaryCta?: { label: string; href: string }
 }
 
+type SeoVideoContent = {
+  id: string
+  eyebrow: string
+  title: string
+  description: string
+  playerTitle: string
+  caption: string
+  src: string
+  poster: string
+  schema: {
+    name: string
+    description: string
+    uploadDate: string
+    duration?: string
+    creatorName?: string
+  }
+}
+
 export const seoOverviewContent = {
   hero: {
     eyebrow: "seo",
@@ -160,6 +178,23 @@ export const seoOffPageContent = {
     primaryCta: { label: "tighten your ecosystem", href: "/get-started" },
     secondaryCta: { label: "review on-page seo", href: "/seo/on-page" },
   } satisfies SeoHeroContent,
+  video: {
+    id: "off-page-seo-video",
+    eyebrow: "watch",
+    title: "enzo on designing off-page proof systems",
+    description: "hear enzo break down how we tighten listings, reviews, and backlinks so platforms see steady proof you’re legit.",
+    playerTitle: "Enzo on tightening off-page proof",
+    caption: "why we build feedback loops around reviews, listings, and mentions so your reputation graph compounds.",
+    src: "https://res.cloudinary.com/dhqpqfw6w/video/upload/v1763427804/off-page-1_s9ni7k.mp4",
+    poster: "https://res.cloudinary.com/dhqpqfw6w/video/upload/so_0/off-page-1_s9ni7k.jpg",
+    schema: {
+      name: "Enzo explains Prism's off-page SEO systems",
+      description:
+        "Enzo Sison walks through Prism’s approach to backlinks, listings, reviews, and entity signals so local brands keep showing up.",
+      uploadDate: "2025-05-28T00:00:00Z",
+      creatorName: "Enzo Sison",
+    },
+  } satisfies SeoVideoContent,
   intro:
     "off-page seo is about proof — proof that other sites vouch for you, that your business exists in the real world, and that real people interact with you.",
   levers: [

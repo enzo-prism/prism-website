@@ -3,6 +3,7 @@ import Link from "next/link"
 
 import { SeoHero } from "@/components/seo/seo-hero"
 import { SeoSection } from "@/components/seo/seo-section"
+import VideoPlayer from "@/components/video-player"
 import { seoOffPageContent } from "@/content/seo"
 import { HowToSchema, ServiceSchema } from "@/components/schema-markup"
 
@@ -27,11 +28,38 @@ export const metadata: Metadata = {
 }
 
 export default function SeoOffPagePage() {
-  const { hero, intro, levers, closing } = seoOffPageContent
+  const { hero, video, intro, levers, closing } = seoOffPageContent
+  const videoAnchor = `https://www.design-prism.com/seo/off-page#${video.id}`
 
   return (
     <>
       <SeoHero {...hero} />
+
+      <SeoSection
+        id={video.id}
+        eyebrow={video.eyebrow}
+        title={video.title}
+        description={video.description}
+      >
+        <VideoPlayer
+          src={video.src}
+          poster={video.poster}
+          title={video.playerTitle}
+          caption={video.caption}
+          className="w-full"
+          schema={{
+            id: videoAnchor,
+            name: video.schema.name,
+            description: video.schema.description,
+            thumbnailUrl: video.poster,
+            uploadDate: video.schema.uploadDate,
+            duration: video.schema.duration,
+            contentUrl: video.src,
+            embedUrl: videoAnchor,
+            creatorName: video.schema.creatorName,
+          }}
+        />
+      </SeoSection>
 
       <SeoSection eyebrow="intro" title="build the proof" description={intro}>
         <p className="text-sm text-neutral-600">
