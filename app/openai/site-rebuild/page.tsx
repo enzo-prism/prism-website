@@ -177,6 +177,56 @@ mkdir site-rebuild && cd site-rebuild`}
                   </div>
                 </div>
               </article>
+
+              <article className="space-y-6">
+                <div className="rounded-3xl border border-neutral-900 bg-neutral-900 p-6 text-white shadow-lg sm:p-8">
+                  <p className="text-xs font-semibold uppercase tracking-[0.28em] text-white/70">next experiment</p>
+                  <h3 className="mt-3 text-2xl font-semibold lowercase text-white sm:text-3xl">
+                    watch gpt-5.1 codex build a dentist site
+                  </h3>
+                  <p className="mt-4 text-base text-white/80 sm:text-lg">
+                    We ran the Model Test Key from this guide through GPT-5.1 Codex (High) and documented the full run: generation
+                    time, UI polish, responsive behavior, sitemap completeness, and the live video breakdown.
+                  </p>
+                  <ul className="mt-6 space-y-3 text-sm text-white/80 sm:text-base">
+                    <li className="flex items-start gap-3">
+                      <span className="mt-1 inline-flex h-6 w-6 items-center justify-center rounded-full bg-white/10 px-2 text-[10px] font-semibold uppercase text-white">
+                        speed
+                      </span>
+                      <span>5 minutes 16 seconds from prompt to exported files, captured end-to-end.</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <span className="mt-1 inline-flex h-6 w-6 items-center justify-center rounded-full bg-white/10 px-2 text-[10px] font-semibold uppercase text-white">
+                        quality
+                      </span>
+                      <span>Deep dive on gradients, icon styling, blog completeness, and mobile breakpoints.</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <span className="mt-1 inline-flex h-6 w-6 items-center justify-center rounded-full bg-white/10 px-2 text-[10px] font-semibold uppercase text-white">
+                        schema
+                      </span>
+                      <span>Full structured data plus transcript so you can mirror the benchmark exactly.</span>
+                    </li>
+                  </ul>
+                  <div className="mt-6 flex flex-wrap gap-3">
+                    <Link
+                      href="/blog/gpt-5-1-codex-test-dentist-website"
+                      className="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-neutral-950 transition hover:bg-neutral-100"
+                    >
+                      read the benchmark
+                    </Link>
+                    <Link
+                      href="https://youtu.be/PZnRkuJ9_S0"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex items-center justify-center rounded-full border border-white/40 px-6 py-3 text-sm font-semibold text-white transition hover:border-white/70"
+                    >
+                      watch the run
+                    </Link>
+                  </div>
+                </div>
+              </article>
+
             </div>
             <div className="min-w-0">
               <GuideTableOfContents sections={guideSections} />
