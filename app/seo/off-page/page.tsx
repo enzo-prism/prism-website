@@ -4,7 +4,7 @@ import Link from "next/link"
 import { SeoHero } from "@/components/seo/seo-hero"
 import { SeoSection } from "@/components/seo/seo-section"
 import VideoPlayer from "@/components/video-player"
-import { seoOffPageContent } from "@/content/seo"
+import { type SeoVideoContent, seoOffPageContent } from "@/content/seo"
 import { HowToSchema, ServiceSchema } from "@/components/schema-markup"
 
 export const metadata: Metadata = {
@@ -28,7 +28,8 @@ export const metadata: Metadata = {
 }
 
 export default function SeoOffPagePage() {
-  const { hero, video, intro, levers, closing } = seoOffPageContent
+  const { hero, intro, levers, closing } = seoOffPageContent
+  const video: SeoVideoContent = seoOffPageContent.video
   const videoAnchor = `https://www.design-prism.com/seo/off-page#${video.id}`
 
   return (

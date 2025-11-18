@@ -16,7 +16,7 @@ export type SeoHeroContent = {
   secondaryCta?: { label: string; href: string }
 }
 
-type SeoVideoContent = {
+export type SeoVideoContent = {
   id: string
   eyebrow: string
   title: string
