@@ -445,6 +445,7 @@ type VideoObject = {
   duration?: string
   contentUrl: string
   embedUrl?: string
+  transcript?: string
   width?: number
   height?: number
   publisher: {
@@ -979,6 +980,7 @@ export function VideoObjectSchema({
   contentUrl,
   embedUrl,
   creatorName,
+  transcript,
 }: {
   videoId: string
   name: string
@@ -989,6 +991,7 @@ export function VideoObjectSchema({
   contentUrl?: string
   embedUrl?: string
   creatorName?: string
+  transcript?: string
 }) {
   const videoSchema: Partial<VideoObject> & { "@type": "VideoObject"; "@id": string } = {
     "@type": "VideoObject",
@@ -1000,6 +1003,7 @@ export function VideoObjectSchema({
     ...(duration && { duration }),
     ...(contentUrl && { contentUrl }),
     ...(embedUrl && { embedUrl }),
+    ...(transcript && { transcript }),
     publisher: {
       "@id": "https://design-prism.com/#organization",
     },

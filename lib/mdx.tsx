@@ -1,5 +1,5 @@
 // This module is server-side only, responsible for fetching and parsing blog content.
-import { VideoObjectSchema } from '@/components/schema-markup';
+import { VideoObjectSchema, FAQSchema } from '@/components/schema-markup';
 import MDXComponents from "@/components/mdx-components";
 import fs from "fs/promises"; // Node.js file system module for server-side operations
 import matter from "gray-matter"; // For parsing frontmatter from .mdx files
@@ -203,6 +203,7 @@ const mdxComponents = {
   MobileInteractiveWidget,
   // Structured data components
   VideoObjectSchema,
+  FAQSchema,
   // Override potentially dangerous HTML elements
   script: () => null, // Block script tags
   iframe: ({ src, title, ...props }: React.IframeHTMLAttributes<HTMLIFrameElement>) => {
