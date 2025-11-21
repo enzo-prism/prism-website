@@ -34,8 +34,6 @@ export default function HeroReviewSliderCard({ className }: HeroReviewSliderCard
   const progressValue = useMotionValue(0)
   const progressControls = useRef<AnimationPlaybackControls | null>(null)
   const isPausedRef = useRef(isPaused)
-  const progressAngle = useTransform(progressValue, (latest) => Math.min(360, latest * 360))
-  const pieGradient = useMotionTemplate`conic-gradient(transparent 0deg ${progressAngle}deg, currentColor ${progressAngle}deg 360deg)`
   const heroReviewForSchema = useMemo(() => {
     if (reviewPool.length === 0) return null
     return reviewPool.find((quote) => quote.heroSpotlight) ?? reviewPool[0]
@@ -176,22 +174,20 @@ export default function HeroReviewSliderCard({ className }: HeroReviewSliderCard
     }
 
     const normalizedLength = Math.min(currentReviewLength / 320, 1)
-    return 0.35 + normalizedLength * 0.2
+    return 0.28 + normalizedLength * 0.12
   }, [currentReviewLength, shouldReduceMotion])
-  const childTransitionDuration = Math.max(0.2, quoteTransitionDuration - 0.15)
+  const childTransitionDuration = Math.max(0.2, quoteTransitionDuration - 0.12)
   const childStagger = shouldReduceMotion ? 0 : 0.05
   const authorDelay = shouldReduceMotion ? 0 : 0.08
 
   const quoteVariants: Variants = {
     initial: (dir: number) => ({
       opacity: 0,
-      y: shouldReduceMotion ? 0 : dir * 12,
-      filter: shouldReduceMotion ? "blur(0px)" : "blur(6px)",
+      y: shouldReduceMotion ? 0 : dir * 8,
     }),
     animate: {
       opacity: 1,
       y: 0,
-      filter: "blur(0px)",
       transition: {
         duration: quoteTransitionDuration,
         ease: QUOTE_TRANSITION_EASE,
@@ -201,10 +197,9 @@ export default function HeroReviewSliderCard({ className }: HeroReviewSliderCard
     },
     exit: (dir: number) => ({
       opacity: 0,
-      y: shouldReduceMotion ? 0 : dir * -10,
-      filter: shouldReduceMotion ? "blur(0px)" : "blur(4px)",
+      y: shouldReduceMotion ? 0 : dir * -8,
       transition: {
-        duration: Math.max(0.2, quoteTransitionDuration - 0.1),
+        duration: Math.max(0.2, quoteTransitionDuration - 0.08),
         ease: QUOTE_TRANSITION_EASE,
       },
     }),
@@ -213,7 +208,7 @@ export default function HeroReviewSliderCard({ className }: HeroReviewSliderCard
   const quoteTextVariants: Variants = {
     initial: {
       opacity: 0,
-      y: shouldReduceMotion ? 0 : 6,
+      y: shouldReduceMotion ? 0 : 5,
     },
     animate: {
       opacity: 1,
@@ -236,7 +231,7 @@ export default function HeroReviewSliderCard({ className }: HeroReviewSliderCard
   const quoteAuthorVariants: Variants = {
     initial: {
       opacity: 0,
-      y: shouldReduceMotion ? 0 : 6,
+      y: shouldReduceMotion ? 0 : 5,
     },
     animate: {
       opacity: 1,
@@ -267,7 +262,7 @@ export default function HeroReviewSliderCard({ className }: HeroReviewSliderCard
   return (
     <div
       className={cn(
-        "relative w-full rounded-3xl border border-white/30 bg-white/75 p-5 text-left shadow-xl shadow-neutral-900/5 backdrop-blur-xl transition-colors duration-300 sm:p-6",
+        "relative w-full rounded-3xl border border-white/30 bg-white/75 p-5 text-left shadow-xl shadow-neutral-900/5 backdrop-blur-lg transition-colors duration-300 sm:p-6",
         "dark:border-white/10 dark:bg-neutral-900/80 dark:text-white",
         className
       )}
@@ -309,10 +304,12 @@ export default function HeroReviewSliderCard({ className }: HeroReviewSliderCard
 
       {!shouldReduceMotion ? (
         <div className="mt-5 flex items-center justify-center" aria-hidden="true">
-          <motion.span
-            className="h-3 w-3 rounded-full border border-neutral-900/40 bg-white/70 text-neutral-900 transition-all duration-200 dark:border-white/40 dark:bg-neutral-800 dark:text-white"
-            style={{ backgroundImage: pieGradient }}
-          />
+          <div className="h-1.5 w-16 overflow-hidden rounded-full bg-neutral-900/10 dark:bg-white/10">
+            <motion.div
+              className="h-full w-full origin-left bg-neutral-800/70 dark:bg-white/70"
+              style={{ scaleX: progressValue }}
+            />
+          </div>
         </div>
       ) : null}
 
