@@ -691,6 +691,7 @@ const heroReviewSequence =
 
 const HOMEPAGE_HERO_REVIEW_IDS = [44, 15, 16, 68, 82, 86, 92, 93, 196, 211, 218, 251, 252]
 const homepageHeroReviewSet = new Set(HOMEPAGE_HERO_REVIEW_IDS)
+const HERO_PRIORITY_IDS = [196, 92, 218]
 
 const ensurePositiveLimit = (limit: number, fallback = 1) =>
   Number.isFinite(limit) && limit > 0 ? Math.floor(limit) : fallback
@@ -699,6 +700,15 @@ const normalizeOffset = (offset: number, length: number) => {
   if (length === 0) return 0
   const normalized = Number.isFinite(offset) ? Math.floor(offset) : 0
   return ((normalized % length) + length) % length
+}
+
+const shuffleQuotes = (quotes: Quote[]) => {
+  const next = quotes.slice()
+  for (let i = next.length - 1; i > 0; i -= 1) {
+    const j = Math.floor(Math.random() * (i + 1))
+    ;[next[i], next[j]] = [next[j], next[i]]
+  }
+  return next
 }
 
 export function getHeroReviews(limit = 5, options?: { offset?: number }): Quote[] {
@@ -729,7 +739,11 @@ export function getHeroReviewCount() {
 export function getHomepageHeroReviewPool() {
   const curated = consentSafeQuotes.filter((quote) => homepageHeroReviewSet.has(quote.id))
   if (curated.length > 0) {
-    return curated
+    const prioritySet = new Set(HERO_PRIORITY_IDS)
+    const priorityQuotes = HERO_PRIORITY_IDS.map((id) => curated.find((quote) => quote.id === id)).filter(Boolean) as Quote[]
+    const remaining = curated.filter((quote) => !prioritySet.has(quote.id))
+    const randomizedRemaining = shuffleQuotes(remaining)
+    return [...priorityQuotes, ...randomizedRemaining]
   }
   return consentSafeQuotes.slice(0, 10)
 }

@@ -21,22 +21,12 @@ import { sanitizeReviewText } from "@/lib/schema-helpers"
 const AUTO_ROTATE_INTERVAL = 6000
 const QUOTE_TRANSITION_EASE: [number, number, number, number] = [0.4, 0, 0.2, 1]
 
-const shuffleQuotes = (quotes: Quote[]) => {
-  const next = quotes.slice()
-  for (let i = next.length - 1; i > 0; i -= 1) {
-    const j = Math.floor(Math.random() * (i + 1))
-    ;[next[i], next[j]] = [next[j], next[i]]
-  }
-  return next
-}
-
 type HeroReviewSliderCardProps = {
   className?: string
 }
 
 export default function HeroReviewSliderCard({ className }: HeroReviewSliderCardProps) {
-  const initialPool = useMemo(() => shuffleQuotes(getHomepageHeroReviewPool()), [])
-  const [reviewPool, setReviewPool] = useState<Quote[]>(initialPool)
+  const reviewPool = useMemo(() => getHomepageHeroReviewPool(), [])
   const [activeIndex, setActiveIndex] = useState(0)
   const [isPaused, setIsPaused] = useState(false)
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false)
@@ -88,47 +78,6 @@ export default function HeroReviewSliderCard({ className }: HeroReviewSliderCard
 
     mediaQuery.addListener(updatePreference)
     return () => mediaQuery.removeListener(updatePreference)
-  }, [])
-
-  useEffect(() => {
-    const pool = shuffleQuotes(getHomepageHeroReviewPool())
-    if (!pool.length) {
-      setReviewPool([])
-      setActiveIndex(0)
-      return
-    }
-
-    const storageKey = "prism-hero-review"
-    let index: number | null = null
-
-    if (typeof window !== "undefined") {
-      try {
-        const stored = window.localStorage.getItem(storageKey)
-        if (stored !== null) {
-          const parsed = Number.parseInt(stored, 10)
-          if (!Number.isNaN(parsed)) {
-            index = parsed % pool.length
-          }
-        }
-      } catch {
-        index = null
-      }
-    }
-
-    if (index === null) {
-      index = Math.floor(Math.random() * pool.length)
-    }
-
-    if (typeof window !== "undefined") {
-      try {
-        window.localStorage.setItem(storageKey, String(index))
-      } catch {
-        // ignore
-      }
-    }
-
-    setReviewPool(pool)
-    setActiveIndex(index)
   }, [])
 
   useEffect(() => {
