@@ -615,6 +615,7 @@ export const quotesData: Quote[] = [
   { id: 255, text: "Exactly 💯", client: "abdulaziz_raimovs", company: "Instagram Community of Entrepreneurs" },
   { id: 256, text: "facts🙌", client: "ms_forexbro_", company: "Instagram Community of Entrepreneurs" },
   { id: 257, text: "YOLO", client: "egaiosowor", company: "Instagram Community of Entrepreneurs" },
+  { id: 258, text: "Thank you for saving me", client: "keremtorgay", company: "Instagram Community of Entrepreneurs" },
 ]
 
 export const takeawaysData: Takeaway[] = [
@@ -694,9 +695,9 @@ const heroReviewSequence =
       ? [...pinnedHeroCandidates, ...secondaryHeroCandidates]
       : consentSafeQuotes
 
-const HOMEPAGE_HERO_REVIEW_IDS = [44, 15, 16, 68, 82, 86, 92, 93, 196, 211, 218, 251, 252]
+const HOMEPAGE_HERO_REVIEW_IDS = [44, 15, 16, 68, 82, 86, 92, 93, 196, 211, 218, 251, 252, 258, 265]
 const homepageHeroReviewSet = new Set(HOMEPAGE_HERO_REVIEW_IDS)
-const HERO_PRIORITY_IDS = [196, 92, 218]
+const HERO_PRIORITY_IDS = [258, 196, 92, 218]
 
 const ensurePositiveLimit = (limit: number, fallback = 1) =>
   Number.isFinite(limit) && limit > 0 ? Math.floor(limit) : fallback
