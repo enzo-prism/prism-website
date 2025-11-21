@@ -568,7 +568,7 @@ export const quotesData: Quote[] = [
   { id: 173, text: "Top tier wisdom for generations", client: "guts00777", company: "Instagram Community of Entrepreneurs" },
   { id: 174, text: "That is hundred % right", client: "hanadhero95", company: "Instagram Community of Entrepreneurs" },
   { id: 175, text: "Using this mindset 🔥", client: "manifestationflo", company: "Instagram Community of Entrepreneurs" },
-  { id: 176, text: "Man,this is golden ✨️✨️❤️", client: "autosync", company: "Instagram Community of Entrepreneurs" },
+  { id: 176, text: "Man,this is golden ✨️ ✨️ ❤️", client: "@_autosync", company: "Instagram Community of Entrepreneurs" },
   { id: 177, text: "No risk no reward", client: "realkopssworld", company: "Instagram Community of Entrepreneurs" },
   { id: 178, text: "🔥🔥🔥🔥🔥🙌amen.", client: "jhumble666", company: "Instagram Community of Entrepreneurs" },
   { id: 179, text: "We have nothing to lose lads", client: "usman.ssg_", company: "Instagram Community of Entrepreneurs" },
@@ -610,6 +610,11 @@ export const quotesData: Quote[] = [
   { id: 216, text: "👏", client: "vani7561", company: "Instagram Community of Entrepreneurs" },
   { id: 217, text: "Just wow 👏", client: "zorwealth", company: "Instagram Community of Entrepreneurs" },
   { id: 218, text: "This is beautiful man 🙏🏼", client: "danielekimian", company: "Instagram Community of Entrepreneurs" },
+  { id: 253, text: "God please allow me live long. Life is very sweet❤️", client: "fo____lu", company: "Instagram Community of Entrepreneurs" },
+  { id: 254, text: "Experience is key🔥", client: "andrei.abramsm3_", company: "Instagram Community of Entrepreneurs" },
+  { id: 255, text: "Exactly 💯", client: "abdulaziz_raimovs", company: "Instagram Community of Entrepreneurs" },
+  { id: 256, text: "facts🙌", client: "ms_forexbro_", company: "Instagram Community of Entrepreneurs" },
+  { id: 257, text: "YOLO", client: "egaiosowor", company: "Instagram Community of Entrepreneurs" },
 ]
 
 export const takeawaysData: Takeaway[] = [
