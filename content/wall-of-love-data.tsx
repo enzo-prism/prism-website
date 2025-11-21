@@ -483,6 +483,7 @@ export const quotesData: Quote[] = [
   { id: 85, text: "Bro described my exact situation sometimes it gets that bad I sit in the car for hours in silence stationary thinking", client: "louistizzy", company: "Instagram Community of Entrepreneurs" },
   { id: 86, text: "Feelings into words couldn’t have been shot better than this video right here …..", client: "shuaib_khan", company: "Instagram Community of Entrepreneurs" },
   { id: 251, text: "This hits. Deep.", client: "@jalbers10", company: "Instagram Community of Entrepreneurs" },
+  { id: 252, text: "That changed so much in me…", client: "@20_jin_07", company: "Instagram Community of Entrepreneurs", pinned: true },
   { id: 87, text: "needed this", client: "fitnationmg", company: "Instagram Community of Entrepreneurs" },
   { id: 88, text: "This is why I still have Instagram.", client: "notpharaoh_", company: "Instagram Community of Entrepreneurs" },
   { id: 91, text: "Goosebumps….", client: "dishonshan", company: "Instagram Community of Entrepreneurs" },
@@ -688,7 +689,7 @@ const heroReviewSequence =
       ? [...pinnedHeroCandidates, ...secondaryHeroCandidates]
       : consentSafeQuotes
 
-const HOMEPAGE_HERO_REVIEW_IDS = [44, 15, 16, 82, 86, 93, 211, 218, 251, 252]
+const HOMEPAGE_HERO_REVIEW_IDS = [44, 15, 16, 68, 82, 86, 92, 93, 196, 211, 218, 251, 252]
 const homepageHeroReviewSet = new Set(HOMEPAGE_HERO_REVIEW_IDS)
 
 const ensurePositiveLimit = (limit: number, fallback = 1) =>
