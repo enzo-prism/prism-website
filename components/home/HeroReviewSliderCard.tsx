@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { useCallback, useEffect, useMemo, useState, useRef } from "react"
+import { useCallback, useEffect, useMemo, useState } from "react"
 import { AnimatePresence, motion } from "framer-motion"
 
 import { cn } from "@/lib/utils"
@@ -21,7 +21,6 @@ export default function HeroReviewSliderCard({ className }: HeroReviewSliderCard
   const [activeIndex, setActiveIndex] = useState(0)
   
   // Interaction State
-  const [isPaused, setIsPaused] = useState(false)
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false)
 
   // --- Initialization ---
@@ -45,16 +44,15 @@ export default function HeroReviewSliderCard({ className }: HeroReviewSliderCard
 
   useEffect(() => {
     // Don't rotate if:
-    // 1. Reduced motion is on (user controls manually)
-    // 2. User is interacting (paused)
-    // 3. Not enough slides
-    if (prefersReducedMotion || isPaused || reviewPool.length <= 1) {
+    // 1. Reduced motion is on
+    // 2. Not enough slides
+    if (prefersReducedMotion || reviewPool.length <= 1) {
       return
     }
 
     const timer = setInterval(nextSlide, AUTO_ROTATE_MS)
     return () => clearInterval(timer)
-  }, [prefersReducedMotion, isPaused, reviewPool.length, nextSlide])
+  }, [prefersReducedMotion, reviewPool.length, nextSlide])
 
   // --- Schema Data ---
   const currentReview = reviewPool[activeIndex] ?? null
@@ -83,17 +81,6 @@ export default function HeroReviewSliderCard({ className }: HeroReviewSliderCard
     })
   }, [heroReviewForSchema])
 
-  // --- Handlers ---
-  const handlePause = () => setIsPaused(true)
-  const handleResume = () => setIsPaused(false)
-  
-  const handleManualNext = () => {
-    nextSlide()
-    // Keep paused briefly after manual interaction if needed, 
-    // but standard behavior is just to advance. 
-    // The timer will naturally restart on the next effect cycle.
-  }
-
   if (!currentReview) {
     // Optional: Render a skeleton or empty state here to prevent layout shift during hydration
     return <div className={cn("min-h-[200px] w-full rounded-3xl bg-white/50 backdrop-blur-lg", className)} />
@@ -106,12 +93,6 @@ export default function HeroReviewSliderCard({ className }: HeroReviewSliderCard
         "dark:border-white/10 dark:bg-neutral-900/80 dark:text-white",
         className
       )}
-      onMouseEnter={handlePause}
-      onMouseLeave={handleResume}
-      onFocusCapture={handlePause}
-      onBlurCapture={handleResume}
-      onTouchStart={handlePause}
-      onTouchEnd={handleResume}
     >
       <div className="mb-4 flex items-center justify-between text-[10px] font-semibold uppercase tracking-[0.32em] text-neutral-500 dark:text-neutral-400">
         <span>founders love prism ❤️</span>
@@ -155,36 +136,13 @@ export default function HeroReviewSliderCard({ className }: HeroReviewSliderCard
               key={activeIndex}
               className="h-full w-full origin-left bg-neutral-800/70 dark:bg-white/70"
               initial={{ width: "0%" }}
-              animate={{ width: isPaused ? "100%" : "100%" }} // If paused, we could hold it, but resetting is cleaner UX for "reading"
+              animate={{ width: "100%" }}
               transition={{ 
                 duration: AUTO_ROTATE_MS / 1000, 
                 ease: "linear",
-                // If paused, we effectively stop the visual progress by making it instant or holding
-                // But simple restart is often less buggy. 
-                // Let's stick to: it animates. If you pause, the timer stops. 
-                // Visual desync is minor compared to content glitches.
-              }}
-              // Optimized: Stop animation if paused to reflect state
-              style={{ 
-                 width: isPaused ? "auto" : undefined // This is a bit hacky. 
-                 // Better: Let's trust the timer. The bar is just decoration.
               }}
             />
           </div>
-        </div>
-      )}
-
-      {/* Mobile Manual Control (Reduced Motion) */}
-      {prefersReducedMotion && (
-        <div className="mt-5 flex justify-center">
-          <button
-            type="button"
-            onClick={handleManualNext}
-            disabled={reviewPool.length <= 1}
-            className="rounded-full border border-neutral-300 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.28em] text-neutral-700 transition hover:border-neutral-400 hover:text-neutral-900 disabled:cursor-not-allowed dark:border-white/15 dark:text-neutral-100 dark:hover:border-white/30"
-          >
-            show another story
-          </button>
         </div>
       )}
 
