@@ -2,7 +2,7 @@ import Link from "next/link"
 import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
 import { Button } from "@/components/ui/button"
-import { CheckCircle2 } from "lucide-react"
+import { CheckCircle2, Calendar } from "lucide-react"
 
 export default function LaunchThankYouPage() {
   return (
@@ -17,14 +17,24 @@ export default function LaunchThankYouPage() {
           </div>
           <h1 className="text-4xl font-semibold tracking-tight">You're Cleared for Launch! 🚀</h1>
           <p className="text-lg text-zinc-600">
-            We've received your request for the <strong>Launch Plan</strong>.
-            <br className="hidden sm:block" />
-            Our team will review your details and reach out via your preferred contact method shortly to confirm the timeline.
+            We've received your submission. Our team will get back to you within 48 hours to find a time to meet to discuss the next steps of your project.
           </p>
-          <div className="pt-6">
-             <Button asChild size="lg" className="rounded-full bg-black text-white hover:bg-black/90">
-               <Link href="/">Return to Home</Link>
-             </Button>
+          
+          <div className="rounded-2xl bg-zinc-50 p-6 mt-6 border border-zinc-100">
+            <p className="text-sm font-medium text-zinc-900 mb-4">
+              Want to accelerate the process?
+            </p>
+            <div className="flex flex-col items-center gap-3">
+              <Button asChild size="lg" className="w-full rounded-full bg-black text-white hover:bg-black/90 shadow-lg shadow-black/5">
+                <Link href="https://calendar.notion.so/meet/enzosison/sfux4ogo" target="_blank">
+                  <Calendar className="mr-2 h-4 w-4" />
+                  Book Meeting Now
+                </Link>
+              </Button>
+              <Button asChild variant="link" className="text-zinc-500 hover:text-black">
+                <Link href="/">Return to Home</Link>
+              </Button>
+            </div>
           </div>
         </div>
       </main>
