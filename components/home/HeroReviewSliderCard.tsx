@@ -26,7 +26,7 @@ type HeroReviewSliderCardProps = {
 }
 
 export default function HeroReviewSliderCard({ className }: HeroReviewSliderCardProps) {
-  const reviewPool = useMemo(() => getHomepageHeroReviewPool(), [])
+  const [reviewPool, setReviewPool] = useState<Quote[]>([])
   const [activeIndex, setActiveIndex] = useState(0)
   const [isPaused, setIsPaused] = useState(false)
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false)
@@ -34,6 +34,11 @@ export default function HeroReviewSliderCard({ className }: HeroReviewSliderCard
   const progressValue = useMotionValue(0)
   const progressControls = useRef<AnimationPlaybackControls | null>(null)
   const isPausedRef = useRef(isPaused)
+
+  useEffect(() => {
+    setReviewPool(getHomepageHeroReviewPool())
+  }, [])
+
   const heroReviewForSchema = useMemo(() => {
     if (reviewPool.length === 0) return null
     return reviewPool.find((quote) => quote.heroSpotlight) ?? reviewPool[0]
@@ -187,6 +192,10 @@ export default function HeroReviewSliderCard({ className }: HeroReviewSliderCard
       },
     },
     exit: (dir: number) => ({
+      position: "absolute",
+      top: 0,
+      left: 0,
+      width: "100%",
       opacity: 0,
       y: shouldReduceMotion ? 0 : dir * -8,
       transition: {
@@ -251,7 +260,8 @@ export default function HeroReviewSliderCard({ className }: HeroReviewSliderCard
   }
 
   return (
-    <div
+    <motion.div
+      layout
       className={cn(
         "relative w-full rounded-3xl border border-white/30 bg-white/75 p-5 text-left shadow-xl shadow-neutral-900/5 backdrop-blur-lg transition-colors duration-300 sm:p-6",
         "dark:border-white/10 dark:bg-neutral-900/80 dark:text-white",
@@ -266,7 +276,7 @@ export default function HeroReviewSliderCard({ className }: HeroReviewSliderCard
         <span>founders love prism ❤️</span>
       </div>
 
-      <AnimatePresence mode="wait" initial={false} custom={direction}>
+      <AnimatePresence mode="popLayout" initial={false} custom={direction}>
         <motion.div
           key={currentReview.id}
           custom={direction}
