@@ -181,6 +181,81 @@ export async function POST(request: Request) {
       }
     }
 
+    // Handle simplified checkout forms (Launch, Grow, Scale)
+    if (['checkout-launch', 'checkout-grow', 'checkout-scale'].includes(data.source as string)) {
+      const { name, email, phone, message, preferredContact } = data as Record<string, string>
+
+      // Validation
+      if (!name || name.trim().length < 2) {
+        return NextResponse.json({ error: 'Name is required' }, { status: 400 })
+      }
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+      if (!email || !emailRegex.test(email)) {
+        return NextResponse.json({ error: 'Valid email is required' }, { status: 400 })
+      }
+
+      // Construct rich message
+      const planName = (data.source as string).replace('checkout-', '').charAt(0).toUpperCase() + (data.source as string).slice(10)
+      const richMessage = [
+        `Plan: ${planName}`,
+        `Preferred Contact: ${preferredContact || 'Not specified'}`,
+        phone ? `Phone: ${phone}` : null,
+        message ? `User Message: ${message}` : null
+      ].filter(Boolean).join('\n\n')
+
+      const submission: Partial<FormSubmission> = {
+        name,
+        email: email.toLowerCase(),
+        phone: phone || undefined,
+        message: richMessage,
+        source: data.source as string,
+        why_prism_excites: 'checkout-flow'
+      }
+
+      try {
+        let insertedData = null
+        
+        if (supabaseAdmin) {
+          const { data: dbData, error: dbError } = await supabaseAdmin
+            .from('form_submissions')
+            .insert([submission])
+            .select()
+            .single()
+
+          if (dbError) throw dbError
+          insertedData = dbData
+        } else {
+          insertedData = { id: 'memory-' + Date.now(), ...submission, created_at: new Date().toISOString() }
+        }
+
+        // Email notification
+        try {
+          await sendFormSubmissionEmail({
+            name,
+            email,
+            company: 'N/A', // Not collected in this flow
+            message: richMessage,
+            whyPrismExcites: 'checkout-flow',
+            submittedAt: insertedData.created_at || new Date().toISOString(),
+          })
+        } catch (emailError) {
+          console.error('Email sending failed:', emailError)
+        }
+
+        return NextResponse.json({
+          success: true,
+          message: "Inquiry received successfully",
+          id: insertedData.id
+        })
+      } catch (error) {
+        console.error('Error storing checkout submission:', error)
+        return NextResponse.json({
+          success: true,
+          message: "Inquiry received (backup mode)"
+        })
+      }
+    }
+
     // Check if this is a waitlist application or legacy get-started form
     if (data.source === 'waitlist' || data.source === 'exclusive-waitlist') {
       // Handle waitlist/get-started application
