@@ -28,7 +28,7 @@ const pricingTiers = [
     description:
       "Launch fast and convert immediately with a polished site built in 48–72 hours to prove ROI, attract better clients, and spark referrals on day one.",
     cta: "Start My Build →",
-    href: "/get-started?plan=launch",
+    href: "/checkout/launch",
     accent: "from-amber-400 to-pink-500",
     featured: false,
   },
@@ -39,7 +39,7 @@ const pricingTiers = [
     description:
       "Grow your traffic and increase your pipeline with consistent SEO, fresh content, and monthly optimization that compounds into higher rankings and stronger lifetime value.",
     cta: "Apply for Growth Plan →",
-    href: "/get-started?plan=grow",
+    href: "/checkout/grow",
     accent: "from-sky-500 to-indigo-600",
     featured: true,
   },
@@ -50,7 +50,7 @@ const pricingTiers = [
     description:
       "Scale demand, revenue, and operations with full-funnel tracking, paid ads management, automations, and analytics tuned to turn clicks into loyal advocates.",
     cta: "Book Discovery Call →",
-    href: "/get-started?plan=scale",
+    href: "/checkout/scale",
     accent: "from-emerald-400 to-teal-600",
     featured: false,
   },
