@@ -2,7 +2,8 @@
 
 import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { Loader2, CheckCircle2, AlertCircle } from "lucide-react"
+import { Loader2, AlertCircle } from "lucide-react"
+import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
@@ -14,6 +15,7 @@ interface CheckoutFormProps {
 }
 
 export default function CheckoutForm({ plan }: CheckoutFormProps) {
+  const router = useRouter()
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -50,6 +52,7 @@ export default function CheckoutForm({ plan }: CheckoutFormProps) {
       }
 
       setStatus("success")
+      router.push(`/checkout/${plan}/thank-you`)
     } catch (error) {
       console.error("Submission error:", error)
       setStatus("error")
@@ -60,27 +63,6 @@ export default function CheckoutForm({ plan }: CheckoutFormProps) {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
     setFormData((prev) => ({ ...prev, [name]: value }))
-  }
-
-  if (status === "success") {
-    return (
-      <motion.div
-        initial={{ opacity: 0, scale: 0.95 }}
-        animate={{ opacity: 1, scale: 1 }}
-        className="flex flex-col items-center justify-center text-center space-y-4 py-12"
-      >
-        <div className="rounded-full bg-green-100 p-3 dark:bg-green-900/30">
-          <CheckCircle2 className="h-8 w-8 text-green-600 dark:text-green-400" />
-        </div>
-        <h3 className="text-2xl font-semibold">Request Received!</h3>
-        <p className="text-muted-foreground max-w-md">
-          Thanks for your interest in the {plan.charAt(0).toUpperCase() + plan.slice(1)} plan. We'll be in touch via {formData.preferredContact} shortly to get things moving.
-        </p>
-        <Button variant="outline" className="mt-6" onClick={() => window.location.href = "/"}>
-          Return Home
-        </Button>
-      </motion.div>
-    )
   }
 
   return (
