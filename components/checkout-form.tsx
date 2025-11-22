@@ -31,8 +31,14 @@ export default function CheckoutForm({ plan }: CheckoutFormProps) {
     setStatus("submitting")
     setErrorMessage("")
 
+    const formEndpoints = {
+      launch: "https://formspree.io/f/xdkjweov",
+      grow: "https://formspree.io/f/mqajypqo",
+      scale: "https://formspree.io/f/xdkjweov",
+    }
+
     try {
-      const response = await fetch("https://formspree.io/f/xdkjweov", {
+      const response = await fetch(formEndpoints[plan], {
         method: "POST",
         headers: { 
           "Content-Type": "application/json",
