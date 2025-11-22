@@ -34,7 +34,7 @@ export default function CheckoutForm({ plan }: CheckoutFormProps) {
     const formEndpoints = {
       launch: "https://formspree.io/f/xdkjweov",
       grow: "https://formspree.io/f/mqajypqo",
-      scale: "https://formspree.io/f/xdkjweov",
+      scale: "https://formspree.io/f/mzzwjeap",
     }
 
     try {
