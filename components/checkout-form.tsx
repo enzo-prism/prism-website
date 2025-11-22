@@ -197,7 +197,7 @@ export default function CheckoutForm({ plan }: CheckoutFormProps) {
               Securing Spot...
             </>
           ) : (
-            "Confirm & Start Build"
+            "Submit"
           )}
         </Button>
       </form>
