@@ -276,32 +276,34 @@ export default function HeroReviewSliderCard({ className }: HeroReviewSliderCard
         <span>founders love prism ❤️</span>
       </div>
 
-      <AnimatePresence mode="popLayout" initial={false} custom={direction}>
-        <motion.div
-          key={currentReview.id}
-          custom={direction}
-          variants={quoteVariants}
-          initial="initial"
-          animate="animate"
-          exit="exit"
-          className="relative min-h-[100px]"
-          aria-live="polite"
-          role="status"
-        >
-          <motion.p
-            variants={quoteTextVariants}
-            className="text-base leading-relaxed text-neutral-900 dark:text-white"
+      <div className="relative min-h-[100px]">
+        <AnimatePresence mode="popLayout" initial={false} custom={direction}>
+          <motion.div
+            key={currentReview.id}
+            custom={direction}
+            variants={quoteVariants}
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            className="relative"
+            aria-live="polite"
+            role="status"
           >
-            &ldquo;{renderFormattedText(currentReview.text)}&rdquo;
-          </motion.p>
-          <motion.p
-            variants={quoteAuthorVariants}
-            className="mt-4 text-sm font-semibold text-neutral-900 dark:text-white"
-          >
-            {currentReview.client}
-          </motion.p>
-        </motion.div>
-      </AnimatePresence>
+            <motion.p
+              variants={quoteTextVariants}
+              className="text-base leading-relaxed text-neutral-900 dark:text-white"
+            >
+              &ldquo;{renderFormattedText(currentReview.text)}&rdquo;
+            </motion.p>
+            <motion.p
+              variants={quoteAuthorVariants}
+              className="mt-4 text-sm font-semibold text-neutral-900 dark:text-white"
+            >
+              {currentReview.client}
+            </motion.p>
+          </motion.div>
+        </AnimatePresence>
+      </div>
 
       {!shouldReduceMotion ? (
         <div className="mt-5 flex items-center justify-center" aria-hidden="true">
