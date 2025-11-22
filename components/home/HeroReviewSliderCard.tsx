@@ -339,6 +339,6 @@ export default function HeroReviewSliderCard({ className }: HeroReviewSliderCard
       {heroReviewSchema ? (
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: heroReviewSchema }} />
       ) : null}
-    </div>
+    </motion.div>
   )
 }
