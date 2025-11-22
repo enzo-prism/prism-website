@@ -102,17 +102,7 @@ export default function HeroReviewSliderCard({ className }: HeroReviewSliderCard
     })
   }, [determineDirection, reviewPool.length])
 
-  useEffect(() => {
-    if (prefersReducedMotion || isPaused || reviewPool.length <= 1) {
-      return
-    }
 
-    const timeout = window.setTimeout(goToNext, AUTO_ROTATE_INTERVAL)
-    return () => {
-      window.clearTimeout(timeout)
-    }
-    // Re-run when activeIndex changes so the timeout restarts for each slide
-  }, [prefersReducedMotion, isPaused, reviewPool.length, activeIndex, goToNext])
 
   const startProgressAnimation = useCallback(
     (fromValue: number) => {
@@ -121,9 +111,10 @@ export default function HeroReviewSliderCard({ className }: HeroReviewSliderCard
       progressControls.current = animate(progressValue, 1, {
         duration: remainingDuration,
         ease: "linear",
+        onComplete: goToNext,
       })
     },
-    [progressValue]
+    [progressValue, goToNext]
   )
 
   useEffect(() => {
