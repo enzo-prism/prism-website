@@ -25,8 +25,12 @@ const pricingTiers = [
     name: "Launch",
     emoji: "🚀",
     price: "$400 one-time",
-    description:
-      "Launch fast and convert immediately with a polished site built in 48–72 hours to prove ROI, attract better clients, and spark referrals on day one.",
+    bestFor: [
+      "One-time events or short-term campaigns",
+      "Early-stage startups needing a fast, clean, credibility-boosting site",
+      "Founders validating an idea and proving demand ASAP",
+      "Anyone who needs a polished site live within 48–72 hours",
+    ],
     cta: "Start My Build →",
     href: "/checkout/launch",
     accent: "from-amber-400 to-pink-500",
@@ -36,8 +40,12 @@ const pricingTiers = [
     name: "Grow",
     emoji: "🌱",
     price: "$900/mo",
-    description:
-      "Grow your traffic and increase your pipeline with consistent SEO, fresh content, and monthly optimization that compounds into higher rankings and stronger lifetime value.",
+    bestFor: [
+      "Founders testing consistent SEO and content before going “all-in”",
+      "Businesses that want steady lead growth without heavy spend",
+      "Teams needing ongoing conversion analysis + improvements",
+      "Brands focused on long-term organic growth and compounding traffic",
+    ],
     cta: "Apply for Growth Plan →",
     href: "/checkout/grow",
     accent: "from-sky-500 to-indigo-600",
@@ -47,8 +55,12 @@ const pricingTiers = [
     name: "Scale",
     emoji: "📈",
     price: "from $1,500/mo",
-    description:
-      "Scale demand, revenue, and operations with full-funnel tracking, paid ads management, automations, and analytics tuned to turn clicks into loyal advocates.",
+    bestFor: [
+      "Established businesses with proven product–market fit",
+      "Founders ready to treat their online presence like a growth engine",
+      "Teams scaling leads, conversions, and lifetime value",
+      "Businesses that want full-funnel tracking, paid ads, and automation dialed in",
+    ],
     cta: "Book Discovery Call →",
     href: "/checkout/scale",
     accent: "from-emerald-400 to-teal-600",
@@ -251,7 +263,16 @@ function PricingCard({ tier, index }: { tier: PricingTier; index: number }) {
           </p>
         </div>
         <p className={cn("text-3xl font-semibold", tier.featured && "text-white")}>{tier.price}</p>
-        <p className={cn("text-base text-black/70", tier.featured && "text-white/80")}>{tier.description}</p>
+        <div className="pt-2">
+          <p className={cn("text-sm font-semibold mb-3", tier.featured && "text-white/90")}>
+            Best for:
+          </p>
+          <ul className={cn("space-y-2.5 list-disc list-inside text-sm text-black/70", tier.featured && "text-white/80")}>
+            {tier.bestFor.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+        </div>
       </div>
       <div className="mt-8 flex flex-1 flex-col gap-5">
         <Button
@@ -525,7 +546,7 @@ function PricingStructuredData() {
             key={`pricing-product-${tier.name.toLowerCase()}`}
             productId={`pricing-${tier.name.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}
             name={`${tier.name} website plan`}
-            description={tier.description}
+            description={tier.bestFor.join(". ")}
             url="https://www.design-prism.com/pricing"
             offer={{
               name: `${tier.name} plan`,
