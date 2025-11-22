@@ -30,11 +30,14 @@ export default function CheckoutForm({ plan }: CheckoutFormProps) {
     setErrorMessage("")
 
     try {
-      const response = await fetch("/api/prism-leads", {
+      const response = await fetch("https://formspree.io/f/xdkjweov", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { 
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
         body: JSON.stringify({
-          source: `checkout-${plan}`,
+          plan: plan,
           ...formData,
         }),
       })
@@ -42,7 +45,8 @@ export default function CheckoutForm({ plan }: CheckoutFormProps) {
       const data = await response.json()
 
       if (!response.ok) {
-        throw new Error(data.error || "Something went wrong")
+        const error = data.errors?.map((e: any) => e.message).join(", ") || "Something went wrong"
+        throw new Error(error)
       }
 
       setStatus("success")
