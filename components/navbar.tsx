@@ -51,7 +51,13 @@ export default function Navbar() {
   const getNavIcon = (label?: string) => {
     if (!label) return null
     const Icon = serviceIconMap[label.toLowerCase()]
-    return Icon ? <Icon className="h-4 w-4 text-neutral-400" aria-hidden /> : null
+    if (!Icon) return null
+    return (
+      <Icon
+        className="h-4 w-4 text-neutral-400 transition-colors duration-150 group-hover:text-indigo-500 group-hover:dark:text-indigo-300"
+        aria-hidden
+      />
+    )
   }
   return (
     <header className={`${headerPositionClass} top-0 z-50 w-full border-b bg-background/95 md:backdrop-blur supports-[backdrop-filter]:bg-background/60`}>
@@ -183,7 +189,7 @@ export default function Navbar() {
                                 <Link
                                   key={child.label}
                                   href={child.href}
-                                  className={`flex items-center gap-2 rounded-md px-3 py-2 text-sm lowercase hover:bg-neutral-50 ${
+                                  className={`group flex items-center gap-2 rounded-md px-3 py-2 text-sm lowercase hover:bg-neutral-50 ${
                                     isActivePath(child.href) ? 'text-neutral-900' : 'text-neutral-700 hover:text-neutral-900'
                                   }`}
                                   onClick={() => trackNavigation(child.label, child.href)}
