@@ -49,7 +49,7 @@ const pricingTiers = [
     emoji: "🚀",
     price: "$400 one-time",
     bestFor: [
-      { icon: CalendarClock, text: "One-time events or short-term campaigns" },
+      { icon: CalendarClock, text: "One-time events or short-term campaigns", iconScale: 0.92 },
       { icon: Sparkles, text: "Early-stage startups needing a fast, clean, credibility-boosting site" },
       { icon: CheckCheck, text: "Founders validating an idea and proving demand ASAP" },
       { icon: Rocket, text: "Anyone who needs a polished site live within 48–72 hours" },
@@ -354,7 +354,13 @@ function PricingCard({ tier, index, allowMotion }: { tier: PricingTier; index: n
               return (
                 <div key={item.text} className="flex items-start gap-3">
                   <Icon
-                    className={cn("h-4 w-4 mt-0.5 text-black/60", tier.featured && "text-white/70")}
+                    strokeWidth={1.6}
+                    className={cn("mt-0.5 h-4 w-4 shrink-0 text-black/60", tier.featured && "text-white/70")}
+                    style={
+                      item.iconScale
+                        ? { transform: `scale(${item.iconScale})`, transformOrigin: "center" }
+                        : undefined
+                    }
                     aria-hidden
                   />
                   <span>{item.text}</span>
