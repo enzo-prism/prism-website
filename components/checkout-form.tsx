@@ -155,7 +155,7 @@ export default function CheckoutForm({ plan }: CheckoutFormProps) {
                 checked={formData.preferredContact === "phone"}
                 onChange={() => setFormData(prev => ({ ...prev, preferredContact: "phone" }))}
               />
-              📱 Phone Call
+              📱 iMessage
             </label>
           </div>
         </div>
