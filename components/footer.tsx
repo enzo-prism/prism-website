@@ -23,6 +23,7 @@ const footerSections: FooterSection[] = [
     title: "Core services",
     items: [
       { label: "Website", href: "/websites" },
+      { label: "Design", href: "/designs" },
       { label: "Ads", href: "/ads" },
       { label: "Map listings", href: "/local-listings" },
     ],
