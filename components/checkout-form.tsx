@@ -76,7 +76,7 @@ export default function CheckoutForm({ plan }: CheckoutFormProps) {
       <div className="space-y-2 text-center sm:text-left">
         <h2 className="text-3xl font-semibold tracking-tight">Let's Get Started</h2>
         <p className="text-muted-foreground">
-          Fill out the details below to secure your {plan.charAt(0).toUpperCase() + plan.slice(1)} build slot.
+          Fill out the details below so our team can contact you with next steps.
         </p>
       </div>
 
