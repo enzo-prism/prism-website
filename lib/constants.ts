@@ -25,7 +25,7 @@ export const LOGO_SIZES = {
   small: { width: 40, height: 40 },
 } as const 
 
-export const FREE_AUDIT_CTA_TEXT = "free analysis"
+export const FREE_AUDIT_CTA_TEXT = "Pricing"
 
 // New primary navigation structure
 export type NavChild = { label: string; href: string }
