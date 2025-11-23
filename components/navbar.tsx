@@ -54,7 +54,7 @@ export default function Navbar() {
     if (!Icon) return null
     return (
       <Icon
-        className="h-4 w-4 text-neutral-400 transition-colors duration-150 group-hover:text-indigo-500 group-hover:dark:text-indigo-300"
+        className="h-4 w-4 text-neutral-400 transition-colors duration-150 group-hover:text-indigo-500 group-hover:dark:text-indigo-400"
         aria-hidden
       />
     )
