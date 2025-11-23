@@ -17,7 +17,6 @@ import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
 import { getAllPosts } from "@/lib/mdx"
 import { ServiceSchema } from "@/components/schema-markup"
 import Image from "next/image"
-import Image from "next/image"
 
 export const metadata: Metadata = {
   title: "small business website portfolio & local seo wins | prism",
