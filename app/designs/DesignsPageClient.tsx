@@ -161,10 +161,16 @@ export default function DesignsPageClient() {
                       every surface we ship is part of a linked system that keeps your story consistent and measurable.
                     </p>
                     <ul className="space-y-3 text-base sm:text-lg font-light text-white/90">
-                      {["websites", "ads", "video", "analytics", "automation"].map((label) => (
-                        <li key={label} className="flex items-center gap-3">
-                          <span className="h-2 w-2 rounded-full bg-white/60" aria-hidden="true" />
-                          <span className="tracking-wide">{label}</span>
+                      {[
+                        { label: "websites", icon: "🖥️" },
+                        { label: "ads", icon: "📢" },
+                        { label: "video", icon: "🎥" },
+                        { label: "analytics", icon: "📊" },
+                        { label: "automation", icon: "⚙️" },
+                      ].map((item) => (
+                        <li key={item.label} className="flex items-center gap-3">
+                          <span className="text-lg" aria-hidden>{item.icon}</span>
+                          <span className="tracking-wide">{item.label}</span>
                         </li>
                       ))}
                     </ul>
