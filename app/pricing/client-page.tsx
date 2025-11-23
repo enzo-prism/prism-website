@@ -342,7 +342,6 @@ function PricingCard({ tier, index, allowMotion }: { tier: PricingTier; index: n
     >
       {tier.name === "Scale" && (
         <div className="absolute right-4 top-4 inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.2em] text-emerald-700">
-          <span aria-hidden>🎯</span>
           <span>includes ads</span>
         </div>
       )}
