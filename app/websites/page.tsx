@@ -18,7 +18,6 @@ import { getAllPosts } from "@/lib/mdx"
 import { ServiceSchema } from "@/components/schema-markup"
 import Image from "next/image"
 import Image from "next/image"
-import { useState } from "react"
 
 export const metadata: Metadata = {
   title: "small business website portfolio & local seo wins | prism",
