@@ -332,7 +332,7 @@ function PricingCard({ tier, index, allowMotion }: { tier: PricingTier; index: n
   const content = (
     <motion.article
       className={cn(
-        "flex h-full flex-col rounded-3xl border border-black/20 bg-white/90 p-6 shadow-[8px_8px_0_0_#00000010] transition-shadow",
+        "relative flex h-full flex-col rounded-3xl border border-black/20 bg-white/90 p-6 shadow-[8px_8px_0_0_#00000010] transition-shadow",
         tier.featured && "bg-black text-white shadow-[12px_12px_0_0_#00000015]"
       )}
       variants={allowMotion ? hoverTilt : undefined}
@@ -340,6 +340,12 @@ function PricingCard({ tier, index, allowMotion }: { tier: PricingTier; index: n
       whileHover={allowMotion ? "hover" : undefined}
       whileTap={allowMotion ? "hover" : undefined}
     >
+      {tier.name === "Scale" && (
+        <div className="absolute right-4 top-4 inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.2em] text-emerald-700">
+          <span aria-hidden>🎯</span>
+          <span>includes ads</span>
+        </div>
+      )}
       <div className="space-y-3">
         <div className="flex items-center gap-2">
           <motion.span
@@ -363,12 +369,6 @@ function PricingCard({ tier, index, allowMotion }: { tier: PricingTier; index: n
           <p className={cn("mb-3 text-sm font-semibold", tier.featured && "text-white/90")}>
             Best For
           </p>
-          {tier.name === "Scale" && (
-            <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.2em] text-emerald-700">
-              <span aria-hidden>🎯</span>
-              <span>includes ads</span>
-            </div>
-          )}
           <div className={cn("space-y-2.5 text-sm text-black/70", tier.featured && "text-white/80")}>
             {tier.bestFor.map((item) => {
               const Icon = item.icon
