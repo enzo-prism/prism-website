@@ -16,6 +16,7 @@ import Link from "next/link"
 import { useEffect, useState } from "react"
 import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
 const Navbar = dynamic(() => import("@/components/navbar"), { ssr: false })
+const CLIENT_SITE = "https://exquisitedentistryla.com/"
 
 export default function ExquisiteDentistryCaseStudy() {
   const [activeSection, setActiveSection] = useState("")
@@ -60,6 +61,13 @@ export default function ExquisiteDentistryCaseStudy() {
               <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl">Aligning Digital Excellence with Luxury Care</h1>
               <p className="text-xl text-neutral-600">How Prism elevated Beverly Hills' Exquisite Dentistry's online presence to match their premium in-person experience.</p>
               <p className="text-neutral-500">Practice owner: <strong>Dr. Alexie Aguil</strong></p>
+              <div className="flex flex-wrap items-center gap-3">
+                <Button asChild variant="outline" className="rounded-full lowercase">
+                  <Link href={CLIENT_SITE} target="_blank" rel="noreferrer">
+                    visit exquisitedentistryla.com
+                  </Link>
+                </Button>
+              </div>
             </div>
             <div className="mt-10 mb-6">
               <Image src="/exquisite-dentistry-consultation.png" alt="Exquisite Dentistry consultation" width={800} height={450} className="rounded-md w-full h-auto" priority />

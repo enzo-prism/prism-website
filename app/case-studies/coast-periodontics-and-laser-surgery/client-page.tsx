@@ -5,7 +5,7 @@ const quickFacts = [
   { label: "location", value: "san luis obispo, ca" },
   { label: "client since", value: "september 2024" },
   { label: "services", value: "website, local listing optimization" },
-  { label: "website", value: "coastperiodontics.com", href: "https://www.coastperiodontics.com" },
+  { label: "website", value: "coastperiodontics.com", href: "http://coastperiodontics.com" },
 ]
 
 const sections = [

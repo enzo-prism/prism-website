@@ -16,6 +16,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants";
 const Navbar = dynamic(() => import("@/components/navbar"), { ssr: false })
+const CLIENT_SITE = "https://www.chriswongdds.com"
 
 export default function ChristopherWongCaseStudy() {
   const [activeSection, setActiveSection] = useState("")
@@ -81,6 +82,13 @@ export default function ChristopherWongCaseStudy() {
               <p className="text-xl text-neutral-600 lowercase">
                 how we helped a palo alto dental practice achieve 100% patient retention and exponential growth
               </p>
+              <div className="flex flex-wrap items-center gap-3">
+                <Button asChild variant="outline" className="rounded-full lowercase">
+                  <Link href={CLIENT_SITE} target="_blank" rel="noreferrer">
+                    visit chriswongdds.com
+                  </Link>
+                </Button>
+              </div>
             </div>
 
             {/* Polaroid Images - With Animation */}

@@ -12,6 +12,7 @@ import Link from "next/link"
 import { useEffect, useState } from "react"
 import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
 const Navbar = dynamic(() => import("@/components/navbar"), { ssr: false })
+const CLIENT_SITE = "https://www.towncentredental.net"
 
 export default function TownCentreDentalCaseStudy() {
   const [activeSection, setActiveSection] = useState("")
@@ -49,6 +50,13 @@ export default function TownCentreDentalCaseStudy() {
               <div className="inline-block px-4 py-1 bg-neutral-100 rounded-full text-sm lowercase">case study</div>
               <h1 className="text-3xl font-bold tracking-tighter lowercase sm:text-4xl">family dentistry growth system</h1>
               <p className="text-xl text-neutral-600 lowercase">modern website, clear services, and measurable acquisition in brentwood, ca</p>
+              <div className="flex flex-wrap items-center gap-3">
+                <Button asChild variant="outline" className="rounded-full lowercase">
+                  <Link href={CLIENT_SITE} target="_blank" rel="noreferrer">
+                    visit towncentredental.net
+                  </Link>
+                </Button>
+              </div>
             </div>
           </div>
         </section>

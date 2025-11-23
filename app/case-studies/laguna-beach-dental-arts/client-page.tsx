@@ -13,6 +13,7 @@ import Link from "next/link"
 import { useEffect, useState } from "react"
 import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
 const Navbar = dynamic(() => import("@/components/navbar"), { ssr: false })
+const CLIENT_SITE = "https://lagunabeachdentalarts.com"
 
 export default function LagunaBeachDentalArtsCaseStudy() {
   const [activeSection, setActiveSection] = useState("")
@@ -56,6 +57,13 @@ export default function LagunaBeachDentalArtsCaseStudy() {
               <p className="text-xl text-neutral-600 lowercase">
                 brand refresh, modern website, full‑funnel acquisition channels and end‑to‑end tracking
               </p>
+              <div className="flex flex-wrap items-center gap-3">
+                <Button asChild variant="outline" className="rounded-full lowercase">
+                  <Link href={CLIENT_SITE} target="_blank" rel="noreferrer">
+                    visit lagunabeachdentalarts.com
+                  </Link>
+                </Button>
+              </div>
             </div>
           </div>
         </section>
