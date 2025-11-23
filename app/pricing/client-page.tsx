@@ -4,6 +4,7 @@ import { motion } from "framer-motion"
 import Image from "next/image"
 import { useState } from "react"
 import Link from "next/link"
+import type { LucideIcon } from "lucide-react"
 import {
   Award,
   BarChart3,
@@ -43,7 +44,24 @@ const HERO_IMAGE = {
   alt: "Prism pricing hero preview",
 }
 
-const pricingTiers = [
+type PricingBullet = {
+  icon: LucideIcon
+  text: string
+  iconScale?: number
+}
+
+type PricingTier = {
+  name: string
+  emoji: string
+  price: string
+  bestFor: PricingBullet[]
+  cta: string
+  href: string
+  accent: string
+  featured: boolean
+}
+
+const pricingTiers: PricingTier[] = [
   {
     name: "Launch",
     emoji: "🚀",
@@ -89,7 +107,7 @@ const pricingTiers = [
     accent: "from-emerald-400 to-teal-600",
     featured: false,
   },
-] as const
+]
 
 const features = [
   {
@@ -149,8 +167,6 @@ const faqs = [
       "Absolutely. Scale engagements include paid media, automation, and analytics consulting. Tell us what you need inside the intake form and we'll shape a custom scope.",
   },
 ] as const
-
-type PricingTier = (typeof pricingTiers)[number]
 
 export default function PricingPageClient() {
   const { allowMotion } = useMotionPreferences()
