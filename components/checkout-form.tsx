@@ -139,7 +139,7 @@ export default function CheckoutForm({ plan }: CheckoutFormProps) {
                 checked={formData.preferredContact === "email"}
                 onChange={() => setFormData(prev => ({ ...prev, preferredContact: "email" }))}
               />
-              Email
+              📧 Email
             </label>
             <label className={cn(
               "flex-1 cursor-pointer rounded-xl border p-4 text-center text-sm font-medium transition-all",
@@ -155,7 +155,7 @@ export default function CheckoutForm({ plan }: CheckoutFormProps) {
                 checked={formData.preferredContact === "phone"}
                 onChange={() => setFormData(prev => ({ ...prev, preferredContact: "phone" }))}
               />
-              Phone Call
+              📱 Phone Call
             </label>
           </div>
         </div>
