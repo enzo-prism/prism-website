@@ -2,13 +2,29 @@
 
 import { motion } from "framer-motion"
 import Link from "next/link"
-import { BarChart3, MonitorSmartphone, Sparkles } from "lucide-react"
+import {
+  Award,
+  BarChart3,
+  Beaker,
+  CalendarClock,
+  CheckCheck,
+  Gauge,
+  Leaf,
+  MonitorSmartphone,
+  Network,
+  PieChart,
+  Rocket,
+  Sparkles,
+  TrendingUp,
+  Users,
+} from "lucide-react"
 
 import AnimatedGradient from "@/components/animations/animated-gradient"
 import RippleHighlight from "@/components/animations/ripple-highlight"
 import ClientsSection from "@/components/home/Clients"
 import RevealOnScroll from "@/components/reveal-on-scroll"
 import VideoPlayer from "@/components/video-player"
+import { useMotionPreferences } from "@/hooks/use-motion-preferences"
 import { Button } from "@/components/ui/button"
 import {
   Accordion,
@@ -26,10 +42,10 @@ const pricingTiers = [
     emoji: "🚀",
     price: "$400 one-time",
     bestFor: [
-      "One-time events or short-term campaigns",
-      "Early-stage startups needing a fast, clean, credibility-boosting site",
-      "Founders validating an idea and proving demand ASAP",
-      "Anyone who needs a polished site live within 48–72 hours",
+      { icon: CalendarClock, text: "One-time events or short-term campaigns" },
+      { icon: Sparkles, text: "Early-stage startups needing a fast, clean, credibility-boosting site" },
+      { icon: CheckCheck, text: "Founders validating an idea and proving demand ASAP" },
+      { icon: Rocket, text: "Anyone who needs a polished site live within 48–72 hours" },
     ],
     cta: "Start My Build →",
     href: "/checkout/launch",
@@ -41,10 +57,10 @@ const pricingTiers = [
     emoji: "🌱",
     price: "$900/mo",
     bestFor: [
-      "Founders testing consistent SEO and content before going “all-in”",
-      "Businesses that want steady lead growth without heavy spend",
-      "Teams needing ongoing conversion analysis + improvements",
-      "Brands focused on long-term organic growth and compounding traffic",
+      { icon: Beaker, text: "Founders testing consistent SEO and content before going “all-in”" },
+      { icon: TrendingUp, text: "Businesses that want steady lead growth without heavy spend" },
+      { icon: PieChart, text: "Teams needing ongoing conversion analysis + improvements" },
+      { icon: Leaf, text: "Brands focused on long-term organic growth and compounding traffic" },
     ],
     cta: "Apply for Growth Plan →",
     href: "/checkout/grow",
@@ -56,10 +72,10 @@ const pricingTiers = [
     emoji: "📈",
     price: "from $1,500/mo",
     bestFor: [
-      "Established businesses with proven product–market fit",
-      "Founders ready to treat their online presence like a growth engine",
-      "Teams scaling leads, conversions, and lifetime value",
-      "Businesses that want full-funnel tracking, paid ads, and automation dialed in",
+      { icon: Award, text: "Established businesses with proven product–market fit" },
+      { icon: Gauge, text: "Founders ready to treat their online presence like a growth engine" },
+      { icon: Users, text: "Teams scaling leads, conversions, and lifetime value" },
+      { icon: Network, text: "Businesses that want full-funnel tracking, paid ads, and automation dialed in" },
     ],
     cta: "Book Discovery Call →",
     href: "/checkout/scale",
@@ -130,13 +146,15 @@ const faqs = [
 type PricingTier = (typeof pricingTiers)[number]
 
 export default function PricingPageClient() {
+  const { allowMotion } = useMotionPreferences()
+
   return (
     <div className="bg-white text-black" style={{ textTransform: "lowercase" }}>
       <HeroSection />
-      <PricingSection />
+      <PricingSection allowMotion={allowMotion} />
       <KickoffCTASection />
-      <FeatureSection />
-      <WebsiteUseCasesSection />
+      <FeatureSection allowMotion={allowMotion} />
+      <WebsiteUseCasesSection allowMotion={allowMotion} />
       <HandoffSection />
       <ClientsSection />
       <FAQSection />
@@ -180,7 +198,7 @@ function HeroSection() {
   )
 }
 
-function PricingSection() {
+function PricingSection({ allowMotion }: { allowMotion: boolean }) {
   return (
     <section id="plans" className="bg-white py-24 sm:py-32">
       <div className="mx-auto flex max-w-6xl flex-col gap-10 px-6">
@@ -193,7 +211,7 @@ function PricingSection() {
         </RevealOnScroll>
         <div className="grid gap-8 md:grid-cols-3">
           {pricingTiers.map((tier, index) => (
-            <PricingCard key={tier.name} tier={tier} index={index} />
+            <PricingCard key={tier.name} tier={tier} index={index} allowMotion={allowMotion} />
           ))}
         </div>
         <div className="mt-16">
@@ -229,7 +247,7 @@ function PricingSection() {
   )
 }
 
-function PricingCard({ tier, index }: { tier: PricingTier; index: number }) {
+function PricingCard({ tier, index, allowMotion }: { tier: PricingTier; index: number; allowMotion: boolean }) {
   const hasArrow = tier.cta.includes("→")
   const ctaLabel = hasArrow ? tier.cta.replace("→", "").trim() : tier.cta
 
@@ -239,39 +257,48 @@ function PricingCard({ tier, index }: { tier: PricingTier; index: number }) {
         "flex h-full flex-col rounded-3xl border border-black/20 bg-white/90 p-6 shadow-[8px_8px_0_0_#00000010] transition-shadow",
         tier.featured && "bg-black text-white shadow-[12px_12px_0_0_#00000015]"
       )}
-      variants={hoverTilt}
-      initial="rest"
-      whileHover="hover"
-      whileTap="hover"
+      variants={allowMotion ? hoverTilt : undefined}
+      initial={allowMotion ? "rest" : undefined}
+      whileHover={allowMotion ? "hover" : undefined}
+      whileTap={allowMotion ? "hover" : undefined}
     >
       <div className="space-y-3">
         <div className="flex items-center gap-2">
           <motion.span
             aria-hidden
             className="text-base"
-            animate={floatLoop(6, 5 + index * 0.3, index * 0.2)}
+            animate={allowMotion ? floatLoop(6, 5 + index * 0.3, index * 0.2) : undefined}
           >
             {tier.emoji}
           </motion.span>
-            <p
-              className={cn(
-                "text-sm font-semibold tracking-[0.3em] text-black/60",
-                tier.featured && "text-white/70"
-              )}
-            >
+          <p
+            className={cn(
+              "text-sm font-semibold tracking-[0.3em] text-black/60",
+              tier.featured && "text-white/70"
+            )}
+          >
             {tier.name}
           </p>
         </div>
         <p className={cn("text-3xl font-semibold", tier.featured && "text-white")}>{tier.price}</p>
         <div className="pt-2">
-          <p className={cn("text-sm font-semibold mb-3", tier.featured && "text-white/90")}>
-            Best for:
+          <p className={cn("mb-3 text-sm font-semibold", tier.featured && "text-white/90")}>
+            Best For
           </p>
-          <ul className={cn("space-y-2.5 list-disc list-inside text-sm text-black/70", tier.featured && "text-white/80")}>
-            {tier.bestFor.map((item) => (
-              <li key={item}>{item}</li>
-            ))}
-          </ul>
+          <div className={cn("space-y-2.5 text-sm text-black/70", tier.featured && "text-white/80")}>
+            {tier.bestFor.map((item) => {
+              const Icon = item.icon
+              return (
+                <div key={item.text} className="flex items-start gap-3">
+                  <Icon
+                    className={cn("h-4 w-4 mt-0.5 text-black/60", tier.featured && "text-white/70")}
+                    aria-hidden
+                  />
+                  <span>{item.text}</span>
+                </div>
+              )
+            })}
+          </div>
         </div>
       </div>
       <div className="mt-8 flex flex-1 flex-col gap-5">
@@ -351,7 +378,7 @@ function KickoffCTASection() {
   )
 }
 
-function FeatureSection() {
+function FeatureSection({ allowMotion }: { allowMotion: boolean }) {
   return (
     <section className="bg-white py-24 sm:py-32">
       <div className="mx-auto max-w-6xl px-6">
@@ -367,13 +394,13 @@ function FeatureSection() {
             <RevealOnScroll key={feature.title} delay={index * 0.05}>
               <motion.div
                 className="h-full rounded-3xl border border-black/15 bg-white p-6 shadow-[6px_6px_0_0_#0000000A]"
-                whileHover={{ y: -6 }}
+                whileHover={allowMotion ? { y: -6 } : undefined}
                 transition={{ type: "spring", stiffness: 200, damping: 18 }}
               >
                 <motion.div
                   aria-hidden
                   className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-black/5"
-                  animate={floatLoop(8, 7 + index * 0.4)}
+                  animate={allowMotion ? floatLoop(8, 7 + index * 0.4) : undefined}
                 >
                   <feature.icon className="h-6 w-6 text-black" />
                 </motion.div>
@@ -388,7 +415,7 @@ function FeatureSection() {
   )
 }
 
-function WebsiteUseCasesSection() {
+function WebsiteUseCasesSection({ allowMotion }: { allowMotion: boolean }) {
   return (
     <section className="bg-zinc-50 py-24 text-black dark:bg-zinc-900 dark:text-white">
       <div className="mx-auto max-w-6xl px-6">
@@ -406,16 +433,18 @@ function WebsiteUseCasesSection() {
             <RevealOnScroll key={item.label} delay={itemIndex * 0.02}>
               <motion.div
                 className="group flex aspect-square flex-col items-center justify-center rounded-2xl border border-zinc-200 bg-white text-center text-sm font-semibold text-zinc-800 shadow-sm transition dark:border-zinc-800 dark:bg-zinc-800 dark:text-white"
-                initial={{ opacity: 0, scale: 0.95 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true, amount: 0.3 }}
-                whileHover={{ y: -6, boxShadow: "0px 12px 25px rgba(0,0,0,0.08)" }}
+                initial={allowMotion ? { opacity: 0, scale: 0.95 } : undefined}
+                whileInView={allowMotion ? { opacity: 1, scale: 1 } : undefined}
+                viewport={allowMotion ? { once: true, amount: 0.3 } : undefined}
+                whileHover={
+                  allowMotion ? { y: -6, boxShadow: "0px 12px 25px rgba(0,0,0,0.08)" } : undefined
+                }
                 transition={{ type: "spring", stiffness: 200, damping: 18 }}
               >
                 <motion.span
                   aria-hidden
                   className="text-3xl"
-                  animate={floatLoop(4, 5 + itemIndex * 0.2)}
+                  animate={allowMotion ? floatLoop(4, 5 + itemIndex * 0.2) : undefined}
                 >
                   {item.icon}
                 </motion.span>
@@ -541,16 +570,17 @@ function PricingStructuredData() {
     <>
       {pricingTiers.map((tier) => {
         const numericPrice = tier.price.replace(/[^\d.]/g, "")
+        const bestForDescription = tier.bestFor.map((item) => item.text).join(" • ")
         return (
           <ProductSchema
             key={`pricing-product-${tier.name.toLowerCase()}`}
             productId={`pricing-${tier.name.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}
             name={`${tier.name} website plan`}
-            description={tier.bestFor.join(". ")}
+            description={bestForDescription}
             url="https://www.design-prism.com/pricing"
             offer={{
               name: `${tier.name} plan`,
-              description: tier.description,
+              description: bestForDescription,
               price: numericPrice.length ? numericPrice : undefined,
               priceCurrency: "USD",
               priceRange: tier.price,
