@@ -48,13 +48,14 @@ export default function Navbar() {
     ads: Megaphone,
     "local listings": MapPin,
   }
-  const getNavIcon = (label?: string) => {
+  const getNavIcon = (label?: string, group?: string) => {
     if (!label) return null
     const Icon = serviceIconMap[label.toLowerCase()]
     if (!Icon) return null
+    const hoverClass = group ? `group-hover/${group}:text-indigo-500 group-hover/${group}:dark:text-indigo-400` : ""
     return (
       <Icon
-        className="h-4 w-4 text-neutral-400 transition-colors duration-150 group-hover:text-indigo-500 group-hover:dark:text-indigo-400"
+        className={`h-4 w-4 text-neutral-400 transition-colors duration-150 ${hoverClass}`.trim()}
         aria-hidden
       />
     )
@@ -186,15 +187,15 @@ export default function Navbar() {
                           <div className="absolute left-1/2 -translate-x-1/2 top-full pt-2 z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-opacity duration-150">
                             <div className="rounded-xl border bg-white shadow-lg p-2 min-w-[220px]">
                               {item.children.map((child) => (
-                                <Link
+                              <Link
                                   key={child.label}
                                   href={child.href}
-                                  className={`group flex items-center gap-2 rounded-md px-3 py-2 text-sm lowercase hover:bg-neutral-50 ${
+                                  className={`group/nav-item flex items-center gap-2 rounded-md px-3 py-2 text-sm lowercase hover:bg-neutral-50 ${
                                     isActivePath(child.href) ? 'text-neutral-900' : 'text-neutral-700 hover:text-neutral-900'
                                   }`}
                                   onClick={() => trackNavigation(child.label, child.href)}
                                 >
-                                  {getNavIcon(child.label)}
+                                  {getNavIcon(child.label, "nav-item")}
                                   {child.label}
                                 </Link>
                               ))}
