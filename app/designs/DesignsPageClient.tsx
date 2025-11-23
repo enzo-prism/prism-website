@@ -220,18 +220,18 @@ export default function DesignsPageClient() {
 
             <div className="grid gap-4 sm:grid-cols-2">
               {[
-                { title: "websites", desc: "Conversion-first sites that turn visitors into loyal clients" },
-                { title: "ads", desc: "Attention-grabbing creatives that drive measurable results" },
-                { title: "social", desc: "Branded posts and profiles that stay true to your voice" },
-                { title: "print", desc: "Business cards, brochures, and collateral that leave a mark" },
-                { title: "internal assets", desc: "Decks, docs, and templates that keep teams aligned" },
-                { title: "systems", desc: "Reusable components and guidelines to keep everything cohesive" },
+                { title: "websites", desc: "Conversion-first sites that turn visitors into loyal clients", icon: "🖥️" },
+                { title: "ads", desc: "Attention-grabbing creatives that drive measurable results", icon: "📢" },
+                { title: "social", desc: "Branded posts and profiles that stay true to your voice", icon: "💬" },
+                { title: "print", desc: "Business cards, brochures, and collateral that leave a mark", icon: "🖨️" },
+                { title: "internal assets", desc: "Decks, docs, and templates that keep teams aligned", icon: "📑" },
+                { title: "systems", desc: "Reusable components and guidelines to keep everything cohesive", icon: "🧭" },
               ].map((item) => (
                 <div
                   key={item.title}
                   className="flex items-start gap-3 rounded-2xl border border-neutral-200 bg-white p-4 shadow-sm"
                 >
-                  <span className="mt-1 h-2.5 w-2.5 flex-shrink-0 rounded-full bg-neutral-900/70" aria-hidden />
+                  <span className="mt-0.5 text-lg" aria-hidden>{item.icon}</span>
                   <div className="space-y-1">
                     <p className="text-sm font-semibold uppercase tracking-wide text-neutral-900">{item.title}</p>
                     <p className="text-sm text-neutral-700">{item.desc}</p>
