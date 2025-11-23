@@ -175,7 +175,6 @@ export default function PricingPageClient() {
     <div className="bg-white text-black" style={{ textTransform: "lowercase" }}>
       <HeroSection />
       <PricingSection allowMotion={allowMotion} />
-      <KickoffCTASection />
       <FeatureSection allowMotion={allowMotion} />
       <WebsiteUseCasesSection allowMotion={allowMotion} />
       <HandoffSection />
@@ -424,43 +423,6 @@ function PricingCard({ tier, index, allowMotion }: { tier: PricingTier; index: n
   }
 
   return content
-}
-
-function KickoffCTASection() {
-  return (
-    <section id="kickoff-call" className="border-y border-black/10 bg-white py-16 text-black sm:py-20">
-      <div className="mx-auto flex max-w-4xl flex-col gap-6 px-6 text-center">
-        <RevealOnScroll>
-          <p className="text-sm font-semibold tracking-[0.3em] text-black/60">next steps</p>
-        </RevealOnScroll>
-        <RevealOnScroll delay={0.1}>
-          <h2 className="text-3xl font-semibold leading-snug sm:text-4xl">Let’s align your goals, your numbers, and your launch timeline.</h2>
-        </RevealOnScroll>
-        <RevealOnScroll delay={0.15}>
-          <p className="text-base text-black/70">Book a 15-minute kickoff call and we’ll map your brand, revenue targets, and the fastest path to launch.</p>
-        </RevealOnScroll>
-        <RevealOnScroll delay={0.2}>
-          <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
-            <RippleHighlight fullWidth className="sm:w-auto">
-              <Button
-                asChild
-                className="w-full rounded-2xl border border-black bg-black px-8 py-6 text-base font-semibold text-white hover:bg-black/90 sm:w-auto"
-              >
-                <Link
-                  href="https://calendar.notion.so/meet/enzosison/sfux4ogo"
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label="Book Your 15-Minute Prism Site Kickoff Call"
-                >
-                  Book Your 15-Minute Prism Site Kickoff Call
-                </Link>
-              </Button>
-            </RippleHighlight>
-          </div>
-        </RevealOnScroll>
-      </div>
-    </section>
-  )
 }
 
 function FeatureSection({ allowMotion }: { allowMotion: boolean }) {
