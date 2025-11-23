@@ -39,6 +39,7 @@ export const NAV_ITEMS: NavItem[] = [
     label: "services",
     children: [
       { label: "websites", href: "/websites" },
+      { label: "design", href: "/designs" },
       { label: "seo", href: "/seo" },
       { label: "ads", href: "/ads" },
       { label: "local listings", href: "/local-listings" },
