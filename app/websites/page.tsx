@@ -306,7 +306,7 @@ const faqItems = [
 
 export default async function WebsitesPage() {
   const heroImage = {
-    src: "https://res.cloudinary.com/dhqpqfw6w/image/upload/v1763933832/Generated_Image_November_23_2025_-_1_35PM_1_ljpijq.webp",
+    src: "https://res.cloudinary.com/dhqpqfw6w/image/upload/v1763934373/Generated_Image_November_23_2025_-_1_45PM_m55vhg.webp",
     alt: "Prism website portfolio preview",
   }
   const aggregateRating = {
