@@ -16,6 +16,9 @@ import Link from "next/link"
 import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
 import { getAllPosts } from "@/lib/mdx"
 import { ServiceSchema } from "@/components/schema-markup"
+import Image from "next/image"
+import Image from "next/image"
+import { useState } from "react"
 
 export const metadata: Metadata = {
   title: "small business website portfolio & local seo wins | prism",
@@ -304,6 +307,10 @@ const faqItems = [
 ]
 
 export default async function WebsitesPage() {
+  const heroImage = {
+    src: "https://res.cloudinary.com/dhqpqfw6w/image/upload/v1763933832/Generated_Image_November_23_2025_-_1_35PM_1_ljpijq.webp",
+    alt: "Prism website portfolio preview",
+  }
   const aggregateRating = {
     "@type": "AggregateRating" as const,
     ratingValue: "4.9",
@@ -347,7 +354,7 @@ export default async function WebsitesPage() {
             </p>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
               <Button asChild size="lg" className="rounded-full px-8">
-                <Link href="/get-started?service=website-design">
+                <Link href="/pricing">
                   {FREE_AUDIT_CTA_TEXT}
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
@@ -355,6 +362,26 @@ export default async function WebsitesPage() {
               <Button asChild variant="outline" size="lg" className="rounded-full px-8">
                 <Link href="#recent-work">See recent launches</Link>
               </Button>
+            </div>
+            <div className="mt-10 overflow-hidden rounded-3xl border border-neutral-200 shadow-[10px_10px_0_0_#00000008]">
+              <div className="relative aspect-[16/9] w-full">
+                <Link
+                  href={heroImage.src}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="block h-full w-full"
+                  aria-label="View website portfolio preview in fullscreen"
+                >
+                  <Image
+                    src={heroImage.src}
+                    alt={heroImage.alt}
+                    fill
+                    sizes="(min-width: 1280px) 1024px, (min-width: 768px) 768px, 100vw"
+                    className="object-cover transition duration-300 hover:scale-[1.01]"
+                    priority
+                  />
+                </Link>
+              </div>
             </div>
             <div id="websites-founder-vsl" className="mx-auto mt-12 max-w-3xl text-left">
               <p className="text-center text-xs font-semibold uppercase tracking-[0.28em] text-neutral-400">hear from our founder</p>
