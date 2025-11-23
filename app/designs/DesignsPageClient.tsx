@@ -122,76 +122,73 @@ export default function DesignsPageClient() {
       <Navbar />
       <main className="flex-1">
         {/* Hero Section */}
-        <section className="px-4 pt-24 pb-12 sm:pt-32 sm:pb-16">
-          <div className="max-w-7xl mx-auto">
-            <div className="grid gap-12 lg:gap-16 md:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] items-stretch">
-              <div className="space-y-8">
-                <h1 className="text-4xl sm:text-5xl lg:text-6xl font-semibold leading-tight tracking-tight text-neutral-900">
-                  how design works at prism
-                </h1>
-                <figure className="space-y-3">
-                  <blockquote className="text-2xl sm:text-3xl font-light leading-snug text-neutral-900 italic">
-                    &ldquo;design isn&rsquo;t just how something looks, it&rsquo;s how it works.&rdquo;
-                  </blockquote>
-                  <figcaption className="text-sm font-medium uppercase tracking-[0.35em] text-neutral-500">
-                    &mdash; steve jobs
-                  </figcaption>
-                </figure>
-                <div className="space-y-5 text-base sm:text-lg leading-relaxed text-neutral-700">
-                  <p>
-                    design is the backbone of everything we do at prism &mdash; it connects every part of your business.
-                  </p>
-                  <p>
-                    from websites and ads to video, analytics, and automation, great design shapes how it all works together.
-                  </p>
-                  <p>
-                    we design with purpose &mdash; blending beauty, performance, and precision to create outcomes that move your brand forward.
-                  </p>
-                </div>
+        <section className="px-4 pt-20 pb-12 sm:pt-28 sm:pb-16">
+          <div className="mx-auto flex max-w-7xl flex-col gap-10 lg:flex-row lg:items-center">
+            <div className="w-full space-y-6 lg:max-w-2xl">
+              <p className="text-xs font-semibold uppercase tracking-[0.35em] text-neutral-500">design at prism</p>
+              <h1 className="text-4xl font-semibold leading-tight tracking-tight text-neutral-900 sm:text-5xl">
+                how design works at prism
+              </h1>
+              <figure className="space-y-3">
+                <blockquote className="text-2xl font-light leading-snug text-neutral-900 sm:text-3xl italic">
+                  &ldquo;design isn&rsquo;t just how something looks, it&rsquo;s how it works.&rdquo;
+                </blockquote>
+                <figcaption className="text-sm font-medium uppercase tracking-[0.35em] text-neutral-500">
+                  &mdash; steve jobs
+                </figcaption>
+              </figure>
+              <div className="space-y-4 text-base leading-relaxed text-neutral-700 sm:text-lg">
+                <p>design is the backbone of everything we do at prism — it connects every part of your business.</p>
+                <p>from websites and ads to video, analytics, and automation, great design shapes how it all works together.</p>
+                <p>we design with purpose — blending beauty, performance, and precision to create outcomes that move your brand forward.</p>
               </div>
+            </div>
 
-              <aside className="relative overflow-hidden rounded-[28px] border border-neutral-200 bg-neutral-900 text-white shadow-[0_32px_80px_-40px_rgba(15,23,42,0.55)]">
-                <div
-                  className="pointer-events-none absolute inset-0 bg-gradient-to-br from-emerald-400/20 via-sky-500/10 to-indigo-400/25 opacity-80"
-                  aria-hidden="true"
-                />
-                <div className="relative flex h-full flex-col justify-between gap-8 p-8 sm:p-10 lg:p-12">
-                  <div className="relative aspect-[16/10] w-full overflow-hidden rounded-2xl border border-white/10 bg-neutral-800">
-                    <Image
-                      src="https://res.cloudinary.com/dhqpqfw6w/image/upload/v1763935789/Generated_Image_November_23_2025_-_2_08PM_fvriub.webp"
-                      alt="Design hero preview"
-                      fill
-                      sizes="(min-width: 1280px) 640px, (min-width: 768px) 520px, 100vw"
-                      className="object-cover"
-                      priority
-                    />
+            <aside className="relative w-full overflow-hidden rounded-[28px] border border-neutral-200 bg-neutral-900 text-white shadow-[0_32px_80px_-40px_rgba(15,23,42,0.55)]">
+              <div
+                className="pointer-events-none absolute inset-0 bg-gradient-to-br from-emerald-400/15 via-sky-500/10 to-indigo-400/20 opacity-90"
+                aria-hidden="true"
+              />
+              <div className="relative flex flex-col gap-6 p-8 sm:p-10">
+                <div className="relative aspect-[16/10] w-full overflow-hidden rounded-2xl border border-white/10 bg-neutral-800">
+                  <Image
+                    src="https://res.cloudinary.com/dhqpqfw6w/image/upload/v1763935789/Generated_Image_November_23_2025_-_2_08PM_fvriub.webp"
+                    alt="Design hero preview"
+                    fill
+                    sizes="(min-width: 1280px) 640px, (min-width: 768px) 520px, 100vw"
+                    className="object-cover"
+                    priority
+                  />
+                </div>
+
+                <div className="space-y-4">
+                  <p className="text-xs uppercase tracking-[0.35em] text-white/70">connected by design</p>
+                  <p className="text-lg font-light text-white/90">
+                    every surface we ship is part of a linked system that keeps your story consistent and measurable.
+                  </p>
+                  <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+                    {[
+                      { label: "websites", icon: "🖥️" },
+                      { label: "ads", icon: "📢" },
+                      { label: "video", icon: "🎥" },
+                      { label: "analytics", icon: "📊" },
+                      { label: "automation", icon: "⚙️" },
+                    ].map((item) => (
+                      <div
+                        key={item.label}
+                        className="flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm font-medium text-white/90"
+                      >
+                        <span aria-hidden className="text-base">{item.icon}</span>
+                        <span className="leading-tight">{item.label}</span>
+                      </div>
+                    ))}
                   </div>
-                  <div className="space-y-5">
-                    <p className="text-xs uppercase tracking-[0.4em] text-white/70">connected by design</p>
-                    <p className="text-lg font-light text-white/90">
-                      every surface we ship is part of a linked system that keeps your story consistent and measurable.
-                    </p>
-                    <ul className="space-y-3 text-base sm:text-lg font-light text-white/90">
-                      {[
-                        { label: "websites", icon: "🖥️" },
-                        { label: "ads", icon: "📢" },
-                        { label: "video", icon: "🎥" },
-                        { label: "analytics", icon: "📊" },
-                        { label: "automation", icon: "⚙️" },
-                      ].map((item) => (
-                        <li key={item.label} className="flex items-center gap-3">
-                          <span className="text-lg" aria-hidden>{item.icon}</span>
-                          <span className="tracking-wide">{item.label}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                  <p className="text-sm sm:text-base leading-relaxed text-white/75">
+                  <p className="text-sm leading-relaxed text-white/75">
                     every element is crafted to move in sync, so your brand feels intentional across channels and devices.
                   </p>
                 </div>
-              </aside>
-            </div>
+              </div>
+            </aside>
           </div>
         </section>
 
