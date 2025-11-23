@@ -155,6 +155,16 @@ export default function DesignsPageClient() {
                   aria-hidden="true"
                 />
                 <div className="relative flex h-full flex-col justify-between gap-8 p-8 sm:p-10 lg:p-12">
+                  <div className="relative aspect-[16/10] w-full overflow-hidden rounded-2xl border border-white/10 bg-neutral-800">
+                    <Image
+                      src="https://res.cloudinary.com/dhqpqfw6w/image/upload/v1763935789/Generated_Image_November_23_2025_-_2_08PM_fvriub.webp"
+                      alt="Design hero preview"
+                      fill
+                      sizes="(min-width: 1280px) 640px, (min-width: 768px) 520px, 100vw"
+                      className="object-cover"
+                      priority
+                    />
+                  </div>
                   <div className="space-y-5">
                     <p className="text-xs uppercase tracking-[0.4em] text-white/70">connected by design</p>
                     <p className="text-lg font-light text-white/90">
