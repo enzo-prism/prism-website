@@ -1,6 +1,6 @@
 "use client"
 
-import { MapPin, Megaphone, Menu, MonitorSmartphone, Search, X } from "lucide-react"
+import { MapPin, Megaphone, Menu, MonitorSmartphone, Search, Sparkles, X } from "lucide-react"
 import type { LucideIcon } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
@@ -43,6 +43,7 @@ export default function Navbar() {
   const headerPositionClass = isMobile && pathname === "/" ? "fixed" : "sticky"
   const serviceIconMap: Record<string, LucideIcon> = {
     websites: MonitorSmartphone,
+    design: Sparkles,
     seo: Search,
     ads: Megaphone,
     "local listings": MapPin,
