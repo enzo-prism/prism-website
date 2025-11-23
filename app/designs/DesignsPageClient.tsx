@@ -207,37 +207,42 @@ export default function DesignsPageClient() {
 
         {/* What We Design */}
         <section className="px-4 py-16 sm:py-20 bg-neutral-50">
-          <div className="max-w-6xl mx-auto">
-            <div className="grid gap-12 lg:gap-16 md:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
-              <div className="space-y-6">
-                <h2 className="text-3xl sm:text-4xl font-semibold leading-tight text-neutral-900">
-                  what we design
-                </h2>
-                <p className="text-base sm:text-lg leading-relaxed text-neutral-700">
-                  great design ties everything together. our team builds visual systems that keep your brand consistent across every touchpoint.
-                </p>
-                <p className="text-sm uppercase tracking-[0.3em] text-neutral-500">we design:</p>
-              </div>
-              <div className="space-y-6">
-                <ul className="space-y-4 text-base sm:text-lg leading-relaxed text-neutral-800">
-                  {[
-                    "websites that convert visitors into loyal clients",
-                    "ads that attract attention and drive measurable results",
-                    "social media branding and posts that stay true to your voice",
-                    "business cards, brochures, and print that make a lasting impression",
-                    "internal assets like presentation decks and branded templates that keep your team aligned",
-                  ].map((item) => (
-                    <li key={item} className="flex items-start gap-3">
-                      <span className="mt-2 h-2.5 w-2.5 flex-shrink-0 rounded-full bg-neutral-900/70" aria-hidden="true" />
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-                <p className="text-base sm:text-lg leading-relaxed text-neutral-700">
-                  each piece is crafted to blend seamlessly, so your message looks &mdash; and feels &mdash; unified everywhere your brand lives.
-                </p>
-              </div>
+          <div className="mx-auto max-w-5xl space-y-10">
+            <div className="space-y-4 text-center sm:text-left">
+              <p className="text-xs font-semibold uppercase tracking-[0.35em] text-neutral-500">what we design</p>
+              <h2 className="text-3xl font-semibold leading-tight text-neutral-900 sm:text-4xl">
+                Cohesive visuals that work everywhere
+              </h2>
+              <p className="text-base leading-relaxed text-neutral-700 sm:text-lg">
+                Great design ties everything together. We build visual systems that keep your brand consistent across every touchpoint.
+              </p>
             </div>
+
+            <div className="grid gap-4 sm:grid-cols-2">
+              {[
+                { title: "websites", desc: "Conversion-first sites that turn visitors into loyal clients" },
+                { title: "ads", desc: "Attention-grabbing creatives that drive measurable results" },
+                { title: "social", desc: "Branded posts and profiles that stay true to your voice" },
+                { title: "print", desc: "Business cards, brochures, and collateral that leave a mark" },
+                { title: "internal assets", desc: "Decks, docs, and templates that keep teams aligned" },
+                { title: "systems", desc: "Reusable components and guidelines to keep everything cohesive" },
+              ].map((item) => (
+                <div
+                  key={item.title}
+                  className="flex items-start gap-3 rounded-2xl border border-neutral-200 bg-white p-4 shadow-sm"
+                >
+                  <span className="mt-1 h-2.5 w-2.5 flex-shrink-0 rounded-full bg-neutral-900/70" aria-hidden />
+                  <div className="space-y-1">
+                    <p className="text-sm font-semibold uppercase tracking-wide text-neutral-900">{item.title}</p>
+                    <p className="text-sm text-neutral-700">{item.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <p className="text-center text-sm leading-relaxed text-neutral-600 sm:text-base sm:text-left">
+              Each piece is crafted to blend seamlessly, so your message looks — and feels — unified everywhere your brand lives.
+            </p>
           </div>
         </section>
 
