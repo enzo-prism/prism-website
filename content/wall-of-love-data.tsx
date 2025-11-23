@@ -606,7 +606,6 @@ export const quotesData: Quote[] = [
   { id: 212, text: "Trials.", client: "thebookopener", company: "Instagram Community of Entrepreneurs" },
   { id: 213, text: "Pay the toll to reach your goal", client: "focus.ire", company: "Instagram Community of Entrepreneurs" },
   { id: 214, text: "Beautiful", client: "carlos.nxva", company: "Instagram Community of Entrepreneurs" },
-  { id: 215, text: "@hormozi is definitely worth a follow on here and also YouTube!", client: "kai.ringeisen", company: "Instagram Community of Entrepreneurs" },
   { id: 216, text: "👏", client: "vani7561", company: "Instagram Community of Entrepreneurs" },
   { id: 217, text: "Just wow 👏", client: "zorwealth", company: "Instagram Community of Entrepreneurs" },
   { id: 218, text: "This is beautiful man 🙏🏼", client: "danielekimian", company: "Instagram Community of Entrepreneurs" },
