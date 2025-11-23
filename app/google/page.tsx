@@ -7,7 +7,7 @@ import Navbar from "@/components/navbar"
 import ScrollToTop from "@/components/scroll-to-top"
 import { Button } from "@/components/ui/button"
 
-const GET_STARTED_HREF = "/get-started"
+const GET_STARTED_HREF = "/pricing"
 const PRICING_HREF = "/pricing"
 const GOOGLE_WORKSPACE_LINK =
   "https://c.gle/APy2Ad08G18tc2DVKTvFnIX7ZsIi8C_16CofJocN9aFYsQDXBJRKDAH3FRQb6BfrqNgPv1Buz5DypvRjWF8E2rqpEvohTLTUWmLF6UOh4oCinNkIBx-wbk3wUX2jqxqDYiPNn4cWz4pfBlfNZT7je1YO"

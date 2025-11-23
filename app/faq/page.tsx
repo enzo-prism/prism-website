@@ -132,7 +132,7 @@ export default function FAQPage() {
                   Email Us
                 </a>
                 <a
-                  href="/get-started"
+                  href="/pricing"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"

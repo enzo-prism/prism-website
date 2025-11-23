@@ -100,7 +100,7 @@ export default function SeoOffPagePage() {
             review on-page seo
           </Link>
           <Link
-            href="/get-started"
+            href="/pricing"
             className="inline-flex items-center rounded-full bg-neutral-900 px-6 py-3 text-sm font-semibold lowercase text-white"
           >
             talk with prism

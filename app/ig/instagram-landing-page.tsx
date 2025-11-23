@@ -128,7 +128,7 @@ export default function InstagramLandingPage() {
                 ))}
               </ul>
               <Button asChild size="lg" className="mt-4 w-fit rounded-full px-8 py-3 text-base">
-                <Link href="/get-started">
+                <Link href="/pricing">
                   Start a Project <ArrowRight className="ml-2 h-5 w-5" />
                 </Link>
               </Button>

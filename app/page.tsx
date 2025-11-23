@@ -89,7 +89,7 @@ export default function Home() {
               if you are viewing this page without javascript, here is the short version: prism designs and powers digital experiences that help neighborhood brands earn trust and new revenue. we build fast websites, run performance ads, and optimize local listings under one strategy so your team can focus on serving clients.
             </p>
             <p>
-              ready to see how it fits your business? review our <a href="/pricing">pricing plans</a> or request a <a href="/get-started">free design audit</a>.
+              ready to see how it fits your business? review our <a href="/pricing">pricing plans</a> or request a <a href="/pricing">free design audit</a>.
             </p>
           </div>
         </section>

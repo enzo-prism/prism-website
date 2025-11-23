@@ -165,7 +165,7 @@ export default function ServicesPage() {
                   explore pricing
                 </Link>
                 <Link
-                  href="/get-started"
+                  href="/pricing"
                   className="inline-flex items-center justify-center rounded-full border border-neutral-200 px-6 py-3 text-sm font-semibold text-neutral-900 transition hover:border-neutral-900"
                 >
                   talk with prism
@@ -285,7 +285,7 @@ export default function ServicesPage() {
               </p>
               <div className="mt-8 flex flex-wrap justify-center gap-3">
                 <Link
-                  href="/get-started"
+                  href="/pricing"
                   className="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-neutral-900 transition hover:bg-neutral-100"
                 >
                   claim your audit & plan

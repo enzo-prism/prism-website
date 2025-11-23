@@ -601,7 +601,7 @@ function FinalCTA() {
                 size="lg"
                 className="w-full rounded-full border border-white bg-white px-8 py-6 text-base font-semibold text-black hover:bg-white/90 sm:w-auto"
               >
-                <Link href="/get-started">Get started</Link>
+                <Link href="/pricing">Get started</Link>
               </Button>
             </RippleHighlight>
           </div>

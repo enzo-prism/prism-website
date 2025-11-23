@@ -18,7 +18,7 @@ import Navbar from "@/components/navbar"
 import ScrollToTop from "@/components/scroll-to-top"
 import { Button } from "@/components/ui/button"
 
-const GET_FREE_AUDIT_HREF = "/get-started"
+const GET_FREE_AUDIT_HREF = "/pricing"
 const CONTACT_HREF = "/contact"
 const STRUCTURE_SECTION_ID = "structure"
 const POLICY_SECTION_ID = "policy"
