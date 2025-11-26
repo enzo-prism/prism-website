@@ -44,6 +44,12 @@ const cta = {
   trackLabel: "practice transitions institute case study cta",
 }
 
+const heroButton = {
+  label: "visit practicetransitionsinstitute.com",
+  href: "https://practicetransitionsinstitute.com",
+  trackLabel: "practice transitions institute website",
+}
+
 const share = {
   url: "https://www.design-prism.com/case-studies/practice-transitions-institute",
   title: "practice transitions institute × prism case study",
@@ -68,6 +74,7 @@ export default function PracticeTransitionsInstituteCaseStudy() {
       heroTitle="practice transitions institute — consulting launchpad"
       heroSubtitle="making complex practice transitions easy to understand online"
       summary="practice transitions institute partnered with prism to articulate their transition playbook, elevate credibility, and set up measurement across every lead source."
+      heroButton={heroButton}
       quickFacts={quickFacts}
       sections={sections}
       comingSoon={comingSoon}

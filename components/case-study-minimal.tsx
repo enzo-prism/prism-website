@@ -54,12 +54,19 @@ type CTAConfig = {
   href?: string
 }
 
+type HeroButtonConfig = {
+  label: string
+  href: string
+  trackLabel?: string
+}
+
 interface MinimalCaseStudyProps {
   pageTrackingTitle: string
   heroEyebrow?: string
   heroTitle: string
   heroSubtitle?: string
   summary: string
+  heroButton?: HeroButtonConfig
   quickFacts: QuickFact[]
   sections?: Section[]
   comingSoon?: ComingSoon
@@ -74,6 +81,7 @@ export default function MinimalCaseStudyPage({
   heroTitle,
   heroSubtitle,
   summary,
+  heroButton,
   quickFacts,
   sections,
   comingSoon,
@@ -97,6 +105,20 @@ export default function MinimalCaseStudyPage({
               <h1 className="text-3xl font-bold tracking-tight lowercase sm:text-4xl">{heroTitle}</h1>
               {heroSubtitle && <p className="text-xl text-neutral-600 lowercase">{heroSubtitle}</p>}
               <p className="text-neutral-600 lowercase">{summary}</p>
+              {heroButton && (
+                <div className="flex flex-wrap items-center gap-3">
+                  <Button asChild variant="outline" className="rounded-full lowercase">
+                    <Link
+                      href={heroButton.href}
+                      target={heroButton.href.startsWith("http") ? "_blank" : undefined}
+                      rel={heroButton.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                      onClick={() => heroButton.trackLabel && trackCTAClick(heroButton.label, heroButton.trackLabel)}
+                    >
+                      {heroButton.label}
+                    </Link>
+                  </Button>
+                </div>
+              )}
             </div>
           </div>
         </section>

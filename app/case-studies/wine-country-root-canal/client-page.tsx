@@ -44,6 +44,12 @@ const cta = {
   trackLabel: "wine country root canal case study cta",
 }
 
+const heroButton = {
+  label: "visit winecountryrootcanal.com",
+  href: "https://www.winecountryrootcanal.com",
+  trackLabel: "wine country root canal website",
+}
+
 const share = {
   url: "https://www.design-prism.com/case-studies/wine-country-root-canal",
   title: "wine country root canal × prism case study",
@@ -68,6 +74,7 @@ export default function WineCountryRootCanalCaseStudy() {
       heroTitle="wine country root canal — endodontic growth system"
       heroSubtitle="pairing specialty credibility with a smooth patient journey"
       summary="wine country root canal turned to prism for a calm, trustworthy website and local search presence that reflect the precision of their endodontic care."
+      heroButton={heroButton}
       quickFacts={quickFacts}
       sections={sections}
       comingSoon={comingSoon}

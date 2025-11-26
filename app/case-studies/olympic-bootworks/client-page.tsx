@@ -70,6 +70,18 @@ export default function OlympicBootworksCaseStudy() {
               <p className="text-sm text-neutral-500 italic lowercase">
                 the transformation: from outdated squarespace template to custom e-commerce powerhouse
               </p>
+              <div className="flex flex-wrap items-center gap-3">
+                <Button asChild variant="outline" className="rounded-full lowercase">
+                  <Link
+                    href="https://olympicbootworks.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => trackCTAClick("visit olympicbootworks.com", "olympic bootworks website hero")}
+                  >
+                    visit olympicbootworks.com
+                  </Link>
+                </Button>
+              </div>
             </div>
           </div>
         </section>
