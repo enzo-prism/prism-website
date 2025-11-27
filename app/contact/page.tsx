@@ -32,9 +32,7 @@ export default function ContactPage() {
           <div className="mx-auto flex max-w-2xl flex-col gap-10">
             <RevealOnScroll>
               <div className="space-y-4 text-center">
-                <p className="text-sm font-semibold uppercase tracking-[0.3em] text-slate-500">contact</p>
-                <h1 className="text-4xl font-semibold text-slate-900 sm:text-5xl">Let's talk.</h1>
-                <p className="text-base text-slate-600">We reply fast and keep every next step simple.</p>
+                <h1 className="text-4xl font-semibold text-slate-900 sm:text-5xl">Contact Prism</h1>
               </div>
             </RevealOnScroll>
             <RevealOnScroll delay={0.1}>
