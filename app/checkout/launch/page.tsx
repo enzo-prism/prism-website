@@ -28,6 +28,9 @@ export default function LaunchCheckoutPage() {
                 </Link>
              </Button>
           </div>
+          <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight text-center mb-6">
+            start your launch plan
+          </h1>
           <div className="mb-10 text-center">
             <span className="inline-block rounded-full bg-amber-100 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-amber-800 mb-4">
               Launch Plan 🚀
