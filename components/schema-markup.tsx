@@ -922,6 +922,7 @@ export function OfferSchema({
   priceCurrency = "USD",
   priceRange,
   availability = "https://schema.org/InStock",
+  url,
   validFrom,
 }: {
   offerId: string
