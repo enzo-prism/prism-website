@@ -424,9 +424,14 @@ type Offer = {
   price?: string
   priceCurrency?: string
   itemOffered: {
-    "@type": "Service"
+    "@type": "Service" | "Product"
     name: string
     description: string
+    sku?: string
+    brand?: {
+      "@type": "Brand"
+      name: string
+    }
   }
   availability: string
   validFrom?: string
