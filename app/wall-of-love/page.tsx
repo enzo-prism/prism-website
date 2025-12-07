@@ -39,6 +39,13 @@ export const metadata: Metadata = {
 }
 
 export default function WallOfLovePage() {
+  const defaultReviewRating = {
+    "@type": "Rating",
+    ratingValue: "5",
+    bestRating: "5",
+    worstRating: "1",
+  }
+
   const reviewListSchema = {
     "@context": "https://schema.org",
     "@type": "ItemList",
@@ -52,6 +59,7 @@ export default function WallOfLovePage() {
           name: quote.client,
         },
         reviewBody: sanitizeReviewText(quote.text),
+        reviewRating: defaultReviewRating,
         itemReviewed: {
           "@type": "Organization",
           "@id": "https://www.design-prism.com/#organization",

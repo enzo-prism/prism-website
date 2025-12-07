@@ -635,7 +635,6 @@ function PricingStructuredData() {
               description: bestForDescription,
               price: numericPrice.length ? numericPrice : undefined,
               priceCurrency: "USD",
-              priceRange: tier.price,
               availability: "https://schema.org/InStock",
             }}
             aggregateRating={{

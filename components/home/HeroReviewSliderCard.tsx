@@ -10,6 +10,12 @@ import { trackNavigation } from "@/utils/analytics"
 import { sanitizeReviewText } from "@/lib/schema-helpers"
 
 const AUTO_ROTATE_MS = 6000
+const DEFAULT_REVIEW_RATING = {
+  "@type": "Rating",
+  ratingValue: "5",
+  bestRating: "5",
+  worstRating: "1",
+}
 
 type HeroReviewSliderCardProps = {
   className?: string
@@ -66,8 +72,10 @@ export default function HeroReviewSliderCard({ className }: HeroReviewSliderCard
     return JSON.stringify({
       "@context": "https://schema.org",
       "@type": "Review",
+      name: `Review from ${heroReviewForSchema.client}`,
       author: { "@type": "Person", name: heroReviewForSchema.client },
       reviewBody: sanitizeReviewText(heroReviewForSchema.text),
+      reviewRating: DEFAULT_REVIEW_RATING,
       itemReviewed: {
         "@type": "Organization",
         "@id": "https://www.design-prism.com/#organization",
