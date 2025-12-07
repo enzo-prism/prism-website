@@ -112,7 +112,6 @@ const tiers: Record<TierId, TierContent> = {
         price: "$229.95",
         description:
           "If a practice already owns a DSLR, pair it with a turnkey kit that covers retractors, mirrors, contrastors, LED attachments, and a carry case.",
-        image: "https://dentalaccessories.org/cdn/shop/products/UltimateBundleKitfinal_3.jpg?v=1615480709&width=550",
         link: {
           href: "https://dentalaccessories.org/products/dental-photography-ultimate-bundle-kit",
           label: "dentalaccessories.org"
