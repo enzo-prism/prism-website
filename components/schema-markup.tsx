@@ -332,13 +332,16 @@ type Service = {
     name: string
     description: string
     businessFunction: string
+    availability?: string
     priceSpecification?: {
-      "@type": "PriceSpecification"
+      "@type": "UnitPriceSpecification"
       price?: string
       priceCurrency?: string
-      priceRange?: string
+      unitCode?: string
+      billingDuration?: string
     }
   }
+  aggregateRating?: AggregateRating
 }
 
 type LocalBusiness = {
@@ -677,6 +680,8 @@ export function ServiceSchema({
     price?: string
     priceCurrency?: string
     priceRange?: string
+    billingPeriod?: string
+    availability?: string
   }
   aggregateRating?: AggregateRating
 }) {
@@ -696,16 +701,19 @@ export function ServiceSchema({
         name: offerDetails.name,
         description: offerDetails.description,
         businessFunction: offerDetails.businessFunction,
-        ...(offerDetails.price || offerDetails.priceRange
-          ? {
-              priceSpecification: {
-                "@type": "PriceSpecification",
-                ...(offerDetails.price && { price: offerDetails.price }),
-                ...(offerDetails.priceCurrency && { priceCurrency: offerDetails.priceCurrency }),
-                ...(offerDetails.priceRange && { priceRange: offerDetails.priceRange }),
-              },
-            }
-          : {}),
+        availability: offerDetails.availability || "https://schema.org/InStock",
+        ...((offerDetails.price || offerDetails.priceRange) && {
+          priceSpecification: {
+            "@type": "UnitPriceSpecification",
+            ...(offerDetails.price && { price: offerDetails.price }),
+            ...(offerDetails.priceRange && { price: offerDetails.priceRange }),
+            priceCurrency: offerDetails.priceCurrency || "USD",
+            ...(offerDetails.billingPeriod && {
+              unitCode: "MON",
+              billingDuration: offerDetails.billingPeriod,
+            }),
+          },
+        }),
       },
     }),
     ...(aggregateRating && { aggregateRating }),

@@ -37,7 +37,7 @@ import {
 } from "@/components/ui/accordion"
 import { floatLoop, hoverTilt } from "@/lib/animations"
 import { cn } from "@/lib/utils"
-import { FAQSchema, ProductSchema } from "@/components/schema-markup"
+import { FAQSchema, ServiceSchema } from "@/components/schema-markup"
 
 const HERO_IMAGE = {
   src: "https://res.cloudinary.com/dhqpqfw6w/image/upload/v1763918627/Generated_Image_November_23_2025_-_9_22AM_eobrfp.webp",
@@ -618,24 +618,35 @@ function FinalCTA() {
 
 function PricingStructuredData() {
   const faqItems = faqs.map((faq) => ({ question: faq.question, answer: faq.answer }))
+
+  // Define pricing details for each tier with proper billing context
+  const tierPricing: Record<string, { price: string; billingPeriod?: string }> = {
+    Launch: { price: "400" }, // One-time payment
+    Grow: { price: "900", billingPeriod: "P1M" }, // Monthly
+    Scale: { price: "1500", billingPeriod: "P1M" }, // Monthly (minimum)
+  }
+
   return (
     <>
       {pricingTiers.map((tier) => {
-        const numericPrice = tier.price.replace(/[^\d.]/g, "")
+        const pricing = tierPricing[tier.name]
         const bestForDescription = tier.bestFor.map((item) => item.text).join(" • ")
+
         return (
-          <ProductSchema
-            key={`pricing-product-${tier.name.toLowerCase()}`}
-            productId={`pricing-${tier.name.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}
-            name={`${tier.name} website plan`}
+          <ServiceSchema
+            key={`pricing-service-${tier.name.toLowerCase()}`}
+            serviceId={`pricing-${tier.name.toLowerCase()}`}
+            name={`${tier.name} Website Design Plan`}
             description={bestForDescription}
-            imageUrl="https://www.design-prism.com/prism-opengraph.png"
-            url="https://www.design-prism.com/pricing"
-            offer={{
-              name: `${tier.name} plan`,
+            serviceType="WebDesign"
+            areaServed="Worldwide"
+            offerDetails={{
+              name: `${tier.name} Plan`,
               description: bestForDescription,
-              price: numericPrice.length ? numericPrice : undefined,
+              businessFunction: "http://purl.org/goodrelations/v1#ProvideService",
+              price: pricing?.price,
               priceCurrency: "USD",
+              billingPeriod: pricing?.billingPeriod,
               availability: "https://schema.org/InStock",
             }}
             aggregateRating={{
