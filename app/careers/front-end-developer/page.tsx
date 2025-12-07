@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     images: ["/prism-opengraph.png"],
   },
   alternates: {
-    canonical: "https://design-prism.com/careers/front-end-developer",
+    canonical: "https://www.design-prism.com/careers/front-end-developer",
   },
 }
 

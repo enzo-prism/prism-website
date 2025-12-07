@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     ],
   },
   alternates: {
-    canonical: "https://design-prism.com/offers/ai-seo-boost",
+    canonical: "https://www.design-prism.com/offers/ai-seo-boost",
   },
 }
 

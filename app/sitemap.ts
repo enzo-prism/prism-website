@@ -61,7 +61,6 @@ function segmentRoutes(base: string): StaticRouteInput[] {
     "proof",
     "wall-of-love",
     "refer",
-    "get-started",
     "seo",
     "seo/on-page",
     "seo/off-page",
@@ -76,7 +75,7 @@ function segmentRoutes(base: string): StaticRouteInput[] {
   return segmentSlugs.map((slug) => ({
     url: `${base}/${slug}`,
     changeFrequency: slug.startsWith("pricing") || slug.startsWith("offers") ? "weekly" : "monthly",
-    priority: slug === "get-started" ? 0.9 : 0.75,
+    priority: 0.75,
   }))
 }
 

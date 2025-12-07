@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     title: "local listing optimization for small businesses | prism",
     description:
       "prism optimizes google, apple, yelp, bing, facebook, and nextdoor listings so small businesses stay accurate, rank higher, and convert more local searches into customers.",
-    url: "https://design-prism.com/local-listings",
+    url: "https://www.design-prism.com/local-listings",
     images: [
       {
         url: "/prism-opengraph.png",
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     ],
   },
   alternates: {
-    canonical: "https://design-prism.com/local-listings",
+    canonical: "https://www.design-prism.com/local-listings",
   },
 }
 

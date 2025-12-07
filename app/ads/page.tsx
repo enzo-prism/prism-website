@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     title: "paid ads management for small businesses | prism",
     description:
       "prism plans, builds, and optimizes google, meta, tiktok, and yelp ads so small businesses capture ready-to-buy local customers without wasted spend.",
-    url: "https://design-prism.com/ads",
+    url: "https://www.design-prism.com/ads",
     images: [
       {
         url: "/prism-opengraph.png",
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     ],
   },
   alternates: {
-    canonical: "https://design-prism.com/ads",
+    canonical: "https://www.design-prism.com/ads",
   },
 }
 

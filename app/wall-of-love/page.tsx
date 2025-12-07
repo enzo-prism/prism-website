@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     images: ["/prism-opengraph.png"],
   },
   alternates: {
-    canonical: "https://design-prism.com/wall-of-love",
+    canonical: "https://www.design-prism.com/wall-of-love",
   },
 }
 
