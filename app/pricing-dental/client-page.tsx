@@ -392,7 +392,6 @@ function DentalPricingStructuredData() {
             description: plan.description,
             price: plan.monthlyPrice,
             priceCurrency: "USD",
-            priceRange: `$${plan.monthlyPrice}/mo or $${plan.annualPrice}/yr`,
             availability: "https://schema.org/InStock",
           }}
           aggregateRating={{
