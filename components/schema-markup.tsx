@@ -552,6 +552,7 @@ type Product = {
   "@id": string
   name: string
   description: string
+  image?: string
   brand: {
     "@type": "Brand"
     name: string
@@ -1233,6 +1234,7 @@ export function ProductSchema({
   productId,
   name,
   description,
+  imageUrl,
   sku,
   url,
   offer,
@@ -1241,6 +1243,7 @@ export function ProductSchema({
   productId: string
   name: string
   description: string
+  imageUrl?: string
   sku?: string
   url: string
   offer: {
@@ -1287,6 +1290,7 @@ export function ProductSchema({
     "@id": `https://design-prism.com/#${productId}`,
     name,
     description,
+    image: imageUrl,
     brand: {
       "@type": "Brand",
       name: "Prism",

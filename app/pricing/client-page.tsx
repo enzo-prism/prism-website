@@ -629,6 +629,7 @@ function PricingStructuredData() {
             productId={`pricing-${tier.name.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}
             name={`${tier.name} website plan`}
             description={bestForDescription}
+            imageUrl="https://www.design-prism.com/prism-opengraph.png"
             url="https://www.design-prism.com/pricing"
             offer={{
               name: `${tier.name} plan`,
