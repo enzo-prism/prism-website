@@ -23,7 +23,7 @@ export default function Home() {
       >
         <div className="mx-auto flex max-w-5xl flex-col gap-6 px-6 py-20">
           <div className="space-y-4">
-            <h1 className="text-4xl font-semibold tracking-tight">prism growth engine for local businesses</h1>
+            <h1 className="text-4xl font-semibold tracking-tight">grow your local business with websites, seo, and ads that work</h1>
             <p className="text-lg leading-relaxed text-white/80">
               prism designs, builds, and markets the digital storefronts that keep neighborhood brands booked. we combine fast websites, local-first seo, and paid acquisition into one measurable system so your team can focus on the work only you can do.
             </p>
