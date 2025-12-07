@@ -948,12 +948,9 @@ export function OfferSchema({
       name: serviceName,
       description: serviceDescription,
     },
-    priceSpecification: {
-      "@type": "PriceSpecification",
-      ...(price && { price }),
-      priceCurrency,
-      ...(priceRange && { priceRange }),
-    },
+    ...(price && { price }),
+    ...(priceCurrency && { priceCurrency }),
+    ...(priceRange && { priceRange }),
     availability: availability || "https://schema.org/InStock",
     ...(validFrom && { validFrom }),
   }
