@@ -4,6 +4,15 @@ import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
 import CheckoutForm from "@/components/checkout-form"
 import { Button } from "@/components/ui/button"
+import type { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "grow plan checkout | prism",
+  description: "confirm your prism grow website plan and finalize billing details.",
+  alternates: {
+    canonical: "https://www.design-prism.com/checkout/grow",
+  },
+}
 
 export default function GrowCheckoutPage() {
   return (

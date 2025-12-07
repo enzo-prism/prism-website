@@ -4,6 +4,15 @@ import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
 import CheckoutForm from "@/components/checkout-form"
 import { Button } from "@/components/ui/button"
+import type { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "launch plan checkout | prism",
+  description: "confirm your prism launch website plan and finalize billing details.",
+  alternates: {
+    canonical: "https://www.design-prism.com/checkout/launch",
+  },
+}
 
 export default function LaunchCheckoutPage() {
   return (
