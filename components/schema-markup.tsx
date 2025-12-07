@@ -428,12 +428,6 @@ type Offer = {
     name: string
     description: string
   }
-  priceSpecification: {
-    "@type": "PriceSpecification"
-    price?: string
-    priceCurrency?: string
-    priceRange?: string
-  }
   availability: string
   validFrom?: string
 }
@@ -1251,7 +1245,6 @@ export function ProductSchema({
     description?: string
     price?: string
     priceCurrency?: string
-    priceRange?: string
     businessFunction?: string
     availability?: string
     validFrom?: string
@@ -1269,18 +1262,18 @@ export function ProductSchema({
       "@id": "https://design-prism.com/#organization",
     },
     url: offer.url || url,
-    ...(offer.price && { price: offer.price }),
-    ...(offer.priceCurrency && { priceCurrency: offer.priceCurrency }),
     itemOffered: {
-      "@type": "Service",
+      "@type": "Product",
       name,
       description,
+      ...(sku && { sku }),
+      brand: {
+        "@type": "Brand",
+        name: "Prism",
+      },
     },
-    priceSpecification: {
-      "@type": "PriceSpecification",
-      ...(offer.price && { price: offer.price }),
-      ...(offer.priceCurrency && { priceCurrency: offer.priceCurrency }),
-    },
+    ...(offer.price && { price: offer.price }),
+    ...(offer.priceCurrency && { priceCurrency: offer.priceCurrency }),
     availability: offer.availability || "https://schema.org/InStock",
     ...(offer.validFrom && { validFrom: offer.validFrom }),
   }
