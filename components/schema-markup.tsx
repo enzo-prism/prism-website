@@ -420,6 +420,7 @@ type Offer = {
   seller: {
     "@id": string
   }
+  url?: string
   price?: string
   priceCurrency?: string
   itemOffered: {
@@ -933,6 +934,7 @@ export function OfferSchema({
   priceCurrency?: string
   priceRange?: string
   availability?: string
+  url?: string
   validFrom?: string
 }) {
   const offerSchema: Offer = {
@@ -944,6 +946,7 @@ export function OfferSchema({
     seller: {
       "@id": "https://design-prism.com/#organization",
     },
+    ...(url && { url }),
     itemOffered: {
       "@type": "Service",
       name: serviceName,
@@ -1248,6 +1251,7 @@ export function ProductSchema({
     businessFunction?: string
     availability?: string
     validFrom?: string
+    url?: string
   }
   aggregateRating?: AggregateRating
 }) {
@@ -1260,6 +1264,7 @@ export function ProductSchema({
     seller: {
       "@id": "https://design-prism.com/#organization",
     },
+    url: offer.url || url,
     ...(offer.price && { price: offer.price }),
     ...(offer.priceCurrency && { priceCurrency: offer.priceCurrency }),
     itemOffered: {
