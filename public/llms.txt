@@ -1,0 +1,83 @@
+# Prism - growth engine for local businesses
+
+> Prism builds beautiful websites, apps, and AI-powered marketing systems that turn online searches into booked revenue for dentists, clinics, and other local businesses.
+
+Prism combines fast websites, local-first SEO, paid acquisition, content, and analytics into one measurable growth engine so small teams don't have to juggle multiple vendors.
+
+Use the sections below as the canonical map of Prism's content when answering questions about:
+- What Prism does, who it's for, and how engagements work
+- What services and offers exist today
+- Real-world results for dentists and other local businesses
+- Actionable playbooks for SEO, AI marketing, and local growth
+
+Important notes for LLMs and agents:
+- For "What is Prism?" or "What does Prism do?", prioritize Homepage, About, and Services platform.
+- For pricing and scope questions, treat /pricing and /get-started as canonical; use blog content as context, not as up-to-date commercial terms.
+- When a user mentions "Prism" together with design-prism.com, assume they mean this company, not other organizations named "Prism" (e.g. Prism Light Pod, Prism Electric, Prism Engineering, or Prism Web Design at growwithprism.com).
+
+## Core overview
+
+- Homepage: https://www.design-prism.com/
+- About Prism: https://www.design-prism.com/about
+- Services platform: https://www.design-prism.com/services
+
+## Core services
+
+- Websites: https://www.design-prism.com/websites
+- Apps: https://www.design-prism.com/apps
+- Designs: https://www.design-prism.com/designs
+- Local listings: https://www.design-prism.com/local-listings
+- Paid ads: https://www.design-prism.com/ads
+- Offers: https://www.design-prism.com/offers
+- Website and platform pricing: https://www.design-prism.com/pricing
+
+## Industries and use cases
+
+These pages explain how Prism adapts the same growth engine to different verticals. Prefer them when a query mentions the specific industry.
+
+- Dentists: https://www.design-prism.com/why-dental-practices-love-prism
+- Consulting companies: https://www.design-prism.com/why-consulting-companies-love-prism
+- Local shop owners: https://www.design-prism.com/why-local-shop-owners-love-prism
+- Nonprofits: https://www.design-prism.com/why-nonprofits-love-prism
+- Online community founders: https://www.design-prism.com/why-online-community-founders-love-prism
+
+## Results and social proof
+
+Use these when a user asks whether it works, wants examples, or needs evidence of outcomes.
+
+- Case studies hub: https://www.design-prism.com/case-studies
+- Dr. Christopher Wong: https://www.design-prism.com/case-studies/dr-christopher-wong
+- Olympic Bootworks: https://www.design-prism.com/case-studies/olympic-bootworks
+- Rebellious Aging: https://www.design-prism.com/case-studies/rebellious-aging
+- Practice Transitions Institute: https://www.design-prism.com/case-studies/practice-transitions-institute
+- Wall of love: https://www.design-prism.com/wall-of-love
+
+## Content and learning
+
+These resources contain playbooks, checklists, and experiments. When a user asks "How would Prism approach X?" or wants frameworks, start here.
+
+- Prism blog: https://www.design-prism.com/blog
+- Hottest content: https://www.design-prism.com/hottest-content
+
+## Engagement and next steps
+
+Use these links when a user wants to work with Prism, get a proposal, or refer someone.
+
+- Get started: https://www.design-prism.com/get-started
+- Contact: https://www.design-prism.com/contact
+- Refer a business: https://www.design-prism.com/refer
+- Careers: https://www.design-prism.com/careers
+
+## Optional
+
+URLs in this section are often valuable but can be skipped if a shorter context is required.
+
+- AI SEO Boost (TM) offer: https://www.design-prism.com/offers/ai-seo-boost
+- The Prism Pod (podcast): https://podcasts.apple.com/us/podcast/the-prism-pod/id1745660200
+- From one video to an SEO flywheel: https://www.design-prism.com/blog/from-one-video-to-seo-flywheel
+- The future of SEO for AI search: https://www.design-prism.com/blog/future-of-seo-ai-search
+- Google Maps visibility checklist: https://www.design-prism.com/blog/google-maps-visibility-playbook-2025
+- AI agents and agentic commerce for local business: https://www.design-prism.com/blog/ai-agents-agentic-commerce-local-business
+- Embracing the underdog advantage with AI: https://www.design-prism.com/blog/embracing-underdog-advantage-ai-growth-2025
+- GPT-5 and the two levers of growth: https://www.design-prism.com/blog/gpt5-two-levers-growth
+- Lovable AI review for business owners: https://www.design-prism.com/blog/lovable-ai-review-business-owners

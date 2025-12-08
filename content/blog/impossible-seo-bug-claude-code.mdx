@@ -1,0 +1,153 @@
+---
+title: 'how an "impossible" seo bug turned into a 20-minute win with claude code'
+description: "the structured data issue that kept our site health stuck at 92%, how swapping models fixed it fast, and a founder-ready seo checklist."
+date: "2025-12-07"
+category: "seo"
+image: "https://design-prism.com/api/og/blog/impossible-seo-bug-claude-code"
+gradientClass: "bg-gradient-to-br from-amber-300/30 via-rose-300/30 to-indigo-300/30"
+openGraph:
+  title: 'how an "impossible" seo bug turned into a 20-minute win with claude code'
+  description: "site health was stuck, structured data errors kept returning, and one model swap cleared it on the first try."
+  url: "https://design-prism.com/blog/impossible-seo-bug-claude-code"
+  siteName: "prism"
+  images:
+    - url: "https://design-prism.com/api/og/blog/impossible-seo-bug-claude-code"
+      width: 1200
+      height: 630
+      alt: "Structured data debugging with Claude Code"
+  locale: "en_US"
+  type: "article"
+  publishedTime: "2025-12-07T00:00:00.000Z"
+  authors: ["Enzo Sison"]
+twitter:
+  card: "summary_large_image"
+  title: 'how an "impossible" seo bug turned into a 20-minute win with claude code'
+  description: "the structured data issue that stalled our site health and how switching models unlocked the fix."
+  images: ["https://design-prism.com/api/og/blog/impossible-seo-bug-claude-code"]
+canonical: "https://design-prism.com/blog/impossible-seo-bug-claude-code"
+---
+
+import YouTubeVideoEmbed from '@/components/youtube-video-embed'
+
+*By Enzo Sison - Founder, Prism*
+
+We hit a structured data bug that would not die. Multiple fixes, multiple Semrush crawls, and site health stayed around 92%. One model switch turned it into a 20-minute win. Here is the story, the lesson, and a checklist you can use.
+
+> Video breakdown: the live walkthrough sits below. This post adds context, lessons, and the exact playbook.
+
+<YouTubeVideoEmbed videoId="wcKFssQybnE" title='how an "impossible" seo bug turned into a 20-minute win with claude code' className="my-8" />
+
+### quick background: what prism actually does for founders
+
+I run Prism, a web studio for founders who care about growth, not just pretty pixels. Every project ladders up to three levers:
+
+1. increasing leads (more qualified people discovering you)
+2. improving conversion rate (more of those people becoming customers)
+3. increasing lifetime value (customers sticking around and spending more)
+
+Technical SEO sits in the middle. If your site is hard for Google to understand, you cap all three.
+
+---
+
+## the real problem: a structured data bug that would not go away
+
+We were working across a 120-page site (our own plus some client work). The loop was simple:
+
+- run a Semrush site audit
+- fix errors
+- re-run the audit
+- watch site health climb closer to 100%
+
+Except it did not. Health stuck near 92%. A handful of structured data errors refused to clear. Every time we shipped a fix and waited another 20-minute crawl, the same issues returned.
+
+We were using OpenAI's Codeex model through the CLI to debug:
+
+1. feed in the error details and source code
+2. get a fix suggestion
+3. implement it
+4. re-run Semrush
+5. same errors again
+
+After a couple of days, it was obvious we needed a second opinion from another model.
+
+---
+
+## why structured data matters more than most founders realize
+
+Structured data (schema) tells Google exactly what is on a page:
+
+- "this is a product with a price and reviews."
+- "this is an article with an author and date."
+- "this is a local business at this address with these hours."
+
+When it is implemented correctly, you get richer search results, better eligibility for AI search, and a clearer picture of your business. When it is wrong, you get warnings, missed visibility, and less trust from Google - real revenue left on the table for a 120-page site.
+
+---
+
+## enter claude code (opus 4.5): $20 well spent
+
+I had hesitated to add Claude Code's Pro plan because we were already spending about $200 a month on OpenAI and had paid for Anthropic and Gemini before. But this bug overstayed its welcome, so we tested Claude Code for roughly $20.
+
+We fed Claude the exact same inputs we had given Codeex - Semrush error details, code snippets, and schema context. Claude spotted the underlying mistake, suggested a fix that matched the spec, and we implemented it.
+
+We ran another Semrush audit:
+
+- the bug disappeared on the first try
+- site health jumped
+- no more recurring structured data errors
+
+The takeaway is not that one vendor "won" forever. Being dogmatic about a single model wasted days; being flexible solved it in one shot.
+
+---
+
+## what this means for you as a founder (not a developer)
+
+### 1) keep a multi-model mindset
+
+The AI landscape moves too fast to bet on one vendor. Your team should switch between OpenAI, Anthropic, Gemini, and whatever works best for the problem. Treat models like interchangeable power tools, not religions. If an agency insists one tool is "best at everything," that is a red flag.
+
+### 2) "we use ai" is meaningless - how you use it matters
+
+Codeex gave plausible fixes that passed its own reasoning but failed reality. Claude gave a fix that matched the schema spec and Semrush's behavior. Good AI workflows stay grounded in real-world feedback (Semrush, Search Console, analytics), generate options, and test until the bug is actually gone.
+
+### 3) technical seo stops being optional once you scale
+
+A five-page brochure site can get away with a lot. A 50-200+ page site that should feed you leads daily is a different game. You need clean site health scores, structured data coverage, and crawl/indexability dialed in - especially if you are paying to send people to the site.
+
+---
+
+## a simple checklist: is it time to get help with your site health?
+
+Answer honestly:
+
+- do you have 20+ pages (blog, product, locations, case studies)?
+- do you rely on the site for leads, demos, or sales?
+- do you skip Semrush/Ahrefs/Search Console checks for months at a time?
+- has your developer or agency ever explained structured data and site health?
+- when they did, did it sound like jargon or like they actually knew the system?
+
+If you are nodding along, you likely have hidden technical issues costing you money every month.
+
+---
+
+## how we approach this at prism
+
+1. **baseline audit**: run a full crawl, check site health, structured data, speed, and core technical issues.
+2. **prioritized fix list**: rank by revenue impact, not what looks cool in a report. Explain each issue in plain English.
+3. **ai-powered implementation**: use multiple AI coding tools (Codeex, Claude Code, Gemini, etc.) and validate fixes against Semrush and Search Console, not just model output.
+4. **growth alignment**: tie every fix back to leads, conversion, and LTV so the site is built to generate business.
+5. **ongoing iteration**: as models improve, we keep testing them on real problems so you do not have to care which tool we use - only that the site keeps improving.
+
+---
+
+## why we share this stuff publicly
+
+This work is not magic. The video shows the exact issue, tools, and outcome in real time so you can see what is happening under the hood and the level of care you should expect from whoever owns your site.
+
+---
+
+## if you want your website to actually pull its weight
+
+If you are a founder with a site that should be producing leads - and you suspect hidden technical debt is holding it back - let us handle the ugly parts.
+
+We will run a site health and structured data audit, fix the high-impact issues, and turn your website into something that supports your growth targets. Worst case, you get clarity on what is slowing you down. Best case, we unlock traffic and revenue you are currently leaving on the table.
