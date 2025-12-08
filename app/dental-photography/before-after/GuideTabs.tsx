@@ -113,8 +113,8 @@ const tiers: Record<TierId, TierContent> = {
         description:
           "If a practice already owns a DSLR, pair it with a turnkey kit that covers retractors, mirrors, contrastors, LED attachments, and a carry case.",
         link: {
-          href: "https://dentalaccessories.org/products/dental-photography-ultimate-bundle-kit",
-          label: "dentalaccessories.org"
+          href: "https://dentiphoto.com/products/dentiphoto-set-phototography",
+          label: "dentiphoto.com"
         },
         bullets: ["Uses the body you already own.", "Adds every accessory needed for before/after sessions."]
       },

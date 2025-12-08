@@ -26,7 +26,8 @@
     "git:cleanup": "node scripts/git-branch-cleanup.js",
     "git:cleanup-dry": "node scripts/git-branch-cleanup.js --dry-run",
     "git:hooks-install": "node scripts/setup-git-hooks.js install",
-    "git:hooks-remove": "node scripts/setup-git-hooks.js remove"
+    "git:hooks-remove": "node scripts/setup-git-hooks.js remove",
+    "check:external": "node scripts/check-external-links.js"
   },
   "dependencies": {
     "@emotion/is-prop-valid": "latest",
