@@ -34,7 +34,9 @@ export default async function Blog() {
   }
   return (
     <>
-      <Breadcrumbs items={[{ name: "home", url: "/" }, { name: "blog", url: "/blog" }]} />
+      <div className="mx-auto max-w-5xl px-6">
+        <Breadcrumbs items={[{ name: "home", url: "/" }, { name: "blog", url: "/blog" }]} />
+      </div>
       <section id="static-blog-hero" className="bg-neutral-900 text-white">
         <div className="mx-auto flex max-w-5xl flex-col gap-4 px-6 py-16">
           <div>

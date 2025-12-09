@@ -121,14 +121,14 @@ export default function BlogPostLayout({
       <main className="flex-1">
         <div className="w-full py-6 sm:py-8 md:py-10">
           <div className="container mx-auto px-4 sm:px-6">
-            <Breadcrumbs
-              items={[
-                { name: "home", url: "/" },
-                { name: "blog", url: "/blog" },
-                { name: title, url: shareUrl },
-              ]}
-            />
             <div className="max-w-3xl mx-auto">
+              <Breadcrumbs
+                items={[
+                  { name: "home", url: "/" },
+                  { name: "blog", url: "/blog" },
+                  { name: title, url: shareUrl },
+                ]}
+              />
               <article>
                 <header className="relative mb-6 sm:mb-8">
                   {showHeroImage && image && !hasImageError ? (
