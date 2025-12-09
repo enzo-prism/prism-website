@@ -10,6 +10,7 @@ import BlogPageTracker from "./BlogPageTracker"
 import BlogPostsList from "./BlogPostsList"
 import { useEffect } from "react"
 import BlogEmailSignup from "@/components/blog-email-signup"
+import Breadcrumbs from "@/components/breadcrumbs"
 
 // Define the blog post type
 interface BlogPost extends BlogFrontmatter {
@@ -40,6 +41,9 @@ export default function BlogPage({ posts }: { posts: BlogPost[] }) {
       <BlogPageTracker />
       <Navbar />
       <main className="flex-1 relative">
+        <div className="container mx-auto px-4 md:px-6">
+          <Breadcrumbs items={[{ name: "home", url: "/" }, { name: "blog", url: "/blog" }]} />
+        </div>
         {/* Minimal hero */}
         <section className="py-6 md:py-10 border-b border-neutral-100">
           <div className="container mx-auto px-4 md:px-6">

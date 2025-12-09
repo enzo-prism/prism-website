@@ -4,7 +4,6 @@ import type { Metadata } from "next"
 import Link from "next/link"
 import { notFound } from "next/navigation"
 import BlogPage from "./BlogPage"
-import Breadcrumbs from "@/components/breadcrumbs"
 
 export const metadata: Metadata = {
   title: "prism blog | web design, ai marketing & growth experiments",
@@ -34,9 +33,6 @@ export default async function Blog() {
   }
   return (
     <>
-      <div className="mx-auto max-w-5xl px-6">
-        <Breadcrumbs items={[{ name: "home", url: "/" }, { name: "blog", url: "/blog" }]} />
-      </div>
       <section id="static-blog-hero" className="bg-neutral-900 text-white">
         <div className="mx-auto flex max-w-5xl flex-col gap-4 px-6 py-16">
           <div>
