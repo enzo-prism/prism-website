@@ -64,6 +64,11 @@ const blogPosts = {
     category: "Business Strategy",
     gradientClass: 'bg-gradient-to-br from-blue-300/30 via-indigo-300/30 to-purple-300/30',
   },
+  'from-6-impressions-to-hundreds-seo-journey': {
+    title: "From 6 impressions a day to hundreds: what it really takes to win with seo",
+    category: "seo",
+    gradientClass: "bg-gradient-to-br from-amber-200/30 via-emerald-200/30 to-sky-300/30",
+  },
   'from-one-video-to-seo-flywheel': {
     title: "From one video to seo flywheel",
     category: "Content Strategy",
