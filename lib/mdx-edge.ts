@@ -99,6 +99,11 @@ const blogPosts = {
     category: "Local SEO",
     gradientClass: "bg-gradient-to-br from-sky-300/30 via-emerald-300/30 to-indigo-300/30",
   },
+  'prism-approach-small-business-growth': {
+    title: "The Prism Approach to Small Business Growth",
+    category: "Local Growth Strategy",
+    gradientClass: "bg-gradient-to-br from-amber-300/30 via-sky-300/30 to-emerald-300/30",
+  },
   'riding-the-ai-wave': {
     title: "Riding the ai wave",
     category: "AI Trends",
