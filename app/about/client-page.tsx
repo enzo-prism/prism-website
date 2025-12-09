@@ -9,6 +9,7 @@ import { useMobile } from "@/hooks/use-mobile"
 import { trackVideoInteraction } from "@/utils/analytics"
 import dynamic from "next/dynamic"
 import PoleVaultCarousel from "@/components/pole-vault-carousel"
+import Image from "next/image"
 import Link from "next/link"
 import { useEffect, useRef, useState } from "react"
 const Navbar = dynamic(() => import("@/components/navbar"), { ssr: false })
@@ -104,6 +105,22 @@ export default function AboutClientPage() {
             {/* Minimal carousel of training/competition clips */}
             <div className="flex justify-center">
               <PoleVaultCarousel />
+            </div>
+          </div>
+        </section>
+
+        <section className="px-4 pb-12 md:pb-16">
+          <div className="container mx-auto max-w-4xl px-4 md:px-6">
+            <div className="overflow-hidden rounded-3xl border border-neutral-100 shadow-sm">
+              <Image
+                src="https://res.cloudinary.com/dhqpqfw6w/image/upload/v1765247213/Gemini_Generated_Image_7xl9or7xl9or7xl9_zxuiin.webp"
+                alt="Gemini-generated artwork for Prism"
+                width={1792}
+                height={2400}
+                className="h-auto w-full object-cover"
+                sizes="(min-width: 768px) 896px, 100vw"
+                priority
+              />
             </div>
           </div>
         </section>
