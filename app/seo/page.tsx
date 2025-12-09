@@ -1,5 +1,6 @@
 import Link from "next/link"
 import type { Metadata } from "next"
+import Image from "next/image"
 
 import { SeoHero } from "@/components/seo/seo-hero"
 import { SeoSection } from "@/components/seo/seo-section"
@@ -112,6 +113,19 @@ export default async function SeoPage() {
           </div>
         </div>
       </SeoSection>
+
+      <section className="bg-white px-4 py-16 sm:py-20">
+        <div className="mx-auto max-w-5xl overflow-hidden rounded-3xl border border-neutral-200 shadow-sm">
+          <Image
+            src="https://res.cloudinary.com/dhqpqfw6w/image/upload/v1765246263/Gemini_Generated_Image_c2hnwfc2hnwfc2hn_kfn9if.webp"
+            alt="SEO strategy infographic"
+            width={2752}
+            height={1536}
+            className="h-auto w-full"
+            sizes="(min-width: 1024px) 1024px, 100vw"
+          />
+        </div>
+      </section>
 
       <SeoSection title={onPagePreview.title}>
         <div className="grid gap-6 md:grid-cols-2">
