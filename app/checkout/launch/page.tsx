@@ -33,10 +33,33 @@ export default function LaunchCheckoutPage() {
           </h1>
           <div className="mb-10 text-center">
             <span className="inline-block rounded-full bg-amber-100 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-amber-800 mb-4">
-              Launch Plan 🚀
+              Launch Plan
             </span>
+            <p className="text-slate-600 mt-4 max-w-md mx-auto">
+              Everything in Grow, plus advanced features to accelerate your business growth and online presence.
+            </p>
           </div>
+
+          {/* Plan details */}
+          <div className="mb-8 p-6 rounded-2xl border border-slate-200 bg-slate-50">
+            <h2 className="font-semibold text-slate-900 mb-3">What you get with the Launch Plan:</h2>
+            <ul className="space-y-2 text-sm text-slate-600">
+              <li>Everything in the Grow Plan, plus:</li>
+              <li>Advanced SEO optimization and keyword strategy</li>
+              <li>Google Business Profile setup and optimization</li>
+              <li>Local listing management across major directories</li>
+              <li>Monthly performance reporting and insights</li>
+              <li>Priority support with faster response times</li>
+              <li>60 days of post-launch support</li>
+            </ul>
+          </div>
+
           <CheckoutForm plan="launch" />
+
+          {/* Trust signals */}
+          <div className="mt-8 text-center text-sm text-slate-500">
+            <p>Secure checkout powered by Stripe. Your information is protected.</p>
+          </div>
         </div>
       </main>
       <Footer />

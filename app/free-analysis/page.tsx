@@ -4,7 +4,6 @@ import FreeAnalysisForm from "@/components/forms/FreeAnalysisForm"
 import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
 import PageViewTracker from "@/components/page-view-tracker"
-import RevealOnScroll from "@/components/reveal-on-scroll"
 
 export const metadata: Metadata = {
   title: "Free analysis | prism",
@@ -22,55 +21,53 @@ export default function FreeAnalysisPage() {
       <main className="flex-1" style={{ textTransform: "none" }}>
         <section className="border-b border-black/10 bg-white px-6 py-16 sm:py-24">
           <div className="mx-auto max-w-3xl space-y-6 text-center">
-            <RevealOnScroll>
-              <p className="text-sm font-semibold uppercase tracking-[0.3em] text-black/60">free analysis</p>
-            </RevealOnScroll>
-            <RevealOnScroll delay={0.1}>
-              <h1 className="text-4xl font-semibold leading-tight sm:text-5xl">
-                Get a free analysis of your current website and visibility.
-              </h1>
-            </RevealOnScroll>
-            <RevealOnScroll delay={0.2}>
-              <p className="text-lg text-black/70">
-                We'll review your site, Google listing, and performance — then show you how AI-powered design could double
-                your traffic.
-              </p>
-            </RevealOnScroll>
+            <p className="text-sm font-semibold uppercase tracking-[0.3em] text-black/60">free analysis</p>
+            <h1 className="text-4xl font-semibold leading-tight sm:text-5xl">
+              Get a free analysis of your current website and visibility.
+            </h1>
+            <p className="text-lg text-black/70">
+              We will review your site, Google listing, and performance — then show you how AI-powered design could double
+              your traffic. No cost, no commitment.
+            </p>
           </div>
         </section>
 
         <section className="px-6 py-16 sm:py-24">
           <div className="mx-auto grid max-w-5xl gap-10 lg:grid-cols-[0.95fr,1.05fr]">
-            <RevealOnScroll>
-              <div className="space-y-6 rounded-3xl border border-black/10 bg-neutral-50 p-6 sm:p-8">
-                <div>
-                  <p className="text-sm font-semibold uppercase tracking-[0.3em] text-black/50">you'll receive</p>
-                  <h2 className="mt-3 text-2xl font-semibold">
-                    A concise plan with data-backed recommendations.
-                  </h2>
-                </div>
-                <ul className="space-y-4 text-sm text-black/70">
-                  <li className="flex items-start gap-3">
-                    <span aria-hidden>🔍</span>
-                    <span>Technical and SEO health score with prioritized fixes.</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <span aria-hidden>📊</span>
-                    <span>Visibility snapshot across Google, Maps, and social channels.</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <span aria-hidden>✨</span>
-                    <span>Design and messaging improvements tailored to your offers.</span>
-                  </li>
-                </ul>
-                <div className="rounded-2xl border border-dashed border-black/15 bg-white p-5 text-sm text-black/70">
-                  <p>Need it sooner? Mention your timeline in the notes—we'll prioritize urgent requests.</p>
-                </div>
+            <div className="space-y-6 rounded-3xl border border-black/10 bg-neutral-50 p-6 sm:p-8">
+              <div>
+                <p className="text-sm font-semibold uppercase tracking-[0.3em] text-black/50">what you will receive</p>
+                <h2 className="mt-3 text-2xl font-semibold">
+                  A concise plan with data-backed recommendations.
+                </h2>
               </div>
-            </RevealOnScroll>
-            <RevealOnScroll delay={0.1}>
-              <FreeAnalysisForm />
-            </RevealOnScroll>
+              <p className="text-sm text-black/70">
+                Our team analyzes your online presence and delivers actionable insights within 48 hours.
+                Here is what your free analysis includes:
+              </p>
+              <ul className="space-y-4 text-sm text-black/70">
+                <li className="flex items-start gap-3">
+                  <span className="text-green-600 font-bold">✓</span>
+                  <span>Technical and SEO health score with prioritized fixes to improve your search rankings.</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="text-green-600 font-bold">✓</span>
+                  <span>Visibility snapshot across Google Search, Google Maps, and social channels.</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="text-green-600 font-bold">✓</span>
+                  <span>Design and messaging improvements tailored to your specific offers and target audience.</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="text-green-600 font-bold">✓</span>
+                  <span>Competitor comparison showing how you stack up against similar businesses in your area.</span>
+                </li>
+              </ul>
+              <div className="rounded-2xl border border-dashed border-black/15 bg-white p-5 text-sm text-black/70">
+                <p><strong>Need it sooner?</strong> Mention your timeline in the notes — we prioritize urgent requests and can often deliver within 24 hours.</p>
+              </div>
+            </div>
+            <FreeAnalysisForm />
           </div>
         </section>
       </main>

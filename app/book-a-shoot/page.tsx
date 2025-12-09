@@ -40,9 +40,33 @@ export default function BookAShootPage() {
           </div>
         </section>
 
+        {/* What to expect section */}
+        <section className="px-4 py-12 bg-white">
+          <div className="container mx-auto max-w-3xl">
+            <div className="grid gap-6 md:grid-cols-3">
+              <div className="text-center p-4">
+                <p className="text-2xl mb-2">📸</p>
+                <h3 className="font-semibold text-neutral-900 mb-1">Professional Equipment</h3>
+                <p className="text-sm text-neutral-600">High-quality cameras and lighting for stunning results</p>
+              </div>
+              <div className="text-center p-4">
+                <p className="text-2xl mb-2">⏱️</p>
+                <h3 className="font-semibold text-neutral-900 mb-1">One Hour Session</h3>
+                <p className="text-sm text-neutral-600">Efficient shoots that capture everything you need</p>
+              </div>
+              <div className="text-center p-4">
+                <p className="text-2xl mb-2">🖼️</p>
+                <h3 className="font-semibold text-neutral-900 mb-1">Edited Deliverables</h3>
+                <p className="text-sm text-neutral-600">Professionally edited photos delivered within a week</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
         <section className="px-4 py-16">
           <div className="container mx-auto max-w-3xl">
             <div className="rounded-3xl border border-neutral-200 bg-white p-8 shadow-sm">
+              <h2 className="text-xl font-semibold text-neutral-900 mb-6 text-center">Schedule Your Photography Session</h2>
               <form action="https://formspree.io/f/xjkjkggn" method="POST" className="space-y-6">
                 <input
                   type="hidden"

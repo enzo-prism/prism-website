@@ -10,7 +10,7 @@ import HotjarScript from "@/components/hotjar-script"
 import MCPHealthMonitor from "@/components/mcp-health-monitor"
 import PerformanceMonitor from "@/components/performance-monitor"
 import AnalyticsProvider from "@/components/analytics-provider"
-import { LocalBusinessSchema, OrganizationSchema, WebsiteSchema } from "@/components/schema-markup"
+import { GlobalSchemaGraph } from "@/components/schema-markup"
 import SentryContextProvider from "@/components/sentry-context-provider"
 import { GA_MEASUREMENT_ID, GOOGLE_ADS_ID, IS_ANALYTICS_ENABLED } from "@/lib/constants"
 
@@ -135,9 +135,7 @@ export default function RootLayout({
         if tailwind.config.ts is updated accordingly.
     */}
       <body className="m-0 p-0 w-full min-h-screen font-sans antialiased">
-        <OrganizationSchema />
-        <WebsiteSchema />
-        <LocalBusinessSchema />
+        <GlobalSchemaGraph />
         <ScrollManager />
         <HotjarScript />
         <ErrorTracker />

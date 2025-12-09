@@ -75,65 +75,146 @@ type AggregateRating = {
   worstRating?: string
 }
 
-export function OrganizationSchema() {
-  const orgSchema: Organization = {
-    "@type": "Organization",
-    "@id": "https://www.design-prism.com/#organization",
-    name: "Prism Agency",
-    url: "https://www.design-prism.com",
-    logo: {
-      "@type": "ImageObject",
-      url: "https://www.design-prism.com/prism-opengraph.png",
-      width: 1200,
-      height: 630,
-    },
-    sameAs: [
-      "https://www.instagram.com/the_design_prism/?hl=en",
-      "https://www.linkedin.com/company/web-prism/",
-      "https://www.tiktok.com/@the_design_prism",
-      "https://x.com/NosisTheGod",
-    ],
-    contactPoint: {
-      "@type": "ContactPoint",
-      telephone: "+1-650-862-4069",
-      contactType: "customer service",
-      email: "support@design-prism.com",
-    },
-  }
+// Shared data objects for schema consolidation
+const organizationData = {
+  "@type": "Organization",
+  "@id": "https://www.design-prism.com/#organization",
+  name: "Prism Agency",
+  url: "https://www.design-prism.com",
+  logo: {
+    "@type": "ImageObject",
+    url: "https://www.design-prism.com/prism-opengraph.png",
+    width: 1200,
+    height: 630,
+  },
+  sameAs: [
+    "https://www.instagram.com/the_design_prism/?hl=en",
+    "https://www.linkedin.com/company/web-prism/",
+    "https://www.tiktok.com/@the_design_prism",
+    "https://x.com/NosisTheGod",
+  ],
+  contactPoint: {
+    "@type": "ContactPoint",
+    telephone: "+1-650-862-4069",
+    contactType: "customer service",
+    email: "support@design-prism.com",
+  },
+}
 
+const websiteData = {
+  "@type": "WebSite",
+  "@id": "https://www.design-prism.com/#website",
+  url: "https://www.design-prism.com",
+  name: "Prism Agency - Beautiful Software That Grows Revenue",
+  description:
+    "Prism Agency builds high-converting websites, manages local listing optimization, and runs online ad campaigns that grow revenue for ambitious businesses.",
+  publisher: {
+    "@id": "https://www.design-prism.com/#organization",
+  },
+  potentialAction: {
+    "@type": "SearchAction",
+    target: "https://www.design-prism.com/search?q={search_term_string}",
+    "query-input": "required name=search_term_string",
+  },
+}
+
+// Trimmed LocalBusiness data - removed verbose hasOfferCatalog (service details are on individual pages)
+const localBusinessData = {
+  "@type": "LocalBusiness",
+  "@id": "https://www.design-prism.com/#localbusiness",
+  name: "Prism",
+  legalName: "Design Prism LLC",
+  url: "https://www.design-prism.com",
+  image: "https://www.design-prism.com/prism-opengraph.png",
+  logo: {
+    "@type": "ImageObject",
+    url: "https://www.design-prism.com/prism-opengraph.png",
+    width: 1200,
+    height: 630,
+  },
+  telephone: "+1-650-862-4069",
+  priceRange: "$1,000 - $3,000",
+  description: "Prism builds high-converting websites, manages local listing optimization, and runs online ad campaigns for growing businesses.",
+  sameAs: [
+    "https://www.instagram.com/the_design_prism/?hl=en",
+    "https://www.linkedin.com/company/web-prism/",
+    "https://www.tiktok.com/@the_design_prism",
+    "https://x.com/NosisTheGod",
+  ],
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "548 Market St #62411",
+    addressLocality: "San Francisco",
+    addressRegion: "CA",
+    postalCode: "94104",
+    addressCountry: "US",
+  },
+  geo: {
+    "@type": "GeoCoordinates",
+    latitude: 37.7897,
+    longitude: -122.3942,
+  },
+  contactPoint: {
+    "@type": "ContactPoint",
+    telephone: "+1-650-862-4069",
+    contactType: "customer service",
+    email: "support@design-prism.com",
+  },
+  openingHoursSpecification: [
+    {
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      opens: "08:00",
+      closes: "18:00",
+    },
+  ],
+  founder: {
+    "@type": "Person",
+    name: "Enzo Sison",
+  },
+  areaServed: ["United States"],
+  aggregateRating: buildAggregateRating(),
+}
+
+/**
+ * Consolidated global schema graph - outputs ONE script tag instead of THREE
+ * This significantly improves text-to-HTML ratio by:
+ * 1. Removing duplicate @context declarations
+ * 2. Combining all global schemas into a single @graph array
+ * 3. Trimming verbose data (hasOfferCatalog removed from LocalBusiness)
+ */
+export function GlobalSchemaGraph() {
   return (
     <script
       type="application/ld+json"
       dangerouslySetInnerHTML={{
-        __html: JSON.stringify(orgSchema),
+        __html: JSON.stringify({
+          "@context": "https://schema.org",
+          "@graph": [organizationData, websiteData, localBusinessData],
+        }),
+      }}
+    />
+  )
+}
+
+// Legacy individual schema functions (kept for backward compatibility with page-specific usage)
+export function OrganizationSchema() {
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{
+        __html: JSON.stringify(organizationData),
       }}
     />
   )
 }
 
 export function WebsiteSchema() {
-  const websiteSchema: WebSite = {
-    "@type": "WebSite",
-    "@id": "https://www.design-prism.com/#website",
-    url: "https://www.design-prism.com",
-    name: "Prism Agency - Beautiful Software That Grows Revenue",
-    description:
-      "Prism Agency builds high-converting websites, manages local listing optimization, and runs online ad campaigns that grow revenue for ambitious businesses.",
-    publisher: {
-      "@id": "https://www.design-prism.com/#organization",
-    },
-    potentialAction: {
-      "@type": "SearchAction",
-       target: "https://www.design-prism.com/search?q={search_term_string}",
-      "query-input": "required name=search_term_string",
-    },
-  }
-
   return (
     <script
       type="application/ld+json"
       dangerouslySetInnerHTML={{
-        __html: JSON.stringify(websiteSchema),
+        __html: JSON.stringify(websiteData),
       }}
     />
   )

@@ -31,12 +31,34 @@ export default function GrowCheckoutPage() {
           <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight text-center mb-6">
             start your grow plan
           </h1>
-           <div className="mb-10 text-center">
+          <div className="mb-10 text-center">
             <span className="inline-block rounded-full bg-sky-100 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-sky-800 mb-4">
-              Grow Plan 🌱
+              Grow Plan
             </span>
+            <p className="text-slate-600 mt-4 max-w-md mx-auto">
+              A conversion-focused website designed to help your business attract more customers and grow online.
+            </p>
           </div>
+
+          {/* Plan details */}
+          <div className="mb-8 p-6 rounded-2xl border border-slate-200 bg-slate-50">
+            <h2 className="font-semibold text-slate-900 mb-3">What you get with the Grow Plan:</h2>
+            <ul className="space-y-2 text-sm text-slate-600">
+              <li>Custom website design optimized for conversions</li>
+              <li>Mobile-responsive layout that works on all devices</li>
+              <li>SEO-friendly structure to help you rank in search</li>
+              <li>Fast loading speeds for better user experience</li>
+              <li>Contact forms and lead capture integration</li>
+              <li>30 days of post-launch support</li>
+            </ul>
+          </div>
+
           <CheckoutForm plan="grow" />
+
+          {/* Trust signals */}
+          <div className="mt-8 text-center text-sm text-slate-500">
+            <p>Secure checkout powered by Stripe. Your information is protected.</p>
+          </div>
         </div>
       </main>
       <Footer />

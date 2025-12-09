@@ -110,6 +110,7 @@ async function getPost(slug: string): Promise<{ frontmatter: BlogFrontmatter; co
     // Provide fallback for optional fields
     const frontmatter: BlogFrontmatter = {
       title: normalizedData.title,
+      h1Title: normalizedData.h1Title,
       description: normalizedData.description,
       date: normalizedData.date,
       category: normalizedData.category.trim(),
