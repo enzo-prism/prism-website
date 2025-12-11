@@ -33,7 +33,7 @@ const SEGMENTS = [
 export default function SegmentsRail() {
   return (
     <section className="py-20 md:py-28 bg-neutral-50">
-      <div className="container mx-auto px-4 md:px-6">
+      <div className="mx-auto max-w-5xl px-4 md:px-6">
         <div className="mx-auto max-w-3xl text-center">
           <h2 className="text-3xl font-bold tracking-tight lowercase sm:text-4xl">
             segments we support
@@ -42,14 +42,14 @@ export default function SegmentsRail() {
 
         <div className="mt-10">
           <div
-            className="flex gap-3 sm:gap-4 overflow-x-auto snap-x snap-mandatory px-2 sm:px-4 md:px-6 py-2 scroll-smooth"
+            className="flex gap-4 overflow-x-auto snap-x snap-mandatory px-2 sm:px-3 md:px-4 py-2 scroll-smooth"
             role="list"
             aria-label="Segments we support"
           >
             {SEGMENTS.map((segment) => (
               <article
                 key={segment.title}
-                className="shrink-0 snap-start w-[78vw] sm:w-[60vw] md:w-[320px]"
+                className="shrink-0 snap-start w-[88vw] sm:w-[64vw] md:w-[380px]"
                 role="listitem"
               >
                 <Link
