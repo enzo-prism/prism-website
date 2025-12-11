@@ -9,7 +9,7 @@ import { getHomepageHeroReviewPool, renderFormattedText, type Quote } from "@/co
 import { trackNavigation } from "@/utils/analytics"
 import { sanitizeReviewText } from "@/lib/schema-helpers"
 
-const AUTO_ROTATE_MS = 6000
+const AUTO_ROTATE_MS = 7000
 const DEFAULT_REVIEW_RATING = {
   "@type": "Rating",
   ratingValue: "5",
@@ -28,6 +28,7 @@ export default function HeroReviewSliderCard({ className }: HeroReviewSliderCard
   
   // Interaction State
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false)
+  const [isHovered, setIsHovered] = useState(false)
 
   // --- Initialization ---
   useEffect(() => {
@@ -52,13 +53,13 @@ export default function HeroReviewSliderCard({ className }: HeroReviewSliderCard
     // Don't rotate if:
     // 1. Reduced motion is on
     // 2. Not enough slides
-    if (prefersReducedMotion || reviewPool.length <= 1) {
+    if (prefersReducedMotion || reviewPool.length <= 1 || isHovered) {
       return
     }
 
     const timer = setInterval(nextSlide, AUTO_ROTATE_MS)
     return () => clearInterval(timer)
-  }, [prefersReducedMotion, reviewPool.length, nextSlide])
+  }, [prefersReducedMotion, reviewPool.length, isHovered, nextSlide])
 
   // --- Schema Data ---
   const currentReview = reviewPool[activeIndex] ?? null
@@ -97,13 +98,18 @@ export default function HeroReviewSliderCard({ className }: HeroReviewSliderCard
   return (
     <div
       className={cn(
-        "relative w-full overflow-hidden rounded-3xl border border-white/30 bg-white/75 p-5 text-left shadow-xl shadow-neutral-900/5 backdrop-blur-lg transition-colors duration-300 sm:p-6",
-        "dark:border-white/10 dark:bg-neutral-900/80 dark:text-white",
+        "relative w-full overflow-hidden rounded-2xl border border-neutral-200 bg-white p-5 text-left shadow-sm transition-colors duration-300 sm:p-6",
+        "dark:border-neutral-800 dark:bg-neutral-900 dark:text-white",
         className
       )}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
     >
-      <div className="mb-4 flex items-center justify-between text-[10px] font-semibold uppercase tracking-[0.32em] text-neutral-500 dark:text-neutral-400">
-        <span>founders love prism ❤️</span>
+      <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-neutral-100 px-3 py-1 text-xs font-semibold text-neutral-700 dark:bg-neutral-800 dark:text-neutral-200">
+        <span className="text-sm" aria-hidden>
+          ❤️
+        </span>
+        <span className="tracking-tight">trusted by founders</span>
       </div>
 
       {/* 
@@ -116,10 +122,10 @@ export default function HeroReviewSliderCard({ className }: HeroReviewSliderCard
         <AnimatePresence mode="wait">
           <motion.div
             key={currentReview.id}
-            initial={{ opacity: 0, y: 10 }}
+            initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.25, ease: "easeOut" }}
+            exit={{ opacity: 0, y: -6 }}
+            transition={{ duration: 0.28, ease: "easeOut" }}
             className="w-full"
           >
             <p className="text-base leading-relaxed text-neutral-900 dark:text-white">
@@ -132,33 +138,11 @@ export default function HeroReviewSliderCard({ className }: HeroReviewSliderCard
         </AnimatePresence>
       </div>
 
-      {/* Progress Bar */}
-      {!prefersReducedMotion && reviewPool.length > 1 && (
-        <div className="mt-5 flex items-center justify-center" aria-hidden="true">
-          <div className="h-1.5 w-16 overflow-hidden rounded-full bg-neutral-900/10 dark:bg-white/10">
-            {/* 
-              We use a separate motion key here to force the animation to restart 
-              from 0% whenever the activeIndex changes.
-            */}
-            <motion.div
-              key={activeIndex}
-              className="h-full w-full origin-left bg-neutral-800/70 dark:bg-white/70"
-              initial={{ width: "0%" }}
-              animate={{ width: "100%" }}
-              transition={{ 
-                duration: AUTO_ROTATE_MS / 1000, 
-                ease: "linear",
-              }}
-            />
-          </div>
-        </div>
-      )}
-
       <div className="mt-4 flex justify-center">
         <Link
           href="/wall-of-love"
           onClick={() => trackNavigation("hero_review_card_cta", "/wall-of-love")}
-          className="text-[11px] font-semibold uppercase tracking-[0.32em] text-neutral-600 underline decoration-neutral-300/60 underline-offset-4 transition hover:text-neutral-900 dark:text-neutral-300 dark:decoration-white/20 dark:hover:text-white"
+          className="text-xs font-semibold text-neutral-700 underline decoration-neutral-300 underline-offset-4 transition hover:text-neutral-900 dark:text-neutral-200 dark:hover:text-white"
         >
           read 250+ more
         </Link>
