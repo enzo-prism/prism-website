@@ -20,7 +20,6 @@ const ScrollProgressBar = dynamic(() => import("@/components/scroll-progress-bar
 // Use SSR for these sections to improve first paint/SEO
 const ClientsSection = dynamic(() => import("@/components/home/Clients"), { ssr: false })
 const ValuesSection = dynamic(() => import("@/components/home/ValuesSection"), { ssr: false })
-const GrowthResultsSlider = dynamic(() => import("@/components/home/GrowthResultsSlider"), { ssr: false })
 const HottestContentSection = dynamic(() => import("@/components/home/HottestContentSection"), { ssr: false })
 const WebsitesFeatures = dynamic(() => import("@/components/home/WebsitesFeatures"), { ssr: false })
 const SegmentsGrid = dynamic(() => import("@/components/home/SegmentsGrid"), { ssr: false })
@@ -113,7 +112,6 @@ export default function ClientPage() {
         {/* New homepage sections per updated structure */}
         <ClientsSection />
         <ValuesSection />
-        <GrowthResultsSlider />
         <SegmentsGrid />
         <ReferralSection />
         <HottestContentSection />
