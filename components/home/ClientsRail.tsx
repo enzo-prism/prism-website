@@ -110,25 +110,6 @@ export default function ClientsRail() {
             aria-hidden="true"
           />
         ) : null}
-
-        <button
-          type="button"
-          aria-label="Scroll left"
-          onClick={() => scrollByAmount("left")}
-          disabled={!canScrollLeft}
-          className="hidden md:flex absolute left-4 top-1/2 -translate-y-1/2 h-11 w-11 items-center justify-center rounded-full border bg-white/95 shadow-md transition hover:bg-white disabled:pointer-events-none disabled:opacity-40"
-        >
-          <ChevronLeft className="h-5 w-5" />
-        </button>
-        <button
-          type="button"
-          aria-label="Scroll right"
-          onClick={() => scrollByAmount("right")}
-          disabled={!canScrollRight}
-          className="hidden md:flex absolute right-4 top-1/2 -translate-y-1/2 h-11 w-11 items-center justify-center rounded-full border bg-white/95 shadow-md transition hover:bg-white disabled:pointer-events-none disabled:opacity-40"
-        >
-          <ChevronRight className="h-5 w-5" />
-        </button>
       </div>
 
       <div className="mt-4 flex items-center justify-center text-xs text-neutral-500 dark:text-neutral-400">
