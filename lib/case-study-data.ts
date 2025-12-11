@@ -16,6 +16,7 @@ type CaseStudyCategory =
   | "consulting"
   | "event"
   | "private resort"
+  | "online community"
 
 export type CaseStudyMeta = {
   id: string
