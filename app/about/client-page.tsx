@@ -1,49 +1,19 @@
 "use client"
 
 import Footer from "@/components/footer"
-import VideoPlayer from "@/components/video-player"
 import PageViewTracker from "@/components/page-view-tracker"
 import { PersonSchema } from "@/components/schema-markup"
 import ScrollingTimeline from "@/components/scrolling-timeline"
 import { useMobile } from "@/hooks/use-mobile"
-import { trackVideoInteraction } from "@/utils/analytics"
 import dynamic from "next/dynamic"
 import PoleVaultCarousel from "@/components/pole-vault-carousel"
 import Image from "next/image"
 import Link from "next/link"
-import { useEffect, useRef, useState } from "react"
 const Navbar = dynamic(() => import("@/components/navbar"), { ssr: false })
 import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
 
 export default function AboutClientPage() {
   const isMobile = useMobile()
-  const [videoLoaded, setVideoLoaded] = useState(false)
-  const videoRef = useRef<HTMLDivElement>(null)
-
-  // Track when video section is visible
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting && !videoLoaded) {
-            setVideoLoaded(true)
-            trackVideoInteraction("about_video", "visible", "About page video visible")
-          }
-        })
-      },
-      { threshold: 0.3 },
-    )
-
-    if (videoRef.current) {
-      observer.observe(videoRef.current)
-    }
-
-    return () => {
-      if (videoRef.current) {
-        observer.unobserve(videoRef.current)
-      }
-    }
-  }, [videoLoaded])
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -65,32 +35,6 @@ export default function AboutClientPage() {
           </div>
         </section>
 
-        {/* Video Section */}
-        <section ref={videoRef} className="px-4 py-12 bg-neutral-50 sm:py-16">
-          <div className="container mx-auto max-w-3xl px-4 md:px-6 text-left">
-            <VideoPlayer
-              className="mt-4"
-              src="https://res.cloudinary.com/dhqpqfw6w/video/upload/v1763168589/pricing-1_suz6es.mp4"
-              poster="https://res.cloudinary.com/dhqpqfw6w/video/upload/so_0/pricing-1_suz6es.jpg"
-              title="Enzo Sison"
-              caption="founder, prism"
-              schema={{
-                id: "https://www.design-prism.com/about#founder-vsl",
-                name: "Enzo Sison",
-                description:
-                  "Enzo Sison explains the inspiration for Prism, blending elite design, growth systems, and an Olympic mindset to serve ambitious teams.",
-                thumbnailUrl: "https://res.cloudinary.com/dhqpqfw6w/video/upload/so_0/pricing-1_suz6es.jpg",
-                uploadDate: "2025-01-24T00:00:00Z",
-                duration: "PT60S",
-                contentUrl: "https://res.cloudinary.com/dhqpqfw6w/video/upload/v1763168589/pricing-1_suz6es.mp4",
-                embedUrl: "https://www.design-prism.com/about#founder-vsl",
-                width: 1920,
-                height: 1080,
-                creatorName: "Enzo Sison",
-              }}
-            />
-          </div>
-        </section>
         {/* LA 2028 Olympic Journey (moved below the single video section) */}
         <section className="px-4 py-12 md:py-16">
           <div className="container mx-auto px-4 md:px-6 max-w-4xl">
@@ -144,7 +88,7 @@ export default function AboutClientPage() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center rounded-full bg-neutral-900 px-6 py-3 text-sm font-medium text-white hover:bg-neutral-800 lowercase transition-colors"
-                onClick={() => trackVideoInteraction("instagram_link", "click", "About page Instagram link")}
+                onClick={() => null}
               >
                 follow our journey on instagram <span className="ml-2">→</span>
               </a>
