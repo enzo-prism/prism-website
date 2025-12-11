@@ -3,9 +3,10 @@
 import ClientCard from "@/components/home/ClientCard"
 import { CLIENTS } from "@/lib/clients"
 import { shuffleArray } from "@/utils/shuffle"
-import { ChevronLeft, ChevronRight, MoveRight } from "lucide-react"
+import { MoveRight } from "lucide-react"
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { useMobile } from "@/hooks/use-mobile"
+import Link from "next/link"
 
 export default function ClientsRail() {
   const railRef = useRef<HTMLDivElement>(null)
@@ -87,10 +88,13 @@ export default function ClientsRail() {
       </div>
 
       <div className="mt-4 flex items-center justify-center text-xs text-neutral-500 dark:text-neutral-400">
-        <span className="flex items-center gap-2 rounded-full border border-neutral-200 bg-white px-4 py-1 shadow-sm dark:border-neutral-800 dark:bg-neutral-950">
+        <Link
+          href="/case-studies"
+          className="inline-flex items-center gap-2 rounded-full border border-neutral-200 bg-white px-4 py-2 text-sm font-semibold lowercase text-neutral-800 shadow-sm transition hover:border-neutral-300 hover:bg-neutral-50"
+        >
+          view case studies
           <MoveRight className="h-4 w-4" aria-hidden="true" />
-          <span className="font-semibold uppercase tracking-[0.3em] sm:hidden">swipe</span>
-        </span>
+        </Link>
       </div>
     </div>
   )
