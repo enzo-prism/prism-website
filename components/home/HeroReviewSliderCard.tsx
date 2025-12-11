@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { useEffect, useMemo, useState } from "react"
+import { useCallback, useEffect, useMemo, useState } from "react"
 import { AnimatePresence, motion } from "framer-motion"
 
 import { cn } from "@/lib/utils"
@@ -23,10 +23,11 @@ type HeroReviewSliderCardProps = {
 export default function HeroReviewSliderCard({ className }: HeroReviewSliderCardProps) {
   // Data State
   const [reviewPool, setReviewPool] = useState<Quote[]>([])
-  const [activeIndex] = useState(0)
+  const [activeIndex, setActiveIndex] = useState(0)
   
   // Interaction State
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false)
+  const [isPaused, setIsPaused] = useState(false)
 
   // --- Initialization ---
   useEffect(() => {
@@ -48,6 +49,22 @@ export default function HeroReviewSliderCard({ className }: HeroReviewSliderCard
     if (reviewPool.length === 0) return null
     return reviewPool.find((quote) => quote.heroSpotlight) ?? reviewPool[0]
   }, [reviewPool])
+
+  const nextReview = useCallback(() => {
+    if (reviewPool.length <= 1) return
+    setActiveIndex((current) => (current + 1) % reviewPool.length)
+  }, [reviewPool.length])
+
+  const prevReview = useCallback(() => {
+    if (reviewPool.length <= 1) return
+    setActiveIndex((current) => (current - 1 + reviewPool.length) % reviewPool.length)
+  }, [reviewPool.length])
+
+  useEffect(() => {
+    if (prefersReducedMotion || reviewPool.length <= 1 || isPaused) return
+    const timer = window.setInterval(nextReview, 6500)
+    return () => window.clearInterval(timer)
+  }, [isPaused, nextReview, prefersReducedMotion, reviewPool.length])
   
   const heroReviewSchema = useMemo(() => {
     if (!heroReviewForSchema) return null
@@ -83,6 +100,10 @@ export default function HeroReviewSliderCard({ className }: HeroReviewSliderCard
         "dark:border-neutral-800 dark:bg-neutral-900 dark:text-white",
         className
       )}
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
+      onFocusCapture={() => setIsPaused(true)}
+      onBlurCapture={() => setIsPaused(false)}
     >
       <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-neutral-100 px-3 py-1 text-xs font-semibold text-neutral-700 dark:bg-neutral-800 dark:text-neutral-200">
         <span className="text-sm" aria-hidden>
@@ -126,6 +147,40 @@ export default function HeroReviewSliderCard({ className }: HeroReviewSliderCard
           read 250+ more
         </Link>
       </div>
+
+      {reviewPool.length > 1 && (
+        <div className="mt-3 flex items-center justify-center gap-3">
+          <button
+            type="button"
+            aria-label="Previous review"
+            onClick={prevReview}
+            className="h-8 w-8 rounded-full border border-neutral-200 text-neutral-600 transition hover:border-neutral-400 hover:text-neutral-900 dark:border-neutral-700 dark:text-neutral-300 dark:hover:border-neutral-500 dark:hover:text-white"
+          >
+            ←
+          </button>
+          <div className="flex items-center gap-2">
+            {reviewPool.map((quote, index) => (
+              <button
+                key={quote.id}
+                type="button"
+                aria-label={`Go to review ${index + 1}`}
+                onClick={() => setActiveIndex(index)}
+                className={`h-2.5 w-2.5 rounded-full transition ${
+                  index === activeIndex ? "bg-neutral-900 dark:bg-white" : "bg-neutral-300 dark:bg-neutral-700"
+                }`}
+              />
+            ))}
+          </div>
+          <button
+            type="button"
+            aria-label="Next review"
+            onClick={nextReview}
+            className="h-8 w-8 rounded-full border border-neutral-200 text-neutral-600 transition hover:border-neutral-400 hover:text-neutral-900 dark:border-neutral-700 dark:text-neutral-300 dark:hover:border-neutral-500 dark:hover:text-white"
+          >
+            →
+          </button>
+        </div>
+      )}
 
       {heroReviewSchema && (
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: heroReviewSchema }} />
