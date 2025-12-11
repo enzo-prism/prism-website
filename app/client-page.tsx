@@ -26,14 +26,17 @@ export default function ClientPage() {
             <div className="flex flex-col items-center text-center gap-6 sm:gap-8">
               <HeroReviewSliderCard className="w-full max-w-sm sm:max-w-md" />
               <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-4">
-                <Link href="/pricing">
-                  <Button
-                    className="rounded-full px-7 py-5 text-base sm:text-lg lowercase hardware-hover touch-feedback"
-                    onClick={() => trackCTAClick("view pricing", "hero section")}
-                  >
-                    build your dream <ArrowRight className="ml-2 h-5 w-5" />
-                  </Button>
-                </Link>
+                <div className="group relative inline-flex">
+                  <span className="pointer-events-none absolute inset-0 scale-105 rounded-full bg-gradient-to-r from-purple-500 via-pink-500 to-amber-400 opacity-0 blur-md transition duration-300 group-hover:opacity-70" aria-hidden />
+                  <Link href="/pricing">
+                    <Button
+                      className="relative rounded-full px-7 py-5 text-base sm:text-lg lowercase hardware-hover touch-feedback"
+                      onClick={() => trackCTAClick("view pricing", "hero section")}
+                    >
+                      build your dream <ArrowRight className="ml-2 h-5 w-5" />
+                    </Button>
+                  </Link>
+                </div>
               </div>
             </div>
           </div>
