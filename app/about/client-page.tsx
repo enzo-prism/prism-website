@@ -75,7 +75,21 @@ export default function AboutClientPage() {
         {/* LA 2028 Olympic Journey (moved below the single video section) */}
         <section className="px-4 py-12 md:py-16">
           <div className="container mx-auto px-4 md:px-6 max-w-4xl">
-            <div className="text-center mb-8 md:mb-10">
+            <div className="text-center mb-8 md:mb-10 space-y-3">
+              <div className="flex justify-center" aria-hidden>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 120 60"
+                  className="h-10 w-20"
+                  role="presentation"
+                >
+                  <circle cx="20" cy="30" r="12" stroke="#0072CE" strokeWidth="4" fill="none" />
+                  <circle cx="50" cy="30" r="12" stroke="#000000" strokeWidth="4" fill="none" />
+                  <circle cx="80" cy="30" r="12" stroke="#FECB00" strokeWidth="4" fill="none" />
+                  <circle cx="35" cy="42" r="12" stroke="#00A651" strokeWidth="4" fill="none" />
+                  <circle cx="65" cy="42" r="12" stroke="#E4262C" strokeWidth="4" fill="none" />
+                </svg>
+              </div>
               <h2 className="text-2xl md:text-3xl font-bold tracking-tighter normal-case">LA 2028 olympic journey</h2>
               <p className="mx-auto mt-3 max-w-[720px] text-neutral-600 lowercase md:text-lg">
                 enzo is pursuing competing in the la 2028 olympics for the philippines in pole vaulting—a journey that
