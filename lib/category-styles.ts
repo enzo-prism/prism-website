@@ -28,3 +28,8 @@ export function getCategoryClasses(category?: string) {
   const key = category.toLowerCase() as CategoryKey
   return CATEGORY_STYLES[key] ?? CATEGORY_STYLES.default
 }
+
+export function buildCategoryPillClasses(category?: string) {
+  const { bg, border, text } = getCategoryClasses(category)
+  return `${bg} ${border} ${text} inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-[11px] font-semibold lowercase leading-none`
+}

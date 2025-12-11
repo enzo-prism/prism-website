@@ -3,7 +3,7 @@
 import Link from "next/link"
 import type { ClientInfo } from "@/lib/clients"
 import { trackNavigation, trackExternalLinkClick } from "@/utils/analytics"
-import { getCategoryClasses } from "@/lib/category-styles"
+import { buildCategoryPillClasses } from "@/lib/category-styles"
 
 type Props = ClientInfo & {
   interactive?: boolean
@@ -33,17 +33,10 @@ export default function ClientCard({
         {sublabel}
       </div>
       {category ? (
-        (() => {
-          const { bg, border, text } = getCategoryClasses(category)
-          return (
-            <div
-              className={`mt-2 inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[11px] font-semibold lowercase ${bg} ${border} ${text}`}
-            >
-              <span className="h-1.5 w-1.5 rounded-full bg-current/60" aria-hidden />
-              <span>{category}</span>
-            </div>
-          )
-        })()
+        <div className={`mt-2 ${buildCategoryPillClasses(category)}`}>
+          <span className="h-1.5 w-1.5 rounded-full bg-current/70" aria-hidden />
+          <span>{category}</span>
+        </div>
       ) : null}
     </div>
   )

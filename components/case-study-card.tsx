@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { getCategoryClasses } from "@/lib/category-styles"
+import { buildCategoryPillClasses } from "@/lib/category-styles"
 
 interface CaseStudyCardProps {
   business: string
@@ -11,8 +11,6 @@ interface CaseStudyCardProps {
 }
 
 export default function CaseStudyCard({ business, category, location, slug }: CaseStudyCardProps) {
-  const { bg, border, text } = getCategoryClasses(category)
-
   return (
     <Link
       href={`/case-studies/${slug}`}
@@ -20,7 +18,8 @@ export default function CaseStudyCard({ business, category, location, slug }: Ca
     >
       <div className="relative h-full rounded-2xl border border-neutral-200 bg-white p-5 transition hover:-translate-y-1 hover:border-neutral-300 hover:shadow-md">
         <div className="space-y-2">
-          <div className={`inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs font-semibold lowercase ${bg} ${border} ${text}`}>
+          <div className={buildCategoryPillClasses(category)}>
+            <span className="h-1.5 w-1.5 rounded-full bg-current/70" aria-hidden />
             <span>{category}</span>
           </div>
           <h3 className="text-lg font-semibold lowercase text-neutral-900">{business}</h3>
