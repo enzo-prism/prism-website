@@ -22,6 +22,7 @@ type HeroReviewSliderCardProps = {
 export default function HeroReviewSliderCard({ className }: HeroReviewSliderCardProps) {
   const reviews = useMemo(() => getHomepageHeroReviewPool(), [])
   const [activeIndex, setActiveIndex] = useState(0)
+  const [prevIndex, setPrevIndex] = useState<number | null>(null)
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false)
   const pauseRef = useRef(false)
   const intervalRef = useRef<number | null>(null)
@@ -39,8 +40,10 @@ export default function HeroReviewSliderCard({ className }: HeroReviewSliderCard
     if (prefersReducedMotion || reviews.length <= 1) return
     const tick = () => {
       if (pauseRef.current) return
-      activeRef.current = (activeRef.current + 1) % reviews.length
-      setActiveIndex(activeRef.current)
+      const next = (activeRef.current + 1) % reviews.length
+      setPrevIndex(activeRef.current)
+      activeRef.current = next
+      setActiveIndex(next)
     }
     intervalRef.current = window.setInterval(tick, 5200)
     return () => {
@@ -80,8 +83,11 @@ export default function HeroReviewSliderCard({ className }: HeroReviewSliderCard
     return <div className={cn("w-full max-w-sm", className)} />
   }
 
-  const nextIndex = (activeIndex + 1) % reviews.length
-  const nextReview = reviews[nextIndex]
+  const slideIndices = useMemo(() => {
+    const items = [activeIndex]
+    if (prevIndex !== null && prevIndex !== activeIndex) items.push(prevIndex)
+    return items
+  }, [activeIndex, prevIndex])
 
   return (
     <div
@@ -102,37 +108,30 @@ export default function HeroReviewSliderCard({ className }: HeroReviewSliderCard
       </div>
 
       <div className="relative px-1">
-        <div className="relative mx-auto flex min-h-[170px] max-w-xl items-center justify-center overflow-hidden">
-          <div
-            className="absolute inset-0 flex flex-col items-center justify-center space-y-3 px-3 text-center transition duration-300 ease-in-out"
-            style={{
-              opacity: 1,
-              transform: "translateY(0)",
-              willChange: "transform, opacity",
-            }}
-            key={currentReview.id}
-          >
-            <p className="text-lg leading-relaxed text-neutral-900 sm:text-xl dark:text-white">
-              &ldquo;{renderFormattedText(currentReview.text)}&rdquo;
-            </p>
-            <p className="text-sm font-semibold text-neutral-700 dark:text-neutral-200">{currentReview.client}</p>
-          </div>
-
-          {!prefersReducedMotion && nextReview ? (
-            <div
-              className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center space-y-3 px-3 text-center opacity-0 transition duration-300 ease-in-out"
-              style={{
-                willChange: "transform, opacity",
-                transform: "translateY(12px)",
-              }}
-              aria-hidden
-            >
-              <p className="text-lg leading-relaxed text-neutral-900 sm:text-xl dark:text-white">
-                &ldquo;{renderFormattedText(nextReview.text)}&rdquo;
-              </p>
-              <p className="text-sm font-semibold text-neutral-700 dark:text-neutral-200">{nextReview.client}</p>
-            </div>
-          ) : null}
+        <div className="relative mx-auto flex min-h-[190px] max-w-xl items-center justify-center overflow-hidden">
+          {slideIndices.map((idx) => {
+            const review = reviews[idx]
+            if (!review) return null
+            const isActive = idx === activeIndex
+            return (
+              <div
+                key={review.id}
+                className={cn(
+                  "absolute inset-0 flex flex-col items-center justify-center space-y-3 px-3 text-center transition duration-320 ease-[0.22,1,0.36,1]",
+                  isActive
+                    ? "opacity-100 translate-y-0 z-10"
+                    : "opacity-0 translate-y-3 z-0 pointer-events-none"
+                )}
+                style={{ willChange: "transform, opacity" }}
+                aria-hidden={!isActive}
+              >
+                <p className="text-lg leading-relaxed text-neutral-900 sm:text-xl dark:text-white">
+                  &ldquo;{renderFormattedText(review.text)}&rdquo;
+                </p>
+                <p className="text-sm font-semibold text-neutral-700 dark:text-neutral-200">{review.client}</p>
+              </div>
+            )
+          })}
         </div>
       </div>
 
