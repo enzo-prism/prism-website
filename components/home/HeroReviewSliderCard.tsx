@@ -135,27 +135,6 @@ export default function HeroReviewSliderCard({ className }: HeroReviewSliderCard
         </Link>
       </div>
 
-      {reviewPool.length > 1 && (
-        <div className="flex items-center justify-center gap-2 text-sm text-neutral-600 dark:text-neutral-300">
-          <button
-            type="button"
-            aria-label="Previous review"
-            onClick={prevReview}
-            className="flex items-center justify-center rounded-full border border-neutral-200 px-3 py-1 text-xs font-semibold lowercase text-neutral-700 transition hover:border-neutral-400 hover:text-neutral-900 dark:border-neutral-700 dark:text-neutral-300 dark:hover:border-neutral-500 dark:hover:text-white"
-          >
-            ← prev
-          </button>
-          <button
-            type="button"
-            aria-label="Next review"
-            onClick={nextReview}
-            className="flex items-center justify-center rounded-full border border-neutral-200 px-3 py-1 text-xs font-semibold lowercase text-neutral-700 transition hover:border-neutral-400 hover:text-neutral-900 dark:border-neutral-700 dark:text-neutral-300 dark:hover:border-neutral-500 dark:hover:text-white"
-          >
-            next →
-          </button>
-        </div>
-      )}
-
       {heroReviewSchema && (
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: heroReviewSchema }} />
       )}
