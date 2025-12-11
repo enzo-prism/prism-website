@@ -1,6 +1,6 @@
 export type ClientInfo = {
   title: string
-  image: string
+  image?: string
   location?: string
   website?: string
   href?: string
