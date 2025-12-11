@@ -138,59 +138,6 @@ export default function ClientPage() {
         <WebsitesFeatures />
         <LatestPostsSection />
 
-        {/* We're Hiring Section */}
-        <section className="border-t border-neutral-100 bg-white py-16 dark:border-neutral-800 dark:bg-neutral-900 md:py-24">
-          <div className="container mx-auto px-4 md:px-6 max-w-5xl">
-            <div className="mx-auto max-w-2xl text-center space-y-4">
-              <p className="text-sm font-medium tracking-[0.32em] text-neutral-500 lowercase dark:text-neutral-400">
-                we're hiring
-              </p>
-              <h2 className="text-3xl font-bold tracking-tighter lowercase sm:text-4xl dark:text-white">
-                build the future of local web with prism
-              </h2>
-              <p className="text-neutral-600 dark:text-neutral-300 lowercase md:text-lg">
-                join our lean, fast-moving team helping dentists and local businesses grow with modern design and engineering.
-              </p>
-            </div>
-            <div className="mt-10 grid gap-4 md:grid-cols-2">
-              {openRoles.map((role) => (
-                <Link
-                  key={role.href}
-                  href={role.href}
-                  className="group rounded-2xl border border-neutral-200 bg-white p-6 transition-all hover:-translate-y-1 hover:border-neutral-300 hover:shadow-lg dark:border-neutral-800 dark:bg-neutral-950 dark:hover:border-neutral-700"
-                  onClick={() => trackNavigation("home_hiring_role", role.href)}
-                >
-                  <div className="flex items-start justify-between gap-4">
-                    <div>
-                      <h3 className="text-xl font-semibold lowercase text-neutral-800 dark:text-white">
-                        {role.title}
-                      </h3>
-                      <p className="mt-3 text-sm text-neutral-500 lowercase dark:text-neutral-400">
-                        {role.meta}
-                      </p>
-                    </div>
-                    <Briefcase className="mt-1 h-6 w-6 text-neutral-400 transition-colors group-hover:text-neutral-500 dark:text-neutral-600 dark:group-hover:text-neutral-400" />
-                  </div>
-                  <div className="mt-6 inline-flex items-center text-sm font-medium lowercase text-neutral-700 transition-colors group-hover:text-neutral-900 dark:text-neutral-300 dark:group-hover:text-white">
-                    view details <ArrowRight className="ml-2 h-4 w-4" />
-                  </div>
-                </Link>
-              ))}
-            </div>
-            <div className="mt-10 text-center">
-              <Link href="/careers">
-                <Button
-                  variant="outline"
-                  className="rounded-full lowercase"
-                  onClick={() => trackCTAClick("explore careers", "home hiring section")}
-                >
-                  explore all openings <ArrowRight className="ml-2 h-4 w-4" />
-                </Button>
-              </Link>
-            </div>
-          </div>
-        </section>
-
         {/* Additional content pruned per new simplified homepage */}
 
         {/* Flywheel section removed */}
