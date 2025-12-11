@@ -62,7 +62,7 @@ export default function HeroReviewSliderCard({ className }: HeroReviewSliderCard
 
   useEffect(() => {
     if (prefersReducedMotion || reviewPool.length <= 1 || isPaused) return
-    const timer = window.setInterval(nextReview, 6500)
+    const timer = window.setInterval(nextReview, 7000)
     return () => window.clearInterval(timer)
   }, [isPaused, nextReview, prefersReducedMotion, reviewPool.length])
   
@@ -89,8 +89,7 @@ export default function HeroReviewSliderCard({ className }: HeroReviewSliderCard
   }, [heroReviewForSchema])
 
   if (!currentReview) {
-    // Optional: Render a skeleton or empty state here to prevent layout shift during hydration
-    return <div className={cn("min-h-[140px] w-full max-w-sm", className)} />
+    return <div className={cn("w-full max-w-sm", className)} />
   }
 
   return (
@@ -106,26 +105,20 @@ export default function HeroReviewSliderCard({ className }: HeroReviewSliderCard
         <span className="tracking-tight">founders love prism</span>
       </div>
 
-      {/* 
-        Content Container 
-        Using `mode="wait"` ensures the exiting slide completely fades out 
-        before the new one fades in. This eliminates layout jumps and overlapping text
-        on mobile devices where vertical space is tight.
-      */}
-      <div className="relative min-h-[120px] sm:min-h-[120px] px-1"> 
+      <div className="relative px-1">
         <AnimatePresence mode="wait">
           <motion.div
             key={currentReview.id}
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -6 }}
-            transition={{ duration: 0.28, ease: "easeOut" }}
-            className="w-full"
+            transition={{ duration: 0.25, ease: "easeOut" }}
+            className="w-full space-y-3"
           >
             <p className="text-lg leading-relaxed text-neutral-900 sm:text-xl dark:text-white">
               &ldquo;{renderFormattedText(currentReview.text)}&rdquo;
             </p>
-            <p className="mt-4 text-sm font-semibold text-neutral-700 dark:text-neutral-200">
+            <p className="text-sm font-semibold text-neutral-700 dark:text-neutral-200">
               {currentReview.client}
             </p>
           </motion.div>
