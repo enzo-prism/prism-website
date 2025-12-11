@@ -24,7 +24,7 @@ export default function GrowthHeadline() {
           ))}
         </div>
 
-        <h2 className="text-balance text-3xl font-semibold leading-normal tracking-tight text-neutral-900 lowercase sm:text-4xl md:text-[clamp(2.5rem,4vw,3.5rem)] dark:text-neutral-50">
+        <h2 className="text-balance text-3xl font-semibold leading-[1.3] tracking-tight text-neutral-900 lowercase sm:text-4xl md:text-[clamp(2.5rem,4vw,3.5rem)] dark:text-neutral-50 max-w-3xl mx-auto">
           websites, content systems, and ads that grow your business.
         </h2>
 
