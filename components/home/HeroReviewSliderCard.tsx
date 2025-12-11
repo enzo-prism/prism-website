@@ -28,11 +28,13 @@ export default function HeroReviewSliderCard({ className }: HeroReviewSliderCard
   // Interaction State
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false)
   const [isPaused, setIsPaused] = useState(false)
+  const [isMounted, setIsMounted] = useState(false)
 
   // --- Initialization ---
   useEffect(() => {
     // Hydration-safe data loading
     setReviewPool(getHomepageHeroReviewPool())
+    setIsMounted(true)
 
     // Motion preference check
     const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)")
@@ -62,8 +64,19 @@ export default function HeroReviewSliderCard({ className }: HeroReviewSliderCard
 
   useEffect(() => {
     if (prefersReducedMotion || reviewPool.length <= 1 || isPaused) return
-    const timer = window.setInterval(nextReview, 7000)
-    return () => window.clearInterval(timer)
+    let frame: number
+    let timer: number
+    const tick = () => {
+      timer = window.setTimeout(() => {
+        frame = window.requestAnimationFrame(nextReview)
+        tick()
+      }, 5500)
+    }
+    tick()
+    return () => {
+      window.clearTimeout(timer)
+      if (frame) window.cancelAnimationFrame(frame)
+    }
   }, [isPaused, nextReview, prefersReducedMotion, reviewPool.length])
   
   const heroReviewSchema = useMemo(() => {
@@ -94,7 +107,11 @@ export default function HeroReviewSliderCard({ className }: HeroReviewSliderCard
 
   return (
     <div
-      className={cn("w-full max-w-sm sm:max-w-md text-center space-y-3 sm:space-y-4", className)}
+      className={cn(
+        "w-full max-w-sm sm:max-w-md text-center space-y-3 sm:space-y-4",
+        "select-none",
+        className
+      )}
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
       onFocusCapture={() => setIsPaused(true)}
@@ -106,23 +123,25 @@ export default function HeroReviewSliderCard({ className }: HeroReviewSliderCard
       </div>
 
       <div className="relative px-1">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={currentReview.id}
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -6 }}
-            transition={{ duration: 0.25, ease: "easeOut" }}
-            className="w-full space-y-3"
-          >
-            <p className="text-lg leading-relaxed text-neutral-900 sm:text-xl dark:text-white">
-              &ldquo;{renderFormattedText(currentReview.text)}&rdquo;
-            </p>
-            <p className="text-sm font-semibold text-neutral-700 dark:text-neutral-200">
-              {currentReview.client}
-            </p>
-          </motion.div>
-        </AnimatePresence>
+        <div className="relative mx-auto flex min-h-[140px] max-w-xl items-center justify-center overflow-hidden">
+          <AnimatePresence mode="wait" initial={false}>
+            <motion.div
+              key={currentReview.id}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
+              className="absolute inset-0 flex flex-col items-center justify-center space-y-3 px-3 text-center"
+            >
+              <p className="text-lg leading-relaxed text-neutral-900 sm:text-xl dark:text-white">
+                &ldquo;{renderFormattedText(currentReview.text)}&rdquo;
+              </p>
+              <p className="text-sm font-semibold text-neutral-700 dark:text-neutral-200">
+                {currentReview.client}
+              </p>
+            </motion.div>
+          </AnimatePresence>
+        </div>
       </div>
 
       <div className="flex justify-center">
