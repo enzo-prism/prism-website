@@ -1,6 +1,6 @@
 "use client"
 
-import { Eye, TrendingUp, Users2 } from "lucide-react"
+import { Eye, Users2, Wallet } from "lucide-react"
 
 const PILL_ITEMS = [
   { label: "websites", emoji: "📱" },
@@ -40,7 +40,7 @@ export default function GrowthHeadline() {
             impressions
           </span>
           <span className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.3em]">
-            <TrendingUp className="h-4 w-4" aria-hidden />
+            <Wallet className="h-4 w-4" aria-hidden />
             conversions
           </span>
           <span className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.3em]">
