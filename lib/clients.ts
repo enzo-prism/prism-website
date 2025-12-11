@@ -128,4 +128,24 @@ export const CLIENTS: ClientInfo[] = [
     href: "/case-studies/sr4-partners",
     category: "consulting",
   },
+  {
+    title: "Infobell IT",
+    location: "San Jose, CA",
+    category: "it",
+  },
+  {
+    title: "Saorsa Growth Partners",
+    location: "San Francisco, CA",
+    category: "consulting",
+  },
+  {
+    title: "We Are Saplings",
+    location: "New York City",
+    category: "education",
+  },
+  {
+    title: "Dentist Retreat",
+    location: "San Francisco, CA",
+    category: "event",
+  },
 ]
