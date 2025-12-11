@@ -61,14 +61,15 @@ export default function ClientsRail() {
   }
 
   const maskStyle = useMemo(() => {
-    const leftStop = !isMobile && canScrollLeft ? "0%" : "6%"
-    const rightStop = canScrollRight ? "100%" : "94%"
-    const leftColor = !isMobile && canScrollLeft ? "transparent" : "rgba(0,0,0,1)"
+    if (isMobile) return undefined
+    const leftStop = canScrollLeft ? "0%" : "8%"
+    const rightStop = canScrollRight ? "100%" : "92%"
+    const leftColor = canScrollLeft ? "transparent" : "rgba(0,0,0,1)"
     const rightColor = canScrollRight ? "transparent" : "rgba(0,0,0,1)"
 
     return {
-      maskImage: `linear-gradient(to right, ${leftColor} ${leftStop}, black 12%, black 88%, ${rightColor} ${rightStop})`,
-      WebkitMaskImage: `linear-gradient(to right, ${leftColor} ${leftStop}, black 12%, black 88%, ${rightColor} ${rightStop})`,
+      maskImage: `linear-gradient(to right, ${leftColor} ${leftStop}, black 14%, black 86%, ${rightColor} ${rightStop})`,
+      WebkitMaskImage: `linear-gradient(to right, ${leftColor} ${leftStop}, black 14%, black 86%, ${rightColor} ${rightStop})`,
     } as const
   }, [canScrollLeft, canScrollRight, isMobile])
 
@@ -77,7 +78,7 @@ export default function ClientsRail() {
       <div className="relative">
         <div
           ref={railRef}
-          className="flex gap-4 overflow-x-auto snap-x snap-mandatory px-4 md:px-6 py-1 scroll-smooth"
+          className="flex gap-3 sm:gap-4 overflow-x-auto snap-x snap-mandatory px-4 md:px-6 py-1 scroll-smooth"
           role="list"
           aria-label="Client stories"
           style={maskStyle}
@@ -87,7 +88,7 @@ export default function ClientsRail() {
             return (
               <div
                 key={client.title}
-                className="shrink-0 snap-start md:translate-y-0 w-[78vw] sm:w-[58vw] md:w-[260px] first:ml-1 md:first:ml-0"
+                className="shrink-0 snap-start md:translate-y-0 w-[74vw] sm:w-[52vw] md:w-[260px] first:ml-1 md:first:ml-0"
                 role="listitem"
               >
                 <ClientCard
@@ -123,7 +124,7 @@ export default function ClientsRail() {
           aria-label="Scroll left"
           onClick={() => scrollByAmount("left")}
           disabled={!canScrollLeft}
-          className="hidden sm:flex absolute left-4 top-1/2 -translate-y-1/2 h-11 w-11 items-center justify-center rounded-full border bg-white/95 shadow-md transition hover:bg-white disabled:pointer-events-none disabled:opacity-40"
+          className="hidden md:flex absolute left-4 top-1/2 -translate-y-1/2 h-11 w-11 items-center justify-center rounded-full border bg-white/95 shadow-md transition hover:bg-white disabled:pointer-events-none disabled:opacity-40"
         >
           <ChevronLeft className="h-5 w-5" />
         </button>
@@ -132,7 +133,7 @@ export default function ClientsRail() {
           aria-label="Scroll right"
           onClick={() => scrollByAmount("right")}
           disabled={!canScrollRight}
-          className="hidden sm:flex absolute right-4 top-1/2 -translate-y-1/2 h-11 w-11 items-center justify-center rounded-full border bg-white/95 shadow-md transition hover:bg-white disabled:pointer-events-none disabled:opacity-40"
+          className="hidden md:flex absolute right-4 top-1/2 -translate-y-1/2 h-11 w-11 items-center justify-center rounded-full border bg-white/95 shadow-md transition hover:bg-white disabled:pointer-events-none disabled:opacity-40"
         >
           <ChevronRight className="h-5 w-5" />
         </button>
