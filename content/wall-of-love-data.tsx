@@ -593,7 +593,6 @@ export const quotesData: Quote[] = [
   { id: 199, text: "Damn…", client: "tomshawuk", company: "Instagram Community of Entrepreneurs" },
   { id: 200, text: "Facts", client: "itslukasts", company: "Instagram Community of Entrepreneurs" },
   { id: 201, text: "مكتوب — it is written", client: "mathewsalameh", company: "Instagram Community of Entrepreneurs" },
-  { id: 202, text: "Wow, that's powerful. Thank you Hormozi!!", client: "dallinbunnell", company: "Instagram Community of Entrepreneurs" },
   { id: 203, text: "Straight roads don’t make for good drivers and if it ain’t tough, it ain’t worth it", client: "victor.siqueira.barbosa", company: "Instagram Community of Entrepreneurs" },
   { id: 204, text: "Glorious 🤌🏻✨", client: "aviibhardwaj", company: "Instagram Community of Entrepreneurs" },
   { id: 205, text: "This kinda content > EVERYTHING", client: "csuarezftw", company: "Instagram Community of Entrepreneurs" },
