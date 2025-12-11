@@ -90,13 +90,13 @@ export default function HeroReviewSliderCard({ className }: HeroReviewSliderCard
 
   if (!currentReview) {
     // Optional: Render a skeleton or empty state here to prevent layout shift during hydration
-    return <div className={cn("min-h-[180px] w-full rounded-2xl bg-white/70", className)} />
+    return <div className={cn("min-h-[180px] w-full max-w-sm rounded-2xl bg-white/70", className)} />
   }
 
   return (
     <div
       className={cn(
-        "relative w-full overflow-hidden rounded-2xl border border-neutral-200 bg-white p-5 text-left shadow-sm transition-colors duration-200 sm:p-6",
+        "relative w-full max-w-sm sm:max-w-md overflow-hidden rounded-2xl border border-neutral-200 bg-white p-5 text-left shadow-sm transition-colors duration-200 sm:p-6",
         "dark:border-neutral-800 dark:bg-neutral-900 dark:text-white",
         className
       )}
@@ -147,29 +147,28 @@ export default function HeroReviewSliderCard({ className }: HeroReviewSliderCard
       </div>
 
       {reviewPool.length > 1 && (
-        <div className="mt-4 flex items-center justify-center gap-4">
-          <div className="flex items-center gap-3">
-            {reviewPool.map((quote, index) => (
-              <button
-                key={quote.id}
-                type="button"
-                aria-label={`Go to review ${index + 1}`}
-                onClick={() => setActiveIndex(index)}
-                className={`h-3 w-3 rounded-full transition ${
-                  index === activeIndex ? "bg-neutral-900 dark:bg-white" : "bg-neutral-300 dark:bg-neutral-700"
-                }`}
-              />
-            ))}
+        <div className="mt-4 flex flex-col items-center gap-3 text-sm text-neutral-600 dark:text-neutral-300">
+          <span className="text-xs font-semibold uppercase tracking-[0.2em] text-neutral-500 dark:text-neutral-400">
+            review {activeIndex + 1} of {reviewPool.length}
+          </span>
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              aria-label="Previous review"
+              onClick={prevReview}
+              className="flex items-center justify-center rounded-full border border-neutral-200 px-3 py-1 text-xs font-semibold lowercase text-neutral-700 transition hover:border-neutral-400 hover:text-neutral-900 dark:border-neutral-700 dark:text-neutral-300 dark:hover:border-neutral-500 dark:hover:text-white"
+            >
+              ← prev
+            </button>
+            <button
+              type="button"
+              aria-label="Next review"
+              onClick={nextReview}
+              className="flex items-center justify-center rounded-full border border-neutral-200 px-3 py-1 text-xs font-semibold lowercase text-neutral-700 transition hover:border-neutral-400 hover:text-neutral-900 dark:border-neutral-700 dark:text-neutral-300 dark:hover:border-neutral-500 dark:hover:text-white"
+            >
+              next →
+            </button>
           </div>
-          <button
-            type="button"
-            aria-label="Next review"
-            onClick={nextReview}
-            className="flex items-center gap-2 rounded-full border border-neutral-200 px-3 py-1 text-xs font-semibold lowercase text-neutral-700 transition hover:border-neutral-400 hover:text-neutral-900 dark:border-neutral-700 dark:text-neutral-300 dark:hover:border-neutral-500 dark:hover:text-white"
-          >
-            next
-            <span aria-hidden>→</span>
-          </button>
         </div>
       )}
 
