@@ -2,6 +2,13 @@
 
 import Link from "next/link"
 import { ArrowRight } from "lucide-react"
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel"
 
 type Segment = {
   emoji: string
@@ -66,40 +73,55 @@ export default function SegmentsGrid() {
           </p>
         </div>
 
-        <div className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {segments.map((segment) => (
-            <article
-              key={segment.title}
-              className="group flex h-full flex-col justify-between rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
-            >
-              <div>
-                <div className="flex items-center gap-3">
-                  <span className="text-3xl" aria-hidden>
-                    {segment.emoji}
-                  </span>
-                  <h3 className="text-xl font-semibold lowercase text-neutral-900">
-                    {segment.title}
-                  </h3>
-                </div>
-                <p className="mt-4 text-sm text-neutral-600">{segment.summary}</p>
-                <ul className="mt-6 space-y-2 text-sm text-neutral-500">
-                  {segment.highlights.map((highlight) => (
-                    <li key={highlight} className="flex items-start gap-2">
-                      <span className="mt-1 h-1.5 w-1.5 rounded-full bg-primary" aria-hidden />
-                      <span>{highlight}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <Link
-                href={segment.href}
-                className="mt-6 inline-flex items-center text-sm font-semibold text-primary transition group-hover:gap-2"
-              >
-                <span>see why</span>
-                <ArrowRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" />
-              </Link>
-            </article>
-          ))}
+        <div className="mt-14">
+          <Carousel
+            opts={{
+              align: "start",
+              loop: false,
+              dragFree: true,
+            }}
+            className="relative"
+          >
+            <CarouselContent>
+              {segments.map((segment) => (
+                <CarouselItem
+                  key={segment.title}
+                  className="pl-4 basis-[92%] sm:basis-[78%] md:basis-[52%] lg:basis-[45%] xl:basis-[38%]"
+                >
+                  <article className="group flex h-full flex-col justify-between rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
+                    <div>
+                      <div className="flex items-center gap-3">
+                        <span className="text-3xl" aria-hidden>
+                          {segment.emoji}
+                        </span>
+                        <h3 className="text-xl font-semibold lowercase text-neutral-900">
+                          {segment.title}
+                        </h3>
+                      </div>
+                      <p className="mt-4 text-sm text-neutral-600">{segment.summary}</p>
+                      <ul className="mt-6 space-y-2 text-sm text-neutral-500">
+                        {segment.highlights.map((highlight) => (
+                          <li key={highlight} className="flex items-start gap-2">
+                            <span className="mt-1 h-1.5 w-1.5 rounded-full bg-primary" aria-hidden />
+                            <span>{highlight}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <Link
+                      href={segment.href}
+                      className="mt-6 inline-flex items-center text-sm font-semibold text-primary transition group-hover:gap-2"
+                    >
+                      <span>see why</span>
+                      <ArrowRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                    </Link>
+                  </article>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious className="hidden sm:flex -left-4 md:-left-8" />
+            <CarouselNext className="hidden sm:flex -right-4 md:-right-8" />
+          </Carousel>
         </div>
       </div>
     </section>
