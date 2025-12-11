@@ -118,16 +118,6 @@ export default function ClientPage() {
                       view pricing <ArrowRight className="ml-2 h-5 w-5" />
                     </Button>
                   </Link>
-                  <Link
-                    href="/scholarship"
-                    className="text-xs tracking-[0.24em] uppercase text-neutral-400 transition hover:text-neutral-600"
-                    onClick={() => trackCTAClick("apply for scholarship", "hero section")}
-                  >
-                    <span aria-hidden="true" className="mr-2 text-base">
-                      🎓
-                    </span>
-                    apply for scholarship
-                  </Link>
                 </div>
                 <HeroReviewSliderCard className="w-full max-w-md" />
               </div>
