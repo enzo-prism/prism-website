@@ -11,11 +11,11 @@ type CategoryKey =
   | "default"
 
 const CATEGORY_STYLES: Record<CategoryKey, { bg: string; border: string; text: string }> = {
-  dentistry: { bg: "bg-[#e6f2ff]", border: "border-[#c8dfff]", text: "text-[#1f4f91]" },
+  dentistry: { bg: "bg-[#fff5e8]", border: "border-[#ffd8af]", text: "text-[#a35516]" },
   retail: { bg: "bg-[#fff0e6]", border: "border-[#ffd8bf]", text: "text-[#a34b18]" },
   education: { bg: "bg-[#f3e9ff]", border: "border-[#e0cfff]", text: "text-[#5c3fa3]" },
   nonprofit: { bg: "bg-[#e6f8f2]", border: "border-[#c6ecde]", text: "text-[#1c6b4d]" },
-  consulting: { bg: "bg-[#eaf2ff]", border: "border-[#d4e2ff]", text: "text-[#2f4f99]" },
+  consulting: { bg: "bg-[#e8f7ff]", border: "border-[#cdeeff]", text: "text-[#1a6a9b]" },
   event: { bg: "bg-[#fff3e8]", border: "border-[#ffe0c2]", text: "text-[#a45a16]" },
   "private resort": { bg: "bg-[#e8fbff]", border: "border-[#c8f2ff]", text: "text-[#146c82]" },
   "online community": { bg: "bg-[#f8ecff]", border: "border-[#e8d3ff]", text: "text-[#7a3fa5]" },
