@@ -150,9 +150,6 @@ export default function ClientsRail() {
           <span className="relative sm:hidden">Swipe</span>
           <MoveRight className="relative h-4 w-4" aria-hidden="true" />
         </div>
-        <p className="text-center text-xs text-neutral-500 sm:text-sm dark:text-neutral-400">
-          explore the brands that trust prism
-        </p>
       </div>
     </div>
   )
