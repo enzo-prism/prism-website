@@ -13,7 +13,7 @@ type CategoryKey =
 const CATEGORY_STYLES: Record<CategoryKey, { bg: string; border: string; text: string }> = {
   dentistry: { bg: "bg-[#f1f8ff]", border: "border-[#cfe5ff]", text: "text-[#1f4f91]" },
   retail: { bg: "bg-[#fff3e8]", border: "border-[#ffd9b8]", text: "text-[#a34b18]" },
-  education: { bg: "bg-[#f7ecff]", border: "border-[#e7d4ff]", text: "text-[#5c3fa3]" },
+  education: { bg: "bg-[#f6efe7]", border: "border-[#e3d4c3]", text: "text-[#7a4c24]" },
   nonprofit: { bg: "bg-[#e7f9f1]", border: "border-[#c8eddc]", text: "text-[#1c6b4d]" },
   consulting: { bg: "bg-[#ffecec]", border: "border-[#ffc8c8]", text: "text-[#a02727]" },
   event: { bg: "bg-[#fff7eb]", border: "border-[#ffdfb8]", text: "text-[#a45a16]" },
