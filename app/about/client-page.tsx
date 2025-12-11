@@ -53,22 +53,6 @@ export default function AboutClientPage() {
           </div>
         </section>
 
-        <section className="px-4 pb-12 md:pb-16">
-          <div className="container mx-auto max-w-4xl px-4 md:px-6">
-            <div className="overflow-hidden rounded-3xl border border-neutral-100 shadow-sm">
-              <Image
-                src="https://res.cloudinary.com/dhqpqfw6w/image/upload/v1765247213/Gemini_Generated_Image_7xl9or7xl9or7xl9_zxuiin.webp"
-                alt="Gemini-generated artwork for Prism"
-                width={1792}
-                height={2400}
-                className="h-auto w-full object-cover"
-                sizes="(min-width: 768px) 896px, 100vw"
-                priority
-              />
-            </div>
-          </div>
-        </section>
-
         {/* Timeline Section */}
         <section className="px-4 py-16 md:py-24">
           <div className="container mx-auto px-4 md:px-6">
