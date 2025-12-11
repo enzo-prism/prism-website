@@ -131,7 +131,7 @@ export default function HeroReviewSliderCard({ className }: HeroReviewSliderCard
           onClick={() => trackNavigation("hero_review_card_cta", "/wall-of-love")}
           className="text-xs font-semibold text-neutral-700 underline decoration-neutral-300 underline-offset-4 transition hover:text-neutral-900 dark:text-neutral-200 dark:hover:text-white"
         >
-          read 250+ more
+          250+ more
         </Link>
       </div>
 
