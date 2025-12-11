@@ -56,24 +56,14 @@ export default function RecentLaunchesCarousel({ projects }: RecentLaunchesCarou
 
   return (
     <section className="mt-16 rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm sm:p-8">
-      <div className="flex flex-col gap-3 text-center sm:text-left">
+      <div className="flex flex-col gap-2 text-center sm:text-left">
         <span className="text-xs font-semibold uppercase tracking-[0.28em] text-neutral-400">recent launches</span>
         <h2 className="text-2xl font-semibold lowercase text-neutral-900 sm:text-3xl">
           see the sites clients launch with prism
         </h2>
-        <p className="text-sm text-neutral-600 sm:text-base">
-          A sampling of sites we designed, wrote, and built across healthcare, retail, nonprofit, and services—toggle the industries to see the matches.
-        </p>
       </div>
 
-      <div className="mt-8 space-y-6">
-        <div className="flex flex-col items-center gap-2 text-center">
-          <span className="text-xs font-semibold uppercase tracking-[0.28em] text-neutral-400">toggle the industries</span>
-          <p className="max-w-2xl text-sm text-neutral-600">
-            pick a category to surface the launches closest to your world. the filter updates the list instantly.
-          </p>
-        </div>
-
+      <div className="mt-6 space-y-6">
         <ToggleGroup
           type="single"
           value={activeCategory}
@@ -83,8 +73,7 @@ export default function RecentLaunchesCarousel({ projects }: RecentLaunchesCarou
           className="mx-auto flex w-full max-w-3xl flex-wrap justify-center gap-2 bg-neutral-50 p-1"
         >
           <ToggleGroupItem value={ALL_CATEGORY} aria-label="show all website launches" className="px-3">
-            <span className="text-sm font-medium">all</span>
-            <span className="ml-2 text-xs text-neutral-500">{projects.length}</span>
+            <span className="text-sm font-medium">all ({projects.length})</span>
           </ToggleGroupItem>
           {categorySummary.map(category => (
             <ToggleGroupItem
@@ -93,15 +82,12 @@ export default function RecentLaunchesCarousel({ projects }: RecentLaunchesCarou
               aria-label={`show ${category.label.toLowerCase()} websites`}
               className="px-3"
             >
-              <span className="text-sm font-medium">{category.label}</span>
-              <span className="ml-2 text-xs text-neutral-500">{category.count}</span>
+              <span className="text-sm font-medium">
+                {category.label} ({category.count})
+              </span>
             </ToggleGroupItem>
           ))}
         </ToggleGroup>
-
-        <div className="text-center text-xs font-medium uppercase tracking-[0.28em] text-neutral-400">
-          showing {filteredProjects.length} {filteredProjects.length === 1 ? "launch" : "launches"} · {activeLabel}
-        </div>
 
         <div className="relative">
           <Carousel
@@ -122,23 +108,16 @@ export default function RecentLaunchesCarousel({ projects }: RecentLaunchesCarou
                       <h3 className="text-xl font-semibold text-neutral-900">{project.title}</h3>
                       <p className="text-sm text-neutral-600">{project.description}</p>
                     </div>
-                    <div className="mt-6 flex items-center justify-between text-sm font-semibold text-neutral-900">
+                    <div className="mt-6">
                       <Link
                         href={project.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 rounded-full bg-neutral-900 px-4 py-2 text-white transition hover:bg-neutral-800"
+                        className="inline-flex items-center gap-2 rounded-full bg-neutral-900 px-4 py-2 text-sm font-semibold text-white transition hover:bg-neutral-800"
                         onClick={() => trackCTAClick("portfolio-click", project.title)}
                       >
                         view site
                         <ArrowUpRight className="h-4 w-4" />
-                      </Link>
-                      <Link
-                        href="/websites#recent-work"
-                        className="inline-flex items-center gap-1 text-neutral-700 hover:text-neutral-900"
-                      >
-                        see all
-                        <ArrowRight className="h-4 w-4" />
                       </Link>
                     </div>
                   </div>
