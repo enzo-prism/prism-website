@@ -61,10 +61,7 @@ export default function SegmentsGrid() {
     <section className="py-20 md:py-28 bg-neutral-50">
       <div className="container mx-auto px-4 md:px-6">
         <div className="mx-auto max-w-3xl text-center">
-          <span className="text-xs font-semibold uppercase tracking-[0.35em] text-neutral-500">
-            who we help
-          </span>
-          <h2 className="mt-4 text-3xl font-bold tracking-tight lowercase sm:text-4xl">
+          <h2 className="text-3xl font-bold tracking-tight lowercase sm:text-4xl">
             market segments we support
           </h2>
         </div>
