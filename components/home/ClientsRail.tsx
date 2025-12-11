@@ -58,19 +58,6 @@ export default function ClientsRail() {
     rail.scrollBy({ left: direction === "left" ? -amount : amount, behavior: "smooth" })
   }
 
-  const maskStyle = useMemo(() => {
-    if (isMobile) return undefined
-    const leftStop = canScrollLeft ? "0%" : "8%"
-    const rightStop = canScrollRight ? "100%" : "92%"
-    const leftColor = canScrollLeft ? "transparent" : "rgba(0,0,0,1)"
-    const rightColor = canScrollRight ? "transparent" : "rgba(0,0,0,1)"
-
-    return {
-      maskImage: `linear-gradient(to right, ${leftColor} ${leftStop}, black 14%, black 86%, ${rightColor} ${rightStop})`,
-      WebkitMaskImage: `linear-gradient(to right, ${leftColor} ${leftStop}, black 14%, black 86%, ${rightColor} ${rightStop})`,
-    } as const
-  }, [canScrollLeft, canScrollRight, isMobile])
-
   return (
     <div className="relative">
       <div className="relative">
@@ -79,7 +66,6 @@ export default function ClientsRail() {
           className="flex gap-3 sm:gap-4 overflow-x-auto snap-x snap-mandatory px-4 md:px-6 py-1 scroll-smooth"
           role="list"
           aria-label="Client stories"
-          style={maskStyle}
         >
           {clients.map((client) => (
             <div
@@ -97,19 +83,6 @@ export default function ClientsRail() {
           ))}
           <span className="sr-only">Swipe or scroll horizontally to view more clients</span>
         </div>
-
-        {!isMobile && canScrollLeft ? (
-          <div
-            className="pointer-events-none absolute inset-y-0 left-0 w-12 bg-gradient-to-r from-white to-transparent dark:from-neutral-950"
-            aria-hidden="true"
-          />
-        ) : null}
-        {canScrollRight ? (
-          <div
-            className="pointer-events-none absolute inset-y-0 right-0 w-12 bg-gradient-to-l from-white to-transparent dark:from-neutral-950"
-            aria-hidden="true"
-          />
-        ) : null}
       </div>
 
       <div className="mt-4 flex items-center justify-center text-xs text-neutral-500 dark:text-neutral-400">
