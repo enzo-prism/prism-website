@@ -31,10 +31,6 @@ export default function GrowthHeadline() {
         <p className="max-w-2xl text-balance text-base text-neutral-500 lowercase md:text-lg dark:text-neutral-300">
           design and engineering that boosts impressions, conversions, and referrals.
         </p>
-
-        <p className="text-xs font-semibold uppercase tracking-[0.3em] text-neutral-400">
-          impressions · conversions · referrals
-        </p>
       </div>
     </section>
   )
