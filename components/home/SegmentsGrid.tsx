@@ -67,10 +67,6 @@ export default function SegmentsGrid() {
           <h2 className="mt-4 text-3xl font-bold tracking-tight lowercase sm:text-4xl">
             market segments we support
           </h2>
-          <p className="mt-4 text-base text-neutral-600">
-            Explore how different teams partner with Prism to unlock growth. Each segment has a dedicated playbook
-            that dives deeper into the outcomes we deliver.
-          </p>
         </div>
 
         <div className="mt-14">
