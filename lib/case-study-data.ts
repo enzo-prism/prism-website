@@ -246,7 +246,7 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
   {
     id: "19",
     title: "Modern Dental Presence",
-    client: "Michael Njo, DDS",
+    client: "Dental Strategies",
     category: "dentistry",
     founder: "Dr. Michael Njo",
     industry: "Dentistry",
