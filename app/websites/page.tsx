@@ -425,19 +425,6 @@ export default async function WebsitesPage() {
           </div>
         </section>
 
-        <section className="bg-white px-4 py-16 sm:py-20">
-          <div className="mx-auto max-w-5xl overflow-hidden rounded-3xl border border-neutral-200 shadow-sm">
-            <Image
-              src="https://res.cloudinary.com/dhqpqfw6w/image/upload/v1765245097/Gemini_Generated_Image_i4s9g3i4s9g3i4s9_jwlzsk.webp"
-              alt="Website development process infographic"
-              width={1536}
-              height={2752}
-              className="h-auto w-full"
-              sizes="(min-width: 1024px) 1024px, 100vw"
-            />
-          </div>
-        </section>
-
         <section id="recent-work" className="px-4 py-16 sm:py-20">
           <div className="mx-auto max-w-4xl">
             <div className="mb-10 text-center">
