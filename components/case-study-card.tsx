@@ -3,14 +3,12 @@
 import Link from "next/link"
 interface CaseStudyCardProps {
   business: string
-  founder?: string
+  category: string
   location: string
   slug: string
 }
 
-export default function CaseStudyCard({ business, founder, location, slug }: CaseStudyCardProps) {
-  const founderLabel = founder && founder.trim().length > 0 ? founder : "founder not listed"
-
+export default function CaseStudyCard({ business, category, location, slug }: CaseStudyCardProps) {
   return (
     <Link
       href={`/case-studies/${slug}`}
@@ -18,8 +16,10 @@ export default function CaseStudyCard({ business, founder, location, slug }: Cas
     >
       <div className="relative h-full rounded-2xl border border-neutral-200 bg-white p-5 transition hover:-translate-y-1 hover:border-neutral-300 hover:shadow-md">
         <div className="space-y-2">
+          <div className="inline-flex items-center gap-2 rounded-full border border-neutral-200 px-3 py-1 text-xs font-semibold lowercase text-neutral-700">
+            <span>{category}</span>
+          </div>
           <h3 className="text-lg font-semibold lowercase text-neutral-900">{business}</h3>
-          <p className="text-sm lowercase text-neutral-600">{founderLabel}</p>
           <p className="text-sm lowercase text-neutral-500">{location}</p>
         </div>
       </div>
