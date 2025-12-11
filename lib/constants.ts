@@ -45,6 +45,5 @@ export const NAV_ITEMS: NavItem[] = [
     ],
   },
   { label: "pricing", href: "/pricing" },
-  { label: "scholarship", href: "/scholarship" },
   { label: "contact", href: "/contact" },
 ]
