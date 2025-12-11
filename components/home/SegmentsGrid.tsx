@@ -85,24 +85,13 @@ export default function SegmentsGrid() {
                   className="pl-4 basis-[92%] sm:basis-[78%] md:basis-[52%] lg:basis-[45%] xl:basis-[38%]"
                 >
                   <article className="group flex h-full flex-col justify-between rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
-                    <div>
-                      <div className="flex items-center gap-3">
-                        <span className="text-3xl" aria-hidden>
-                          {segment.emoji}
-                        </span>
-                        <h3 className="text-xl font-semibold lowercase text-neutral-900">
-                          {segment.title}
-                        </h3>
-                      </div>
-                      <p className="mt-4 text-sm text-neutral-600">{segment.summary}</p>
-                      <ul className="mt-6 space-y-2 text-sm text-neutral-500">
-                        {segment.highlights.map((highlight) => (
-                          <li key={highlight} className="flex items-start gap-2">
-                            <span className="mt-1 h-1.5 w-1.5 rounded-full bg-primary" aria-hidden />
-                            <span>{highlight}</span>
-                          </li>
-                        ))}
-                      </ul>
+                    <div className="flex items-center gap-3">
+                      <span className="text-3xl" aria-hidden>
+                        {segment.emoji}
+                      </span>
+                      <h3 className="text-xl font-semibold lowercase text-neutral-900">
+                        {segment.title}
+                      </h3>
                     </div>
                     <Link
                       href={segment.href}
