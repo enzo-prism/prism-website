@@ -582,7 +582,6 @@ export const quotesData: Quote[] = [
   { id: 187, text: "👏", client: "barryy_off", company: "Instagram Community of Entrepreneurs" },
   { id: 188, text: "🔥🔥🔥", client: "providante", company: "Instagram Community of Entrepreneurs" },
   { id: 189, text: "👏", client: "patrickptruong", company: "Instagram Community of Entrepreneurs" },
-  { id: 190, text: "Man literally I got answer for my current situation. Thank you @hormozi", client: "adhity_pa", company: "Instagram Community of Entrepreneurs" },
   { id: 191, text: "1% Men Welcome!", client: "1percent_men", company: "Instagram Community of Entrepreneurs" },
   { id: 192, text: "More people who don’t want this news to hear this.", client: "dlmiris", company: "Instagram Community of Entrepreneurs" },
   { id: 193, text: "It wasn't pretty but it was worth it.", client: "he.ls.him", company: "Instagram Community of Entrepreneurs" },
