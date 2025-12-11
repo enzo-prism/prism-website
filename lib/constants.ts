@@ -34,16 +34,8 @@ export type NavItem = { label: string; href?: string; children?: NavChild[]; emo
 // Updated primary navigation to required structure
 export const NAV_ITEMS: NavItem[] = [
   { label: "home", href: "/" },
-  { label: "story", href: "/about" },
-  {
-    label: "services",
-    children: [
-      { label: "websites", href: "/websites" },
-      { label: "design", href: "/designs" },
-      { label: "seo", href: "/seo" },
-      { label: "ads", href: "/ads" },
-    ],
-  },
+  { label: "our story", href: "/about" },
+  { label: "case studies", href: "/case-studies" },
+  { label: "wall of love", href: "/wall-of-love" },
   { label: "pricing", href: "/pricing" },
-  { label: "contact", href: "/contact" },
 ]
