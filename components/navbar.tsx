@@ -63,7 +63,11 @@ export default function Navbar() {
     <header className={`${headerPositionClass} top-0 z-50 w-full border-b bg-background/95 md:backdrop-blur supports-[backdrop-filter]:bg-background/60`}>
       <div className="w-full max-w-7xl mx-auto flex h-14 md:h-16 items-center justify-between px-0">
         <div className="flex items-center justify-between w-full px-3 md:px-0">
-        <Link href="/" className="flex items-center" onClick={() => trackNavigation("logo", "/")}>
+        <Link
+          href="/"
+          className="flex items-center rounded-lg transition-transform duration-150 hover:scale-[1.04]"
+          onClick={() => trackNavigation("logo", "/")}
+        >
           <div className="relative h-8 w-8 overflow-hidden rounded-lg isolate">
             <CoreImage
               src={LOGO_CONFIG.src}
