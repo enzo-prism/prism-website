@@ -117,7 +117,6 @@ export default function ClientPage() {
         <SegmentsGrid />
         <ReferralSection />
         <HottestContentSection />
-        <CoreOfferingsSection />
         <WebsitesFeatures />
         <LatestPostsSection />
 
