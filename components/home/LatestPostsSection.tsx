@@ -99,9 +99,6 @@ export default function LatestPostsSection() {
       <div className="container mx-auto px-4 md:px-6">
         <div className="mb-12 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <div className="space-y-3 max-w-2xl">
-            <Badge variant="outline" className="lowercase">
-              latest on the blog
-            </Badge>
             <h2 className="text-3xl font-bold tracking-tighter lowercase sm:text-4xl">
               free business content we just published
             </h2>
