@@ -98,7 +98,7 @@ export default function ClientPage() {
                       className="rounded-full px-7 py-5 text-base sm:text-lg lowercase hardware-hover touch-feedback"
                       onClick={() => trackCTAClick("view pricing", "hero section")}
                     >
-                      view pricing <ArrowRight className="ml-2 h-5 w-5" />
+                      build your dream <ArrowRight className="ml-2 h-5 w-5" />
                     </Button>
                   </Link>
                 </div>
