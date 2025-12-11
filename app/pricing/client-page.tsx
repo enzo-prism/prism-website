@@ -210,7 +210,7 @@ function HeroSection() {
                 size="lg"
                 className="w-full rounded-full border border-black bg-black px-8 py-6 text-base font-semibold text-white hover:bg-black/90 sm:w-auto"
               >
-                <a href="#plans">Start Your Website →</a>
+                <a href="#plans">pricing breakdown</a>
               </Button>
             </div>
           </RevealOnScroll>
