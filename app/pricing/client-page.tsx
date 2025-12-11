@@ -196,10 +196,10 @@ function HeroSection() {
           <RevealOnScroll delay={0.1}>
             <div className="space-y-6">
               <h1 className="text-4xl font-semibold leading-tight tracking-tight sm:text-5xl lg:text-6xl">
-                Your website should grow your business — not drain your time.
+                Buy back your time — and accelerate compounding growth.
               </h1>
               <p className="text-lg text-black/70 sm:text-xl">
-                No more redesign headaches, slow freelancers, or guessing what converts. Prism builds clean, high-performing websites designed to increase leads, boost conversions, and strengthen long-term customer value.
+                Your website is the engine that starts it all. Prism builds clean, high-performing sites that remove busywork, eliminate guessing, and create a system that grows more valuable every month.
               </p>
             </div>
           </RevealOnScroll>
