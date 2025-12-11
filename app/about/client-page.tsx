@@ -26,9 +26,9 @@ export default function AboutClientPage() {
         <section className="px-4 py-16 md:py-24 lg:py-32">
           <div className="container mx-auto px-4 md:px-6">
             <div className="flex flex-col items-center space-y-6 text-center">
-              <div className="relative inline-flex items-center justify-center">
-                <span className="pointer-events-none absolute inset-0 scale-110 rounded-full bg-gradient-to-r from-purple-500 via-pink-500 to-amber-400 opacity-0 blur-md transition duration-300 group-hover/avatar:opacity-70"></span>
-                <div className="group/avatar relative h-28 w-28 overflow-hidden rounded-full border-2 border-neutral-200 shadow-sm transition">
+              <div className="relative inline-flex items-center justify-center group hardware-hover touch-feedback">
+                <span className="pointer-events-none absolute inset-0 scale-110 rounded-full bg-gradient-to-r from-purple-500 via-pink-500 to-amber-400 opacity-0 blur-md transition duration-300 group-hover:opacity-70" />
+                <div className="relative h-28 w-28 overflow-hidden rounded-full border-2 border-neutral-200 shadow-sm transition">
                   <Image
                     src="https://res.cloudinary.com/dhqpqfw6w/image/upload/v1765426902/Enzo_s_Headshot_xg546f.webp"
                     alt="Enzo Sison headshot"
