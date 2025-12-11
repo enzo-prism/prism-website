@@ -74,6 +74,9 @@ export default function SegmentsRail() {
             ))}
             <span className="sr-only">Swipe or scroll horizontally to view more segments</span>
           </div>
+          <p className="mt-3 text-center text-xs font-medium text-neutral-500 sm:hidden">
+            swipe to explore more segments →
+          </p>
         </div>
       </div>
     </section>
