@@ -96,19 +96,10 @@ export default function WallOfLoveClientPage() {
                   <p className="text-[15px] sm:text-base text-neutral-800 leading-relaxed tracking-tight">
                     &ldquo;{renderFormattedText(isQuote ? (item.data as Quote).text : (item.data as Takeaway).text)}&rdquo;
                   </p>
-                  <footer className="mt-3 flex items-center justify-between text-left">
-                    <span className="inline-flex items-center rounded-full bg-neutral-100 px-3 py-1 text-xs font-semibold lowercase text-neutral-700">
-                      {isQuote ? "testimonial" : "takeaway"}
-                    </span>
-                    <div className="flex items-center gap-2 text-right">
-                      <p className="font-medium text-sm sm:text-[15px] text-neutral-900">
-                        {isQuote ? (item.data as Quote).client : `@${(item.data as Takeaway).handle}`}
-                      </p>
-                      <span className="text-neutral-300">•</span>
-                      <p className="text-xs sm:text-sm text-neutral-500">
-                        {isQuote ? (item.data as Quote).company : "community"}
-                      </p>
-                    </div>
+                  <footer className="mt-3 flex items-center justify-end text-right">
+                    <p className="font-medium text-sm sm:text-[15px] text-neutral-900">
+                      {isQuote ? (item.data as Quote).client : `@${(item.data as Takeaway).handle}`}
+                    </p>
                   </footer>
                 </blockquote>
               )
