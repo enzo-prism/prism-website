@@ -76,6 +76,7 @@ export default function ClientsRail() {
               <ClientCard
                 title={client.title}
                 location={client.location}
+                category={client.category}
                 href={client.href}
                 website={client.website}
               />
