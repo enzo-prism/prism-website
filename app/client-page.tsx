@@ -105,7 +105,6 @@ export default function ClientPage() {
 
         {/* New homepage sections per updated structure */}
         <ClientsSection />
-        <ValuesSection />
         <SegmentsGrid />
         <ReferralSection />
         <LatestPostsSection />
