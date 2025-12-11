@@ -43,18 +43,7 @@ const ServiceSchemaClient = dynamic(() => import("@/components/schema-markup").t
 })
 
 export default function ClientPage() {
-  const isMobile = useMobile() // Added this line
-  const [shouldLoadVideo, setShouldLoadVideo] = useState(false)
-  const [videoSkipped, setVideoSkipped] = useState(false)
-  const [videoQuality, setVideoQuality] = useState<"360p" | "auto">("auto")
-  const [videoScale, setVideoScale] = useState(1.5)
-  const heroRef = useRef<HTMLElement>(null)
-  const resolvedVideoQuality = useMemo(() => {
-    if (videoQuality === "auto") {
-      return isMobile ? "540p" : "auto"
-    }
-    return videoQuality
-  }, [isMobile, videoQuality])
+  const isMobile = useMobile()
 
   // Lazy loading states for below-the-fold sections
   // removed case studies and testimonials sections
@@ -72,99 +61,6 @@ export default function ClientPage() {
   // services section removed in new structure
   // removed testimonials and case studies animations
   // service cards staggered reveal removed in new structure
-
-  // Calculate video scale based on viewport dimensions
-  // Avoid recalculating on mobile scroll-driven height changes which cause URL bar resize events
-  useEffect(() => {
-    let lastWidth = window.innerWidth
-
-    const calculateVideoScale = () => {
-      const currentWidth = window.innerWidth
-      // Ignore height-only resize events (mobile address bar show/hide)
-      if (isMobile && Math.abs(currentWidth - lastWidth) < 1) {
-        return
-      }
-
-      // Video aspect ratio is 16:9
-      const videoAspectRatio = 16 / 9
-      const viewportAspectRatio = currentWidth / window.innerHeight
-
-      let scale = 1
-      if (viewportAspectRatio < videoAspectRatio) {
-        // Portrait orientation - scale based on width to fill height
-        scale = videoAspectRatio / viewportAspectRatio
-      } else {
-        // Landscape orientation - scale based on height to fill width
-        scale = viewportAspectRatio / videoAspectRatio
-      }
-
-      const extraScale = isMobile ? 1.02 : 1.05
-      setVideoScale(scale * extraScale)
-      lastWidth = currentWidth
-    }
-
-    // Initial calc
-    calculateVideoScale()
-
-    // On mobile, only recompute when width changes or orientation changes
-    const handleResize = () => calculateVideoScale()
-    const handleOrientation = () => calculateVideoScale()
-
-    window.addEventListener('resize', handleResize)
-    window.addEventListener('orientationchange', handleOrientation)
-
-    return () => {
-      window.removeEventListener('resize', handleResize)
-      window.removeEventListener('orientationchange', handleOrientation)
-    }
-  }, [isMobile])
-
-  // Enhanced lazy load video with comprehensive performance checks
-  useEffect(() => {
-    if (!heroRef.current) return
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting && !shouldLoadVideo) {
-            const connection = (navigator as any).connection
-            const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches
-            const hasLowMemory = "deviceMemory" in navigator && (navigator as any).deviceMemory < 2
-            const isConstrainedNetwork =
-              connection?.effectiveType === "2g" ||
-              connection?.effectiveType === "slow-2g" ||
-              connection?.saveData === true
-
-            if (prefersReducedMotion) {
-              setVideoSkipped(true)
-              observer.disconnect()
-              return
-            }
-
-            if (isConstrainedNetwork || hasLowMemory) {
-              setVideoQuality("360p")
-            } else {
-              setVideoQuality("auto")
-            }
-
-            setVideoSkipped(false)
-            setShouldLoadVideo(true)
-            observer.disconnect()
-          }
-        })
-      },
-      {
-        rootMargin: "150px", // Increased preload distance for smoother UX
-        threshold: 0.1,
-      }
-    )
-
-    observer.observe(heroRef.current)
-
-    return () => {
-      observer.disconnect()
-    }
-  }, [shouldLoadVideo])
 
   // removed observers for case studies and testimonials
 
@@ -189,50 +85,7 @@ export default function ClientPage() {
       <Navbar />
       <main className="flex-1">
         {/* Hero Section */}
-        <section ref={heroRef} className="hero-section relative min-h-[100svh] flex items-center justify-center overflow-hidden pt-14 md:pt-16">
-          {/* Background video container with full coverage */}
-          <div className="absolute inset-0 -z-20 gpu-layer">
-            {/* Lightweight placeholder while video loads */}
-            <div
-              aria-hidden="true"
-              className={`absolute inset-0 bg-gradient-to-br from-neutral-100 via-neutral-50 to-neutral-200 ${shouldLoadVideo ? 'opacity-0' : 'opacity-100'} gpu-fade hero-gradient-shift`}
-              style={{
-                backgroundImage: `radial-gradient(circle at 30% 50%, rgba(120, 119, 198, 0.1) 0%, transparent 50%),
-                                  radial-gradient(circle at 70% 80%, rgba(255, 119, 198, 0.1) 0%, transparent 50%)`,
-                backgroundSize: '200% 200%',
-              }}
-            />
-            
-            {/* Video iframe - Only rendered when needed */}
-            {shouldLoadVideo && (
-              <div className="absolute inset-0 overflow-hidden gpu-accelerated">
-                <iframe
-                  src={`https://player.vimeo.com/video/1096693144?background=1&autoplay=1&loop=1&muted=1&controls=0&playsinline=1&quality=${resolvedVideoQuality}`}
-                  title="Prism hero background video"
-                  className="gpu-fade"
-                  style={{
-                    width: '100%',
-                    height: '100%',
-                    minWidth: '100%',
-                    minHeight: '100%',
-                    position: 'absolute',
-                    left: '50%',
-                    top: '50%',
-                    transform: `translate(-50%, -50%) scale(${videoScale})`,
-                    opacity: shouldLoadVideo ? 1 : 0,
-                    objectFit: 'cover',
-                    filter: 'saturate(0.6) brightness(1.2)',
-                    willChange: 'transform, opacity',
-                  }}
-                  allow="autoplay; fullscreen; picture-in-picture"
-                  allowFullScreen
-                />
-              </div>
-            )}
-          </div>
-          {/* White overlay for elegant contrast */}
-          <div className="absolute inset-0 -z-10 bg-white/85 dark:bg-neutral-950/85 gpu-layer transition-opacity duration-500" />
-
+        <section className="hero-section relative min-h-[100svh] flex items-center justify-center bg-white pt-14 md:pt-16">
           <div className="container relative mx-auto px-4 md:px-6 py-10 md:py-20">
             <div className="flex flex-col items-center text-center gap-8 sm:gap-10">
               <div className={`flex items-center justify-center gap-3 sm:gap-4 md:gap-6 ${!isMobile ? 'smooth-reveal' : ''}`}>
@@ -277,11 +130,6 @@ export default function ClientPage() {
                   </Link>
                 </div>
                 <HeroReviewSliderCard className="w-full max-w-md" />
-                {videoSkipped ? (
-                  <p className="mt-4 text-xs tracking-[0.24em] uppercase text-neutral-400">
-                    background motion disabled for accessibility
-                  </p>
-                ) : null}
               </div>
             </div>
           </div>
