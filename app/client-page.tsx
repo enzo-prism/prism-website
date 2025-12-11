@@ -86,21 +86,16 @@ export default function ClientPage() {
         <section className="hero-section relative min-h-[90svh] flex items-center justify-center bg-white pt-14 md:pt-16">
           <div className="container relative mx-auto px-4 md:px-6 py-8 md:py-16">
             <div className="flex flex-col items-center text-center gap-6 sm:gap-8">
-              <h1 className={`text-3xl font-bold tracking-tighter lowercase sm:text-4xl md:text-5xl ${!isMobile ? 'gpu-accelerated' : ''}`}>
-                prism
-              </h1>
-              <div className="flex flex-col items-center w-full gap-5 sm:gap-6">
-                <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-4">
-                  <Link href="/pricing">
-                    <Button
-                      className="rounded-full px-7 py-5 text-base sm:text-lg lowercase hardware-hover touch-feedback"
-                      onClick={() => trackCTAClick("view pricing", "hero section")}
-                    >
-                      build your dream <ArrowRight className="ml-2 h-5 w-5" />
-                    </Button>
-                  </Link>
-                </div>
-                <HeroReviewSliderCard className="w-full max-w-sm sm:max-w-md" />
+              <HeroReviewSliderCard className="w-full max-w-sm sm:max-w-md" />
+              <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-4">
+                <Link href="/pricing">
+                  <Button
+                    className="rounded-full px-7 py-5 text-base sm:text-lg lowercase hardware-hover touch-feedback"
+                    onClick={() => trackCTAClick("view pricing", "hero section")}
+                  >
+                    build your dream <ArrowRight className="ml-2 h-5 w-5" />
+                  </Button>
+                </Link>
               </div>
             </div>
           </div>
