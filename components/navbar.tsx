@@ -33,6 +33,8 @@ const getTopIcon = (label?: string) => {
   return <Icon className="h-4 w-4 text-neutral-400" aria-hidden />
 }
 
+const getNavIcon = getTopIcon
+
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const pathname = usePathname()
