@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { useCallback, useEffect, useMemo, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { AnimatePresence, motion } from "framer-motion"
 
 import { cn } from "@/lib/utils"
@@ -9,7 +9,6 @@ import { getHomepageHeroReviewPool, renderFormattedText, type Quote } from "@/co
 import { trackNavigation } from "@/utils/analytics"
 import { sanitizeReviewText } from "@/lib/schema-helpers"
 
-const AUTO_ROTATE_MS = 7000
 const DEFAULT_REVIEW_RATING = {
   "@type": "Rating",
   ratingValue: "5",
@@ -24,11 +23,10 @@ type HeroReviewSliderCardProps = {
 export default function HeroReviewSliderCard({ className }: HeroReviewSliderCardProps) {
   // Data State
   const [reviewPool, setReviewPool] = useState<Quote[]>([])
-  const [activeIndex, setActiveIndex] = useState(0)
+  const [activeIndex] = useState(0)
   
   // Interaction State
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false)
-  const [isHovered, setIsHovered] = useState(false)
 
   // --- Initialization ---
   useEffect(() => {
@@ -43,23 +41,6 @@ export default function HeroReviewSliderCard({ className }: HeroReviewSliderCard
     mediaQuery.addEventListener("change", updatePreference)
     return () => mediaQuery.removeEventListener("change", updatePreference)
   }, [])
-
-  // --- Timer Logic ---
-  const nextSlide = useCallback(() => {
-    setActiveIndex((current) => (reviewPool.length > 0 ? (current + 1) % reviewPool.length : 0))
-  }, [reviewPool.length])
-
-  useEffect(() => {
-    // Don't rotate if:
-    // 1. Reduced motion is on
-    // 2. Not enough slides
-    if (prefersReducedMotion || reviewPool.length <= 1 || isHovered) {
-      return
-    }
-
-    const timer = setInterval(nextSlide, AUTO_ROTATE_MS)
-    return () => clearInterval(timer)
-  }, [prefersReducedMotion, reviewPool.length, isHovered, nextSlide])
 
   // --- Schema Data ---
   const currentReview = reviewPool[activeIndex] ?? null
@@ -102,8 +83,6 @@ export default function HeroReviewSliderCard({ className }: HeroReviewSliderCard
         "dark:border-neutral-800 dark:bg-neutral-900 dark:text-white",
         className
       )}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
     >
       <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-neutral-100 px-3 py-1 text-xs font-semibold text-neutral-700 dark:bg-neutral-800 dark:text-neutral-200">
         <span className="text-sm" aria-hidden>

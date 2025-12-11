@@ -155,8 +155,7 @@ export default function GrowthResultsSlider() {
                           className="h-full w-full object-cover"
                           sizes="(max-width: 640px) 85vw, 320px"
                           fallbackSrc={`/placeholder.svg?height=1600&width=900&text=${encodeURIComponent(slide.platform)}`}
-                          quality={90}
-                          priority={index < 2}
+                          quality={85}
                         />
                       </div>
                     </div>

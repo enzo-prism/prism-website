@@ -6,21 +6,16 @@ import { shuffleArray } from "@/utils/shuffle"
 import { ChevronLeft, ChevronRight, MoveRight } from "lucide-react"
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { useMobile } from "@/hooks/use-mobile"
-import { useReducedMotion } from "framer-motion"
 
 const FALLBACK_BACKGROUNDS = ["/gradient a.png", "/gradient b.png", "/gradient c.png", "/gradient d.png"] as const
 
 export default function ClientsRail() {
   const railRef = useRef<HTMLDivElement>(null)
-  const containerRef = useRef<HTMLDivElement>(null)
   const [clients, setClients] = useState(CLIENTS)
   const [canScrollLeft, setCanScrollLeft] = useState(false)
   const [canScrollRight, setCanScrollRight] = useState(false)
   const [scrollProgress, setScrollProgress] = useState(0)
-  const [hasInteracted, setHasInteracted] = useState(false)
-  const [isInView, setIsInView] = useState(true)
   const isMobile = useMobile()
-  const prefersReducedMotion = useReducedMotion()
 
   useEffect(() => {
     setClients(shuffleArray(CLIENTS))
@@ -34,10 +29,6 @@ export default function ClientsRail() {
     setCanScrollRight(scrollLeft + clientWidth < scrollWidth - 8)
     const maxScroll = Math.max(scrollWidth - clientWidth, 1)
     setScrollProgress(Math.min(scrollLeft / maxScroll, 1))
-  }, [])
-
-  const markInteracted = useCallback(() => {
-    setHasInteracted((prev) => (prev ? prev : true))
   }, [])
 
   useEffect(() => {
@@ -56,59 +47,13 @@ export default function ClientsRail() {
     rail.addEventListener("scroll", handleScroll, { passive: true })
     window.addEventListener("resize", handleResize)
 
-    const handlePointer = () => markInteracted()
-    rail.addEventListener("pointerdown", handlePointer)
-    rail.addEventListener("wheel", handlePointer, { passive: true })
-    rail.addEventListener("touchstart", handlePointer, { passive: true })
-
     return () => {
       rail.removeEventListener("scroll", handleScroll)
-      rail.removeEventListener("pointerdown", handlePointer)
-      rail.removeEventListener("wheel", handlePointer)
-      rail.removeEventListener("touchstart", handlePointer)
       window.removeEventListener("resize", handleResize)
     }
-  }, [markInteracted, updateScrollState])
-
-  useEffect(() => {
-    const container = containerRef.current
-    if (!container) return
-
-    if (typeof IntersectionObserver === "undefined") return
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        setIsInView(entry.isIntersecting)
-      },
-      { threshold: 0.1 }
-    )
-    observer.observe(container)
-    return () => observer.disconnect()
-  }, [])
-
-  useEffect(() => {
-    if (hasInteracted || prefersReducedMotion || isMobile || !isInView) return
-    const rail = railRef.current
-    if (!rail) return
-
-    let frame: number
-    const step = () => {
-      const maxScroll = rail.scrollWidth - rail.clientWidth
-      if (maxScroll <= 0) return
-      if (rail.scrollLeft + rail.clientWidth >= rail.scrollWidth - 2) {
-        rail.scrollTo({ left: 0 })
-      } else {
-        rail.scrollLeft += 0.6
-      }
-      updateScrollState()
-      frame = requestAnimationFrame(step)
-    }
-
-    frame = requestAnimationFrame(step)
-    return () => cancelAnimationFrame(frame)
-  }, [hasInteracted, isInView, isMobile, prefersReducedMotion, updateScrollState])
+  }, [updateScrollState])
 
   const scrollByAmount = (direction: "left" | "right") => {
-    markInteracted()
     const rail = railRef.current
     if (!rail) return
     const amount = Math.max(rail.clientWidth * 0.85, 320)
@@ -128,7 +73,7 @@ export default function ClientsRail() {
   }, [canScrollLeft, canScrollRight, isMobile])
 
   return (
-    <div className="relative" ref={containerRef}>
+    <div className="relative">
       <div className="relative">
         <div
           ref={railRef}
