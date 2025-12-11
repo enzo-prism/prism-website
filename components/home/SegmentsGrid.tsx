@@ -62,7 +62,7 @@ export default function SegmentsGrid() {
       <div className="container mx-auto px-4 md:px-6">
         <div className="mx-auto max-w-3xl text-center">
           <h2 className="text-3xl font-bold tracking-tight lowercase sm:text-4xl">
-            market segments we support
+            segments we support
           </h2>
         </div>
 
