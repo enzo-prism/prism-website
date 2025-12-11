@@ -4,16 +4,18 @@ import Footer from "@/components/footer"
 import PageViewTracker from "@/components/page-view-tracker"
 import { PersonSchema } from "@/components/schema-markup"
 import ScrollingTimeline from "@/components/scrolling-timeline"
-import { useMobile } from "@/hooks/use-mobile"
 import dynamic from "next/dynamic"
 import PoleVaultCarousel from "@/components/pole-vault-carousel"
 import Image from "next/image"
 import Link from "next/link"
 const Navbar = dynamic(() => import("@/components/navbar"), { ssr: false })
-import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
+import { ArrowDownRight, ArrowUpRight } from "lucide-react"
 
 export default function AboutClientPage() {
-  const isMobile = useMobile()
+  const scrollToTimeline = () => {
+    const target = document.getElementById("timeline")
+    if (target) target.scrollIntoView({ behavior: "smooth", block: "start" })
+  }
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -41,6 +43,23 @@ export default function AboutClientPage() {
                 <p className="mx-auto mt-4 max-w-[700px] text-neutral-600 lowercase md:text-xl">
                   enzo sison built prism to pursue his passions for tech, business, and athletics at the highest level — and to connect with others chasing excellence in their own fields.
                 </p>
+                <div className="flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-4">
+                  <button
+                    type="button"
+                    onClick={scrollToTimeline}
+                    className="inline-flex items-center justify-center rounded-full bg-neutral-900 px-6 py-3 text-sm font-semibold text-white transition hover:bg-neutral-800 lowercase"
+                  >
+                    view timeline <ArrowDownRight className="ml-2 h-4 w-4" aria-hidden />
+                  </button>
+                  <Link
+                    href="https://enzosison.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center rounded-full border border-neutral-300 px-6 py-3 text-sm font-semibold text-neutral-800 transition hover:border-neutral-400 hover:bg-neutral-50 lowercase"
+                  >
+                    enzosison.com <ArrowUpRight className="ml-2 h-4 w-4" aria-hidden />
+                  </Link>
+                </div>
               </div>
             </div>
           </div>
@@ -65,7 +84,7 @@ export default function AboutClientPage() {
         </section>
 
         {/* Timeline Section */}
-        <section className="px-4 py-16 md:py-24">
+        <section id="timeline" className="px-4 py-16 md:py-24">
           <div className="container mx-auto px-4 md:px-6">
             <div className="mb-12 text-center">
               <h2 className="text-3xl font-bold tracking-tighter lowercase sm:text-4xl">our journey</h2>
