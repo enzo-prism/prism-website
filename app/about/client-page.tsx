@@ -42,6 +42,9 @@ export default function AboutClientPage() {
               <p className="text-sm font-medium lowercase text-neutral-500">
                 enzo sison · founder, prism
               </p>
+              <p className="inline-flex items-center rounded-full bg-neutral-100 px-4 py-2 text-xs font-semibold text-neutral-700">
+                founded in 2023
+              </p>
               <div className="space-y-3">
                 <h1 className="text-4xl font-bold tracking-tighter lowercase sm:text-5xl md:text-6xl">our story</h1>
                 <p className="mx-auto mt-4 max-w-[700px] text-neutral-600 lowercase md:text-xl">
