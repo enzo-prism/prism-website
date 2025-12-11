@@ -20,14 +20,13 @@ const homeLink: FooterItem = { label: "Home", href: "/" }
 
 const footerSections: FooterSection[] = [
   {
-    title: "Core services",
-    items: [
-      { label: "Website", href: "/websites" },
-      { label: "Design", href: "/designs" },
-      { label: "Ads", href: "/ads" },
-      { label: "Map listings", href: "/local-listings" },
-    ],
-  },
+  title: "Core services",
+  items: [
+    { label: "Website", href: "/websites" },
+    { label: "Design", href: "/designs" },
+    { label: "Ads", href: "/ads" },
+  ],
+},
   {
     title: "Customers we serve",
     items: [
