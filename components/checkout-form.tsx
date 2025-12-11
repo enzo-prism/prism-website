@@ -73,13 +73,6 @@ export default function CheckoutForm({ plan }: CheckoutFormProps) {
 
   return (
     <div className="w-full max-w-md mx-auto space-y-8">
-      <div className="space-y-2 text-center sm:text-left">
-        <h2 className="text-3xl font-semibold tracking-tight">Let's Get Started</h2>
-        <p className="text-muted-foreground">
-          Fill out the details below so our team can contact you with next steps.
-        </p>
-      </div>
-
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="space-y-2">
           <Label htmlFor="name">Full Name</Label>

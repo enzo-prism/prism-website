@@ -28,37 +28,32 @@ export default function GrowCheckoutPage() {
                 </Link>
              </Button>
           </div>
-          <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight text-center mb-6">
-            start your grow plan
-          </h1>
-          <div className="mb-10 text-center">
-            <span className="inline-block rounded-full bg-sky-100 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-sky-800 mb-4">
-              Grow Plan
-            </span>
-            <p className="text-slate-600 mt-4 max-w-md mx-auto">
-              A conversion-focused website designed to help your business attract more customers and grow online.
-            </p>
-          </div>
-
-          {/* Plan details */}
-          <div className="mb-8 p-6 rounded-2xl border border-slate-200 bg-slate-50">
-            <h2 className="font-semibold text-slate-900 mb-3">What you get with the Grow Plan:</h2>
-            <ul className="space-y-2 text-sm text-slate-600">
-              <li>Custom website design optimized for conversions</li>
-              <li>Mobile-responsive layout that works on all devices</li>
-              <li>SEO-friendly structure to help you rank in search</li>
-              <li>Fast loading speeds for better user experience</li>
-              <li>Contact forms and lead capture integration</li>
-              <li>30 days of post-launch support</li>
-            </ul>
+          <div className="mb-10 rounded-3xl border border-slate-200 bg-gradient-to-br from-sky-50 via-white to-white p-6 shadow-sm sm:p-8">
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+              <div className="space-y-3 text-center sm:text-left">
+                <span className="inline-flex items-center justify-center rounded-full bg-sky-100 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-sky-800">
+                  Grow Plan
+                </span>
+                <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight text-slate-900">
+                  start your grow plan
+                </h1>
+                <p className="text-slate-600 max-w-xl">
+                  A conversion-focused website designed to help your business attract more customers and grow online.
+                </p>
+              </div>
+              <div className="flex items-center gap-3 rounded-2xl border border-white/70 bg-white/80 px-4 py-3 text-sm text-slate-700 shadow-sm sm:self-start">
+                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-sky-100 text-sky-800 text-xs font-semibold">
+                  1:1
+                </div>
+                <div className="leading-tight text-left">
+                  <div className="font-semibold text-slate-900">personal kickoff</div>
+                  <div className="text-slate-600">we respond within one business day</div>
+                </div>
+              </div>
+            </div>
           </div>
 
           <CheckoutForm plan="grow" />
-
-          {/* Trust signals */}
-          <div className="mt-8 text-center text-sm text-slate-500">
-            <p>Secure checkout powered by Stripe. Your information is protected.</p>
-          </div>
         </div>
       </main>
       <Footer />
