@@ -7,8 +7,6 @@ import { ChevronLeft, ChevronRight, MoveRight } from "lucide-react"
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { useMobile } from "@/hooks/use-mobile"
 
-const FALLBACK_BACKGROUNDS = ["/gradient a.png", "/gradient b.png", "/gradient c.png", "/gradient d.png"] as const
-
 export default function ClientsRail() {
   const railRef = useRef<HTMLDivElement>(null)
   const [clients, setClients] = useState(CLIENTS)
@@ -83,26 +81,20 @@ export default function ClientsRail() {
           aria-label="Client stories"
           style={maskStyle}
         >
-          {clients.map((client, index) => {
-            const backgroundSrc = client.image ?? FALLBACK_BACKGROUNDS[index % FALLBACK_BACKGROUNDS.length]
-            return (
-              <div
-                key={client.title}
-                className="shrink-0 snap-start md:translate-y-0 w-[74vw] sm:w-[52vw] md:w-[260px] first:ml-1 md:first:ml-0"
-                role="listitem"
-              >
-                <ClientCard
-                  title={client.title}
-                  location={client.location}
-                  image={backgroundSrc}
-                  href={client.href}
-                  objectPosition={client.objectPosition}
-                  priority={index < 3}
-                  website={client.website}
-                />
-              </div>
-            )
-          })}
+          {clients.map((client) => (
+            <div
+              key={client.title}
+              className="shrink-0 snap-start md:translate-y-0 w-[74vw] sm:w-[52vw] md:w-[240px] first:ml-1 md:first:ml-0"
+              role="listitem"
+            >
+              <ClientCard
+                title={client.title}
+                location={client.location}
+                href={client.href}
+                website={client.website}
+              />
+            </div>
+          ))}
           <span className="sr-only">Swipe or scroll horizontally to view more clients</span>
         </div>
 
@@ -139,17 +131,12 @@ export default function ClientsRail() {
         </button>
       </div>
 
-      <div className="mt-4 flex flex-col items-center gap-2 text-sm text-neutral-500 sm:flex-row sm:justify-center">
-        <div className="relative inline-flex items-center gap-2 overflow-hidden rounded-full border border-neutral-200 bg-white px-4 py-1 text-xs font-medium uppercase tracking-wider text-neutral-600 shadow-sm dark:border-neutral-800 dark:bg-neutral-950 dark:text-neutral-200">
-          <span
-            aria-hidden
-            className="pointer-events-none absolute left-0 top-0 h-full bg-neutral-100/80 dark:bg-neutral-800/60"
-            style={{ width: `${Math.max(scrollProgress, 0.08) * 100}%` }}
-          />
-          <span className="relative hidden sm:inline">Scroll</span>
-          <span className="relative sm:hidden">Swipe</span>
-          <MoveRight className="relative h-4 w-4" aria-hidden="true" />
-        </div>
+      <div className="mt-4 flex items-center justify-center text-xs text-neutral-500 dark:text-neutral-400">
+        <span className="flex items-center gap-2 rounded-full border border-neutral-200 bg-white px-4 py-1 shadow-sm dark:border-neutral-800 dark:bg-neutral-950">
+          <MoveRight className="h-4 w-4" aria-hidden="true" />
+          <span className="font-semibold uppercase tracking-[0.3em] hidden sm:inline">scroll</span>
+          <span className="font-semibold uppercase tracking-[0.3em] sm:hidden">swipe</span>
+        </span>
       </div>
     </div>
   )
