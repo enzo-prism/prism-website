@@ -105,9 +105,6 @@ export default function LatestPostsSection() {
             <h2 className="text-3xl font-bold tracking-tighter lowercase sm:text-4xl">
               free business content we just published
             </h2>
-            <p className="text-neutral-600 dark:text-neutral-400 lowercase md:text-lg">
-              see the newest playbooks and growth experiments before they make it into our client engagements.
-            </p>
           </div>
           <Link
             href="/blog"
