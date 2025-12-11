@@ -115,7 +115,7 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
     id: "8",
     title: "Designing a Digital Home for Bold Aging",
     client: "Rebellious Aging",
-    category: "education",
+    category: "online community",
     founder: "Suz Rohde",
     industry: "Online Community",
     location: "Los Gatos, CA",
