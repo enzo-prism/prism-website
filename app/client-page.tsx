@@ -88,26 +88,9 @@ export default function ClientPage() {
         <section className="hero-section relative min-h-[90svh] flex items-center justify-center bg-white pt-14 md:pt-16">
           <div className="container relative mx-auto px-4 md:px-6 py-8 md:py-16">
             <div className="flex flex-col items-center text-center gap-6 sm:gap-8">
-              <div className={`flex items-center justify-center gap-3 sm:gap-4 md:gap-6 ${!isMobile ? 'smooth-reveal' : ''}`}>
-                <div className="relative h-8 w-8 md:h-10 md:w-10">
-                  <CoreImage
-                    src={LOGO_CONFIG.src}
-                    alt={LOGO_CONFIG.alt}
-                    width={LOGO_SIZES.hero.width}
-                    height={LOGO_SIZES.hero.height}
-                    className={`object-contain ${LOGO_CONFIG.className} overflow-hidden`}
-                    sizes="(max-width: 768px) 64px, (max-width: 1200px) 80px, 96px"
-                    priority
-                    fallbackSrc={LOGO_CONFIG.fallbackSrc}
-                    trackingId="hero_logo"
-                    quality={90}
-                    showLoadingIndicator={true}
-                  />
-                </div>
-                <h1 className={`text-3xl font-bold tracking-tighter lowercase sm:text-4xl md:text-5xl ${!isMobile ? 'gpu-accelerated' : ''}`}>
-                  prism
-                </h1>
-              </div>
+              <h1 className={`text-3xl font-bold tracking-tighter lowercase sm:text-4xl md:text-5xl ${!isMobile ? 'gpu-accelerated' : ''}`}>
+                prism
+              </h1>
               <div className="flex flex-col items-center w-full gap-5 sm:gap-6">
                 <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-4">
                   <Link href="/pricing">
