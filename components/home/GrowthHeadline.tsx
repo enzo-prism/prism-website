@@ -4,7 +4,7 @@ import { Eye, TrendingUp, Users2 } from "lucide-react"
 
 const PILL_ITEMS = [
   { label: "websites", emoji: "📱" },
-  { label: "map listings", emoji: "📍" },
+  { label: "automated systems", emoji: "⚙️" },
   { label: "ads", emoji: "📣" },
 ]
 
