@@ -4,9 +4,11 @@ import { Megaphone, Menu, MonitorSmartphone, Search, Sparkles, X } from "lucide-
 import type { LucideIcon } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { useState } from "react"
+import { useMemo, useState } from "react"
 
+import Breadcrumbs from "@/components/breadcrumbs"
 import { Button } from "@/components/ui/button"
+import { CASE_STUDIES } from "@/lib/case-study-data"
 import { LOGO_CONFIG, NAV_ITEMS, type NavItem } from "@/lib/constants"
 import { trackNavigation } from "@/utils/analytics"
 import CoreImage from "./core-image"
@@ -34,6 +36,22 @@ export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const pathname = usePathname()
   const navItems = NAV_ITEMS
+
+  const caseStudyBreadcrumbs = useMemo(() => {
+    if (!pathname?.startsWith("/case-studies")) return null
+    const baseTrail = [
+      { name: "home", url: "/" },
+      { name: "case studies", url: "/case-studies" },
+    ]
+
+    const parts = pathname.split("/").filter(Boolean)
+    if (parts.length <= 1) return baseTrail
+
+    const slug = parts[1]
+    const match = CASE_STUDIES.find((study) => study.slug === slug)
+    const label = match?.client ?? slug.replace(/-/g, " ")
+    return [...baseTrail, { name: label, url: pathname }]
+  }, [pathname])
 
   const normalizeHref = (href: string) => aliasMap[href] ?? href
   const isActivePath = (href?: string) => (href ? pathname === normalizeHref(href) : false)
@@ -178,6 +196,13 @@ export default function Navbar() {
               </div>
             ))}
           </nav>
+        </div>
+      ) : null}
+      {caseStudyBreadcrumbs ? (
+        <div className="border-t bg-background/90 backdrop-blur supports-[backdrop-filter]:bg-background/70">
+          <div className="mx-auto max-w-6xl px-4 md:px-6">
+            <Breadcrumbs items={caseStudyBreadcrumbs} className="py-2 mb-0" />
+          </div>
         </div>
       ) : null}
     </header>
