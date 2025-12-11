@@ -62,12 +62,6 @@ export const quotesData: Quote[] = [
     company: "website client",
   },
   {
-    id: 9,
-    text: "Seeing this makes me feel hopeful — I'm confident in you.",
-    client: "Dr. Tingjen Ji",
-    company: "website client",
-  },
-  {
     id: 10,
     text: "That little snippet is brilliant — it'll be fun!",
     client: "Mary Lynn Wheaton",
