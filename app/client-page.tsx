@@ -19,15 +19,15 @@ const ScrollProgressBar = dynamic(() => import("@/components/scroll-progress-bar
 // New homepage sections
 // Use SSR for these sections to improve first paint/SEO
 const ClientsSection = dynamic(() => import("@/components/home/Clients"), { ssr: false })
-const ValuesSection = dynamic(() => import("@/components/home/ValuesSection"))
-const GrowthResultsSlider = dynamic(() => import("@/components/home/GrowthResultsSlider"))
-const HottestContentSection = dynamic(() => import("@/components/home/HottestContentSection"))
-const WebsitesFeatures = dynamic(() => import("@/components/home/WebsitesFeatures"))
-const SegmentsGrid = dynamic(() => import("@/components/home/SegmentsGrid"))
-const ReferralSection = dynamic(() => import("@/components/home/ReferralSection"))
-const CoreOfferingsSection = dynamic(() => import("@/components/home/CoreOfferingsSection"))
+const ValuesSection = dynamic(() => import("@/components/home/ValuesSection"), { ssr: false })
+const GrowthResultsSlider = dynamic(() => import("@/components/home/GrowthResultsSlider"), { ssr: false })
+const HottestContentSection = dynamic(() => import("@/components/home/HottestContentSection"), { ssr: false })
+const WebsitesFeatures = dynamic(() => import("@/components/home/WebsitesFeatures"), { ssr: false })
+const SegmentsGrid = dynamic(() => import("@/components/home/SegmentsGrid"), { ssr: false })
+const ReferralSection = dynamic(() => import("@/components/home/ReferralSection"), { ssr: false })
+const CoreOfferingsSection = dynamic(() => import("@/components/home/CoreOfferingsSection"), { ssr: false })
 const LatestPostsSection = dynamic(() => import("@/components/home/LatestPostsSection"), { ssr: false })
-const GrowthHeadline = dynamic(() => import("@/components/home/GrowthHeadline"))
+const GrowthHeadline = dynamic(() => import("@/components/home/GrowthHeadline"), { ssr: false })
 
 // Import analytics functions directly for now (will optimize separately)
 import CoreImage from "@/components/core-image"
@@ -85,11 +85,11 @@ export default function ClientPage() {
       <Navbar />
       <main className="flex-1">
         {/* Hero Section */}
-        <section className="hero-section relative min-h-[100svh] flex items-center justify-center bg-white pt-14 md:pt-16">
-          <div className="container relative mx-auto px-4 md:px-6 py-10 md:py-20">
-            <div className="flex flex-col items-center text-center gap-8 sm:gap-10">
+        <section className="hero-section relative min-h-[90svh] flex items-center justify-center bg-white pt-14 md:pt-16">
+          <div className="container relative mx-auto px-4 md:px-6 py-8 md:py-16">
+            <div className="flex flex-col items-center text-center gap-6 sm:gap-8">
               <div className={`flex items-center justify-center gap-3 sm:gap-4 md:gap-6 ${!isMobile ? 'smooth-reveal' : ''}`}>
-                <div className="relative h-8 w-8 md:h-10 md:w-10 lg:h-12 lg:w-12">
+                <div className="relative h-8 w-8 md:h-10 md:w-10">
                   <CoreImage
                     src={LOGO_CONFIG.src}
                     alt={LOGO_CONFIG.alt}
@@ -104,22 +104,22 @@ export default function ClientPage() {
                     showLoadingIndicator={true}
                   />
                 </div>
-                <h1 className={`text-3xl font-bold tracking-tighter lowercase sm:text-4xl md:text-5xl lg:text-6xl ${!isMobile ? 'gpu-accelerated' : ''}`}>
+                <h1 className={`text-3xl font-bold tracking-tighter lowercase sm:text-4xl md:text-5xl ${!isMobile ? 'gpu-accelerated' : ''}`}>
                   prism
                 </h1>
               </div>
-              <div className="flex flex-col items-center w-full gap-6 sm:gap-7">
-                <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6">
+              <div className="flex flex-col items-center w-full gap-5 sm:gap-6">
+                <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-4">
                   <Link href="/pricing">
                     <Button
-                      className="rounded-full px-8 py-6 text-lg lowercase hardware-hover touch-feedback"
+                      className="rounded-full px-7 py-5 text-base sm:text-lg lowercase hardware-hover touch-feedback"
                       onClick={() => trackCTAClick("view pricing", "hero section")}
                     >
                       view pricing <ArrowRight className="ml-2 h-5 w-5" />
                     </Button>
                   </Link>
                 </div>
-                <HeroReviewSliderCard className="w-full max-w-md" />
+                <HeroReviewSliderCard className="w-full max-w-sm sm:max-w-md" />
               </div>
             </div>
           </div>
