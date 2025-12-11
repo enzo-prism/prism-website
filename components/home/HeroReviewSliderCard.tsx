@@ -57,6 +57,12 @@ export default function HeroReviewSliderCard({ className }: HeroReviewSliderCard
     return reviews.find((quote) => quote.heroSpotlight) ?? reviews[0]
   }, [reviews])
 
+  const slideIndices = useMemo(() => {
+    const items = [activeIndex]
+    if (prevIndex !== null && prevIndex !== activeIndex) items.push(prevIndex)
+    return items
+  }, [activeIndex, prevIndex])
+
   const heroReviewSchema = useMemo(() => {
     if (!heroReviewForSchema) return null
     return JSON.stringify({
@@ -79,16 +85,6 @@ export default function HeroReviewSliderCard({ className }: HeroReviewSliderCard
     })
   }, [heroReviewForSchema])
 
-  if (!currentReview) {
-    return <div className={cn("w-full max-w-sm", className)} />
-  }
-
-  const slideIndices = useMemo(() => {
-    const items = [activeIndex]
-    if (prevIndex !== null && prevIndex !== activeIndex) items.push(prevIndex)
-    return items
-  }, [activeIndex, prevIndex])
-
   return (
     <div
       className={cn(
@@ -109,29 +105,35 @@ export default function HeroReviewSliderCard({ className }: HeroReviewSliderCard
 
       <div className="relative px-1">
         <div className="relative mx-auto flex min-h-[190px] max-w-xl items-center justify-center overflow-hidden">
-          {slideIndices.map((idx) => {
-            const review = reviews[idx]
-            if (!review) return null
-            const isActive = idx === activeIndex
-            return (
-              <div
-                key={review.id}
-                className={cn(
-                  "absolute inset-0 flex flex-col items-center justify-center space-y-3 px-3 text-center transition duration-320 ease-[0.22,1,0.36,1]",
-                  isActive
-                    ? "opacity-100 translate-y-0 z-10"
-                    : "opacity-0 translate-y-3 z-0 pointer-events-none"
-                )}
-                style={{ willChange: "transform, opacity" }}
-                aria-hidden={!isActive}
-              >
-                <p className="text-lg leading-relaxed text-neutral-900 sm:text-xl dark:text-white">
-                  &ldquo;{renderFormattedText(review.text)}&rdquo;
-                </p>
-                <p className="text-sm font-semibold text-neutral-700 dark:text-neutral-200">{review.client}</p>
-              </div>
-            )
-          })}
+          {currentReview ? (
+            slideIndices.map((idx) => {
+              const review = reviews[idx]
+              if (!review) return null
+              const isActive = idx === activeIndex
+              return (
+                <div
+                  key={review.id}
+                  className={cn(
+                    "absolute inset-0 flex flex-col items-center justify-center space-y-3 px-3 text-center transition duration-300 ease-out",
+                    isActive
+                      ? "opacity-100 translate-y-0 z-10"
+                      : "opacity-0 translate-y-3 z-0 pointer-events-none"
+                  )}
+                  style={{ willChange: "transform, opacity" }}
+                  aria-hidden={!isActive}
+                >
+                  <p className="text-lg leading-relaxed text-neutral-900 sm:text-xl dark:text-white">
+                    &ldquo;{renderFormattedText(review.text)}&rdquo;
+                  </p>
+                  <p className="text-sm font-semibold text-neutral-700 dark:text-neutral-200">{review.client}</p>
+                </div>
+              )
+            })
+          ) : (
+            <div className="flex w-full items-center justify-center rounded-xl bg-neutral-50 py-10 text-sm text-neutral-400">
+              loading…
+            </div>
+          )}
         </div>
       </div>
 
