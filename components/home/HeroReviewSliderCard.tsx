@@ -90,22 +90,18 @@ export default function HeroReviewSliderCard({ className }: HeroReviewSliderCard
 
   if (!currentReview) {
     // Optional: Render a skeleton or empty state here to prevent layout shift during hydration
-    return <div className={cn("min-h-[180px] w-full max-w-sm rounded-2xl bg-white/70", className)} />
+    return <div className={cn("min-h-[140px] w-full max-w-sm", className)} />
   }
 
   return (
     <div
-      className={cn(
-        "relative w-full max-w-sm sm:max-w-md overflow-hidden rounded-2xl border border-neutral-200 bg-white p-5 text-left shadow-sm transition-colors duration-200 sm:p-6",
-        "dark:border-neutral-800 dark:bg-neutral-900 dark:text-white",
-        className
-      )}
+      className={cn("w-full max-w-sm sm:max-w-md text-center space-y-3 sm:space-y-4", className)}
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
       onFocusCapture={() => setIsPaused(true)}
       onBlurCapture={() => setIsPaused(false)}
     >
-      <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-neutral-100 px-3 py-1 text-[11px] font-semibold text-neutral-700 dark:bg-neutral-800 dark:text-neutral-200">
+      <div className="inline-flex items-center gap-2 rounded-full bg-neutral-100 px-3 py-1 text-[11px] font-semibold text-neutral-700 dark:bg-neutral-800 dark:text-neutral-200">
         <span className="text-sm" aria-hidden>❤️</span>
         <span className="tracking-tight">founders love prism</span>
       </div>
@@ -116,7 +112,7 @@ export default function HeroReviewSliderCard({ className }: HeroReviewSliderCard
         before the new one fades in. This eliminates layout jumps and overlapping text
         on mobile devices where vertical space is tight.
       */}
-      <div className="relative min-h-[120px] sm:min-h-[132px]"> 
+      <div className="relative min-h-[120px] sm:min-h-[120px] px-1"> 
         <AnimatePresence mode="wait">
           <motion.div
             key={currentReview.id}
@@ -136,7 +132,7 @@ export default function HeroReviewSliderCard({ className }: HeroReviewSliderCard
         </AnimatePresence>
       </div>
 
-      <div className="mt-4 flex justify-center">
+      <div className="flex justify-center">
         <Link
           href="/wall-of-love"
           onClick={() => trackNavigation("hero_review_card_cta", "/wall-of-love")}
@@ -147,10 +143,10 @@ export default function HeroReviewSliderCard({ className }: HeroReviewSliderCard
       </div>
 
       {reviewPool.length > 1 && (
-        <div className="mt-4 flex flex-col items-center gap-3 text-sm text-neutral-600 dark:text-neutral-300">
-          <span className="text-xs font-semibold uppercase tracking-[0.2em] text-neutral-500 dark:text-neutral-400">
-            review {activeIndex + 1} of {reviewPool.length}
-          </span>
+        <div className="flex flex-col items-center gap-2 text-sm text-neutral-600 dark:text-neutral-300">
+          <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-neutral-500 dark:text-neutral-400">
+            <span>review {activeIndex + 1} of {reviewPool.length}</span>
+          </div>
           <div className="flex items-center gap-2">
             <button
               type="button"
