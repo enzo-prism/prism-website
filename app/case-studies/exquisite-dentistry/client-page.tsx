@@ -1,8 +1,5 @@
 "use client"
 
-import { ExquisiteChannelShareChart } from "@/components/case-studies/exquisite-channel-share-chart"
-import { ExquisiteSessionsGrowthChart } from "@/components/case-studies/exquisite-sessions-growth-chart"
-import { ExquisiteSpeedGauge } from "@/components/case-studies/exquisite-speed-gauge"
 import Footer from "@/components/footer"
 import PageViewTracker from "@/components/page-view-tracker"
 import { CaseStudySchema } from "@/components/schema-markup"
@@ -17,6 +14,19 @@ import { useEffect, useState } from "react"
 import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
 const Navbar = dynamic(() => import("@/components/navbar"), { ssr: false })
 const CLIENT_SITE = "https://exquisitedentistryla.com/"
+
+const ExquisiteChannelShareChart = dynamic(
+  () => import("@/components/case-studies/exquisite-channel-share-chart").then((m) => m.ExquisiteChannelShareChart),
+  { ssr: false, loading: () => <div className="h-32 w-full animate-pulse rounded-lg bg-neutral-100" /> }
+)
+const ExquisiteSessionsGrowthChart = dynamic(
+  () => import("@/components/case-studies/exquisite-sessions-growth-chart").then((m) => m.ExquisiteSessionsGrowthChart),
+  { ssr: false, loading: () => <div className="h-48 w-full animate-pulse rounded-lg bg-neutral-100" /> }
+)
+const ExquisiteSpeedGauge = dynamic(
+  () => import("@/components/case-studies/exquisite-speed-gauge").then((m) => m.ExquisiteSpeedGauge),
+  { ssr: false, loading: () => <div className="h-32 w-full animate-pulse rounded-lg bg-neutral-100" /> }
+)
 
 export default function ExquisiteDentistryCaseStudy() {
   const [activeSection, setActiveSection] = useState("")
