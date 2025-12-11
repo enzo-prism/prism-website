@@ -97,7 +97,7 @@ export default function SegmentsGrid() {
                       href={segment.href}
                       className="mt-6 inline-flex items-center text-sm font-semibold text-primary transition group-hover:gap-2"
                     >
-                      <span>how</span>
+                      <span>how we help</span>
                       <ArrowRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" />
                     </Link>
                   </article>
