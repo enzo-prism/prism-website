@@ -31,7 +31,5 @@ export function getCategoryClasses(category?: string) {
 
 export function buildCategoryPillClasses(category?: string) {
   const { bg, border, text } = getCategoryClasses(category)
-  return `${bg} ${border} ${text} inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-[11px] font-semibold lowercase leading-none`
+  return `${bg} ${border} ${text} inline-flex items-center justify-center rounded-full border px-3 py-1 text-[11px] font-semibold lowercase leading-tight tracking-tight`
 }
-
-export const CATEGORY_DOT_CLASS = "inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-current/70"
