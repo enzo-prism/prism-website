@@ -134,7 +134,6 @@ export default function ClientsRail() {
       <div className="mt-4 flex items-center justify-center text-xs text-neutral-500 dark:text-neutral-400">
         <span className="flex items-center gap-2 rounded-full border border-neutral-200 bg-white px-4 py-1 shadow-sm dark:border-neutral-800 dark:bg-neutral-950">
           <MoveRight className="h-4 w-4" aria-hidden="true" />
-          <span className="font-semibold uppercase tracking-[0.3em] hidden sm:inline">scroll</span>
           <span className="font-semibold uppercase tracking-[0.3em] sm:hidden">swipe</span>
         </span>
       </div>
