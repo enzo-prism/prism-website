@@ -148,4 +148,9 @@ export const CLIENTS: ClientInfo[] = [
     location: "San Francisco, CA",
     category: "event",
   },
+  {
+    title: "Mataria Dental Group",
+    location: "Torrance, CA",
+    category: "dentistry",
+  },
 ]
