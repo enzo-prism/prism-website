@@ -78,7 +78,7 @@ export default function WallOfLoveClientPage() {
       <div className="bg-neutral-50">
         <main className="w-full max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
           <p className="mb-6 text-xs uppercase tracking-[0.3em] text-neutral-400 text-center">
-            {reviewCount.toLocaleString()} voices from our community
+            {reviewCount.toLocaleString()} voices from our community of founders
           </p>
           <div className="space-y-4 sm:space-y-5 columns-1 md:columns-2 xl:columns-3 gap-5">
             {feed.map((item) => {
