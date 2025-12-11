@@ -20,24 +20,6 @@ type FeedItem =
 
 // removed copy/DM helpers to simplify UI
 
-const TakeawayCard = ({ item }: { item: Takeaway }) => {
-  return (
-    <blockquote
-      className="bg-neutral-50 p-4 sm:p-5 rounded-xl w-full border border-neutral-200 overflow-hidden"
-      aria-label={`Viewer takeaway from @${item.handle}`}
-    >
-      <p className="text-[15px] sm:text-base text-neutral-800 leading-relaxed tracking-tight">&ldquo;{item.text}&rdquo;</p>
-      <footer className="mt-3 flex items-center justify-end gap-2 text-right">
-        <div className="flex items-center gap-2">
-          <p className="font-medium text-sm sm:text-[15px] text-neutral-900">@{item.handle}</p>
-          <span className="text-neutral-300">•</span>
-          <p className="text-xs sm:text-sm text-neutral-500">Instagram Community of Entrepreneurs</p>
-        </div>
-      </footer>
-    </blockquote>
-  )
-}
-
 // Generic Fisher–Yates shuffle
 const shuffleArray = <T,>(array: T[]): T[] => {
   const copy = array.slice()
@@ -46,26 +28,6 @@ const shuffleArray = <T,>(array: T[]): T[] => {
     ;[copy[i], copy[j]] = [copy[j], copy[i]]
   }
   return copy
-}
-
-const TestimonialCard = ({ quote }: { quote: Quote }) => {
-  return (
-    <blockquote
-      className="bg-neutral-50 p-4 sm:p-5 rounded-xl w-full border border-neutral-200 overflow-hidden"
-      aria-label={`Testimonial from ${quote.client}`}
-    >
-      <p className="text-[15px] sm:text-base text-neutral-800 leading-relaxed tracking-tight">
-        &ldquo;{renderFormattedText(quote.text)}&rdquo;
-      </p>
-      <footer className="mt-3 flex items-center justify-end gap-2 text-right">
-        <div className="flex items-center gap-2">
-          <p className="font-medium text-sm sm:text-[15px] text-neutral-900">{quote.client}</p>
-        <span className="text-neutral-300">•</span>
-        <p className="text-xs sm:text-sm text-neutral-500">{quote.company}</p>
-        </div>
-      </footer>
-    </blockquote>
-  )
 }
 
 export default function WallOfLoveClientPage() {
@@ -88,7 +50,7 @@ export default function WallOfLoveClientPage() {
   return (
     <>
       <section className="relative w-full py-10 sm:py-12 bg-white">
-        <div className="w-full max-w-[720px] mx-auto px-4 text-center">
+        <div className="w-full max-w-5xl mx-auto px-4 sm:px-6 text-center">
           <div className="space-y-3">
             <div className="text-4xl">❤️</div>
             <h1 className="text-[32px] sm:text-[40px] font-semibold tracking-tight lowercase text-neutral-900">wall of love</h1>
@@ -113,21 +75,44 @@ export default function WallOfLoveClientPage() {
         </div>
       </section>
 
-      {/* simple vertical lists – carousels removed */}
-
       <div className="bg-neutral-50">
-        <main className="w-full max-w-[720px] mx-auto px-4 py-8 sm:py-10">
-          <p className="mb-4 text-xs uppercase tracking-[0.3em] text-neutral-400 text-center">
+        <main className="w-full max-w-5xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
+          <p className="mb-6 text-xs uppercase tracking-[0.3em] text-neutral-400 text-center">
             {reviewCount.toLocaleString()} voices from our community
           </p>
-          <div className="space-y-4 sm:space-y-5">
-            {feed.map((item) =>
-              item.kind === "quote" ? (
-                <TestimonialCard key={`quote-${item.data.id}`} quote={item.data} />
-              ) : (
-                <TakeawayCard key={`takeaway-${item.data.id}`} item={item.data} />
+          <div className="grid grid-cols-1 gap-4 sm:gap-5 md:grid-cols-2 xl:grid-cols-3">
+            {feed.map((item) => {
+              const isQuote = item.kind === "quote"
+              return (
+                <blockquote
+                  key={`${item.kind}-${isQuote ? item.data.id : item.data.id}`}
+                  className="bg-white p-4 sm:p-5 rounded-xl w-full border border-neutral-200 overflow-hidden shadow-sm"
+                  aria-label={
+                    isQuote
+                      ? `Testimonial from ${item.data.client}`
+                      : `Viewer takeaway from @${(item.data as Takeaway).handle}`
+                  }
+                >
+                  <p className="text-[15px] sm:text-base text-neutral-800 leading-relaxed tracking-tight">
+                    &ldquo;{renderFormattedText(isQuote ? (item.data as Quote).text : (item.data as Takeaway).text)}&rdquo;
+                  </p>
+                  <footer className="mt-3 flex items-center justify-between text-left">
+                    <span className="inline-flex items-center rounded-full bg-neutral-100 px-3 py-1 text-xs font-semibold lowercase text-neutral-700">
+                      {isQuote ? "testimonial" : "takeaway"}
+                    </span>
+                    <div className="flex items-center gap-2 text-right">
+                      <p className="font-medium text-sm sm:text-[15px] text-neutral-900">
+                        {isQuote ? (item.data as Quote).client : `@${(item.data as Takeaway).handle}`}
+                      </p>
+                      <span className="text-neutral-300">•</span>
+                      <p className="text-xs sm:text-sm text-neutral-500">
+                        {isQuote ? (item.data as Quote).company : "community"}
+                      </p>
+                    </div>
+                  </footer>
+                </blockquote>
               )
-            )}
+            })}
           </div>
         </main>
       </div>
