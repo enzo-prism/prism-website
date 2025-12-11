@@ -7,12 +7,6 @@ import { ArrowRight, Gift } from "lucide-react"
 
 const TYPEFORM_URL = "https://fxuqp40sseh.typeform.com/to/ln0VzAjB"
 
-const talkingPoints = [
-  "help with website improvements",
-  "local listing optimization",
-  "running high-performing online ads"
-]
-
 export default function ReferralSection() {
   return (
     <section className="border-t border-neutral-100 bg-white py-16 md:py-24">
@@ -41,19 +35,6 @@ export default function ReferralSection() {
             </div>
           </div>
           <div className="flex-1 space-y-8">
-            <div>
-              <p className="text-sm font-semibold uppercase tracking-[0.3em] text-neutral-500">
-                how we help
-              </p>
-              <ul className="mt-4 space-y-3 text-sm text-neutral-600">
-                {talkingPoints.map((point) => (
-                  <li key={point} className="flex items-start gap-2">
-                    <span className="mt-1 h-1.5 w-1.5 rounded-full bg-primary" aria-hidden />
-                    <span>{point}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
             <div className="flex flex-wrap gap-3">
               <Button asChild className="rounded-full lowercase">
                 <Link href={TYPEFORM_URL} target="_blank" rel="noopener noreferrer">
