@@ -1,6 +1,6 @@
 "use client"
 
-import { Megaphone, Menu, MonitorSmartphone, Search, Sparkles, X } from "lucide-react"
+import { BadgeDollarSign, BookOpen, FolderOpen, Heart, Home, Menu, X } from "lucide-react"
 import type { LucideIcon } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
@@ -18,16 +18,17 @@ const aliasMap: Record<string, string> = {
   "/growth": "/prism-flywheel",
 }
 
-const serviceIconMap: Record<string, LucideIcon> = {
-  websites: MonitorSmartphone,
-  design: Sparkles,
-  seo: Search,
-  ads: Megaphone,
+const topIconMap: Record<string, LucideIcon> = {
+  home: Home,
+  "our story": BookOpen,
+  "case studies": FolderOpen,
+  "wall of love": Heart,
+  pricing: BadgeDollarSign,
 }
 
-const getNavIcon = (label?: string) => {
+const getTopIcon = (label?: string) => {
   if (!label) return null
-  const Icon = serviceIconMap[label.toLowerCase()]
+  const Icon = topIconMap[label.toLowerCase()]
   if (!Icon) return null
   return <Icon className="h-4 w-4 text-neutral-400" aria-hidden />
 }
@@ -93,11 +94,12 @@ export default function Navbar() {
               {item.href ? (
                 <Link
                   href={item.href}
-                  className={`flex items-center gap-1 text-sm font-medium lowercase transition-colors hover:text-primary ${
+                  className={`flex items-center gap-2 text-sm font-medium lowercase transition-colors hover:text-primary ${
                     isActivePath(item.href) ? "text-primary" : "text-muted-foreground"
                   }`}
                   onClick={() => trackNavigation(item.label, item.href!)}
                 >
+                  {getTopIcon(item.label)}
                   <span>{item.label}</span>
                 </Link>
               ) : (
@@ -160,7 +162,10 @@ export default function Navbar() {
                       trackNavigation(item.label, item.href!)
                     }}
                   >
-                    <span>{item.label}</span>
+                    <span className="flex items-center gap-2">
+                      {getTopIcon(item.label)}
+                      {item.label}
+                    </span>
                   </Link>
                 ) : (
                   <div
