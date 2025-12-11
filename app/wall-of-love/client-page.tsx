@@ -76,17 +76,17 @@ export default function WallOfLoveClientPage() {
       </section>
 
       <div className="bg-neutral-50">
-        <main className="w-full max-w-5xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
+        <main className="w-full max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
           <p className="mb-6 text-xs uppercase tracking-[0.3em] text-neutral-400 text-center">
             {reviewCount.toLocaleString()} voices from our community
           </p>
-          <div className="grid grid-cols-1 gap-4 sm:gap-5 md:grid-cols-2 xl:grid-cols-3">
+          <div className="space-y-4 sm:space-y-5 columns-1 md:columns-2 xl:columns-3 gap-5">
             {feed.map((item) => {
               const isQuote = item.kind === "quote"
               return (
                 <blockquote
-                  key={`${item.kind}-${isQuote ? item.data.id : item.data.id}`}
-                  className="bg-white p-4 sm:p-5 rounded-xl w-full border border-neutral-200 overflow-hidden shadow-sm"
+                  key={`${item.kind}-${item.data.id}`}
+                  className="mb-4 break-inside-avoid bg-white p-4 sm:p-5 rounded-xl w-full border border-neutral-200 overflow-hidden shadow-sm"
                   aria-label={
                     isQuote
                       ? `Testimonial from ${item.data.client}`
