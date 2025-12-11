@@ -5,6 +5,8 @@ import Footer from "@/components/footer"
 import CheckoutForm from "@/components/checkout-form"
 import { Button } from "@/components/ui/button"
 import type { Metadata } from "next"
+import RecentLaunchesCarousel from "@/components/checkout/recent-launches-carousel"
+import { websiteProjects } from "@/lib/website-projects"
 
 export const metadata: Metadata = {
   title: "launch plan checkout | prism",
@@ -55,6 +57,9 @@ export default function LaunchCheckoutPage() {
 
           <CheckoutForm plan="launch" />
 
+          <div className="mt-16">
+            <RecentLaunchesCarousel projects={websiteProjects} />
+          </div>
         </div>
       </main>
       <Footer />
