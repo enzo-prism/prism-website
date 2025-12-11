@@ -210,7 +210,10 @@ function HeroSection() {
                 size="lg"
                 className="w-full rounded-full border border-black bg-black px-8 py-6 text-base font-semibold text-white hover:bg-black/90 sm:w-auto"
               >
-                <a href="#plans">pricing breakdown</a>
+                <a href="#plans" className="inline-flex items-center gap-2">
+                  <span className="inline-block h-0 w-0 border-l-4 border-r-4 border-b-6 border-l-transparent border-r-transparent border-b-white" aria-hidden />
+                  <span>pricing breakdown</span>
+                </a>
               </Button>
             </div>
           </RevealOnScroll>
