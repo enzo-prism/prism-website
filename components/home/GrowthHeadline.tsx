@@ -4,7 +4,7 @@ import { DollarSign, Eye, Users2 } from "lucide-react"
 
 const PILL_ITEMS = [
   { label: "websites", emoji: "📱" },
-  { label: "automated systems", emoji: "⚙️" },
+  { label: "content systems", emoji: "⚙️" },
   { label: "ads", emoji: "📣" },
 ]
 
