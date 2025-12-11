@@ -70,7 +70,7 @@ export default function ClientsRail() {
           {clients.map((client) => (
             <div
               key={client.title}
-              className="shrink-0 snap-start md:translate-y-0 w-[74vw] sm:w-[52vw] md:w-[240px] first:ml-1 md:first:ml-0"
+              className="shrink-0 snap-start md:translate-y-0 w-[78vw] sm:w-[54vw] md:w-[270px] first:ml-1 md:first:ml-0"
               role="listitem"
             >
               <ClientCard
