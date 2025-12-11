@@ -17,7 +17,7 @@ export default function ReferralSection() {
             share prism with a friend
           </h2>
           <p className="mt-3 text-sm text-neutral-600 lowercase sm:text-base">
-            connect us with who's looking to grow without handling all the tech themselves.
+            connect us with a founder who's looking to grow without handling all the tech themselves.
           </p>
           <div className="mt-6 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <Button asChild className="w-full rounded-full lowercase sm:w-auto">
