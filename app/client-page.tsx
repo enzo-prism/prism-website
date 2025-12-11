@@ -141,39 +141,6 @@ export default function ClientPage() {
           </div>
         </section>
 
-        {/* About Section */}
-        <section className="border-t border-neutral-100 dark:border-neutral-800 py-12">
-          <div className="container mx-auto px-4 md:px-6">
-            <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-              <div className="md:w-1/2">
-                <CoreImage
-                  src="/enzo-avatar.png"
-                  alt="Enzo Sison, founder of Prism"
-                  width={80}
-                  height={80}
-                  className="rounded-full mb-4"
-                  trackingId="about_section_avatar"
-                />
-                <h3 className="text-xl font-medium lowercase mb-2">our story</h3>
-                <p className="text-neutral-500 dark:text-neutral-400 lowercase max-w-md">
-                  founded by enzo sison, prism helps businesses create digital experiences that drive real results.
-                </p>
-              </div>
-              <div className="md:w-1/2 flex justify-center md:justify-end">
-                <Link href="/about">
-                  <Button
-                    variant="outline"
-                    className="rounded-full lowercase"
-                    onClick={() => trackNavigation("learn more about us", "/about")}
-                  >
-                    learn more about us <ArrowRight className="ml-2 h-4 w-4" />
-                  </Button>
-                </Link>
-              </div>
-            </div>
-          </div>
-        </section>
-
         {/* Book a Demo */}
       </main>
       <Footer />
