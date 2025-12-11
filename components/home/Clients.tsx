@@ -12,26 +12,6 @@ export default function ClientsSection() {
         </div>
 
         <ClientsRail />
-
-        {/* Social proof under carousel */}
-        <div className="mt-8 md:mt-10 flex flex-col items-center space-y-2 text-center">
-          <Link
-            href="https://www.instagram.com/the_design_prism/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-sm text-neutral-500 lowercase hover:text-neutral-800 hover:underline"
-          >
-            40,000+ entrepreneurs follow us on instagram
-          </Link>
-          <Link
-            href="https://www.youtube.com/@the_design_prism"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-sm text-neutral-500 lowercase hover:text-neutral-800 hover:underline"
-          >
-            24.5k+ subscribers on youtube
-          </Link>
-        </div>
       </div>
     </section>
   )
