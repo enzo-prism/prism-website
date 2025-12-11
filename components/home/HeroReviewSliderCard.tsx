@@ -90,13 +90,13 @@ export default function HeroReviewSliderCard({ className }: HeroReviewSliderCard
 
   if (!currentReview) {
     // Optional: Render a skeleton or empty state here to prevent layout shift during hydration
-    return <div className={cn("min-h-[200px] w-full rounded-3xl bg-white/50 backdrop-blur-lg", className)} />
+    return <div className={cn("min-h-[180px] w-full rounded-2xl bg-white/70", className)} />
   }
 
   return (
     <div
       className={cn(
-        "relative w-full overflow-hidden rounded-2xl border border-neutral-200 bg-white p-5 text-left shadow-sm transition-colors duration-300 sm:p-6",
+        "relative w-full overflow-hidden rounded-2xl border border-neutral-200 bg-white p-5 text-left shadow-sm transition-colors duration-200 sm:p-6",
         "dark:border-neutral-800 dark:bg-neutral-900 dark:text-white",
         className
       )}
@@ -105,10 +105,8 @@ export default function HeroReviewSliderCard({ className }: HeroReviewSliderCard
       onFocusCapture={() => setIsPaused(true)}
       onBlurCapture={() => setIsPaused(false)}
     >
-      <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-neutral-100 px-3 py-1 text-xs font-semibold text-neutral-700 dark:bg-neutral-800 dark:text-neutral-200">
-        <span className="text-sm" aria-hidden>
-          ❤️
-        </span>
+      <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-neutral-100 px-3 py-1 text-[11px] font-semibold text-neutral-700 dark:bg-neutral-800 dark:text-neutral-200">
+        <span className="text-sm" aria-hidden>❤️</span>
         <span className="tracking-tight">founders love prism</span>
       </div>
 
@@ -118,7 +116,7 @@ export default function HeroReviewSliderCard({ className }: HeroReviewSliderCard
         before the new one fades in. This eliminates layout jumps and overlapping text
         on mobile devices where vertical space is tight.
       */}
-      <div className="relative min-h-[120px]"> 
+      <div className="relative min-h-[120px] sm:min-h-[132px]"> 
         <AnimatePresence mode="wait">
           <motion.div
             key={currentReview.id}
@@ -128,10 +126,10 @@ export default function HeroReviewSliderCard({ className }: HeroReviewSliderCard
             transition={{ duration: 0.28, ease: "easeOut" }}
             className="w-full"
           >
-            <p className="text-base leading-relaxed text-neutral-900 dark:text-white">
+            <p className="text-lg leading-relaxed text-neutral-900 sm:text-xl dark:text-white">
               &ldquo;{renderFormattedText(currentReview.text)}&rdquo;
             </p>
-            <p className="mt-4 text-sm font-semibold text-neutral-900 dark:text-white">
+            <p className="mt-4 text-sm font-semibold text-neutral-700 dark:text-neutral-200">
               {currentReview.client}
             </p>
           </motion.div>
@@ -149,23 +147,15 @@ export default function HeroReviewSliderCard({ className }: HeroReviewSliderCard
       </div>
 
       {reviewPool.length > 1 && (
-        <div className="mt-3 flex items-center justify-center gap-3">
-          <button
-            type="button"
-            aria-label="Previous review"
-            onClick={prevReview}
-            className="h-8 w-8 rounded-full border border-neutral-200 text-neutral-600 transition hover:border-neutral-400 hover:text-neutral-900 dark:border-neutral-700 dark:text-neutral-300 dark:hover:border-neutral-500 dark:hover:text-white"
-          >
-            ←
-          </button>
-          <div className="flex items-center gap-2">
+        <div className="mt-4 flex items-center justify-center gap-4">
+          <div className="flex items-center gap-3">
             {reviewPool.map((quote, index) => (
               <button
                 key={quote.id}
                 type="button"
                 aria-label={`Go to review ${index + 1}`}
                 onClick={() => setActiveIndex(index)}
-                className={`h-2.5 w-2.5 rounded-full transition ${
+                className={`h-3 w-3 rounded-full transition ${
                   index === activeIndex ? "bg-neutral-900 dark:bg-white" : "bg-neutral-300 dark:bg-neutral-700"
                 }`}
               />
@@ -175,9 +165,10 @@ export default function HeroReviewSliderCard({ className }: HeroReviewSliderCard
             type="button"
             aria-label="Next review"
             onClick={nextReview}
-            className="h-8 w-8 rounded-full border border-neutral-200 text-neutral-600 transition hover:border-neutral-400 hover:text-neutral-900 dark:border-neutral-700 dark:text-neutral-300 dark:hover:border-neutral-500 dark:hover:text-white"
+            className="flex items-center gap-2 rounded-full border border-neutral-200 px-3 py-1 text-xs font-semibold lowercase text-neutral-700 transition hover:border-neutral-400 hover:text-neutral-900 dark:border-neutral-700 dark:text-neutral-300 dark:hover:border-neutral-500 dark:hover:text-white"
           >
-            →
+            next
+            <span aria-hidden>→</span>
           </button>
         </div>
       )}
