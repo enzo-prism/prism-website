@@ -88,7 +88,7 @@ export default function HeroReviewSliderCard({ className }: HeroReviewSliderCard
         <span className="text-sm" aria-hidden>
           ❤️
         </span>
-        <span className="tracking-tight">trusted by founders</span>
+        <span className="tracking-tight">founders love prism</span>
       </div>
 
       {/* 
