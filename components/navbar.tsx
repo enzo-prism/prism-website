@@ -63,16 +63,13 @@ export default function Navbar() {
     <header className={`${headerPositionClass} top-0 z-50 w-full border-b bg-background/95 md:backdrop-blur supports-[backdrop-filter]:bg-background/60`}>
       <div className="w-full max-w-7xl mx-auto flex h-14 md:h-16 items-center justify-between px-0">
         <div className="flex items-center justify-between w-full px-3 md:px-0">
-        <Link href="/" className="flex items-center gap-2" onClick={() => trackNavigation("logo", "/")}>
-          {/* This div provides the dimensions and primary clipping */}
+        <Link href="/" className="flex items-center" onClick={() => trackNavigation("logo", "/")}>
           <div className="relative h-8 w-8 overflow-hidden rounded-lg isolate">
             <CoreImage
               src={LOGO_CONFIG.src}
               alt={LOGO_CONFIG.alt}
               width={32}
               height={32}
-              // Pass classes to CoreImage to apply to the NextImage component
-              // This ensures the NextImage itself is rounded and clips its content.
               className={`object-contain w-full h-full ${LOGO_CONFIG.className} overflow-hidden`}
               priority
               fallbackSrc={LOGO_CONFIG.fallbackSrc}
@@ -80,7 +77,6 @@ export default function Navbar() {
               quality={90}
             />
           </div>
-          <span className="text-2xl font-bold lowercase text-foreground">prism</span>
         </Link>
 
         { !isMounted ? (
