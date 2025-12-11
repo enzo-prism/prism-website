@@ -212,10 +212,6 @@ function HeroSection() {
               >
                 <a href="#plans">Start Your Website →</a>
               </Button>
-              <span className="inline-flex items-center gap-2 rounded-full border border-black/20 px-5 py-3 text-sm font-semibold text-black/80 shadow-sm">
-                <span aria-hidden className="text-base">⏱️</span>
-                Launch-ready in 60 hours
-              </span>
             </div>
           </RevealOnScroll>
           <RevealOnScroll delay={0.25}>
