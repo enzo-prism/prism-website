@@ -26,7 +26,7 @@ export default function CaseStudiesPage() {
                 <CaseStudyCard
                   key={study.id}
                   business={study.client}
-                  category={study.industry}
+                  category={study.category}
                   location={study.location}
                   slug={study.slug}
                 />
