@@ -42,7 +42,6 @@ export const NAV_ITEMS: NavItem[] = [
       { label: "design", href: "/designs" },
       { label: "seo", href: "/seo" },
       { label: "ads", href: "/ads" },
-      { label: "local listings", href: "/local-listings" },
     ],
   },
   { label: "pricing", href: "/pricing" },
