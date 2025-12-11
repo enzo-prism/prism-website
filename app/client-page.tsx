@@ -110,38 +110,6 @@ export default function ClientPage() {
         <LatestPostsSection />
 
         {/* Additional content pruned per new simplified homepage */}
-
-        {/* Flywheel section removed */}
-
-        {/* Testimonials / Wall of Love section removed */}
-
-        {/* Featured Case Studies section removed */}
-
-        {/* Bottom CTA Section */}
-        <section className="bg-neutral-50 dark:bg-neutral-800 py-16 md:py-24">
-          <div className="container mx-auto px-4 md:px-6">
-            <div className="mx-auto max-w-2xl space-y-6 text-center">
-              <h2 className="text-3xl font-bold tracking-tighter lowercase sm:text-4xl gpu-accelerated">
-                ready to hit your business goals?
-              </h2>
-              <p className="text-neutral-600 dark:text-neutral-300 lowercase md:text-lg">
-                email support@design-prism.com to take the next steps
-              </p>
-              <div className="pt-6">
-                <Link href="mailto:support@design-prism.com">
-                  <Button
-                    className="rounded-full px-8 py-6 text-lg lowercase hardware-hover touch-feedback scale-bounce"
-                    onClick={() => trackCTAClick("email support", "bottom cta")}
-                  >
-                    email support <ArrowRight className="ml-2 h-5 w-5" />
-                  </Button>
-                </Link>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Book a Demo */}
       </main>
       <Footer />
       
