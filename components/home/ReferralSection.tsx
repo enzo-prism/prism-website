@@ -13,9 +13,6 @@ export default function ReferralSection() {
       <div className="container mx-auto max-w-5xl px-4 md:px-6">
         <div className="flex flex-col gap-10 md:flex-row md:items-center md:justify-between">
           <div className="max-w-2xl space-y-6">
-            <div className="inline-flex items-center gap-2 rounded-full border border-neutral-200 bg-neutral-50 px-4 py-1 text-xs font-semibold uppercase tracking-[0.35em] text-neutral-500">
-              who do you know?
-            </div>
             <h2 className="text-3xl font-bold tracking-tight lowercase sm:text-4xl">
               know a business that could use our help?
             </h2>
