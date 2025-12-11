@@ -1,84 +1,22 @@
 "use client"
 
-import { Button } from "@/components/ui/button"
-import { useMobile } from "@/hooks/use-mobile"
-import { ArrowRight, ArrowUpRight, Briefcase } from "lucide-react"
-import dynamic from "next/dynamic"
+import { ArrowRight } from "lucide-react"
 import Link from "next/link"
-import { useEffect, useMemo, useRef, useState } from "react"
+
 import HeroReviewSliderCard from "@/components/home/HeroReviewSliderCard"
-
-const Footer = dynamic(() => import("@/components/footer"), { ssr: false })
-const Navbar = dynamic(() => import("@/components/navbar"), { ssr: false })
-
-// Lazy load below-the-fold components
-const ScrollProgressBar = dynamic(() => import("@/components/scroll-progress-bar"), {
-  ssr: false
-})
-
-// New homepage sections
-// Use SSR for these sections to improve first paint/SEO
-const ClientsSection = dynamic(() => import("@/components/home/Clients"), { ssr: false })
-const ValuesSection = dynamic(() => import("@/components/home/ValuesSection"), { ssr: false })
-const HottestContentSection = dynamic(() => import("@/components/home/HottestContentSection"), { ssr: false })
-const SegmentsGrid = dynamic(() => import("@/components/home/SegmentsGrid"), { ssr: false })
-const ReferralSection = dynamic(() => import("@/components/home/ReferralSection"), { ssr: false })
-const CoreOfferingsSection = dynamic(() => import("@/components/home/CoreOfferingsSection"), { ssr: false })
-const LatestPostsSection = dynamic(() => import("@/components/home/LatestPostsSection"), { ssr: false })
-const GrowthHeadline = dynamic(() => import("@/components/home/GrowthHeadline"), { ssr: false })
-
-// Import analytics functions directly for now (will optimize separately)
-import CoreImage from "@/components/core-image"
-// import GetStartedCTA from "@/components/GetStartedCTA" // removed from new homepage flow
+import ClientsSection from "@/components/home/Clients"
+import GrowthHeadline from "@/components/home/GrowthHeadline"
+import ReferralSection from "@/components/home/ReferralSection"
+import SegmentsGrid from "@/components/home/SegmentsGrid"
+import Footer from "@/components/footer"
+import Navbar from "@/components/navbar"
 import PageViewTracker from "@/components/page-view-tracker"
-// import VideoWithPoster from "@/components/video-with-poster" // removed with testimonials section
-// import { useRevealAnimation } from "@/hooks/use-reveal-animation" // no longer used on simplified homepage
-import { LOGO_CONFIG, LOGO_SIZES } from "@/lib/constants"
-import { trackCTAClick, trackNavigation } from "@/utils/analytics"
-// Render Service schema only on client to keep SSR HTML lean
-const ServiceSchemaClient = dynamic(() => import("@/components/schema-markup").then(m => m.ServiceSchema), {
-  ssr: false
-})
+import { Button } from "@/components/ui/button"
+import { trackCTAClick } from "@/utils/analytics"
 
 export default function ClientPage() {
-  const isMobile = useMobile()
-
-  // Lazy loading states for below-the-fold sections
-  // removed case studies and testimonials sections
-  
-  useEffect(() => {
-    const fallbackHero = document.getElementById("static-home-hero")
-    if (fallbackHero) {
-      fallbackHero.setAttribute("data-hydrated-hidden", "true")
-      fallbackHero.setAttribute("aria-hidden", "true")
-      fallbackHero.style.display = "none"
-    }
-  }, [])
-
-  // GPU-accelerated animation hooks
-  // services section removed in new structure
-  // removed testimonials and case studies animations
-  // service cards staggered reveal removed in new structure
-
-  // removed observers for case studies and testimonials
-
-  // removed unused featuredCaseStudies data
-  const openRoles = [
-    {
-      title: "contract front-end developer",
-      href: "/careers/front-end-developer",
-      meta: "contract / remote / 10-20 hrs/week"
-    },
-    {
-      title: "contract replit builder",
-      href: "/careers/replit-builder",
-      meta: "contract / remote / ~10-20 hrs/week"
-    }
-  ]
-
   return (
     <div className="flex min-h-screen flex-col">
-      {isMobile && <ScrollProgressBar />} {/* Added this line */}
       <PageViewTracker title="Prism Agency" />
       <Navbar />
       <main className="flex-1">
@@ -107,68 +45,9 @@ export default function ClientPage() {
         <ClientsSection />
         <SegmentsGrid />
         <ReferralSection />
-        <LatestPostsSection />
 
-        {/* Additional content pruned per new simplified homepage */}
       </main>
       <Footer />
-      
-      {/* Service Schema Markup (client-only to reduce SSR HTML) */}
-      <ServiceSchemaClient
-        serviceId="website-development"
-        name="Website Development"
-        description="Custom website development services that drive business growth and enhance user experience"
-        serviceType="Website Development"
-        areaServed={["United States", "Canada", "Global"]}
-        offerDetails={{
-          name: "Custom Website Development",
-          description: "professional website development with modern design and functionality",
-          businessFunction: "http://purl.org/goodrelations/v1#Sell",
-          priceRange: "$2,500 - $10,000"
-        }}
-      />
-      
-      <ServiceSchemaClient
-        serviceId="mobile-app-development"
-        name="Mobile App Development"
-        description="Native and cross-platform mobile app development for iOS and Android"
-        serviceType="Mobile App Development"
-        areaServed={["United States", "Canada", "Global"]}
-        offerDetails={{
-          name: "Mobile App Development Services",
-          description: "end-to-end mobile app development from concept to launch",
-          businessFunction: "http://purl.org/goodrelations/v1#Sell",
-          priceRange: "$5,000 - $25,000"
-        }}
-      />
-      
-      <ServiceSchemaClient
-        serviceId="digital-marketing"
-        name="Digital Marketing"
-        description="Comprehensive digital marketing services including SEO, content marketing, and social media"
-        serviceType="Digital Marketing"
-        areaServed={["United States", "Canada", "Global"]}
-        offerDetails={{
-          name: "Digital Marketing Services",
-          description: "data-driven digital marketing strategies to grow your online presence",
-          businessFunction: "http://purl.org/goodrelations/v1#Sell",
-          priceRange: "$1,000 - $5,000"
-        }}
-      />
-      
-      <ServiceSchemaClient
-        serviceId="ui-ux-design"
-        name="UI/UX Design"
-        description="User interface and user experience design services for web and mobile applications"
-        serviceType="UI/UX Design"
-        areaServed={["United States", "Canada", "Global"]}
-        offerDetails={{
-          name: "UI/UX Design Services",
-          description: "beautiful and functional design that enhances user experience",
-          businessFunction: "http://purl.org/goodrelations/v1#Sell",
-          priceRange: "$1,500 - $8,000"
-        }}
-      />
     </div>
   )
 }
