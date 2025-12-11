@@ -3,7 +3,7 @@
 import Link from "next/link"
 import type { ClientInfo } from "@/lib/clients"
 import { trackNavigation, trackExternalLinkClick } from "@/utils/analytics"
-import { buildCategoryPillClasses } from "@/lib/category-styles"
+import { buildCategoryPillClasses, CATEGORY_DOT_CLASS } from "@/lib/category-styles"
 
 type Props = ClientInfo & {
   interactive?: boolean
@@ -34,7 +34,7 @@ export default function ClientCard({
       </div>
       {category ? (
         <div className={`mt-2 ${buildCategoryPillClasses(category)}`}>
-          <span className="h-1.5 w-1.5 rounded-full bg-current/70" aria-hidden />
+          <span className={CATEGORY_DOT_CLASS} aria-hidden />
           <span>{category}</span>
         </div>
       ) : null}
