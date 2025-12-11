@@ -24,6 +24,18 @@ export default function AboutClientPage() {
         <section className="px-4 py-16 md:py-24 lg:py-32">
           <div className="container mx-auto px-4 md:px-6">
             <div className="flex flex-col items-center space-y-6 text-center">
+              <div className="flex items-center justify-center">
+                <div className="h-28 w-28 overflow-hidden rounded-full border-2 border-neutral-200 shadow-sm">
+                  <Image
+                    src="https://res.cloudinary.com/dhqpqfw6w/image/upload/v1765426902/Enzo_s_Headshot_xg546f.webp"
+                    alt="Enzo Sison headshot"
+                    width={160}
+                    height={160}
+                    className="h-full w-full object-cover"
+                    priority
+                  />
+                </div>
+              </div>
               <div className="space-y-3">
                 <h1 className="text-4xl font-bold tracking-tighter lowercase sm:text-5xl md:text-6xl">our story</h1>
                 <p className="mx-auto mt-4 max-w-[700px] text-neutral-600 lowercase md:text-xl">
