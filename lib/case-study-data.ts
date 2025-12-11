@@ -12,6 +12,7 @@ export type CaseStudyMeta = {
   id: string
   title: string
   client: string
+  founder?: string
   industry: string
   location: string
   description: string
@@ -24,6 +25,7 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
     id: "1",
     title: "Powering a Seamless Transition",
     client: "Dr. Christopher B. Wong",
+    founder: "Dr. Christopher B. Wong",
     industry: "Dentistry",
     location: "Palo Alto, CA",
     description:
@@ -65,6 +67,7 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
     id: "5",
     title: "Family‑Focused Website with Clear Conversion",
     client: "Family First Smile Care",
+    founder: "Dr. Jayleen Pang",
     industry: "Dentistry",
     location: "Los Gatos, CA",
     description: "Services clarity, office comforts, and measurable conversion flows built for families.",
@@ -95,6 +98,7 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
     id: "8",
     title: "Designing a Digital Home for Bold Aging",
     client: "Rebellious Aging",
+    founder: "Suz Rohde",
     industry: "Online Community",
     location: "Los Gatos, CA",
     description:
@@ -116,6 +120,7 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
     id: "10",
     title: "Consulting Presence Refresh",
     client: "sr4 Partners",
+    founder: "Srikanth Ravi",
     industry: "Consulting",
     location: "Chicago, IL",
     description: "Messaging clarity and modular web design that support enterprise transformation engagements.",
@@ -126,6 +131,7 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
     id: "11",
     title: "Making Complex IT Services Clear",
     client: "Infobell IT",
+    founder: "Harshad Shinde",
     industry: "IT Services",
     location: "Global",
     description: "Approachable messaging, modular design, and analytics guardrails for managed it solutions.",
@@ -136,6 +142,7 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
     id: "12",
     title: "Mission-Driven Web Refresh",
     client: "Canary Foundation",
+    founder: "Don Listwin",
     industry: "Nonprofit",
     location: "Palo Alto, CA",
     description: "Accessible storytelling and donor journeys that amplify early cancer detection work.",
@@ -146,6 +153,7 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
     id: "13",
     title: "Story-First Nonprofit Hub",
     client: "Belize Kids Foundation",
+    founder: "Tamara Sniffin",
     industry: "Nonprofit",
     location: "San Pedro, Belize",
     description: "Program storytelling, supporter flows, and analytics groundwork that keep impact front and center.",
@@ -166,6 +174,7 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
     id: "15",
     title: "Joyful Education Platform",
     client: "We Are Saplings",
+    founder: "Lizzie Alexander",
     industry: "Education",
     location: "Global",
     description: "Parent-friendly storytelling, enrollment journeys, and resource hubs for curiosity-led learning.",
@@ -176,6 +185,7 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
     id: "16",
     title: "Specialty Dental Foundations",
     client: "Coast Periodontics & Laser Surgery",
+    founder: "Dr. Steven S. Ku",
     industry: "Dentistry",
     location: "San Luis Obispo, CA",
     description:
@@ -187,6 +197,7 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
     id: "17",
     title: "Transition Consulting Launchpad",
     client: "Practice Transitions Institute",
+    founder: "Dr. Kurt Laue",
     industry: "Consulting",
     location: "San Mateo, CA",
     description: "Narrative clarity, modern website, and local visibility for a dental transition advisory firm.",
@@ -197,6 +208,7 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
     id: "18",
     title: "Leadership Retreat Digital Presence",
     client: "Leadership Retreat",
+    founder: "Leadership Summit Team",
     industry: "Professional Development",
     location: "United States",
     description: "Conversion-friendly retreat site with clear agenda, speakers, and booking paths.",
@@ -207,6 +219,7 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
     id: "19",
     title: "Modern Dental Presence",
     client: "Michael Njo, DDS",
+    founder: "Dr. Michael Njo",
     industry: "Dentistry",
     location: "Bay Area, CA",
     description: "Credibility-first website with clear services, patient flows, and tracking.",
