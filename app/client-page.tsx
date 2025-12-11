@@ -21,7 +21,6 @@ const ScrollProgressBar = dynamic(() => import("@/components/scroll-progress-bar
 const ClientsSection = dynamic(() => import("@/components/home/Clients"), { ssr: false })
 const ValuesSection = dynamic(() => import("@/components/home/ValuesSection"), { ssr: false })
 const HottestContentSection = dynamic(() => import("@/components/home/HottestContentSection"), { ssr: false })
-const WebsitesFeatures = dynamic(() => import("@/components/home/WebsitesFeatures"), { ssr: false })
 const SegmentsGrid = dynamic(() => import("@/components/home/SegmentsGrid"), { ssr: false })
 const ReferralSection = dynamic(() => import("@/components/home/ReferralSection"), { ssr: false })
 const CoreOfferingsSection = dynamic(() => import("@/components/home/CoreOfferingsSection"), { ssr: false })
@@ -114,7 +113,6 @@ export default function ClientPage() {
         <ValuesSection />
         <SegmentsGrid />
         <ReferralSection />
-        <WebsitesFeatures />
         <LatestPostsSection />
 
         {/* Additional content pruned per new simplified homepage */}
