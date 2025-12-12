@@ -1,6 +1,7 @@
 import BlogPostLayout from '@/components/blog-post-layout'
 import BlogEmailSignup from "@/components/blog-email-signup"
-import { getAllPosts, getPost, renderPost } from '@/lib/mdx'
+import { getAllPosts, getPost } from "@/lib/mdx-data"
+import { renderPost } from "@/lib/mdx"
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 

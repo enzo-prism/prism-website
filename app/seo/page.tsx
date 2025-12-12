@@ -9,7 +9,7 @@ import { ServiceSchema } from "@/components/schema-markup"
 import SimpleBlogGrid from "@/components/simple-blog-grid"
 import SimpleBlogPostCard from "@/components/simple-blog-post-card"
 import { Button } from "@/components/ui/button"
-import { getAllPosts } from "@/lib/mdx"
+import { getAllPosts } from "@/lib/mdx-data"
 import VideoPlayer from "@/components/video-player"
 
 export const metadata: Metadata = {

@@ -1,5 +1,5 @@
 import SeoTextSection from "@/components/seo-text-section"
-import { getAllPosts } from "@/lib/mdx"
+import { getAllPosts } from "@/lib/mdx-data"
 import type { Metadata } from "next"
 import Link from "next/link"
 import { notFound } from "next/navigation"

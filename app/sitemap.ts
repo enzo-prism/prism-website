@@ -1,4 +1,4 @@
-import { getAllPosts } from "@/lib/mdx"
+import { getAllPosts } from "@/lib/mdx-data"
 import type { MetadataRoute } from "next"
 import { CASE_STUDIES } from "@/lib/case-study-data"
 import fs from "node:fs/promises"

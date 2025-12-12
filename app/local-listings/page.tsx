@@ -10,7 +10,7 @@ import type { Metadata } from "next"
 import Link from "next/link"
 import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
 import { ServiceSchema } from "@/components/schema-markup"
-import { getAllPosts } from "@/lib/mdx"
+import { getAllPosts } from "@/lib/mdx-data"
 import VideoPlayer from "@/components/video-player"
 
 export const metadata: Metadata = {

@@ -1,6 +1,6 @@
 export const runtime = "nodejs"
 export const dynamic = "force-dynamic"
-import { getAllPosts } from "@/lib/mdx"
+import { getAllPosts } from "@/lib/mdx-data"
 import { NextResponse } from "next/server"
 
 export async function GET() {

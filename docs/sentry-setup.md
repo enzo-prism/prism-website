@@ -143,7 +143,7 @@ From your development environment, you can:
 - Monitor Core Web Vitals for user experience insights
 
 ### Privacy and Security
-- Review and adjust session replay privacy settings
+- Session replay is currently disabled to keep bundles small; if you re-enable it, review privacy settings first
 - Ensure sensitive data is not logged in error contexts
 - Use Sentry's data scrubbing features for compliance
 

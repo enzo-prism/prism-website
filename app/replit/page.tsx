@@ -6,7 +6,7 @@ import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
 import ScrollToTop from "@/components/scroll-to-top"
 import { Button } from "@/components/ui/button"
-import { getAllPosts } from "@/lib/mdx"
+import { getAllPosts } from "@/lib/mdx-data"
 
 const REPLIT_REFERRAL_URL = "https://replit.com/refer/enzo78"
 const YOUTUBE_CHANNEL_URL = "https://www.youtube.com/@the_design_prism"

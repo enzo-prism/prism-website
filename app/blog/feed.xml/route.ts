@@ -1,4 +1,4 @@
-import { getAllPosts } from "@/lib/mdx"
+import { getAllPosts } from "@/lib/mdx-data"
 
 const CANONICAL_HOST = "www.design-prism.com"
 
