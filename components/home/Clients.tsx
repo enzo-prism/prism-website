@@ -1,5 +1,3 @@
-"use client"
-
 import ClientsRail from "@/components/home/ClientsRail"
 import Link from "next/link"
 

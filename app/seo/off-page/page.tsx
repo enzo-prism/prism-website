@@ -11,6 +11,9 @@ export const metadata: Metadata = {
   title: "off-page seo systems | prism",
   description:
     "prism tightens listings, review flows, backlinks, and real-world engagement so search engines trust your brand and keep surfacing it.",
+  alternates: {
+    canonical: "https://www.design-prism.com/seo/off-page",
+  },
   openGraph: {
     title: "off-page seo systems | prism",
     description:

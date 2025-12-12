@@ -8,11 +8,14 @@ export const metadata: Metadata = {
   title: "small business ai services | gpt-5 solutions by prism",
   description:
     "leverage gpt-5 across marketing, operations, and support. prism sets up, trains, and tunes ai workflows tailored to your small business.",
+  alternates: {
+    canonical: "https://www.design-prism.com/smb",
+  },
   openGraph: {
     title: "small business ai services | gpt-5 solutions by prism",
     description:
       "leverage gpt-5 across marketing, operations, and support. prism sets up, trains, and tunes ai workflows tailored to your small business.",
-    url: "https://design-prism.com/smb",
+    url: "https://www.design-prism.com/smb",
     images: [
       {
         url: "/prism-opengraph.png",
@@ -42,4 +45,3 @@ export default function SMBPage() {
     </>
   )
 }
-

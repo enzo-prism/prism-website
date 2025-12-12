@@ -191,7 +191,7 @@ export default function ScrollingTimeline() {
       description: '"i think there\'s a way to use what the tech industry taught me to help smaller businesses…"',
       icon: "✨",
       image: {
-              src: "/Prism Logo.png",
+              src: "/prism-logo.png",
       alt: "Prism logo with rainbow gradient",
         width: 800,
         height: 800,

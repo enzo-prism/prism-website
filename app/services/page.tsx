@@ -4,6 +4,7 @@ import type { Metadata } from "next"
 import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
 import { ServiceSchema } from "@/components/schema-markup"
+import FAQSection from "@/components/faq-section"
 
 const coreServices = [
   {
@@ -119,17 +120,85 @@ const workflow = [
   },
 ]
 
+const whoItsFor = [
+  "Local businesses that need a clear, conversion‑ready online presence.",
+  "Founders or operators tired of juggling five vendors for one growth goal.",
+  "Teams launching new locations, services, or product lines.",
+  "Brands that want one system for website, local visibility, ads, and analytics.",
+]
+
+const problemsWeSolve = [
+  "Outdated websites that look fine but don’t convert.",
+  "Inconsistent listings, reviews, and map pack visibility.",
+  "Paid ads that spend money without showing real ROI.",
+  "Disconnected analytics that make growth decisions guessy.",
+  "Manual follow‑ups and intake that slow your team down.",
+]
+
+const deliverables = [
+  "A modern website and design system you can evolve.",
+  "Listings + review engine that keeps you accurate and trusted.",
+  "Always‑on paid search/social campaigns tuned to local intent.",
+  "Content and creative that supports offers and authority.",
+  "Dashboards tying leads, bookings, and revenue to channels.",
+  "Quarterly planning and weekly optimizations with Prism.",
+]
+
+const proofLinks = [
+  { label: "Olympic Bootworks", href: "/case-studies/olympic-bootworks" },
+  { label: "Dr. Christopher B. Wong", href: "/case-studies/dr-christopher-wong" },
+  { label: "sr4 Partners", href: "/case-studies/sr4-partners" },
+]
+
+const faqItems = [
+  {
+    question: "Do I need every service to work with Prism?",
+    answer:
+      "No. Most clients start with one foundation—usually a website or local presence—and add paid media, content, or automation once the core is stable.",
+  },
+  {
+    question: "How do you decide what to prioritize first?",
+    answer:
+      "We start with a short audit of your website, listings, ads, and analytics, then map the fastest path to measurable wins based on your market and goals.",
+  },
+  {
+    question: "What industries do you work with?",
+    answer:
+      "We focus on local and service‑based businesses—dental and medical practices, local retail, professional services, nonprofits, and community brands.",
+  },
+  {
+    question: "How do you measure success?",
+    answer:
+      "We track calls, forms, bookings, and revenue lift against channel spend, then report in plain English so you know what’s working and why.",
+  },
+  {
+    question: "Can you collaborate with our internal team?",
+    answer:
+      "Yes. We plug into existing marketing, ops, or front‑office teams, share dashboards, and provide playbooks so execution stays aligned.",
+  },
+  {
+    question: "What does an engagement look like month to month?",
+    answer:
+      "You get a dedicated Prism sprint team, weekly check‑ins, and quarterly planning. We ship improvements continuously rather than in big, risky redesigns.",
+  },
+]
+
 const slugify = (value: string) => value.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)+/g, "")
 
 export const metadata: Metadata = {
-  title: "prism services platform",
+  title: {
+    absolute: "Prism Services | Websites, Local Presence, Ads & Analytics",
+  },
   description:
-    "prism unifies websites, local presence, paid media, content, and analytics. see how each service works together and the bundles clients launch with.",
+    "One partner for websites, local presence, paid media, content systems, and analytics—so your business gets found, trusted, and chosen.",
+  alternates: {
+    canonical: "https://www.design-prism.com/services",
+  },
   openGraph: {
-    title: "prism services platform",
+    title: "Prism Services | Websites, Local Presence, Ads & Analytics",
     description:
-      "prism unifies websites, local presence, paid media, content, and analytics. see how each service works together and the bundles clients launch with.",
-    url: "https://design-prism.com/services",
+      "One partner for websites, local presence, paid media, content systems, and analytics—so your business gets found, trusted, and chosen.",
+    url: "https://www.design-prism.com/services",
     images: [
       {
         url: "/prism-opengraph.png",
@@ -172,6 +241,50 @@ export default function ServicesPage() {
                 </Link>
               </div>
             </div>
+          </div>
+        </section>
+
+        <section className="py-16 sm:py-20">
+          <div className="container mx-auto px-4 md:px-6">
+            <div className="mx-auto grid max-w-4xl gap-10 md:grid-cols-2">
+              <div className="space-y-4">
+                <h2 className="text-2xl font-semibold lowercase text-neutral-900 sm:text-3xl">who it&apos;s for</h2>
+                <ul className="space-y-2 text-sm text-neutral-600 sm:text-base">
+                  {whoItsFor.map((item) => (
+                    <li key={item} className="flex gap-2">
+                      <span className="mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full bg-neutral-900" aria-hidden="true" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className="space-y-4">
+                <h2 className="text-2xl font-semibold lowercase text-neutral-900 sm:text-3xl">problems we solve</h2>
+                <ul className="space-y-2 text-sm text-neutral-600 sm:text-base">
+                  {problemsWeSolve.map((item) => (
+                    <li key={item} className="flex gap-2">
+                      <span className="mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full bg-neutral-900" aria-hidden="true" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+
+            <div className="mx-auto mt-12 max-w-4xl text-center">
+              <h2 className="text-2xl font-semibold lowercase text-neutral-900 sm:text-3xl">what you get</h2>
+              <p className="mt-3 text-sm text-neutral-600 sm:text-base">
+                A single sprint team that covers strategy, design, engineering, and growth—so every lever stays connected.
+              </p>
+            </div>
+            <ul className="mx-auto mt-8 grid max-w-4xl gap-3 text-sm text-neutral-600 sm:grid-cols-2 sm:text-base">
+              {deliverables.map((item) => (
+                <li key={item} className="flex gap-2 rounded-2xl border border-neutral-200 bg-white p-4">
+                  <span className="mt-[6px] h-1.5 w-1.5 shrink-0 rounded-full bg-neutral-900" aria-hidden="true" />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
           </div>
         </section>
 
@@ -226,7 +339,7 @@ export default function ServicesPage() {
         <section className="border-y border-neutral-100 bg-neutral-50 py-16 sm:py-20">
           <div className="container mx-auto px-4 md:px-6">
             <div className="mx-auto max-w-3xl text-center">
-              <h2 className="text-3xl font-semibold lowercase text-neutral-900 sm:text-4xl">how the platform fits together</h2>
+              <h2 className="text-3xl font-semibold lowercase text-neutral-900 sm:text-4xl">how it works</h2>
               <p className="mt-3 text-sm text-neutral-600 sm:text-base">
                 We start with the foundation, then bring in additional services as your goals expand.
               </p>
@@ -275,6 +388,41 @@ export default function ServicesPage() {
             </div>
           </div>
         </section>
+
+        <section className="border-t border-neutral-100 bg-neutral-50 py-16 sm:py-20">
+          <div className="container mx-auto px-4 md:px-6">
+            <div className="mx-auto max-w-3xl text-center">
+              <h2 className="text-3xl font-semibold lowercase text-neutral-900 sm:text-4xl">proof in the wild</h2>
+              <p className="mt-3 text-sm text-neutral-600 sm:text-base">
+                Recent launches showing how Prism connects design, engineering, and growth for local brands.
+              </p>
+              <div className="mt-6 flex flex-wrap justify-center gap-3">
+                {proofLinks.map((link) => (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    className="rounded-full border border-neutral-200 bg-white px-5 py-2 text-sm font-semibold lowercase text-neutral-900 transition hover:border-neutral-900"
+                  >
+                    {link.label}
+                  </Link>
+                ))}
+                <Link
+                  href="/case-studies"
+                  className="rounded-full bg-neutral-900 px-5 py-2 text-sm font-semibold lowercase text-white transition hover:bg-neutral-800"
+                >
+                  see all case studies
+                </Link>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <FAQSection
+          title="services faq"
+          subtitle="Answers about scope, timing, and how to start."
+          items={faqItems}
+          className="bg-neutral-50"
+        />
 
         <section className="bg-neutral-900 py-16 text-white sm:py-20">
           <div className="container mx-auto px-4 md:px-6">

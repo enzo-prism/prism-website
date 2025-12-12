@@ -14,13 +14,15 @@ import { getAllPosts } from "@/lib/mdx-data"
 import VideoPlayer from "@/components/video-player"
 
 export const metadata: Metadata = {
-  title: "local listing optimization for small businesses | prism",
+  title: {
+    absolute: "Local Listing Optimization for Small Businesses | Prism",
+  },
   description:
-    "prism optimizes google, apple, yelp, bing, facebook, and nextdoor listings so small businesses stay accurate, rank higher, and turn local searches into customers.",
+    "Accurate listings across Google, Apple, Yelp, Bing, Facebook, and more—so you rank higher and win more local customers.",
   openGraph: {
-    title: "local listing optimization for small businesses | prism",
+    title: "Local Listing Optimization for Small Businesses | Prism",
     description:
-      "prism optimizes google, apple, yelp, bing, facebook, and nextdoor listings so small businesses stay accurate, rank higher, and convert more local searches into customers.",
+      "Accurate listings across Google, Apple, Yelp, Bing, Facebook, and more—so you rank higher and win more local customers.",
     url: "https://www.design-prism.com/local-listings",
     images: [
       {

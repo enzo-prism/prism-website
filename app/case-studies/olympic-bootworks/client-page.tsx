@@ -807,21 +807,21 @@ export default function OlympicBootworksCaseStudy() {
       <CaseStudySchema
         title="Case Study: Olympic Bootworks - Turning a Legendary Ski Shop into an AI-Powered Ecommerce Engine"
         description="Prism transformed Olympic Bootworks from a basic site into a multi-site ecommerce system for Fantic bikes and heel-lock bootfitting tech."
-        url={cs?.structured?.canonicalUrl ?? "https://design-prism.com/case-studies/olympic-bootworks"}
-        imageUrl={cs?.structured?.heroImage ?? "https://design-prism.com/olympic-bootworks-hero.png"}
+        url={cs?.structured?.canonicalUrl ?? "https://www.design-prism.com/case-studies/olympic-bootworks"}
+        imageUrl={cs?.structured?.heroImage ?? "https://www.design-prism.com/olympic-bootworks-hero.png"}
         datePublished={cs?.structured?.datePublished ?? "2025-02-15T00:00:00.000Z"}
         dateModified={cs?.structured?.dateModified ?? "2025-02-15T00:00:00.000Z"}
 	        clientName="Olympic Bootworks"
 	        outcome="Modern ecommerce and multi-site system for a legendary Tahoe ski shop and Fantic bike inventory."
 	        breadcrumbs={[
-	          { name: "Home", url: "https://design-prism.com" },
-	          { name: "Case Studies", url: "https://design-prism.com/case-studies" },
-	          { name: "Olympic Bootworks", url: "https://design-prism.com/case-studies/olympic-bootworks" },
+	          { name: "Home", url: "https://www.design-prism.com" },
+	          { name: "Case Studies", url: "https://www.design-prism.com/case-studies" },
+	          { name: "Olympic Bootworks", url: "https://www.design-prism.com/case-studies/olympic-bootworks" },
 	        ]}
         organization={{
           name: "Prism",
-          url: "https://design-prism.com",
-          logo: "https://design-prism.com/logo.png",
+          url: "https://www.design-prism.com",
+          logo: "https://www.design-prism.com/logo.png",
           sameAs: ["https://www.linkedin.com/company/prism-digital", "https://www.youtube.com/@designprism"],
         }}
         video={{
@@ -830,7 +830,7 @@ export default function OlympicBootworksCaseStudy() {
             "A quick interview walkthrough of how Prism rebuilt Olympic Bootworks' website and launched a POS-linked ecommerce system for Fantic bikes.",
           embedUrl: `https://www.youtube.com/embed/${HERO_VIDEO_ID}`,
           uploadDate: cs?.structured?.datePublished ?? "2025-02-15T00:00:00.000Z",
-          thumbnailUrl: cs?.structured?.heroImage ?? "https://design-prism.com/olympic-bootworks-hero.png",
+          thumbnailUrl: cs?.structured?.heroImage ?? "https://www.design-prism.com/olympic-bootworks-hero.png",
         }}
         faq={[
           {
@@ -857,8 +857,8 @@ export default function OlympicBootworksCaseStudy() {
       />
       <div className="mt-12">
         <SocialShare
-          url="https://design-prism.com/case-studies/olympic-bootworks"
-          imageUrl={cs?.structured?.heroImage ?? "https://design-prism.com/olympic-bootworks-hero.png"}
+          url="https://www.design-prism.com/case-studies/olympic-bootworks"
+          imageUrl={cs?.structured?.heroImage ?? "https://www.design-prism.com/olympic-bootworks-hero.png"}
           title="Case Study: Olympic Bootworks"
           description="How Prism turned an iconic Tahoe ski shop into a modern ecommerce and growth system."
         />

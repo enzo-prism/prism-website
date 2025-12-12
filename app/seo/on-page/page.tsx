@@ -11,6 +11,9 @@ export const metadata: Metadata = {
   title: "on-page seo services | prism",
   description:
     "see how prism structures content, technical seo, and engagement signals so every page feels like the perfect answer for local searches.",
+  alternates: {
+    canonical: "https://www.design-prism.com/seo/on-page",
+  },
   openGraph: {
     title: "on-page seo services | prism",
     description:
@@ -52,7 +55,7 @@ export default function SeoOnPagePage() {
           caption="How Prism thinks through content structure, schema, and UX so every visit feels like an obvious next step."
           className="w-full"
           schema={{
-            id: `https://design-prism.com/#${videoSectionId}`,
+            id: `https://www.design-prism.com/seo/on-page#${videoSectionId}`,
             name: "Enzo explains Prism's on-page SEO approach",
             description: videoDescription,
             thumbnailUrl: videoPoster,

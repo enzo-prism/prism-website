@@ -812,7 +812,7 @@ export default function WineCountryRootCanalDesignReview() {
               </div>
               <div className="relative overflow-hidden rounded-[28px] border border-neutral-200 bg-neutral-900 shadow-2xl shadow-black/20">
                 <Image
-                  src="/Wine Country Root Canal.webp"
+                  src="/wine-country-root-canal.webp"
                   alt="Wine Country Root Canal web concepts"
                   width={960}
                   height={720}

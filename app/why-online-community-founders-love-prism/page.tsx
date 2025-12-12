@@ -4,6 +4,7 @@ import Link from "next/link"
 import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
 import ScrollToTop from "@/components/scroll-to-top"
+import FAQSection from "@/components/faq-section"
 import { Button } from "@/components/ui/button"
 import { ArrowRight, CheckCircle2 } from "lucide-react"
 import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
@@ -58,6 +59,69 @@ const prismTakesCareOf = [
   "Every join flow and funnel optimized for clarity and conversion",
   "Key insights and data shared in simple dashboards",
   "Proactive suggestions and auto-applied improvements — without endless approval loops"
+]
+
+const segmentWhoItsFor = [
+  "Founders of paid or free online communities and membership programs.",
+  "Teams growing a movement, course hub, or content‑driven network.",
+  "Creators who need a reliable system for onboarding and retention.",
+]
+
+const segmentProblemsWeSolve = [
+  "Funnels that don’t explain the value fast enough to convert.",
+  "Onboarding flows that leave new members unsure what to do next.",
+  "Content hubs that aren’t organized for search or discovery.",
+  "Growth that relies on manual outreach instead of repeatable loops.",
+  "Limited analytics tying marketing to member activation and retention.",
+]
+
+const segmentDeliverables = [
+  "Conversion‑ready landing pages and membership website.",
+  "Onboarding journeys that get members to value in minutes.",
+  "SEO + AEO foundations for your topics and offers.",
+  "Referral and share loops that scale community growth.",
+  "Automations for email, events, and follow‑ups.",
+  "Dashboards showing activation, churn, and acquisition quality.",
+]
+
+const segmentProcess = [
+  { step: "audit the offer + journey", detail: "we map how members find you, join, and stick around." },
+  { step: "build the foundation", detail: "launch a fast, branded site with clear onboarding." },
+  { step: "layer growth loops", detail: "content, ads, and referrals compound demand." },
+  { step: "optimize continuously", detail: "we ship improvements as your community evolves." },
+]
+
+const segmentFaqItems = [
+  {
+    question: "Can Prism work with our existing platform (Circle, Skool, Mighty Networks)?",
+    answer:
+      "Yes. We integrate with your platform or migrate if needed, while keeping the experience cohesive on the marketing site.",
+  },
+  {
+    question: "How do you improve member onboarding?",
+    answer:
+      "We design the join flow, welcome sequence, and first‑week journey so members reach value quickly and know what to do next.",
+  },
+  {
+    question: "Do you help with content and SEO?",
+    answer:
+      "Yes. We structure topics, internal links, and schema so your best ideas rank and get surfaced in AI search too.",
+  },
+  {
+    question: "What metrics do you track?",
+    answer:
+      "Activation, engagement, retention, referrals, and acquisition channels—tied back to revenue where relevant.",
+  },
+  {
+    question: "How long does a rebuild take?",
+    answer:
+      "Most community sites ship in 4–8 weeks depending on content and integrations, then improve monthly.",
+  },
+  {
+    question: "Do we own everything?",
+    answer:
+      "Yes. Your domain, content, and data remain fully yours.",
+  },
 ]
 
 const retentionBenefits = [
@@ -301,6 +365,78 @@ export default function CommunityFoundersPage() {
             </div>
           </div>
         </section>
+
+        <section className="border-t border-neutral-100 bg-neutral-50/70">
+          <div className="container mx-auto px-4 py-20">
+            <div className="mx-auto max-w-4xl text-center">
+              <p className="text-xs font-semibold uppercase tracking-[0.32em] text-neutral-500">community playbook</p>
+              <h2 className="mt-4 text-3xl font-semibold tracking-tight md:text-4xl">
+                what prism delivers for community founders
+              </h2>
+            </div>
+
+            <div className="mt-12 grid gap-8 md:grid-cols-2">
+              <div className="rounded-3xl border border-neutral-200 bg-white p-8 shadow-sm">
+                <h3 className="text-xl font-semibold text-neutral-900">who it&apos;s for</h3>
+                <ul className="mt-4 space-y-3 text-sm text-neutral-600">
+                  {segmentWhoItsFor.map((item) => (
+                    <li key={item} className="flex items-start gap-3">
+                      <CheckCircle2 className="mt-0.5 h-5 w-5 flex-shrink-0 text-primary" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className="rounded-3xl border border-neutral-200 bg-white p-8 shadow-sm">
+                <h3 className="text-xl font-semibold text-neutral-900">problems we solve</h3>
+                <ul className="mt-4 space-y-3 text-sm text-neutral-600">
+                  {segmentProblemsWeSolve.map((item) => (
+                    <li key={item} className="flex items-start gap-3">
+                      <CheckCircle2 className="mt-0.5 h-5 w-5 flex-shrink-0 text-primary" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+
+            <div className="mt-12 rounded-3xl border border-neutral-200 bg-white p-8 shadow-sm">
+              <h3 className="text-xl font-semibold text-neutral-900">what you get</h3>
+              <ul className="mt-4 grid gap-3 text-sm text-neutral-600 md:grid-cols-2">
+                {segmentDeliverables.map((item) => (
+                  <li key={item} className="flex items-start gap-3">
+                    <CheckCircle2 className="mt-0.5 h-5 w-5 flex-shrink-0 text-primary" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="mt-12 rounded-3xl border border-neutral-200 bg-white p-8 shadow-sm">
+              <h3 className="text-xl font-semibold text-neutral-900">how it works</h3>
+              <ol className="mt-4 space-y-4 text-sm text-neutral-600">
+                {segmentProcess.map((item, index) => (
+                  <li key={item.step} className="flex gap-4">
+                    <span className="mt-0.5 flex h-6 w-6 items-center justify-center rounded-full bg-neutral-900 text-xs font-semibold text-white">
+                      {index + 1}
+                    </span>
+                    <div>
+                      <p className="font-semibold text-neutral-900">{item.step}</p>
+                      <p className="mt-1">{item.detail}</p>
+                    </div>
+                  </li>
+                ))}
+              </ol>
+            </div>
+          </div>
+        </section>
+
+        <FAQSection
+          title="community growth faq"
+          subtitle="questions founders ask about onboarding and retention."
+          items={segmentFaqItems}
+          className="bg-neutral-50/70"
+        />
 
         {/* Section 7: Closing CTA */}
         <section className="border-t border-neutral-100 bg-white">

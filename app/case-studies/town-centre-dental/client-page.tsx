@@ -177,7 +177,7 @@ export default function TownCentreDentalCaseStudy() {
 
               {/* Share */}
               <div className="mt-12">
-                <SocialShare url="https://design-prism.com/case-studies/town-centre-dental" title="Town Centre Dental Case Study" description="Modern site, clear services, and measurable acquisition for a family dentistry practice." />
+                <SocialShare url="https://www.design-prism.com/case-studies/town-centre-dental" title="Town Centre Dental Case Study" description="Modern site, clear services, and measurable acquisition for a family dentistry practice." />
               </div>
             </div>
           </div>
@@ -188,7 +188,7 @@ export default function TownCentreDentalCaseStudy() {
       <CaseStudySchema
         title="town centre dental — family dentistry growth system"
         description="how we modernized web, conversion flows, and analytics to help more families find care in brentwood, ca"
-        url="https://design-prism.com/case-studies/town-centre-dental"
+        url="https://www.design-prism.com/case-studies/town-centre-dental"
         datePublished="2025-03-05T00:00:00.000Z"
         dateModified="2025-03-05T00:00:00.000Z"
         clientName="Town Centre Dental"

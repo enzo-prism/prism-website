@@ -5,6 +5,10 @@ export const metadata: Metadata = {
   title: "we are saplings case study — education platform foundations",
   description:
     "see how prism is helping we are saplings launch a modern educational platform with clear storytelling and parent-friendly journeys.",
+  alternates: {
+    canonical:
+      "https://www.design-prism.com/case-studies/we-are-saplings",
+  },
   openGraph: {
     title: "we are saplings × prism case study",
     description: "education brand clarity with website design and onboarding pathways.",

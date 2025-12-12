@@ -14,6 +14,9 @@ export const metadata: Metadata = {
   title: "prism's hottest content library",
   description:
     "see prism’s top-performing instagram reels exactly as they appeared on the platform. live embeds with full context from the original posts.",
+  alternates: {
+    canonical: "https://www.design-prism.com/hottest-content",
+  },
 }
 
 export default function HottestContentPage() {

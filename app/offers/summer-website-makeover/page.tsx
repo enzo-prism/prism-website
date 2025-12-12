@@ -5,6 +5,9 @@ export const metadata: Metadata = {
   title: "summer website makeover offer | prism",
   description:
     "triple your traffic and conversions in 30 days with prism's summer website makeover—full-stack rebuild, seo, and cro with guaranteed results.",
+  alternates: {
+    canonical: "https://www.design-prism.com/offers/summer-website-makeover",
+  },
   openGraph: {
     title: "☀️ summer website makeover - guaranteed growth | prism",
     description:

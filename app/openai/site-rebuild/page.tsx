@@ -25,11 +25,14 @@ export const metadata: Metadata = {
   title: "rebuild any site locally with codex | prism openai guide",
   description:
     "Follow Prism’s no-fluff playbook to download a live site, extract its content, prep Codex context, and rebuild the experience on your machine.",
+  alternates: {
+    canonical: "https://www.design-prism.com/openai/site-rebuild",
+  },
   openGraph: {
     title: "rebuild any site locally with codex | prism openai guide",
     description:
       "Seven precise steps to mirror a live website, feed Codex, and launch the Next.js rebuild on your localhost.",
-    url: "https://design-prism.com/openai/site-rebuild",
+    url: "https://www.design-prism.com/openai/site-rebuild",
     images: [
       {
         url: "/prism-opengraph.png",

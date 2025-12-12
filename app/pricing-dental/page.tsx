@@ -7,6 +7,9 @@ export const metadata: Metadata = {
   title: "dental marketing pricing | prism",
   description:
     "transparent pricing plans designed specifically for dental practices. choose between starter and pro plans to grow your practice and attract more patients.",
+  alternates: {
+    canonical: "https://www.design-prism.com/pricing-dental",
+  },
 }
 
 export default function PricingDentalPage() {

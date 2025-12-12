@@ -5,6 +5,9 @@ export const metadata: Metadata = {
   title: "canary cove case study — private retreat storytelling",
   description:
     "see how prism is crafting a refined digital experience for canary cove with immersive visuals, booking clarity, and brand cohesion.",
+  alternates: {
+    canonical: "https://www.design-prism.com/case-studies/canary-cove",
+  },
   openGraph: {
     title: "canary cove × prism case study",
     description: "luxury retreat storytelling with modern web design and guest journey planning.",

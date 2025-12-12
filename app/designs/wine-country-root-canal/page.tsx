@@ -9,7 +9,7 @@ export const metadata: Metadata = {
     title: "Wine Country Root Canal design review | Prism",
     description:
       "See every asset Prism is shaping for Wine Country Root Canal—website refresh, patient education, and referral social tiles.",
-    images: ["/Wine Country Root Canal.webp"],
+    images: ["/wine-country-root-canal.webp"],
   },
   alternates: {
     canonical: "https://www.design-prism.com/designs/wine-country-root-canal",

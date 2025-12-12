@@ -4,13 +4,15 @@ import type { Metadata } from "next"
 import PricingPageClient from "./client-page"
 
 export const metadata: Metadata = {
-  title: "website pricing | prism",
+  title: {
+    absolute: "Pricing | Prism",
+  },
   description:
-    "transparent pricing for prism’s beautifully designed business websites. choose launch, grow, or scale and move from concept to live site in days.",
+    "Clear pricing for Prism’s website builds and growth systems. Start with a plan, then launch fast with a high-performing site.",
   openGraph: {
-    title: "website pricing | prism",
+    title: "Pricing | Prism",
     description:
-      "see prism’s launch, grow, and scale plans—high-performing websites built fast with seo, analytics, and automation.",
+      "Clear pricing for Prism’s website builds and growth systems. Start with a plan, then launch fast with a high-performing site.",
     images: ["/prism-opengraph.png"],
   },
   alternates: {

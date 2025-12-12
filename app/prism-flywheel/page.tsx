@@ -7,6 +7,9 @@ import PrismFlywheelClient from "./client-page"
 export const metadata: Metadata = {
   title: "prism flywheel | powering exponential growth",
   description: "discover prism's flywheel: a compounding system using frontier ai like grok and claude to build maximum leverage for your business growth.",
+  alternates: {
+    canonical: "https://www.design-prism.com/prism-flywheel",
+  },
   keywords: [
     "AI-powered growth flywheel",
     "frontier AI for business leverage",
@@ -18,7 +21,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "the prism flywheel: compounding leverage for unstoppable growth",
     description: "harness frontier ai and cutting-edge tech to build a self-reinforcing system that transforms code and content into revenue.",
-    url: "https://design-prism.com/prism-flywheel",
+    url: "https://www.design-prism.com/prism-flywheel",
     siteName: "Design Prism",
     images: [
       {

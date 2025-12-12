@@ -903,21 +903,21 @@ export default function MatariaDentalGroupCaseStudy() {
       <CaseStudySchema
         title="Case Study: Mataria Dental Group - Launching an M&A Practice for a National Implant Educator"
         description="Prism relaunched Mataria Dental Group in Torrance with a new dental website, listings alignment, content library, social campaigns, and analytics."
-        url={cs?.structured?.canonicalUrl ?? "https://design-prism.com/case-studies/mataria-dental-group"}
-        imageUrl={cs?.structured?.heroImage ?? "https://design-prism.com/mataria-hero.png"}
+        url={cs?.structured?.canonicalUrl ?? "https://www.design-prism.com/case-studies/mataria-dental-group"}
+        imageUrl={cs?.structured?.heroImage ?? "https://www.design-prism.com/mataria-hero.png"}
         datePublished={cs?.structured?.datePublished ?? "2025-02-01T00:00:00.000Z"}
         dateModified={cs?.structured?.dateModified ?? "2025-02-01T00:00:00.000Z"}
         clientName="Mataria Dental Group"
         outcome="Full-stack relaunch: website, listings, content, social campaigns, and analytics for a newly acquired practice."
         breadcrumbs={[
-          { name: "Home", url: "https://design-prism.com" },
-          { name: "Case Studies", url: "https://design-prism.com/case-studies" },
-          { name: "Mataria Dental Group", url: "https://design-prism.com/case-studies/mataria-dental-group" },
+          { name: "Home", url: "https://www.design-prism.com" },
+          { name: "Case Studies", url: "https://www.design-prism.com/case-studies" },
+          { name: "Mataria Dental Group", url: "https://www.design-prism.com/case-studies/mataria-dental-group" },
         ]}
         organization={{
           name: "Prism",
-          url: "https://design-prism.com",
-          logo: "https://design-prism.com/logo.png",
+          url: "https://www.design-prism.com",
+          logo: "https://www.design-prism.com/logo.png",
           sameAs: ["https://www.linkedin.com/company/prism-digital", "https://www.youtube.com/@designprism"],
         }}
         video={{
@@ -925,7 +925,7 @@ export default function MatariaDentalGroupCaseStudy() {
           description: "Short overview of Mataria Dental Group and Dr. Mataria's transition story.",
           embedUrl: `https://www.youtube.com/embed/${HERO_VIDEO_ID}`,
           uploadDate: cs?.structured?.datePublished ?? "2025-02-01T00:00:00.000Z",
-          thumbnailUrl: cs?.structured?.heroImage ?? "https://design-prism.com/mataria-hero.png",
+          thumbnailUrl: cs?.structured?.heroImage ?? "https://www.design-prism.com/mataria-hero.png",
         }}
         faq={[
           {
@@ -952,8 +952,8 @@ export default function MatariaDentalGroupCaseStudy() {
       />
       <div className="mt-12">
         <SocialShare
-          url="https://design-prism.com/case-studies/mataria-dental-group"
-          imageUrl={cs?.structured?.heroImage ?? "https://design-prism.com/mataria-hero.png"}
+          url="https://www.design-prism.com/case-studies/mataria-dental-group"
+          imageUrl={cs?.structured?.heroImage ?? "https://www.design-prism.com/mataria-hero.png"}
           title="Case Study: Mataria Dental Group"
           description="How Prism relaunched Mataria Dental Group with website, listings, content, social campaigns, and analytics."
         />

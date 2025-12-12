@@ -66,6 +66,24 @@ The repo assumes pnpm; npm/yarn installs will fall out of sync.
 - v0.dev remains the design/control plane; updates published from v0 sync back into this repo.
 - For preview builds open a PR—Vercel posts a preview URL for QA.
 
+## Canonicalization rules
+
+Production canonical origin is `https://www.design-prism.com`.
+
+- **Host + protocol** – Any request to `design-prism.com` (http or https) or `http://www.design-prism.com` 301s to the same path on `https://www.design-prism.com`.
+- **Trailing slashes** – The site uses **no trailing slash** URLs. Requests like `/services/` redirect to `/services` (root `/` is unchanged).
+- **Canonical tags** – Every indexable page sets a self‑referencing `<link rel="canonical">` via `metadata.alternates.canonical`.
+- **Internal links** – Absolute internal URLs in code and MDX should use the canonical origin and no trailing slash.
+
+**How to test**
+
+1. Start the dev server: `pnpm dev`.
+2. Check redirects + canonicals:
+   - Production (default): `pnpm canonical:check`
+   - Local: `pnpm canonical:check -- --origin http://localhost:3000`
+
+The checker prints each URL’s redirect chain, final URL, and canonical tag value. Host/protocol redirects are only enforced on `design-prism.com`/`www.design-prism.com` so local development on `localhost` works normally.
+
 ## Need-to-knows
 
 - Analytics defaults to GA4 property `G-P9VY77PRC0` unless `NEXT_PUBLIC_GA_MEASUREMENT_ID` is set.

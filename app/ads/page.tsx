@@ -14,13 +14,15 @@ import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
 import { getAllPosts } from "@/lib/mdx-data"
 
 export const metadata: Metadata = {
-  title: "paid ads management for small businesses | prism",
+  title: {
+    absolute: "Paid Ads Management for Small Businesses | Prism",
+  },
   description:
-    "prism plans, builds, and optimizes google, meta, tiktok, and yelp ads so small businesses capture ready-to-buy local customers without wasted spend.",
+    "Google, Meta, TikTok, and Yelp ads planned and optimized to drive more calls, form fills, and booked appointments.",
   openGraph: {
-    title: "paid ads management for small businesses | prism",
+    title: "Paid Ads Management for Small Businesses | Prism",
     description:
-      "prism plans, builds, and optimizes google, meta, tiktok, and yelp ads so small businesses capture ready-to-buy local customers without wasted spend.",
+      "Google, Meta, TikTok, and Yelp ads planned and optimized to drive more calls, form fills, and booked appointments.",
     url: "https://www.design-prism.com/ads",
     images: [
       {

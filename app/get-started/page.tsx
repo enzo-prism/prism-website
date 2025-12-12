@@ -104,7 +104,7 @@ export default async function GetStartedPage({
                   </ul>
                   <div className="relative mt-8 overflow-hidden rounded-2xl border border-white/10 bg-white/5">
                     <Image
-                      src="/prism get started.webp"
+                      src="/prism-get-started.webp"
                       alt="Website plan preview"
                       width={900}
                       height={700}

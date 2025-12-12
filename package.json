@@ -29,7 +29,8 @@
     "git:hooks-install": "node scripts/setup-git-hooks.js install",
     "git:hooks-remove": "node scripts/setup-git-hooks.js remove",
     "check:external": "node scripts/check-external-links.js",
-    "seo:inventory": "npx ts-node scripts/seo-inventory.ts"
+    "seo:inventory": "npx ts-node scripts/seo-inventory.ts",
+    "canonical:check": "npx ts-node scripts/verify-canonical.ts"
   },
   "dependencies": {
     "@emotion/is-prop-valid": "latest",

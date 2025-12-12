@@ -1,8 +1,10 @@
 import type { Metadata } from "next"
 export const metadata: Metadata = {
-  title: "prism growth engine for local businesses",
+  title: {
+    absolute: "Prism | Websites, Local SEO & Ads for Local Businesses",
+  },
   description:
-    "launch high-converting websites, paid ads, and local seo with one partner so your small business gets found, trusted, and chosen.",
+    "Prism builds high-converting websites, local SEO, and paid ads for local businesses. One partner for design, engineering, and growth.",
   alternates: {
     canonical: "/",
   },

@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     title: "testimonials | dentists & local brands working with prism",
     description:
       "explore feedback from dental practices, nonprofits, and local retailers that partner with prism for high-performing websites and growth systems.",
-    url: "https://design-prism.com/wall-of-love",
+    url: "https://www.design-prism.com/wall-of-love",
     images: [
       {
         url: "/prism-opengraph.png", // Using existing opengraph image

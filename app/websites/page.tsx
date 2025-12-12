@@ -19,13 +19,15 @@ import Image from "next/image"
 import { websiteProjects } from "@/lib/website-projects"
 
 export const metadata: Metadata = {
-  title: "small business website portfolio & local seo wins | prism",
+  title: {
+    absolute: "Small Business Website Design & Builds | Prism",
+  },
   description:
-    "explore the small business websites and local presence optimizations we launch to attract qualified leads and convert more local customers for clients like you.",
+    "Websites engineered to convert and stay sharp long-term. Strategy, design, development, and SEO-ready foundations.",
   openGraph: {
-    title: "small business website portfolio & local seo wins | prism",
+    title: "Small Business Website Design & Builds | Prism",
     description:
-      "explore the small business websites and local presence optimizations we launch to attract qualified leads and convert more local customers for clients like you.",
+      "Websites engineered to convert and stay sharp long-term. Strategy, design, development, and SEO-ready foundations.",
     images: ["/prism-opengraph.png"],
   },
   alternates: {

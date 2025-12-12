@@ -49,13 +49,15 @@ export default function CoreImage({
 }: CoreImageProps) {
   const [error, setError] = useState(false)
   const [loaded, setLoaded] = useState(false)
-  const [imgSrc, setImgSrc] = useState<string | null>(null)
+  const [imgSrc, setImgSrc] = useState<string | null>(() =>
+    typeof src === "string" ? src : null,
+  )
 
   const imageRef = useRef<HTMLDivElement>(null)
 
   // Use IntersectionObserver for better lazy loading
   useEffect(() => {
-    if (!imageRef.current || priority) return
+    if (!imageRef.current || priority || imgSrc) return
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -79,7 +81,7 @@ export default function CoreImage({
         observer.disconnect()
       }
     }
-  }, [src, priority])
+  }, [src, priority, imgSrc])
 
   // If priority is true, set the image source immediately
   useEffect(() => {
@@ -207,8 +209,8 @@ export default function CoreImage({
           quality={quality || 85}
           placeholder="blur"
           blurDataURL={blurDataURL}
-          // Bypass Next.js optimizer for local files with spaces in the path
-          // to avoid INVALID_IMAGE_OPTIMIZE_REQUEST (e.g., "/gradient a.png")
+          // Bypass Next.js optimizer for legacy local files with spaces in the path
+          // to avoid INVALID_IMAGE_OPTIMIZE_REQUEST.
           unoptimized={typeof imgSrc === "string" && imgSrc.includes(" ")}
           onError={handleError}
           onLoad={() => {

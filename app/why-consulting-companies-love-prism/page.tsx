@@ -4,6 +4,7 @@ import Link from "next/link"
 import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
 import ScrollToTop from "@/components/scroll-to-top"
+import FAQSection from "@/components/faq-section"
 import { Button } from "@/components/ui/button"
 import { ArrowRight, CheckCircle2 } from "lucide-react"
 import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
@@ -59,6 +60,68 @@ const prismCoverage = [
   "Your analytics and CRM",
   "Your email automations and booking flows",
   "Your testimonials, case studies, and thought leadership content"
+]
+
+const segmentWhoItsFor = [
+  "Boutique and mid‑size consulting firms selling high‑consideration services.",
+  "Professional services teams that need clearer positioning and proof online.",
+  "Founders running lean who want a reliable growth system without more vendors.",
+]
+
+const segmentProblemsWeSolve = [
+  "Websites that explain services but don’t build trust fast enough.",
+  "Case studies buried in PDFs instead of a conversion flow.",
+  "Thought leadership that’s hard to publish or doesn’t rank.",
+  "Leads that slip through because intake and follow‑up are manual.",
+  "Analytics that don’t connect marketing to pipeline quality.",
+]
+
+const segmentDeliverables = [
+  "Authority‑driven website and modular service pages.",
+  "Case study and proof system that scales with new wins.",
+  "SEO + AEO structure for your core offers and niches.",
+  "Lead capture, qualification, and onboarding automations.",
+  "CRM + analytics dashboards tying content to revenue.",
+]
+
+const segmentProcess = [
+  { step: "audit + positioning map", detail: "we clarify who you serve, why you win, and where leads get stuck." },
+  { step: "architect the funnel", detail: "sitemap, messaging, proof, and CTAs aligned to buyer intent." },
+  { step: "design + build", detail: "a refined, fast site with governance so your team can ship updates." },
+  { step: "publish + optimize", detail: "content, experiments, and reporting that compound over time." },
+]
+
+const segmentFaqItems = [
+  {
+    question: "Do you work with consulting firms outside tech?",
+    answer:
+      "Yes. We’ve built systems for strategy, operations, education, and specialist consulting teams. The playbook adapts to your buyers.",
+  },
+  {
+    question: "Can you migrate our existing site and content?",
+    answer:
+      "Absolutely. We’ll audit what’s working, refresh what’s outdated, and migrate pages into a cleaner structure.",
+  },
+  {
+    question: "How do you handle case studies and proof?",
+    answer:
+      "We turn wins into modular stories with clear outcomes, then place them where buyers need reassurance most.",
+  },
+  {
+    question: "Will this help us rank in AI search results too?",
+    answer:
+      "Yes. We structure pages, schema, and internal links so both Google and AI engines can surface your expertise.",
+  },
+  {
+    question: "What’s the typical timeline?",
+    answer:
+      "Most consulting sites ship in 6–8 weeks, then iterate monthly as new offers and insights emerge.",
+  },
+  {
+    question: "Do we keep ownership of everything?",
+    answer:
+      "Yes. You own the domain, site, and data. Prism runs the system with full transparency.",
+  },
 ]
 
 const retentionBenefits = [
@@ -317,6 +380,78 @@ export default function ConsultingCompaniesPage() {
             </div>
           </div>
         </section>
+
+        <section className="border-t border-neutral-100 bg-neutral-50/70">
+          <div className="container mx-auto px-4 py-20">
+            <div className="mx-auto max-w-4xl text-center">
+              <p className="text-xs font-semibold uppercase tracking-[0.32em] text-neutral-500">consulting playbook</p>
+              <h2 className="mt-4 text-3xl font-semibold tracking-tight md:text-4xl">
+                what prism does for consulting firms
+              </h2>
+            </div>
+
+            <div className="mt-12 grid gap-8 md:grid-cols-2">
+              <div className="rounded-3xl border border-neutral-200 bg-white p-8 shadow-sm">
+                <h3 className="text-xl font-semibold text-neutral-900">who it&apos;s for</h3>
+                <ul className="mt-4 space-y-3 text-sm text-neutral-600">
+                  {segmentWhoItsFor.map((item) => (
+                    <li key={item} className="flex items-start gap-3">
+                      <CheckCircle2 className="mt-0.5 h-5 w-5 flex-shrink-0 text-primary" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className="rounded-3xl border border-neutral-200 bg-white p-8 shadow-sm">
+                <h3 className="text-xl font-semibold text-neutral-900">problems we solve</h3>
+                <ul className="mt-4 space-y-3 text-sm text-neutral-600">
+                  {segmentProblemsWeSolve.map((item) => (
+                    <li key={item} className="flex items-start gap-3">
+                      <CheckCircle2 className="mt-0.5 h-5 w-5 flex-shrink-0 text-primary" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+
+            <div className="mt-12 rounded-3xl border border-neutral-200 bg-white p-8 shadow-sm">
+              <h3 className="text-xl font-semibold text-neutral-900">what you get</h3>
+              <ul className="mt-4 grid gap-3 text-sm text-neutral-600 md:grid-cols-2">
+                {segmentDeliverables.map((item) => (
+                  <li key={item} className="flex items-start gap-3">
+                    <CheckCircle2 className="mt-0.5 h-5 w-5 flex-shrink-0 text-primary" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="mt-12 rounded-3xl border border-neutral-200 bg-white p-8 shadow-sm">
+              <h3 className="text-xl font-semibold text-neutral-900">how it works</h3>
+              <ol className="mt-4 space-y-4 text-sm text-neutral-600">
+                {segmentProcess.map((item, index) => (
+                  <li key={item.step} className="flex gap-4">
+                    <span className="mt-0.5 flex h-6 w-6 items-center justify-center rounded-full bg-neutral-900 text-xs font-semibold text-white">
+                      {index + 1}
+                    </span>
+                    <div>
+                      <p className="font-semibold text-neutral-900">{item.step}</p>
+                      <p className="mt-1">{item.detail}</p>
+                    </div>
+                  </li>
+                ))}
+              </ol>
+            </div>
+          </div>
+        </section>
+
+        <FAQSection
+          title="consulting marketing faq"
+          subtitle="answers about positioning, proof, and collaboration."
+          items={segmentFaqItems}
+          className="bg-neutral-50/70"
+        />
 
         {/* Section 7: Closing CTA */}
         <section className="border-t border-neutral-100 bg-white">

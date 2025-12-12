@@ -55,7 +55,7 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
     slug: "dr-christopher-wong",
     segments: ["dental", "local"],
     structured: {
-      heroImage: "https://design-prism.com/dr-wong-polaroids.png",
+      heroImage: "https://www.design-prism.com/dr-wong-polaroids.png",
       heroVideoId: "HrksJeYb02Q",
       datePublished: "2025-01-15T00:00:00.000Z",
       dateModified: "2025-01-15T00:00:00.000Z",
@@ -68,7 +68,8 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
       ],
       focus: "Dental M&A handoff",
       scope: "Website, SEO, ads, AI stack",
-      canonicalUrl: "https://design-prism.com/case-studies/dr-christopher-wong",
+      canonicalUrl:
+        "https://www.design-prism.com/case-studies/dr-christopher-wong",
     },
   },
   {
@@ -93,7 +94,7 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
     slug: "olympic-bootworks",
     segments: ["local"],
     structured: {
-      heroImage: "https://design-prism.com/olympic-bootworks-hero.png",
+      heroImage: "https://www.design-prism.com/olympic-bootworks-hero.png",
       heroVideoId: "Cgi7CZHMYQ0",
       datePublished: "2025-02-15T00:00:00.000Z",
       dateModified: "2025-02-15T00:00:00.000Z",
@@ -106,7 +107,8 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
       ],
       focus: "Ecommerce + multi-site launch",
       scope: "Website rebuild, ecommerce, POS-linked catalog, multi-site, analytics, workspace",
-      canonicalUrl: "https://design-prism.com/case-studies/olympic-bootworks",
+      canonicalUrl:
+        "https://www.design-prism.com/case-studies/olympic-bootworks",
     },
   },
   {
@@ -320,7 +322,7 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
     slug: "mataria-dental-group",
     segments: ["dental", "local"],
     structured: {
-      heroImage: "https://design-prism.com/mataria-hero.png",
+      heroImage: "https://www.design-prism.com/mataria-hero.png",
       heroVideoId: "VIDEO_PLACEHOLDER",
       datePublished: "2025-02-01T00:00:00.000Z",
       dateModified: "2025-02-01T00:00:00.000Z",
@@ -332,7 +334,8 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
       ],
       focus: "Dental M&A launch",
       scope: "Website, listings, content, social ads, analytics",
-      canonicalUrl: "https://design-prism.com/case-studies/mataria-dental-group",
+      canonicalUrl:
+        "https://www.design-prism.com/case-studies/mataria-dental-group",
     },
   },
 ]

@@ -65,6 +65,9 @@ function segmentRoutes(base: string): StaticRouteInput[] {
     "seo/on-page",
     "seo/off-page",
     "services",
+    "websites",
+    "ads",
+    "local-listings",
     "case-studies",
     "blog",
     "about",
@@ -97,10 +100,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   // Case study detail pages
   for (const study of CASE_STUDIES) {
+    const lastMod =
+      study.structured?.dateModified || study.structured?.datePublished
     routes.push({
       url: `${baseOrigin}/case-studies/${study.slug}`,
       changeFrequency: "monthly",
       priority: 0.7,
+      lastModified: lastMod ? new Date(lastMod) : undefined,
     })
   }
 

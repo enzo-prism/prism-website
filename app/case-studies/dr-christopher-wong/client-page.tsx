@@ -1193,21 +1193,21 @@ export default function ChristopherWongCaseStudy() {
       <CaseStudySchema
         title="Case Study: Dr. Wong - De-Risking a Dental M&A in Palo Alto with AI-Powered Marketing"
         description="Prism helped Dr. Chris Wong take over an established Palo Alto dental practice, retain the patient base, and modernize the online experience with a new dental website, local SEO, ads, and an AI-native stack."
-        url={cs?.structured?.canonicalUrl ?? "https://design-prism.com/case-studies/dr-christopher-wong"}
-        imageUrl={cs?.structured?.heroImage ?? "https://design-prism.com/dr-wong-polaroids.png"}
+        url={cs?.structured?.canonicalUrl ?? "https://www.design-prism.com/case-studies/dr-christopher-wong"}
+        imageUrl={cs?.structured?.heroImage ?? "https://www.design-prism.com/dr-wong-polaroids.png"}
         datePublished={cs?.structured?.datePublished ?? "2025-01-15T00:00:00.000Z"}
         dateModified={cs?.structured?.dateModified ?? "2025-01-15T00:00:00.000Z"}
         clientName="Dr. Christopher B. Wong"
         outcome="AI-powered marketing, design, and engineering to de-risk a dental M&A and drive growth"
         breadcrumbs={[
-          { name: "Home", url: "https://design-prism.com" },
-          { name: "Case Studies", url: "https://design-prism.com/case-studies" },
-          { name: "Dr. Christopher Wong", url: "https://design-prism.com/case-studies/dr-christopher-wong" },
+          { name: "Home", url: "https://www.design-prism.com" },
+          { name: "Case Studies", url: "https://www.design-prism.com/case-studies" },
+          { name: "Dr. Christopher Wong", url: "https://www.design-prism.com/case-studies/dr-christopher-wong" },
         ]}
         organization={{
           name: "Prism",
-          url: "https://design-prism.com",
-          logo: "https://design-prism.com/logo.png",
+          url: "https://www.design-prism.com",
+          logo: "https://www.design-prism.com/logo.png",
           sameAs: [
             "https://www.linkedin.com/company/prism-digital",
             "https://www.youtube.com/@designprism",
@@ -1218,7 +1218,7 @@ export default function ChristopherWongCaseStudy() {
           description: "Enzo interviews Dr. Chris Wong on taking over Dr. Hamamoto's practice and modernizing the brand.",
           embedUrl: `https://www.youtube.com/embed/${HERO_VIDEO_ID}`,
           uploadDate: cs?.structured?.datePublished ?? "2025-01-15T00:00:00.000Z",
-          thumbnailUrl: cs?.structured?.heroImage ?? "https://design-prism.com/dr-wong-polaroids.png",
+          thumbnailUrl: cs?.structured?.heroImage ?? "https://www.design-prism.com/dr-wong-polaroids.png",
         }}
         faq={[
           {
@@ -1245,8 +1245,8 @@ export default function ChristopherWongCaseStudy() {
       />
       <div className="mt-12">
         <SocialShare
-          url="https://design-prism.com/case-studies/dr-christopher-wong"
-          imageUrl="https://design-prism.com/dr-wong-polaroids.png"
+          url="https://www.design-prism.com/case-studies/dr-christopher-wong"
+          imageUrl="https://www.design-prism.com/dr-wong-polaroids.png"
           title="Case Study: Dr. Wong - AI-Powered Dental M&A"
           description="How Prism de-risked a Palo Alto dental ownership transition with AI-driven marketing, design, and engineering."
         />

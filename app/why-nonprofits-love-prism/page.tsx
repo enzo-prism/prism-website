@@ -4,6 +4,7 @@ import Link from "next/link"
 import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
 import ScrollToTop from "@/components/scroll-to-top"
+import FAQSection from "@/components/faq-section"
 import { Button } from "@/components/ui/button"
 import { ArrowRight, CheckCircle2 } from "lucide-react"
 import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
@@ -64,6 +65,69 @@ const improvementHighlights = [
   "Regular updates and AEO improvements keep your organization visible.",
   "Accessibility and mobile optimization ensure everyone can experience your message.",
   "Monthly insights help your team make data-driven decisions with ease."
+]
+
+const segmentWhoItsFor = [
+  "Nonprofits and foundations with small teams and big missions.",
+  "Organizations needing clearer donor and volunteer journeys.",
+  "Programs expanding into new regions, services, or fundraising campaigns.",
+]
+
+const segmentProblemsWeSolve = [
+  "Websites that don’t tell the story fast enough to earn trust.",
+  "Donation or signup flows that feel clunky on mobile.",
+  "Low search visibility for programs, impact, or local chapters.",
+  "Fragmented tools for email, analytics, and updates.",
+  "Manual follow‑ups that slow down fundraising.",
+]
+
+const segmentDeliverables = [
+  "Mission‑aligned website with accessible, mobile‑first storytelling.",
+  "Impact pages and program templates your team can update.",
+  "SEO + AEO foundations so supporters find you first.",
+  "Donation and newsletter integrations that actually convert.",
+  "Automations for thank‑yous, updates, and recurring gifts.",
+  "Dashboards tying campaigns to signups and donations.",
+]
+
+const segmentProcess = [
+  { step: "impact + funnel audit", detail: "we map supporter journeys and remove friction." },
+  { step: "build the foundation", detail: "launch a modern site and donation flows you own." },
+  { step: "grow visibility", detail: "content, listings, and campaigns expand awareness." },
+  { step: "optimize monthly", detail: "continuous improvements aligned to your mission." },
+]
+
+const segmentFaqItems = [
+  {
+    question: "Can you work with our donation platform?",
+    answer:
+      "Yes. We integrate Donorbox, Stripe, PayPal, Givebutter, and other platforms while keeping the experience on‑brand.",
+  },
+  {
+    question: "Do you help with accessibility?",
+    answer:
+      "Absolutely. Accessibility and mobile usability are core to every Prism nonprofit build.",
+  },
+  {
+    question: "How do we update content after launch?",
+    answer:
+      "We provide templates and light governance so your team can publish impact updates without breaking design.",
+  },
+  {
+    question: "Will this help us show up in AI search too?",
+    answer:
+      "Yes. We structure pages and schema so AI engines can surface your programs and stories accurately.",
+  },
+  {
+    question: "What does a typical engagement cost?",
+    answer:
+      "We tailor scope to your budget, starting with the highest‑impact foundation and scaling as fundraising grows.",
+  },
+  {
+    question: "Do we keep ownership of the site and data?",
+    answer:
+      "Yes. Your domain, content, and analytics stay fully under your control.",
+  },
 ]
 
 const nonprofitCaseStudies = CASE_STUDIES.filter((study) => study.segments.includes("nonprofit"))
@@ -336,6 +400,78 @@ export default function NonprofitsPage() {
             </div>
           </div>
         </section>
+
+        <section className="border-t border-neutral-100 bg-slate-50/70">
+          <div className="container mx-auto px-4 py-20">
+            <div className="mx-auto max-w-4xl text-center">
+              <p className="text-xs font-semibold uppercase tracking-[0.32em] text-neutral-500">nonprofit playbook</p>
+              <h2 className="mt-4 text-3xl font-semibold tracking-tight md:text-4xl">
+                what prism delivers for nonprofits
+              </h2>
+            </div>
+
+            <div className="mt-12 grid gap-8 md:grid-cols-2">
+              <div className="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
+                <h3 className="text-xl font-semibold text-neutral-900">who it&apos;s for</h3>
+                <ul className="mt-4 space-y-3 text-sm text-neutral-600">
+                  {segmentWhoItsFor.map((item) => (
+                    <li key={item} className="flex items-start gap-3">
+                      <CheckCircle2 className="mt-0.5 h-5 w-5 flex-shrink-0 text-primary" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
+                <h3 className="text-xl font-semibold text-neutral-900">problems we solve</h3>
+                <ul className="mt-4 space-y-3 text-sm text-neutral-600">
+                  {segmentProblemsWeSolve.map((item) => (
+                    <li key={item} className="flex items-start gap-3">
+                      <CheckCircle2 className="mt-0.5 h-5 w-5 flex-shrink-0 text-primary" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+
+            <div className="mt-12 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
+              <h3 className="text-xl font-semibold text-neutral-900">what you get</h3>
+              <ul className="mt-4 grid gap-3 text-sm text-neutral-600 md:grid-cols-2">
+                {segmentDeliverables.map((item) => (
+                  <li key={item} className="flex items-start gap-3">
+                    <CheckCircle2 className="mt-0.5 h-5 w-5 flex-shrink-0 text-primary" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="mt-12 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
+              <h3 className="text-xl font-semibold text-neutral-900">how it works</h3>
+              <ol className="mt-4 space-y-4 text-sm text-neutral-600">
+                {segmentProcess.map((item, index) => (
+                  <li key={item.step} className="flex gap-4">
+                    <span className="mt-0.5 flex h-6 w-6 items-center justify-center rounded-full bg-neutral-900 text-xs font-semibold text-white">
+                      {index + 1}
+                    </span>
+                    <div>
+                      <p className="font-semibold text-neutral-900">{item.step}</p>
+                      <p className="mt-1">{item.detail}</p>
+                    </div>
+                  </li>
+                ))}
+              </ol>
+            </div>
+          </div>
+        </section>
+
+        <FAQSection
+          title="nonprofit faq"
+          subtitle="fundraising, visibility, and platform questions."
+          items={segmentFaqItems}
+          className="bg-slate-50/70"
+        />
 
         {/* Section 8: Closing CTA */}
         <section className="border-t border-neutral-100 bg-neutral-900 text-white">

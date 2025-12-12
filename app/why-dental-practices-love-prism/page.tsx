@@ -5,6 +5,7 @@ import Link from "next/link"
 import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
 import ScrollToTop from "@/components/scroll-to-top"
+import FAQSection from "@/components/faq-section"
 import { Button } from "@/components/ui/button"
 import {
   ArrowRight,
@@ -202,6 +203,81 @@ const videoItems = [
     focus: "Keeping operations aligned across marketing, scheduling, and email"
   }
 ] as const
+
+const segmentWhoItsFor = [
+  "Owner‑dentists and specialty practices that need a calmer, clearer patient journey online.",
+  "Multi‑location groups who want consistent branding, listings, and reporting across offices.",
+  "Practices launching new services, providers, or acquisition/transition announcements.",
+]
+
+const segmentProblemsWeSolve = [
+  "Websites that look dated or don’t explain treatments clearly.",
+  "Low map‑pack visibility from messy listings and inconsistent NAP data.",
+  "Reviews that trickle in without a repeatable capture workflow.",
+  "Ads that drive the wrong patients or don’t track real bookings.",
+  "Manual intake, referrals, and follow‑ups that overwhelm staff.",
+]
+
+const segmentDeliverables = [
+  "Conversion‑first dental website with ADA‑aware UX and clear service pages.",
+  "Local SEO + AEO structure for treatments, providers, and locations.",
+  "Listings and reputation engine across Google, Yelp, Apple, and niche directories.",
+  "Paid search/social campaigns tied to calls, forms, and appointments.",
+  "Photography + video systems to show the real clinical experience.",
+  "Dashboards and automation so your front desk runs smoother.",
+]
+
+const segmentProcess = [
+  {
+    step: "Audit & map the patient journey",
+    detail: "we review your site, listings, ads, and referrals, then pinpoint the fastest wins.",
+  },
+  {
+    step: "Build the foundation",
+    detail: "launch a modern site + local presence that patients trust immediately.",
+  },
+  {
+    step: "Layer growth levers",
+    detail: "add ads, content, and automation once the core experience is stable.",
+  },
+  {
+    step: "Optimize & report",
+    detail: "weekly improvements with quarterly planning so momentum compounds.",
+  },
+]
+
+const segmentFaqItems = [
+  {
+    question: "How long does a dental website rebuild take?",
+    answer:
+      "Most practices launch in 6–10 weeks depending on content, approvals, and the number of locations or treatments.",
+  },
+  {
+    question: "Do you handle HIPAA and ADA considerations?",
+    answer:
+      "Yes. We design and build with accessibility and privacy in mind, and we’ll coordinate around any compliance needs your practice has.",
+  },
+  {
+    question: "Can you work with our existing brand and photos?",
+    answer:
+      "Absolutely. We can refresh within your current brand system, and we’ll recommend a new shoot only if the current assets limit trust or clarity.",
+  },
+  {
+    question: "Will you improve our Google Business Profile and reviews?",
+    answer:
+      "Yes. Listings cleanup and a review capture workflow are core parts of the Prism dental playbook.",
+  },
+  {
+    question: "How do you measure results for dental practices?",
+    answer:
+      "We track calls, forms, referral volume, and booked appointments against search and ad performance, then report in plain English.",
+  },
+  {
+    question: "What if we have multiple locations?",
+    answer:
+      "We standardize the system across offices while still tailoring pages and listings to each local market.",
+  },
+]
 
 type FeaturedHighlight = (typeof featuredCaseStudyDetails)[number]["highlight"]
 
@@ -611,6 +687,79 @@ export default function DentalPracticesPage() {
             </div>
           </div>
         </section>
+
+        <section className="border-t border-neutral-100 bg-neutral-50/70">
+          <div className="container mx-auto px-4 py-20">
+            <div className="mx-auto max-w-4xl text-center">
+              <p className="text-xs font-semibold uppercase tracking-[0.32em] text-neutral-500">dental playbook</p>
+              <h2 className="mt-4 text-3xl font-semibold tracking-tight md:text-4xl">
+                what prism delivers for dental teams
+              </h2>
+            </div>
+
+            <div className="mt-12 grid gap-8 md:grid-cols-2">
+              <div className="rounded-3xl border border-neutral-200 bg-white p-8 shadow-sm">
+                <h3 className="text-xl font-semibold text-neutral-900">who it&apos;s for</h3>
+                <ul className="mt-4 space-y-3 text-sm text-neutral-600">
+                  {segmentWhoItsFor.map((item) => (
+                    <li key={item} className="flex items-start gap-3">
+                      <CheckCircle2 className="mt-0.5 h-5 w-5 flex-shrink-0 text-primary" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="rounded-3xl border border-neutral-200 bg-white p-8 shadow-sm">
+                <h3 className="text-xl font-semibold text-neutral-900">problems we solve</h3>
+                <ul className="mt-4 space-y-3 text-sm text-neutral-600">
+                  {segmentProblemsWeSolve.map((item) => (
+                    <li key={item} className="flex items-start gap-3">
+                      <CheckCircle2 className="mt-0.5 h-5 w-5 flex-shrink-0 text-primary" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+
+            <div className="mt-12 rounded-3xl border border-neutral-200 bg-white p-8 shadow-sm">
+              <h3 className="text-xl font-semibold text-neutral-900">what you get</h3>
+              <ul className="mt-4 grid gap-3 text-sm text-neutral-600 md:grid-cols-2">
+                {segmentDeliverables.map((item) => (
+                  <li key={item} className="flex items-start gap-3">
+                    <CheckCircle2 className="mt-0.5 h-5 w-5 flex-shrink-0 text-primary" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="mt-12 rounded-3xl border border-neutral-200 bg-white p-8 shadow-sm">
+              <h3 className="text-xl font-semibold text-neutral-900">how it works</h3>
+              <ol className="mt-4 space-y-4 text-sm text-neutral-600">
+                {segmentProcess.map((item, index) => (
+                  <li key={item.step} className="flex gap-4">
+                    <span className="mt-0.5 flex h-6 w-6 items-center justify-center rounded-full bg-neutral-900 text-xs font-semibold text-white">
+                      {index + 1}
+                    </span>
+                    <div>
+                      <p className="font-semibold text-neutral-900">{item.step}</p>
+                      <p className="mt-1">{item.detail}</p>
+                    </div>
+                  </li>
+                ))}
+              </ol>
+            </div>
+          </div>
+        </section>
+
+        <FAQSection
+          title="dental marketing faq"
+          subtitle="straight answers about scope, timeline, and results."
+          items={segmentFaqItems}
+          className="bg-neutral-50/70"
+        />
 
         <section className="border-t border-neutral-100 bg-white">
           <div className="container mx-auto px-4 py-24">

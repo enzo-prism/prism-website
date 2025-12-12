@@ -177,7 +177,7 @@ export default function FamilyFirstSmileCareCaseStudy() {
 
               {/* Share */}
               <div className="mt-12">
-                <SocialShare url="https://design-prism.com/case-studies/family-first-smile-care" title="Family First Smile Care Case Study" description="Family‑focused website with services clarity, comforts, and conversion‑friendly flows." />
+                <SocialShare url="https://www.design-prism.com/case-studies/family-first-smile-care" title="Family First Smile Care Case Study" description="Family‑focused website with services clarity, comforts, and conversion‑friendly flows." />
               </div>
             </div>
           </div>
@@ -188,7 +188,7 @@ export default function FamilyFirstSmileCareCaseStudy() {
       <CaseStudySchema
         title="family first smile care — family‑focused website"
         description="how we designed a modern site with clear services, office comforts, and measurable conversion flows"
-        url="https://design-prism.com/case-studies/family-first-smile-care"
+        url="https://www.design-prism.com/case-studies/family-first-smile-care"
         datePublished="2025-03-05T00:00:00.000Z"
         dateModified="2025-03-05T00:00:00.000Z"
         clientName="Family First Smile Care"

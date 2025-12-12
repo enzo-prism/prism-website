@@ -13,6 +13,8 @@ export default function ValuesSection() {
         <img
           src="https://res.cloudinary.com/dhqpqfw6w/image/upload/v1761856728/garden_cejtbs.webp"
           alt=""
+          width={1920}
+          height={1080}
           className="h-full w-full object-cover"
           loading="lazy"
           aria-hidden="true"

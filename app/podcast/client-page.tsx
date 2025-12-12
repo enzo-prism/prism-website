@@ -81,7 +81,7 @@ export default function PodcastClientPage() {
                       size="lg"
                       className="bg-[#9333ea] hover:bg-[#7e22ce] text-white rounded-full px-8 py-6 text-lg lowercase shadow-lg"
                     >
-                      <img src="/icons/applepodcasts.svg" alt="Apple Podcasts" className="mr-3 h-6 w-6" />
+                      <img src="/icons/applepodcasts.svg" alt="Apple Podcasts" width={24} height={24} className="mr-3 h-6 w-6" />
                       listen on apple
                     </Button>
                   </a>
@@ -95,7 +95,7 @@ export default function PodcastClientPage() {
                       size="lg"
                       className="bg-[#1db954] hover:bg-[#169c46] text-white rounded-full px-8 py-6 text-lg lowercase shadow-lg"
                     >
-                      <img src="/icons/spotify.svg" alt="Spotify" className="mr-3 h-6 w-6" />
+                      <img src="/icons/spotify.svg" alt="Spotify" width={24} height={24} className="mr-3 h-6 w-6" />
                       listen on spotify
                     </Button>
                   </a>

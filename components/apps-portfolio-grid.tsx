@@ -51,7 +51,7 @@ export default function AppsPortfolioGrid({ projects }: AppsPortfolioGridProps) 
             {project.isEmoji ? (
               <span className="text-3xl">{project.icon}</span>
             ) : project.icon ? (
-              <img src={project.icon} alt="" className="w-10 h-10 object-contain" />
+              <img src={project.icon} alt="" width={40} height={40} className="w-10 h-10 object-contain" />
             ) : (
               <Smartphone className="w-8 h-8 text-white/80" />
             )}

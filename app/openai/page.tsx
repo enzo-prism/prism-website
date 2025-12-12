@@ -82,11 +82,14 @@ export const metadata: Metadata = {
   title: "openai growth systems | design prism",
   description:
     "See how Prism uses OpenAI tools, copilots, and distribution intelligence to expand your practice across chat, search, and assistant surfaces.",
+  alternates: {
+    canonical: "https://www.design-prism.com/openai",
+  },
   openGraph: {
     title: "openai growth systems | design prism",
     description:
       "Prism trains OpenAI copilots on your brand, publishes AI-assisted campaigns, and studies distribution so you show up across new surfaces.",
-    url: "https://design-prism.com/openai",
+    url: "https://www.design-prism.com/openai",
     images: [
       {
         url: "/prism-opengraph.png",

@@ -8,7 +8,10 @@ import { Button } from "@/components/ui/button"
 
 export const metadata: Metadata = {
   title: "book a shoot | prism",
-  description: "share two dates and one-hour windows for Prism to capture your office + team photography."
+  description: "share two dates and one-hour windows for Prism to capture your office + team photography.",
+  alternates: {
+    canonical: "https://www.design-prism.com/book-a-shoot",
+  },
 }
 
 export default function BookAShootPage() {

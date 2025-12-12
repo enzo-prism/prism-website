@@ -254,15 +254,15 @@ export default function ExquisiteDentistryCaseStudy() {
         </div>
 
         <div className="mt-12">
-          <SocialShare url="https://design-prism.com/case-studies/exquisite-dentistry" imageUrl="https://design-prism.com/exquisite-dentistry-consultation.png" title="Exquisite Dentistry Case Study" description="How Prism elevated Beverly Hills' Exquisite Dentistry's online presence." />
+          <SocialShare url="https://www.design-prism.com/case-studies/exquisite-dentistry" imageUrl="https://www.design-prism.com/exquisite-dentistry-consultation.png" title="Exquisite Dentistry Case Study" description="How Prism elevated Beverly Hills' Exquisite Dentistry's online presence." />
         </div>
       </main>
       <Footer />
       <CaseStudySchema
         title="aligning digital excellence with luxury care | exquisite dentistry case study"
         description="how prism elevated beverly hills' exquisite dentistry's online presence to match their premium in-person experience."
-        url="https://design-prism.com/case-studies/exquisite-dentistry"
-        imageUrl="https://design-prism.com/exquisite-dentistry-consultation.png"
+        url="https://www.design-prism.com/case-studies/exquisite-dentistry"
+        imageUrl="https://www.design-prism.com/exquisite-dentistry-consultation.png"
         datePublished="2025-06-01T00:00:00.000Z"
         dateModified="2025-06-01T00:00:00.000Z"
         clientName="Exquisite Dentistry"

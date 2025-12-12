@@ -4,10 +4,13 @@ import PrismAIClient from "./prism-ai-client"
 export const metadata: Metadata = {
   title: "prism ai - build your website with ai | design prism",
   description: "describe your dream website and let prism ai build it for you. get started in minutes.",
+  alternates: {
+    canonical: "https://www.design-prism.com/ai",
+  },
   openGraph: {
     title: "prism ai - build your website with ai",
     description: "describe your dream website and let prism ai build it for you. get started in minutes.",
-    url: "https://design-prism.com/ai",
+    url: "https://www.design-prism.com/ai",
     siteName: "Design Prism",
     images: [
       {

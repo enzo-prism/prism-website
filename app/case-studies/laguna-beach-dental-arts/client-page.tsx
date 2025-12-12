@@ -296,7 +296,7 @@ export default function LagunaBeachDentalArtsCaseStudy() {
               {/* Share */}
               <div className="mt-12">
                 <SocialShare
-                  url="https://design-prism.com/case-studies/laguna-beach-dental-arts"
+                  url="https://www.design-prism.com/case-studies/laguna-beach-dental-arts"
                   title="Laguna Beach Dental Arts Case Study"
                   description="Post‑M&A relaunch: brand, website, acquisition channels, and tracking."
                 />
@@ -310,7 +310,7 @@ export default function LagunaBeachDentalArtsCaseStudy() {
       <CaseStudySchema
         title="laguna beach dental arts — post‑m&a relaunch"
         description="how we partnered with laguna beach dental arts to relaunch brand, website, and acquisition with full‑funnel tracking"
-        url="https://design-prism.com/case-studies/laguna-beach-dental-arts"
+        url="https://www.design-prism.com/case-studies/laguna-beach-dental-arts"
         datePublished="2025-03-05T00:00:00.000Z"
         dateModified="2025-03-05T00:00:00.000Z"
         clientName="Laguna Beach Dental Arts"

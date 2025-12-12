@@ -16,6 +16,9 @@ export const metadata: Metadata = {
   title: "seo that compounds | prism",
   description:
     "prism bakes on-page and off-page seo into every build. see how we structure sites, listings, reviews, and authority signals so local brands outrank competitors.",
+  alternates: {
+    canonical: "https://www.design-prism.com/seo",
+  },
   openGraph: {
     title: "seo that compounds | prism",
     description:

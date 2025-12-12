@@ -141,12 +141,13 @@ export function GlobalSchemaGraph() {
     "@type": "Organization",
     name: "Prism",
     url: "https://www.design-prism.com",
-    logo: "https://www.design-prism.com/prism-opengraph.png",
+    logo: "https://www.design-prism.com/prism-logo.png",
     sameAs: [
+      "https://www.instagram.com/the_design_prism/",
       "https://www.youtube.com/@the_design_prism",
       "https://x.com/NosisTheGod",
-      "https://www.instagram.com/the_design_prism/",
-      "https://www.linkedin.com/company/design-prism/",
+      "https://www.tiktok.com/@the_design_prism",
+      "https://www.linkedin.com/company/web-prism/?viewAsMember=true",
     ],
   }
 
@@ -155,11 +156,6 @@ export function GlobalSchemaGraph() {
     "@type": "WebSite",
     name: "Prism",
     url: "https://www.design-prism.com",
-    potentialAction: {
-      "@type": "SearchAction",
-      target: "https://www.design-prism.com/search?q={search_term_string}",
-      "query-input": "required name=search_term_string",
-    },
   }
 
   return renderJsonLd([organization, website])

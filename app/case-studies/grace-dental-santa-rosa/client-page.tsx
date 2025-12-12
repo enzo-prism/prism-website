@@ -188,7 +188,7 @@ export default function GraceDentalSantaRosaCaseStudy() {
 
               {/* Share */}
               <div className="mt-12">
-                <SocialShare url="https://design-prism.com/case-studies/grace-dental-santa-rosa" title="Grace Dental Santa Rosa Case Study" description="Post‑M&A relaunch: brand, website, acquisition channels, and tracking for a family dental practice." />
+                <SocialShare url="https://www.design-prism.com/case-studies/grace-dental-santa-rosa" title="Grace Dental Santa Rosa Case Study" description="Post‑M&A relaunch: brand, website, acquisition channels, and tracking for a family dental practice." />
               </div>
             </div>
           </div>
@@ -199,7 +199,7 @@ export default function GraceDentalSantaRosaCaseStudy() {
       <CaseStudySchema
         title="grace dental santa rosa — post‑m&a relaunch"
         description="how we partnered post‑m&a to relaunch brand and website, and implement acquisition and tracking"
-        url="https://design-prism.com/case-studies/grace-dental-santa-rosa"
+        url="https://www.design-prism.com/case-studies/grace-dental-santa-rosa"
         datePublished="2025-03-05T00:00:00.000Z"
         dateModified="2025-03-05T00:00:00.000Z"
         clientName="Grace Dental Santa Rosa (Tingjen Ji, DDS MSD)"

@@ -39,7 +39,7 @@ export default function Image({
   ...props
 }: ImageProps) {
   const [imageState, setImageState] = useState<ImageState>({
-    src: null,
+    src: typeof src === "string" && src.trim().length > 0 ? src : null,
     loading: false,
     error: false,
     retryCount: 0,
@@ -125,37 +125,18 @@ export default function Image({
     setImageState((prev) => ({ ...prev, loaded: true, loading: false }))
   }, [])
 
-  // Intersection Observer for lazy loading
+  // Keep src in sync when it changes; rely on Next.js native lazy loading.
   useEffect(() => {
-    if (!imageRef.current || priority) return
+    if (isValidPath(src as string)) {
+      handleImageLoad(src as string)
+    }
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting && isValidPath(src as string)) {
-            handleImageLoad(src as string)
-            observer.disconnect()
-          }
-        })
-      },
-      { rootMargin: "200px 0px", threshold: 0.01 },
-    )
-
-    observer.observe(imageRef.current)
     return () => {
-      observer.disconnect()
       if (retryTimeoutRef.current) {
         clearTimeout(retryTimeoutRef.current)
       }
     }
-  }, [src, priority, handleImageLoad, isValidPath])
-
-  // Load image immediately if priority
-  useEffect(() => {
-    if (priority && isValidPath(src as string)) {
-      handleImageLoad(src as string)
-    }
-  }, [src, priority, handleImageLoad, isValidPath])
+  }, [src, handleImageLoad, isValidPath])
 
   // Show loading placeholder
   if (!imageState.src && !imageState.error) {

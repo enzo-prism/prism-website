@@ -5,7 +5,7 @@ import type React from "react"
 import { useEffect, useMemo, useRef, useState } from "react"
 
 import { cn } from "@/lib/utils"
-import { getHomepageHeroReviewPool, renderFormattedText, type Quote } from "@/content/wall-of-love-data"
+import { getHeroReviews, getHomepageHeroReviewPool, renderFormattedText, type Quote } from "@/content/wall-of-love-data"
 import { trackNavigation } from "@/utils/analytics"
 import { sanitizeReviewText } from "@/lib/schema-helpers"
 
@@ -21,39 +21,17 @@ type HeroReviewSliderCardProps = {
 }
 
 export default function HeroReviewSliderCard({ className }: HeroReviewSliderCardProps) {
-  const reviews = useMemo(() => getHomepageHeroReviewPool(), [])
+  const [reviews, setReviews] = useState<Quote[]>(() => getHeroReviews(6))
   const [activeIndex, setActiveIndex] = useState(0)
   const [prevIndex, setPrevIndex] = useState<number | null>(null)
-  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false)
-  const pauseRef = useRef(false)
-  const intervalRef = useRef<number | null>(null)
   const activeRef = useRef(0)
   const touchStartRef = useRef<{ x: number; y: number } | null>(null)
   const touchEndRef = useRef<{ x: number; y: number } | null>(null)
   const resumeTimeoutRef = useRef<number | null>(null)
 
   useEffect(() => {
-    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)")
-    setPrefersReducedMotion(mediaQuery.matches)
-    const updatePreference = (e: MediaQueryListEvent) => setPrefersReducedMotion(e.matches)
-    mediaQuery.addEventListener("change", updatePreference)
-    return () => mediaQuery.removeEventListener("change", updatePreference)
+    setReviews(getHomepageHeroReviewPool())
   }, [])
-
-  useEffect(() => {
-    if (prefersReducedMotion || reviews.length <= 1) return
-    const tick = () => {
-      if (pauseRef.current) return
-      const next = (activeRef.current + 1) % reviews.length
-      setPrevIndex(activeRef.current)
-      activeRef.current = next
-      setActiveIndex(next)
-    }
-    intervalRef.current = window.setInterval(tick, 5200)
-    return () => {
-      if (intervalRef.current) window.clearInterval(intervalRef.current)
-    }
-  }, [prefersReducedMotion, reviews.length])
 
   useEffect(() => {
     return () => {
@@ -79,7 +57,6 @@ export default function HeroReviewSliderCard({ className }: HeroReviewSliderCard
     const touch = event.touches[0]
     touchStartRef.current = { x: touch.clientX, y: touch.clientY }
     touchEndRef.current = { x: touch.clientX, y: touch.clientY }
-    pauseRef.current = true
     if (resumeTimeoutRef.current) window.clearTimeout(resumeTimeoutRef.current)
   }
 
@@ -97,7 +74,6 @@ export default function HeroReviewSliderCard({ className }: HeroReviewSliderCard
 
     if (!start || !end || reviews.length <= 1) {
       resumeTimeoutRef.current = window.setTimeout(() => {
-        pauseRef.current = false
       }, 2000)
       return
     }
@@ -117,7 +93,6 @@ export default function HeroReviewSliderCard({ className }: HeroReviewSliderCard
     }
 
     resumeTimeoutRef.current = window.setTimeout(() => {
-      pauseRef.current = false
     }, 3000)
   }
 
@@ -161,10 +136,6 @@ export default function HeroReviewSliderCard({ className }: HeroReviewSliderCard
         "w-full max-w-sm sm:max-w-md text-center space-y-3 sm:space-y-4 select-none",
         className
       )}
-      onMouseEnter={() => (pauseRef.current = true)}
-      onMouseLeave={() => (pauseRef.current = false)}
-      onFocusCapture={() => (pauseRef.current = true)}
-      onBlurCapture={() => (pauseRef.current = false)}
     >
       <div className="inline-flex items-center gap-2 rounded-full bg-neutral-100 px-3 py-1 text-[11px] font-semibold text-neutral-700 dark:bg-neutral-800 dark:text-neutral-200">
         <span className="text-sm" aria-hidden>

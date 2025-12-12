@@ -4,6 +4,7 @@ import Link from "next/link"
 import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
 import ScrollToTop from "@/components/scroll-to-top"
+import FAQSection from "@/components/faq-section"
 import { Button } from "@/components/ui/button"
 import { ArrowRight, CheckCircle2 } from "lucide-react"
 import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
@@ -64,6 +65,69 @@ const innovationHighlights = [
   "We continuously improve your website, listings, and ads with the latest tools and strategies.",
   "AI-driven analytics and AEO keep your business ahead of search and platform changes.",
   "Every improvement is backed by data — not guesswork."
+]
+
+const segmentWhoItsFor = [
+  "Local retail shops, studios, and service businesses that rely on nearby customers.",
+  "Owners who want more foot traffic without learning marketing tech.",
+  "Teams adding new locations, products, or seasonal promotions.",
+]
+
+const segmentProblemsWeSolve = [
+  "Low visibility in Google Maps and local search.",
+  "Outdated sites that don’t show what’s new or why you’re different.",
+  "Listings that drift out of sync across Apple, Yelp, and niche directories.",
+  "Ad spend that doesn’t translate into real visits or orders.",
+  "No repeat‑visit engine—customers buy once and disappear.",
+]
+
+const segmentDeliverables = [
+  "A fast, mobile‑first website that reflects your shop and converts visitors.",
+  "Local SEO + AEO structure so you show up when people search nearby.",
+  "Listings and review engine kept accurate across major platforms.",
+  "Google/Meta/Yelp campaigns tied to calls, directions, and sales.",
+  "Simple follow‑ups and offer loops to bring customers back.",
+  "Reporting dashboards that show what’s driving revenue.",
+]
+
+const segmentProcess = [
+  { step: "visibility audit", detail: "we clean up your website, listings, and map presence first." },
+  { step: "convert the demand", detail: "refresh your site and offers so browsers become buyers." },
+  { step: "add growth loops", detail: "ads, reviews, and retention campaigns layer in next." },
+  { step: "optimize monthly", detail: "we keep improving as your products and seasons change." },
+]
+
+const segmentFaqItems = [
+  {
+    question: "Will you work with my existing website platform?",
+    answer:
+      "Yes. We can rebuild on Next.js for speed or migrate from Squarespace/WordPress if your current stack is holding you back.",
+  },
+  {
+    question: "How fast can we see more local visibility?",
+    answer:
+      "Listings fixes and profile updates often lift map engagement within weeks. Rankings compound as reviews and content stack up.",
+  },
+  {
+    question: "Do you handle promotions and seasonal updates?",
+    answer:
+      "Yes. We keep your homepage, offers, and listings fresh so customers always see what’s new.",
+  },
+  {
+    question: "Can you track in‑store results?",
+    answer:
+      "We track calls, direction requests, form fills, and promo redemptions where possible, then review trends with you monthly.",
+  },
+  {
+    question: "What if I don’t want to run ads?",
+    answer:
+      "That’s fine. Many shops start with website + local presence and add ads only when the foundation is ready.",
+  },
+  {
+    question: "Do I own my domain and data?",
+    answer:
+      "Always. Prism works inside your accounts and keeps everything transferable.",
+  },
 ]
 
 const localCaseStudies = CASE_STUDIES.filter((study) => study.segments.includes("local"))
@@ -340,6 +404,78 @@ export default function LocalShopOwnersPage() {
             </div>
           </div>
         </section>
+
+        <section className="border-t border-neutral-100 bg-neutral-50/70">
+          <div className="container mx-auto px-4 py-20">
+            <div className="mx-auto max-w-4xl text-center">
+              <p className="text-xs font-semibold uppercase tracking-[0.32em] text-neutral-500">local business playbook</p>
+              <h2 className="mt-4 text-3xl font-semibold tracking-tight md:text-4xl">
+                what prism delivers for local shop owners
+              </h2>
+            </div>
+
+            <div className="mt-12 grid gap-8 md:grid-cols-2">
+              <div className="rounded-3xl border border-neutral-200 bg-white p-8 shadow-sm">
+                <h3 className="text-xl font-semibold text-neutral-900">who it&apos;s for</h3>
+                <ul className="mt-4 space-y-3 text-sm text-neutral-600">
+                  {segmentWhoItsFor.map((item) => (
+                    <li key={item} className="flex items-start gap-3">
+                      <CheckCircle2 className="mt-0.5 h-5 w-5 flex-shrink-0 text-primary" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className="rounded-3xl border border-neutral-200 bg-white p-8 shadow-sm">
+                <h3 className="text-xl font-semibold text-neutral-900">problems we solve</h3>
+                <ul className="mt-4 space-y-3 text-sm text-neutral-600">
+                  {segmentProblemsWeSolve.map((item) => (
+                    <li key={item} className="flex items-start gap-3">
+                      <CheckCircle2 className="mt-0.5 h-5 w-5 flex-shrink-0 text-primary" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+
+            <div className="mt-12 rounded-3xl border border-neutral-200 bg-white p-8 shadow-sm">
+              <h3 className="text-xl font-semibold text-neutral-900">what you get</h3>
+              <ul className="mt-4 grid gap-3 text-sm text-neutral-600 md:grid-cols-2">
+                {segmentDeliverables.map((item) => (
+                  <li key={item} className="flex items-start gap-3">
+                    <CheckCircle2 className="mt-0.5 h-5 w-5 flex-shrink-0 text-primary" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="mt-12 rounded-3xl border border-neutral-200 bg-white p-8 shadow-sm">
+              <h3 className="text-xl font-semibold text-neutral-900">how it works</h3>
+              <ol className="mt-4 space-y-4 text-sm text-neutral-600">
+                {segmentProcess.map((item, index) => (
+                  <li key={item.step} className="flex gap-4">
+                    <span className="mt-0.5 flex h-6 w-6 items-center justify-center rounded-full bg-neutral-900 text-xs font-semibold text-white">
+                      {index + 1}
+                    </span>
+                    <div>
+                      <p className="font-semibold text-neutral-900">{item.step}</p>
+                      <p className="mt-1">{item.detail}</p>
+                    </div>
+                  </li>
+                ))}
+              </ol>
+            </div>
+          </div>
+        </section>
+
+        <FAQSection
+          title="local business faq"
+          subtitle="questions owners ask before they hand off growth."
+          items={segmentFaqItems}
+          className="bg-neutral-50/70"
+        />
 
         {/* Section 8: Closing CTA */}
         <section className="border-t border-neutral-100 bg-neutral-900 text-white">

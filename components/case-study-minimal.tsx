@@ -215,6 +215,11 @@ export default function MinimalCaseStudyPage({
         dateModified={schema.dateModified}
         clientName={schema.clientName}
         outcome={schema.outcome}
+        breadcrumbs={[
+          { name: "Home", url: "https://www.design-prism.com" },
+          { name: "Case Studies", url: "https://www.design-prism.com/case-studies" },
+          { name: schema.clientName, url: schema.url },
+        ]}
       />
     </div>
   )

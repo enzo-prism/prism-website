@@ -75,11 +75,14 @@ export const metadata: Metadata = {
   title: "story-driven marketing | design prism",
   description:
     "Turn customer impact into your strongest growth engine. Learn how Prism’s Customer Signal Engine captures real stories and turns them into SEO, conversions, and community.",
+  alternates: {
+    canonical: "https://www.design-prism.com/story",
+  },
   openGraph: {
     title: "story-driven marketing | design prism",
     description:
       "Capture customer stories, expand them into narratives, and distribute them everywhere with Prism’s Customer Signal Engine.",
-    url: "https://design-prism.com/story",
+    url: "https://www.design-prism.com/story",
     images: [
       {
         url: "/prism-opengraph.png",

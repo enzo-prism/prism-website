@@ -1,8 +1,15 @@
+import type { Metadata } from "next"
 import Link from "next/link"
 import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
 import { Button } from "@/components/ui/button"
 import { CheckCircle2, Calendar } from "lucide-react"
+
+export const metadata: Metadata = {
+  alternates: {
+    canonical: "https://www.design-prism.com/checkout/scale/thank-you",
+  },
+}
 
 export default function ScaleThankYouPage() {
   return (

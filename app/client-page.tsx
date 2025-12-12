@@ -1,5 +1,3 @@
-"use client"
-
 import HeroReviewSliderCard from "@/components/home/HeroReviewSliderCard"
 import ClientsSection from "@/components/home/Clients"
 import GrowthHeadline from "@/components/home/GrowthHeadline"

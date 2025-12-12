@@ -138,8 +138,8 @@ export default function AboutClientPage() {
         name="Enzo Sison"
         jobTitle="Founder & CEO"
         description="Founder of Prism Agency, helping businesses create digital experiences that drive real results"
-        image="https://design-prism.com/enzo-avatar.png"
-        url="https://design-prism.com/about"
+        image="https://www.design-prism.com/enzo-avatar.png"
+        url="https://www.design-prism.com/about"
         sameAs={[
           "https://x.com/NosisTheGod",
           "https://www.linkedin.com/in/enzo-sison",

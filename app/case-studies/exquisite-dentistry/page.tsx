@@ -5,6 +5,10 @@ export const metadata: Metadata = {
   title: "exquisite dentistry case study — aligning digital excellence",
   description:
     "how prism elevated beverly hills’ exquisite dentistry’s online presence to match their premium in-person experience.",
+  alternates: {
+    canonical:
+      "https://www.design-prism.com/case-studies/exquisite-dentistry",
+  },
   openGraph: {
     title: "exquisite dentistry case study — aligning digital excellence",
     description:
