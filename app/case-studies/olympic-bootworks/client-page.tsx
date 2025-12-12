@@ -4,6 +4,7 @@ import Footer from "@/components/footer"
 import { CaseStudySchema } from "@/components/schema-markup"
 import SocialShare from "@/components/social-share"
 import { Button } from "@/components/ui/button"
+import YouTubeVideoEmbed from "@/components/youtube-video-embed"
 import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
 import { CASE_STUDIES } from "@/lib/case-study-data"
 import { trackCTAClick } from "@/utils/analytics"
@@ -13,6 +14,8 @@ import Link from "next/link"
 import { ReactNode, useEffect } from "react"
 
 const Navbar = dynamic(() => import("@/components/navbar"), { ssr: false })
+
+const HERO_VIDEO_ID = "Cgi7CZHMYQ0"
 
 const cs = CASE_STUDIES.find((item) => item.slug === "olympic-bootworks")
 
@@ -509,10 +512,10 @@ export default function OlympicBootworksCaseStudy() {
 
             <div className="grid items-start gap-8 lg:grid-cols-[1.2fr_1fr]">
               <div className="overflow-hidden rounded-xl border bg-white shadow-sm">
-                <img
-                  src={cs?.structured?.heroImage ?? "/olympic-bootworks.png"}
-                  alt="Olympic Bootworks case study hero"
-                  className="h-auto w-full object-cover"
+                <YouTubeVideoEmbed
+                  videoId={HERO_VIDEO_ID}
+                  title="Olympic Bootworks Case Study Interview"
+                  className="w-full"
                 />
               </div>
               <div className="space-y-4">
@@ -815,17 +818,25 @@ export default function OlympicBootworksCaseStudy() {
 	          { name: "Case Studies", url: "https://design-prism.com/case-studies" },
 	          { name: "Olympic Bootworks", url: "https://design-prism.com/case-studies/olympic-bootworks" },
 	        ]}
-	        organization={{
-	          name: "Prism",
-	          url: "https://design-prism.com",
-	          logo: "https://design-prism.com/logo.png",
-	          sameAs: ["https://www.linkedin.com/company/prism-digital", "https://www.youtube.com/@designprism"],
-	        }}
-	        faq={[
-	          {
-	            question: "What did Prism deliver for Olympic Bootworks?",
-	            answer:
-	              "Full site rebuild, POS-linked ecommerce, multi-site architecture with Fantic Warehouse, analytics stack, Typeform flows, Google Ads, and Workspace setup.",
+        organization={{
+          name: "Prism",
+          url: "https://design-prism.com",
+          logo: "https://design-prism.com/logo.png",
+          sameAs: ["https://www.linkedin.com/company/prism-digital", "https://www.youtube.com/@designprism"],
+        }}
+        video={{
+          name: "Olympic Bootworks Case Study Interview",
+          description:
+            "A quick interview walkthrough of how Prism rebuilt Olympic Bootworks' website and launched a POS-linked ecommerce system for Fantic bikes.",
+          embedUrl: `https://www.youtube.com/embed/${HERO_VIDEO_ID}`,
+          uploadDate: cs?.structured?.datePublished ?? "2025-02-15T00:00:00.000Z",
+          thumbnailUrl: cs?.structured?.heroImage ?? "https://design-prism.com/olympic-bootworks-hero.png",
+        }}
+        faq={[
+          {
+            question: "What did Prism deliver for Olympic Bootworks?",
+            answer:
+              "Full site rebuild, POS-linked ecommerce, multi-site architecture with Fantic Warehouse, analytics stack, Typeform flows, Google Ads, and Workspace setup.",
           },
           {
             question: "What technology stack was used?",

@@ -94,6 +94,7 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
     segments: ["local"],
     structured: {
       heroImage: "https://design-prism.com/olympic-bootworks-hero.png",
+      heroVideoId: "Cgi7CZHMYQ0",
       datePublished: "2025-02-15T00:00:00.000Z",
       dateModified: "2025-02-15T00:00:00.000Z",
       outcomes: [
