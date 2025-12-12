@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import type React from "react"
 import { useEffect, useMemo, useRef, useState } from "react"
 
 import { cn } from "@/lib/utils"
@@ -27,6 +28,9 @@ export default function HeroReviewSliderCard({ className }: HeroReviewSliderCard
   const pauseRef = useRef(false)
   const intervalRef = useRef<number | null>(null)
   const activeRef = useRef(0)
+  const touchStartRef = useRef<{ x: number; y: number } | null>(null)
+  const touchEndRef = useRef<{ x: number; y: number } | null>(null)
+  const resumeTimeoutRef = useRef<number | null>(null)
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)")
@@ -50,6 +54,72 @@ export default function HeroReviewSliderCard({ className }: HeroReviewSliderCard
       if (intervalRef.current) window.clearInterval(intervalRef.current)
     }
   }, [prefersReducedMotion, reviews.length])
+
+  useEffect(() => {
+    return () => {
+      if (resumeTimeoutRef.current) {
+        window.clearTimeout(resumeTimeoutRef.current)
+      }
+    }
+  }, [])
+
+  const goToIndex = (nextIndex: number) => {
+    if (reviews.length === 0) return
+    const normalized = (nextIndex + reviews.length) % reviews.length
+    setPrevIndex(activeRef.current)
+    activeRef.current = normalized
+    setActiveIndex(normalized)
+  }
+
+  const goNext = () => goToIndex(activeRef.current + 1)
+  const goPrev = () => goToIndex(activeRef.current - 1)
+
+  const handleTouchStart = (event: React.TouchEvent) => {
+    if (reviews.length <= 1) return
+    const touch = event.touches[0]
+    touchStartRef.current = { x: touch.clientX, y: touch.clientY }
+    touchEndRef.current = { x: touch.clientX, y: touch.clientY }
+    pauseRef.current = true
+    if (resumeTimeoutRef.current) window.clearTimeout(resumeTimeoutRef.current)
+  }
+
+  const handleTouchMove = (event: React.TouchEvent) => {
+    if (!touchStartRef.current) return
+    const touch = event.touches[0]
+    touchEndRef.current = { x: touch.clientX, y: touch.clientY }
+  }
+
+  const handleTouchEnd = () => {
+    const start = touchStartRef.current
+    const end = touchEndRef.current
+    touchStartRef.current = null
+    touchEndRef.current = null
+
+    if (!start || !end || reviews.length <= 1) {
+      resumeTimeoutRef.current = window.setTimeout(() => {
+        pauseRef.current = false
+      }, 2000)
+      return
+    }
+
+    const dx = end.x - start.x
+    const dy = end.y - start.y
+    const absDx = Math.abs(dx)
+    const absDy = Math.abs(dy)
+    const minSwipeDistance = 40
+
+    if (absDx > minSwipeDistance && absDx > absDy * 1.2) {
+      if (dx < 0) {
+        goNext()
+      } else {
+        goPrev()
+      }
+    }
+
+    resumeTimeoutRef.current = window.setTimeout(() => {
+      pauseRef.current = false
+    }, 3000)
+  }
 
   const currentReview = reviews[activeIndex] ?? null
   const heroReviewForSchema = useMemo(() => {
@@ -104,7 +174,14 @@ export default function HeroReviewSliderCard({ className }: HeroReviewSliderCard
       </div>
 
       <div className="relative px-1">
-        <div className="relative mx-auto flex min-h-[190px] max-w-xl items-center justify-center overflow-hidden">
+        <div
+          className="relative mx-auto flex min-h-[190px] max-w-xl items-center justify-center overflow-hidden"
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+          onTouchCancel={handleTouchEnd}
+          style={{ touchAction: "pan-y" }}
+        >
           {currentReview ? (
             slideIndices.map((idx) => {
               const review = reviews[idx]
