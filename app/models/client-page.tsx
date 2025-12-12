@@ -5,7 +5,6 @@ import Link from "next/link"
 
 import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
-import PageViewTracker from "@/components/page-view-tracker"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { trackCTAClick } from "@/utils/analytics"
@@ -188,7 +187,6 @@ export default function ModelsPageClient() {
 
   return (
     <div className="flex min-h-screen flex-col bg-white text-neutral-900">
-      <PageViewTracker title="prism models" />
       <Navbar />
       <main className="flex-1">
         <HeroSection />

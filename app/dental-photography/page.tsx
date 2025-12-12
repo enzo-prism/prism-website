@@ -4,7 +4,6 @@ import { ArrowRight, Award, Calendar, Camera, Layers3, MapPin, Megaphone, Share2
 
 import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
-import PageViewTracker from "@/components/page-view-tracker"
 import ScrollToTop from "@/components/scroll-to-top"
 import { Button } from "@/components/ui/button"
 import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
@@ -306,7 +305,6 @@ export default function DentalPhotographyPage() {
           </div>
         </section>
 
-        <PageViewTracker title="Prism - Dental Photography" />
       </main>
       <Footer />
       <ScrollToTop />

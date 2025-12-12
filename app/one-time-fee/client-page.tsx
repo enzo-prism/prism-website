@@ -10,7 +10,6 @@ import { useMobile } from "@/hooks/use-mobile"
 import dynamic from "next/dynamic"
 const Navbar = dynamic(() => import("@/components/navbar"), { ssr: false })
 
-import PageViewTracker from "@/components/page-view-tracker"
 import { trackCTAClick, trackNavigation } from "@/utils/analytics"
 import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
 
@@ -47,7 +46,6 @@ export default function OneTimeFeeClientPage() {
   return (
     <div className="flex min-h-screen flex-col">
       {isMobile && <ScrollProgressBar />}
-      <PageViewTracker title="One-Time Design Fee - Prism" />
       <Navbar />
       <main className="flex-1">
         {/* Hero Section */}

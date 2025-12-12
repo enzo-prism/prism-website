@@ -1,7 +1,6 @@
 "use client"
 
 import Footer from "@/components/footer"
-import PageViewTracker from "@/components/page-view-tracker"
 import { PersonSchema } from "@/components/schema-markup"
 import ScrollingTimeline from "@/components/scrolling-timeline"
 import dynamic from "next/dynamic"
@@ -19,7 +18,6 @@ export default function AboutClientPage() {
 
   return (
     <div className="flex min-h-screen flex-col">
-      <PageViewTracker title="About Prism" />
       <Navbar />
       <main className="flex-1">
         {/* Hero Section */}

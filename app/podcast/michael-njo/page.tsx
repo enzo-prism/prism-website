@@ -1,6 +1,5 @@
 import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
-import PageViewTracker from "@/components/page-view-tracker"
 import { Button } from "@/components/ui/button"
 import type { Metadata } from "next"
 import Link from "next/link"
@@ -63,7 +62,6 @@ export default function MichaelNjoPage() {
     <div className="allow-capitalization">
       <Navbar />
       <main className="bg-white text-neutral-900">
-        <PageViewTracker title="Dr. Michael Njo Profile" />
         <section className="border-b border-neutral-200 bg-neutral-950 text-white">
           <div className="container mx-auto max-w-4xl px-4 py-16 text-center sm:py-20 md:px-6">
             <p className="text-xs font-semibold uppercase tracking-[0.35em] text-white/70">podcast feature</p>

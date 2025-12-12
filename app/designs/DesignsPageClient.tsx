@@ -1,7 +1,6 @@
 "use client"
 
 import Footer from "@/components/footer"
-import PageViewTracker from "@/components/page-view-tracker"
 import VideoPlayer from "@/components/video-player"
 import {
   Carousel,
@@ -118,7 +117,6 @@ export default function DesignsPageClient() {
 
   return (
     <div className="flex min-h-screen flex-col">
-      <PageViewTracker title="Captivating Designs" />
       <Navbar />
       <main className="flex-1">
         {/* Hero Section */}

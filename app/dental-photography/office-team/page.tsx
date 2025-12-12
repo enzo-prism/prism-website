@@ -5,7 +5,6 @@ import { Apple, ArrowRight, Calendar } from "lucide-react"
 
 import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
-import PageViewTracker from "@/components/page-view-tracker"
 import ScrollToTop from "@/components/scroll-to-top"
 import { Button } from "@/components/ui/button"
 import RecentShootsSection from "./recent-shoots-section"
@@ -163,7 +162,6 @@ export default function OfficeTeamPhotographyPage() {
           </div>
         </section>
 
-        <PageViewTracker title="Prism - Office & Team Photography" />
       </main>
       <Footer />
       <ScrollToTop />

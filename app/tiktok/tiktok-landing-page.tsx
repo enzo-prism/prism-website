@@ -7,7 +7,6 @@ import HeroLoopingVideo from "@/components/HeroLoopingVideo"
 import HeroSupportPill from "@/components/HeroSupportPill"
 import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
-import PageViewTracker from "@/components/page-view-tracker"
 import ScrollToTop from "@/components/scroll-to-top"
 import { Button } from "@/components/ui/button"
 
@@ -17,7 +16,6 @@ export default function TikTokLandingPage() {
       <Navbar />
       <ScrollToTop />
       <main className="flex-1">
-        <PageViewTracker title="TikTok Community" />
         <section className="relative overflow-hidden border-b border-neutral-200 bg-neutral-950 text-white">
           <div className="absolute inset-0">
             <div className="absolute inset-0 bg-gradient-to-br from-neutral-900/95 via-neutral-900/85 to-neutral-950" />

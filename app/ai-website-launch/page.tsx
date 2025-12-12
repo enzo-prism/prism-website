@@ -2,7 +2,6 @@ import type { Metadata } from "next"
 
 import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
-import PageViewTracker from "@/components/page-view-tracker"
 
 import AiWebsiteLaunchClientPage from "./client-page"
 
@@ -42,7 +41,6 @@ export const metadata: Metadata = {
 export default function AiWebsiteLaunchPage() {
   return (
     <div className="bg-white text-slate-900">
-      <PageViewTracker title="AI Website Launch" />
       <Navbar />
       <main>
         <AiWebsiteLaunchClientPage />

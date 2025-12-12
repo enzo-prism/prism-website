@@ -3,7 +3,6 @@ import Link from "next/link"
 
 import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
-import PageViewTracker from "@/components/page-view-tracker"
 import ScrollToTop from "@/components/scroll-to-top"
 import { Button } from "@/components/ui/button"
 
@@ -163,7 +162,6 @@ export default function BookAShootPage() {
           </div>
         </section>
 
-        <PageViewTracker title="Prism - Book a Shoot" />
       </main>
       <Footer />
       <ScrollToTop />

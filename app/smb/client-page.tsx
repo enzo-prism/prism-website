@@ -5,14 +5,12 @@ import { ArrowRight } from "lucide-react"
 import Link from "next/link"
 
 import AnimatedBackground from "@/components/animated-background"
-import PageViewTracker from "@/components/page-view-tracker"
 import { Button } from "@/components/ui/button"
 import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
 
 export default function SMBClientPage() {
   return (
     <div className="flex min-h-screen flex-col">
-      <PageViewTracker title="Prism — Small Business AI (GPT‑5)" />
       {/* Hero */}
       <section className="relative min-h-[100vh] flex items-center justify-center overflow-hidden" style={{ isolation: 'isolate' }}>
         {/* Elegant rainbow gradient video-like animation */}

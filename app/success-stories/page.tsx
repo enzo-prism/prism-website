@@ -4,7 +4,6 @@ import type { Metadata } from "next"
 
 import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
-import PageViewTracker from "@/components/page-view-tracker"
 import RevealOnScroll from "@/components/reveal-on-scroll"
 import { Button } from "@/components/ui/button"
 
@@ -52,7 +51,6 @@ export const metadata: Metadata = {
 export default function SuccessStoriesPage() {
   return (
     <div className="flex min-h-screen flex-col bg-white" style={{ textTransform: "none" }}>
-      <PageViewTracker title="Success Stories" />
       <Navbar />
       <main className="flex-1">
         <section className="bg-slate-900 text-white">

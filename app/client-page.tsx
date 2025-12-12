@@ -7,12 +7,10 @@ import ReferralSection from "@/components/home/ReferralSection"
 import SegmentsRail from "@/components/home/SegmentsRail"
 import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
-import PageViewTracker from "@/components/page-view-tracker"
 
 export default function ClientPage() {
   return (
     <div className="flex min-h-screen flex-col">
-      <PageViewTracker title="Prism Agency" />
       <Navbar />
       <main className="flex-1">
         {/* Hero Section */}

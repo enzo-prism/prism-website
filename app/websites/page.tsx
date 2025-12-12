@@ -1,7 +1,6 @@
 import FAQSection from "@/components/faq-section"
 import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
-import PageViewTracker from "@/components/page-view-tracker"
 import ScrollToTop from "@/components/scroll-to-top"
 import SeoTextSection from "@/components/seo-text-section"
 import SimpleBlogGrid from "@/components/simple-blog-grid"
@@ -241,7 +240,6 @@ export default async function WebsitesPage() {
 
   return (
     <div className="flex min-h-screen flex-col bg-white">
-      <PageViewTracker title="Websites Portfolio & Services" />
       <Navbar />
 
       <main className="flex-1">

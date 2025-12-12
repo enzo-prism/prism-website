@@ -2,7 +2,6 @@ import type { Metadata } from "next"
 
 import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
-import PageViewTracker from "@/components/page-view-tracker"
 import RevealOnScroll from "@/components/reveal-on-scroll"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
@@ -51,7 +50,6 @@ export const metadata: Metadata = {
 export default function GrowthPage() {
   return (
     <div className="flex min-h-screen flex-col bg-white">
-      <PageViewTracker title="Growth" />
       <Navbar />
       <main className="flex-1" style={{ textTransform: "none" }}>
         <section className="bg-slate-900 text-white">

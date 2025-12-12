@@ -4,7 +4,6 @@ import type { Metadata } from "next"
 import GetStartedForm from "@/components/forms/GetStartedForm"
 import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
-import PageViewTracker from "@/components/page-view-tracker"
 import RevealOnScroll from "@/components/reveal-on-scroll"
 
 const planLabels: Record<string, string> = {
@@ -39,7 +38,6 @@ export default async function GetStartedPage({
 
   return (
     <div className="flex min-h-screen flex-col bg-gradient-to-b from-slate-50 to-white">
-      <PageViewTracker title="Get Started" />
       <Navbar />
       <main className="flex-1" style={{ textTransform: "none" }}>
         <section className="mx-auto max-w-6xl px-6 py-16 sm:py-24">

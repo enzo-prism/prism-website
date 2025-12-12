@@ -1,19 +1,14 @@
-import ScrollManager from "@/components/scroll-manager"
 import type { Metadata, Viewport } from "next"
 import Script from "next/script"
 import type React from "react"
 import { Suspense } from "react"
 import "./globals.css"
 // Import the schema components
-import ErrorTracker from "@/components/error-tracker"
-import HotjarScript from "@/components/hotjar-script"
-import MCPHealthMonitor from "@/components/mcp-health-monitor"
-import PerformanceMonitor from "@/components/performance-monitor"
 import AnalyticsProvider from "@/components/analytics-provider"
 import { GlobalSchemaGraph } from "@/components/schema-markup"
+import RootClientMonitors from "@/components/root-client-monitors"
 import SentryContextProvider from "@/components/sentry-context-provider"
 import { GA_MEASUREMENT_ID, GOOGLE_ADS_ID, IS_ANALYTICS_ENABLED } from "@/lib/constants"
-
 
 export const metadata: Metadata = {
   title: {
@@ -107,6 +102,20 @@ export default function RootLayout({
             />
           </>
         )}
+        {process.env.NODE_ENV === "production" && (
+          <Script id="hotjar-loader" strategy="lazyOnload">
+            {`
+              (function(h,o,t,j,a,r){
+                h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+                h._hjSettings={hjid:3698826,hjsv:6};
+                a=o.getElementsByTagName('head')[0];
+                r=o.createElement('script');r.async=1;
+                r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+                a.appendChild(r);
+              })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+            `}
+          </Script>
+        )}
         {/* viewport is defined via metadata.viewport to avoid duplicates */}
         {/* Add mobile-specific meta tags for better scrolling */}
         <meta name="mobile-web-app-capable" content="yes" />
@@ -134,15 +143,11 @@ export default function RootLayout({
         The existing font-sans class from Tailwind will then use this font
         if tailwind.config.ts is updated accordingly.
     */}
-      <body className="m-0 p-0 w-full min-h-screen font-sans antialiased">
-        <GlobalSchemaGraph />
-        <ScrollManager />
-        <HotjarScript />
-        <ErrorTracker />
-        <MCPHealthMonitor />
-        <PerformanceMonitor />
-        <SentryContextProvider>
-          <Suspense fallback={null}>
+	      <body className="m-0 p-0 w-full min-h-screen font-sans antialiased">
+	        <GlobalSchemaGraph />
+	        <RootClientMonitors />
+	        <SentryContextProvider>
+	          <Suspense fallback={null}>
             <AnalyticsProvider>{children}</AnalyticsProvider>
           </Suspense>
         </SentryContextProvider>

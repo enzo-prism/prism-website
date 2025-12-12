@@ -2,7 +2,6 @@
 
 import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
-import PageViewTracker from "@/components/page-view-tracker"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
@@ -147,7 +146,6 @@ export default function ScholarshipPageClient() {
 
   return (
     <div className="flex min-h-screen flex-col bg-white text-neutral-900">
-      <PageViewTracker title="Scholarship" />
       <Navbar />
       <main className="flex-1">
         <section className="bg-white">

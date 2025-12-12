@@ -1,6 +1,5 @@
 import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
-import PageViewTracker from "@/components/page-view-tracker"
 import { Button } from "@/components/ui/button"
 import type { Metadata } from "next"
 import Link from "next/link"
@@ -24,7 +23,6 @@ export const metadata: Metadata = {
 export default function PricingThankYouPage() {
   return (
     <div className="flex min-h-screen flex-col bg-white">
-      <PageViewTracker title="Pricing Plan Submitted" />
       <Navbar />
       <main className="flex flex-1 items-center justify-center px-4 py-24 sm:py-32">
         <div className="flex w-full max-w-xl flex-col items-center gap-8 rounded-3xl border border-neutral-200 bg-white/60 p-10 text-center shadow-sm backdrop-blur">

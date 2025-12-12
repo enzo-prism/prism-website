@@ -1,7 +1,6 @@
 "use client"
 
 import Footer from "@/components/footer"
-import PageViewTracker from "@/components/page-view-tracker"
 import { Button } from "@/components/ui/button"
 import { trackCTAClick, trackNavigation } from "@/utils/analytics"
 import { Briefcase, Clock, Mail, MapPin } from "lucide-react"
@@ -69,7 +68,6 @@ export default function ReplitBuilderPage() {
 
   return (
     <div className="flex min-h-screen flex-col">
-      <PageViewTracker title="Replit Builder - Prism Careers" />
       <Navbar />
       <main className="flex-1">
         {/* Hero Section */}

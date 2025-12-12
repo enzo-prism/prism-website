@@ -3,7 +3,6 @@ import type { Metadata } from "next"
 import ContactForm from "@/components/forms/ContactForm"
 import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
-import PageViewTracker from "@/components/page-view-tracker"
 import { Button } from "@/components/ui/button"
 import { ContactPageSchema } from "@/components/schema-markup"
 
@@ -24,7 +23,6 @@ export const metadata: Metadata = {
 export default function ContactPage() {
   return (
     <div className="flex min-h-screen flex-col bg-white">
-      <PageViewTracker title="Contact" />
       <Navbar />
       <main className="flex-1" style={{ textTransform: "none" }}>
         <section className="px-6 py-16 sm:py-24">

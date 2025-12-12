@@ -1,7 +1,6 @@
 "use client"
 
 import Footer from "@/components/footer"
-import PageViewTracker from "@/components/page-view-tracker"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { trackCTAClick, trackNavigation } from "@/utils/analytics"
@@ -72,7 +71,6 @@ export default function CareersClientPage() {
 
   return (
     <div className="flex min-h-screen flex-col">
-      <PageViewTracker title="Careers at Prism" />
       <Navbar />
       <main className="flex-1">
         {/* Hero Section */}

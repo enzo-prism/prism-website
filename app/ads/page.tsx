@@ -1,7 +1,6 @@
 import FAQSection from "@/components/faq-section"
 import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
-import PageViewTracker from "@/components/page-view-tracker"
 import ScrollToTop from "@/components/scroll-to-top"
 import SimpleBlogGrid from "@/components/simple-blog-grid"
 import SimpleBlogPostCard from "@/components/simple-blog-post-card"
@@ -230,7 +229,6 @@ export default async function AdsPage() {
 
   return (
     <div className="flex min-h-screen flex-col bg-white">
-      <PageViewTracker title="Prism - Paid Ads Services" />
       <Navbar />
 
       <main className="flex-1">

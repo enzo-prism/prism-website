@@ -1,4 +1,9 @@
 import { withSentryConfig } from '@sentry/nextjs';
+import withBundleAnalyzer from "@next/bundle-analyzer";
+
+const withAnalyzer = withBundleAnalyzer({
+  enabled: process.env.ANALYZE === "true",
+});
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -117,7 +122,7 @@ images: {
   },
 }
 
-export default withSentryConfig(nextConfig, {
+export default withSentryConfig(withAnalyzer(nextConfig), {
   // For all available options, see:
   // https://github.com/getsentry/sentry-webpack-plugin#options
 

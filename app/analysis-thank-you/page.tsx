@@ -4,7 +4,6 @@ import Link from "next/link"
 
 import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
-import PageViewTracker from "@/components/page-view-tracker"
 import RevealOnScroll from "@/components/reveal-on-scroll"
 import { Button } from "@/components/ui/button"
 
@@ -19,7 +18,6 @@ export const metadata: Metadata = {
 export default function AnalysisThankYouPage() {
   return (
     <div className="flex min-h-screen flex-col bg-white">
-      <PageViewTracker title="Analysis Thank You" />
       <Navbar />
       <main className="flex-1" style={{ textTransform: "none" }}>
         <section className="px-6 py-16 sm:py-24">

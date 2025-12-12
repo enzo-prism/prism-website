@@ -6,7 +6,6 @@ import Navbar from "@/components/navbar"
 import SeoTextSection from "@/components/seo-text-section"
 import type { BlogFrontmatter } from "@/lib/mdx"
 import BlogCTAButton from "./BlogCTAButton"
-import BlogPageTracker from "./BlogPageTracker"
 import BlogPostsList from "./BlogPostsList"
 import { useEffect } from "react"
 import BlogEmailSignup from "@/components/blog-email-signup"
@@ -38,7 +37,6 @@ export default function BlogPage({ posts }: { posts: BlogPost[] }) {
 
   return (
     <div className="flex min-h-screen flex-col">
-      <BlogPageTracker />
       <Navbar />
       <main className="flex-1 relative">
         <div className="container mx-auto px-4 md:px-6">

@@ -5,7 +5,6 @@ import dynamic from "next/dynamic"
 import { useState, type ComponentType } from "react"
 
 import Footer from "@/components/footer"
-import PageViewTracker from "@/components/page-view-tracker"
 import {
   Carousel,
   CarouselContent,
@@ -792,7 +791,6 @@ export default function WineCountryRootCanalDesignReview() {
 
   return (
     <div className="flex min-h-screen flex-col bg-neutral-50 text-neutral-900">
-      <PageViewTracker title="Wine Country Root Canal Design Review" />
       <Navbar />
       <main className="flex-1">
         <section className="bg-white px-4 pb-16 pt-24 sm:pb-20 sm:pt-28 lg:pt-32">

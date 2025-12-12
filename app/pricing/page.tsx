@@ -1,6 +1,5 @@
 import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
-import PageViewTracker from "@/components/page-view-tracker"
 import type { Metadata } from "next"
 import PricingPageClient from "./client-page"
 
@@ -22,7 +21,6 @@ export const metadata: Metadata = {
 export default function PricingPage() {
   return (
     <div className="flex min-h-screen flex-col bg-white">
-      <PageViewTracker title="Prism Pricing" />
       <Navbar />
       <main className="flex-1">
         <PricingPageClient />

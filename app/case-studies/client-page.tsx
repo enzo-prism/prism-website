@@ -1,13 +1,11 @@
 import CaseStudiesList from "@/components/case-studies/CaseStudiesList"
 import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
-import PageViewTracker from "@/components/page-view-tracker"
 import { CASE_STUDIES } from "@/lib/case-study-data"
 
 export default function CaseStudiesPage() {
   return (
     <div className="flex min-h-screen flex-col">
-      <PageViewTracker title="Case Studies" />
       <Navbar />
       <main className="flex-1">
         <section className="px-4 py-12 md:py-16">

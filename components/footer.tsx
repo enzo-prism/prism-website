@@ -1,10 +1,5 @@
-"use client"
-
 import { LOGO_CONFIG } from "@/lib/constants"
-import { trackNavigation } from "@/utils/analytics"
 import Link from "next/link"
-import { useEffect, useState } from "react"
-import CoreImage from "./core-image"
 
 type FooterItem = {
   label: string
@@ -77,18 +72,6 @@ const socialLinks = [
 ]
 
 export default function Footer() {
-  const [isMounted, setIsMounted] = useState(false)
-  useEffect(() => setIsMounted(true), [])
-  if (!isMounted) {
-    return (
-      <footer className="border-t bg-white">
-        <div className="container mx-auto px-4 py-8 md:px-6">
-          <p className="text-xs text-neutral-500 lowercase">prism © 2023-2025.</p>
-        </div>
-      </footer>
-    )
-  }
-
   return (
     <footer className="border-t bg-white">
       <div className="container mx-auto px-4 py-12 md:px-6">
@@ -96,16 +79,12 @@ export default function Footer() {
           <div className="max-w-md space-y-4">
             <div className="flex items-center gap-2">
               <div className="relative h-8 w-8 overflow-hidden rounded-lg">
-                <CoreImage
-                  src={LOGO_CONFIG.src}
+                <img
+                  src={LOGO_CONFIG.fallbackSrc ?? LOGO_CONFIG.src}
                   alt={LOGO_CONFIG.alt}
                   width={32}
                   height={32}
                   className={`h-full w-full object-contain ${LOGO_CONFIG.className}`}
-                  priority
-                  fallbackSrc={LOGO_CONFIG.fallbackSrc}
-                  trackingId="footer_logo"
-                  quality={90}
                 />
               </div>
               <span className="text-2xl font-semibold lowercase">prism</span>
@@ -116,14 +95,12 @@ export default function Footer() {
               <Link
                 href={homeLink.href!}
                 className="inline-flex w-full items-center justify-center rounded-full border border-neutral-200 px-5 py-2 text-sm font-medium lowercase text-neutral-700 transition hover:border-neutral-900 hover:text-neutral-900 sm:w-auto"
-                onClick={() => trackNavigation("footer_home", homeLink.href!)}
               >
                 go to homepage
               </Link>
               <Link
                 href="/contact"
                 className="inline-flex w-full items-center justify-center rounded-full border border-neutral-900 bg-neutral-900 px-5 py-2 text-sm font-semibold lowercase text-white transition hover:bg-neutral-800 sm:w-auto"
-                onClick={() => trackNavigation("footer_contact_cta", "/contact")}
               >
                 contact prism
               </Link>
@@ -141,7 +118,6 @@ export default function Footer() {
                         <Link
                           href={item.href}
                           className="transition-colors hover:text-neutral-900"
-                          onClick={() => trackNavigation(`footer_${section.title}_${item.label}`, item.href!)}
                         >
                           {item.label}
                         </Link>
@@ -163,21 +139,18 @@ export default function Footer() {
               <Link
                 href="/privacy-policy"
                 className="hover:text-neutral-900"
-                onClick={() => trackNavigation("footer_privacy_policy", "/privacy-policy")}
               >
                 privacy
               </Link>
               <Link
                 href="/terms-of-service"
                 className="hover:text-neutral-900"
-                onClick={() => trackNavigation("footer_terms_of_service", "/terms-of-service")}
               >
                 terms
               </Link>
               <Link
                 href="/careers"
                 className="hover:text-neutral-900"
-                onClick={() => trackNavigation("footer_careers", "/careers")}
               >
                 careers
               </Link>
@@ -193,7 +166,6 @@ export default function Footer() {
                 rel="noopener noreferrer"
                 aria-label={`Prism on ${social.label}`}
                 className="hover:text-neutral-900"
-                onClick={() => trackNavigation(`footer_social_${social.id}`, social.href)}
               >
                 {social.label}
               </Link>

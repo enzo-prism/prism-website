@@ -1,7 +1,6 @@
 import Footer from "@/components/footer"
 import MinimalAppsList from "@/components/minimal-apps-list"
 import Navbar from "@/components/navbar"
-import PageViewTracker from "@/components/page-view-tracker"
 import ScrollProgressBar from "@/components/scroll-progress-bar"
 import SeoTextSection from "@/components/seo-text-section"
 import { Button } from "@/components/ui/button"
@@ -72,7 +71,6 @@ export default function AppsPage() {
   return (
     <div className="flex min-h-screen flex-col bg-white">
       <ScrollProgressBar />
-      <PageViewTracker title="Mobile Apps Portfolio & Services" />
       <Navbar />
       
       <main className="flex-1">

@@ -5,7 +5,6 @@ import Script from "next/script"
 
 import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
-import PageViewTracker from "@/components/page-view-tracker"
 import RevealOnScroll from "@/components/reveal-on-scroll"
 import { Button } from "@/components/ui/button"
 
@@ -34,7 +33,6 @@ export default function ThankYouPage() {
         }}
       />
       <div className="flex min-h-screen flex-col bg-white">
-        <PageViewTracker title="Thank You" />
         <Navbar />
         <main className="flex-1" style={{ textTransform: "none" }}>
           <section className="px-6 py-16 sm:py-24">

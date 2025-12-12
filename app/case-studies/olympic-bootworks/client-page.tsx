@@ -1,11 +1,9 @@
 "use client"
 
 import Footer from "@/components/footer"
-import PageViewTracker from "@/components/page-view-tracker"
 import { CaseStudySchema } from "@/components/schema-markup"
 import SocialShare from "@/components/social-share"
 import { Button } from "@/components/ui/button"
-import YouTubeVideoEmbed from "@/components/youtube-video-embed"
 import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
 import { CASE_STUDIES } from "@/lib/case-study-data"
 import { trackCTAClick } from "@/utils/analytics"
@@ -16,7 +14,6 @@ import { ReactNode, useEffect } from "react"
 
 const Navbar = dynamic(() => import("@/components/navbar"), { ssr: false })
 
-const HERO_VIDEO_ID = "VIDEO_PLACEHOLDER"
 const cs = CASE_STUDIES.find((item) => item.slug === "olympic-bootworks")
 
 type ListItem = {
@@ -485,11 +482,10 @@ export default function OlympicBootworksCaseStudy() {
 
   return (
     <div className="flex min-h-screen flex-col bg-white">
-      <PageViewTracker title="Case Study: Olympic Bootworks" />
       <Navbar />
       <main className="flex-1">
-        {/* Hero / Video Block */}
-        <section className="border-b bg-neutral-50 px-4 py-16 md:py-24">
+	        {/* Hero Block */}
+	        <section className="border-b bg-neutral-50 px-4 py-16 md:py-24">
           <div className="container mx-auto max-w-5xl space-y-12 px-4 md:px-6">
             <div className="space-y-4 max-w-3xl">
               <span className="inline-flex w-fit items-center rounded-full bg-neutral-900 px-4 py-1 text-sm font-medium text-white">
@@ -513,14 +509,17 @@ export default function OlympicBootworksCaseStudy() {
 
             <div className="grid items-start gap-8 lg:grid-cols-[1.2fr_1fr]">
               <div className="overflow-hidden rounded-xl border bg-white shadow-sm">
-                <YouTubeVideoEmbed videoId={HERO_VIDEO_ID} title="Olympic Bootworks Overview" className="w-full" />
+                <img
+                  src={cs?.structured?.heroImage ?? "/olympic-bootworks.png"}
+                  alt="Olympic Bootworks case study hero"
+                  className="h-auto w-full object-cover"
+                />
               </div>
               <div className="space-y-4">
                 <div className="space-y-3 rounded-xl border bg-white p-6 shadow-sm">
-                  <p className="text-neutral-700">30-60s overview video of Olympic Bootworks, Fantic bikes, and athlete testimonials.</p>
-                  <p className="text-neutral-700">See how Prism turned an iconic brick-and-mortar brand into a modern ecommerce and growth system.</p>
+                  <p className="text-neutral-700">Snapshot of the new Olympic Bootworks + Fantic Warehouse experience.</p>
+                  <p className="text-neutral-700">Scroll for products, stack, story, and outcomes.</p>
                 </div>
-                <p className="text-sm text-neutral-600">See how Prism turned an iconic brick-and-mortar brand into a modern ecommerce and growth system.</p>
               </div>
             </div>
           </div>
@@ -809,31 +808,24 @@ export default function OlympicBootworksCaseStudy() {
         imageUrl={cs?.structured?.heroImage ?? "https://design-prism.com/olympic-bootworks-hero.png"}
         datePublished={cs?.structured?.datePublished ?? "2025-02-15T00:00:00.000Z"}
         dateModified={cs?.structured?.dateModified ?? "2025-02-15T00:00:00.000Z"}
-        clientName="Olympic Bootworks"
-        outcome="Modern ecommerce and multi-site system for a legendary Tahoe ski shop and Fantic bike inventory."
-        breadcrumbs={[
-          { name: "Home", url: "https://design-prism.com" },
-          { name: "Case Studies", url: "https://design-prism.com/case-studies" },
-          { name: "Olympic Bootworks", url: "https://design-prism.com/case-studies/olympic-bootworks" },
-        ]}
-        organization={{
-          name: "Prism",
-          url: "https://design-prism.com",
-          logo: "https://design-prism.com/logo.png",
-          sameAs: ["https://www.linkedin.com/company/prism-digital", "https://www.youtube.com/@designprism"],
-        }}
-        video={{
-          name: "Olympic Bootworks Overview",
-          description: "Short overview of Olympic Bootworks, Fantic bikes, and athlete testimonials.",
-          embedUrl: `https://www.youtube.com/embed/${HERO_VIDEO_ID}`,
-          uploadDate: cs?.structured?.datePublished ?? "2025-02-15T00:00:00.000Z",
-          thumbnailUrl: cs?.structured?.heroImage ?? "https://design-prism.com/olympic-bootworks-hero.png",
-        }}
-        faq={[
-          {
-            question: "What did Prism deliver for Olympic Bootworks?",
-            answer:
-              "Full site rebuild, POS-linked ecommerce, multi-site architecture with Fantic Warehouse, analytics stack, Typeform flows, Google Ads, and Workspace setup.",
+	        clientName="Olympic Bootworks"
+	        outcome="Modern ecommerce and multi-site system for a legendary Tahoe ski shop and Fantic bike inventory."
+	        breadcrumbs={[
+	          { name: "Home", url: "https://design-prism.com" },
+	          { name: "Case Studies", url: "https://design-prism.com/case-studies" },
+	          { name: "Olympic Bootworks", url: "https://design-prism.com/case-studies/olympic-bootworks" },
+	        ]}
+	        organization={{
+	          name: "Prism",
+	          url: "https://design-prism.com",
+	          logo: "https://design-prism.com/logo.png",
+	          sameAs: ["https://www.linkedin.com/company/prism-digital", "https://www.youtube.com/@designprism"],
+	        }}
+	        faq={[
+	          {
+	            question: "What did Prism deliver for Olympic Bootworks?",
+	            answer:
+	              "Full site rebuild, POS-linked ecommerce, multi-site architecture with Fantic Warehouse, analytics stack, Typeform flows, Google Ads, and Workspace setup.",
           },
           {
             question: "What technology stack was used?",

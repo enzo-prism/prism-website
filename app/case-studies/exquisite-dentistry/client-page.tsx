@@ -1,7 +1,6 @@
 "use client"
 
 import Footer from "@/components/footer"
-import PageViewTracker from "@/components/page-view-tracker"
 import { CaseStudySchema } from "@/components/schema-markup"
 import SocialShare from "@/components/social-share"
 import { Button } from "@/components/ui/button"
@@ -60,7 +59,6 @@ export default function ExquisiteDentistryCaseStudy() {
 
   return (
     <div className="flex min-h-screen flex-col">
-      <PageViewTracker title="Exquisite Dentistry Case Study" />
       <Navbar />
       <main className="flex-1 bg-white">
         {/* Hero */}

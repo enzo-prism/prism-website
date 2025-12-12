@@ -2,7 +2,6 @@
 
 import Footer from "@/components/footer"
 import GetStartedCTA from "@/components/GetStartedCTA"
-import PageViewTracker from "@/components/page-view-tracker"
 import { Button } from "@/components/ui/button"
 import { trackCTAClick, trackNavigation } from "@/utils/analytics"
 import { ChevronDown, ChevronUp, Youtube } from "lucide-react"
@@ -38,7 +37,6 @@ export default function PodcastClientPage() {
 
   return (
     <div className="flex min-h-screen flex-col">
-      <PageViewTracker title="Prism Podcast" />
       <Navbar />
       <main className="flex-1">
         {/* Hero Section */}

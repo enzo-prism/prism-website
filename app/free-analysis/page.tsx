@@ -3,7 +3,6 @@ import type { Metadata } from "next"
 import FreeAnalysisForm from "@/components/forms/FreeAnalysisForm"
 import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
-import PageViewTracker from "@/components/page-view-tracker"
 
 export const metadata: Metadata = {
   title: "Free analysis | prism",
@@ -16,7 +15,6 @@ export const metadata: Metadata = {
 export default function FreeAnalysisPage() {
   return (
     <div className="flex min-h-screen flex-col bg-white text-black">
-      <PageViewTracker title="Free Analysis" />
       <Navbar />
       <main className="flex-1" style={{ textTransform: "none" }}>
         <section className="border-b border-black/10 bg-white px-6 py-16 sm:py-24">
