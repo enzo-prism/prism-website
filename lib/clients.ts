@@ -83,12 +83,6 @@ export const CLIENTS: ClientInfo[] = [
     category: "consulting",
   },
   {
-    title: "Leadership Summit",
-    location: "San Francisco, CA",
-    image: "/Leadership Summit.webp",
-    category: "consulting",
-  },
-  {
     title: "Rebellious Aging",
     location: "Los Gatos, CA",
     image: "/Rebellious Aging.webp",

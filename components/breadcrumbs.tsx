@@ -1,6 +1,5 @@
 import Link from "next/link"
 import { ChevronRight, Home } from "lucide-react"
-import { BreadcrumbSchema } from "./schema-markup"
 import { cn } from "@/lib/utils"
 
 type Breadcrumb = {
@@ -9,6 +8,17 @@ type Breadcrumb = {
 }
 
 export default function Breadcrumbs({ items, className }: { items: Breadcrumb[], className?: string }) {
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: items.map((item, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: item.name,
+      item: item.url,
+    })),
+  }
+
   // Filter out "home" if it's the first item to avoid duplication with the icon
   const cleanItems = items.filter((item, index) => {
     if (index === 0 && item.name.toLowerCase() === 'home' && item.url === '/') return false
@@ -17,7 +27,7 @@ export default function Breadcrumbs({ items, className }: { items: Breadcrumb[],
 
   return (
     <>
-      <BreadcrumbSchema items={items} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
       <nav 
         aria-label="Breadcrumb" 
         className={cn(

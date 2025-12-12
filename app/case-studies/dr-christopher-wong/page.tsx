@@ -1,25 +1,38 @@
 import type { Metadata } from "next"
 import ChristopherWongCaseStudy from "./client-page"
+import { CASE_STUDIES } from "@/lib/case-study-data"
+
+const cs = CASE_STUDIES.find((cs) => cs.slug === "dr-christopher-wong")
+const structured = cs?.structured
 
 export const metadata: Metadata = {
-  title: "dr. christopher wong case study | seamless transition",
-  description:
-    "how we helped a palo alto dental practice achieve 100% patient retention and sustainable growth through a multi-phase digital strategy.",
+  title: "case study: dr. wong - ai-powered dental m&a in palo alto",
+  description: "how prism de-risked dr. chris wong's palo alto dental m&a with a new dental website, seo, ads, and an ai-native stack.",
   alternates: {
     canonical: "/case-studies/dr-christopher-wong",
   },
   openGraph: {
-    title: "dr. christopher wong case study | seamless transition",
-    description:
-      "how we helped a palo alto dental practice achieve 100% patient retention and sustainable growth through a multi-phase digital strategy.",
+    title: "case study: dr. wong - ai-powered dental m&a in palo alto",
+    description: "how prism de-risked dr. chris wong's palo alto dental m&a with a new dental website, seo, ads, and an ai-native stack.",
     images: [
       {
-        url: "/dr-wong-polaroids.png",
+        url: structured?.heroImage ?? "/dr-wong-polaroids.png",
         width: 800,
         height: 450,
         alt: "polaroid photos of dr. christopher wong in his dental practice",
       },
     ],
+    type: "article",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "case study: dr. wong - ai-powered dental m&a in palo alto",
+    description: "how prism de-risked dr. chris wong's palo alto dental m&a with a new dental website, seo, ads, and an ai-native stack.",
+    images: structured?.heroImage ?? "/dr-wong-polaroids.png",
+  },
+  robots: {
+    index: true,
+    follow: true,
   },
 }
 
@@ -29,30 +42,24 @@ export default function ChristopherWongCaseStudyPage() {
       <section id="static-dr-wong-hero" className="bg-neutral-900 text-white">
         <div className="mx-auto flex max-w-4xl flex-col gap-4 px-6 py-16">
           <h1 className="text-3xl font-semibold tracking-tight md:text-4xl">
-            dr. christopher wong case study: seamless practice transition
+            case study: dr. wong - de-risking a dental m&a in palo alto
           </h1>
           <p className="text-lg leading-relaxed text-white/80">
-            when dr. wong took ownership of a beloved palo alto practice, prism rebuilt the patient journey end-to-end. we refreshed the identity, launched a conversion-ready site, and activated nurture campaigns so existing families stayed while new patients found the practice fast.
+            prism helped dr. chris wong take over an established palo alto practice from dr. hamamoto, retain the patient base, and modernize the online experience with a new dental website, local seo, paid ads, and an ai-native development stack.
           </p>
           <ul className="space-y-2 text-sm text-white/70">
-            <li>• 100% patient retention through the first 90 days of transition.</li>
-            <li>• 4x increase in appointment requests once the new scheduling funnel launched.</li>
-            <li>• Automated post-visit review sequences to keep local search visibility climbing.</li>
+            <li>story-led hero video, photography, and brand system to introduce the new owner.</li>
+            <li>rebuild from webflow to replit with ai cli workflows plus seo and local listings cleanup.</li>
+            <li>google + meta ads powered by gemini optimizations and a tap-to-review system.</li>
           </ul>
         </div>
       </section>
       <noscript>
         <section className="px-6 py-12">
           <div className="mx-auto max-w-4xl space-y-4 text-neutral-900">
-            <h2 className="text-2xl font-semibold tracking-tight">in brief: dr. wong&apos;s results</h2>
-            <p>
-              when dr. christopher wong acquired a long-standing palo alto dental practice, prism handled the brand refresh,
-              website rebuild, and automations that preserved patient loyalty while attracting new appointments.
-            </p>
-            <p>
-              the project delivered 100% patient retention during the handover, a fourfold increase in digital appointment
-              requests, and automated review campaigns that lifted local search visibility week over week.
-            </p>
+            <h2 className="text-2xl font-semibold tracking-tight">in brief: dr. wong&apos;s ai-powered transition</h2>
+            <p>prism rebuilt the online and offline experience for dr. chris wong as he acquired dr. hamamoto&apos;s palo alto practice.</p>
+            <p>the work included a new dental website, local seo cleanup, ai-assisted rebuilds on replit, story-driven video, and gemini-tuned google and meta ads - designed to retain existing patients and attract new ones.</p>
           </div>
         </section>
       </noscript>

@@ -29,6 +29,16 @@ export type CaseStudyMeta = {
   description: string
   slug: string
   segments: SegmentKey[]
+  structured?: {
+    heroImage?: string
+    heroVideoId?: string
+    datePublished?: string
+    dateModified?: string
+    outcomes?: string[]
+    focus?: string
+    scope?: string
+    canonicalUrl?: string
+  }
 }
 
 export const CASE_STUDIES: CaseStudyMeta[] = [
@@ -44,6 +54,22 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
       "How we helped achieve 100% patient retention during practice transition and drive sustainable growth.",
     slug: "dr-christopher-wong",
     segments: ["dental", "local"],
+    structured: {
+      heroImage: "https://design-prism.com/dr-wong-polaroids.png",
+      heroVideoId: "HrksJeYb02Q",
+      datePublished: "2025-01-15T00:00:00.000Z",
+      dateModified: "2025-01-15T00:00:00.000Z",
+      outcomes: [
+        "The M&A transition was supported by a clear, story-driven online presence rather than leaving patients to guess what happened.",
+        "The practice now runs on a modern dental website with strong SEO foundations and clean UX.",
+        "Local presence and review profiles now reflect Dr. Wong as the primary dentist, not just the previous owner.",
+        "Acquisition has shifted from passive word-of-mouth to active, AI-optimized ads and Google campaigns.",
+        "The development and design stack is modern, AI-native, and capable of continuous improvement rather than one-off redesigns.",
+      ],
+      focus: "Dental M&A handoff",
+      scope: "Website, SEO, ads, AI stack",
+      canonicalUrl: "https://design-prism.com/case-studies/dr-christopher-wong",
+    },
   },
   {
     id: "2",
@@ -66,6 +92,22 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
     description: "Full-stack digital overhaul: brand-new site, e-commerce build, analytics & growth program.",
     slug: "olympic-bootworks",
     segments: ["local"],
+    structured: {
+      heroImage: "https://design-prism.com/olympic-bootworks-hero.png",
+      heroVideoId: "VIDEO_PLACEHOLDER",
+      datePublished: "2025-02-15T00:00:00.000Z",
+      dateModified: "2025-02-15T00:00:00.000Z",
+      outcomes: [
+        "Traffic, search impressions, and online engagement have compounded over time.",
+        "Olympic Bootworks now runs a two-site system: a brand site and a Fantic Warehouse ecommerce microsite.",
+        "Fantic inventory gained a real online sales channel instead of relying only on in-store sales.",
+        "The business escaped legacy technical debt on website and email, moving to owned infrastructure.",
+        "Prism gained deep ecommerce and POS integration experience feeding the Prism flywheel.",
+      ],
+      focus: "Ecommerce + multi-site launch",
+      scope: "Website rebuild, ecommerce, POS-linked catalog, multi-site, analytics, workspace",
+      canonicalUrl: "https://design-prism.com/case-studies/olympic-bootworks",
+    },
   },
   {
     id: "4",
@@ -277,5 +319,20 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
     description: "Modern, trusted web presence with clear services and booking paths.",
     slug: "mataria-dental-group",
     segments: ["dental", "local"],
+    structured: {
+      heroImage: "https://design-prism.com/mataria-hero.png",
+      heroVideoId: "VIDEO_PLACEHOLDER",
+      datePublished: "2025-02-01T00:00:00.000Z",
+      dateModified: "2025-02-01T00:00:00.000Z",
+      outcomes: [
+        "Mataria Dental Group relaunched with a modern dental website, aligned local listings, and structured analytics.",
+        "Patients received a clear, human story about Dr. Mataria and why the transition benefits them.",
+        "New channels and campaigns (Instagram, TikTok, giveaways) drove awareness with real video and team content.",
+        "Prism captured scar tissue that shaped the later AI-native growth model.",
+      ],
+      focus: "Dental M&A launch",
+      scope: "Website, listings, content, social ads, analytics",
+      canonicalUrl: "https://design-prism.com/case-studies/mataria-dental-group",
+    },
   },
 ]
