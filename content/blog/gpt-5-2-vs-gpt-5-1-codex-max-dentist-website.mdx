@@ -1,0 +1,244 @@
+---
+title: "gpt‑5.2 vs gpt‑5.1 codex max: i one‑shotted a full dentist website from an empty repo"
+description: "a real‑world empty‑repo one‑shot build comparing gpt‑5.2 vs gpt‑5.1 codex max on a full multi‑page dentist website."
+date: "2025-12-12"
+category: "AI & Dentistry"
+gradientClass: "bg-gradient-to-br from-amber-300/30 via-sky-300/30 to-violet-300/30"
+openGraph:
+  title: "gpt‑5.2 vs gpt‑5.1 codex max: i one‑shotted a full dentist website from an empty repo"
+  description: "a real‑world empty‑repo one‑shot build comparing gpt‑5.2 vs gpt‑5.1 codex max on a full multi‑page dentist website."
+  url: "https://www.design-prism.com/blog/gpt-5-2-vs-gpt-5-1-codex-max-dentist-website"
+  siteName: "prism"
+  images:
+    - url: "https://www.design-prism.com/api/og/blog/gpt-5-2-vs-gpt-5-1-codex-max-dentist-website"
+      width: 1200
+      height: 630
+      alt: "GPT‑5.2 vs GPT‑5.1 Codex Max dentist website one‑shot test"
+  locale: "en_US"
+  type: "article"
+  publishedTime: "2025-12-12T00:00:00.000Z"
+  authors: ["Enzo Sison"]
+twitter:
+  card: "summary_large_image"
+  title: "gpt‑5.2 vs gpt‑5.1 codex max dentist website test"
+  description: "we asked gpt‑5.2 to ship a multi‑page dentist website from an empty repo. here’s the honest scorecard."
+  images: ["https://www.design-prism.com/api/og/blog/gpt-5-2-vs-gpt-5-1-codex-max-dentist-website"]
+canonical: "https://www.design-prism.com/blog/gpt-5-2-vs-gpt-5-1-codex-max-dentist-website"
+---
+
+import YouTubeVideoEmbed from "@/components/youtube-video-embed"
+import { VideoObjectSchema } from "@/components/schema-markup"
+
+*By Enzo Sison — Founder, Prism*
+
+<VideoObjectSchema
+  videoId="gpt-5-2-vs-gpt-5-1-codex-max-dentist-website"
+  name="GPT‑5.2 vs GPT‑5.1 Codex Max dentist website one‑shot"
+  description="Prism runs GPT‑5.2 through the empty‑repo dentist website control prompt and compares speed and polish to GPT‑5.1 Codex Max."
+  thumbnailUrl="https://img.youtube.com/vi/OwPHePKX71o/hqdefault.jpg"
+  uploadDate="2025-12-12T00:00:00.000Z"
+  contentUrl="https://youtu.be/OwPHePKX71o"
+  embedUrl="https://www.youtube.com/embed/OwPHePKX71o"
+  creatorName="Prism"
+/>
+
+most founders don’t care about “benchmarks.”
+
+they care about one thing:
+
+**can i ship a clean, trustworthy website that brings in leads — without spending weeks in dev hell?**
+
+so i ran a real-world test.
+
+i used the same challenge we used in our last episode: start with a completely empty repo and ask an ai model to build a full business website from scratch — in one shot.
+
+this time, we tested **gpt‑5.2**.
+
+---
+
+## watch the experiment
+
+<YouTubeVideoEmbed videoId="OwPHePKX71o" title="GPT‑5.2 vs GPT‑5.1 Codex Max dentist website experiment" className="mb-8" />
+
+---
+
+## the setup (what we actually did)
+
+here’s the simplest version of the test:
+
+- **starting point:** empty repo  
+- **task:** generate a complete marketing website for a dental practice (“prism dental”)  
+- **workflow:** run the build through an agentic coding flow (codex-style), pick the model, set reasoning high, give it the ability to create files, and let it run  
+- **evaluation:** open the site and look for the things that usually break:
+  - layout / spacing issues  
+  - broken buttons  
+  - ugly typography  
+  - weird responsiveness (mobile + that awkward mid-size window)  
+  - pages that don’t connect properly  
+  - obvious front-end errors  
+
+> quick safety note: if you ever run agentic tooling with “full access,” do it in a throwaway repo and review every change. never expose api keys in recordings or screenshots.
+
+---
+
+## the results (the honest version)
+
+### it took longer…
+**gpt‑5.2 runtime:** 16 minutes 27 seconds  
+(our prior run with gpt‑5.1 codex max took ~10 minutes)
+
+so yeah — it’s slower.
+
+### …but the output was clearly better
+and i’m not talking “barely better.”
+
+i’m talking: **visibly better design quality** the moment the site loads.
+
+specifically, what stood out:
+
+- the **typography** felt more intentional  
+- the **spacing** looked cleaner (less “ai chaos”)  
+- the **color palette** worked — elements actually felt like they belonged together  
+- the **buttons** didn’t have the usual weird broken states  
+- overall, **far fewer front-end issues** compared to the prior test  
+
+### responsiveness passed the real test
+mobile layout looked good.
+
+and the surprise: the “weird middle size window” test (where a lot of ai-generated sites fall apart) still looked solid.
+
+### it shipped multiple pages, not just a homepage
+the build wasn’t just a landing page. it generated a real structure:
+
+- service pages (ex: cosmetic dentistry, orthodontics)  
+- a blog experience (with navigation + breadcrumbs)  
+- an appointment/booking flow (at least as a page / route)  
+
+is it “production-ready”? not automatically. but it’s not a toy either.
+
+---
+
+## what broke (because something always breaks)
+
+here’s the blunt truth:
+
+**the footer had the main visible design errors.**
+
+everything else looked surprisingly clean for a one-shot build.
+
+there were also a couple moments where blog navigation felt a little buggy / inconsistent — not catastrophic, but noticeable.
+
+and i couldn’t pull up a sitemap view in the moment (not a dealbreaker, but it matters if you care about indexing + internal linking).
+
+---
+
+## the bigger takeaway: “speed vs quality” is real
+
+this is what the run made obvious:
+
+- **gpt‑5.1** was faster, but more likely to ship “rough edges”  
+- **gpt‑5.2** took longer, but delivered a more polished design baseline and fewer ui errors  
+
+if you’re a founder, that tradeoff is familiar:
+
+**you can ship fast, or you can ship clean.**  
+what’s new is that ai is starting to let you do both — *if you validate the output like a pro.*
+
+---
+
+## why this matters for founders (not engineers)
+
+if you run a local business (dentist, law firm, med spa, home services, etc.), your website’s job is simple:
+
+1) get found  
+2) earn trust fast  
+3) make it stupid-easy to book/call  
+
+ai can now get you 70% of the way there *fast*.
+
+but that last 30% is where money is made (or lost).
+
+because founders don’t lose leads from “the repo wasn’t elegant.”
+
+they lose leads because:
+
+- the site feels untrustworthy  
+- the offer isn’t clear in 5 seconds  
+- the booking flow is confusing  
+- mobile layout is awkward  
+- pages load slow  
+- tracking is missing  
+- seo basics aren’t in place  
+- nobody follows up on form leads  
+
+ai won’t reliably handle all of that out of the box.
+
+so here’s the right mental model:
+
+> **use ai to generate the first draft. use professionals (and a checklist) to make it convert.**
+
+---
+
+## the “don’t be stupid” launch checklist (what we check before shipping)
+
+if you’re going to use ai output for a real business site, run this checklist:
+
+### conversion + trust
+- is the headline clear in 5 seconds?
+- is there a single primary call-to-action (“book”, “call”, “get quote”)?
+- do you have real proof? (reviews, before/after, certifications, photos, guarantees)
+- does every page end with a next step?
+
+### mobile-first reality
+- test on an actual phone
+- test the annoying middle-width screen size
+- make sure tap targets are big enough and forms aren’t painful
+
+### technical basics
+- page speed isn’t terrible
+- images aren’t massive
+- no obvious layout shifting / broken spacing
+- forms actually deliver leads where you’ll see them
+
+### seo basics (local businesses especially)
+- each service has its own page
+- titles + descriptions aren’t generic
+- your name/address/phone is consistent
+- internal links make sense
+- there’s a simple blog structure (if you plan to publish)
+
+### ops + measurement
+- analytics installed
+- call tracking (if calls matter)
+- form notifications tested
+- a follow-up process exists (most businesses drop the ball here)
+
+---
+
+## what i’d do next to make this build “client-ready”
+
+based on what i saw, the fast path to production quality would be:
+
+1) fix the footer layout properly  
+2) tighten the copy so it matches a real offer + real location + real proof  
+3) validate every link + route  
+4) wire up a real booking system (or at least a high-converting inquiry flow)  
+5) run a performance pass (images, fonts, loading)  
+6) add tracking + conversion events  
+
+that’s the difference between a “cool demo” and a “site that prints leads.”
+
+---
+
+## bottom line
+
+gpt‑5.2 is a real step up for one-shot website generation.
+
+it took longer — but the design quality and the lack of front-end errors made it worth it.
+
+if you want to mess around with this yourself, do it.
+
+but if you want the outcome that actually matters — **a fast, mobile-first website that gets you found, trusted, and chosen** — that’s what we build at prism.
+
+if you want help, reach out and we’ll map your offer, design direction, and launch plan into a site that converts.
+
