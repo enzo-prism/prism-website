@@ -117,6 +117,18 @@ export default function SeoOnPagePage() {
             explore off-page seo
           </Link>
           <Link
+            href="/dental-practice-seo-expert"
+            className="inline-flex items-center rounded-full border border-neutral-200 px-6 py-3 text-sm font-semibold lowercase text-neutral-700"
+          >
+            seo for dentists
+          </Link>
+          <Link
+            href="/blog/dental-practice-rank-higher-google-search"
+            className="inline-flex items-center rounded-full border border-neutral-200 px-6 py-3 text-sm font-semibold lowercase text-neutral-700"
+          >
+            rank higher in google
+          </Link>
+          <Link
             href="/pricing"
             className="inline-flex items-center rounded-full bg-neutral-900 px-6 py-3 text-sm font-semibold lowercase text-white"
           >

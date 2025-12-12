@@ -434,11 +434,29 @@ export default async function WebsitesPage() {
                     </div>
                     <div className="flex h-full flex-col justify-between rounded-2xl border border-neutral-200 bg-neutral-50 p-6">
                       <div>
-                        <span className="text-xs font-semibold uppercase tracking-[0.28em] text-neutral-400">impact focus</span>
+                        <span className="text-xs font-semibold uppercase tracking-[0.28em] text-neutral-400">
+                          impact focus
+                        </span>
                         <p className="mt-2 text-sm font-semibold text-neutral-900">{playbook.spotlight}</p>
                         <p className="mt-3 text-sm text-neutral-600">{playbook.summary}</p>
+                        {playbook.id === "dental" ? (
+                          <p className="mt-4 text-sm text-neutral-600">
+                            need{" "}
+                            <Link
+                              href="/dental-website"
+                              className="font-semibold text-neutral-900 underline underline-offset-4"
+                            >
+                              dentist website design
+                            </Link>
+                            ? see the dental website blueprint.
+                          </p>
+                        ) : null}
                       </div>
-                      <Button asChild variant="outline" className="mt-6 inline-flex items-center justify-center rounded-full px-6">
+                      <Button
+                        asChild
+                        variant="outline"
+                        className="mt-6 inline-flex items-center justify-center rounded-full px-6"
+                      >
                         <Link href={playbook.href}>
                           {playbook.ctaLabel}
                           <ArrowRight className="ml-2 h-4 w-4" />

@@ -333,6 +333,13 @@ export default function ServicesPage() {
                 </div>
               ))}
             </div>
+            <div className="mx-auto mt-10 max-w-4xl rounded-3xl border border-neutral-200 bg-neutral-50 p-6 text-sm text-neutral-700">
+              dental teams running paid social: see{" "}
+              <Link href="/tiktok-ads-for-dentists" className="font-semibold text-neutral-900 underline underline-offset-4">
+                tiktok ads for dentists
+              </Link>
+              .
+            </div>
           </div>
         </section>
 

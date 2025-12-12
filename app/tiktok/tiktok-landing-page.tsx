@@ -41,6 +41,13 @@ export default function TikTokLandingPage() {
                       We design websites, systems, and campaigns that attract customers, drive revenue, and make your brand
                       stand out.
                     </p>
+                    <p className="text-sm text-neutral-200">
+                      run a dental practice? see{" "}
+                      <Link href="/tiktok-ads-for-dentists" className="font-semibold text-white underline underline-offset-4">
+                        tiktok ads for dentists
+                      </Link>
+                      .
+                    </p>
                   </div>
                 </div>
                 <div className="flex flex-col gap-3 sm:flex-row sm:items-center">

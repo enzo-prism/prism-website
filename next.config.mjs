@@ -63,6 +63,18 @@ images: {
       // Friendly shortpaths for new nav structure
       { source: '/design', destination: '/designs', permanent: true },
       { source: '/growth', destination: '/prism-flywheel', permanent: true },
+      { source: '/seo-consultant-for-dentists', destination: '/dental-practice-seo-expert', permanent: true },
+      { source: '/seo-for-dentists', destination: '/dental-practice-seo-expert', permanent: true },
+      { source: '/dentist-seo', destination: '/dental-practice-seo-expert', permanent: true },
+      { source: '/dental-seo', destination: '/dental-practice-seo-expert', permanent: true },
+      { source: '/dentist-website-design', destination: '/dental-website', permanent: true },
+      { source: '/dental-website-design', destination: '/dental-website', permanent: true },
+      { source: '/ai-search-for-dental-practice', destination: '/blog/ai-search-for-dental-practice', permanent: true },
+      { source: '/dentist-tiktok-ads', destination: '/tiktok-ads-for-dentists', permanent: true },
+      { source: '/tiktok-ads-dental-practice', destination: '/tiktok-ads-for-dentists', permanent: true },
+      { source: '/meta-ads-for-dentists', destination: '/facebook-ads-for-dentists', permanent: true },
+      { source: '/instagram-ads-for-dentists', destination: '/facebook-ads-for-dentists', permanent: true },
+      { source: '/dental-practice-rank-higher-google-search', destination: '/blog/dental-practice-rank-higher-google-search', permanent: true },
 
       // Old content -> closest current destinations
       { source: '/dr-kris-hamamoto', destination: '/', permanent: true },
@@ -93,7 +105,7 @@ images: {
       { source: '/prism-guides/digital-dental-blueprint', destination: '/blog', permanent: true },
       { source: '/prism-guides/referral-strategies', destination: '/blog', permanent: true },
       { source: '/resources/design', destination: '/services', permanent: true },
-      { source: '/dental-clinic-website-design', destination: '/services', permanent: true },
+      { source: '/dental-clinic-website-design', destination: '/dental-website', permanent: true },
       { source: '/pod-2-arash', destination: '/podcast', permanent: true },
       { source: '/blog/mobile-app-ux', destination: '/blog', permanent: true },
       { source: '/mission', destination: '/about', permanent: true },

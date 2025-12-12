@@ -11,6 +11,11 @@ Quick reference for the pages we edit most often.
 - Includes hero, founder VSL, benefits, showcases, vertical playbooks, FAQs, SEO copy, and service schema.
 - The VSL near the hero is the canonical marketing video (reused on `/ai-website-launch`); changes here should propagate to any page referencing the same clip.
 
+## Dental Website (`app/dental-website/page.tsx`)
+- Dentist-focused website page targeting “dentist website design”.
+- Includes `ServiceSchema` plus FAQ structured data (via `FAQSchema`) and cross-links into the dental SEO and ads funnels.
+- Aliases in `next.config.mjs` (redirect to `/dental-website`): `/dentist-website-design`, `/dental-website-design`, `/dental-clinic-website-design`.
+
 ## Free Analysis (`app/free-analysis/page.tsx`)
 - Minimal layout: hero card + deliverables card + `FreeAnalysisForm`.
 - Update copy here when the offer changes.
@@ -49,6 +54,13 @@ Each uses card-based layouts: confirmation message + kickoff-call CTA + contact 
 - Includes two dedicated dental-photography sections: the dark “On-site storytelling” block (linking to `/dental-photography/office-team` + `/book-a-shoot`, using the `dentalPhotographyHighlights` array) and the light “Before & after mastery” block (linking to `/dental-photography/before-after` + `/dental-photography/office-team`, using `beforeAfterGuideHighlights`). Update the respective highlight arrays when editing those bullets so layout components stay in sync.
 - Keep both sections intact so this page keeps funneling visitors toward the photography hub and DIY guide without duplicating copy in multiple files.
 
+## SEO for Dentists (`app/dental-practice-seo-expert/page.tsx`)
+
+- SEO-focused landing page targeting “seo for dentists” (and related dental SEO consultant queries), linking into the broader `/seo` and dental funnels.
+- Aliases in `next.config.mjs` (redirect to `/dental-practice-seo-expert`): `/seo-consultant-for-dentists`, `/seo-for-dentists`, `/dentist-seo`, `/dental-seo`.
+- Includes a dental-focused `ServiceSchema` plus FAQ structured data (via `FAQSection`) to help search engines understand the offer.
+- Supporting dentist SEO guides live in `content/blog/` (e.g., `/blog/dental-practice-rank-higher-google-search`, `/blog/ai-search-for-dental-practice`).
+
 ## Local Listings (`app/local-listings/page.tsx`)
 - Hero, benefits grid, platform cards, and the founder VSL render before the audience + FAQ sections.
 - The video mirrors the copy on `/websites` but points at the local-listings Cloudinary asset—update the `VideoPlayer` block in this file when you need a new transcript or duration.
@@ -56,6 +68,17 @@ Each uses card-based layouts: confirmation message + kickoff-call CTA + contact 
 ## Ads (`app/ads/page.tsx`)
 - Same layout pattern as Local Listings: hero, benefits, platforms, audience grid, then the ads-focused founder VSL.
 - `VideoPlayer` is imported directly in `app/ads/page.tsx`; keep schema metadata up to date (id, upload date, duration) when swapping clips so Google’s video rich results stay accurate.
+
+## Facebook Ads for Dentists (`app/facebook-ads-for-dentists/page.tsx`)
+
+- Dentist-focused paid social landing page targeting “facebook ads for dentists”.
+- Includes `ServiceSchema` plus on-page FAQ structured data (via `FAQSection`) and cross-links into `/ads`, `/google/dental-ads`, and `/tiktok-ads-for-dentists`.
+- Aliases in `next.config.mjs` (redirect to `/facebook-ads-for-dentists`): `/meta-ads-for-dentists`, `/instagram-ads-for-dentists`.
+
+## TikTok Ads for Dentists (`app/tiktok-ads-for-dentists/page.tsx`)
+
+- Dentist-focused paid social landing page targeting “tiktok ads for dentists”.
+- Includes `ServiceSchema` plus on-page FAQ structured data (via `FAQSection`) and cross-links into `/ads` and `/google/dental-ads`.
 
 ## Designs (`app/designs/DesignsPageClient.tsx`)
 - The hero, quote slider, CTA blocks, and the founder VSL all live inside the client component.

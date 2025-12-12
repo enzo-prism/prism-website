@@ -11,6 +11,7 @@ import DentalTrendsChart from "@/components/dental-trends-chart"
 import DentalClientsSection from "@/components/dental-clients-section"
 import VideoCarousel from "@/components/video-carousel"
 import HeroLoopingVideo from "@/components/HeroLoopingVideo"
+import { FAQSchema, ServiceSchema } from "@/components/schema-markup"
 
 const lovePoints = [
   {
@@ -28,6 +29,62 @@ const lovePoints = [
     description:
       "clear calls-to-action, instant scheduling, and mobile-first design turn browsers into booked visits."
   }
+]
+
+const designEssentials = [
+  {
+    title: "clear treatment pages",
+    description:
+      "service pages (implants, invisalign, emergency, whitening) written for patient intent, with FAQs, next steps, and financing context.",
+  },
+  {
+    title: "trust signals that reduce anxiety",
+    description:
+      "provider bios, reviews, real photos/video, and what-to-expect sections so patients feel confident choosing you.",
+  },
+  {
+    title: "fast path to booking",
+    description:
+      "call + form + online booking designed for mobile, wired to the right team, and measured with conversion tracking.",
+  },
+  {
+    title: "ada-aware UX",
+    description:
+      "accessible patterns (semantic headings, readable typography, keyboard support, alt text) so more patients can use your site.",
+  },
+  {
+    title: "seo-ready foundations",
+    description:
+      "clean information architecture, internal linking, and schema so google understands your services and your practice.",
+  },
+  {
+    title: "migration + ownership",
+    description:
+      "a clean cutover with redirects, analytics, and ownership of your domain and accounts — so you’re not stuck again later.",
+  },
+]
+
+const designExamples = [
+  {
+    label: "Dr. Christopher Wong",
+    description: "practice transition + modern rebuild",
+    href: "/case-studies/dr-christopher-wong",
+  },
+  {
+    label: "Mataria Dental Group",
+    description: "multi-location clarity + growth foundation",
+    href: "/case-studies/mataria-dental-group",
+  },
+  {
+    label: "Family First Smile Care",
+    description: "patient-first experience + conversion upgrades",
+    href: "/case-studies/family-first-smile-care",
+  },
+  {
+    label: "Wine Country Root Canal",
+    description: "specialty positioning + high-trust journey",
+    href: "/case-studies/wine-country-root-canal",
+  },
 ]
 
 const revenueHighlights = [
@@ -83,6 +140,16 @@ const faqs = [
       "no. we map every legacy URL, keep metadata intact, and submit the new structure to search engines so visibility only improves."
   },
   {
+    question: "what should a dentist website include?",
+    answer:
+      "clear treatment pages, provider bios, reviews, and a simple booking path — plus fast performance, accessibility, and seo-ready structure so patients (and google) understand you quickly.",
+  },
+  {
+    question: "how much does dentist website design cost?",
+    answer:
+      "it depends on scope: number of locations, services, integrations, content needs, and whether you’re migrating from an old provider. we scope around what will actually move calls and bookings, not a one-size template.",
+  },
+  {
     question: "can you integrate specialty services like ortho or implants?",
     answer:
       "yes. we build dedicated funnels with financing options, smile simulations, and testimonial blocks tailored to each specialty."
@@ -95,24 +162,24 @@ const faqs = [
 ]
 
 export const metadata: Metadata = {
-  title: "modern dental websites that convert patients | prism",
+  title: "dentist website design that converts | prism",
   description:
-    "see how prism designs high-converting dental websites, drives new treatment revenue, and transitions you from an old provider without downtime.",
+    "dentist website design for practices that want more booked patients — fast, ada-aware, seo-ready, and built for simple scheduling. stress-free provider migrations included.",
   alternates: {
     canonical: "https://www.design-prism.com/dental-website"
   },
   openGraph: {
-    title: "modern dental websites that convert patients | prism",
+    title: "dentist website design that converts | prism",
     description:
-      "prism builds dentist websites that load fast, rank locally, and keep schedules full. seamless handoff from your old provider included.",
+      "dentist website design that loads fast, ranks locally, and keeps schedules full — with a seamless handoff from your old provider.",
     url: "https://www.design-prism.com/dental-website",
     type: "website"
   },
   twitter: {
     card: "summary_large_image",
-    title: "modern dental websites that convert patients | prism",
+    title: "dentist website design that converts | prism",
     description:
-      "dentists choose prism for beautiful sites, measurable growth, and zero-stress migrations from legacy providers."
+      "dentist website design built for booked demand, clean migrations, and measurable growth."
   },
   robots: {
     index: true,
@@ -133,10 +200,10 @@ export default function DentalWebsitePage() {
                 dental website blueprint
               </span>
               <h1 className="text-4xl font-semibold tracking-tight md:text-5xl lg:text-6xl">
-                dental websites built to win treatments — not just look pretty.
+                dentist website design that wins treatments — not just looks pretty.
               </h1>
               <p className="mt-6 max-w-2xl text-base text-neutral-200 md:text-lg">
-                prism designs conversion-first sites for dentists that increase case acceptance, showcase clinical excellence, and keep phones ringing. every build includes a stress-free transfer from your previous provider.
+                prism delivers dentist website design that increases case acceptance, showcases clinical excellence, and keeps phones ringing. every build includes a stress-free transfer from your previous provider.
               </p>
               <div className="mt-8 flex flex-wrap justify-center gap-3">
                 <Button asChild size="lg" className="rounded-full px-8 py-3 text-base lowercase">
@@ -178,6 +245,30 @@ export default function DentalWebsitePage() {
                     </div>
                   ))}
                 </div>
+                <p className="text-sm text-neutral-600">
+                  want the dentist-specific ai overviews checklist? read{" "}
+                  <Link
+                    href="/blog/ai-search-for-dental-practice"
+                    className="font-medium text-neutral-900 underline decoration-neutral-200 underline-offset-4"
+                  >
+                    ai search for dental practice
+                  </Link>
+                  . want the step-by-step checklist to rank higher in google? read{" "}
+                  <Link
+                    href="/blog/dental-practice-rank-higher-google-search"
+                    className="font-medium text-neutral-900 underline decoration-neutral-200 underline-offset-4"
+                  >
+                    dental practice rank higher in google search
+                  </Link>
+                  . want the website checklist? read{" "}
+                  <Link
+                    href="/blog/dentist-website-design-checklist"
+                    className="font-medium text-neutral-900 underline decoration-neutral-200 underline-offset-4"
+                  >
+                    dentist website design checklist
+                  </Link>
+                  .
+                </p>
               </div>
               <div className="rounded-3xl border border-neutral-200 bg-white p-8 shadow-sm">
                 <h3 className="text-lg font-semibold text-neutral-900">dentists see results within weeks</h3>
@@ -191,6 +282,58 @@ export default function DentalWebsitePage() {
                   <ArrowRight className="h-4 w-4" aria-hidden />
                 </div>
               </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="px-4 py-16 sm:py-20">
+          <div className="container mx-auto max-w-5xl">
+            <div className="mx-auto max-w-3xl text-center">
+              <p className="text-sm font-medium uppercase tracking-[0.32em] text-neutral-500">dentist website design</p>
+              <h2 className="text-3xl font-semibold tracking-tight text-neutral-900 sm:text-4xl">
+                what your website should include
+              </h2>
+              <p className="mt-4 text-base leading-relaxed text-neutral-600">
+                the goal isn’t “a prettier site.” it’s a calmer, clearer experience that patients trust — and a structure google can understand.
+              </p>
+            </div>
+
+            <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {designEssentials.map((item) => (
+                <div key={item.title} className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm">
+                  <h3 className="text-lg font-semibold text-neutral-900">{item.title}</h3>
+                  <p className="mt-3 text-sm text-neutral-600">{item.description}</p>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-12 rounded-3xl border border-neutral-200 bg-neutral-50 p-6 shadow-sm sm:p-8">
+              <p className="text-sm text-neutral-700">
+                want dentist website design examples? explore real dental launches:
+              </p>
+              <div className="mt-6 grid gap-4 sm:grid-cols-2">
+                {designExamples.map((example) => (
+                  <Link
+                    key={example.href}
+                    href={example.href}
+                    className="block rounded-2xl border border-neutral-200 bg-white p-5 shadow-sm transition hover:-translate-y-1 hover:border-neutral-300 hover:shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-neutral-400"
+                  >
+                    <p className="text-xs font-semibold uppercase tracking-[0.3em] text-neutral-500">case study</p>
+                    <h3 className="mt-2 text-lg font-semibold text-neutral-900">{example.label}</h3>
+                    <p className="mt-2 text-sm text-neutral-600">{example.description}</p>
+                  </Link>
+                ))}
+              </div>
+              <p className="mt-6 text-sm text-neutral-600">
+                want the full transformation story? read{" "}
+                <Link
+                  href="/blog/from-broken-to-beautiful-dental-website-transformation"
+                  className="font-semibold text-neutral-900 underline decoration-neutral-200 underline-offset-4"
+                >
+                  from broken to beautiful: dental website transformation
+                </Link>
+                .
+              </p>
             </div>
           </div>
         </section>
@@ -215,6 +358,11 @@ export default function DentalWebsitePage() {
                 </div>
               ))}
             </div>
+              <div className="mt-10 flex justify-center">
+                <Button asChild variant="outline" className="rounded-full px-8">
+                <Link href="/dental-practice-seo-expert">see our seo for dentists playbook</Link>
+                </Button>
+              </div>
           </div>
         </section>
 
@@ -316,7 +464,13 @@ export default function DentalWebsitePage() {
               <ul className="space-y-2 text-sm text-white/70">
                 <li className="flex items-start gap-2">
                   <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-emerald-400" aria-hidden />
-                  <span>hyper-local google ads and meta campaigns tied to actual booked treatment.</span>
+                  <span>
+                    hyper-local google ads and meta campaigns tied to actual booked treatment. see{" "}
+                    <Link href="/facebook-ads-for-dentists" className="font-semibold text-white underline underline-offset-4">
+                      facebook ads for dentists
+                    </Link>
+                    .
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-emerald-400" aria-hidden />
@@ -476,6 +630,14 @@ export default function DentalWebsitePage() {
       </main>
       <Footer />
       <ScrollToTop />
+      <ServiceSchema
+        serviceId="dentist-website-design"
+        name="Dentist website design"
+        description="Dentist website design, copy, and development built to convert patients, load fast, and support long-term local visibility."
+        serviceType="Website design"
+        areaServed="United States"
+      />
+      <FAQSchema questions={faqs} />
     </>
   )
 }

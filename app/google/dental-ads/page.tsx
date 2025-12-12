@@ -207,6 +207,13 @@ export default function GoogleDentalAdsPage() {
                 we help dental practices attract more high-value patients with google ads that follow every policy, convert
                 faster, and scale smarter — built for 2025 and beyond.
               </p>
+              <p className="max-w-3xl text-sm text-white/70">
+                want to add paid social too? see{" "}
+                <Link href="/tiktok-ads-for-dentists" className="font-semibold text-white underline underline-offset-4">
+                  tiktok ads for dentists
+                </Link>
+                .
+              </p>
               <div className="flex w-full flex-col gap-3 sm:flex-row sm:justify-center">
                 <Button
                   asChild
@@ -260,12 +267,42 @@ export default function GoogleDentalAdsPage() {
           </div>
         </section>
 
+        <section className="border-t border-neutral-100 bg-white px-4 py-12 sm:py-14">
+          <div className="container mx-auto max-w-4xl px-4 md:px-6">
+            <div className="rounded-3xl border border-neutral-200 bg-neutral-50 p-6 text-center shadow-sm">
+              <p className="text-sm text-neutral-700">
+                want compounding organic visibility too? work with our{" "}
+                <Link
+                  href="/dental-practice-seo-expert"
+                  className="font-semibold text-neutral-900 underline decoration-neutral-300 underline-offset-4"
+                >
+                  seo for dentists
+                </Link>{" "}
+                playbook to improve maps + organic rankings. for facebook &amp; instagram campaigns, see{" "}
+                <Link
+                  href="/facebook-ads-for-dentists"
+                  className="font-semibold text-neutral-900 underline decoration-neutral-300 underline-offset-4"
+                >
+                  facebook ads for dentists
+                </Link>
+                .
+              </p>
+              <div className="mt-5 flex flex-wrap justify-center gap-3">
+                <Button asChild variant="outline" className="rounded-full px-8">
+                  <Link href="/dental-practice-seo-expert">see seo for dentists</Link>
+                </Button>
+                <Button asChild className="rounded-full px-8">
+                  <Link href={CONTACT_HREF}>talk to prism</Link>
+                </Button>
+              </div>
+            </div>
+          </div>
+        </section>
+
         <section className="bg-neutral-950 text-white">
           <div className="container mx-auto grid gap-10 px-4 py-16 md:grid-cols-[minmax(0,_320px),_1fr] md:px-6 lg:py-24">
             <div className="flex flex-col gap-3">
-              <p className="text-xs font-semibold uppercase tracking-[0.28em] text-white/60">
-                The 2025–2026 landscape
-              </p>
+              <p className="text-xs font-semibold uppercase tracking-[0.28em] text-white/60">The 2025–2026 landscape</p>
               <h2 className="text-3xl font-semibold md:text-4xl">What’s changed — and how to stay ahead.</h2>
             </div>
             <div className="space-y-6 text-base text-white/80 sm:text-lg">

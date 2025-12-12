@@ -1,6 +1,7 @@
 import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
 import type { Metadata } from "next"
+import Link from "next/link"
 import PricingDentalClient from "./client-page"
 
 export const metadata: Metadata = {
@@ -22,6 +23,11 @@ export default function PricingDentalPage() {
             <p>
               packages include seo, online booking, and review capture—everything you need to attract
               and convert new patients.
+            </p>
+            <p>
+              looking for{" "}
+              <Link href="/dental-practice-seo-expert">seo for dentists</Link>? see our approach and what we ship
+              each month.
             </p>
           </div>
         </div>

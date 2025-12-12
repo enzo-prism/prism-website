@@ -374,6 +374,22 @@ export default async function AdsPage() {
               </Link>
             ))}
           </div>
+          <div className="mx-auto mt-8 max-w-5xl rounded-3xl border border-neutral-200 bg-neutral-50 p-6 text-left shadow-sm">
+            <p className="text-sm text-neutral-700">
+              running paid social for a dental practice? start with{" "}
+              <Link
+                href="/facebook-ads-for-dentists"
+                className="font-semibold text-neutral-900 underline underline-offset-4"
+              >
+                facebook ads for dentists
+              </Link>
+              . want short-form demand too? see{" "}
+              <Link href="/tiktok-ads-for-dentists" className="font-semibold text-neutral-900 underline underline-offset-4">
+                tiktok ads for dentists
+              </Link>
+              .
+            </p>
+          </div>
           <div className="mx-auto mt-12 max-w-4xl rounded-3xl border border-neutral-200 bg-white p-8 text-left shadow-sm sm:flex sm:items-center sm:justify-between sm:gap-8">
             <div>
               <span className="text-xs font-semibold uppercase tracking-[0.28em] text-neutral-400">referral program</span>

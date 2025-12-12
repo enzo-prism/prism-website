@@ -184,8 +184,8 @@ const faqItems = [
 const audienceSegments = [
   {
     name: "Dental & medical teams",
-    description: "hipaa-aware intake flows, treatment highlights, and review engines that keep operatories full.",
-    href: "/why-dental-practices-love-prism",
+    description: "maps-first seo for dentists: hipaa-aware intake flows, treatment highlights, and review engines that keep operatories full.",
+    href: "/dental-practice-seo-expert",
   },
   {
     name: "Local shop owners",
@@ -392,6 +392,13 @@ export default async function LocalListingsPage() {
                 <p className="mt-2 text-sm text-neutral-600">{item.description}</p>
               </div>
             ))}
+          </div>
+          <div className="mx-auto mt-10 max-w-4xl rounded-3xl border border-neutral-200 bg-white p-6 text-left text-sm text-neutral-600 shadow-sm">
+            running a dental practice and trying to rank higher in google? read{" "}
+            <Link href="/blog/dental-practice-rank-higher-google-search" className="font-semibold text-neutral-900 underline underline-offset-4">
+              dental practice rank higher in google search
+            </Link>
+            .
           </div>
         </section>
 

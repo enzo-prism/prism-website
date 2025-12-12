@@ -27,6 +27,9 @@ yarn-error.log*
 # local dev helper files
 .next-dev.*
 
+# SEO audit artifacts
+/seo/lighthouse-*.json
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

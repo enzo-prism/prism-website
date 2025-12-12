@@ -358,6 +358,23 @@ export default function DentalPracticesPage() {
                   </Button>
                 </Link>
               </div>
+              <p className="mt-6 text-sm text-neutral-600">
+                need a{" "}
+                <Link
+                  href="/dental-practice-seo-expert"
+                  className="font-semibold text-neutral-900 underline decoration-neutral-200 underline-offset-4"
+                >
+                  seo for dentists playbook
+                </Link>
+                ? see how prism maps treatments to intent, tightens listings + reviews, and ships compounding improvements. need{" "}
+                <Link
+                  href="/dental-website"
+                  className="font-semibold text-neutral-900 underline decoration-neutral-200 underline-offset-4"
+                >
+                  dentist website design
+                </Link>
+                ? start with the dental website blueprint.
+              </p>
             </div>
             <div className="mt-14">
               <div className="relative mx-auto max-w-[220px] md:max-w-sm">
@@ -480,6 +497,23 @@ export default function DentalPracticesPage() {
                 </div>
               ))}
             </div>
+            <p className="mx-auto mt-10 max-w-3xl text-center text-sm text-white/80">
+              want the dentist-specific ai overviews checklist? read{" "}
+              <Link
+                href="/blog/ai-search-for-dental-practice"
+                className="font-semibold text-white underline underline-offset-4"
+              >
+                ai search for dental practice
+              </Link>
+              . want the step-by-step checklist to rank higher in google? read{" "}
+              <Link
+                href="/blog/dental-practice-rank-higher-google-search"
+                className="font-semibold text-white underline underline-offset-4"
+              >
+                dental practice rank higher in google search
+              </Link>
+              .
+            </p>
           </div>
         </section>
 
@@ -550,6 +584,13 @@ export default function DentalPracticesPage() {
                 </div>
               ))}
             </div>
+            <p className="mx-auto mt-10 max-w-3xl text-center text-sm text-neutral-600">
+              running paid social for your practice? start with{" "}
+              <Link href="/tiktok-ads-for-dentists" className="font-semibold text-neutral-900 underline underline-offset-4">
+                tiktok ads for dentists
+              </Link>
+              .
+            </p>
             <div className="mt-12 rounded-3xl border border-neutral-200 bg-white px-8 py-10 shadow-sm md:px-12 md:py-12">
               <div className="mx-auto max-w-3xl text-center">
                 <h3 className="text-2xl font-semibold md:text-3xl">

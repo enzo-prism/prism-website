@@ -211,6 +211,39 @@ export default async function SeoPage() {
         </div>
       </SeoSection>
 
+      <SeoSection
+        eyebrow="dental"
+        title="seo for dental practices"
+        description="dental search is high-trust and hyperlocal. the winners are the practices that are easiest to understand, easiest to trust, and easiest to choose."
+      >
+        <div className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm">
+          <p className="text-sm text-neutral-600">
+            need{" "}
+            <Link
+              href="/dental-practice-seo-expert"
+              className="font-semibold lowercase text-neutral-900 underline decoration-neutral-300 underline-offset-4"
+            >
+              seo for dentists
+            </Link>
+            ? see how prism maps treatments to intent, tightens listings + reviews, and ships compounding improvements. for a step-by-step checklist to rank higher in google search, read{" "}
+            <Link
+              href="/blog/dental-practice-rank-higher-google-search"
+              className="font-semibold lowercase text-neutral-900 underline decoration-neutral-300 underline-offset-4"
+            >
+              dental practice rank higher in google search
+            </Link>
+            . for a dentist-specific breakdown of ai overviews + assistants, read{" "}
+            <Link
+              href="/blog/ai-search-for-dental-practice"
+              className="font-semibold lowercase text-neutral-900 underline decoration-neutral-300 underline-offset-4"
+            >
+              ai search for dental practice
+            </Link>
+            .
+          </p>
+        </div>
+      </SeoSection>
+
       {seoBlogPosts.length > 0 ? (
         <section className="border-t border-neutral-100 bg-neutral-50 px-4 py-16 sm:py-20">
           <div className="mx-auto max-w-4xl text-center">
