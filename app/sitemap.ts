@@ -68,6 +68,8 @@ function segmentRoutes(base: string): StaticRouteInput[] {
     "seo",
     "seo/on-page",
     "seo/off-page",
+    "local-seo-services",
+    "local-seo-agency",
     "services",
     "websites",
     "ads",

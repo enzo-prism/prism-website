@@ -6,7 +6,15 @@ import Footer from "@/components/footer"
 import { ServiceSchema } from "@/components/schema-markup"
 import FAQSection from "@/components/faq-section"
 
-const coreServices = [
+type CoreService = {
+  name: string
+  summary: string
+  outcomes: string[]
+  caseStudies: { label: string; href: string }[]
+  learnMoreLinks?: { label: string; href: string }[]
+}
+
+const coreServices: CoreService[] = [
   {
     name: "Websites & Experience Design",
     summary: "Design systems, copy, and development that give you a conversion-ready site — managed end to end by Prism.",
@@ -23,6 +31,10 @@ const coreServices = [
   {
     name: "Local Presence & Reviews",
     summary: "Keep your practice or storefront discoverable with listings, reputation management, and map pack reporting.",
+    learnMoreLinks: [
+      { label: "local seo services", href: "/local-seo-services" },
+      { label: "local seo agency", href: "/local-seo-agency" },
+    ],
     outcomes: [
       "Google, Apple, Yelp, and niche directory management",
       "Review capture flows and response playbooks",
@@ -307,6 +319,19 @@ export default function ServicesPage() {
                   <div>
                     <h3 className="text-xl font-semibold lowercase text-neutral-900">{service.name}</h3>
                     <p className="mt-2 text-sm text-neutral-600">{service.summary}</p>
+                    {service.learnMoreLinks?.length ? (
+                      <div className="mt-3 flex flex-wrap gap-3">
+                        {service.learnMoreLinks.map((link) => (
+                          <Link
+                            key={link.href}
+                            href={link.href}
+                            className="inline-flex items-center text-sm font-semibold lowercase text-neutral-900 underline decoration-neutral-300 underline-offset-4 hover:decoration-neutral-900"
+                          >
+                            {link.label}
+                          </Link>
+                        ))}
+                      </div>
+                    ) : null}
                   </div>
                   <ul className="space-y-2 text-sm text-neutral-600">
                     {service.outcomes.map((item) => (

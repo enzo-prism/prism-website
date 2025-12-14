@@ -99,6 +99,11 @@ const blogPosts = {
     category: "Local SEO",
     gradientClass: "bg-gradient-to-br from-sky-300/30 via-emerald-300/30 to-indigo-300/30",
   },
+  'how-to-choose-local-seo-agency': {
+    title: "How to choose a local seo agency (checklist + red flags)",
+    category: "Local SEO",
+    gradientClass: "bg-gradient-to-br from-amber-200/30 via-emerald-200/30 to-sky-300/30",
+  },
   'prism-approach-small-business-growth': {
     title: "The Prism Approach to Small Business Growth",
     category: "Local Growth Strategy",
@@ -113,6 +118,26 @@ const blogPosts = {
     title: "The 1–3M Swamp for Dental Practices",
     category: "Business & Leadership",
     gradientClass: "bg-gradient-to-br from-teal-300/30 via-blue-300/30 to-indigo-300/30",
+  },
+  'dental-seo-guide': {
+    title: "dental seo guide: how dentists rank higher (maps + organic)",
+    category: "seo",
+    gradientClass: "bg-gradient-to-br from-emerald-300/30 via-sky-300/30 to-indigo-300/30",
+  },
+  'dental-practice-rank-higher-google-search': {
+    title: "dental practice rank higher in google search: a dentist checklist",
+    category: "seo",
+    gradientClass: "bg-gradient-to-br from-emerald-300/30 via-sky-300/30 to-indigo-300/30",
+  },
+  'how-to-choose-seo-consultant-for-dentists': {
+    title: "how to choose an seo consultant for dentists (checklist + questions)",
+    category: "seo",
+    gradientClass: "bg-gradient-to-br from-emerald-300/30 via-sky-300/30 to-indigo-300/30",
+  },
+  'ai-search-for-dental-practice': {
+    title: "ai search for dental practice: how to get cited",
+    category: "appear in ai search",
+    gradientClass: "bg-gradient-to-br from-sky-300/30 via-emerald-300/30 to-indigo-300/30",
   },
   'adapting-small-business-ai-search-revolution-2025': {
     title: "Adapting Your Small Business to the AI Search Revolution: Reclaim Your Traffic in 2025",

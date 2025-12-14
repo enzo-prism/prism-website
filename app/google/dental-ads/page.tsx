@@ -276,7 +276,7 @@ export default function GoogleDentalAdsPage() {
                   href="/dental-practice-seo-expert"
                   className="font-semibold text-neutral-900 underline decoration-neutral-300 underline-offset-4"
                 >
-                  seo for dentists
+                  dental seo
                 </Link>{" "}
                 playbook to improve maps + organic rankings. for facebook &amp; instagram campaigns, see{" "}
                 <Link
@@ -289,7 +289,7 @@ export default function GoogleDentalAdsPage() {
               </p>
               <div className="mt-5 flex flex-wrap justify-center gap-3">
                 <Button asChild variant="outline" className="rounded-full px-8">
-                  <Link href="/dental-practice-seo-expert">see seo for dentists</Link>
+                  <Link href="/dental-practice-seo-expert">see dental seo</Link>
                 </Button>
                 <Button asChild className="rounded-full px-8">
                   <Link href={CONTACT_HREF}>talk to prism</Link>

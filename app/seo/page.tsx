@@ -212,6 +212,48 @@ export default async function SeoPage() {
       </SeoSection>
 
       <SeoSection
+        eyebrow="local"
+        title="local seo services for small businesses"
+        description="if you’re searching for local seo services, the goal is simple: show up when customers search nearby, and turn that visibility into calls and bookings."
+      >
+        <div className="grid gap-6 md:grid-cols-2">
+          <div className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm">
+            <p className="text-sm text-neutral-600">
+              local visibility is a system: listings + reviews + local pages + clean technical structure. prism runs the system end to end so results compound.
+            </p>
+            <div className="mt-6 flex flex-wrap gap-4">
+              <Link
+                href="/local-seo-services"
+                className="inline-flex items-center text-sm font-semibold lowercase text-neutral-900 underline decoration-neutral-300 underline-offset-4"
+              >
+                local seo services
+              </Link>
+              <Link
+                href="/local-seo-agency"
+                className="inline-flex items-center text-sm font-semibold lowercase text-neutral-900 underline decoration-neutral-300 underline-offset-4"
+              >
+                local seo agency
+              </Link>
+            </div>
+          </div>
+          <ul className="space-y-3 text-sm text-neutral-700">
+            {[
+              "google business profile optimization and map-pack signals",
+              "citations and NAP consistency across directories",
+              "review capture + reputation management",
+              "service and location pages with schema and internal links",
+              "reporting tied to calls, forms, and bookings",
+            ].map((item) => (
+              <li key={item} className="flex gap-3">
+                <span className="mt-2 h-1.5 w-1.5 rounded-full bg-neutral-900" aria-hidden />
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </SeoSection>
+
+      <SeoSection
         eyebrow="dental"
         title="seo for dental practices"
         description="dental search is high-trust and hyperlocal. the winners are the practices that are easiest to understand, easiest to trust, and easiest to choose."
@@ -223,9 +265,16 @@ export default async function SeoPage() {
               href="/dental-practice-seo-expert"
               className="font-semibold lowercase text-neutral-900 underline decoration-neutral-300 underline-offset-4"
             >
-              seo for dentists
+              dental seo
             </Link>
-            ? see how prism maps treatments to intent, tightens listings + reviews, and ships compounding improvements. for a step-by-step checklist to rank higher in google search, read{" "}
+            ? see how prism maps treatments to intent, tightens listings + reviews, and ships compounding improvements. for a full overview, read{" "}
+            <Link
+              href="/blog/dental-seo-guide"
+              className="font-semibold lowercase text-neutral-900 underline decoration-neutral-300 underline-offset-4"
+            >
+              dental seo guide
+            </Link>
+            . for a step-by-step checklist to rank higher in google search, read{" "}
             <Link
               href="/blog/dental-practice-rank-higher-google-search"
               className="font-semibold lowercase text-neutral-900 underline decoration-neutral-300 underline-offset-4"

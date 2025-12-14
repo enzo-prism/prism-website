@@ -184,7 +184,7 @@ const faqItems = [
 const audienceSegments = [
   {
     name: "Dental & medical teams",
-    description: "maps-first seo for dentists: hipaa-aware intake flows, treatment highlights, and review engines that keep operatories full.",
+    description: "maps-first dental seo for dentists: hipaa-aware intake flows, treatment highlights, and review engines that keep operatories full.",
     href: "/dental-practice-seo-expert",
   },
   {
@@ -255,6 +255,17 @@ export default async function LocalListingsPage() {
             </h1>
             <p className="mt-6 text-base text-neutral-600 sm:text-lg">
               We optimize and maintain your listings across Google, Apple, Yelp, Bing, Facebook, Instagram, Nextdoor, Waze, and more so you show up higher, look better, and win more nearby customers.
+            </p>
+            <p className="mt-4 text-sm text-neutral-600">
+              Need the full plan beyond listings? Explore our{" "}
+              <Link href="/local-seo-services" className="font-semibold text-neutral-900 underline underline-offset-4">
+                local seo services
+              </Link>{" "}
+              — or work with Prism as your{" "}
+              <Link href="/local-seo-agency" className="font-semibold text-neutral-900 underline underline-offset-4">
+                local seo agency
+              </Link>
+              .
             </p>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
               <Button asChild size="lg" className="rounded-full px-8">

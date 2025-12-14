@@ -611,6 +611,17 @@ export default async function WebsitesPage() {
             structured data, and image performance—to help you rank and convert on mobile. made with next.js
             and a design system you can iterate on.
           </p>
+          <p>
+            looking specifically for{" "}
+            <Link href="/local-seo-services" className="font-semibold text-neutral-900 underline underline-offset-4">
+              local seo services
+            </Link>
+            {" "}or a{" "}
+            <Link href="/local-seo-agency" className="font-semibold text-neutral-900 underline underline-offset-4">
+              local seo agency
+            </Link>{" "}
+            partner? see what prism ships beyond the website: listings, reviews, and local content systems that compound.
+          </p>
         </SeoTextSection>
       </main>
 

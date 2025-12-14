@@ -26,7 +26,7 @@ export default function PricingDentalPage() {
             </p>
             <p>
               looking for{" "}
-              <Link href="/dental-practice-seo-expert">seo for dentists</Link>? see our approach and what we ship
+              <Link href="/dental-practice-seo-expert">dental seo</Link>? see our approach and what we ship
               each month.
             </p>
           </div>

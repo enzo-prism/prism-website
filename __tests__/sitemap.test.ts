@@ -13,6 +13,8 @@ describe("sitemap", () => {
       "https://www.design-prism.com/websites",
       "https://www.design-prism.com/ads",
       "https://www.design-prism.com/local-listings",
+      "https://www.design-prism.com/local-seo-services",
+      "https://www.design-prism.com/local-seo-agency",
       "https://www.design-prism.com/pricing",
       "https://www.design-prism.com/case-studies",
       "https://www.design-prism.com/blog",

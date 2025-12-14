@@ -6,20 +6,20 @@ import FAQSection from "@/components/faq-section"
 import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
 import ScrollToTop from "@/components/scroll-to-top"
-import { PersonSchema, ServiceSchema } from "@/components/schema-markup"
+import { HowToSchema, PersonSchema, ServiceSchema } from "@/components/schema-markup"
 import { Button } from "@/components/ui/button"
 import { CASE_STUDIES } from "@/lib/case-study-data"
 
 export const metadata: Metadata = {
   title: {
-    absolute: "SEO for Dentists | Prism",
+    absolute: "Dental SEO for Dentists | Prism",
   },
   description:
-    "SEO for dentists that helps dental practices rank higher in Google Maps and organic search with clear architecture, listings, content, and ongoing optimization.",
+    "Dental SEO that helps dental practices rank higher in Google Maps and organic search with clear architecture, listings, content, and ongoing optimization.",
   openGraph: {
-    title: "SEO for Dentists | Prism",
+    title: "Dental SEO for Dentists | Prism",
     description:
-      "SEO for dentists that helps dental practices rank higher in Maps and organic search with clear architecture, listings, content, and ongoing optimization.",
+      "Dental SEO that helps dental practices rank higher in Maps and organic search with clear architecture, listings, content, and ongoing optimization.",
     url: "https://www.design-prism.com/dental-practice-seo-expert",
     siteName: "prism",
     locale: "en_US",
@@ -35,9 +35,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "SEO for Dentists | Prism",
+    title: "Dental SEO for Dentists | Prism",
     description:
-      "SEO for dentists that helps dental practices rank higher in Maps and organic search with clear architecture, listings, content, and ongoing optimization.",
+      "Dental SEO that helps dental practices rank higher in Maps and organic search with clear architecture, listings, content, and ongoing optimization.",
     images: ["/prism-opengraph.png"],
   },
   alternates: {
@@ -128,9 +128,9 @@ const processSteps = [
 
 const faqItems = [
   {
-    question: "What is SEO for dentists?",
+    question: "What is dental SEO?",
     answer:
-      "SEO for dentists is the system of improving your Google Maps visibility and organic rankings so more local patients find you, trust you, and book — driven by listings accuracy, reviews, clear treatment pages, and technical fundamentals.",
+      "Dental SEO is the system of improving your Google Maps visibility and organic rankings so more local patients find you, trust you, and book — driven by listings accuracy, reviews, clear treatment pages, and technical fundamentals.",
   },
   {
     question: "How long does dental SEO take to work?",
@@ -212,15 +212,23 @@ export default function DentalPracticeSeoExpertPage() {
       <main className="flex-1">
         <section className="border-b border-neutral-100 px-4 py-20 sm:py-24">
           <div className="mx-auto max-w-4xl text-center">
-            <p className="text-sm font-medium uppercase tracking-[0.3em] text-neutral-400">dental seo consulting</p>
+            <p className="text-sm font-medium uppercase tracking-[0.3em] text-neutral-400">dental seo</p>
             <h1 className="mt-4 text-4xl font-semibold tracking-tight text-neutral-900 sm:text-5xl">
-              seo for dentists
+              dental seo
             </h1>
             <p className="mt-6 text-base text-neutral-600 sm:text-lg">
-              if you’re looking for seo for dentists (and want a consultant-led partner), prism helps you become the
-              obvious choice when patients search — across maps, organic results, and ai-powered search.
+              dental seo (seo for dentists) helps your practice show up when patients search — in google maps, organic results, and ai-powered search.
+              prism runs a consultant-led system built around high-intent treatments, clean technical structure, and compounding trust signals.
             </p>
             <p className="mt-6 text-sm text-neutral-500">
+              want the full guide? read{" "}
+              <Link
+                href="/blog/dental-seo-guide"
+                className="font-medium text-neutral-900 underline decoration-neutral-300 underline-offset-4"
+              >
+                dental seo guide
+              </Link>
+              .{" "}
               want the dentist-specific ai overviews checklist? read{" "}
               <Link
                 href="/blog/ai-search-for-dental-practice"
@@ -252,14 +260,72 @@ export default function DentalPracticeSeoExpertPage() {
         </section>
 
         <section className="px-4 py-16 sm:py-20">
-            <div className="mx-auto max-w-5xl">
+          <div className="mx-auto max-w-5xl">
             <div className="mx-auto max-w-3xl text-center">
               <h2 className="text-3xl font-semibold tracking-tight text-neutral-900 sm:text-4xl">
-                what seo for dentists actually includes
+                what dental seo actually includes
               </h2>
               <p className="mt-4 text-base leading-relaxed text-neutral-600">
-                not tricks. not templates. a repeatable system that makes your practice easier to understand, easier to trust, and easier to choose.
+                dental seo is two systems working together: maps trust + website clarity. no tricks — just a repeatable process that makes your
+                practice easier to understand, easier to trust, and easier to choose.
               </p>
+            </div>
+
+            <div className="mt-10 grid gap-6 md:grid-cols-2">
+              <div className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm">
+                <p className="text-xs font-semibold uppercase tracking-[0.3em] text-neutral-500">google maps</p>
+                <h3 className="mt-3 text-lg font-semibold lowercase text-neutral-900">maps + local pack visibility</h3>
+                <p className="mt-3 text-sm leading-relaxed text-neutral-600">
+                  improve relevance, distance eligibility, and prominence signals — then track actions like calls and direction requests.
+                </p>
+                <ul className="mt-4 space-y-2 text-sm text-neutral-700">
+                  {[
+                    "google business profile categories, services, attributes, and photos",
+                    "review velocity and response systems",
+                    "listings/citations consistency (NAP cleanup)",
+                    "spam-safe improvement (no name stuffing, no fake reviews)",
+                  ].map((item) => (
+                    <li key={item} className="flex gap-3">
+                      <span className="mt-2 h-1.5 w-1.5 rounded-full bg-neutral-900" aria-hidden />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+                <p className="mt-6 text-sm text-neutral-600">
+                  need the listings subsystem? start with{" "}
+                  <Link href="/local-listings" className="font-semibold text-neutral-900 underline underline-offset-4">
+                    local listings
+                  </Link>
+                  .
+                </p>
+              </div>
+              <div className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm">
+                <p className="text-xs font-semibold uppercase tracking-[0.3em] text-neutral-500">organic</p>
+                <h3 className="mt-3 text-lg font-semibold lowercase text-neutral-900">treatment pages that convert</h3>
+                <p className="mt-3 text-sm leading-relaxed text-neutral-600">
+                  become the clearest answer for the services patients actually search — and make the next step obvious.
+                </p>
+                <ul className="mt-4 space-y-2 text-sm text-neutral-700">
+                  {[
+                    "intent-mapped service pages (implants, invisalign, emergency, etc.)",
+                    "internal linking that clarifies hierarchy (treatments, locations, providers, faqs)",
+                    "technical hygiene: indexation, canonicals, performance, and schema",
+                    "patient-ready answers: pricing context, timelines, and booking paths",
+                  ].map((item) => (
+                    <li key={item} className="flex gap-3">
+                      <span className="mt-2 h-1.5 w-1.5 rounded-full bg-neutral-900" aria-hidden />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+                <p className="mt-6 text-sm text-neutral-600">
+                  want a faster site foundation for compounding rankings? explore{" "}
+                  <Link href="/dental-website" className="font-semibold text-neutral-900 underline underline-offset-4">
+                    dental website design
+                  </Link>
+                  .
+                </p>
+              </div>
             </div>
 
             <div className="mt-10 grid gap-6 md:grid-cols-2">
@@ -472,10 +538,18 @@ export default function DentalPracticeSeoExpertPage() {
 
       <ServiceSchema
         serviceId="dental-practice-seo-expert"
-        name="SEO for dentists"
-        description="SEO consulting and implementation for dentists, including on-page structure, technical SEO, listings, and trust systems."
+        name="Dental SEO for dentists"
+        description="Dental SEO consulting and implementation for dentists, including on-page structure, technical SEO, listings, and trust systems."
         serviceType="Dental SEO consulting"
         areaServed="United States"
+      />
+      <HowToSchema
+        name="Dental SEO process"
+        description="A repeatable dental SEO system: audit, architecture, implementation, trust, and iteration."
+        steps={processSteps.map((step) => ({
+          name: step.step,
+          text: step.description,
+        }))}
       />
 
       <PersonSchema

@@ -258,6 +258,19 @@ export default function LocalShopOwnersPage() {
                       </li>
                     ))}
                   </ul>
+                  {theme.heading === "Be Found Everywhere" ? (
+                    <p className="mt-6 text-sm text-neutral-600">
+                      Explore our{" "}
+                      <Link href="/local-seo-services" className="font-semibold text-neutral-900 underline underline-offset-4">
+                        local seo services
+                      </Link>{" "}
+                      — or work with Prism as your{" "}
+                      <Link href="/local-seo-agency" className="font-semibold text-neutral-900 underline underline-offset-4">
+                        local seo agency
+                      </Link>
+                      .
+                    </p>
+                  ) : null}
                 </div>
               ))}
             </div>
