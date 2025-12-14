@@ -11,6 +11,15 @@ Quick reference for the pages we edit most often.
 - Includes hero, founder VSL, benefits, showcases, vertical playbooks, FAQs, SEO copy, and service schema.
 - The VSL near the hero is the canonical marketing video (reused on `/ai-website-launch`); changes here should propagate to any page referencing the same clip.
 
+## Apps (`app/apps/page.tsx`)
+- Mobile app portfolio + process overview.
+- Uses `ItemList` JSON-LD for the showcased projects; avoid `SoftwareApplication` rich-result schema unless we can supply accurate pricing + reviews/ratings.
+- `metadata.title` is combined with the root title template, so keep it free of `| prism` to avoid duplicate “| prism | prism” titles.
+
+## Podcast (`app/podcast/page.tsx`)
+- Podcast hub + recent episode preview cards.
+- Uses `PodcastSeriesSchema` plus `PodcastEpisodeSchema` (with nested `VideoObject` metadata). Keep episode publish dates, YouTube URLs, and thumbnails up to date so Video structured data stays valid.
+
 ## Dental Website (`app/dental-website/page.tsx`)
 - Dentist-focused website page targeting “dentist website design”.
 - Includes `ServiceSchema` plus FAQ structured data (via `FAQSchema`) and cross-links into the dental SEO and ads funnels.
@@ -59,11 +68,21 @@ Each uses card-based layouts: confirmation message + kickoff-call CTA + contact 
 - SEO-focused landing page targeting “seo for dentists” (and related dental SEO consultant queries), linking into the broader `/seo` and dental funnels.
 - Aliases in `next.config.mjs` (redirect to `/dental-practice-seo-expert`): `/seo-consultant-for-dentists`, `/seo-for-dentists`, `/dentist-seo`, `/dental-seo`.
 - Includes a dental-focused `ServiceSchema` plus FAQ structured data (via `FAQSection`) to help search engines understand the offer.
-- Supporting dentist SEO guides live in `content/blog/` (e.g., `/blog/dental-practice-rank-higher-google-search`, `/blog/ai-search-for-dental-practice`).
+- Supporting dentist SEO guides live in `content/blog/` (e.g., `/blog/dental-seo-guide`, `/blog/dental-practice-rank-higher-google-search`, `/blog/ai-search-for-dental-practice`).
 
 ## Local Listings (`app/local-listings/page.tsx`)
 - Hero, benefits grid, platform cards, and the founder VSL render before the audience + FAQ sections.
 - The video mirrors the copy on `/websites` but points at the local-listings Cloudinary asset—update the `VideoPlayer` block in this file when you need a new transcript or duration.
+
+## Local SEO Services (`app/local-seo-services/page.tsx`)
+- Primary landing page targeting “local seo services” and related local SEO service intent.
+- Cross-links into `/seo` (methodology) and `/local-listings` (listings subsystem) so internal linking reinforces the topical cluster without duplicating content.
+- Includes structured data (`ServiceSchema`, `HowToSchema`, and `FAQSection`) and should be kept human-first (avoid doorway patterns or keyword stuffing).
+
+## Local SEO Agency (`app/local-seo-agency/page.tsx`)
+- Primary landing page targeting “local seo agency” (agency intent: selection, proof, process, and reporting).
+- Links to `/local-seo-services` for the deliverables breakdown, and to `/seo` + `/local-listings` for supporting context.
+- Includes structured data (`ServiceSchema`, `HowToSchema`, and `FAQSection`) and a “what we won’t do” section to keep messaging aligned with Google spam policies.
 
 ## Ads (`app/ads/page.tsx`)
 - Same layout pattern as Local Listings: hero, benefits, platforms, audience grid, then the ads-focused founder VSL.

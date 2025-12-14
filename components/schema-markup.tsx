@@ -452,7 +452,8 @@ interface PodcastEpisodeSchemaProps {
   name: string
   description: string
   url: string
-  videoUrl?: string
+  videoEmbedUrl?: string
+  videoContentUrl?: string
   thumbnailUrl?: string
   datePublished?: string
 }
@@ -463,10 +464,24 @@ export function PodcastEpisodeSchema({
   name,
   description,
   url,
-  videoUrl,
+  videoEmbedUrl,
+  videoContentUrl,
   thumbnailUrl,
   datePublished,
 }: PodcastEpisodeSchemaProps) {
+  const associatedMedia =
+    videoEmbedUrl && thumbnailUrl && datePublished
+      ? {
+          "@type": "VideoObject",
+          name,
+          description,
+          thumbnailUrl,
+          uploadDate: datePublished,
+          embedUrl: videoEmbedUrl,
+          contentUrl: videoContentUrl || videoEmbedUrl,
+        }
+      : undefined
+
   const data = {
     "@context": "https://schema.org",
     "@type": "PodcastEpisode",
@@ -479,14 +494,7 @@ export function PodcastEpisodeSchema({
     description,
     url,
     datePublished,
-    associatedMedia: videoUrl
-      ? {
-          "@type": "VideoObject",
-          contentUrl: videoUrl,
-          embedUrl: videoUrl,
-          thumbnailUrl,
-        }
-      : undefined,
+    associatedMedia,
   }
 
   return renderJsonLd(data)

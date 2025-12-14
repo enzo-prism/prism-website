@@ -7,10 +7,9 @@ import { Button } from "@/components/ui/button"
 import type { Metadata } from "next"
 import Link from "next/link"
 import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
-import { SoftwareApplicationSchema } from "@/components/schema-markup"
 
 export const metadata: Metadata = {
-  title: "mobile app development portfolio & services | prism",
+  title: "mobile app development portfolio & services",
   description:
     "explore custom mobile apps for restaurants, healthcare, and small businesses. interactive demos highlight native ios and android builds that boost engagement.",
   openGraph: {
@@ -66,6 +65,23 @@ const appProjects = [
     platforms: ["iOS", "Android"],
   },
 ]
+
+const appPortfolioItemList = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "@id": "https://www.design-prism.com/apps#portfolio",
+  name: "Prism app portfolio",
+  itemListElement: appProjects.map((project, index) => ({
+    "@type": "ListItem",
+    position: index + 1,
+    item: {
+      "@type": "CreativeWork",
+      name: project.title,
+      description: project.description,
+      url: project.url,
+    },
+  })),
+}
 
 export default function AppsPage() {
   return (
@@ -187,17 +203,12 @@ export default function AppsPage() {
 
       </main>
       <Footer />
-      {appProjects.map((project) => (
-        <SoftwareApplicationSchema
-          key={`app-schema-${project.id}`}
-          appId={`app-${project.id}`}
-          name={project.title}
-          description={project.description}
-          applicationCategory={project.category}
-          operatingSystems={project.platforms}
-          url={project.url}
-        />
-      ))}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(appPortfolioItemList),
+        }}
+      />
     </div>
   )
 }

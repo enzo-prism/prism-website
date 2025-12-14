@@ -114,7 +114,8 @@ export default function PodcastPage() {
             name={`Episode ${episode.number}: ${episode.guest}`}
             description={episode.takeaways.join(" · ")}
             url={`https://www.design-prism.com/podcast#episode-${episode.number}`}
-            videoUrl={videoId ? `https://www.youtube.com/embed/${videoId}` : episode.youtubeUrl}
+            videoEmbedUrl={videoId ? `https://www.youtube.com/embed/${videoId}` : undefined}
+            videoContentUrl={episode.youtubeUrl}
             thumbnailUrl={videoId ? `https://img.youtube.com/vi/${videoId}/hqdefault.jpg` : undefined}
             datePublished={episode.publishedAt}
           />

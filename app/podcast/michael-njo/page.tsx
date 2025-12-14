@@ -228,7 +228,8 @@ export default function MichaelNjoPage() {
         name="Episode 05: Dr. Michael Njo"
         description="Dr. Michael Njo on reinvention, patient experience, and guiding dentists through Practice Transitions Institute."
         url="https://www.design-prism.com/podcast/michael-njo"
-        videoUrl={episodeEmbedUrl}
+        videoEmbedUrl={episodeEmbedUrl}
+        videoContentUrl={episodeYoutubeUrl}
         thumbnailUrl={episodeThumbnail}
         datePublished={episodePublishedAt}
       />
