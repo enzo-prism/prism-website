@@ -55,6 +55,7 @@ images: {
       { source: '/about-us', destination: '/about', permanent: true },
       { source: '/our-work', destination: '/case-studies', permanent: true },
       { source: '/our-work/:path*', destination: '/case-studies', permanent: true },
+      { source: '/success-stories', destination: '/case-studies', permanent: true },
       { source: '/our-services', destination: '/', permanent: true },
       { source: '/pod', destination: '/', permanent: true },
       { source: '/tools', destination: '/services', permanent: true },

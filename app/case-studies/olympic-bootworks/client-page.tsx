@@ -730,8 +730,8 @@ export default function OlympicBootworksCaseStudy() {
               <ul className="space-y-2 text-neutral-700">
                 <li>
                   See more{" "}
-                  <Link href="/success-stories" className="font-medium text-neutral-900 underline underline-offset-4">
-                    success stories
+                  <Link href="/case-studies" className="font-medium text-neutral-900 underline underline-offset-4">
+                    case studies
                   </Link>{" "}
                   and{" "}
                   <Link href="/proof" className="font-medium text-neutral-900 underline underline-offset-4">
