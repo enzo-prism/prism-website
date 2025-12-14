@@ -265,9 +265,10 @@ export default async function SeoPage() {
               href="/dental-practice-seo-expert"
               className="font-semibold lowercase text-neutral-900 underline decoration-neutral-300 underline-offset-4"
             >
-              dental seo
+              dental local seo
             </Link>
-            ? see how prism maps treatments to intent, tightens listings + reviews, and ships compounding improvements. for a full overview, read{" "}
+            {" "}
+            (maps + organic)? see how prism maps treatments to intent, tightens listings + reviews, and ships compounding improvements. for a full overview, read{" "}
             <Link
               href="/blog/dental-seo-guide"
               className="font-semibold lowercase text-neutral-900 underline decoration-neutral-300 underline-offset-4"
@@ -290,6 +291,47 @@ export default async function SeoPage() {
             </Link>
             .
           </p>
+        </div>
+      </SeoSection>
+
+      <SeoSection
+        eyebrow="ai"
+        title="ai seo services"
+        description="ai overviews and assistants are changing how buyers discover brands. the goal is to be easy to cite, easy to corroborate, and easy to choose."
+      >
+        <div className="grid gap-6 md:grid-cols-2">
+          <div className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm">
+            <p className="text-sm text-neutral-600">
+              if you want prism’s full approach, read{" "}
+              <Link
+                href="/ai-seo-services"
+                className="font-semibold lowercase text-neutral-900 underline decoration-neutral-300 underline-offset-4"
+              >
+                ai seo services
+              </Link>
+              . if you’re looking for a focused sprint, see{" "}
+              <Link
+                href="/offers/ai-seo-boost"
+                className="font-semibold lowercase text-neutral-900 underline decoration-neutral-300 underline-offset-4"
+              >
+                ai seo boost
+              </Link>
+              .
+            </p>
+          </div>
+          <ul className="space-y-3 text-sm text-neutral-700">
+            {[
+              "create answer-first page structures that are easy to quote",
+              "add corroboration signals (proof, consistency, and structured data)",
+              "tighten internal links so crawlers understand topic clusters",
+              "measure visibility + leads and iterate with search console",
+            ].map((item) => (
+              <li key={item} className="flex gap-3">
+                <span className="mt-2 h-1.5 w-1.5 rounded-full bg-neutral-900" aria-hidden />
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
         </div>
       </SeoSection>
 

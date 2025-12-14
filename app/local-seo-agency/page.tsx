@@ -155,6 +155,16 @@ export default function LocalSeoAgencyPage() {
               </Link>
               .
             </p>
+            <p className="mt-2 text-sm text-neutral-600">
+              Dental practice? Start with{" "}
+              <Link
+                href="/dental-practice-seo-expert"
+                className="font-semibold text-neutral-900 underline underline-offset-4"
+              >
+                dental local seo
+              </Link>
+              .
+            </p>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
               <Button asChild size="lg" className="rounded-full px-8">
                 <Link href="/free-analysis">
@@ -379,4 +389,3 @@ export default function LocalSeoAgencyPage() {
     </div>
   )
 }
-

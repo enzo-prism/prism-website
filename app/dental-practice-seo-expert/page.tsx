@@ -12,14 +12,14 @@ import { CASE_STUDIES } from "@/lib/case-study-data"
 
 export const metadata: Metadata = {
   title: {
-    absolute: "Dental SEO for Dentists | Prism",
+    absolute: "Dental Local SEO for Dentists | Prism",
   },
   description:
-    "Dental SEO that helps dental practices rank higher in Google Maps and organic search with clear architecture, listings, content, and ongoing optimization.",
+    "Dental local SEO that helps dental practices rank higher in Google Maps (local pack) and organic search with listings, reviews, treatment pages, and technical cleanup tied to calls and bookings.",
   openGraph: {
-    title: "Dental SEO for Dentists | Prism",
+    title: "Dental Local SEO for Dentists | Prism",
     description:
-      "Dental SEO that helps dental practices rank higher in Maps and organic search with clear architecture, listings, content, and ongoing optimization.",
+      "Dental local SEO that helps dental practices rank higher in Google Maps and organic search with listings, reviews, treatment pages, and ongoing optimization.",
     url: "https://www.design-prism.com/dental-practice-seo-expert",
     siteName: "prism",
     locale: "en_US",
@@ -35,9 +35,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Dental SEO for Dentists | Prism",
+    title: "Dental Local SEO for Dentists | Prism",
     description:
-      "Dental SEO that helps dental practices rank higher in Maps and organic search with clear architecture, listings, content, and ongoing optimization.",
+      "Dental local SEO that helps dental practices rank higher in Google Maps and organic search with listings, reviews, treatment pages, and ongoing optimization.",
     images: ["/prism-opengraph.png"],
   },
   alternates: {
@@ -128,19 +128,29 @@ const processSteps = [
 
 const faqItems = [
   {
-    question: "What is dental SEO?",
+    question: "What is dental local SEO?",
     answer:
-      "Dental SEO is the system of improving your Google Maps visibility and organic rankings so more local patients find you, trust you, and book — driven by listings accuracy, reviews, clear treatment pages, and technical fundamentals.",
+      "Dental local SEO is improving your Google Maps/local pack visibility and local organic rankings so nearby patients find you, trust you, and book — driven by Google Business Profile relevance, reviews, citations/NAP consistency, and patient-ready treatment pages.",
   },
   {
-    question: "How long does dental SEO take to work?",
+    question: "How do you rank a dentist in Google Maps (the local pack)?",
+    answer:
+      "Start with accurate Google Business Profile categories/services, consistent NAP across directories, steady review velocity (and responses), correct address/service-area settings, and website pages that corroborate treatments and location. Avoid name stuffing and fake reviews.",
+  },
+  {
+    question: "How long does dental local SEO take to work?",
     answer:
       "Quick wins can show up in weeks (fixing listings, technical issues, and page clarity). Competitive treatments and multi-location markets compound over months as trust and content depth grow.",
   },
   {
-    question: "How much does SEO for dentists cost?",
+    question: "How much does dental local SEO cost?",
     answer:
       "It depends on your market and starting point. Most practices need an initial audit + cleanup, then ongoing monthly work for reviews, listings, content updates, and technical maintenance — priced around the scope you actually need, not a one-size retainer.",
+  },
+  {
+    question: "Do dentists need location pages for dental local SEO?",
+    answer:
+      "If you operate from real locations, yes — one clear page per location is usually helpful. Avoid dozens of near-duplicate “dentist in {city}” pages with the same copy (doorway patterns). For service-area coverage, pair correct GBP settings with content that clearly explains where you serve.",
   },
   {
     question: "Should dentists focus on Google Maps or organic search first?",
@@ -212,12 +222,12 @@ export default function DentalPracticeSeoExpertPage() {
       <main className="flex-1">
         <section className="border-b border-neutral-100 px-4 py-20 sm:py-24">
           <div className="mx-auto max-w-4xl text-center">
-            <p className="text-sm font-medium uppercase tracking-[0.3em] text-neutral-400">dental seo</p>
+            <p className="text-sm font-medium uppercase tracking-[0.3em] text-neutral-400">dental local seo</p>
             <h1 className="mt-4 text-4xl font-semibold tracking-tight text-neutral-900 sm:text-5xl">
-              dental seo
+              dental local seo
             </h1>
             <p className="mt-6 text-base text-neutral-600 sm:text-lg">
-              dental seo (seo for dentists) helps your practice show up when patients search — in google maps, organic results, and ai-powered search.
+              dental local seo (seo for dentists) helps your practice show up when nearby patients search — in google maps (the local pack), organic results, and ai-powered search.
               prism runs a consultant-led system built around high-intent treatments, clean technical structure, and compounding trust signals.
             </p>
             <p className="mt-6 text-sm text-neutral-500">
@@ -256,6 +266,97 @@ export default function DentalPracticeSeoExpertPage() {
             <p className="mt-6 text-sm text-neutral-500">
               consultant-led. built for owner-dentists, specialty practices, and multi-location groups.
             </p>
+          </div>
+        </section>
+
+        <section className="border-b border-neutral-100 bg-neutral-50 px-4 py-16 sm:py-20">
+          <div className="mx-auto max-w-5xl">
+            <div className="mx-auto max-w-3xl text-center">
+              <p className="text-sm font-medium uppercase tracking-[0.3em] text-neutral-400">google maps</p>
+              <h2 className="mt-3 text-3xl font-semibold tracking-tight text-neutral-900 sm:text-4xl">
+                dental local seo: how google decides who shows up
+              </h2>
+              <p className="mt-4 text-base leading-relaxed text-neutral-600">
+                local rankings are a scoring system built around three signals: relevance, distance, and prominence. dental local seo is making
+                those signals unambiguous — with clean listings, strong reviews, and pages that corroborate what you do and where you do it.
+              </p>
+            </div>
+
+            <div className="mt-10 grid gap-6 sm:grid-cols-3">
+              {[
+                {
+                  title: "relevance",
+                  description: "match the exact treatment + location intent behind searches.",
+                  bullets: [
+                    "google business profile categories + services reflect your real treatments",
+                    "treatment pages mirror how patients search (implants, invisalign, emergency)",
+                    "clear contact and location signals on-site",
+                  ],
+                },
+                {
+                  title: "distance (proximity)",
+                  description: "be eligible in the geos that matter — accurately.",
+                  bullets: [
+                    "correct address or service-area settings (no “fake” locations)",
+                    "one page per real location when you have multiple offices",
+                    "consistent NAP across the web so google can match entities",
+                  ],
+                },
+                {
+                  title: "prominence",
+                  description: "prove you’re trusted with steady real-world signals.",
+                  bullets: [
+                    "review velocity + specific patient feedback",
+                    "citations and local mentions that corroborate your practice",
+                    "engagement signals: calls, direction requests, website clicks",
+                  ],
+                },
+              ].map((item) => (
+                <div key={item.title} className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm">
+                  <h3 className="text-lg font-semibold lowercase text-neutral-900">{item.title}</h3>
+                  <p className="mt-2 text-sm text-neutral-600">{item.description}</p>
+                  <ul className="mt-4 space-y-2 text-sm text-neutral-700">
+                    {item.bullets.map((bullet) => (
+                      <li key={bullet} className="flex gap-3">
+                        <span className="mt-2 h-1.5 w-1.5 rounded-full bg-neutral-900" aria-hidden />
+                        <span>{bullet}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+
+            <div className="mx-auto mt-10 max-w-4xl rounded-3xl border border-neutral-200 bg-white p-6 text-sm text-neutral-700 shadow-sm">
+              <p className="text-xs font-semibold uppercase tracking-[0.3em] text-neutral-400">what we won’t do</p>
+              <ul className="mt-4 space-y-2">
+                {[
+                  "keyword-stuff your business name in google business profile",
+                  "buy fake reviews, links, or citation packages",
+                  "publish thin “dentist in [city]” doorway pages",
+                  "ship structured data that doesn’t match visible content",
+                ].map((item) => (
+                  <li key={item} className="flex gap-3">
+                    <span className="mt-2 h-1.5 w-1.5 rounded-full bg-neutral-900" aria-hidden />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+              <p className="mt-6 text-sm text-neutral-600">
+                want the maps checklist? read{" "}
+                <Link
+                  href="/blog/google-maps-visibility-playbook-2025"
+                  className="font-semibold text-neutral-900 underline underline-offset-4"
+                >
+                  google maps visibility checklist
+                </Link>
+                . need listings cleanup? start with{" "}
+                <Link href="/local-listings" className="font-semibold text-neutral-900 underline underline-offset-4">
+                  local listings
+                </Link>
+                .
+              </p>
+            </div>
           </div>
         </section>
 
@@ -538,9 +639,9 @@ export default function DentalPracticeSeoExpertPage() {
 
       <ServiceSchema
         serviceId="dental-practice-seo-expert"
-        name="Dental SEO for dentists"
-        description="Dental SEO consulting and implementation for dentists, including on-page structure, technical SEO, listings, and trust systems."
-        serviceType="Dental SEO consulting"
+        name="Dental local SEO for dentists"
+        description="Dental local SEO consulting and implementation for dentists, including Google Maps optimization, listings, reviews, on-page structure, and technical cleanup."
+        serviceType="Dental local SEO consulting"
         areaServed="United States"
       />
       <HowToSchema

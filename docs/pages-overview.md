@@ -65,8 +65,8 @@ Each uses card-based layouts: confirmation message + kickoff-call CTA + contact 
 
 ## SEO for Dentists (`app/dental-practice-seo-expert/page.tsx`)
 
-- SEO-focused landing page targeting “seo for dentists” (and related dental SEO consultant queries), linking into the broader `/seo` and dental funnels.
-- Aliases in `next.config.mjs` (redirect to `/dental-practice-seo-expert`): `/seo-consultant-for-dentists`, `/seo-for-dentists`, `/dentist-seo`, `/dental-seo`.
+- Dentist-focused landing page targeting “dental local seo” + “seo for dentists” queries, linking into the broader `/seo` and dental funnels.
+- Aliases in `next.config.mjs` (redirect to `/dental-practice-seo-expert`): `/seo-consultant-for-dentists`, `/seo-for-dentists`, `/dentist-seo`, `/dental-seo`, `/dental-local-seo`, `/dentist-local-seo`, `/local-seo-for-dentists`.
 - Includes a dental-focused `ServiceSchema` plus FAQ structured data (via `FAQSection`) to help search engines understand the offer.
 - Supporting dentist SEO guides live in `content/blog/` (e.g., `/blog/dental-seo-guide`, `/blog/dental-practice-rank-higher-google-search`, `/blog/ai-search-for-dental-practice`).
 

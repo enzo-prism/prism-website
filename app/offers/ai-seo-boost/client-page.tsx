@@ -109,6 +109,13 @@ export default function AISEOBoostPage() {
                 </Button>
               </Link>
             </div>
+            <p className="mt-6 text-sm text-neutral-600 lowercase">
+              want the full breakdown?{" "}
+              <Link href="/ai-seo-services" className="font-semibold text-neutral-900 underline underline-offset-4">
+                ai seo services
+              </Link>
+              .
+            </p>
             <p className="text-sm text-neutral-500 mt-6 lowercase">
               90-day results guarantee • No long-term contracts
             </p>

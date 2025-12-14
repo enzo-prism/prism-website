@@ -34,6 +34,8 @@ const coreServices: CoreService[] = [
     learnMoreLinks: [
       { label: "local seo services", href: "/local-seo-services" },
       { label: "local seo agency", href: "/local-seo-agency" },
+      { label: "dental local seo", href: "/dental-practice-seo-expert" },
+      { label: "ai seo services", href: "/ai-seo-services" },
     ],
     outcomes: [
       "Google, Apple, Yelp, and niche directory management",

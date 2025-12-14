@@ -109,6 +109,12 @@ export default function SeoOffPagePage() {
             dental seo
           </Link>
           <Link
+            href="/ai-seo-services"
+            className="inline-flex items-center rounded-full border border-neutral-200 px-6 py-3 text-sm font-semibold lowercase text-neutral-700"
+          >
+            ai seo services
+          </Link>
+          <Link
             href="/blog/dental-practice-rank-higher-google-search"
             className="inline-flex items-center rounded-full border border-neutral-200 px-6 py-3 text-sm font-semibold lowercase text-neutral-700"
           >
