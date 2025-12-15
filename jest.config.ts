@@ -11,6 +11,7 @@ const config: Config = {
   transformIgnorePatterns: [
     '/node_modules/(?!(next-mdx-remote)/)'
   ],
+  testPathIgnorePatterns: ['<rootDir>/__tests__/visual/'],
   setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
   globals: {
     'ts-jest': {

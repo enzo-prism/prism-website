@@ -12,7 +12,8 @@ Keep Prism's Next.js builds predictable by following this checklist whenever you
 2. `pnpm lint` – catches Tailwind/ESLint issues before the Next build step fails.
 3. `pnpm typecheck` – **required**. Next's production build runs TypeScript after compilation, so missing fields (e.g., forgetting `featured` on every tier in `pricingTiers`) will break deploys even if dev mode works.
 4. `pnpm test` – optional but strongly recommended before touching shared components or hooks.
-5. `pnpm build` – mirrors `vercel build` locally and surfaces experimental warnings (clientTraceMetadata, etc.) so you can address them early.
+5. `pnpm test:visual` – required when touching `/`, `/about`, or `/pricing`; enforces UI-locked screenshots.
+6. `pnpm build` – mirrors `vercel build` locally and surfaces experimental warnings (clientTraceMetadata, etc.) so you can address them early.
 
 If any of these steps fail locally, fix them before opening a PR. The CI build logs show only the first failure; running the full chain locally shortens feedback loops considerably.
 

@@ -6,6 +6,7 @@ This guide highlights the workflows we lean on most often while iterating on the
 - Install deps with `pnpm install` (repo assumes pnpm).
 - Start the Next.js dev server with `pnpm dev`.
 - Run `pnpm lint` before committing so the shared Tailwind + ESLint rules stay consistent.
+- Run `pnpm test:visual` before merging changes that touch the UI of `/`, `/about`, or `/pricing` (screenshot-locked routes).
 
 ## Formspree Integration
 All marketing forms live under `components/forms/` (Contact, Free Analysis, Get Started) and share the `useFormValidation` hook. The new AI Website Launch landing page keeps its form in `app/ai-website-launch/client-page.tsx`, but mirrors the exact same submission pattern (client-side `fetch`, `Accept: application/json`, and redirect to `/thank-you`).
