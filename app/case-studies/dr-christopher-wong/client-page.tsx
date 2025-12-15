@@ -1157,6 +1157,13 @@ export default function ChristopherWongCaseStudy() {
                 <div className="space-y-2">
                   <p className="text-lg font-semibold text-neutral-900">Ready to modernize your practice?</p>
                   <p className="text-sm text-neutral-700">Let&apos;s apply the same AI-powered playbook to your transition or growth plan.</p>
+                  <p className="text-sm text-neutral-700">
+                    Built with Prism’s{" "}
+                    <Link href="/dental-website" className="font-semibold text-neutral-900 underline underline-offset-4">
+                      dental practice website system
+                    </Link>
+                    .
+                  </p>
                 </div>
                 <div className="flex flex-wrap items-center gap-3">
                   <Link href="/get-started">

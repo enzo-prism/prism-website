@@ -371,9 +371,9 @@ export default function DentalPracticesPage() {
                   href="/dental-website"
                   className="font-semibold text-neutral-900 underline decoration-neutral-200 underline-offset-4"
                 >
-                  dentist website design
+                  a dental practice website
                 </Link>
-                ? start with the dental website blueprint.
+                ? start with the dental practice website blueprint.
               </p>
             </div>
             <div className="mt-14">

@@ -422,7 +422,7 @@ export default function DentalPracticeSeoExpertPage() {
                 <p className="mt-6 text-sm text-neutral-600">
                   want a faster site foundation for compounding rankings? explore{" "}
                   <Link href="/dental-website" className="font-semibold text-neutral-900 underline underline-offset-4">
-                    dental website design
+                    a dental practice website
                   </Link>
                   .
                 </p>
@@ -620,7 +620,7 @@ export default function DentalPracticeSeoExpertPage() {
             <p className="mt-6 text-sm text-white/70">
               also exploring a website rebuild? start here:{" "}
               <Link href="/dental-website" className="font-medium text-white underline underline-offset-4">
-                modern dental websites
+                dental practice website blueprint
               </Link>
             </p>
           </div>

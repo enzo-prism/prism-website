@@ -68,6 +68,7 @@ export default function CoastPeriodonticsCaseStudy() {
       heroTitle="coast periodontics & laser surgery — specialty dental foundations"
       heroSubtitle="giving patients and referring dentists a calm, trustworthy digital home"
       summary="coast periodontics & laser surgery partnered with prism to pair a reassuring website with local visibility and measurement systems that support every referral."
+      showDentalWebsiteSystemLink
       quickFacts={quickFacts}
       sections={sections}
       comingSoon={comingSoon}

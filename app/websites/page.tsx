@@ -446,9 +446,9 @@ export default async function WebsitesPage() {
                               href="/dental-website"
                               className="font-semibold text-neutral-900 underline underline-offset-4"
                             >
-                              dentist website design
+                              a dental practice website
                             </Link>
-                            ? see the dental website blueprint.
+                            ? see the dental practice website blueprint.
                           </p>
                         ) : null}
                       </div>

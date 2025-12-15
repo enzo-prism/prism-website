@@ -66,6 +66,7 @@ interface MinimalCaseStudyProps {
   heroSubtitle?: string
   summary: string
   heroButton?: HeroButtonConfig
+  showDentalWebsiteSystemLink?: boolean
   quickFacts: QuickFact[]
   sections?: Section[]
   comingSoon?: ComingSoon
@@ -81,6 +82,7 @@ export default function MinimalCaseStudyPage({
   heroSubtitle,
   summary,
   heroButton,
+  showDentalWebsiteSystemLink = false,
   quickFacts,
   sections,
   comingSoon,
@@ -142,6 +144,19 @@ export default function MinimalCaseStudyPage({
                 </div>
               ))}
             </div>
+
+            {showDentalWebsiteSystemLink ? (
+              <div className="rounded-xl border border-neutral-200 bg-neutral-50 px-6 py-4 text-sm text-neutral-700">
+                built with prism’s{" "}
+                <Link
+                  href="/dental-website"
+                  className="font-semibold text-neutral-900 underline underline-offset-4"
+                >
+                  dental practice website system
+                </Link>
+                .
+              </div>
+            ) : null}
 
             {sections?.map((section) => (
               <section key={section.id} className="space-y-4 border-t pt-10" data-section={section.id}>

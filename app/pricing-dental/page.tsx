@@ -25,6 +25,10 @@ export default function PricingDentalPage() {
               and convert new patients.
             </p>
             <p>
+              want to see what we ship for a{" "}
+              <Link href="/dental-website">dental practice website</Link>? explore the blueprint and examples.
+            </p>
+            <p>
               looking for{" "}
               <Link href="/dental-practice-seo-expert">dental seo</Link>? see our approach and what we ship
               each month.

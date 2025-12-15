@@ -139,6 +139,7 @@ export function GlobalSchemaGraph() {
   const organization = {
     "@context": "https://schema.org",
     "@type": "Organization",
+    "@id": "https://www.design-prism.com/#organization",
     name: "Prism",
     url: "https://www.design-prism.com",
     logo: "https://www.design-prism.com/prism-logo.png",
@@ -154,8 +155,10 @@ export function GlobalSchemaGraph() {
   const website = {
     "@context": "https://schema.org",
     "@type": "WebSite",
+    "@id": "https://www.design-prism.com/#website",
     name: "Prism",
     url: "https://www.design-prism.com",
+    publisher: { "@id": "https://www.design-prism.com/#organization" },
   }
 
   return renderJsonLd([organization, website])
@@ -239,10 +242,11 @@ export function BlogPostSchema({
     },
     publisher: {
       "@type": "Organization",
+      "@id": "https://www.design-prism.com/#organization",
       name: "Prism",
       logo: {
         "@type": "ImageObject",
-        url: "https://www.design-prism.com/prism-opengraph.png",
+        url: "https://www.design-prism.com/prism-logo.png",
       },
     },
   }
@@ -367,6 +371,7 @@ export function ServiceSchema({
     areaServed,
     provider: {
       "@type": "Organization",
+      "@id": "https://www.design-prism.com/#organization",
       name: "Prism",
       url: "https://www.design-prism.com",
     },

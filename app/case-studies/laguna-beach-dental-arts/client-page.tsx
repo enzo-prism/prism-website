@@ -266,6 +266,13 @@ export default function LagunaBeachDentalArtsCaseStudy() {
                     post‑m&a transitions demand clarity, speed, and measurement. we can help you keep momentum while
                     leveling up your digital presence.
                   </p>
+                  <p className="text-sm text-neutral-600 lowercase max-w-2xl mx-auto">
+                    built with prism’s{" "}
+                    <Link href="/dental-website" className="font-semibold text-neutral-900 underline underline-offset-4">
+                      dental practice website system
+                    </Link>
+                    .
+                  </p>
                 <div className="pt-6">
                   <Link href="/get-started">
                     <Button

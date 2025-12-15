@@ -66,6 +66,7 @@ export default function MichaelNjoCaseStudy() {
       heroTitle="michael njo, dds — modern dental presence"
       heroSubtitle="credibility-first website with clear services, patient flows, and tracking"
       summary="dr. michael njo partnered with prism to relaunch his digital presence with service clarity, trust signals, and measurement that ties calls and form fills back to marketing channels."
+      showDentalWebsiteSystemLink
       quickFacts={quickFacts}
       sections={sections}
       comingSoon={comingSoon}
@@ -75,4 +76,3 @@ export default function MichaelNjoCaseStudy() {
     />
   )
 }
-

@@ -74,6 +74,7 @@ export default function WineCountryRootCanalCaseStudy() {
       heroTitle="wine country root canal — endodontic growth system"
       heroSubtitle="pairing specialty credibility with a smooth patient journey"
       summary="wine country root canal turned to prism for a calm, trustworthy website and local search presence that reflect the precision of their endodontic care."
+      showDentalWebsiteSystemLink
       heroButton={heroButton}
       quickFacts={quickFacts}
       sections={sections}

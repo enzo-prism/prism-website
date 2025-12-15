@@ -126,15 +126,18 @@ export default function RootLayout({
         {/* YouTube Embed Handler */}
         {/* YouTube embeds are now handled natively with iframe - no custom JavaScript needed */}
         {/* Preconnect to Vimeo for faster video loading */}
-        <link rel="preconnect" href="https://player.vimeo.com" />
-        <link rel="preconnect" href="https://i.vimeocdn.com" />
-        <link rel="preconnect" href="https://f.vimeocdn.com" />
+        <link rel="preconnect" href="https://player.vimeo.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://i.vimeocdn.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://f.vimeocdn.com" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://player.vimeo.com" />
         <link rel="dns-prefetch" href="https://i.vimeocdn.com" />
         <link rel="dns-prefetch" href="https://f.vimeocdn.com" />
+        {/* Preconnect to Cloudinary for faster image/video loading */}
+        <link rel="preconnect" href="https://res.cloudinary.com" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://res.cloudinary.com" />
         {/* Preconnect to YouTube for faster video loading */}
-        <link rel="preconnect" href="https://www.youtube.com" />
-        <link rel="preconnect" href="https://img.youtube.com" />
+        <link rel="preconnect" href="https://www.youtube.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://img.youtube.com" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://www.youtube.com" />
         <link rel="dns-prefetch" href="https://img.youtube.com" />
       </head>

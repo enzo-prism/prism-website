@@ -15,19 +15,19 @@ import { FAQSchema, ServiceSchema } from "@/components/schema-markup"
 
 const lovePoints = [
   {
-    title: "tailored for dental journeys",
+    title: "clear answers in seconds",
     description:
-      "service pages, smile galleries, insurance FAQs, and provider bios are structured the way patients search and decide."
+      "treatment pages, insurance info, and provider bios are organized so patients can quickly confirm they’re in the right place."
   },
   {
-    title: "answer engine optimized",
+    title: "trust before the first call",
     description:
-      "we map every page to conversational queries so claude, chatgpt, and google ai overviews cite your practice."
+      "real photos, reviews, and what-to-expect details reduce anxiety and make it easy to choose your practice."
   },
   {
-    title: "designed to convert appointments",
+    title: "booking feels effortless on mobile",
     description:
-      "clear calls-to-action, instant scheduling, and mobile-first design turn browsers into booked visits."
+      "tap-to-call, request forms, and scheduling paths are obvious and fast—so more visits become booked appointments."
   }
 ]
 
@@ -140,12 +140,12 @@ const faqs = [
       "no. we map every legacy URL, keep metadata intact, and submit the new structure to search engines so visibility only improves."
   },
   {
-    question: "what should a dentist website include?",
+    question: "what should a dental practice website include?",
     answer:
       "clear treatment pages, provider bios, reviews, and a simple booking path — plus fast performance, accessibility, and seo-ready structure so patients (and google) understand you quickly.",
   },
   {
-    question: "how much does dentist website design cost?",
+    question: "how much does a dental practice website cost?",
     answer:
       "it depends on scope: number of locations, services, integrations, content needs, and whether you’re migrating from an old provider. we scope around what will actually move calls and bookings, not a one-size template.",
   },
@@ -162,24 +162,26 @@ const faqs = [
 ]
 
 export const metadata: Metadata = {
-  title: "dentist website design that converts | prism",
+  title: {
+    absolute: "Dental Practice Website Design That Converts | Prism",
+  },
   description:
-    "dentist website design for practices that want more booked patients — fast, ada-aware, seo-ready, and built for simple scheduling. stress-free provider migrations included.",
+    "Modern dental practice websites built to get found, build trust, and convert visitors into booked appointments. Fast, mobile-first, and built with a long-term content system.",
   alternates: {
     canonical: "https://www.design-prism.com/dental-website"
   },
   openGraph: {
-    title: "dentist website design that converts | prism",
+    title: "Dental Practice Website Design That Converts | Prism",
     description:
-      "dentist website design that loads fast, ranks locally, and keeps schedules full — with a seamless handoff from your old provider.",
+      "Modern dental practice websites built to get found, build trust, and convert visitors into booked appointments.",
     url: "https://www.design-prism.com/dental-website",
     type: "website"
   },
   twitter: {
     card: "summary_large_image",
-    title: "dentist website design that converts | prism",
+    title: "Dental Practice Website Design That Converts | Prism",
     description:
-      "dentist website design built for booked demand, clean migrations, and measurable growth."
+      "Modern dental practice websites built to get found, build trust, and convert visitors into booked appointments."
   },
   robots: {
     index: true,
@@ -197,13 +199,13 @@ export default function DentalWebsitePage() {
           <div className="container relative mx-auto px-4 py-24 md:py-28">
             <div className="mx-auto flex max-w-4xl flex-col items-center text-center">
               <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-4 py-1 text-xs uppercase tracking-[0.28em] text-neutral-200">
-                dental website blueprint
+                dental practice website blueprint
               </span>
               <h1 className="text-4xl font-semibold tracking-tight md:text-5xl lg:text-6xl">
-                dentist website design that wins treatments — not just looks pretty.
+                dental practice websites that get found, trusted, and chosen.
               </h1>
               <p className="mt-6 max-w-2xl text-base text-neutral-200 md:text-lg">
-                prism delivers dentist website design that increases case acceptance, showcases clinical excellence, and keeps phones ringing. every build includes a stress-free transfer from your previous provider.
+                prism builds modern dental practice websites that earn trust quickly, rank for local intent, and turn visits into booked appointments. every launch includes a stress-free transfer from your previous provider.
               </p>
               <div className="mt-8 flex flex-wrap justify-center gap-3">
                 <Button asChild size="lg" className="rounded-full px-8 py-3 text-base lowercase">
@@ -229,10 +231,10 @@ export default function DentalWebsitePage() {
               <div className="space-y-6">
                 <p className="text-sm font-medium uppercase tracking-[0.32em] text-neutral-500">crafted for dental growth</p>
                 <h2 className="text-3xl font-semibold tracking-tight text-neutral-900 sm:text-4xl">
-                  why dentists love prism websites
+                  what patients expect from a dental practice website
                 </h2>
                 <p className="text-base leading-relaxed text-neutral-600">
-                  each site is custom built for your clinical focus, insurance mix, and patient personas. we blend lighting-fast performance with storytelling that makes your chair the obvious choice.
+                  before patients choose a dentist, they want clarity, proof, and an easy next step. a great website removes friction and answers questions the way people actually search.
                 </p>
                 <div className="space-y-4">
                   {lovePoints.map((item) => (
@@ -245,6 +247,9 @@ export default function DentalWebsitePage() {
                     </div>
                   ))}
                 </div>
+                <p className="text-sm text-neutral-600">
+                  who wrote this: the prism design + engineering team. how we build: patient-first structure, fast performance, and measurement tied to calls/forms. why: so your website compounds trust and bookings over time.
+                </p>
                 <p className="text-sm text-neutral-600">
                   want the dentist-specific ai overviews checklist? read{" "}
                   <Link
@@ -289,12 +294,12 @@ export default function DentalWebsitePage() {
         <section className="px-4 py-16 sm:py-20">
           <div className="container mx-auto max-w-5xl">
             <div className="mx-auto max-w-3xl text-center">
-              <p className="text-sm font-medium uppercase tracking-[0.32em] text-neutral-500">dentist website design</p>
+              <p className="text-sm font-medium uppercase tracking-[0.32em] text-neutral-500">what we build</p>
               <h2 className="text-3xl font-semibold tracking-tight text-neutral-900 sm:text-4xl">
-                what your website should include
+                what we build (and why it works)
               </h2>
               <p className="mt-4 text-base leading-relaxed text-neutral-600">
-                the goal isn’t “a prettier site.” it’s a calmer, clearer experience that patients trust — and a structure google can understand.
+                the goal isn’t “a prettier site.” it’s a calmer, clearer experience patients trust — and a structure google can understand.
               </p>
             </div>
 
@@ -306,12 +311,23 @@ export default function DentalWebsitePage() {
                 </div>
               ))}
             </div>
+          </div>
+        </section>
+
+        <section className="px-4 py-16 sm:py-20">
+          <div className="container mx-auto max-w-5xl">
+            <div className="mx-auto max-w-3xl text-center">
+              <p className="text-sm font-medium uppercase tracking-[0.32em] text-neutral-500">proof</p>
+              <h2 className="text-3xl font-semibold tracking-tight text-neutral-900 sm:text-4xl">
+                dental website examples and case studies
+              </h2>
+              <p className="mt-4 text-base leading-relaxed text-neutral-600">
+                explore real dental launches—how we structure pages, clarify services, and improve booking paths.
+              </p>
+            </div>
 
             <div className="mt-12 rounded-3xl border border-neutral-200 bg-neutral-50 p-6 shadow-sm sm:p-8">
-              <p className="text-sm text-neutral-700">
-                want dentist website design examples? explore real dental launches:
-              </p>
-              <div className="mt-6 grid gap-4 sm:grid-cols-2">
+              <div className="mt-2 grid gap-4 sm:grid-cols-2">
                 {designExamples.map((example) => (
                   <Link
                     key={example.href}
@@ -334,6 +350,59 @@ export default function DentalWebsitePage() {
                 </Link>
                 .
               </p>
+            </div>
+          </div>
+        </section>
+
+        <section className="border-y border-neutral-100 bg-white px-4 py-16 sm:py-20">
+          <div className="container mx-auto max-w-5xl">
+            <div className="mx-auto max-w-3xl text-center">
+              <p className="text-sm font-medium uppercase tracking-[0.32em] text-neutral-500">our process</p>
+              <h2 className="text-3xl font-semibold tracking-tight text-neutral-900 sm:text-4xl">our build process</h2>
+              <p className="mt-4 text-base leading-relaxed text-neutral-600">
+                a clear plan, a fast build, and a launch that protects what already works—so your new website performs on day one.
+              </p>
+            </div>
+
+            <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {[
+                {
+                  step: "01",
+                  title: "intent + site map",
+                  description:
+                    "we map treatments, locations, and common questions into a structure patients and search engines can follow.",
+                },
+                {
+                  step: "02",
+                  title: "copy + conversion plan",
+                  description:
+                    "we clarify your offer, write patient-first pages, and define the booking paths (call, form, online scheduling).",
+                },
+                {
+                  step: "03",
+                  title: "design + build",
+                  description:
+                    "mobile-first design, fast pages, and technical seo foundations (headings, internal links, schema).",
+                },
+                {
+                  step: "04",
+                  title: "launch + redirects",
+                  description:
+                    "we migrate content, set up redirects, and verify analytics so you don’t lose calls during the switch.",
+                },
+                {
+                  step: "05",
+                  title: "measure + iterate",
+                  description:
+                    "we track calls and forms, ship improvements, and expand content so results compound over time.",
+                },
+              ].map((item) => (
+                <div key={item.step} className="rounded-2xl border border-neutral-200 bg-neutral-50 p-5 text-sm text-neutral-600">
+                  <span className="text-xs font-semibold uppercase tracking-[0.28em] text-neutral-400">{item.step}</span>
+                  <h3 className="mt-3 text-base font-semibold text-neutral-900">{item.title}</h3>
+                  <p className="mt-2 text-sm text-neutral-600">{item.description}</p>
+                </div>
+              ))}
             </div>
           </div>
         </section>
@@ -372,6 +441,7 @@ export default function DentalWebsitePage() {
               <HeroLoopingVideo
                 videoSrc="https://res.cloudinary.com/dhqpqfw6w/video/upload/v1762028676/scheduling-dental-website_nehxuw.mp4"
                 posterSrc="https://res.cloudinary.com/dhqpqfw6w/image/upload/v1762028718/scheduling-dental-website_dnebtj.webp"
+                alt="Preview of a dental practice website scheduling flow"
                 className="border-none shadow-none"
                 aspectClassName="aspect-[16/9]"
                 videoClassName="object-cover"
@@ -418,6 +488,7 @@ export default function DentalWebsitePage() {
               <HeroLoopingVideo
                 videoSrc="https://res.cloudinary.com/dhqpqfw6w/video/upload/v1762028436/dental-website_axxdfz.mp4"
                 posterSrc="https://res.cloudinary.com/dhqpqfw6w/image/upload/v1762028473/dental-website-thumbnail_bpbzex.webp"
+                alt="Preview of a modern dental practice website design"
                 className="border-none shadow-none"
                 aspectClassName="aspect-[16/9]"
                 videoClassName="object-cover"
@@ -585,9 +656,9 @@ export default function DentalWebsitePage() {
           <div className="container mx-auto max-w-5xl">
             <div className="grid gap-6 md:grid-cols-[minmax(0,0.75fr)_minmax(0,1.25fr)] md:items-start">
               <div className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm">
-                <div className="inline-flex items-center gap-2 rounded-full bg-neutral-900 px-4 py-2 text-xs uppercase tracking-[0.28em] text-white">
-                  faqs
-                </div>
+                <h2 className="inline-flex items-center gap-2 rounded-full bg-neutral-900 px-4 py-2 text-xs uppercase tracking-[0.28em] text-white">
+                  FAQ
+                </h2>
                 <p className="mt-4 text-sm text-neutral-600">
                   the questions we hear from practice owners preparing to switch providers.
                 </p>
@@ -607,9 +678,9 @@ export default function DentalWebsitePage() {
         <section className="px-4 pb-20 pt-16 sm:pb-24">
           <div className="container mx-auto max-w-4xl text-center">
             <p className="text-sm font-medium uppercase tracking-[0.32em] text-neutral-500">ready for a practice website that performs?</p>
-            <h2 className="mt-4 text-3xl font-semibold tracking-tight text-neutral-900 sm:text-4xl">let&apos;s plan your next launch</h2>
+            <h2 className="mt-4 text-3xl font-semibold tracking-tight text-neutral-900 sm:text-4xl">next step</h2>
             <p className="mt-4 text-base text-neutral-600">
-              start with a complimentary audit, see real patient journeys, and get a tailored roadmap for your new dental website.
+              start with a complimentary audit, see real patient journeys, and get a tailored roadmap for your new dental practice website.
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-3">
               <Button asChild size="lg" className="rounded-full px-8 py-3 text-base lowercase">
@@ -631,9 +702,9 @@ export default function DentalWebsitePage() {
       <Footer />
       <ScrollToTop />
       <ServiceSchema
-        serviceId="dentist-website-design"
-        name="Dentist website design"
-        description="Dentist website design, copy, and development built to convert patients, load fast, and support long-term local visibility."
+        serviceId="dental-practice-website-design"
+        name="Dental practice website design"
+        description="Dental practice website design, copy, and development built to earn trust, load fast, and support long-term local visibility."
         serviceType="Website design"
         areaServed="United States"
       />

@@ -152,6 +152,13 @@ export default function FamilyFirstSmileCareCaseStudy() {
                 <div className="text-center space-y-6">
                   <h2 className="text-2xl font-bold tracking-tighter lowercase">ready to build a family‑friendly site?</h2>
                   <p className="text-neutral-600 lowercase max-w-2xl mx-auto">let’s make services clear, comforts visible, and booking effortless—backed by tracking.</p>
+                  <p className="text-sm text-neutral-600 lowercase max-w-2xl mx-auto">
+                    built with prism’s{" "}
+                    <Link href="/dental-website" className="font-semibold text-neutral-900 underline underline-offset-4">
+                      dental practice website system
+                    </Link>
+                    .
+                  </p>
                   <div className="pt-6">
                     <Link href="/get-started">
                       <Button

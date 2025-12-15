@@ -218,6 +218,13 @@ export default function ExquisiteDentistryCaseStudy() {
                 <div className="text-center space-y-6">
                   <h2 className="text-2xl font-bold tracking-tighter">Ready to Close the Digital Gap?</h2>
                   <p>If your offline experience screams five-star but your website whispers two-star, let's talk.<br />➡ <strong>Book a 15-min strategy call</strong> or explore more success stories.</p>
+                  <p className="text-sm text-neutral-600">
+                    Built with Prism’s{" "}
+                    <Link href="/dental-website" className="font-semibold text-neutral-900 underline underline-offset-4">
+                      dental practice website system
+                    </Link>
+                    .
+                  </p>
                   <div className="pt-6">
                     <Link href="/free-analysis">
                       <Button
