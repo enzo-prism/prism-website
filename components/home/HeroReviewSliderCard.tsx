@@ -16,12 +16,14 @@ const DEFAULT_REVIEW_RATING = {
   worstRating: "1",
 }
 
+const HERO_SLIDE_COUNT = 6
+
 type HeroReviewSliderCardProps = {
   className?: string
 }
 
 export default function HeroReviewSliderCard({ className }: HeroReviewSliderCardProps) {
-  const [reviews, setReviews] = useState<Quote[]>(() => getHeroReviews(6))
+  const [reviews, setReviews] = useState<Quote[]>(() => getHeroReviews(HERO_SLIDE_COUNT))
   const [activeIndex, setActiveIndex] = useState(0)
   const [prevIndex, setPrevIndex] = useState<number | null>(null)
   const activeRef = useRef(0)
@@ -30,7 +32,7 @@ export default function HeroReviewSliderCard({ className }: HeroReviewSliderCard
   const resumeTimeoutRef = useRef<number | null>(null)
 
   useEffect(() => {
-    setReviews(getHomepageHeroReviewPool())
+    setReviews(getHomepageHeroReviewPool().slice(0, HERO_SLIDE_COUNT))
   }, [])
 
   useEffect(() => {
@@ -48,6 +50,15 @@ export default function HeroReviewSliderCard({ className }: HeroReviewSliderCard
     activeRef.current = normalized
     setActiveIndex(normalized)
   }
+
+  useEffect(() => {
+    if (reviews.length === 0) return
+    if (activeRef.current < reviews.length) return
+
+    activeRef.current = 0
+    setActiveIndex(0)
+    setPrevIndex(null)
+  }, [reviews.length])
 
   const goNext = () => goToIndex(activeRef.current + 1)
   const goPrev = () => goToIndex(activeRef.current - 1)
@@ -184,6 +195,33 @@ export default function HeroReviewSliderCard({ className }: HeroReviewSliderCard
           )}
         </div>
       </div>
+
+      {reviews.length > 1 ? (
+        <div className="flex items-center justify-center gap-1" aria-label="Review slides">
+          {reviews.map((review, index) => {
+            const isActive = index === activeIndex
+            return (
+              <button
+                key={review.id}
+                type="button"
+                onClick={() => goToIndex(index)}
+                className="group rounded-full p-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                aria-label={`Go to review ${index + 1} of ${reviews.length}`}
+                aria-current={isActive ? "true" : undefined}
+              >
+                <span
+                  className={cn(
+                    "block h-1.5 rounded-full transition-[width,background-color] duration-300 ease-out motion-reduce:transition-none",
+                    isActive
+                      ? "w-6 bg-neutral-900 dark:bg-white"
+                      : "w-1.5 bg-neutral-300 group-hover:bg-neutral-400 dark:bg-neutral-700 dark:group-hover:bg-neutral-600"
+                  )}
+                />
+              </button>
+            )
+          })}
+        </div>
+      ) : null}
 
       <div className="flex justify-center">
         <Link
