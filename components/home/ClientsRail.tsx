@@ -64,7 +64,7 @@ export default function ClientsRail() {
       <div className="relative">
         <div
           ref={railRef}
-          className="flex gap-3 sm:gap-4 overflow-x-auto snap-x snap-mandatory px-4 md:px-6 py-1 scroll-smooth"
+          className="flex gap-3 sm:gap-4 overflow-x-auto snap-x snap-mandatory px-4 md:px-6 py-2 scroll-smooth"
           role="list"
           aria-label="Client stories"
         >
