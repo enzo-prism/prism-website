@@ -335,7 +335,6 @@ function PricingSection({ allowMotion }: { allowMotion: boolean }) {
 function PricingCard({ tier, index, allowMotion }: { tier: PricingTier; index: number; allowMotion: boolean }) {
   const hasArrow = tier.cta.includes("→")
   const ctaLabel = hasArrow ? tier.cta.replace("→", "").trim() : tier.cta
-  const includesAds = tier.included.includes("Ads")
 
   const content = (
     <motion.article
@@ -348,11 +347,6 @@ function PricingCard({ tier, index, allowMotion }: { tier: PricingTier; index: n
       whileHover={allowMotion ? "hover" : undefined}
       whileTap={allowMotion ? "hover" : undefined}
     >
-      {includesAds && (
-        <div className="absolute right-4 top-4 inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.2em] text-emerald-700">
-          <span>includes ads</span>
-        </div>
-      )}
       <div className="space-y-3">
         <div className="flex items-center gap-2">
           <motion.span
