@@ -204,7 +204,7 @@ function HeroSection() {
                 Buy back your time — and accelerate compounding growth.
               </h1>
               <p className="text-lg text-black/70 sm:text-xl">
-                Your website is the engine that starts it all. Prism builds clean, high-performing sites that remove busywork, eliminate guessing, and create a system that grows more valuable every month.
+                with prism impossible is temporary
               </p>
             </div>
           </RevealOnScroll>
@@ -288,11 +288,7 @@ function PricingSection({ allowMotion }: { allowMotion: boolean }) {
     <section id="plans" className="bg-white py-24 sm:py-32">
       <div className="mx-auto flex max-w-6xl flex-col gap-10 px-6">
         <RevealOnScroll className="text-center">
-          <p className="text-sm font-semibold tracking-[0.2em] text-black/60">pricing tiers</p>
-          <h2 className="mt-3 text-3xl font-semibold sm:text-4xl">Pick your plan — we handle everything.</h2>
-          <p className="mt-4 text-base text-black/70">
-            Every site is tuned to convert and ready to grow from day one.
-          </p>
+          <h2 className="text-3xl font-semibold sm:text-4xl">pick your plan</h2>
         </RevealOnScroll>
         <div className="grid gap-8 md:grid-cols-3">
           {pricingTiers.map((tier, index) => (
@@ -314,7 +310,7 @@ function PricingSection({ allowMotion }: { allowMotion: boolean }) {
                 id: "https://www.design-prism.com/pricing#founder-vsl",
                 name: "Founder Enzo Sison on Prism pricing",
                 description:
-                  "Enzo Sison walks through Prism’s pricing tiers, how Launch, Grow, and Scale deliver conversion-ready websites plus ongoing optimization, and why everything stays transparent from day one.",
+                  "Enzo Sison walks through Prism’s pricing, how Launch, Grow, and Scale deliver conversion-ready websites plus ongoing optimization, and why everything stays transparent from day one.",
                 thumbnailUrl: "https://res.cloudinary.com/dhqpqfw6w/video/upload/so_0/pricing_ymfnqy.jpg",
                 uploadDate: "2025-01-24T00:00:00Z",
                 duration: "PT60S",

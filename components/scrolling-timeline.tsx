@@ -59,7 +59,7 @@ export default function ScrollingTimeline() {
       year: "June 2012",
       title: "makes first dollar from youtube",
           description:
-      "important moment that changed the way I viewed the world forever",
+      "changed the way I viewed the world forever",
       icon: "🎮",
     },
     {
@@ -175,7 +175,7 @@ export default function ScrollingTimeline() {
       id: 3,
       year: "May 2023",
       title: "enzo starts driving for uber",
-      description: "just trying to pay rent and groceries",
+      description: "funding the dream",
       icon: "🚗",
       image: {
         src: "/uber-driver-profile.jpeg",
