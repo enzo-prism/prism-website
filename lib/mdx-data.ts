@@ -26,7 +26,7 @@ export type BlogFrontmatter = {
   }
 }
 
-const BLOG_PATH = "content/blog"
+const BLOG_PATH = path.join(process.cwd(), "content", "blog")
 
 const CODEX_REGEX = /\bcode?x\b/gi
 const DEFAULT_CATEGORY_SLUG = "general"
@@ -140,4 +140,3 @@ export async function getAllPosts(): Promise<Array<{ slug: string } & BlogFrontm
     return null
   }
 }
-

@@ -15,6 +15,9 @@ typescript: {
 },
 outputFileTracingIncludes: {
   "/api/latest-posts": ["content/blog/**/*"],
+  "/blog": ["content/blog/**/*"],
+  "/blog/feed.xml": ["content/blog/**/*"],
+  "/sitemap.xml": ["content/blog/**/*"],
 },
 // Enhanced image optimization configuration
 images: {
