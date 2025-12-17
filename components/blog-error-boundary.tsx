@@ -4,6 +4,8 @@ import React from "react"
 import { AlertTriangle, RefreshCw, ArrowLeft } from "lucide-react"
 import Link from "next/link"
 
+import { Button } from "@/components/ui/button"
+
 interface BlogErrorBoundaryState {
   hasError: boolean
   error: Error | null
@@ -92,13 +94,10 @@ function BlogErrorFallback({ error, retry }: { error: Error; retry: () => void }
         </div>
         
         <div className="space-y-3">
-          <button
-            onClick={retry}
-            className="inline-flex items-center px-4 py-2 bg-neutral-900 text-white rounded-lg hover:bg-neutral-800 transition-colors lowercase"
-          >
-            <RefreshCw className="h-4 w-4 mr-2" />
+          <Button onClick={retry} className="lowercase bg-neutral-900 text-white hover:bg-neutral-800">
+            <RefreshCw />
             try again
-          </button>
+          </Button>
           
           <div>
             <Link
@@ -143,13 +142,10 @@ export function BlogPostErrorBoundary({ children }: { children: React.ReactNode 
                   there was an error processing the blog post content. this might be due to invalid 
                   formatting or a temporary issue.
                 </p>
-                <button
-                  onClick={retry}
-                  className="inline-flex items-center px-3 py-2 bg-red-600 text-white text-sm rounded hover:bg-red-700 transition-colors lowercase"
-                >
-                  <RefreshCw className="h-4 w-4 mr-2" />
+                <Button onClick={retry} variant="destructive" size="sm" className="lowercase">
+                  <RefreshCw />
                   retry loading
-                </button>
+                </Button>
               </div>
             </div>
           </div>
@@ -184,13 +180,10 @@ export function BlogListErrorBoundary({ children }: { children: React.ReactNode 
               <p className="text-red-700 lowercase mb-6">
                 we couldn't load the blog posts right now. please try again.
               </p>
-              <button
-                onClick={retry}
-                className="inline-flex items-center px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors lowercase"
-              >
-                <RefreshCw className="h-4 w-4 mr-2" />
+              <Button onClick={retry} variant="destructive" className="lowercase">
+                <RefreshCw />
                 retry loading
-              </button>
+              </Button>
             </div>
           </div>
         </section>

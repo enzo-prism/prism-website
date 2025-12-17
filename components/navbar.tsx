@@ -1,13 +1,14 @@
 "use client"
 
-import { BadgeDollarSign, BookOpen, FolderOpen, Heart, Home, Menu, X } from "lucide-react"
+import { BadgeDollarSign, BookOpen, FolderOpen, Heart, Home, Menu } from "lucide-react"
 import type { LucideIcon } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { useMemo, useState } from "react"
+import { useMemo } from "react"
 
 import Breadcrumbs from "@/components/breadcrumbs"
 import { Button } from "@/components/ui/button"
+import { Sheet, SheetClose, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { CASE_STUDIES } from "@/lib/case-study-data"
 import { LOGO_CONFIG, NAV_ITEMS, type NavItem } from "@/lib/constants"
 import { trackNavigation } from "@/utils/analytics"
@@ -36,7 +37,6 @@ const getTopIcon = (label?: string) => {
 const getNavIcon = getTopIcon
 
 export default function Navbar() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
   const pathname = usePathname()
   const navItems = NAV_ITEMS
 
@@ -137,74 +137,70 @@ export default function Navbar() {
         </nav>
 
         <div className="flex items-center md:hidden">
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => setIsMenuOpen((open) => !open)}
-            aria-label="Toggle menu"
-          >
-            {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-          </Button>
+          <Sheet>
+            <SheetTrigger asChild>
+              <Button variant="ghost" size="icon" aria-label="Open menu">
+                <Menu className="h-6 w-6" />
+              </Button>
+            </SheetTrigger>
+            <SheetContent side="top" className="top-16 border-t border-b-0 p-0 shadow-sm">
+              <nav className="mx-auto flex max-w-6xl flex-col gap-2 px-4 py-4">
+                {navItems.map((item) => (
+                  <div key={item.label} className="flex flex-col">
+                    {item.href ? (
+                      <SheetClose asChild>
+                        <Link
+                          href={item.href}
+                          className={`flex items-center justify-between rounded-lg px-3 py-2 text-base lowercase transition-colors hover:bg-muted ${
+                            isActivePath(item.href)
+                              ? "bg-muted font-semibold text-foreground"
+                              : "text-muted-foreground"
+                          }`}
+                          onClick={() => trackNavigation(item.label, item.href!)}
+                        >
+                          <span className="flex items-center gap-2">
+                            {getTopIcon(item.label)}
+                            {item.label}
+                          </span>
+                        </Link>
+                      </SheetClose>
+                    ) : (
+                      <div
+                        className={`flex items-center justify-between rounded-lg px-3 py-2 text-base lowercase ${
+                          isParentActive(item) ? "text-foreground" : "text-muted-foreground"
+                        }`}
+                      >
+                        <span>{item.label}</span>
+                      </div>
+                    )}
+                    {item.children && (
+                      <div className="mt-2 space-y-1 pl-4">
+                        {item.children.map((child) => (
+                          <SheetClose asChild key={child.label}>
+                            <Link
+                              href={child.href}
+                              className={`flex items-center gap-2 rounded-md px-3 py-2 text-base lowercase transition-colors hover:bg-muted ${
+                                isActivePath(child.href)
+                                  ? "bg-muted font-medium text-foreground"
+                                  : "text-muted-foreground"
+                              }`}
+                              onClick={() => trackNavigation(child.label, child.href)}
+                            >
+                              {getNavIcon(child.label)}
+                              {child.label}
+                            </Link>
+                          </SheetClose>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </nav>
+            </SheetContent>
+          </Sheet>
         </div>
       </div>
 
-      {isMenuOpen ? (
-        <div className="md:hidden border-t bg-background shadow-sm">
-          <nav className="mx-auto flex max-w-6xl flex-col gap-2 px-4 py-4">
-            {navItems.map((item) => (
-              <div key={item.label} className="flex flex-col">
-                {item.href ? (
-                  <Link
-                    href={item.href}
-                    className={`flex items-center justify-between rounded-lg px-3 py-2 text-base lowercase transition-colors hover:bg-muted ${
-                      isActivePath(item.href) ? "bg-muted font-semibold text-foreground" : "text-muted-foreground"
-                    }`}
-                    onClick={() => {
-                      setIsMenuOpen(false)
-                      trackNavigation(item.label, item.href!)
-                    }}
-                  >
-                    <span className="flex items-center gap-2">
-                      {getTopIcon(item.label)}
-                      {item.label}
-                    </span>
-                  </Link>
-                ) : (
-                  <div
-                    className={`flex items-center justify-between rounded-lg px-3 py-2 text-base lowercase ${
-                      isParentActive(item) ? "text-foreground" : "text-muted-foreground"
-                    }`}
-                  >
-                    <span>{item.label}</span>
-                  </div>
-                )}
-                {item.children && (
-                  <div className="mt-2 space-y-1 pl-4">
-                    {item.children.map((child) => (
-                      <Link
-                        key={child.label}
-                        href={child.href}
-                        className={`flex items-center gap-2 rounded-md px-3 py-2 text-base lowercase transition-colors hover:bg-muted ${
-                          isActivePath(child.href)
-                            ? "bg-muted font-medium text-foreground"
-                            : "text-muted-foreground"
-                        }`}
-                        onClick={() => {
-                          setIsMenuOpen(false)
-                          trackNavigation(child.label, child.href)
-                        }}
-                      >
-                        {getNavIcon(child.label)}
-                        {child.label}
-                      </Link>
-                    ))}
-                  </div>
-                )}
-              </div>
-            ))}
-          </nav>
-        </div>
-      ) : null}
       {caseStudyBreadcrumbs ? (
         <div className="border-t bg-background/90 backdrop-blur supports-[backdrop-filter]:bg-background/70">
           <div className="mx-auto max-w-6xl px-4 md:px-6">

@@ -5,6 +5,9 @@ import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
 import ScrollToTop from "@/components/scroll-to-top"
 import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Textarea } from "@/components/ui/textarea"
 
 export const metadata: Metadata = {
   title: "book a shoot | prism",
@@ -76,15 +79,15 @@ export default function BookAShootPage() {
                   value="https://www.design-prism.com/book-a-shoot/thank-you"
                 />
                 <div className="space-y-2">
-                  <label htmlFor="email" className="text-sm font-medium text-neutral-800">
+                  <Label htmlFor="email" className="text-neutral-800">
                     your email
-                  </label>
-                  <input
+                  </Label>
+                  <Input
                     id="email"
                     name="email"
                     type="email"
                     required
-                    className="w-full rounded-2xl border border-neutral-200 bg-neutral-50 px-4 py-3 text-sm text-neutral-900 focus:border-neutral-900 focus:outline-none"
+                    className="w-full rounded-2xl border-neutral-200 bg-neutral-50 px-4 py-3 text-sm text-neutral-900 focus-visible:border-neutral-900 focus-visible:ring-neutral-900 focus-visible:ring-offset-0"
                     placeholder="name@practice.com"
                   />
                 </div>
@@ -92,11 +95,11 @@ export default function BookAShootPage() {
                 <div className="space-y-2">
                   <p className="text-sm font-medium text-neutral-800">preferred day #1</p>
                   <div className="grid gap-4 md:grid-cols-2">
-                    <input
+                    <Input
                       type="date"
                       name="day_one_date"
                       required
-                      className="rounded-2xl border border-neutral-200 bg-neutral-50 px-4 py-3 text-base text-neutral-900 focus:border-neutral-900 focus:outline-none sm:text-sm"
+                      className="rounded-2xl border-neutral-200 bg-neutral-50 px-4 py-3 text-base text-neutral-900 focus-visible:border-neutral-900 focus-visible:ring-neutral-900 focus-visible:ring-offset-0 sm:text-sm"
                     />
                     <select
                       name="day_one_time"
@@ -119,11 +122,11 @@ export default function BookAShootPage() {
                 <div className="space-y-2">
                   <p className="text-sm font-medium text-neutral-800">preferred day #2</p>
                   <div className="grid gap-4 md:grid-cols-2">
-                    <input
+                    <Input
                       type="date"
                       name="day_two_date"
                       required
-                      className="rounded-2xl border border-neutral-200 bg-neutral-50 px-4 py-3 text-base text-neutral-900 focus:border-neutral-900 focus:outline-none sm:text-sm"
+                      className="rounded-2xl border-neutral-200 bg-neutral-50 px-4 py-3 text-base text-neutral-900 focus-visible:border-neutral-900 focus-visible:ring-neutral-900 focus-visible:ring-offset-0 sm:text-sm"
                     />
                     <select
                       name="day_two_time"
@@ -144,14 +147,14 @@ export default function BookAShootPage() {
                 </div>
 
                 <div className="space-y-2">
-                  <label htmlFor="notes" className="text-sm font-medium text-neutral-800">
+                  <Label htmlFor="notes" className="text-neutral-800">
                     anything we should know?
-                  </label>
-                  <textarea
+                  </Label>
+                  <Textarea
                     id="notes"
                     name="notes"
                     rows={4}
-                    className="w-full rounded-2xl border border-neutral-200 bg-neutral-50 px-4 py-3 text-sm text-neutral-900 focus:border-neutral-900 focus:outline-none"
+                    className="w-full rounded-2xl border-neutral-200 bg-neutral-50 px-4 py-3 text-sm text-neutral-900 shadow-none focus-visible:border-neutral-900 focus-visible:ring-neutral-900 focus-visible:ring-offset-0"
                     placeholder="number of operatories, parking instructions, etc."
                   />
                 </div>

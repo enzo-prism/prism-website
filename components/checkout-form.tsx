@@ -4,6 +4,7 @@ import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Loader2, AlertCircle } from "lucide-react"
 import { useRouter } from "next/navigation"
+import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
@@ -171,10 +172,12 @@ export default function CheckoutForm({ plan }: CheckoutFormProps) {
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
-              className="flex items-center gap-2 rounded-lg bg-red-50 p-3 text-sm text-red-600"
+              className="overflow-hidden"
             >
-              <AlertCircle className="h-4 w-4" />
-              <p>{errorMessage}</p>
+              <Alert variant="destructive" className="bg-red-50 text-red-600">
+                <AlertCircle className="h-4 w-4" />
+                <AlertDescription>{errorMessage}</AlertDescription>
+              </Alert>
             </motion.div>
           )}
         </AnimatePresence>
