@@ -3,7 +3,10 @@
 import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Sparkles, Copy, Check, RefreshCw, Target } from "lucide-react"
+import { toast } from "sonner"
+
 import { Button } from "@/components/ui/button"
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import { fadeInUp, springScale, successPop } from "@/utils/animation-variants"
 
 interface TaglineData {
@@ -66,9 +69,15 @@ export default function BrandTaglineGenerator() {
   }
 
   const copyToClipboard = async (text: string, index: number) => {
-    await navigator.clipboard.writeText(text)
-    setCopiedIndex(index)
-    setTimeout(() => setCopiedIndex(null), 2000)
+    try {
+      await navigator.clipboard.writeText(text)
+      setCopiedIndex(index)
+      toast.success("tagline copied")
+      setTimeout(() => setCopiedIndex(null), 2000)
+    } catch (error) {
+      console.error("[BrandTaglineGenerator] failed to copy tagline", error)
+      toast.error("couldn't copy tagline")
+    }
   }
 
   const addSuggestion = (field: keyof TaglineData, suggestion: string) => {
@@ -78,12 +87,13 @@ export default function BrandTaglineGenerator() {
   const isFormValid = formData.business && formData.specialty && formData.audience
 
   return (
-    <motion.div
-      className="w-full bg-gradient-to-br from-purple-50 to-blue-50 border border-purple-200 rounded-lg shadow-sm p-6 mb-8"
-      initial="initial"
-      animate="animate"
-      variants={springScale}
-    >
+    <TooltipProvider delayDuration={250}>
+      <motion.div
+        className="w-full bg-gradient-to-br from-purple-50 to-blue-50 border border-purple-200 rounded-lg shadow-sm p-6 mb-8"
+        initial="initial"
+        animate="animate"
+        variants={springScale}
+      >
       <motion.div className="mb-6" variants={fadeInUp}>
         <div className="flex items-center gap-3 mb-3">
           <div className="w-10 h-10 bg-purple-500 rounded-lg flex items-center justify-center">
@@ -229,35 +239,42 @@ export default function BrandTaglineGenerator() {
                     className="flex items-center justify-between p-3 bg-white rounded-lg border border-neutral-200 hover:border-purple-300 transition-colors"
                   >
                     <span className="text-sm font-medium text-neutral-900">{tagline}</span>
-                    <motion.button
-                      onClick={() => copyToClipboard(tagline, index)}
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                      className="p-2 hover:bg-neutral-100 rounded-full transition-colors"
-                    >
-                      <AnimatePresence mode="wait">
-                        {copiedIndex === index ? (
-                          <motion.div
-                            key="check"
-                            initial={{ scale: 0 }}
-                            animate={{ scale: 1 }}
-                            exit={{ scale: 0 }}
-                            variants={successPop}
-                          >
-                            <Check className="w-4 h-4 text-green-500" />
-                          </motion.div>
-                        ) : (
-                          <motion.div
-                            key="copy"
-                            initial={{ scale: 0 }}
-                            animate={{ scale: 1 }}
-                            exit={{ scale: 0 }}
-                          >
-                            <Copy className="w-4 h-4 text-neutral-500" />
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
-                    </motion.button>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <motion.button
+                          type="button"
+                          onClick={() => copyToClipboard(tagline, index)}
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                          className="rounded-full p-2 transition-colors hover:bg-neutral-100"
+                          aria-label="Copy tagline"
+                        >
+                          <AnimatePresence mode="wait">
+                            {copiedIndex === index ? (
+                              <motion.div
+                                key="check"
+                                initial={{ scale: 0 }}
+                                animate={{ scale: 1 }}
+                                exit={{ scale: 0 }}
+                                variants={successPop}
+                              >
+                                <Check className="w-4 h-4 text-green-500" />
+                              </motion.div>
+                            ) : (
+                              <motion.div
+                                key="copy"
+                                initial={{ scale: 0 }}
+                                animate={{ scale: 1 }}
+                                exit={{ scale: 0 }}
+                              >
+                                <Copy className="w-4 h-4 text-neutral-500" />
+                              </motion.div>
+                            )}
+                          </AnimatePresence>
+                        </motion.button>
+                      </TooltipTrigger>
+                      <TooltipContent side="top">{copiedIndex === index ? "copied" : "copy"}</TooltipContent>
+                    </Tooltip>
                   </motion.div>
                 ))}
               </div>
@@ -281,6 +298,7 @@ export default function BrandTaglineGenerator() {
           models associate it with your brand.
         </p>
       </motion.div>
-    </motion.div>
+      </motion.div>
+    </TooltipProvider>
   )
 }

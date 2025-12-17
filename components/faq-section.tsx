@@ -1,8 +1,7 @@
 "use client"
 
 import { cn } from "@/lib/utils"
-import { ChevronDown } from "lucide-react"
-import { useState } from "react"
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 
 interface FAQItem {
   question: string
@@ -24,16 +23,6 @@ export default function FAQSection({
   className,
   variant = "default" 
 }: FAQSectionProps) {
-  const [openItems, setOpenItems] = useState<number[]>([])
-
-  const toggleItem = (index: number) => {
-    setOpenItems(prev => 
-      prev.includes(index) 
-        ? prev.filter(i => i !== index)
-        : [...prev, index]
-    )
-  }
-
   const paddingClasses = {
     default: "py-12 sm:py-16",
     compact: "py-8 sm:py-10"
@@ -78,41 +67,22 @@ export default function FAQSection({
         </div>
 
         <div className="space-y-4">
-          {items.map((item, index) => (
-            <div 
-              key={index}
-              className="bg-neutral-50 rounded-lg overflow-hidden border border-neutral-200"
-            >
-              <button
-                onClick={() => toggleItem(index)}
-                className="w-full px-6 py-4 text-left flex items-center justify-between hover:bg-neutral-100 transition-colors"
-                aria-expanded={openItems.includes(index)}
-                aria-controls={`faq-answer-${index}`}
+          <Accordion type="multiple" className="space-y-4">
+            {items.map((item, index) => (
+              <AccordionItem
+                key={index}
+                value={`faq-${index}`}
+                className="overflow-hidden rounded-lg border border-neutral-200 bg-neutral-50"
               >
-                <span className="font-medium text-neutral-900 pr-4">
-                  {item.question}
-                </span>
-                <ChevronDown 
-                  className={cn(
-                    "h-5 w-5 text-neutral-500 flex-shrink-0 transition-transform",
-                    openItems.includes(index) && "rotate-180"
-                  )}
-                />
-              </button>
-              
-              <div 
-                id={`faq-answer-${index}`}
-                className={cn(
-                  "px-6 overflow-hidden transition-all duration-300",
-                  openItems.includes(index) ? "max-h-96 pb-4" : "max-h-0"
-                )}
-              >
-                <p className="text-neutral-700 leading-relaxed">
-                  {item.answer}
-                </p>
-              </div>
-            </div>
-          ))}
+                <AccordionTrigger className="px-6 py-4 text-left text-neutral-900 hover:bg-neutral-100 hover:no-underline [&>svg]:h-5 [&>svg]:w-5 [&>svg]:text-neutral-500">
+                  <span className="pr-4">{item.question}</span>
+                </AccordionTrigger>
+                <AccordionContent className="px-6 text-base text-neutral-700 leading-relaxed">
+                  <p>{item.answer}</p>
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
         </div>
       </div>
     </section>

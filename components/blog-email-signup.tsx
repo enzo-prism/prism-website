@@ -2,6 +2,8 @@
 
 import { useState } from "react"
 import { trackFormSubmission } from "@/utils/analytics"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
 
 const FORM_ENDPOINT = "https://formspree.io/f/xvgvvnrj"
 
@@ -55,22 +57,22 @@ export default function BlogEmailSignup() {
           <label htmlFor="blog-email" className="sr-only">
             email address
           </label>
-          <input
+          <Input
             id="blog-email"
             name="email"
             type="email"
             required
             autoComplete="email"
             placeholder="you@company.com"
-            className="w-full rounded-full border border-neutral-200 bg-white px-5 py-3 text-sm text-neutral-900 placeholder:text-neutral-400 focus:border-neutral-900 focus:outline-none focus:ring-1 focus:ring-neutral-900"
+            className="h-auto w-full rounded-full border-neutral-200 bg-white px-5 py-3 text-sm text-neutral-900 placeholder:text-neutral-400 focus-visible:ring-neutral-900"
           />
-          <button
+          <Button
             type="submit"
-            className="inline-flex items-center justify-center rounded-full bg-neutral-900 px-5 py-3 text-sm font-semibold text-white transition hover:bg-neutral-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900 focus-visible:ring-offset-2"
+            className="h-auto w-full rounded-full px-5 py-3 text-sm font-semibold"
             disabled={status === "submitting"}
           >
             {status === "submitting" ? "sending..." : "send me updates"}
-          </button>
+          </Button>
           {message ? (
             <p
               className={`text-xs ${

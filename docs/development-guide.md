@@ -42,5 +42,15 @@ Any CTA labeled “free analysis” should point to `/free-analysis`. When you a
 - Pages that need natural capitalization should wrap their content in `.allow-capitalization` (e.g., `<main className="allow-capitalization ...">`) which resets `text-transform` to `none`.
 - This override is scoped, so you can mix lowercase-first sections with standard sentences without touching the global rule.
 
+## UI Components (shadcn/ui)
+The site uses shadcn/ui primitives under `components/ui/` (Tailwind + Radix + `cn()` helpers). Add new primitives via the CLI so we stay aligned with upstream.
+
+- Add a component: `pnpm dlx shadcn@latest add <component>`
+- Common additions: `alert`, `tooltip`, `dropdown-menu`, `popover`, `sheet`, `sonner`
+- Toasts: the global `<Toaster />` is mounted in `app/layout.tsx`, so client components can call `toast.success(...)` via `import { toast } from "sonner"`.
+- Form submit errors: prefer `<Alert variant="destructive">` for consistent styling, but keep native form controls intact.
+
+Form note: our marketing forms rely on native HTML5 validation via `useFormValidation` (`form.checkValidity()` + real `<input>/<select>/<textarea>`). Avoid swapping native `<select>`/checkbox controls for Radix equivalents unless you also preserve native form semantics and validation.
+
 ## Deployment
 Merges to `main` deploy automatically via Vercel. If you need a preview, open a PR – the CI pipeline will comment with the URL.

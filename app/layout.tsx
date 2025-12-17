@@ -8,6 +8,8 @@ import AnalyticsProvider from "@/components/analytics-provider"
 import { GlobalSchemaGraph } from "@/components/schema-markup"
 import RootClientMonitors from "@/components/root-client-monitors"
 import SentryContextProvider from "@/components/sentry-context-provider"
+import { ThemeProvider } from "@/components/theme-provider"
+import { Toaster } from "@/components/ui/sonner"
 import { GA_MEASUREMENT_ID, GOOGLE_ADS_ID, IS_ANALYTICS_ENABLED } from "@/lib/constants"
 
 export const metadata: Metadata = {
@@ -150,9 +152,12 @@ export default function RootLayout({
 	        <GlobalSchemaGraph />
 	        <RootClientMonitors />
 	        <SentryContextProvider>
-	          <Suspense fallback={null}>
-            <AnalyticsProvider>{children}</AnalyticsProvider>
-          </Suspense>
+	          <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
+	            <Toaster />
+	            <Suspense fallback={null}>
+                <AnalyticsProvider>{children}</AnalyticsProvider>
+              </Suspense>
+	          </ThemeProvider>
         </SentryContextProvider>
       </body>
     </html>

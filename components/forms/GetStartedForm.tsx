@@ -1,6 +1,7 @@
 "use client"
 
 import { useRouter } from "next/navigation"
+import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
@@ -252,7 +253,11 @@ export default function GetStartedForm({ defaultBudgetValue = "", selectedPlan }
         >
           {isSubmitting ? "Submitting..." : "Craft My Website Plan"}
         </Button>
-        {submitError ? <p className="text-sm text-rose-600">{submitError}</p> : null}
+        {submitError ? (
+          <Alert variant="destructive" className="rounded-2xl">
+            <AlertDescription>{submitError}</AlertDescription>
+          </Alert>
+        ) : null}
         <p className="text-xs text-slate-500">
           By submitting, you agree to receive project updates by email. We respect your inbox.
         </p>

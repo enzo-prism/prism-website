@@ -1,6 +1,7 @@
 "use client"
 
 import { useRouter } from "next/navigation"
+import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
@@ -121,7 +122,11 @@ export default function ContactForm() {
         >
           {isSubmitting ? "Sending..." : "Send Message →"}
         </Button>
-        {submitError ? <p className="text-sm text-rose-600">{submitError}</p> : null}
+        {submitError ? (
+          <Alert variant="destructive" className="rounded-2xl">
+            <AlertDescription>{submitError}</AlertDescription>
+          </Alert>
+        ) : null}
         <p className="text-xs text-slate-500">We reply within one business day and never share your details.</p>
       </div>
     </form>

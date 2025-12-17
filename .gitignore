@@ -37,3 +37,6 @@ next-env.d.ts
 # Git sync management logs
 git-sync-report.json
 scripts/logs/
+
+# macOS
+.DS_Store

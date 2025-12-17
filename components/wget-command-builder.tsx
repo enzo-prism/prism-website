@@ -1,6 +1,8 @@
 "use client"
 
 import { useState } from "react"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
 
 export const DEFAULT_URL = "https://example.com"
 
@@ -30,17 +32,17 @@ export default function WgetCommandBuilder({ value, onValueChange, commandUrl }:
 
   return (
     <div className="mt-3 space-y-3">
-      <label htmlFor="wget-command-url" className="text-sm font-semibold text-neutral-800 sm:text-base">
+      <Label htmlFor="wget-command-url" className="text-sm font-semibold text-neutral-800 sm:text-base">
         Enter your website URL
-      </label>
-      <input
+      </Label>
+      <Input
         id="wget-command-url"
         type="url"
         inputMode="url"
         placeholder={DEFAULT_URL}
         value={inputValue}
         onChange={(event) => setValue(event.target.value)}
-        className="w-full rounded-full border border-neutral-200 bg-white px-5 py-3 text-sm text-neutral-900 placeholder:text-neutral-400 focus:border-neutral-900 focus:outline-none focus:ring-1 focus:ring-neutral-900 sm:text-base"
+        className="h-auto w-full rounded-full border-neutral-200 bg-white px-5 py-3 text-sm text-neutral-900 placeholder:text-neutral-400 focus-visible:ring-neutral-900 sm:text-base"
         aria-describedby="wget-command-helper"
       />
       <p id="wget-command-helper" className="text-xs text-neutral-500 sm:text-sm">
