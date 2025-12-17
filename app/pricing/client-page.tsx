@@ -10,6 +10,7 @@ import {
   BarChart3,
   Beaker,
   CalendarClock,
+  Check,
   CheckCheck,
   Gauge,
   Leaf,
@@ -54,6 +55,7 @@ type PricingTier = {
   name: string
   emoji: string
   price: string
+  included: string[]
   bestFor: PricingBullet[]
   cta: string
   href: string
@@ -66,6 +68,7 @@ const pricingTiers: PricingTier[] = [
     name: "Launch",
     emoji: "🚀",
     price: "$400 one-time",
+    included: ["Website"],
     bestFor: [
       { icon: CalendarClock, text: "One-time events, pop-up offers, or short-term campaigns with a hard date", iconScale: 0.92 },
       { icon: Sparkles, text: "Early-stage startups that need a sharp, legit site this week — not next quarter" },
@@ -81,6 +84,7 @@ const pricingTiers: PricingTier[] = [
     name: "Grow",
     emoji: "🌱",
     price: "$900/mo",
+    included: ["Website", "Content Systems"],
     bestFor: [
       { icon: Beaker, text: "Founders ready to publish consistently and see what actually ranks and converts" },
       { icon: TrendingUp, text: "Businesses that want steady lead growth from SEO and content — without spraying ad spend" },
@@ -96,6 +100,7 @@ const pricingTiers: PricingTier[] = [
     name: "Scale",
     emoji: "📈",
     price: "from $1,500/mo",
+    included: ["Website", "Content Systems", "Ads"],
     bestFor: [
       { icon: Award, text: "Established businesses with proven product–market fit and clear revenue targets" },
       { icon: Gauge, text: "Founders who want their site, funnels, and campaigns treated like a full growth channel" },
@@ -330,6 +335,7 @@ function PricingSection({ allowMotion }: { allowMotion: boolean }) {
 function PricingCard({ tier, index, allowMotion }: { tier: PricingTier; index: number; allowMotion: boolean }) {
   const hasArrow = tier.cta.includes("→")
   const ctaLabel = hasArrow ? tier.cta.replace("→", "").trim() : tier.cta
+  const includesAds = tier.included.includes("Ads")
 
   const content = (
     <motion.article
@@ -342,7 +348,7 @@ function PricingCard({ tier, index, allowMotion }: { tier: PricingTier; index: n
       whileHover={allowMotion ? "hover" : undefined}
       whileTap={allowMotion ? "hover" : undefined}
     >
-      {tier.name === "Scale" && (
+      {includesAds && (
         <div className="absolute right-4 top-4 inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.2em] text-emerald-700">
           <span>includes ads</span>
         </div>
@@ -367,6 +373,23 @@ function PricingCard({ tier, index, allowMotion }: { tier: PricingTier; index: n
         </div>
         <p className={cn("text-3xl font-semibold", tier.featured && "text-white")}>{tier.price}</p>
         <div className="pt-2">
+          <p className={cn("mb-3 text-sm font-semibold", tier.featured && "text-white/90")}>
+            What's included
+          </p>
+          <ul className={cn("space-y-2 text-sm text-black/70", tier.featured && "text-white/80")}>
+            {tier.included.map((item) => (
+              <li key={item} className="flex items-center gap-2">
+                <Check
+                  strokeWidth={2}
+                  className={cn("h-4 w-4 shrink-0 text-black/60", tier.featured && "text-white/70")}
+                  aria-hidden
+                />
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div>
           <p className={cn("mb-3 text-sm font-semibold", tier.featured && "text-white/90")}>
             Best For
           </p>
@@ -633,18 +656,20 @@ function PricingStructuredData() {
       {pricingTiers.map((tier) => {
         const pricing = tierPricing[tier.name]
         const bestForDescription = tier.bestFor.map((item) => item.text).join(" • ")
+        const includesDescription = tier.included.join(" • ")
+        const fullDescription = `${bestForDescription} • Includes: ${includesDescription}`
 
         return (
           <ServiceSchema
             key={`pricing-service-${tier.name.toLowerCase()}`}
             serviceId={`pricing-${tier.name.toLowerCase()}`}
             name={`${tier.name} Website Design Plan`}
-            description={bestForDescription}
+            description={fullDescription}
             serviceType="WebDesign"
             areaServed="Worldwide"
             offerDetails={{
               name: `${tier.name} Plan`,
-              description: bestForDescription,
+              description: fullDescription,
               businessFunction: "http://purl.org/goodrelations/v1#ProvideService",
               price: pricing?.price,
               priceCurrency: "USD",
