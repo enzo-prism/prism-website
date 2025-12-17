@@ -69,6 +69,11 @@ const blogPosts = {
     category: "seo",
     gradientClass: "bg-gradient-to-br from-amber-200/30 via-emerald-200/30 to-sky-300/30",
   },
+  'seo-mystery-beverly-hills-dentist-traffic-from-china': {
+    title: "the seo mystery: why a beverly hills dentist was getting traffic from china (and what we did about it)",
+    category: "seo",
+    gradientClass: "bg-gradient-to-br from-rose-300/30 via-amber-300/30 to-sky-300/30",
+  },
   'from-one-video-to-seo-flywheel': {
     title: "From one video to seo flywheel",
     category: "Content Strategy",

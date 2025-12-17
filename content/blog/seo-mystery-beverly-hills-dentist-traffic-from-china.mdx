@@ -1,0 +1,351 @@
+---
+title: "the seo mystery: why a beverly hills dentist was getting traffic from china (and what we did about it)"
+description: "a real seo detective case: a beverly hills dentist got most of their traffic from china—here’s how we traced it to old backlink spam and cleaned it up."
+date: "2025-12-16"
+category: "seo"
+image: "/api/og/blog/seo-mystery-beverly-hills-dentist-traffic-from-china"
+gradientClass: "bg-gradient-to-br from-rose-300/30 via-amber-300/30 to-sky-300/30"
+showHeroImage: false
+openGraph:
+  title: "the seo mystery: why a beverly hills dentist was getting traffic from china (and what we did about it)"
+  description: "ga showed a beverly hills dentist getting most traffic from china. here’s the 3-tool workflow we used to find old backlink spam and fix it."
+  url: "https://www.design-prism.com/blog/seo-mystery-beverly-hills-dentist-traffic-from-china"
+  siteName: "Prism"
+  type: "article"
+  publishedTime: "2025-12-16T00:00:00.000Z"
+  authors: ["Enzo Sison"]
+twitter:
+  card: "summary_large_image"
+  title: "the seo mystery: why a beverly hills dentist was getting traffic from china"
+  description: "a fast, practical workflow to diagnose weird geo traffic, uncover spam backlinks, and clean up seo baggage."
+canonical: "https://www.design-prism.com/blog/seo-mystery-beverly-hills-dentist-traffic-from-china"
+video: "https://youtu.be/OB5ekFYbVCg?si=7e5UAKU-HbPWft5d"
+---
+
+import YouTubeVideoEmbed from "@/components/youtube-video-embed"
+import { VideoObjectSchema } from "@/components/schema-markup"
+
+*By Enzo Sison — Founder of Prism*
+
+If you’re a local business and your website traffic report looks like an international travel itinerary… something’s off.
+
+In this video, I walk through a real “SEO detective” case we hit with a client (a dental practice in Beverly Hills). Google Analytics showed **most of their traffic over the last 28 days coming from China**, with the U.S. coming second, plus meaningful traffic from places like Singapore, France, and the UK.
+
+For a Beverly Hills dentist, that’s not “global expansion.” That’s a problem.
+
+Below is the exact workflow we used to trace the root cause and what you should do if your website has the same kind of SEO baggage.
+
+---
+
+## Watch the video (full breakdown)
+
+<YouTubeVideoEmbed
+  videoId="OB5ekFYbVCg"
+  title="The SEO Mystery: Why a Beverly Hills Dentist Was Getting Traffic From China (and What We Did About It)"
+  className="my-8"
+/>
+
+<VideoObjectSchema
+  videoId="OB5ekFYbVCg"
+  name="The SEO Mystery: Why a Beverly Hills Dentist Was Getting Traffic From China (and What We Did About It)"
+  description="Enzo Sison walks through a real SEO detective case where a Beverly Hills dental practice’s analytics showed most traffic from China—and the backlink spam behind it."
+  thumbnailUrl="https://img.youtube.com/vi/OB5ekFYbVCg/hqdefault.jpg"
+  uploadDate="2025-12-16T00:00:00.000Z"
+  contentUrl="https://youtu.be/OB5ekFYbVCg?si=7e5UAKU-HbPWft5d"
+  embedUrl="https://www.youtube.com/embed/OB5ekFYbVCg"
+  creatorName="Enzo Sison"
+/>
+
+---
+
+## The symptom: “Why is my traffic coming from China?”
+
+When you look at your analytics and see:
+
+- **A big spike in traffic from countries you don’t serve**
+- **A bounce rate that’s insanely high** (70–80% is a classic sign)
+- **Sessions that don’t convert, don’t call, don’t book, don’t buy**
+
+…it usually means one of a few things:
+
+1. Bot/spam traffic
+2. Bad tracking setup (filters, tags, or referrers polluting your data)
+3. Your site is being referenced/linked in weird places (often from old SEO tactics)
+
+In our case, it was #3.
+
+And it was *ugly*.
+
+---
+
+## The root cause: old-school black hat backlink spam
+
+Here’s what we uncovered:
+
+- The client’s domain had been around **since before 2010**
+- Lots of vendors had worked on the website over the years
+- Back then (roughly 2005–2015), some SEO vendors used **black hat link building** to “game” rankings
+
+The classic strategy was:
+
+- Pay someone a small amount (often via marketplaces like Fiverr)
+- Have them create accounts across hundreds or thousands of random blogs
+- Drop comments with a keyword-rich name + a link back to your site  
+  Example keyword: **“Dentist Los Angeles”**  
+  Link: the dentist’s website
+
+Years later, those links are still out there.
+
+And now they don’t help you. They hurt you.
+
+---
+
+## The “SEO detective” workflow: 3 tools, no fluff
+
+You don’t need 10 tools and a $5,000 audit to find this stuff.
+
+We used three:
+
+- **Google Analytics** (free)
+- **Google Search Console** (free)
+- **Semrush** (paid, but worth it when you need it)
+
+Here’s the exact flow.
+
+---
+
+### Step 1: Confirm the weirdness in Google Analytics
+
+Start with the simplest check:
+
+**GA → Reports → User / Acquisition / Geo (depending on GA version)**
+
+Look at:
+
+- Traffic by **country**
+- Traffic by **source/medium**
+- Bounce rate / engagement rate
+- Landing pages for that traffic
+
+In our situation:
+
+- China was #1 by country
+- Bounce rate was sky high
+- Nothing about the traffic matched the business
+
+That’s your first clue: **this traffic is not real demand**.
+
+---
+
+### Step 2: Check if it’s referral traffic or backlink-driven
+
+Next question:  
+**Where is this traffic actually coming from?**
+
+In GA, look at:
+
+- Referrals
+- “Source” and “Referral path” (if available)
+- Landing pages those users hit
+
+If you see traffic coming from random websites that have nothing to do with your business (food blogs, spam domains, weird directories), you’re probably dealing with backlink spam or referral spam.
+
+---
+
+### Step 3: Use Semrush to inspect backlinks at scale
+
+This is where Semrush earned its keep.
+
+In Semrush:
+
+- Go to **Backlink Analytics**
+- Enter your domain
+- Review:
+  - **Referring domains**
+  - New/lost backlinks
+  - Anchor text distribution
+  - Toxicity signals
+
+In the video example, we found:
+
+- **385 referring domains**
+- Almost none were related to dentistry or Los Angeles
+- Many were based in totally irrelevant countries
+- One random site was linking to the dental practice **75 times**
+
+That’s not “good SEO.” That’s a footprint.
+
+---
+
+### Step 4: Click into the worst offenders and inspect the page
+
+This is the part most people skip, and it’s the part that actually explains the “why.”
+
+We opened the referring page and did:
+
+**Command + F → search for the anchor text**  
+Example: “Dentist Los Angeles”
+
+And there it was.
+
+A comment from a “user account” named something like **Dentist Los Angeles** saying random nonsense (like “I didn’t know Indians eat pumpkin.”)
+
+And here’s the tell:
+
+- Clicking the “user” didn’t go to a user profile
+- It redirected straight to the dentist’s website
+
+That’s deliberate spam.
+
+And if you scroll further, you see more accounts like:
+
+- Therapist Los Angeles
+- SEO Los Angeles
+- (more keyword-stuffed names)
+
+That pattern is not accidental.
+
+---
+
+## Why this hurts your SEO (and your data)
+
+Here’s the blunt truth:
+
+### 1) It confuses Google
+
+Your site is about dentistry, but your backlink profile says “food blogs, random comments, unrelated international sites.”
+
+Google is way smarter than it was in 2010. This stuff does **not** look trustworthy.
+
+### 2) It wrecks engagement metrics
+
+People click the link expecting one thing, land on a dentist website, and immediately leave.
+
+That inflates bounce rate, ruins conversion reporting, and makes it harder to interpret what’s working.
+
+### 3) It creates “SEO baggage” that follows you for years
+
+If your domain has been around a long time and a lot of vendors touched it, you can inherit old tactics you didn’t approve—and might not even know exist.
+
+This is *extremely* common with older domains.
+
+---
+
+## What to do next: a clean, practical action plan
+
+There are three levels of response, depending on how bad it is.
+
+### Level 1: Don’t panic—document what you’re seeing
+
+Before you start “fixing,” get clear on the facts:
+
+- Which countries are spiking?
+- Which sources/referrers are driving it?
+- Which pages are being linked to?
+- What anchor text is being used?
+
+You want receipts before you touch anything.
+
+---
+
+### Level 2: Identify and prioritize toxic referring domains
+
+In Semrush, export your referring domains list and flag:
+
+- Totally irrelevant sites
+- Sites with obvious spam patterns
+- Sites linking dozens of times with keyword anchors
+- Networks of similar-looking domains
+
+You’re not trying to clean every single thing overnight.  
+You’re trying to remove the obvious junk first.
+
+---
+
+### Level 3: Remove what you can, then disavow what you can’t (carefully)
+
+There are two main options:
+
+#### Option A: Outreach + removal
+
+You can contact site owners and ask them to remove the links. This works occasionally, but it’s usually slow and inconsistent—especially with spammy sites.
+
+#### Option B: Disavow (advanced)
+
+You can create a disavow file and submit it to Google so Google ignores those links for ranking purposes.
+
+Two important notes:
+
+1) **Disavowing does not “block traffic.”** People can still click links and land on your site. Disavow is about how Google counts links for rankings.
+2) **It’s not instant.** It can take time for Google to reprocess signals.
+
+A disavow file typically looks like this:
+
+- `domain:spammyexample.com`
+- `domain:anotherjunkdomain.net`
+
+(Do not disavow random stuff blindly. If you disavow good links, you can hurt your own rankings.)
+
+If you’re not confident, get a second opinion before you submit anything.
+
+---
+
+## The meta-lesson: SEO is just debugging
+
+This whole situation is exactly like software engineering:
+
+- You spot a weird symptom
+- You trace the system backward
+- You isolate the root cause
+- You ship a fix without breaking other things
+
+Sometimes it’s frustrating as hell.  
+Then you finally find the real cause and it’s *so* obvious in hindsight.
+
+That’s the job.
+
+---
+
+## Quick checklist: “Is my domain carrying SEO baggage?”
+
+If you answer “yes” to any of these, it’s time for an audit:
+
+- The domain existed before ~2015
+- Multiple vendors worked on it
+- You’ve never looked at your backlink profile
+- You see traffic from countries you don’t serve
+- Bounce rate is unusually high with no clear reason
+- You get random spikes that don’t correlate with marketing campaigns
+
+---
+
+## If you want help: Prism can run the audit with you
+
+If you’re seeing weird traffic patterns and you want a clean answer (fast), this is the kind of detective work we do.
+
+We’ll walk through:
+
+- GA + Search Console data sanity checks
+- Backlink profile analysis
+- Anchor text and referring domain patterns
+- A safe remediation plan (removals + disavow when appropriate)
+
+If you want us to take a look, reach out through the Prism site.
+
+---
+
+### Final takeaway
+
+You don’t need fancy tools or magic SEO hacks.
+
+You need:
+
+- Google Analytics
+- Google Search Console
+- Semrush (when needed)
+- The willingness to follow the evidence
+
+Because half the time, the “mystery” is just an old vendor’s strategy still haunting your domain.
+
+And now you know how to find it.
+
