@@ -7,11 +7,12 @@ import { Button } from "@/components/ui/button"
 import YouTubeVideoEmbed from "@/components/youtube-video-embed"
 import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
 import { CASE_STUDIES } from "@/lib/case-study-data"
+import { useCaseStudyStickyNavHeight } from "@/hooks/use-case-study-sticky-nav"
 import { trackCTAClick } from "@/utils/analytics"
 import { ArrowLeft, ArrowRight } from "lucide-react"
 import dynamic from "next/dynamic"
 import Link from "next/link"
-import { ReactNode, useEffect } from "react"
+import { ReactNode, useEffect, useRef } from "react"
 
 const Navbar = dynamic(() => import("@/components/navbar"), { ssr: false })
 
@@ -824,6 +825,9 @@ const meaningList = [
 ]
 
 export default function ChristopherWongCaseStudy() {
+  const stickyNavRef = useRef<HTMLDivElement>(null)
+  useCaseStudyStickyNavHeight(stickyNavRef)
+
   useEffect(() => {
     const hero = document.getElementById("static-dr-wong-hero")
     if (hero) {
@@ -834,13 +838,7 @@ export default function ChristopherWongCaseStudy() {
   }, [])
 
   const handleJump = (id: string) => {
-    const el = document.getElementById(id)
-    if (el) {
-      window.scrollTo({
-        top: el.getBoundingClientRect().top + window.scrollY - 90,
-        behavior: "smooth",
-      })
-    }
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" })
   }
 
   return (
@@ -904,7 +902,10 @@ export default function ChristopherWongCaseStudy() {
         </section>
 
         {/* Jump Nav */}
-        <div className="sticky top-14 z-10 border-b bg-white/95 px-4 backdrop-blur">
+        <div
+          ref={stickyNavRef}
+          className="sticky top-[var(--prism-header-height)] z-40 border-b bg-background/90 px-4 backdrop-blur supports-[backdrop-filter]:bg-background/70"
+        >
           <div className="container mx-auto max-w-5xl px-4 md:px-6">
             <div className="flex gap-2 overflow-x-auto py-3 text-sm">
               {jumpLinks.map((link) => (
@@ -921,7 +922,7 @@ export default function ChristopherWongCaseStudy() {
         </div>
 
         {/* Products & Services */}
-        <section id="products" className="px-4 py-16 md:py-20">
+        <section id="products" data-case-study-section className="px-4 py-16 md:py-20">
           <div className="container mx-auto max-w-5xl space-y-10 px-4 md:px-6">
             <div className="space-y-3 max-w-3xl">
               <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">Products &amp; Services Delivered by Prism for Dr. Wong</h2>
@@ -976,7 +977,7 @@ export default function ChristopherWongCaseStudy() {
         </section>
 
         {/* Technology Applied */}
-        <section id="technology" className="border-t bg-neutral-50 px-4 py-16 md:py-20">
+        <section id="technology" data-case-study-section className="border-t bg-neutral-50 px-4 py-16 md:py-20">
           <div className="container mx-auto max-w-5xl space-y-8 px-4 md:px-6">
             <div className="space-y-3 max-w-3xl">
               <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">Technology Applied</h2>
@@ -1037,7 +1038,7 @@ export default function ChristopherWongCaseStudy() {
         </section>
 
         {/* Story */}
-        <section id="story" className="px-4 py-16 md:py-20">
+        <section id="story" data-case-study-section className="px-4 py-16 md:py-20">
           <div className="container mx-auto max-w-5xl space-y-8 px-4 md:px-6">
             <div className="space-y-3 max-w-3xl">
               <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">
@@ -1064,7 +1065,7 @@ export default function ChristopherWongCaseStudy() {
         </section>
 
         {/* Outcomes */}
-        <section id="outcomes" className="border-t bg-neutral-50 px-4 py-16 md:py-20">
+        <section id="outcomes" data-case-study-section className="border-t bg-neutral-50 px-4 py-16 md:py-20">
           <div className="container mx-auto max-w-5xl space-y-6 px-4 md:px-6">
             <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">Outcomes &amp; Impact (Qualitative)</h2>
             <div className="grid gap-4 md:grid-cols-2">
@@ -1078,7 +1079,7 @@ export default function ChristopherWongCaseStudy() {
         </section>
 
         {/* What This Means */}
-        <section id="meaning" className="px-4 py-16 md:py-20">
+        <section id="meaning" data-case-study-section className="px-4 py-16 md:py-20">
           <div className="container mx-auto max-w-5xl space-y-6 px-4 md:px-6">
             <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">What This Means for Other Dental Practices</h2>
             <div className="grid gap-6 md:grid-cols-2">
@@ -1109,7 +1110,7 @@ export default function ChristopherWongCaseStudy() {
         </section>
 
         {/* CTA / Next Steps */}
-        <section id="cta" className="border-t bg-neutral-50 px-4 py-16 md:py-20">
+        <section id="cta" data-case-study-section className="border-t bg-neutral-50 px-4 py-16 md:py-20">
           <div className="container mx-auto max-w-5xl space-y-8 px-4 md:px-6">
             <div className="space-y-3">
               <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">CTA / Next Steps</h2>

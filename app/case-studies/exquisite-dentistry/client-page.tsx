@@ -4,12 +4,13 @@ import Footer from "@/components/footer"
 import { CaseStudySchema } from "@/components/schema-markup"
 import SocialShare from "@/components/social-share"
 import { Button } from "@/components/ui/button"
+import { useCaseStudyStickyNavHeight } from "@/hooks/use-case-study-sticky-nav"
 import { trackCTAClick } from "@/utils/analytics"
 import { ArrowLeft, ArrowRight, ChevronRight } from "lucide-react"
 import dynamic from "next/dynamic"
 import Image from "next/image"
 import Link from "next/link"
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
 const Navbar = dynamic(() => import("@/components/navbar"), { ssr: false })
 const CLIENT_SITE = "https://exquisitedentistryla.com/"
@@ -28,6 +29,9 @@ const ExquisiteSpeedGauge = dynamic(
 )
 
 export default function ExquisiteDentistryCaseStudy() {
+  const stickyNavRef = useRef<HTMLDivElement>(null)
+  useCaseStudyStickyNavHeight(stickyNavRef)
+
   const [activeSection, setActiveSection] = useState("")
 
   useEffect(() => {
@@ -49,12 +53,7 @@ export default function ExquisiteDentistryCaseStudy() {
 
   const scrollToSection = (id: string) => {
     const el = document.querySelector(`[data-section="${id}"]`)
-    if (el) {
-      window.scrollTo({
-        top: el.getBoundingClientRect().top + window.scrollY - 100,
-        behavior: "smooth",
-      })
-    }
+    if (el instanceof HTMLElement) el.scrollIntoView({ behavior: "smooth", block: "start" })
   }
 
   return (
@@ -84,7 +83,10 @@ export default function ExquisiteDentistryCaseStudy() {
         </section>
 
         {/* Table of Contents - Desktop */}
-        <div className="hidden lg:block sticky top-16 bg-white border-b z-10">
+        <div
+          ref={stickyNavRef}
+          className="hidden lg:block sticky top-[var(--prism-header-height)] z-40 border-b bg-background/90 backdrop-blur supports-[backdrop-filter]:bg-background/70"
+        >
           <div className="container mx-auto px-4 md:px-6 max-w-3xl">
             <div className="py-4 flex gap-6 text-sm overflow-x-auto scrollbar-hide">
               <button onClick={() => scrollToSection("overview")} className={`whitespace-nowrap ${activeSection === "overview" ? "font-medium text-black" : "text-neutral-500"}`}>Overview</button>

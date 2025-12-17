@@ -4,7 +4,7 @@ import { BadgeDollarSign, BookOpen, FolderOpen, Heart, Home, Menu } from "lucide
 import type { LucideIcon } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { useMemo } from "react"
+import { useLayoutEffect, useMemo, useRef } from "react"
 
 import Breadcrumbs from "@/components/breadcrumbs"
 import { Button } from "@/components/ui/button"
@@ -39,6 +39,7 @@ const getNavIcon = getTopIcon
 export default function Navbar() {
   const pathname = usePathname()
   const navItems = NAV_ITEMS
+  const headerRef = useRef<HTMLElement | null>(null)
 
   const caseStudyBreadcrumbs = useMemo(() => {
     if (!pathname?.startsWith("/case-studies")) return null
@@ -56,6 +57,26 @@ export default function Navbar() {
     return [...baseTrail, { name: label, url: pathname }]
   }, [pathname])
 
+  useLayoutEffect(() => {
+    const header = headerRef.current
+    if (!header) return
+
+    const updateHeaderHeight = () => {
+      document.documentElement.style.setProperty("--prism-header-height", `${header.getBoundingClientRect().height}px`)
+    }
+
+    updateHeaderHeight()
+
+    const resizeObserver = typeof ResizeObserver !== "undefined" ? new ResizeObserver(updateHeaderHeight) : null
+    resizeObserver?.observe(header)
+    window.addEventListener("resize", updateHeaderHeight)
+
+    return () => {
+      window.removeEventListener("resize", updateHeaderHeight)
+      resizeObserver?.disconnect()
+    }
+  }, [pathname])
+
   const normalizeHref = (href: string) => aliasMap[href] ?? href
   const isActivePath = (href?: string) => (href ? pathname === normalizeHref(href) : false)
   const isParentActive = (item: NavItem) => {
@@ -67,7 +88,12 @@ export default function Navbar() {
   }
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/90 backdrop-blur supports-[backdrop-filter]:bg-background/70">
+    <header
+      ref={headerRef}
+      className={`sticky top-0 z-50 w-full bg-background/90 backdrop-blur supports-[backdrop-filter]:bg-background/70 ${
+        caseStudyBreadcrumbs ? "" : "border-b"
+      }`}
+    >
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4">
         <Link
           href="/"
