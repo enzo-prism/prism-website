@@ -54,9 +54,9 @@ function ToggleGroupItem({ className, variant, size, children, ...props }: Toggl
         toggleVariants({
           variant: resolvedVariant,
           size: resolvedSize,
-          className,
         }),
-        "w-auto min-w-0"
+        "shrink-0",
+        className
       )}
       {...props}
     >

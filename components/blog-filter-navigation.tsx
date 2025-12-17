@@ -59,7 +59,9 @@ export default function BlogFilterNavigation({
   ]
 
   return (
-    <div className={`sticky top-0 z-40 bg-white/95 backdrop-blur-sm border-b border-neutral-200 ${className}`}>
+    <div
+      className={`sticky top-[var(--prism-header-height,0px)] z-40 bg-white/95 backdrop-blur-sm border-b border-neutral-200 ${className}`}
+    >
       <div className="container mx-auto px-4 py-3 md:py-4">
         <div className="space-y-3">
           <div className="relative max-w-2xl">
@@ -92,7 +94,7 @@ export default function BlogFilterNavigation({
               if (value) onCategoryChange(value)
             }}
             wrap={false}
-            className="w-full justify-start gap-2 overflow-x-auto scrollbar-hide pb-1"
+            className="w-full flex-nowrap justify-start gap-2 overflow-x-auto scrollbar-hide pb-1"
           >
             {buttonCategories.map((category) => (
               <ToggleGroupItem
