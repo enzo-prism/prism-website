@@ -1,9 +1,16 @@
-import SeoTextSection from "@/components/seo-text-section"
-import { getAllPosts } from "@/lib/mdx-data"
 import type { Metadata } from "next"
-import Link from "next/link"
 import { notFound } from "next/navigation"
-import BlogPage from "./BlogPage"
+
+import BlogEmailSignup from "@/components/blog-email-signup"
+import BlogFilterNavigationServer from "@/components/blog-filter-navigation-server"
+import Breadcrumbs from "@/components/breadcrumbs"
+import Footer from "@/components/footer"
+import Navbar from "@/components/navbar"
+import SeoTextSection from "@/components/seo-text-section"
+import SimpleBlogGrid from "@/components/simple-blog-grid"
+import SimpleBlogPostCard from "@/components/simple-blog-post-card"
+import { getAllPosts } from "@/lib/mdx-data"
+import BlogCTAButtonLazy from "./BlogCTAButtonLazy"
 
 export const metadata: Metadata = {
   title: "prism blog | web design, ai marketing & growth experiments",
@@ -14,9 +21,44 @@ export const metadata: Metadata = {
   },
 }
 
-export default async function Blog() {
+export default async function Blog({
+  searchParams,
+}: {
+  searchParams: Promise<{ category?: string; q?: string }>
+}) {
+  const resolvedSearchParams = await searchParams
+  const rawCategory = resolvedSearchParams?.category ?? "all"
+  const searchQuery = resolvedSearchParams?.q ?? ""
+
   const posts = await getAllPosts()
   if (!posts) notFound()
+
+  const categoryMap = new Map<string, string>()
+  posts.forEach((post) => {
+    if (!categoryMap.has(post.categorySlug)) {
+      categoryMap.set(post.categorySlug, post.category)
+    }
+  })
+  const categories = Array.from(categoryMap.entries()).map(([slug, label]) => ({ slug, label }))
+
+  const allowedCategories = new Set(categories.map((c) => c.slug.toLowerCase()))
+  const selectedCategory =
+    rawCategory && rawCategory.toLowerCase() !== "all" && allowedCategories.has(rawCategory.toLowerCase())
+      ? rawCategory.toLowerCase()
+      : "all"
+
+  const normalizedQuery = searchQuery.trim().toLowerCase()
+  const filteredPosts = posts.filter((post) => {
+    if (selectedCategory !== "all" && post.categorySlug !== selectedCategory) return false
+    if (!normalizedQuery) return true
+
+    return (
+      post.title.toLowerCase().includes(normalizedQuery) ||
+      post.description.toLowerCase().includes(normalizedQuery) ||
+      post.category.toLowerCase().includes(normalizedQuery)
+    )
+  })
+
   const blogItemList = {
     "@context": "https://schema.org",
     "@type": "ItemList",
@@ -31,73 +73,77 @@ export default async function Blog() {
       },
     })),
   }
+
   return (
-    <>
-      <section id="static-blog-hero" className="bg-neutral-900 text-white">
-        <div className="mx-auto flex max-w-5xl flex-col gap-4 px-6 py-16">
-          <div>
-            <h1 className="text-4xl font-semibold tracking-tight">prism blog</h1>
-            <p className="mt-3 text-lg leading-relaxed text-white/80">
-              field notes from building high-converting websites, ai-infused marketing systems, and repeatable playbooks for local businesses. every article captures experiments we shipped for clients and the numbers that proved they worked.
-            </p>
-            <div className="mt-4">
-              <Link href="/blog/feed.xml" className="text-sm font-medium text-white/80 underline-offset-4 hover:text-white">
-                subscribe via rss
-              </Link>
-            </div>
-          </div>
+    <div className="flex min-h-screen flex-col bg-white">
+      <Navbar />
+      <main className="relative flex-1">
+        <div className="container mx-auto px-4 md:px-6">
+          <Breadcrumbs items={[{ name: "home", url: "/" }, { name: "blog", url: "/blog" }]} />
         </div>
-      </section>
-      <section id="static-blog-preview" className="border-b border-neutral-200 bg-neutral-50">
-        <div className="mx-auto flex max-w-5xl flex-col gap-6 px-6 py-12">
-          <p className="text-sm font-medium uppercase tracking-[0.32em] text-neutral-500">
-            recent insights
-          </p>
-          <ul className="grid gap-4 sm:grid-cols-2">
-            {posts.slice(0, 4).map((post) => (
-              <li key={post.slug} className="rounded-2xl border border-neutral-200 bg-white p-5 shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
-                <Link href={`/blog/${post.slug}`} className="space-y-2">
-                  <span className="block text-xs uppercase tracking-[0.24em] text-neutral-400">{post.category}</span>
-                  <span className="block text-lg font-semibold leading-snug text-neutral-900">{post.title}</span>
-                  <span className="block text-sm text-neutral-600">{post.description}</span>
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
-      <noscript>
-        <section className="px-6 py-12">
-          <div className="mx-auto max-w-5xl space-y-4 text-neutral-900">
-            <h2 className="text-2xl font-semibold uppercase tracking-tight">prism blog highlights</h2>
-            <p>
-              recent stories cover ai-assisted seo, conversion-focused design, and growth experiments that helped local companies win more revenue. browse the articles below and keep reading at <a href="https://www.design-prism.com/blog">design-prism.com/blog</a>.
+
+        <section className="border-b border-neutral-100 py-6 md:py-10">
+          <div className="container mx-auto px-4 md:px-6">
+            <h1 className="text-2xl font-bold tracking-tight lowercase sm:text-3xl md:text-4xl">insights & ideas</h1>
+            <p className="mt-2 lowercase text-neutral-600">
+              thoughts on design, development, and digital strategy from the prism team
             </p>
-            <p>
-              prefer feeds? follow the <a href="/blog/feed.xml">rss channel</a>.
-            </p>
-            <ul className="list-disc space-y-2 pl-5">
-              {posts.slice(0, 4).map((post) => (
-                <li key={`noscript-${post.slug}`}>
-                  <a href={`/blog/${post.slug}`} className="underline">
-                    {post.title}
-                  </a>{" "}
-                  — {post.description}
-                </li>
-              ))}
-            </ul>
           </div>
         </section>
-      </noscript>
-      <BlogPage posts={posts} />
-      <SeoTextSection title="prism blog: design, development, and growth">
-        <p>
-          we publish practical notes on product design, engineering, and modern seo—how to ship faster,
-          write clearer interfaces, and measure what matters. each post is written from real client work
-          and experiments, not theory.
-        </p>
-      </SeoTextSection>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(blogItemList) }} />
-    </>
+
+        <BlogFilterNavigationServer categories={categories} selectedCategory={selectedCategory} query={searchQuery} />
+
+        <section className="py-8 md:py-12">
+          <div className="container mx-auto px-4 md:px-6">
+            {filteredPosts.length > 0 ? (
+              <SimpleBlogGrid>
+                {filteredPosts.map((post) => (
+                  <SimpleBlogPostCard
+                    key={post.slug}
+                    title={post.title}
+                    category={post.category}
+                    date={post.date}
+                    description={post.description}
+                    slug={post.slug}
+                    image={post.image || "/blog/ai-digital-marketing.png"}
+                    gradientClass={post.gradientClass}
+                    prefetch={false}
+                  />
+                ))}
+              </SimpleBlogGrid>
+            ) : (
+              <div className="rounded-lg border border-dashed border-neutral-200 py-16 text-center">
+                <h3 className="mb-2 text-xl font-medium lowercase text-neutral-600">no posts found</h3>
+                <p className="lowercase text-neutral-500">try adjusting your filters or search query</p>
+              </div>
+            )}
+          </div>
+        </section>
+
+        <BlogEmailSignup />
+
+        <section className="bg-neutral-50 py-12 md:py-16">
+          <div className="container mx-auto px-4 md:px-6">
+            <div className="mx-auto max-w-2xl space-y-4 text-center">
+              <h2 className="text-2xl font-bold lowercase tracking-tighter sm:text-3xl">want to work with us?</h2>
+              <p className="lowercase text-neutral-600">let's discuss how we can help your business grow</p>
+              <div className="pt-4">
+                <BlogCTAButtonLazy />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <SeoTextSection title="prism blog: design, development, and growth">
+          <p>
+            we publish practical notes on product design, engineering, and modern seo—how to ship faster,
+            write clearer interfaces, and measure what matters. each post is written from real client work
+            and experiments, not theory.
+          </p>
+        </SeoTextSection>
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(blogItemList) }} />
+      </main>
+      <Footer />
+    </div>
   )
 }

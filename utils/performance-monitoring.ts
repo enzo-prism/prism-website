@@ -1,6 +1,6 @@
 "use client"
 
-import * as Sentry from "@sentry/nextjs"
+import { getSentryModule } from "@/utils/sentry-client"
 import { addBreadcrumb, isSentryInitialized } from "./sentry-helpers"
 
 export interface PerformanceMetrics {
@@ -22,6 +22,9 @@ export function startPerformanceTransaction(
   if (!isSentryInitialized()) return null
   
   try {
+    const Sentry = getSentryModule()
+    if (!Sentry) return null
+
     const span = Sentry.startSpan({
       name,
       op: operation,
@@ -30,6 +33,7 @@ export function startPerformanceTransaction(
         name,
         operation,
         setData: (key: string, value: any) => Sentry.setTag(key, String(value)),
+        setStatus: (status: string) => Sentry.setTag("status", status),
         finish: () => {},
       }
     })
@@ -64,6 +68,9 @@ export function createPerformanceSpan(
   if (!transaction || !isSentryInitialized()) return null
   
   try {
+    const Sentry = getSentryModule()
+    if (!Sentry) return null
+
     return Sentry.startSpan({
       name: description,
       op: operation,
@@ -93,6 +100,9 @@ export function createPerformanceSpan(
  */
 export function trackWebVitals() {
   if (typeof window === "undefined" || !isSentryInitialized()) return
+
+  const Sentry = getSentryModule()
+  if (!Sentry) return
   
   // Track First Contentful Paint (FCP)
   if ('performance' in window && 'getEntriesByType' in window.performance) {
@@ -296,7 +306,9 @@ export function trackAPIPerformance<T>(
         transaction.setData('duration', duration)
         transaction.setData('error', error.message)
         transaction.setData('context', context)
-        transaction.setStatus('internal_error')
+        if (typeof transaction.setStatus === "function") {
+          transaction.setStatus('internal_error')
+        }
         transaction.finish()
       }
       
@@ -326,6 +338,12 @@ export function trackComponentRender(
   props?: Record<string, any>
 ): void {
   if (!isSentryInitialized()) {
+    renderFunction()
+    return
+  }
+
+  const Sentry = getSentryModule()
+  if (!Sentry) {
     renderFunction()
     return
   }

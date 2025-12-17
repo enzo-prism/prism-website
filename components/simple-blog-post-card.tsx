@@ -1,7 +1,4 @@
-"use client"
-
 import { cn } from "@/lib/utils"
-import { trackCTAClick } from "@/utils/analytics"
 import { ArrowRight } from "lucide-react"
 import Link from "next/link"
 
@@ -15,6 +12,7 @@ interface SimpleBlogPostCardProps {
   featured?: boolean
   compact?: boolean
   gradientClass: string
+  prefetch?: boolean
 }
 
 export default function SimpleBlogPostCard({
@@ -27,11 +25,14 @@ export default function SimpleBlogPostCard({
   featured = false,
   compact = false,
   gradientClass,
+  prefetch,
 }: SimpleBlogPostCardProps) {
   return (
     <Link
       href={`/blog/${slug}`}
-      onClick={() => trackCTAClick(`view blog post`, title)}
+      prefetch={prefetch}
+      data-cta-text="view blog post"
+      data-cta-location={title}
       className="block h-full"
     >
       <article className="border border-neutral-200 rounded-xl overflow-hidden h-full flex flex-col transition-transform duration-200 hover:-translate-y-0.5">

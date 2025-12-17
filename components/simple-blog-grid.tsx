@@ -1,17 +1,8 @@
-"use client"
-
-import type { BlogFrontmatter } from "@/lib/mdx"
-import React from "react"
-
-interface BlogPost extends BlogFrontmatter {
-  slug: string
-  featured?: boolean
-  compact?: boolean
-}
+import type { ReactNode } from "react"
 
 interface SimpleBlogGridProps {
-  children: React.ReactNode
-  posts: BlogPost[]
+  children: ReactNode
+  posts?: unknown[]
   className?: string
 }
 

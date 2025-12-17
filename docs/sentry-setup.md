@@ -15,10 +15,11 @@ This project is configured with Sentry for comprehensive error monitoring, perfo
 
 #### Configuration Files
 - `instrumentation.ts` - Main instrumentation file for server and edge runtime
-- `instrumentation-client.ts` - Client-side Sentry initialization
+- `instrumentation-client.ts` - Client-side Sentry initialization (lazy-loaded to keep initial bundles small)
 - `sentry.server.config.ts` - Server-side Sentry configuration
 - `sentry.edge.config.ts` - Edge runtime Sentry configuration
-- `.env.local` - Environment variables for local development
+- `utils/sentry-client.ts` - Shared client loader for dynamic Sentry imports
+- `utils/sentry-helpers.ts` - Sentry helper wrappers that no-op until Sentry is initialized
 - `next.config.mjs` - Updated with Sentry webpack plugin integration
 
 #### Error Handling
@@ -38,12 +39,11 @@ This project is configured with Sentry for comprehensive error monitoring, perfo
 - Core Web Vitals monitoring
 
 ### Session Replay
-- 10% session sampling
-- 100% error session capture
-- Privacy-focused with text/media masking
+- Not enabled by default (keeps client bundles smaller). If you enable replay, confirm privacy settings before shipping.
 
 ### Additional Features
 - Source map uploads for better stack traces
+- Client SDK lazy-loaded to keep initial bundles small
 - Automatic Vercel Cron Monitor integration
 - Ad-blocker circumvention via tunneling route (`/monitoring`)
 
@@ -70,20 +70,13 @@ The Sentry MCP server is configured in `~/.cursor/mcp.json`:
 
 ## Environment Variables
 
-### Required for Production
+### Optional overrides
 ```bash
-SENTRY_DSN=https://68c104f36835243619e583be41896f33@o4508365743325184.ingest.us.sentry.io/4509559921049600
-SENTRY_ORG=prism-m0
-SENTRY_PROJECT=prism-website
-```
+# Override the default DSN (server-side). Client-side override requires NEXT_PUBLIC_ prefix.
+SENTRY_DSN=
+NEXT_PUBLIC_SENTRY_DSN=
 
-### Optional Environment Variables
-```bash
-# Suppress specific warnings
-SENTRY_SUPPRESS_INSTRUMENTATION_FILE_WARNING=1
-SENTRY_SUPPRESS_GLOBAL_ERROR_HANDLER_FILE_WARNING=1
-
-# Authentication token for source map uploads (production only)
+# Authentication token for source map uploads (CI / production only)
 SENTRY_AUTH_TOKEN=your_auth_token_here
 ```
 

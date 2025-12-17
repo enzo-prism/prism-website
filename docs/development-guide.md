@@ -47,7 +47,7 @@ The site uses shadcn/ui primitives under `components/ui/` (Tailwind + Radix + `c
 
 - Add a component: `pnpm dlx shadcn@latest add <component>`
 - Common additions: `alert`, `tooltip`, `dropdown-menu`, `popover`, `sheet`, `sonner`
-- Toasts: the global `<Toaster />` is mounted in `app/layout.tsx`, so client components can call `toast.success(...)` via `import { toast } from "sonner"`.
+- Toasts: a lazy `<Toaster />` is mounted from `app/layout.tsx` via `components/toaster-lazy.tsx`, so client components can call `toast.success(...)` via `import { toast } from "sonner"`.
 - Form submit errors: prefer `<Alert variant="destructive">` for consistent styling, but keep native form controls intact.
 
 Form note: our marketing forms rely on native HTML5 validation via `useFormValidation` (`form.checkValidity()` + real `<input>/<select>/<textarea>`). Avoid swapping native `<select>`/checkbox controls for Radix equivalents unless you also preserve native form semantics and validation.

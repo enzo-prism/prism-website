@@ -1,6 +1,8 @@
 "use client"
 
-import * as Sentry from "@sentry/nextjs"
+import type { SeverityLevel } from "@sentry/nextjs"
+
+import { getSentryModule, initSentryClient, isSentryInitialized as isSentryClientInitialized } from "@/utils/sentry-client"
 
 /**
  * Enhanced Sentry utilities for comprehensive error tracking and debugging
@@ -30,6 +32,12 @@ export function captureErrorWithContext(
   error: Error | string,
   context: ErrorContext
 ): string {
+  const Sentry = getSentryModule()
+  if (!Sentry) {
+    void initSentryClient()
+    return "sentry_not_ready"
+  }
+
   return Sentry.withScope((scope) => {
     // Set error level based on type
     const level = getErrorLevel(context.errorType)
@@ -69,9 +77,12 @@ export function captureErrorWithContext(
 export function addBreadcrumb(
   message: string,
   category: string = "user",
-  level: Sentry.SeverityLevel = "info",
+  level: SeverityLevel = "info",
   data?: Record<string, any>
 ): void {
+  const Sentry = getSentryModule()
+  if (!Sentry) return
+
   Sentry.addBreadcrumb({
     message,
     category,
@@ -91,6 +102,9 @@ export function startTransaction(
   operation: string = "navigation"
 ): any {
   try {
+    const Sentry = getSentryModule()
+    if (!Sentry) return fallbackTransaction(name, operation)
+
     // For newer Sentry versions, use spans instead of transactions
     return Sentry.startSpan({
       name,
@@ -105,13 +119,16 @@ export function startTransaction(
       }
     })
   } catch {
-    // Fallback for compatibility
-    return {
-      name,
-      operation,
-      setData: () => {},
-      finish: () => {},
-    }
+    return fallbackTransaction(name, operation)
+  }
+}
+
+function fallbackTransaction(name: string, operation: string) {
+  return {
+    name,
+    operation,
+    setData: () => {},
+    finish: () => {},
   }
 }
 
@@ -119,6 +136,9 @@ export function startTransaction(
  * Track custom performance metrics
  */
 export function trackPerformance(context: PerformanceContext): void {
+  const Sentry = getSentryModule()
+  if (!Sentry) return
+
   Sentry.withScope((scope) => {
     scope.setTag("operation", context.operation)
     scope.setTag("success", context.success.toString())
@@ -144,6 +164,9 @@ export function trackPerformance(context: PerformanceContext): void {
  * Set user context for the session
  */
 export function setUserContext(userId: string, email?: string, additionalData?: Record<string, any>): void {
+  const Sentry = getSentryModule()
+  if (!Sentry) return
+
   Sentry.setUser({
     id: userId,
     email,
@@ -155,6 +178,9 @@ export function setUserContext(userId: string, email?: string, additionalData?: 
  * Add tags for better error categorization
  */
 export function setContextTags(tags: Record<string, string>): void {
+  const Sentry = getSentryModule()
+  if (!Sentry) return
+
   Object.entries(tags).forEach(([key, value]) => {
     Sentry.setTag(key, value)
   })
@@ -164,6 +190,9 @@ export function setContextTags(tags: Record<string, string>): void {
  * Clear all context (useful for user logout)
  */
 export function clearContext(): void {
+  const Sentry = getSentryModule()
+  if (!Sentry) return
+
   try {
     // Clear user context
     Sentry.setUser(null)
@@ -177,7 +206,7 @@ export function clearContext(): void {
 /**
  * Get error level based on error type
  */
-function getErrorLevel(errorType: string): Sentry.SeverityLevel {
+function getErrorLevel(errorType: string): SeverityLevel {
   const criticalErrors = ["js_error", "unhandled_promise_rejection", "build_error", "api_error"]
   const warningErrors = ["image_load_error", "validation_error", "user_error"]
   
@@ -194,18 +223,16 @@ function getErrorLevel(errorType: string): Sentry.SeverityLevel {
  * Check if Sentry is properly initialized
  */
 export function isSentryInitialized(): boolean {
-  try {
-    // Check if Sentry is available and has been initialized
-    return typeof Sentry !== "undefined" && typeof Sentry.captureException === "function"
-  } catch {
-    return false
-  }
+  return isSentryClientInitialized()
 }
 
 /**
  * Manually flush Sentry (useful before page unload)
  */
 export async function flushSentry(timeout: number = 2000): Promise<boolean> {
+  const Sentry = getSentryModule()
+  if (!Sentry) return false
+
   try {
     return await Sentry.flush(timeout)
   } catch {

@@ -6,6 +6,12 @@ This guide documents the GPU acceleration and performance optimizations implemen
 
 ## Key Optimizations Implemented
 
+### 0. Blog index bundle reduction
+
+- `/blog` is now server-rendered (see `app/blog/page.tsx`) so the initial post grid ships as HTML instead of a large client-rendered list.
+- Filtering/search uses URL params (`category`, `q`) via `components/blog-filter-navigation-server.tsx` to avoid hydrating the entire filter/list UI.
+- Blog post cards on the index disable Next.js prefetch (`prefetch={false}`) to avoid prefetching dozens of post routes on first load.
+
 ### 1. GPU Acceleration Styles
 
 We've added several GPU acceleration techniques across blog components:

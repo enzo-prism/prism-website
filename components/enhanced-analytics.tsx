@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react"
 import { usePathname, useSearchParams } from "next/navigation"
-import { trackEvent, trackPageView } from "@/utils/analytics"
+import { trackCTAClick, trackEvent, trackPageView } from "@/utils/analytics"
 
 interface EnhancedAnalyticsProps {
   title: string
@@ -49,6 +49,22 @@ export default function EnhancedAnalytics({ title }: EnhancedAnalyticsProps) {
       engaged = true
     }
 
+    const handleTrackedClick = (event: MouseEvent) => {
+      engaged = true
+
+      const target = event.target as HTMLElement | null
+      if (!target) return
+
+      const tracked = target.closest<HTMLElement>("[data-cta-text]")
+      if (!tracked) return
+
+      const ctaText = tracked.getAttribute("data-cta-text")?.trim()
+      if (!ctaText) return
+
+      const ctaLocation = tracked.getAttribute("data-cta-location")?.trim() || title || pathname
+      trackCTAClick(ctaText, ctaLocation)
+    }
+
     const trackScroll = () => {
       const scrollPosition = window.scrollY + window.innerHeight
       const documentHeight = document.body.scrollHeight
@@ -73,7 +89,7 @@ export default function EnhancedAnalytics({ title }: EnhancedAnalyticsProps) {
 
     // Add event listeners
     window.addEventListener("scroll", trackScroll, { passive: true })
-    window.addEventListener("click", trackEngagement)
+    window.addEventListener("click", handleTrackedClick)
     window.addEventListener("keydown", trackEngagement)
     window.addEventListener("mousemove", trackEngagement)
     window.addEventListener("touchstart", trackEngagement)
@@ -84,13 +100,13 @@ export default function EnhancedAnalytics({ title }: EnhancedAnalyticsProps) {
     return () => {
       reportEngagement()
       window.removeEventListener("scroll", trackScroll)
-      window.removeEventListener("click", trackEngagement)
+      window.removeEventListener("click", handleTrackedClick)
       window.removeEventListener("keydown", trackEngagement)
       window.removeEventListener("mousemove", trackEngagement)
       window.removeEventListener("touchstart", trackEngagement)
       window.removeEventListener("beforeunload", reportEngagement)
     }
-  }, [pathname])
+  }, [pathname, title])
 
   return null // This component doesn't render anything
 }
