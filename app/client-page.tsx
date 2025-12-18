@@ -1,6 +1,7 @@
 import HeroReviewSliderCard from "@/components/home/HeroReviewSliderCard"
 import ClientsSection from "@/components/home/Clients"
 import GrowthHeadline from "@/components/home/GrowthHeadline"
+import ImpactGraphSection from "@/components/home/ImpactGraphSection"
 import ReferralSection from "@/components/home/ReferralSection"
 import SegmentsRail from "@/components/home/SegmentsRail"
 import Footer from "@/components/footer"
@@ -23,6 +24,7 @@ export default function ClientPage() {
         <GrowthHeadline />
 
         {/* New homepage sections per updated structure */}
+        <ImpactGraphSection />
         <ClientsSection />
         <SegmentsRail />
         <ReferralSection />

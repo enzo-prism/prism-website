@@ -44,6 +44,7 @@ Quick reference for the pages we edit most often.
 ## Homepage (`app/client-page.tsx`)
 - The hero uses `HeroReviewSliderCard` (`components/home/HeroReviewSliderCard.tsx`): swipeable reviews with minimal dot pagination. Keep it lightweight for CWV and ensure the “250+ more” CTA stays above the fold.
 - All testimonial copy for the slider lives in `content/wall-of-love-data.tsx`; update that file (and respect `heroSpotlight`) instead of duplicating data inside `app/client-page.tsx`.
+- The impact graph section below `GrowthHeadline` is `components/home/ImpactGraphSection.tsx`, which lazy-mounts `FounderImpactGraph` so Recharts only loads when near the viewport.
 
 ## Thank-you routes
 - `app/thank-you/page.tsx`

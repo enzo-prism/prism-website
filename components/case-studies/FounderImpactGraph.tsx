@@ -16,7 +16,6 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
@@ -246,9 +245,6 @@ export function FounderImpactGraph({ className, slug }: FounderImpactGraphProps)
           </TabsContent>
         </Tabs>
       </CardContent>
-      <CardFooter className="pt-0 text-xs text-neutral-500">
-        illustrative trendlines — the exact curve varies by business.
-      </CardFooter>
     </Card>
   )
 }
