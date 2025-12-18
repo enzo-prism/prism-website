@@ -2,7 +2,15 @@
 
 import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
+import { Button } from "@/components/ui/button"
+import { Skeleton } from "@/components/ui/skeleton"
+import dynamic from "next/dynamic"
 import Link from "next/link"
+
+const FounderImpactGraph = dynamic(
+  () => import("@/components/case-studies/FounderImpactGraph").then((m) => m.FounderImpactGraph),
+  { ssr: false, loading: () => <Skeleton className="h-64 w-full rounded-2xl" /> }
+)
 
 export default function SaorsaGrowthPartnersCaseStudy() {
   return (
@@ -29,13 +37,16 @@ export default function SaorsaGrowthPartnersCaseStudy() {
               <span className="rounded-full bg-neutral-100 px-3 py-1">fast contact paths</span>
             </div>
             <div className="pt-6">
-              <Link
-                href="/contact"
-                className="inline-flex items-center rounded-full bg-neutral-900 px-5 py-3 text-sm font-semibold text-white transition hover:bg-neutral-800 lowercase"
-              >
-                start a project
-              </Link>
+              <Button asChild className="rounded-full lowercase">
+                <Link href="/contact">start a project</Link>
+              </Button>
             </div>
+          </div>
+        </section>
+
+        <section className="border-t px-4 py-12 md:py-16">
+          <div className="container mx-auto max-w-3xl space-y-6 px-4 md:px-6">
+            <FounderImpactGraph />
           </div>
         </section>
       </main>

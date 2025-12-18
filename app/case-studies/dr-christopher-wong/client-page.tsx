@@ -1,20 +1,25 @@
 "use client"
 
+import { CaseStudySectionNav } from "@/components/case-studies/CaseStudySectionNav"
 import Footer from "@/components/footer"
 import { CaseStudySchema } from "@/components/schema-markup"
 import SocialShare from "@/components/social-share"
 import { Button } from "@/components/ui/button"
+import { Skeleton } from "@/components/ui/skeleton"
 import YouTubeVideoEmbed from "@/components/youtube-video-embed"
 import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
 import { CASE_STUDIES } from "@/lib/case-study-data"
-import { useCaseStudyStickyNavHeight } from "@/hooks/use-case-study-sticky-nav"
 import { trackCTAClick } from "@/utils/analytics"
 import { ArrowLeft, ArrowRight } from "lucide-react"
 import dynamic from "next/dynamic"
 import Link from "next/link"
-import { ReactNode, useEffect, useRef } from "react"
+import { ReactNode, useEffect } from "react"
 
 const Navbar = dynamic(() => import("@/components/navbar"), { ssr: false })
+const FounderImpactGraph = dynamic(
+  () => import("@/components/case-studies/FounderImpactGraph").then((m) => m.FounderImpactGraph),
+  { ssr: false, loading: () => <Skeleton className="h-64 w-full rounded-2xl" /> }
+)
 
 const HERO_VIDEO_ID = "HrksJeYb02Q"
 
@@ -825,9 +830,6 @@ const meaningList = [
 ]
 
 export default function ChristopherWongCaseStudy() {
-  const stickyNavRef = useRef<HTMLDivElement>(null)
-  useCaseStudyStickyNavHeight(stickyNavRef)
-
   useEffect(() => {
     const hero = document.getElementById("static-dr-wong-hero")
     if (hero) {
@@ -836,10 +838,6 @@ export default function ChristopherWongCaseStudy() {
       hero.style.display = "none"
     }
   }, [])
-
-  const handleJump = (id: string) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" })
-  }
 
   return (
     <div className="flex min-h-screen flex-col bg-white">
@@ -901,25 +899,7 @@ export default function ChristopherWongCaseStudy() {
           </div>
         </section>
 
-        {/* Jump Nav */}
-        <div
-          ref={stickyNavRef}
-          className="sticky top-[var(--prism-header-height)] z-40 border-b bg-background/90 px-4 backdrop-blur supports-[backdrop-filter]:bg-background/70"
-        >
-          <div className="container mx-auto max-w-5xl px-4 md:px-6">
-            <div className="flex gap-2 overflow-x-auto py-3 text-sm">
-              {jumpLinks.map((link) => (
-                <button
-                  key={link.id}
-                  onClick={() => handleJump(link.id)}
-                  className="rounded-full border border-neutral-200 bg-white px-4 py-2 text-neutral-700 transition hover:border-neutral-300 hover:text-neutral-900"
-                >
-                  {link.label}
-                </button>
-              ))}
-            </div>
-          </div>
-        </div>
+        <CaseStudySectionNav sections={jumpLinks} containerClassName="max-w-5xl" ariaLabel="dr wong case study sections" />
 
         {/* Products & Services */}
         <section id="products" data-case-study-section className="px-4 py-16 md:py-20">
@@ -1068,6 +1048,7 @@ export default function ChristopherWongCaseStudy() {
         <section id="outcomes" data-case-study-section className="border-t bg-neutral-50 px-4 py-16 md:py-20">
           <div className="container mx-auto max-w-5xl space-y-6 px-4 md:px-6">
             <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">Outcomes &amp; Impact (Qualitative)</h2>
+            <FounderImpactGraph />
             <div className="grid gap-4 md:grid-cols-2">
               {outcomes.map((item, idx) => (
                 <div key={idx} className="rounded-xl border border-neutral-200 bg-white p-4 shadow-sm">

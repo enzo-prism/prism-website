@@ -1,61 +1,48 @@
 "use client"
 
 import Footer from "@/components/footer"
+import { CaseStudySectionNav } from "@/components/case-studies/CaseStudySectionNav"
 import { CaseStudySchema } from "@/components/schema-markup"
 import SocialShare from "@/components/social-share"
 import { Button } from "@/components/ui/button"
-import { useCaseStudyStickyNavHeight } from "@/hooks/use-case-study-sticky-nav"
+import { Skeleton } from "@/components/ui/skeleton"
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { trackCTAClick } from "@/utils/analytics"
-import { ArrowLeft, ArrowRight, ChevronRight } from "lucide-react"
+import { ArrowLeft, ArrowRight } from "lucide-react"
 import dynamic from "next/dynamic"
 import Image from "next/image"
 import Link from "next/link"
-import { useEffect, useRef, useState } from "react"
 import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
 const Navbar = dynamic(() => import("@/components/navbar"), { ssr: false })
 const CLIENT_SITE = "https://exquisitedentistryla.com/"
 
 const ExquisiteChannelShareChart = dynamic(
   () => import("@/components/case-studies/exquisite-channel-share-chart").then((m) => m.ExquisiteChannelShareChart),
-  { ssr: false, loading: () => <div className="h-32 w-full animate-pulse rounded-lg bg-neutral-100" /> }
+  { ssr: false, loading: () => <Skeleton className="h-32 w-full rounded-lg" /> }
 )
 const ExquisiteSessionsGrowthChart = dynamic(
   () => import("@/components/case-studies/exquisite-sessions-growth-chart").then((m) => m.ExquisiteSessionsGrowthChart),
-  { ssr: false, loading: () => <div className="h-48 w-full animate-pulse rounded-lg bg-neutral-100" /> }
+  { ssr: false, loading: () => <Skeleton className="h-48 w-full rounded-lg" /> }
 )
 const ExquisiteSpeedGauge = dynamic(
   () => import("@/components/case-studies/exquisite-speed-gauge").then((m) => m.ExquisiteSpeedGauge),
-  { ssr: false, loading: () => <div className="h-32 w-full animate-pulse rounded-lg bg-neutral-100" /> }
+  { ssr: false, loading: () => <Skeleton className="h-32 w-full rounded-lg" /> }
+)
+const FounderImpactGraph = dynamic(
+  () => import("@/components/case-studies/FounderImpactGraph").then((m) => m.FounderImpactGraph),
+  { ssr: false, loading: () => <Skeleton className="h-64 w-full rounded-2xl" /> }
 )
 
+const sectionNav = [
+  { id: "overview", label: "Overview" },
+  { id: "opportunity", label: "The Opportunity" },
+  { id: "approach", label: "Our Approach" },
+  { id: "transformation", label: "Transformation" },
+  { id: "results", label: "Results" },
+  { id: "insights", label: "Insights" },
+] as const
+
 export default function ExquisiteDentistryCaseStudy() {
-  const stickyNavRef = useRef<HTMLDivElement>(null)
-  useCaseStudyStickyNavHeight(stickyNavRef)
-
-  const [activeSection, setActiveSection] = useState("")
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const sections = document.querySelectorAll("[data-section]")
-      let current = ""
-      sections.forEach((section) => {
-        const top = section.getBoundingClientRect().top
-        if (top < 200) {
-          current = section.getAttribute("data-section") || ""
-        }
-      })
-      if (current !== activeSection) setActiveSection(current)
-    }
-    window.addEventListener("scroll", handleScroll)
-    handleScroll()
-    return () => window.removeEventListener("scroll", handleScroll)
-  }, [activeSection])
-
-  const scrollToSection = (id: string) => {
-    const el = document.querySelector(`[data-section="${id}"]`)
-    if (el instanceof HTMLElement) el.scrollIntoView({ behavior: "smooth", block: "start" })
-  }
-
   return (
     <div className="flex min-h-screen flex-col">
       <Navbar />
@@ -82,60 +69,47 @@ export default function ExquisiteDentistryCaseStudy() {
           </div>
         </section>
 
-        {/* Table of Contents - Desktop */}
-        <div
-          ref={stickyNavRef}
-          className="hidden lg:block sticky top-[var(--prism-header-height)] z-40 border-b bg-background/90 backdrop-blur supports-[backdrop-filter]:bg-background/70"
-        >
-          <div className="container mx-auto px-4 md:px-6 max-w-3xl">
-            <div className="py-4 flex gap-6 text-sm overflow-x-auto scrollbar-hide">
-              <button onClick={() => scrollToSection("overview")} className={`whitespace-nowrap ${activeSection === "overview" ? "font-medium text-black" : "text-neutral-500"}`}>Overview</button>
-              <button onClick={() => scrollToSection("opportunity")} className={`whitespace-nowrap ${activeSection === "opportunity" ? "font-medium text-black" : "text-neutral-500"}`}>The Opportunity</button>
-              <button onClick={() => scrollToSection("approach")} className={`whitespace-nowrap ${activeSection === "approach" ? "font-medium text-black" : "text-neutral-500"}`}>Our Approach</button>
-              <button onClick={() => scrollToSection("transformation")} className={`whitespace-nowrap ${activeSection === "transformation" ? "font-medium text-black" : "text-neutral-500"}`}>Transformation</button>
-              <button onClick={() => scrollToSection("results")} className={`whitespace-nowrap ${activeSection === "results" ? "font-medium text-black" : "text-neutral-500"}`}>Results</button>
-              <button onClick={() => scrollToSection("insights")} className={`whitespace-nowrap ${activeSection === "insights" ? "font-medium text-black" : "text-neutral-500"}`}>Insights</button>
-            </div>
-          </div>
-        </div>
+        <CaseStudySectionNav sections={[...sectionNav]} containerClassName="max-w-3xl" />
 
         <div className="container mx-auto px-4 md:px-6 max-w-3xl">
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-12">
-            {/* Table of Contents - Mobile */}
-            <div className="lg:hidden border-b pb-6 mt-6">
-              <h2 className="font-medium mb-4">Contents</h2>
-              <ul className="space-y-3 text-sm">
-                <li><button onClick={() => scrollToSection("overview")} className={`flex items-center ${activeSection === "overview" ? "font-medium text-black" : "text-neutral-500"}`}><ChevronRight className="h-3 w-3 mr-1" />Overview</button></li>
-                <li><button onClick={() => scrollToSection("opportunity")} className={`flex items-center ${activeSection === "opportunity" ? "font-medium text-black" : "text-neutral-500"}`}><ChevronRight className="h-3 w-3 mr-1" />The Opportunity</button></li>
-                <li><button onClick={() => scrollToSection("approach")} className={`flex items-center ${activeSection === "approach" ? "font-medium text-black" : "text-neutral-500"}`}><ChevronRight className="h-3 w-3 mr-1" />Our Approach</button></li>
-                <li><button onClick={() => scrollToSection("transformation")} className={`flex items-center ${activeSection === "transformation" ? "font-medium text-black" : "text-neutral-500"}`}><ChevronRight className="h-3 w-3 mr-1" />Transformation</button></li>
-                <li><button onClick={() => scrollToSection("results")} className={`flex items-center ${activeSection === "results" ? "font-medium text-black" : "text-neutral-500"}`}><ChevronRight className="h-3 w-3 mr-1" />Results</button></li>
-                <li><button onClick={() => scrollToSection("insights")} className={`flex items-center ${activeSection === "insights" ? "font-medium text-black" : "text-neutral-500"}`}><ChevronRight className="h-3 w-3 mr-1" />Insights</button></li>
-              </ul>
-            </div>
-
             <div className="col-span-1 lg:col-span-4">
               {/* Overview */}
               <section className="py-8 border-t" data-section="overview">
                 <h2 className="text-2xl font-bold tracking-tighter mb-6">Overview</h2>
-                <div className="overflow-x-auto">
-                  <table className="w-full text-sm border">
-                    <thead>
-                      <tr>
-                        <th className="border px-3 py-2">At-a-Glance KPI</th>
-                        <th className="border px-3 py-2">Last 12 Months*</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr><td className="border px-3 py-2 font-medium">Search Clicks</td><td className="border px-3 py-2">9.3 K</td></tr>
-                      <tr><td className="border px-3 py-2 font-medium">Search Impressions</td><td className="border px-3 py-2">1.67 M</td></tr>
-                      <tr><td className="border px-3 py-2 font-medium">New Users (GA4)</td><td className="border px-3 py-2">2.9 K</td></tr>
-                      <tr><td className="border px-3 py-2 font-medium">Organic-Search Share of Sessions</td><td className="border px-3 py-2">64 %</td></tr>
-                      <tr><td className="border px-3 py-2 font-medium">Avg. Engagement Rate (Organic)</td><td className="border px-3 py-2">60.7 %</td></tr>
-                    </tbody>
-                  </table>
-                  <p className="text-xs text-neutral-500 mt-2">*Google Search Console & Google Analytics 4, Jun 2024 – Jun 2025.</p>
+                <div className="rounded-xl border border-neutral-200">
+                  <Table>
+                    <TableHeader>
+                      <TableRow className="border-neutral-200">
+                        <TableHead className="px-3 py-2 text-neutral-600">At-a-Glance KPI</TableHead>
+                        <TableHead className="px-3 py-2 text-neutral-600">Last 12 Months*</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      <TableRow className="border-neutral-200">
+                        <TableCell className="px-3 py-2 font-medium">Search Clicks</TableCell>
+                        <TableCell className="px-3 py-2">9.3 K</TableCell>
+                      </TableRow>
+                      <TableRow className="border-neutral-200">
+                        <TableCell className="px-3 py-2 font-medium">Search Impressions</TableCell>
+                        <TableCell className="px-3 py-2">1.67 M</TableCell>
+                      </TableRow>
+                      <TableRow className="border-neutral-200">
+                        <TableCell className="px-3 py-2 font-medium">New Users (GA4)</TableCell>
+                        <TableCell className="px-3 py-2">2.9 K</TableCell>
+                      </TableRow>
+                      <TableRow className="border-neutral-200">
+                        <TableCell className="px-3 py-2 font-medium">Organic-Search Share of Sessions</TableCell>
+                        <TableCell className="px-3 py-2">64 %</TableCell>
+                      </TableRow>
+                      <TableRow className="border-neutral-200">
+                        <TableCell className="px-3 py-2 font-medium">Avg. Engagement Rate (Organic)</TableCell>
+                        <TableCell className="px-3 py-2">60.7 %</TableCell>
+                      </TableRow>
+                    </TableBody>
+                  </Table>
                 </div>
+                <p className="text-xs text-neutral-500 mt-2">*Google Search Console & Google Analytics 4, Jun 2024 – Jun 2025.</p>
               </section>
 
               {/* Opportunity */}
@@ -151,21 +125,57 @@ export default function ExquisiteDentistryCaseStudy() {
               {/* Approach */}
               <section className="py-8 border-t" data-section="approach">
                 <h2 className="text-2xl font-bold tracking-tighter mb-6">Prism's Approach — Crafting a Patient-Centric Digital Ecosystem</h2>
-                <div className="overflow-x-auto">
-                  <table className="w-full text-sm border">
-                    <thead>
-                      <tr><th className="border px-3 py-2">Pillar</th><th className="border px-3 py-2">What We Did</th><th className="border px-3 py-2">Result</th></tr>
-                    </thead>
-                    <tbody>
-                      <tr><td className="border px-3 py-2 font-medium">Bespoke Website Rebuild</td><td className="border px-3 py-2">Hand-coded, mobile-first framework (2.1 s LCP).</td><td className="border px-3 py-2">Load time cut <strong>50 %</strong>; mobile CTR rose to <strong>0.7 %</strong>.</td></tr>
-                      <tr><td className="border px-3 py-2 font-medium">UX First</td><td className="border px-3 py-2">Instagram-style navigation, thumb-zone CTAs.</td><td className="border px-3 py-2">Avg. pages per mobile session doubled.</td></tr>
-                      <tr><td className="border px-3 py-2 font-medium">Content Remix</td><td className="border px-3 py-2">Integrated pro photos & video testimonials across service pages.</td><td className="border px-3 py-2"><strong>+68 %</strong> clicks on "veneers" & "teeth-whitening" queries.</td></tr>
-                      <tr><td className="border px-3 py-2 font-medium">Listing Clean-Up</td><td className="border px-3 py-2">Synced NAP data across 40+ directories.</td><td className="border px-3 py-2">Consistent local-pack visibility.</td></tr>
-                      <tr><td className="border px-3 py-2 font-medium">Ad Campaigns</td><td className="border px-3 py-2">High-intent Instagram retargeting.</td><td className="border px-3 py-2">Funnel filled while organic traffic ramped.</td></tr>
-                      <tr><td className="border px-3 py-2 font-medium">Systems Integration</td><td className="border px-3 py-2">Connected online scheduling & VOIP tracking.</td><td className="border px-3 py-2">Leads drop straight into the PMS.</td></tr>
-                      <tr><td className="border px-3 py-2 font-medium">AI-Ready Schema</td><td className="border px-3 py-2">Added FAQ & Review markup.</td><td className="border px-3 py-2">Prepares site for Google SGE & chat-based search.</td></tr>
-                    </tbody>
-                  </table>
+                <div className="rounded-xl border border-neutral-200">
+                  <Table>
+                    <TableHeader>
+                      <TableRow className="border-neutral-200">
+                        <TableHead className="px-3 py-2 text-neutral-600">Pillar</TableHead>
+                        <TableHead className="px-3 py-2 text-neutral-600">What We Did</TableHead>
+                        <TableHead className="px-3 py-2 text-neutral-600">Result</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      <TableRow className="border-neutral-200">
+                        <TableCell className="px-3 py-2 font-medium">Bespoke Website Rebuild</TableCell>
+                        <TableCell className="px-3 py-2">Hand-coded, mobile-first framework (2.1 s LCP).</TableCell>
+                        <TableCell className="px-3 py-2">
+                          Load time cut <strong>50 %</strong>; mobile CTR rose to <strong>0.7 %</strong>.
+                        </TableCell>
+                      </TableRow>
+                      <TableRow className="border-neutral-200">
+                        <TableCell className="px-3 py-2 font-medium">UX First</TableCell>
+                        <TableCell className="px-3 py-2">Instagram-style navigation, thumb-zone CTAs.</TableCell>
+                        <TableCell className="px-3 py-2">Avg. pages per mobile session doubled.</TableCell>
+                      </TableRow>
+                      <TableRow className="border-neutral-200">
+                        <TableCell className="px-3 py-2 font-medium">Content Remix</TableCell>
+                        <TableCell className="px-3 py-2">Integrated pro photos &amp; video testimonials across service pages.</TableCell>
+                        <TableCell className="px-3 py-2">
+                          <strong>+68 %</strong> clicks on &quot;veneers&quot; &amp; &quot;teeth-whitening&quot; queries.
+                        </TableCell>
+                      </TableRow>
+                      <TableRow className="border-neutral-200">
+                        <TableCell className="px-3 py-2 font-medium">Listing Clean-Up</TableCell>
+                        <TableCell className="px-3 py-2">Synced NAP data across 40+ directories.</TableCell>
+                        <TableCell className="px-3 py-2">Consistent local-pack visibility.</TableCell>
+                      </TableRow>
+                      <TableRow className="border-neutral-200">
+                        <TableCell className="px-3 py-2 font-medium">Ad Campaigns</TableCell>
+                        <TableCell className="px-3 py-2">High-intent Instagram retargeting.</TableCell>
+                        <TableCell className="px-3 py-2">Funnel filled while organic traffic ramped.</TableCell>
+                      </TableRow>
+                      <TableRow className="border-neutral-200">
+                        <TableCell className="px-3 py-2 font-medium">Systems Integration</TableCell>
+                        <TableCell className="px-3 py-2">Connected online scheduling &amp; VOIP tracking.</TableCell>
+                        <TableCell className="px-3 py-2">Leads drop straight into the PMS.</TableCell>
+                      </TableRow>
+                      <TableRow className="border-neutral-200">
+                        <TableCell className="px-3 py-2 font-medium">AI-Ready Schema</TableCell>
+                        <TableCell className="px-3 py-2">Added FAQ &amp; Review markup.</TableCell>
+                        <TableCell className="px-3 py-2">Prepares site for Google SGE &amp; chat-based search.</TableCell>
+                      </TableRow>
+                    </TableBody>
+                  </Table>
                 </div>
                 {/* Removed interactive KPI chart per latest update */}
               </section>
@@ -173,20 +183,55 @@ export default function ExquisiteDentistryCaseStudy() {
               {/* Transformation */}
               <section className="py-8 border-t" data-section="transformation">
                 <h2 className="text-2xl font-bold tracking-tighter mb-6">The Transformation — 90-Day Pre- vs Post-Launch <span className="block text-sm font-normal">(Jan 1 – Mar 31 vs Apr 1 – Jun 30 2025)</span></h2>
-                <div className="overflow-x-auto">
-                  <table className="w-full text-sm border">
-                    <thead>
-                      <tr><th className="border px-3 py-2">Metric</th><th className="border px-3 py-2">Pre</th><th className="border px-3 py-2">Post</th><th className="border px-3 py-2">Δ</th></tr>
-                    </thead>
-                    <tbody>
-                      <tr><td className="border px-3 py-2 font-medium">Avg. Google Rank (all queries)</td><td className="border px-3 py-2">48.2</td><td className="border px-3 py-2">37.0</td><td className="border px-3 py-2 font-medium">▲ 11.2</td></tr>
-                      <tr><td className="border px-3 py-2 font-medium">Organic Click-Through Rate</td><td className="border px-3 py-2">0.32 %</td><td className="border px-3 py-2">0.71 %</td><td className="border px-3 py-2 font-medium">▲ 119 %</td></tr>
-                      <tr><td className="border px-3 py-2 font-medium">Organic Sessions</td><td className="border px-3 py-2">1,134</td><td className="border px-3 py-2">2,195</td><td className="border px-3 py-2 font-medium">▲ 93 %</td></tr>
-                      <tr><td className="border px-3 py-2 font-medium">Engagement Rate</td><td className="border px-3 py-2">52.4 %</td><td className="border px-3 py-2">60.7 %</td><td className="border px-3 py-2 font-medium">▲ 8.3 pp</td></tr>
-                      <tr><td className="border px-3 py-2 font-medium">Events / Session</td><td className="border px-3 py-2">3.98</td><td className="border px-3 py-2">4.64</td><td className="border px-3 py-2 font-medium">▲ 16 %</td></tr>
-                      <tr><td className="border px-3 py-2 font-medium">Avg. Page Load (LCP)</td><td className="border px-3 py-2">4.2 s</td><td className="border px-3 py-2">2.1 s</td><td className="border px-3 py-2 font-medium">▼ 50 %</td></tr>
-                    </tbody>
-                  </table>
+                <div className="rounded-xl border border-neutral-200">
+                  <Table>
+                    <TableHeader>
+                      <TableRow className="border-neutral-200">
+                        <TableHead className="px-3 py-2 text-neutral-600">Metric</TableHead>
+                        <TableHead className="px-3 py-2 text-neutral-600">Pre</TableHead>
+                        <TableHead className="px-3 py-2 text-neutral-600">Post</TableHead>
+                        <TableHead className="px-3 py-2 text-neutral-600">Δ</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      <TableRow className="border-neutral-200">
+                        <TableCell className="px-3 py-2 font-medium">Avg. Google Rank (all queries)</TableCell>
+                        <TableCell className="px-3 py-2">48.2</TableCell>
+                        <TableCell className="px-3 py-2">37.0</TableCell>
+                        <TableCell className="px-3 py-2 font-medium">▲ 11.2</TableCell>
+                      </TableRow>
+                      <TableRow className="border-neutral-200">
+                        <TableCell className="px-3 py-2 font-medium">Organic Click-Through Rate</TableCell>
+                        <TableCell className="px-3 py-2">0.32 %</TableCell>
+                        <TableCell className="px-3 py-2">0.71 %</TableCell>
+                        <TableCell className="px-3 py-2 font-medium">▲ 119 %</TableCell>
+                      </TableRow>
+                      <TableRow className="border-neutral-200">
+                        <TableCell className="px-3 py-2 font-medium">Organic Sessions</TableCell>
+                        <TableCell className="px-3 py-2">1,134</TableCell>
+                        <TableCell className="px-3 py-2">2,195</TableCell>
+                        <TableCell className="px-3 py-2 font-medium">▲ 93 %</TableCell>
+                      </TableRow>
+                      <TableRow className="border-neutral-200">
+                        <TableCell className="px-3 py-2 font-medium">Engagement Rate</TableCell>
+                        <TableCell className="px-3 py-2">52.4 %</TableCell>
+                        <TableCell className="px-3 py-2">60.7 %</TableCell>
+                        <TableCell className="px-3 py-2 font-medium">▲ 8.3 pp</TableCell>
+                      </TableRow>
+                      <TableRow className="border-neutral-200">
+                        <TableCell className="px-3 py-2 font-medium">Events / Session</TableCell>
+                        <TableCell className="px-3 py-2">3.98</TableCell>
+                        <TableCell className="px-3 py-2">4.64</TableCell>
+                        <TableCell className="px-3 py-2 font-medium">▲ 16 %</TableCell>
+                      </TableRow>
+                      <TableRow className="border-neutral-200">
+                        <TableCell className="px-3 py-2 font-medium">Avg. Page Load (LCP)</TableCell>
+                        <TableCell className="px-3 py-2">4.2 s</TableCell>
+                        <TableCell className="px-3 py-2">2.1 s</TableCell>
+                        <TableCell className="px-3 py-2 font-medium">▼ 50 %</TableCell>
+                      </TableRow>
+                    </TableBody>
+                  </Table>
                 </div>
                 <p className="text-sm text-neutral-600 mt-4">Practice staff note a clear uptick in veneer and whitening consultations, confirming the quality of incoming leads.</p>
                 <div className="mt-6 space-y-6">
@@ -198,6 +243,9 @@ export default function ExquisiteDentistryCaseStudy() {
               {/* Results */}
               <section className="py-8 border-t" data-section="results">
                 <h2 className="text-2xl font-bold tracking-tighter mb-6">Results That Matter</h2>
+                <div className="mb-8">
+                  <FounderImpactGraph />
+                </div>
                 <ul className="list-disc space-y-2 pl-6">
                   <li>Luxury Brand Cohesion – The website now mirrors the spa-like, white-glove in-office feel.</li>
                   <li>High-Value Lead Surge – Form-fills and phone clicks up <strong>71 %</strong> (internal PMS).</li>

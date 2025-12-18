@@ -2,6 +2,14 @@
 
 Quick reference for the pages we edit most often.
 
+## Case Studies (`app/case-studies/*`)
+- Individual case study pages live under `app/case-studies/<slug>/` and typically render a client component (`client-page.tsx`).
+- Sticky section navigation is `components/case-studies/CaseStudySectionNav.tsx` (shadcn `ToggleGroup` + `Sheet` + `ScrollArea`); sections must use `data-section="<id>"` or `id="<id>"` so scrolling and active state work.
+- Reusable “data note / in progress” callouts are `components/case-studies/CaseStudyCallout.tsx` (shadcn `Alert`).
+- The “buy back time / grow customers” interactive graph is `components/case-studies/FounderImpactGraph.tsx` (shadcn `Tabs` + recharts; “with prism” vs “without prism” scenarios).
+- The shared curve/data generator lives in `lib/case-study-impact-graph.ts` (defaults are illustrative; tune here if we ever switch to case-specific “actual” numbers).
+- Minimal case studies use `components/case-study-minimal.tsx`, which automatically includes the graph so pages stay consistent.
+
 ## Pricing (`app/pricing/client-page.tsx`)
 - Hero copy, pricing tiers, the founder VSL block, “Website Use Cases”, the handoff section, and footer CTA all live here.
 - The video directly under the pricing cards uses `VideoPlayer` plus structured data—when swapping the asset, update the Cloudinary `src`, poster, and metadata inside `PricingSection`.

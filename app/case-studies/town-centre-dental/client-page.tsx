@@ -1,45 +1,31 @@
 "use client"
 
+import { CaseStudySectionNav } from "@/components/case-studies/CaseStudySectionNav"
 import Footer from "@/components/footer"
 import { CaseStudySchema } from "@/components/schema-markup"
 import SocialShare from "@/components/social-share"
 import { Button } from "@/components/ui/button"
-import { useCaseStudyStickyNavHeight } from "@/hooks/use-case-study-sticky-nav"
+import { Skeleton } from "@/components/ui/skeleton"
 import { trackCTAClick } from "@/utils/analytics"
-import { ArrowLeft, ArrowRight, ChevronRight } from "lucide-react"
+import { ArrowLeft, ArrowRight } from "lucide-react"
 import dynamic from "next/dynamic"
 import Link from "next/link"
-import { useEffect, useRef, useState } from "react"
 import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
 const Navbar = dynamic(() => import("@/components/navbar"), { ssr: false })
+const FounderImpactGraph = dynamic(
+  () => import("@/components/case-studies/FounderImpactGraph").then((m) => m.FounderImpactGraph),
+  { ssr: false, loading: () => <Skeleton className="h-64 w-full rounded-2xl" /> }
+)
 const CLIENT_SITE = "https://www.towncentredental.net"
 
+const sectionNav = [
+  { id: "overview", label: "Overview" },
+  { id: "challenge", label: "The Challenge" },
+  { id: "solution", label: "Our Solution" },
+  { id: "results", label: "Results" },
+] as const
+
 export default function TownCentreDentalCaseStudy() {
-  const stickyNavRef = useRef<HTMLDivElement>(null)
-  useCaseStudyStickyNavHeight(stickyNavRef)
-
-  const [activeSection, setActiveSection] = useState("")
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const sections = document.querySelectorAll("[data-section]")
-      let currentSection = ""
-      sections.forEach((section) => {
-        const sectionTop = section.getBoundingClientRect().top
-        if (sectionTop < 200) currentSection = section.getAttribute("data-section") || ""
-      })
-      if (currentSection !== activeSection) setActiveSection(currentSection)
-    }
-    window.addEventListener("scroll", handleScroll)
-    handleScroll()
-    return () => window.removeEventListener("scroll", handleScroll)
-  }, [activeSection])
-
-  const scrollToSection = (sectionId: string) => {
-    const section = document.querySelector(`[data-section="${sectionId}"]`)
-    if (section instanceof HTMLElement) section.scrollIntoView({ behavior: "smooth", block: "start" })
-  }
-
   return (
     <div className="flex min-h-screen flex-col">
       <Navbar />
@@ -63,36 +49,10 @@ export default function TownCentreDentalCaseStudy() {
           </div>
         </section>
 
-        {/* Desktop TOC */}
-        <div
-          ref={stickyNavRef}
-          className="hidden lg:block sticky top-[var(--prism-header-height)] z-40 border-b bg-background/90 backdrop-blur supports-[backdrop-filter]:bg-background/70"
-        >
-          <div className="container mx-auto px-4 md:px-6 max-w-3xl">
-            <div className="py-4 flex gap-6 text-sm overflow-x-auto scrollbar-hide">
-              {[["overview","Overview"],["challenge","The Challenge"],["solution","Our Solution"],["results","Results"]].map(([id,label]) => (
-                <button key={id} onClick={() => scrollToSection(String(id))} className={`whitespace-nowrap ${activeSection===id?"font-medium text-black":"text-neutral-500"}`}>{label}</button>
-              ))}
-            </div>
-          </div>
-        </div>
+        <CaseStudySectionNav sections={[...sectionNav]} containerClassName="max-w-3xl" />
 
         <div className="container mx-auto px-4 md:px-6 max-w-3xl">
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-12">
-            {/* Mobile TOC */}
-            <div className="lg:hidden border-b pb-6 mt-6">
-              <h2 className="font-medium mb-4 lowercase">Contents</h2>
-              <ul className="space-y-3 text-sm">
-                {[["overview","Overview"],["challenge","The Challenge"],["solution","Our Solution"],["results","Results"]].map(([id,label]) => (
-                  <li key={id as string}>
-                    <button onClick={() => scrollToSection(String(id))} className={`flex items-center ${activeSection===id?"font-medium text-black":"text-neutral-500"}`}>
-                      <ChevronRight className="h-3 w-3 mr-1" />{label}
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
             {/* Main */}
             <div className="col-span-1 lg:col-span-4">
               {/* Key points */}
@@ -140,6 +100,9 @@ export default function TownCentreDentalCaseStudy() {
               {/* Results */}
               <section className="py-8 border-t" data-section="results">
                 <h2 className="text-2xl font-bold tracking-tighter lowercase mb-6">results</h2>
+                <div className="mb-8">
+                  <FounderImpactGraph />
+                </div>
                 <div className="prose prose-neutral max-w-none space-y-4 lowercase">
                   <div className="grid gap-4 md:grid-cols-2 my-6">
                     <div className="space-y-4">
