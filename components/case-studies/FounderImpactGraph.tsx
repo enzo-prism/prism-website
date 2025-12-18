@@ -27,16 +27,68 @@ type FounderImpactGraphProps = {
 }
 
 const chartConfig = {
-  customers: { label: "customers coming in", color: "hsl(var(--chart-1))" },
-  effort: { label: "founder time + energy", color: "hsl(var(--chart-2))" },
+  customers: { label: "customers coming in" },
+  effort: { label: "founder time + energy" },
 } satisfies ChartConfig
 
 type ScenarioKey = "with-prism" | "without-prism"
+
+type ResolvedChartColors = {
+  customers: string
+  effort: string
+  axis: string
+  grid: string
+}
 
 function levelLabel(value: number) {
   if (value >= 70) return "high"
   if (value >= 40) return "medium"
   return "low"
+}
+
+function parseHslTriplet(value: string) {
+  const parts = value.replace(/\s+/g, " ").trim().split(" ")
+  if (parts.length < 3) return null
+
+  const [h, s, l] = parts
+  if (!h || !s || !l) return null
+
+  return { h, s, l }
+}
+
+function toHsl(triplet: { h: string; s: string; l: string }) {
+  return `hsl(${triplet.h}, ${triplet.s}, ${triplet.l})`
+}
+
+function toHsla(triplet: { h: string; s: string; l: string }, alpha: number) {
+  return `hsla(${triplet.h}, ${triplet.s}, ${triplet.l}, ${alpha})`
+}
+
+function resolveChartColors(): ResolvedChartColors {
+  const fallbackChart1 = parseHslTriplet("12 76% 61%")!
+  const fallbackChart2 = parseHslTriplet("173 58% 39%")!
+  const fallbackMuted = parseHslTriplet("0 0% 45.1%")!
+
+  if (typeof window === "undefined") {
+    return {
+      customers: toHsl(fallbackChart1),
+      effort: toHsl(fallbackChart2),
+      axis: toHsl(fallbackMuted),
+      grid: toHsla(fallbackMuted, 0.2),
+    }
+  }
+
+  const styles = getComputedStyle(document.documentElement)
+  const chart1 = parseHslTriplet(styles.getPropertyValue("--chart-1")) ?? fallbackChart1
+  const chart2 = parseHslTriplet(styles.getPropertyValue("--chart-2")) ?? fallbackChart2
+  const muted = parseHslTriplet(styles.getPropertyValue("--muted-foreground")) ?? fallbackMuted
+
+  return {
+    customers: toHsl(chart1),
+    effort: toHsl(chart2),
+    axis: toHsl(muted),
+    grid: toHsla(muted, 0.2),
+  }
 }
 
 function tooltipMonthLabel(month: number) {
@@ -93,20 +145,17 @@ function buildWithoutPrismPoints(months: number): CaseStudyImpactPoint[] {
   })
 }
 
-function ScenarioLegend() {
+function ScenarioLegend({ colors }: { colors: ResolvedChartColors }) {
   return (
     <div className="flex flex-wrap items-center gap-4 text-xs text-neutral-600">
       <span className="inline-flex items-center gap-2">
-        <span
-          className="h-2 w-2 rounded-full"
-          style={{ backgroundColor: "hsl(var(--chart-1))" }}
-        />
+        <span className="h-2 w-2 rounded-full" style={{ backgroundColor: colors.customers }} />
         customers coming in
       </span>
       <span className="inline-flex items-center gap-2">
         <span
           className="h-0 w-5 border-t-2 border-dashed"
-          style={{ borderColor: "hsl(var(--chart-2))" }}
+          style={{ borderColor: colors.effort }}
         />
         founder time + energy
       </span>
@@ -114,7 +163,13 @@ function ScenarioLegend() {
   )
 }
 
-function ScenarioChart({ points }: { points: CaseStudyImpactPoint[] }) {
+function ScenarioChart({
+  points,
+  colors,
+}: {
+  points: CaseStudyImpactPoint[]
+  colors: ResolvedChartColors
+}) {
   const lastMonth = points[points.length - 1]?.month ?? 0
   const ticks = lastMonth >= 6 ? [0, Math.round(lastMonth / 2), lastMonth] : [0, lastMonth]
 
@@ -124,56 +179,48 @@ function ScenarioChart({ points }: { points: CaseStudyImpactPoint[] }) {
       className="aspect-auto h-[280px] w-full md:h-[320px]"
     >
       <LineChart data={points} margin={{ top: 12, right: 12, left: 4, bottom: 8 }}>
-        <CartesianGrid
-          vertical={false}
-          strokeDasharray="3 3"
-          stroke="hsl(var(--muted-foreground) / 0.2)"
+        <CartesianGrid vertical={false} strokeDasharray="3 3" stroke={colors.grid} />
+        <XAxis
+          dataKey="month"
+          tickLine={false}
+          axisLine={false}
+          stroke={colors.axis}
+          fontSize={12}
+          ticks={ticks}
+          interval="preserveStartEnd"
+          minTickGap={24}
+          tickFormatter={(value: number) => (value === 0 ? "start" : `m${value}`)}
         />
-	        <XAxis
-	          dataKey="month"
-	          tickLine={false}
-	          axisLine={false}
-	          stroke="hsl(var(--muted-foreground))"
-	          fontSize={12}
-	          ticks={ticks}
-	          interval="preserveStartEnd"
-	          minTickGap={24}
-	          tickFormatter={(value: number) => (value === 0 ? "start" : `m${value}`)}
-	        />
-	        <YAxis
-	          domain={[-5, 105]}
-	          ticks={[0, 50, 100]}
-	          tickLine={false}
-	          axisLine={false}
-	          stroke="hsl(var(--muted-foreground))"
-	          fontSize={12}
-	          tickFormatter={(value: number) =>
-	            value === 0 ? "low" : value === 50 ? "medium" : value === 100 ? "high" : ""
-	          }
-	        />
-	        <ChartTooltip cursor={{ strokeDasharray: "3 3" }} content={<ImpactTooltip />} />
+        <YAxis
+          domain={[-5, 105]}
+          ticks={[0, 50, 100]}
+          tickLine={false}
+          axisLine={false}
+          stroke={colors.axis}
+          fontSize={12}
+          tickFormatter={(value: number) =>
+            value === 0 ? "low" : value === 50 ? "medium" : value === 100 ? "high" : ""
+          }
+        />
+        <ChartTooltip cursor={{ strokeDasharray: "3 3" }} content={<ImpactTooltip />} />
         <Line
           type="monotone"
           dataKey="customers"
-          stroke="var(--color-customers)"
+          stroke={colors.customers}
           strokeWidth={2.5}
           dot={false}
-          activeDot={{
-            r: 5,
-            style: { filter: "drop-shadow(0 0 3px hsl(var(--chart-1)))" },
-          }}
+          isAnimationActive={false}
+          activeDot={{ r: 5 }}
         />
         <Line
           type="monotone"
           dataKey="effort"
-          stroke="var(--color-effort)"
+          stroke={colors.effort}
           strokeWidth={2.5}
           strokeDasharray="6 4"
           dot={false}
-          activeDot={{
-            r: 5,
-            style: { filter: "drop-shadow(0 0 3px hsl(var(--chart-2)))" },
-          }}
+          isAnimationActive={false}
+          activeDot={{ r: 5 }}
         />
       </LineChart>
     </ChartContainer>
@@ -183,16 +230,18 @@ function ScenarioChart({ points }: { points: CaseStudyImpactPoint[] }) {
 function ScenarioPanel({
   scenario,
   points,
+  colors,
 }: {
   scenario: ScenarioKey
   points: CaseStudyImpactPoint[]
+  colors: ResolvedChartColors
 }) {
   const isWithPrism = scenario === "with-prism"
 
   return (
     <div className="space-y-4">
-      <ScenarioLegend />
-      <ScenarioChart points={points} />
+      <ScenarioLegend colors={colors} />
+      <ScenarioChart points={points} colors={colors} />
       <CaseStudyCallout title={isWithPrism ? "with prism" : "without prism"}>
         {isWithPrism ? (
           <>
@@ -209,6 +258,7 @@ function ScenarioPanel({
 }
 
 export function FounderImpactGraph({ className, slug }: FounderImpactGraphProps) {
+  const colors = React.useMemo(() => resolveChartColors(), [])
   const withPrismPoints = React.useMemo(() => {
     const config = getCaseStudyImpactGraphConfig(slug)
     return generateCaseStudyImpactPoints(config)
@@ -237,11 +287,11 @@ export function FounderImpactGraph({ className, slug }: FounderImpactGraphProps)
           </TabsList>
 
           <TabsContent value="with-prism" className="mt-2">
-            <ScenarioPanel scenario="with-prism" points={withPrismPoints} />
+            <ScenarioPanel scenario="with-prism" points={withPrismPoints} colors={colors} />
           </TabsContent>
 
           <TabsContent value="without-prism" className="mt-2">
-            <ScenarioPanel scenario="without-prism" points={withoutPrismPoints} />
+            <ScenarioPanel scenario="without-prism" points={withoutPrismPoints} colors={colors} />
           </TabsContent>
         </Tabs>
       </CardContent>
