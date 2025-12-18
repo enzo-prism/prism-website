@@ -130,29 +130,29 @@ function ScenarioChart({ points }: { points: CaseStudyImpactPoint[] }) {
           strokeDasharray="3 3"
           stroke="hsl(var(--muted-foreground) / 0.2)"
         />
-        <XAxis
-          dataKey="month"
-          tickLine={false}
-          axisLine={false}
-          stroke="hsl(var(--muted-foreground))"
-          fontSize={12}
-          ticks={ticks}
-          interval="preserveStartEnd"
-          minTickGap={24}
-          tickFormatter={(value: number) => (value === 0 ? "start" : `m${value}`)}
-        />
-        <YAxis
-          domain={[0, 100]}
-          ticks={[0, 50, 100]}
-          tickLine={false}
-          axisLine={false}
+	        <XAxis
+	          dataKey="month"
+	          tickLine={false}
+	          axisLine={false}
+	          stroke="hsl(var(--muted-foreground))"
+	          fontSize={12}
+	          ticks={ticks}
+	          interval="preserveStartEnd"
+	          minTickGap={24}
+	          tickFormatter={(value: number) => (value === 0 ? "start" : `m${value}`)}
+	        />
+	        <YAxis
+	          domain={[-5, 105]}
+	          ticks={[0, 50, 100]}
+	          tickLine={false}
+	          axisLine={false}
 	          stroke="hsl(var(--muted-foreground))"
 	          fontSize={12}
 	          tickFormatter={(value: number) =>
 	            value === 0 ? "low" : value === 50 ? "medium" : value === 100 ? "high" : ""
 	          }
 	        />
-        <ChartTooltip cursor={{ strokeDasharray: "3 3" }} content={<ImpactTooltip />} />
+	        <ChartTooltip cursor={{ strokeDasharray: "3 3" }} content={<ImpactTooltip />} />
         <Line
           type="monotone"
           dataKey="customers"
