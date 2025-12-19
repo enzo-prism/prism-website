@@ -201,7 +201,7 @@ function HeroSection() {
           <RevealOnScroll delay={0.1}>
             <div className="space-y-6">
               <h1 className="text-4xl font-semibold leading-tight tracking-tight sm:text-5xl lg:text-6xl">
-                Buy back your time — and accelerate compounding growth.
+                buy back your time. accelerate compounding growth.
               </h1>
               <p className="text-lg text-black/70 sm:text-xl">
                 with prism impossible is temporary
