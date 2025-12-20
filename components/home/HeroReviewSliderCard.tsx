@@ -15,7 +15,7 @@ const DEFAULT_REVIEW_RATING = {
   worstRating: "1",
 }
 
-const HERO_QUOTE_COUNT = 2
+const HERO_QUOTE_COUNT = 3
 
 type HeroReviewSliderCardProps = {
   className?: string

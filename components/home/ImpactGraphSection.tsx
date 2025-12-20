@@ -52,10 +52,16 @@ export default function ImpactGraphSection() {
   )
   const calloutCopy = React.useMemo(
     () => ({
+      withPrism: (
+        <div className="space-y-1">
+          <p>customers come in. your time comes back.</p>
+          <p>we build it, run it, and keep improving it.</p>
+        </div>
+      ),
       withoutPrism: (
         <div className="space-y-1">
-          <p>your effort stays high.</p>
-          <p>results stay “fine.” (until you burn out and rebuild again)</p>
+          <p>you run marketing alone.</p>
+          <p>effort stays high. results stay “fine.”</p>
         </div>
       ),
     }),
@@ -83,9 +89,9 @@ export default function ImpactGraphSection() {
               you didn't start a business to:
             </p>
             <ul className="grid list-disc gap-2 pl-5 text-sm text-neutral-600 lowercase sm:text-base">
-              <li>duct-tape marketing tools together</li>
-              <li>chase freelancers for updates</li>
-              <li>guess at seo and ads</li>
+              <li>duct-tape too many tools just to update a page</li>
+              <li>text freelancers for fixes and still wait weeks</li>
+              <li>guess which seo task matters</li>
               <li>rebuild a “pretty website” that doesn’t bring customers</li>
               <li>spend nights + weekends on marketing</li>
             </ul>
@@ -128,17 +134,16 @@ export default function ImpactGraphSection() {
               </p>
               <p className="mt-3 text-sm text-neutral-600 lowercase">we own:</p>
               <ul className="mt-3 grid list-disc gap-2 pl-5 text-sm text-neutral-700 lowercase">
-                <li>a fast website that turns visits into calls + bookings</li>
-                <li>your google business profile + local seo (so you show up in maps)</li>
-                <li>content that answers customer questions (and wins the click)</li>
-                <li>ads that bring in ready-to-buy leads (with tracking)</li>
+                <li>a fast website that turns visits into calls</li>
+                <li>your google business profile + local seo</li>
+                <li>content that answers real customer questions</li>
+                <li>ads that bring in ready-to-buy leads with tracking</li>
               </ul>
               <div className="mt-4 grid gap-2 text-sm text-neutral-600 lowercase">
                 <p>you don’t manage the project.</p>
                 <p>you don’t chase updates.</p>
                 <p>
-                  you message us when you want a status check — we reply with what’s done, what’s
-                  next, and timing.
+                  message us anytime for a status check — we reply with what’s done and what’s next.
                 </p>
               </div>
             </div>

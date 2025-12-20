@@ -5,24 +5,39 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { trackCTAClick } from "@/utils/analytics"
 
-export default function HeroCtas() {
+const DEFAULT_NOTE =
+  "also built for ai search: clear pages + structured answers so you show up when customers ask."
+
+type HeroCtasProps = {
+  note?: string
+  showNote?: boolean
+  location?: string
+  className?: string
+}
+
+export default function HeroCtas({
+  note = DEFAULT_NOTE,
+  showNote = true,
+  location = "homepage hero",
+  className,
+}: HeroCtasProps) {
   return (
-    <div className="flex flex-col items-center gap-3">
+    <div className={["flex flex-col items-center gap-3", className].filter(Boolean).join(" ")}>
       <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
         <Button asChild className="w-full rounded-full lowercase sm:w-auto">
-          <Link href="/pricing" onClick={() => trackCTAClick("see pricing", "homepage hero")}>
+          <Link href="/pricing" onClick={() => trackCTAClick("see pricing", location)}>
             see pricing
           </Link>
         </Button>
         <Button variant="outline" asChild className="w-full rounded-full lowercase sm:w-auto">
-          <Link href="/case-studies" onClick={() => trackCTAClick("explore case studies", "homepage hero")}>
+          <Link href="/case-studies" onClick={() => trackCTAClick("explore case studies", location)}>
             explore case studies
           </Link>
         </Button>
       </div>
-      <p className="text-balance text-xs text-neutral-500 lowercase">
-        also built for ai search (google ai overviews + chatgpt-style answers).
-      </p>
+      {showNote ? (
+        <p className="text-balance text-xs text-neutral-500 lowercase">{note}</p>
+      ) : null}
     </div>
   )
 }
