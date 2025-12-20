@@ -688,7 +688,7 @@ const heroReviewSequence =
 
 const HOMEPAGE_HERO_REVIEW_IDS = [44, 15, 16, 56, 66, 68, 72, 77, 82, 86, 92, 93, 196, 211, 218, 251, 252, 258, 265, 58]
 const homepageHeroReviewSet = new Set(HOMEPAGE_HERO_REVIEW_IDS)
-const HERO_PRIORITY_IDS = [258, 196, 92, 218]
+const HERO_PRIORITY_IDS = [16, 218, 258, 196]
 
 const ensurePositiveLimit = (limit: number, fallback = 1) =>
   Number.isFinite(limit) && limit > 0 ? Math.floor(limit) : fallback

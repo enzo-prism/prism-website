@@ -20,7 +20,7 @@
 - On warmed dev, Lighthouse consistently reports ~21–24s LCP across routes, which does not match real navigation timings and appears to be a dev-lab artifact.
 - The CWV fixes shipped in this PR still matter for production:
   - Removed unnecessary client boundaries in homepage sections (`app/client-page.tsx`, `components/home/*`) to reduce JS and hydration cost.
-  - Stabilized hero review rendering and removed auto-rotation to avoid LCP inflation (`components/home/HeroReviewSliderCard.tsx`).
+  - Simplified the hero proof strip to two curated quotes (no slider/auto-rotation) to keep above-the-fold JS light (`components/home/HeroReviewSliderCard.tsx`).
   - Ensured above‑fold images are sized and crawl‑safe, leaning on Next native lazy loading (`components/image.tsx`, `components/core-image.tsx`).
 
 **How to re‑measure correctly**
@@ -30,4 +30,3 @@
    npx lighthouse http://localhost:3000/ --only-categories=performance --form-factor=mobile
    ```
 3. Update this file with production “after” numbers.
-

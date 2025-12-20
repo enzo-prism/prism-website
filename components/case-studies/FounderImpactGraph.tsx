@@ -244,13 +244,15 @@ function ScenarioPanel({
       <ScenarioChart points={points} colors={colors} />
       <CaseStudyCallout title={isWithPrism ? "with prism" : "without prism"}>
         {isWithPrism ? (
-          <>
-            prism owns the website, content, and ads. founder effort drops over time while customers compound.
-          </>
+          <div className="space-y-1">
+            <p>customers go up. your effort goes down.</p>
+            <p>we build it, run it, and keep improving it.</p>
+          </div>
         ) : (
-          <>
-            the founder stays on the hook for execution and troubleshooting. effort stays high and results stall.
-          </>
+          <div className="space-y-1">
+            <p>your effort stays high.</p>
+            <p>results stay "fine." (until you burn out and rebuild again)</p>
+          </div>
         )}
       </CaseStudyCallout>
     </div>
@@ -273,10 +275,10 @@ export function FounderImpactGraph({ className, slug }: FounderImpactGraphProps)
     <Card className={cn("rounded-2xl border-neutral-200 bg-white shadow-sm", className)}>
       <CardHeader className="space-y-2">
         <CardTitle className="text-lg font-semibold tracking-tight">
-          buy back time. grow customers.
+          toggle to compare what happens over time.
         </CardTitle>
         <CardDescription className="text-sm text-neutral-600">
-          compare founder effort vs. inbound customers with prism vs. without prism.
+          customers coming in vs founder time + energy.
         </CardDescription>
       </CardHeader>
       <CardContent className="pt-0">

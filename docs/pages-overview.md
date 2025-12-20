@@ -42,9 +42,10 @@ Quick reference for the pages we edit most often.
 - Uses `ContactForm` for all validation/submission logic.
 
 ## Homepage (`app/client-page.tsx`)
-- The hero uses `HeroReviewSliderCard` (`components/home/HeroReviewSliderCard.tsx`): swipeable reviews with minimal dot pagination. Keep it lightweight for CWV and ensure the “250+ more” CTA stays above the fold.
-- All testimonial copy for the slider lives in `content/wall-of-love-data.tsx`; update that file (and respect `heroSpotlight`) instead of duplicating data inside `app/client-page.tsx`.
-- The impact graph section below `GrowthHeadline` is `components/home/ImpactGraphSection.tsx`, which lazy-mounts `FounderImpactGraph` so Recharts only loads when near the viewport.
+- The hero proof strip uses `HeroReviewSliderCard` (`components/home/HeroReviewSliderCard.tsx`) with two curated quotes and the “250+ more” CTA kept above the fold.
+- Hero copy, service strip, and CTAs live in `app/client-page.tsx` with CTA tracking in `components/home/HeroCtas.tsx`.
+- Testimonial copy for the proof strip lives in `content/wall-of-love-data.tsx`; adjust `HERO_PRIORITY_IDS` to control the surfaced quotes.
+- The impact graph section below the hero is `components/home/ImpactGraphSection.tsx`, which lazy-mounts `FounderImpactGraph` so Recharts only loads when near the viewport.
 
 ## Thank-you routes
 - `app/thank-you/page.tsx`
@@ -73,10 +74,16 @@ Each uses card-based layouts: confirmation message + kickoff-call CTA + contact 
 
 ## SEO for Dentists (`app/dental-practice-seo-expert/page.tsx`)
 
-- Dentist-focused landing page targeting “dental local seo” + “seo for dentists” queries, linking into the broader `/seo` and dental funnels.
+- Dentist-focused landing page targeting “dentist seo”, “seo for dentists”, and “dental seo services” queries, linking into the broader `/seo` and dental funnels.
 - Aliases in `next.config.mjs` (redirect to `/dental-practice-seo-expert`): `/seo-consultant-for-dentists`, `/seo-for-dentists`, `/dentist-seo`, `/dental-seo`, `/dental-local-seo`, `/dentist-local-seo`, `/local-seo-for-dentists`.
 - Includes a dental-focused `ServiceSchema` plus FAQ structured data (via `FAQSection`) to help search engines understand the offer.
 - Supporting dentist SEO guides live in `content/blog/` (e.g., `/blog/dental-seo-guide`, `/blog/dental-practice-rank-higher-google-search`, `/blog/ai-search-for-dental-practice`).
+
+## SEO Audit Service (`app/seo/audit/page.tsx`)
+
+- SEO audit service landing page targeting “seo audit service” intent.
+- Uses `SeoHero` + `SeoSection` blocks with `ServiceSchema`, `HowToSchema`, and FAQ structured data.
+- Cross-links into `/seo` and `/free-analysis` to separate the full audit from the free snapshot.
 
 ## Local Listings (`app/local-listings/page.tsx`)
 - Hero, benefits grid, platform cards, and the founder VSL render before the audience + FAQ sections.

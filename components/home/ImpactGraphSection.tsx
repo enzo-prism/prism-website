@@ -66,12 +66,19 @@ export default function ImpactGraphSection() {
               buy back time
             </p>
             <h2 className="text-balance text-3xl font-bold tracking-tight lowercase sm:text-4xl">
-              grow customers while founder effort drops.
+              buy back time.
             </h2>
             <p className="text-balance text-sm text-neutral-600 lowercase sm:text-base">
-              toggle between <span className="font-semibold text-neutral-900">with prism</span> and{" "}
-              <span className="font-semibold text-neutral-900">without prism</span> to see how inbound
-              compounds while your workload trends toward zero.
+              you didn't start a business to:
+            </p>
+            <ul className="grid list-disc gap-2 pl-5 text-sm text-neutral-600 lowercase sm:text-base">
+              <li>fight with marketing tools</li>
+              <li>babysit freelancers</li>
+              <li>guess at seo and ads</li>
+              <li>rebuild a "pretty website" that doesn't bring customers</li>
+            </ul>
+            <p className="text-balance text-sm text-neutral-600 lowercase sm:text-base">
+              prism owns the whole growth system - so your workload drops while inbound compounds.
             </p>
 
             <div className="flex flex-col gap-3 sm:flex-row">
@@ -91,12 +98,37 @@ export default function ImpactGraphSection() {
             </div>
           </div>
 
-          <div ref={graphRef} className="w-full">
-            {isNearViewport ? (
-              <FounderImpactGraph className="rounded-3xl" />
-            ) : (
-              <Skeleton className="h-[620px] w-full rounded-3xl md:h-[660px]" />
-            )}
+          <div className="w-full space-y-6">
+            <div ref={graphRef}>
+              {isNearViewport ? (
+                <FounderImpactGraph className="rounded-3xl" />
+              ) : (
+                <Skeleton className="h-[620px] w-full rounded-3xl md:h-[660px]" />
+              )}
+            </div>
+
+            <div className="rounded-2xl border border-neutral-200 bg-white p-5 text-left shadow-sm">
+              <p className="text-xs font-semibold uppercase tracking-[0.3em] text-neutral-500">
+                with prism
+              </p>
+              <p className="mt-3 text-sm text-neutral-600 lowercase">
+                we take ownership of:
+              </p>
+              <ul className="mt-3 grid list-disc gap-2 pl-5 text-sm text-neutral-700 lowercase">
+                <li>a fast website that converts</li>
+                <li>google business profile + local seo</li>
+                <li>content that answers customer questions</li>
+                <li>ads that bring in ready-to-buy leads</li>
+              </ul>
+              <div className="mt-4 grid gap-2 text-sm text-neutral-600 lowercase">
+                <p>you don't manage the project.</p>
+                <p>you don't chase updates.</p>
+                <p>
+                  you message us when you want a status check - we reply with what's done, what's
+                  next, and timing.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </div>

@@ -32,10 +32,14 @@ export default function SegmentsRail() {
   return (
     <section className="py-20 md:py-28 bg-neutral-50">
       <div className="mx-auto max-w-5xl px-4 md:px-6">
-        <div className="mx-auto max-w-3xl text-center">
+        <div className="mx-auto max-w-3xl text-center space-y-3">
           <h2 className="text-3xl font-bold tracking-tight lowercase sm:text-4xl">
-            segments we support
+            who we help
           </h2>
+          <p className="text-balance text-sm text-neutral-600 lowercase sm:text-base">
+            if you're great at your craft - and tired of marketing + tech stealing your week - you're
+            in the right place.
+          </p>
         </div>
 
         <div className="mt-10">
