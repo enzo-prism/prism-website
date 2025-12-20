@@ -55,6 +55,7 @@ type PricingTier = {
   name: string
   emoji: string
   price: string
+  tagline: string
   included: string[]
   bestFor: PricingBullet[]
   cta: string
@@ -68,14 +69,20 @@ const pricingTiers: PricingTier[] = [
     name: "Launch",
     emoji: "🚀",
     price: "$400 one-time",
-    included: ["Website"],
-    bestFor: [
-      { icon: CalendarClock, text: "One-time events, pop-up offers, or short-term campaigns with a hard date", iconScale: 0.92 },
-      { icon: Sparkles, text: "Early-stage startups that need a sharp, legit site this week — not next quarter" },
-      { icon: CheckCheck, text: "Founders validating a new offer before pouring money into dev or ads" },
-      { icon: Rocket, text: "Anyone who wants a polished, conversion-ready site live within 48–72 hours" },
+    tagline: "a sharp site in 48–72 hours.",
+    included: [
+      "conversion-ready website",
+      "premium design + copy",
+      "analytics + seo basics",
+      "go-live setup (domain, ssl, forms, hosting)",
     ],
-    cta: "Apply for launch",
+    bestFor: [
+      { icon: CalendarClock, text: "one offer with a hard date (event, pop-up, waitlist)", iconScale: 0.92 },
+      { icon: Sparkles, text: "founders who need a legit site this week" },
+      { icon: CheckCheck, text: "validating an idea before spending on ads/dev" },
+      { icon: Rocket, text: "a polished site without a long build" },
+    ],
+    cta: "apply for launch",
     href: "/checkout/launch",
     accent: "from-amber-400 to-pink-500",
     featured: false,
@@ -84,14 +91,20 @@ const pricingTiers: PricingTier[] = [
     name: "Grow",
     emoji: "🌱",
     price: "$900/mo",
-    included: ["Website", "Content Systems"],
-    bestFor: [
-      { icon: Beaker, text: "Founders ready to publish consistently and see what actually ranks and converts" },
-      { icon: TrendingUp, text: "Businesses that want steady lead growth from SEO and content — without spraying ad spend" },
-      { icon: PieChart, text: "Teams that need ongoing testing, analytics, and conversion tweaks every month" },
-      { icon: Leaf, text: "Brands focused on long-term organic traffic that compounds instead of resets every quarter" },
+    tagline: "publish consistently. rank. convert.",
+    included: [
+      "website + ongoing improvements",
+      "content system (topics, writing, publishing)",
+      "seo + conversion tweaks each month",
+      "reporting so you know what’s working",
     ],
-    cta: "Apply for growth",
+    bestFor: [
+      { icon: Beaker, text: "steady lead growth from seo/content" },
+      { icon: TrendingUp, text: "teams that want a partner, not a freelancer" },
+      { icon: PieChart, text: "businesses tired of guessing what to write" },
+      { icon: Leaf, text: "brands playing the long game" },
+    ],
+    cta: "apply for grow",
     href: "/checkout/grow",
     accent: "from-sky-500 to-indigo-600",
     featured: true,
@@ -100,14 +113,20 @@ const pricingTiers: PricingTier[] = [
     name: "Scale",
     emoji: "📈",
     price: "from $1,500/mo",
-    included: ["Website", "Content Systems", "Ads"],
-    bestFor: [
-      { icon: Award, text: "Established businesses with proven product–market fit and clear revenue targets" },
-      { icon: Gauge, text: "Founders who want their site, funnels, and campaigns treated like a full growth channel" },
-      { icon: Users, text: "Teams scaling leads, conversion rate, and lifetime value across multiple offers or locations" },
-      { icon: Network, text: "Businesses that need full-funnel tracking, paid ads, and automation dialed in and maintained" },
+    tagline: "full-funnel growth (site + content + ads).",
+    included: [
+      "everything in grow",
+      "paid ads management",
+      "full-funnel tracking + call/lead tracking",
+      "landing pages + funnels as you scale",
     ],
-    cta: "Apply for scale",
+    bestFor: [
+      { icon: Award, text: "businesses with product–market fit" },
+      { icon: Gauge, text: "founders who want more lead volume" },
+      { icon: Users, text: "multi-location or multi-offer growth" },
+      { icon: Network, text: "one owner for the whole channel" },
+    ],
+    cta: "apply for scale",
     href: "/checkout/scale",
     accent: "from-emerald-400 to-teal-600",
     featured: false,
@@ -117,20 +136,17 @@ const pricingTiers: PricingTier[] = [
 const features = [
   {
     title: "Launch smarter",
-    description:
-      "Built with intention, reviewed with precision. Every page is designed to convert with thoughtful layouts, compelling messaging, and SEO baked into the foundation so you rank faster and close stronger.",
+    description: "we design pages to convert. we write clear copy. we bake in seo basics.",
     icon: Sparkles,
   },
   {
     title: "Track everything",
-    description:
-      "Know what’s working — down to the click. GA4, Meta Pixel, lead tracking, call tracking, and event data are wired in before launch so you can see exactly where revenue comes from.",
+    description: "we set up ga4, pixels, and lead tracking so you can see what drives revenue.",
     icon: BarChart3,
   },
   {
     title: "Go live effortlessly",
-    description:
-      "Launch day should feel simple — and it will. We handle domains, SSL, forms, hosting, DNS, migrations, and integrations so you go live without touching a technical step.",
+    description: "we handle domains, ssl, forms, hosting, dns, migrations, and integrations.",
     icon: MonitorSmartphone,
   },
 ] as const
@@ -154,22 +170,22 @@ const faqs = [
   {
     question: "How long does the build take?",
     answer:
-      "Launch projects ship in 48–72 hours. Grow and Scale timelines range from 5–10 days because we also layer in SEO, content, and analytics automation.",
+      "launch is usually live in 48–72 hours. grow/scale depend on scope — we’ll confirm timing in our 24-hour reply.",
   },
   {
     question: "Who owns the website?",
     answer:
-      "You do. Prism transfers all design files, code, and assets after launch. We stay on retainer only if you want us to keep optimizing and publishing new content.",
+      "you do. your domain, your content, your assets. prism just runs the system.",
   },
   {
     question: "Can I upgrade between plans?",
     answer:
-      "Yes. Most teams start with Launch, then add Grow once they see early traction. Upgrades are prorated, and we treat them as sprint-style add-ons so you stay agile.",
+      "yes. start where you are, upgrade when you’re ready. we carry your work forward.",
   },
   {
     question: "Do you offer custom builds?",
     answer:
-      "Absolutely. Scale engagements include paid media, automation, and analytics consulting. Tell us what you need inside the intake form and we'll shape a custom scope.",
+      "yes. if you need something custom, we’ll scope it and send a fixed plan.",
   },
 ] as const
 
@@ -201,11 +217,15 @@ function HeroSection() {
           <RevealOnScroll delay={0.1}>
             <div className="space-y-6">
               <h1 className="text-4xl font-semibold leading-tight tracking-tight sm:text-5xl lg:text-6xl">
-                buy back your time. accelerate compounding growth.
+                buy back your time. get more customers each month.
               </h1>
-              <p className="text-lg text-black/70 sm:text-xl">
-                with prism impossible is temporary
-              </p>
+              <div className="space-y-2">
+                <p className="text-lg text-black/70 sm:text-xl">
+                  three ways to work with prism: launch (fast site), grow (site + content), scale
+                  (site + content + ads).
+                </p>
+                <p className="text-sm text-black/60 sm:text-base">impossible is temporary.</p>
+              </div>
             </div>
           </RevealOnScroll>
           <RevealOnScroll delay={0.2}>
@@ -220,7 +240,7 @@ function HeroSection() {
                     className="inline-block h-0 w-0 translate-y-[1px] border-x-[6px] border-b-[8px] border-x-transparent border-b-white"
                     aria-hidden
                   />
-                  <span>pricing breakdown</span>
+                  <span>see plans + pricing</span>
                 </a>
               </Button>
             </div>
@@ -290,11 +310,32 @@ function PricingSection({ allowMotion }: { allowMotion: boolean }) {
         <RevealOnScroll className="text-center">
           <h2 className="text-3xl font-semibold sm:text-4xl">pick your plan</h2>
         </RevealOnScroll>
+        <RevealOnScroll className="mx-auto max-w-3xl rounded-3xl border border-black/10 bg-zinc-50 p-6 text-left shadow-sm">
+          <h3 className="text-lg font-semibold">not sure where to start?</h3>
+          <ul className="mt-4 list-disc space-y-2 pl-5 text-sm text-black/70">
+            <li>need a great site fast? choose launch.</li>
+            <li>want inbound from content + seo? choose grow.</li>
+            <li>ready for full-funnel growth (site + content + ads)? choose scale.</li>
+            <li>still unsure? apply anyway — we’ll tell you the best fit.</li>
+          </ul>
+        </RevealOnScroll>
         <div className="grid gap-8 md:grid-cols-3">
           {pricingTiers.map((tier, index) => (
             <PricingCard key={tier.name} tier={tier} index={index} allowMotion={allowMotion} />
           ))}
         </div>
+        <RevealOnScroll className="text-center text-sm text-black/60">
+          we reply within 24 hours with timing + next steps.
+        </RevealOnScroll>
+        <RevealOnScroll className="mx-auto max-w-3xl text-left">
+          <h3 className="text-2xl font-semibold">what happens next</h3>
+          <ol className="mt-4 list-decimal space-y-2 pl-5 text-sm text-black/70">
+            <li>apply (2 minutes).</li>
+            <li>we reply in 24 hours with a timeline + next steps.</li>
+            <li>we build. you approve the preview.</li>
+            <li>we launch + track results. (and keep improving on grow/scale.)</li>
+          </ol>
+        </RevealOnScroll>
         <div className="mt-16">
           <div id="pricing-founder-vsl" className="mx-auto max-w-3xl text-left">
             <p className="text-center text-xs font-semibold tracking-[0.28em] text-black/60">
@@ -360,8 +401,21 @@ function PricingCard({ tier, index, allowMotion }: { tier: PricingTier; index: n
           >
             {tier.name}
           </p>
+          {tier.featured ? (
+            <span
+              className={cn(
+                "rounded-full border border-black/20 px-2 py-0.5 text-[10px] font-semibold text-black/70",
+                tier.featured && "border-white/30 text-white/80"
+              )}
+            >
+              most popular
+            </span>
+          ) : null}
         </div>
         <p className={cn("text-3xl font-semibold", tier.featured && "text-white")}>{tier.price}</p>
+        <p className={cn("text-sm text-black/70", tier.featured && "text-white/80")}>
+          {tier.tagline}
+        </p>
         <div className="pt-2">
           <p className={cn("mb-3 text-sm font-semibold", tier.featured && "text-white/90")}>
             What's included
@@ -450,12 +504,14 @@ function FeatureSection({ allowMotion }: { allowMotion: boolean }) {
     <section className="bg-white py-24 sm:py-32">
       <div className="mx-auto max-w-6xl px-6">
         <RevealOnScroll className="max-w-2xl">
-          <h2 className="text-3xl font-semibold sm:text-4xl">everything included</h2>
+          <h2 className="text-3xl font-semibold sm:text-4xl">
+            everything you need to go live — and grow.
+          </h2>
           <p className="mt-4 text-lg text-black/80">
-            Design that elevates your brand. Systems that grow it.
+            premium design. real tracking. zero tech headaches.
           </p>
           <p className="mt-4 text-base text-black/70">
-            Launch with confidence knowing your brand story, SEO signals, and analytics are dialed in — all with premium design and white-glove delivery from start to finish.
+            we build the site, set up tracking, and launch it for you — so you can focus on customers.
           </p>
         </RevealOnScroll>
         <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -539,22 +595,18 @@ function HandoffSection() {
       />
       <div className="relative mx-auto flex max-w-4xl flex-col gap-6 px-6 text-center sm:gap-8">
         <RevealOnScroll>
-          <h2 className="text-3xl font-semibold sm:text-4xl">
-            ⚙️ The smoothest switch you’ll ever make
-          </h2>
+          <h2 className="text-3xl font-semibold sm:text-4xl">switch without losing momentum</h2>
         </RevealOnScroll>
         <RevealOnScroll delay={0.1}>
-          <p className="text-lg text-white/80">Switching shouldn’t cost you momentum.</p>
-        </RevealOnScroll>
-        <RevealOnScroll delay={0.15}>
           <p className="text-base text-white/80">
-            We take over everything — hosting, domains, content, analytics, DNS, forms, and old logins — and rebuild it into a clean, modern system designed for performance and growth.
+            we take over hosting, domains, analytics, dns, forms, and old logins — then rebuild
+            everything into a clean, modern system built to convert.
           </p>
         </RevealOnScroll>
-        <RevealOnScroll delay={0.2}>
-          <p className="text-sm text-white/70">Your only job? Approve the design and watch the leads increase.</p>
+        <RevealOnScroll delay={0.15}>
+          <p className="text-sm text-white/70">your only job: approve the preview.</p>
         </RevealOnScroll>
-        <RevealOnScroll delay={0.25}>
+        <RevealOnScroll delay={0.2}>
           <motion.div
             className="rounded-3xl border border-white/10 bg-white/10 p-5 text-base font-semibold text-white shadow-lg"
             animate={{ backgroundPositionX: ["0%", "100%"] }}
@@ -565,7 +617,7 @@ function HandoffSection() {
               backgroundSize: "200% 200%",
             }}
           >
-            💡 Approve the final preview and watch qualified leads ramp up.
+            approve the final preview — then watch qualified leads ramp up.
           </motion.div>
         </RevealOnScroll>
       </div>
@@ -630,7 +682,7 @@ function FinalCTA() {
       <div className="relative mx-auto flex max-w-5xl flex-col gap-6 px-6 text-center">
         <RevealOnScroll>
           <h2 className="text-2xl font-semibold">
-            🚀 Launch a website that grows your business — starting at $400.
+            ready to stop worrying about marketing setup? start at $400.
           </h2>
         </RevealOnScroll>
         <RevealOnScroll delay={0.1}>
@@ -641,7 +693,7 @@ function FinalCTA() {
                 size="lg"
                 className="w-full rounded-full border border-white bg-white px-8 py-6 text-base font-semibold text-black hover:bg-white/90 sm:w-auto"
               >
-                <Link href="#plans">Get started</Link>
+                <Link href="#plans">see plans + pricing</Link>
               </Button>
             </RippleHighlight>
           </div>
