@@ -50,6 +50,17 @@ export default function ImpactGraphSection() {
     }),
     []
   )
+  const calloutCopy = React.useMemo(
+    () => ({
+      withoutPrism: (
+        <div className="space-y-1">
+          <p>your effort stays high.</p>
+          <p>results stay “fine.” (until you burn out and rebuild again)</p>
+        </div>
+      ),
+    }),
+    []
+  )
 
   const { ref: graphRef, isNearViewport } = useNearViewport<HTMLDivElement>(observerOptions)
 
@@ -72,13 +83,14 @@ export default function ImpactGraphSection() {
               you didn't start a business to:
             </p>
             <ul className="grid list-disc gap-2 pl-5 text-sm text-neutral-600 lowercase sm:text-base">
-              <li>fight with marketing tools</li>
-              <li>babysit freelancers</li>
+              <li>duct-tape marketing tools together</li>
+              <li>chase freelancers for updates</li>
               <li>guess at seo and ads</li>
-              <li>rebuild a "pretty website" that doesn't bring customers</li>
+              <li>rebuild a “pretty website” that doesn’t bring customers</li>
+              <li>spend nights + weekends on marketing</li>
             </ul>
             <p className="text-balance text-sm text-neutral-600 lowercase sm:text-base">
-              prism owns the whole growth system - so your workload drops while inbound compounds.
+              prism owns the whole growth system — so your workload drops while inbound compounds.
             </p>
 
             <div className="flex flex-col gap-3 sm:flex-row">
@@ -101,7 +113,10 @@ export default function ImpactGraphSection() {
           <div className="w-full space-y-6">
             <div ref={graphRef}>
               {isNearViewport ? (
-                <FounderImpactGraph className="rounded-3xl" />
+                <FounderImpactGraph
+                  className="rounded-3xl overflow-hidden"
+                  calloutCopy={calloutCopy}
+                />
               ) : (
                 <Skeleton className="h-[620px] w-full rounded-3xl md:h-[660px]" />
               )}
@@ -111,20 +126,18 @@ export default function ImpactGraphSection() {
               <p className="text-xs font-semibold uppercase tracking-[0.3em] text-neutral-500">
                 with prism
               </p>
-              <p className="mt-3 text-sm text-neutral-600 lowercase">
-                we take ownership of:
-              </p>
+              <p className="mt-3 text-sm text-neutral-600 lowercase">we own:</p>
               <ul className="mt-3 grid list-disc gap-2 pl-5 text-sm text-neutral-700 lowercase">
-                <li>a fast website that converts</li>
-                <li>google business profile + local seo</li>
-                <li>content that answers customer questions</li>
-                <li>ads that bring in ready-to-buy leads</li>
+                <li>a fast website that turns visits into calls + bookings</li>
+                <li>your google business profile + local seo (so you show up in maps)</li>
+                <li>content that answers customer questions (and wins the click)</li>
+                <li>ads that bring in ready-to-buy leads (with tracking)</li>
               </ul>
               <div className="mt-4 grid gap-2 text-sm text-neutral-600 lowercase">
-                <p>you don't manage the project.</p>
-                <p>you don't chase updates.</p>
+                <p>you don’t manage the project.</p>
+                <p>you don’t chase updates.</p>
                 <p>
-                  you message us when you want a status check - we reply with what's done, what's
+                  you message us when you want a status check — we reply with what’s done, what’s
                   next, and timing.
                 </p>
               </div>

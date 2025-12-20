@@ -24,6 +24,10 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 type FounderImpactGraphProps = {
   className?: string
   slug?: string
+  calloutCopy?: {
+    withPrism?: React.ReactNode
+    withoutPrism?: React.ReactNode
+  }
 }
 
 const chartConfig = {
@@ -231,12 +235,29 @@ function ScenarioPanel({
   scenario,
   points,
   colors,
+  calloutCopy,
 }: {
   scenario: ScenarioKey
   points: CaseStudyImpactPoint[]
   colors: ResolvedChartColors
+  calloutCopy?: {
+    withPrism?: React.ReactNode
+    withoutPrism?: React.ReactNode
+  }
 }) {
   const isWithPrism = scenario === "with-prism"
+  const defaultWithPrismCopy = (
+    <div className="space-y-1">
+      <p>customers go up. your effort goes down.</p>
+      <p>we build it, run it, and keep improving it.</p>
+    </div>
+  )
+  const defaultWithoutPrismCopy = (
+    <div className="space-y-1">
+      <p>your effort stays high.</p>
+      <p>results stay "fine." (until you burn out and rebuild again)</p>
+    </div>
+  )
 
   return (
     <div className="space-y-4">
@@ -244,22 +265,16 @@ function ScenarioPanel({
       <ScenarioChart points={points} colors={colors} />
       <CaseStudyCallout title={isWithPrism ? "with prism" : "without prism"}>
         {isWithPrism ? (
-          <div className="space-y-1">
-            <p>customers go up. your effort goes down.</p>
-            <p>we build it, run it, and keep improving it.</p>
-          </div>
+          calloutCopy?.withPrism ?? defaultWithPrismCopy
         ) : (
-          <div className="space-y-1">
-            <p>your effort stays high.</p>
-            <p>results stay "fine." (until you burn out and rebuild again)</p>
-          </div>
+          calloutCopy?.withoutPrism ?? defaultWithoutPrismCopy
         )}
       </CaseStudyCallout>
     </div>
   )
 }
 
-export function FounderImpactGraph({ className, slug }: FounderImpactGraphProps) {
+export function FounderImpactGraph({ className, slug, calloutCopy }: FounderImpactGraphProps) {
   const colors = React.useMemo(() => resolveChartColors(), [])
   const withPrismPoints = React.useMemo(() => {
     const config = getCaseStudyImpactGraphConfig(slug)
@@ -289,11 +304,21 @@ export function FounderImpactGraph({ className, slug }: FounderImpactGraphProps)
           </TabsList>
 
           <TabsContent value="with-prism" className="mt-2">
-            <ScenarioPanel scenario="with-prism" points={withPrismPoints} colors={colors} />
+            <ScenarioPanel
+              scenario="with-prism"
+              points={withPrismPoints}
+              colors={colors}
+              calloutCopy={calloutCopy}
+            />
           </TabsContent>
 
           <TabsContent value="without-prism" className="mt-2">
-            <ScenarioPanel scenario="without-prism" points={withoutPrismPoints} colors={colors} />
+            <ScenarioPanel
+              scenario="without-prism"
+              points={withoutPrismPoints}
+              colors={colors}
+              calloutCopy={calloutCopy}
+            />
           </TabsContent>
         </Tabs>
       </CardContent>

@@ -21,7 +21,7 @@ export default function HeroCtas() {
         </Button>
       </div>
       <p className="text-balance text-xs text-neutral-500 lowercase">
-        also built for ai-powered search (google ai overviews + chatgpt-style answers).
+        also built for ai search (google ai overviews + chatgpt-style answers).
       </p>
     </div>
   )

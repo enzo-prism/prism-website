@@ -30,28 +30,28 @@ export default function ClientPage() {
                 {SERVICE_STRIP.map((service) => {
                   const Icon = service.icon
                   return (
-                  <span
-                    key={service.label}
-                    className="inline-flex items-center gap-2 rounded-full border border-neutral-200 bg-white px-4 py-2 text-xs font-semibold text-neutral-700"
-                  >
-                    <Icon className="h-4 w-4 text-neutral-500" aria-hidden />
-                    <span>{service.label}</span>
-                  </span>
+                    <span
+                      key={service.label}
+                      className="inline-flex items-center gap-2 rounded-full border border-neutral-200 bg-white px-4 py-2 text-xs font-semibold text-neutral-700"
+                    >
+                      <Icon className="h-4 w-4 text-neutral-500" aria-hidden />
+                      <span>{service.label}</span>
+                    </span>
                   )
                 })}
               </div>
 
               <div className="max-w-3xl space-y-4">
                 <h1 className="text-balance text-3xl font-semibold tracking-tight lowercase sm:text-4xl md:text-5xl">
-                  show up on google + google maps - without doing the marketing.
+                  get found on google + google maps — without becoming a part-time marketer.
                 </h1>
                 <p className="text-balance text-sm text-neutral-600 lowercase sm:text-base">
-                  prism builds and runs your website, local seo, and ads so customers find you and you
-                  get your time + energy back.
+                  prism builds and runs your website, local seo, and ads — so customers find you and
+                  you get your time + energy back.
                 </p>
                 <p className="text-balance text-sm text-neutral-600 lowercase sm:text-base">
-                  white-glove and custom to your business. a trusted partner you can message anytime
-                  to check in on timeline.
+                  white-glove, custom to your business. one trusted partner. message us anytime for a
+                  status check.
                 </p>
               </div>
 
