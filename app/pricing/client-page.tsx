@@ -25,7 +25,7 @@ import {
 
 import AnimatedGradient from "@/components/animations/animated-gradient"
 import RippleHighlight from "@/components/animations/ripple-highlight"
-import ClientsSection from "@/components/home/Clients"
+import ClientsRail from "@/components/home/ClientsRail"
 import RevealOnScroll from "@/components/reveal-on-scroll"
 import VideoPlayer from "@/components/video-player"
 import { useMotionPreferences } from "@/hooks/use-motion-preferences"
@@ -177,13 +177,13 @@ export default function PricingPageClient() {
   const { allowMotion } = useMotionPreferences()
 
   return (
-    <div className="bg-white text-black" style={{ textTransform: "lowercase" }}>
+    <div className="bg-white text-black">
       <HeroSection />
       <PricingSection allowMotion={allowMotion} />
       <FeatureSection allowMotion={allowMotion} />
       <WebsiteUseCasesSection allowMotion={allowMotion} />
       <HandoffSection />
-      <ClientsSection />
+      <PricingClientsSection />
       <FAQSection />
       <FinalCTA />
       <PricingStructuredData />
@@ -297,7 +297,7 @@ function PricingSection({ allowMotion }: { allowMotion: boolean }) {
         </div>
         <div className="mt-16">
           <div id="pricing-founder-vsl" className="mx-auto max-w-3xl text-left">
-            <p className="text-center text-xs font-semibold uppercase tracking-[0.28em] text-black/60">
+            <p className="text-center text-xs font-semibold tracking-[0.28em] text-black/60">
               hear from our founder
             </p>
             <VideoPlayer
@@ -450,8 +450,10 @@ function FeatureSection({ allowMotion }: { allowMotion: boolean }) {
     <section className="bg-white py-24 sm:py-32">
       <div className="mx-auto max-w-6xl px-6">
         <RevealOnScroll className="max-w-2xl">
-          <p className="text-sm font-semibold tracking-[0.2em] text-black/60">everything included</p>
-          <h2 className="mt-4 text-3xl font-semibold sm:text-4xl">Design that elevates your brand. Systems that grow it.</h2>
+          <h2 className="text-3xl font-semibold sm:text-4xl">everything included</h2>
+          <p className="mt-4 text-lg text-black/80">
+            Design that elevates your brand. Systems that grow it.
+          </p>
           <p className="mt-4 text-base text-black/70">
             Launch with confidence knowing your brand story, SEO signals, and analytics are dialed in — all with premium design and white-glove delivery from start to finish.
           </p>
@@ -487,10 +489,10 @@ function WebsiteUseCasesSection({ allowMotion }: { allowMotion: boolean }) {
     <section className="bg-zinc-50 py-24 text-black dark:bg-zinc-900 dark:text-white">
       <div className="mx-auto max-w-6xl px-6">
         <RevealOnScroll className="text-center">
-          <p className="text-sm font-semibold tracking-[0.3em] text-zinc-500 dark:text-zinc-400">
-            Website Use Cases
+          <h2 className="text-3xl font-semibold sm:text-4xl">Website Use Cases</h2>
+          <p className="mt-3 text-lg text-zinc-600 dark:text-zinc-300">
+            Websites built to win business — not just sit online.
           </p>
-          <h2 className="mt-3 text-3xl font-semibold sm:text-4xl">Websites built to win business — not just sit online.</h2>
           <p className="mt-4 text-base text-zinc-600 dark:text-zinc-300">
             Whether you're booking clients, selling products, hiring talent, or building your personal brand, Prism builds websites that convert better, nurture trust faster, and position you as the top choice in your market.
           </p>
@@ -537,12 +539,12 @@ function HandoffSection() {
       />
       <div className="relative mx-auto flex max-w-4xl flex-col gap-6 px-6 text-center sm:gap-8">
         <RevealOnScroll>
-          <div className="inline-flex items-center justify-center gap-2 rounded-full border border-white/20 px-4 py-1 text-xs font-semibold tracking-[0.3em] text-white/70">
-            ⚙️ The smoothest switch you'll ever make
-          </div>
+          <h2 className="text-3xl font-semibold sm:text-4xl">
+            ⚙️ The smoothest switch you’ll ever make
+          </h2>
         </RevealOnScroll>
         <RevealOnScroll delay={0.1}>
-          <h2 className="text-3xl font-semibold sm:text-4xl">Switching shouldn’t cost you momentum.</h2>
+          <p className="text-lg text-white/80">Switching shouldn’t cost you momentum.</p>
         </RevealOnScroll>
         <RevealOnScroll delay={0.15}>
           <p className="text-base text-white/80">
@@ -566,6 +568,22 @@ function HandoffSection() {
             💡 Approve the final preview and watch qualified leads ramp up.
           </motion.div>
         </RevealOnScroll>
+      </div>
+    </section>
+  )
+}
+
+function PricingClientsSection() {
+  return (
+    <section className="bg-white py-24 sm:py-32">
+      <div className="mx-auto flex max-w-6xl flex-col gap-8 px-6">
+        <div className="text-center">
+          <h2 className="text-3xl font-semibold sm:text-4xl">our clients</h2>
+        </div>
+        <ClientsRail />
+        <p className="text-center text-xs text-neutral-500">
+          Swipe or scroll horizontally to view more clients
+        </p>
       </div>
     </section>
   )
@@ -611,7 +629,9 @@ function FinalCTA() {
       />
       <div className="relative mx-auto flex max-w-5xl flex-col gap-6 px-6 text-center">
         <RevealOnScroll>
-          <p className="text-2xl font-semibold">🚀 Launch a website that grows your business — starting at $400.</p>
+          <h2 className="text-2xl font-semibold">
+            🚀 Launch a website that grows your business — starting at $400.
+          </h2>
         </RevealOnScroll>
         <RevealOnScroll delay={0.1}>
           <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
@@ -621,7 +641,7 @@ function FinalCTA() {
                 size="lg"
                 className="w-full rounded-full border border-white bg-white px-8 py-6 text-base font-semibold text-black hover:bg-white/90 sm:w-auto"
               >
-                <Link href="/pricing">Get started</Link>
+                <Link href="#plans">Get started</Link>
               </Button>
             </RippleHighlight>
           </div>

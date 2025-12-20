@@ -11,9 +11,10 @@ Quick reference for the pages we edit most often.
 - Minimal case studies use `components/case-study-minimal.tsx`, which automatically includes the graph so pages stay consistent.
 
 ## Pricing (`app/pricing/client-page.tsx`)
-- Hero copy, pricing tiers, the founder VSL block, “Website Use Cases”, the handoff section, and footer CTA all live here.
+- Hero copy + image, the plans grid, founder VSL block, “everything included” features, “Website Use Cases”, smooth handoff section, clients rail, FAQ, and final CTA all live here.
+- The primary “pricing breakdown” CTA and the final CTA link to `#plans`; keep that anchor intact when editing.
 - The video directly under the pricing cards uses `VideoPlayer` plus structured data—when swapping the asset, update the Cloudinary `src`, poster, and metadata inside `PricingSection`.
-- Copy was recently repositioned around “clean, high-performing websites” (no AI phrasing). Keep new sections in that voice and continue wrapping blocks with `RevealOnScroll` for consistency.
+- Clients are rendered via `components/home/ClientsRail.tsx` to keep the same scroller behavior and the “view case studies” link.
 
 ## Websites (`app/websites/page.tsx`)
 - Includes hero, founder VSL, benefits, showcases, vertical playbooks, FAQs, SEO copy, and service schema.
