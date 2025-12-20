@@ -39,60 +39,68 @@ const CTA_SECONDARY_LABEL = "Contact Prism"
 const CTA_PRIMARY_HREF = "/get-started"
 const CTA_SECONDARY_HREF = "/contact"
 
+const heroWhatYouGet = [
+  "Dental practice website that explains services and drives calls.",
+  "Google Business Profile cleanup + local SEO built for map results.",
+  "Review system that keeps feedback coming in.",
+  "Tracking for calls, forms, and booked consults.",
+  "ADA-aware and HIPAA-aware foundation."
+] as const
+
 const modernPracticePromises = [
-  { icon: Globe2, label: "Stay visible everywhere patients search." },
-  { icon: ShieldCheck, label: "Build trust before the first appointment." },
-  { icon: Workflow, label: "Automate repetitive front-office work." },
-  { icon: Cpu, label: "Leverage technology that gives small teams big-practice power." }
+  { icon: Globe2, label: "Show up in the map pack when patients search." },
+  { icon: ShieldCheck, label: "Look trusted before the first call." },
+  { icon: Workflow, label: "Keep reviews and referrals moving without extra work." },
+  { icon: Cpu, label: "See clear tracking for calls, forms, and booked visits." }
 ] as const
 
 const prismMethodPillars = [
   {
     title: "Visibility & Growth",
-    headline: "Be everywhere patients are looking.",
+    headline: "If you have ever searched your practice and felt invisible.",
     description:
-      "We ensure your listings, reviews, and search presence stay accurate and active across Google, Yelp, Apple, Facebook, and beyond — so new patients find you first.",
+      "When your Google Business Profile is wrong, patients skip you. We fix listings and build local SEO + AEO so you show up when people ask.",
     includes: [
-      { icon: Radar, label: "Local SEO + AEO (Answer Engine Optimization)" },
-      { icon: MapPin, label: "Google Business Profile & directory optimization" },
-      { icon: MessageSquare, label: "Review monitoring and engagement" },
-      { icon: BarChart3, label: "Deep analytics showing which channels drive new patients" }
+      { icon: Radar, label: "Local SEO + AEO for the treatments you want to book" },
+      { icon: MapPin, label: "Google Business Profile cleanup and weekly updates" },
+      { icon: MessageSquare, label: "Reviews workflow with asks, follow-ups, and replies" },
+      { icon: BarChart3, label: "Tracking for calls, forms, and booked consults" }
     ]
   },
   {
     title: "Trust & Storytelling",
-    headline: "Your brand should feel as polished online as it does in person.",
+    headline: "If your website feels dated or unclear.",
     description:
-      "From authentic photography and clear service pages to consistent branding across every platform — Prism builds digital trust that converts clicks into booked patients.",
+      "When service pages are thin, patients bounce. We build a dental practice website with clear service pages, photos, and proof that feel like your chairside care.",
     includes: [
-      { icon: Palette, label: "Brand identity & design (digital + print)" },
-      { icon: Camera, label: "Professional photography & video" },
-      { icon: Users, label: "Team bios, reviews, and success stories" },
-      { icon: PenSquare, label: "Website copy and visual storytelling" }
+      { icon: Palette, label: "Design that matches how your office feels" },
+      { icon: Camera, label: "Team + office photography and short videos" },
+      { icon: Users, label: "Team bios, reviews, and patient stories" },
+      { icon: PenSquare, label: "Clear copy for every service page" }
     ]
   },
   {
     title: "Automation & Operations",
-    headline: "Run smoother with less manual work.",
+    headline: "If the front desk is buried in follow-ups.",
     description:
-      "We automate your intake, forms, and communications so your staff can focus on patients — not paperwork or follow-ups.",
+      "When intake is manual, the team loses time. We automate forms, referrals, and follow-ups so patients get fast answers.",
     includes: [
-      { icon: CalendarCheck2, label: "Online appointment & referral forms" },
-      { icon: Mail, label: "Custom email setup for you and your team" },
-      { icon: Workflow, label: "FAQ automation and follow-up workflows" },
-      { icon: RefreshCcw, label: "Seamless transition off old vendors and platforms" }
+      { icon: CalendarCheck2, label: "Online forms for new patients and referrals" },
+      { icon: Mail, label: "Patient-ready email templates and routing" },
+      { icon: Workflow, label: "Follow-up workflows for recalls and no-shows" },
+      { icon: RefreshCcw, label: "Clean handoff from old vendors and tools" }
     ]
   },
   {
     title: "Technology & Leverage",
-    headline: "The Silicon Valley advantage.",
+    headline: "If your tech stack feels fragile.",
     description:
-      "Prism isn’t just another marketing company — it’s your embedded product and engineering team. We use modern frameworks and AI to make your website faster, smarter, and future-proof.",
+      "Slow sites and broken tracking waste budget. We build a HIPAA-aware, ADA-aware foundation so the system keeps working when you are busy.",
     includes: [
-      { icon: Layers, label: "Full-stack website architecture" },
-      { icon: Sparkles, label: "AI optimization and insights" },
-      { icon: Shield, label: "HIPAA-aware hosting and security" },
-      { icon: LineChart, label: "Continuous performance improvements" }
+      { icon: Layers, label: "Fast website architecture that loads on phones" },
+      { icon: Sparkles, label: "AEO-ready pages and structured answers" },
+      { icon: Shield, label: "HIPAA-aware and ADA-aware setup" },
+      { icon: LineChart, label: "Performance checks and tracking cleanup" }
     ]
   }
 ] as const
@@ -100,60 +108,60 @@ const prismMethodPillars = [
 const connectedPresenceHighlights = [
   {
     emoji: "🧭",
-    title: "Be Found Everywhere",
+    title: "Be Found Where Patients Look",
     bullets: [
-      "Local SEO & AEO to appear at the top of Google.",
-      "Fully optimized Google Business Profile.",
-      "Consistent listings across 50+ directories."
+      "Local SEO + AEO for the treatments you want to book.",
+      "Google Business Profile that stays accurate and active.",
+      "Listings consistency across the directories patients use."
     ]
   },
   {
     emoji: "🎨",
-    title: "Look Exceptional Online",
+    title: "Look Clear and Trustworthy",
     bullets: [
-      "Modern, conversion-driven web design.",
-      "Clear, educational service pages for every treatment.",
-      "Beautiful before-and-after galleries and team photography."
+      "Dental practice website that feels calm and modern.",
+      "Service pages that explain treatments in plain language.",
+      "Real team photos and before-and-after proof."
     ]
   },
   {
     emoji: "💬",
-    title: "Turn Visitors into Patients",
+    title: "Turn Visits into Calls",
     bullets: [
-      "Automated review collection and reminders.",
-      "Friction-free forms and scheduling.",
-      "Precision-targeted ads on Google and Meta."
+      "Reviews workflow that keeps feedback steady.",
+      "Fast forms and easy scheduling.",
+      "Ads with call and form tracking."
     ]
   }
 ] as const
 
 const dentalPhotographyHighlights = [
   {
-    title: "1-day capture",
-    description: "Team portraits, candid chairside shots, and lobby details handled in a single shoot day."
+    title: "One-day capture",
+    description: "We shoot team portraits, chairside moments, and lobby details in one day."
   },
   {
-    title: "Ready for every channel",
-    description: "Delivery includes crops for your website hero, ads, local listings, and recruiting funnels."
+    title: "Sized for every channel",
+    description: "You get crops for your website hero, ads, local listings, and hiring."
   },
   {
-    title: "Built-in coordination",
-    description: "We manage the shot list, staff reminders, and cloud delivery so you can stay focused on patients."
+    title: "Handled end to end",
+    description: "We manage the shot list, staff reminders, and delivery so you can focus on patients."
   }
 ] as const
 
 const beforeAfterGuideHighlights = [
   {
-    title: "Step-by-step protocol",
-    description: "Camera settings, lighting guidance, and positioning tips so every shoot feels consistent."
+    title: "Step-by-step guide",
+    description: "Camera settings, lighting, and positioning so every shot looks consistent."
   },
   {
     title: "Gear list with links",
-    description: "Shop the exact flashes, reflectors, and mirrors we recommend for natural-looking results."
+    description: "Use the exact flashes, reflectors, and mirrors we recommend."
   },
   {
     title: "Patient-ready handoff",
-    description: "Embed-ready galleries and before/after templates keep your clinical team and marketing synced."
+    description: "Embed-ready galleries and templates keep clinical and marketing in sync."
   }
 ] as const
 
@@ -205,44 +213,44 @@ const videoItems = [
 ] as const
 
 const segmentWhoItsFor = [
-  "Owner‑dentists and specialty practices that need a calmer, clearer patient journey online.",
-  "Multi‑location groups who want consistent branding, listings, and reporting across offices.",
-  "Practices launching new services, providers, or acquisition/transition announcements.",
+  "Owner dentists who want a calmer new patient flow and less marketing stress.",
+  "Multi-location groups that need one standard across offices.",
+  "Practices adding a new provider, service, or transition story.",
 ]
 
 const segmentProblemsWeSolve = [
-  "Websites that look dated or don’t explain treatments clearly.",
-  "Low map‑pack visibility from messy listings and inconsistent NAP data.",
-  "Reviews that trickle in without a repeatable capture workflow.",
-  "Ads that drive the wrong patients or don’t track real bookings.",
-  "Manual intake, referrals, and follow‑ups that overwhelm staff.",
+  "Service pages that don't answer patient questions.",
+  "Map pack visibility lost to messy listings and NAP data.",
+  "Reviews that only show up when someone remembers to ask.",
+  "Ads that drive the wrong calls or lack tracking.",
+  "Front desk buried in manual intake and follow-ups.",
 ]
 
 const segmentDeliverables = [
-  "Conversion‑first dental website with ADA‑aware UX and clear service pages.",
-  "Local SEO + AEO structure for treatments, providers, and locations.",
-  "Listings and reputation engine across Google, Yelp, Apple, and niche directories.",
-  "Paid search/social campaigns tied to calls, forms, and appointments.",
-  "Photography + video systems to show the real clinical experience.",
-  "Dashboards and automation so your front desk runs smoother.",
+  "Dental practice website with clear service pages and ADA-aware UX.",
+  "Local SEO + AEO for treatments, providers, and locations.",
+  "Google Business Profile + directory management with reviews workflow.",
+  "Call, form, and booking tracking tied to each channel.",
+  "HIPAA-aware hosting setup with forms and email routing.",
+  "Photos and video that show real care and real people.",
 ]
 
 const segmentProcess = [
   {
-    step: "Audit & map the patient journey",
-    detail: "we review your site, listings, ads, and referrals, then pinpoint the fastest wins.",
+    step: "Audit and map the patient journey",
+    detail: "We review your site, listings, and intake to find the fastest wins.",
   },
   {
     step: "Build the foundation",
-    detail: "launch a modern site + local presence that patients trust immediately.",
+    detail: "We launch a clean site and local presence patients trust.",
   },
   {
-    step: "Layer growth levers",
-    detail: "add ads, content, and automation once the core experience is stable.",
+    step: "Add growth steps",
+    detail: "We add ads, content, and reviews once the core is solid.",
   },
   {
-    step: "Optimize & report",
-    detail: "weekly improvements with quarterly planning so momentum compounds.",
+    step: "Track and improve",
+    detail: "We report in plain language and adjust each month.",
   },
 ]
 
@@ -250,32 +258,32 @@ const segmentFaqItems = [
   {
     question: "How long does a dental website rebuild take?",
     answer:
-      "Most practices launch in 6–10 weeks depending on content, approvals, and the number of locations or treatments.",
+      "Most practices launch in 6-10 weeks. Timing depends on content, approvals, and locations.",
   },
   {
     question: "Do you handle HIPAA and ADA considerations?",
     answer:
-      "Yes. We design and build with accessibility and privacy in mind, and we’ll coordinate around any compliance needs your practice has.",
+      "Yes. We build with HIPAA-aware and ADA-aware practices in mind and coordinate on any requirements.",
   },
   {
     question: "Can you work with our existing brand and photos?",
     answer:
-      "Absolutely. We can refresh within your current brand system, and we’ll recommend a new shoot only if the current assets limit trust or clarity.",
+      "Yes. We can work inside your current brand and reuse strong assets. We only recommend a new shoot when needed.",
   },
   {
     question: "Will you improve our Google Business Profile and reviews?",
     answer:
-      "Yes. Listings cleanup and a review capture workflow are core parts of the Prism dental playbook.",
+      "Yes. Listings cleanup and a reviews workflow are core parts of the Prism dental playbook.",
   },
   {
     question: "How do you measure results for dental practices?",
     answer:
-      "We track calls, forms, referral volume, and booked appointments against search and ad performance, then report in plain English.",
+      "We track calls, forms, referrals, and booked visits against search and ads. We report in plain language.",
   },
   {
     question: "What if we have multiple locations?",
     answer:
-      "We standardize the system across offices while still tailoring pages and listings to each local market.",
+      "We standardize the system across offices and tailor pages and listings to each market.",
   },
 ]
 
@@ -296,16 +304,16 @@ const featuredCaseStudies = featuredCaseStudyDetails
   .filter((study): study is CaseStudyMeta & { highlight: FeaturedHighlight } => Boolean(study))
 
 export const metadata: Metadata = {
-  title: "Why Dentists Love Working with Prism",
+  title: "Prism | Dental practice website + local SEO for new patients",
   description:
-    "Prism helps dental practices grow through modern websites, AI-powered marketing, and seamless operations. Discover why dentists across California trust Prism to boost visibility, build trust, and attract more patients — stress-free.",
+    "Prism helps dentist owners fix messy dental marketing with a clear system: dental practice website, dental practice SEO, Google Business Profile, local SEO, reviews, and tracking so you can see new patient demand.",
   alternates: {
     canonical: "https://www.design-prism.com/why-dental-practices-love-prism"
   },
   openGraph: {
-    title: "Why Dentists Love Working with Prism",
+    title: "Prism | Dental practice website + local SEO for new patients",
     description:
-      "Prism helps dental practices grow through modern websites, AI-powered marketing, and seamless operations. Discover why dentists across California trust Prism to boost visibility, build trust, and attract more patients — stress-free.",
+      "Prism helps dentist owners fix messy dental marketing with a clear system: dental practice website, dental practice SEO, Google Business Profile, local SEO, reviews, and tracking so you can see new patient demand.",
     url: "https://www.design-prism.com/why-dental-practices-love-prism",
     siteName: "Prism",
     locale: "en_US",
@@ -313,9 +321,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Why Dentists Love Working with Prism",
+    title: "Prism | Dental practice website + local SEO for new patients",
     description:
-      "Prism helps dental practices grow through modern websites, AI-powered marketing, and seamless operations. Discover why dentists across California trust Prism to boost visibility, build trust, and attract more patients — stress-free.",
+      "Prism helps dentist owners fix messy dental marketing with a clear system: dental practice website, dental practice SEO, Google Business Profile, local SEO, reviews, and tracking so you can see new patient demand.",
     creator: "@designprism"
   },
   robots: {
@@ -333,12 +341,27 @@ export default function DentalPracticesPage() {
           <div className="absolute inset-0 bg-gradient-to-b from-neutral-50 via-white to-white" aria-hidden />
           <div className="container relative mx-auto px-4 py-24 md:py-32">
             <div className="mx-auto flex max-w-4xl flex-col items-center text-center">
-              <p className="text-sm font-semibold text-neutral-500">🦷 Why Dentists Love Working with Prism</p>
+              <p className="text-sm font-semibold text-neutral-500">🦷 For dentist owners</p>
               <h1 className="mt-6 text-4xl font-semibold tracking-tight md:text-5xl lg:text-6xl">
-                Grow your practice. Worry less about marketing and technology.
+                The phone is quiet. The map pack is full of other offices.
               </h1>
               <p className="mt-6 text-base text-neutral-600 md:text-lg">
-                Prism helps dentists attract new patients, modernize their online presence, and transition away from outdated providers — all without stress or downtime.
+                Prism builds a calm, clear system for dental marketing. You get more qualified new patient calls. You
+                see what works with simple tracking.
+              </p>
+              <div className="mt-6 w-full max-w-2xl rounded-2xl border border-neutral-100 bg-neutral-50/80 p-6 text-left">
+                <p className="text-xs font-semibold uppercase tracking-[0.32em] text-neutral-500">What you get</p>
+                <ul className="mt-4 space-y-2 text-sm text-neutral-700">
+                  {heroWhatYouGet.map((item) => (
+                    <li key={item} className="flex items-start gap-3">
+                      <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-primary" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <p className="mt-8 text-sm text-neutral-600">
+                Want a calmer week and clearer numbers? Start with a free analysis or a quick call.
               </p>
               <div className="mt-10 flex flex-wrap justify-center gap-4">
                 <Link href={CTA_PRIMARY_HREF}>
@@ -359,21 +382,22 @@ export default function DentalPracticesPage() {
                 </Link>
               </div>
               <p className="mt-6 text-sm text-neutral-600">
-                need a{" "}
+                Need a{" "}
                 <Link
                   href="/dental-practice-seo-expert"
                   className="font-semibold text-neutral-900 underline decoration-neutral-200 underline-offset-4"
                 >
                   seo for dentists playbook
                 </Link>
-                ? see how prism maps treatments to intent, tightens listings + reviews, and ships compounding improvements. need{" "}
+                ? See how Prism maps treatments to intent, tightens listings + reviews, and ships steady improvements.
+                Need{" "}
                 <Link
                   href="/dental-website"
                   className="font-semibold text-neutral-900 underline decoration-neutral-200 underline-offset-4"
                 >
                   a dental practice website
                 </Link>
-                ? start with the dental practice website blueprint.
+                ? Start with the dental practice website blueprint.
               </p>
             </div>
             <div className="mt-14">
@@ -400,20 +424,56 @@ export default function DentalPracticesPage() {
 
         <section className="border-b border-neutral-100 bg-white">
           <div className="container mx-auto px-4 py-20">
+            <div className="mx-auto max-w-3xl">
+              <p className="text-xs font-semibold uppercase tracking-[0.32em] text-neutral-500">
+                Founder note
+              </p>
+              <h2 className="mt-4 text-3xl font-semibold tracking-tight md:text-4xl">
+                A note to one dentist owner
+              </h2>
+              <div className="mt-4 space-y-4 text-base text-neutral-600">
+                <p>
+                  I built Prism for dentist owners who feel stuck with marketing that creates more
+                  work. When phones go quiet, your team scrambles. Missed calls pile up. Listings
+                  show the wrong hours.
+                </p>
+                <p>
+                  Service pages read like a brochure and don't answer patient questions. Reviews
+                  come in when someone remembers to ask. Staff jumps between tools and still can't
+                  see which channel brought the new patient. You don't have to chase vendors or
+                  decode reports.
+                </p>
+                <p>
+                  Prism exists to fix that. We run the dental practice website, dental practice SEO,
+                  Google Business Profile, local SEO, and AEO as one clean system. We set up
+                  tracking for calls, forms, and booked consults so you can see what is working. We
+                  keep the foundation HIPAA-aware and ADA-aware. Your team stays focused on care
+                  while we handle the mess of dental marketing and your online presence.
+                </p>
+                <p className="text-sm font-semibold text-neutral-900">
+                  If you want a calmer week and a clearer patient flow, start below.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="border-b border-neutral-100 bg-white">
+          <div className="container mx-auto px-4 py-20">
             <div className="grid gap-12 lg:gap-16 md:grid-cols-[1.1fr_0.9fr]">
               <div className="space-y-6">
                 <p className="text-xs font-semibold uppercase tracking-[0.38em] text-neutral-500">Why Prism</p>
                 <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">
-                  Why Modern Dental Practices Choose Prism
+                  Why dentist owners choose Prism
                 </h2>
                 <p className="text-base text-neutral-600">
-                  Most dentists aren’t losing patients because they’re bad at dentistry — they’re losing visibility, consistency, and control online.
+                  Most dentists lose new patients because their online presence is messy, not because their care is weak.
                 </p>
                 <div className="rounded-2xl border border-neutral-100 bg-neutral-50/80 p-6 text-base text-neutral-800 shadow-sm">
-                  Prism was built to fix that.
+                  Prism fixes that.
                 </div>
                 <p className="text-base text-neutral-600">
-                  We pair Silicon Valley engineering, brand design, and AI-driven marketing to create systems dentists can rely on every single day.
+                  We run the dental practice website, local SEO, and dental marketing as one clean system.
                 </p>
               </div>
 
@@ -427,7 +487,7 @@ export default function DentalPracticesPage() {
                     The Prism Method
                   </p>
                   <p className="mt-4 text-2xl font-semibold text-neutral-900">
-                    We combine full-stack engineering, brand design, and AI-driven marketing to help practices:
+                    We run the website, local SEO, and dental marketing as one system so you can:
                   </p>
                   <ul className="mt-6 space-y-4 text-base text-neutral-700">
                     {modernPracticePromises.map(({ icon: Icon, label }) => (
@@ -450,8 +510,8 @@ export default function DentalPracticesPage() {
                     ))}
                   </div>
                   <p className="mt-6 text-sm text-neutral-500">
-                    That’s The Prism Method — Visibility. Trust. Automation. Leverage. It’s how local dental practices
-                    compete (and win) in the digital age.
+                    That is the Prism Method: visibility, trust, automation, and leverage. Leverage means the system
+                    keeps working even when you are in the operatory.
                   </p>
                 </div>
               </div>
@@ -498,14 +558,14 @@ export default function DentalPracticesPage() {
               ))}
             </div>
             <p className="mx-auto mt-10 max-w-3xl text-center text-sm text-white/80">
-              want the dentist-specific ai overviews checklist? read{" "}
+              Want the dentist-specific AI overviews checklist? Read{" "}
               <Link
                 href="/blog/ai-search-for-dental-practice"
                 className="font-semibold text-white underline underline-offset-4"
               >
                 ai search for dental practice
               </Link>
-              . want the step-by-step checklist to rank higher in google? read{" "}
+              . Want the step-by-step checklist to rank higher in Google? Read{" "}
               <Link
                 href="/blog/dental-practice-rank-higher-google-search"
                 className="font-semibold text-white underline underline-offset-4"
@@ -524,15 +584,15 @@ export default function DentalPracticesPage() {
                 Real Results, Real Voices
               </p>
               <h2 className="mt-4 text-3xl font-semibold tracking-tight md:text-4xl">
-                🎥 Watch the Conversations
+                🎥 Hear from real dental teams
               </h2>
               <p className="mt-4 text-base leading-relaxed text-neutral-600">
-                Enzo interviews dentists and their teams — founders, office managers, and front-desk leaders — to understand
-                what really matters when you’re running a modern dental practice and creating an end-to-end patient experience.
+                These interviews exist so you can hear what changed inside a real practice. You will learn what they
+                fixed first, how they track new patients, and what made the biggest difference.
               </p>
               <div className="mx-auto mt-6 max-w-2xl rounded-3xl border border-neutral-100 bg-neutral-50/80 p-6 text-sm text-neutral-700 shadow-sm">
-                These conversations surface the operational bottlenecks, technology gaps, and storytelling wins that keep
-                patients feeling confident from the first search to their follow-up email.
+                Each conversation shows the real wins and real bottlenecks, from listings and reviews to front-desk
+                follow-up and tracking.
               </div>
             </div>
             <div className="mt-12">
@@ -560,10 +620,10 @@ export default function DentalPracticesPage() {
           <div className="container mx-auto px-4 py-24">
             <div className="mx-auto max-w-4xl text-center">
               <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">
-                Every Part of Your Online Presence — Unified Through the Prism Method
+                Your online presence should feel like one system
               </h2>
               <p className="mt-4 text-base text-neutral-600">
-                Visibility, trust, automation, and leverage come together when every channel shares the same standard.
+                When every channel shares the same standard, patients feel trust and your team feels calm.
               </p>
             </div>
             <div className="mt-12 grid gap-6 md:grid-cols-3">
@@ -585,7 +645,7 @@ export default function DentalPracticesPage() {
               ))}
             </div>
             <p className="mx-auto mt-10 max-w-3xl text-center text-sm text-neutral-600">
-              running paid social for your practice? start with{" "}
+              Running paid social for your practice? Start with{" "}
               <Link href="/tiktok-ads-for-dentists" className="font-semibold text-neutral-900 underline underline-offset-4">
                 tiktok ads for dentists
               </Link>
@@ -594,10 +654,14 @@ export default function DentalPracticesPage() {
             <div className="mt-12 rounded-3xl border border-neutral-200 bg-white px-8 py-10 shadow-sm md:px-12 md:py-12">
               <div className="mx-auto max-w-3xl text-center">
                 <h3 className="text-2xl font-semibold md:text-3xl">
-                  Own the Inbox Experience, Not Just the Website
+                  Own the inbox, not just the website
                 </h3>
                 <p className="mt-4 text-base text-neutral-600">
-                  See how Prism configures custom email systems so patients, hiring platforms, and partners trust every message — with verified deliverability and HIPAA-aware safeguards built in.
+                  Prism sets up custom email so patients, hiring platforms, and partners trust every message. We keep it
+                  HIPAA-aware and easy for your team to manage.
+                </p>
+                <p className="mt-6 text-sm text-neutral-600">
+                  If you want email that builds trust and doesn't break, start here.
                 </p>
                 <div className="mt-10 flex flex-wrap justify-center gap-4">
                   <Link href={CTA_PRIMARY_HREF}>
@@ -628,16 +692,25 @@ export default function DentalPracticesPage() {
               <div>
                 <p className="text-sm font-semibold uppercase tracking-[0.32em] text-white/70">On-site storytelling</p>
                 <h2 className="mt-4 text-3xl font-semibold tracking-tight md:text-4xl">
-                  Show the photography patients actually want to see
+                  Show the photos patients want to see
                 </h2>
                 <p className="mt-4 text-base text-white/80">
-                  Our dedicated office &amp; team photography day captures real operatories, candid care moments, and welcoming lobby vibes so
-                  your entire funnel feels consistent. The full breakdown lives on our <Link href="/dental-photography/office-team" className="underline decoration-white/40 underline-offset-4 hover:decoration-white">office &amp; team photography page</Link>
+                  Our office and team photography day captures real operatories, care moments, and lobby details so your
+                  funnel feels consistent. The full breakdown lives on our{" "}
+                  <Link
+                    href="/dental-photography/office-team"
+                    className="underline decoration-white/40 underline-offset-4 hover:decoration-white"
+                  >
+                    office &amp; team photography page
+                  </Link>
                   , where you can tour recent shoots and see how the Apple Maps proof works.
                 </p>
                 <p className="mt-4 text-base text-white/80">
-                  Use those assets across your website, paid campaigns, local listings, and recruiting touchpoints without juggling multiple vendors.
-                  Prism plans the shot list, handles scheduling with your staff, and delivers the files sized for every channel.
+                  Use those assets across your website, ads, local listings, and hiring without juggling vendors. Prism
+                  plans the shot list, handles scheduling, and delivers files sized for each channel.
+                </p>
+                <p className="mt-6 text-sm text-white/80">
+                  If you want photos that match the care you give, start here.
                 </p>
                 <div className="mt-10 flex flex-wrap gap-4">
                   <Link href="/dental-photography/office-team">
@@ -697,14 +770,25 @@ export default function DentalPracticesPage() {
               <div>
                 <p className="text-sm font-semibold uppercase tracking-[0.32em] text-neutral-500">Before &amp; after mastery</p>
                 <h2 className="mt-4 text-3xl font-semibold tracking-tight md:text-4xl">
-                  DIY capture workflow for every clinical team
+                  A simple before-and-after system your team can follow
                 </h2>
                 <p className="mt-4 text-base text-neutral-600">
-                  When you’re not ready for an on-site production day, Prism still equips you with a repeatable protocol. The <Link href="/dental-photography/before-after" className="underline decoration-neutral-300 underline-offset-4 transition hover:decoration-neutral-600">before + after photography guide</Link>
-                  shows your team exactly how to stage, light, and document cases without slowing down the schedule.
+                  If you are not ready for an on-site production day, Prism still gives you a repeatable system. The{" "}
+                  <Link
+                    href="/dental-photography/before-after"
+                    className="underline decoration-neutral-300 underline-offset-4 transition hover:decoration-neutral-600"
+                  >
+                    before + after photography guide
+                  </Link>{" "}
+                  shows your team how to stage, light, and document cases without slowing the schedule.
                 </p>
                 <p className="mt-4 text-base text-neutral-600">
-                  Follow the tabs for gear, lighting, and workflow tips, then drop the finished assets straight into your website, social, and consult decks. If you need Prism on-site after trying the guide, you can move into the office &amp; team service without re-learning a new system.
+                  Follow the tabs for gear, lighting, and workflow tips, then drop the assets into your website, social,
+                  and consult decks. If you need Prism on-site later, you can move into the office and team service
+                  without learning a new system.
+                </p>
+                <p className="mt-6 text-sm text-neutral-600">
+                  If you want a clear way to capture cases, start with the guide.
                 </p>
                 <div className="mt-10 flex flex-wrap gap-4">
                   <Link href="/dental-photography/before-after">
@@ -734,7 +818,7 @@ export default function DentalPracticesPage() {
             <div className="mx-auto max-w-4xl text-center">
               <p className="text-xs font-semibold uppercase tracking-[0.32em] text-neutral-500">dental playbook</p>
               <h2 className="mt-4 text-3xl font-semibold tracking-tight md:text-4xl">
-                what prism delivers for dental teams
+                what you get with Prism
               </h2>
             </div>
 
@@ -806,10 +890,10 @@ export default function DentalPracticesPage() {
           <div className="container mx-auto px-4 py-24">
             <div className="mx-auto max-w-3xl text-center">
               <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">
-                Trusted by Leading Dental Practices Across California and Beyond
+                Trusted by dental practices across California and beyond
               </h2>
               <p className="mt-4 text-base text-neutral-600">
-                Each practice is unique — but they all share the same outcome: peace of mind knowing their marketing is handled by experts who care as much as they do.
+                Each practice is different, but they all wanted the same thing: steady new patient flow and clear tracking.
               </p>
             </div>
             <p className="mt-12 text-center text-xs font-semibold uppercase tracking-[0.32em] text-neutral-500">
@@ -851,10 +935,13 @@ export default function DentalPracticesPage() {
           <div className="container mx-auto px-4 py-24">
             <div className="mx-auto max-w-2xl text-center">
               <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">
-                Ready to Experience the Prism Method?
+                Ready for a calmer dental marketing system?
               </h2>
               <p className="mt-4 text-base text-white/80">
-                Join hundreds of dentists modernizing their practices with smarter systems, cleaner design, and reliable growth.
+                Get a clear plan, clean tracking, and a system your team can trust.
+              </p>
+              <p className="mt-6 text-sm text-white/80">
+                If you want new patient demand without the mess, start here.
               </p>
               <div className="mt-10 flex flex-wrap justify-center gap-4">
                 <Link href={CTA_PRIMARY_HREF}>
