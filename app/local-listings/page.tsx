@@ -184,7 +184,7 @@ const faqItems = [
 const audienceSegments = [
   {
     name: "Dental & medical teams",
-    description: "maps-first dental local seo for dentists: hipaa-aware intake flows, treatment highlights, and review engines that keep operatories full.",
+    description: "maps-first dentist seo: hipaa-aware intake flows, treatment highlights, and review engines that keep operatories full.",
     href: "/dental-practice-seo-expert",
   },
   {

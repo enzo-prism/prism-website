@@ -161,7 +161,14 @@ export default function LocalSeoAgencyPage() {
                 href="/dental-practice-seo-expert"
                 className="font-semibold text-neutral-900 underline underline-offset-4"
               >
-                dental local seo
+                seo for dentists
+              </Link>
+              .
+            </p>
+            <p className="mt-2 text-sm text-neutral-600">
+              Need a baseline first? Start with our{" "}
+              <Link href="/seo/audit" className="font-semibold text-neutral-900 underline underline-offset-4">
+                seo audit service
               </Link>
               .
             </p>

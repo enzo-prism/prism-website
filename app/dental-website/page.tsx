@@ -429,7 +429,7 @@ export default function DentalWebsitePage() {
             </div>
               <div className="mt-10 flex justify-center">
                 <Button asChild variant="outline" className="rounded-full px-8">
-                <Link href="/dental-practice-seo-expert">see our dental seo playbook</Link>
+                <Link href="/dental-practice-seo-expert">see our dentist seo playbook</Link>
                 </Button>
               </div>
           </div>

@@ -1,4 +1,5 @@
 import type { Metadata } from "next"
+import Link from "next/link"
 
 import FreeAnalysisForm from "@/components/forms/FreeAnalysisForm"
 import Footer from "@/components/footer"
@@ -26,6 +27,13 @@ export default function FreeAnalysisPage() {
             <p className="text-lg text-black/70">
               We will review your site, Google listing, and performance — then show you how AI-powered design could double
               your traffic. No cost, no commitment.
+            </p>
+            <p className="text-sm text-black/60">
+              Need a deeper crawl and prioritized fixes? See our{" "}
+              <Link href="/seo/audit" className="font-semibold text-black underline underline-offset-4">
+                seo audit service
+              </Link>
+              .
             </p>
           </div>
         </section>

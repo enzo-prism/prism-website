@@ -103,10 +103,16 @@ export default function SeoOffPagePage() {
             review on-page seo
           </Link>
           <Link
+            href="/seo/audit"
+            className="inline-flex items-center rounded-full border border-neutral-200 px-6 py-3 text-sm font-semibold lowercase text-neutral-700"
+          >
+            seo audit service
+          </Link>
+          <Link
             href="/dental-practice-seo-expert"
             className="inline-flex items-center rounded-full border border-neutral-200 px-6 py-3 text-sm font-semibold lowercase text-neutral-700"
           >
-            dental seo
+            dentist seo
           </Link>
           <Link
             href="/ai-seo-services"

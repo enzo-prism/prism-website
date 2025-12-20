@@ -212,6 +212,49 @@ export default async function SeoPage() {
       </SeoSection>
 
       <SeoSection
+        eyebrow="audit"
+        title="seo audit service"
+        description="if you are not sure what is blocking rankings, start with a full audit and a prioritized plan."
+      >
+        <div className="grid gap-6 md:grid-cols-2">
+          <div className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm">
+            <p className="text-sm text-neutral-600">
+              our seo audit service reviews technical health, on-page intent, internal linking, schema, and trust signals, then maps the fastest
+              fixes to measurable outcomes.
+            </p>
+            <div className="mt-6 flex flex-wrap gap-4">
+              <Link
+                href="/seo/audit"
+                className="inline-flex items-center text-sm font-semibold lowercase text-neutral-900 underline decoration-neutral-300 underline-offset-4"
+              >
+                seo audit service
+              </Link>
+              <Link
+                href="/free-analysis"
+                className="inline-flex items-center text-sm font-semibold lowercase text-neutral-900 underline decoration-neutral-300 underline-offset-4"
+              >
+                free analysis
+              </Link>
+            </div>
+          </div>
+          <ul className="space-y-3 text-sm text-neutral-700">
+            {[
+              "crawlability, canonicals, and indexation issues",
+              "title and heading intent match for core pages",
+              "internal linking and topic-cluster clarity",
+              "structured data accuracy and rich-result readiness",
+              "page experience and mobile performance gaps",
+            ].map((item) => (
+              <li key={item} className="flex gap-3">
+                <span className="mt-2 h-1.5 w-1.5 rounded-full bg-neutral-900" aria-hidden />
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </SeoSection>
+
+      <SeoSection
         eyebrow="local"
         title="local seo services for small businesses"
         description="if you’re searching for local seo services, the goal is simple: show up when customers search nearby, and turn that visibility into calls and bookings."
@@ -265,7 +308,7 @@ export default async function SeoPage() {
               href="/dental-practice-seo-expert"
               className="font-semibold lowercase text-neutral-900 underline decoration-neutral-300 underline-offset-4"
             >
-              dental local seo
+              dentist seo
             </Link>
             {" "}
             (maps + organic)? see how prism maps treatments to intent, tightens listings + reviews, and ships compounding improvements. for a full overview, read{" "}

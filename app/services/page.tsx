@@ -34,7 +34,8 @@ const coreServices: CoreService[] = [
     learnMoreLinks: [
       { label: "local seo services", href: "/local-seo-services" },
       { label: "local seo agency", href: "/local-seo-agency" },
-      { label: "dental local seo", href: "/dental-practice-seo-expert" },
+      { label: "dentist seo", href: "/dental-practice-seo-expert" },
+      { label: "seo audit service", href: "/seo/audit" },
       { label: "ai seo services", href: "/ai-seo-services" },
     ],
     outcomes: [

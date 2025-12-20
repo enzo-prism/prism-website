@@ -12,14 +12,14 @@ import { CASE_STUDIES } from "@/lib/case-study-data"
 
 export const metadata: Metadata = {
   title: {
-    absolute: "Dental Local SEO for Dentists | Prism",
+    absolute: "Dentist SEO | Prism",
   },
   description:
-    "Dental local SEO that helps dental practices rank higher in Google Maps (local pack) and organic search with listings, reviews, treatment pages, and technical cleanup tied to calls and bookings.",
+    "Dentist SEO that helps dental practices rank higher in Google Maps (local pack) and organic search with listings, reviews, treatment pages, and technical cleanup tied to calls and bookings.",
   openGraph: {
-    title: "Dental Local SEO for Dentists | Prism",
+    title: "Dentist SEO | Prism",
     description:
-      "Dental local SEO that helps dental practices rank higher in Google Maps and organic search with listings, reviews, treatment pages, and ongoing optimization.",
+      "Dentist SEO that helps dental practices rank higher in Google Maps and organic search with listings, reviews, treatment pages, and ongoing optimization.",
     url: "https://www.design-prism.com/dental-practice-seo-expert",
     siteName: "prism",
     locale: "en_US",
@@ -35,9 +35,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Dental Local SEO for Dentists | Prism",
+    title: "Dentist SEO | Prism",
     description:
-      "Dental local SEO that helps dental practices rank higher in Google Maps and organic search with listings, reviews, treatment pages, and ongoing optimization.",
+      "Dentist SEO that helps dental practices rank higher in Google Maps and organic search with listings, reviews, treatment pages, and ongoing optimization.",
     images: ["/prism-opengraph.png"],
   },
   alternates: {
@@ -128,9 +128,14 @@ const processSteps = [
 
 const faqItems = [
   {
-    question: "What is dental local SEO?",
+    question: "What is dentist SEO?",
     answer:
-      "Dental local SEO is improving your Google Maps/local pack visibility and local organic rankings so nearby patients find you, trust you, and book — driven by Google Business Profile relevance, reviews, citations/NAP consistency, and patient-ready treatment pages.",
+      "Dentist SEO (SEO for dentists) is improving your visibility in Google Maps/local pack and local organic rankings so nearby patients find you, trust you, and book — driven by Google Business Profile relevance, reviews, citations/NAP consistency, and patient-ready treatment pages.",
+  },
+  {
+    question: "What does dentist SEO include?",
+    answer:
+      "Typically: Google Business Profile optimization, listings/citations cleanup, review strategy, treatment and location pages, technical SEO (indexation, speed, schema), and reporting tied to calls and bookings.",
   },
   {
     question: "How do you rank a dentist in Google Maps (the local pack)?",
@@ -138,17 +143,17 @@ const faqItems = [
       "Start with accurate Google Business Profile categories/services, consistent NAP across directories, steady review velocity (and responses), correct address/service-area settings, and website pages that corroborate treatments and location. Avoid name stuffing and fake reviews.",
   },
   {
-    question: "How long does dental local SEO take to work?",
+    question: "How long does dentist SEO take to work?",
     answer:
       "Quick wins can show up in weeks (fixing listings, technical issues, and page clarity). Competitive treatments and multi-location markets compound over months as trust and content depth grow.",
   },
   {
-    question: "How much does dental local SEO cost?",
+    question: "How much does dentist SEO cost?",
     answer:
       "It depends on your market and starting point. Most practices need an initial audit + cleanup, then ongoing monthly work for reviews, listings, content updates, and technical maintenance — priced around the scope you actually need, not a one-size retainer.",
   },
   {
-    question: "Do dentists need location pages for dental local SEO?",
+    question: "Do dentists need location pages for SEO?",
     answer:
       "If you operate from real locations, yes — one clear page per location is usually helpful. Avoid dozens of near-duplicate “dentist in {city}” pages with the same copy (doorway patterns). For service-area coverage, pair correct GBP settings with content that clearly explains where you serve.",
   },
@@ -168,7 +173,7 @@ const faqItems = [
       "No — and you should be skeptical of anyone who does. We focus on controllable levers: site structure, content quality, performance, listings consistency, and reputation systems that earn durable visibility.",
   },
   {
-    question: "What should dentists look for in an SEO consultant?",
+    question: "What should dentists look for in an SEO partner?",
     answer:
       "A consultant who talks in patient intent (treatments + location), ties work to calls and forms, understands Maps and listings, and can translate strategy into a real implementation backlog — not vague reports.",
   },
@@ -222,13 +227,13 @@ export default function DentalPracticeSeoExpertPage() {
       <main className="flex-1">
         <section className="border-b border-neutral-100 px-4 py-20 sm:py-24">
           <div className="mx-auto max-w-4xl text-center">
-            <p className="text-sm font-medium uppercase tracking-[0.3em] text-neutral-400">dental local seo</p>
+            <p className="text-sm font-medium uppercase tracking-[0.3em] text-neutral-400">dentist seo</p>
             <h1 className="mt-4 text-4xl font-semibold tracking-tight text-neutral-900 sm:text-5xl">
-              dental local seo
+              dentist seo
             </h1>
             <p className="mt-6 text-base text-neutral-600 sm:text-lg">
-              dental local seo (seo for dentists) helps your practice show up when nearby patients search — in google maps (the local pack), organic results, and ai-powered search.
-              prism runs a consultant-led system built around high-intent treatments, clean technical structure, and compounding trust signals.
+              dentist seo (seo for dentists) helps your practice show up when nearby patients search — in google maps (the local pack), organic results, and ai-powered search.
+              prism runs a consultant-led dentist seo system built around high-intent treatments, clean technical structure, and compounding trust signals across local + organic.
             </p>
             <p className="mt-6 text-sm text-neutral-500">
               want the full guide? read{" "}
@@ -264,7 +269,8 @@ export default function DentalPracticeSeoExpertPage() {
               </Button>
             </div>
             <p className="mt-6 text-sm text-neutral-500">
-              consultant-led. built for owner-dentists, specialty practices, and multi-location groups.
+              consultant-led. built for owner-dentists, specialty practices, and multi-location groups. expect clearer treatment pages, stronger
+              maps visibility, and a roadmap tied to calls and bookings.
             </p>
           </div>
         </section>
@@ -274,10 +280,10 @@ export default function DentalPracticeSeoExpertPage() {
             <div className="mx-auto max-w-3xl text-center">
               <p className="text-sm font-medium uppercase tracking-[0.3em] text-neutral-400">google maps</p>
               <h2 className="mt-3 text-3xl font-semibold tracking-tight text-neutral-900 sm:text-4xl">
-                dental local seo: how google decides who shows up
+                dentist seo: how google decides who shows up
               </h2>
               <p className="mt-4 text-base leading-relaxed text-neutral-600">
-                local rankings are a scoring system built around three signals: relevance, distance, and prominence. dental local seo is making
+                local rankings are a scoring system built around three signals: relevance, distance, and prominence. dentist seo makes
                 those signals unambiguous — with clean listings, strong reviews, and pages that corroborate what you do and where you do it.
               </p>
             </div>
@@ -364,11 +370,11 @@ export default function DentalPracticeSeoExpertPage() {
           <div className="mx-auto max-w-5xl">
             <div className="mx-auto max-w-3xl text-center">
               <h2 className="text-3xl font-semibold tracking-tight text-neutral-900 sm:text-4xl">
-                what dental seo actually includes
+                what dentist seo includes
               </h2>
               <p className="mt-4 text-base leading-relaxed text-neutral-600">
                 dental seo is two systems working together: maps trust + website clarity. no tricks — just a repeatable process that makes your
-                practice easier to understand, easier to trust, and easier to choose.
+                practice easier to understand, easier to trust, and easier to choose. these are the core dentist seo deliverables we ship.
               </p>
             </div>
 
@@ -475,7 +481,7 @@ export default function DentalPracticeSeoExpertPage() {
               <div>
                 <p className="text-sm font-medium uppercase tracking-[0.3em] text-neutral-400">engagement options</p>
                 <h2 className="mt-3 text-3xl font-semibold tracking-tight text-neutral-900 sm:text-4xl">
-                  seo consulting for dentists, your way
+                  dentist seo, your way
                 </h2>
                 <p className="mt-4 text-base leading-relaxed text-neutral-600">
                   hire prism for consulting-only, consultant-led implementation, or full done-for-you delivery. the same roadmap either way —
@@ -538,7 +544,7 @@ export default function DentalPracticeSeoExpertPage() {
             <div className="mx-auto max-w-3xl text-center">
               <p className="text-sm font-medium uppercase tracking-[0.3em] text-neutral-400">the process</p>
               <h2 className="mt-3 text-3xl font-semibold tracking-tight text-neutral-900 sm:text-4xl">
-                how prism runs seo consulting for dentists
+                how prism runs dentist seo
               </h2>
               <p className="mt-4 text-base leading-relaxed text-neutral-600">
                 start with clarity, then earn trust. that’s how you get durable rankings and steady patient demand.
@@ -627,8 +633,8 @@ export default function DentalPracticeSeoExpertPage() {
         </section>
 
         <FAQSection
-          title="seo consulting questions"
-          subtitle="what most dentists want to know before hiring an seo consultant."
+          title="dentist seo questions"
+          subtitle="what most dentists want to know before hiring an seo partner."
           items={faqItems}
         />
 
@@ -639,14 +645,14 @@ export default function DentalPracticeSeoExpertPage() {
 
       <ServiceSchema
         serviceId="dental-practice-seo-expert"
-        name="Dental local SEO for dentists"
-        description="Dental local SEO consulting and implementation for dentists, including Google Maps optimization, listings, reviews, on-page structure, and technical cleanup."
-        serviceType="Dental local SEO consulting"
+        name="Dentist SEO"
+        description="Dentist SEO, including Google Maps optimization, listings, reviews, on-page structure, and technical cleanup tied to calls and bookings."
+        serviceType="Dentist SEO services"
         areaServed="United States"
       />
       <HowToSchema
-        name="Dental SEO process"
-        description="A repeatable dental SEO system: audit, architecture, implementation, trust, and iteration."
+        name="Dentist SEO process"
+        description="A repeatable dentist SEO system: audit, architecture, implementation, trust, and iteration."
         steps={processSteps.map((step) => ({
           name: step.step,
           text: step.description,

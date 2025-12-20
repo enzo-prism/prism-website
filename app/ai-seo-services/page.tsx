@@ -196,6 +196,10 @@ export default function AiSeoServicesPage() {
               <Link href="/seo" className="font-semibold text-neutral-900 underline underline-offset-4">
                 seo overview
               </Link>
+              . need a baseline first?{" "}
+              <Link href="/seo/audit" className="font-semibold text-neutral-900 underline underline-offset-4">
+                seo audit service
+              </Link>
               .
             </p>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
@@ -384,4 +388,3 @@ export default function AiSeoServicesPage() {
     </div>
   )
 }
-
