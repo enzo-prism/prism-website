@@ -18,12 +18,11 @@ const SERVICE_STRIP = [
 
 const FOUNDER_LETTER_LINES = [
   "i built prism after watching owners get stuck in tools instead of running the business.",
-  "you shouldn't need a full team just to get found online.",
-  "we take full ownership of your website, local seo, and ads.",
-  "we handle the build, tracking, and upkeep.",
-  "you approve the direction and tell us what matters.",
-  "we run the system and report back.",
-  "if you want a status check, you can message me anytime.",
+  "you shouldn't need a full team to get found online.",
+  "we own your website, local seo, and ads end-to-end.",
+  "we build it, wire tracking, and keep improving it.",
+  "you approve the direction. we handle the work.",
+  "if you want a status check, message me anytime — i'll tell you what's done and what's next.",
 ]
 
 const HOW_IT_WORKS_STEPS = [
@@ -75,17 +74,17 @@ export default function ClientPage() {
                   get found on google + google maps — and get more calls.
                 </h1>
                 <p className="text-balance text-sm text-neutral-600 lowercase sm:text-base">
-                  your day is full. marketing gets pushed to nights + weekends.
+                  your day is full. marketing gets pushed to nights + weekends — then it never gets done.
                 </p>
                 <p className="text-balance text-sm text-neutral-600 lowercase sm:text-base">
-                  you need growth, not another project to manage.
+                  you need leads, not another project to babysit.
                 </p>
                 <p className="text-balance text-sm text-neutral-600 lowercase sm:text-base">
                   prism builds and runs your website, local seo, and ads — so you get your time back.
                 </p>
                 <p className="text-balance text-sm text-neutral-600 lowercase sm:text-base">
                   white-glove, custom to your business. one trusted partner. message us anytime for a
-                  status check.
+                  status check — we'll tell you what's done and what's next.
                 </p>
               </div>
 

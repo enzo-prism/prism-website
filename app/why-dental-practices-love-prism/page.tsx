@@ -343,11 +343,11 @@ export default function DentalPracticesPage() {
             <div className="mx-auto flex max-w-4xl flex-col items-center text-center">
               <p className="text-sm font-semibold text-neutral-500">🦷 For dentist owners</p>
               <h1 className="mt-6 text-4xl font-semibold tracking-tight md:text-5xl lg:text-6xl">
-                The phone is quiet. The map pack is full of other offices.
+                grow your practice. worry less about marketing + tech.
               </h1>
               <p className="mt-6 text-base text-neutral-600 md:text-lg">
-                Prism builds a calm, clear system for dental marketing. You get more qualified new patient calls. You
-                see what works with simple tracking.
+                prism helps dentists get more new-patient calls, modernize their online presence, and switch off outdated
+                providers — without stress or downtime.
               </p>
               <div className="mt-6 w-full max-w-2xl rounded-2xl border border-neutral-100 bg-neutral-50/80 p-6 text-left">
                 <p className="text-xs font-semibold uppercase tracking-[0.32em] text-neutral-500">What you get</p>
@@ -467,13 +467,15 @@ export default function DentalPracticesPage() {
                   Why dentist owners choose Prism
                 </h2>
                 <p className="text-base text-neutral-600">
-                  Most dentists lose new patients because their online presence is messy, not because their care is weak.
+                  most dentists aren't losing patients because they're bad at dentistry. they're losing visibility,
+                  consistency, and control online.
                 </p>
                 <div className="rounded-2xl border border-neutral-100 bg-neutral-50/80 p-6 text-base text-neutral-800 shadow-sm">
-                  Prism fixes that.
+                  prism was built to fix that.
                 </div>
                 <p className="text-base text-neutral-600">
-                  We run the dental practice website, local SEO, and dental marketing as one clean system.
+                  we pair silicon valley engineering, brand design, and ai-driven marketing to build systems your team
+                  can rely on every day.
                 </p>
               </div>
 

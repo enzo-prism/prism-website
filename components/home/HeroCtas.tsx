@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button"
 import { trackCTAClick } from "@/utils/analytics"
 
 const DEFAULT_NOTE =
-  "also built for ai search: clear pages + structured answers so you show up when customers ask."
+  "built for ai search too: clear pages + structured answers so you show up when customers ask."
 
 type HeroCtasProps = {
   note?: string

@@ -217,14 +217,14 @@ function HeroSection() {
           <RevealOnScroll delay={0.1}>
             <div className="space-y-6">
               <h1 className="text-4xl font-semibold leading-tight tracking-tight sm:text-5xl lg:text-6xl">
-                buy back your time. get more customers each month.
+                buy back your time. build growth that compounds.
               </h1>
               <div className="space-y-2">
                 <p className="text-lg text-black/70 sm:text-xl">
                   three ways to work with prism: launch (fast site), grow (site + content), scale
                   (site + content + ads).
                 </p>
-                <p className="text-sm text-black/60 sm:text-base">impossible is temporary.</p>
+                <p className="text-sm text-black/60 sm:text-base">with prism, impossible is temporary.</p>
               </div>
             </div>
           </RevealOnScroll>
@@ -682,7 +682,7 @@ function FinalCTA() {
       <div className="relative mx-auto flex max-w-5xl flex-col gap-6 px-6 text-center">
         <RevealOnScroll>
           <h2 className="text-2xl font-semibold">
-            ready to stop worrying about marketing setup? start at $400.
+            🚀 launch a website that brings in customers — starting at $400.
           </h2>
         </RevealOnScroll>
         <RevealOnScroll delay={0.1}>
