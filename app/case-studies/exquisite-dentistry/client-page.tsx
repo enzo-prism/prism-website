@@ -1,329 +1,445 @@
 "use client"
 
 import Footer from "@/components/footer"
-import { CaseStudySectionNav } from "@/components/case-studies/CaseStudySectionNav"
 import { CaseStudySchema } from "@/components/schema-markup"
 import SocialShare from "@/components/social-share"
-import { Button } from "@/components/ui/button"
-import { Skeleton } from "@/components/ui/skeleton"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { trackCTAClick } from "@/utils/analytics"
-import { ArrowLeft, ArrowRight } from "lucide-react"
 import dynamic from "next/dynamic"
-import Image from "next/image"
-import Link from "next/link"
-import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
+
 const Navbar = dynamic(() => import("@/components/navbar"), { ssr: false })
-const CLIENT_SITE = "https://exquisitedentistryla.com/"
-
-const ExquisiteChannelShareChart = dynamic(
-  () => import("@/components/case-studies/exquisite-channel-share-chart").then((m) => m.ExquisiteChannelShareChart),
-  { ssr: false, loading: () => <Skeleton className="h-32 w-full rounded-lg" /> }
-)
-const ExquisiteSessionsGrowthChart = dynamic(
-  () => import("@/components/case-studies/exquisite-sessions-growth-chart").then((m) => m.ExquisiteSessionsGrowthChart),
-  { ssr: false, loading: () => <Skeleton className="h-48 w-full rounded-lg" /> }
-)
-const ExquisiteSpeedGauge = dynamic(
-  () => import("@/components/case-studies/exquisite-speed-gauge").then((m) => m.ExquisiteSpeedGauge),
-  { ssr: false, loading: () => <Skeleton className="h-32 w-full rounded-lg" /> }
-)
-const FounderImpactGraph = dynamic(
-  () => import("@/components/case-studies/FounderImpactGraph").then((m) => m.FounderImpactGraph),
-  { ssr: false, loading: () => <Skeleton className="h-64 w-full rounded-2xl" /> }
-)
-
-const sectionNav = [
-  { id: "overview", label: "Overview" },
-  { id: "opportunity", label: "The Opportunity" },
-  { id: "approach", label: "Our Approach" },
-  { id: "transformation", label: "Transformation" },
-  { id: "results", label: "Results" },
-  { id: "insights", label: "Insights" },
-] as const
+const EXQUISITE_SITE = "https://exquisitedentistryla.com/?utm_source=chatgpt.com"
+const EXQUISITE_SITE_TITLE = "Exquisite Dentistry: Cosmetic Dentist Los Angeles | Dr. Aguil"
+const linkClassName = "font-medium text-neutral-900 underline underline-offset-4"
 
 export default function ExquisiteDentistryCaseStudy() {
   return (
     <div className="flex min-h-screen flex-col">
       <Navbar />
       <main className="flex-1 bg-white">
-        {/* Hero */}
-        <section className="border-b px-4 py-16 md:py-24">
-          <div className="container mx-auto px-4 md:px-6 max-w-3xl">
-            <div className="space-y-6">
-              <div className="inline-block px-4 py-1 bg-neutral-100 rounded-full text-sm lowercase">case study</div>
-              <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl">Aligning Digital Excellence with Luxury Care</h1>
-              <p className="text-xl text-neutral-600">How Prism elevated Beverly Hills' Exquisite Dentistry's online presence to match their premium in-person experience.</p>
-              <p className="text-neutral-500">Practice owner: <strong>Dr. Alexie Aguil</strong></p>
-              <div className="flex flex-wrap items-center gap-3">
-                <Button asChild variant="outline" className="rounded-full lowercase">
-                  <Link href={CLIENT_SITE} target="_blank" rel="noreferrer">
-                    visit exquisitedentistryla.com
-                  </Link>
-                </Button>
-              </div>
-            </div>
-            <div className="mt-10 mb-6">
-              <Image src="/exquisite-dentistry-consultation.png" alt="Exquisite Dentistry consultation" width={800} height={450} className="rounded-md w-full h-auto" priority />
-            </div>
-          </div>
-        </section>
+        <div className="container mx-auto px-4 md:px-6 max-w-3xl py-16 md:py-24">
+          <article className="prose prose-neutral max-w-none">
+            <h1>Case Study: Exquisite Dentistry — Turning a Legacy Beverly Hills Brand Into a Modern, Trackable Growth Engine</h1>
+            <p>
+              <strong>High-end cosmetic dentistry</strong>
+            </p>
+            <p>
+              <strong>Location:</strong> Beverly Hills / Los Angeles, CA{" "}
+              (<a className={linkClassName} href={EXQUISITE_SITE} title={EXQUISITE_SITE_TITLE} target="_blank" rel="noreferrer">
+                Exquisite Dentistry
+              </a>)
+            </p>
+            <p>
+              <strong>Practice:</strong> Exquisite Dentistry (Dr. Alexie Aguil){" "}
+              (<a className={linkClassName} href={EXQUISITE_SITE} title={EXQUISITE_SITE_TITLE} target="_blank" rel="noreferrer">
+                Exquisite Dentistry
+              </a>)
+            </p>
+            <p>
+              <strong>Scope:</strong> Website rebuild, SEO preservation + upgrades, local listings cleanup, funnel + forms rebuild, analytics + attribution, ongoing optimization
+            </p>
+            <hr />
 
-        <CaseStudySectionNav sections={[...sectionNav]} containerClassName="max-w-3xl" />
+            <h2>“We’re one of the best practices in the city… so why does our website look like it isn’t?”</h2>
+            <p>
+              Exquisite Dentistry is the kind of practice most dentists <em>wish</em> they had.
+            </p>
+            <p>
+              They’ve been established for years. They’re known for elite cosmetic work. They have deep community trust. They attract a high-end patient base, including celebrity clientele. And their in-person experience feels premium.
+            </p>
+            <p>But online?</p>
+            <p>The website told a different story.</p>
+            <p>And that mismatch creates a specific kind of anxiety that practice owners know too well:</p>
+            <ul>
+              <li>
+                <strong>“If someone finds us on Google for the first time, do we look as good as we actually are?”</strong>
+              </li>
+              <li>
+                <strong>“Are we leaking high-value patients because the site feels old or confusing?”</strong>
+              </li>
+              <li>
+                <strong>“Are we one plugin update away from the whole thing breaking?”</strong>
+              </li>
+              <li>
+                <strong>“If we rebuild, will we destroy years of SEO and rankings?”</strong>
+              </li>
+            </ul>
+            <p>That last one is the trap.</p>
+            <p>
+              Because when a practice <em>still</em> gets leads from search and maps, the website becomes a ticking time bomb:
+              <br />
+              <strong>bad enough to hold you back, but “working” enough that you’re scared to touch it.</strong>
+            </p>
+            <p>That was Exquisite Dentistry.</p>
+            <hr />
 
-        <div className="container mx-auto px-4 md:px-6 max-w-3xl">
-          <div className="grid grid-cols-1 lg:grid-cols-4 gap-12">
-            <div className="col-span-1 lg:col-span-4">
-              {/* Overview */}
-              <section className="py-8 border-t" data-section="overview">
-                <h2 className="text-2xl font-bold tracking-tighter mb-6">Overview</h2>
-                <div className="rounded-xl border border-neutral-200">
-                  <Table>
-                    <TableHeader>
-                      <TableRow className="border-neutral-200">
-                        <TableHead className="px-3 py-2 text-neutral-600">At-a-Glance KPI</TableHead>
-                        <TableHead className="px-3 py-2 text-neutral-600">Last 12 Months*</TableHead>
-                      </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                      <TableRow className="border-neutral-200">
-                        <TableCell className="px-3 py-2 font-medium">Search Clicks</TableCell>
-                        <TableCell className="px-3 py-2">9.3 K</TableCell>
-                      </TableRow>
-                      <TableRow className="border-neutral-200">
-                        <TableCell className="px-3 py-2 font-medium">Search Impressions</TableCell>
-                        <TableCell className="px-3 py-2">1.67 M</TableCell>
-                      </TableRow>
-                      <TableRow className="border-neutral-200">
-                        <TableCell className="px-3 py-2 font-medium">New Users (GA4)</TableCell>
-                        <TableCell className="px-3 py-2">2.9 K</TableCell>
-                      </TableRow>
-                      <TableRow className="border-neutral-200">
-                        <TableCell className="px-3 py-2 font-medium">Organic-Search Share of Sessions</TableCell>
-                        <TableCell className="px-3 py-2">64 %</TableCell>
-                      </TableRow>
-                      <TableRow className="border-neutral-200">
-                        <TableCell className="px-3 py-2 font-medium">Avg. Engagement Rate (Organic)</TableCell>
-                        <TableCell className="px-3 py-2">60.7 %</TableCell>
-                      </TableRow>
-                    </TableBody>
-                  </Table>
-                </div>
-                <p className="text-xs text-neutral-500 mt-2">*Google Search Console & Google Analytics 4, Jun 2024 – Jun 2025.</p>
-              </section>
+            <h2>The Real Problem Wasn’t “A Bad Website.” It Was Compounding Scar Tissue.</h2>
+            <p>Yes, the website was outdated.</p>
+            <p>But the deeper issue was what we see constantly in established practices that have been online for a long time:</p>
 
-              {/* Opportunity */}
-              <section className="py-8 border-t" data-section="opportunity">
-                <h2 className="text-2xl font-bold tracking-tighter mb-6">The Opportunity — Bridging the Digital–Physical Divide</h2>
-                <ol className="list-decimal space-y-4 pl-6">
-                  <li><p><strong>Out-of-date mobile experience</strong><br /><em>Mobile CTR sat at just <strong>0.3 %</strong> and average rank hovered near page 5.</em></p></li>
-                  <li><p><strong>Brand incongruence</strong><br />High-end photography and celebrity testimonials were hidden behind clunky navigation.</p></li>
-                  <li><p><strong>Visibility gaps</strong><br />Directory inconsistencies made it harder for Google to surface the practice locally.</p></li>
-                </ol>
-              </section>
+            <h3>1) Years of vendor “patchwork” creates invisible technical debt</h3>
+            <p>Over time, different vendors add different “fixes”:</p>
+            <ul>
+              <li>a scheduling widget here</li>
+              <li>a form plugin there</li>
+              <li>a theme change</li>
+              <li>an SEO plugin migration</li>
+              <li>tracking scripts piled on top of tracking scripts</li>
+            </ul>
+            <p>Eventually nobody can answer basic questions like:</p>
+            <ul>
+              <li>
+                <strong>What forms are still active?</strong>
+              </li>
+              <li>
+                <strong>Where does that lead go?</strong>
+              </li>
+              <li>
+                <strong>What’s connected to what?</strong>
+              </li>
+              <li>
+                <strong>Which phone number is <em>actually</em> being tracked?</strong>
+              </li>
+              <li>
+                <strong>Which pages are indexed, and which are broken?</strong>
+              </li>
+            </ul>
+            <p>On the surface it “runs.” Under the hood it becomes a maze.</p>
 
-              {/* Approach */}
-              <section className="py-8 border-t" data-section="approach">
-                <h2 className="text-2xl font-bold tracking-tighter mb-6">Prism's Approach — Crafting a Patient-Centric Digital Ecosystem</h2>
-                <div className="rounded-xl border border-neutral-200">
-                  <Table>
-                    <TableHeader>
-                      <TableRow className="border-neutral-200">
-                        <TableHead className="px-3 py-2 text-neutral-600">Pillar</TableHead>
-                        <TableHead className="px-3 py-2 text-neutral-600">What We Did</TableHead>
-                        <TableHead className="px-3 py-2 text-neutral-600">Result</TableHead>
-                      </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                      <TableRow className="border-neutral-200">
-                        <TableCell className="px-3 py-2 font-medium">Bespoke Website Rebuild</TableCell>
-                        <TableCell className="px-3 py-2">Hand-coded, mobile-first framework (2.1 s LCP).</TableCell>
-                        <TableCell className="px-3 py-2">
-                          Load time cut <strong>50 %</strong>; mobile CTR rose to <strong>0.7 %</strong>.
-                        </TableCell>
-                      </TableRow>
-                      <TableRow className="border-neutral-200">
-                        <TableCell className="px-3 py-2 font-medium">UX First</TableCell>
-                        <TableCell className="px-3 py-2">Instagram-style navigation, thumb-zone CTAs.</TableCell>
-                        <TableCell className="px-3 py-2">Avg. pages per mobile session doubled.</TableCell>
-                      </TableRow>
-                      <TableRow className="border-neutral-200">
-                        <TableCell className="px-3 py-2 font-medium">Content Remix</TableCell>
-                        <TableCell className="px-3 py-2">Integrated pro photos &amp; video testimonials across service pages.</TableCell>
-                        <TableCell className="px-3 py-2">
-                          <strong>+68 %</strong> clicks on &quot;veneers&quot; &amp; &quot;teeth-whitening&quot; queries.
-                        </TableCell>
-                      </TableRow>
-                      <TableRow className="border-neutral-200">
-                        <TableCell className="px-3 py-2 font-medium">Listing Clean-Up</TableCell>
-                        <TableCell className="px-3 py-2">Synced NAP data across 40+ directories.</TableCell>
-                        <TableCell className="px-3 py-2">Consistent local-pack visibility.</TableCell>
-                      </TableRow>
-                      <TableRow className="border-neutral-200">
-                        <TableCell className="px-3 py-2 font-medium">Ad Campaigns</TableCell>
-                        <TableCell className="px-3 py-2">High-intent Instagram retargeting.</TableCell>
-                        <TableCell className="px-3 py-2">Funnel filled while organic traffic ramped.</TableCell>
-                      </TableRow>
-                      <TableRow className="border-neutral-200">
-                        <TableCell className="px-3 py-2 font-medium">Systems Integration</TableCell>
-                        <TableCell className="px-3 py-2">Connected online scheduling &amp; VOIP tracking.</TableCell>
-                        <TableCell className="px-3 py-2">Leads drop straight into the PMS.</TableCell>
-                      </TableRow>
-                      <TableRow className="border-neutral-200">
-                        <TableCell className="px-3 py-2 font-medium">AI-Ready Schema</TableCell>
-                        <TableCell className="px-3 py-2">Added FAQ &amp; Review markup.</TableCell>
-                        <TableCell className="px-3 py-2">Prepares site for Google SGE &amp; chat-based search.</TableCell>
-                      </TableRow>
-                    </TableBody>
-                  </Table>
-                </div>
-                {/* Removed interactive KPI chart per latest update */}
-              </section>
+            <h3>2) The brand was strong… but the online presence wasn’t converting like it should</h3>
+            <p>They had the reputation. They had the reviews. They had the results.</p>
+            <p>But the online experience wasn’t doing their excellence justice:</p>
+            <ul>
+              <li>old design signals “average” when the practice is premium</li>
+              <li>clunky mobile UX creates friction at the exact moment patients want ease</li>
+              <li>
+                generic copy doesn’t <em>match the sophistication</em> of the actual care
+              </li>
+            </ul>
 
-              {/* Transformation */}
-              <section className="py-8 border-t" data-section="transformation">
-                <h2 className="text-2xl font-bold tracking-tighter mb-6">The Transformation — 90-Day Pre- vs Post-Launch <span className="block text-sm font-normal">(Jan 1 – Mar 31 vs Apr 1 – Jun 30 2025)</span></h2>
-                <div className="rounded-xl border border-neutral-200">
-                  <Table>
-                    <TableHeader>
-                      <TableRow className="border-neutral-200">
-                        <TableHead className="px-3 py-2 text-neutral-600">Metric</TableHead>
-                        <TableHead className="px-3 py-2 text-neutral-600">Pre</TableHead>
-                        <TableHead className="px-3 py-2 text-neutral-600">Post</TableHead>
-                        <TableHead className="px-3 py-2 text-neutral-600">Δ</TableHead>
-                      </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                      <TableRow className="border-neutral-200">
-                        <TableCell className="px-3 py-2 font-medium">Avg. Google Rank (all queries)</TableCell>
-                        <TableCell className="px-3 py-2">48.2</TableCell>
-                        <TableCell className="px-3 py-2">37.0</TableCell>
-                        <TableCell className="px-3 py-2 font-medium">▲ 11.2</TableCell>
-                      </TableRow>
-                      <TableRow className="border-neutral-200">
-                        <TableCell className="px-3 py-2 font-medium">Organic Click-Through Rate</TableCell>
-                        <TableCell className="px-3 py-2">0.32 %</TableCell>
-                        <TableCell className="px-3 py-2">0.71 %</TableCell>
-                        <TableCell className="px-3 py-2 font-medium">▲ 119 %</TableCell>
-                      </TableRow>
-                      <TableRow className="border-neutral-200">
-                        <TableCell className="px-3 py-2 font-medium">Organic Sessions</TableCell>
-                        <TableCell className="px-3 py-2">1,134</TableCell>
-                        <TableCell className="px-3 py-2">2,195</TableCell>
-                        <TableCell className="px-3 py-2 font-medium">▲ 93 %</TableCell>
-                      </TableRow>
-                      <TableRow className="border-neutral-200">
-                        <TableCell className="px-3 py-2 font-medium">Engagement Rate</TableCell>
-                        <TableCell className="px-3 py-2">52.4 %</TableCell>
-                        <TableCell className="px-3 py-2">60.7 %</TableCell>
-                        <TableCell className="px-3 py-2 font-medium">▲ 8.3 pp</TableCell>
-                      </TableRow>
-                      <TableRow className="border-neutral-200">
-                        <TableCell className="px-3 py-2 font-medium">Events / Session</TableCell>
-                        <TableCell className="px-3 py-2">3.98</TableCell>
-                        <TableCell className="px-3 py-2">4.64</TableCell>
-                        <TableCell className="px-3 py-2 font-medium">▲ 16 %</TableCell>
-                      </TableRow>
-                      <TableRow className="border-neutral-200">
-                        <TableCell className="px-3 py-2 font-medium">Avg. Page Load (LCP)</TableCell>
-                        <TableCell className="px-3 py-2">4.2 s</TableCell>
-                        <TableCell className="px-3 py-2">2.1 s</TableCell>
-                        <TableCell className="px-3 py-2 font-medium">▼ 50 %</TableCell>
-                      </TableRow>
-                    </TableBody>
-                  </Table>
-                </div>
-                <p className="text-sm text-neutral-600 mt-4">Practice staff note a clear uptick in veneer and whitening consultations, confirming the quality of incoming leads.</p>
-                <div className="mt-6 space-y-6">
-                  <ExquisiteSessionsGrowthChart />
-                  <ExquisiteSpeedGauge />
-                </div>
-              </section>
+            <h3>3) They couldn’t clearly see what was working</h3>
+            <p>They were getting leads, but they didn’t have clean clarity on:</p>
+            <ul>
+              <li>
+                <strong>Did this patient find us on Search, Maps, Apple Maps, Instagram, Facebook, or referrals?</strong>
+              </li>
+              <li>
+                <strong>Which campaigns or pages are driving real consults (not just clicks)?</strong>
+              </li>
+              <li>
+                <strong>Where are patients dropping off in the booking flow?</strong>
+              </li>
+            </ul>
+            <p>When tracking is messy, you end up guessing.</p>
+            <p>And guessing is expensive.</p>
+            <hr />
 
-              {/* Results */}
-              <section className="py-8 border-t" data-section="results">
-                <h2 className="text-2xl font-bold tracking-tighter mb-6">Results That Matter</h2>
-                <div className="mb-8">
-                  <FounderImpactGraph />
-                </div>
-                <ul className="list-disc space-y-2 pl-6">
-                  <li>Luxury Brand Cohesion – The website now mirrors the spa-like, white-glove in-office feel.</li>
-                  <li>High-Value Lead Surge – Form-fills and phone clicks up <strong>71 %</strong> (internal PMS).</li>
-                  <li>Market Precision – <strong>46 %</strong> of new visitors originate from the LA metro (GA4 city heat map).</li>
-                  <li>Future-Ready Foundation – Structured data and analytics wiring position the practice for AI-driven growth.</li>
-                </ul>
-                <div className="mt-8">
-                  <ExquisiteChannelShareChart />
-                </div>
-              </section>
+            <h2>Prism’s Approach: Don’t Swing the Wrecking Ball First</h2>
+            <p>Most agencies do the same thing:</p>
+            <p>They walk in, trash the current system, rebuild everything, and call it “modern.”</p>
+            <p>That’s how practices lose rankings.</p>
+            <p>So we did the opposite:</p>
 
-              {/* Partner Insights */}
-              <section className="py-8 border-t" data-section="insights">
-                <h2 className="text-2xl font-bold tracking-tighter mb-6">Partner Insights</h2>
-                <p>Dr. Alexie Aguil and team now view the website as an authentic extension of their signature luxury experience—and prospective patients agree.</p>
-              </section>
+            <h3>Phase 1 — Understand the machine before you replace parts</h3>
+            <p>Before we rebuilt anything, we spent the early phase:</p>
+            <ul>
+              <li>mapping the existing website + plugin ecosystem</li>
+              <li>identifying technical debt and risk areas</li>
+              <li>auditing indexation + crawlability</li>
+              <li>cleaning up obvious low-hanging fruit in the local ecosystem</li>
+            </ul>
+            <p>This included syncing and tightening the practice’s presence across major local platforms:</p>
+            <ul>
+              <li>Google Business Profile</li>
+              <li>Apple Business Connect</li>
+              <li>
+                Yelp for Business
+                <br />
+                (And related listings consistency)
+                <br />
+                Learn more: <strong>Local listings cleanup</strong> →{" "}
+                <a className={linkClassName} href="https://www.design-prism.com/local-listings" target="_blank" rel="noreferrer">
+                  https://www.design-prism.com/local-listings
+                </a>
+              </li>
+            </ul>
+            <p>This alone can reduce confusion signals (for patients and algorithms) and stabilize lead flow.</p>
 
-              {/* CTA */}
-              <section className="py-12 border-t border-b my-8" data-section="cta">
-                <div className="text-center space-y-6">
-                  <h2 className="text-2xl font-bold tracking-tighter">Ready to Close the Digital Gap?</h2>
-                  <p>If your offline experience screams five-star but your website whispers two-star, let's talk.<br />➡ <strong>Book a 15-min strategy call</strong> or explore more success stories.</p>
-                  <p className="text-sm text-neutral-600">
-                    Built with Prism’s{" "}
-                    <Link href="/dental-website" className="font-semibold text-neutral-900 underline underline-offset-4">
-                      dental practice website system
-                    </Link>
-                    .
-                  </p>
-                  <div className="pt-6">
-                    <Link href="/free-analysis">
-                      <Button
-                        className="rounded-full px-8 py-6 text-lg"
-                        onClick={() => trackCTAClick(FREE_AUDIT_CTA_TEXT, "case study bottom")}
-                      >
-                        {FREE_AUDIT_CTA_TEXT} <ArrowRight className="ml-2 h-5 w-5" />
-                      </Button>
-                    </Link>
-                  </div>
-                </div>
-              </section>
+            <h3>Phase 2 — Rebuild at the right moment, with SEO preservation as the #1 constraint</h3>
+            <p>Only after we understood the existing system did we rebuild the website.</p>
+            <p>The goal wasn’t “make it pretty.”</p>
+            <p>The goal was:</p>
+            <ul>
+              <li>
+                <strong>match the premium in-person experience</strong>
+              </li>
+              <li>
+                <strong>remove technical debt</strong>
+              </li>
+              <li>
+                <strong>improve mobile conversion</strong>
+              </li>
+              <li>
+                <strong>preserve what already worked in SEO</strong>
+              </li>
+              <li>
+                <strong>create a foundation we can iterate on without fear</strong>
+              </li>
+            </ul>
+            <p>
+              This is what our <strong>Dental Website System</strong> is built for:
+              <br />
+              <a className={linkClassName} href="https://www.design-prism.com/dental-website" target="_blank" rel="noreferrer">
+                https://www.design-prism.com/dental-website
+              </a>
+            </p>
+            <hr />
 
-              {/* Data Note */}
-              <section className="py-8" data-section="data-note">
-                <h3 className="font-medium mb-2">Data Note</h3>
-                <p>Figures sourced from Google Search Console & GA4 for Exquisite Dentistry, Jun 2024 – Jun 2025. Improvement percentages compare 90-day windows before and after the Mar 2025 relaunch.</p>
-                <p className="mt-2">Need the raw numbers or custom charts? Let us know—Prism can spin up an embeddable Looker Studio view in minutes.</p>
-              </section>
+            <h2>The Website Rebuild: A Modern Front-End + A Simpler Back-End</h2>
+            <p>When we launched the new site, we focused on two things at once:</p>
 
-              {/* Navigation */}
-              <div className="flex justify-between py-8">
-                <Link href="/case-studies">
-                  <Button variant="outline" className="rounded-full"><ArrowLeft className="mr-2 h-4 w-4" /> all case studies</Button>
-                </Link>
-                <Link href="/free-analysis">
-                  <Button variant="outline" className="rounded-full">
-                    {FREE_AUDIT_CTA_TEXT} <ArrowRight className="ml-2 h-4 w-4" />
-                  </Button>
-                </Link>
-              </div>
-            </div>
-          </div>
+            <h3>1) Front-end: premium clarity</h3>
+            <p>Patients don’t “evaluate” your website consciously.</p>
+            <p>
+              They <em>feel it.</em>
+            </p>
+            <p>So we rebuilt the experience around:</p>
+            <ul>
+              <li>trust, polish, and calm confidence</li>
+              <li>clear navigation for high-intent services</li>
+              <li>mobile-first flow (because that’s where decisions happen)</li>
+              <li>faster load times and better UX patterns</li>
+            </ul>
+            <p>
+              In short: <strong>the site now looks like the practice feels.</strong>
+            </p>
+
+            <h3>2) Back-end: remove complexity so it can’t rot again</h3>
+            <p>
+              A huge part of the work was <em>subtracting</em>:
+            </p>
+            <ul>
+              <li>removing brittle plugin dependencies</li>
+              <li>simplifying workflows that no one understood</li>
+              <li>standardizing tracking and event logic</li>
+              <li>ensuring future edits don’t create new “scar tissue”</li>
+            </ul>
+            <p>The result: a site that’s easier to maintain, easier to improve, and far less likely to break.</p>
+            <hr />
+
+            <h2>The Hidden Win: Rebuilding the Funnel (Forms, Scheduling, Attribution)</h2>
+            <p>A “new website” doesn’t matter if the booking flow still leaks.</p>
+            <p>So we rebuilt the intake pipeline with two priorities:</p>
+            <ol>
+              <li>
+                <strong>A smoother patient experience</strong> (especially on mobile)
+              </li>
+              <li>
+                <strong>Clean attribution</strong> so the practice can finally see what’s working
+              </li>
+            </ol>
+            <p>We upgraded:</p>
+            <ul>
+              <li>scheduling / consultation request flow</li>
+              <li>form UX and structure</li>
+              <li>lead routing + tagging</li>
+              <li>attribution logic (where leads came from: Search vs Maps vs Social vs Ads)</li>
+            </ul>
+            <p>This is where practices start to feel relief.</p>
+            <p>Because now you can answer questions like:</p>
+            <ul>
+              <li>“Are we getting cosmetic consults from Maps or Search?”</li>
+              <li>“Are ads driving real appointments or just traffic?”</li>
+              <li>“Which pages are producing the best patients?”</li>
+            </ul>
+            <p>
+              This is the difference between marketing that <em>looks active</em> and marketing that <em>prints money</em>.
+            </p>
+            <p>
+              Related: <strong>apps + forms systems</strong> →{" "}
+              <a className={linkClassName} href="https://www.design-prism.com/apps" target="_blank" rel="noreferrer">
+                https://www.design-prism.com/apps
+              </a>
+            </p>
+            <hr />
+
+            <h2>Analytics Overhaul: Stop Guessing, Start Knowing</h2>
+            <p>We then rebuilt the measurement stack so the practice could see reality.</p>
+            <p>That included:</p>
+            <ul>
+              <li>Google Analytics (clean setup + conversion structure)</li>
+              <li>Google Search Console (indexation + query intelligence)</li>
+              <li>SEMrush (competitive + technical monitoring)</li>
+              <li>Hotjar (behavior, drop-off, friction discovery)</li>
+            </ul>
+            <p>This let us deeply analyze:</p>
+            <ul>
+              <li>SEO performance and technical crawl health</li>
+              <li>site speed and mobile usability</li>
+              <li>conversion bottlenecks</li>
+              <li>how bots (search + AI discovery) interpret the practice</li>
+            </ul>
+            <p>
+              Learn more:
+              <br />
+              <strong>SEO system</strong> →{" "}
+              <a className={linkClassName} href="https://www.design-prism.com/seo" target="_blank" rel="noreferrer">
+                https://www.design-prism.com/seo
+              </a>
+              <br />
+              <strong>Growth reporting</strong> →{" "}
+              <a className={linkClassName} href="https://www.design-prism.com/growth" target="_blank" rel="noreferrer">
+                https://www.design-prism.com/growth
+              </a>
+            </p>
+            <hr />
+
+            <h2>The Strategy: Make Platforms Confident Sending Patients Here</h2>
+            <p>Here’s the part most agencies don’t say out loud:</p>
+            <p>Google, Apple, and Meta are not “traffic sources.”</p>
+            <p>They are gatekeepers.</p>
+            <p>They decide who gets shown and who doesn’t.</p>
+            <p>So the strategy is not “post more” or “run ads.”</p>
+            <p>The strategy is:</p>
+            <p>
+              <strong>Send clear signals that:</strong>
+            </p>
+            <ul>
+              <li>this is a real, trusted business</li>
+              <li>patients have a great experience here</li>
+              <li>the brand is consistent everywhere</li>
+              <li>the website answers the intent behind the search</li>
+              <li>the business is active and investable as a local entity</li>
+            </ul>
+            <p>That’s how you win over time.</p>
+            <p>And it’s why we connect the full ecosystem:</p>
+            <ul>
+              <li>site + SEO</li>
+              <li>listings + reviews</li>
+              <li>ads + landing pages</li>
+              <li>analytics + iteration loops</li>
+            </ul>
+            <p>
+              Related:
+              <br />
+              <strong>Ads system</strong> →{" "}
+              <a className={linkClassName} href="https://www.design-prism.com/ads" target="_blank" rel="noreferrer">
+                https://www.design-prism.com/ads
+              </a>
+              <br />
+              <strong>Google Ads</strong> →{" "}
+              <a className={linkClassName} href="https://www.design-prism.com/google" target="_blank" rel="noreferrer">
+                https://www.design-prism.com/google
+              </a>
+              <br />
+              <strong>Proof engine</strong> (reviews + trust) →{" "}
+              <a className={linkClassName} href="https://www.design-prism.com/proof" target="_blank" rel="noreferrer">
+                https://www.design-prism.com/proof
+              </a>
+            </p>
+            <hr />
+
+            <h2>Outcomes (What Changed)</h2>
+            <p>Exquisite Dentistry came out of this engagement with something most practices never get:</p>
+
+            <h3>A premium digital presence that finally matches the real product</h3>
+            <ul>
+              <li>modern design that supports a luxury brand</li>
+              <li>clearer service pathways</li>
+              <li>stronger trust signals</li>
+              <li>better mobile experience</li>
+            </ul>
+
+            <h3>A tech stack that can evolve without breaking</h3>
+            <ul>
+              <li>fewer fragile dependencies</li>
+              <li>cleaner infrastructure</li>
+              <li>easier iteration cycle</li>
+              <li>safer updates</li>
+            </ul>
+
+            <h3>A measurable funnel</h3>
+            <ul>
+              <li>smoother scheduling + forms</li>
+              <li>clearer attribution</li>
+              <li>cleaner analytics</li>
+              <li>better insight into what channels drive real consults</li>
+            </ul>
+            <hr />
+
+            <h2>What This Means for Other Practice Owners</h2>
+            <p>If you’re a dentist and any of this feels familiar, you’re not alone:</p>
+            <ul>
+              <li>You’ve been around long enough to accumulate website “scar tissue.”</li>
+              <li>You’re afraid to rebuild because you might lose rankings.</li>
+              <li>You know your practice is excellent—but your online presence doesn’t show it.</li>
+              <li>You’re spending money (or time) on marketing without clean clarity on ROI.</li>
+              <li>You want a system you can trust, not a fragile website you’re scared to touch.</li>
+            </ul>
+            <p>That’s exactly what Prism is built for.</p>
+            <p>We don’t just “make it look better.”</p>
+            <p>
+              We build an <strong>AI-native growth stack</strong> that makes your practice easier to discover, easier to trust, and easier to choose.
+            </p>
+            <p>
+              See more results:{" "}
+              <a className={linkClassName} href="https://www.design-prism.com/case-studies" target="_blank" rel="noreferrer">
+                https://www.design-prism.com/case-studies
+              </a>
+              <br />
+              See why dentists work with Prism:{" "}
+              <a className={linkClassName} href="https://www.design-prism.com/why-dental-practices-love-prism" target="_blank" rel="noreferrer">
+                https://www.design-prism.com/why-dental-practices-love-prism
+              </a>
+            </p>
+            <hr />
+
+            <h2>CTA</h2>
+            <p>If you want to know what’s holding your practice back online — and what to fix first:</p>
+            <ul>
+              <li>
+                Get a free analysis:{" "}
+                <a className={linkClassName} href="https://www.design-prism.com/free-analysis" target="_blank" rel="noreferrer">
+                  https://www.design-prism.com/free-analysis
+                </a>
+              </li>
+              <li>
+                Or go straight to pricing:{" "}
+                <a className={linkClassName} href="https://www.design-prism.com/get-started" target="_blank" rel="noreferrer">
+                  https://www.design-prism.com/get-started
+                </a>
+              </li>
+              <li>
+                Or talk with us:{" "}
+                <a className={linkClassName} href="https://www.design-prism.com/contact" target="_blank" rel="noreferrer">
+                  https://www.design-prism.com/contact
+                </a>
+              </li>
+            </ul>
+            <p>
+              <strong>Ready to modernize your practice without risking what already works?</strong>
+            </p>
+            <p>Let’s build the system you’ll be proud to send patients to.</p>
+          </article>
         </div>
 
         <div className="mt-12">
-          <SocialShare url="https://www.design-prism.com/case-studies/exquisite-dentistry" imageUrl="https://www.design-prism.com/exquisite-dentistry-consultation.png" title="Exquisite Dentistry Case Study" description="How Prism elevated Beverly Hills' Exquisite Dentistry's online presence." />
+          <SocialShare
+            url="https://www.design-prism.com/case-studies/exquisite-dentistry"
+            imageUrl="https://www.design-prism.com/exquisite-dentistry-consultation.png"
+            title="Case Study: Exquisite Dentistry — Turning a Legacy Beverly Hills Brand Into a Modern, Trackable Growth Engine"
+            description="Turning a legacy Beverly Hills brand into a modern, trackable growth engine."
+          />
         </div>
       </main>
       <Footer />
       <CaseStudySchema
-        title="aligning digital excellence with luxury care | exquisite dentistry case study"
-        description="how prism elevated beverly hills' exquisite dentistry's online presence to match their premium in-person experience."
+        title="Case Study: Exquisite Dentistry — Turning a Legacy Beverly Hills Brand Into a Modern, Trackable Growth Engine"
+        description="Turning a legacy Beverly Hills brand into a modern, trackable growth engine."
         url="https://www.design-prism.com/case-studies/exquisite-dentistry"
         imageUrl="https://www.design-prism.com/exquisite-dentistry-consultation.png"
         datePublished="2025-06-01T00:00:00.000Z"
         dateModified="2025-06-01T00:00:00.000Z"
         clientName="Exquisite Dentistry"
-        outcome="higher-quality leads and luxury brand cohesion"
+        outcome="premium digital presence, a tech stack that can evolve without breaking, and a measurable funnel"
       />
     </div>
   )
