@@ -44,7 +44,7 @@ const TRAINING_COURSES = [
         alt: "Replit logo",
       },
       {
-        src: "https://res.cloudinary.com/dhqpqfw6w/image/upload/v1766513382/lovable-icon-bg-light_q8fx8w.webp",
+        src: "https://res.cloudinary.com/dhqpqfw6w/image/upload/v1766517079/lovable-logo-icon_ubydgo.webp",
         alt: "Lovable logo",
       },
     ],
