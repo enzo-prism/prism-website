@@ -82,7 +82,7 @@ export default function WallOfLoveCarousel({
               align: "start",
               containScroll: "trimSnaps",
               dragFree: !isSwipeDisabled,
-              draggable: !isSwipeDisabled,
+              watchDrag: !isSwipeDisabled,
               loop: false,
             }}
             className="touch-pan-y"
