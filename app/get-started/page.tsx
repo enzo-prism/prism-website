@@ -138,13 +138,15 @@ export default function GetStartedPage() {
           <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-muted/50 via-background to-background" />
           <div className="container relative mx-auto flex max-w-4xl flex-col gap-6 px-4 sm:px-6">
             <Badge variant="secondary" className="w-fit">
-              Get Started
+              Elevate Your Results
             </Badge>
             <h1 className="text-balance text-4xl font-semibold tracking-tight text-foreground sm:text-5xl lg:text-6xl">
               Tired of handling all the marketing and tech yourself?
             </h1>
-            <p className="text-balance text-lg text-muted-foreground">
-              Join our Online Presence Transformation program - remove yourself as the bottleneck for growth.
+            <p className="max-w-2xl text-lg leading-relaxed text-muted-foreground">
+              <span className="font-medium text-foreground">Join our Online Presence Transformation program</span>
+              <span className="hidden sm:inline"> - </span>
+              <span className="block sm:inline">remove yourself as the bottleneck for growth 📈</span>
             </p>
             <VideoPlayer
               src={VSL_SOURCE.src}
