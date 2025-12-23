@@ -61,11 +61,11 @@ export default function WallOfLoveClientPage() {
               <span>24.5k+ on youtube</span>
             </div>
             <div className="pt-1 flex items-center justify-center">
-              <Link href="/pricing">
+              <Link href="/get-started">
                 <Button
                   size="sm"
                   className="rounded-full px-6 py-2.5 text-sm lowercase bg-neutral-900 text-white hover:bg-neutral-800"
-                  onClick={() => trackCTAClick("wall_of_love_pricing_cta", "/pricing")}
+                  onClick={() => trackCTAClick("wall_of_love_get_started_cta", "/get-started")}
                 >
                   let's make something you'll love <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>

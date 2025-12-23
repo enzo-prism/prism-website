@@ -109,8 +109,8 @@ export default function ImpactGraphSection() {
                 </Link>
               </Button>
               <Button variant="outline" asChild className="w-full rounded-full lowercase sm:w-auto">
-                <Link href="/pricing" onClick={() => trackCTAClick("see pricing", "homepage impact graph")}>
-                  see pricing
+                <Link href="/get-started" onClick={() => trackCTAClick("get started", "homepage impact graph")}>
+                  get started
                 </Link>
               </Button>
             </div>

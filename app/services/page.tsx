@@ -243,13 +243,13 @@ export default function ServicesPage() {
               </p>
               <div className="mt-8 flex flex-wrap justify-center gap-3">
                 <Link
-                  href="/pricing"
+                  href="/get-started"
                   className="inline-flex items-center justify-center rounded-full bg-neutral-900 px-6 py-3 text-sm font-semibold text-white transition hover:bg-neutral-800"
                 >
-                  explore pricing
+                  get started
                 </Link>
                 <Link
-                  href="/pricing"
+                  href="/get-started"
                   className="inline-flex items-center justify-center rounded-full border border-neutral-200 px-6 py-3 text-sm font-semibold text-neutral-900 transition hover:border-neutral-900"
                 >
                   talk with prism
@@ -396,7 +396,7 @@ export default function ServicesPage() {
             <div className="mx-auto max-w-2xl text-center">
               <h2 className="text-3xl font-semibold lowercase text-neutral-900 sm:text-4xl">popular bundles clients launch with</h2>
               <p className="mt-3 text-sm text-neutral-600 sm:text-base">
-                Use the pricing planner to fine-tune your mix. These example stacks show where most teams begin.
+                Use the get started plan to fine-tune your mix. These example stacks show where most teams begin.
               </p>
             </div>
             <div className="mt-10 grid gap-6 md:grid-cols-3">
@@ -414,8 +414,11 @@ export default function ServicesPage() {
                     ))}
                   </ul>
                   <div className="mt-auto">
-                    <Link href="/pricing" className="text-sm font-semibold lowercase text-neutral-900 underline decoration-neutral-300 underline-offset-4 hover:decoration-neutral-900">
-                      configure this in the pricing planner
+                    <Link
+                      href="/get-started"
+                      className="text-sm font-semibold lowercase text-neutral-900 underline decoration-neutral-300 underline-offset-4 hover:decoration-neutral-900"
+                    >
+                      configure this in your plan
                     </Link>
                   </div>
                 </div>
@@ -468,7 +471,7 @@ export default function ServicesPage() {
               </p>
               <div className="mt-8 flex flex-wrap justify-center gap-3">
                 <Link
-                  href="/pricing"
+                  href="/get-started"
                   className="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-neutral-900 transition hover:bg-neutral-100"
                 >
                   claim your audit & plan

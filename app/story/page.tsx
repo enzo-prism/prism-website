@@ -125,7 +125,7 @@ export default function StoryPage() {
               </p>
               <div className="mt-8 flex flex-wrap justify-center gap-3">
                 <Link
-                  href="/pricing"
+                  href="/get-started"
                   className="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-neutral-950 transition hover:bg-neutral-100"
                 >
                   start a story-driven strategy session
@@ -316,7 +316,7 @@ export default function StoryPage() {
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-3">
               <Link
-                href="/pricing"
+                href="/get-started"
                 className="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-neutral-950 transition hover:bg-neutral-200"
               >
                 start a story-driven strategy session

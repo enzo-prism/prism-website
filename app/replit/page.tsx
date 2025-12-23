@@ -133,7 +133,7 @@ export default async function ReplitPage() {
                   variant="inverted"
                   className="h-auto rounded-full px-8 py-4 text-base font-semibold"
                 >
-                  <Link href="/pricing">
+                  <Link href="/get-started">
                     🚀 get a website built in replit <ArrowRight className="h-5 w-5" aria-hidden />
                   </Link>
                 </Button>
@@ -205,8 +205,8 @@ export default async function ReplitPage() {
                 variant="inverted"
                 className="mt-4 h-auto w-full rounded-full px-8 py-4 text-base font-semibold sm:w-auto"
               >
-                <Link href="/pricing" className="lowercase">
-                  see our pricing &amp; website packages <ArrowRight className="h-5 w-5" aria-hidden />
+                <Link href="/get-started" className="lowercase">
+                  get started with prism <ArrowRight className="h-5 w-5" aria-hidden />
                 </Link>
               </Button>
             </div>
@@ -381,7 +381,7 @@ export default async function ReplitPage() {
                 variant="inverted"
                 className="h-auto rounded-full px-8 py-4 text-base font-semibold"
               >
-                <Link href="/pricing">
+                <Link href="/get-started">
                   get a website built by prism <ArrowRight className="h-5 w-5" aria-hidden />
                 </Link>
               </Button>

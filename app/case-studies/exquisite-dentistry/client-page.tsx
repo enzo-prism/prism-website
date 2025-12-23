@@ -402,7 +402,7 @@ export default function ExquisiteDentistryCaseStudy() {
                 </a>
               </li>
               <li>
-                Or go straight to pricing:{" "}
+                Or go straight to get started:{" "}
                 <a className={linkClassName} href="https://www.design-prism.com/get-started" target="_blank" rel="noreferrer">
                   https://www.design-prism.com/get-started
                 </a>

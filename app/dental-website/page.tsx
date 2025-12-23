@@ -690,8 +690,8 @@ export default function DentalWebsitePage() {
                 </Link>
               </Button>
               <Button asChild variant="outline" size="lg" className="rounded-full px-8 py-3 text-base lowercase">
-                <Link href="/pricing">
-                  explore pricing
+                <Link href="/get-started">
+                  get started
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>

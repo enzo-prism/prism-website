@@ -52,7 +52,7 @@ export default function TikTokLandingPage() {
                 </div>
                 <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
                   <Button asChild size="lg" variant="inverted" className="rounded-full px-8 py-3 text-base font-semibold">
-                    <Link href="/pricing">👉 Work With Prism</Link>
+                    <Link href="/get-started">👉 Work With Prism</Link>
                   </Button>
                   <Button
                     asChild
@@ -166,7 +166,7 @@ export default function TikTokLandingPage() {
                       variant="inverted"
                       className="rounded-full px-6 py-3 text-base font-semibold"
                     >
-                      <Link href="/pricing">Get Started →</Link>
+                      <Link href="/get-started">Get Started →</Link>
                     </Button>
                   </div>
                 </div>

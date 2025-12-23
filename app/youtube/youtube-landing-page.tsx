@@ -68,7 +68,7 @@ export default function YouTubeLandingPage() {
                 </div>
                 <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
                   <Button asChild size="lg" variant="inverted" className="rounded-full px-8 py-3 text-base font-semibold">
-                    <Link href="/pricing">👉 Work With Prism</Link>
+                    <Link href="/get-started">👉 Work With Prism</Link>
                   </Button>
                   <Button asChild size="lg" variant="outline-inverted" className="rounded-full px-8 py-3 text-base">
                     <Link href="/refer">💸 Refer &amp; Earn</Link>
@@ -198,7 +198,7 @@ export default function YouTubeLandingPage() {
                   👤 Business Owners: Let’s design a system that turns your traffic into customers.
                 </p>
                 <Button asChild size="lg" variant="inverted" className="rounded-full px-8 py-3 text-base font-semibold">
-                  <Link href="/pricing">Get Started</Link>
+                  <Link href="/get-started">Get Started</Link>
                 </Button>
               </div>
               <div className="space-y-4">

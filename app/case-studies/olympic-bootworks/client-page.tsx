@@ -52,8 +52,8 @@ export default function OlympicBootworksCaseStudy() {
                 Wall of love
               </Link>{" "}
               •{" "}
-              <Link href="/pricing" className={linkClassName}>
-                Pricing
+              <Link href="/get-started" className={linkClassName}>
+                Get started
               </Link>
             </p>
             <hr />
@@ -454,8 +454,8 @@ export default function OlympicBootworksCaseStudy() {
               </li>
               <li>
                 Review{" "}
-                <Link href="/pricing" className={linkClassName}>
-                  pricing
+                <Link href="/get-started" className={linkClassName}>
+                  get started
                 </Link>{" "}
                 (if you already know you want Prism)
               </li>

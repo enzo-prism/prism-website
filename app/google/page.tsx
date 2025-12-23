@@ -7,11 +7,11 @@ import Navbar from "@/components/navbar"
 import ScrollToTop from "@/components/scroll-to-top"
 import { Button } from "@/components/ui/button"
 
-const GET_STARTED_HREF = "/pricing"
-const PRICING_HREF = "/pricing"
+const GET_STARTED_HREF = "/get-started"
+const PRICING_HREF = "/get-started"
 const GOOGLE_WORKSPACE_LINK =
   "https://c.gle/APy2Ad08G18tc2DVKTvFnIX7ZsIi8C_16CofJocN9aFYsQDXBJRKDAH3FRQb6BfrqNgPv1Buz5DypvRjWF8E2rqpEvohTLTUWmLF6UOh4oCinNkIBx-wbk3wUX2jqxqDYiPNn4cWz4pfBlfNZT7je1YO"
-const GOOGLE_MARKETING_PLANS_HREF = "/pricing"
+const GOOGLE_MARKETING_PLANS_HREF = "/get-started"
 const BLOG_HREF = "/blog"
 const YOUTUBE_CHANNEL_URL = "https://www.youtube.com/@the_design_prism"
 const HIPAA_PATIENT_FORMS_GUIDE = "/google/dental-patient-forms"
@@ -30,7 +30,7 @@ const servicesHighlights = [
     title: "google marketing integration",
     description:
       "we connect and optimize your google business profile, google ads, analytics, and youtube — ensuring every ad click and search result leads to measurable growth.",
-    ctaLabel: "View our plans",
+    ctaLabel: "Get started with Prism",
     href: GOOGLE_MARKETING_PLANS_HREF,
     external: false,
     icon: Globe2
@@ -352,7 +352,7 @@ export default function GooglePage() {
                 className="h-auto rounded-full px-8 py-4 text-base font-semibold"
               >
                 <Link href={PRICING_HREF}>
-                  View Pricing <ArrowRight className="h-5 w-5" aria-hidden />
+                  Get started with Prism <ArrowRight className="h-5 w-5" aria-hidden />
                 </Link>
               </Button>
               <Button

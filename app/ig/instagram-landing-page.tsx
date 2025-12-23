@@ -55,7 +55,7 @@ export default function InstagramLandingPage() {
                 </div>
                 <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
                   <Button asChild size="lg" variant="inverted" className="rounded-full px-8 py-3 text-base font-semibold">
-                    <Link href="/pricing">Work With Prism</Link>
+                    <Link href="/get-started">Work With Prism</Link>
                   </Button>
                   <Button
                     asChild
@@ -126,7 +126,7 @@ export default function InstagramLandingPage() {
                 ))}
               </ul>
               <Button asChild size="lg" className="mt-4 w-fit rounded-full px-8 py-3 text-base">
-                <Link href="/pricing">
+                <Link href="/get-started">
                   Start a Project <ArrowRight className="ml-2 h-5 w-5" />
                 </Link>
               </Button>
@@ -147,7 +147,7 @@ export default function InstagramLandingPage() {
                   Let’s design a website that helps you grow.
                 </p>
                 <Button asChild size="lg" variant="inverted" className="rounded-full px-8 py-3 text-base font-semibold">
-                  <Link href="/pricing">Get Started</Link>
+                  <Link href="/get-started">Get Started</Link>
                 </Button>
               </div>
               <div className="space-y-4">

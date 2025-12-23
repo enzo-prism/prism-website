@@ -39,7 +39,7 @@ export const seoOverviewContent = {
     eyebrow: "seo",
     title: "seo that actually moves the needle",
     subtitle: "we build websites that don’t just look good — they show up, get clicked, and turn strangers into customers.",
-    primaryCta: { label: "talk with prism", href: "/pricing" },
+    primaryCta: { label: "talk with prism", href: "/get-started" },
     secondaryCta: { label: "see on-page seo", href: "/seo/on-page" },
   } satisfies SeoHeroContent,
   scoringQuestions: [
@@ -105,7 +105,7 @@ export const seoOnPageContent = {
     eyebrow: "on-page seo",
     title: "on-page seo: make your website a perfect answer",
     subtitle: "everything you control on your own site — designed to match what people are actually searching for.",
-    primaryCta: { label: "book a prism build", href: "/pricing" },
+    primaryCta: { label: "book a prism build", href: "/get-started" },
     secondaryCta: { label: "see off-page seo", href: "/seo/off-page" },
   } satisfies SeoHeroContent,
   intro:
@@ -175,7 +175,7 @@ export const seoOffPageContent = {
     eyebrow: "off-page seo",
     title: "off-page seo: prove to google and apple that the world trusts you",
     subtitle: "everything happening off your site that boosts trust, authority, and visibility.",
-    primaryCta: { label: "tighten your ecosystem", href: "/pricing" },
+    primaryCta: { label: "tighten your ecosystem", href: "/get-started" },
     secondaryCta: { label: "review on-page seo", href: "/seo/on-page" },
   } satisfies SeoHeroContent,
   video: {

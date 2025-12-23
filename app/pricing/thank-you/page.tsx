@@ -44,7 +44,7 @@ export default function PricingThankYouPage() {
               <Link href="/">Return to homepage</Link>
             </Button>
             <Button asChild variant="ghost" size="lg" className="rounded-full px-8">
-              <Link href="/pricing">Adjust your plan</Link>
+              <Link href="/get-started">Adjust your plan</Link>
             </Button>
           </div>
         </div>

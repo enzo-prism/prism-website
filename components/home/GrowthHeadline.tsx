@@ -50,7 +50,7 @@ export default function GrowthHeadline() {
               variant="inverted"
               className="rounded-full px-5 py-3 text-base font-semibold"
             >
-              <Link href="/pricing" onClick={() => trackCTAClick("start your build", "growth headline")}>
+              <Link href="/get-started" onClick={() => trackCTAClick("start your build", "growth headline")}>
                 start your build <ArrowRight className="ml-2 h-4 w-4" aria-hidden />
               </Link>
             </Button>

@@ -22,9 +22,9 @@ export default function GrowCheckoutPage() {
         <div className="mx-auto max-w-2xl">
           <div className="mb-8">
              <Button variant="ghost" size="sm" asChild className="gap-2 pl-0 hover:bg-transparent hover:text-neutral-600">
-                <Link href="/pricing">
+                <Link href="/get-started">
                   <ArrowLeft className="h-4 w-4" />
-                  Back to Pricing
+                  Back to Get Started
                 </Link>
              </Button>
           </div>

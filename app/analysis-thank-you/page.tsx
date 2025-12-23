@@ -69,9 +69,9 @@ export default function AnalysisThankYouPage() {
                   <p className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-500">next</p>
                   <div className="mt-3 space-y-3 text-sm text-slate-600">
                     <div>
-                      <p className="font-semibold text-slate-900">Need pricing info?</p>
-                      <Link href="/pricing" className="text-slate-900 underline-offset-4 hover:underline">
-                        See our plans →
+                      <p className="font-semibold text-slate-900">Ready to get started?</p>
+                      <Link href="/get-started" className="text-slate-900 underline-offset-4 hover:underline">
+                        Start your plan →
                       </Link>
                     </div>
                     <div>

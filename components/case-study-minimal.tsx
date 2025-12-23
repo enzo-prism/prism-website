@@ -97,7 +97,7 @@ export default function MinimalCaseStudyPage({
   schema,
   cta,
 }: MinimalCaseStudyProps) {
-  const ctaHref = cta?.href ?? "/pricing"
+  const ctaHref = cta?.href ?? "/get-started"
   const ctaTrackLabel = cta?.trackLabel ?? `${pageTrackingTitle.toLowerCase()} case study`
 
   return (

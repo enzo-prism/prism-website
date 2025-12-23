@@ -63,6 +63,7 @@ images: {
       { source: '/pod', destination: '/', permanent: true },
       { source: '/tools', destination: '/services', permanent: true },
       { source: '/portfolio', destination: '/case-studies', permanent: true },
+      { source: '/pricing', destination: '/get-started', permanent: true },
       // Friendly shortpaths for new nav structure
       { source: '/design', destination: '/designs', permanent: true },
       { source: '/growth', destination: '/prism-flywheel', permanent: true },

@@ -127,7 +127,7 @@ export default function SeoOffPagePage() {
             rank higher in google
           </Link>
           <Link
-            href="/pricing"
+            href="/get-started"
             className="inline-flex items-center rounded-full bg-neutral-900 px-6 py-3 text-sm font-semibold lowercase text-white"
           >
             talk with prism

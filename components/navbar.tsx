@@ -1,6 +1,6 @@
 "use client"
 
-import { BadgeDollarSign, BookOpen, FolderOpen, Heart, Home, Menu } from "lucide-react"
+import { BookOpen, FolderOpen, Heart, Home, Menu, Play } from "lucide-react"
 import type { LucideIcon } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
@@ -32,7 +32,7 @@ const topIconMap: Record<string, LucideIcon> = {
   "our story": BookOpen,
   "case studies": FolderOpen,
   "wall of love": Heart,
-  pricing: BadgeDollarSign,
+  start: Play,
 }
 
 const getTopIcon = (label?: string) => {

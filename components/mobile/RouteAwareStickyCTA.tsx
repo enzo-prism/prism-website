@@ -4,9 +4,8 @@ import { usePathname } from "next/navigation"
 import StickyCTA from "./StickyCTA"
 
 const ALLOWED_ROUTES = new Set([
-  "/pricing",
+  "/get-started",
   "/pricing-dental",
-  "/pricing",
   "/services",
   "/",
 ])

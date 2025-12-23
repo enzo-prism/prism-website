@@ -259,8 +259,8 @@ export default async function WebsitesPage() {
             </p>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
               <Button asChild size="lg" className="rounded-full px-8">
-                <Link href="/pricing">
-                  Pricing
+                <Link href="/get-started">
+                  Get started
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>

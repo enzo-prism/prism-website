@@ -52,7 +52,7 @@ const footerSections: FooterSection[] = [
     title: "About",
     items: [
       { label: "Our story", href: "/about" },
-      { label: "Pricing", href: "/pricing" },
+      { label: "Get Started", href: "/get-started" },
     ],
   },
 ]

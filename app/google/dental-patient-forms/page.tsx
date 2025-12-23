@@ -891,7 +891,7 @@ export default function GoogleDentalPatientFormsGuide() {
             </p>
             <div className="flex w-full flex-col gap-3 sm:flex-row sm:justify-center">
               <Button asChild size="lg" variant="inverted" className="h-auto rounded-full px-8 py-4 text-base font-semibold">
-                <Link href="/pricing">
+                <Link href="/get-started">
                   Talk to Prism <ArrowRight className="h-5 w-5" aria-hidden />
                 </Link>
               </Button>

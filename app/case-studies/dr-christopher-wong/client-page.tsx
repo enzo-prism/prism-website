@@ -464,7 +464,7 @@ export default function ChristopherWongCaseStudy() {
               <li>
                 see{" "}
                 <Link href="/get-started" className={linkClassName}>
-                  pricing
+                  get started
                 </Link>
               </li>
               <li>

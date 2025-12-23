@@ -26,7 +26,7 @@ export default function HeroSupportPill({ platform, className }: HeroSupportPill
 
   return (
     <Link
-      href="/pricing"
+      href="/get-started"
       className={cn(
         "group relative block w-full max-w-xl self-start rounded-2xl transition focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-900",
         className,

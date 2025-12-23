@@ -239,7 +239,7 @@ export default function ClientPage() {
                 size="lg"
                 className="w-full rounded-full transition-transform duration-200 ease-out hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0 sm:w-auto"
               >
-                <Link href="/pricing">Elevate your Online Presence</Link>
+                <Link href="/get-started">Elevate your Online Presence</Link>
               </Button>
             </div>
 

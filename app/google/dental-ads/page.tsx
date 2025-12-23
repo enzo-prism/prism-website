@@ -18,7 +18,7 @@ import Navbar from "@/components/navbar"
 import ScrollToTop from "@/components/scroll-to-top"
 import { Button } from "@/components/ui/button"
 
-const GET_FREE_AUDIT_HREF = "/pricing"
+const GET_FREE_AUDIT_HREF = "/get-started"
 const CONTACT_HREF = "/contact"
 const STRUCTURE_SECTION_ID = "structure"
 const POLICY_SECTION_ID = "policy"
@@ -556,8 +556,8 @@ export default function GoogleDentalAdsPage() {
               size="lg"
               className="mt-10 h-auto rounded-full bg-neutral-900 px-8 py-4 text-base font-semibold text-white"
             >
-              <Link href="/pricing">
-                View Full Pricing <ArrowRight className="ml-2 h-5 w-5" aria-hidden />
+              <Link href="/get-started">
+                Get started with Prism <ArrowRight className="ml-2 h-5 w-5" aria-hidden />
               </Link>
             </Button>
           </div>
