@@ -216,11 +216,11 @@ export default function ClientPage() {
                   Looking to elevate your online presence?
                 </h1>
                 <p className="text-balance text-lg text-muted-foreground">
-                  Handoff to the team that's grown 20+ businesses from 0 to millions of impressions per month
+                  Done-for-you growth from a team that's driven millions of monthly impressions for 20+ businesses.
                 </p>
                 <Card className="border-border/60 bg-card/80">
                   <CardContent className="p-4 text-sm font-semibold text-foreground">
-                    More Exposure + More customers + Higher lifetime value $ per customer
+                    More exposure • More customers • Higher customer LTV
                   </CardContent>
                 </Card>
               </div>
