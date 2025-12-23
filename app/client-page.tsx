@@ -1,3 +1,4 @@
+import type { ReactNode } from "react"
 import Image from "next/image"
 import Link from "next/link"
 
@@ -90,7 +91,16 @@ const TRAINING_COURSES = [
   },
 ]
 
-const FAQ_ITEMS = [
+type FAQBlock =
+  | { type: "paragraph"; content: ReactNode }
+  | { type: "list"; items: string[] }
+
+type FAQItem = {
+  question: string
+  answer: FAQBlock[]
+}
+
+const FAQ_ITEMS: FAQItem[] = [
   {
     question: "What is Prism?",
     answer: [
