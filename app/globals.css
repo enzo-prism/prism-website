@@ -47,7 +47,7 @@ body {
 @tailwind utilities;
 /* Mobile scroll performance: avoid blur on small screens */
 @media (max-width: 768px) {
-  .backdrop-blur { backdrop-filter: none !important; }
+  .backdrop-blur:not(.nav-blur) { backdrop-filter: none !important; }
 }
 
 /* Pause CSS animations when body indicates heavy scrolling (desktop only usage) */

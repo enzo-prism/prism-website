@@ -112,7 +112,7 @@ export default function Navbar() {
   return (
     <header
       ref={headerRef}
-      className={`sticky top-0 z-50 w-full backdrop-blur transition-colors ${
+      className={`sticky top-0 z-50 w-full backdrop-blur nav-blur transition-colors ${
         isScrolled
           ? "bg-background/95 shadow-sm supports-[backdrop-filter]:bg-background/90"
           : "bg-background/80 supports-[backdrop-filter]:bg-background/60"
