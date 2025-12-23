@@ -185,12 +185,12 @@ const FAQ_ITEMS: FAQItem[] = [
 ]
 
 const FOUNDER_PARAGRAPHS = [
-  "Prism was founded by Enzo Sison to help businesses grow online in a way that actually compounds. Enzo's career in digital marketing started early--building and scaling online audiences during middle school and high school, long before it was fashionable. Through years of experimentation, he learned how attention is earned, how communities are built, and how digital platforms can be turned into real, measurable business growth.",
+  "Prism was founded by Enzo Sison to help businesses grow online in a way that actually compounds. Enzo's career in digital marketing started early, building and scaling online audiences during middle school and high school, long before it was fashionable. Through years of experimentation, he learned how attention is earned, how communities are built, and how digital platforms can be turned into real, measurable business growth.",
   "Those early projects reached millions of people and led to partnerships with brands like Sony and FanDuel, where Enzo sharpened his understanding of distribution, monetization, and performance-driven marketing.",
   "Enzo later earned an engineering degree from Cal Poly, San Luis Obispo, studying computer science and user experience design. He also interned at Apple, where his approach was shaped by a deep respect for precision, craft, and the intersection of world-class design, engineering, and storytelling.",
   "Today, Enzo is training for the 2028 Olympics in Los Angeles, competing in track and field for Team Philippines. He competed Division I in college and continues to apply the same discipline, systems thinking, and long-term mindset to building Prism.",
-  "At Prism, Enzo focuses entirely on technology-driven marketing--websites, SEO, ads, and systems that remove complexity for founders and operators. By taking ownership of the technical and digital surface area, Prism allows clients to stay focused on their product, service, and customers.",
-  "The digital landscape is changing fast, especially with AI reshaping how businesses are discovered and evaluated. Prism exists to stay ahead of that curve--helping clients improve visibility, conversion, and lifetime value month after month, without noise or gimmicks.",
+  "At Prism, Enzo focuses entirely on technology-driven marketing, websites, SEO, ads, and systems that remove complexity for founders and operators. By taking ownership of the technical and digital surface area, Prism allows clients to stay focused on their product, service, and customers.",
+  "The digital landscape is changing fast, especially with AI reshaping how businesses are discovered and evaluated. Prism exists to stay ahead of that curve, helping clients improve visibility, conversion, and lifetime value month after month, without noise or gimmicks.",
 ]
 
 const ROADMAP_PHASES = [
