@@ -4,6 +4,7 @@ import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Search, AlertCircle, CheckCircle, TrendingUp, RefreshCw } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
 import { fadeInUp, springScale, successPop } from "@/utils/animation-variants"
 
 interface TestResult {
@@ -125,12 +126,12 @@ export default function AIMentionTracker() {
             <label className="block text-sm font-medium text-neutral-700 mb-2">
               Business Name *
             </label>
-            <input
+            <Input
               type="text"
               value={businessName}
               onChange={(e) => setBusinessName(e.target.value)}
               placeholder="e.g., Sweet Haven"
-              className="w-full px-3 py-2 border border-neutral-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full border-neutral-300 px-3 py-2 focus-visible:ring-blue-500"
             />
           </div>
 
@@ -138,12 +139,12 @@ export default function AIMentionTracker() {
             <label className="block text-sm font-medium text-neutral-700 mb-2">
               Industry/Category *
             </label>
-            <input
+            <Input
               type="text"
               value={industry}
               onChange={(e) => setIndustry(e.target.value)}
               placeholder="e.g., coffee roasters, fitness coaching"
-              className="w-full px-3 py-2 border border-neutral-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full border-neutral-300 px-3 py-2 focus-visible:ring-blue-500"
             />
           </div>
 
@@ -151,12 +152,12 @@ export default function AIMentionTracker() {
             <label className="block text-sm font-medium text-neutral-700 mb-2">
               Target Audience (Optional)
             </label>
-            <input
+            <Input
               type="text"
               value={targetAudience}
               onChange={(e) => setTargetAudience(e.target.value)}
               placeholder="e.g., busy professionals, families"
-              className="w-full px-3 py-2 border border-neutral-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full border-neutral-300 px-3 py-2 focus-visible:ring-blue-500"
             />
           </div>
 
@@ -165,22 +166,24 @@ export default function AIMentionTracker() {
               Custom Test Queries (Optional)
             </label>
             {customQueries.map((query, index) => (
-              <input
+              <Input
                 key={index}
                 type="text"
                 value={query}
                 onChange={(e) => updateCustomQuery(index, e.target.value)}
                 placeholder="e.g., best local coffee shop"
-                className="w-full px-3 py-2 border border-neutral-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 mb-2"
+                className="mb-2 w-full border-neutral-300 px-3 py-2 focus-visible:ring-blue-500"
               />
             ))}
             {customQueries.length < 3 && (
-              <button
+              <Button
+                type="button"
                 onClick={addCustomQuery}
-                className="text-sm text-blue-600 hover:text-blue-800 transition-colors"
+                variant="link"
+                className="h-auto p-0 text-sm text-blue-600 hover:text-blue-800"
               >
                 + Add custom query
-              </button>
+              </Button>
             )}
           </div>
 

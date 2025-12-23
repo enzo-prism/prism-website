@@ -17,9 +17,9 @@ const data = [
 ]
 
 const chartConfig = {
-  organic: { label: "Organic", color: "hsl(var(--chart-1))" },
-  direct: { label: "Direct", color: "hsl(var(--chart-2))" },
-  other: { label: "Other", color: "hsl(var(--chart-3))" },
+  organic: { label: "Organic", color: "var(--chart-1)" },
+  direct: { label: "Direct", color: "var(--chart-2)" },
+  other: { label: "Other", color: "var(--chart-3)" },
 } satisfies ChartConfig
 
 export function ExquisiteChannelShareChart() {
@@ -28,7 +28,14 @@ export function ExquisiteChannelShareChart() {
       <ResponsiveContainer width="100%" height="100%">
         <PieChart>
           <ChartTooltip content={<ChartTooltipContent hideLabel className="rounded-lg shadow-lg bg-background/95 backdrop-blur-sm" />} />
-          <Pie data={data} dataKey="value" nameKey="channel" innerRadius="60%" strokeWidth={3} stroke="hsl(var(--background))">
+          <Pie
+            data={data}
+            dataKey="value"
+            nameKey="channel"
+            innerRadius="60%"
+            strokeWidth={3}
+            stroke="var(--background)"
+          >
             {data.map((entry, index) => (
               <Cell key={`cell-${index}`} fill={entry.fill} />
             ))}

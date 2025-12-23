@@ -39,13 +39,13 @@ const data = {
 }
 
 const chartConfig = {
-  bespoke: { label: "Bespoke Website Rebuild", color: "hsl(var(--chart-1))" },
-  ux: { label: "UX First", color: "hsl(var(--chart-2))" },
-  content: { label: "Content Remix", color: "hsl(var(--chart-3))" },
-  listings: { label: "Listing Clean-Up", color: "hsl(var(--chart-4))" },
-  ads: { label: "Ad Campaigns", color: "hsl(var(--chart-5))" },
-  systems: { label: "Systems Integration", color: "hsl(var(--chart-6))" },
-  schema: { label: "AI-Ready Schema", color: "hsl(var(--chart-7))" },
+  bespoke: { label: "Bespoke Website Rebuild", color: "var(--chart-1)" },
+  ux: { label: "UX First", color: "var(--chart-2)" },
+  content: { label: "Content Remix", color: "var(--chart-3)" },
+  listings: { label: "Listing Clean-Up", color: "var(--chart-4)" },
+  ads: { label: "Ad Campaigns", color: "var(--chart-5)" },
+  systems: { label: "Systems Integration", color: "var(--chart-6)" },
+  schema: { label: "AI-Ready Schema", color: "var(--chart-7)" },
 } satisfies ChartConfig
 
 export function ExquisitePillarKPIChart() {
@@ -55,8 +55,8 @@ export function ExquisitePillarKPIChart() {
         <Sankey
           data={data}
           nodePadding={30}
-          node={{ stroke: "hsl(var(--muted-foreground))", strokeWidth: 1 }}
-          link={{ stroke: "hsl(var(--chart-1))", strokeOpacity: 0.5 }}
+          node={{ stroke: "var(--muted-foreground)", strokeWidth: 1 }}
+          link={{ stroke: "var(--chart-1)", strokeOpacity: 0.5 }}
         >
           <ChartTooltip
             content={

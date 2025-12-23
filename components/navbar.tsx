@@ -8,6 +8,14 @@ import { useLayoutEffect, useMemo, useRef } from "react"
 
 import Breadcrumbs from "@/components/breadcrumbs"
 import { Button } from "@/components/ui/button"
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+} from "@/components/ui/navigation-menu"
 import { Sheet, SheetClose, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { CASE_STUDIES } from "@/lib/case-study-data"
 import { LOGO_CONFIG, NAV_ITEMS, type NavItem } from "@/lib/constants"
@@ -116,51 +124,67 @@ export default function Navbar() {
           </div>
         </Link>
 
-        <nav className="hidden items-center gap-6 md:flex">
-          {navItems.map((item) => (
-            <div key={item.label} className="relative group">
-              {item.href ? (
-                <Link
-                  href={item.href}
-                  className={`flex items-center gap-2 text-sm font-medium lowercase transition-colors hover:text-primary ${
-                    isActivePath(item.href) ? "text-primary" : "text-muted-foreground"
-                  }`}
-                  onClick={() => trackNavigation(item.label, item.href!)}
-                >
-                  {getTopIcon(item.label)}
-                  <span>{item.label}</span>
-                </Link>
-              ) : (
-                <button
-                  className={`flex items-center gap-1 text-sm font-medium lowercase transition-colors hover:text-primary ${
-                    isParentActive(item) ? "text-primary" : "text-muted-foreground"
-                  }`}
-                  aria-haspopup="menu"
-                  aria-expanded="false"
-                >
-                  <span>{item.label}</span>
-                </button>
-              )}
-              {item.children && (
-                <div className="invisible absolute left-1/2 top-full z-50 mt-3 w-52 -translate-x-1/2 rounded-xl border bg-white p-2 opacity-0 shadow-lg transition-all duration-150 group-hover:visible group-hover:opacity-100">
-                  {item.children.map((child) => (
+        <NavigationMenu className="hidden md:flex" viewport={false}>
+          <NavigationMenuList className="gap-6">
+            {navItems.map((item) => (
+              <NavigationMenuItem key={item.label}>
+                {item.href ? (
+                  <NavigationMenuLink
+                    asChild
+                    className={`flex items-center gap-2 p-0 text-sm font-medium lowercase transition-colors hover:bg-transparent hover:text-primary focus:bg-transparent focus:text-primary ${
+                      isActivePath(item.href) ? "text-primary" : "text-muted-foreground"
+                    }`}
+                    active={isActivePath(item.href)}
+                  >
                     <Link
-                      key={child.label}
-                      href={child.href}
-                      className={`group/nav-item flex items-center gap-2 rounded-md px-3 py-2 text-sm lowercase transition-colors hover:bg-neutral-50 ${
-                        isActivePath(child.href) ? "text-neutral-900" : "text-neutral-700 hover:text-neutral-900"
-                      }`}
-                      onClick={() => trackNavigation(child.label, child.href)}
+                      href={item.href}
+                      onClick={() => trackNavigation(item.label, item.href!)}
                     >
-                      {getNavIcon(child.label)}
-                      {child.label}
+                      {getTopIcon(item.label)}
+                      <span>{item.label}</span>
                     </Link>
-                  ))}
-                </div>
-              )}
-            </div>
-          ))}
-        </nav>
+                  </NavigationMenuLink>
+                ) : (
+                  <>
+                    <NavigationMenuTrigger
+                      className={`h-auto bg-transparent px-0 py-0 text-sm font-medium lowercase transition-colors hover:bg-transparent hover:text-primary focus:bg-transparent focus:text-primary data-[state=open]:bg-transparent data-[state=open]:text-primary ${
+                        isParentActive(item) ? "text-primary" : "text-muted-foreground"
+                      }`}
+                    >
+                      {item.label}
+                    </NavigationMenuTrigger>
+                    {item.children && (
+                      <NavigationMenuContent className="rounded-xl border bg-white p-2 shadow-lg">
+                        <div className="flex w-52 flex-col gap-1">
+                          {item.children.map((child) => (
+                            <NavigationMenuLink
+                              key={child.label}
+                              asChild
+                              className={`flex items-center gap-2 rounded-md px-3 py-2 text-sm lowercase transition-colors ${
+                                isActivePath(child.href)
+                                  ? "bg-muted text-foreground"
+                                  : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                              }`}
+                              active={isActivePath(child.href)}
+                            >
+                              <Link
+                                href={child.href}
+                                onClick={() => trackNavigation(child.label, child.href)}
+                              >
+                                {getNavIcon(child.label)}
+                                {child.label}
+                              </Link>
+                            </NavigationMenuLink>
+                          ))}
+                        </div>
+                      </NavigationMenuContent>
+                    )}
+                  </>
+                )}
+              </NavigationMenuItem>
+            ))}
+          </NavigationMenuList>
+        </NavigationMenu>
 
         <div className="flex items-center md:hidden">
           <Sheet>

@@ -2,6 +2,8 @@
 
 import type React from "react"
 import { useState, useEffect } from "react"
+import { ChevronLeft, ChevronRight } from "lucide-react"
+import { Button } from "@/components/ui/button"
 import CoreImage from "@/components/core-image" // Using CoreImage for consistency and optimization
 
 interface Benefit {
@@ -79,55 +81,40 @@ const BenefitsSlideshow: React.FC<BenefitsSlideshowProps> = ({ benefits }) => {
 
       <div className="absolute bottom-5 left-0 w-full flex justify-center space-x-2.5">
         {benefits.map((_, index) => (
-          <button
+          <Button
             key={index}
             onClick={() => goToSlide(index)}
             aria-label={`Go to slide ${index + 1}`}
-            className={`h-2.5 w-2.5 rounded-full transition-all duration-300 ${
+            type="button"
+            variant="ghost"
+            size="icon-xs"
+            className={`h-2.5 w-2.5 rounded-full p-0 transition-all duration-300 ${
               index === currentIndex ? "bg-neutral-700 scale-125" : "bg-neutral-300 hover:bg-neutral-400"
             }`}
           />
         ))}
       </div>
 
-      <button
+      <Button
         onClick={goToPrevious}
         aria-label="Previous Slide"
-        className="absolute top-1/2 left-2 transform -translate-y-1/2 bg-white bg-opacity-70 hover:bg-opacity-90 text-neutral-700 p-2 rounded-full shadow-md transition-opacity focus:outline-none focus:ring-2 focus:ring-neutral-500 md:left-4"
+        type="button"
+        variant="ghost"
+        size="icon"
+        className="absolute top-1/2 left-2 -translate-y-1/2 rounded-full bg-white/70 text-neutral-700 shadow-md transition-opacity hover:bg-white/90 focus-visible:ring-2 focus-visible:ring-neutral-500 md:left-4"
       >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <polyline points="15 18 9 12 15 6"></polyline>
-        </svg>
-      </button>
-      <button
+        <ChevronLeft className="h-5 w-5" />
+      </Button>
+      <Button
         onClick={goToNext}
         aria-label="Next Slide"
-        className="absolute top-1/2 right-2 transform -translate-y-1/2 bg-white bg-opacity-70 hover:bg-opacity-90 text-neutral-700 p-2 rounded-full shadow-md transition-opacity focus:outline-none focus:ring-2 focus:ring-neutral-500 md:right-4"
+        type="button"
+        variant="ghost"
+        size="icon"
+        className="absolute top-1/2 right-2 -translate-y-1/2 rounded-full bg-white/70 text-neutral-700 shadow-md transition-opacity hover:bg-white/90 focus-visible:ring-2 focus-visible:ring-neutral-500 md:right-4"
       >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <polyline points="9 18 15 12 9 6"></polyline>
-        </svg>
-      </button>
+        <ChevronRight className="h-5 w-5" />
+      </Button>
     </div>
   )
 }

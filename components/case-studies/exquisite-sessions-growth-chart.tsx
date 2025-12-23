@@ -28,8 +28,8 @@ const data = [
 ]
 
 const chartConfig = {
-  sessions: { label: "Sessions per Day", color: "hsl(var(--chart-1))" },
-  relaunch: { label: "Relaunch", color: "hsl(var(--chart-2))" },
+  sessions: { label: "Sessions per Day", color: "var(--chart-1)" },
+  relaunch: { label: "Relaunch", color: "var(--chart-2)" },
 } satisfies ChartConfig
 
 export function ExquisiteSessionsGrowthChart() {
@@ -42,16 +42,26 @@ export function ExquisiteSessionsGrowthChart() {
         >
           <defs>
             <linearGradient id="sessionsGradient" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor="hsl(var(--chart-1))" stopOpacity={0.8} />
-              <stop offset="95%" stopColor="hsl(var(--chart-1))" stopOpacity={0} />
+              <stop offset="5%" stopColor="var(--chart-1)" stopOpacity={0.8} />
+              <stop offset="95%" stopColor="var(--chart-1)" stopOpacity={0} />
             </linearGradient>
           </defs>
-          <CartesianGrid vertical={false} strokeDasharray="3 3" stroke="hsl(var(--muted-foreground) / 0.2)" />
-          <XAxis dataKey="date" tickLine={false} axisLine={false} stroke="hsl(var(--muted-foreground))" fontSize={12} />
+          <CartesianGrid
+            vertical={false}
+            strokeDasharray="3 3"
+            stroke="color-mix(in oklch, var(--muted-foreground) 20%, transparent)"
+          />
+          <XAxis
+            dataKey="date"
+            tickLine={false}
+            axisLine={false}
+            stroke="var(--muted-foreground)"
+            fontSize={12}
+          />
           <YAxis
             tickLine={false}
             axisLine={false}
-            stroke="hsl(var(--muted-foreground))"
+            stroke="var(--muted-foreground)"
             fontSize={12}
             tickFormatter={(v: number) => (v >= 100 ? `${v}` : v.toString())}
           />
@@ -78,7 +88,7 @@ export function ExquisiteSessionsGrowthChart() {
             strokeWidth={2.5}
             fillOpacity={1}
             fill="url(#sessionsGradient)"
-            activeDot={{ r: 6, style: { filter: "drop-shadow(0 0 3px hsl(var(--chart-1)))" } }}
+            activeDot={{ r: 6, style: { filter: "drop-shadow(0 0 3px var(--chart-1))" } }}
           />
         </AreaChart>
       </ResponsiveContainer>

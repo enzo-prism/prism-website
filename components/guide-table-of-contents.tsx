@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react"
 import clsx from "clsx"
+import { Button } from "@/components/ui/button"
 
 type GuideSection = {
   id: string
@@ -63,15 +64,16 @@ export default function GuideTableOfContents({ sections }: GuideTableOfContentsP
       <div className="lg:hidden">
         <div className="flex flex-wrap gap-2 pb-4 pt-2">
           {sections.map((section) => (
-            <button
+            <Button
               type="button"
               key={section.id}
               onClick={() => scrollToSection(section.id)}
+              variant="ghost"
               className={clsx(
                 "w-full rounded-full border px-4 py-2 text-sm font-medium transition sm:w-auto",
                 activeId === section.id
-                  ? "border-neutral-900 bg-neutral-900 text-white"
-                  : "border-neutral-300 bg-white text-neutral-600 hover:border-neutral-400 hover:text-neutral-900",
+                  ? "border-neutral-900 bg-neutral-900 text-white hover:bg-neutral-900"
+                  : "border-neutral-300 bg-white text-neutral-600 hover:border-neutral-400 hover:bg-white hover:text-neutral-900",
               )}
             >
               {section.emoji && (
@@ -80,7 +82,7 @@ export default function GuideTableOfContents({ sections }: GuideTableOfContentsP
                 </span>
               )}
               {section.label}
-            </button>
+            </Button>
           ))}
         </div>
       </div>
@@ -96,13 +98,14 @@ export default function GuideTableOfContents({ sections }: GuideTableOfContentsP
               const isActive = activeId === section.id
               return (
                 <li key={section.id}>
-                  <button
+                  <Button
                     type="button"
                     onClick={() => scrollToSection(section.id)}
+                    variant="ghost"
                     className={clsx(
                       "flex w-full items-center gap-2 rounded-2xl px-3 py-2 text-left text-sm font-medium transition",
                       isActive
-                        ? "bg-neutral-900 text-white shadow-sm"
+                        ? "bg-neutral-900 text-white shadow-sm hover:bg-neutral-900"
                         : "text-neutral-600 hover:bg-neutral-100 hover:text-neutral-900",
                     )}
                   >
@@ -118,7 +121,7 @@ export default function GuideTableOfContents({ sections }: GuideTableOfContentsP
                       {section.emoji ?? "•"}
                     </span>
                     <span>{section.label}</span>
-                  </button>
+                  </Button>
                 </li>
               )
             })}

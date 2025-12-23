@@ -5,6 +5,7 @@ import Image from "next/image"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 // Import isTouchDevice from scroll optimization utilities
 import { throttle, isTouchDevice } from "@/utils/scroll-optimization"
+import { Button } from "@/components/ui/button"
 
 interface Slide {
   id: number
@@ -184,36 +185,45 @@ export default function ClientCarousel() {
         </div>
 
         {/* Navigation arrows */}
-        <button
+        <Button
           onClick={(e) => {
             e.preventDefault() // Prevent any default browser action
             prevSlide()
           }}
-          className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/80 rounded-full p-2 shadow-md hover:bg-white transition-colors z-20"
+          type="button"
+          variant="ghost"
+          size="icon"
+          className="absolute left-2 top-1/2 z-20 -translate-y-1/2 rounded-full bg-white/80 shadow-md transition-colors hover:bg-white"
           aria-label="Previous slide"
         >
           <ChevronLeft className="h-5 w-5" />
-        </button>
+        </Button>
 
-        <button
+        <Button
           onClick={(e) => {
             e.preventDefault() // Prevent any default browser action
             nextSlide()
           }}
-          className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/80 rounded-full p-2 shadow-md hover:bg-white transition-colors z-20"
+          type="button"
+          variant="ghost"
+          size="icon"
+          className="absolute right-2 top-1/2 z-20 -translate-y-1/2 rounded-full bg-white/80 shadow-md transition-colors hover:bg-white"
           aria-label="Next slide"
         >
           <ChevronRight className="h-5 w-5" />
-        </button>
+        </Button>
       </div>
 
       {/* Indicators */}
       <div className="flex justify-center gap-2 mt-6">
         {slides.map((_, index) => (
-          <button
+          <Button
             key={index}
             onClick={() => setCurrentIndex(index)}
-            className={`h-2 w-2 rounded-full transition-all ${
+            type="button"
+            variant="ghost"
+            size="icon-xs"
+            className={`h-2 w-2 rounded-full p-0 transition-all ${
               index === currentIndex ? "bg-neutral-800 w-4" : "bg-neutral-400"
             }`}
             aria-label={`Go to slide ${index + 1}`}

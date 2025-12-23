@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { trackFormSubmission } from "@/utils/analytics"
+import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 
@@ -45,45 +46,47 @@ export default function BlogEmailSignup() {
 
   return (
     <section className="bg-neutral-50 px-4 py-12 sm:py-14">
-      <div className="mx-auto flex max-w-3xl flex-col gap-6 rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md sm:p-8 md:flex-row md:items-center md:justify-between">
-        <div className="space-y-2 md:max-w-sm">
-          <p className="text-xs font-medium uppercase tracking-[0.32em] text-neutral-500">stay in the loop</p>
-          <h2 className="text-xl font-semibold text-neutral-900 sm:text-2xl">get fresh prism notes via email</h2>
-          <p className="text-sm leading-relaxed text-neutral-600">
-            when we publish new experiments or playbooks, we’ll send you the highlights so you can apply them faster.
-          </p>
-        </div>
-        <form onSubmit={handleSubmit} className="flex w-full flex-col gap-3 md:max-w-sm">
-          <label htmlFor="blog-email" className="sr-only">
-            email address
-          </label>
-          <Input
-            id="blog-email"
-            name="email"
-            type="email"
-            required
-            autoComplete="email"
-            placeholder="you@company.com"
-            className="h-auto w-full rounded-full border-neutral-200 bg-white px-5 py-3 text-sm text-neutral-900 placeholder:text-neutral-400 focus-visible:ring-neutral-900"
-          />
-          <Button
-            type="submit"
-            className="h-auto w-full rounded-full px-5 py-3 text-sm font-semibold"
-            disabled={status === "submitting"}
-          >
-            {status === "submitting" ? "sending..." : "send me updates"}
-          </Button>
-          {message ? (
-            <p
-              className={`text-xs ${
-                status === "success" ? "text-emerald-600" : "text-rose-600"
-              }`}
-            >
-              {message}
+      <Card className="mx-auto max-w-3xl rounded-3xl border border-neutral-200 bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md">
+        <CardContent className="flex flex-col gap-6 p-6 sm:p-8 md:flex-row md:items-center md:justify-between">
+          <div className="space-y-2 md:max-w-sm">
+            <p className="text-xs font-medium uppercase tracking-[0.32em] text-neutral-500">stay in the loop</p>
+            <h2 className="text-xl font-semibold text-neutral-900 sm:text-2xl">get fresh prism notes via email</h2>
+            <p className="text-sm leading-relaxed text-neutral-600">
+              when we publish new experiments or playbooks, we’ll send you the highlights so you can apply them faster.
             </p>
-          ) : null}
-        </form>
-      </div>
+          </div>
+          <form onSubmit={handleSubmit} className="flex w-full flex-col gap-3 md:max-w-sm">
+            <label htmlFor="blog-email" className="sr-only">
+              email address
+            </label>
+            <Input
+              id="blog-email"
+              name="email"
+              type="email"
+              required
+              autoComplete="email"
+              placeholder="you@company.com"
+              className="h-auto w-full rounded-full border-neutral-200 bg-white px-5 py-3 text-sm text-neutral-900 placeholder:text-neutral-400 focus-visible:ring-neutral-900"
+            />
+            <Button
+              type="submit"
+              className="h-auto w-full rounded-full px-5 py-3 text-sm font-semibold"
+              disabled={status === "submitting"}
+            >
+              {status === "submitting" ? "sending..." : "send me updates"}
+            </Button>
+            {message ? (
+              <p
+                className={`text-xs ${
+                  status === "success" ? "text-emerald-600" : "text-rose-600"
+                }`}
+              >
+                {message}
+              </p>
+            ) : null}
+          </form>
+        </CardContent>
+      </Card>
     </section>
   )
 }

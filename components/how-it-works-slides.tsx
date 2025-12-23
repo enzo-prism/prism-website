@@ -4,6 +4,7 @@ import type React from "react"
 
 import { useState, useRef, useEffect, useCallback } from "react"
 import { ChevronLeft, ChevronRight } from "lucide-react"
+import { Button } from "@/components/ui/button"
 
 // Add the import for scroll optimization utilities
 import { throttle } from "@/utils/scroll-optimization"
@@ -139,20 +140,26 @@ export default function HowItWorksSlides() {
     <div className="relative w-full pt-4 pb-12">
       {/* Navigation buttons */}
       <div className="flex justify-between mb-4">
-        <button
+        <Button
           onClick={prevSlide}
-          className="rounded-full bg-white p-2 shadow-sm hover:shadow-md transition-shadow active:scale-95 transform"
+          type="button"
+          variant="ghost"
+          size="icon"
+          className="rounded-full bg-white shadow-sm transition-shadow hover:shadow-md active:scale-95"
           aria-label="Previous step"
         >
           <ChevronLeft className="h-5 w-5" />
-        </button>
-        <button
+        </Button>
+        <Button
           onClick={nextSlide}
-          className="rounded-full bg-white p-2 shadow-sm hover:shadow-md transition-shadow active:scale-95 transform"
+          type="button"
+          variant="ghost"
+          size="icon"
+          className="rounded-full bg-white shadow-sm transition-shadow hover:shadow-md active:scale-95"
           aria-label="Next step"
         >
           <ChevronRight className="h-5 w-5" />
-        </button>
+        </Button>
       </div>
 
       {/* Swipable container */}
@@ -188,10 +195,13 @@ export default function HowItWorksSlides() {
       {/* Indicators */}
       <div className="mt-6 mb-4 flex justify-center gap-2">
         {steps.map((_, index) => (
-          <button
+          <Button
             key={index}
             onClick={() => goToSlide(index)}
-            className={`h-2 w-2 rounded-full transition-all duration-300 ${
+            type="button"
+            variant="ghost"
+            size="icon-xs"
+            className={`h-2 w-2 rounded-full p-0 transition-all duration-300 ${
               index === currentIndex ? "bg-neutral-800" : "bg-neutral-300"
             }`}
             aria-label={`Go to step ${index + 1}`}

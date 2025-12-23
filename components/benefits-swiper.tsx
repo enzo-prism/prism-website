@@ -3,6 +3,7 @@
 import { trackBenefitsInteraction } from "@/utils/analytics"
 import { throttle } from "@/utils/scroll-optimization"
 import { ChevronLeft, ChevronRight } from "lucide-react"
+import { Button } from "@/components/ui/button"
 import type React from "react"
 import { useCallback, useEffect, useRef, useState } from "react"
 
@@ -143,20 +144,26 @@ const BenefitsSwiper: React.FC = () => {
   return (
     <div className="relative w-full max-w-[90vw] mx-auto">
       <div className="absolute top-1/2 left-0 right-0 -mt-6 flex justify-between z-10 px-1" style={{ touchAction: 'manipulation' }}>
-        <button
+        <Button
           onClick={prevSlide}
-          className="rounded-full bg-white p-2 shadow-md hover:bg-gray-50 transition-colors"
+          type="button"
+          variant="ghost"
+          size="icon"
+          className="rounded-full bg-white shadow-md transition-colors hover:bg-gray-50"
           aria-label="Previous benefit"
         >
           <ChevronLeft className="h-5 w-5" />
-        </button>
-        <button
+        </Button>
+        <Button
           onClick={nextSlide}
-          className="rounded-full bg-white p-2 shadow-md hover:bg-gray-50 transition-colors"
+          type="button"
+          variant="ghost"
+          size="icon"
+          className="rounded-full bg-white shadow-md transition-colors hover:bg-gray-50"
           aria-label="Next benefit"
         >
           <ChevronRight className="h-5 w-5" />
-        </button>
+        </Button>
       </div>
 
       <div
@@ -193,10 +200,13 @@ const BenefitsSwiper: React.FC = () => {
       {/* Corrected Indicators */}
       <div className="mt-6 mb-4 flex justify-center gap-2">
         {benefits.map((_, index) => (
-          <button
+          <Button
             key={index}
             onClick={() => goToSlide(index)}
-            className={`h-2 w-2 rounded-full transition-all duration-300 ${
+            type="button"
+            variant="ghost"
+            size="icon-xs"
+            className={`h-2 w-2 rounded-full p-0 transition-all duration-300 ${
               index === currentIndex ? "bg-neutral-800" : "bg-neutral-300"
             }`}
             aria-label={`Go to benefit ${index + 1}`}

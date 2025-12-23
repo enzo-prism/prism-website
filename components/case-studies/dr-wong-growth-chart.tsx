@@ -21,7 +21,7 @@ const chartData = [
 const chartConfig = {
   sessions: {
     label: "Website Sessions",
-    color: "hsl(var(--chart-1))",
+    color: "var(--chart-1)",
   },
 } satisfies ChartConfig
 
@@ -35,23 +35,27 @@ export function DrWongGrowthChart() {
         >
           <defs>
             <linearGradient id="colorSessions" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor="hsl(var(--chart-1))" stopOpacity={0.8} />
-              <stop offset="95%" stopColor="hsl(var(--chart-1))" stopOpacity={0} />
+              <stop offset="5%" stopColor="var(--chart-1)" stopOpacity={0.8} />
+              <stop offset="95%" stopColor="var(--chart-1)" stopOpacity={0} />
             </linearGradient>
           </defs>
-          <CartesianGrid vertical={false} strokeDasharray="3 3" stroke="hsl(var(--muted-foreground) / 0.2)" />
+          <CartesianGrid
+            vertical={false}
+            strokeDasharray="3 3"
+            stroke="color-mix(in oklch, var(--muted-foreground) 20%, transparent)"
+          />
           <XAxis
             dataKey="month"
             tickLine={false}
             axisLine={false}
-            stroke="hsl(var(--muted-foreground))"
+            stroke="var(--muted-foreground)"
             fontSize={12}
             padding={{ left: 20, right: 20 }}
           />
           <YAxis
             tickLine={false}
             axisLine={false}
-            stroke="hsl(var(--muted-foreground))"
+            stroke="var(--muted-foreground)"
             fontSize={12}
             tickFormatter={(value: number) => (value >= 1000 ? `${value / 1000}k` : value.toString())}
             domain={["dataMin - 200", "dataMax + 200"]}
@@ -73,7 +77,7 @@ indicator="line"
             strokeWidth={2.5}
             fillOpacity={1}
             fill="url(#colorSessions)"
-            activeDot={{ r: 6, style: { filter: "drop-shadow(0 0 3px hsl(var(--chart-1)))" } }}
+            activeDot={{ r: 6, style: { filter: "drop-shadow(0 0 3px var(--chart-1))" } }}
           />
         </AreaChart>
       </ResponsiveContainer>

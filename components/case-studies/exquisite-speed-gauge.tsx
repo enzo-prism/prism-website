@@ -7,8 +7,8 @@ import {
 } from "@/components/ui/chart"
 
 const chartConfig = {
-  pre: { label: "Pre Launch", color: "hsl(var(--chart-1))" },
-  post: { label: "Post Launch", color: "hsl(var(--chart-2))" },
+  pre: { label: "Pre Launch", color: "var(--chart-1)" },
+  post: { label: "Post Launch", color: "var(--chart-2)" },
 } satisfies ChartConfig
 
 const maxValue = 5
@@ -37,7 +37,7 @@ export function ExquisiteSpeedGauge() {
                 dataKey="value"
                 cornerRadius={10}
                 fill={`var(--color-${item.key})`}
-                background={{ fill: "hsl(var(--muted))" }}
+                background={{ fill: "var(--muted)" }}
               />
             </RadialBarChart>
           </ChartContainer>

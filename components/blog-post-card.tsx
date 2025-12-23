@@ -6,7 +6,8 @@ import { ArrowRight } from "lucide-react"
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion"
 import { trackCTAClick } from "@/utils/analytics"
 import { cn } from "@/lib/utils"
-import CoreImage from "@/components/core-image"
+import { Badge } from "@/components/ui/badge"
+import { Card, CardContent } from "@/components/ui/card"
 import { blogCardHover3D, blogCardPerspective } from "@/utils/animation-variants"
 
 interface BlogPostCardProps {
@@ -71,7 +72,7 @@ export default function BlogPostCard({
     <Link href={`/blog/${slug}`} onClick={() => trackCTAClick(`view blog post`, title)} className="block">
       <motion.div
         ref={ref}
-        className="border border-neutral-200 rounded-lg overflow-hidden h-full relative group cursor-pointer"
+        className="relative h-full cursor-pointer group"
         variants={blogCardHover3D}
         initial="initial"
         whileHover="hover"
@@ -87,81 +88,86 @@ export default function BlogPostCard({
           rotateY,
         }}
       >
-        {featured && (
+        <Card className="h-full overflow-hidden border-neutral-200">
+          {featured && (
+            <Badge
+              asChild
+              className="absolute left-3 top-3 z-10 rounded-full bg-black/80 px-3 py-1 text-xs lowercase text-white"
+            >
+              <motion.div
+                initial={{ scale: 0, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ delay: 0.3, duration: 0.3 }}
+              >
+                featured
+              </motion.div>
+            </Badge>
+          )}
+          {/* Enhanced gradient thumbnail with shimmer effect */}
           <motion.div 
-            className="absolute top-3 left-3 text-xs text-white bg-black/80 px-3 py-1 rounded-full lowercase z-10"
-            initial={{ scale: 0, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ delay: 0.3, duration: 0.3 }}
+            className={cn("relative w-full aspect-[4/3] overflow-hidden", gradientClass)}
+            whileHover={{ scale: 1.05 }}
+            transition={{ duration: 0.3 }}
           >
-            featured
+            <motion.div
+              className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full"
+              animate={{ x: ["0%", "100%"] }}
+              transition={{
+                duration: 2,
+                repeat: Infinity,
+                repeatDelay: 3,
+                ease: "linear"
+              }}
+            />
           </motion.div>
-        )}
-        
-        {/* Enhanced gradient thumbnail with shimmer effect */}
-        <motion.div 
-          className={cn("relative w-full aspect-[4/3] overflow-hidden", gradientClass)}
-          whileHover={{ scale: 1.05 }}
-          transition={{ duration: 0.3 }}
-        >
-          <motion.div
-            className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full"
-            animate={{ x: ["0%", "100%"] }}
-            transition={{
-              duration: 2,
-              repeat: Infinity,
-              repeatDelay: 3,
-              ease: "linear"
-            }}
-          />
-        </motion.div>
-        
-        <motion.div 
-          className="p-5 space-y-3 border-t border-neutral-100"
-          style={{ transform: "translateZ(20px)" }}
-        >
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2">
+          <CardContent
+            className="space-y-3 border-t border-neutral-100 p-5 pt-5"
+            style={{ transform: "translateZ(20px)" }}
+          >
+            <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
+              <motion.div
+                whileHover={{ scale: 1.05, backgroundColor: "rgb(229, 229, 229)" }}
+                transition={{ duration: 0.2 }}
+              >
+                <Badge
+                  variant="secondary"
+                  className="rounded-full bg-neutral-100 px-3 py-1 text-xs lowercase text-neutral-700"
+                >
+                  {category}
+                </Badge>
+              </motion.div>
+              <div className="text-sm text-neutral-500 lowercase">{date}</div>
+            </div>
+            <motion.h3 
+              className="text-lg font-bold lowercase"
+              style={{ transform: "translateZ(30px)" }}
+            >
+              {title}
+            </motion.h3>
+            {!compact && (
+              <motion.p 
+                className="text-neutral-600 lowercase"
+                style={{ transform: "translateZ(20px)" }}
+              >
+                {description}
+              </motion.p>
+            )}
             <motion.div 
-              className="inline-block px-3 py-1 bg-neutral-100 rounded-full text-xs lowercase"
-              whileHover={{ scale: 1.05, backgroundColor: "rgb(229, 229, 229)" }}
+              className="flex items-center pt-2 text-sm font-medium text-neutral-900 lowercase"
+              style={{ transform: "translateZ(40px)" }}
+              whileHover={{ x: 4 }}
               transition={{ duration: 0.2 }}
             >
-              {category}
+              read post 
+              <motion.div
+                animate={{ x: [0, 4, 0] }}
+                transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+              >
+                <ArrowRight className="ml-1 h-4 w-4" />
+              </motion.div>
             </motion.div>
-            <div className="text-sm text-neutral-500 lowercase">{date}</div>
-          </div>
-          
-          <motion.h3 
-            className="text-lg font-bold lowercase"
-            style={{ transform: "translateZ(30px)" }}
-          >
-            {title}
-          </motion.h3>
-          
-          {!compact && (
-            <motion.p 
-              className="text-neutral-600 lowercase"
-              style={{ transform: "translateZ(20px)" }}
-            >
-              {description}
-            </motion.p>
-          )}
-          
-          <motion.div 
-            className="flex items-center text-sm font-medium text-neutral-900 lowercase pt-2"
-            style={{ transform: "translateZ(40px)" }}
-            whileHover={{ x: 4 }}
-            transition={{ duration: 0.2 }}
-          >
-            read post 
-            <motion.div
-              animate={{ x: [0, 4, 0] }}
-              transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-            >
-              <ArrowRight className="ml-1 h-4 w-4" />
-            </motion.div>
-          </motion.div>
-        </motion.div>
+          </CardContent>
+        </Card>
       </motion.div>
     </Link>
   )

@@ -6,6 +6,7 @@ import { Sparkles, Copy, Check, RefreshCw, Target } from "lucide-react"
 import { toast } from "sonner"
 
 import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import { fadeInUp, springScale, successPop } from "@/utils/animation-variants"
 
@@ -112,22 +113,25 @@ export default function BrandTaglineGenerator() {
             <label className="block text-sm font-medium text-neutral-700 mb-2">
               Business Name *
             </label>
-            <input
+            <Input
               type="text"
               value={formData.business}
               onChange={(e) => handleInputChange("business", e.target.value)}
               placeholder="e.g., Sweet Haven"
-              className="w-full px-3 py-2 border border-neutral-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+              className="w-full border-neutral-300 px-3 py-2 focus-visible:ring-purple-500"
             />
             <div className="flex flex-wrap gap-1 mt-2">
               {suggestions.business.map((suggestion) => (
-                <button
+                <Button
                   key={suggestion}
+                  type="button"
                   onClick={() => addSuggestion("business", `${formData.business} ${suggestion}`.trim())}
-                  className="px-2 py-1 text-xs bg-neutral-100 hover:bg-neutral-200 rounded-full transition-colors"
+                  variant="ghost"
+                  size="xs"
+                  className="h-6 rounded-full bg-neutral-100 px-2 py-1 text-xs hover:bg-neutral-200"
                 >
                   {suggestion}
-                </button>
+                </Button>
               ))}
             </div>
           </div>
@@ -136,22 +140,25 @@ export default function BrandTaglineGenerator() {
             <label className="block text-sm font-medium text-neutral-700 mb-2">
               Specialty/Product *
             </label>
-            <input
+            <Input
               type="text"
               value={formData.specialty}
               onChange={(e) => handleInputChange("specialty", e.target.value)}
               placeholder="e.g., artisan sourdough"
-              className="w-full px-3 py-2 border border-neutral-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+              className="w-full border-neutral-300 px-3 py-2 focus-visible:ring-purple-500"
             />
             <div className="flex flex-wrap gap-1 mt-2">
               {suggestions.specialty.map((suggestion) => (
-                <button
+                <Button
                   key={suggestion}
+                  type="button"
                   onClick={() => addSuggestion("specialty", suggestion)}
-                  className="px-2 py-1 text-xs bg-neutral-100 hover:bg-neutral-200 rounded-full transition-colors"
+                  variant="ghost"
+                  size="xs"
+                  className="h-6 rounded-full bg-neutral-100 px-2 py-1 text-xs hover:bg-neutral-200"
                 >
                   {suggestion}
-                </button>
+                </Button>
               ))}
             </div>
           </div>
@@ -160,22 +167,25 @@ export default function BrandTaglineGenerator() {
             <label className="block text-sm font-medium text-neutral-700 mb-2">
               Target Audience *
             </label>
-            <input
+            <Input
               type="text"
               value={formData.audience}
               onChange={(e) => handleInputChange("audience", e.target.value)}
               placeholder="e.g., busy families"
-              className="w-full px-3 py-2 border border-neutral-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+              className="w-full border-neutral-300 px-3 py-2 focus-visible:ring-purple-500"
             />
             <div className="flex flex-wrap gap-1 mt-2">
               {suggestions.audience.map((suggestion) => (
-                <button
+                <Button
                   key={suggestion}
+                  type="button"
                   onClick={() => addSuggestion("audience", suggestion)}
-                  className="px-2 py-1 text-xs bg-neutral-100 hover:bg-neutral-200 rounded-full transition-colors"
+                  variant="ghost"
+                  size="xs"
+                  className="h-6 rounded-full bg-neutral-100 px-2 py-1 text-xs hover:bg-neutral-200"
                 >
                   {suggestion}
-                </button>
+                </Button>
               ))}
             </div>
           </div>
@@ -184,22 +194,25 @@ export default function BrandTaglineGenerator() {
             <label className="block text-sm font-medium text-neutral-700 mb-2">
               Value Proposition (Optional)
             </label>
-            <input
+            <Input
               type="text"
               value={formData.value}
               onChange={(e) => handleInputChange("value", e.target.value)}
               placeholder="e.g., reliable, affordable, quick"
-              className="w-full px-3 py-2 border border-neutral-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+              className="w-full border-neutral-300 px-3 py-2 focus-visible:ring-purple-500"
             />
             <div className="flex flex-wrap gap-1 mt-2">
               {suggestions.value.map((suggestion) => (
-                <button
+                <Button
                   key={suggestion}
+                  type="button"
                   onClick={() => addSuggestion("value", suggestion)}
-                  className="px-2 py-1 text-xs bg-neutral-100 hover:bg-neutral-200 rounded-full transition-colors"
+                  variant="ghost"
+                  size="xs"
+                  className="h-6 rounded-full bg-neutral-100 px-2 py-1 text-xs hover:bg-neutral-200"
                 >
                   {suggestion}
-                </button>
+                </Button>
               ))}
             </div>
           </div>

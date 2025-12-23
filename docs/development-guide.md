@@ -43,7 +43,7 @@ Any CTA labeled “free analysis” should point to `/free-analysis`. When you a
 - This override is scoped, so you can mix lowercase-first sections with standard sentences without touching the global rule.
 
 ## UI Components (shadcn/ui)
-The site uses shadcn/ui primitives under `components/ui/` (Tailwind + Radix + `cn()` helpers). Add new primitives via the CLI so we stay aligned with upstream.
+The site uses shadcn/ui primitives under `components/ui/` (Tailwind + Radix + `cn()` helpers) with the `radix-vega` preset (neutral palette + subtle menu accent, Inter as `--font-sans`). Add new primitives via the CLI so we stay aligned with upstream.
 
 - Add a component: `pnpm dlx shadcn@latest add <component>`
 - Common additions: `alert`, `tooltip`, `dropdown-menu`, `popover`, `sheet`, `sonner`

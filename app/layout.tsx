@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next"
+import { Inter } from "next/font/google"
 import Script from "next/script"
 import type React from "react"
 import { Suspense } from "react"
@@ -10,6 +11,11 @@ import RootClientMonitors from "@/components/root-client-monitors"
 import SentryContextProvider from "@/components/sentry-context-provider"
 import ToasterLazy from "@/components/toaster-lazy"
 import { GA_MEASUREMENT_ID, GOOGLE_ADS_ID, IS_ANALYTICS_ENABLED } from "@/lib/constants"
+
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-sans",
+})
 
 export const metadata: Metadata = {
   title: {
@@ -78,7 +84,11 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className="m-0 p-0 w-full" suppressHydrationWarning>
+    <html
+      lang="en"
+      className={`m-0 p-0 w-full ${inter.variable}`}
+      suppressHydrationWarning
+    >
       <head>
         {IS_ANALYTICS_ENABLED && (
           <>
@@ -147,7 +157,7 @@ export default function RootLayout({
         The existing font-sans class from Tailwind will then use this font
         if tailwind.config.ts is updated accordingly.
     */}
-	      <body className="m-0 p-0 w-full min-h-screen font-sans antialiased">
+      <body className="m-0 p-0 w-full min-h-screen font-sans antialiased">
 	        <GlobalSchemaGraph />
 	        <RootClientMonitors />
 	        <SentryContextProvider>

@@ -2,6 +2,7 @@
 
 import { useRef, useState } from "react"
 import { ChevronLeft, ChevronRight } from "lucide-react"
+import { Button } from "@/components/ui/button"
 import MinimalistVideoPlayer from "@/components/minimalist-video-player"
 
 type Slide = {
@@ -52,24 +53,30 @@ export default function PoleVaultCarousel() {
       />
 
       {/* Controls (mobile + desktop) */}
-      <button
+      <Button
         aria-label="Previous"
         onClick={prev}
         onTouchStart={(e) => e.stopPropagation()}
         onTouchEnd={(e) => e.stopPropagation()}
-        className="flex absolute left-2 sm:-left-4 top-1/2 -translate-y-1/2 z-30 rounded-full bg-white/80 backdrop-blur p-2 sm:p-2.5 shadow active:scale-95"
+        type="button"
+        variant="ghost"
+        size="icon"
+        className="absolute left-2 top-1/2 z-30 -translate-y-1/2 rounded-full bg-white/80 shadow backdrop-blur active:scale-95 sm:-left-4 sm:p-2.5"
       >
         <ChevronLeft className="h-5 w-5" />
-      </button>
-      <button
+      </Button>
+      <Button
         aria-label="Next"
         onClick={next}
         onTouchStart={(e) => e.stopPropagation()}
         onTouchEnd={(e) => e.stopPropagation()}
-        className="flex absolute right-2 sm:-right-4 top-1/2 -translate-y-1/2 z-30 rounded-full bg-white/80 backdrop-blur p-2 sm:p-2.5 shadow active:scale-95"
+        type="button"
+        variant="ghost"
+        size="icon"
+        className="absolute right-2 top-1/2 z-30 -translate-y-1/2 rounded-full bg-white/80 shadow backdrop-blur active:scale-95 sm:-right-4 sm:p-2.5"
       >
         <ChevronRight className="h-5 w-5" />
-      </button>
+      </Button>
 
       {/* Dots */}
       <div className="flex items-center justify-center gap-2 mt-3">

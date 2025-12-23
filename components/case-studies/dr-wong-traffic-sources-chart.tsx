@@ -25,19 +25,19 @@ const chartConfig = {
   },
   organic: {
     label: "Organic Search",
-    color: "hsl(var(--chart-1))",
+    color: "var(--chart-1)",
   },
   direct: {
     label: "Direct",
-    color: "hsl(var(--chart-2))",
+    color: "var(--chart-2)",
   },
   referrals: {
     label: "Referrals",
-    color: "hsl(var(--chart-3))",
+    color: "var(--chart-3)",
   },
   paid: {
     label: "Paid Search",
-    color: "hsl(var(--chart-4))",
+    color: "var(--chart-4)",
   },
 } satisfies ChartConfig
 
@@ -66,7 +66,7 @@ export function DrWongTrafficSourcesChart() {
             nameKey="source"
             innerRadius="60%"
             strokeWidth={3}
-            stroke="hsl(var(--background))"
+            stroke="var(--background)"
             activeShape={(props: {
               cx?: number
               cy?: number  
