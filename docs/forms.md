@@ -26,6 +26,8 @@ const { handleSubmit, getError, isSubmitting } = useFormValidation({
 - `components/forms/ScalingRoadmapForm.tsx`
 - `app/ai-website-launch/client-page.tsx` (inline card form for the AI launch offer; uses the same fetch + redirect pattern without the shared hook so the form can live next to its layout code)
 
+The Get Started form now captures first/last name, phone, and a call date/time; the scheduling fields stay disabled until the first three fields are filled.
+
 All three use the hook above so users always land on `/thank-you` or `/analysis-thank-you`. They already include `_subject` + `_gotcha` honeypot fields; reuse those when cloning.
 
 ## Adding a new form

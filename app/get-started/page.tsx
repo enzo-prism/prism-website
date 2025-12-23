@@ -1,120 +1,328 @@
-import Image from "next/image"
+import type { ReactNode } from "react"
+import Link from "next/link"
 import type { Metadata } from "next"
 
 import GetStartedForm from "@/components/forms/GetStartedForm"
 import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
-import RevealOnScroll from "@/components/reveal-on-scroll"
+import VideoPlayer from "@/components/video-player"
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { quotesData, renderFormattedText } from "@/content/wall-of-love-data"
 
-const planLabels: Record<string, string> = {
-  launch: "Launch plan selected",
-  grow: "Grow plan selected",
-  scale: "Scale plan selected",
+type FAQBlock =
+  | { type: "paragraph"; content: ReactNode }
+  | { type: "list"; items: string[] }
+
+type FAQItem = {
+  question: string
+  answer: FAQBlock[]
 }
 
+const HERO_CTA_TEXT = "I'm ready to elevate"
+
+const VSL_SOURCE = {
+  src: "https://res.cloudinary.com/dhqpqfw6w/video/upload/v1763160814/prism_websites_vsl_2_ojqiku.mp4",
+  poster: "https://res.cloudinary.com/dhqpqfw6w/video/upload/so_0/prism_websites_vsl_2_ojqiku.jpg",
+  caption:
+    "Our team audits your online presence, creates a custom strategy, then handles all the execution for you 7-days a week.",
+}
+
+const WALL_OF_LOVE_QUOTES = quotesData.filter((quote) => !quote.requiresConsent).slice(0, 3)
+
+const PROGRAM_ROLES = [
+  "Website Developer",
+  "Designer",
+  "Marketer and Storyteller",
+  "Project Manager",
+]
+
+const FAQ_ITEMS: FAQItem[] = [
+  {
+    question: "What is Prism?",
+    answer: [
+      {
+        type: "paragraph",
+        content:
+          "Prism is a done-for-you online growth team for busy founders. We handle the parts that drive discovery and revenue--your website, Google Maps/Google Business Profile SEO, content systems, and ads--so your business gets found, converts more customers, and increases lifetime value.",
+      },
+      {
+        type: "paragraph",
+        content:
+          "We also set up clean, integrated tracking (analytics, attribution, dashboards) so you can see what's working, what's not, and where to double down--without guessing.",
+      },
+    ],
+  },
+  {
+    question: "How do I start with Prism?",
+    answer: [
+      {
+        type: "paragraph",
+        content: "Submit the request form on our website with a few details about your business and goals.",
+      },
+      {
+        type: "paragraph",
+        content: (
+          <>
+            If you're a fit, we'll reach out within <strong>1 business day</strong> to
+            schedule a quick call and walk through:
+          </>
+        ),
+      },
+      {
+        type: "list",
+        items: [
+          "where you are today (traffic, leads, conversion, offers)",
+          "what's blocking growth",
+          "what we'd implement first",
+          "timeline + pricing",
+        ],
+      },
+    ],
+  },
+  {
+    question: "Who is right for Prism?",
+    answer: [
+      {
+        type: "paragraph",
+        content: (
+          <>
+            Prism is for founders who already have <strong>product-market fit</strong>
+            --customers want what you sell--and you're ready to scale your online
+            presence without becoming the in-house marketing/tech team.
+          </>
+        ),
+      },
+      {
+        type: "paragraph",
+        content: "You're a strong fit if:",
+      },
+      {
+        type: "list",
+        items: [
+          "you want more qualified leads (not vanity metrics)",
+          "you're tired of duct-taped tools and inconsistent results",
+          "you want one team to own website + SEO + ads + tracking end-to-end",
+          "you can move fast and give feedback when needed",
+        ],
+      },
+      {
+        type: "paragraph",
+        content: (
+          <>
+            Prism is <strong>not</strong> a fit if you're pre-offer, still figuring out what
+            you sell, or looking for a one-off &quot;quick website&quot; with no growth system
+            behind it.
+          </>
+        ),
+      },
+    ],
+  },
+]
+
 export const metadata: Metadata = {
-  title: "Get started | prism",
+  title: "Get started | Prism",
   description:
-    "Tell Prism about your business so we can craft a beautifully designed website plan in under 24 hours.",
+    "Join Prism's Online Presence Transformation program to remove yourself as the bottleneck for growth.",
   alternates: {
     canonical: "https://www.design-prism.com/get-started",
   },
 }
 
-export default async function GetStartedPage({
-  searchParams,
-}: {
-  searchParams: Promise<{ plan?: string }>
-}) {
-  const resolvedSearchParams = await searchParams
-  const selectedPlan = resolvedSearchParams?.plan?.toLowerCase() ?? ""
-  const budgetValueMap: Record<string, string> = {
-    launch: "<500",
-    grow: "500-1000",
-    scale: "1000+",
-  }
-  const selectedBudgetValue = budgetValueMap[selectedPlan] ?? ""
-  const planNote = selectedPlan ? planLabels[selectedPlan] : null
-
+export default function GetStartedPage() {
   return (
-    <div className="flex min-h-screen flex-col bg-gradient-to-b from-slate-50 to-white">
+    <div className="flex min-h-screen flex-col bg-background">
       <Navbar />
-      <main className="flex-1" style={{ textTransform: "none" }}>
-        <section className="mx-auto max-w-6xl px-6 py-16 sm:py-24">
-          <div className="grid gap-16 lg:grid-cols-[1fr,0.9fr]">
-            <RevealOnScroll>
-              <div className="space-y-10">
-                <div className="space-y-4">
-                  <p className="text-sm font-semibold uppercase tracking-[0.3em] text-slate-500">
-                    intake form
-                  </p>
-                  <h1 className="text-4xl font-semibold text-slate-900 sm:text-5xl">
-                    Let's build your new business website.
-                  </h1>
-                  <p className="text-lg text-slate-600">
-                    Tell us about your business — we'll use your answers to craft a custom website plan within 24 hours.
-                  </p>
-                  {planNote ? (
-                    <p className="inline-flex items-center gap-2 rounded-full bg-slate-900 px-4 py-2 text-sm font-medium text-white">
-                      <span className="text-base" aria-hidden>
-                        ✅
-                      </span>
-                      {planNote}
+      <main className="flex-1 allow-capitalization">
+        <section className="relative overflow-hidden py-16 sm:py-24">
+          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-muted/50 via-background to-background" />
+          <div className="container relative mx-auto grid gap-12 px-4 sm:px-6 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:items-center">
+            <div className="space-y-6">
+              <Badge variant="secondary" className="w-fit">
+                Get Started
+              </Badge>
+              <div className="space-y-4">
+                <h1 className="text-balance text-4xl font-semibold tracking-tight text-foreground sm:text-5xl lg:text-6xl">
+                  Tired of handling all the marketing and tech yourself?
+                </h1>
+                <p className="text-balance text-lg text-muted-foreground">
+                  Join our Online Presence Transformation program - remove yourself as the bottleneck for growth.
+                </p>
+              </div>
+              <Button
+                asChild
+                size="lg"
+                className="w-full rounded-full transition-transform duration-200 ease-out hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0 sm:w-auto"
+              >
+                <Link href="#book-call">{HERO_CTA_TEXT}</Link>
+              </Button>
+            </div>
+
+            <Card className="border-border/60 bg-card/90 shadow-lg">
+              <CardHeader className="space-y-2">
+                <Badge variant="outline" className="w-fit">
+                  VSL
+                </Badge>
+                <CardTitle className="text-xl">Online Presence Transformation VSL</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                <VideoPlayer
+                  src={VSL_SOURCE.src}
+                  poster={VSL_SOURCE.poster}
+                  caption={VSL_SOURCE.caption}
+                  className="border-border/60 bg-card/90 shadow-none"
+                />
+                <Link
+                  href={VSL_SOURCE.src}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-sm font-semibold text-primary underline underline-offset-4"
+                >
+                  Open the VSL link
+                </Link>
+              </CardContent>
+            </Card>
+          </div>
+        </section>
+
+        <section className="py-16 sm:py-24 bg-muted/30">
+          <div className="container mx-auto px-4 sm:px-6">
+            <div className="flex flex-col items-center gap-3 text-center">
+              <Badge variant="secondary" className="w-fit">
+                What people are saying
+              </Badge>
+              <h2 className="text-balance text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
+                Wall of Love quotes
+              </h2>
+            </div>
+            <div className="mt-10 grid gap-6 md:grid-cols-3">
+              {WALL_OF_LOVE_QUOTES.map((quote) => (
+                <Card key={quote.id} className="border-border/60 bg-card/90">
+                  <CardHeader className="space-y-3">
+                    <Badge variant="outline" className="w-fit">
+                      {quote.company}
+                    </Badge>
+                    <p className="text-sm font-semibold text-foreground">
+                      "{renderFormattedText(quote.text)}"
                     </p>
-                  ) : null}
-                </div>
-                <GetStartedForm defaultBudgetValue={selectedBudgetValue} selectedPlan={selectedPlan} />
-              </div>
-            </RevealOnScroll>
-            <RevealOnScroll delay={0.1}>
-              <div className="relative overflow-hidden rounded-3xl bg-slate-900 p-8 text-white">
-                <div className="absolute inset-0 opacity-40">
-                  <div className="h-full w-full bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.35),_transparent_60%)]" />
-                </div>
-                <div className="relative space-y-6">
-                  <p className="text-sm font-semibold uppercase tracking-[0.3em] text-white/70">
-                    your preview
-                  </p>
-                  <h2 className="text-3xl font-semibold leading-snug">
-                    Get a storyboard of your website's design, messaging, and growth plan.
-                  </h2>
-                  <p className="text-base text-white/80">
-                    We map your offer, design direction, SEO priorities, and launch gameplan into a private preview link
-                    so you can react before anything goes live.
-                  </p>
-                  <ul className="space-y-3 rounded-2xl bg-white/5 p-5 text-sm text-white/90 backdrop-blur">
-                    <li className="flex items-start gap-3">
-                      <span className="text-lg" aria-hidden>
-                        🎯
-                      </span>
-                      <span>Page-by-page layout, messaging, and call-to-action flow.</span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <span className="text-lg" aria-hidden>
-                        📈
-                      </span>
-                      <span>Priority keywords plus a simple roadmap to strengthen your search presence.</span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <span className="text-lg" aria-hidden>
-                        ⚙️
-                      </span>
-                      <span>Recommended forms, automations, and integrations to streamline your operations.</span>
-                    </li>
-                  </ul>
-                  <div className="relative mt-8 overflow-hidden rounded-2xl border border-white/10 bg-white/5">
-                    <Image
-                      src="/prism-get-started.webp"
-                      alt="Website plan preview"
-                      width={900}
-                      height={700}
-                      className="h-full w-full object-cover"
-                      priority
-                    />
-                  </div>
-                </div>
-              </div>
-            </RevealOnScroll>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-sm font-semibold text-foreground">{quote.client}</p>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="py-16 sm:py-24">
+          <div className="container mx-auto px-4 sm:px-6">
+            <div className="flex flex-col items-center gap-3 text-center">
+              <Badge variant="secondary" className="w-fit">
+                Transformation program
+              </Badge>
+              <h2 className="text-balance text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
+                What you'll get in the online presence transformation program
+              </h2>
+            </div>
+            <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+              {PROGRAM_ROLES.map((role, index) => (
+                <Card key={role} className="border-border/60 bg-card/90">
+                  <CardContent className="p-6">
+                    <p className="text-xs font-semibold uppercase tracking-[0.3em] text-muted-foreground">
+                      Role {String(index + 1).padStart(2, "0")}
+                    </p>
+                    <p className="mt-3 text-lg font-semibold text-foreground">{role}</p>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+            <div className="mt-10 flex flex-col items-center gap-4 text-center">
+              <p className="text-base text-muted-foreground">
+                The team works 7 days a week to get you more leads, more customers, and better custom lifetime value.
+              </p>
+              <Button
+                asChild
+                size="lg"
+                className="rounded-full transition-transform duration-200 ease-out hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0"
+              >
+                <Link href="#book-call">{HERO_CTA_TEXT}</Link>
+              </Button>
+            </div>
+          </div>
+        </section>
+
+        <section id="book-call" className="py-16 sm:py-24 bg-muted/30">
+          <div className="container mx-auto px-4 sm:px-6">
+            <Card className="border-border/60 bg-card/95 shadow-lg">
+              <CardHeader className="space-y-3">
+                <Badge variant="secondary" className="w-fit">
+                  Book a call
+                </Badge>
+                <CardTitle className="text-balance text-3xl font-semibold text-foreground sm:text-4xl">
+                  Exited to speak with you for our online presence transformation program.
+                </CardTitle>
+                <p className="text-base text-muted-foreground">
+                  Book a call below to see if you are a fit.
+                </p>
+              </CardHeader>
+              <CardContent>
+                <GetStartedForm />
+              </CardContent>
+            </Card>
+          </div>
+        </section>
+
+        <section className="py-16 sm:py-24">
+          <div className="container mx-auto flex flex-col gap-10 px-4 sm:px-6">
+            <div className="flex flex-col items-center gap-3 text-center">
+              <Badge variant="secondary" className="w-fit">
+                FAQs
+              </Badge>
+              <h2 className="text-balance text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
+                Frequently asked questions
+              </h2>
+            </div>
+            <Card className="border-border/60 bg-card/90">
+              <CardContent className="p-0">
+                <Accordion type="single" collapsible className="px-6">
+                  {FAQ_ITEMS.map((item) => (
+                    <AccordionItem key={item.question} value={item.question}>
+                      <AccordionTrigger className="text-left text-base font-semibold text-foreground">
+                        {item.question}
+                      </AccordionTrigger>
+                      <AccordionContent className="space-y-3 text-sm text-muted-foreground">
+                        {item.answer.map((block, index) => {
+                          if (block.type === "list") {
+                            return (
+                              <ul key={`list-${index}`} className="space-y-2 pl-4">
+                                {block.items.map((itemText) => (
+                                  <li key={itemText} className="list-disc">
+                                    {itemText}
+                                  </li>
+                                ))}
+                              </ul>
+                            )
+                          }
+                          return <p key={`paragraph-${index}`}>{block.content}</p>
+                        })}
+                      </AccordionContent>
+                    </AccordionItem>
+                  ))}
+                </Accordion>
+              </CardContent>
+            </Card>
+            <div className="flex justify-center">
+              <Button
+                asChild
+                size="lg"
+                className="rounded-full transition-transform duration-200 ease-out hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0"
+              >
+                <Link href="#book-call">{HERO_CTA_TEXT}</Link>
+              </Button>
+            </div>
           </div>
         </section>
       </main>

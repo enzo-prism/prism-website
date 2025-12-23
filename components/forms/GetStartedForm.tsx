@@ -1,46 +1,37 @@
 "use client"
 
+import type { ChangeEvent } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { useRouter } from "next/navigation"
+
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
-import { useEffect, useState } from "react"
-
+import { Label } from "@/components/ui/label"
+import { cn } from "@/lib/utils"
 import { useFormValidation } from "@/hooks/use-form-validation"
 
-const goalOptions = [
-  { label: "Launch a new site fast", value: "site" },
-  { label: "Improve SEO visibility", value: "seo" },
-  { label: "Run paid ads that convert", value: "ads" },
-  { label: "Automate follow-up workflows", value: "automation" },
+const FORM_ACTION = "https://formspree.io/f/manawlzn"
+const DEFAULT_REDIRECT = "https://www.design-prism.com/thank-you"
+
+const TIME_SLOTS = [
+  { value: "monday-9am", label: "Monday 9:00 AM PT" },
+  { value: "tuesday-11am", label: "Tuesday 11:00 AM PT" },
+  { value: "wednesday-2pm", label: "Wednesday 2:00 PM PT" },
+  { value: "thursday-4pm", label: "Thursday 4:00 PM PT" },
+  { value: "friday-10am", label: "Friday 10:00 AM PT" },
 ]
 
-const industryOptions = [
-  "Professional services",
-  "Health & wellness",
-  "Home services",
-  "Retail or e-commerce",
-  "Hospitality & travel",
-  "Nonprofit",
-  "Other",
-]
-
-const budgetOptions = [
-  { label: "Select a budget", value: "" },
-  { label: "< $500", value: "<500" },
-  { label: "$500 – $1,000", value: "500-1000" },
-  { label: "$1,000+", value: "1000+" },
-]
-
-type GetStartedFormProps = {
-  defaultBudgetValue?: string
-  selectedPlan?: string
-}
-
-export default function GetStartedForm({ defaultBudgetValue = "", selectedPlan }: GetStartedFormProps) {
+export default function GetStartedForm() {
   const router = useRouter()
   const [submitError, setSubmitError] = useState<string | null>(null)
+  const [redirectUrl, setRedirectUrl] = useState(DEFAULT_REDIRECT)
+  const [formState, setFormState] = useState({
+    firstName: "",
+    lastName: "",
+    phone: "",
+  })
+
   const { getError, handleBlur, handleInput, handleSubmit, isSubmitting } = useFormValidation({
     onValidSubmit: async (form) => {
       setSubmitError(null)
@@ -63,13 +54,20 @@ export default function GetStartedForm({ defaultBudgetValue = "", selectedPlan }
       router.push("/thank-you")
     },
   })
-  const [redirectUrl, setRedirectUrl] = useState("https://www.design-prism.com/thank-you")
 
   useEffect(() => {
     if (typeof window !== "undefined") {
       setRedirectUrl(`${window.location.origin}/thank-you`)
     }
   }, [])
+
+  const handleValueChange = (field: keyof typeof formState) => (event: ChangeEvent<HTMLInputElement>) => {
+    setFormState((prev) => ({ ...prev, [field]: event.target.value }))
+  }
+
+  const canSchedule = useMemo(() => {
+    return Boolean(formState.firstName.trim() && formState.lastName.trim() && formState.phone.trim())
+  }, [formState.firstName, formState.lastName, formState.phone])
 
   const renderError = (name: string) => {
     const error = getError(name)
@@ -81,186 +79,135 @@ export default function GetStartedForm({ defaultBudgetValue = "", selectedPlan }
     )
   }
 
-  const getDescribedBy = (name: string) => {
-    return getError(name) ? `${name}-error` : undefined
-  }
+  const describedBy = (name: string) => (getError(name) ? `${name}-error` : undefined)
 
   return (
     <form
-      className="space-y-6 rounded-3xl border border-slate-200 bg-white p-6 shadow-xl"
-      action="https://formspree.io/f/manawlzn"
+      className="space-y-6"
+      action={FORM_ACTION}
       method="POST"
       noValidate
       onSubmit={handleSubmit}
     >
-      <input type="hidden" name="_subject" value="New submission from Prism" />
+      <input type="hidden" name="_subject" value="Online presence transformation request" />
       <input type="hidden" name="_redirect" value={redirectUrl} />
+      <input type="hidden" name="form_name" value="online_presence_transformation" />
       <input type="text" name="_gotcha" tabIndex={-1} autoComplete="off" style={{ display: "none" }} aria-hidden="true" />
-      {selectedPlan ? <input type="hidden" name="selected_plan" value={selectedPlan} /> : null}
 
-      <div className="grid gap-4 sm:grid-cols-2">
-        <div className="flex flex-col gap-2 text-sm font-medium text-slate-700">
-          <label htmlFor="intake-name">Full Name</label>
+      <div className="grid gap-4 sm:grid-cols-3">
+        <div className="space-y-2">
+          <Label htmlFor="get-started-first-name">First name</Label>
           <Input
-            id="intake-name"
-            name="name"
+            id="get-started-first-name"
+            name="first_name"
             required
-            placeholder="Jordan Ramirez"
-            autoComplete="name"
-            aria-invalid={Boolean(getError("name"))}
-            aria-describedby={getDescribedBy("name")}
+            placeholder="Jordan"
+            autoComplete="given-name"
+            aria-invalid={Boolean(getError("first_name"))}
+            aria-describedby={describedBy("first_name")}
             onBlur={handleBlur}
             onInput={handleInput}
+            onChange={handleValueChange("firstName")}
           />
-          {renderError("name")}
+          {renderError("first_name")}
         </div>
-        <div className="flex flex-col gap-2 text-sm font-medium text-slate-700">
-          <label htmlFor="intake-email">Email</label>
+        <div className="space-y-2">
+          <Label htmlFor="get-started-last-name">Last name</Label>
           <Input
-            id="intake-email"
-            name="email"
-            type="email"
+            id="get-started-last-name"
+            name="last_name"
             required
-            placeholder="you@company.com"
-            autoComplete="email"
-            aria-invalid={Boolean(getError("email"))}
-            aria-describedby={getDescribedBy("email")}
+            placeholder="Ramirez"
+            autoComplete="family-name"
+            aria-invalid={Boolean(getError("last_name"))}
+            aria-describedby={describedBy("last_name")}
             onBlur={handleBlur}
             onInput={handleInput}
+            onChange={handleValueChange("lastName")}
           />
-          {renderError("email")}
+          {renderError("last_name")}
         </div>
-        <div className="flex flex-col gap-2 text-sm font-medium text-slate-700">
-          <label htmlFor="intake-business">Business Name</label>
+        <div className="space-y-2">
+          <Label htmlFor="get-started-phone">Phone number</Label>
           <Input
-            id="intake-business"
-            name="business"
+            id="get-started-phone"
+            name="phone"
+            type="tel"
             required
-            placeholder="Prism Dental Studio"
-            autoComplete="organization"
-            aria-invalid={Boolean(getError("business"))}
-            aria-describedby={getDescribedBy("business")}
+            placeholder="(555) 000-0000"
+            autoComplete="tel"
+            aria-invalid={Boolean(getError("phone"))}
+            aria-describedby={describedBy("phone")}
             onBlur={handleBlur}
             onInput={handleInput}
+            onChange={handleValueChange("phone")}
           />
-          {renderError("business")}
-        </div>
-        <div className="flex flex-col gap-2 text-sm font-medium text-slate-700">
-          <label htmlFor="intake-website">Current Website (optional)</label>
-          <Input
-            id="intake-website"
-            name="website"
-            type="url"
-            placeholder="https://yourdomain.com"
-            autoComplete="url"
-            aria-invalid={Boolean(getError("website"))}
-            aria-describedby={getDescribedBy("website")}
-            onBlur={handleBlur}
-            onInput={handleInput}
-            inputMode="url"
-          />
-          {renderError("website")}
+          {renderError("phone")}
         </div>
       </div>
 
-      <div className="grid gap-4 sm:grid-cols-2">
-        <div className="flex flex-col gap-2 text-sm font-medium text-slate-700">
-          <label htmlFor="intake-industry">Industry</label>
-          <select
-            id="intake-industry"
-            name="industry"
+      <div
+        className={cn(
+          "space-y-4 rounded-2xl border border-border/60 bg-muted/30 p-5",
+          !canSchedule && "opacity-60"
+        )}
+        aria-disabled={!canSchedule}
+      >
+        <div className="space-y-2">
+          <Label htmlFor="get-started-date">Choose a date</Label>
+          <Input
+            id="get-started-date"
+            name="call_date"
+            type="date"
             required
+            disabled={!canSchedule}
+            aria-invalid={Boolean(getError("call_date"))}
+            aria-describedby={describedBy("call_date")}
+            onBlur={handleBlur}
+            onInput={handleInput}
+          />
+          {renderError("call_date")}
+        </div>
+        <div className="space-y-2">
+          <Label htmlFor="get-started-time">Choose a time slot</Label>
+          <select
+            id="get-started-time"
+            name="call_time"
+            required
+            disabled={!canSchedule}
             defaultValue=""
-            className="h-12 w-full rounded-xl border border-slate-200 bg-white px-3 text-sm text-slate-700 outline-none focus:border-slate-900 focus:ring-2 focus:ring-slate-900/10"
-            aria-invalid={Boolean(getError("industry"))}
-            aria-describedby={getDescribedBy("industry")}
+            className="h-10 w-full rounded-md border border-input bg-background px-3 text-sm text-foreground shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+            aria-invalid={Boolean(getError("call_time"))}
+            aria-describedby={describedBy("call_time")}
             onBlur={handleBlur}
             onChange={handleInput}
           >
             <option value="" disabled>
-              Select an industry
+              Select a time
             </option>
-            {industryOptions.map((option) => (
-              <option key={option} value={option}>
-                {option}
+            {TIME_SLOTS.map((slot) => (
+              <option key={slot.value} value={slot.label}>
+                {slot.label}
               </option>
             ))}
           </select>
-          {renderError("industry")}
-        </div>
-        <div className="flex flex-col gap-2 text-sm font-medium text-slate-700">
-          <label htmlFor="intake-budget">Budget</label>
-          <select
-            id="intake-budget"
-            name="budget"
-            defaultValue={defaultBudgetValue || ""}
-            className="h-12 w-full rounded-xl border border-slate-200 bg-white px-3 text-sm text-slate-700 outline-none focus:border-slate-900 focus:ring-2 focus:ring-slate-900/10"
-            aria-invalid={Boolean(getError("budget"))}
-            aria-describedby={getDescribedBy("budget")}
-            onBlur={handleBlur}
-            onChange={handleInput}
-          >
-            {budgetOptions.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.label}
-              </option>
-            ))}
-          </select>
-          {renderError("budget")}
+          {renderError("call_time")}
         </div>
       </div>
 
-      <fieldset className="space-y-3 rounded-2xl border border-slate-200 px-4 py-4">
-        <legend className="text-sm font-semibold uppercase tracking-[0.3em] text-slate-500">Goals</legend>
-        <div className="grid gap-3 sm:grid-cols-2">
-          {goalOptions.map((goal) => (
-            <label
-              key={goal.value}
-              className="flex items-center gap-3 rounded-2xl border border-slate-200 px-3 py-3 text-sm font-medium text-slate-600 transition hover:border-slate-900"
-            >
-              <input
-                type="checkbox"
-                name="goals"
-                value={goal.value}
-                className="h-4 w-4 rounded border-slate-300 text-slate-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900"
-              />
-              <span>{goal.label}</span>
-            </label>
-          ))}
-        </div>
-      </fieldset>
-
-      <div className="flex flex-col gap-2 text-sm font-medium text-slate-700">
-        <label htmlFor="intake-notes">Anything else we should know?</label>
-        <Textarea
-          id="intake-notes"
-          name="notes"
-          rows={4}
-          placeholder="Drop links, timelines, inspiration, or anything specific we should factor into your site plan."
-          aria-invalid={Boolean(getError("notes"))}
-          aria-describedby={getDescribedBy("notes")}
-          onBlur={handleBlur}
-          onInput={handleInput}
-        />
-        {renderError("notes")}
-      </div>
-
-      <div className="space-y-3 pt-2">
+      <div className="space-y-3">
         <Button
           type="submit"
-          className="w-full rounded-2xl bg-slate-900 py-6 text-base font-semibold"
+          className="w-full rounded-full transition-transform duration-200 ease-out hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0 sm:w-auto"
           disabled={isSubmitting}
         >
-          {isSubmitting ? "Submitting..." : "Craft My Website Plan"}
+          {isSubmitting ? "Submitting..." : "I'm ready to elevate"}
         </Button>
         {submitError ? (
-          <Alert variant="destructive" className="rounded-2xl">
+          <Alert variant="destructive">
             <AlertDescription>{submitError}</AlertDescription>
           </Alert>
         ) : null}
-        <p className="text-xs text-slate-500">
-          By submitting, you agree to receive project updates by email. We respect your inbox.
-        </p>
       </div>
     </form>
   )
