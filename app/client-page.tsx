@@ -94,31 +94,93 @@ const FAQ_ITEMS = [
   {
     question: "What is Prism?",
     answer: [
-      "Prism is a software development and marketing company that helps busy founders implement the frontier of the most powerful technology and marketing strategies to grow their business.",
-      "Prism drives increased leads, conversions, customer lifetime value, and referrals by overhauling the website, content systems, and ads for our clients, while freeing them from the time and energy spent on tech and marketing so they can focus on other key parts of their business. Additionally, Prism deploys world-class, deeply integrated analytics systems that enhance data-driven decision making inside the businesses we work with.",
+      {
+        type: "paragraph",
+        content:
+          "Prism is a done-for-you online growth team for busy founders. We handle the parts that drive discovery and revenue--your website, Google Maps/Google Business Profile SEO, content systems, and ads--so your business gets found, converts more customers, and increases lifetime value.",
+      },
+      {
+        type: "paragraph",
+        content:
+          "We also set up clean, integrated tracking (analytics, attribution, dashboards) so you can see what's working, what's not, and where to double down--without guessing.",
+      },
     ],
   },
   {
-    question: "How Do I Start with Prism?",
+    question: "How do I start with Prism?",
     answer: [
-      "Submit the request form on our website to share some initial information about your business.",
-      "If you are a good fit, our team will reach out with more details within 1 business day of your submission.",
+      {
+        type: "paragraph",
+        content:
+          "Submit the request form on our website with a few details about your business and goals.",
+      },
+      {
+        type: "paragraph",
+        content: (
+          <>
+            If you're a fit, we'll reach out within <strong>1 business day</strong> to
+            schedule a quick call and walk through:
+          </>
+        ),
+      },
+      {
+        type: "list",
+        items: [
+          "where you are today (traffic, leads, conversion, offers)",
+          "what's blocking growth",
+          "what we'd implement first",
+          "timeline + pricing",
+        ],
+      },
     ],
   },
   {
     question: "Who is right for Prism?",
     answer: [
-      "Founders with product-market fit, a product or service proven to be loved by customers, who want to get that product or service out to more people but are overwhelmed by the complexities of the tech and online parts of the business.",
-      "If you are spending lots of time, energy, and money here, pulling focus away from your customers and core product or service, and still seeing mediocre results, you are the perfect fit for Prism.",
+      {
+        type: "paragraph",
+        content: (
+          <>
+            Prism is for founders who already have <strong>product-market fit</strong>
+            --customers want what you sell--and you're ready to scale your online
+            presence without becoming the in-house marketing/tech team.
+          </>
+        ),
+      },
+      {
+        type: "paragraph",
+        content: "You're a strong fit if:",
+      },
+      {
+        type: "list",
+        items: [
+          "you want more qualified leads (not vanity metrics)",
+          "you're tired of duct-taped tools and inconsistent results",
+          "you want one team to own website + SEO + ads + tracking end-to-end",
+          "you can move fast and give feedback when needed",
+        ],
+      },
+      {
+        type: "paragraph",
+        content: (
+          <>
+            Prism is <strong>not</strong> a fit if you're pre-offer, still figuring
+            out what you sell, or looking for a one-off &quot;quick website&quot; with
+            no growth system behind it.
+          </>
+        ),
+      },
     ],
   },
 ]
 
 const FOUNDER_PARAGRAPHS = [
-  "Prism was founded by Enzo Sison to help businesses scale online. Enzo started his career early in the 2000s in middle school, when he had a YouTube channel for gaming and quickly fell in love with online business and online marketing. He scaled that up to millions of people, partnered with companies like Sony and FanDuel to help them with their marketing efforts, and ultimately learned how to build a community online and monetize that community. This was all during middle school and high school.",
-  "Enzo went on to earn his engineering degree at Cal Poly in San Luis Obispo, where he studied computer science and user experience design. He also interned at Apple, deepening his expertise and passion for the intersection of world-class design, world-class engineering, and world-class storytelling.",
-  "Today, Enzo is training for the Olympics in 2028 in Los Angeles for Team Philippines. He has done track and field his entire life and competed Division One in college. He is excited to leverage what he learned from his career in social media and Silicon Valley to help SMBs scale, level up their online presence, and grow their businesses.",
-  "By taking the technical and online presence load off founders, they can focus on their core product, service, and customers. Enzo focuses entirely on technology marketing for his clients. It is a dynamic time with AI changing the landscape, and Prism is focused on finding new ways to create value for SMBs while improving impressions, conversions, and lifetime value month over month.",
+  "Prism was founded by Enzo Sison to help businesses grow online in a way that actually compounds. Enzo's career in digital marketing started early--building and scaling online audiences during middle school and high school, long before it was fashionable. Through years of experimentation, he learned how attention is earned, how communities are built, and how digital platforms can be turned into real, measurable business growth.",
+  "Those early projects reached millions of people and led to partnerships with brands like Sony and FanDuel, where Enzo sharpened his understanding of distribution, monetization, and performance-driven marketing.",
+  "Enzo later earned an engineering degree from Cal Poly, San Luis Obispo, studying computer science and user experience design. He also interned at Apple, where his approach was shaped by a deep respect for precision, craft, and the intersection of world-class design, engineering, and storytelling.",
+  "Today, Enzo is training for the 2028 Olympics in Los Angeles, competing in track and field for Team Philippines. He competed Division I in college and continues to apply the same discipline, systems thinking, and long-term mindset to building Prism.",
+  "At Prism, Enzo focuses entirely on technology-driven marketing--websites, SEO, ads, and systems that remove complexity for founders and operators. By taking ownership of the technical and digital surface area, Prism allows clients to stay focused on their product, service, and customers.",
+  "The digital landscape is changing fast, especially with AI reshaping how businesses are discovered and evaluated. Prism exists to stay ahead of that curve--helping clients improve visibility, conversion, and lifetime value month after month, without noise or gimmicks.",
 ]
 
 const ROADMAP_PHASES = [
@@ -280,9 +342,20 @@ export default function ClientPage() {
                         {item.question}
                       </AccordionTrigger>
                       <AccordionContent className="space-y-3 text-sm text-muted-foreground">
-                        {item.answer.map((paragraph) => (
-                          <p key={paragraph}>{paragraph}</p>
-                        ))}
+                        {item.answer.map((block, index) => {
+                          if (block.type === "list") {
+                            return (
+                              <ul key={`list-${index}`} className="space-y-2 pl-4">
+                                {block.items.map((itemText) => (
+                                  <li key={itemText} className="list-disc">
+                                    {itemText}
+                                  </li>
+                                ))}
+                              </ul>
+                            )
+                          }
+                          return <p key={`paragraph-${index}`}>{block.content}</p>
+                        })}
                       </AccordionContent>
                     </AccordionItem>
                   ))}
