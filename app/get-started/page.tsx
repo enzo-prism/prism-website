@@ -10,7 +10,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { quotesData, renderFormattedText } from "@/content/wall-of-love-data"
+import WallOfLoveCarousel from "@/components/home/WallOfLoveCarousel"
 
 type FAQBlock =
   | { type: "paragraph"; content: ReactNode }
@@ -29,8 +29,6 @@ const VSL_SOURCE = {
   caption:
     "Our team audits your online presence, creates a custom strategy, then handles all the execution for you 7-days a week.",
 }
-
-const WALL_OF_LOVE_QUOTES = quotesData.filter((quote) => !quote.requiresConsent).slice(0, 3)
 
 const PROGRAM_ROLES = [
   "Website Developer",
@@ -138,84 +136,35 @@ export default function GetStartedPage() {
       <main className="flex-1 allow-capitalization">
         <section className="relative overflow-hidden py-16 sm:py-24">
           <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-muted/50 via-background to-background" />
-          <div className="container relative mx-auto grid gap-12 px-4 sm:px-6 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:items-center">
-            <div className="space-y-6">
-              <Badge variant="secondary" className="w-fit">
-                Get Started
-              </Badge>
-              <div className="space-y-4">
-                <h1 className="text-balance text-4xl font-semibold tracking-tight text-foreground sm:text-5xl lg:text-6xl">
-                  Tired of handling all the marketing and tech yourself?
-                </h1>
-                <p className="text-balance text-lg text-muted-foreground">
-                  Join our Online Presence Transformation program - remove yourself as the bottleneck for growth.
-                </p>
-              </div>
-              <Button
-                asChild
-                size="lg"
-                className="w-full rounded-full transition-transform duration-200 ease-out hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0 sm:w-auto"
-              >
-                <Link href="#book-call">{HERO_CTA_TEXT}</Link>
-              </Button>
-            </div>
-
-            <Card className="border-border/60 bg-card/90 shadow-lg">
-              <CardHeader className="space-y-2">
-                <Badge variant="outline" className="w-fit">
-                  VSL
-                </Badge>
-                <CardTitle className="text-xl">Online Presence Transformation VSL</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-3">
-                <VideoPlayer
-                  src={VSL_SOURCE.src}
-                  poster={VSL_SOURCE.poster}
-                  caption={VSL_SOURCE.caption}
-                  className="border-border/60 bg-card/90 shadow-none"
-                />
-                <Link
-                  href={VSL_SOURCE.src}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="text-sm font-semibold text-primary underline underline-offset-4"
-                >
-                  Open the VSL link
-                </Link>
-              </CardContent>
-            </Card>
+          <div className="container relative mx-auto flex max-w-4xl flex-col gap-6 px-4 sm:px-6">
+            <Badge variant="secondary" className="w-fit">
+              Get Started
+            </Badge>
+            <h1 className="text-balance text-4xl font-semibold tracking-tight text-foreground sm:text-5xl lg:text-6xl">
+              Tired of handling all the marketing and tech yourself?
+            </h1>
+            <p className="text-balance text-lg text-muted-foreground">
+              Join our Online Presence Transformation program - remove yourself as the bottleneck for growth.
+            </p>
+            <VideoPlayer
+              src={VSL_SOURCE.src}
+              poster={VSL_SOURCE.poster}
+              className="border-border/60 bg-card/90 shadow-lg"
+            />
+            <p className="text-base text-muted-foreground">
+              {VSL_SOURCE.caption}
+            </p>
+            <Button
+              asChild
+              size="lg"
+              className="w-full rounded-full transition-transform duration-200 ease-out hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0 sm:w-auto"
+            >
+              <Link href="#book-call">{HERO_CTA_TEXT}</Link>
+            </Button>
           </div>
         </section>
 
-        <section className="py-16 sm:py-24 bg-muted/30">
-          <div className="container mx-auto px-4 sm:px-6">
-            <div className="flex flex-col items-center gap-3 text-center">
-              <Badge variant="secondary" className="w-fit">
-                What people are saying
-              </Badge>
-              <h2 className="text-balance text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
-                Wall of Love quotes
-              </h2>
-            </div>
-            <div className="mt-10 grid gap-6 md:grid-cols-3">
-              {WALL_OF_LOVE_QUOTES.map((quote) => (
-                <Card key={quote.id} className="border-border/60 bg-card/90">
-                  <CardHeader className="space-y-3">
-                    <Badge variant="outline" className="w-fit">
-                      {quote.company}
-                    </Badge>
-                    <p className="text-sm font-semibold text-foreground">
-                      "{renderFormattedText(quote.text)}"
-                    </p>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-sm font-semibold text-foreground">{quote.client}</p>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </div>
-        </section>
+        <WallOfLoveCarousel showCta={false} showEyebrow={false} />
 
         <section className="py-16 sm:py-24">
           <div className="container mx-auto px-4 sm:px-6">

@@ -11,16 +11,11 @@ import { Label } from "@/components/ui/label"
 import { cn } from "@/lib/utils"
 import { useFormValidation } from "@/hooks/use-form-validation"
 
-const FORM_ACTION = "https://formspree.io/f/manawlzn"
+const FORM_ACTION = "https://formspree.io/f/xzdpoyer"
 const DEFAULT_REDIRECT = "https://www.design-prism.com/thank-you"
 
-const TIME_SLOTS = [
-  { value: "monday-9am", label: "Monday 9:00 AM PT" },
-  { value: "tuesday-11am", label: "Tuesday 11:00 AM PT" },
-  { value: "wednesday-2pm", label: "Wednesday 2:00 PM PT" },
-  { value: "thursday-4pm", label: "Thursday 4:00 PM PT" },
-  { value: "friday-10am", label: "Friday 10:00 AM PT" },
-]
+const HOUR_OPTIONS = Array.from({ length: 12 }, (_, index) => String(index + 1))
+const MINUTE_OPTIONS = ["00", "05", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55"]
 
 export default function GetStartedForm() {
   const router = useRouter()
@@ -30,6 +25,7 @@ export default function GetStartedForm() {
     firstName: "",
     lastName: "",
     phone: "",
+    callDate: "",
   })
 
   const { getError, handleBlur, handleInput, handleSubmit, isSubmitting } = useFormValidation({
@@ -61,13 +57,18 @@ export default function GetStartedForm() {
     }
   }, [])
 
-  const handleValueChange = (field: keyof typeof formState) => (event: ChangeEvent<HTMLInputElement>) => {
+  const handleValueChange =
+    (field: keyof typeof formState) => (event: ChangeEvent<HTMLInputElement>) => {
     setFormState((prev) => ({ ...prev, [field]: event.target.value }))
   }
 
   const canSchedule = useMemo(() => {
-    return Boolean(formState.firstName.trim() && formState.lastName.trim() && formState.phone.trim())
+    return Boolean(
+      formState.firstName.trim() && formState.lastName.trim() && formState.phone.trim()
+    )
   }, [formState.firstName, formState.lastName, formState.phone])
+
+  const hasDateSelected = Boolean(formState.callDate.trim())
 
   const renderError = (name: string) => {
     const error = getError(name)
@@ -165,33 +166,108 @@ export default function GetStartedForm() {
             aria-describedby={describedBy("call_date")}
             onBlur={handleBlur}
             onInput={handleInput}
+            onChange={handleValueChange("callDate")}
           />
           {renderError("call_date")}
         </div>
         <div className="space-y-2">
-          <Label htmlFor="get-started-time">Choose a time slot</Label>
-          <select
-            id="get-started-time"
-            name="call_time"
-            required
-            disabled={!canSchedule}
-            defaultValue=""
-            className="h-10 w-full rounded-md border border-input bg-background px-3 text-sm text-foreground shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-            aria-invalid={Boolean(getError("call_time"))}
-            aria-describedby={describedBy("call_time")}
-            onBlur={handleBlur}
-            onChange={handleInput}
-          >
-            <option value="" disabled>
-              Select a time
-            </option>
-            {TIME_SLOTS.map((slot) => (
-              <option key={slot.value} value={slot.label}>
-                {slot.label}
-              </option>
-            ))}
-          </select>
-          {renderError("call_time")}
+          <Label>Preferred time</Label>
+          <div className="grid gap-3 sm:grid-cols-[1fr_1fr_auto] sm:items-center">
+            <div className="space-y-2">
+              <Label htmlFor="get-started-time-hour" className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
+                Hour
+              </Label>
+              <select
+                id="get-started-time-hour"
+                name="call_time_hour"
+                required
+                disabled={!canSchedule || !hasDateSelected}
+                defaultValue=""
+                className="h-10 w-full rounded-md border border-input bg-background px-3 text-sm text-foreground shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                aria-invalid={Boolean(getError("call_time_hour"))}
+                aria-describedby={describedBy("call_time_hour")}
+                onBlur={handleBlur}
+                onChange={handleInput}
+              >
+                <option value="" disabled>
+                  Select hour
+                </option>
+                {HOUR_OPTIONS.map((hour) => (
+                  <option key={hour} value={hour}>
+                    {hour}
+                  </option>
+                ))}
+              </select>
+              {renderError("call_time_hour")}
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="get-started-time-minute" className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
+                Minute
+              </Label>
+              <select
+                id="get-started-time-minute"
+                name="call_time_minute"
+                required
+                disabled={!canSchedule || !hasDateSelected}
+                defaultValue=""
+                className="h-10 w-full rounded-md border border-input bg-background px-3 text-sm text-foreground shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                aria-invalid={Boolean(getError("call_time_minute"))}
+                aria-describedby={describedBy("call_time_minute")}
+                onBlur={handleBlur}
+                onChange={handleInput}
+              >
+                <option value="" disabled>
+                  Select minutes
+                </option>
+                {MINUTE_OPTIONS.map((minute) => (
+                  <option key={minute} value={minute}>
+                    {minute}
+                  </option>
+                ))}
+              </select>
+              {renderError("call_time_minute")}
+            </div>
+            <div className="space-y-2">
+              <Label className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
+                AM/PM
+              </Label>
+              <div className="flex items-center gap-2">
+                <label className="relative">
+                  <input
+                    type="radio"
+                    name="call_time_period"
+                    value="AM"
+                    required
+                    disabled={!canSchedule || !hasDateSelected}
+                    className="peer sr-only"
+                    onBlur={handleBlur}
+                    onChange={handleInput}
+                  />
+                  <span className="inline-flex h-10 min-w-[3.5rem] items-center justify-center rounded-md border border-input bg-background px-3 text-sm font-medium text-foreground transition peer-checked:border-primary peer-checked:bg-primary peer-checked:text-primary-foreground peer-focus-visible:outline-none peer-focus-visible:ring-2 peer-focus-visible:ring-ring peer-focus-visible:ring-offset-2 peer-disabled:cursor-not-allowed peer-disabled:opacity-50">
+                    AM
+                  </span>
+                </label>
+                <label className="relative">
+                  <input
+                    type="radio"
+                    name="call_time_period"
+                    value="PM"
+                    disabled={!canSchedule || !hasDateSelected}
+                    className="peer sr-only"
+                    onBlur={handleBlur}
+                    onChange={handleInput}
+                  />
+                  <span className="inline-flex h-10 min-w-[3.5rem] items-center justify-center rounded-md border border-input bg-background px-3 text-sm font-medium text-foreground transition peer-checked:border-primary peer-checked:bg-primary peer-checked:text-primary-foreground peer-focus-visible:outline-none peer-focus-visible:ring-2 peer-focus-visible:ring-ring peer-focus-visible:ring-offset-2 peer-disabled:cursor-not-allowed peer-disabled:opacity-50">
+                    PM
+                  </span>
+                </label>
+              </div>
+              {renderError("call_time_period")}
+            </div>
+          </div>
+          <p className="text-xs text-muted-foreground">
+            Calls last 30 minutes. Please reserve 30 minutes for the call.
+          </p>
         </div>
       </div>
 
