@@ -57,8 +57,16 @@ export default function WallOfLoveCarousel() {
         </div>
 
         <div className="relative">
-          <Carousel opts={{ align: "start", loop: true }}>
-            <CarouselContent>
+          <Carousel
+            opts={{
+              align: "start",
+              containScroll: "trimSnaps",
+              dragFree: true,
+              loop: false,
+            }}
+            className="touch-pan-y"
+          >
+            <CarouselContent className="select-none pr-4 hardware-accelerated">
               {QUOTE_POOL.map((quote) => (
                 <CarouselItem
                   key={quote.id}
