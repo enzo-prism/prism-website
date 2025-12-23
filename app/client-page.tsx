@@ -468,7 +468,7 @@ export default function ClientPage() {
           </div>
         </section>
 
-        <WallOfLoveCarousel />
+        <WallOfLoveCarousel enableMobileArrows disableSwipeOnMobile />
       </main>
       <Footer />
     </div>

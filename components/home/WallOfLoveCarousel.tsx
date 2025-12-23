@@ -3,6 +3,7 @@
 import Link from "next/link"
 import { ArrowUpRight } from "lucide-react"
 
+import { useMobile } from "@/hooks/use-mobile"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
@@ -30,12 +31,19 @@ const QUOTE_POOL = buildQuotePool()
 type WallOfLoveCarouselProps = {
   showCta?: boolean
   showEyebrow?: boolean
+  enableMobileArrows?: boolean
+  disableSwipeOnMobile?: boolean
 }
 
 export default function WallOfLoveCarousel({
   showCta = true,
   showEyebrow = true,
+  enableMobileArrows = false,
+  disableSwipeOnMobile = false,
 }: WallOfLoveCarouselProps) {
+  const isMobile = useMobile()
+  const isSwipeDisabled = disableSwipeOnMobile && isMobile
+
   return (
     <section className="relative overflow-hidden py-16 sm:py-24 bg-muted/30">
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-muted/50 via-transparent to-transparent" />
@@ -73,7 +81,8 @@ export default function WallOfLoveCarousel({
             opts={{
               align: "start",
               containScroll: "trimSnaps",
-              dragFree: true,
+              dragFree: !isSwipeDisabled,
+              draggable: !isSwipeDisabled,
               loop: false,
             }}
             className="touch-pan-y"
@@ -104,6 +113,12 @@ export default function WallOfLoveCarousel({
                 </CarouselItem>
               ))}
             </CarouselContent>
+            {enableMobileArrows && isMobile ? (
+              <div className="mt-6 flex items-center justify-center gap-4 sm:hidden">
+                <CarouselPrevious className="static h-10 w-10 translate-y-0" />
+                <CarouselNext className="static h-10 w-10 translate-y-0" />
+              </div>
+            ) : null}
             <CarouselPrevious className="-left-4 hidden sm:flex" />
             <CarouselNext className="-right-4 hidden sm:flex" />
           </Carousel>
