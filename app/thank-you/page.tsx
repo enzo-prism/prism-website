@@ -46,10 +46,10 @@ export default function ThankYouPage() {
                     <div className="space-y-3">
                       <p className="text-sm font-semibold uppercase tracking-[0.3em] text-slate-500">Received</p>
                       <h1 className="text-3xl font-semibold text-slate-900 sm:text-4xl">
-                        Your AI site plan is now in progress.
+                        Review in progress.
                       </h1>
                       <p className="text-base text-slate-600">
-                        We’re reviewing your answers and preparing a preview in under 24 hours.
+                        The team will get back to you within 24 hours.
                       </p>
                     </div>
                   </div>
