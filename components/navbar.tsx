@@ -4,7 +4,7 @@ import { BadgeDollarSign, BookOpen, FolderOpen, Heart, Home, Menu } from "lucide
 import type { LucideIcon } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { useLayoutEffect, useMemo, useRef } from "react"
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react"
 
 import Breadcrumbs from "@/components/breadcrumbs"
 import { Button } from "@/components/ui/button"
@@ -48,6 +48,7 @@ export default function Navbar() {
   const pathname = usePathname()
   const navItems = NAV_ITEMS
   const headerRef = useRef<HTMLElement | null>(null)
+  const [isScrolled, setIsScrolled] = useState(false)
 
   const caseStudyBreadcrumbs = useMemo(() => {
     if (!pathname?.startsWith("/case-studies")) return null
@@ -85,6 +86,19 @@ export default function Navbar() {
     }
   }, [pathname])
 
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 8)
+    }
+
+    handleScroll()
+    window.addEventListener("scroll", handleScroll, { passive: true })
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll)
+    }
+  }, [])
+
   const normalizeHref = (href: string) => aliasMap[href] ?? href
   const isActivePath = (href?: string) => (href ? pathname === normalizeHref(href) : false)
   const isParentActive = (item: NavItem) => {
@@ -98,7 +112,11 @@ export default function Navbar() {
   return (
     <header
       ref={headerRef}
-      className={`sticky top-0 z-50 w-full bg-background/90 backdrop-blur supports-[backdrop-filter]:bg-background/70 ${
+      className={`sticky top-0 z-50 w-full backdrop-blur transition-colors ${
+        isScrolled
+          ? "bg-background/95 shadow-sm supports-[backdrop-filter]:bg-background/90"
+          : "bg-background/80 supports-[backdrop-filter]:bg-background/60"
+      } ${
         caseStudyBreadcrumbs ? "" : "border-b"
       }`}
     >
