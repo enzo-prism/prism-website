@@ -1,6 +1,7 @@
 import type { ReactNode } from "react"
 import Link from "next/link"
 import type { Metadata } from "next"
+import { ClipboardCheck, Code2, Megaphone, PenTool } from "lucide-react"
 
 import GetStartedForm from "@/components/forms/GetStartedForm"
 import Footer from "@/components/footer"
@@ -31,10 +32,10 @@ const VSL_SOURCE = {
 }
 
 const PROGRAM_ROLES = [
-  "Website Developer",
-  "Designer",
-  "Marketer and Storyteller",
-  "Project Manager",
+  { title: "Website Developer", icon: Code2 },
+  { title: "Designer", icon: PenTool },
+  { title: "Marketer and Storyteller", icon: Megaphone },
+  { title: "Project Manager", icon: ClipboardCheck },
 ]
 
 const FAQ_ITEMS: FAQItem[] = [
@@ -179,16 +180,24 @@ export default function GetStartedPage() {
               </h2>
             </div>
             <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-              {PROGRAM_ROLES.map((role, index) => (
-                <Card key={role} className="border-border/60 bg-card/90">
-                  <CardContent className="p-6">
-                    <p className="text-xs font-semibold uppercase tracking-[0.3em] text-muted-foreground">
-                      Role {String(index + 1).padStart(2, "0")}
-                    </p>
-                    <p className="mt-3 text-lg font-semibold text-foreground">{role}</p>
-                  </CardContent>
-                </Card>
-              ))}
+              {PROGRAM_ROLES.map((role, index) => {
+                const Icon = role.icon
+                return (
+                  <Card key={role.title} className="border-border/60 bg-card/90">
+                    <CardContent className="p-6">
+                      <div className="flex items-start justify-between gap-3">
+                        <p className="text-xs font-semibold uppercase tracking-[0.3em] text-muted-foreground">
+                          Role {String(index + 1).padStart(2, "0")}
+                        </p>
+                        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-muted/60 text-muted-foreground">
+                          <Icon className="h-5 w-5" aria-hidden="true" />
+                        </div>
+                      </div>
+                      <p className="mt-3 text-lg font-semibold text-foreground">{role.title}</p>
+                    </CardContent>
+                  </Card>
+                )
+              })}
             </div>
             <div className="mt-10 flex flex-col items-center gap-4 text-center">
               <p className="text-base text-muted-foreground">
