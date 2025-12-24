@@ -201,7 +201,7 @@ export default function GetStartedPage() {
             </div>
             <div className="mt-10 flex flex-col items-center gap-4 text-center">
               <p className="text-base text-muted-foreground">
-                The team works 7 days a week to get you more leads, more customers, and better custom lifetime value.
+                Your team from Prism works 7 days a week to get you more leads, more customers, and better custom lifetime value.
               </p>
               <Button
                 asChild
