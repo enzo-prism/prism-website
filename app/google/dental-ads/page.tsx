@@ -155,14 +155,14 @@ const partnershipPoints = [
 ]
 
 export const metadata: Metadata = {
-  title: "prism × google ads for dentists | compliant dental advertising in 2025",
+  title: "google ads for dentists",
   description:
     "prism helps dental practices attract more patients with fully compliant google ads. learn how to structure campaigns for dental implants, invisalign, and general dentistry while meeting google’s health advertising policies.",
   alternates: {
     canonical: "https://www.design-prism.com/google/dental-ads"
   },
   openGraph: {
-    title: "prism × google ads for dentists | compliant dental advertising in 2025",
+    title: "google ads for dentists",
     description:
       "prism helps dental practices attract more patients with fully compliant google ads. learn how to structure campaigns for dental implants, invisalign, and general dentistry while meeting google’s health advertising policies.",
     url: "https://www.design-prism.com/google/dental-ads",
@@ -172,7 +172,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "prism × google ads for dentists | compliant dental advertising in 2025",
+    title: "google ads for dentists",
     description:
       "prism helps dental practices attract more patients with fully compliant google ads. learn how to structure campaigns for dental implants, invisalign, and general dentistry while meeting google’s health advertising policies."
   },
@@ -211,6 +211,13 @@ export default function GoogleDentalAdsPage() {
                 want to add paid social too? see{" "}
                 <Link href="/tiktok-ads-for-dentists" className="font-semibold text-white underline underline-offset-4">
                   tiktok ads for dentists
+                </Link>
+                .
+              </p>
+              <p className="max-w-3xl text-sm text-white/70">
+                need a hipaa-safe intake workflow? see our{" "}
+                <Link href="/google/dental-patient-forms" className="font-semibold text-white underline underline-offset-4">
+                  google workspace patient forms guide
                 </Link>
                 .
               </p>

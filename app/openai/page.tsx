@@ -125,6 +125,13 @@ export default function OpenAIPage() {
                 Prism works directly with OpenAI&apos;s tools and distribution network so your practice shows up in the conversations,
                 searches, and recommendations happening inside ChatGPT and beyond.
               </p>
+              <p className="mt-3 text-sm text-neutral-500 sm:text-base">
+                building broader small business ai systems? explore{" "}
+                <Link href="/smb" className="font-semibold text-neutral-900 underline underline-offset-4">
+                  small business ai services
+                </Link>
+                .
+              </p>
               <div className="mt-8 flex flex-wrap justify-center gap-3">
                 <Link
                   href="/get-started"

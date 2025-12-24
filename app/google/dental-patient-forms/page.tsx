@@ -873,7 +873,7 @@ export default function GoogleDentalPatientFormsGuide() {
                       rel="noopener noreferrer"
                       className="break-words text-sm font-semibold text-sky-600 underline"
                     >
-                      {ref.href}
+                      View {ref.label}
                     </Link>
                   </div>
                 </li>

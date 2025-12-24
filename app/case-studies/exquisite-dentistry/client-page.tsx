@@ -157,7 +157,7 @@ export default function ExquisiteDentistryCaseStudy() {
                 <br />
                 Learn more: <strong>Local listings cleanup</strong> →{" "}
                 <a className={linkClassName} href="https://www.design-prism.com/local-listings" target="_blank" rel="noreferrer">
-                  https://www.design-prism.com/local-listings
+                  local listings cleanup
                 </a>
               </li>
             </ul>
@@ -188,7 +188,7 @@ export default function ExquisiteDentistryCaseStudy() {
               This is what our <strong>Dental Website System</strong> is built for:
               <br />
               <a className={linkClassName} href="https://www.design-prism.com/dental-website" target="_blank" rel="noreferrer">
-                https://www.design-prism.com/dental-website
+                dental website system
               </a>
             </p>
             <hr />
@@ -256,7 +256,7 @@ export default function ExquisiteDentistryCaseStudy() {
             <p>
               Related: <strong>apps + forms systems</strong> →{" "}
               <a className={linkClassName} href="https://www.design-prism.com/apps" target="_blank" rel="noreferrer">
-                https://www.design-prism.com/apps
+                prism apps + forms
               </a>
             </p>
             <hr />
@@ -282,12 +282,12 @@ export default function ExquisiteDentistryCaseStudy() {
               <br />
               <strong>SEO system</strong> →{" "}
               <a className={linkClassName} href="https://www.design-prism.com/seo" target="_blank" rel="noreferrer">
-                https://www.design-prism.com/seo
+                prism seo
               </a>
               <br />
               <strong>Growth reporting</strong> →{" "}
               <a className={linkClassName} href="https://www.design-prism.com/growth" target="_blank" rel="noreferrer">
-                https://www.design-prism.com/growth
+                prism growth reporting
               </a>
             </p>
             <hr />
@@ -322,17 +322,17 @@ export default function ExquisiteDentistryCaseStudy() {
               <br />
               <strong>Ads system</strong> →{" "}
               <a className={linkClassName} href="https://www.design-prism.com/ads" target="_blank" rel="noreferrer">
-                https://www.design-prism.com/ads
+                prism ads
               </a>
               <br />
               <strong>Google Ads</strong> →{" "}
               <a className={linkClassName} href="https://www.design-prism.com/google" target="_blank" rel="noreferrer">
-                https://www.design-prism.com/google
+                prism × google
               </a>
               <br />
               <strong>Proof engine</strong> (reviews + trust) →{" "}
               <a className={linkClassName} href="https://www.design-prism.com/proof" target="_blank" rel="noreferrer">
-                https://www.design-prism.com/proof
+                proof engine
               </a>
             </p>
             <hr />
@@ -382,12 +382,12 @@ export default function ExquisiteDentistryCaseStudy() {
             <p>
               See more results:{" "}
               <a className={linkClassName} href="https://www.design-prism.com/case-studies" target="_blank" rel="noreferrer">
-                https://www.design-prism.com/case-studies
+                case studies
               </a>
               <br />
               See why dentists work with Prism:{" "}
               <a className={linkClassName} href="https://www.design-prism.com/why-dental-practices-love-prism" target="_blank" rel="noreferrer">
-                https://www.design-prism.com/why-dental-practices-love-prism
+                why dental practices love prism
               </a>
             </p>
             <hr />
@@ -398,19 +398,19 @@ export default function ExquisiteDentistryCaseStudy() {
               <li>
                 Get a free analysis:{" "}
                 <a className={linkClassName} href="https://www.design-prism.com/free-analysis" target="_blank" rel="noreferrer">
-                  https://www.design-prism.com/free-analysis
+                  free analysis
                 </a>
               </li>
               <li>
                 Or go straight to get started:{" "}
                 <a className={linkClassName} href="https://www.design-prism.com/get-started" target="_blank" rel="noreferrer">
-                  https://www.design-prism.com/get-started
+                  get started
                 </a>
               </li>
               <li>
                 Or talk with us:{" "}
                 <a className={linkClassName} href="https://www.design-prism.com/contact" target="_blank" rel="noreferrer">
-                  https://www.design-prism.com/contact
+                  contact prism
                 </a>
               </li>
             </ul>

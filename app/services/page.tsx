@@ -18,6 +18,10 @@ const coreServices: CoreService[] = [
   {
     name: "Websites & Experience Design",
     summary: "Design systems, copy, and development that give you a conversion-ready site — managed end to end by Prism.",
+    learnMoreLinks: [
+      { label: "website design services", href: "/websites" },
+      { label: "start a website project", href: "/get-started?service=website-design" },
+    ],
     outcomes: [
       "Custom design, UX, and development in one sprint team",
       "Editable component library and CMS governance",
@@ -26,6 +30,7 @@ const coreServices: CoreService[] = [
     caseStudies: [
       { label: "Laguna Beach Dental Arts", href: "/case-studies/laguna-beach-dental-arts" },
       { label: "Family First Smile Care", href: "/case-studies/family-first-smile-care" },
+      { label: "Infobell IT", href: "/case-studies/infobell-it" },
     ],
   },
   {
@@ -64,6 +69,9 @@ const coreServices: CoreService[] = [
   {
     name: "Content & Communications",
     summary: "Operator-friendly content systems for email, video, blogs, and in-practice storytelling.",
+    learnMoreLinks: [
+      { label: "custom email for dental practices", href: "/custom-email-for-dental-practices" },
+    ],
     outcomes: [
       "Editorial calendars and brand voice guidelines",
       "Short-form video, blog, and email nurture production",
@@ -365,6 +373,20 @@ export default function ServicesPage() {
               dental teams running paid social: see{" "}
               <Link href="/tiktok-ads-for-dentists" className="font-semibold text-neutral-900 underline underline-offset-4">
                 tiktok ads for dentists
+              </Link>
+              .
+            </div>
+            <div className="mx-auto mt-6 max-w-4xl rounded-3xl border border-neutral-200 bg-white p-6 text-sm text-neutral-700">
+              building an app alongside your growth stack? explore our{" "}
+              <Link href="/apps" className="font-semibold text-neutral-900 underline underline-offset-4">
+                app development work
+              </Link>{" "}
+              or{" "}
+              <Link
+                href="/get-started?service=app-development"
+                className="font-semibold text-neutral-900 underline underline-offset-4"
+              >
+                start an app project
               </Link>
               .
             </div>

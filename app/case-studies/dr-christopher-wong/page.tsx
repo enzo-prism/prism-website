@@ -6,13 +6,13 @@ const cs = CASE_STUDIES.find((cs) => cs.slug === "dr-christopher-wong")
 const structured = cs?.structured
 
 export const metadata: Metadata = {
-  title: "case study: dr. wong — de-risking a dental m&a in palo alto with ai-powered marketing",
+  title: "case study: dr. wong dental m&a relaunch",
   description: "from ownership transition risk to a future-proof, ai-powered dental practice in palo alto.",
   alternates: {
     canonical: "/case-studies/dr-christopher-wong",
   },
   openGraph: {
-    title: "case study: dr. wong — de-risking a dental m&a in palo alto with ai-powered marketing",
+    title: "case study: dr. wong dental m&a relaunch",
     description: "from ownership transition risk to a future-proof, ai-powered dental practice in palo alto.",
     images: [
       {
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "case study: dr. wong — de-risking a dental m&a in palo alto with ai-powered marketing",
+    title: "case study: dr. wong dental m&a relaunch",
     description: "from ownership transition risk to a future-proof, ai-powered dental practice in palo alto.",
     images: structured?.heroImage ?? "/dr-wong-polaroids.png",
   },

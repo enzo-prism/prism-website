@@ -697,6 +697,13 @@ function FinalCTA() {
               </Button>
             </RippleHighlight>
           </div>
+          <p className="mt-4 text-sm text-white/70">
+            looking for a limited-time promo?{" "}
+            <Link href="/offers" className="font-semibold text-white underline underline-offset-4">
+              see current offers
+            </Link>
+            .
+          </p>
         </RevealOnScroll>
       </div>
     </section>

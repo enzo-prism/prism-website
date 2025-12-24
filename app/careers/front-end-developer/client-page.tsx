@@ -230,6 +230,19 @@ export default function FrontEndDeveloperPage() {
           </div>
         </section>
 
+        <section className="px-4 pb-2">
+          <div className="container mx-auto px-4 md:px-6 text-center">
+            <p className="text-xs font-semibold uppercase tracking-[0.28em] text-neutral-400">other open roles</p>
+            <Link
+              href="/careers/replit-builder"
+              className="mt-3 inline-flex text-sm font-semibold lowercase text-neutral-900 underline decoration-neutral-300 underline-offset-4 transition hover:decoration-neutral-900"
+              onClick={() => trackNavigation("open_role_replit_builder", "/careers/replit-builder")}
+            >
+              replit builder contract role
+            </Link>
+          </div>
+        </section>
+
         {/* Back Navigation */}
         <section className="px-4 py-8">
           <div className="container mx-auto px-4 md:px-6 text-center">

@@ -2,7 +2,7 @@ import type { Metadata } from "next"
 import ExquisiteDentistryCaseStudy from "./client-page"
 
 export const metadata: Metadata = {
-  title: "Case Study: Exquisite Dentistry — Turning a Legacy Beverly Hills Brand Into a Modern, Trackable Growth Engine",
+  title: "Case Study: Exquisite Dentistry brand relaunch",
   description:
     "Turning a legacy Beverly Hills brand into a modern, trackable growth engine.",
   alternates: {
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
       "https://www.design-prism.com/case-studies/exquisite-dentistry",
   },
   openGraph: {
-    title: "Case Study: Exquisite Dentistry — Turning a Legacy Beverly Hills Brand Into a Modern, Trackable Growth Engine",
+    title: "Case Study: Exquisite Dentistry brand relaunch",
     description:
       "Turning a legacy Beverly Hills brand into a modern, trackable growth engine.",
     images: [

@@ -65,7 +65,7 @@ export const seoOverviewContent = {
       "core services and locations are impossible to miss",
       "loading is fast, clean, and mobile friendly",
     ],
-    linkText: "learn more",
+    linkText: "on-page seo services",
     linkHref: "/seo/on-page",
   },
   offPagePreview: {

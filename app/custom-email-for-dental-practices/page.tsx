@@ -297,6 +297,13 @@ export default function CustomEmailDentalPage() {
                 <p className="mt-4 text-sm text-neutral-500">
                   Already on Google Workspace or Microsoft 365? We will harden deliverability, clean up DNS, and lock in best practices without rebuilding from scratch.
                 </p>
+                <p className="mt-4 text-sm text-neutral-500">
+                  Need a HIPAA-safe intake workflow too? Read our{" "}
+                  <Link href="/google/dental-patient-forms" className="font-semibold text-neutral-900 underline underline-offset-4">
+                    Google Workspace patient forms guide
+                  </Link>
+                  .
+                </p>
               </div>
               <div className="grid gap-4">
                 {pricingOptions.map((option) => (

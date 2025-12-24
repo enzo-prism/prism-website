@@ -69,14 +69,14 @@ const learningLinks = [
 ]
 
 export const metadata: Metadata = {
-  title: "prism × google | google workspace & ads partner for local businesses",
+  title: "google workspace & ads partner",
   description:
     "prism is a google partner helping small businesses grow through google workspace, ads, analytics, and business profile optimization. get started or set up workspace with a partner discount.",
   alternates: {
     canonical: "https://www.design-prism.com/google"
   },
   openGraph: {
-    title: "prism × google | google workspace & ads partner for local businesses",
+    title: "google workspace & ads partner",
     description:
       "prism is a google partner helping small businesses grow through google workspace, ads, analytics, and business profile optimization. get started or set up workspace with a partner discount.",
     url: "https://www.design-prism.com/google",
@@ -86,7 +86,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "prism × google | google workspace & ads partner for local businesses",
+    title: "google workspace & ads partner",
     description:
       "prism is a google partner helping small businesses grow through google workspace, ads, analytics, and business profile optimization. get started or set up workspace with a partner discount."
   },
