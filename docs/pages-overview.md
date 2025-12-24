@@ -47,6 +47,7 @@ Quick reference for the pages we edit most often.
 - Hero copy, service strip, and CTAs live in `app/client-page.tsx` with CTA tracking in `components/home/HeroCtas.tsx`.
 - Testimonial copy for the proof strip lives in `content/wall-of-love-data.tsx`; adjust `HERO_PRIORITY_IDS` to control the surfaced quotes.
 - The impact graph section below the hero is `components/home/ImpactGraphSection.tsx`, which lazy-mounts `FounderImpactGraph` so Recharts only loads when near the viewport.
+- The Wall of Love slider uses `components/home/WallOfLoveCarousel.tsx` and a native scroll-snap rail (no Embla); adjust the quote pool via `pinned` / `heroSpotlight` in `content/wall-of-love-data.tsx`.
 
 ## Thank-you routes
 - `app/thank-you/page.tsx`

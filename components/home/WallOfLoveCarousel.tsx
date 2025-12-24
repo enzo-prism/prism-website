@@ -1,19 +1,12 @@
 "use client"
 
 import Link from "next/link"
-import { ArrowUpRight } from "lucide-react"
+import { ArrowUpRight, ChevronLeft, ChevronRight } from "lucide-react"
+import { useCallback, useEffect, useRef, useState } from "react"
 
-import { useMobile } from "@/hooks/use-mobile"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel"
 import { quotesData, renderFormattedText } from "@/content/wall-of-love-data"
 
 const MAX_QUOTES = 12
@@ -32,17 +25,63 @@ type WallOfLoveCarouselProps = {
   showCta?: boolean
   showEyebrow?: boolean
   enableMobileArrows?: boolean
-  disableSwipeOnMobile?: boolean
 }
 
 export default function WallOfLoveCarousel({
   showCta = true,
   showEyebrow = true,
   enableMobileArrows = false,
-  disableSwipeOnMobile = false,
 }: WallOfLoveCarouselProps) {
-  const isMobile = useMobile()
-  const isSwipeDisabled = disableSwipeOnMobile && isMobile
+  const railRef = useRef<HTMLDivElement>(null)
+  const [canScrollLeft, setCanScrollLeft] = useState(false)
+  const [canScrollRight, setCanScrollRight] = useState(false)
+
+  const updateScrollState = useCallback(() => {
+    const rail = railRef.current
+    if (!rail) return
+    const { scrollLeft, scrollWidth, clientWidth } = rail
+    setCanScrollLeft(scrollLeft > 8)
+    setCanScrollRight(scrollLeft + clientWidth < scrollWidth - 8)
+  }, [])
+
+  useEffect(() => {
+    updateScrollState()
+  }, [updateScrollState])
+
+  useEffect(() => {
+    const rail = railRef.current
+    if (!rail) return
+
+    updateScrollState()
+
+    const handleScroll = () => updateScrollState()
+    const handleResize = () => updateScrollState()
+
+    rail.addEventListener("scroll", handleScroll, { passive: true })
+    window.addEventListener("resize", handleResize)
+
+    return () => {
+      rail.removeEventListener("scroll", handleScroll)
+      window.removeEventListener("resize", handleResize)
+    }
+  }, [updateScrollState])
+
+  const scrollByAmount = useCallback((direction: "left" | "right") => {
+    const rail = railRef.current
+    if (!rail) return
+    if (typeof window === "undefined") return
+    const firstCard = rail.firstElementChild as HTMLElement | null
+    let amount = Math.max(rail.clientWidth * 0.85, 320)
+
+    if (firstCard) {
+      const styles = window.getComputedStyle(rail)
+      const gapRaw = styles.columnGap || styles.gap || "0"
+      const gap = Number.parseFloat(gapRaw) || 0
+      amount = firstCard.getBoundingClientRect().width + gap
+    }
+
+    rail.scrollBy({ left: direction === "left" ? -amount : amount, behavior: "smooth" })
+  }, [])
 
   return (
     <section className="relative overflow-hidden py-16 sm:py-24 bg-muted/30">
@@ -77,21 +116,18 @@ export default function WallOfLoveCarousel({
         </div>
 
         <div className="relative">
-          <Carousel
-            opts={{
-              align: "start",
-              containScroll: "trimSnaps",
-              dragFree: !isSwipeDisabled,
-              watchDrag: !isSwipeDisabled,
-              loop: false,
-            }}
-            className="touch-pan-y"
-          >
-            <CarouselContent className="select-none pr-4 hardware-accelerated">
+          <div className="relative">
+            <div
+              ref={railRef}
+              className="flex snap-x snap-mandatory gap-4 overflow-x-auto px-2 py-1 scroll-smooth scrollbar-hide"
+              role="list"
+              aria-label="Wall of love quotes"
+            >
               {QUOTE_POOL.map((quote) => (
-                <CarouselItem
+                <div
                   key={quote.id}
-                  className="basis-full pl-4 sm:basis-[70%] md:basis-[50%] lg:basis-[33%]"
+                  className="w-[86vw] shrink-0 snap-start sm:w-[70vw] md:w-[48vw] lg:w-[360px]"
+                  role="listitem"
                 >
                   <Card className="flex h-full flex-col border-border/60 bg-card/90 shadow-sm">
                     <CardHeader className="space-y-3">
@@ -103,25 +139,73 @@ export default function WallOfLoveCarousel({
                         {quote.company}
                       </Badge>
                       <p className="text-sm font-semibold text-foreground">
-                        "{renderFormattedText(quote.text)}"
+                        &ldquo;{renderFormattedText(quote.text)}&rdquo;
                       </p>
                     </CardHeader>
                     <CardContent className="mt-auto">
                       <p className="text-sm font-semibold text-foreground">{quote.client}</p>
                     </CardContent>
                   </Card>
-                </CarouselItem>
+                </div>
               ))}
-            </CarouselContent>
-            {enableMobileArrows && isMobile ? (
-              <div className="mt-6 flex items-center justify-center gap-4 sm:hidden">
-                <CarouselPrevious className="static h-10 w-10 translate-y-0" />
-                <CarouselNext className="static h-10 w-10 translate-y-0" />
-              </div>
+              <span className="sr-only">Swipe horizontally to explore more testimonials</span>
+            </div>
+
+            {canScrollLeft ? (
+              <div
+                className="pointer-events-none absolute inset-y-0 left-0 hidden w-12 bg-gradient-to-r from-muted/30 to-transparent sm:block"
+                aria-hidden="true"
+              />
             ) : null}
-            <CarouselPrevious className="-left-4 hidden sm:flex" />
-            <CarouselNext className="-right-4 hidden sm:flex" />
-          </Carousel>
+            {canScrollRight ? (
+              <div
+                className="pointer-events-none absolute inset-y-0 right-0 hidden w-12 bg-gradient-to-l from-muted/30 to-transparent sm:block"
+                aria-hidden="true"
+              />
+            ) : null}
+
+            <button
+              type="button"
+              aria-label="Scroll left"
+              onClick={() => scrollByAmount("left")}
+              disabled={!canScrollLeft}
+              className="hidden sm:flex absolute left-0 top-1/2 -translate-y-1/2 h-10 w-10 translate-x-1 items-center justify-center rounded-full border bg-card/95 shadow-md transition hover:bg-card disabled:pointer-events-none disabled:opacity-40"
+            >
+              <ChevronLeft className="h-5 w-5" />
+            </button>
+            <button
+              type="button"
+              aria-label="Scroll right"
+              onClick={() => scrollByAmount("right")}
+              disabled={!canScrollRight}
+              className="hidden sm:flex absolute right-0 top-1/2 -translate-y-1/2 h-10 w-10 -translate-x-1 items-center justify-center rounded-full border bg-card/95 shadow-md transition hover:bg-card disabled:pointer-events-none disabled:opacity-40"
+            >
+              <ChevronRight className="h-5 w-5" />
+            </button>
+          </div>
+
+          {enableMobileArrows ? (
+            <div className="mt-6 flex items-center justify-center gap-4 sm:hidden">
+              <button
+                type="button"
+                aria-label="Scroll left"
+                onClick={() => scrollByAmount("left")}
+                disabled={!canScrollLeft}
+                className="flex h-10 w-10 items-center justify-center rounded-full border bg-card/95 shadow-md transition disabled:pointer-events-none disabled:opacity-40"
+              >
+                <ChevronLeft className="h-5 w-5" />
+              </button>
+              <button
+                type="button"
+                aria-label="Scroll right"
+                onClick={() => scrollByAmount("right")}
+                disabled={!canScrollRight}
+                className="flex h-10 w-10 items-center justify-center rounded-full border bg-card/95 shadow-md transition disabled:pointer-events-none disabled:opacity-40"
+              >
+                <ChevronRight className="h-5 w-5" />
+              </button>
+            </div>
+          ) : null}
         </div>
       </div>
     </section>
