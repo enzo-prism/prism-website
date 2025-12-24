@@ -82,11 +82,10 @@ export default function ScrollingTimeline() {
       description: "barely made the team. ended up having a great career at cp",
       icon: "🏃‍♂️",
       image: {
-        src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/cp%20t%20and%20f-sFMISm7fIig64jJN92rJgLfgGKPIDp.png",
+        src: "/timeline/cal-poly-track.png",
         alt: "Enzo smiling in his Cal Poly Track and Field jacket after achieving Division 1 status.",
         width: 450,
         height: 600,
-        isExternal: true,
       },
     },
     {
@@ -123,11 +122,10 @@ export default function ScrollingTimeline() {
       description: "earned a b.s. in engineering from california polytechnic state university.",
       icon: "🎓",
       image: {
-        src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/grad-IsBQyLlLzevhd9EO2UZyIUSJDekUhk.png",
+        src: "/timeline/cal-poly-grad.png",
         alt: "Enzo and a friend in green graduation gowns with their father/mentor at Cal Poly commencement ceremony",
         width: 760,
         height: 592,
-        isExternal: true,
       },
     },
     {
@@ -137,11 +135,10 @@ export default function ScrollingTimeline() {
       description: "at a venture-backed tech startup",
       icon: "💼",
       image: {
-        src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Linkedin%20Headshot-wqbXPfncCKxPDoDbSub2dwgsqv6yG3.jpeg",
+        src: "/timeline/enzo-headshot.jpeg",
         alt: "Enzo's professional headshot, smiling in a collared shirt, marking his first full-time product manager role.",
         width: 800,
         height: 800,
-        isExternal: true,
       },
     },
     {
@@ -151,11 +148,10 @@ export default function ScrollingTimeline() {
       description: "first time competing overseas!",
       icon: "🏆",
       image: {
-        src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ph-U2V1yVnSjGOdkPrYBvjUZyroAD9aNN.png",
+        src: "/timeline/philippines-championship.png",
         alt: "Enzo and fellow athletes holding the Philippine flag at the Philippine National Track and Field Championship.",
         width: 800,
         height: 570,
-        isExternal: true,
       },
     },
     {

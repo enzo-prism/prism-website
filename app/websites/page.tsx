@@ -268,24 +268,23 @@ export default async function WebsitesPage() {
                 <Link href="#recent-work">See recent launches</Link>
               </Button>
             </div>
+            <p className="mt-4 text-sm text-neutral-500">
+              limited-time build option:{" "}
+              <Link href="/offers/summer-website-makeover" className="font-semibold text-neutral-900 underline underline-offset-4">
+                summer website makeover offer
+              </Link>
+              .
+            </p>
             <div className="mt-10 overflow-hidden rounded-3xl border border-neutral-200 shadow-[10px_10px_0_0_#00000008]">
               <div className="relative aspect-[16/9] w-full">
-                <Link
-                  href={heroImage.src}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="block h-full w-full"
-                  aria-label="View website portfolio preview in fullscreen"
-                >
-                  <Image
-                    src={heroImage.src}
-                    alt={heroImage.alt}
-                    fill
-                    sizes="(min-width: 1280px) 1024px, (min-width: 768px) 768px, 100vw"
-                    className="object-cover transition duration-300 hover:scale-[1.01]"
-                    priority
-                  />
-                </Link>
+                <Image
+                  src={heroImage.src}
+                  alt={heroImage.alt}
+                  fill
+                  sizes="(min-width: 1280px) 1024px, (min-width: 768px) 768px, 100vw"
+                  className="object-cover transition duration-300 hover:scale-[1.01]"
+                  priority
+                />
               </div>
             </div>
             <div id="websites-founder-vsl" className="mx-auto mt-12 max-w-3xl text-left">

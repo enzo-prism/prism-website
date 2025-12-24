@@ -255,6 +255,20 @@ export default function DesignsPageClient() {
             <p className="text-center text-sm leading-relaxed text-neutral-600 sm:text-base sm:text-left">
               Each piece is crafted to blend seamlessly, so your message looks — and feels — unified everywhere your brand lives.
             </p>
+
+            <div className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm">
+              <p className="text-xs font-semibold uppercase tracking-[0.35em] text-neutral-500">featured design</p>
+              <h3 className="mt-3 text-2xl font-semibold text-neutral-900">Wine Country Root Canal</h3>
+              <p className="mt-3 text-sm text-neutral-600">
+                See the full design review and deliverables for this endodontic brand refresh.
+              </p>
+              <Link
+                href="/designs/wine-country-root-canal"
+                className="mt-4 inline-flex text-sm font-semibold lowercase text-neutral-900 underline decoration-neutral-300 underline-offset-4 hover:decoration-neutral-900"
+              >
+                view the design review
+              </Link>
+            </div>
           </div>
         </section>
 

@@ -696,6 +696,13 @@ export default function DentalWebsitePage() {
                 </Link>
               </Button>
             </div>
+            <p className="mt-4 text-sm text-neutral-500">
+              want dental-specific pricing? view{" "}
+              <Link href="/pricing-dental" className="font-semibold text-neutral-900 underline underline-offset-4">
+                dental pricing plans
+              </Link>
+              .
+            </p>
           </div>
         </section>
       </main>

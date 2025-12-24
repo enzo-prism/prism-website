@@ -390,6 +390,13 @@ export default function ServicesPage() {
               </Link>
               .
             </div>
+            <div className="mx-auto mt-6 max-w-4xl rounded-3xl border border-neutral-200 bg-neutral-50 p-6 text-sm text-neutral-700">
+              need plan details before you dive in? compare options on our{" "}
+              <Link href="/pricing" className="font-semibold text-neutral-900 underline underline-offset-4">
+                pricing page
+              </Link>
+              .
+            </div>
           </div>
         </section>
 

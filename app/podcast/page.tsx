@@ -26,7 +26,7 @@ export default function PodcastPage() {
     <>
       <section id="static-podcast-hero" className="bg-neutral-900 text-white">
         <div className="mx-auto flex max-w-4xl flex-col gap-4 px-6 py-16 text-center">
-          <h1 className="text-4xl font-semibold tracking-tight">prism podcast</h1>
+          <h2 className="text-4xl font-semibold tracking-tight">prism podcast</h2>
           <p className="text-lg leading-relaxed text-white/80">
             join founder enzo sison as he speaks with dentists, operators, and creative leaders who are actively scaling. expect honest stories, practical frameworks, and questions that uncover the moves behind their momentum.
           </p>
