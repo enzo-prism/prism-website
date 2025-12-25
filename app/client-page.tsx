@@ -391,9 +391,6 @@ export default function ClientPage() {
                     About our Founder
                   </Badge>
                   <CardTitle className="text-2xl">Enzo Sison</CardTitle>
-                  <CardDescription className="text-base text-muted-foreground">
-                    Founder of Prism
-                  </CardDescription>
                 </div>
               </CardHeader>
               <CardContent className="space-y-4 text-sm text-muted-foreground">
