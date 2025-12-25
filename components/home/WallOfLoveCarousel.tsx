@@ -95,11 +95,8 @@ export default function WallOfLoveCarousel({
           ) : null}
           <div className="space-y-3">
             <h2 className="text-balance text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
-              Founders are already seeing the difference
+              Founders love Prism
             </h2>
-            <p className="text-balance text-base text-muted-foreground">
-              A few notes from the people we have helped build, refine, and scale their online presence.
-            </p>
           </div>
           {showCta ? (
             <Button
