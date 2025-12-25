@@ -218,9 +218,6 @@ export default function ClientPage() {
           <div className="pointer-events-none absolute -right-24 top-16 h-80 w-80 rounded-full bg-primary/10 blur-3xl" />
           <div className="container relative grid mx-auto gap-12 px-4 sm:px-6 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:items-center">
             <div className="space-y-6">
-              <Badge variant="secondary" className="w-fit">
-                Prism
-              </Badge>
               <div className="space-y-4">
                 <h1 className="text-balance text-4xl font-semibold tracking-tight text-foreground sm:text-5xl lg:text-6xl">
                   Looking to elevate your online presence?
