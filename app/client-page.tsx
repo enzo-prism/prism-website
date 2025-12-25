@@ -25,7 +25,7 @@ import {
 
 const TRAINING_COURSES = [
   {
-    title: "2026 Website Development",
+    title: "Website Development",
     icons: [
       { src: "/icons/vercel-alt.svg", alt: "Vercel logo" },
       {
@@ -280,7 +280,7 @@ export default function ClientPage() {
               </Badge>
               <div className="space-y-3">
                 <h2 className="text-balance text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
-                  Free Advanced Training
+                  2026 Free Advanced Training
                 </h2>
                 <p className="text-balance text-base text-muted-foreground">
                   Videos, Guides, Templates, Downloads &amp; more to help you succeed:
