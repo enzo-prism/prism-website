@@ -11,7 +11,6 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import WallOfLoveCarousel from "@/components/home/WallOfLoveCarousel"
 
 type FAQBlock =
   | { type: "paragraph"; content: ReactNode }
@@ -166,8 +165,6 @@ export default function GetStartedPage() {
             </Button>
           </div>
         </section>
-
-        <WallOfLoveCarousel showCta={false} showEyebrow={false} />
 
         <section className="py-16 sm:py-24">
           <div className="container mx-auto px-4 sm:px-6">
