@@ -21,4 +21,11 @@ export const PRISM_APPS: SoftwareApp[] = [
     href: "https://hotcontent.app",
     hrefLabel: "hotcontent.app",
   },
+  {
+    title: "Engineering Tracker",
+    description: "Track new code Prism is publishing",
+    platform: "YouTube",
+    href: "https://enzo.engineering",
+    hrefLabel: "enzo.engineering",
+  },
 ]

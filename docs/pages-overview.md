@@ -26,7 +26,7 @@ Quick reference for the pages we edit most often.
 - `metadata.title` is combined with the root title template, so keep it free of `| prism` to avoid duplicate “| prism | prism” titles.
 
 ## Software (`app/software/page.tsx`)
-- Growth tools hub listing Prism-built software (currently Density and Hot Content).
+- Growth tools hub listing Prism-built software (currently Density, Hot Content, and Engineering Tracker).
 - App card data is shared via `lib/software-apps.ts`; update this list to keep the homepage section and `/software` in sync.
 
 ## Podcast (`app/podcast/page.tsx`)
