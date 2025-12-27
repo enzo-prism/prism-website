@@ -1,7 +1,7 @@
 export type SoftwareApp = {
   title: string
   description: string
-  platform: string
+  platform?: string
   href: string
   hrefLabel: string
 }
@@ -24,7 +24,6 @@ export const PRISM_APPS: SoftwareApp[] = [
   {
     title: "Engineering Tracker",
     description: "Track new code Prism is publishing",
-    platform: "YouTube",
     href: "https://enzo.engineering",
     hrefLabel: "enzo.engineering",
   },
