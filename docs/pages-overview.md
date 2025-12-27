@@ -25,6 +25,10 @@ Quick reference for the pages we edit most often.
 - Uses `ItemList` JSON-LD for the showcased projects; avoid `SoftwareApplication` rich-result schema unless we can supply accurate pricing + reviews/ratings.
 - `metadata.title` is combined with the root title template, so keep it free of `| prism` to avoid duplicate “| prism | prism” titles.
 
+## Software (`app/software/page.tsx`)
+- Growth tools hub listing Prism-built software (currently Density and Hot Content).
+- App card data is shared via `lib/software-apps.ts`; update this list to keep the homepage section and `/software` in sync.
+
 ## Podcast (`app/podcast/page.tsx`)
 - Podcast hub + recent episode preview cards.
 - Uses `PodcastSeriesSchema` plus `PodcastEpisodeSchema` (with nested `VideoObject` metadata). Keep episode publish dates, YouTube URLs, and thumbnails up to date so Video structured data stays valid.

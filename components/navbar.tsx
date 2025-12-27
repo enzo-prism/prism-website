@@ -1,6 +1,6 @@
 "use client"
 
-import { BookOpen, FolderOpen, Heart, Home, Menu, Play } from "lucide-react"
+import { BookOpen, FolderOpen, Heart, Home, LayoutGrid, Menu, Play } from "lucide-react"
 import type { LucideIcon } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
@@ -30,6 +30,7 @@ const aliasMap: Record<string, string> = {
 const topIconMap: Record<string, LucideIcon> = {
   home: Home,
   "our story": BookOpen,
+  software: LayoutGrid,
   "case studies": FolderOpen,
   "wall of love": Heart,
   start: Play,

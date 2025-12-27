@@ -35,6 +35,7 @@ export type NavItem = { label: string; href?: string; children?: NavChild[]; emo
 export const NAV_ITEMS: NavItem[] = [
   { label: "home", href: "/" },
   { label: "our story", href: "/about" },
+  { label: "software", href: "/software" },
   { label: "case studies", href: "/case-studies" },
   { label: "wall of love", href: "/wall-of-love" },
   { label: "start", href: "/get-started" },
