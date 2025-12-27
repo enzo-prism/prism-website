@@ -88,7 +88,7 @@ export default function AboutClientPage() {
                   <circle cx="65" cy="42" r="12" stroke="#E4262C" strokeWidth="4" fill="none" />
                 </svg>
               </div>
-              <h2 className="text-2xl md:text-3xl font-bold tracking-tighter normal-case">LA 2028 olympic journey</h2>
+              <h2 className="text-2xl md:text-3xl font-bold tracking-tighter lowercase">LA 2028 olympic journey</h2>
               <p className="mx-auto mt-3 max-w-[720px] text-neutral-600 lowercase md:text-lg">
                 enzo is pursuing competing in the la 2028 olympics for the philippines in pole vaulting—a journey that
                 started in high school, continued through ncaa d1 at cal poly, and now continues on the international stage.

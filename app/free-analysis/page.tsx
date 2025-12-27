@@ -17,7 +17,7 @@ export default function FreeAnalysisPage() {
   return (
     <div className="flex min-h-screen flex-col bg-white text-black">
       <Navbar />
-      <main className="flex-1" style={{ textTransform: "none" }}>
+      <main className="flex-1">
         <section className="border-b border-black/10 bg-white px-6 py-16 sm:py-24">
           <div className="mx-auto max-w-3xl space-y-6 text-center">
             <p className="text-sm font-semibold uppercase tracking-[0.3em] text-black/60">free analysis</p>

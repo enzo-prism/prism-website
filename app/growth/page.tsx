@@ -51,7 +51,7 @@ export default function GrowthPage() {
   return (
     <div className="flex min-h-screen flex-col bg-white">
       <Navbar />
-      <main className="flex-1" style={{ textTransform: "none" }}>
+      <main className="flex-1">
         <section className="bg-slate-900 text-white">
           <div className="mx-auto max-w-5xl px-6 py-24 sm:py-32">
             <RevealOnScroll>

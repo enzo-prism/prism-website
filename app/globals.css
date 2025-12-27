@@ -27,13 +27,6 @@ body {
   text-transform: lowercase !important;
 }
 
-.allow-capitalization,
-.allow-capitalization *,
-.allow-capitalization .uppercase,
-.allow-capitalization .capitalize {
-  text-transform: none !important;
-}
-
 /* Ensure no safe area padding interferes on mobile */
 @supports (padding: max(0px)) {
   body {
@@ -1260,15 +1253,6 @@ input, textarea, select {
 .lowercase-prose a {
   text-transform: lowercase;
 }
-
-/* Preserve case for specific elements if needed, e.g., acronyms within text */
-.lowercase-prose .preserve-case {
-  text-transform: none !important; /* Or specific casing */
-}
-
-/* Ensure acronyms like AI, SEO are not lowercased by prose if they are part of the text */
-/* This might require manually wrapping them or adjusting prose settings if it forces lowercase */
-/* For now, the provided text has AI and SEO in uppercase, which should be fine if not overridden by prose */
 
 /* Ensure headings within prose are also lowercase if that's the style */
 .prose h1,

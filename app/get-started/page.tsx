@@ -133,7 +133,7 @@ export default function GetStartedPage() {
   return (
     <div className="flex min-h-screen flex-col bg-background">
       <Navbar />
-      <main className="flex-1 allow-capitalization">
+      <main className="flex-1">
         <section className="relative overflow-hidden py-16 sm:py-24">
           <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-muted/50 via-background to-background" />
           <div className="container relative mx-auto flex max-w-4xl flex-col gap-6 px-4 sm:px-6">

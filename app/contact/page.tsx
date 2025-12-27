@@ -24,7 +24,7 @@ export default function ContactPage() {
   return (
     <div className="flex min-h-screen flex-col bg-white">
       <Navbar />
-      <main className="flex-1" style={{ textTransform: "none" }}>
+      <main className="flex-1">
         <section className="px-6 py-16 sm:py-24">
           <div className="mx-auto flex max-w-2xl flex-col gap-10">
             {/* Header with descriptive content */}

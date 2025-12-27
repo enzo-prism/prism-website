@@ -59,7 +59,7 @@ export const metadata: Metadata = {
 
 export default function MichaelNjoPage() {
   return (
-    <div className="allow-capitalization">
+    <div>
       <Navbar />
       <main className="bg-white text-neutral-900">
         <section className="border-b border-neutral-200 bg-neutral-950 text-white">

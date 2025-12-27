@@ -551,7 +551,7 @@ export default function GoogleDentalPatientFormsGuide() {
   return (
     <>
       <Navbar />
-      <main className="bg-white text-neutral-900 ![text-transform:none]">
+      <main className="bg-white text-neutral-900">
         <ScrollProgressBar />
         <section className="relative overflow-hidden rounded-b-[3rem] bg-neutral-950 text-white">
           <div

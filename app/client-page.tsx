@@ -213,7 +213,7 @@ export default function ClientPage() {
   return (
     <div className="flex min-h-screen flex-col bg-background">
       <Navbar />
-      <main className="flex-1 allow-capitalization">
+      <main className="flex-1">
         <section className="relative overflow-hidden py-16 sm:py-24 bg-background">
           <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-muted/50 via-background to-background" />
           <div className="pointer-events-none absolute -right-24 top-16 h-80 w-80 rounded-full bg-primary/10 blur-3xl" />

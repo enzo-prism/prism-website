@@ -39,8 +39,7 @@ Any CTA labeled “free analysis” should point to `/free-analysis`. When you a
 
 ## Typography & Casing
 - The global stylesheet forces the brand’s lowercase aesthetic via `body { text-transform: lowercase !important; }`.
-- Pages that need natural capitalization should wrap their content in `.allow-capitalization` (e.g., `<main className="allow-capitalization ...">`) which resets `text-transform` to `none`.
-- This override is scoped, so you can mix lowercase-first sections with standard sentences without touching the global rule.
+- All UI text should stay lowercase end-to-end; do not introduce casing overrides or `text-transform: none` escape hatches.
 
 ## UI Components (shadcn/ui)
 The site uses shadcn/ui primitives under `components/ui/` (Tailwind + Radix + `cn()` helpers) with the `radix-vega` preset (neutral palette + subtle menu accent, Inter as `--font-sans`). Add new primitives via the CLI so we stay aligned with upstream.
