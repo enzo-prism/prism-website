@@ -91,6 +91,23 @@ const TRAINING_COURSES = [
   },
 ]
 
+const PRISM_APPS = [
+  {
+    title: "Density",
+    description: "Track posting frequency and learn from performance trends",
+    platform: "YouTube",
+    href: "https://density.report",
+    hrefLabel: "density.report",
+  },
+  {
+    title: "Hot Content",
+    description: "Test how viral video ideas are BEFORE you start shooting.",
+    platform: "YouTube",
+    href: "https://hotcontent.app",
+    hrefLabel: "hotcontent.app",
+  },
+]
+
 type FAQBlock =
   | { type: "paragraph"; content: ReactNode }
   | { type: "list"; items: string[] }
@@ -267,6 +284,58 @@ export default function ClientPage() {
                   </div>
                 </Card>
               </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="py-16 sm:py-24 bg-background">
+          <div className="container relative flex flex-col mx-auto gap-10 px-4 sm:px-6">
+            <div className="flex flex-col items-center gap-3 text-center">
+              <Badge variant="secondary" className="w-fit">
+                Apps developed by Prism
+              </Badge>
+              <div className="space-y-3">
+                <h2 className="text-balance text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
+                  Tools to Help You Grow
+                </h2>
+                <p className="text-balance text-base text-muted-foreground">
+                  Free software to help you increase leads, conversions, and customer LTV
+                </p>
+              </div>
+            </div>
+            <div className="grid gap-6 md:grid-cols-2">
+              {PRISM_APPS.map((app) => (
+                <Card
+                  key={app.title}
+                  className="flex h-full flex-col border-border/60 bg-card/90 transition-transform duration-200 ease-out hover:-translate-y-1 hover:shadow-lg"
+                >
+                  <CardHeader className="space-y-3">
+                    <CardTitle className="text-xl">{app.title}</CardTitle>
+                    <CardDescription className="text-sm text-muted-foreground">
+                      {app.description}
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent className="space-y-2">
+                    <p className="text-xs font-semibold uppercase tracking-[0.3em] text-muted-foreground">
+                      Current platforms supported
+                    </p>
+                    <Badge variant="outline" className="w-fit">
+                      {app.platform}
+                    </Badge>
+                  </CardContent>
+                  <CardFooter className="mt-auto">
+                    <Button
+                      asChild
+                      variant="outline"
+                      className="w-full rounded-full transition-transform duration-200 ease-out hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0"
+                    >
+                      <Link href={app.href} target="_blank" rel="noopener noreferrer">
+                        {app.hrefLabel}
+                      </Link>
+                    </Button>
+                  </CardFooter>
+                </Card>
+              ))}
             </div>
           </div>
         </section>
