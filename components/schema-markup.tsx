@@ -608,23 +608,25 @@ interface ProductSchemaProps {
   name: string
   description: string
   url: string
+  image?: string | string[]
   offer?: {
     name?: string
     description?: string
-    price?: string
+    price?: string | number
     priceCurrency?: string
     availability?: string
   }
   aggregateRating?: Record<string, unknown>
 }
 
-export function ProductSchema({ productId, name, description, url, offer, aggregateRating }: ProductSchemaProps) {
+export function ProductSchema({ productId, name, description, url, image, offer, aggregateRating }: ProductSchemaProps) {
   const data = {
     "@context": "https://schema.org",
     "@type": "Product",
     "@id": `${url}#${productId}`,
     name,
     description,
+    image,
     url,
     offers: offer
       ? {

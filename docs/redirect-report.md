@@ -3,6 +3,9 @@
 ## Overview
 Based on the analytics data and client requirements, we've implemented redirects for several pages and removed the `/our-work` and `/about` pages, redirecting all traffic to the homepage.
 
+## Notes
+- `/pricing` is an active page and should stay indexable; do not redirect it or remove it from the sitemap.
+
 ## Implemented Redirects
 
 | Old Path | New Path | Rationale |

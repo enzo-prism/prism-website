@@ -19,15 +19,17 @@ const dentalPlans = [
     id: "dental-starter",
     name: "starter dental marketing",
     description: "playbooks and templates for owners who implement with their own team.",
-    monthlyPrice: "1000",
-    annualPrice: "11000",
+    monthlyPrice: 1000,
+    annualPrice: 11000,
+    image: "https://www.design-prism.com/town-centre-dental.png",
   },
   {
     id: "dental-pro",
     name: "pro dental marketing",
     description: "done-for-you growth engine with website, ads, listings, and automation.",
-    monthlyPrice: "3000",
-    annualPrice: "32000",
+    monthlyPrice: 3000,
+    annualPrice: 32000,
+    image: "https://www.design-prism.com/laguna-beach-dental-arts.png",
   },
 ]
 
@@ -387,6 +389,7 @@ function DentalPricingStructuredData() {
           name={plan.name}
           description={plan.description}
           url="https://www.design-prism.com/pricing-dental"
+          image={plan.image}
           offer={{
             name: plan.name,
             description: plan.description,

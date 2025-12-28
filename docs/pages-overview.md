@@ -16,6 +16,9 @@ Quick reference for the pages we edit most often.
 - The video directly under the pricing cards uses `VideoPlayer` plus structured data—when swapping the asset, update the Cloudinary `src`, poster, and metadata inside `PricingSection`.
 - Clients are rendered via `components/home/ClientsRail.tsx` to keep the same scroller behavior and the “view case studies” link.
 
+## Dental Pricing (`app/pricing-dental/client-page.tsx`)
+- Plan definitions live in `dentalPlans`; keep prices and product images aligned with what's shown on the page so Merchant listing structured data stays valid.
+
 ## Websites (`app/websites/page.tsx`)
 - Includes hero, founder VSL, benefits, showcases, vertical playbooks, FAQs, SEO copy, and service schema.
 - The VSL near the hero is the canonical marketing video (reused on `/ai-website-launch`); changes here should propagate to any page referencing the same clip.
