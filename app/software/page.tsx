@@ -1,7 +1,9 @@
 import type { Metadata } from "next"
 import Link from "next/link"
 
+import LordIconScript from "@/components/LordIconScript"
 import Footer from "@/components/footer"
+import LordIcon from "@/components/lord-icon"
 import Navbar from "@/components/navbar"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -35,6 +37,7 @@ export const metadata: Metadata = {
 export default function SoftwarePage() {
   return (
     <div className="flex min-h-screen flex-col bg-background">
+      <LordIconScript />
       <Navbar />
       <main className="flex-1">
         <section className="relative overflow-hidden py-16 sm:py-24 bg-background">
@@ -64,6 +67,13 @@ export default function SoftwarePage() {
                   className="flex h-full flex-col border-border/60 bg-card/90 transition-transform duration-200 ease-out hover:-translate-y-1 hover:shadow-lg"
                 >
                   <CardHeader className="space-y-3">
+                    <LordIcon
+                      src={app.icon.src}
+                      trigger={app.icon.trigger}
+                      delay={app.icon.delay}
+                      style={{ width: app.icon.size, height: app.icon.size }}
+                      aria-hidden="true"
+                    />
                     <CardTitle className="text-xl">{app.title}</CardTitle>
                     <CardDescription className="text-sm text-muted-foreground">
                       {app.description}
