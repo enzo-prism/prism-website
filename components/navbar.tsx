@@ -27,20 +27,26 @@ const aliasMap: Record<string, string> = {
   "/growth": "/prism-flywheel",
 }
 
-const topIconMap: Record<string, LucideIcon> = {
-  home: Home,
-  "our story": BookOpen,
-  software: LayoutGrid,
-  "case studies": FolderOpen,
-  "wall of love": Heart,
-  start: Play,
+const topIconMap: Record<string, { icon: LucideIcon; motionClass: string }> = {
+  home: { icon: Home, motionClass: "nav-icon-home" },
+  "our story": { icon: BookOpen, motionClass: "nav-icon-story" },
+  software: { icon: LayoutGrid, motionClass: "nav-icon-software" },
+  "case studies": { icon: FolderOpen, motionClass: "nav-icon-case-studies" },
+  "wall of love": { icon: Heart, motionClass: "nav-icon-love" },
+  start: { icon: Play, motionClass: "nav-icon-start" },
 }
 
 const getTopIcon = (label?: string) => {
   if (!label) return null
-  const Icon = topIconMap[label.toLowerCase()]
-  if (!Icon) return null
-  return <Icon className="h-4 w-4 text-neutral-400" aria-hidden />
+  const iconConfig = topIconMap[label.toLowerCase()]
+  if (!iconConfig) return null
+  const Icon = iconConfig.icon
+  return (
+    <Icon
+      className={`nav-icon ${iconConfig.motionClass} h-4 w-4 text-neutral-400 transition-colors group-hover:text-primary group-focus-visible:text-primary`}
+      aria-hidden
+    />
+  )
 }
 
 const getNavIcon = getTopIcon
@@ -150,7 +156,7 @@ export default function Navbar() {
                 {item.href ? (
                   <NavigationMenuLink
                     asChild
-                    className={`flex items-center gap-2 p-0 text-sm font-medium lowercase transition-colors hover:bg-transparent hover:text-primary focus:bg-transparent focus:text-primary ${
+                    className={`group nav-link flex items-center gap-2 p-0 text-sm font-medium lowercase transition-colors hover:bg-transparent hover:text-primary focus:bg-transparent focus:text-primary ${
                       isActivePath(item.href) ? "text-primary" : "text-muted-foreground"
                     }`}
                     active={isActivePath(item.href)}
@@ -179,7 +185,7 @@ export default function Navbar() {
                             <NavigationMenuLink
                               key={child.label}
                               asChild
-                              className={`flex items-center gap-2 rounded-md px-3 py-2 text-sm lowercase transition-colors ${
+                              className={`group nav-link flex items-center gap-2 rounded-md px-3 py-2 text-sm lowercase transition-colors ${
                                 isActivePath(child.href)
                                   ? "bg-muted text-foreground"
                                   : "text-muted-foreground hover:bg-muted hover:text-foreground"
@@ -220,7 +226,7 @@ export default function Navbar() {
                       <SheetClose asChild>
                         <Link
                           href={item.href}
-                          className={`flex items-center justify-between rounded-lg px-3 py-2 text-base lowercase transition-colors hover:bg-muted ${
+                          className={`group nav-link flex items-center justify-between rounded-lg px-3 py-2 text-base lowercase transition-colors hover:bg-muted ${
                             isActivePath(item.href)
                               ? "bg-muted font-semibold text-foreground"
                               : "text-muted-foreground"
@@ -248,7 +254,7 @@ export default function Navbar() {
                           <SheetClose asChild key={child.label}>
                             <Link
                               href={child.href}
-                              className={`flex items-center gap-2 rounded-md px-3 py-2 text-base lowercase transition-colors hover:bg-muted ${
+                              className={`group nav-link flex items-center gap-2 rounded-md px-3 py-2 text-base lowercase transition-colors hover:bg-muted ${
                                 isActivePath(child.href)
                                   ? "bg-muted font-medium text-foreground"
                                   : "text-muted-foreground"

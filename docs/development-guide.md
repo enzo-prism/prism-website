@@ -54,5 +54,9 @@ Form note: our marketing forms rely on native HTML5 validation via `useFormValid
 ## Sticky Navigation Offsets
 The navbar dynamically sets a CSS variable (`--prism-header-height`) so other sticky UI can position itself below the full header stack (including case study breadcrumbs). Case study chapter menus also set `--prism-case-study-nav-height` via `useCaseStudyStickyNavHeight` (see `hooks/use-case-study-sticky-nav.ts`), and jump targets rely on `scroll-margin-top` for correct offsets when scrolling into view.
 
+## Navbar Icon Hover Motion
+- Navbar icons animate on hover via the `.nav-link` + `.nav-icon` classes in `components/navbar.tsx` and the motion rules in `app/globals.css`.
+- Keep hover effects transform-only and subtle so text layout stays stable and reduced-motion preferences remain respected.
+
 ## Deployment
 Merges to `main` deploy automatically via Vercel. If you need a preview, open a PR – the CI pipeline will comment with the URL.

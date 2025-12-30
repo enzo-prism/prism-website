@@ -54,6 +54,53 @@ body.is-scrolling-fast .animation-paused {
   text-transform: lowercase !important;
 }
 
+/* Navbar icon hover motion */
+.nav-icon {
+  will-change: transform;
+  transition: transform 180ms ease, color 180ms ease;
+}
+
+.nav-link:hover .nav-icon-home,
+.nav-link:focus-visible .nav-icon-home {
+  transform: translate3d(0, -2px, 0) scale(1.06);
+}
+
+.nav-link:hover .nav-icon-story,
+.nav-link:focus-visible .nav-icon-story {
+  transform: translate3d(0, -1px, 0) rotate(-8deg);
+}
+
+.nav-link:hover .nav-icon-software,
+.nav-link:focus-visible .nav-icon-software {
+  transform: translate3d(0, -1px, 0) rotate(6deg) scale(1.08);
+}
+
+.nav-link:hover .nav-icon-case-studies,
+.nav-link:focus-visible .nav-icon-case-studies {
+  transform: translate3d(2px, -1px, 0) rotate(4deg);
+}
+
+.nav-link:hover .nav-icon-love,
+.nav-link:focus-visible .nav-icon-love {
+  transform: translate3d(0, -1px, 0) scale(1.12);
+}
+
+.nav-link:hover .nav-icon-start,
+.nav-link:focus-visible .nav-icon-start {
+  transform: translate3d(2px, 0, 0) scale(1.06);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-icon {
+    transition: none;
+  }
+
+  .nav-link:hover .nav-icon,
+  .nav-link:focus-visible .nav-icon {
+    transform: none;
+  }
+}
+
 /* Prevent white flash during framer-motion whileInView on mobile */
 .testimonial-container > blockquote {
   background-color: #fff;
