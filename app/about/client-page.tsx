@@ -116,15 +116,12 @@ export default function AboutClientPage() {
 
             {/* Add a "View more" button */}
             <div className="mt-12 text-center">
-              <a
-                href="https://www.instagram.com/the_design_prism/"
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                href="/get-started"
                 className="inline-flex items-center justify-center rounded-full bg-neutral-900 px-6 py-3 text-sm font-medium text-white hover:bg-neutral-800 lowercase transition-colors"
-                onClick={() => null}
               >
-                follow our journey on instagram <span className="ml-2">→</span>
-              </a>
+                get started <span className="ml-2">→</span>
+              </Link>
             </div>
           </div>
         </section>
