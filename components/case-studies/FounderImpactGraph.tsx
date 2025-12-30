@@ -44,55 +44,17 @@ type ResolvedChartColors = {
   grid: string
 }
 
+const chartColors: ResolvedChartColors = {
+  customers: "var(--chart-1)",
+  effort: "var(--chart-2)",
+  axis: "var(--muted-foreground)",
+  grid: "color-mix(in oklch, var(--muted-foreground) 20%, transparent)",
+}
+
 function levelLabel(value: number) {
   if (value >= 70) return "high"
   if (value >= 40) return "medium"
   return "low"
-}
-
-function parseHslTriplet(value: string) {
-  const parts = value.replace(/\s+/g, " ").trim().split(" ")
-  if (parts.length < 3) return null
-
-  const [h, s, l] = parts
-  if (!h || !s || !l) return null
-
-  return { h, s, l }
-}
-
-function toHsl(triplet: { h: string; s: string; l: string }) {
-  return `hsl(${triplet.h}, ${triplet.s}, ${triplet.l})`
-}
-
-function toHsla(triplet: { h: string; s: string; l: string }, alpha: number) {
-  return `hsla(${triplet.h}, ${triplet.s}, ${triplet.l}, ${alpha})`
-}
-
-function resolveChartColors(): ResolvedChartColors {
-  const fallbackChart1 = parseHslTriplet("12 76% 61%")!
-  const fallbackChart2 = parseHslTriplet("173 58% 39%")!
-  const fallbackMuted = parseHslTriplet("0 0% 45.1%")!
-
-  if (typeof window === "undefined") {
-    return {
-      customers: toHsl(fallbackChart1),
-      effort: toHsl(fallbackChart2),
-      axis: toHsl(fallbackMuted),
-      grid: toHsla(fallbackMuted, 0.2),
-    }
-  }
-
-  const styles = getComputedStyle(document.documentElement)
-  const chart1 = parseHslTriplet(styles.getPropertyValue("--chart-1")) ?? fallbackChart1
-  const chart2 = parseHslTriplet(styles.getPropertyValue("--chart-2")) ?? fallbackChart2
-  const muted = parseHslTriplet(styles.getPropertyValue("--muted-foreground")) ?? fallbackMuted
-
-  return {
-    customers: toHsl(chart1),
-    effort: toHsl(chart2),
-    axis: toHsl(muted),
-    grid: toHsla(muted, 0.2),
-  }
 }
 
 function tooltipMonthLabel(month: number) {
@@ -275,7 +237,7 @@ function ScenarioPanel({
 }
 
 export function FounderImpactGraph({ className, slug, calloutCopy }: FounderImpactGraphProps) {
-  const colors = React.useMemo(() => resolveChartColors(), [])
+  const colors = chartColors
   const withPrismPoints = React.useMemo(() => {
     const config = getCaseStudyImpactGraphConfig(slug)
     return generateCaseStudyImpactPoints(config)
