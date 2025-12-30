@@ -43,7 +43,7 @@ const getTopIcon = (label?: string) => {
   const Icon = iconConfig.icon
   return (
     <Icon
-      className={`nav-icon ${iconConfig.motionClass} h-4 w-4 text-neutral-400 transition-colors group-hover:text-primary group-focus-visible:text-primary`}
+      className={`nav-icon ${iconConfig.motionClass} h-4 w-4 text-neutral-400`}
       aria-hidden
     />
   )
