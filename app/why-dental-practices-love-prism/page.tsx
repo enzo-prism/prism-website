@@ -34,10 +34,10 @@ import VideoCarousel from "@/components/video-carousel"
 import type { CaseStudyMeta } from "@/lib/case-study-data"
 import { CASE_STUDIES } from "@/lib/case-study-data"
 
-const CTA_PRIMARY_LABEL = "Claim Free Analysis"
-const CTA_SECONDARY_LABEL = "Contact Prism"
+const CTA_PRIMARY_LABEL = "Get Started"
+const CTA_SECONDARY_LABEL = "Get Started"
 const CTA_PRIMARY_HREF = "/get-started"
-const CTA_SECONDARY_HREF = "/contact"
+const CTA_SECONDARY_HREF = "/get-started"
 
 const heroWhatYouGet = [
   "Dental practice website that explains services and drives calls.",
@@ -361,7 +361,7 @@ export default function DentalPracticesPage() {
                 </ul>
               </div>
               <p className="mt-8 text-sm text-neutral-600">
-                Want a calmer week and clearer numbers? Start with a free analysis or a quick call.
+                Want a calmer week and clearer numbers? Get started by booking a demo with the Prism team.
               </p>
               <div className="mt-10 flex flex-wrap justify-center gap-4">
                 <Link href={CTA_PRIMARY_HREF}>

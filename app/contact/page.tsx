@@ -64,24 +64,24 @@ export default function ContactPage() {
               </ul>
             </div>
 
-            {/* Book a call section */}
+            {/* Book a demo section */}
             <div className="rounded-3xl border border-slate-200 bg-white p-6 text-center shadow-sm">
-              <p className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-500">prefer to talk?</p>
-              <h2 className="mt-2 text-xl font-semibold text-slate-900">Book a 15-Minute Kickoff Call</h2>
+              <p className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-500">prefer to see it live?</p>
+              <h2 className="mt-2 text-xl font-semibold text-slate-900">Book a demo</h2>
               <p className="mt-2 text-slate-600">
-                Schedule a quick call to discuss your project, get instant feedback, and see if Prism is the right fit for your business.
+                Book a demo to walk through your goals, see how Prism works, and decide on next steps.
               </p>
               <Button
                 asChild
                 className="mt-4 w-full rounded-full border border-black bg-black px-6 py-3 text-base font-semibold text-white hover:bg-black/90 sm:w-auto"
               >
                 <a
-                  href="https://calendar.notion.so/meet/enzosison/sfux4ogo"
+                  href="https://calendar.notion.so/meet/enzosison/oj1fm4o2p"
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label="Book a 15-minute Prism kickoff call"
+                  aria-label="Book a Prism demo"
                 >
-                  Book now →
+                  Book a demo →
                 </a>
               </Button>
             </div>

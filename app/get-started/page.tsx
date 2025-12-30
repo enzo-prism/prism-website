@@ -3,7 +3,6 @@ import Link from "next/link"
 import type { Metadata } from "next"
 import { ClipboardCheck, Code2, Megaphone, PenTool } from "lucide-react"
 
-import GetStartedForm from "@/components/forms/GetStartedForm"
 import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
 import VideoPlayer from "@/components/video-player"
@@ -216,17 +215,24 @@ export default function GetStartedPage() {
             <Card className="border-border/60 bg-card/95 shadow-lg">
               <CardHeader className="space-y-3">
                 <Badge variant="secondary" className="w-fit">
-                  Book a call
+                  Book a demo
                 </Badge>
                 <CardTitle className="text-balance text-3xl font-semibold text-foreground sm:text-4xl">
-                  Exited to speak with you for our online presence transformation program.
+                  Book a demo of our online presence transformation program.
                 </CardTitle>
                 <p className="text-base text-muted-foreground">
-                  Book a call below to see if you are a fit.
+                  Choose a time below to book a demo and see if we&apos;re a fit.
                 </p>
               </CardHeader>
               <CardContent>
-                <GetStartedForm />
+                <div className="overflow-hidden rounded-2xl border border-border/60 bg-background">
+                  <iframe
+                    title="Prism demo scheduling"
+                    src="https://calendar.notion.so/meet/enzosison/oj1fm4o2p"
+                    className="h-[720px] w-full border-0"
+                    loading="lazy"
+                  />
+                </div>
               </CardContent>
             </Card>
           </div>

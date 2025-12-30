@@ -1,6 +1,7 @@
 import type { ReactNode } from "react"
 import Image from "next/image"
 import Link from "next/link"
+import { Calendar } from "lucide-react"
 
 import LordIconScript from "@/components/LordIconScript"
 import Footer from "@/components/footer"
@@ -220,7 +221,7 @@ export default function ClientPage() {
         <section className="relative overflow-hidden py-16 sm:py-24 bg-background">
           <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-muted/50 via-background to-background" />
           <div className="pointer-events-none absolute -right-24 top-16 h-80 w-80 rounded-full bg-primary/10 blur-3xl" />
-          <div className="container relative grid mx-auto gap-12 px-4 sm:px-6 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:items-center">
+          <div className="container relative grid mx-auto gap-12 px-4 sm:px-6 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)] lg:items-center">
             <div className="space-y-6">
               <div className="space-y-4">
                 <h1 className="text-balance text-4xl font-semibold tracking-tight text-foreground sm:text-5xl lg:text-6xl">
@@ -235,17 +236,34 @@ export default function ClientPage() {
                   </CardContent>
                 </Card>
               </div>
-              <Button
-                asChild
-                size="lg"
-                className="w-full rounded-full transition-transform duration-200 ease-out hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0 sm:w-auto"
-              >
-                <Link href="/get-started">Elevate your Online Presence</Link>
-              </Button>
+              <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
+                <Button
+                  asChild
+                  size="lg"
+                  className="w-full rounded-full transition-transform duration-200 ease-out hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0 sm:w-auto"
+                >
+                  <Link href="/get-started">Elevate your Online Presence</Link>
+                </Button>
+                <Button
+                  asChild
+                  size="lg"
+                  variant="outline"
+                  className="w-full rounded-full transition-transform duration-200 ease-out hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0 sm:w-auto"
+                >
+                  <Link
+                    href="https://calendar.notion.so/meet/enzosison/oj1fm4o2p"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <Calendar aria-hidden="true" />
+                    Book a Demo
+                  </Link>
+                </Button>
+              </div>
             </div>
 
             <div>
-              <div className="relative mx-auto w-full max-w-[280px] sm:max-w-[320px] lg:max-w-[340px]">
+              <div className="relative mx-auto w-full max-w-[240px] sm:max-w-[280px] lg:max-w-[300px]">
                 <div className="pointer-events-none absolute -left-10 -top-10 h-32 w-32 rounded-full bg-muted/70 blur-2xl" />
                 <Card className="relative overflow-hidden border-border/70 bg-card shadow-2xl">
                   <div className="relative aspect-[4/5] sm:aspect-[3/4] lg:aspect-[4/5]">
