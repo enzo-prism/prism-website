@@ -239,7 +239,7 @@ export default function DentalWebsitePage() {
                 <div className="space-y-4">
                   {lovePoints.map((item) => (
                     <div key={item.title} className="flex items-start gap-3 rounded-2xl border border-neutral-200 bg-neutral-50 p-4">
-                      <CheckCircle2 className="mt-1 h-5 w-5 flex-shrink-0 text-emerald-500" aria-hidden />
+                      <CheckCircle2 className="mt-1 h-5 w-5 shrink-0 text-emerald-500" aria-hidden />
                       <div>
                         <h3 className="text-base font-semibold text-neutral-900">{item.title}</h3>
                         <p className="text-sm text-neutral-600">{item.description}</p>
@@ -332,7 +332,7 @@ export default function DentalWebsitePage() {
                   <Link
                     key={example.href}
                     href={example.href}
-                    className="block rounded-2xl border border-neutral-200 bg-white p-5 shadow-sm transition hover:-translate-y-1 hover:border-neutral-300 hover:shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-neutral-400"
+                    className="block rounded-2xl border border-neutral-200 bg-white p-5 shadow-sm transition hover:-translate-y-1 hover:border-neutral-300 hover:shadow-md focus:outline-hidden focus-visible:ring-2 focus-visible:ring-neutral-400"
                   >
                     <p className="text-xs font-semibold uppercase tracking-[0.3em] text-neutral-500">case study</p>
                     <h3 className="mt-2 text-lg font-semibold text-neutral-900">{example.label}</h3>
@@ -458,15 +458,15 @@ export default function DentalWebsitePage() {
               </p>
               <ul className="space-y-3 text-sm text-neutral-600">
                 <li className="flex items-start gap-2">
-                  <CheckCircle2 className="mt-0.5 h-5 w-5 flex-shrink-0 text-emerald-500" aria-hidden />
+                  <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-emerald-500" aria-hidden />
                   <span>synced with dentrix, open dental, and leading practice management tools.</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <CheckCircle2 className="mt-0.5 h-5 w-5 flex-shrink-0 text-emerald-500" aria-hidden />
+                  <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-emerald-500" aria-hidden />
                   <span>automatic confirmations, reminders, and follow-up emails + sms when patients book.</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <CheckCircle2 className="mt-0.5 h-5 w-5 flex-shrink-0 text-emerald-500" aria-hidden />
+                  <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-emerald-500" aria-hidden />
                   <span>availability updates instantly reflected across specialty landing pages and paid campaigns.</span>
                 </li>
               </ul>
@@ -534,7 +534,7 @@ export default function DentalWebsitePage() {
               </p>
               <ul className="space-y-2 text-sm text-white/70">
                 <li className="flex items-start gap-2">
-                  <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-emerald-400" aria-hidden />
+                  <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-emerald-400" aria-hidden />
                   <span>
                     hyper-local google ads and meta campaigns tied to actual booked treatment. see{" "}
                     <Link href="/facebook-ads-for-dentists" className="font-semibold text-white underline underline-offset-4">
@@ -544,11 +544,11 @@ export default function DentalWebsitePage() {
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-emerald-400" aria-hidden />
+                  <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-emerald-400" aria-hidden />
                   <span>50+ directories and ai search surfaced with accurate hours, services, and reviews.</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-emerald-400" aria-hidden />
+                  <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-emerald-400" aria-hidden />
                   <span>ongoing optimization so your practice stays ahead of algorithm shifts.</span>
                 </li>
               </ul>
@@ -637,7 +637,7 @@ export default function DentalWebsitePage() {
                   <ul className="grid gap-3 text-sm text-neutral-600 sm:grid-cols-2">
                     {integrationPoints.map((point) => (
                       <li key={point} className="flex items-start gap-2">
-                        <CheckCircle2 className="mt-1 h-4 w-4 flex-shrink-0 text-emerald-500" aria-hidden />
+                        <CheckCircle2 className="mt-1 h-4 w-4 shrink-0 text-emerald-500" aria-hidden />
                         <span>{point}</span>
                       </li>
                     ))}

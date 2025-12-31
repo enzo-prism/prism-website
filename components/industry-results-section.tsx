@@ -141,7 +141,7 @@ export default function IndustryResultsSection() {
               <div className="overflow-x-auto pb-4 -mx-4 px-4">
                 <div className="flex gap-4" style={{ width: 'max-content' }}>
                   {industries.map((industry, index) => (
-                    <div key={industry.id} className="w-[320px] flex-shrink-0">
+                    <div key={industry.id} className="w-[320px] shrink-0">
                       <IndustryROICard {...industry} isActive={true} />
                     </div>
                   ))}

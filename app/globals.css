@@ -1,5 +1,7 @@
+@import "tailwindcss";
+@config "../tailwind.config.cjs";
 
-/* Critical Mobile Viewport Reset - Must come BEFORE @tailwind base */
+/* Critical Mobile Viewport Reset */
 * {
   box-sizing: border-box;
 }
@@ -35,9 +37,6 @@ body {
   }
 }
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
 /* Mobile scroll performance: avoid blur on small screens */
 @media (max-width: 768px) {
   .backdrop-blur:not(.nav-blur) { backdrop-filter: none !important; }
@@ -1663,7 +1662,8 @@ input, textarea, select {
 }
 
 /* Mobile Blog Typography System */
-.prose-mobile {
+.prose-mobile,
+.mobile-blog-content {
   @apply max-w-none;
   
   /* Base mobile typography - optimized for small screens */
@@ -1677,30 +1677,41 @@ input, textarea, select {
 .prose-mobile h3,
 .prose-mobile h4,
 .prose-mobile h5,
-.prose-mobile h6 {
+.prose-mobile h6,
+.mobile-blog-content h1,
+.mobile-blog-content h2,
+.mobile-blog-content h3,
+.mobile-blog-content h4,
+.mobile-blog-content h5,
+.mobile-blog-content h6 {
   @apply font-bold tracking-tight mb-4 mt-8;
   line-height: 1.3;
   color: #000;
 }
 
-.prose-mobile h1 {
+.prose-mobile h1,
+.mobile-blog-content h1 {
   font-size: 1.75rem; /* 28px */
   margin-top: 0;
 }
 
-.prose-mobile h2 {
+.prose-mobile h2,
+.mobile-blog-content h2 {
   font-size: 1.5rem; /* 24px */
 }
 
-.prose-mobile h3 {
+.prose-mobile h3,
+.mobile-blog-content h3 {
   font-size: 1.25rem; /* 20px */
 }
 
-.prose-mobile h4 {
+.prose-mobile h4,
+.mobile-blog-content h4 {
   font-size: 1.125rem; /* 18px */
 }
 
-.prose-mobile p {
+.prose-mobile p,
+.mobile-blog-content p {
   @apply mb-6;
   line-height: 1.6;
   max-width: 60ch; /* Optimal reading line length */
@@ -1708,49 +1719,53 @@ input, textarea, select {
 }
 
 .prose-mobile ul,
-.prose-mobile ol {
+.prose-mobile ol,
+.mobile-blog-content ul,
+.mobile-blog-content ol {
   @apply my-6 space-y-2;
   padding-left: 1.25rem;
 }
 
-.prose-mobile li {
+.prose-mobile li,
+.mobile-blog-content li {
   line-height: 1.6;
   color: #000;
 }
 
-.prose-mobile blockquote {
+.prose-mobile blockquote,
+.mobile-blog-content blockquote {
   @apply border-l-4 border-neutral-300 pl-4 py-2 my-6 italic;
   background: #f8f9fa;
   border-radius: 0 8px 8px 0;
 }
 
-.prose-mobile a {
+.prose-mobile a,
+.mobile-blog-content a {
   @apply text-blue-600 underline underline-offset-2;
   min-height: 44px; /* Touch-friendly links */
   display: inline-block;
   padding: 2px 0;
 }
 
-.prose-mobile code {
+.prose-mobile code,
+.mobile-blog-content code {
   @apply bg-neutral-100 px-2 py-1 rounded text-sm font-mono;
   color: #000;
 }
 
-.prose-mobile pre {
+.prose-mobile pre,
+.mobile-blog-content pre {
   @apply bg-neutral-100 rounded-lg p-4 overflow-x-auto my-6;
   font-size: 14px;
 }
 
-.prose-mobile img {
+.prose-mobile img,
+.mobile-blog-content img {
   @apply rounded-lg my-6 w-full;
   height: auto;
 }
 
 /* Mobile-optimized components */
-.mobile-blog-content {
-  @apply prose-mobile;
-}
-
 .mobile-blog-content > * {
   animation: fadeInUp 0.6s ease-out forwards;
   opacity: 0;

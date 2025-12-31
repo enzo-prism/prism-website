@@ -89,7 +89,7 @@ export default function DentalClientCarousel() {
             target="_blank"
             rel="noreferrer"
             onClick={() => trackCTAClick("dental_client_click", client.name)}
-            className="group block min-w-[260px] shrink-0 rounded-3xl border border-neutral-200 bg-neutral-50/80 p-6 shadow-sm backdrop-blur transition duration-300 hover:-translate-y-1 hover:border-neutral-300 hover:bg-white hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900"
+            className="group block min-w-[260px] shrink-0 rounded-3xl border border-neutral-200 bg-neutral-50/80 p-6 shadow-sm backdrop-blur transition duration-300 hover:-translate-y-1 hover:border-neutral-300 hover:bg-white hover:shadow-lg focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-neutral-900"
           >
             <div className="flex items-center justify-between gap-2">
               <div>

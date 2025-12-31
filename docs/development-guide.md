@@ -8,6 +8,13 @@ This guide highlights the workflows we lean on most often while iterating on the
 - Run `pnpm lint` before committing so the shared Tailwind + ESLint rules stay consistent.
 - Run `pnpm test:visual` before merging changes that touch the UI of `/`, `/about`, or `/pricing` (screenshot-locked routes).
 
+## Styling Pipeline
+- Tailwind v4 runs through the `@tailwindcss/postcss` plugin, with `@import "tailwindcss";` and `@config "../tailwind.config.cjs";` in `app/globals.css`.
+- To safelist utilities, use `@source inline(...)` in `app/globals.css` (the `safelist` config option is no longer supported).
+
+## Linting
+- ESLint uses the flat config in `eslint.config.js` (Next 16 removed `next lint`).
+
 ## Formspree Integration
 All marketing forms live under `components/forms/` (Contact, Free Analysis, Get Started) and share the `useFormValidation` hook. The new AI Website Launch landing page keeps its form in `app/ai-website-launch/client-page.tsx`, but mirrors the exact same submission pattern (client-side `fetch`, `Accept: application/json`, and redirect to `/thank-you`).
 

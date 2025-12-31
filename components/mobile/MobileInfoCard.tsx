@@ -121,7 +121,7 @@ export function MobileInfoCard({
           {/* Icon */}
           <div
             className={`
-              flex-shrink-0 p-2 rounded-lg ${styles.icon}
+              shrink-0 p-2 rounded-lg ${styles.icon}
               shadow-sm
             `}
           >

@@ -335,7 +335,7 @@ export function PerformantMobileBlogGrid({ children, posts, className = "" }: Mo
               px-6 py-3 bg-neutral-900 text-white rounded-full
               font-medium text-sm lowercase
               hover:bg-neutral-800 transition-colors
-              focus:outline-none focus:ring-2 focus:ring-neutral-500
+              focus:outline-hidden focus:ring-2 focus:ring-neutral-500
               active:scale-95 transition-transform
               min-h-[44px] min-w-[44px]
             "

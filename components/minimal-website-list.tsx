@@ -46,7 +46,7 @@ export default function MinimalWebsiteList({ projects }: MinimalWebsiteListProps
                   {project.description}
                 </p>
               </div>
-              <div className="flex-shrink-0 w-6 h-6 rounded-full bg-neutral-100 flex items-center justify-center group-hover:bg-neutral-900 transition-colors duration-200">
+              <div className="shrink-0 w-6 h-6 rounded-full bg-neutral-100 flex items-center justify-center group-hover:bg-neutral-900 transition-colors duration-200">
                 <ArrowUpRight className="w-3 h-3 text-neutral-400 group-hover:text-white transition-colors duration-200" />
               </div>
             </div>

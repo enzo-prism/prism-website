@@ -39,7 +39,7 @@ export default function Breadcrumbs({ items, className }: { items: Breadcrumb[],
           {/* Home icon */}
           <Link 
             href="/" 
-            className="flex items-center hover:text-neutral-900 transition-colors flex-shrink-0" 
+            className="flex items-center hover:text-neutral-900 transition-colors shrink-0" 
             aria-label="home"
           >
             <Home size={16} strokeWidth={2} />
@@ -51,7 +51,7 @@ export default function Breadcrumbs({ items, className }: { items: Breadcrumb[],
 
             return (
               <div key={item.url + index} className="flex items-center">
-                <ChevronRight size={14} className="mx-2 text-neutral-300 flex-shrink-0" strokeWidth={2} />
+                <ChevronRight size={14} className="mx-2 text-neutral-300 shrink-0" strokeWidth={2} />
                 
                 {isLastItem ? (
                   <span 

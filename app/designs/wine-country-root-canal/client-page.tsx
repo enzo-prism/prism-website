@@ -795,7 +795,7 @@ export default function WineCountryRootCanalDesignReview() {
       <main className="flex-1">
         <section className="bg-white px-4 pb-16 pt-24 sm:pb-20 sm:pt-28 lg:pt-32">
           <div className="mx-auto max-w-6xl">
-            <div className="grid gap-10 lg:grid-cols-[1.1fr,0.9fr] lg:items-center">
+            <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
               <div className="space-y-6">
                 <p className="text-xs font-semibold uppercase tracking-[0.35em] text-neutral-500">logo design board</p>
                 <h1 className="text-4xl font-semibold leading-tight sm:text-5xl">wine country root canal</h1>

@@ -23,7 +23,7 @@ export default function BlogLoading() {
             {/* Filter buttons skeleton */}
             <div className="flex overflow-x-auto gap-2 mb-8 pb-2">
               {[1, 2, 3, 4].map(i => (
-                <Skeleton key={i} className="h-10 w-20 rounded-full flex-shrink-0" />
+                <Skeleton key={i} className="h-10 w-20 rounded-full shrink-0" />
               ))}
             </div>
 

@@ -307,7 +307,7 @@ export default function GoogleDentalAdsPage() {
         </section>
 
         <section className="bg-neutral-950 text-white">
-          <div className="container mx-auto grid gap-10 px-4 py-16 md:grid-cols-[minmax(0,_320px),_1fr] md:px-6 lg:py-24">
+          <div className="container mx-auto grid gap-10 px-4 py-16 md:grid-cols-[minmax(0,_320px)_1fr] md:px-6 lg:py-24">
             <div className="flex flex-col gap-3">
               <p className="text-xs font-semibold uppercase tracking-[0.28em] text-white/60">The 2025–2026 landscape</p>
               <h2 className="text-3xl font-semibold md:text-4xl">What’s changed — and how to stay ahead.</h2>
@@ -357,7 +357,7 @@ export default function GoogleDentalAdsPage() {
         </section>
 
         <section className="border-t border-neutral-200 bg-white">
-          <div className="container mx-auto grid gap-10 px-4 py-16 md:grid-cols-[minmax(0,_320px),_1fr] md:px-6 lg:py-24">
+          <div className="container mx-auto grid gap-10 px-4 py-16 md:grid-cols-[minmax(0,_320px)_1fr] md:px-6 lg:py-24">
             <div className="flex flex-col gap-3">
               <p className="text-xs font-semibold uppercase tracking-[0.28em] text-neutral-500">What we do</p>
               <h2 className="text-3xl font-semibold text-neutral-900 md:text-4xl">
@@ -391,7 +391,7 @@ export default function GoogleDentalAdsPage() {
         </section>
 
         <section id={STRUCTURE_SECTION_ID} className="border-t border-neutral-200 bg-neutral-50">
-          <div className="container mx-auto grid gap-10 px-4 py-16 md:grid-cols-[minmax(0,_320px),_1fr] md:px-6 lg:py-24">
+          <div className="container mx-auto grid gap-10 px-4 py-16 md:grid-cols-[minmax(0,_320px)_1fr] md:px-6 lg:py-24">
             <div className="flex flex-col gap-3">
               <p className="text-xs font-semibold uppercase tracking-[0.28em] text-neutral-500">
                 How we structure dental ads
@@ -571,7 +571,7 @@ export default function GoogleDentalAdsPage() {
         </section>
 
         <section className="border-t border-neutral-200 bg-white">
-          <div className="container mx-auto grid gap-10 px-4 py-16 md:grid-cols-[minmax(0,_320px),_1fr] md:px-6 lg:py-24">
+          <div className="container mx-auto grid gap-10 px-4 py-16 md:grid-cols-[minmax(0,_320px)_1fr] md:px-6 lg:py-24">
             <div className="flex flex-col gap-3">
               <p className="text-xs font-semibold uppercase tracking-[0.28em] text-neutral-500">
                 Why partner with Prism

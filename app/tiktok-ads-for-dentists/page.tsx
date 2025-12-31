@@ -375,7 +375,7 @@ export default function TikTokAdsForDentistsPage() {
                   <Link
                     key={study.slug}
                     href={`/case-studies/${study.slug}`}
-                    className="block rounded-2xl border border-neutral-200 bg-white p-5 shadow-sm transition hover:-translate-y-1 hover:border-neutral-300 hover:shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-neutral-400"
+                    className="block rounded-2xl border border-neutral-200 bg-white p-5 shadow-sm transition hover:-translate-y-1 hover:border-neutral-300 hover:shadow-md focus:outline-hidden focus-visible:ring-2 focus-visible:ring-neutral-400"
                   >
                     <p className="text-xs font-semibold uppercase tracking-[0.3em] text-neutral-500">{study.category}</p>
                     <h3 className="mt-2 text-lg font-semibold lowercase text-neutral-900">{study.client}</h3>

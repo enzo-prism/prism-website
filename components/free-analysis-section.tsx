@@ -27,13 +27,13 @@ export default function FreeAnalysisSection() {
             We’ll review your site, uncover growth opportunities, and map out next steps.
           </p>
         </div>
-        <div className="grid gap-10 lg:grid-cols-[1.1fr,0.9fr] lg:items-center">
+        <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
           <div className="space-y-4">
             <p className="text-sm font-semibold uppercase tracking-[0.3em] text-white/70">You’ll receive:</p>
             <ul className="space-y-4 text-base text-neutral-100 sm:text-lg">
               {benefits.map((benefit) => (
                 <li key={benefit} className="flex items-start gap-3">
-                  <span className="mt-1 h-2.5 w-2.5 flex-shrink-0 rounded-full bg-white" />
+                  <span className="mt-1 h-2.5 w-2.5 shrink-0 rounded-full bg-white" />
                   <span className="text-neutral-200">{benefit}</span>
                 </li>
               ))}

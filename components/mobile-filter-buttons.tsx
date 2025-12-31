@@ -249,7 +249,7 @@ function MobileFilterButton({
           : 'bg-neutral-100 text-neutral-700 hover:bg-neutral-200 active:bg-neutral-300'
         }
         ${isPressed ? 'shadow-inner' : ''}
-        focus:outline-none focus:ring-2 focus:ring-neutral-500 focus:ring-offset-2
+        focus:outline-hidden focus:ring-2 focus:ring-neutral-500 focus:ring-offset-2
         active:shadow-inner
       `}
       style={{
@@ -344,7 +344,7 @@ export function CompactMobileFilterButtons({
                 ? 'bg-neutral-900 text-white shadow-md'
                 : 'bg-neutral-100 text-neutral-700 hover:bg-neutral-200 active:bg-neutral-300'
               }
-              focus:outline-none focus:ring-2 focus:ring-neutral-500
+              focus:outline-hidden focus:ring-2 focus:ring-neutral-500
             `}
             style={{
               willChange: "transform",

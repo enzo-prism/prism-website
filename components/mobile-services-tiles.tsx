@@ -167,7 +167,7 @@ export default function MobileServicesTiles() {
           }}
         >
           {services.map((service, index) => (
-            <div key={index} className="w-full flex-shrink-0 px-4">
+            <div key={index} className="w-full shrink-0 px-4">
               <Link
                 href={service.href}
                 className="block rounded-lg bg-white p-6 shadow-sm transition-all hover:shadow-md"

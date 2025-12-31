@@ -249,7 +249,7 @@ function HeroSection() {
             <button
               type="button"
               onClick={() => setIsFullscreen(true)}
-              className="group relative w-full overflow-hidden rounded-3xl border border-black/10 bg-zinc-50 shadow-[10px_10px_0_0_#00000008] outline-none transition focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+              className="group relative w-full overflow-hidden rounded-3xl border border-black/10 bg-zinc-50 shadow-[10px_10px_0_0_#00000008] outline-hidden transition focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2 focus-visible:ring-offset-white"
               aria-label="Open pricing hero image in fullscreen"
             >
               <div className="relative aspect-video w-full">

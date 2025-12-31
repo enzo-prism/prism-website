@@ -54,7 +54,7 @@ const BenefitsSlideshow: React.FC<BenefitsSlideshowProps> = ({ benefits }) => {
           style={{ transform: `translateX(-${currentIndex * 100}%)` }}
         >
           {benefits.map((benefit, index) => (
-            <div key={index} className="w-full flex-shrink-0 bg-white">
+            <div key={index} className="w-full shrink-0 bg-white">
               <div className="md:flex md:min-h-[320px]">
                 {" "}
                 {/* Ensure consistent height */}

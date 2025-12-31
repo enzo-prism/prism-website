@@ -16,7 +16,7 @@ export default function CaseStudyCard({ business, category, location, slug }: Ca
   return (
     <Link
       href={`/case-studies/${slug}`}
-      className="block focus:outline-none focus-visible:ring-2 focus-visible:ring-neutral-400 rounded-2xl"
+      className="block focus:outline-hidden focus-visible:ring-2 focus-visible:ring-neutral-400 rounded-2xl"
     >
       <Card className="relative h-full rounded-2xl border border-neutral-200 bg-white shadow-none transition hover:-translate-y-1 hover:border-neutral-300 hover:shadow-md">
         <CardContent className="space-y-2 p-5 pt-5">

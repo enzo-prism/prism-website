@@ -295,7 +295,7 @@ export default function ConsultingCompaniesPage() {
               <ul className="mt-6 space-y-3 text-sm text-neutral-600">
                 {prismCoverage.map((item) => (
                   <li key={item} className="flex items-start gap-3">
-                    <CheckCircle2 className="mt-0.5 h-5 w-5 flex-shrink-0 text-primary" />
+                    <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
                     <span>{item}</span>
                   </li>
                 ))}
@@ -308,15 +308,15 @@ export default function ConsultingCompaniesPage() {
               <h3 className="text-xl font-semibold text-neutral-900">What you keep:</h3>
               <ul className="mt-6 space-y-4 text-sm text-neutral-600">
                 <li className="flex items-start gap-3">
-                  <CheckCircle2 className="mt-0.5 h-5 w-5 flex-shrink-0 text-primary" />
+                  <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
                   <span>Consistent brand storytelling without the bottlenecks</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <CheckCircle2 className="mt-0.5 h-5 w-5 flex-shrink-0 text-primary" />
+                  <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
                   <span>Dashboards that surface the metrics your partners care about</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <CheckCircle2 className="mt-0.5 h-5 w-5 flex-shrink-0 text-primary" />
+                  <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
                   <span>Room to experiment with new offers without spinning up new tooling</span>
                 </li>
               </ul>
@@ -396,7 +396,7 @@ export default function ConsultingCompaniesPage() {
                 <ul className="mt-4 space-y-3 text-sm text-neutral-600">
                   {segmentWhoItsFor.map((item) => (
                     <li key={item} className="flex items-start gap-3">
-                      <CheckCircle2 className="mt-0.5 h-5 w-5 flex-shrink-0 text-primary" />
+                      <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
                       <span>{item}</span>
                     </li>
                   ))}
@@ -407,7 +407,7 @@ export default function ConsultingCompaniesPage() {
                 <ul className="mt-4 space-y-3 text-sm text-neutral-600">
                   {segmentProblemsWeSolve.map((item) => (
                     <li key={item} className="flex items-start gap-3">
-                      <CheckCircle2 className="mt-0.5 h-5 w-5 flex-shrink-0 text-primary" />
+                      <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
                       <span>{item}</span>
                     </li>
                   ))}
@@ -420,7 +420,7 @@ export default function ConsultingCompaniesPage() {
               <ul className="mt-4 grid gap-3 text-sm text-neutral-600 md:grid-cols-2">
                 {segmentDeliverables.map((item) => (
                   <li key={item} className="flex items-start gap-3">
-                    <CheckCircle2 className="mt-0.5 h-5 w-5 flex-shrink-0 text-primary" />
+                    <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
                     <span>{item}</span>
                   </li>
                 ))}

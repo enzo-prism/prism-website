@@ -149,7 +149,7 @@ export default function VideoWithPoster({
         {/* Play button overlay - only show when poster is loaded and no video error */}
         {isPosterLoaded && !isVideoError && (
           <div className="absolute inset-0 flex items-center justify-center">
-            <div className="rounded-full bg-black bg-opacity-50 p-4 transition-transform hover:scale-110">
+            <div className="rounded-full bg-black/50 p-4 transition-transform hover:scale-110">
               <Play className="h-8 w-8 text-white" fill="white" />
             </div>
           </div>
@@ -188,7 +188,7 @@ export default function VideoWithPoster({
             />
           </div>
           <div className="absolute inset-0 flex items-center justify-center">
-            <div className="bg-black bg-opacity-50 text-white px-4 py-2 rounded text-sm">
+            <div className="bg-black/50 text-white px-4 py-2 rounded text-sm">
               Video unavailable
             </div>
           </div>
@@ -198,7 +198,7 @@ export default function VideoWithPoster({
       {/* Loading indicator while video loads */}
       {isPosterLoaded && isVideoLoaded && !showVideo && (
         <div className="absolute inset-0 z-15 flex items-center justify-center">
-          <div className="bg-black bg-opacity-50 text-white px-3 py-1 rounded text-xs">
+          <div className="bg-black/50 text-white px-3 py-1 rounded text-xs">
             Starting video...
           </div>
         </div>

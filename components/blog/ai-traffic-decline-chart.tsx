@@ -137,14 +137,16 @@ export default function AITrafficDeclineChart() {
                   }}
                   labelStyle={{ color: '#374151', fontWeight: 'bold' }}
                   itemStyle={{ color: '#374151' }}
-                  formatter={(value: number, name: string) => {
-                    if (name === 'Traditional Organic') {
-                      return [`${value}%`, 'Traditional Organic Search']
+                  formatter={(value, name) => {
+                    const safeValue = value ?? 0
+                    const safeName = name ?? "Value"
+                    if (safeName === "Traditional Organic") {
+                      return [`${safeValue}%`, "Traditional Organic Search"]
                     }
-                    if (name === 'With AI Features') {
-                      return [`${value}%`, 'With AI Search Features']
+                    if (safeName === "With AI Features") {
+                      return [`${safeValue}%`, "With AI Search Features"]
                     }
-                    return [`${value}%`, name]
+                    return [`${safeValue}%`, safeName]
                   }}
                   labelFormatter={(label) => `Period: ${label}`}
                 />
@@ -183,7 +185,7 @@ export default function AITrafficDeclineChart() {
               >
                 <div className="flex items-center gap-3">
                   <div 
-                    className="w-4 h-4 rounded-full flex-shrink-0"
+                    className="w-4 h-4 rounded-full shrink-0"
                     style={{ backgroundColor: industry.color }}
                   />
                   <span className="font-medium text-neutral-900 text-sm sm:text-base">{industry.name}</span>

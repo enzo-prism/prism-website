@@ -416,7 +416,7 @@ export default async function WebsitesPage() {
                 ))}
               </TabsList>
               {segmentPlaybooks.map(playbook => (
-                <TabsContent key={playbook.id} value={playbook.id} className="mt-6 focus-visible:outline-none">
+                <TabsContent key={playbook.id} value={playbook.id} className="mt-6 focus-visible:outline-hidden">
                   <div className="grid gap-6 sm:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)] sm:gap-8">
                     <div>
                       <p className="text-sm text-neutral-600">{playbook.tagline}</p>

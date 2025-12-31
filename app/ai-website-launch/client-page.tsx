@@ -330,7 +330,7 @@ export default function AiWebsiteLaunchClientPage() {
 
       {/* How it works */}
       <section className="bg-white px-4 py-12 sm:py-16 lg:py-20">
-        <div className="mx-auto max-w-6xl space-y-10 rounded-[32px] border border-slate-200 bg-white px-4 py-10 sm:px-8 lg:grid lg:grid-cols-[1.1fr,0.9fr] lg:items-center lg:gap-12 lg:space-y-0">
+        <div className="mx-auto max-w-6xl space-y-10 rounded-[32px] border border-slate-200 bg-white px-4 py-10 sm:px-8 lg:grid lg:grid-cols-[1.1fr_0.9fr] lg:items-center lg:gap-12 lg:space-y-0">
           <div className="space-y-6" ref={howItWorksRef}>
             <p className="text-sm font-semibold uppercase tracking-[0.35em] text-slate-500">speed run</p>
             <h2 className="text-3xl font-semibold text-slate-900 sm:text-4xl">From zero to launch in 48 hours.</h2>
@@ -662,7 +662,7 @@ export default function AiWebsiteLaunchClientPage() {
       {/* Final CTA + Form */}
       <section id={CTA_TARGET_ID} className="bg-slate-50 px-4 py-12 sm:py-16 lg:py-20">
         <div className="mx-auto max-w-6xl rounded-[32px] border border-slate-200 bg-white p-6 shadow-xl sm:p-10 lg:p-12">
-          <div className="grid gap-8 lg:grid-cols-[0.9fr,1.1fr] lg:gap-14">
+          <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:gap-14">
             <div className="space-y-6">
               <p className="text-sm font-semibold uppercase tracking-[0.35em] text-slate-500">get your launch</p>
               <div className="space-y-4">
@@ -719,7 +719,7 @@ export default function AiWebsiteLaunchClientPage() {
                   name="name"
                   autoComplete="name"
                   required
-                  className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-base text-slate-900 shadow-inner focus:border-slate-900 focus:outline-none focus:ring-2 focus:ring-slate-200"
+                  className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-base text-slate-900 shadow-inner focus:border-slate-900 focus:outline-hidden focus:ring-2 focus:ring-slate-200"
                 />
               </div>
 
@@ -734,7 +734,7 @@ export default function AiWebsiteLaunchClientPage() {
                   autoComplete="email"
                   inputMode="email"
                   required
-                  className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-base text-slate-900 shadow-inner focus:border-slate-900 focus:outline-none focus:ring-2 focus:ring-slate-200"
+                  className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-base text-slate-900 shadow-inner focus:border-slate-900 focus:outline-hidden focus:ring-2 focus:ring-slate-200"
                 />
               </div>
 
@@ -747,7 +747,7 @@ export default function AiWebsiteLaunchClientPage() {
                   name="business"
                   autoComplete="organization"
                   required
-                  className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-base text-slate-900 shadow-inner focus:border-slate-900 focus:outline-none focus:ring-2 focus:ring-slate-200"
+                  className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-base text-slate-900 shadow-inner focus:border-slate-900 focus:outline-hidden focus:ring-2 focus:ring-slate-200"
                 />
               </div>
 
@@ -761,7 +761,7 @@ export default function AiWebsiteLaunchClientPage() {
                   type="url"
                   inputMode="url"
                   autoComplete="url"
-                  className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-base text-slate-900 shadow-inner focus:border-slate-900 focus:outline-none focus:ring-2 focus:ring-slate-200"
+                  className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-base text-slate-900 shadow-inner focus:border-slate-900 focus:outline-hidden focus:ring-2 focus:ring-slate-200"
                 />
               </div>
 
@@ -774,7 +774,7 @@ export default function AiWebsiteLaunchClientPage() {
                   name="message"
                   rows={4}
                   placeholder="Describe what you’d like to achieve"
-                  className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-base text-slate-900 shadow-inner focus:border-slate-900 focus:outline-none focus:ring-2 focus:ring-slate-200"
+                  className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-base text-slate-900 shadow-inner focus:border-slate-900 focus:outline-hidden focus:ring-2 focus:ring-slate-200"
                 />
               </div>
 

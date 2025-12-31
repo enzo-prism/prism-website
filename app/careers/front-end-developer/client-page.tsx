@@ -121,7 +121,7 @@ export default function FrontEndDeveloperPage() {
               <ul className="space-y-4">
                 {responsibilities.map((responsibility, index) => (
                   <li key={index} className="flex items-start">
-                    <span className="w-2 h-2 bg-neutral-900 rounded-full mr-4 mt-2 flex-shrink-0"></span>
+                    <span className="w-2 h-2 bg-neutral-900 rounded-full mr-4 mt-2 shrink-0"></span>
                     <span className="text-neutral-700 lowercase leading-relaxed">{responsibility}</span>
                   </li>
                 ))}
@@ -143,7 +143,7 @@ export default function FrontEndDeveloperPage() {
               <ul className="space-y-4">
                 {requirements.map((requirement, index) => (
                   <li key={index} className="flex items-start">
-                    <span className="w-2 h-2 bg-neutral-900 rounded-full mr-4 mt-2 flex-shrink-0"></span>
+                    <span className="w-2 h-2 bg-neutral-900 rounded-full mr-4 mt-2 shrink-0"></span>
                     <span className="text-neutral-700 lowercase leading-relaxed">{requirement}</span>
                   </li>
                 ))}
@@ -197,7 +197,7 @@ export default function FrontEndDeveloperPage() {
                   <ol className="space-y-3">
                     {applicationSteps.map((step, index) => (
                       <li key={index} className="flex items-start text-neutral-300 lowercase">
-                        <span className="bg-white text-neutral-900 rounded-full w-6 h-6 flex items-center justify-center text-sm font-medium mr-3 flex-shrink-0 mt-0.5">
+                        <span className="bg-white text-neutral-900 rounded-full w-6 h-6 flex items-center justify-center text-sm font-medium mr-3 shrink-0 mt-0.5">
                           {index + 1}
                         </span>
                         <span>{step}</span>

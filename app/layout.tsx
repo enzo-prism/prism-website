@@ -155,7 +155,7 @@ export default function RootLayout({
       {/* You can also apply inter.className directly to body if preferred,
         but applying to html covers the entire document.
         The existing font-sans class from Tailwind will then use this font
-        if tailwind.config.ts is updated accordingly.
+        if tailwind.config.cjs is updated accordingly.
     */}
       <body className="m-0 p-0 w-full min-h-screen font-sans antialiased">
 	        <GlobalSchemaGraph />

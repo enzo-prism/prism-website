@@ -56,7 +56,7 @@ export default function MobileBlogPostCard({
       href={`/blog/${slug}`} 
       onClick={() => trackCTAClick(`view blog post`, title)}
       className={`
-        block focus:outline-none focus:ring-2 focus:ring-neutral-500 focus:ring-offset-2 rounded-lg
+        block focus:outline-hidden focus:ring-2 focus:ring-neutral-500 focus:ring-offset-2 rounded-lg
         mobile-blog-card animate-in
         relative border border-neutral-200 rounded-xl overflow-hidden h-full
         bg-white shadow-sm hover:shadow-md transition-all duration-200
@@ -204,7 +204,7 @@ export function CompactMobileBlogPostCard({
     <Link 
       href={`/blog/${slug}`} 
       onClick={() => trackCTAClick(`view blog post`, title)}
-      className="block focus:outline-none focus:ring-2 focus:ring-neutral-500 focus:ring-offset-2 rounded-lg"
+      className="block focus:outline-hidden focus:ring-2 focus:ring-neutral-500 focus:ring-offset-2 rounded-lg"
     >
       <motion.div
         className="relative border border-neutral-200 rounded-xl overflow-hidden bg-white shadow-sm hover:shadow-md transition-all duration-200 min-h-[120px] active:scale-[0.98]"
@@ -219,7 +219,7 @@ export function CompactMobileBlogPostCard({
       >
         <div className="flex h-full">
           {/* Thumbnail */}
-          <div className={cn("w-24 h-full flex-shrink-0", gradientClass)}>
+          <div className={cn("w-24 h-full shrink-0", gradientClass)}>
             <motion.div
               className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full"
               animate={!reducedMotion ? { x: ["0%", "100%"] } : {}}

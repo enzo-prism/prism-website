@@ -114,7 +114,7 @@ function MobileElegantSteps() {
           <motion.button
             key={step.number}
             onClick={() => setActiveStep(step.number)}
-            className="focus:outline-none focus:ring-2 focus:ring-black focus:ring-opacity-50 rounded-full"
+            className="focus:outline-hidden focus:ring-2 focus:ring-black/50 rounded-full"
             initial={{ scale: 0, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ delay: index * 0.1, type: "spring" }}

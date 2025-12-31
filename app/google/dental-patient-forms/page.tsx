@@ -602,7 +602,7 @@ export default function GoogleDentalPatientFormsGuide() {
 
         <section id="overview" className="border-b border-neutral-200 bg-white">
           <div className="container mx-auto px-4 py-16 md:px-6 lg:py-24">
-            <div className="grid gap-10 lg:grid-cols-[minmax(0,_320px),_minmax(0,_1fr),_minmax(0,_260px)] lg:items-start">
+            <div className="grid gap-10 lg:grid-cols-[minmax(0,_320px)_minmax(0,_1fr)_minmax(0,_260px)] lg:items-start">
               <div className="flex flex-col gap-4">
                 <p className="text-xs font-semibold uppercase tracking-[0.28em] text-neutral-500">What you’ll accomplish</p>
                 <h2 className="text-3xl font-semibold text-neutral-900 md:text-4xl">
@@ -648,7 +648,7 @@ export default function GoogleDentalPatientFormsGuide() {
         </section>
 
         <section id="prerequisites" className="border-b border-neutral-200 bg-neutral-50">
-          <div className="container mx-auto grid gap-10 px-4 py-16 md:grid-cols-[minmax(0,_320px),_1fr] md:px-6 lg:py-24">
+          <div className="container mx-auto grid gap-10 px-4 py-16 md:grid-cols-[minmax(0,_320px)_1fr] md:px-6 lg:py-24">
             <div className="flex flex-col gap-3">
               <p className="text-xs font-semibold tracking-[0.28em] text-neutral-500">PREREQUISITES</p>
               <h2 className="text-3xl font-semibold text-neutral-900 md:text-4xl">Don’t Skip These Foundations</h2>
@@ -792,7 +792,7 @@ export default function GoogleDentalPatientFormsGuide() {
         </section>
 
         <section id="truth-table" className="border-b border-neutral-200 bg-white">
-          <div className="container mx-auto grid gap-10 px-4 py-16 md:grid-cols-[minmax(0,_320px),_1fr] md:px-6 lg:py-24">
+          <div className="container mx-auto grid gap-10 px-4 py-16 md:grid-cols-[minmax(0,_320px)_1fr] md:px-6 lg:py-24">
             <div className="flex flex-col gap-3">
               <p className="text-xs font-semibold tracking-[0.28em] text-neutral-500">TRUTH TABLE</p>
               <h2 className="text-3xl font-semibold text-neutral-900 md:text-4xl">What This Setup Does — and Doesn’t</h2>
@@ -818,7 +818,7 @@ export default function GoogleDentalPatientFormsGuide() {
         </section>
 
         <section id="appendix" className="border-b border-neutral-200 bg-neutral-50">
-          <div className="container mx-auto grid gap-8 px-4 py-16 md:grid-cols-[minmax(0,_320px),_1fr] md:px-6 lg:py-24">
+          <div className="container mx-auto grid gap-8 px-4 py-16 md:grid-cols-[minmax(0,_320px)_1fr] md:px-6 lg:py-24">
             <div className="flex flex-col gap-3">
               <p className="text-xs font-semibold tracking-[0.28em] text-neutral-500">APPENDIX</p>
               <h2 className="text-3xl font-semibold text-neutral-900 md:text-4xl">Why Google Forms Works in 2025</h2>
@@ -838,7 +838,7 @@ export default function GoogleDentalPatientFormsGuide() {
         </section>
 
         <section id="checklist" className="border-b border-neutral-200 bg-white">
-          <div className="container mx-auto grid gap-10 px-4 py-16 md:grid-cols-[minmax(0,_320px),_1fr] md:px-6 lg:py-24">
+          <div className="container mx-auto grid gap-10 px-4 py-16 md:grid-cols-[minmax(0,_320px)_1fr] md:px-6 lg:py-24">
             <div className="flex flex-col gap-3">
               <p className="text-xs font-semibold tracking-[0.28em] text-neutral-500">ONE-PAGE CHECKLIST</p>
               <h2 className="text-3xl font-semibold text-neutral-900 md:text-4xl">Copy into Your Ops Doc</h2>

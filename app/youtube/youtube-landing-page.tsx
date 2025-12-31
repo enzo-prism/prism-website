@@ -49,7 +49,7 @@ export default function YouTubeLandingPage() {
           <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.08),_transparent_60%)]" />
           <div className="absolute inset-0 -z-10 bg-[conic-gradient(from_120deg,_rgba(255,255,255,0.12),_rgba(13,13,13,0.8))] opacity-40" />
           <div className="mx-auto max-w-6xl px-6 pb-24 pt-24 sm:pt-28 md:pt-32">
-            <div className="grid gap-10 lg:grid-cols-[1.05fr,0.95fr] lg:items-center xl:gap-16">
+            <div className="grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-center xl:gap-16">
               <HeroLoopingVideo className="border-white/15 bg-white/10 shadow-2xl shadow-black/30 backdrop-blur-sm" />
               <div className="flex flex-col gap-8 text-left lg:ml-auto lg:max-w-[32rem]">
                 <div>
@@ -81,7 +81,7 @@ export default function YouTubeLandingPage() {
 
         <section className="border-b border-neutral-200">
           <div className="mx-auto max-w-5xl px-6 py-20 sm:py-24">
-            <div className="grid gap-12 md:grid-cols-[1.1fr,0.9fr] md:items-start">
+            <div className="grid gap-12 md:grid-cols-[1.1fr_0.9fr] md:items-start">
               <div className="space-y-6">
                 <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">Why We Share</h2>
                 <p className="text-base text-neutral-600 sm:text-lg">
@@ -142,7 +142,7 @@ export default function YouTubeLandingPage() {
 
         <section className="border-b border-neutral-200">
           <div className="mx-auto max-w-5xl px-6 py-20 sm:py-24">
-            <div className="grid gap-10 md:grid-cols-[1.1fr,0.9fr] md:items-center">
+            <div className="grid gap-10 md:grid-cols-[1.1fr_0.9fr] md:items-center">
               <div className="space-y-6">
                 <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">Where Design Meets Growth</h2>
                 <p className="text-base text-neutral-600 sm:text-lg">

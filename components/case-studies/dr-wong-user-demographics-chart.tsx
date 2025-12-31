@@ -45,7 +45,11 @@ export function DrWongUserDemographicsChart() {
               ))}
             </Pie>
             <Tooltip
-              formatter={(value: number, name: string) => [`${value}%`, name]}
+              formatter={(value, name) => {
+                const safeValue = value ?? 0
+                const safeName = name ?? "Value"
+                return [`${safeValue}%`, safeName]
+              }}
               contentStyle={{ borderRadius: "0.5rem", backgroundColor: "hsla(var(--background)/0.95)" }}
             />
           </PieChart>
@@ -65,7 +69,7 @@ export function DrWongUserDemographicsChart() {
             key={entry.name}
             onMouseEnter={() => setActiveIndex(index)}
             onMouseLeave={handleLeave}
-            className="flex items-center focus:outline-none"
+            className="flex items-center focus:outline-hidden"
           >
             <span
               className="w-3 h-3 rounded-full mr-2"

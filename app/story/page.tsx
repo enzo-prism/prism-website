@@ -137,7 +137,7 @@ export default function StoryPage() {
         </section>
 
         <section className="border-b border-neutral-200 bg-white">
-          <div className="container mx-auto grid gap-12 px-4 py-16 md:grid-cols-[minmax(0,_1fr),_minmax(0,_1fr)] md:px-6 lg:gap-16 lg:py-24">
+          <div className="container mx-auto grid gap-12 px-4 py-16 md:grid-cols-[minmax(0,_1fr)_minmax(0,_1fr)] md:px-6 lg:gap-16 lg:py-24">
             <div className="space-y-5">
               <p className="text-xs font-semibold uppercase tracking-[0.28em] text-neutral-500">why stories win</p>
               <h2 className="text-3xl font-semibold lowercase text-neutral-900 sm:text-4xl">
@@ -169,7 +169,7 @@ export default function StoryPage() {
         </section>
 
         <section className="border-b border-neutral-200 bg-neutral-50">
-          <div className="container mx-auto grid gap-10 px-4 py-16 md:grid-cols-[minmax(0,_1.1fr),_minmax(0,_0.9fr)] md:px-6 lg:gap-16 lg:py-24">
+          <div className="container mx-auto grid gap-10 px-4 py-16 md:grid-cols-[minmax(0,_1.1fr)_minmax(0,_0.9fr)] md:px-6 lg:gap-16 lg:py-24">
             <div className="space-y-6">
               <p className="text-xs font-semibold uppercase tracking-[0.28em] text-neutral-500">our philosophy</p>
               <h2 className="text-3xl font-semibold lowercase text-neutral-900 sm:text-4xl">the customer signal engine</h2>
@@ -287,7 +287,7 @@ export default function StoryPage() {
         </section>
 
         <section className="border-b border-neutral-200 bg-neutral-50">
-          <div className="container mx-auto grid gap-10 px-4 py-16 md:grid-cols-[minmax(0,_1fr),_minmax(0,_1fr)] md:px-6 lg:gap-16 lg:py-24">
+          <div className="container mx-auto grid gap-10 px-4 py-16 md:grid-cols-[minmax(0,_1fr)_minmax(0,_1fr)] md:px-6 lg:gap-16 lg:py-24">
             <div className="space-y-4">
               <p className="text-xs font-semibold uppercase tracking-[0.28em] text-neutral-500">the result</p>
               <h2 className="text-3xl font-semibold lowercase text-neutral-900 sm:text-4xl">

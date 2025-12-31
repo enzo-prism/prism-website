@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 const DEFAULT_ORIGIN = "https://www.design-prism.com";
 const DEFAULT_PATHS = [
   "/",
@@ -99,4 +98,3 @@ main().catch((error) => {
   console.error(error);
   process.exit(1);
 });
-

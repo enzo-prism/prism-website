@@ -23,7 +23,7 @@ export default function TikTokLandingPage() {
             <div className="pointer-events-none absolute left-1/2 top-16 h-[32rem] w-[32rem] -translate-x-1/2 rounded-full bg-neutral-700/20 blur-3xl" />
           </div>
           <div className="relative mx-auto max-w-6xl px-4 pb-24 pt-24 sm:pt-28 md:pt-32">
-            <div className="grid gap-10 lg:grid-cols-[1.05fr,0.95fr] lg:items-center xl:gap-16">
+            <div className="grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-center xl:gap-16">
               <HeroLoopingVideo className="border-white/20 bg-white/10 shadow-2xl shadow-black/40 backdrop-blur-sm" />
               <div className="flex flex-col gap-8 text-left lg:ml-auto lg:max-w-[32rem]">
                 <div>

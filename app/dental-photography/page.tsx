@@ -243,7 +243,7 @@ export default function DentalPhotographyPage() {
                 <ul className="mt-6 space-y-3 text-sm text-neutral-600">
                   {shotTypes.map((item) => (
                     <li key={item} className="flex items-start gap-2">
-                      <Layers3 className="mt-0.5 h-4 w-4 flex-shrink-0 text-neutral-400" aria-hidden />
+                      <Layers3 className="mt-0.5 h-4 w-4 shrink-0 text-neutral-400" aria-hidden />
                       <span>{item}</span>
                     </li>
                   ))}

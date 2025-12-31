@@ -39,7 +39,7 @@ export default function FreeAnalysisPage() {
         </section>
 
         <section className="px-6 py-16 sm:py-24">
-          <div className="mx-auto grid max-w-5xl gap-10 lg:grid-cols-[0.95fr,1.05fr]">
+          <div className="mx-auto grid max-w-5xl gap-10 lg:grid-cols-[0.95fr_1.05fr]">
             <div className="space-y-6 rounded-3xl border border-black/10 bg-neutral-50 p-6 sm:p-8">
               <div>
                 <p className="text-sm font-semibold uppercase tracking-[0.3em] text-black/50">what you will receive</p>

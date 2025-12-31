@@ -171,7 +171,7 @@ export default function GooglePage() {
         </section>
 
         <section className="bg-neutral-950 text-white">
-          <div className="container mx-auto grid gap-10 px-4 py-16 md:grid-cols-[minmax(0,_320px),_1fr] md:px-6 lg:py-24">
+          <div className="container mx-auto grid gap-10 px-4 py-16 md:grid-cols-[minmax(0,_320px)_1fr] md:px-6 lg:py-24">
             <div className="flex flex-col gap-3">
               <p className="text-xs font-semibold uppercase tracking-[0.28em] text-white/60">What we do</p>
               <h2 className="text-3xl font-semibold md:text-4xl">
@@ -216,7 +216,7 @@ export default function GooglePage() {
         </section>
 
         <section className="border-t border-neutral-200 bg-white">
-          <div className="container mx-auto grid gap-10 px-4 py-16 md:grid-cols-[minmax(0,_320px),_1fr] md:px-6 lg:py-24">
+          <div className="container mx-auto grid gap-10 px-4 py-16 md:grid-cols-[minmax(0,_320px)_1fr] md:px-6 lg:py-24">
             <div className="flex flex-col gap-3">
               <p className="text-xs font-semibold uppercase tracking-[0.28em] text-neutral-500">
                 Why partner with Prism
@@ -259,7 +259,7 @@ export default function GooglePage() {
         </section>
 
         <section className="border-t border-neutral-200 bg-neutral-50">
-          <div className="container mx-auto grid gap-10 px-4 py-16 md:grid-cols-[minmax(0,_320px),_1fr] md:px-6 lg:py-24">
+          <div className="container mx-auto grid gap-10 px-4 py-16 md:grid-cols-[minmax(0,_320px)_1fr] md:px-6 lg:py-24">
             <div className="flex flex-col gap-3">
               <p className="text-xs font-semibold uppercase tracking-[0.28em] text-neutral-500">
                 hipaa patient intake
@@ -302,7 +302,7 @@ export default function GooglePage() {
         </section>
 
         <section className="border-t border-neutral-200 bg-neutral-50">
-          <div className="container mx-auto grid gap-10 px-4 py-16 md:grid-cols-[minmax(0,_320px),_1fr] md:px-6 lg:py-24">
+          <div className="container mx-auto grid gap-10 px-4 py-16 md:grid-cols-[minmax(0,_320px)_1fr] md:px-6 lg:py-24">
             <div className="flex flex-col gap-3">
               <p className="text-xs font-semibold uppercase tracking-[0.28em] text-neutral-500">
                 Learn & grow with Google

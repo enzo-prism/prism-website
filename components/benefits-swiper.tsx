@@ -182,7 +182,7 @@ const BenefitsSwiper: React.FC = () => {
           }}
         >
           {benefits.map((benefit, index) => (
-            <div key={index} className="w-full flex-shrink-0 px-4">
+            <div key={index} className="w-full shrink-0 px-4">
               <div className="flex flex-col items-center text-center bg-white p-6 rounded-xl shadow-sm border">
                 <div
                   className={`mb-6 ${benefit.bgColor} rounded-full aspect-square w-16 flex items-center justify-center`}

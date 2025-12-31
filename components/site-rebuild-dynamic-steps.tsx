@@ -85,7 +85,7 @@ export default function SiteRebuildDynamicSteps() {
             </pre>
           </div>
           <div className="rounded-2xl border border-neutral-200 bg-neutral-50 p-5 text-sm text-neutral-700 shadow-sm sm:text-base">
-            <div className="md:grid md:grid-cols-[minmax(0,_360px),_minmax(0,_1fr)] md:items-start md:gap-8">
+            <div className="md:grid md:grid-cols-[minmax(0,_360px)_minmax(0,_1fr)] md:items-start md:gap-8">
               <div className="min-w-0 space-y-4">
                 <p className="font-semibold text-neutral-800">Download the live site:</p>
                 <WgetCommandBuilder value={inputValue} onValueChange={setInputValue} commandUrl={commandUrl} />

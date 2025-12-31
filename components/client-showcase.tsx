@@ -348,7 +348,7 @@ export default function ClientShowcase() {
           {clients.map((client: Client, index: number) => (
             <div
               key={`${client.id}-${index}`}
-              className="relative flex-shrink-0 px-2 first:pl-4 last:pr-4"
+              className="relative shrink-0 px-2 first:pl-4 last:pr-4"
               style={{ width: "280px" }}
             >
               <div className={`relative overflow-hidden rounded-xl ${client.gradient}`} style={{ aspectRatio: "9/16" }}>
@@ -371,13 +371,13 @@ export default function ClientShowcase() {
                   ) : (
                     <div className={`w-full h-full ${client.gradient}`}></div>
                   )}
-                  <div className="absolute inset-0 bg-black bg-opacity-25"></div>
+                  <div className="absolute inset-0 bg-black/25"></div>
                 </div>
 
                 <div className="relative z-10 flex flex-col justify-between h-full p-6">
                   <div>
                     <h3 className="text-lg font-bold text-white lowercase">{client.name}</h3>
-                    <p className="text-sm text-white text-opacity-90 lowercase">
+                    <p className="text-sm text-white/90 lowercase">
                       {client.clientType === "podcast guest" || client.clientType === "Instagram"
                         ? client.business
                         : `owner of ${client.business}`}

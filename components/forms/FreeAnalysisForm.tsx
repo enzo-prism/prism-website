@@ -132,7 +132,7 @@ export default function FreeAnalysisForm() {
           name="challenge"
           required
           defaultValue=""
-          className="h-12 rounded-2xl border border-slate-200 bg-white px-3 text-sm text-slate-700 outline-none transition focus:border-slate-900 focus:ring-2 focus:ring-slate-900/10"
+          className="h-12 rounded-2xl border border-slate-200 bg-white px-3 text-sm text-slate-700 outline-hidden transition focus:border-slate-900 focus:ring-2 focus:ring-slate-900/10"
           aria-invalid={Boolean(getError("challenge"))}
           aria-describedby={getDescribedBy("challenge")}
           onBlur={handleBlur}

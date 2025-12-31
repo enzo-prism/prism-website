@@ -126,7 +126,7 @@ export default function PodcastClientPage() {
                   >
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-4">
-                        <span className="bg-neutral-900 text-white rounded-full w-10 h-10 flex items-center justify-center text-sm font-bold flex-shrink-0">
+                        <span className="bg-neutral-900 text-white rounded-full w-10 h-10 flex items-center justify-center text-sm font-bold shrink-0">
                           {episode.number}
                         </span>
                         <div>
@@ -136,9 +136,9 @@ export default function PodcastClientPage() {
                         </div>
                       </div>
                       {expandedEpisode === episode.number ? (
-                        <ChevronUp className="h-5 w-5 text-neutral-500 flex-shrink-0" />
+                        <ChevronUp className="h-5 w-5 text-neutral-500 shrink-0" />
                       ) : (
-                        <ChevronDown className="h-5 w-5 text-neutral-500 flex-shrink-0" />
+                        <ChevronDown className="h-5 w-5 text-neutral-500 shrink-0" />
                       )}
                     </div>
                   </button>
@@ -153,7 +153,7 @@ export default function PodcastClientPage() {
                           <ul className="space-y-2">
                             {episode.takeaways.map((takeaway, index) => (
                               <li key={index} className="text-sm text-neutral-600 lowercase flex items-start">
-                                <span className="w-1.5 h-1.5 bg-neutral-400 rounded-full mr-3 mt-2 flex-shrink-0"></span>
+                                <span className="w-1.5 h-1.5 bg-neutral-400 rounded-full mr-3 mt-2 shrink-0"></span>
                                 {takeaway}
                               </li>
                             ))}

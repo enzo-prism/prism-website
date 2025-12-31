@@ -51,7 +51,7 @@ export function MobileStrategyCard({
         <ol className="space-y-3">
           {steps.map((step, index) => (
             <li key={index} className="flex items-start gap-3">
-              <span className="flex-shrink-0 w-6 h-6 rounded-full bg-neutral-100 flex items-center justify-center text-xs text-neutral-600 mt-0.5">
+              <span className="shrink-0 w-6 h-6 rounded-full bg-neutral-100 flex items-center justify-center text-xs text-neutral-600 mt-0.5">
                 {index + 1}
               </span>
               <span className="text-sm text-neutral-700 leading-relaxed">

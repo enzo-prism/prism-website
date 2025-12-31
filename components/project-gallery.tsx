@@ -59,7 +59,7 @@ export default function ProjectGallery({ items, type }: ProjectGalleryProps) {
 
             {/* Overlay that appears on hover */}
             <div
-              className={`absolute inset-0 bg-black bg-opacity-50 flex flex-col items-center justify-center p-4 transition-opacity duration-300 ${
+              className={`absolute inset-0 bg-black/50 flex flex-col items-center justify-center p-4 transition-opacity duration-300 ${
                 hoveredItem === item.id ? "opacity-100" : "opacity-0"
               }`}
             >

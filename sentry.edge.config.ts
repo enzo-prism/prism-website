@@ -6,7 +6,6 @@ const dsn =
     : undefined)
 
 if (dsn) {
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
   const Sentry = require("@sentry/nextjs")
   Sentry.init({
     dsn,

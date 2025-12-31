@@ -140,7 +140,7 @@ export function MobileList({
           transition={{ duration: 0.4, delay: index * 0.1 }}
           className="flex items-start gap-3"
         >
-          <div className="flex-shrink-0 mt-2">
+          <div className="shrink-0 mt-2">
             {type === "bullet" ? (
               <div className="w-2 h-2 bg-neutral-400 dark:bg-neutral-600 rounded-full" />
             ) : (

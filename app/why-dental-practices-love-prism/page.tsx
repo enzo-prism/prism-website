@@ -354,7 +354,7 @@ export default function DentalPracticesPage() {
                 <ul className="mt-4 space-y-2 text-sm text-neutral-700">
                   {heroWhatYouGet.map((item) => (
                     <li key={item} className="flex items-start gap-3">
-                      <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-primary" />
+                      <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
                       <span>{item}</span>
                     </li>
                   ))}
@@ -538,7 +538,7 @@ export default function DentalPracticesPage() {
                     <ul className="mt-4 space-y-3 text-sm text-white">
                       {pillar.includes.map(({ icon: Icon, label }) => (
                         <li key={label} className="flex items-start gap-3">
-                          <span className="mt-0.5 inline-flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-2xl border border-white/30 bg-white/10 text-white">
+                          <span className="mt-0.5 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-2xl border border-white/30 bg-white/10 text-white">
                             <Icon className="h-4 w-4" />
                           </span>
                           <span>{label}</span>
@@ -820,7 +820,7 @@ export default function DentalPracticesPage() {
                 <ul className="mt-4 space-y-3 text-sm text-neutral-600">
                   {segmentWhoItsFor.map((item) => (
                     <li key={item} className="flex items-start gap-3">
-                      <CheckCircle2 className="mt-0.5 h-5 w-5 flex-shrink-0 text-primary" />
+                      <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
                       <span>{item}</span>
                     </li>
                   ))}
@@ -832,7 +832,7 @@ export default function DentalPracticesPage() {
                 <ul className="mt-4 space-y-3 text-sm text-neutral-600">
                   {segmentProblemsWeSolve.map((item) => (
                     <li key={item} className="flex items-start gap-3">
-                      <CheckCircle2 className="mt-0.5 h-5 w-5 flex-shrink-0 text-primary" />
+                      <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
                       <span>{item}</span>
                     </li>
                   ))}
@@ -845,7 +845,7 @@ export default function DentalPracticesPage() {
               <ul className="mt-4 grid gap-3 text-sm text-neutral-600 md:grid-cols-2">
                 {segmentDeliverables.map((item) => (
                   <li key={item} className="flex items-start gap-3">
-                    <CheckCircle2 className="mt-0.5 h-5 w-5 flex-shrink-0 text-primary" />
+                    <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
                     <span>{item}</span>
                   </li>
                 ))}

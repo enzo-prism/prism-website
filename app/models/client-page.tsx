@@ -214,7 +214,7 @@ export default function ModelsPageClient() {
                     rel="noopener noreferrer"
                     aria-label={`visit ${partner.name} website`}
                     onClick={() => trackCTAClick("models_dental_partner", partner.name)}
-                    className="group block min-w-[240px] shrink-0 rounded-3xl border border-neutral-200/70 bg-neutral-50/75 p-6 shadow-sm backdrop-blur transition duration-300 hover:-translate-y-1 hover:border-neutral-300 hover:bg-white hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900"
+                    className="group block min-w-[240px] shrink-0 rounded-3xl border border-neutral-200/70 bg-neutral-50/75 p-6 shadow-sm backdrop-blur transition duration-300 hover:-translate-y-1 hover:border-neutral-300 hover:bg-white hover:shadow-lg focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-neutral-900"
                   >
                     <div className="space-y-2 text-left">
                       <p className="text-sm font-semibold lowercase text-neutral-900">

@@ -96,7 +96,7 @@ export default function OpenAISiteRebuildGuidePage() {
         </section>
 
         <section className="border-b border-neutral-200 bg-white">
-          <div className="container mx-auto grid gap-10 px-4 py-16 md:px-6 lg:grid-cols-[minmax(0,_1fr),_minmax(0,_260px)] lg:gap-16 lg:py-24">
+          <div className="container mx-auto grid gap-10 px-4 py-16 md:px-6 lg:grid-cols-[minmax(0,_1fr)_minmax(0,_260px)] lg:gap-16 lg:py-24">
             <div className="min-w-0 space-y-16">
               <article id="overview" className="space-y-8">
                 <div className="space-y-4">

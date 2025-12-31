@@ -187,7 +187,7 @@ export default function MinimalCaseStudyPage({
                   <ul className="space-y-3 text-neutral-600 lowercase">
                     {section.bullets.map((bullet, index) => (
                       <li key={`${section.id}-${index}`} className="flex gap-3 text-sm">
-                        <span className="mt-1 h-2 w-2 flex-shrink-0 rounded-full bg-neutral-400" />
+                        <span className="mt-1 h-2 w-2 shrink-0 rounded-full bg-neutral-400" />
                         <span>{bullet}</span>
                       </li>
                     ))}
@@ -205,7 +205,7 @@ export default function MinimalCaseStudyPage({
                       <ul className="space-y-2 text-sm text-neutral-700 lowercase">
                         {comingSoon.bullets.map((bullet, index) => (
                           <li key={`coming-soon-${index}`} className="flex gap-2">
-                            <span className="mt-1 h-2 w-2 flex-shrink-0 rounded-full bg-neutral-300" />
+                            <span className="mt-1 h-2 w-2 shrink-0 rounded-full bg-neutral-300" />
                             <span>{bullet}</span>
                           </li>
                         ))}

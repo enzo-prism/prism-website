@@ -183,7 +183,7 @@ export default function GetStartedForm() {
                 required
                 disabled={!canSchedule || !hasDateSelected}
                 defaultValue=""
-                className="h-10 w-full rounded-md border border-input bg-background px-3 text-sm text-foreground shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                className="h-10 w-full rounded-md border border-input bg-background px-3 text-sm text-foreground shadow-sm focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                 aria-invalid={Boolean(getError("call_time_hour"))}
                 aria-describedby={describedBy("call_time_hour")}
                 onBlur={handleBlur}
@@ -210,7 +210,7 @@ export default function GetStartedForm() {
                 required
                 disabled={!canSchedule || !hasDateSelected}
                 defaultValue=""
-                className="h-10 w-full rounded-md border border-input bg-background px-3 text-sm text-foreground shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                className="h-10 w-full rounded-md border border-input bg-background px-3 text-sm text-foreground shadow-sm focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                 aria-invalid={Boolean(getError("call_time_minute"))}
                 aria-describedby={describedBy("call_time_minute")}
                 onBlur={handleBlur}
@@ -243,7 +243,7 @@ export default function GetStartedForm() {
                     onBlur={handleBlur}
                     onChange={handleInput}
                   />
-                  <span className="inline-flex h-10 min-w-[3.5rem] items-center justify-center rounded-md border border-input bg-background px-3 text-sm font-medium text-foreground transition peer-checked:border-primary peer-checked:bg-primary peer-checked:text-primary-foreground peer-focus-visible:outline-none peer-focus-visible:ring-2 peer-focus-visible:ring-ring peer-focus-visible:ring-offset-2 peer-disabled:cursor-not-allowed peer-disabled:opacity-50">
+                  <span className="inline-flex h-10 min-w-[3.5rem] items-center justify-center rounded-md border border-input bg-background px-3 text-sm font-medium text-foreground transition peer-checked:border-primary peer-checked:bg-primary peer-checked:text-primary-foreground peer-focus-visible:outline-hidden peer-focus-visible:ring-2 peer-focus-visible:ring-ring peer-focus-visible:ring-offset-2 peer-disabled:cursor-not-allowed peer-disabled:opacity-50">
                     AM
                   </span>
                 </label>
@@ -257,7 +257,7 @@ export default function GetStartedForm() {
                     onBlur={handleBlur}
                     onChange={handleInput}
                   />
-                  <span className="inline-flex h-10 min-w-[3.5rem] items-center justify-center rounded-md border border-input bg-background px-3 text-sm font-medium text-foreground transition peer-checked:border-primary peer-checked:bg-primary peer-checked:text-primary-foreground peer-focus-visible:outline-none peer-focus-visible:ring-2 peer-focus-visible:ring-ring peer-focus-visible:ring-offset-2 peer-disabled:cursor-not-allowed peer-disabled:opacity-50">
+                  <span className="inline-flex h-10 min-w-[3.5rem] items-center justify-center rounded-md border border-input bg-background px-3 text-sm font-medium text-foreground transition peer-checked:border-primary peer-checked:bg-primary peer-checked:text-primary-foreground peer-focus-visible:outline-hidden peer-focus-visible:ring-2 peer-focus-visible:ring-ring peer-focus-visible:ring-offset-2 peer-disabled:cursor-not-allowed peer-disabled:opacity-50">
                     PM
                   </span>
                 </label>

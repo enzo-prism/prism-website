@@ -257,7 +257,7 @@ export default function AIMentionTracker() {
                     }`}
                   >
                     <div className="flex items-start gap-3">
-                      <div className="flex-shrink-0 mt-1">
+                      <div className="shrink-0 mt-1">
                         {result.mentioned ? (
                           <CheckCircle className="w-5 h-5 text-green-500" />
                         ) : (

@@ -253,7 +253,7 @@ export default function LocalShopOwnersPage() {
                   <ul className="mt-4 space-y-3 text-sm text-neutral-600">
                     {theme.bullets.map((item) => (
                       <li key={item} className="flex items-start gap-3">
-                        <CheckCircle2 className="mt-0.5 h-5 w-5 flex-shrink-0 text-primary" />
+                        <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
                         <span>{item}</span>
                       </li>
                     ))}
@@ -290,7 +290,7 @@ export default function LocalShopOwnersPage() {
               <ul className="mt-6 space-y-4 text-sm text-neutral-600">
                 {transitionPoints.map((point) => (
                   <li key={point} className="flex items-start gap-3">
-                    <CheckCircle2 className="mt-0.5 h-5 w-5 flex-shrink-0 text-primary" />
+                    <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
                     <span>{point}</span>
                   </li>
                 ))}
@@ -339,7 +339,7 @@ export default function LocalShopOwnersPage() {
               <ul className="mt-6 space-y-4 text-sm text-neutral-600">
                 {innovationHighlights.map((line) => (
                   <li key={line} className="flex items-start gap-3">
-                    <CheckCircle2 className="mt-0.5 h-5 w-5 flex-shrink-0 text-primary" />
+                    <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
                     <span>{line}</span>
                   </li>
                 ))}
@@ -433,7 +433,7 @@ export default function LocalShopOwnersPage() {
                 <ul className="mt-4 space-y-3 text-sm text-neutral-600">
                   {segmentWhoItsFor.map((item) => (
                     <li key={item} className="flex items-start gap-3">
-                      <CheckCircle2 className="mt-0.5 h-5 w-5 flex-shrink-0 text-primary" />
+                      <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
                       <span>{item}</span>
                     </li>
                   ))}
@@ -444,7 +444,7 @@ export default function LocalShopOwnersPage() {
                 <ul className="mt-4 space-y-3 text-sm text-neutral-600">
                   {segmentProblemsWeSolve.map((item) => (
                     <li key={item} className="flex items-start gap-3">
-                      <CheckCircle2 className="mt-0.5 h-5 w-5 flex-shrink-0 text-primary" />
+                      <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
                       <span>{item}</span>
                     </li>
                   ))}
@@ -457,7 +457,7 @@ export default function LocalShopOwnersPage() {
               <ul className="mt-4 grid gap-3 text-sm text-neutral-600 md:grid-cols-2">
                 {segmentDeliverables.map((item) => (
                   <li key={item} className="flex items-start gap-3">
-                    <CheckCircle2 className="mt-0.5 h-5 w-5 flex-shrink-0 text-primary" />
+                    <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
                     <span>{item}</span>
                   </li>
                 ))}

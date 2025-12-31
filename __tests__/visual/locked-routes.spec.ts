@@ -38,7 +38,6 @@ async function stabilizePage(page: Page) {
 
   await page.evaluate(async () => {
     if ("fonts" in document) {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const fonts = (document as any).fonts as { ready?: Promise<unknown> } | undefined
       await fonts?.ready
     }

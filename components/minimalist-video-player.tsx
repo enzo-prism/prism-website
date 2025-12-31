@@ -160,7 +160,6 @@ export default function MinimalistVideoPlayer({
         // If loadVideo fails for any reason, keep controls visible so the user can retry
         setIsControlsVisible(true)
       })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [videoId])
 
   const handleVideoLoaded = () => {
@@ -239,7 +238,7 @@ export default function MinimalistVideoPlayer({
             priority
           />
           <div className="absolute inset-0 flex items-center justify-center">
-            <div className="rounded-full bg-black bg-opacity-50 p-4">
+            <div className="rounded-full bg-black/50 p-4">
               <Play className="h-8 w-8 text-white" fill="white" />
             </div>
           </div>
@@ -257,7 +256,7 @@ export default function MinimalistVideoPlayer({
       >
         <button
           onClick={togglePlay}
-          className="rounded-full bg-black bg-opacity-50 p-2 text-white transition-colors hover:bg-opacity-70"
+          className="rounded-full bg-black/50 p-2 text-white transition-colors hover:bg-black/70"
           aria-label={isPlaying ? "Pause" : "Play"}
         >
           {isPlaying ? <Pause className="h-5 w-5" /> : <Play className="h-5 w-5" />}
@@ -266,7 +265,7 @@ export default function MinimalistVideoPlayer({
         {shouldShowMuteButton ? (
           <button
             onClick={toggleMute}
-            className="rounded-full bg-black bg-opacity-50 p-2 text-white transition-colors hover:bg-opacity-70"
+            className="rounded-full bg-black/50 p-2 text-white transition-colors hover:bg-black/70"
             aria-label={isMuted ? "Unmute" : "Mute"}
           >
             {isMuted ? <VolumeX className="h-5 w-5" /> : <Volume2 className="h-5 w-5" />}

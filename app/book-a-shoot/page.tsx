@@ -104,7 +104,7 @@ export default function BookAShootPage() {
                     <select
                       name="day_one_time"
                       required
-                      className="rounded-2xl border border-neutral-200 bg-neutral-50 px-4 py-3 text-base text-neutral-900 focus:border-neutral-900 focus:outline-none sm:text-sm"
+                      className="rounded-2xl border border-neutral-200 bg-neutral-50 px-4 py-3 text-base text-neutral-900 focus:border-neutral-900 focus:outline-hidden sm:text-sm"
                     >
                       <option value="">best one-hour window</option>
                       <option value="08:00">8:00 – 9:00 AM</option>
@@ -131,7 +131,7 @@ export default function BookAShootPage() {
                     <select
                       name="day_two_time"
                       required
-                      className="rounded-2xl border border-neutral-200 bg-neutral-50 px-4 py-3 text-base text-neutral-900 focus:border-neutral-900 focus:outline-none sm:text-sm"
+                      className="rounded-2xl border border-neutral-200 bg-neutral-50 px-4 py-3 text-base text-neutral-900 focus:border-neutral-900 focus:outline-hidden sm:text-sm"
                     >
                       <option value="">best one-hour window</option>
                       <option value="08:00">8:00 – 9:00 AM</option>

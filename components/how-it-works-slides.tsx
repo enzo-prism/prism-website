@@ -175,7 +175,7 @@ export default function HowItWorksSlides() {
           style={{ transform: `translateX(-${currentIndex * 100}%)` }}
         >
           {steps.map((step, index) => (
-            <div key={index} className="w-full flex-shrink-0 px-4">
+            <div key={index} className="w-full shrink-0 px-4">
               <div
                 className={`flex flex-col items-center text-center bg-white p-6 rounded-lg shadow-sm ${
                   index === currentIndex ? "ring-2 ring-neutral-200" : ""

@@ -262,7 +262,7 @@ export default function ScrollingTimeline() {
               className={`relative flex flex-col md:flex-row ${
                 index % 2 === 0 ? "md:flex-row-reverse" : ""
               } items-start transition-all duration-700 ${
-                isVisible ? "opacity-100 transform-none" : "opacity-0 translate-y-8"
+                isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
               }`}
             >
               <div

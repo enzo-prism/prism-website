@@ -204,7 +204,7 @@ export default function StrategyTimelineChart() {
                             transition={{ delay: stepIndex * 0.1 }}
                             className="flex items-start gap-3 p-3 bg-white rounded-lg border border-neutral-200"
                           >
-                            <div className="w-6 h-6 rounded-full bg-neutral-100 flex items-center justify-center flex-shrink-0 mt-0.5">
+                            <div className="w-6 h-6 rounded-full bg-neutral-100 flex items-center justify-center shrink-0 mt-0.5">
                               <span className="text-xs font-semibold text-neutral-700">
                                 {stepIndex + 1}
                               </span>

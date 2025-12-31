@@ -692,7 +692,7 @@ export default function MatariaDentalGroupCaseStudy() {
                         <ul className="mt-3 space-y-2 text-sm text-neutral-700">
                           {item.bullets.map((bullet, idx) => (
                             <li key={`${item.heading}-${idx}`} className="flex gap-2">
-                              <span className="mt-1 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-neutral-400" />
+                              <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-neutral-400" />
                               <span>{bullet}</span>
                             </li>
                           ))}
@@ -715,7 +715,7 @@ export default function MatariaDentalGroupCaseStudy() {
                         <ul className="mt-3 space-y-2 text-sm text-neutral-700">
                           {item.bullets.map((bullet, idx) => (
                             <li key={`${item.heading}-${idx}`} className="flex gap-2">
-                              <span className="mt-1 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-neutral-400" />
+                              <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-neutral-400" />
                               <span>{bullet}</span>
                             </li>
                           ))}
@@ -738,7 +738,7 @@ export default function MatariaDentalGroupCaseStudy() {
             <div className="relative space-y-8">
               <div className="absolute left-4 top-0 h-full w-px bg-neutral-200 md:left-6" aria-hidden="true" />
               {storySteps.map((step, idx) => (
-                <div key={step.id} id={step.id} className="relative grid gap-4 rounded-2xl border border-neutral-200 bg-white p-6 shadow-sm md:grid-cols-[auto,1fr]">
+                <div key={step.id} id={step.id} className="relative grid gap-4 rounded-2xl border border-neutral-200 bg-white p-6 shadow-sm md:grid-cols-[auto_1fr]">
                   <div className="relative flex h-full items-start justify-start">
                     <div className="mt-1 flex h-10 w-10 items-center justify-center rounded-full bg-neutral-900 text-sm font-semibold text-white">
                       {idx + 1}
@@ -779,7 +779,7 @@ export default function MatariaDentalGroupCaseStudy() {
                 <ul className="space-y-2 text-sm text-neutral-700">
                   {meaningBullets.map((item) => (
                     <li key={item} className="flex gap-2">
-                      <span className="mt-1 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-neutral-400" />
+                      <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-neutral-400" />
                       <span>{item}</span>
                     </li>
                   ))}
@@ -790,7 +790,7 @@ export default function MatariaDentalGroupCaseStudy() {
                 <ul className="space-y-2 text-sm text-neutral-700">
                   {meaningList.map((item, idx) => (
                     <li key={idx} className="flex gap-2">
-                      <span className="mt-1 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-neutral-400" />
+                      <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-neutral-400" />
                       <span>{item}</span>
                     </li>
                   ))}

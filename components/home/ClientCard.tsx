@@ -24,7 +24,7 @@ export default function ClientCard({
 
   const content = (
     <div
-      className="relative overflow-hidden rounded-2xl border border-neutral-200 bg-white p-4 text-left transition-[border-color,background-color,box-shadow] duration-300 ease-out hover:border-neutral-300 hover:bg-neutral-50 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-300 group-focus-visible/client:border-neutral-300 group-focus-visible/client:bg-neutral-50 group-focus-visible/client:shadow-md dark:border-neutral-800 dark:bg-neutral-900 dark:hover:border-neutral-700 dark:hover:bg-neutral-800 dark:group-focus-visible/client:border-neutral-700 dark:group-focus-visible/client:bg-neutral-800"
+      className="relative overflow-hidden rounded-2xl border border-neutral-200 bg-white p-4 text-left transition-[border-color,background-color,box-shadow] duration-300 ease-out hover:border-neutral-300 hover:bg-neutral-50 hover:shadow-md focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-neutral-300 group-focus-visible/client:border-neutral-300 group-focus-visible/client:bg-neutral-50 group-focus-visible/client:shadow-md dark:border-neutral-800 dark:bg-neutral-900 dark:hover:border-neutral-700 dark:hover:bg-neutral-800 dark:group-focus-visible/client:border-neutral-700 dark:group-focus-visible/client:bg-neutral-800"
       role="group"
       aria-label={`${title}${location ? ` — ${location}` : ""}`}
     >
@@ -40,7 +40,7 @@ export default function ClientCard({
 
       {url && interactive ? (
         <span
-          className="absolute right-3 top-3 inline-flex h-9 w-9 translate-y-1 scale-95 items-center justify-center rounded-full border border-neutral-200 bg-white/70 text-neutral-500 opacity-0 shadow-sm transition-[opacity,transform] duration-300 ease-out group-hover/client:opacity-100 group-hover/client:translate-y-0 group-hover/client:scale-100 group-focus-visible/client:opacity-100 group-focus-visible/client:translate-y-0 group-focus-visible/client:scale-100 dark:border-neutral-700 dark:bg-neutral-900/60 dark:text-neutral-300"
+          className="absolute right-3 top-3 inline-flex h-9 w-9 translate-y-1 scale-95 items-center justify-center rounded-full border border-neutral-200 bg-white/70 text-neutral-500 opacity-0 shadow-sm transition-[opacity,translate,scale] duration-300 ease-out group-hover/client:opacity-100 group-hover/client:translate-y-0 group-hover/client:scale-100 group-focus-visible/client:opacity-100 group-focus-visible/client:translate-y-0 group-focus-visible/client:scale-100 dark:border-neutral-700 dark:bg-neutral-900/60 dark:text-neutral-300"
           aria-hidden="true"
         >
           {isExternal ? <ArrowUpRight className="h-4 w-4" /> : <MoveRight className="h-4 w-4" />}
@@ -74,7 +74,7 @@ export default function ClientCard({
           trackNavigation("client_card", url)
           if (isExternal) trackExternalLinkClick(url, title)
         }}
-        className="group/client block rounded-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-neutral-400 hardware-hover touch-feedback"
+        className="group/client block rounded-2xl focus:outline-hidden focus-visible:ring-2 focus-visible:ring-neutral-400 hardware-hover touch-feedback"
         target={isExternal ? "_blank" : undefined}
         rel={isExternal ? "noopener noreferrer" : undefined}
       >

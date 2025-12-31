@@ -313,7 +313,7 @@ export default function GuideTabs() {
               <ul className="mt-4 grid gap-2 text-sm text-neutral-700 sm:grid-cols-2">
                 {content.guideIncludes.map((item) => (
                   <li key={item} className="flex items-start gap-2">
-                    <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-emerald-500" aria-hidden />
+                    <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-emerald-500" aria-hidden />
                     <span>{item}</span>
                   </li>
                 ))}
@@ -371,7 +371,7 @@ export default function GuideTabs() {
                           <ul className="mt-4 space-y-2 text-sm text-neutral-600">
                             {product.bullets.map((bullet) => (
                               <li key={bullet} className="flex items-start gap-2">
-                                <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-neutral-400" aria-hidden />
+                                <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-neutral-400" aria-hidden />
                                 <span>{bullet}</span>
                               </li>
                             ))}
@@ -471,7 +471,7 @@ export default function GuideTabs() {
                       <ul className="mt-3 space-y-2 text-sm text-neutral-600">
                         {content.consent.map((item) => (
                           <li key={item} className="flex items-start gap-2">
-                            <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-neutral-400" aria-hidden />
+                            <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-neutral-400" aria-hidden />
                             <span>{item}</span>
                           </li>
                         ))}
@@ -494,7 +494,7 @@ export default function GuideTabs() {
                         <ul className="mt-3 space-y-2 text-sm text-neutral-600">
                           {group.items.map((item) => (
                             <li key={item} className="flex items-start gap-2">
-                              <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-neutral-400" aria-hidden />
+                              <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-neutral-400" aria-hidden />
                               <span>{item}</span>
                             </li>
                           ))}
@@ -514,7 +514,7 @@ export default function GuideTabs() {
                   <ul className="mt-3 grid gap-2 text-sm text-neutral-700 sm:grid-cols-2">
                     {content.outcomes.map((item) => (
                       <li key={item} className="flex items-start gap-2">
-                        <Lightbulb className="mt-0.5 h-4 w-4 flex-shrink-0 text-amber-500" aria-hidden />
+                        <Lightbulb className="mt-0.5 h-4 w-4 shrink-0 text-amber-500" aria-hidden />
                         <span>{item}</span>
                       </li>
                     ))}

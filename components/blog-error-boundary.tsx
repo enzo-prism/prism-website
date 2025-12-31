@@ -133,7 +133,7 @@ export function BlogPostErrorBoundary({ children }: { children: React.ReactNode 
         <div className="prose-blog">
           <div className="bg-red-50 border border-red-200 rounded-lg p-6 my-8">
             <div className="flex items-start">
-              <AlertTriangle className="h-5 w-5 text-red-600 mt-0.5 mr-3 flex-shrink-0" />
+              <AlertTriangle className="h-5 w-5 text-red-600 mt-0.5 mr-3 shrink-0" />
               <div>
                 <h3 className="text-lg font-semibold text-red-900 lowercase mb-2">
                   failed to render blog content

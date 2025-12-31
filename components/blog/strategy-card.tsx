@@ -71,7 +71,7 @@ export default function StrategyCard({
     >
       <motion.div variants={fadeInUp}>
         <div className="flex flex-col sm:flex-row sm:items-start gap-4 mb-4">
-          <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-500 rounded-lg flex items-center justify-center flex-shrink-0 mx-auto sm:mx-0">
+          <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-500 rounded-lg flex items-center justify-center shrink-0 mx-auto sm:mx-0">
             <Icon className="w-6 h-6 text-white" />
           </div>
           <div className="flex-1 text-center sm:text-left">
@@ -104,7 +104,7 @@ export default function StrategyCard({
               transition={{ delay: index * 0.1 }}
               className="flex items-start gap-3"
             >
-              <div className="w-6 h-6 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0 mt-0.5">
+              <div className="w-6 h-6 rounded-full bg-blue-100 flex items-center justify-center shrink-0 mt-0.5">
                 <span className="text-xs font-semibold text-blue-700">{index + 1}</span>
               </div>
               <p className="text-sm text-neutral-700 leading-relaxed">{step}</p>

@@ -153,7 +153,7 @@ export default async function ReplitPage() {
         </section>
 
         <section className="border-t border-neutral-200 bg-white lowercase">
-          <div className="container mx-auto grid gap-10 px-4 py-16 md:grid-cols-[minmax(0,_320px),_1fr] md:px-6 lg:py-24">
+          <div className="container mx-auto grid gap-10 px-4 py-16 md:grid-cols-[minmax(0,_320px)_1fr] md:px-6 lg:py-24">
             <div className="flex flex-col gap-3">
               <p className="text-xs font-semibold tracking-[0.28em] text-neutral-500">why we use replit</p>
               <h2 className="text-3xl font-semibold text-neutral-900 md:text-4xl">
@@ -174,7 +174,7 @@ export default async function ReplitPage() {
         </section>
 
         <section className="bg-neutral-950 text-white lowercase">
-          <div className="container mx-auto grid gap-10 px-4 py-16 md:grid-cols-[minmax(0,_320px),_1fr] md:px-6 lg:py-24">
+          <div className="container mx-auto grid gap-10 px-4 py-16 md:grid-cols-[minmax(0,_320px)_1fr] md:px-6 lg:py-24">
             <div className="flex flex-col gap-3">
               <p className="text-xs font-semibold tracking-[0.28em] text-white/60">how prism builds</p>
               <h2 className="text-3xl font-semibold md:text-4xl">our workflow.</h2>
@@ -214,7 +214,7 @@ export default async function ReplitPage() {
         </section>
 
         <section className="border-t border-neutral-200 bg-neutral-50 lowercase">
-          <div className="container mx-auto grid gap-10 px-4 py-16 md:grid-cols-[minmax(0,_320px),_1fr] md:px-6 lg:py-24">
+          <div className="container mx-auto grid gap-10 px-4 py-16 md:grid-cols-[minmax(0,_320px)_1fr] md:px-6 lg:py-24">
             <div className="flex flex-col gap-3">
               <p className="text-xs font-semibold tracking-[0.28em] text-neutral-500">
                 learn to build on replit
@@ -302,7 +302,7 @@ export default async function ReplitPage() {
         </section>
 
         <section className="border-t border-neutral-200 bg-white lowercase">
-          <div className="container mx-auto grid gap-10 px-4 py-16 md:grid-cols-[minmax(0,_320px),_1fr] md:px-6 lg:py-24">
+          <div className="container mx-auto grid gap-10 px-4 py-16 md:grid-cols-[minmax(0,_320px)_1fr] md:px-6 lg:py-24">
             <div className="flex flex-col gap-3">
               <p className="text-xs font-semibold tracking-[0.28em] text-neutral-500">
                 partnership statement
@@ -331,7 +331,7 @@ export default async function ReplitPage() {
         </section>
 
         <section className="border-t border-neutral-200 bg-neutral-100 lowercase">
-          <div className="container mx-auto grid gap-10 px-4 py-16 md:grid-cols-[minmax(0,_320px),_1fr] md:px-6 lg:py-24">
+          <div className="container mx-auto grid gap-10 px-4 py-16 md:grid-cols-[minmax(0,_320px)_1fr] md:px-6 lg:py-24">
             <div className="flex flex-col gap-3">
               <p className="text-xs font-semibold tracking-[0.28em] text-neutral-600">
                 explore our work

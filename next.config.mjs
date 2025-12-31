@@ -1,18 +1,22 @@
 import { withSentryConfig } from '@sentry/nextjs';
 import withBundleAnalyzer from "@next/bundle-analyzer";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 
 const withAnalyzer = withBundleAnalyzer({
   enabled: process.env.ANALYZE === "true",
 });
 
+const configRoot = path.dirname(fileURLToPath(import.meta.url));
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-eslint: {
-  ignoreDuringBuilds: false,
-},
 typescript: {
   ignoreBuildErrors: false,
 },
+  turbopack: {
+    root: configRoot,
+  },
 outputFileTracingIncludes: {
   "/api/latest-posts": ["content/blog/**/*"],
   "/blog": ["content/blog/**/*"],

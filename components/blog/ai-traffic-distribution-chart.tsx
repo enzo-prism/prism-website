@@ -112,9 +112,10 @@ export default function AITrafficDistributionChart() {
                   }}
                   labelStyle={{ color: '#374151', fontWeight: 'bold' }}
                   itemStyle={{ color: '#374151' }}
-                  formatter={(value: number, name: string, props: { payload?: { color?: string; description?: string } }) => {
-                    const description = props.payload?.description || 'No description available'
-                    return [`${value}%`, description]
+                  formatter={(value, _name, item) => {
+                    const description = item.payload?.description ?? "No description available"
+                    const safeValue = value ?? 0
+                    return [`${safeValue}%`, description]
                   }}
                   labelFormatter={(label) => `Traffic Source: ${label}`}
                 />
@@ -142,7 +143,7 @@ export default function AITrafficDistributionChart() {
               <div className="flex flex-col sm:flex-row sm:items-center gap-3 mb-2">
                 <div className="flex items-center gap-3 flex-1">
                   <div 
-                    className="w-4 h-4 rounded-full flex-shrink-0"
+                    className="w-4 h-4 rounded-full shrink-0"
                     style={{ backgroundColor: item.color }}
                   />
                   <h4 className="font-semibold text-neutral-900 text-sm sm:text-base">{item.name}</h4>
