@@ -5,6 +5,7 @@ import { ClipboardCheck, Code2, Megaphone, PenTool } from "lucide-react"
 
 import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
+import BookDemoEmbed from "@/components/BookDemoEmbed"
 import VideoPlayer from "@/components/video-player"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import { Badge } from "@/components/ui/badge"
@@ -225,14 +226,7 @@ export default function GetStartedPage() {
                 </p>
               </CardHeader>
               <CardContent>
-                <div className="overflow-hidden rounded-2xl border border-border/60 bg-background">
-                  <iframe
-                    title="Prism demo scheduling"
-                    src="https://calendar.notion.so/meet/enzosison/oj1fm4o2p"
-                    className="h-[720px] w-full border-0"
-                    loading="lazy"
-                  />
-                </div>
+                <BookDemoEmbed />
               </CardContent>
             </Card>
           </div>

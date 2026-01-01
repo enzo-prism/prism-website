@@ -25,7 +25,7 @@ const { handleSubmit, getError, isSubmitting } = useFormValidation({
 - `components/forms/ScalingRoadmapForm.tsx`
 - `app/ai-website-launch/client-page.tsx` (inline card form for the AI launch offer; uses the same fetch + redirect pattern without the shared hook so the form can live next to its layout code)
 
-The `/get-started` page now uses an embedded Notion calendar scheduler instead of a Formspree form.
+The `/get-started` page now uses an embedded Notion calendar scheduler instead of a Formspree form. The embed sizing lives in `components/BookDemoEmbed.tsx` and uses a width-based height map to avoid nested iframe scrolling.
 
 All Formspree-backed forms use the hook above so users always land on `/thank-you` or `/analysis-thank-you`. They already include `_subject` + `_gotcha` honeypot fields; reuse those when cloning.
 
