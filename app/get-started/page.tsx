@@ -173,7 +173,7 @@ export default function GetStartedPage() {
                 Transformation program
               </Badge>
               <h2 className="text-balance text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
-                What you'll get in the online presence transformation program
+                Joining unlocks 4 powerful partners to grow your business
               </h2>
             </div>
             <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
