@@ -327,16 +327,6 @@ export default function ClientPage() {
                       {app.description}
                     </CardDescription>
                   </CardHeader>
-                  {app.platform ? (
-                    <CardContent className="space-y-2">
-                      <p className="text-xs font-semibold uppercase tracking-[0.3em] text-muted-foreground">
-                        Current platforms supported
-                      </p>
-                      <Badge variant="outline" className="w-fit">
-                        {app.platform}
-                      </Badge>
-                    </CardContent>
-                  ) : null}
                   <CardFooter className="mt-auto">
                     <Button
                       asChild
