@@ -219,10 +219,10 @@ export default function GetStartedPage() {
                   Book a demo
                 </Badge>
                 <CardTitle className="text-balance text-3xl font-semibold text-foreground sm:text-4xl">
-                  Book a demo of our online presence transformation program.
+                  Learn More about the Online Presence Transformation Program
                 </CardTitle>
                 <p className="text-base text-muted-foreground">
-                  Choose a time below to book a demo and see if we&apos;re a fit.
+                  Meet the team behind the transformations
                 </p>
               </CardHeader>
               <CardContent>
