@@ -67,6 +67,7 @@ const Carousel = React.forwardRef<
     )
     const [canScrollPrev, setCanScrollPrev] = React.useState(false)
     const [canScrollNext, setCanScrollNext] = React.useState(false)
+    const keyboardScrollLock = React.useRef(false)
 
     const onSelect = React.useCallback((api: CarouselApi) => {
       if (!api) {
@@ -87,11 +88,16 @@ const Carousel = React.forwardRef<
 
     const handleKeyDown = React.useCallback(
       (event: React.KeyboardEvent<HTMLDivElement>) => {
+        if (event.repeat || keyboardScrollLock.current) {
+          return
+        }
         if (event.key === "ArrowLeft") {
           event.preventDefault()
+          keyboardScrollLock.current = true
           scrollPrev()
         } else if (event.key === "ArrowRight") {
           event.preventDefault()
+          keyboardScrollLock.current = true
           scrollNext()
         }
       },
@@ -111,12 +117,18 @@ const Carousel = React.forwardRef<
         return
       }
 
+      const releaseKeyboardLock = () => {
+        keyboardScrollLock.current = false
+      }
+
       onSelect(api)
       api.on("reInit", onSelect)
       api.on("select", onSelect)
+      api.on("settle", releaseKeyboardLock)
 
       return () => {
         api?.off("select", onSelect)
+        api?.off("settle", releaseKeyboardLock)
       }
     }, [api, onSelect])
 

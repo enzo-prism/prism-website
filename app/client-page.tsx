@@ -344,7 +344,7 @@ export default function ClientPage() {
                       Search Console growth snapshots
                     </span>
                   </div>
-                  <Carousel opts={{ align: "start", loop: true }} className="relative overflow-visible">
+                  <Carousel opts={{ align: "start", loop: true, duration: 40 }} className="relative overflow-visible">
                     <CarouselContent className="-ml-2">
                       {HERO_SEARCH_CONSOLE_SLIDES.map((slide, index) => (
                         <CarouselItem key={slide.src} className="pl-2">
