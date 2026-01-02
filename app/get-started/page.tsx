@@ -58,23 +58,23 @@ const FAQ_ITEMS: FAQItem[] = [
     answer: [
       {
         type: "paragraph",
-        content: "Submit the request form on our website with a few details about your business and goals.",
+        content: <strong>The first step is simple: book a demo.</strong>,
       },
       {
         type: "paragraph",
-        content: (
-          <>
-            If you're a fit, we'll reach out within <strong>1 business day</strong> to
-            schedule a quick call and walk through:
-          </>
-        ),
+        content:
+          "You'll meet with our team on Zoom so we can get to know you, understand your business goals, and see if Prism is the right fit. If it is, we'll outline a clear plan for how we'd elevate your online presence and remove you as the bottleneck.",
+      },
+      {
+        type: "paragraph",
+        content: "During the demo, we'll review:",
       },
       {
         type: "list",
         items: [
-          "where you are today (traffic, leads, conversion, offers)",
-          "what's blocking growth",
-          "what we'd implement first",
+          "your current website + marketing performance",
+          "the biggest gaps holding you back",
+          "the first 7-30 days of execution",
           "timeline + pricing",
         ],
       },

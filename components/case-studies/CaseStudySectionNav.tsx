@@ -6,7 +6,6 @@ import { BookOpen } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { useCaseStudyStickyNavHeight } from "@/hooks/use-case-study-sticky-nav"
 import { Button } from "@/components/ui/button"
-import { ScrollArea } from "@/components/ui/scroll-area"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 import {
   Sheet,
@@ -72,11 +71,15 @@ export function CaseStudySectionNav({
   ariaLabel = "case study sections",
 }: CaseStudySectionNavProps) {
   const navRef = React.useRef<HTMLDivElement>(null)
+  const listRef = React.useRef<HTMLDivElement>(null)
   useCaseStudyStickyNavHeight(navRef)
 
   const [activeSection, setActiveSection] = React.useState<string>(sections[0]?.id ?? "")
   const [isSheetOpen, setIsSheetOpen] = React.useState(false)
   const [intersectionOffset, setIntersectionOffset] = React.useState(120)
+  const activeLabel = React.useMemo(() => {
+    return sections.find((section) => section.id === activeSection)?.label ?? sections[0]?.label ?? ""
+  }, [activeSection, sections])
 
   React.useLayoutEffect(() => {
     const updateOffset = () => {
@@ -129,6 +132,19 @@ export function CaseStudySectionNav({
     return () => observer.disconnect()
   }, [sections, intersectionOffset])
 
+  React.useEffect(() => {
+    if (!listRef.current || !activeSection) return
+    const safe = escapeSelector(activeSection)
+    const activeItem = listRef.current.querySelector<HTMLElement>(`[data-section-id="${safe}"]`)
+    if (!activeItem) return
+
+    activeItem.scrollIntoView({
+      behavior: prefersReducedMotion() ? "auto" : "smooth",
+      block: "nearest",
+      inline: "center",
+    })
+  }, [activeSection])
+
   const scrollTo = React.useCallback((id: string) => {
     const el = findSectionTarget(id)
     if (!el) return
@@ -148,13 +164,22 @@ export function CaseStudySectionNav({
       )}
     >
       <div className={cn("container mx-auto px-4 md:px-6", containerClassName)}>
-        <div className="flex items-center gap-2 py-3">
+        <div className="flex flex-col gap-2 py-3 lg:flex-row lg:items-center">
           <div className="lg:hidden">
             <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
               <SheetTrigger asChild>
-                <Button variant="outline" size="sm" className="rounded-full">
-                  <BookOpen className="h-4 w-4" />
-                  contents
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="w-full justify-between rounded-full px-4 lowercase"
+                >
+                  <span className="flex items-center gap-2 text-neutral-600">
+                    <BookOpen className="h-4 w-4" />
+                    jump to
+                  </span>
+                  <span className="max-w-[55%] truncate font-medium text-neutral-900">
+                    {activeLabel}
+                  </span>
                 </Button>
               </SheetTrigger>
               <SheetContent side="bottom" className="rounded-t-2xl">
@@ -184,36 +209,37 @@ export function CaseStudySectionNav({
             </Sheet>
           </div>
 
-          <ScrollArea className="w-full">
-            <div className="w-max py-0.5">
-              <ToggleGroup
-                type="single"
-                value={activeSection}
-                onValueChange={(next) => {
-                  if (!next) return
-                  scrollTo(next)
-                }}
-                variant="outline"
-                size="sm"
-                wrap={false}
-                className="justify-start"
-                aria-label={ariaLabel}
-              >
-                {sections.map((section) => (
-                  <ToggleGroupItem
-                    key={section.id}
-                    value={section.id}
-                    className="rounded-full border-neutral-200 bg-background px-4 lowercase data-[state=on]:border-neutral-900 data-[state=on]:bg-neutral-900 data-[state=on]:text-white"
-                  >
-                    {section.label}
-                  </ToggleGroupItem>
-                ))}
-              </ToggleGroup>
-            </div>
-          </ScrollArea>
+          <div
+            ref={listRef}
+            className="-mx-4 overflow-x-auto px-4 scrollbar-hide scroll-smooth motion-reduce:scroll-auto lg:mx-0 lg:px-0"
+          >
+            <ToggleGroup
+              type="single"
+              value={activeSection}
+              onValueChange={(next) => {
+                if (!next) return
+                scrollTo(next)
+              }}
+              variant="outline"
+              size="sm"
+              wrap={false}
+              className="w-max justify-start gap-2"
+              aria-label={ariaLabel}
+            >
+              {sections.map((section) => (
+                <ToggleGroupItem
+                  key={section.id}
+                  value={section.id}
+                  data-section-id={section.id}
+                  className="rounded-full border-neutral-200 bg-background px-3 lowercase data-[state=on]:border-neutral-900 data-[state=on]:bg-neutral-900 data-[state=on]:text-white sm:px-4"
+                >
+                  {section.label}
+                </ToggleGroupItem>
+              ))}
+            </ToggleGroup>
+          </div>
         </div>
       </div>
     </div>
   )
 }
-
