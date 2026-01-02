@@ -9,8 +9,8 @@ const BOOK_DEMO_SRC = "https://calendar.notion.so/meet/enzosison/oj1fm4o2p"
 // Measured scheduler heights to prevent inner iframe scrollbars at each width band.
 const FRAME_HEIGHTS = [
   { minWidth: 1024, height: 776 },
-  { minWidth: 820, height: 906 },
-  { minWidth: 0, height: 1303 },
+  { minWidth: 770, height: 1027 },
+  { minWidth: 0, height: 1925 },
 ]
 
 const HEIGHT_BUFFER = 8
