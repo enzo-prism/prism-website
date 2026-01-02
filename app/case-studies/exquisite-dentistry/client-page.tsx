@@ -4,6 +4,7 @@ import Footer from "@/components/footer"
 import { CaseStudySchema } from "@/components/schema-markup"
 import SocialShare from "@/components/social-share"
 import dynamic from "next/dynamic"
+import Image from "next/image"
 
 const Navbar = dynamic(() => import("@/components/navbar"), { ssr: false })
 const EXQUISITE_SITE = "https://exquisitedentistryla.com/?utm_source=chatgpt.com"
@@ -130,6 +131,55 @@ export default function ExquisiteDentistryCaseStudy() {
             </ul>
             <p>When tracking is messy, you end up guessing.</p>
             <p>And guessing is expensive.</p>
+            <figure className="not-prose my-6 rounded-2xl border border-neutral-200 bg-white p-3 shadow-sm">
+              <Image
+                src="https://res.cloudinary.com/dhqpqfw6w/image/upload/v1767372937/keyword-tracking-semrush_m3aql3.png"
+                alt="Keyword tracking performance in Semrush for Exquisite Dentistry"
+                width={1973}
+                height={1235}
+                className="h-auto w-full rounded-xl"
+                sizes="(min-width: 1024px) 768px, 100vw"
+              />
+              <figcaption className="mt-3 text-xs font-semibold uppercase tracking-[0.28em] text-neutral-500">
+                keyword tracking momentum
+              </figcaption>
+            </figure>
+            <hr />
+
+            <h2>Competitor Analysis</h2>
+            <p>We mapped the competitive landscape to understand what was outranking Exquisite Dentistry and why.</p>
+            <p>That let us prioritize the fastest visibility gains without risking the legacy SEO equity.</p>
+            <figure className="not-prose my-6 rounded-2xl border border-neutral-200 bg-white p-3 shadow-sm">
+              <Image
+                src="https://res.cloudinary.com/dhqpqfw6w/image/upload/v1767373072/seo-competitor-analysis_o3w4ks.png"
+                alt="SEO competitor analysis for Exquisite Dentistry"
+                width={1002}
+                height={384}
+                className="h-auto w-full rounded-xl"
+                sizes="(min-width: 1024px) 768px, 100vw"
+              />
+              <figcaption className="mt-3 text-xs font-semibold uppercase tracking-[0.28em] text-neutral-500">
+                competitor visibility map
+              </figcaption>
+            </figure>
+            <hr />
+
+            <h2>Toxic Backlink Audit</h2>
+            <p>We audited the backlink profile to isolate risky links and confirm which signals were safe to keep.</p>
+            <p>This protects rankings while we build higher-quality authority over time.</p>
+            <figure className="not-prose my-6 rounded-2xl border border-neutral-200 bg-white p-3 shadow-sm">
+              <Image
+                src="https://res.cloudinary.com/dhqpqfw6w/image/upload/v1767373231/seo-toxic-backlink-audit_audrut.webp"
+                alt="Toxic backlink audit for Exquisite Dentistry"
+                width={762}
+                height={481}
+                className="h-auto w-full rounded-xl"
+                sizes="(min-width: 1024px) 768px, 100vw"
+              />
+              <figcaption className="mt-3 text-xs font-semibold uppercase tracking-[0.28em] text-neutral-500">
+                toxic backlink audit
+              </figcaption>
+            </figure>
             <hr />
 
             <h2>Prism’s Approach: Don’t Swing the Wrecking Ball First</h2>

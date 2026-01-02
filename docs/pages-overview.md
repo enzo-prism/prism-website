@@ -89,6 +89,11 @@ Each uses card-based layouts: confirmation message + kickoff-call CTA + contact 
 - Includes a dental-focused `ServiceSchema` plus FAQ structured data (via `FAQSection`) to help search engines understand the offer.
 - Supporting dentist SEO guides live in `content/blog/` (e.g., `/blog/dental-seo-guide`, `/blog/dental-practice-rank-higher-google-search`, `/blog/ai-search-for-dental-practice`).
 
+## SEO Overview (`app/seo/page.tsx`)
+
+- Core SEO overview page (hero, founder VSL, scoring framework, on/off-page previews, packages, and audit CTA).
+- Search Console, keyword tracking, competitor analysis, and toxic backlink audit visuals use the expandable image pattern in `components/seo/seo-expandable-image.tsx` so visitors can zoom into charts.
+
 ## SEO Audit Service (`app/seo/audit/page.tsx`)
 
 - SEO audit service landing page targeting “seo audit service” intent.

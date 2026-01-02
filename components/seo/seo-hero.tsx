@@ -1,4 +1,5 @@
 import Link from "next/link"
+import Image from "next/image"
 
 import { cn } from "@/lib/utils"
 
@@ -10,9 +11,21 @@ export type SeoHeroProps = {
   primaryCta?: { label: string; href: string }
   secondaryCta?: { label: string; href: string }
   className?: string
+  iconSrc?: string
+  iconAlt?: string
 }
 
-export function SeoHero({ eyebrow, title, subtitle, kicker, primaryCta, secondaryCta, className }: SeoHeroProps) {
+export function SeoHero({
+  eyebrow,
+  title,
+  subtitle,
+  kicker,
+  primaryCta,
+  secondaryCta,
+  className,
+  iconSrc,
+  iconAlt,
+}: SeoHeroProps) {
   return (
     <section
       className={cn(
@@ -23,6 +36,18 @@ export function SeoHero({ eyebrow, title, subtitle, kicker, primaryCta, secondar
     >
       <div className="relative">
         <div className="container mx-auto max-w-5xl px-4 py-20 text-center sm:py-24 md:px-6 md:py-28">
+          {iconSrc ? (
+            <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center overflow-hidden rounded-2xl bg-white/95 p-2 shadow-sm ring-1 ring-white/20">
+              <Image
+                src={iconSrc}
+                alt={iconAlt ?? ""}
+                width={40}
+                height={40}
+                priority
+                className="h-10 w-10 object-contain"
+              />
+            </div>
+          ) : null}
           <p className="text-xs font-semibold uppercase tracking-[0.35em] text-white/70">{eyebrow}</p>
           <h1 className="mt-5 text-4xl font-semibold lowercase tracking-tight sm:text-5xl md:text-6xl">{title}</h1>
           <p className="mt-5 text-base text-white/80 sm:text-lg">{subtitle}</p>

@@ -1,8 +1,8 @@
 import Link from "next/link"
 import type { Metadata } from "next"
-import Image from "next/image"
 
 import { SeoHero } from "@/components/seo/seo-hero"
+import { SeoExpandableImage } from "@/components/seo/seo-expandable-image"
 import { SeoSection } from "@/components/seo/seo-section"
 import { seoOverviewContent } from "@/content/seo"
 import { ServiceSchema } from "@/components/schema-markup"
@@ -56,7 +56,11 @@ export default async function SeoPage() {
 
   return (
     <>
-      <SeoHero {...hero} />
+      <SeoHero
+        {...hero}
+        iconSrc="https://res.cloudinary.com/dhqpqfw6w/image/upload/v1767371606/Google_Search_Icon_1_rclfuu.webp"
+        iconAlt="Google Search icon"
+      />
       <section className="px-4 py-16 sm:py-20">
         <div id="seo-founder-vsl" className="mx-auto max-w-3xl text-left">
           <p className="text-center text-xs font-semibold uppercase tracking-[0.28em] text-neutral-400">hear from our founder</p>
@@ -81,6 +85,37 @@ export default async function SeoPage() {
               creatorName: "Enzo Sison",
             }}
           />
+        </div>
+      </section>
+
+      <section className="px-4 pb-16 sm:pb-20">
+        <div className="container mx-auto max-w-5xl space-y-6">
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            <SeoExpandableImage
+              src="https://res.cloudinary.com/dhqpqfw6w/image/upload/v1767372608/search-console-details_omzokl.webp"
+              alt="Search Console performance detail screenshot"
+              width={1975}
+              height={1237}
+              caption="search console performance"
+              sizes="(min-width: 1024px) 320px, (min-width: 768px) 360px, 100vw"
+            />
+            <SeoExpandableImage
+              src="https://res.cloudinary.com/dhqpqfw6w/image/upload/v1767372937/keyword-tracking-semrush_m3aql3.png"
+              alt="Keyword tracking performance in Semrush"
+              width={1973}
+              height={1235}
+              caption="keyword tracking momentum"
+              sizes="(min-width: 1024px) 320px, (min-width: 768px) 360px, 100vw"
+            />
+            <SeoExpandableImage
+              src="https://res.cloudinary.com/dhqpqfw6w/image/upload/v1767372936/search-console-details-prism_ffjk5v.png"
+              alt="Search Console performance detail for Prism"
+              width={1970}
+              height={1234}
+              caption="search console detail"
+              sizes="(min-width: 1024px) 320px, (min-width: 768px) 360px, 100vw"
+            />
+          </div>
         </div>
       </section>
 
@@ -117,14 +152,76 @@ export default async function SeoPage() {
         </div>
       </SeoSection>
 
+      <SeoSection
+        eyebrow="competitive analysis"
+        title="know exactly where you stand"
+        description="we map the rankings, content depth, and trust signals your competitors use so we can close the gaps fast."
+      >
+        <div className="grid gap-6 md:grid-cols-[1.1fr_0.9fr] md:items-center">
+          <ul className="space-y-3 text-sm text-neutral-700">
+            <li className="flex gap-3">
+              <span className="mt-2 h-1.5 w-1.5 rounded-full bg-neutral-900" aria-hidden />
+              <span>see who owns the top spots for your highest-intent searches</span>
+            </li>
+            <li className="flex gap-3">
+              <span className="mt-2 h-1.5 w-1.5 rounded-full bg-neutral-900" aria-hidden />
+              <span>identify the exact pages, links, and listings fueling their visibility</span>
+            </li>
+            <li className="flex gap-3">
+              <span className="mt-2 h-1.5 w-1.5 rounded-full bg-neutral-900" aria-hidden />
+              <span>prioritize the fastest wins for the next 30-90 days</span>
+            </li>
+          </ul>
+          <SeoExpandableImage
+            src="https://res.cloudinary.com/dhqpqfw6w/image/upload/v1767373072/seo-competitor-analysis_o3w4ks.png"
+            alt="SEO competitor analysis overview"
+            width={1002}
+            height={384}
+            caption="competitor visibility map"
+            sizes="(min-width: 1024px) 420px, 100vw"
+          />
+        </div>
+      </SeoSection>
+
+      <SeoSection
+        eyebrow="toxic backlink audit"
+        title="clean up links that hurt rankings"
+        description="we surface spammy, irrelevant, or risky backlinks and build a clear cleanup plan so your authority stays intact."
+      >
+        <div className="grid gap-6 md:grid-cols-[0.9fr_1.1fr] md:items-center">
+          <SeoExpandableImage
+            src="https://res.cloudinary.com/dhqpqfw6w/image/upload/v1767373231/seo-toxic-backlink-audit_audrut.webp"
+            alt="Toxic backlink audit overview"
+            width={762}
+            height={481}
+            caption="toxic link risk audit"
+            sizes="(min-width: 1024px) 420px, 100vw"
+          />
+          <ul className="space-y-3 text-sm text-neutral-700">
+            <li className="flex gap-3">
+              <span className="mt-2 h-1.5 w-1.5 rounded-full bg-neutral-900" aria-hidden />
+              <span>flag suspicious domains, link networks, and spam patterns</span>
+            </li>
+            <li className="flex gap-3">
+              <span className="mt-2 h-1.5 w-1.5 rounded-full bg-neutral-900" aria-hidden />
+              <span>separate harmless noise from links that can suppress rankings</span>
+            </li>
+            <li className="flex gap-3">
+              <span className="mt-2 h-1.5 w-1.5 rounded-full bg-neutral-900" aria-hidden />
+              <span>deliver a remediation plan (cleanup, disavow, or rebuild)</span>
+            </li>
+          </ul>
+        </div>
+      </SeoSection>
+
       <section className="bg-white px-4 py-16 sm:py-20">
-        <div className="mx-auto max-w-5xl overflow-hidden rounded-3xl border border-neutral-200 shadow-sm">
-          <Image
+        <div className="mx-auto max-w-5xl">
+          <SeoExpandableImage
             src="https://res.cloudinary.com/dhqpqfw6w/image/upload/v1765246263/Gemini_Generated_Image_c2hnwfc2hnwfc2hn_kfn9if.webp"
             alt="SEO strategy infographic"
             width={2752}
             height={1536}
-            className="h-auto w-full"
+            padding="none"
             sizes="(min-width: 1024px) 1024px, 100vw"
           />
         </div>

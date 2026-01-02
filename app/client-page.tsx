@@ -18,6 +18,13 @@ import {
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel"
+import {
   Card,
   CardContent,
   CardDescription,
@@ -211,6 +218,52 @@ const ROADMAP_PHASES = [
   },
 ]
 
+const HERO_CLIENT_ICONS = [
+  { src: "/google-logo.png", alt: "Google logo" },
+  { src: "/icons/tiktok-icon.svg", alt: "TikTok logo" },
+  {
+    src: "https://res.cloudinary.com/dhqpqfw6w/image/upload/v1766512757/Instagram_logo_2016.svg_grfivn.webp",
+    alt: "Instagram logo",
+  },
+  { src: "/icons/chatgpt-4.svg", alt: "ChatGPT logo" },
+  {
+    src: "https://res.cloudinary.com/dhqpqfw6w/image/upload/v1766513009/gemini-color_lijrgt.webp",
+    alt: "Gemini logo",
+  },
+  {
+    src: "https://res.cloudinary.com/dhqpqfw6w/image/upload/v1766512757/YouTube_full-color_icon__2017.svg_yr4kgz.webp",
+    alt: "YouTube logo",
+  },
+  {
+    src: "https://res.cloudinary.com/dhqpqfw6w/image/upload/v1766512757/Twitter-X-Logo-vector-svg-cricut_1024x_uztyun.webp",
+    alt: "X logo",
+  },
+]
+
+const HERO_SEARCH_CONSOLE_SLIDES = [
+  {
+    src: "https://res.cloudinary.com/dhqpqfw6w/image/upload/v1767370938/Google-search-olympic-bootworks_issxqh.webp",
+    alt: "Google Search Console growth for Olympic Bootworks",
+    width: 498,
+    height: 667,
+  },
+  {
+    src: "https://res.cloudinary.com/dhqpqfw6w/image/upload/v1767370938/Google-search_lwg9un.webp",
+    alt: "Google Search Console growth for a Prism client",
+    width: 495,
+    height: 666,
+  },
+  {
+    src: "https://res.cloudinary.com/dhqpqfw6w/image/upload/v1767372191/LV-google-search_pyr1sx.webp",
+    alt: "Google Search Console growth for a Prism client in Las Vegas",
+    width: 496,
+    height: 667,
+  },
+]
+
+const HERO_SEARCH_ICON =
+  "https://res.cloudinary.com/dhqpqfw6w/image/upload/v1767371606/Google_Search_Icon_1_rclfuu.webp"
+
 export default function ClientPage() {
   return (
     <div className="flex min-h-screen flex-col bg-background">
@@ -234,6 +287,27 @@ export default function ClientPage() {
                     More exposure • More customers • Higher customer LTV
                   </CardContent>
                 </Card>
+                <div className="space-y-3">
+                  <p className="text-xs font-semibold uppercase tracking-[0.28em] text-muted-foreground">
+                    get more clients from
+                  </p>
+                  <div className="flex flex-wrap items-center gap-2">
+                    {HERO_CLIENT_ICONS.map((icon) => (
+                      <div
+                        key={icon.src}
+                        className="flex h-10 w-10 items-center justify-center rounded-full border border-border/60 bg-background"
+                      >
+                        <Image
+                          src={icon.src}
+                          alt={icon.alt}
+                          width={20}
+                          height={20}
+                          className="h-5 w-5 object-contain"
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
               <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
                 <Button
@@ -262,31 +336,61 @@ export default function ClientPage() {
             </div>
 
             <div>
-              <div className="relative mx-auto w-full max-w-[240px] sm:max-w-[280px] lg:max-w-[300px]">
+              <div className="relative mx-auto w-full max-w-[520px]">
                 <div className="pointer-events-none absolute -left-10 -top-10 h-32 w-32 rounded-full bg-muted/70 blur-2xl" />
-                <Card className="relative overflow-hidden border-border/70 bg-card shadow-2xl">
-                  <div className="relative aspect-[4/5] sm:aspect-[3/4] lg:aspect-[4/5]">
-                    <Image
-                      src="https://res.cloudinary.com/dhqpqfw6w/image/upload/v1766510261/Enzo-headshot_p4y1kn.webp"
-                      alt="Enzo Sison headshot"
-                      fill
-                      priority
-                      sizes="(min-width: 1024px) 340px, (min-width: 640px) 320px, 280px"
-                      className="object-cover object-top"
-                    />
+                <div className="space-y-3">
+                  <div className="flex flex-wrap items-center justify-between gap-2">
+                    <Badge variant="secondary" className="w-fit">
+                      recent client results
+                    </Badge>
+                    <span className="text-xs font-medium text-muted-foreground">
+                      Search Console growth snapshots
+                    </span>
                   </div>
-                  <div className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-border/50" />
-                  <div className="absolute bottom-4 left-4 sm:bottom-6 sm:left-6">
-                    <Card className="w-fit border-border/30 bg-neutral-950/80 text-white backdrop-blur">
-                      <CardContent className="p-3">
-                        <Badge variant="secondary" className="w-fit bg-white/20 text-white hover:bg-white/30">
-                          Founder
-                        </Badge>
-                        <p className="mt-2 text-base font-semibold text-white">Enzo Sison</p>
-                      </CardContent>
-                    </Card>
-                  </div>
-                </Card>
+                  <Carousel opts={{ align: "start", loop: true }} className="relative overflow-visible">
+                    <CarouselContent className="-ml-2">
+                      {HERO_SEARCH_CONSOLE_SLIDES.map((slide, index) => (
+                        <CarouselItem key={slide.src} className="pl-2">
+                          <div className="space-y-2">
+                            <div
+                              className="relative w-full overflow-hidden rounded-xl border border-border/60 bg-white"
+                              style={{ aspectRatio: `${slide.width} / ${slide.height}` }}
+                            >
+                              <Image
+                                src={slide.src}
+                                alt={slide.alt}
+                                fill
+                                priority={index === 0}
+                                sizes="(min-width: 1024px) 520px, (min-width: 640px) 460px, 92vw"
+                                className="object-contain"
+                              />
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <Image
+                                src={HERO_SEARCH_ICON}
+                                alt="Google Search icon"
+                                width={20}
+                                height={20}
+                                className="h-5 w-5"
+                              />
+                              <span className="text-xs text-muted-foreground sm:text-sm">
+                                we make Google love your business with SEO (Search Engine Optimization)
+                              </span>
+                            </div>
+                          </div>
+                        </CarouselItem>
+                      ))}
+                    </CarouselContent>
+                    <CarouselPrevious className="-left-3 top-1/2 h-7 w-7 -translate-y-1/2 border-border/60 bg-background/90 shadow-sm backdrop-blur hover:bg-background sm:-left-4 sm:h-8 sm:w-8" />
+                    <CarouselNext className="-right-3 top-1/2 h-7 w-7 -translate-y-1/2 border-border/60 bg-background/90 shadow-sm backdrop-blur hover:bg-background sm:-right-4 sm:h-8 sm:w-8" />
+                  </Carousel>
+                  <Link
+                    href="/seo"
+                    className="inline-flex text-sm font-medium text-muted-foreground underline decoration-border/70 underline-offset-4 transition-colors hover:text-foreground hover:decoration-border"
+                  >
+                    learn more about prism's seo services
+                  </Link>
+                </div>
               </div>
             </div>
           </div>

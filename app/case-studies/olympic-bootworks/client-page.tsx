@@ -4,6 +4,7 @@ import Footer from "@/components/footer"
 import { CaseStudySchema } from "@/components/schema-markup"
 import SocialShare from "@/components/social-share"
 import dynamic from "next/dynamic"
+import Image from "next/image"
 import Link from "next/link"
 
 const Navbar = dynamic(() => import("@/components/navbar"), { ssr: false })
@@ -361,6 +362,19 @@ export default function OlympicBootworksCaseStudy() {
             <a id="outcomes" />
             <h2>Outcomes</h2>
             <p>This is a qualitative case study, but the directional impact is clear:</p>
+            <div className="not-prose my-6 rounded-2xl border border-neutral-200 bg-white p-3 shadow-sm">
+              <Image
+                src="https://res.cloudinary.com/dhqpqfw6w/image/upload/v1767372608/search-console-details_omzokl.webp"
+                alt="Search Console performance detail for Olympic Bootworks"
+                width={1975}
+                height={1237}
+                className="h-auto w-full rounded-xl"
+                sizes="(min-width: 1024px) 768px, 100vw"
+              />
+              <p className="mt-3 text-xs font-semibold uppercase tracking-[0.28em] text-neutral-500">
+                search console performance snapshot
+              </p>
+            </div>
             <ul>
               <li>
                 <strong>Traffic, search impressions, and online engagement compounded over time</strong>
