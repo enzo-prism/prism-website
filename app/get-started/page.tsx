@@ -10,7 +10,7 @@ import VideoPlayer from "@/components/video-player"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent } from "@/components/ui/card"
 
 type FAQBlock =
   | { type: "paragraph"; content: ReactNode }
@@ -213,22 +213,20 @@ export default function GetStartedPage() {
 
         <section id="book-call" className="py-16 sm:py-24 bg-muted/30">
           <div className="container mx-auto px-4 sm:px-6">
-            <Card className="border-border/60 bg-card/95 shadow-lg">
-              <CardHeader className="space-y-3">
-                <Badge variant="secondary" className="w-fit">
-                  Book a demo
-                </Badge>
-                <CardTitle className="text-balance text-3xl font-semibold text-foreground sm:text-4xl">
-                  Learn More about the Online Presence Transformation Program
-                </CardTitle>
-                <p className="text-base text-muted-foreground">
-                  Meet the team behind the transformations
-                </p>
-              </CardHeader>
-              <CardContent>
-                <BookDemoEmbed />
-              </CardContent>
-            </Card>
+            <div className="mx-auto flex max-w-4xl flex-col gap-3 sm:gap-4">
+              <Badge variant="secondary" className="w-fit">
+                Book a demo
+              </Badge>
+              <h2 className="text-balance text-3xl font-semibold text-foreground sm:text-4xl">
+                Learn More about the Online Presence Transformation Program
+              </h2>
+              <p className="text-base text-muted-foreground">
+                Meet the team behind the transformations
+              </p>
+            </div>
+            <div className="mt-8 -mx-4 sm:mx-0">
+              <BookDemoEmbed className="sm:mx-auto sm:max-w-4xl" />
+            </div>
           </div>
         </section>
 
