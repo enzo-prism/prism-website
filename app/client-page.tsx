@@ -271,8 +271,6 @@ export default function ClientPage() {
       <Navbar />
       <main className="flex-1">
         <section className="relative overflow-hidden py-16 sm:py-24 bg-background">
-          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-muted/50 via-background to-background" />
-          <div className="pointer-events-none absolute -right-24 top-16 h-80 w-80 rounded-full bg-primary/10 blur-3xl" />
           <div className="container relative grid mx-auto gap-12 px-4 sm:px-6 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)] lg:items-center">
             <div className="space-y-6">
               <div className="space-y-4">
@@ -337,7 +335,6 @@ export default function ClientPage() {
 
             <div>
               <div className="relative mx-auto w-full max-w-[520px]">
-                <div className="pointer-events-none absolute -left-10 -top-10 h-32 w-32 rounded-full bg-muted/70 blur-2xl" />
                 <div className="space-y-3">
                   <div className="flex flex-wrap items-center justify-between gap-2">
                     <Badge variant="secondary" className="w-fit">
@@ -448,7 +445,6 @@ export default function ClientPage() {
         </section>
 
         <section className="relative overflow-hidden py-16 sm:py-24 bg-muted/30">
-          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_bottom,_var(--tw-gradient-stops))] from-muted/60 via-transparent to-transparent" />
           <div className="container relative flex flex-col mx-auto gap-10 px-4 sm:px-6">
             <div className="flex flex-col items-center gap-3 text-center">
               <Badge variant="secondary" className="w-fit">
@@ -549,7 +545,6 @@ export default function ClientPage() {
         </section>
 
         <section className="relative overflow-hidden py-16 sm:py-24 bg-muted/30">
-          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,_var(--tw-gradient-stops))] from-muted/70 via-transparent to-transparent" />
           <div className="container relative mx-auto px-4 sm:px-6">
             <Card className="overflow-hidden border-border/60 bg-card/90">
               <CardHeader className="flex flex-col gap-4 sm:flex-row sm:items-center">
@@ -588,8 +583,6 @@ export default function ClientPage() {
         </section>
 
         <section className="relative overflow-hidden py-16 sm:py-24 bg-background">
-          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-muted/50 via-transparent to-transparent" />
-          <div className="pointer-events-none absolute -bottom-24 left-1/2 h-56 w-56 -translate-x-1/2 rounded-full bg-primary/10 blur-3xl" />
           <div className="container mx-auto px-4 sm:px-6">
             <Card className="overflow-hidden rounded-3xl border-border/60 bg-card/95 shadow-lg">
               <div className="grid gap-10 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)]">

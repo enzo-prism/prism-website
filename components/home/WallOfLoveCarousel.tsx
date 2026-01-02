@@ -85,7 +85,6 @@ export default function WallOfLoveCarousel({
 
   return (
     <section className="relative overflow-hidden py-16 sm:py-24 bg-muted/30">
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-muted/50 via-transparent to-transparent" />
       <div className="container relative flex flex-col mx-auto gap-10 px-4 sm:px-6">
         <div className="flex flex-col items-center gap-4 text-center">
           {showEyebrow ? (
