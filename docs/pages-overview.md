@@ -52,7 +52,7 @@ Quick reference for the pages we edit most often.
 ## Homepage (`app/client-page.tsx`)
 - The hero proof strip uses `HeroReviewSliderCard` (`components/home/HeroReviewSliderCard.tsx`) with two curated quotes and the “250+ more” CTA kept above the fold.
 - Hero copy, service strip, and CTAs live in `app/client-page.tsx` with CTA tracking in `components/home/HeroCtas.tsx`.
-- The hero Search Console snapshots are a native scroll-snap rail (no Embla) inside `app/client-page.tsx`; keep it touch-first and JS-light.
+- The hero Search Console snapshots are a native scroll-snap rail (no Embla) inside `app/client-page.tsx`; keep it touch-first and JS-light, with subtle dot indicators under the rail.
 - The Apps developed by Prism section (tools cards + outbound links) lives under the hero and above the training section.
 - Testimonial copy for the proof strip lives in `content/wall-of-love-data.tsx`; adjust `HERO_PRIORITY_IDS` to control the surfaced quotes.
 - The impact graph section below the hero is `components/home/ImpactGraphSection.tsx`, which lazy-mounts `FounderImpactGraph` so Recharts only loads when near the viewport.

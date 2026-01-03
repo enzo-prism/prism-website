@@ -376,6 +376,14 @@ export default function ClientPage() {
                     ))}
                     <span className="sr-only">Swipe horizontally to view more growth snapshots</span>
                   </div>
+                  <div className="flex items-center justify-center gap-2" aria-hidden="true">
+                    {HERO_SEARCH_CONSOLE_SLIDES.map((slide) => (
+                      <span
+                        key={slide.src}
+                        className="h-1.5 w-1.5 rounded-full bg-muted-foreground/30"
+                      />
+                    ))}
+                  </div>
                   <Link
                     href="/seo"
                     className="inline-flex text-sm font-medium text-muted-foreground underline decoration-border/70 underline-offset-4 transition-colors hover:text-foreground hover:decoration-border"
