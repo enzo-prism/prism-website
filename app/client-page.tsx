@@ -7,6 +7,7 @@ import LordIconScript from "@/components/LordIconScript"
 import Footer from "@/components/footer"
 import ScalingRoadmapForm from "@/components/forms/ScalingRoadmapForm"
 import WallOfLoveCarousel from "@/components/home/WallOfLoveCarousel"
+import SearchConsoleSnapshotsRail from "@/components/home/SearchConsoleSnapshotsRail"
 import LordIcon from "@/components/lord-icon"
 import Navbar from "@/components/navbar"
 import {
@@ -263,9 +264,9 @@ export default function ClientPage() {
       <LordIconScript />
       <Navbar />
       <main className="flex-1">
-        <section className="relative overflow-hidden py-16 sm:py-24 bg-background">
-          <div className="container relative grid mx-auto gap-16 px-4 sm:gap-12 sm:px-6 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)] lg:items-center">
-            <div className="space-y-6">
+        <section className="relative overflow-hidden bg-background pt-16 pb-8 sm:pt-24 sm:pb-6">
+          <div className="container relative mx-auto px-4 sm:px-6">
+            <div className="mx-auto max-w-2xl space-y-6 text-center lg:max-w-3xl">
               <div className="space-y-4">
                 <h1 className="text-balance text-4xl font-semibold tracking-tight text-foreground sm:text-5xl lg:text-6xl">
                   Looking to elevate your online presence?
@@ -274,15 +275,15 @@ export default function ClientPage() {
                   Done-for-you growth from a team that's driven millions of monthly impressions for 20+ businesses.
                 </p>
                 <Card className="border-border/60 bg-card/80">
-                  <CardContent className="p-4 text-sm font-semibold text-foreground">
+                  <CardContent className="p-4 text-sm font-semibold text-foreground text-center">
                     More exposure • More customers • Higher customer LTV
                   </CardContent>
                 </Card>
                 <div className="space-y-3">
-                  <p className="text-xs font-semibold uppercase tracking-[0.28em] text-muted-foreground">
+                  <p className="text-xs font-medium text-muted-foreground text-center">
                     get more clients from
                   </p>
-                  <div className="flex flex-wrap items-center gap-2">
+                  <div className="flex flex-wrap items-center justify-center gap-2">
                     {HERO_CLIENT_ICONS.map((icon) => (
                       <div
                         key={icon.src}
@@ -300,7 +301,7 @@ export default function ClientPage() {
                   </div>
                 </div>
               </div>
-              <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
+              <div className="flex flex-col items-center gap-3 sm:flex-row sm:flex-wrap sm:justify-center">
                 <Button
                   asChild
                   size="lg"
@@ -325,73 +326,59 @@ export default function ClientPage() {
                 </Button>
               </div>
             </div>
+          </div>
+        </section>
 
-            <div>
-              <div className="relative mx-auto w-full max-w-[520px]">
+        <section className="relative py-14 sm:py-20 bg-background">
+          <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(60%_60%_at_10%_0%,rgba(0,0,0,0.06),transparent_60%),radial-gradient(60%_60%_at_90%_20%,rgba(0,0,0,0.04),transparent_65%)]" />
+          <div className="container relative mx-auto px-4 sm:px-6">
+            <div className="grid grid-cols-1 gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,520px)] lg:items-start">
+              <div className="space-y-6 min-w-0">
                 <div className="space-y-3">
-                  <div className="flex flex-wrap items-center justify-between gap-2">
-                    <Badge variant="secondary" className="w-fit">
-                      recent client results
-                    </Badge>
-                    <span className="text-xs font-medium text-muted-foreground">
-                      Search Console growth snapshots
-                    </span>
-                  </div>
-                  <div
-                    className="flex snap-x snap-mandatory gap-2 overflow-x-auto scrollbar-hide"
-                    role="list"
-                    aria-label="Search Console growth snapshots"
-                    style={{ WebkitOverflowScrolling: "touch" }}
-                  >
-                    {HERO_SEARCH_CONSOLE_SLIDES.map((slide, index) => (
-                      <div key={slide.src} className="w-full shrink-0 snap-start" role="listitem">
-                        <div className="space-y-2">
-                          <div
-                            className="relative w-full overflow-hidden rounded-xl border border-border/60 bg-white"
-                            style={{ aspectRatio: `${slide.width} / ${slide.height}` }}
-                          >
-                            <Image
-                              src={slide.src}
-                              alt={slide.alt}
-                              fill
-                              priority={index === 0}
-                              sizes="(min-width: 1024px) 520px, (min-width: 640px) 460px, 92vw"
-                              className="object-contain"
-                            />
-                          </div>
-                          <div className="flex items-center gap-2">
-                            <Image
-                              src={HERO_SEARCH_ICON}
-                              alt="Google Search icon"
-                              width={20}
-                              height={20}
-                              className="h-5 w-5"
-                            />
-                            <span className="text-xs text-muted-foreground sm:text-sm">
-                              we make Google love your business with SEO (Search Engine Optimization)
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                    <span className="sr-only">Swipe horizontally to view more growth snapshots</span>
-                  </div>
-                  <div className="flex items-center justify-center gap-2" aria-hidden="true">
-                    {HERO_SEARCH_CONSOLE_SLIDES.map((slide) => (
-                      <span
-                        key={slide.src}
-                        className="h-1.5 w-1.5 rounded-full bg-muted-foreground/30"
-                      />
-                    ))}
-                  </div>
-                  <Link
-                    href="/seo"
-                    className="inline-flex text-sm font-medium text-muted-foreground underline decoration-border/70 underline-offset-4 transition-colors hover:text-foreground hover:decoration-border"
-                  >
-                    learn more about prism's seo services
-                  </Link>
+                  <Badge variant="secondary" className="w-fit">
+                    recent client results
+                  </Badge>
+                  <h2 className="text-balance break-words text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
+                    search visibility that compounds
+                  </h2>
+                  <p className="text-balance text-base text-muted-foreground sm:text-lg">
+                    Real Search Console snapshots across different industries, showing multi-month visibility trends.
+                  </p>
                 </div>
+                <div className="grid gap-3 sm:grid-cols-2">
+                  <div className="rounded-xl border border-border/60 px-4 py-3 bg-card/80 text-sm font-semibold text-foreground">
+                    multi-month growth windows
+                  </div>
+                  <div className="rounded-xl border border-border/60 px-4 py-3 bg-card/80 text-sm font-semibold text-foreground">
+                    higher-quality search visibility
+                  </div>
+                  <div className="rounded-xl border border-border/60 px-4 py-3 bg-card/80 text-sm font-semibold text-foreground">
+                    consistent impressions momentum
+                  </div>
+                  <div className="rounded-xl border border-border/60 px-4 py-3 bg-card/80 text-sm font-semibold text-foreground">
+                    local intent traffic wins
+                  </div>
+                </div>
+                <div className="flex flex-wrap items-center gap-3 text-xs text-muted-foreground">
+                  <span className="inline-flex items-center gap-2 rounded-full border border-border/60 px-3 py-1 bg-background text-xs font-semibold text-foreground">
+                    {HERO_SEARCH_CONSOLE_SLIDES.length} snapshots
+                  </span>
+                  <span className="text-xs font-medium text-muted-foreground">
+                    swipe to compare real client graphs
+                  </span>
+                </div>
+                <Link
+                  href="/seo"
+                  className="inline-flex text-sm font-medium text-muted-foreground underline decoration-border/70 underline-offset-4 transition-colors hover:text-foreground hover:decoration-border"
+                >
+                  learn more about prism's seo services
+                </Link>
               </div>
+
+              <SearchConsoleSnapshotsRail
+                slides={HERO_SEARCH_CONSOLE_SLIDES}
+                iconSrc={HERO_SEARCH_ICON}
+              />
             </div>
           </div>
         </section>

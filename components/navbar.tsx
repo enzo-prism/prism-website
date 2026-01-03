@@ -127,7 +127,7 @@ export default function Navbar() {
         caseStudyBreadcrumbs ? "" : "border-b"
       }`}
     >
-      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4">
+      <div className="container mx-auto flex h-16 items-center justify-between px-4 sm:px-6">
         <Link
           href="/"
           className="flex items-center rounded-lg transition-transform duration-150 hover:scale-[1.04]"
@@ -219,7 +219,7 @@ export default function Navbar() {
               </Button>
             </SheetTrigger>
             <SheetContent side="top" className="top-16 border-t border-b-0 p-0 shadow-sm">
-              <nav className="mx-auto flex max-w-6xl flex-col gap-2 px-4 py-4">
+              <nav className="container mx-auto flex flex-col gap-2 px-4 py-4 sm:px-6">
                 {navItems.map((item) => (
                   <div key={item.label} className="flex flex-col">
                     {item.href ? (
@@ -278,7 +278,7 @@ export default function Navbar() {
 
       {caseStudyBreadcrumbs ? (
         <div className="border-t bg-background/90 backdrop-blur supports-[backdrop-filter]:bg-background/70">
-          <div className="mx-auto max-w-6xl px-4 md:px-6">
+          <div className="container mx-auto px-4 sm:px-6">
             <Breadcrumbs items={caseStudyBreadcrumbs} className="py-2 mb-0" />
           </div>
         </div>
