@@ -264,7 +264,7 @@ export default function ClientPage() {
       <Navbar />
       <main className="flex-1">
         <section className="relative overflow-hidden py-16 sm:py-24 bg-background">
-          <div className="container relative grid mx-auto gap-12 px-4 sm:px-6 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)] lg:items-center">
+          <div className="container relative grid mx-auto gap-16 px-4 sm:gap-12 sm:px-6 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)] lg:items-center">
             <div className="space-y-6">
               <div className="space-y-4">
                 <h1 className="text-balance text-4xl font-semibold tracking-tight text-foreground sm:text-5xl lg:text-6xl">
