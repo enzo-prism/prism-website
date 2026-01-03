@@ -18,13 +18,6 @@ import {
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel"
-import {
   Card,
   CardContent,
   CardDescription,
@@ -344,43 +337,45 @@ export default function ClientPage() {
                       Search Console growth snapshots
                     </span>
                   </div>
-                  <Carousel opts={{ align: "start", loop: true, duration: 40 }} className="relative overflow-visible">
-                    <CarouselContent className="-ml-2">
-                      {HERO_SEARCH_CONSOLE_SLIDES.map((slide, index) => (
-                        <CarouselItem key={slide.src} className="pl-2">
-                          <div className="space-y-2">
-                            <div
-                              className="relative w-full overflow-hidden rounded-xl border border-border/60 bg-white"
-                              style={{ aspectRatio: `${slide.width} / ${slide.height}` }}
-                            >
-                              <Image
-                                src={slide.src}
-                                alt={slide.alt}
-                                fill
-                                priority={index === 0}
-                                sizes="(min-width: 1024px) 520px, (min-width: 640px) 460px, 92vw"
-                                className="object-contain"
-                              />
-                            </div>
-                            <div className="flex items-center gap-2">
-                              <Image
-                                src={HERO_SEARCH_ICON}
-                                alt="Google Search icon"
-                                width={20}
-                                height={20}
-                                className="h-5 w-5"
-                              />
-                              <span className="text-xs text-muted-foreground sm:text-sm">
-                                we make Google love your business with SEO (Search Engine Optimization)
-                              </span>
-                            </div>
+                  <div
+                    className="flex snap-x snap-mandatory gap-2 overflow-x-auto scrollbar-hide"
+                    role="list"
+                    aria-label="Search Console growth snapshots"
+                    style={{ WebkitOverflowScrolling: "touch" }}
+                  >
+                    {HERO_SEARCH_CONSOLE_SLIDES.map((slide, index) => (
+                      <div key={slide.src} className="w-full shrink-0 snap-start" role="listitem">
+                        <div className="space-y-2">
+                          <div
+                            className="relative w-full overflow-hidden rounded-xl border border-border/60 bg-white"
+                            style={{ aspectRatio: `${slide.width} / ${slide.height}` }}
+                          >
+                            <Image
+                              src={slide.src}
+                              alt={slide.alt}
+                              fill
+                              priority={index === 0}
+                              sizes="(min-width: 1024px) 520px, (min-width: 640px) 460px, 92vw"
+                              className="object-contain"
+                            />
                           </div>
-                        </CarouselItem>
-                      ))}
-                    </CarouselContent>
-                    <CarouselPrevious className="-left-3 top-1/2 h-7 w-7 -translate-y-1/2 border-border/60 bg-background/90 shadow-sm backdrop-blur hover:bg-background sm:-left-4 sm:h-8 sm:w-8" />
-                    <CarouselNext className="-right-3 top-1/2 h-7 w-7 -translate-y-1/2 border-border/60 bg-background/90 shadow-sm backdrop-blur hover:bg-background sm:-right-4 sm:h-8 sm:w-8" />
-                  </Carousel>
+                          <div className="flex items-center gap-2">
+                            <Image
+                              src={HERO_SEARCH_ICON}
+                              alt="Google Search icon"
+                              width={20}
+                              height={20}
+                              className="h-5 w-5"
+                            />
+                            <span className="text-xs text-muted-foreground sm:text-sm">
+                              we make Google love your business with SEO (Search Engine Optimization)
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                    <span className="sr-only">Swipe horizontally to view more growth snapshots</span>
+                  </div>
                   <Link
                     href="/seo"
                     className="inline-flex text-sm font-medium text-muted-foreground underline decoration-border/70 underline-offset-4 transition-colors hover:text-foreground hover:decoration-border"
