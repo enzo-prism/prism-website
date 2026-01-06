@@ -44,6 +44,7 @@ const footerSections: FooterSection[] = [
   {
     title: "Resources",
     items: [
+      { label: "Library", href: "/library" },
       { label: "Blog", href: "/blog" },
       { label: "Podcast", href: "/podcast" },
     ],

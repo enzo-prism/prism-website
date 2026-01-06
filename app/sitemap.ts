@@ -79,6 +79,7 @@ function segmentRoutes(base: string): StaticRouteInput[] {
     "local-listings",
     "case-studies",
     "blog",
+    "library",
     "about",
     "contact",
     "pricing",
