@@ -350,7 +350,7 @@ export default function ClientPage() {
                     search visibility that compounds
                   </h2>
                   <p className="text-balance text-base text-muted-foreground sm:text-lg">
-                    Real Search Console snapshots across different industries, showing multi-month visibility trends.
+                    prism clients show up more where customers are searching
                   </p>
                 </div>
                 <Link
