@@ -1,11 +1,11 @@
 import type { ReactNode } from "react"
 import Image from "next/image"
 import Link from "next/link"
-import { Calendar } from "lucide-react"
 
 import LordIconScript from "@/components/LordIconScript"
 import Footer from "@/components/footer"
 import ScalingRoadmapForm from "@/components/forms/ScalingRoadmapForm"
+import HeroBenefits from "@/components/home/HeroBenefits"
 import WallOfLoveCarousel from "@/components/home/WallOfLoveCarousel"
 import SearchConsoleSnapshotsRail from "@/components/home/SearchConsoleSnapshotsRail"
 import LordIcon from "@/components/lord-icon"
@@ -26,6 +26,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { PRISM_APPS } from "@/lib/software-apps"
 
 const TRAINING_COURSES = [
@@ -212,25 +213,35 @@ const ROADMAP_PHASES = [
   },
 ]
 
-const HERO_CLIENT_ICONS = [
-  { src: "/google-logo.png", alt: "Google logo" },
-  { src: "/icons/tiktok-icon.svg", alt: "TikTok logo" },
+type HeroClientIcon = {
+  src: string
+  alt: string
+  label: string
+}
+
+const HERO_CLIENT_ICONS: HeroClientIcon[] = [
+  { src: "/google-logo.png", alt: "Google logo", label: "Google Search" },
+  { src: "/icons/tiktok-icon.svg", alt: "TikTok logo", label: "TikTok" },
   {
     src: "https://res.cloudinary.com/dhqpqfw6w/image/upload/v1766512757/Instagram_logo_2016.svg_grfivn.webp",
     alt: "Instagram logo",
+    label: "Instagram",
   },
-  { src: "/icons/chatgpt-4.svg", alt: "ChatGPT logo" },
+  { src: "/icons/chatgpt-4.svg", alt: "ChatGPT logo", label: "ChatGPT" },
   {
     src: "https://res.cloudinary.com/dhqpqfw6w/image/upload/v1766513009/gemini-color_lijrgt.webp",
     alt: "Gemini logo",
+    label: "Google Gemini",
   },
   {
     src: "https://res.cloudinary.com/dhqpqfw6w/image/upload/v1766512757/YouTube_full-color_icon__2017.svg_yr4kgz.webp",
     alt: "YouTube logo",
+    label: "YouTube",
   },
   {
     src: "https://res.cloudinary.com/dhqpqfw6w/image/upload/v1766512757/Twitter-X-Logo-vector-svg-cricut_1024x_uztyun.webp",
     alt: "X logo",
+    label: "X (Twitter)",
   },
 ]
 
@@ -258,13 +269,18 @@ const HERO_SEARCH_CONSOLE_SLIDES = [
 const HERO_SEARCH_ICON =
   "https://res.cloudinary.com/dhqpqfw6w/image/upload/v1767371606/Google_Search_Icon_1_rclfuu.webp"
 
+const SECTION_SPACING =
+  "min-h-screen min-h-[100svh] py-24 sm:py-32 lg:py-40 xl:py-48"
+const HERO_SECTION_CLASSES =
+  "relative overflow-hidden bg-background min-h-screen min-h-[100svh] -mt-[var(--prism-header-height)] pt-[var(--prism-header-height)] pb-[var(--prism-header-height)] flex items-center"
+
 export default function ClientPage() {
   return (
     <div className="flex min-h-screen flex-col bg-background">
       <LordIconScript />
       <Navbar />
       <main className="flex-1">
-        <section className="relative overflow-hidden bg-background pt-16 pb-8 sm:pt-24 sm:pb-6">
+        <section className={HERO_SECTION_CLASSES}>
           <div className="container relative mx-auto px-4 sm:px-6">
             <div className="mx-auto max-w-2xl space-y-6 text-center lg:max-w-3xl">
               <div className="space-y-4">
@@ -274,32 +290,7 @@ export default function ClientPage() {
                 <p className="text-balance text-lg text-muted-foreground">
                   Done-for-you growth from a team that's driven millions of monthly impressions for 20+ businesses.
                 </p>
-                <Card className="border-border/60 bg-card/80">
-                  <CardContent className="p-4 text-sm font-semibold text-foreground text-center">
-                    More exposure • More customers • Higher customer LTV
-                  </CardContent>
-                </Card>
-                <div className="space-y-3">
-                  <p className="text-xs font-medium text-muted-foreground text-center">
-                    get more clients from
-                  </p>
-                  <div className="flex flex-wrap items-center justify-center gap-2">
-                    {HERO_CLIENT_ICONS.map((icon) => (
-                      <div
-                        key={icon.src}
-                        className="flex h-10 w-10 items-center justify-center rounded-full border border-border/60 bg-background"
-                      >
-                        <Image
-                          src={icon.src}
-                          alt={icon.alt}
-                          width={20}
-                          height={20}
-                          className="h-5 w-5 object-contain"
-                        />
-                      </div>
-                    ))}
-                  </div>
-                </div>
+                <HeroBenefits />
               </div>
               <div className="flex flex-col items-center gap-3 sm:flex-row sm:flex-wrap sm:justify-center">
                 <Button
@@ -309,63 +300,58 @@ export default function ClientPage() {
                 >
                   <Link href="/get-started">Elevate your Online Presence</Link>
                 </Button>
-                <Button
-                  asChild
-                  size="lg"
-                  variant="outline"
-                  className="w-full rounded-full transition-transform duration-200 ease-out hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0 sm:w-auto"
-                >
-                  <Link
-                    href="https://calendar.notion.so/meet/enzosison/oj1fm4o2p"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <Calendar aria-hidden="true" />
-                    Book a Demo
-                  </Link>
-                </Button>
+              </div>
+              <div className="space-y-3">
+                <p className="text-xs font-medium text-muted-foreground text-center">
+                  get more clients from
+                </p>
+                <div className="flex flex-wrap items-center justify-center gap-2">
+                  {HERO_CLIENT_ICONS.map((icon) => (
+                    <Popover key={icon.src}>
+                      <PopoverTrigger asChild aria-haspopup={true}>
+                        <button
+                          type="button"
+                          className="flex h-10 w-10 items-center justify-center rounded-full border border-border/60 bg-background focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                          aria-label={icon.label}
+                        >
+                          <Image
+                            src={icon.src}
+                            alt={icon.alt}
+                            width={20}
+                            height={20}
+                            className="h-5 w-5 object-contain"
+                          />
+                        </button>
+                      </PopoverTrigger>
+                      <PopoverContent
+                        side="top"
+                        align="center"
+                        sideOffset={8}
+                        role="tooltip"
+                        className="inline-flex w-auto items-center gap-0 rounded-md border border-border/60 bg-popover px-3 py-1.5 text-xs font-semibold text-popover-foreground shadow-md ring-0 whitespace-nowrap"
+                      >
+                        {icon.label}
+                      </PopoverContent>
+                    </Popover>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
         </section>
 
-        <section className="relative py-14 sm:py-20 bg-background">
+        <section className={`relative ${SECTION_SPACING} bg-background`}>
           <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(60%_60%_at_10%_0%,rgba(0,0,0,0.06),transparent_60%),radial-gradient(60%_60%_at_90%_20%,rgba(0,0,0,0.04),transparent_65%)]" />
           <div className="container relative mx-auto px-4 sm:px-6">
             <div className="grid grid-cols-1 gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,520px)] lg:items-start">
               <div className="space-y-6 min-w-0">
                 <div className="space-y-3">
-                  <Badge variant="secondary" className="w-fit">
-                    recent client results
-                  </Badge>
                   <h2 className="text-balance break-words text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
                     search visibility that compounds
                   </h2>
                   <p className="text-balance text-base text-muted-foreground sm:text-lg">
                     Real Search Console snapshots across different industries, showing multi-month visibility trends.
                   </p>
-                </div>
-                <div className="grid gap-3 sm:grid-cols-2">
-                  <div className="rounded-xl border border-border/60 px-4 py-3 bg-card/80 text-sm font-semibold text-foreground">
-                    multi-month growth windows
-                  </div>
-                  <div className="rounded-xl border border-border/60 px-4 py-3 bg-card/80 text-sm font-semibold text-foreground">
-                    higher-quality search visibility
-                  </div>
-                  <div className="rounded-xl border border-border/60 px-4 py-3 bg-card/80 text-sm font-semibold text-foreground">
-                    consistent impressions momentum
-                  </div>
-                  <div className="rounded-xl border border-border/60 px-4 py-3 bg-card/80 text-sm font-semibold text-foreground">
-                    local intent traffic wins
-                  </div>
-                </div>
-                <div className="flex flex-wrap items-center gap-3 text-xs text-muted-foreground">
-                  <span className="inline-flex items-center gap-2 rounded-full border border-border/60 px-3 py-1 bg-background text-xs font-semibold text-foreground">
-                    {HERO_SEARCH_CONSOLE_SLIDES.length} snapshots
-                  </span>
-                  <span className="text-xs font-medium text-muted-foreground">
-                    swipe to compare real client graphs
-                  </span>
                 </div>
                 <Link
                   href="/seo"
@@ -383,7 +369,7 @@ export default function ClientPage() {
           </div>
         </section>
 
-        <section className="py-16 sm:py-24 bg-background">
+        <section className={`${SECTION_SPACING} bg-background`}>
           <div className="container relative flex flex-col mx-auto gap-10 px-4 sm:px-6">
             <div className="flex flex-col items-center gap-3 text-center">
               <Badge variant="secondary" className="w-fit">
@@ -434,7 +420,7 @@ export default function ClientPage() {
           </div>
         </section>
 
-        <section className="relative overflow-hidden py-16 sm:py-24 bg-muted/30">
+        <section className={`relative overflow-hidden ${SECTION_SPACING} bg-muted/30`}>
           <div className="container relative flex flex-col mx-auto gap-10 px-4 sm:px-6">
             <div className="flex flex-col items-center gap-3 text-center">
               <Badge variant="secondary" className="w-fit">
@@ -490,7 +476,7 @@ export default function ClientPage() {
           </div>
         </section>
 
-        <section className="py-16 sm:py-24 bg-background">
+        <section className={`${SECTION_SPACING} bg-background`}>
           <div className="container flex flex-col mx-auto gap-10 px-4 sm:px-6">
             <div className="flex flex-col items-center gap-3 text-center">
               <Badge variant="secondary" className="w-fit">
@@ -534,7 +520,7 @@ export default function ClientPage() {
           </div>
         </section>
 
-        <section className="relative overflow-hidden py-16 sm:py-24 bg-muted/30">
+        <section className={`relative overflow-hidden ${SECTION_SPACING} bg-muted/30`}>
           <div className="container relative mx-auto px-4 sm:px-6">
             <Card className="overflow-hidden border-border/60 bg-card/90">
               <CardHeader className="flex flex-col gap-4 sm:flex-row sm:items-center">
@@ -572,7 +558,7 @@ export default function ClientPage() {
           </div>
         </section>
 
-        <section className="relative overflow-hidden py-16 sm:py-24 bg-background">
+        <section className={`relative overflow-hidden ${SECTION_SPACING} bg-background`}>
           <div className="container mx-auto px-4 sm:px-6">
             <Card className="overflow-hidden rounded-3xl border-border/60 bg-card/95 shadow-lg">
               <div className="grid gap-10 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)]">

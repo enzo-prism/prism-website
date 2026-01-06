@@ -84,7 +84,7 @@ export default function WallOfLoveCarousel({
   }, [])
 
   return (
-    <section className="relative overflow-hidden py-16 sm:py-24 bg-muted/30">
+    <section className="relative overflow-hidden min-h-screen min-h-[100svh] py-24 sm:py-32 lg:py-40 xl:py-48 bg-muted/30">
       <div className="container relative flex flex-col mx-auto gap-10 px-4 sm:px-6">
         <div className="flex flex-col items-center gap-4 text-center">
           {showEyebrow ? (
