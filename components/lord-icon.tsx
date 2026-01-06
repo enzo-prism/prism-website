@@ -6,6 +6,7 @@ type LordIconProps = HTMLAttributes<HTMLElement> & {
   src?: string
   trigger?: string
   delay?: string
+  state?: string
   colors?: string
 }
 
