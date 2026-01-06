@@ -64,11 +64,11 @@ Quick reference for the pages we edit most often.
 - The Wall of Love slider uses `components/home/WallOfLoveCarousel.tsx` and a native scroll-snap rail (no Embla); adjust the quote pool via `pinned` / `heroSpotlight` in `content/wall-of-love-data.tsx`.
 
 ## Prism Library (`app/library/page.tsx`)
-- Library search/sort/filter UI lives in `components/library/LibraryClient.tsx`; the list page intentionally avoids embeds.
+- Library layout (hero, featured post, and grid) lives in `components/library/LibraryClient.tsx`; the list page intentionally avoids embeds.
 - Data comes from `lib/library/getLibraryPosts.ts` and merges the `content/library/seed.ts` fallback with `content/library/editorial.ts` curation metadata.
 - Detail pages live at `app/library/[slug]/page.tsx` and handle TikTok oEmbed or Instagram iframe playback.
 - To curate a post, add an entry in `content/library/editorial.ts` keyed as `${platform}:${id}` with a speaker name and at least one takeaway (that's what marks a post as curated).
-- Add `tags` and a `group` for filtering; `featuredWeight` is optional if you want to bias the daily featured rotation.
+- Add `tags`, a `group`, and optional `featuredWeight` if you want to bias the daily featured rotation.
 - When API tokens are missing, the Library falls back to `content/library/seed.ts`.
 
 ## Thank-you routes
