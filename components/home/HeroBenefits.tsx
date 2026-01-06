@@ -47,6 +47,12 @@ const CUSTOMER_ICON_VARIANTS: BenefitIcon[] = [
     colors: "primary:#121331,secondary:#3080e8",
   },
   {
+    src: "https://cdn.lordicon.com/quequqsr.json",
+    trigger: "loop",
+    delay: "2000",
+    colors: "primary:#121331,secondary:#3080e8",
+  },
+  {
     src: "https://cdn.lordicon.com/ptilahwn.json",
     trigger: "loop",
     delay: "2000",
