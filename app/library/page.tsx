@@ -30,9 +30,6 @@ export default async function LibraryPage() {
         <section className="border-b border-border/60 py-10 md:py-14">
           <div className="container mx-auto px-4 md:px-6">
             <div className="max-w-3xl space-y-4">
-              <p className="text-xs font-semibold uppercase tracking-[0.3em] text-muted-foreground">
-                Prism Library
-              </p>
               <h1 className="text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
                 Prism Library
               </h1>

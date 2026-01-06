@@ -6,9 +6,6 @@ import Breadcrumbs from "@/components/breadcrumbs"
 import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
 import LibraryInstagramEmbed from "@/components/library/LibraryInstagramEmbed"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { getTikTokEmbedHtml } from "@/lib/library/embeds"
 import { getLibraryPosts } from "@/lib/library/getLibraryPosts"
 import type { LibraryPost } from "@/lib/library/types"
@@ -16,11 +13,6 @@ import type { LibraryPost } from "@/lib/library/types"
 interface PageProps {
   params: Promise<{ slug: string }>
 }
-
-const PLATFORM_LABELS = {
-  instagram: "Instagram",
-  tiktok: "TikTok",
-} as const
 
 const buildMetadata = (post: LibraryPost): Metadata => {
   const base = process.env.NEXT_PUBLIC_BASE_URL || "https://www.design-prism.com"
@@ -84,128 +76,119 @@ export default async function LibraryDetailPage({ params }: PageProps) {
           />
         </div>
 
-        <section className="py-10 md:py-14">
+        <section className="py-10 md:py-16">
           <div className="container mx-auto px-4 md:px-6">
-            <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,380px)]">
-              <div className="space-y-6">
-                <div className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
-                  <Badge variant="outline">{PLATFORM_LABELS[post.platform]}</Badge>
-                  {post.editorial?.group ? (
-                    <Badge variant="secondary">{post.editorial.group}</Badge>
-                  ) : null}
-                </div>
-                <div>
-                  <h1 className="text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
-                    {post.title}
-                  </h1>
-                  {post.editorial?.speaker?.name ? (
-                    <p className="mt-2 text-sm font-semibold text-muted-foreground">
-                      {post.editorial.speaker.name}
-                    </p>
-                  ) : null}
-                </div>
+            <div className="mx-auto max-w-3xl space-y-10">
+              <header className="space-y-3">
+                <h1 className="text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
+                  {post.title}
+                </h1>
+                {post.editorial?.speaker?.name ? (
+                  <p className="text-sm font-semibold text-muted-foreground">
+                    {post.editorial.speaker.name}
+                  </p>
+                ) : null}
+                {post.editorial?.speaker?.subtitle ? (
+                  <p className="text-sm text-muted-foreground">
+                    {post.editorial.speaker.subtitle}
+                  </p>
+                ) : null}
+              </header>
 
-                <div className="rounded-2xl border border-border/60 bg-card/95 p-4">
-                  {post.platform === "tiktok" ? (
-                    embedHtml ? (
-                      <div
-                        className="flex justify-center"
-                        dangerouslySetInnerHTML={{ __html: embedHtml }}
-                      />
-                    ) : (
-                      <div className="text-sm text-muted-foreground">
-                        Embed unavailable. Watch directly on TikTok.
-                      </div>
-                    )
-                  ) : (
-                    <LibraryInstagramEmbed
-                      permalink={post.permalink}
-                      title={post.title}
-                      thumbnailUrl={post.thumbnailUrl}
+              <div className="rounded-2xl border border-border/60 bg-card/95 p-4">
+                {post.platform === "tiktok" ? (
+                  embedHtml ? (
+                    <div
+                      className="flex justify-center"
+                      dangerouslySetInnerHTML={{ __html: embedHtml }}
                     />
+                  ) : (
+                    <div className="text-sm text-muted-foreground">
+                      Embed unavailable.{" "}
+                      <a
+                        href={post.permalink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="font-semibold text-foreground underline underline-offset-4"
+                      >
+                        Watch on TikTok
+                      </a>
+                    </div>
+                  )
+                ) : (
+                  <LibraryInstagramEmbed
+                    permalink={post.permalink}
+                    title={post.title}
+                  />
+                )}
+              </div>
+
+              <section className="space-y-6 text-sm text-muted-foreground">
+                <div className="space-y-2">
+                  <p className="text-xs font-semibold uppercase tracking-[0.3em] text-muted-foreground">
+                    Speaker
+                  </p>
+                  {post.editorial?.speaker ? (
+                    <div className="space-y-2">
+                      <p className="text-base font-semibold text-foreground">
+                        {post.editorial.speaker.name}
+                      </p>
+                      <p className="text-xs font-semibold uppercase tracking-[0.3em] text-muted-foreground">
+                        {post.editorial.speaker.type}
+                      </p>
+                      {post.editorial.speaker.subtitle ? (
+                        <p>{post.editorial.speaker.subtitle}</p>
+                      ) : null}
+                      {post.editorial.speaker.bioShort ? (
+                        <p>{post.editorial.speaker.bioShort}</p>
+                      ) : null}
+                      {post.editorial.speaker.links?.length ? (
+                        <div className="flex flex-col gap-2">
+                          {post.editorial.speaker.links.map((link) => (
+                            <a
+                              key={link.url}
+                              href={link.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-sm font-semibold text-foreground underline underline-offset-4"
+                            >
+                              {link.label}
+                            </a>
+                          ))}
+                        </div>
+                      ) : null}
+                    </div>
+                  ) : (
+                    <p>Speaker details are being curated.</p>
                   )}
                 </div>
 
-                {post.editorial?.tags?.length ? (
-                  <div className="flex flex-wrap gap-2">
-                    {post.editorial.tags.map((tag) => (
-                      <Badge key={tag} variant="outline">
-                        {tag}
-                      </Badge>
-                    ))}
-                  </div>
-                ) : null}
+                <div className="space-y-2">
+                  <p className="text-xs font-semibold uppercase tracking-[0.3em] text-muted-foreground">
+                    Key takeaways
+                  </p>
+                  {post.editorial?.takeaways?.length ? (
+                    <ul className="space-y-3">
+                      {post.editorial.takeaways.map((takeaway) => (
+                        <li key={takeaway} className="list-disc ml-4">
+                          {takeaway}
+                        </li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <p>Key takeaways are being curated.</p>
+                  )}
+                </div>
 
-                <Button asChild className="w-fit rounded-full">
-                  <a href={post.permalink} target="_blank" rel="noopener noreferrer">
-                    Watch on {PLATFORM_LABELS[post.platform]}
-                  </a>
-                </Button>
-              </div>
-
-              <div className="space-y-6">
-                <Card className="border-border/60 bg-card/95">
-                  <CardHeader>
-                    <CardTitle className="text-lg">Speaker</CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-3 text-sm text-muted-foreground">
-                    {post.editorial?.speaker ? (
-                      <>
-                        <div className="space-y-1">
-                          <p className="text-base font-semibold text-foreground">
-                            {post.editorial.speaker.name}
-                          </p>
-                          <p className="text-xs font-semibold uppercase tracking-[0.3em] text-muted-foreground">
-                            {post.editorial.speaker.type}
-                          </p>
-                          {post.editorial.speaker.subtitle ? (
-                            <p>{post.editorial.speaker.subtitle}</p>
-                          ) : null}
-                        </div>
-                        {post.editorial.speaker.bioShort ? (
-                          <p>{post.editorial.speaker.bioShort}</p>
-                        ) : null}
-                        {post.editorial.speaker.links?.length ? (
-                          <div className="flex flex-col gap-2">
-                            {post.editorial.speaker.links.map((link) => (
-                              <a
-                                key={link.url}
-                                href={link.url}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="text-sm font-semibold text-foreground underline underline-offset-4"
-                              >
-                                {link.label}
-                              </a>
-                            ))}
-                          </div>
-                        ) : null}
-                      </>
-                    ) : (
-                      <p>Speaker details are being curated.</p>
-                    )}
-                  </CardContent>
-                </Card>
-
-                <Card className="border-border/60 bg-card/95">
-                  <CardHeader>
-                    <CardTitle className="text-lg">Key takeaways</CardTitle>
-                  </CardHeader>
-                  <CardContent className="text-sm text-muted-foreground">
-                    {post.editorial?.takeaways?.length ? (
-                      <ul className="space-y-3">
-                        {post.editorial.takeaways.map((takeaway) => (
-                          <li key={takeaway} className="list-disc ml-4">
-                            {takeaway}
-                          </li>
-                        ))}
-                      </ul>
-                    ) : (
-                      <p>Key takeaways are being curated.</p>
-                    )}
-                  </CardContent>
-                </Card>
-              </div>
+                <a
+                  href={post.permalink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm font-semibold text-foreground underline underline-offset-4"
+                >
+                  Watch the original post
+                </a>
+              </section>
             </div>
           </div>
         </section>
