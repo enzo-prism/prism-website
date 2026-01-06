@@ -272,7 +272,7 @@ const HERO_SEARCH_ICON =
 const SECTION_SPACING =
   "min-h-screen min-h-[100svh] py-24 sm:py-32 lg:py-40 xl:py-48"
 const HERO_SECTION_CLASSES =
-  "relative overflow-hidden bg-background min-h-screen min-h-[100svh] -mt-[var(--prism-header-height)] pt-[var(--prism-header-height)] pb-[var(--prism-header-height)] flex items-center"
+  "relative flex min-h-screen min-h-[100svh] items-center overflow-hidden -mt-[calc(var(--prism-header-height)+env(safe-area-inset-top,0px))] pt-[calc(var(--prism-header-height)+env(safe-area-inset-top,0px))] pb-[calc(var(--prism-header-height)+env(safe-area-inset-bottom,0px))] bg-background"
 
 export default function ClientPage() {
   return (
