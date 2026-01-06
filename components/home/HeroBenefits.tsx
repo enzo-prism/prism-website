@@ -55,12 +55,6 @@ const LTV_ICON_VARIANTS: BenefitIcon[] = [
     colors: "primary:#121331,secondary:#3080e8",
   },
   {
-    src: "https://cdn.lordicon.com/bnhbhqyo.json",
-    trigger: "loop",
-    state: "loop-oscillate",
-    colors: "primary:#121331,secondary:#3080e8",
-  },
-  {
     src: "https://cdn.lordicon.com/eaegfqtv.json",
     trigger: "morph",
     state: "morph-destroyed",
