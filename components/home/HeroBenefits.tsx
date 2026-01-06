@@ -30,6 +30,13 @@ const EXPOSURE_ICON_VARIANTS: BenefitIcon[] = [
     delay: "2000",
     colors: "primary:#121331,secondary:#3080e8",
   },
+  {
+    src: "https://cdn.lordicon.com/pfvaixkr.json",
+    trigger: "loop",
+    delay: "2000",
+    state: "hover-slide",
+    colors: "primary:#121331,secondary:#3080e8",
+  },
 ]
 
 const CUSTOMER_ICON_VARIANTS: BenefitIcon[] = [
@@ -56,7 +63,8 @@ const LTV_ICON_VARIANTS: BenefitIcon[] = [
   },
   {
     src: "https://cdn.lordicon.com/eaegfqtv.json",
-    trigger: "morph",
+    trigger: "loop",
+    delay: "2000",
     state: "morph-destroyed",
     colors: "primary:#121331,secondary:#3080e8",
   },
