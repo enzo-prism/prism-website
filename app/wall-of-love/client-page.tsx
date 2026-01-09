@@ -60,7 +60,7 @@ export default function WallOfLoveClientPage() {
               <span className="text-neutral-300">•</span>
               <span>5,000+ on tiktok</span>
               <span className="text-neutral-300">•</span>
-              <span>24.5k+ on youtube</span>
+              <span>24,500+ on youtube</span>
             </div>
             <div className="pt-1 flex items-center justify-center">
               <Link href="/get-started">
