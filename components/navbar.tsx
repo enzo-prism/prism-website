@@ -16,7 +16,7 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu"
-import { Sheet, SheetClose, SheetContent, SheetTrigger } from "@/components/ui/sheet"
+import { Sheet, SheetClose, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
 import { CASE_STUDIES } from "@/lib/case-study-data"
 import { LOGO_CONFIG, NAV_ITEMS, type NavItem } from "@/lib/constants"
 import { trackNavigation } from "@/utils/analytics"
@@ -219,6 +219,7 @@ export default function Navbar() {
               </Button>
             </SheetTrigger>
             <SheetContent side="top" className="top-16 border-t border-b-0 p-0 shadow-sm">
+              <SheetTitle className="sr-only">Navigation</SheetTitle>
               <nav className="container mx-auto flex flex-col gap-2 px-4 py-4 sm:px-6">
                 {navItems.map((item) => (
                   <div key={item.label} className="flex flex-col">

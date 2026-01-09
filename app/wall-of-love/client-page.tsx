@@ -58,6 +58,8 @@ export default function WallOfLoveClientPage() {
             <div className="text-[13px] sm:text-[14px] text-neutral-600 lowercase flex items-center justify-center gap-3">
               <span>40,000+ on instagram</span>
               <span className="text-neutral-300">•</span>
+              <span>5,000+ on tiktok</span>
+              <span className="text-neutral-300">•</span>
               <span>24.5k+ on youtube</span>
             </div>
             <div className="pt-1 flex items-center justify-center">
