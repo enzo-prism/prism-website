@@ -97,6 +97,7 @@ export async function renderPost(slug: string) {
   }
 
   try {
+    const { default: rehypeSlug } = await import("rehype-slug")
     // Use MDXRemote for secure rendering
     return (
       <MDXRemote 
@@ -106,7 +107,7 @@ export async function renderPost(slug: string) {
           parseFrontmatter: false, // We already parsed it
           mdxOptions: {
             remarkPlugins: [],
-            rehypePlugins: [],
+            rehypePlugins: [rehypeSlug],
             development: process.env.NODE_ENV === 'development',
             // More forgiving JSX parsing
             jsxImportSource: 'react'

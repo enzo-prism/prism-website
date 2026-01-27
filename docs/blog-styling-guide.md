@@ -17,6 +17,7 @@ The blog styling system has been improved to provide clean, consistent, and read
    - All standard HTML elements are automatically styled
    - Consistent appearance across all blog posts
    - Dark mode support built-in
+   - Table of contents links are generated from H2/H3 headings
 
 3. **Clean Content**
    - The MDX renderer automatically removes conflicting inline styles
@@ -45,12 +46,16 @@ This is a paragraph of text. It will be automatically styled with proper spacing
 3. Throughout the blog
 ```
 
+### Table of Contents
+
+The blog layout automatically builds an "On this page" table of contents from H2/H3 headings. Use H2 for major sections and H3 for sub-sections so the TOC stays clean and scannable. Headings get stable anchor IDs automatically.
+
 ### Special Components
 
 For enhanced content, use the custom MDX components:
 
 ```mdx
-import { Lead, CheckList, CheckItem, Callout, BlogCTA, VideoEmbed } from '@/components/mdx-components'
+import { Lead, CheckList, CheckItem, Callout, BlogCTA, VideoEmbed, SectionBreak } from '@/components/mdx-components'
 
 <Lead>
 This is a lead paragraph with larger text for introductions.
@@ -72,6 +77,8 @@ This is an informational callout box.
   href="/get-started"
 />
 
+<SectionBreak label="Next up" />
+
 <VideoEmbed 
   src="https://www.youtube.com/embed/VIDEO_ID" 
   title="Video Title"
@@ -82,8 +89,9 @@ This is an informational callout box.
 
 1. **Avoid Inline Styles**: Let the prose system handle styling
 2. **Use Semantic HTML**: Use proper heading hierarchy (h1 → h2 → h3)
-3. **Keep It Simple**: Focus on content, not styling
-4. **Use Components**: For special formatting, use the provided MDX components
+3. **Keep TOC Clean**: Use H2 for major sections and H3 for sub-sections
+4. **Keep It Simple**: Focus on content, not styling
+5. **Use Components**: For special formatting, use the provided MDX components
 
 ## Technical Details
 

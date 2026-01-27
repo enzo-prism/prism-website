@@ -9,6 +9,7 @@ Recent updates introduced:
 - **Normalized category slugs** for filterable taxonomies
 - **Related post recommendations** per article
 - **An RSS feed** served from `/blog/feed.xml`
+- **Automatic table of contents generation** from H2/H3 headings
 
 Use this document when adding posts or customizing the discovery experience.
 
@@ -29,6 +30,8 @@ Each MDX file must define:
 | `h1Title`, `showHeroImage`, `openGraph`, `twitter`, `canonical` | optional | Overrides for layout & SEO |
 
 `lib/mdx.tsx` automatically derives `categorySlug` from the `category` label by lowercasing and replacing non-alphanumeric characters with hyphens. Stick to meaningful labels; the slug keeps filters URL-safe.
+
+Headings (H2/H3) are assigned stable anchor IDs during MDX rendering (`rehype-slug`), and `lib/mdx-toc.ts` parses the MDX source to build the table of contents.
 
 ---
 
@@ -76,8 +79,9 @@ If you rebrand or change domains, update the `CANONICAL_HOST` constant to keep f
 1. Create `content/blog/my-post-slug.mdx`.
 2. Populate required frontmatter fields.
 3. Write content in Markdown/MDX. Avoid inline styling—`prose-blog` handles typography.
-4. Run `pnpm run typecheck` to ensure the post parses correctly.
-5. Commit the MDX file. The sitemap, blog page, related posts, and RSS feed update automatically.
+4. Use H2 for major sections and H3 for sub-sections so the table of contents stays accurate.
+5. Run `pnpm run typecheck` to ensure the post parses correctly.
+6. Commit the MDX file. The sitemap, blog page, related posts, and RSS feed update automatically.
 
 ---
 

@@ -2,6 +2,7 @@ import BlogPostLayout from '@/components/blog-post-layout'
 import BlogEmailSignup from "@/components/blog-email-signup"
 import { getAllPosts, getPost } from "@/lib/mdx-data"
 import { renderPost } from "@/lib/mdx"
+import { getMdxToc } from "@/lib/mdx-toc"
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 
@@ -76,6 +77,7 @@ export default async function BlogPostPage({ params }: PageProps) {
   const post = await getPost(slug)
   if (!post) notFound()
   const { frontmatter } = post
+  const toc = await getMdxToc(post.content)
   const content = await renderPost(slug)
   const allPosts = (await getAllPosts()) ?? []
   const relatedPosts = allPosts
@@ -101,6 +103,7 @@ export default async function BlogPostPage({ params }: PageProps) {
       openGraph={frontmatter.openGraph}
       canonical={frontmatter.canonical}
       relatedPosts={prioritized.slice(0, 3)}
+      toc={toc}
       howTo={frontmatter.howTo}
     >
       {content}

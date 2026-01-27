@@ -93,6 +93,17 @@ export const MDXComponents = {
   
   // Section divider
   Divider: () => <hr className="my-12 border-neutral-200 dark:border-neutral-800" />,
+  SectionBreak: ({ label }: { label?: string }) => (
+    <div className="my-12 flex items-center gap-4 text-xs font-semibold uppercase tracking-[0.35em] text-neutral-400">
+      <span className="h-px flex-1 bg-neutral-200 dark:bg-neutral-800" />
+      {label ? (
+        <span>{label}</span>
+      ) : (
+        <span className="h-1.5 w-1.5 rounded-full bg-neutral-300 dark:bg-neutral-700" aria-hidden />
+      )}
+      <span className="h-px flex-1 bg-neutral-200 dark:bg-neutral-800" />
+    </div>
+  ),
   
   CTAButton,
   // CTA component
