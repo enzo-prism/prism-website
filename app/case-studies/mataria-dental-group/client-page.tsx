@@ -1,24 +1,22 @@
-"use client"
-
 import { CaseStudySectionNav } from "@/components/case-studies/CaseStudySectionNav"
 import Footer from "@/components/footer"
+import Navbar from "@/components/navbar"
 import { CaseStudySchema } from "@/components/schema-markup"
 import SocialShare from "@/components/social-share"
+import TrackedLink from "@/components/tracked-link"
 import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
 import YouTubeVideoEmbed from "@/components/youtube-video-embed"
 import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
 import { CASE_STUDIES } from "@/lib/case-study-data"
-import { trackCTAClick } from "@/utils/analytics"
 import { ArrowLeft, ArrowRight } from "lucide-react"
 import dynamic from "next/dynamic"
 import Link from "next/link"
-import { ReactNode, useEffect } from "react"
+import { ReactNode } from "react"
 
-const Navbar = dynamic(() => import("@/components/navbar"), { ssr: false })
 const FounderImpactGraph = dynamic(
   () => import("@/components/case-studies/FounderImpactGraph").then((m) => m.FounderImpactGraph),
-  { ssr: false, loading: () => <Skeleton className="h-64 w-full rounded-2xl" /> }
+  { loading: () => <Skeleton className="h-64 w-full rounded-2xl" /> }
 )
 
 const HERO_VIDEO_ID = "VIDEO_PLACEHOLDER"
@@ -562,15 +560,6 @@ const meaningList = [
 ]
 
 export default function MatariaDentalGroupCaseStudy() {
-  useEffect(() => {
-    const hero = document.getElementById("static-mataria-hero")
-    if (hero) {
-      hero.setAttribute("data-hydrated-hidden", "true")
-      hero.setAttribute("aria-hidden", "true")
-      hero.style.display = "none"
-    }
-  }, [])
-
   return (
     <div className="flex min-h-screen flex-col bg-white">
       <Navbar />
@@ -858,11 +847,11 @@ export default function MatariaDentalGroupCaseStudy() {
                   </p>
                 </div>
                 <div className="flex flex-wrap items-center gap-3">
-                  <Link href="/get-started">
-                    <Button className="rounded-full px-6 py-3 text-base" onClick={() => trackCTAClick(FREE_AUDIT_CTA_TEXT, "mataria case study cta")}>
+                  <Button asChild className="rounded-full px-6 py-3 text-base">
+                    <TrackedLink href="/get-started" label={FREE_AUDIT_CTA_TEXT} location="mataria case study cta">
                       {FREE_AUDIT_CTA_TEXT} <ArrowRight className="ml-2 h-4 w-4" />
-                    </Button>
-                  </Link>
+                    </TrackedLink>
+                  </Button>
                   <Link href="/contact">
                     <Button variant="outline" className="rounded-full px-6 py-3 text-base">
                       Talk with us <ArrowRight className="ml-2 h-4 w-4" />

@@ -15,6 +15,10 @@ export const metadata: Metadata = {
       "thanks for sending your prism pricing plan. we'll review your selections and follow up with next steps shortly.",
     images: ["/prism-opengraph.png"],
   },
+  robots: {
+    index: false,
+    follow: false,
+  },
   alternates: {
     canonical: "https://www.design-prism.com/pricing/thank-you",
   },

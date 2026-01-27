@@ -152,6 +152,27 @@ export function GlobalSchemaGraph() {
     ],
   }
 
+  const localBusiness = {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "@id": "https://www.design-prism.com/#localbusiness",
+    name: "Prism",
+    url: "https://www.design-prism.com",
+    image: "https://www.design-prism.com/prism-opengraph.png",
+    logo: "https://www.design-prism.com/prism-logo.png",
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: "548 Market St #62411",
+      addressLocality: "San Francisco",
+      addressRegion: "CA",
+      postalCode: "94104",
+      addressCountry: "US",
+    },
+    areaServed: "US",
+    sameAs: organization.sameAs,
+    parentOrganization: { "@id": "https://www.design-prism.com/#organization" },
+  }
+
   const website = {
     "@context": "https://schema.org",
     "@type": "WebSite",
@@ -161,7 +182,7 @@ export function GlobalSchemaGraph() {
     publisher: { "@id": "https://www.design-prism.com/#organization" },
   }
 
-  return renderJsonLd([organization, website])
+  return renderJsonLd([organization, localBusiness, website])
 }
 
 export function BreadcrumbSchema({ items }: { items: BreadcrumbItem[] }) {
@@ -676,6 +697,57 @@ export function WebsiteSchema() {
       target: "https://www.design-prism.com/search?q={search_term_string}",
       "query-input": "required name=search_term_string",
     },
+  }
+
+  return renderJsonLd(data)
+}
+
+interface LocalBusinessSchemaProps {
+  name: string
+  url: string
+  image?: string
+  logo?: string
+  address: {
+    streetAddress: string
+    addressLocality: string
+    addressRegion?: string
+    postalCode?: string
+    addressCountry: string
+  }
+  areaServed?: string | string[]
+  sameAs?: string[]
+  priceRange?: string
+  telephone?: string
+}
+
+export function LocalBusinessSchema({
+  name,
+  url,
+  image,
+  logo,
+  address,
+  areaServed,
+  sameAs,
+  priceRange,
+  telephone,
+}: LocalBusinessSchemaProps) {
+  const data = {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "@id": `${url}#localbusiness`,
+    name,
+    url,
+    image,
+    logo,
+    address: {
+      "@type": "PostalAddress",
+      ...address,
+    },
+    areaServed,
+    sameAs,
+    priceRange,
+    telephone,
+    parentOrganization: { "@id": "https://www.design-prism.com/#organization" },
   }
 
   return renderJsonLd(data)

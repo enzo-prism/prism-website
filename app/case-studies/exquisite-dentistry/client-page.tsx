@@ -1,12 +1,8 @@
-"use client"
-
 import Footer from "@/components/footer"
+import Navbar from "@/components/navbar"
 import { CaseStudySchema } from "@/components/schema-markup"
 import SocialShare from "@/components/social-share"
-import dynamic from "next/dynamic"
 import Image from "next/image"
-
-const Navbar = dynamic(() => import("@/components/navbar"), { ssr: false })
 const EXQUISITE_SITE = "https://exquisitedentistryla.com/?utm_source=chatgpt.com"
 const EXQUISITE_SITE_TITLE = "Exquisite Dentistry: Cosmetic Dentist Los Angeles | Dr. Aguil"
 const linkClassName = "font-medium text-neutral-900 underline underline-offset-4"

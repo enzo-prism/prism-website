@@ -1,68 +1,43 @@
-"use client"
-
 import { Button } from "@/components/ui/button"
-import { trackCTAClick } from "@/utils/analytics"
-import { AnimatePresence, motion } from "framer-motion"
-import {
-    ArrowRight,
-    BarChart3,
-    Brain,
-    Code,
-    Globe,
-    Palette,
-    Search,
-    TrendingUp,
-    Zap
-} from "lucide-react"
-import Link from "next/link"
-import { useState } from "react"
 import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
+import FlywheelPhaseSelector from "@/components/prism-flywheel/FlywheelPhaseSelector"
+import TrackedAnchor from "@/components/tracked-anchor"
+import TrackedLink from "@/components/tracked-link"
+import { ArrowRight } from "lucide-react"
 
-  // All scroll-in animations removed for stability and simplicity
+// All scroll-in animations removed for stability and simplicity
 
-  // Tech stack items with their categories
-  const techStackItems = [
+// Tech stack items with their categories
+const techStackItems = [
   {
     category: "AI Development",
-    icon: Brain,
     title: "claude code + cursor",
-    description: "ai-assisted coding for rapid, error-free automation",
-    color: "from-purple-500 to-indigo-500"
+    description: "ai-assisted coding for rapid, error-free automation"
   },
   {
     category: "AI Content",
-    icon: Zap,
     title: "chatgpt + grok + google gemini",
-    description: "frontier llms for content ideation and semantic search",
-    color: "from-blue-500 to-cyan-500"
+    description: "frontier llms for content ideation and semantic search"
   },
   {
     category: "Design & Visual",
-    icon: Palette,
     title: "midjourney + figma + loveable",
-    description: "visual ai and design tools for sleek, engaging assets",
-    color: "from-pink-500 to-rose-500"
+    description: "visual ai and design tools for sleek, engaging assets"
   },
   {
     category: "Development",
-    icon: Code,
     title: "notion + replit + vercel",
-    description: "collaborative workspaces and deployment for scalable code",
-    color: "from-green-500 to-emerald-500"
+    description: "collaborative workspaces and deployment for scalable code"
   },
   {
     category: "Research",
-    icon: Search,
     title: "perplexity",
-    description: "real-time ai research to fuel data-driven insights",
-    color: "from-orange-500 to-amber-500"
+    description: "real-time ai research to fuel data-driven insights"
   },
   {
     category: "Local Presence",
-    icon: Globe,
     title: "google business + apple + yelp + zocdoc",
-    description: "local seo and booking integrations for healthcare/brand visibility",
-    color: "from-indigo-500 to-purple-500"
+    description: "local seo and booking integrations for healthcare/brand visibility"
   }
 ]
 
@@ -72,40 +47,29 @@ const flywheelPhases = [
     number: 1,
     title: "research & ideation",
     description: "watch trends, clip insights, and remix with ai",
-    details: "Using Perplexity for real-time data and Grok for semantic analysis",
-    icon: Search,
-    color: "text-purple-600"
+    details: "Using Perplexity for real-time data and Grok for semantic analysis"
   },
   {
     number: 2,
     title: "creation & remixing",
     description: "build content and code with frontier tools",
-    details: "Claude Code and Cursor for rapid development, Midjourney for visuals",
-    icon: Palette,
-    color: "text-blue-600"
+    details: "Claude Code and Cursor for rapid development, Midjourney for visuals"
   },
   {
     number: 3,
     title: "optimization & analysis",
     description: "refine with data",
-    details: "GA4 for traffic, Hotjar for user heatmaps, GSC for SEO insights",
-    icon: BarChart3,
-    color: "text-green-600"
+    details: "GA4 for traffic, Hotjar for user heatmaps, GSC for SEO insights"
   },
   {
     number: 4,
     title: "monetization & scaling",
     description: "bundle value into products and scale",
-    details: "Deploy via Vercel/Replit, connect locally with Google Business Profile",
-    icon: TrendingUp,
-    color: "text-orange-600"
+    details: "Deploy via Vercel/Replit, connect locally with Google Business Profile"
   }
 ]
 
 export default function PrismFlywheelClient() {
-  const [activePhase, setActivePhase] = useState<number | null>(null)
-  const [hoveredTech, setHoveredTech] = useState<number | null>(null)
-  
   // Removed intersection observers and refs – content is rendered fully visible
 
   return (
@@ -142,14 +106,19 @@ export default function PrismFlywheelClient() {
             <div 
               className="text-center"
             >
-              <Link href="/get-started" onClick={() => trackCTAClick(FREE_AUDIT_CTA_TEXT, "hero-flywheel-minimal")}>
-                <Button 
-                  className="group px-8 py-3 bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 font-medium text-sm rounded-full hover:scale-[1.02] transition-all duration-200"
+              <Button
+                asChild
+                className="group px-8 py-3 bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 font-medium text-sm rounded-full hover:scale-[1.02] transition-all duration-200"
+              >
+                <TrackedLink
+                  href="/get-started"
+                  label={FREE_AUDIT_CTA_TEXT}
+                  location="hero-flywheel-minimal"
                 >
                   {FREE_AUDIT_CTA_TEXT}
                   <ArrowRight className="inline-block ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                </Button>
-              </Link>
+                </TrackedLink>
+              </Button>
             </div>
           </div>
 
@@ -175,57 +144,7 @@ export default function PrismFlywheelClient() {
             </div>
             
             {/* Minimalist phase indicators */}
-            <div className="mt-12 flex flex-wrap justify-center gap-8">
-              {flywheelPhases.map((phase, index) => (
-                <motion.button
-                  key={phase.number}
-                  className={`group flex flex-col items-center space-y-2 transition-all ${
-                    activePhase === phase.number ? 'opacity-100' : 'opacity-60 hover:opacity-100'
-                  }`}
-                  whileHover={{ y: -2 }}
-                  whileTap={{ scale: 0.98 }}
-                  aria-pressed={activePhase === phase.number}
-                  onClick={() => setActivePhase(activePhase === phase.number ? null : phase.number)}
-                >
-                  <div className={`w-12 h-12 rounded-full border-2 flex items-center justify-center transition-colors ${
-                    activePhase === phase.number 
-                      ? 'border-neutral-900 dark:border-white bg-neutral-900 dark:bg-white' 
-                      : 'border-neutral-300 dark:border-neutral-700'
-                  }`}>
-                    <span className={`text-sm font-medium ${
-                      activePhase === phase.number 
-                        ? 'text-white dark:text-neutral-900' 
-                        : 'text-neutral-600 dark:text-neutral-400'
-                    }`}>
-                      {phase.number}
-                    </span>
-                  </div>
-                  <span className="text-sm text-neutral-600 dark:text-neutral-400 font-medium">
-                    {phase.title.split(' ')[0]}
-                  </span>
-                </motion.button>
-              ))}
-            </div>
-
-            {/* Clean phase details */}
-            <AnimatePresence mode="wait">
-              {activePhase && (
-                <motion.div
-                  className="mt-8 text-center max-w-md mx-auto"
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <h4 className="text-lg font-medium text-neutral-900 dark:text-white mb-2">
-                    {flywheelPhases[activePhase - 1].title}
-                  </h4>
-                  <p className="text-sm text-neutral-600 dark:text-neutral-400">
-                    {flywheelPhases[activePhase - 1].details}
-                  </p>
-                </motion.div>
-              )}
-            </AnimatePresence>
+            <FlywheelPhaseSelector phases={flywheelPhases} />
           </div>
         </div>
       </section>
@@ -405,17 +324,29 @@ export default function PrismFlywheelClient() {
 
             {/* Bottom CTA */}
             <div className="text-center pt-8">
-              <Link href="/get-started">
-                <Button 
-                  variant="ghost"
-                  className="text-neutral-900 dark:text-white hover:bg-transparent border-b-2 border-transparent hover:border-neutral-900 dark:hover:border-white rounded-none px-0 py-2 transition-all"
-                  onClick={() => trackCTAClick(FREE_AUDIT_CTA_TEXT, "how it works")}
+              <Button
+                asChild
+                variant="ghost"
+                className="text-neutral-900 dark:text-white hover:bg-transparent border-b-2 border-transparent hover:border-neutral-900 dark:hover:border-white rounded-none px-0 py-2 transition-all"
+              >
+                <TrackedLink
+                  href="/get-started"
+                  label={FREE_AUDIT_CTA_TEXT}
+                  location="how it works"
                 >
                   {FREE_AUDIT_CTA_TEXT} →
-                </Button>
-              </Link>
+                </TrackedLink>
+              </Button>
               <div className="mt-4 text-sm text-neutral-600 dark:text-neutral-400">
-                Want a concrete module? <Link href="/proof" className="underline" onClick={() => trackCTAClick("view proof", "how it works crosslink")}>See Prism Proof</Link>
+                Want a concrete module?{" "}
+                <TrackedLink
+                  href="/proof"
+                  className="underline"
+                  label="view proof"
+                  location="how it works crosslink"
+                >
+                  See Prism Proof
+                </TrackedLink>
               </div>
             </div>
           </div>
@@ -501,14 +432,19 @@ export default function PrismFlywheelClient() {
             <h3 className="text-xl md:text-2xl font-light text-neutral-900 dark:text-white mb-6">
               Ready to compound your growth?
             </h3>
-            <Link href="/get-started" onClick={() => trackCTAClick(FREE_AUDIT_CTA_TEXT, "mid-page-flywheel")}>
-              <Button 
-                variant="outline"
-                className="border-neutral-900 dark:border-white text-neutral-900 dark:text-white hover:bg-neutral-900 hover:text-white dark:hover:bg-white dark:hover:text-neutral-900 rounded-full px-8 py-3 transition-all"
+            <Button
+              asChild
+              variant="outline"
+              className="border-neutral-900 dark:border-white text-neutral-900 dark:text-white hover:bg-neutral-900 hover:text-white dark:hover:bg-white dark:hover:text-neutral-900 rounded-full px-8 py-3 transition-all"
+            >
+              <TrackedLink
+                href="/get-started"
+                label={FREE_AUDIT_CTA_TEXT}
+                location="mid-page-flywheel"
               >
                 {FREE_AUDIT_CTA_TEXT}
-              </Button>
-            </Link>
+              </TrackedLink>
+            </Button>
           </div>
         </div>
       </section>
@@ -710,14 +646,15 @@ export default function PrismFlywheelClient() {
                     In-depth articles on flywheel mechanics and implementation strategies
                   </p>
                 </div>
-                <Link 
+                <TrackedLink
                   href="/blog"
                   className="inline-flex items-center text-sm text-neutral-900 dark:text-white hover:text-neutral-600 dark:hover:text-neutral-300 transition-colors group"
-                  onClick={() => trackCTAClick("read guides minimal", "flywheel-learn")}
+                  label="read guides minimal"
+                  location="flywheel-learn"
                 >
                   Read Articles
                   <ArrowRight className="ml-1 h-3 w-3 transition-transform group-hover:translate-x-1" />
-                </Link>
+                </TrackedLink>
               </div>
 
               {/* YouTube */}
@@ -732,16 +669,17 @@ export default function PrismFlywheelClient() {
                     Watch practical demonstrations and real-world flywheel examples
                   </p>
                 </div>
-                <a 
-                  href="https://www.youtube.com/@the_design_prism" 
-                  target="_blank" 
+                <TrackedAnchor
+                  href="https://www.youtube.com/@the_design_prism"
+                  target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center text-sm text-neutral-900 dark:text-white hover:text-neutral-600 dark:hover:text-neutral-300 transition-colors group"
-                  onClick={() => trackCTAClick("watch youtube minimal", "flywheel-learn")}
+                  label="watch youtube minimal"
+                  location="flywheel-learn"
                 >
                   Watch Videos
                   <ArrowRight className="ml-1 h-3 w-3 transition-transform group-hover:translate-x-1" />
-                </a>
+                </TrackedAnchor>
               </div>
 
               {/* Instagram */}
@@ -756,16 +694,17 @@ export default function PrismFlywheelClient() {
                     Quick tips and behind-the-scenes content on flywheel implementation
                   </p>
                 </div>
-                <a 
-                  href="https://www.instagram.com/the_design_prism/" 
-                  target="_blank" 
+                <TrackedAnchor
+                  href="https://www.instagram.com/the_design_prism/"
+                  target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center text-sm text-neutral-900 dark:text-white hover:text-neutral-600 dark:hover:text-neutral-300 transition-colors group"
-                  onClick={() => trackCTAClick("follow instagram minimal", "flywheel-learn")}
+                  label="follow instagram minimal"
+                  location="flywheel-learn"
                 >
                   Follow Daily
                   <ArrowRight className="ml-1 h-3 w-3 transition-transform group-hover:translate-x-1" />
-                </a>
+                </TrackedAnchor>
               </div>
             </div>
 
@@ -809,13 +748,18 @@ export default function PrismFlywheelClient() {
             </div>
 
             <div className="pt-4">
-              <Link href="/get-started" onClick={() => trackCTAClick(FREE_AUDIT_CTA_TEXT, "footer-flywheel")}>
-                <Button 
-                  className="bg-white text-neutral-900 hover:bg-neutral-100 font-medium text-sm px-10 py-4 rounded-full transition-all hover:scale-[1.02]"
+              <Button
+                asChild
+                className="bg-white text-neutral-900 hover:bg-neutral-100 font-medium text-sm px-10 py-4 rounded-full transition-all hover:scale-[1.02]"
+              >
+                <TrackedLink
+                  href="/get-started"
+                  label={FREE_AUDIT_CTA_TEXT}
+                  location="footer-flywheel"
                 >
                   {FREE_AUDIT_CTA_TEXT}
-                </Button>
-              </Link>
+                </TrackedLink>
+              </Button>
             </div>
 
             <div 

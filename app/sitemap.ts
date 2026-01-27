@@ -1,6 +1,7 @@
 import { getAllPosts } from "@/lib/mdx-data"
 import type { MetadataRoute } from "next"
 import { CASE_STUDIES } from "@/lib/case-study-data"
+import { getLibraryPosts } from "@/lib/library/getLibraryPosts"
 import fs from "node:fs/promises"
 import path from "node:path"
 
@@ -42,6 +43,19 @@ async function getAppRoutes(): Promise<string[]> {
     .filter((entry) => entry.isDirectory())
     .map((dir) => dir.name)
     .filter((name) => !name.startsWith("_"))
+}
+
+async function getNestedRouteSlugs(routeDir: string): Promise<string[]> {
+  const targetDir = path.resolve(process.cwd(), "app", routeDir)
+  try {
+    const entries = await fs.readdir(targetDir, { withFileTypes: true })
+    return entries
+      .filter((entry) => entry.isDirectory())
+      .map((dir) => dir.name)
+      .filter((name) => !name.startsWith("_"))
+  } catch {
+    return []
+  }
 }
 
 function segmentRoutes(base: string): StaticRouteInput[] {
@@ -137,6 +151,21 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // Fail silently; static routes will still be returned
   }
 
+  // Library detail pages
+  try {
+    const libraryPosts = await getLibraryPosts()
+    for (const post of libraryPosts) {
+      routes.push({
+        url: `${baseOrigin}/library/${post.slug}`,
+        changeFrequency: "monthly",
+        priority: 0.6,
+        lastModified: post.publishedAt ? new Date(post.publishedAt) : undefined,
+      })
+    }
+  } catch {
+    // Fail silently; static routes will still be returned
+  }
+
   // Podcast detail pages (if statically generated under /podcast)
   const appRoutes = await getAppRoutes()
   if (appRoutes.includes("podcast")) {
@@ -144,6 +173,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       url: `${baseOrigin}/podcast`,
       changeFrequency: "weekly",
       priority: 0.7,
+    })
+
+    const podcastSlugs = await getNestedRouteSlugs("podcast")
+    podcastSlugs.forEach((slug) => {
+      routes.push({
+        url: `${baseOrigin}/podcast/${slug}`,
+        changeFrequency: "monthly",
+        priority: 0.6,
+      })
     })
   }
 

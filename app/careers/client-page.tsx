@@ -1,14 +1,11 @@
-"use client"
-
 import Footer from "@/components/footer"
+import Navbar from "@/components/navbar"
+import TrackedAnchor from "@/components/tracked-anchor"
+import TrackedLink from "@/components/tracked-link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { trackCTAClick, trackNavigation } from "@/utils/analytics"
 import { ArrowRight, Briefcase, Clock, Mail, MapPin } from "lucide-react"
-import dynamic from "next/dynamic"
-import Link from "next/link"
 import { JobPostingSchema } from "@/components/schema-markup"
-const Navbar = dynamic(() => import("@/components/navbar"), { ssr: false })
 
 export default function CareersClientPage() {
   const currentJobs = [
@@ -144,14 +141,15 @@ export default function CareersClientPage() {
                         ))}
                       </ul>
                     </div>
-                    <Link href={`/careers/${job.slug}`}>
-                      <Button 
-                        className="w-full sm:w-auto rounded-full px-6 py-3 lowercase"
-                        onClick={() => trackCTAClick("view job details", `careers-${job.slug}`)}
+                    <Button asChild className="w-full sm:w-auto rounded-full px-6 py-3 lowercase">
+                      <TrackedLink
+                        href={`/careers/${job.slug}`}
+                        label="view job details"
+                        location={`careers-${job.slug}`}
                       >
                         view details <ArrowRight className="ml-2 h-4 w-4" />
-                      </Button>
-                    </Link>
+                      </TrackedLink>
+                    </Button>
                   </CardContent>
                 </Card>
               ))}
@@ -177,9 +175,10 @@ export default function CareersClientPage() {
                 </p>
 
                 <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                  <a
+                  <TrackedAnchor
                     href="mailto:support@design-prism.com"
-                    onClick={() => trackCTAClick("careers email", "careers page")}
+                    label="careers email"
+                    location="careers page"
                   >
                     <Button
                       size="lg"
@@ -188,7 +187,7 @@ export default function CareersClientPage() {
                       <Mail className="mr-2 h-4 w-4" />
                       support@design-prism.com
                     </Button>
-                  </a>
+                  </TrackedAnchor>
 
                   <div className="flex items-center gap-2 text-neutral-400 text-sm lowercase">
                     <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
@@ -203,13 +202,14 @@ export default function CareersClientPage() {
         {/* Back to Home */}
         <section className="px-4 py-8">
           <div className="container mx-auto px-4 md:px-6 text-center">
-            <Link
+            <TrackedLink
               href="/"
+              label="back to home"
+              location="careers_back_home"
               className="text-sm font-medium text-neutral-600 hover:text-neutral-900 lowercase transition-colors"
-              onClick={() => trackNavigation("careers_back_home", "/")}
             >
               ← back to home
-            </Link>
+            </TrackedLink>
           </div>
         </section>
       </main>

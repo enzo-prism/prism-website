@@ -1,10 +1,10 @@
 "use client"
 
 import Image from "next/image"
-import dynamic from "next/dynamic"
 import { useState, type ComponentType } from "react"
 
 import Footer from "@/components/footer"
+import Navbar from "@/components/navbar"
 import {
   Carousel,
   CarouselContent,
@@ -34,8 +34,6 @@ import {
   Sparkles,
   Type as TypeIcon,
 } from "lucide-react"
-
-const Navbar = dynamic(() => import("@/components/navbar"), { ssr: false })
 
 type LogoSection = {
   heading: string

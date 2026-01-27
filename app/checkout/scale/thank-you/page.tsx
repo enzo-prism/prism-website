@@ -6,6 +6,10 @@ import { Button } from "@/components/ui/button"
 import { CheckCircle2, Calendar } from "lucide-react"
 
 export const metadata: Metadata = {
+  robots: {
+    index: false,
+    follow: false,
+  },
   alternates: {
     canonical: "https://www.design-prism.com/checkout/scale/thank-you",
   },

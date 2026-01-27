@@ -23,7 +23,7 @@ const { handleSubmit, getError, isSubmitting } = useFormValidation({
 - `components/forms/FreeAnalysisForm.tsx`
 - `components/forms/ContactForm.tsx`
 - `components/forms/ScalingRoadmapForm.tsx`
-- `app/ai-website-launch/client-page.tsx` (inline card form for the AI launch offer; uses the same fetch + redirect pattern without the shared hook so the form can live next to its layout code)
+- `components/ai-website-launch/AiWebsiteLaunchForm.tsx` (inline card form for the AI launch offer; embedded in `app/ai-website-launch/client-page.tsx` and wired with `useFormValidation`)
 
 The `/get-started` page now uses an embedded Notion calendar scheduler instead of a Formspree form. The embed sizing lives in `components/BookDemoEmbed.tsx` and uses a width-based height map (>=1024: 776px, >=770: 1027px, <770: 1925px, plus a small buffer) to avoid nested iframe scrolling. On mobile, the embed is allowed to bleed edge-to-edge so the scheduler isn't clipped.
 
@@ -40,6 +40,7 @@ All Formspree-backed forms use the hook above so users always land on `/thank-yo
 - `/analysis-thank-you` ([`app/analysis-thank-you/page.tsx`](../app/analysis-thank-you/page.tsx)) — used by the Free Analysis form.
 
 Each page is intentionally minimal: confirmation card, kickoff-call CTA, and contact info.
+These routes are noindex/no-follow and disallowed in `robots.txt` so they never appear in search results.
 
 ## FAQ / Troubleshooting
 - **Still seeing Formspree’s stock page?** Make sure `fetch` sends `Accept: application/json` and you aren’t calling `form.submit()` directly.

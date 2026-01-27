@@ -1,20 +1,18 @@
-"use client"
-
 import { CaseStudySectionNav } from "@/components/case-studies/CaseStudySectionNav"
 import Footer from "@/components/footer"
+import Navbar from "@/components/navbar"
 import { CaseStudySchema } from "@/components/schema-markup"
 import SocialShare from "@/components/social-share"
+import TrackedLink from "@/components/tracked-link"
 import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
-import { trackCTAClick } from "@/utils/analytics"
 import { ArrowLeft, ArrowRight } from "lucide-react"
 import dynamic from "next/dynamic"
 import Link from "next/link"
 import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
-const Navbar = dynamic(() => import("@/components/navbar"), { ssr: false })
 const FounderImpactGraph = dynamic(
   () => import("@/components/case-studies/FounderImpactGraph").then((m) => m.FounderImpactGraph),
-  { ssr: false, loading: () => <Skeleton className="h-64 w-full rounded-2xl" /> }
+  { loading: () => <Skeleton className="h-64 w-full rounded-2xl" /> }
 )
 const CLIENT_SITE = "https://www.tingjenjidds.com"
 
@@ -142,14 +140,15 @@ export default function GraceDentalSantaRosaCaseStudy() {
                     .
                   </p>
                   <div className="pt-6">
-                    <Link href="/get-started">
-                      <Button
-                        className="rounded-full px-8 py-6 text-lg lowercase"
-                        onClick={() => trackCTAClick(FREE_AUDIT_CTA_TEXT, "grace dental santa rosa case study")}
+                    <Button asChild className="rounded-full px-8 py-6 text-lg lowercase">
+                      <TrackedLink
+                        href="/get-started"
+                        label={FREE_AUDIT_CTA_TEXT}
+                        location="grace dental santa rosa case study"
                       >
                         {FREE_AUDIT_CTA_TEXT} <ArrowRight className="ml-2 h-5 w-5" />
-                      </Button>
-                    </Link>
+                      </TrackedLink>
+                    </Button>
                   </div>
                 </div>
               </section>

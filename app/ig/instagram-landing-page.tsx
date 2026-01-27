@@ -1,16 +1,14 @@
 "use client"
 
-import dynamic from "next/dynamic"
 import Link from "next/link"
 
 import FreeAnalysisSection from "@/components/free-analysis-section"
 import HeroLoopingVideo from "@/components/HeroLoopingVideo"
 import HeroSupportPill from "@/components/HeroSupportPill"
+import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
 import { Button } from "@/components/ui/button"
 import { ArrowRight, Check } from "lucide-react"
-
-const Navbar = dynamic(() => import("@/components/navbar"), { ssr: false })
 
 const missionPoints = [
   "Make growth simple and accessible",

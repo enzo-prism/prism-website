@@ -1,5 +1,3 @@
-"use client"
-
 import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
 import { Button } from "@/components/ui/button"
@@ -9,7 +7,7 @@ import Link from "next/link"
 
 const FounderImpactGraph = dynamic(
   () => import("@/components/case-studies/FounderImpactGraph").then((m) => m.FounderImpactGraph),
-  { ssr: false, loading: () => <Skeleton className="h-64 w-full rounded-2xl" /> }
+  { loading: () => <Skeleton className="h-64 w-full rounded-2xl" /> }
 )
 
 export default function SaorsaGrowthPartnersCaseStudy() {

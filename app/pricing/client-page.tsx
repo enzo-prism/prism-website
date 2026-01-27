@@ -1,8 +1,3 @@
-"use client"
-
-import { motion } from "framer-motion"
-import Image from "next/image"
-import { useState } from "react"
 import Link from "next/link"
 import type { LucideIcon } from "lucide-react"
 import {
@@ -26,9 +21,9 @@ import {
 import AnimatedGradient from "@/components/animations/animated-gradient"
 import RippleHighlight from "@/components/animations/ripple-highlight"
 import ClientsRail from "@/components/home/ClientsRail"
+import PricingHero from "@/components/pricing/PricingHero"
 import RevealOnScroll from "@/components/reveal-on-scroll"
 import VideoPlayer from "@/components/video-player"
-import { useMotionPreferences } from "@/hooks/use-motion-preferences"
 import { Button } from "@/components/ui/button"
 import {
   Accordion,
@@ -36,14 +31,8 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion"
-import { floatLoop, hoverTilt } from "@/lib/animations"
 import { cn } from "@/lib/utils"
 import { FAQSchema, ServiceSchema } from "@/components/schema-markup"
-
-const HERO_IMAGE = {
-  src: "https://res.cloudinary.com/dhqpqfw6w/image/upload/v1763918627/Generated_Image_November_23_2025_-_9_22AM_eobrfp.webp",
-  alt: "Prism pricing hero preview",
-}
 
 type PricingBullet = {
   icon: LucideIcon
@@ -190,14 +179,12 @@ const faqs = [
 ] as const
 
 export default function PricingPageClient() {
-  const { allowMotion } = useMotionPreferences()
-
   return (
     <div className="bg-white text-black">
-      <HeroSection />
-      <PricingSection allowMotion={allowMotion} />
-      <FeatureSection allowMotion={allowMotion} />
-      <WebsiteUseCasesSection allowMotion={allowMotion} />
+      <PricingHero />
+      <PricingSection />
+      <FeatureSection />
+      <WebsiteUseCasesSection />
       <HandoffSection />
       <PricingClientsSection />
       <FAQSection />
@@ -207,103 +194,7 @@ export default function PricingPageClient() {
   )
 }
 
-function HeroSection() {
-  const [isFullscreen, setIsFullscreen] = useState(false)
-
-  return (
-    <>
-      <section className="border-b border-black/10 bg-white text-black">
-        <div className="mx-auto flex max-w-6xl flex-col gap-8 px-6 py-24 sm:py-32">
-          <RevealOnScroll delay={0.1}>
-            <div className="space-y-6">
-              <h1 className="text-4xl font-semibold leading-tight tracking-tight sm:text-5xl lg:text-6xl">
-                buy back your time. build growth that compounds.
-              </h1>
-              <div className="space-y-2">
-                <p className="text-lg text-black/70 sm:text-xl">
-                  three ways to work with prism: launch (fast site), grow (site + content), scale
-                  (site + content + ads).
-                </p>
-                <p className="text-sm text-black/60 sm:text-base">with prism, impossible is temporary.</p>
-              </div>
-            </div>
-          </RevealOnScroll>
-          <RevealOnScroll delay={0.2}>
-            <div className="flex flex-col gap-3 sm:flex-row">
-              <Button
-                asChild
-                size="lg"
-                className="w-full rounded-full border border-black bg-black px-8 py-6 text-base font-semibold text-white hover:bg-black/90 sm:w-auto"
-              >
-                <a href="#plans" className="inline-flex items-center gap-2">
-                  <span
-                    className="inline-block h-0 w-0 translate-y-[1px] border-x-[6px] border-b-[8px] border-x-transparent border-b-white"
-                    aria-hidden
-                  />
-                  <span>see plans + pricing</span>
-                </a>
-              </Button>
-            </div>
-          </RevealOnScroll>
-          <RevealOnScroll delay={0.25}>
-            <button
-              type="button"
-              onClick={() => setIsFullscreen(true)}
-              className="group relative w-full overflow-hidden rounded-3xl border border-black/10 bg-zinc-50 shadow-[10px_10px_0_0_#00000008] outline-hidden transition focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2 focus-visible:ring-offset-white"
-              aria-label="Open pricing hero image in fullscreen"
-            >
-              <div className="relative aspect-video w-full">
-                <Image
-                  src={HERO_IMAGE.src}
-                  alt={HERO_IMAGE.alt}
-                  fill
-                  sizes="(min-width: 1024px) 960px, (min-width: 768px) 720px, 100vw"
-                  className="object-cover transition duration-300 group-hover:scale-[1.01]"
-                  priority
-                />
-              </div>
-            </button>
-          </RevealOnScroll>
-        </div>
-      </section>
-
-      {isFullscreen ? (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 px-4 py-10 backdrop-blur-sm"
-          role="dialog"
-          aria-modal="true"
-          aria-label="Pricing hero image fullscreen"
-          onClick={() => setIsFullscreen(false)}
-        >
-          <div
-            className="relative w-full max-w-6xl"
-            onClick={(event) => event.stopPropagation()}
-          >
-            <button
-              type="button"
-              className="absolute right-3 top-3 z-10 rounded-full border border-white/20 bg-black/60 px-3 py-1 text-sm font-semibold text-white shadow-md transition hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
-              onClick={() => setIsFullscreen(false)}
-            >
-              Close
-            </button>
-            <div className="relative aspect-video w-full overflow-hidden rounded-3xl border border-white/10 bg-black">
-              <Image
-                src={HERO_IMAGE.src}
-                alt={HERO_IMAGE.alt}
-                fill
-                sizes="100vw"
-                className="object-contain"
-                priority
-              />
-            </div>
-          </div>
-        </div>
-      ) : null}
-    </>
-  )
-}
-
-function PricingSection({ allowMotion }: { allowMotion: boolean }) {
+function PricingSection() {
   return (
     <section id="plans" className="bg-white py-24 sm:py-32">
       <div className="mx-auto flex max-w-6xl flex-col gap-10 px-6">
@@ -320,8 +211,8 @@ function PricingSection({ allowMotion }: { allowMotion: boolean }) {
           </ul>
         </RevealOnScroll>
         <div className="grid gap-8 md:grid-cols-3">
-          {pricingTiers.map((tier, index) => (
-            <PricingCard key={tier.name} tier={tier} index={index} allowMotion={allowMotion} />
+          {pricingTiers.map((tier) => (
+            <PricingCard key={tier.name} tier={tier} />
           ))}
         </div>
         <RevealOnScroll className="text-center text-sm text-black/60">
@@ -369,30 +260,23 @@ function PricingSection({ allowMotion }: { allowMotion: boolean }) {
   )
 }
 
-function PricingCard({ tier, index, allowMotion }: { tier: PricingTier; index: number; allowMotion: boolean }) {
+function PricingCard({ tier }: { tier: PricingTier }) {
   const hasArrow = tier.cta.includes("→")
   const ctaLabel = hasArrow ? tier.cta.replace("→", "").trim() : tier.cta
 
   const content = (
-    <motion.article
+    <article
       className={cn(
-        "relative flex h-full flex-col rounded-3xl border border-black/20 bg-white/90 p-6 shadow-[8px_8px_0_0_#00000010] transition-shadow",
-        tier.featured && "bg-black text-white shadow-[12px_12px_0_0_#00000015]"
+        "relative flex h-full flex-col rounded-3xl border border-black/20 bg-white/90 p-6 shadow-[8px_8px_0_0_#00000010] transition-transform duration-200 hover:-translate-y-1 hover:shadow-[12px_12px_0_0_#00000012]",
+        tier.featured &&
+          "bg-black text-white shadow-[12px_12px_0_0_#00000015] hover:shadow-[14px_14px_0_0_#00000020]"
       )}
-      variants={allowMotion ? hoverTilt : undefined}
-      initial={allowMotion ? "rest" : undefined}
-      whileHover={allowMotion ? "hover" : undefined}
-      whileTap={allowMotion ? "hover" : undefined}
     >
       <div className="space-y-3">
         <div className="flex items-center gap-2">
-          <motion.span
-            aria-hidden
-            className="text-base"
-            animate={allowMotion ? floatLoop(6, 5 + index * 0.3, index * 0.2) : undefined}
-          >
+          <span aria-hidden className="text-base">
             {tier.emoji}
-          </motion.span>
+          </span>
           <p
             className={cn(
               "text-sm font-semibold tracking-[0.3em] text-black/60",
@@ -463,7 +347,7 @@ function PricingCard({ tier, index, allowMotion }: { tier: PricingTier; index: n
         <Button
           asChild
           className={cn(
-            "w-full rounded-xl border text-base font-semibold transition",
+            "group w-full rounded-xl border text-base font-semibold transition",
             tier.featured
               ? "border-white bg-white text-black hover:bg-white/90"
               : "border-black bg-black text-white hover:bg-black/90"
@@ -473,19 +357,18 @@ function PricingCard({ tier, index, allowMotion }: { tier: PricingTier; index: n
             <span className="inline-flex items-center gap-2">
               {ctaLabel}
               {hasArrow && (
-                <motion.span
+                <span
                   aria-hidden
-                  animate={{ x: [0, 6, 0] }}
-                  transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
+                  className="transition-transform duration-200 group-hover:translate-x-1"
                 >
                   →
-                </motion.span>
+                </span>
               )}
             </span>
           </Link>
         </Button>
       </div>
-    </motion.article>
+    </article>
   )
 
   if (tier.featured) {
@@ -499,7 +382,7 @@ function PricingCard({ tier, index, allowMotion }: { tier: PricingTier; index: n
   return content
 }
 
-function FeatureSection({ allowMotion }: { allowMotion: boolean }) {
+function FeatureSection() {
   return (
     <section className="bg-white py-24 sm:py-32">
       <div className="mx-auto max-w-6xl px-6">
@@ -517,21 +400,13 @@ function FeatureSection({ allowMotion }: { allowMotion: boolean }) {
         <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {features.map((feature, index) => (
             <RevealOnScroll key={feature.title} delay={index * 0.05}>
-              <motion.div
-                className="h-full rounded-3xl border border-black/15 bg-white p-6 shadow-[6px_6px_0_0_#0000000A]"
-                whileHover={allowMotion ? { y: -6 } : undefined}
-                transition={{ type: "spring", stiffness: 200, damping: 18 }}
-              >
-                <motion.div
-                  aria-hidden
-                  className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-black/5"
-                  animate={allowMotion ? floatLoop(8, 7 + index * 0.4) : undefined}
-                >
+              <div className="h-full rounded-3xl border border-black/15 bg-white p-6 shadow-[6px_6px_0_0_#0000000A] transition-transform duration-200 hover:-translate-y-1">
+                <div aria-hidden className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-black/5">
                   <feature.icon className="h-6 w-6 text-black" />
-                </motion.div>
+                </div>
                 <h3 className="mt-4 text-xl font-semibold">{feature.title}</h3>
                 <p className="mt-3 text-sm text-black/70">{feature.description}</p>
-              </motion.div>
+              </div>
             </RevealOnScroll>
           ))}
         </div>
@@ -540,7 +415,7 @@ function FeatureSection({ allowMotion }: { allowMotion: boolean }) {
   )
 }
 
-function WebsiteUseCasesSection({ allowMotion }: { allowMotion: boolean }) {
+function WebsiteUseCasesSection() {
   return (
     <section className="bg-zinc-50 py-24 text-black dark:bg-zinc-900 dark:text-white">
       <div className="mx-auto max-w-6xl px-6">
@@ -556,25 +431,12 @@ function WebsiteUseCasesSection({ allowMotion }: { allowMotion: boolean }) {
         <div className="mt-12 grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
           {useCaseItems.map((item, itemIndex) => (
             <RevealOnScroll key={item.label} delay={itemIndex * 0.02}>
-              <motion.div
-                className="group flex aspect-square flex-col items-center justify-center rounded-2xl border border-zinc-200 bg-white text-center text-sm font-semibold text-zinc-800 shadow-sm transition dark:border-zinc-800 dark:bg-zinc-800 dark:text-white"
-                initial={allowMotion ? { opacity: 0, scale: 0.95 } : undefined}
-                whileInView={allowMotion ? { opacity: 1, scale: 1 } : undefined}
-                viewport={allowMotion ? { once: true, amount: 0.3 } : undefined}
-                whileHover={
-                  allowMotion ? { y: -6, boxShadow: "0px 12px 25px rgba(0,0,0,0.08)" } : undefined
-                }
-                transition={{ type: "spring", stiffness: 200, damping: 18 }}
-              >
-                <motion.span
-                  aria-hidden
-                  className="text-3xl"
-                  animate={allowMotion ? floatLoop(4, 5 + itemIndex * 0.2) : undefined}
-                >
+              <div className="group flex aspect-square flex-col items-center justify-center rounded-2xl border border-zinc-200 bg-white text-center text-sm font-semibold text-zinc-800 shadow-sm transition-transform duration-200 hover:-translate-y-1 hover:shadow-md dark:border-zinc-800 dark:bg-zinc-800 dark:text-white">
+                <span aria-hidden className="text-3xl">
                   {item.icon}
-                </motion.span>
+                </span>
                 <span className="mt-3 text-xs sm:text-sm">{item.label}</span>
-              </motion.div>
+              </div>
             </RevealOnScroll>
           ))}
         </div>
@@ -607,10 +469,8 @@ function HandoffSection() {
           <p className="text-sm text-white/70">your only job: approve the preview.</p>
         </RevealOnScroll>
         <RevealOnScroll delay={0.2}>
-          <motion.div
+          <div
             className="rounded-3xl border border-white/10 bg-white/10 p-5 text-base font-semibold text-white shadow-lg"
-            animate={{ backgroundPositionX: ["0%", "100%"] }}
-            transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
             style={{
               backgroundImage:
                 "linear-gradient(120deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05), rgba(255,255,255,0.15))",
@@ -618,7 +478,7 @@ function HandoffSection() {
             }}
           >
             approve the final preview — then watch qualified leads ramp up.
-          </motion.div>
+          </div>
         </RevealOnScroll>
       </div>
     </section>

@@ -1,19 +1,14 @@
-"use client"
-
 import { BlogPostErrorBoundary } from "@/components/blog-error-boundary"
-import dynamic from "next/dynamic"
-import CoreImage from "@/components/core-image"
+import BlogHeroMedia from "@/components/blog/BlogHeroMedia"
+import BlogScrollProgress from "@/components/blog/BlogScrollProgress"
 import GetStartedCTA from "@/components/GetStartedCTA"
+import Footer from "@/components/footer"
+import Navbar from "@/components/navbar"
+import BlogShareIcons from "@/components/blog/blog-share-icons"
 import { BlogPostSchema, HowToSchema } from "@/components/schema-markup"
-import { cn } from "@/lib/utils"
-import { ArrowLeft } from "lucide-react"
 import Link from "next/link"
-import { useEffect, useState } from "react"
 import SimpleBlogPostCard from "@/components/simple-blog-post-card"
 import Breadcrumbs from "@/components/breadcrumbs"
-const Footer = dynamic(() => import("@/components/footer"), { ssr: false })
-const Navbar = dynamic(() => import("@/components/navbar"), { ssr: false })
-const BlogShareIcons = dynamic(() => import("@/components/blog/blog-share-icons"), { ssr: false })
 
 interface Props {
   children: React.ReactNode
@@ -73,34 +68,10 @@ export default function BlogPostLayout({
   relatedPosts = [],
   howTo,
 }: Props) {
-  const effectiveGradient = gradientClass || 'bg-gradient-to-br from-indigo-300/30 via-purple-300/30 to-pink-300/30';
-  const effectiveImageUrl = image ? `https://www.design-prism.com${image}` : 'https://www.design-prism.com/prism-opengraph.png';
-  
-  const [hasImageError, setHasImageError] = useState(false);
-  const [scrollProgress, setScrollProgress] = useState(0);
-
-  useEffect(() => {
-    let ticking = false;
-    
-    const handleScroll = () => {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          const scrollTop = window.scrollY;
-          const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-          const progress = (scrollTop / docHeight) * 100;
-          
-          setScrollProgress(Math.min(progress, 100));
-          
-          ticking = false;
-        });
-        
-        ticking = true;
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  const effectiveGradient = gradientClass || "bg-gradient-to-br from-indigo-300/30 via-purple-300/30 to-pink-300/30"
+  const effectiveImageUrl = image
+    ? `https://www.design-prism.com${image}`
+    : "https://www.design-prism.com/prism-opengraph.png"
 
   const shareUrl =
     openGraph?.url ||
@@ -109,13 +80,7 @@ export default function BlogPostLayout({
 
   return (
     <div className="flex min-h-screen flex-col bg-white">
-      {/* Minimal progress bar */}
-      <div className="fixed top-0 left-0 right-0 z-50 h-0.5 bg-neutral-200">
-        <div
-          className="h-full bg-neutral-900 transition-all duration-300"
-          style={{ width: `${scrollProgress}%` }}
-        />
-      </div>
+      <BlogScrollProgress />
 
       <Navbar />
       <main className="flex-1">
@@ -131,24 +96,13 @@ export default function BlogPostLayout({
               />
               <article>
                 <header className="relative mb-6 sm:mb-8">
-                  {showHeroImage && image && !hasImageError ? (
-                    <div className="rounded-lg overflow-hidden mb-6">
-                      <CoreImage
-                        src={image}
-                        alt={title}
-                        width={896}
-                        height={504}
-                        className="w-full h-full object-cover"
-                        sizes="(max-width: 1024px) 100vw, 896px"
-                        priority={true}
-                        trackingId={`blog_hero_${slug}`}
-                        onLoadError={() => setHasImageError(true)}
-                        customErrorHandling={true}
-                      />
-                    </div>
-                  ) : (
-                    <div className={cn("aspect-[16/9] rounded-lg overflow-hidden mb-6", effectiveGradient)} />
-                  )}
+                  <BlogHeroMedia
+                    title={title}
+                    image={image}
+                    gradientClass={effectiveGradient}
+                    showHeroImage={showHeroImage}
+                    slug={slug}
+                  />
                   <div className="flex items-center gap-3 mb-3">
                     <span className="inline-block px-3 py-1 bg-neutral-100 rounded-full text-xs lowercase">
                       {category}

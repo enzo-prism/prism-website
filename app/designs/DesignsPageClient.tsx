@@ -10,13 +10,12 @@ import {
   CarouselPrevious,
   type CarouselApi,
 } from "@/components/ui/carousel"
+import Navbar from "@/components/navbar"
 import { useMobile } from "@/hooks/use-mobile"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import Image from "next/image"
-import dynamic from "next/dynamic"
 import Link from "next/link"
 import { useCallback, useEffect, useState } from "react"
-const Navbar = dynamic(() => import("@/components/navbar"), { ssr: false })
 
 // Quotes data
 const slides = [

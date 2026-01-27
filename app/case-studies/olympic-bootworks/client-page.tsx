@@ -1,13 +1,10 @@
-"use client"
-
 import Footer from "@/components/footer"
+import Navbar from "@/components/navbar"
 import { CaseStudySchema } from "@/components/schema-markup"
 import SocialShare from "@/components/social-share"
-import dynamic from "next/dynamic"
 import Image from "next/image"
 import Link from "next/link"
 
-const Navbar = dynamic(() => import("@/components/navbar"), { ssr: false })
 const linkClassName = "font-medium text-neutral-900 underline underline-offset-4"
 const CASE_STUDY_TITLE = "Olympic Bootworks: the Tahoe shop that finally sells online"
 const CASE_STUDY_DESCRIPTION =

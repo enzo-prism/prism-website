@@ -9,6 +9,10 @@ import { Button } from "@/components/ui/button"
 export const metadata: Metadata = {
   title: "shoot request received | prism",
   description: "Your photography windows are on our calendar—look for a confirmation email with next steps.",
+  robots: {
+    index: false,
+    follow: false,
+  },
   alternates: {
     canonical: "https://www.design-prism.com/book-a-shoot/thank-you",
   },

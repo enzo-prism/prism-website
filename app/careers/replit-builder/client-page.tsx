@@ -1,13 +1,10 @@
-"use client"
-
 import Footer from "@/components/footer"
+import Navbar from "@/components/navbar"
+import TrackedAnchor from "@/components/tracked-anchor"
+import TrackedLink from "@/components/tracked-link"
 import { Button } from "@/components/ui/button"
-import { trackCTAClick, trackNavigation } from "@/utils/analytics"
 import { Briefcase, Clock, Mail, MapPin } from "lucide-react"
-import dynamic from "next/dynamic"
-import Link from "next/link"
 import { JobPostingSchema } from "@/components/schema-markup"
-const Navbar = dynamic(() => import("@/components/navbar"), { ssr: false })
 
 export default function ReplitBuilderPage() {
   const responsibilities = [
@@ -209,9 +206,10 @@ export default function ReplitBuilderPage() {
                 </div>
 
                 <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                  <a
+                  <TrackedAnchor
                     href="mailto:support@design-prism.com?subject=replit%20builder%20%E2%80%93%20[Your%20Name]"
-                    onClick={() => trackCTAClick("apply for job", "replit-builder")}
+                    label="apply for job"
+                    location="replit-builder"
                   >
                     <Button
                       size="lg"
@@ -220,7 +218,7 @@ export default function ReplitBuilderPage() {
                       <Mail className="mr-2 h-4 w-4" />
                       apply now
                     </Button>
-                  </a>
+                  </TrackedAnchor>
 
                   <div className="flex items-center gap-2 text-neutral-400 text-sm lowercase">
                     <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
@@ -235,26 +233,28 @@ export default function ReplitBuilderPage() {
         <section className="px-4 pb-2">
           <div className="container mx-auto px-4 md:px-6 text-center">
             <p className="text-xs font-semibold uppercase tracking-[0.28em] text-neutral-400">other open roles</p>
-            <Link
+            <TrackedLink
               href="/careers/front-end-developer"
+              label="open role"
+              location="open_role_front_end_developer"
               className="mt-3 inline-flex text-sm font-semibold lowercase text-neutral-900 underline decoration-neutral-300 underline-offset-4 transition hover:decoration-neutral-900"
-              onClick={() => trackNavigation("open_role_front_end_developer", "/careers/front-end-developer")}
             >
               contract front-end developer
-            </Link>
+            </TrackedLink>
           </div>
         </section>
 
         {/* Back Navigation */}
         <section className="px-4 py-8">
           <div className="container mx-auto px-4 md:px-6 text-center">
-            <Link
+            <TrackedLink
               href="/careers"
+              label="back to careers"
+              location="back_to_careers"
               className="text-sm font-medium text-neutral-600 hover:text-neutral-900 lowercase transition-colors"
-              onClick={() => trackNavigation("back_to_careers", "/careers")}
             >
               ← back to careers
-            </Link>
+            </TrackedLink>
           </div>
         </section>
       </main>

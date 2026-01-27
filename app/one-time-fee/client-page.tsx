@@ -4,11 +4,10 @@ import { ArrowRight, CheckCircle, CreditCard, FileText, Globe, Palette, Printer,
 import Link from "next/link"
 
 import Footer from "@/components/footer"
+import Navbar from "@/components/navbar"
 import ScrollProgressBar from "@/components/scroll-progress-bar"
 import { Button } from "@/components/ui/button"
 import { useMobile } from "@/hooks/use-mobile"
-import dynamic from "next/dynamic"
-const Navbar = dynamic(() => import("@/components/navbar"), { ssr: false })
 
 import { trackCTAClick, trackNavigation } from "@/utils/analytics"
 import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"

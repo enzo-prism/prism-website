@@ -19,6 +19,8 @@ describe("sitemap", () => {
       "https://www.design-prism.com/pricing",
       "https://www.design-prism.com/case-studies",
       "https://www.design-prism.com/blog",
+      "https://www.design-prism.com/library",
+      "https://www.design-prism.com/podcast",
     ]))
 
     const seen = new Set<string>()
@@ -30,5 +32,8 @@ describe("sitemap", () => {
       expect(seen.has(url)).toBe(false)
       seen.add(url)
     }
+
+    expect(urls.some((url) => url.includes("/library/"))).toBe(true)
+    expect(urls.some((url) => url.startsWith("https://www.design-prism.com/podcast/"))).toBe(true)
   })
 })

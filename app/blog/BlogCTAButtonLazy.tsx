@@ -8,7 +8,6 @@ import { ArrowRight } from "lucide-react"
 import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
 
 const BlogCTAButton = dynamic(() => import("./BlogCTAButton"), {
-  ssr: false,
   loading: () => (
     <Link
       href="/free-analysis"
@@ -25,4 +24,3 @@ const BlogCTAButton = dynamic(() => import("./BlogCTAButton"), {
 export default function BlogCTAButtonLazy() {
   return <BlogCTAButton />
 }
-

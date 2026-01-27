@@ -11,6 +11,10 @@ import { Button } from "@/components/ui/button"
 export const metadata: Metadata = {
   title: "Thank you | prism",
   description: "We received your AI site brief—book a kickoff call to see your plan faster.",
+  robots: {
+    index: false,
+    follow: false,
+  },
   alternates: {
     canonical: "https://www.design-prism.com/thank-you",
   },

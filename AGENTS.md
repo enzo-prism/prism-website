@@ -21,6 +21,12 @@ Install dependencies with `pnpm install`. Run `pnpm dev` to start the local Next
 ## Coding Style & Naming Conventions
 The project relies on ESLint, Prettier, and Tailwind CSS. Preserve the default Prettier formatting (two-space indentation, double quotes in JSON, semicolons in TypeScript) and never hand-format compiled assets. React components use PascalCase filenames (e.g., `components/PricingCard.tsx`), hooks live in `hooks/` and use `use` prefixes, and utility functions prefer camelCase. Keep Tailwind classes ordered logically (layout → spacing → color) to aid diffs.
 
+## Server/Client Component Defaults (Codex CLI notes)
+- Default to Server Components for marketing content; isolate interactivity into small client islands under `components/`.
+- Avoid `ssr: false` for content-bearing components—only use it for client-only utilities (e.g., toasts).
+- When converting a page to server-rendered, replace inline CTA tracking with `components/tracked-link.tsx` or `components/tracked-anchor.tsx` so analytics still fire without making the whole page a client component.
+- Formspree submissions should use `useFormValidation` plus client-side `fetch` and redirect to `/thank-you` routes; document new/changed flows in `docs/forms.md`, `docs/pages-overview.md`, or `docs/development-guide.md`.
+
 ## Testing Guidelines
 Jest with `@testing-library/react` powers the test suite; place files as `ComponentName.test.tsx` inside `__tests__/` or adjacent to the component when co-locating improves clarity. Mock external services via the helpers in `__mocks__/`. Write interaction-focused tests that assert user-visible outcomes, and ensure new code paths are covered before merging.
 

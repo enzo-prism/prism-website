@@ -1,21 +1,19 @@
-"use client"
-
 import Footer from "@/components/footer"
+import Navbar from "@/components/navbar"
 import { CaseStudySchema } from "@/components/schema-markup"
 import SocialShare from "@/components/social-share"
+import TrackedLink from "@/components/tracked-link"
 import { CaseStudyCallout } from "@/components/case-studies/CaseStudyCallout"
 import { CaseStudySectionNav } from "@/components/case-studies/CaseStudySectionNav"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader } from "@/components/ui/card"
 import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
-import { trackCTAClick } from "@/utils/analytics"
 import dynamic from "next/dynamic"
 import Link from "next/link"
 
-const Navbar = dynamic(() => import("@/components/navbar"), { ssr: false })
 const FounderImpactGraph = dynamic(
   () => import("@/components/case-studies/FounderImpactGraph").then((m) => m.FounderImpactGraph),
-  { ssr: false, loading: () => <div className="h-64 w-full animate-pulse rounded-2xl bg-neutral-100" /> }
+  { loading: () => <div className="h-64 w-full animate-pulse rounded-2xl bg-neutral-100" /> }
 )
 
 type QuickFact = {
@@ -115,14 +113,25 @@ export default function MinimalCaseStudyPage({
               {heroButton && (
                 <div className="flex flex-wrap items-center gap-3">
                   <Button asChild variant="outline" className="rounded-full lowercase">
-                    <Link
-                      href={heroButton.href}
-                      target={heroButton.href.startsWith("http") ? "_blank" : undefined}
-                      rel={heroButton.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                      onClick={() => heroButton.trackLabel && trackCTAClick(heroButton.label, heroButton.trackLabel)}
-                    >
-                      {heroButton.label}
-                    </Link>
+                    {heroButton.trackLabel ? (
+                      <TrackedLink
+                        href={heroButton.href}
+                        target={heroButton.href.startsWith("http") ? "_blank" : undefined}
+                        rel={heroButton.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                        label={heroButton.label}
+                        location={heroButton.trackLabel}
+                      >
+                        {heroButton.label}
+                      </TrackedLink>
+                    ) : (
+                      <Link
+                        href={heroButton.href}
+                        target={heroButton.href.startsWith("http") ? "_blank" : undefined}
+                        rel={heroButton.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                      >
+                        {heroButton.label}
+                      </Link>
+                    )}
                   </Button>
                 </div>
               )}
@@ -221,14 +230,11 @@ export default function MinimalCaseStudyPage({
                 {cta.title && <h3 className="text-2xl font-semibold lowercase">{cta.title}</h3>}
                 {cta.body && <p className="mx-auto max-w-xl text-sm text-neutral-600 lowercase">{cta.body}</p>}
                 <div className="pt-2">
-                  <Link href={ctaHref}>
-                    <Button
-                      className="rounded-full px-6 py-5 text-sm lowercase"
-                      onClick={() => trackCTAClick(FREE_AUDIT_CTA_TEXT, ctaTrackLabel)}
-                    >
+                  <Button asChild className="rounded-full px-6 py-5 text-sm lowercase">
+                    <TrackedLink href={ctaHref} label={FREE_AUDIT_CTA_TEXT} location={ctaTrackLabel}>
                       {FREE_AUDIT_CTA_TEXT}
-                    </Button>
-                  </Link>
+                    </TrackedLink>
+                  </Button>
                 </div>
               </section>
             )}

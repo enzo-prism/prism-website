@@ -3,7 +3,6 @@
 import dynamic from "next/dynamic"
 
 const AITrafficDeclineChart = dynamic(() => import("./ai-traffic-decline-chart"), {
-  ssr: false,
   loading: () => (
     <div className="mb-8 w-full rounded-lg border border-neutral-200 bg-white p-6 shadow-sm">
       <div className="h-6 w-48 animate-pulse rounded bg-neutral-100" />
@@ -15,4 +14,3 @@ const AITrafficDeclineChart = dynamic(() => import("./ai-traffic-decline-chart")
 
 export { AITrafficDeclineChart }
 export default AITrafficDeclineChart
-

@@ -10,7 +10,7 @@ import { trackCTAClick } from "@/utils/analytics"
 
 const FounderImpactGraph = dynamic(
   () => import("@/components/case-studies/FounderImpactGraph").then((m) => m.FounderImpactGraph),
-  { ssr: false, loading: () => <Skeleton className="h-[620px] w-full rounded-3xl md:h-[660px]" /> }
+  { loading: () => <Skeleton className="h-[620px] w-full rounded-3xl md:h-[660px]" /> }
 )
 
 function useNearViewport<T extends Element>(options?: IntersectionObserverInit) {

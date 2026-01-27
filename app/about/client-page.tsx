@@ -1,21 +1,14 @@
-"use client"
-
 import Footer from "@/components/footer"
+import Navbar from "@/components/navbar"
+import ScrollToTimelineButton from "@/components/about/ScrollToTimelineButton"
 import { PersonSchema } from "@/components/schema-markup"
 import ScrollingTimeline from "@/components/scrolling-timeline"
-import dynamic from "next/dynamic"
 import PoleVaultCarousel from "@/components/pole-vault-carousel"
 import Image from "next/image"
 import Link from "next/link"
-const Navbar = dynamic(() => import("@/components/navbar"), { ssr: false })
-import { ArrowDownRight, ArrowUpRight } from "lucide-react"
+import { ArrowUpRight } from "lucide-react"
 
 export default function AboutClientPage() {
-  const scrollToTimeline = () => {
-    const target = document.getElementById("timeline")
-    if (target) target.scrollIntoView({ behavior: "smooth", block: "start" })
-  }
-
   return (
     <div className="flex min-h-screen flex-col">
       <Navbar />
@@ -49,13 +42,7 @@ export default function AboutClientPage() {
                   enzo sison built prism to pursue his passions for tech, business, and athletics at the highest level — and to connect with others chasing excellence in their own fields.
                 </p>
                 <div className="flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-4">
-                  <button
-                    type="button"
-                    onClick={scrollToTimeline}
-                    className="inline-flex items-center justify-center rounded-full bg-neutral-900 px-6 py-3 text-sm font-semibold text-white transition hover:bg-neutral-800 lowercase"
-                  >
-                    view timeline <ArrowDownRight className="ml-2 h-4 w-4" aria-hidden />
-                  </button>
+                  <ScrollToTimelineButton />
                   <Link
                     href="https://enzosison.com"
                     target="_blank"

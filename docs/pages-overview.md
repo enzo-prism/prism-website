@@ -3,7 +3,7 @@
 Quick reference for the pages we edit most often.
 
 ## Case Studies (`app/case-studies/*`)
-- Individual case study pages live under `app/case-studies/<slug>/` and typically render a client component (`client-page.tsx`).
+- Individual case study pages live under `app/case-studies/<slug>/` and render server components with client-only subcomponents for the interactive sections.
 - Sticky section navigation is `components/case-studies/CaseStudySectionNav.tsx` (shadcn `ToggleGroup` + `Sheet` + `ScrollArea`); sections must use `data-section="<id>"` or `id="<id>"` so scrolling and active state work.
 - Reusable “data note / in progress” callouts are `components/case-studies/CaseStudyCallout.tsx` (shadcn `Alert`).
 - The “buy back time / grow customers” interactive graph is `components/case-studies/FounderImpactGraph.tsx` (shadcn `Tabs` + recharts; “with prism” vs “without prism” scenarios).
@@ -11,7 +11,7 @@ Quick reference for the pages we edit most often.
 - Minimal case studies use `components/case-study-minimal.tsx`, which automatically includes the graph so pages stay consistent.
 
 ## Pricing (`app/pricing/client-page.tsx`)
-- Hero copy + image, the plans grid, founder VSL block, “everything included” features, “Website Use Cases”, smooth handoff section, clients rail, FAQ, and final CTA all live here.
+- Core sections (plans grid, founder VSL block, “everything included” features, “Website Use Cases”, smooth handoff section, clients rail, FAQ, and final CTA) live here; the hero + fullscreen modal live in `components/pricing/PricingHero.tsx`.
 - The primary “pricing breakdown” CTA and the final CTA link to `#plans`; keep that anchor intact when editing.
 - The video directly under the pricing cards uses `VideoPlayer` plus structured data—when swapping the asset, update the Cloudinary `src`, poster, and metadata inside `PricingSection`.
 - Clients are rendered via `components/home/ClientsRail.tsx` to keep the same scroller behavior and the “view case studies” link.
@@ -49,6 +49,10 @@ Quick reference for the pages we edit most often.
 - Simple hero, form card, kickoff-call button, and contact info.
 - Uses `ContactForm` for all validation/submission logic.
 
+## Structured data (global)
+- `app/layout.tsx` injects `GlobalSchemaGraph` from `components/schema-markup.tsx` (Organization, WebSite, LocalBusiness).
+- `components/breadcrumbs.tsx` emits `BreadcrumbList` JSON-LD with canonical URLs.
+
 ## Homepage (`app/client-page.tsx`)
 - The hero proof strip uses `HeroReviewSliderCard` (`components/home/HeroReviewSliderCard.tsx`) with two curated quotes and the “250+ more” CTA kept above the fold.
 - Hero copy, service strip, and CTAs live in `app/client-page.tsx` with CTA tracking in `components/home/HeroCtas.tsx`.
@@ -80,7 +84,8 @@ Each uses card-based layouts: confirmation message + kickoff-call CTA + contact 
 ## AI Website Launch (`app/ai-website-launch/client-page.tsx`)
 - High-conversion landing page for ads traffic. Sections include hero, founder VSL, pains, how-it-works, deliverables, clients carousel, comparison table, optional-upgrade CTA, and the Formspree intake.
 - The VSL (`VideoPlayer`) lives immediately after the hero; reuse the same video + schema props that `/websites` uses when marketing needs a consistent message.
-- The form lives inline on this page (not under `components/forms/`); it posts to Formspree via `fetch`, redirects to `/thank-you`, and tracks CTA clicks/form submissions through `trackCTAClick` / `trackFormSubmission`.
+- The inline intake form lives in `components/ai-website-launch/AiWebsiteLaunchForm.tsx`; it uses `useFormValidation` with Formspree `fetch`, redirects to `/thank-you`, and tracks submissions via `trackFormSubmission`.
+- CTA links on the page use `components/tracked-anchor.tsx` so analytics fire without making the page a full client component.
 - The “Our Clients” carousel reuses `components/home/ClientsRail.tsx`, so updates to the shared rail automatically propagate here.
 - Use this page as the reference when building future paid-traffic landers that need bespoke layout but the shared analytics + form wiring.
 

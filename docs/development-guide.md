@@ -16,7 +16,7 @@ This guide highlights the workflows we lean on most often while iterating on the
 - ESLint uses the flat config in `eslint.config.js` (Next 16 removed `next lint`).
 
 ## Formspree Integration
-All marketing forms live under `components/forms/` (Contact, Free Analysis, Get Started) and share the `useFormValidation` hook. The new AI Website Launch landing page keeps its form in `app/ai-website-launch/client-page.tsx`, but mirrors the exact same submission pattern (client-side `fetch`, `Accept: application/json`, and redirect to `/thank-you`).
+All marketing forms live under `components/forms/` (Contact, Free Analysis, Get Started) and share the `useFormValidation` hook. The AI Website Launch form lives in `components/ai-website-launch/AiWebsiteLaunchForm.tsx` (embedded in `app/ai-website-launch/client-page.tsx`) and follows the same submission pattern (client-side `fetch`, `Accept: application/json`, and redirect to `/thank-you`).
 
 Key details:
 - Forms post to Formspree via `fetch` with `Accept: application/json`. On success we push the user to `/thank-you` or `/analysis-thank-you` so our custom screens always render.
@@ -32,7 +32,7 @@ Custom confirmation routes live in `app/thank-you/` and `app/analysis-thank-you/
 - When building a new landing page with a Formspree form, make sure the success handler navigates to `/thank-you` so the Ads conversion snippet runs and the GA pageview records properly.
 
 ## Pricing Page Content
-- Pricing UI is in `app/pricing/client-page.tsx`.
+- Pricing UI is in `app/pricing/client-page.tsx` with the hero modal split into `components/pricing/PricingHero.tsx`.
 - Hero copy, tier descriptions, "Website Use Cases", and the new handoff section are all co-located for easy edits.
 - When introducing a new section, wrap it with `RevealOnScroll` helpers for consistent motion.
 
