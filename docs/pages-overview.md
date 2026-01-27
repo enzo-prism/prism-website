@@ -16,6 +16,10 @@ Quick reference for the pages we edit most often.
 - The video directly under the pricing cards uses `VideoPlayer` plus structured data—when swapping the asset, update the Cloudinary `src`, poster, and metadata inside `PricingSection`.
 - Clients are rendered via `components/home/ClientsRail.tsx` to keep the same scroller behavior and the “view case studies” link.
 
+## Checkout (`app/checkout/*/page.tsx`)
+- Launch, Grow, and Scale checkout pages are intentionally **noindex/no-follow** and excluded from the sitemap.
+- Keep canonical URLs set, but avoid adding these routes to marketing navs or sitemap entries.
+
 ## Dental Pricing (`app/pricing-dental/client-page.tsx`)
 - Plan definitions live in `dentalPlans`; keep prices and product images aligned with what's shown on the page so Merchant listing structured data stays valid.
 
@@ -80,6 +84,7 @@ Quick reference for the pages we edit most often.
 - `app/analysis-thank-you/page.tsx`
 
 Each uses card-based layouts: confirmation message + kickoff-call CTA + contact details. When adding new forms, reuse one of these routes for consistency.
+- These routes are noindex/no-follow and should remain crawlable (don’t block them in `robots.txt`) so search engines can read the meta noindex directive.
 
 ## AI Website Launch (`app/ai-website-launch/client-page.tsx`)
 - High-conversion landing page for ads traffic. Sections include hero, founder VSL, pains, how-it-works, deliverables, clients carousel, comparison table, optional-upgrade CTA, and the Formspree intake.

@@ -40,7 +40,7 @@ All Formspree-backed forms use the hook above so users always land on `/thank-yo
 - `/analysis-thank-you` ([`app/analysis-thank-you/page.tsx`](../app/analysis-thank-you/page.tsx)) — used by the Free Analysis form.
 
 Each page is intentionally minimal: confirmation card, kickoff-call CTA, and contact info.
-These routes are noindex/no-follow and disallowed in `robots.txt` so they never appear in search results.
+These routes are noindex/no-follow and **not** blocked in `robots.txt` so search engines can read the meta noindex directive.
 
 ## FAQ / Troubleshooting
 - **Still seeing Formspree’s stock page?** Make sure `fetch` sends `Accept: application/json` and you aren’t calling `form.submit()` directly.

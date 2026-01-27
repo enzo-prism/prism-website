@@ -14,6 +14,10 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://www.design-prism.com/checkout/launch",
   },
+  robots: {
+    index: false,
+    follow: false,
+  },
 }
 
 export default function LaunchCheckoutPage() {

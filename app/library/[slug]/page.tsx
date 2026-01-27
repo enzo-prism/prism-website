@@ -6,6 +6,7 @@ import Breadcrumbs from "@/components/breadcrumbs"
 import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
 import LibraryInstagramEmbed from "@/components/library/LibraryInstagramEmbed"
+import { canonicalUrl } from "@/lib/canonical"
 import { getTikTokEmbedHtml } from "@/lib/library/embeds"
 import { getLibraryPosts } from "@/lib/library/getLibraryPosts"
 import type { LibraryPost } from "@/lib/library/types"
@@ -15,8 +16,7 @@ interface PageProps {
 }
 
 const buildMetadata = (post: LibraryPost): Metadata => {
-  const base = process.env.NEXT_PUBLIC_BASE_URL || "https://www.design-prism.com"
-  const canonical = `${base}/library/${post.slug}`
+  const canonical = canonicalUrl(`/library/${post.slug}`)
   const speakerName = post.editorial?.speaker?.name
   const rawTitle = speakerName ? `${speakerName}: ${post.title}` : post.title
   const description =
@@ -25,7 +25,7 @@ const buildMetadata = (post: LibraryPost): Metadata => {
     post.thumbnailUrl && post.thumbnailUrl.startsWith("http")
       ? post.thumbnailUrl
       : post.thumbnailUrl
-      ? `${base}${post.thumbnailUrl}`
+      ? canonicalUrl(post.thumbnailUrl)
       : null
 
   return {

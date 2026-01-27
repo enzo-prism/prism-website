@@ -12,6 +12,10 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://www.design-prism.com/checkout/scale",
   },
+  robots: {
+    index: false,
+    follow: false,
+  },
 }
 
 export default function ScaleCheckoutPage() {
