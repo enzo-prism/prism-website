@@ -63,6 +63,7 @@ Quick reference for the pages we edit most often.
 - The hero client logo circles use click/tap tooltips; keep the label text in `HERO_CLIENT_ICONS` aligned with the logos.
 - Hero benefit cards are rendered by `components/home/HeroBenefits.tsx`, including randomized Lordicon variants on each load for the “more customers”, “Higher Customer LTV”, and “spend less time on tech” tiles.
 - The hero section uses `HERO_SECTION_CLASSES` in `app/client-page.tsx` to center its content in the viewport while accounting for the sticky header height and safe-area insets.
+- On mobile, the homepage navbar starts hidden and fades/slides in after the first tap; this is enabled via `mobileRevealOnFirstTap` on `components/navbar.tsx`.
 - Homepage sections use full-screen spacing (`SECTION_SPACING` in `app/client-page.tsx` plus the matching padding in `components/home/WallOfLoveCarousel.tsx`) so each section reads as its own viewport.
 - The Search Console snapshots section below the hero uses `components/home/SearchConsoleSnapshotsRail.tsx` (native scroll-snap rail with lightweight arrow controls for desktop); keep it touch-first with subtle progress bars under the rail.
 - Mobile hero spacing between the CTA stack and the Search Console slider is controlled by the grid `gap` on the hero container; keep it roomy on sub-640px screens.

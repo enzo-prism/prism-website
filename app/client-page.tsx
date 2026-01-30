@@ -278,7 +278,7 @@ export default function ClientPage() {
   return (
     <div className="flex min-h-screen flex-col bg-background">
       <LordIconScript />
-      <Navbar />
+      <Navbar mobileRevealOnFirstTap />
       <main className="flex-1">
         <section className={HERO_SECTION_CLASSES}>
           <div className="container relative mx-auto px-4 sm:px-6">

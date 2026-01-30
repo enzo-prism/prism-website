@@ -51,11 +51,16 @@ const getTopIcon = (label?: string) => {
 
 const getNavIcon = getTopIcon
 
-export default function Navbar() {
+type NavbarProps = {
+  mobileRevealOnFirstTap?: boolean
+}
+
+export default function Navbar({ mobileRevealOnFirstTap = false }: NavbarProps) {
   const pathname = usePathname()
   const navItems = NAV_ITEMS
   const headerRef = useRef<HTMLElement | null>(null)
   const [isScrolled, setIsScrolled] = useState(false)
+  const [hasInteracted, setHasInteracted] = useState(!mobileRevealOnFirstTap)
 
   const caseStudyBreadcrumbs = useMemo(() => {
     if (!pathname?.startsWith("/case-studies")) return null
@@ -106,6 +111,20 @@ export default function Navbar() {
     }
   }, [])
 
+  useEffect(() => {
+    if (!mobileRevealOnFirstTap || hasInteracted) return
+
+    const handleFirstInteraction = () => {
+      setHasInteracted(true)
+    }
+
+    window.addEventListener("pointerdown", handleFirstInteraction, { passive: true, once: true })
+
+    return () => {
+      window.removeEventListener("pointerdown", handleFirstInteraction)
+    }
+  }, [hasInteracted, mobileRevealOnFirstTap])
+
   const normalizeHref = (href: string) => aliasMap[href] ?? href
   const isActivePath = (href?: string) => (href ? pathname === normalizeHref(href) : false)
   const isParentActive = (item: NavItem) => {
@@ -116,10 +135,20 @@ export default function Navbar() {
     return false
   }
 
+  const shouldReveal = !mobileRevealOnFirstTap || hasInteracted
+  const revealClasses = mobileRevealOnFirstTap
+    ? shouldReveal
+      ? "opacity-100 translate-y-0"
+      : "pointer-events-none opacity-0 -translate-y-2 md:pointer-events-auto md:opacity-100 md:translate-y-0"
+    : ""
+  const transitionClasses = mobileRevealOnFirstTap
+    ? "transition-[opacity,transform,background-color,box-shadow,border-color] duration-300 ease-out motion-reduce:transition-none"
+    : "transition-colors"
+
   return (
     <header
       ref={headerRef}
-      className={`sticky top-0 z-50 w-full backdrop-blur nav-blur transition-colors ${
+      className={`sticky top-0 z-50 w-full backdrop-blur nav-blur ${transitionClasses} ${revealClasses} ${
         isScrolled
           ? "bg-background/95 shadow-sm supports-[backdrop-filter]:bg-background/90"
           : "bg-background/80 supports-[backdrop-filter]:bg-background/60"
