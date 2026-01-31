@@ -16,6 +16,7 @@ export async function GET() {
       title: post.title,
       description: post.description,
       date: post.date,
+      author: post.author,
       category: post.category,
       image: post.image ?? null,
       gradientClass: post.gradientClass,

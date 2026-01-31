@@ -9,6 +9,11 @@ const blogPosts = {
     category: "Entrepreneurship",
     gradientClass: "bg-gradient-to-br from-amber-300/30 via-orange-300/30 to-rose-300/30",
   },
+  'meet-gwen-prisms-ai-powered-growth-partner': {
+    title: "Meet Gwen: Prism's AI Powered Growth Partner",
+    category: "AI & Growth",
+    gradientClass: "bg-gradient-to-br from-sky-300/30 via-indigo-300/30 to-emerald-300/30",
+  },
   'unlocking-smb-growth-hormozi-100m-offers': {
     title: "Unlocking SMB Growth: Lessons from Alex Hormozi's $100M Offers (And Why AI is Your Secret Weapon Right Now)",
     category: "Business & AI",

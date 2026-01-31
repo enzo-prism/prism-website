@@ -558,6 +558,7 @@ export default async function WebsitesPage() {
                     title={post.title}
                     category={post.category}
                     date={post.date}
+                    author={post.author}
                     description={post.description}
                     slug={post.slug}
                     image={post.image || "/blog/ai-digital-marketing.png"}

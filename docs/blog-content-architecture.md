@@ -22,6 +22,7 @@ Each MDX file must define:
 | Field | Required | Notes |
 | --- | --- | --- |
 | `title` | ✅ | Used for metadata + card headings |
+| `author` | optional | Byline for cards + post header (defaults to "Prism Team") |
 | `description` | ✅ | Summary for cards, RSS, and SEO |
 | `date` | ✅ | ISO string (`YYYY-MM-DD`) |
 | `category` | ✅ | Free-form label; slug auto-generated |

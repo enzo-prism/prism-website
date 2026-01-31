@@ -98,16 +98,17 @@ export default async function Blog({
             {filteredPosts.length > 0 ? (
               <SimpleBlogGrid>
                 {filteredPosts.map((post) => (
-                  <SimpleBlogPostCard
-                    key={post.slug}
-                    title={post.title}
-                    category={post.category}
-                    date={post.date}
-                    description={post.description}
-                    slug={post.slug}
-                    image={post.image || "/blog/ai-digital-marketing.png"}
-                    gradientClass={post.gradientClass}
-                    prefetch={false}
+                    <SimpleBlogPostCard
+                      key={post.slug}
+                      title={post.title}
+                      category={post.category}
+                      date={post.date}
+                      author={post.author}
+                      description={post.description}
+                      slug={post.slug}
+                      image={post.image || "/blog/ai-digital-marketing.png"}
+                      gradientClass={post.gradientClass}
+                      prefetch={false}
                   />
                 ))}
               </SimpleBlogGrid>

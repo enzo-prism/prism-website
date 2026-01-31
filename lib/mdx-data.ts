@@ -6,6 +6,7 @@ import "server-only"
 export type BlogFrontmatter = {
   title: string
   h1Title?: string
+  author: string
   description: string
   date: string
   category: string
@@ -85,9 +86,14 @@ export async function getPost(
       return null
     }
 
+    const rawAuthor = normalizedData.author ?? normalizedData.openGraph?.authors?.[0] ?? "Prism Team"
+    const author =
+      typeof rawAuthor === "string" && rawAuthor.trim().length > 0 ? rawAuthor.trim() : "Prism Team"
+
     const frontmatter: BlogFrontmatter = {
       title: normalizedData.title,
       h1Title: normalizedData.h1Title,
+      author,
       description: normalizedData.description,
       date: normalizedData.date,
       category: normalizedData.category.trim(),

@@ -16,6 +16,7 @@ interface Props {
   slug: string
   title: string
   h1Title?: string
+  author: string
   description: string
   date: string
   category: string
@@ -39,6 +40,7 @@ interface Props {
     title: string
     description: string
     date: string
+    author: string
     category: string
     gradientClass: string
     image?: string
@@ -59,6 +61,7 @@ export default function BlogPostLayout({
   slug,
   title,
   h1Title,
+  author,
   description,
   date,
   category,
@@ -110,13 +113,19 @@ export default function BlogPostLayout({
                       showHeroImage={showHeroImage}
                       slug={slug}
                     />
-                    <div className="flex items-center gap-3 mb-3">
-                      <span className="inline-block px-3 py-1 bg-neutral-100 rounded-full text-xs lowercase">
+                    <div className="flex flex-wrap items-center gap-3 mb-3 text-sm text-neutral-500">
+                      <span className="inline-block px-3 py-1 bg-neutral-100 rounded-full text-xs lowercase text-neutral-700">
                         {category}
                       </span>
-                      <time className="text-sm text-neutral-500 lowercase" dateTime={new Date(date).toISOString()}>
-                        {new Intl.DateTimeFormat(undefined, { year: 'numeric', month: 'short', day: 'numeric' }).format(new Date(date))}
-                      </time>
+                      <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
+                        <time className="lowercase" dateTime={new Date(date).toISOString()}>
+                          {new Intl.DateTimeFormat(undefined, { year: 'numeric', month: 'short', day: 'numeric' }).format(new Date(date))}
+                        </time>
+                        <span className="text-neutral-300" aria-hidden>
+                          &middot;
+                        </span>
+                        <span className="font-medium text-neutral-700 normal-case">By {author}</span>
+                      </div>
                     </div>
                     <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight lowercase leading-tight text-balance">
                       {h1Title || title}
@@ -166,16 +175,17 @@ export default function BlogPostLayout({
                     </div>
                     <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
                       {relatedPosts.map((related) => (
-                        <SimpleBlogPostCard
-                          key={related.slug}
-                          title={related.title}
-                          category={related.category}
-                          date={related.date}
-                          description={related.description}
-                          slug={related.slug}
-                          image={related.image ?? "/blog/ai-digital-marketing.png"}
-                          gradientClass={related.gradientClass}
-                          compact
+                          <SimpleBlogPostCard
+                            key={related.slug}
+                            title={related.title}
+                            category={related.category}
+                            date={related.date}
+                            author={related.author}
+                            description={related.description}
+                            slug={related.slug}
+                            image={related.image ?? "/blog/ai-digital-marketing.png"}
+                            gradientClass={related.gradientClass}
+                            compact
                         />
                       ))}
                     </div>
@@ -220,7 +230,7 @@ export default function BlogPostLayout({
         imageUrl={effectiveImageUrl}
         datePublished={openGraph?.publishedTime || date}
         dateModified={openGraph?.modifiedTime || date}
-        authorName={openGraph?.authors?.[0] || "prism"}
+        authorName={author || openGraph?.authors?.[0] || "prism"}
       />
       {howTo ? (
         <HowToSchema

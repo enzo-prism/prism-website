@@ -11,6 +11,7 @@ type LatestPost = {
   title: string
   description: string
   date: string
+  author: string
   category: string
   image: string | null
   gradientClass?: string | null
@@ -150,6 +151,7 @@ export default function LatestPostsSection() {
                 title={post.title}
                 category={post.category}
                 date={post.date}
+                author={post.author}
                 description={post.description}
                 slug={post.slug}
                 image={post.image ?? FALLBACK_IMAGE}
