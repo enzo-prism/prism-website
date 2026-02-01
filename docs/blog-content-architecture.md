@@ -32,6 +32,8 @@ Each MDX file must define:
 
 `lib/mdx.tsx` automatically derives `categorySlug` from the `category` label by lowercasing and replacing non-alphanumeric characters with hyphens. Stick to meaningful labels; the slug keeps filters URL-safe.
 
+Open Graph behavior: if `openGraph.images` is present in frontmatter, those images are used for metadata. Otherwise the blog post falls back to the dynamic OG generator at `/api/og/blog/[slug]`, which uses `gradientClass` for the background. Add matching `twitter.images` if you want Twitter previews to use the same custom asset.
+
 Headings (H2/H3) are assigned stable anchor IDs during MDX rendering (`rehype-slug`), and `lib/mdx-toc.ts` parses the MDX source to build the table of contents.
 
 ---

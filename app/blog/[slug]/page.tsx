@@ -22,11 +22,41 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   if (!post) notFound()
   const { frontmatter } = post
   
-  // Use dynamic OG image if gradientClass is available
+  // Prefer explicit OG images from frontmatter; fall back to dynamic generator.
   const base = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.design-prism.com'
-  const ogImage = frontmatter.gradientClass
-    ? `${base}/api/og/blog/${slug}`
-    : frontmatter.openGraph?.images?.[0]?.url || frontmatter.image
+  const frontmatterOpenGraphImages = frontmatter.openGraph?.images
+  const normalizedOpenGraphImages = Array.isArray(frontmatterOpenGraphImages)
+    ? frontmatterOpenGraphImages
+    : frontmatterOpenGraphImages
+      ? [frontmatterOpenGraphImages]
+      : []
+  const hasCustomOpenGraphImages = normalizedOpenGraphImages.length > 0
+  const fallbackOgImage = `${base}/api/og/blog/${slug}`
+  const ogImages = hasCustomOpenGraphImages
+    ? normalizedOpenGraphImages
+    : [
+        {
+          url: fallbackOgImage,
+          width: 1200,
+          height: 630,
+          alt: frontmatter.title,
+        },
+      ]
+  const frontmatterTwitterImages = frontmatter.twitter?.images
+  const normalizedTwitterImages = Array.isArray(frontmatterTwitterImages)
+    ? frontmatterTwitterImages
+    : frontmatterTwitterImages
+      ? [frontmatterTwitterImages]
+      : []
+  const openGraphImageUrls = normalizedOpenGraphImages
+    .map(image => (typeof image === "string" ? image : image?.url))
+    .filter(Boolean)
+  const twitterImages =
+    normalizedTwitterImages.length > 0
+      ? normalizedTwitterImages
+      : openGraphImageUrls.length > 0
+        ? openGraphImageUrls
+        : [fallbackOgImage]
   
   // Normalize canonical to www host regardless of frontmatter
   let canonicalUrl: string
@@ -55,18 +85,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     openGraph: {
       ...frontmatter.openGraph,
       url: canonicalUrl,
-      images: [
-        {
-          url: ogImage,
-          width: 1200,
-          height: 630,
-          alt: frontmatter.openGraph?.images?.[0]?.alt || frontmatter.title,
-        },
-      ],
+      images: ogImages,
     },
     twitter: {
       ...frontmatter.twitter,
-      images: [ogImage],
+      images: twitterImages,
     },
     alternates: { canonical: canonicalUrl },
   }
