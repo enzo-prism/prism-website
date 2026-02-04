@@ -4,12 +4,37 @@ import Link from "next/link"
 import FreeAnalysisForm from "@/components/forms/FreeAnalysisForm"
 import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
+import { WebPageSchema } from "@/components/schema-markup"
+
+const PAGE_TITLE = "Free analysis | prism"
+const PAGE_DESCRIPTION =
+  "Request a free review of your current website, Google listing, and visibility metrics."
+const CANONICAL_URL = "https://www.design-prism.com/free-analysis"
 
 export const metadata: Metadata = {
-  title: "Free analysis | prism",
-  description: "Request a free review of your current website, Google listing, and visibility metrics.",
+  title: PAGE_TITLE,
+  description: PAGE_DESCRIPTION,
   alternates: {
-    canonical: "https://www.design-prism.com/free-analysis",
+    canonical: CANONICAL_URL,
+  },
+  openGraph: {
+    title: PAGE_TITLE,
+    description: PAGE_DESCRIPTION,
+    url: CANONICAL_URL,
+    images: [
+      {
+        url: "/prism-opengraph.png",
+        width: 1200,
+        height: 630,
+        alt: "Prism free analysis",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: PAGE_TITLE,
+    description: PAGE_DESCRIPTION,
+    images: ["/prism-opengraph.png"],
   },
 }
 
@@ -78,6 +103,13 @@ export default function FreeAnalysisPage() {
         </section>
       </main>
       <Footer />
+      <WebPageSchema
+        name={PAGE_TITLE}
+        description={PAGE_DESCRIPTION}
+        url={CANONICAL_URL}
+        image="https://www.design-prism.com/prism-opengraph.png"
+        isPartOfId="https://www.design-prism.com/#website"
+      />
     </div>
   )
 }

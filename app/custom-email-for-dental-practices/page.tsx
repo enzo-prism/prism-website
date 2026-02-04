@@ -5,6 +5,7 @@ import { ArrowRight, CheckCircle2, MailCheck, ShieldCheck, Users2 } from "lucide
 import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
 import ScrollToTop from "@/components/scroll-to-top"
+import { FAQSchema, WebPageSchema } from "@/components/schema-markup"
 import { Button } from "@/components/ui/button"
 import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
 
@@ -121,25 +122,38 @@ const sources = [
   "HIPAA and email: HHS allows email with safeguards; Google Workspace offers BAAs on paid tiers.",
 ]
 
+const PAGE_TITLE = "custom email for dental practices"
+const PAGE_DESCRIPTION =
+  "why name@yourpractice.com beats free mailboxes. prism sets up secure, professional email so dental practices look legit, hire faster, and stay compliant."
+const CANONICAL_URL = "https://www.design-prism.com/custom-email-for-dental-practices"
+
 export const metadata: Metadata = {
-  title: "custom email for dental practices",
-  description:
-    "why name@yourpractice.com beats free mailboxes. prism sets up secure, professional email so dental practices look legit, hire faster, and stay compliant.",
+  title: PAGE_TITLE,
+  description: PAGE_DESCRIPTION,
   alternates: {
-    canonical: "https://www.design-prism.com/custom-email-for-dental-practices",
+    canonical: CANONICAL_URL,
   },
   openGraph: {
-    title: "custom email for dental practices",
+    title: PAGE_TITLE,
     description:
       "give your dental practice a professional email foundation. prism handles workspace or 365 setup, deliverability, hipaa safeguards, and team training.",
-    url: "https://www.design-prism.com/custom-email-for-dental-practices",
+    url: CANONICAL_URL,
     type: "website",
+    images: [
+      {
+        url: "/prism-opengraph.png",
+        width: 1200,
+        height: 630,
+        alt: "Prism custom email for dental practices",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "custom email for dental practices",
+    title: PAGE_TITLE,
     description:
       "own your inbox, build trust, and protect patient communication. prism configures professional email that works for modern dental teams.",
+    images: ["/prism-opengraph.png"],
   },
   robots: {
     index: true,
@@ -442,6 +456,14 @@ export default function CustomEmailDentalPage() {
       </main>
       <Footer />
       <ScrollToTop />
+      <WebPageSchema
+        name={PAGE_TITLE}
+        description={PAGE_DESCRIPTION}
+        url={CANONICAL_URL}
+        image="https://www.design-prism.com/prism-opengraph.png"
+        isPartOfId="https://www.design-prism.com/#website"
+      />
+      <FAQSchema questions={faqs} />
     </>
   )
 }

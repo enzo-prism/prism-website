@@ -33,6 +33,13 @@ export const metadata: Metadata = {
       },
     ],
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "Paid Ads Management for Small Businesses | Prism",
+    description:
+      "Google, Meta, TikTok, and Yelp ads planned and optimized to drive more calls, form fills, and booked appointments.",
+    images: ["/prism-opengraph.png"],
+  },
   alternates: {
     canonical: "https://www.design-prism.com/ads",
   },

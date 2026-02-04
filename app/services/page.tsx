@@ -231,6 +231,13 @@ export const metadata: Metadata = {
       },
     ],
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "Prism Services | Websites, Local Presence, Ads & Analytics",
+    description:
+      "One partner for websites, local presence, paid media, content systems, and analytics—so your business gets found, trusted, and chosen.",
+    images: ["/prism-opengraph.png"],
+  },
 }
 
 export default function ServicesPage() {

@@ -7,6 +7,7 @@ import Navbar from "@/components/navbar"
 import ScrollProgressBar from "@/components/scroll-progress-bar"
 import ScrollToTop from "@/components/scroll-to-top"
 import SiteRebuildDynamicSteps from "@/components/site-rebuild-dynamic-steps"
+import { WebPageSchema } from "@/components/schema-markup"
 
 const guideSections = [
   { id: "overview", label: "Overview", emoji: "🧭" },
@@ -21,18 +22,22 @@ const guideSections = [
   { id: "wrap-up", label: "Wrap up", emoji: "✅" },
 ]
 
+const PAGE_TITLE = "rebuild any site locally with codex | prism openai guide"
+const PAGE_DESCRIPTION =
+  "Follow Prism’s no-fluff playbook to download a live site, extract its content, prep Codex context, and rebuild the experience on your machine."
+const CANONICAL_URL = "https://www.design-prism.com/openai/site-rebuild"
+
 export const metadata: Metadata = {
-  title: "rebuild any site locally with codex | prism openai guide",
-  description:
-    "Follow Prism’s no-fluff playbook to download a live site, extract its content, prep Codex context, and rebuild the experience on your machine.",
+  title: PAGE_TITLE,
+  description: PAGE_DESCRIPTION,
   alternates: {
-    canonical: "https://www.design-prism.com/openai/site-rebuild",
+    canonical: CANONICAL_URL,
   },
   openGraph: {
-    title: "rebuild any site locally with codex | prism openai guide",
+    title: PAGE_TITLE,
     description:
       "Seven precise steps to mirror a live website, feed Codex, and launch the Next.js rebuild on your localhost.",
-    url: "https://www.design-prism.com/openai/site-rebuild",
+    url: CANONICAL_URL,
     images: [
       {
         url: "/prism-opengraph.png",
@@ -44,7 +49,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "rebuild any site locally with codex | prism openai guide",
+    title: PAGE_TITLE,
     description:
       "Download the current site, capture the copy, and let Codex rebuild it locally with Next.js and Tailwind.",
     images: ["/prism-opengraph.png"],
@@ -239,6 +244,13 @@ mkdir site-rebuild && cd site-rebuild`}
       </main>
       <ScrollToTop />
       <Footer />
+      <WebPageSchema
+        name={PAGE_TITLE}
+        description={PAGE_DESCRIPTION}
+        url={CANONICAL_URL}
+        image="https://www.design-prism.com/prism-opengraph.png"
+        isPartOfId="https://www.design-prism.com/#website"
+      />
     </>
   )
 }

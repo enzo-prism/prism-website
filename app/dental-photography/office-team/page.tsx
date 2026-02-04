@@ -6,26 +6,40 @@ import { Apple, ArrowRight, Calendar } from "lucide-react"
 import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
 import ScrollToTop from "@/components/scroll-to-top"
+import { WebPageSchema } from "@/components/schema-markup"
 import { Button } from "@/components/ui/button"
 import RecentShootsSection from "./recent-shoots-section"
 
+const PAGE_TITLE = "office & team photography for dental practices | prism"
+const PAGE_DESCRIPTION =
+  "book a single shoot day to capture your team, lobby, and operatory moments so every digital touchpoint feels authentic."
+const CANONICAL_URL = "https://www.design-prism.com/dental-photography/office-team"
+
 export const metadata: Metadata = {
-  title: "office & team photography for dental practices | prism",
-  description:
-    "book a single shoot day to capture your team, lobby, and operatory moments so every digital touchpoint feels authentic.",
+  title: PAGE_TITLE,
+  description: PAGE_DESCRIPTION,
   alternates: {
-    canonical: "https://www.design-prism.com/dental-photography/office-team"
+    canonical: CANONICAL_URL,
   },
   openGraph: {
-    title: "office & team photography for dental practices | prism",
+    title: PAGE_TITLE,
     description: "tap one CTA to schedule your shoot—prism handles the rest.",
-    url: "https://www.design-prism.com/dental-photography/office-team",
-    type: "website"
+    url: CANONICAL_URL,
+    type: "website",
+    images: [
+      {
+        url: "/prism-opengraph.png",
+        width: 1200,
+        height: 630,
+        alt: "Prism office and team photography",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "office & team photography for dental practices | prism",
-    description: "authentic portraits and office stories captured in a single day."
+    title: PAGE_TITLE,
+    description: "authentic portraits and office stories captured in a single day.",
+    images: ["/prism-opengraph.png"],
   },
   robots: {
     index: true,
@@ -165,6 +179,13 @@ export default function OfficeTeamPhotographyPage() {
       </main>
       <Footer />
       <ScrollToTop />
+      <WebPageSchema
+        name={PAGE_TITLE}
+        description={PAGE_DESCRIPTION}
+        url={CANONICAL_URL}
+        image="https://www.design-prism.com/prism-opengraph.png"
+        isPartOfId="https://www.design-prism.com/#website"
+      />
     </>
   )
 }

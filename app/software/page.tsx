@@ -5,6 +5,7 @@ import LordIconScript from "@/components/LordIconScript"
 import Footer from "@/components/footer"
 import LordIcon from "@/components/lord-icon"
 import Navbar from "@/components/navbar"
+import { ItemListSchema } from "@/components/schema-markup"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import {
@@ -96,6 +97,16 @@ export default function SoftwarePage() {
         </section>
       </main>
       <Footer />
+      <ItemListSchema
+        name="Prism software tools"
+        url="https://www.design-prism.com/software"
+        items={PRISM_APPS.map((app) => ({
+          name: app.title,
+          description: app.description,
+          url: app.href,
+          itemType: "CreativeWork",
+        }))}
+      />
     </div>
   )
 }

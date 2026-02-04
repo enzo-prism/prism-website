@@ -1,15 +1,21 @@
 import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
+import { WebPageSchema } from "@/components/schema-markup"
 import type { Metadata } from "next"
 import Link from "next/link"
 
+const PAGE_TITLE = "terms of service | prism agency"
+const PAGE_DESCRIPTION =
+  "read prism agency’s terms and conditions for using our web development, app development, and digital marketing services."
+const CANONICAL_URL = "https://www.design-prism.com/terms-of-service"
+
 export const metadata: Metadata = {
-  title: "terms of service | prism agency",
-  description: "read prism agency’s terms and conditions for using our web development, app development, and digital marketing services.",
+  title: PAGE_TITLE,
+  description: PAGE_DESCRIPTION,
   openGraph: {
-    title: "terms of service | prism agency",
+    title: PAGE_TITLE,
     description: "read prism agency’s terms and conditions for using our services.",
-    url: "https://www.design-prism.com/terms-of-service",
+    url: CANONICAL_URL,
     images: [
       {
         url: "/prism-opengraph.png",
@@ -20,7 +26,7 @@ export const metadata: Metadata = {
     ],
   },
   alternates: {
-    canonical: "https://www.design-prism.com/terms-of-service",
+    canonical: CANONICAL_URL,
   },
 }
 
@@ -244,6 +250,13 @@ export default function TermsOfServicePage() {
         </div>
       </main>
       <Footer />
+      <WebPageSchema
+        name={PAGE_TITLE}
+        description={PAGE_DESCRIPTION}
+        url={CANONICAL_URL}
+        image="https://www.design-prism.com/prism-opengraph.png"
+        isPartOfId="https://www.design-prism.com/#website"
+      />
     </>
   )
 }

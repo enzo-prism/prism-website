@@ -1,21 +1,25 @@
 import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
 import SeoTextSection from "@/components/seo-text-section"
+import { WebPageSchema } from "@/components/schema-markup"
 import type { Metadata } from "next"
 import SMBClientPage from "./client-page"
 
+const PAGE_TITLE = "small business ai services | gpt-5 solutions by prism"
+const PAGE_DESCRIPTION =
+  "leverage gpt-5 across marketing, operations, and support. prism sets up, trains, and tunes ai workflows tailored to your small business."
+const CANONICAL_URL = "https://www.design-prism.com/smb"
+
 export const metadata: Metadata = {
-  title: "small business ai services | gpt-5 solutions by prism",
-  description:
-    "leverage gpt-5 across marketing, operations, and support. prism sets up, trains, and tunes ai workflows tailored to your small business.",
+  title: PAGE_TITLE,
+  description: PAGE_DESCRIPTION,
   alternates: {
-    canonical: "https://www.design-prism.com/smb",
+    canonical: CANONICAL_URL,
   },
   openGraph: {
-    title: "small business ai services | gpt-5 solutions by prism",
-    description:
-      "leverage gpt-5 across marketing, operations, and support. prism sets up, trains, and tunes ai workflows tailored to your small business.",
-    url: "https://www.design-prism.com/smb",
+    title: PAGE_TITLE,
+    description: PAGE_DESCRIPTION,
+    url: CANONICAL_URL,
     images: [
       {
         url: "/prism-opengraph.png",
@@ -42,6 +46,13 @@ export default function SMBPage() {
         </SeoTextSection>
       </main>
       <Footer />
+      <WebPageSchema
+        name={PAGE_TITLE}
+        description={PAGE_DESCRIPTION}
+        url={CANONICAL_URL}
+        image="https://www.design-prism.com/prism-opengraph.png"
+        isPartOfId="https://www.design-prism.com/#website"
+      />
     </>
   )
 }

@@ -5,6 +5,7 @@ import { ArrowRight, BarChart3, CheckCircle2, Globe2, MailCheck, Sparkles } from
 import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
 import ScrollToTop from "@/components/scroll-to-top"
+import { WebPageSchema } from "@/components/schema-markup"
 import { Button } from "@/components/ui/button"
 
 const GET_STARTED_HREF = "/get-started"
@@ -68,27 +69,31 @@ const learningLinks = [
   }
 ]
 
+const PAGE_TITLE = "google workspace & ads partner"
+const PAGE_DESCRIPTION =
+  "prism is a google partner helping small businesses grow with workspace, ads, analytics, and business profile optimization. get started with partner pricing."
+const CANONICAL_URL = "https://www.design-prism.com/google"
+
 export const metadata: Metadata = {
-  title: "google workspace & ads partner",
-  description:
-    "prism is a google partner helping small businesses grow through google workspace, ads, analytics, and business profile optimization. get started or set up workspace with a partner discount.",
+  title: PAGE_TITLE,
+  description: PAGE_DESCRIPTION,
   alternates: {
-    canonical: "https://www.design-prism.com/google"
+    canonical: CANONICAL_URL,
   },
   openGraph: {
-    title: "google workspace & ads partner",
-    description:
-      "prism is a google partner helping small businesses grow through google workspace, ads, analytics, and business profile optimization. get started or set up workspace with a partner discount.",
-    url: "https://www.design-prism.com/google",
+    title: PAGE_TITLE,
+    description: PAGE_DESCRIPTION,
+    url: CANONICAL_URL,
     siteName: "prism",
     locale: "en_US",
-    type: "website"
+    type: "website",
+    images: ["/prism-opengraph.png"],
   },
   twitter: {
     card: "summary_large_image",
-    title: "google workspace & ads partner",
-    description:
-      "prism is a google partner helping small businesses grow through google workspace, ads, analytics, and business profile optimization. get started or set up workspace with a partner discount."
+    title: PAGE_TITLE,
+    description: PAGE_DESCRIPTION,
+    images: ["/prism-opengraph.png"],
   },
   robots: {
     index: true,
@@ -371,6 +376,13 @@ export default function GooglePage() {
       </main>
       <Footer />
       <ScrollToTop />
+      <WebPageSchema
+        name={PAGE_TITLE}
+        description={PAGE_DESCRIPTION}
+        url={CANONICAL_URL}
+        image="https://www.design-prism.com/prism-opengraph.png"
+        isPartOfId="https://www.design-prism.com/#website"
+      />
     </>
   )
 }

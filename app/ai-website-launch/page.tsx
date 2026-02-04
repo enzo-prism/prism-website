@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 
 import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
+import { WebPageSchema } from "@/components/schema-markup"
 
 import AiWebsiteLaunchClientPage from "./client-page"
 
@@ -14,7 +15,7 @@ export const metadata: Metadata = {
   title: PAGE_TITLE,
   description: PAGE_DESCRIPTION,
   alternates: {
-    canonical: CANONICAL_URL,
+    canonical: "https://www.design-prism.com/ai-website-launch",
   },
   openGraph: {
     title: PAGE_TITLE,
@@ -46,6 +47,13 @@ export default function AiWebsiteLaunchPage() {
         <AiWebsiteLaunchClientPage />
       </main>
       <Footer />
+      <WebPageSchema
+        name={PAGE_TITLE}
+        description={PAGE_DESCRIPTION}
+        url={CANONICAL_URL}
+        image="https://www.design-prism.com/prism-opengraph.png"
+        isPartOfId="https://www.design-prism.com/#website"
+      />
     </div>
   )
 }

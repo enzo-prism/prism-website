@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   title: "case study: mataria dental group m&a launch",
   description: "how prism relaunched mataria dental group in torrance with a new dental website, listings, content, social campaigns, and analytics.",
   alternates: {
-    canonical: "/case-studies/mataria-dental-group",
+    canonical: "https://www.design-prism.com/case-studies/mataria-dental-group",
   },
   openGraph: {
     title: "case study: mataria dental group m&a launch",

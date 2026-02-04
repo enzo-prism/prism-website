@@ -5,6 +5,7 @@ import { ArrowRight, Award, Calendar, Camera, Layers3, MapPin, Megaphone, Share2
 import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
 import ScrollToTop from "@/components/scroll-to-top"
+import { WebPageSchema } from "@/components/schema-markup"
 import { Button } from "@/components/ui/button"
 import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
 
@@ -108,24 +109,37 @@ const specialtyTracks = [
   }
 ]
 
+const PAGE_TITLE = "dental photography that fuels every prism campaign | prism"
+const PAGE_DESCRIPTION =
+  "prism captures on-site dental photography and video that power websites, paid ads, local listings, and social media launches."
+const CANONICAL_URL = "https://www.design-prism.com/dental-photography"
+
 export const metadata: Metadata = {
-  title: "dental photography that fuels every prism campaign | prism",
-  description:
-    "prism captures on-site dental photography and video that power websites, paid ads, local listings, and social media launches.",
+  title: PAGE_TITLE,
+  description: PAGE_DESCRIPTION,
   alternates: {
-    canonical: "https://www.design-prism.com/dental-photography"
+    canonical: CANONICAL_URL,
   },
   openGraph: {
-    title: "dental photography that fuels every prism campaign | prism",
+    title: PAGE_TITLE,
     description:
       "authentic chairside visuals replace stock so your website, ads, local listings, and social feeds convert faster.",
-    url: "https://www.design-prism.com/dental-photography",
-    type: "website"
+    url: CANONICAL_URL,
+    type: "website",
+    images: [
+      {
+        url: "/prism-opengraph.png",
+        width: 1200,
+        height: 630,
+        alt: "Prism dental photography",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "dental photography that fuels every prism campaign | prism",
-    description: "on-site shoots that supercharge websites, ad libraries, map packs, and content calendars."
+    title: PAGE_TITLE,
+    description: "on-site shoots that supercharge websites, ad libraries, map packs, and content calendars.",
+    images: ["/prism-opengraph.png"],
   },
   robots: {
     index: true,
@@ -308,6 +322,13 @@ export default function DentalPhotographyPage() {
       </main>
       <Footer />
       <ScrollToTop />
+      <WebPageSchema
+        name={PAGE_TITLE}
+        description={PAGE_DESCRIPTION}
+        url={CANONICAL_URL}
+        image="https://www.design-prism.com/prism-opengraph.png"
+        isPartOfId="https://www.design-prism.com/#website"
+      />
     </>
   )
 }

@@ -1,15 +1,21 @@
 import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
+import { WebPageSchema } from "@/components/schema-markup"
 import type { Metadata } from "next"
 import Link from "next/link"
 
+const PAGE_TITLE = "privacy policy | prism agency"
+const PAGE_DESCRIPTION =
+  "learn how prism agency collects, uses, and protects your personal information across our website and services."
+const CANONICAL_URL = "https://www.design-prism.com/privacy-policy"
+
 export const metadata: Metadata = {
-  title: "privacy policy | prism agency",
-  description: "learn how prism agency collects, uses, and protects your personal information across our website and services.",
+  title: PAGE_TITLE,
+  description: PAGE_DESCRIPTION,
   openGraph: {
-    title: "privacy policy | prism agency",
-    description: "learn how prism agency collects, uses, and protects your personal information across our website and services.",
-    url: "https://www.design-prism.com/privacy-policy",
+    title: PAGE_TITLE,
+    description: PAGE_DESCRIPTION,
+    url: CANONICAL_URL,
     images: [
       {
         url: "/prism-opengraph.png",
@@ -20,7 +26,7 @@ export const metadata: Metadata = {
     ],
   },
   alternates: {
-    canonical: "https://www.design-prism.com/privacy-policy",
+    canonical: CANONICAL_URL,
   },
 }
 
@@ -206,6 +212,13 @@ export default function PrivacyPolicyPage() {
         </div>
       </main>
       <Footer />
+      <WebPageSchema
+        name={PAGE_TITLE}
+        description={PAGE_DESCRIPTION}
+        url={CANONICAL_URL}
+        image="https://www.design-prism.com/prism-opengraph.png"
+        isPartOfId="https://www.design-prism.com/#website"
+      />
     </>
   )
 }

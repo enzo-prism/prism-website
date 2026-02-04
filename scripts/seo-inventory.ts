@@ -22,8 +22,9 @@ type MetadataInfo = {
 type RouteEntry = {
   route: string
   filePath: string
-  type: "static" | "blog"
+  type: "static" | "blog" | "library"
   blogSlug?: string
+  librarySlug?: string
 }
 
 const ROOT = process.cwd()
@@ -34,12 +35,24 @@ const OUTPUT_CSV = path.join(OUTPUT_DIR, "inventory.csv")
 
 const STRUCTURED_DATA_MARKERS = [
   "CaseStudySchema",
+  "MinimalCaseStudyPage",
   "ServiceSchema",
   "BlogPostSchema",
   "HowToSchema",
   "VideoObjectSchema",
+  "VideoSchema",
   "FAQSchema",
+  "FAQSection",
+  "PersonSchema",
   "OrganizationSchema",
+  "ContactPageSchema",
+  "CollectionPageSchema",
+  "ItemListSchema",
+  "JobPostingSchema",
+  "PodcastSeriesSchema",
+  "PodcastEpisodeSchema",
+  "ProductSchema",
+  "WebPageSchema",
   "LocalBusinessSchema",
   "GlobalSchemaGraph",
 ]
@@ -80,10 +93,16 @@ function walkApp(dir: string, segments: string[], out: RouteEntry[]) {
   }
 }
 
-function getStringFromExpression(expr: ts.Expression | undefined): string | undefined {
+function getStringFromExpression(
+  expr: ts.Expression | undefined,
+  constStrings?: Map<string, string>,
+): string | undefined {
   if (!expr) return undefined
   if (ts.isStringLiteral(expr) || ts.isNoSubstitutionTemplateLiteral(expr)) {
     return expr.text
+  }
+  if (ts.isIdentifier(expr) && constStrings?.has(expr.text)) {
+    return constStrings.get(expr.text)
   }
   if (ts.isTemplateExpression(expr)) {
     const head = expr.head.text
@@ -97,6 +116,12 @@ function getStringFromExpression(expr: ts.Expression | undefined): string | unde
     }
   }
   return undefined
+}
+
+function getStringOrNull(expr: ts.Expression | undefined): string | null | undefined {
+  if (!expr) return undefined
+  if (expr.kind === ts.SyntaxKind.NullKeyword) return null
+  return getStringFromExpression(expr)
 }
 
 function getProp(obj: ts.ObjectLiteralExpression, key: string): ts.Expression | undefined {
@@ -113,6 +138,19 @@ function extractMetadataFromFile(filePath: string): MetadataInfo {
   const sourceText = fs.readFileSync(filePath, "utf8")
   const sourceFile = ts.createSourceFile(filePath, sourceText, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX)
   let metadataObj: ts.ObjectLiteralExpression | undefined
+  const constStrings = new Map<string, string>()
+
+  sourceFile.forEachChild((node) => {
+    if (!ts.isVariableStatement(node)) return
+    if (!(node.declarationList.flags & ts.NodeFlags.Const)) return
+    for (const decl of node.declarationList.declarations) {
+      if (!ts.isIdentifier(decl.name) || !decl.initializer) continue
+      const value = getStringFromExpression(decl.initializer)
+      if (value) {
+        constStrings.set(decl.name.text, value)
+      }
+    }
+  })
 
   sourceFile.forEachChild((node) => {
     if (!ts.isVariableStatement(node)) return
@@ -131,18 +169,18 @@ function extractMetadataFromFile(filePath: string): MetadataInfo {
   let title: string | undefined
   if (titleExpr && ts.isObjectLiteralExpression(titleExpr)) {
     title =
-      getStringFromExpression(getProp(titleExpr, "default")) ??
-      getStringFromExpression(getProp(titleExpr, "absolute"))
+      getStringFromExpression(getProp(titleExpr, "default"), constStrings) ??
+      getStringFromExpression(getProp(titleExpr, "absolute"), constStrings)
   } else {
-    title = getStringFromExpression(titleExpr)
+    title = getStringFromExpression(titleExpr, constStrings)
   }
 
-  const description = getStringFromExpression(getProp(metadataObj, "description"))
+  const description = getStringFromExpression(getProp(metadataObj, "description"), constStrings)
 
   let canonical: string | undefined
   const alternatesExpr = getProp(metadataObj, "alternates")
   if (alternatesExpr && ts.isObjectLiteralExpression(alternatesExpr)) {
-    canonical = getStringFromExpression(getProp(alternatesExpr, "canonical"))
+    canonical = getStringFromExpression(getProp(alternatesExpr, "canonical"), constStrings)
   }
 
   let robots: string | undefined
@@ -171,6 +209,9 @@ function stripTags(value: string) {
 
 function findFirstH1(dir: string): string | undefined {
   const files = fs.readdirSync(dir).filter((f) => /\.(tsx|ts|jsx|js|mdx)$/.test(f))
+  const h1Regex = /<(?:[\w$]+\.)?h1[^>]*>([\s\S]*?)<\/(?:[\w$]+\.)?h1>/i
+  const componentMarkers = ["SeoHero", "PricingHero", "MinimalCaseStudyPage"]
+  let combined = ""
   for (const file of files) {
     if (
       file.startsWith("layout.") ||
@@ -183,11 +224,16 @@ function findFirstH1(dir: string): string | undefined {
     }
     const full = path.join(dir, file)
     const text = fs.readFileSync(full, "utf8")
-    const match = text.match(/<h1[^>]*>([\s\S]*?)<\/h1>/i)
+    combined += `\n${text}`
+    const match = text.match(h1Regex)
     if (match) {
       const cleaned = stripTags(match[1])
       if (cleaned) return cleaned
+      if (match[1]?.trim()) return "dynamic"
     }
+  }
+  if (componentMarkers.some((marker) => combined.includes(marker))) {
+    return "component"
   }
   return undefined
 }
@@ -204,6 +250,73 @@ function listBlogSlugs(): string[] {
     .readdirSync(BLOG_DIR)
     .filter((f) => f.endsWith(".mdx"))
     .map((f) => f.replace(/\.mdx$/, ""))
+}
+
+type LibraryEntry = {
+  slug: string
+  title: string
+  description: string
+  h1: string
+}
+
+type LibrarySeedPost = {
+  id?: string
+  platform?: string
+  title?: string
+  caption?: string | null
+}
+
+function parseLibrarySeedPosts(): LibrarySeedPost[] {
+  const seedPath = path.join(ROOT, "content", "library", "seed.ts")
+  if (!fs.existsSync(seedPath)) return []
+  const sourceText = fs.readFileSync(seedPath, "utf8")
+  const sourceFile = ts.createSourceFile(seedPath, sourceText, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS)
+  let posts: LibrarySeedPost[] = []
+
+  sourceFile.forEachChild((node) => {
+    if (!ts.isVariableStatement(node)) return
+    const isExported = node.modifiers?.some((m) => m.kind === ts.SyntaxKind.ExportKeyword)
+    if (!isExported) return
+    for (const decl of node.declarationList.declarations) {
+      if (!ts.isIdentifier(decl.name) || decl.name.text !== "librarySeedPosts") continue
+      if (!decl.initializer || !ts.isArrayLiteralExpression(decl.initializer)) continue
+      posts = decl.initializer.elements
+        .filter(ts.isObjectLiteralExpression)
+        .map((obj) => ({
+          id: getStringFromExpression(getProp(obj, "id")),
+          platform: getStringFromExpression(getProp(obj, "platform")),
+          title: getStringFromExpression(getProp(obj, "title")),
+          caption: getStringOrNull(getProp(obj, "caption")) ?? undefined,
+        }))
+    }
+  })
+
+  return posts
+}
+
+function buildTitleFromCaption(caption?: string | null) {
+  if (!caption) return "Prism Library short"
+  const firstLine = caption.split("\n").find((line) => line.trim().length > 0)
+  const raw = (firstLine ?? caption).trim()
+  if (!raw) return "Prism Library short"
+  return raw.length > 80 ? `${raw.slice(0, 77)}...` : raw
+}
+
+function listLibraryEntries(): LibraryEntry[] {
+  return parseLibrarySeedPosts()
+    .map((post) => {
+      if (!post.id || !post.platform) return null
+      const slug = `${post.platform}-${post.id}`
+      const baseTitle = post.title || buildTitleFromCaption(post.caption)
+      const description = post.caption || "Prism Library short lesson."
+      return {
+        slug,
+        title: baseTitle,
+        description,
+        h1: baseTitle,
+      }
+    })
+    .filter((entry): entry is LibraryEntry => Boolean(entry))
 }
 
 function computeBlogSeo(slug: string): { title: string; description?: string; canonical: string; h1: string; structured: boolean } {
@@ -260,6 +373,19 @@ function buildInventory() {
     })
   }
 
+  const libraryEntries = listLibraryEntries()
+  const libraryPlaceholderIndex = routes.findIndex((r) => r.route === "/library/[slug]")
+  if (libraryPlaceholderIndex !== -1) routes.splice(libraryPlaceholderIndex, 1)
+
+  for (const entry of libraryEntries) {
+    routes.push({
+      route: `/library/${entry.slug}`,
+      filePath: path.join(APP_DIR, "library", "[slug]", "page.tsx"),
+      type: "library",
+      librarySlug: entry.slug,
+    })
+  }
+
   routes.sort((a, b) => a.route.localeCompare(b.route))
 
   const rows = routes.map((entry) => {
@@ -271,6 +397,20 @@ function buildInventory() {
         meta_description: blogSeo.description ?? "",
         canonical: blogSeo.canonical,
         h1: blogSeo.h1,
+        robots: "index",
+        structured_data: "yes",
+      }
+    }
+
+    if (entry.type === "library" && entry.librarySlug) {
+      const libraryEntry = libraryEntries.find((item) => item.slug === entry.librarySlug)
+      const canonical = `https://www.design-prism.com/library/${entry.librarySlug}`
+      return {
+        route: entry.route,
+        title: libraryEntry?.title ?? "",
+        meta_description: libraryEntry?.description ?? "",
+        canonical,
+        h1: libraryEntry?.h1 ?? "",
         robots: "index",
         structured_data: "yes",
       }

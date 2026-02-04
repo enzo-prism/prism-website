@@ -15,14 +15,14 @@ export const metadata: Metadata = {
     absolute: "Facebook Ads for Dentists | Prism",
   },
   description:
-    "Looking for facebook ads for dentists? Prism runs Facebook & Instagram (Meta) ads with patient-ready creative, landing pages, and reporting tied to calls and booked consults.",
+    "Prism runs Facebook & Instagram ads for dentists with patient-ready creative, landing pages, and reporting tied to calls and booked consults.",
   alternates: {
     canonical: "https://www.design-prism.com/facebook-ads-for-dentists",
   },
   openGraph: {
     title: "Facebook Ads for Dentists | Prism",
     description:
-      "Facebook & Instagram (Meta) ads for dentists with offer-first strategy, patient-ready creative, landing pages, and tracking tied to booked demand.",
+      "Facebook & Instagram ads for dentists with offer-first strategy, patient-ready creative, landing pages, and tracking tied to booked demand.",
     url: "https://www.design-prism.com/facebook-ads-for-dentists",
     siteName: "prism",
     locale: "en_US",
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Facebook Ads for Dentists | Prism",
     description:
-      "Facebook ads for dentists with creative, landing pages, and tracking that convert into booked consults.",
+      "Facebook & Instagram ads for dentists with patient-ready creative, landing pages, and reporting tied to calls and booked consults.",
     images: ["/prism-opengraph.png"],
   },
   robots: {

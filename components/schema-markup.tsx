@@ -202,6 +202,88 @@ export function BreadcrumbSchema({ items }: { items: BreadcrumbItem[] }) {
   return renderJsonLd(schema)
 }
 
+interface WebPageSchemaProps {
+  name: string
+  description?: string
+  url: string
+  image?: string | string[]
+  isPartOfId?: string
+}
+
+export function WebPageSchema({ name, description, url, image, isPartOfId }: WebPageSchemaProps) {
+  const data = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": `${url}#webpage`,
+    name,
+    description,
+    url,
+    primaryImageOfPage: image,
+    isPartOf: isPartOfId ? { "@id": isPartOfId } : undefined,
+  }
+
+  return renderJsonLd(data)
+}
+
+interface CollectionPageSchemaProps {
+  name: string
+  description?: string
+  url: string
+  isPartOfId?: string
+}
+
+export function CollectionPageSchema({ name, description, url, isPartOfId }: CollectionPageSchemaProps) {
+  const data = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "@id": `${url}#collection`,
+    name,
+    description,
+    url,
+    isPartOf: isPartOfId ? { "@id": isPartOfId } : undefined,
+  }
+
+  return renderJsonLd(data)
+}
+
+type ItemListEntry = {
+  name: string
+  url: string
+  description?: string
+  image?: string | string[]
+  itemType?: string
+}
+
+interface ItemListSchemaProps {
+  id?: string
+  name: string
+  items: ItemListEntry[]
+  itemType?: string
+  url?: string
+}
+
+export function ItemListSchema({ id, name, items, itemType = "CreativeWork", url }: ItemListSchemaProps) {
+  const data = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "@id": id || (url ? `${url}#itemlist` : undefined),
+    name,
+    itemListElement: items.map((item, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      item: {
+        "@type": item.itemType || itemType,
+        name: item.name,
+        description: item.description,
+        url: item.url,
+        image: item.image,
+      },
+    })),
+  }
+
+  return renderJsonLd(data)
+}
+
 interface PersonSchemaProps {
   personId: string
   name: string

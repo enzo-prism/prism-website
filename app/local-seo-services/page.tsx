@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     absolute: "Local SEO Services for Small Businesses | Prism",
   },
   description:
-    "Local SEO services that help you show up in Google Maps and organic search: listings, reviews, on-page structure, and reporting that turns visibility into calls and customers.",
+    "Local SEO services that help you show up in Google Maps and organic search with listings, reviews, on-page structure, and reporting tied to calls.",
   alternates: {
     canonical: "https://www.design-prism.com/local-seo-services",
   },
@@ -33,6 +33,13 @@ export const metadata: Metadata = {
         alt: "Prism local SEO services",
       },
     ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Local SEO Services for Small Businesses | Prism",
+    description:
+      "Local SEO services that help you show up in Google Maps and organic search with listings, reviews, on-page structure, and reporting tied to calls.",
+    images: ["/prism-opengraph.png"],
   },
 }
 
@@ -133,6 +140,37 @@ export default function LocalSeoServicesPage() {
     bestRating: "5",
     worstRating: "1",
   }
+  const relatedCaseStudies = [
+    {
+      title: "Wine Country Root Canal",
+      href: "/case-studies/wine-country-root-canal",
+      summary: "Local visibility and service clarity for a specialty practice.",
+    },
+    {
+      title: "Town Centre Dental",
+      href: "/case-studies/town-centre-dental",
+      summary: "Modern website + analytics with map pack momentum.",
+    },
+    {
+      title: "Dr. Christopher B. Wong",
+      href: "/case-studies/dr-christopher-wong",
+      summary: "Transition visibility with listings, SEO, and trust signals.",
+    },
+  ]
+  const relatedPosts = [
+    {
+      title: "Google Maps visibility playbook (2025)",
+      href: "/blog/google-maps-visibility-playbook-2025",
+    },
+    {
+      title: "Local SEO agency guide",
+      href: "/blog/how-to-choose-local-seo-agency",
+    },
+    {
+      title: "Modern reviews strategy",
+      href: "/blog/modern-reviews-strategy-2025",
+    },
+  ]
 
   return (
     <div className="flex min-h-screen flex-col bg-white">
@@ -282,6 +320,54 @@ export default function LocalSeoServicesPage() {
                 <p className="text-sm text-neutral-700">{outcome}</p>
               </div>
             ))}
+          </div>
+        </section>
+
+        <section className="border-t border-neutral-100 px-4 py-16 sm:py-20">
+          <div className="mx-auto max-w-5xl">
+            <div className="grid gap-10 md:grid-cols-2">
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-[0.28em] text-neutral-400">case studies</p>
+                <h2 className="mt-3 text-2xl font-semibold lowercase text-neutral-900 sm:text-3xl">
+                  local seo in action
+                </h2>
+                <div className="mt-6 space-y-4">
+                  {relatedCaseStudies.map((study) => (
+                    <Link
+                      key={study.href}
+                      href={study.href}
+                      className="block rounded-2xl border border-neutral-200 bg-white p-5 transition hover:-translate-y-0.5 hover:shadow-md"
+                    >
+                      <p className="text-base font-semibold text-neutral-900">{study.title}</p>
+                      <p className="mt-2 text-sm text-neutral-600">{study.summary}</p>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-[0.28em] text-neutral-400">from the blog</p>
+                <h2 className="mt-3 text-2xl font-semibold lowercase text-neutral-900 sm:text-3xl">
+                  local visibility guides
+                </h2>
+                <ul className="mt-6 space-y-3 text-sm text-neutral-700">
+                  {relatedPosts.map((post) => (
+                    <li key={post.href}>
+                      <Link
+                        href={post.href}
+                        className="font-semibold text-neutral-900 underline decoration-neutral-300 underline-offset-4"
+                      >
+                        {post.title}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+                <div className="mt-6">
+                  <Link href="/blog" className="text-sm font-semibold text-neutral-900 underline underline-offset-4">
+                    browse all posts →
+                  </Link>
+                </div>
+              </div>
+            </div>
           </div>
         </section>
 

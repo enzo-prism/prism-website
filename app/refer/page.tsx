@@ -4,6 +4,7 @@ import Link from "next/link"
 import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
 import ScrollToTop from "@/components/scroll-to-top"
+import { WebPageSchema } from "@/components/schema-markup"
 import { Button } from "@/components/ui/button"
 import { ArrowRight, CheckCircle2, Gift, Handshake, PhoneCall } from "lucide-react"
 import { CASE_STUDIES } from "@/lib/case-study-data"
@@ -99,28 +100,34 @@ const referralBenefits = [
   }
 ]
 
+const PAGE_TITLE = "refer a business to prism & earn"
+const PAGE_DESCRIPTION =
+  "know someone who needs a better website, listings, or ad strategy? refer them to prism for a free analysis and earn up to $1,000 when they become a client."
+const CANONICAL_URL = "https://www.design-prism.com/refer"
+
 export const metadata: Metadata = {
-  title: "refer a business to prism & earn",
-  description:
-    "know someone who needs a better website, listings, or ad strategy? refer them to prism for a free analysis and earn up to $1,000 when they become a client.",
+  title: PAGE_TITLE,
+  description: PAGE_DESCRIPTION,
   alternates: {
-    canonical: "https://www.design-prism.com/refer"
+    canonical: CANONICAL_URL,
   },
   openGraph: {
-    title: "refer a business to prism & earn",
+    title: PAGE_TITLE,
     description:
       "invite a business you care about to prism. we deliver a free analysis — you earn up to $1,000 when they sign.",
-    url: "https://www.design-prism.com/refer",
+    url: CANONICAL_URL,
     siteName: "Prism",
     locale: "en_US",
-    type: "website"
+    type: "website",
+    images: ["/prism-opengraph.png"],
   },
   twitter: {
     card: "summary_large_image",
-    title: "refer a business to prism & earn",
+    title: PAGE_TITLE,
     description:
       "help a friend upgrade their marketing and earn up to $1,000 when they become a prism client.",
-    creator: "@designprism"
+    creator: "@designprism",
+    images: ["/prism-opengraph.png"],
   },
   robots: {
     index: true,
@@ -367,6 +374,13 @@ export default function ReferPage() {
       </main>
       <Footer />
       <ScrollToTop />
+      <WebPageSchema
+        name={PAGE_TITLE}
+        description={PAGE_DESCRIPTION}
+        url={CANONICAL_URL}
+        image="https://www.design-prism.com/prism-opengraph.png"
+        isPartOfId="https://www.design-prism.com/#website"
+      />
     </>
   )
 }

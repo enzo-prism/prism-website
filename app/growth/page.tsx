@@ -3,6 +3,7 @@ import type { Metadata } from "next"
 import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
 import RevealOnScroll from "@/components/reveal-on-scroll"
+import { WebPageSchema } from "@/components/schema-markup"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 
@@ -39,11 +40,35 @@ const services = [
   },
 ]
 
+const PAGE_TITLE = "Growth retainers | prism"
+const PAGE_DESCRIPTION =
+  "Turn your Prism-built site into a full growth engine with SEO, ads, and automation retainers."
+const CANONICAL_URL = "https://www.design-prism.com/growth"
+
 export const metadata: Metadata = {
-  title: "Growth retainers | prism",
-  description: "Turn your Prism-built site into a full growth engine with SEO, ads, and automation retainers.",
+  title: PAGE_TITLE,
+  description: PAGE_DESCRIPTION,
   alternates: {
-    canonical: "https://www.design-prism.com/growth",
+    canonical: CANONICAL_URL,
+  },
+  openGraph: {
+    title: PAGE_TITLE,
+    description: PAGE_DESCRIPTION,
+    url: CANONICAL_URL,
+    images: [
+      {
+        url: "/prism-opengraph.png",
+        width: 1200,
+        height: 630,
+        alt: "Prism growth retainers",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: PAGE_TITLE,
+    description: PAGE_DESCRIPTION,
+    images: ["/prism-opengraph.png"],
   },
 }
 
@@ -96,6 +121,13 @@ export default function GrowthPage() {
         </section>
       </main>
       <Footer />
+      <WebPageSchema
+        name={PAGE_TITLE}
+        description={PAGE_DESCRIPTION}
+        url={CANONICAL_URL}
+        image="https://www.design-prism.com/prism-opengraph.png"
+        isPartOfId="https://www.design-prism.com/#website"
+      />
     </div>
   )
 }

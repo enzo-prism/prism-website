@@ -1,21 +1,26 @@
 import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
+import { WebPageSchema } from "@/components/schema-markup"
 import type { Metadata } from "next"
 import Link from "next/link"
 import ProofCTAs from "./ProofCTAs"
 
+const PAGE_TITLE = "prism proof | testimonial engine for dentists"
+const PAGE_DESCRIPTION =
+  "capture authentic patient stories once and repurpose them into case studies, schema, reels, and google business profile posts that lift trust and acceptance."
+const CANONICAL_URL = "https://www.design-prism.com/proof"
+
 export const metadata: Metadata = {
-  title: "prism proof | testimonial engine for dentists",
-  description:
-    "capture authentic patient stories once and repurpose them into case studies, schema, reels, and google business profile posts that lift trust and acceptance.",
+  title: PAGE_TITLE,
+  description: PAGE_DESCRIPTION,
   openGraph: {
-    title: "prism proof | testimonial engine for dentists",
-    description:
-      "capture authentic patient stories once and repurpose them into case studies, schema, reels, and google business profile posts that lift trust and acceptance.",
-    url: "https://www.design-prism.com/proof",
+    title: PAGE_TITLE,
+    description: PAGE_DESCRIPTION,
+    url: CANONICAL_URL,
+    images: ["/prism-opengraph.png"],
   },
   alternates: {
-    canonical: "https://www.design-prism.com/proof",
+    canonical: CANONICAL_URL,
   },
 }
 
@@ -206,6 +211,13 @@ export default function ProofPage() {
         </section>
       </main>
       <Footer />
+      <WebPageSchema
+        name={PAGE_TITLE}
+        description={PAGE_DESCRIPTION}
+        url={CANONICAL_URL}
+        image="https://www.design-prism.com/prism-opengraph.png"
+        isPartOfId="https://www.design-prism.com/#website"
+      />
     </>
   )
 }

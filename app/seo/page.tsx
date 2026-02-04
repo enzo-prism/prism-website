@@ -33,6 +33,13 @@ export const metadata: Metadata = {
       },
     ],
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "seo that compounds | prism",
+    description:
+      "seo is more than keywords. prism pairs on-page structure with off-page trust so your brand keeps showing up and capturing demand.",
+    images: ["/prism-opengraph.png"],
+  },
 }
 
 export default async function SeoPage() {
@@ -53,6 +60,23 @@ export default async function SeoPage() {
       )
     })
     .slice(0, 3)
+  const seoCaseStudies = [
+    {
+      title: "Dr. Christopher B. Wong",
+      summary: "Post‑M&A transition supported by clean SEO foundations, local listings, and trust signals.",
+      href: "/case-studies/dr-christopher-wong",
+    },
+    {
+      title: "Olympic Bootworks",
+      summary: "Two‑site system with ecommerce + analytics that compounds search visibility over time.",
+      href: "/case-studies/olympic-bootworks",
+    },
+    {
+      title: "Wine Country Root Canal",
+      summary: "Endodontic growth system with local visibility, service clarity, and booking-ready pages.",
+      href: "/case-studies/wine-country-root-canal",
+    },
+  ]
 
   return (
     <>
@@ -508,6 +532,36 @@ export default async function SeoPage() {
           </div>
         </section>
       ) : null}
+
+      <section className="border-t border-neutral-100 px-4 py-16 sm:py-20">
+        <div className="mx-auto max-w-4xl text-center">
+          <span className="text-xs font-semibold uppercase tracking-[0.28em] text-neutral-400">case studies</span>
+          <h2 className="mt-3 text-3xl font-semibold lowercase text-neutral-900 sm:text-4xl">seo wins in the wild</h2>
+          <p className="mt-3 text-neutral-600">
+            Real examples of local visibility, technical cleanup, and conversion-ready pages.
+          </p>
+        </div>
+        <div className="mx-auto mt-10 grid max-w-5xl gap-4 md:grid-cols-3">
+          {seoCaseStudies.map((study) => (
+            <Link
+              key={study.href}
+              href={study.href}
+              className="rounded-2xl border border-neutral-200 bg-white p-5 text-left transition hover:-translate-y-0.5 hover:shadow-md"
+            >
+              <p className="text-base font-semibold text-neutral-900">{study.title}</p>
+              <p className="mt-2 text-sm text-neutral-600">{study.summary}</p>
+              <span className="mt-4 inline-flex items-center text-sm font-semibold text-neutral-900">
+                view case study →
+              </span>
+            </Link>
+          ))}
+        </div>
+        <div className="mt-10 text-center">
+          <Button asChild variant="outline" className="rounded-full px-8">
+            <Link href="/case-studies">browse all case studies</Link>
+          </Button>
+        </div>
+      </section>
 
       <ServiceSchema
         serviceId="seo-service"

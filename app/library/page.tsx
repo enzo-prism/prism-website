@@ -4,20 +4,50 @@ import Breadcrumbs from "@/components/breadcrumbs"
 import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
 import LibraryClient from "@/components/library/LibraryClient"
+import { CollectionPageSchema, ItemListSchema } from "@/components/schema-markup"
 import { getFeaturedPost, getLibraryPosts } from "@/lib/library"
 
+const PAGE_TITLE = "prism library | founder + athlete short lessons"
+const PAGE_DESCRIPTION =
+  "short lessons from founders and world-class athletes, curated to help you build a stronger company and a stronger competitive mindset."
+const CANONICAL_URL = "https://www.design-prism.com/library"
+
 export const metadata: Metadata = {
-  title: "prism library | founder + athlete short lessons",
-  description:
-    "short lessons from founders and world-class athletes, curated to help you build a stronger company and a stronger competitive mindset.",
+  title: PAGE_TITLE,
+  description: PAGE_DESCRIPTION,
   alternates: {
-    canonical: "https://www.design-prism.com/library",
+    canonical: CANONICAL_URL,
+  },
+  openGraph: {
+    title: PAGE_TITLE,
+    description: PAGE_DESCRIPTION,
+    url: CANONICAL_URL,
+    images: [
+      {
+        url: "/prism-opengraph.png",
+        width: 1200,
+        height: 630,
+        alt: "Prism Library",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: PAGE_TITLE,
+    description: PAGE_DESCRIPTION,
+    images: ["/prism-opengraph.png"],
   },
 }
 
 export default async function LibraryPage() {
   const posts = await getLibraryPosts()
   const featured = getFeaturedPost(posts, new Date())
+  const libraryItems = posts.slice(0, 12).map((post) => ({
+    name: post.title,
+    url: `https://www.design-prism.com/library/${post.slug}`,
+    description: post.editorial?.takeaways?.[0] ?? post.caption ?? undefined,
+    image: post.thumbnailUrl ?? undefined,
+  }))
 
   return (
     <div className="flex min-h-screen flex-col bg-background">
@@ -60,6 +90,8 @@ export default async function LibraryPage() {
         </section>
       </main>
       <Footer />
+      <CollectionPageSchema name="Prism Library" description={PAGE_DESCRIPTION} url={CANONICAL_URL} />
+      <ItemListSchema name="Prism Library posts" items={libraryItems} url={CANONICAL_URL} />
     </div>
   )
 }

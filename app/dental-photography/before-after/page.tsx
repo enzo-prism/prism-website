@@ -5,27 +5,34 @@ import { ArrowRight } from "lucide-react"
 import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
 import ScrollToTop from "@/components/scroll-to-top"
+import { WebPageSchema } from "@/components/schema-markup"
 import { Button } from "@/components/ui/button"
 
 import GuideTabs from "./GuideTabs"
 
+const PAGE_TITLE = "dental before + after system: in-practice guide | prism"
+const PAGE_DESCRIPTION =
+  "follow prism's 0→100% workflow to capture dental before-and-after photos in-house, with gear tiers, scripts, storage, and rollout tips."
+const CANONICAL_URL = "https://www.design-prism.com/dental-photography/before-after"
+
 export const metadata: Metadata = {
-  title: "dental before + after system: in-practice guide | prism",
-  description:
-    "follow prism's 0->100% workflow to capture dental before-and-after photos in-house - entry, mid, and premium kit breakdowns with scripts, storage, and rollout tips.",
+  title: PAGE_TITLE,
+  description: PAGE_DESCRIPTION,
   alternates: {
-    canonical: "https://www.design-prism.com/dental-photography/before-after"
+    canonical: CANONICAL_URL,
   },
   openGraph: {
-    title: "dental before + after system: in-practice guide | prism",
-    description: "choose entry, mid, or premium setups to build a repeatable capture station that fuels marketing and elevates the patient reveal.",
-    url: "https://www.design-prism.com/dental-photography/before-after",
-    type: "website"
+    title: PAGE_TITLE,
+    description: PAGE_DESCRIPTION,
+    url: CANONICAL_URL,
+    type: "website",
+    images: ["/prism-opengraph.png"],
   },
   twitter: {
     card: "summary_large_image",
-    title: "dental before + after system: in-practice guide | prism",
-    description: "gear lists, workflows, and file ops so any practice can document every transformation."
+    title: PAGE_TITLE,
+    description: PAGE_DESCRIPTION,
+    images: ["/prism-opengraph.png"],
   },
   robots: {
     index: true,
@@ -92,6 +99,13 @@ export default function BeforeAfterPhotographyPage() {
       </main>
       <Footer />
       <ScrollToTop />
+      <WebPageSchema
+        name={PAGE_TITLE}
+        description={PAGE_DESCRIPTION}
+        url={CANONICAL_URL}
+        image="https://www.design-prism.com/prism-opengraph.png"
+        isPartOfId="https://www.design-prism.com/#website"
+      />
     </>
   )
 }

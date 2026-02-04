@@ -28,6 +28,7 @@ import InteractiveChecklist from "@/components/interactive-checklist"
 import Navbar from "@/components/navbar"
 import ScrollProgressBar from "@/components/scroll-progress-bar"
 import ScrollToTop from "@/components/scroll-to-top"
+import { WebPageSchema } from "@/components/schema-markup"
 import { Button } from "@/components/ui/button"
 
 const GOOGLE_WORKSPACE_LINK =
@@ -519,27 +520,33 @@ const referenceLinks = [
   },
 ]
 
+const PAGE_TITLE = "secure google workspace patient forms for dentists | prism"
+const PAGE_DESCRIPTION =
+  "step-by-step hipaa guide for dentists using google workspace: secure shared drives, vault, compliant forms, and patient data safeguards."
+const CANONICAL_URL = "https://www.design-prism.com/google/dental-patient-forms"
+
 export const metadata: Metadata = {
-  title: "secure google workspace patient forms for dentists | prism",
-  description:
-    "step-by-step hipaa guide for dentists using google workspace: lock down shared drives, configure vault, build compliant google forms, and avoid patient PHI pitfalls.",
+  title: PAGE_TITLE,
+  description: PAGE_DESCRIPTION,
   alternates: {
-    canonical: "https://www.design-prism.com/google/dental-patient-forms",
+    canonical: CANONICAL_URL,
   },
   openGraph: {
-    title: "secure google workspace patient forms for dentists | prism",
+    title: PAGE_TITLE,
     description:
       "follow this hipaa-aligned implementation guide to collect dental patient intake forms with google workspace and keep ephi protected.",
-    url: "https://www.design-prism.com/google/dental-patient-forms",
+    url: CANONICAL_URL,
     siteName: "prism",
     locale: "en_US",
     type: "article",
+    images: ["/prism-opengraph.png"],
   },
   twitter: {
     card: "summary_large_image",
-    title: "secure google workspace patient forms for dentists | prism",
+    title: PAGE_TITLE,
     description:
       "dentist-focused checklist to configure google forms, shared drives, vault, and dlp for hipaa-compliant patient intake.",
+    images: ["/prism-opengraph.png"],
   },
   robots: {
     index: true,
@@ -911,6 +918,13 @@ export default function GoogleDentalPatientFormsGuide() {
       </main>
       <ScrollToTop />
       <Footer />
+      <WebPageSchema
+        name={PAGE_TITLE}
+        description={PAGE_DESCRIPTION}
+        url={CANONICAL_URL}
+        image="https://www.design-prism.com/prism-opengraph.png"
+        isPartOfId="https://www.design-prism.com/#website"
+      />
     </>
   )
 }

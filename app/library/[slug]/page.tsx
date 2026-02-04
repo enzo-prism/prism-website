@@ -6,6 +6,7 @@ import Breadcrumbs from "@/components/breadcrumbs"
 import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
 import LibraryInstagramEmbed from "@/components/library/LibraryInstagramEmbed"
+import { WebPageSchema } from "@/components/schema-markup"
 import { canonicalUrl } from "@/lib/canonical"
 import { getTikTokEmbedHtml } from "@/lib/library/embeds"
 import { getLibraryPosts } from "@/lib/library/getLibraryPosts"
@@ -61,6 +62,7 @@ export default async function LibraryDetailPage({ params }: PageProps) {
   const post = posts.find((item) => item.slug === slug)
   if (!post) notFound()
 
+  const canonical = canonicalUrl(`/library/${post.slug}`)
   const embedHtml = post.platform === "tiktok" ? await getTikTokEmbedHtml(post.permalink) : null
   return (
     <div className="flex min-h-screen flex-col bg-background">
@@ -197,6 +199,19 @@ export default async function LibraryDetailPage({ params }: PageProps) {
       {post.platform === "tiktok" ? (
         <Script src="https://www.tiktok.com/embed.js" strategy="lazyOnload" />
       ) : null}
+      <WebPageSchema
+        name={post.title}
+        description={post.editorial?.takeaways?.[0] ?? post.caption ?? "Prism Library short lesson."}
+        url={canonical}
+        image={
+          post.thumbnailUrl && post.thumbnailUrl.startsWith("http")
+            ? post.thumbnailUrl
+            : post.thumbnailUrl
+            ? canonicalUrl(post.thumbnailUrl)
+            : "https://www.design-prism.com/prism-opengraph.png"
+        }
+        isPartOfId="https://www.design-prism.com/#website"
+      />
     </div>
   )
 }

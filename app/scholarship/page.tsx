@@ -1,12 +1,36 @@
 import type { Metadata } from "next"
+import { WebPageSchema } from "@/components/schema-markup"
 import ScholarshipPageClient from "./ScholarshipPageClient"
 
+const PAGE_TITLE = "community website scholarship | prism"
+const PAGE_DESCRIPTION =
+  "each month prism builds a free website for a community member. apply for the scholarship and we'll review your story before the next pick."
+const CANONICAL_URL = "https://www.design-prism.com/scholarship"
+
 export const metadata: Metadata = {
-  title: "community website scholarship | prism",
-  description:
-    "each month prism builds a free website for a community member. apply for the scholarship and we'll review your story before the next pick.",
+  title: PAGE_TITLE,
+  description: PAGE_DESCRIPTION,
   alternates: {
-    canonical: "https://www.design-prism.com/scholarship",
+    canonical: CANONICAL_URL,
+  },
+  openGraph: {
+    title: PAGE_TITLE,
+    description: PAGE_DESCRIPTION,
+    url: CANONICAL_URL,
+    images: [
+      {
+        url: "/prism-opengraph.png",
+        width: 1200,
+        height: 630,
+        alt: "Prism community scholarship",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: PAGE_TITLE,
+    description: PAGE_DESCRIPTION,
+    images: ["/prism-opengraph.png"],
   },
 }
 
@@ -35,6 +59,13 @@ export default function ScholarshipPage() {
         </section>
       </noscript>
       <ScholarshipPageClient />
+      <WebPageSchema
+        name={PAGE_TITLE}
+        description={PAGE_DESCRIPTION}
+        url={CANONICAL_URL}
+        image="https://www.design-prism.com/prism-opengraph.png"
+        isPartOfId="https://www.design-prism.com/#website"
+      />
     </>
   )
 }

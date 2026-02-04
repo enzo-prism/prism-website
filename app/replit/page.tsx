@@ -5,6 +5,7 @@ import { ArrowRight, CheckCircle2, Sparkles } from "lucide-react"
 import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
 import ScrollToTop from "@/components/scroll-to-top"
+import { WebPageSchema } from "@/components/schema-markup"
 import { Button } from "@/components/ui/button"
 import { getAllPosts } from "@/lib/mdx-data"
 
@@ -58,27 +59,31 @@ const LEARNING_CHANNELS = [
   }
 ]
 
+const PAGE_TITLE = "prism × replit website builds & tutorials"
+const PAGE_DESCRIPTION =
+  "prism partners with replit to design, build, and teach modern website creation with free guides and tutorials."
+const CANONICAL_URL = "https://www.design-prism.com/replit"
+
 export const metadata: Metadata = {
-  title: "prism × replit | build or learn to build websites with replit",
-  description:
-    "prism partners with replit to design, build, and teach modern website creation. get a website built for you or start learning with our free replit guides and tutorials.",
+  title: PAGE_TITLE,
+  description: PAGE_DESCRIPTION,
   alternates: {
-    canonical: "https://www.design-prism.com/replit"
+    canonical: CANONICAL_URL
   },
   openGraph: {
-    title: "prism × replit | build or learn to build websites with replit",
-    description:
-      "prism partners with replit to design, build, and teach modern website creation. get a website built for you or start learning with our free replit guides and tutorials.",
-    url: "https://www.design-prism.com/replit",
+    title: PAGE_TITLE,
+    description: PAGE_DESCRIPTION,
+    url: CANONICAL_URL,
     siteName: "prism",
     locale: "en_US",
-    type: "website"
+    type: "website",
+    images: ["/prism-opengraph.png"]
   },
   twitter: {
     card: "summary_large_image",
-    title: "prism × replit | build or learn to build websites with replit",
-    description:
-      "prism partners with replit to design, build, and teach modern website creation. get a website built for you or start learning with our free replit guides and tutorials."
+    title: PAGE_TITLE,
+    description: PAGE_DESCRIPTION,
+    images: ["/prism-opengraph.png"]
   },
   robots: {
     index: true,
@@ -401,6 +406,13 @@ export default async function ReplitPage() {
       </main>
       <Footer />
       <ScrollToTop />
+      <WebPageSchema
+        name={PAGE_TITLE}
+        description={PAGE_DESCRIPTION}
+        url={CANONICAL_URL}
+        image="https://www.design-prism.com/prism-opengraph.png"
+        isPartOfId="https://www.design-prism.com/#website"
+      />
     </>
   )
 }

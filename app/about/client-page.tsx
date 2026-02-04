@@ -1,7 +1,7 @@
 import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
 import ScrollToTimelineButton from "@/components/about/ScrollToTimelineButton"
-import { PersonSchema } from "@/components/schema-markup"
+import { BreadcrumbSchema, PersonSchema } from "@/components/schema-markup"
 import ScrollingTimeline from "@/components/scrolling-timeline"
 import PoleVaultCarousel from "@/components/pole-vault-carousel"
 import Image from "next/image"
@@ -116,6 +116,12 @@ export default function AboutClientPage() {
       </main>
       <Footer />
       
+      <BreadcrumbSchema
+        items={[
+          { name: "Home", url: "https://www.design-prism.com" },
+          { name: "About", url: "https://www.design-prism.com/about" },
+        ]}
+      />
       {/* Person Schema for Enzo */}
       <PersonSchema
         personId="enzo-sison"

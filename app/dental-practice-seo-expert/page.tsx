@@ -15,11 +15,11 @@ export const metadata: Metadata = {
     absolute: "Dentist SEO | Prism",
   },
   description:
-    "Dentist SEO that helps dental practices rank higher in Google Maps (local pack) and organic search with listings, reviews, treatment pages, and technical cleanup tied to calls and bookings.",
+    "Dentist SEO that helps practices rank in Google Maps and organic search with listings, reviews, and treatment pages tied to calls.",
   openGraph: {
     title: "Dentist SEO | Prism",
     description:
-      "Dentist SEO that helps dental practices rank higher in Google Maps and organic search with listings, reviews, treatment pages, and ongoing optimization.",
+      "Dentist SEO that helps practices rank in Google Maps and organic search with listings, reviews, and treatment pages tied to calls.",
     url: "https://www.design-prism.com/dental-practice-seo-expert",
     siteName: "prism",
     locale: "en_US",
@@ -37,7 +37,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Dentist SEO | Prism",
     description:
-      "Dentist SEO that helps dental practices rank higher in Google Maps and organic search with listings, reviews, treatment pages, and ongoing optimization.",
+      "Dentist SEO that helps practices rank in Google Maps and organic search with listings, reviews, and treatment pages tied to calls.",
     images: ["/prism-opengraph.png"],
   },
   alternates: {

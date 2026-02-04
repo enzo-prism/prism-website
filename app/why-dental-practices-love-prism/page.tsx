@@ -306,25 +306,27 @@ const featuredCaseStudies = featuredCaseStudyDetails
 export const metadata: Metadata = {
   title: "Prism | Dental practice website + local SEO for new patients",
   description:
-    "Prism helps dentist owners fix messy dental marketing with a clear system: dental practice website, dental practice SEO, Google Business Profile, local SEO, reviews, and tracking so you can see new patient demand.",
+    "Prism helps dentist owners fix messy marketing with websites, local SEO, Google Business Profile, reviews, and tracking tied to demand.",
   alternates: {
     canonical: "https://www.design-prism.com/why-dental-practices-love-prism"
   },
   openGraph: {
     title: "Prism | Dental practice website + local SEO for new patients",
     description:
-      "Prism helps dentist owners fix messy dental marketing with a clear system: dental practice website, dental practice SEO, Google Business Profile, local SEO, reviews, and tracking so you can see new patient demand.",
+      "Prism helps dentist owners fix messy marketing with websites, local SEO, Google Business Profile, reviews, and tracking tied to demand.",
     url: "https://www.design-prism.com/why-dental-practices-love-prism",
     siteName: "Prism",
     locale: "en_US",
-    type: "website"
+    type: "website",
+    images: ["/prism-opengraph.png"],
   },
   twitter: {
     card: "summary_large_image",
     title: "Prism | Dental practice website + local SEO for new patients",
     description:
-      "Prism helps dentist owners fix messy dental marketing with a clear system: dental practice website, dental practice SEO, Google Business Profile, local SEO, reviews, and tracking so you can see new patient demand.",
-    creator: "@designprism"
+      "Prism helps dentist owners fix messy marketing with websites, local SEO, Google Business Profile, reviews, and tracking tied to demand.",
+    creator: "@designprism",
+    images: ["/prism-opengraph.png"],
   },
   robots: {
     index: true,

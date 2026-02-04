@@ -19,6 +19,27 @@ function normalizedOrigin(envUrl?: string): string {
 }
 const baseOrigin = normalizedOrigin(process.env.NEXT_PUBLIC_BASE_URL)
 
+const NOINDEX_ROUTES = new Set([
+  "/analysis-thank-you",
+  "/book-a-shoot/thank-you",
+  "/pricing/thank-you",
+  "/thank-you",
+  "/thanks",
+  "/thanks-call",
+])
+
+const NOINDEX_PREFIXES = ["/checkout"]
+
+function isNoindexUrl(url: string) {
+  try {
+    const pathname = new URL(url).pathname
+    if (NOINDEX_ROUTES.has(pathname)) return true
+    return NOINDEX_PREFIXES.some((prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`))
+  } catch {
+    return false
+  }
+}
+
 type StaticRouteInput = {
   url: string
   changeFrequency: MetadataRoute.Sitemap[number]["changeFrequency"]
@@ -228,5 +249,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
   )
 
-  return routes.map((route) => buildSitemapEntry(route))
+  return routes.filter((route) => !isNoindexUrl(route.url)).map((route) => buildSitemapEntry(route))
 }

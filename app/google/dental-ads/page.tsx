@@ -16,6 +16,7 @@ import {
 import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
 import ScrollToTop from "@/components/scroll-to-top"
+import { WebPageSchema } from "@/components/schema-markup"
 import { Button } from "@/components/ui/button"
 
 const GET_FREE_AUDIT_HREF = "/get-started"
@@ -154,27 +155,31 @@ const partnershipPoints = [
   "Proven playbooks that reduce wasted spend"
 ]
 
+const PAGE_TITLE = "google ads for dentists"
+const PAGE_DESCRIPTION =
+  "prism helps dental practices attract more patients with compliant google ads for implants, invisalign, and general dentistry—built for policy safety."
+const CANONICAL_URL = "https://www.design-prism.com/google/dental-ads"
+
 export const metadata: Metadata = {
-  title: "google ads for dentists",
-  description:
-    "prism helps dental practices attract more patients with fully compliant google ads. learn how to structure campaigns for dental implants, invisalign, and general dentistry while meeting google’s health advertising policies.",
+  title: PAGE_TITLE,
+  description: PAGE_DESCRIPTION,
   alternates: {
-    canonical: "https://www.design-prism.com/google/dental-ads"
+    canonical: CANONICAL_URL,
   },
   openGraph: {
-    title: "google ads for dentists",
-    description:
-      "prism helps dental practices attract more patients with fully compliant google ads. learn how to structure campaigns for dental implants, invisalign, and general dentistry while meeting google’s health advertising policies.",
-    url: "https://www.design-prism.com/google/dental-ads",
+    title: PAGE_TITLE,
+    description: PAGE_DESCRIPTION,
+    url: CANONICAL_URL,
     siteName: "prism",
     locale: "en_US",
-    type: "website"
+    type: "website",
+    images: ["/prism-opengraph.png"],
   },
   twitter: {
     card: "summary_large_image",
-    title: "google ads for dentists",
-    description:
-      "prism helps dental practices attract more patients with fully compliant google ads. learn how to structure campaigns for dental implants, invisalign, and general dentistry while meeting google’s health advertising policies."
+    title: PAGE_TITLE,
+    description: PAGE_DESCRIPTION,
+    images: ["/prism-opengraph.png"],
   },
   robots: {
     index: true,
@@ -642,6 +647,13 @@ export default function GoogleDentalAdsPage() {
       </main>
       <Footer />
       <ScrollToTop />
+      <WebPageSchema
+        name={PAGE_TITLE}
+        description={PAGE_DESCRIPTION}
+        url={CANONICAL_URL}
+        image="https://www.design-prism.com/prism-opengraph.png"
+        isPartOfId="https://www.design-prism.com/#website"
+      />
     </>
   )
 }

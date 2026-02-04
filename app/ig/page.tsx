@@ -1,15 +1,50 @@
 import type { Metadata } from "next"
+import { WebPageSchema } from "@/components/schema-markup"
 import InstagramLandingPage from "./instagram-landing-page"
 
+const PAGE_TITLE = "instagram community | prism"
+const PAGE_DESCRIPTION =
+  "discover how prism transforms entrepreneurial insight into growth-ready websites for ambitious businesses who found us on instagram."
+const CANONICAL_URL = "https://www.design-prism.com/ig"
+
 export const metadata: Metadata = {
-  title: "instagram community | prism",
-  description:
-    "discover how prism transforms entrepreneurial insight into growth-ready websites for ambitious businesses who found us on instagram.",
+  title: PAGE_TITLE,
+  description: PAGE_DESCRIPTION,
   alternates: {
-    canonical: "https://www.design-prism.com/ig",
+    canonical: CANONICAL_URL,
+  },
+  openGraph: {
+    title: PAGE_TITLE,
+    description: PAGE_DESCRIPTION,
+    url: CANONICAL_URL,
+    images: [
+      {
+        url: "/prism-opengraph.png",
+        width: 1200,
+        height: 630,
+        alt: "Prism Instagram community",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: PAGE_TITLE,
+    description: PAGE_DESCRIPTION,
+    images: ["/prism-opengraph.png"],
   },
 }
 
 export default function IGPage() {
-  return <InstagramLandingPage />
+  return (
+    <>
+      <InstagramLandingPage />
+      <WebPageSchema
+        name={PAGE_TITLE}
+        description={PAGE_DESCRIPTION}
+        url={CANONICAL_URL}
+        image="https://www.design-prism.com/prism-opengraph.png"
+        isPartOfId="https://www.design-prism.com/#website"
+      />
+    </>
+  )
 }

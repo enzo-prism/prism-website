@@ -7,6 +7,7 @@ import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
 import BookDemoEmbed from "@/components/BookDemoEmbed"
 import VideoPlayer from "@/components/video-player"
+import { WebPageSchema } from "@/components/schema-markup"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -120,12 +121,35 @@ const FAQ_ITEMS: FAQItem[] = [
   },
 ]
 
+const PAGE_TITLE = "Get started | Prism"
+const PAGE_DESCRIPTION =
+  "Join Prism's Online Presence Transformation program to remove yourself as the bottleneck for growth."
+const CANONICAL_URL = "https://www.design-prism.com/get-started"
+
 export const metadata: Metadata = {
-  title: "Get started | Prism",
-  description:
-    "Join Prism's Online Presence Transformation program to remove yourself as the bottleneck for growth.",
+  title: PAGE_TITLE,
+  description: PAGE_DESCRIPTION,
   alternates: {
-    canonical: "https://www.design-prism.com/get-started",
+    canonical: CANONICAL_URL,
+  },
+  openGraph: {
+    title: PAGE_TITLE,
+    description: PAGE_DESCRIPTION,
+    url: CANONICAL_URL,
+    images: [
+      {
+        url: "/prism-opengraph.png",
+        width: 1200,
+        height: 630,
+        alt: "Prism get started",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: PAGE_TITLE,
+    description: PAGE_DESCRIPTION,
+    images: ["/prism-opengraph.png"],
   },
 }
 
@@ -282,6 +306,13 @@ export default function GetStartedPage() {
         </section>
       </main>
       <Footer />
+      <WebPageSchema
+        name={PAGE_TITLE}
+        description={PAGE_DESCRIPTION}
+        url={CANONICAL_URL}
+        image="https://www.design-prism.com/prism-opengraph.png"
+        isPartOfId="https://www.design-prism.com/#website"
+      />
     </div>
   )
 }

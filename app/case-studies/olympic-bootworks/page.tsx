@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   description:
     "Olympic Bootworks already had the hard part: a legendary reputation, Olympians in the fitting room, and customers who drive hours to get it done right.",
   alternates: {
-    canonical: "/case-studies/olympic-bootworks",
+    canonical: "https://www.design-prism.com/case-studies/olympic-bootworks",
   },
   openGraph: {
     title: "Olympic Bootworks: the Tahoe shop that finally sells online",

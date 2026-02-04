@@ -6,6 +6,7 @@ import BlogFilterNavigationServer from "@/components/blog-filter-navigation-serv
 import Breadcrumbs from "@/components/breadcrumbs"
 import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
+import { CollectionPageSchema, ItemListSchema } from "@/components/schema-markup"
 import SeoTextSection from "@/components/seo-text-section"
 import SimpleBlogGrid from "@/components/simple-blog-grid"
 import SimpleBlogPostCard from "@/components/simple-blog-post-card"
@@ -18,6 +19,28 @@ export const metadata: Metadata = {
     "actionable lessons from shipping websites, ai workflows, and conversion experiments for dentists and local businesses, field-tested not theory.",
   alternates: {
     canonical: "https://www.design-prism.com/blog",
+  },
+  openGraph: {
+    title: "prism blog | web design, ai marketing & growth experiments",
+    description:
+      "actionable lessons from shipping websites, ai workflows, and conversion experiments for dentists and local businesses, field-tested not theory.",
+    url: "https://www.design-prism.com/blog",
+    images: [
+      {
+        url: "/prism-opengraph.png",
+        width: 1200,
+        height: 630,
+        alt: "Prism blog",
+      },
+    ],
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "prism blog | web design, ai marketing & growth experiments",
+    description:
+      "actionable lessons from shipping websites, ai workflows, and conversion experiments for dentists and local businesses, field-tested not theory.",
+    images: ["/prism-opengraph.png"],
   },
 }
 
@@ -59,20 +82,12 @@ export default async function Blog({
     )
   })
 
-  const blogItemList = {
-    "@context": "https://schema.org",
-    "@type": "ItemList",
-    itemListElement: posts.slice(0, 10).map((post, index) => ({
-      "@type": "ListItem",
-      position: index + 1,
-      item: {
-        "@type": "BlogPosting",
-        headline: post.title,
-        description: post.description,
-        url: `https://www.design-prism.com/blog/${post.slug}`,
-      },
-    })),
-  }
+  const blogItems = posts.slice(0, 10).map((post) => ({
+    name: post.title,
+    description: post.description,
+    url: `https://www.design-prism.com/blog/${post.slug}`,
+    itemType: "BlogPosting",
+  }))
 
   return (
     <div className="flex min-h-screen flex-col bg-white">
@@ -142,7 +157,17 @@ export default async function Blog({
             and experiments, not theory.
           </p>
         </SeoTextSection>
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(blogItemList) }} />
+        <CollectionPageSchema
+          name="Prism Blog"
+          description="Insights on web design, AI marketing, and growth systems for local businesses."
+          url="https://www.design-prism.com/blog"
+          isPartOfId="https://www.design-prism.com/#website"
+        />
+        <ItemListSchema
+          name="Latest Prism blog posts"
+          url="https://www.design-prism.com/blog"
+          items={blogItems}
+        />
       </main>
       <Footer />
     </div>

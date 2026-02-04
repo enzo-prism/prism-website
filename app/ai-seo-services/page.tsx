@@ -16,14 +16,14 @@ export const metadata: Metadata = {
     absolute: "AI SEO Services | Prism",
   },
   description:
-    "AI SEO services that help your brand get cited in Google AI Overviews, ChatGPT, Gemini, and Perplexity—built on clear pages, corroborated proof, and measurable iteration.",
+    "AI SEO services that help your brand get cited in Google AI Overviews, ChatGPT, Gemini, and Perplexity—built on clear pages, proof, and iteration.",
   alternates: {
     canonical: "https://www.design-prism.com/ai-seo-services",
   },
   openGraph: {
     title: "AI SEO Services | Prism",
     description:
-      "AI SEO services that help your brand get cited and chosen across modern search: Google AI Overviews, ChatGPT, Gemini, and Perplexity.",
+      "AI SEO services that help your brand get cited in Google AI Overviews, ChatGPT, Gemini, and Perplexity—built on clear pages, proof, and iteration.",
     url: "https://www.design-prism.com/ai-seo-services",
     siteName: "prism",
     locale: "en_US",
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "AI SEO Services | Prism",
     description:
-      "AI SEO services that help your brand get cited and chosen across AI Overviews and chat-based search.",
+      "AI SEO services that help your brand get cited in Google AI Overviews, ChatGPT, Gemini, and Perplexity—built on clear pages, proof, and iteration.",
     images: ["/prism-opengraph.png"],
   },
   robots: {

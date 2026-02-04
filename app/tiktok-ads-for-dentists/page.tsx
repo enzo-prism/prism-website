@@ -15,14 +15,14 @@ export const metadata: Metadata = {
     absolute: "TikTok Ads for Dentists | Prism",
   },
   description:
-    "Looking for TikTok ads for dentists? Prism plans creative, landing pages, and tracking so dental practices turn TikTok attention into booked consults—without spammy tactics.",
+    "Prism runs TikTok ads for dentists with creative, landing pages, and tracking that turn attention into booked consults—without spam.",
   alternates: {
     canonical: "https://www.design-prism.com/tiktok-ads-for-dentists",
   },
   openGraph: {
     title: "TikTok Ads for Dentists | Prism",
     description:
-      "Prism runs TikTok ads for dentists with patient-ready creative, fast landing pages, and reporting tied to calls and bookings.",
+      "Prism runs TikTok ads for dentists with creative, landing pages, and tracking that turn attention into booked consults—without spam.",
     url: "https://www.design-prism.com/tiktok-ads-for-dentists",
     siteName: "prism",
     locale: "en_US",
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "TikTok Ads for Dentists | Prism",
     description:
-      "TikTok ads for dentists with creative, landing pages, and tracking that convert into booked demand.",
+      "Prism runs TikTok ads for dentists with creative, landing pages, and tracking that turn attention into booked consults—without spam.",
     images: ["/prism-opengraph.png"],
   },
   robots: {

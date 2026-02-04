@@ -3,6 +3,7 @@ import MinimalAppsList from "@/components/minimal-apps-list"
 import Navbar from "@/components/navbar"
 import ScrollProgressBar from "@/components/scroll-progress-bar"
 import SeoTextSection from "@/components/seo-text-section"
+import { ItemListSchema } from "@/components/schema-markup"
 import { Button } from "@/components/ui/button"
 import type { Metadata } from "next"
 import Link from "next/link"
@@ -65,23 +66,6 @@ const appProjects = [
     platforms: ["iOS", "Android"],
   },
 ]
-
-const appPortfolioItemList = {
-  "@context": "https://schema.org",
-  "@type": "ItemList",
-  "@id": "https://www.design-prism.com/apps#portfolio",
-  name: "Prism app portfolio",
-  itemListElement: appProjects.map((project, index) => ({
-    "@type": "ListItem",
-    position: index + 1,
-    item: {
-      "@type": "CreativeWork",
-      name: project.title,
-      description: project.description,
-      url: project.url,
-    },
-  })),
-}
 
 export default function AppsPage() {
   return (
@@ -203,11 +187,16 @@ export default function AppsPage() {
 
       </main>
       <Footer />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(appPortfolioItemList),
-        }}
+      <ItemListSchema
+        id="https://www.design-prism.com/apps#portfolio"
+        name="Prism app portfolio"
+        url="https://www.design-prism.com/apps"
+        items={appProjects.map((project) => ({
+          name: project.title,
+          description: project.description,
+          url: project.url,
+          itemType: "CreativeWork",
+        }))}
       />
     </div>
   )

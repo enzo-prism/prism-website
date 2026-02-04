@@ -28,6 +28,15 @@ export const metadata: Metadata = {
     title: "Small Business Website Design & Builds | Prism",
     description:
       "Websites engineered to convert and stay sharp long-term. Strategy, design, development, and SEO-ready foundations.",
+    url: "https://www.design-prism.com/websites",
+    type: "website",
+    images: ["/prism-opengraph.png"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Small Business Website Design & Builds | Prism",
+    description:
+      "Websites engineered to convert and stay sharp long-term. Strategy, design, development, and SEO-ready foundations.",
     images: ["/prism-opengraph.png"],
   },
   alternates: {

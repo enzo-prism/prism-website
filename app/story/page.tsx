@@ -4,6 +4,7 @@ import { ArrowRight, BookOpen, Share2, Sparkles } from "lucide-react"
 
 import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
+import { WebPageSchema } from "@/components/schema-markup"
 
 const whyStoriesWin = [
   "Build trust faster than any ad can.",
@@ -71,18 +72,22 @@ const engineDeliverables = [
   "A Story Vault (your growing library of customer stories — your most valuable content asset).",
 ]
 
+const PAGE_TITLE = "story-driven marketing | design prism"
+const PAGE_DESCRIPTION =
+  "Turn customer impact into a growth engine. Prism’s Customer Signal Engine captures real stories and turns them into SEO, conversions, and community."
+const CANONICAL_URL = "https://www.design-prism.com/story"
+
 export const metadata: Metadata = {
-  title: "story-driven marketing | design prism",
-  description:
-    "Turn customer impact into your strongest growth engine. Learn how Prism’s Customer Signal Engine captures real stories and turns them into SEO, conversions, and community.",
+  title: PAGE_TITLE,
+  description: PAGE_DESCRIPTION,
   alternates: {
-    canonical: "https://www.design-prism.com/story",
+    canonical: CANONICAL_URL,
   },
   openGraph: {
-    title: "story-driven marketing | design prism",
+    title: PAGE_TITLE,
     description:
       "Capture customer stories, expand them into narratives, and distribute them everywhere with Prism’s Customer Signal Engine.",
-    url: "https://www.design-prism.com/story",
+    url: CANONICAL_URL,
     images: [
       {
         url: "/prism-opengraph.png",
@@ -94,9 +99,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "story-driven marketing | design prism",
-    description:
-      "Story-driven marketing turns customer impact into your most powerful growth engine. See how Prism captures, expands, and distributes every win.",
+    title: PAGE_TITLE,
+    description: PAGE_DESCRIPTION,
     images: ["/prism-opengraph.png"],
   },
 }
@@ -333,6 +337,13 @@ export default function StoryPage() {
         </section>
       </main>
       <Footer />
+      <WebPageSchema
+        name={PAGE_TITLE}
+        description={PAGE_DESCRIPTION}
+        url={CANONICAL_URL}
+        image="https://www.design-prism.com/prism-opengraph.png"
+        isPartOfId="https://www.design-prism.com/#website"
+      />
     </>
   )
 }

@@ -4,18 +4,42 @@ import Link from "next/link"
 import InstagramEmbed from "@/components/instagram-embed"
 import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
+import { WebPageSchema } from "@/components/schema-markup"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { HOTTEST_CONTENT } from "@/lib/hottest-content"
 import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
 
+const PAGE_TITLE = "prism's hottest content library"
+const PAGE_DESCRIPTION =
+  "see prism’s top-performing instagram reels exactly as they appeared on the platform. live embeds with full context from the original posts."
+const CANONICAL_URL = "https://www.design-prism.com/hottest-content"
+
 export const metadata: Metadata = {
-  title: "prism's hottest content library",
-  description:
-    "see prism’s top-performing instagram reels exactly as they appeared on the platform. live embeds with full context from the original posts.",
+  title: PAGE_TITLE,
+  description: PAGE_DESCRIPTION,
   alternates: {
-    canonical: "https://www.design-prism.com/hottest-content",
+    canonical: CANONICAL_URL,
+  },
+  openGraph: {
+    title: PAGE_TITLE,
+    description: PAGE_DESCRIPTION,
+    url: CANONICAL_URL,
+    images: [
+      {
+        url: "/prism-opengraph.png",
+        width: 1200,
+        height: 630,
+        alt: "Prism hottest content",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: PAGE_TITLE,
+    description: PAGE_DESCRIPTION,
+    images: ["/prism-opengraph.png"],
   },
 }
 
@@ -80,6 +104,13 @@ export default function HottestContentPage() {
         </div>
       </main>
       <Footer />
+      <WebPageSchema
+        name={PAGE_TITLE}
+        description={PAGE_DESCRIPTION}
+        url={CANONICAL_URL}
+        image="https://www.design-prism.com/prism-opengraph.png"
+        isPartOfId="https://www.design-prism.com/#website"
+      />
     </div>
   )
 }

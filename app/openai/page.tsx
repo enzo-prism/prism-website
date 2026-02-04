@@ -3,6 +3,7 @@ import type { Metadata } from "next"
 
 import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
+import { WebPageSchema } from "@/components/schema-markup"
 
 const openAiStack = [
   {
@@ -78,18 +79,22 @@ const workflow = [
   },
 ]
 
+const PAGE_TITLE = "openai growth systems | design prism"
+const PAGE_DESCRIPTION =
+  "See how Prism uses OpenAI tools, copilots, and distribution intelligence to expand your practice across chat, search, and assistant surfaces."
+const CANONICAL_URL = "https://www.design-prism.com/openai"
+
 export const metadata: Metadata = {
-  title: "openai growth systems | design prism",
-  description:
-    "See how Prism uses OpenAI tools, copilots, and distribution intelligence to expand your practice across chat, search, and assistant surfaces.",
+  title: PAGE_TITLE,
+  description: PAGE_DESCRIPTION,
   alternates: {
-    canonical: "https://www.design-prism.com/openai",
+    canonical: CANONICAL_URL,
   },
   openGraph: {
-    title: "openai growth systems | design prism",
+    title: PAGE_TITLE,
     description:
       "Prism trains OpenAI copilots on your brand, publishes AI-assisted campaigns, and studies distribution so you show up across new surfaces.",
-    url: "https://www.design-prism.com/openai",
+    url: CANONICAL_URL,
     images: [
       {
         url: "/prism-opengraph.png",
@@ -101,7 +106,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "openai growth systems | design prism",
+    title: PAGE_TITLE,
     description:
       "Prism uses OpenAI copilots and distribution intelligence to get your practice discovered across AI-powered channels.",
     images: ["/prism-opengraph.png"],
@@ -266,6 +271,13 @@ export default function OpenAIPage() {
         </section>
       </main>
       <Footer />
+      <WebPageSchema
+        name={PAGE_TITLE}
+        description={PAGE_DESCRIPTION}
+        url={CANONICAL_URL}
+        image="https://www.design-prism.com/prism-opengraph.png"
+        isPartOfId="https://www.design-prism.com/#website"
+      />
     </>
   )
 }

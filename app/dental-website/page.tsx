@@ -166,22 +166,24 @@ export const metadata: Metadata = {
     absolute: "Dental Practice Website Design That Converts | Prism",
   },
   description:
-    "Modern dental practice websites built to get found, build trust, and convert visitors into booked appointments. Fast, mobile-first, and built with a long-term content system.",
+    "Modern dental practice websites that get found, build trust, and convert visits into booked appointments. Fast, mobile-first, and built for long-term content.",
   alternates: {
     canonical: "https://www.design-prism.com/dental-website"
   },
   openGraph: {
     title: "Dental Practice Website Design That Converts | Prism",
     description:
-      "Modern dental practice websites built to get found, build trust, and convert visitors into booked appointments.",
+      "Modern dental practice websites that get found, build trust, and convert visits into booked appointments. Fast, mobile-first, and built for long-term content.",
     url: "https://www.design-prism.com/dental-website",
-    type: "website"
+    type: "website",
+    images: ["/prism-opengraph.png"],
   },
   twitter: {
     card: "summary_large_image",
     title: "Dental Practice Website Design That Converts | Prism",
     description:
-      "Modern dental practice websites built to get found, build trust, and convert visitors into booked appointments."
+      "Modern dental practice websites that get found, build trust, and convert visits into booked appointments. Fast, mobile-first, and built for long-term content.",
+    images: ["/prism-opengraph.png"],
   },
   robots: {
     index: true,

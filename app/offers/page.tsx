@@ -1,20 +1,32 @@
-import Footer from "@/components/footer";
-import Navbar from "@/components/navbar";
-import ScrollToTop from "@/components/scroll-to-top"; // Assuming you have this component
-import type { Metadata } from "next";
-import OffersClientPage from "./client-page";
+import Footer from "@/components/footer"
+import Navbar from "@/components/navbar"
+import ScrollToTop from "@/components/scroll-to-top"
+import { WebPageSchema } from "@/components/schema-markup"
+import type { Metadata } from "next"
+import OffersClientPage from "./client-page"
+
+const PAGE_TITLE = "special offers for prism clients"
+const PAGE_DESCRIPTION =
+  "browse the latest limited-time offers from prism for websites, apps, and design support, all crafted to launch momentum quickly."
+const CANONICAL_URL = "https://www.design-prism.com/offers"
 
 export const metadata: Metadata = {
-  title: "special offers for prism clients",
-  description:
-    "browse the latest limited-time offers from prism for websites, apps, and design support, all crafted to launch momentum quickly.",
+  title: PAGE_TITLE,
+  description: PAGE_DESCRIPTION,
   openGraph: {
-    title: "special offers for prism clients",
+    title: PAGE_TITLE,
     description: "exclusive offers on our web design, app development, and design services.",
-    url: "https://www.design-prism.com/offers",
+    url: CANONICAL_URL,
+    images: ["/prism-opengraph.png"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: PAGE_TITLE,
+    description: "exclusive offers on our web design, app development, and design services.",
+    images: ["/prism-opengraph.png"],
   },
   alternates: {
-    canonical: "https://www.design-prism.com/offers",
+    canonical: CANONICAL_URL,
   },
 }
 
@@ -38,6 +50,13 @@ export default function OffersPage() {
       </main>
       <Footer />
       <ScrollToTop />
+      <WebPageSchema
+        name={PAGE_TITLE}
+        description={PAGE_DESCRIPTION}
+        url={CANONICAL_URL}
+        image="https://www.design-prism.com/prism-opengraph.png"
+        isPartOfId="https://www.design-prism.com/#website"
+      />
     </>
   )
 }

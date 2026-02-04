@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   title: "case study: dr. wong dental m&a relaunch",
   description: "from ownership transition risk to a future-proof, ai-powered dental practice in palo alto.",
   alternates: {
-    canonical: "/case-studies/dr-christopher-wong",
+    canonical: "https://www.design-prism.com/case-studies/dr-christopher-wong",
   },
   openGraph: {
     title: "case study: dr. wong dental m&a relaunch",

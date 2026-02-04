@@ -8,6 +8,9 @@ export const metadata: Metadata = {
     index: false,
     follow: false,
   },
+  alternates: {
+    canonical: "https://www.design-prism.com/thanks-call",
+  },
 }
 
 export default function ThanksCallPage() {

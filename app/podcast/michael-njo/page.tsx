@@ -37,7 +37,7 @@ const lessons = [
 export const metadata: Metadata = {
   title: "Dr. Michael Njo, DDS | Prism Podcast",
   description:
-    "Read Dr. Michael Njo's story of discipline, reinvention, and mentorship--from building a practice from scratch to guiding dentists through Practice Transitions Institute.",
+    "Read Dr. Michael Njo's story of discipline, reinvention, and mentorship—from building a practice to guiding dentists through Practice Transitions Institute.",
   openGraph: {
     title: "Dr. Michael Njo, DDS | Prism Podcast",
     description:
@@ -54,6 +54,13 @@ export const metadata: Metadata = {
   },
   alternates: {
     canonical: "https://www.design-prism.com/podcast/michael-njo",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Dr. Michael Njo, DDS | Prism Podcast",
+    description:
+      "Read Dr. Michael Njo's story of discipline, reinvention, and mentorship—from building a practice to guiding dentists through Practice Transitions Institute.",
+    images: ["/prism-opengraph.png"],
   },
 }
 

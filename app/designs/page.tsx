@@ -1,19 +1,23 @@
 import SeoTextSection from "@/components/seo-text-section"
 import type { Metadata } from "next"
+import { WebPageSchema } from "@/components/schema-markup"
 import DesignsPageClient from "./DesignsPageClient"
 
+const PAGE_TITLE = "graphic design portfolio & creative services | prism"
+const PAGE_DESCRIPTION =
+  "browse award-winning logos, branding, marketing assets, and social graphics that show how intentional design elevates your brand and captures attention."
+const CANONICAL_URL = "https://www.design-prism.com/designs"
+
 export const metadata: Metadata = {
-  title: "graphic design portfolio & creative services | prism",
-  description:
-    "browse award-winning logos, branding, marketing assets, and social graphics that show how intentional design elevates your brand and captures attention.",
+  title: PAGE_TITLE,
+  description: PAGE_DESCRIPTION,
   openGraph: {
-    title: "graphic design portfolio & creative services | prism",
-    description:
-      "browse award-winning logos, branding, marketing assets, and social graphics that show how intentional design elevates your brand and captures attention.",
+    title: PAGE_TITLE,
+    description: PAGE_DESCRIPTION,
     images: ["/prism-opengraph.png"],
   },
   alternates: {
-    canonical: "https://www.design-prism.com/designs",
+    canonical: CANONICAL_URL,
   },
 }
 
@@ -43,6 +47,13 @@ export default function DesignsPage() {
           is optimized for mobile, ensuring your brand looks sharp from instagram to investor meetings.
         </p>
       </SeoTextSection>
+      <WebPageSchema
+        name={PAGE_TITLE}
+        description={PAGE_DESCRIPTION}
+        url={CANONICAL_URL}
+        image="https://www.design-prism.com/prism-opengraph.png"
+        isPartOfId="https://www.design-prism.com/#website"
+      />
     </>
   )
 }
