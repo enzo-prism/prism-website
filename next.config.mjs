@@ -127,26 +127,6 @@ images: {
       { source: '/blog/mobile-app-ux', destination: '/blog', permanent: true },
       { source: '/mission', destination: '/about', permanent: true },
       { source: '/free-resources-prism', destination: '/proof', permanent: true },
-
-      // Canonical host enforcement for key system pages
-      {
-        source: '/privacy-policy',
-        has: [{ type: 'host', value: 'design-prism.com' }],
-        destination: 'https://www.design-prism.com/privacy-policy',
-        permanent: true,
-      },
-      {
-        source: '/terms-of-service',
-        has: [{ type: 'host', value: 'design-prism.com' }],
-        destination: 'https://www.design-prism.com/terms-of-service',
-        permanent: true,
-      },
-      {
-        source: '/podcast',
-        has: [{ type: 'host', value: 'design-prism.com' }],
-        destination: 'https://www.design-prism.com/podcast',
-        permanent: true,
-      },
     ]
   },
 }

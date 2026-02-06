@@ -10,6 +10,7 @@ import { BlogPostSchema, HowToSchema } from "@/components/schema-markup"
 import SimpleBlogPostCard from "@/components/simple-blog-post-card"
 import Breadcrumbs from "@/components/breadcrumbs"
 import { cn } from "@/lib/utils"
+import { toAbsoluteUrl } from "@/lib/url"
 
 interface Props {
   children: React.ReactNode
@@ -75,9 +76,7 @@ export default function BlogPostLayout({
   howTo,
 }: Props) {
   const effectiveGradient = gradientClass || "bg-gradient-to-br from-indigo-300/30 via-purple-300/30 to-pink-300/30"
-  const effectiveImageUrl = image
-    ? `https://www.design-prism.com${image}`
-    : "https://www.design-prism.com/prism-opengraph.png"
+  const effectiveImageUrl = image ? toAbsoluteUrl(image) : toAbsoluteUrl("/prism-opengraph.png")
 
   const shareUrl =
     openGraph?.url ||

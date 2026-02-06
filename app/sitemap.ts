@@ -48,12 +48,16 @@ type StaticRouteInput = {
 }
 
 function buildSitemapEntry(route: StaticRouteInput): MetadataRoute.Sitemap[number] {
-  return {
+  const entry: MetadataRoute.Sitemap[number] = {
     url: route.url,
     changeFrequency: route.changeFrequency,
     priority: route.priority,
-    lastModified: route.lastModified ?? new Date(),
   }
+
+  // Only set lastModified when we actually know it (blog/case studies/library).
+  if (route.lastModified) entry.lastModified = route.lastModified
+
+  return entry
 }
 
 async function getAppRoutes(): Promise<string[]> {

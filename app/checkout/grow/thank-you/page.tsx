@@ -6,6 +6,8 @@ import { Button } from "@/components/ui/button"
 import { CheckCircle2, Calendar } from "lucide-react"
 
 export const metadata: Metadata = {
+  title: "grow checkout received | prism",
+  description: "we received your grow plan submission—book a kickoff call to accelerate next steps.",
   robots: {
     index: false,
     follow: false,

@@ -2,6 +2,16 @@ import { NextRequest, NextResponse } from "next/server";
 
 const CANONICAL_HOSTNAME = "www.design-prism.com";
 
+export function shouldNoindexBlogIndex(searchParams: URLSearchParams): boolean {
+  const q = (searchParams.get("q") ?? "").trim();
+  const category = (searchParams.get("category") ?? "").trim();
+
+  if (q.length > 0) return true;
+  if (category.length > 0 && category.toLowerCase() !== "all") return true;
+
+  return false;
+}
+
 export function proxy(request: NextRequest) {
   const url = request.nextUrl.clone();
   const rawHost = request.headers.get("host") ?? url.host;
@@ -31,7 +41,11 @@ export function proxy(request: NextRequest) {
     return NextResponse.redirect(url, 301);
   }
 
-  return NextResponse.next();
+  const response = NextResponse.next();
+  if (url.pathname === "/blog" && shouldNoindexBlogIndex(url.searchParams)) {
+    response.headers.set("X-Robots-Tag", "noindex, follow");
+  }
+  return response;
 }
 
 export const config = {

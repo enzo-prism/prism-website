@@ -70,7 +70,9 @@ export default function Navbar({ mobileRevealOnFirstTap = false }: NavbarProps) 
     ]
 
     const parts = pathname.split("/").filter(Boolean)
-    if (parts.length <= 1) return baseTrail
+    // Only show the in-navbar breadcrumb bar for case study detail pages.
+    // The `/case-studies` index page already renders its own breadcrumbs in-page.
+    if (parts.length <= 1) return null
 
     const slug = parts[1]
     const match = CASE_STUDIES.find((study) => study.slug === slug)

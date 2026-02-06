@@ -4,6 +4,7 @@ import { useState } from "react"
 
 import CoreImage from "@/components/core-image"
 import { cn } from "@/lib/utils"
+import { toLocalPathIfSameOrigin } from "@/lib/url"
 
 interface BlogHeroMediaProps {
   title: string
@@ -23,10 +24,11 @@ export default function BlogHeroMedia({
   const [hasImageError, setHasImageError] = useState(false)
 
   if (showHeroImage && image && !hasImageError) {
+    const effectiveSrc = toLocalPathIfSameOrigin(image)
     return (
       <div className="rounded-lg overflow-hidden mb-6">
         <CoreImage
-          src={image}
+          src={effectiveSrc}
           alt={title}
           width={896}
           height={504}
