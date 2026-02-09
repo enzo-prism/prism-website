@@ -153,7 +153,7 @@ export default function RootLayout({
       {/* Fonts are wired via Geist CSS variables on <html>; Tailwind's `font-sans` / `font-mono`
         resolve via `--font-sans` / `--font-mono` in `app/globals.css`.
       */}
-      <body className="m-0 p-0 w-full min-h-screen font-sans antialiased">
+      <body className="m-0 p-0 w-full min-h-screen font-mono antialiased">
         <SkipToContent />
 	        <GlobalSchemaGraph />
 	        <RootClientMonitors />

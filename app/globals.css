@@ -43,8 +43,9 @@ body {
   /* Use small viewport height to avoid iOS URL bar resize jumps */
   min-height: 100svh;
   overflow-x: hidden; /* Prevent horizontal scroll */
-  font-family: var(--font-sans), system-ui, -apple-system, BlinkMacSystemFont,
-    "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+  font-family: var(--font-mono), var(--font-sans), system-ui, -apple-system,
+    BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial,
+    "Noto Sans", sans-serif;
   /* Add Safari-specific scrolling fixes */
   position: relative;
   z-index: 1;
@@ -317,21 +318,21 @@ input, textarea, select {
     font-size: clamp(1.125rem, 1.6vw, 1.375rem);
     line-height: 1.6;
     font-weight: 400;
-    color: rgb(82, 82, 82);
+    color: hsl(var(--muted-foreground));
   }
 
   .type-body {
     font-size: 1rem;
     line-height: 1.7;
     font-weight: 400;
-    color: rgb(23, 23, 23);
+    color: hsl(var(--foreground));
   }
 
   .type-small {
     font-size: 0.875rem;
     line-height: 1.5;
     font-weight: 400;
-    color: rgb(82, 82, 82);
+    color: hsl(var(--muted-foreground));
   }
 
   .text-balance {
@@ -2731,4 +2732,30 @@ input, textarea, select {
 /* Responsive icon sizing for buttons */
 .btn-icon-responsive {
   @apply h-4 w-4 sm:h-5 sm:w-5;
+}
+
+@layer base {
+  .dark .bg-white {
+    background-color: hsl(var(--background)) !important;
+  }
+
+  .dark .bg-gray-50,
+  .dark .bg-gray-100,
+  .dark .bg-neutral-50 {
+    background-color: hsl(var(--card)) !important;
+  }
+
+  .dark .text-neutral-900,
+  .dark .text-slate-900,
+  .dark .text-gray-900 {
+    color: hsl(var(--foreground)) !important;
+  }
+
+  .dark .border-neutral-100,
+  .dark .border-neutral-200,
+  .dark .border-neutral-300,
+  .dark .border-slate-200,
+  .dark .border-gray-200 {
+    border-color: hsl(var(--border)) !important;
+  }
 }
