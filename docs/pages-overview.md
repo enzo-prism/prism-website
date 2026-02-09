@@ -65,6 +65,8 @@ Quick reference for the pages we edit most often.
 - The hero section uses `HERO_SECTION_CLASSES` in `app/client-page.tsx` to reserve a full-viewport slot for the Unicorn Studio animation, accounting for the sticky header height and safe-area insets.
 - The homepage hero background animation is embedded via `components/home/UnicornHeroScene.tsx`, which loads the Unicorn Studio SDK and mounts the WebGL scene as the entire hero section.
 - The main hero copy, CTA, benefits, and client logos now live in the section immediately following the animation.
+- The hero section uses `HERO_SECTION_CLASSES` in `app/client-page.tsx` to center its content in the viewport while accounting for the sticky header height and safe-area insets.
+- The homepage hero background animation is embedded via `components/home/UnicornHeroScene.tsx`, which loads the Unicorn Studio SDK and mounts the WebGL scene behind the hero copy.
 - On mobile, the homepage navbar starts hidden and fades/slides in after the first tap; this is enabled via `mobileRevealOnFirstTap` on `components/navbar.tsx`.
 - Homepage sections use full-screen spacing (`SECTION_SPACING` in `app/client-page.tsx` plus the matching padding in `components/home/WallOfLoveCarousel.tsx`) so each section reads as its own viewport.
 - The Search Console snapshots section below the hero uses `components/home/SearchConsoleSnapshotsRail.tsx` (native scroll-snap rail with lightweight arrow controls for desktop); keep it touch-first with subtle progress bars under the rail.
