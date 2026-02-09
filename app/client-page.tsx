@@ -6,6 +6,7 @@ import PixelishIcon from "@/components/pixelish/PixelishIcon"
 import Footer from "@/components/footer"
 import ScalingRoadmapForm from "@/components/forms/ScalingRoadmapForm"
 import HeroBenefits from "@/components/home/HeroBenefits"
+import UnicornHeroScene from "@/components/home/UnicornHeroScene"
 import WallOfLoveCarousel from "@/components/home/WallOfLoveCarousel"
 import SearchConsoleSnapshotsRail from "@/components/home/SearchConsoleSnapshotsRail"
 import Navbar from "@/components/navbar"
@@ -248,6 +249,7 @@ export default function ClientPage() {
       <Navbar mobileRevealOnFirstTap />
       <main className="flex-1">
         <section className={HERO_SECTION_CLASSES}>
+          <UnicornHeroScene className="absolute inset-0 -z-10" />
           <div className="container relative mx-auto px-4 sm:px-6">
             <div className="mx-auto max-w-2xl space-y-6 text-center lg:max-w-3xl">
               <div className="space-y-4">
