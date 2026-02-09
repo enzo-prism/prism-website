@@ -49,6 +49,10 @@ Quick reference for the pages we edit most often.
 - Minimal layout: hero card + deliverables card + `FreeAnalysisForm`.
 - Update copy here when the offer changes.
 
+## Get Started (`app/get-started/page.tsx`)
+- The hero animation uses `components/get-started/GetStartedHeroScene.tsx` with the Unicorn Studio JSON at `/public/unicorn/get-started-hero.json`.
+- The original hero (badge, copy, VSL, CTA) now follows the animation section; keep the CTA anchored to `#book-call`.
+
 ## Contact (`app/contact/page.tsx`)
 - Simple hero, form card, kickoff-call button, and contact info.
 - Uses `ContactForm` for all validation/submission logic.
