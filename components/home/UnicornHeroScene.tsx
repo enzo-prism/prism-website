@@ -11,8 +11,10 @@ type UnicornHeroSceneProps = {
 }
 
 export default function UnicornHeroScene({ className }: UnicornHeroSceneProps) {
+  const rootClassName = ["unicorn-hero-scene", className].filter(Boolean).join(" ")
+
   return (
-    <div className={className} aria-hidden="true">
+    <div className={rootClassName} aria-hidden="true">
       <UnicornScene
         jsonFilePath={JSON_FILE_PATH}
         sdkUrl={SDK_URL}
