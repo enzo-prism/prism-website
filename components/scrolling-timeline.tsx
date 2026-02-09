@@ -202,7 +202,7 @@ export default function ScrollingTimeline() {
       iconSrc: "/pixelish/emoji-rocket.svg",
       iconAlt: "Rocket icon",
       image: {
-        src: "/transparent-prism-logo.png",
+        src: "/prism-logo.jpeg",
         alt: "Prism logo",
         width: 800,
         height: 800,

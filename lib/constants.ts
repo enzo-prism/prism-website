@@ -9,8 +9,8 @@ export const GOOGLE_ADS_ID = "AW-11373090310"
 
 // Logo configuration
 export const LOGO_CONFIG = {
-  src: "/transparent-prism-logo.png",
-  fallbackSrc: "/transparent-prism-logo.png",
+  src: "/prism-logo.jpeg",
+  fallbackSrc: "/prism-logo.jpeg",
   alt: "Prism logo",
   // Consistent corner radius class for all logo instances
   className: "rounded-lg", // This applies an 8px border-radius

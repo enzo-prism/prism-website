@@ -9,7 +9,7 @@ export default function ImageUsageExample() {
   // Preload critical images
   useEffect(() => {
     const criticalImages = [
-      "/transparent-prism-logo.png",
+      "/prism-logo.jpeg",
       "/favicon-large.png",
       // Add other critical images here
     ]
@@ -28,11 +28,11 @@ export default function ImageUsageExample() {
         <h3 className="mb-2 font-medium">Basic Usage with Fallback</h3>
         <ImageErrorBoundary>
           <EnhancedImage
-            src="/transparent-prism-logo.png"
+            src="/prism-logo.jpeg"
             alt="Prism Logo"
             width={200}
             height={200}
-            fallbackSrc="/transparent-prism-logo.png"
+            fallbackSrc="/prism-logo.jpeg"
             className="rounded-lg"
           />
         </ImageErrorBoundary>

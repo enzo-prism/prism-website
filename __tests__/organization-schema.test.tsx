@@ -16,7 +16,7 @@ describe("GlobalSchemaGraph", () => {
     expect(organization).toBeTruthy()
     expect(organization.name).toBe("Prism")
     expect(organization.url).toBe("https://www.design-prism.com")
-    expect(organization.logo).toContain("transparent-prism-logo.png")
+    expect(organization.logo).toContain("prism-logo.jpeg")
     expect(organization.sameAs).toEqual(
       expect.arrayContaining([
         "https://www.instagram.com/the_design_prism/",
