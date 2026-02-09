@@ -3,8 +3,7 @@
 import UnicornScene from "unicornstudio-react/next"
 
 const JSON_FILE_PATH = "/unicorn/hero-scene.json"
-const SDK_URL =
-  "https://cdn.jsdelivr.net/gh/hiunicornstudio/unicornstudio.js@v2.0.5/dist/unicornStudio.umd.js"
+const SDK_URL = "/unicorn/unicornStudio.umd.js"
 
 type UnicornHeroSceneProps = {
   className?: string
