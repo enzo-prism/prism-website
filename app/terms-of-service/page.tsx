@@ -32,11 +32,14 @@ export const metadata: Metadata = {
 
 export default function TermsOfServicePage() {
   const lastUpdated = "January 1, 2025"
+
+  const linkClassName =
+    "font-semibold text-foreground underline decoration-border/60 underline-offset-4 hover:decoration-border"
   
   return (
     <>
       <Navbar />
-      <main className="min-h-screen bg-white">
+      <main className="min-h-screen bg-background">
         <div className="container mx-auto px-4 py-16">
           <div className="max-w-4xl mx-auto">
             <header className="mb-12">
@@ -48,7 +51,7 @@ export default function TermsOfServicePage() {
               </p>
             </header>
 
-            <div className="prose prose-gray max-w-none">
+            <div className="prose prose-gray dark:prose-invert max-w-none">
               <section className="mb-8">
                 <h2 className="text-2xl font-semibold text-gray-900 mb-4">1. acceptance of terms</h2>
                 <p className="text-gray-600 mb-4">
@@ -234,14 +237,29 @@ export default function TermsOfServicePage() {
                 </p>
                 <div className="bg-gray-50 p-6 rounded-lg">
                   <p className="text-gray-700 font-semibold mb-2">prism agency</p>
-                  <p className="text-gray-600">Email: <a href="mailto:support@design-prism.com" className="text-blue-600 hover:underline">support@design-prism.com</a></p>
-                  <p className="text-gray-600">Phone: <a href="tel:+1234567890" className="text-blue-600 hover:underline">(123) 456-7890</a></p>
-                  <p className="text-gray-600">Website: <Link href="/" className="text-blue-600 hover:underline">design-prism.com</Link></p>
+                  <p className="text-gray-600">
+                    Email:{" "}
+                    <a href="mailto:support@design-prism.com" className={linkClassName}>
+                      support@design-prism.com
+                    </a>
+                  </p>
+                  <p className="text-gray-600">
+                    Phone:{" "}
+                    <a href="tel:+1234567890" className={linkClassName}>
+                      (123) 456-7890
+                    </a>
+                  </p>
+                  <p className="text-gray-600">
+                    Website:{" "}
+                    <Link href="/" className={linkClassName}>
+                      design-prism.com
+                    </Link>
+                  </p>
                 </div>
               </section>
 
-              <section className="mt-12 p-6 bg-blue-50 rounded-lg">
-                <p className="text-blue-800 text-sm">
+              <section className="mt-12 rounded-lg border border-border/60 bg-card p-6">
+                <p className="text-sm text-muted-foreground">
                   <strong>Note:</strong> By using our services, you acknowledge that you have read, understood, and agree to be bound by these Terms of Service. If you are entering into these Terms on behalf of a company or other legal entity, you represent that you have the authority to bind such entity to these Terms.
                 </p>
               </section>

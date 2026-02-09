@@ -3,18 +3,20 @@
 import Link from "next/link"
 import { ArrowRight } from "lucide-react"
 
+import PixelishImg from "@/components/pixelish/PixelishImg"
+import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { trackCTAClick } from "@/utils/analytics"
 
 const SERVICE_PILLS = [
-  { icon: "📱", label: "websites" },
-  { icon: "⚙️", label: "content systems" },
-  { icon: "📣", label: "ads" },
+  { iconSrc: "/pixelish/device-monitor.svg", iconAlt: "Website icon", label: "websites" },
+  { iconSrc: "/pixelish/command.svg", iconAlt: "System icon", label: "content systems" },
+  { iconSrc: "/pixelish/device-radio.svg", iconAlt: "Broadcast icon", label: "ads" },
 ]
 
 export default function GrowthHeadline() {
   return (
-    <section className="relative overflow-hidden bg-black py-16 text-white sm:py-20 md:py-24">
+    <section className="relative overflow-hidden bg-background py-16 text-foreground sm:py-20 md:py-24">
       <div
         className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(255,255,255,0.08),transparent_45%),radial-gradient(circle_at_80%_0%,rgba(255,255,255,0.06),transparent_40%),radial-gradient(circle_at_50%_80%,rgba(255,255,255,0.05),transparent_45%)]"
         aria-hidden
@@ -23,23 +25,29 @@ export default function GrowthHeadline() {
         <div className="flex flex-col items-center text-center gap-8">
           <div className="flex flex-wrap justify-center gap-2">
             {SERVICE_PILLS.map((service) => (
-              <span
+              <Badge
                 key={service.label}
-                className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-4 py-2 text-sm font-semibold text-white/80"
+                variant="outline"
+                className="gap-2 rounded-full bg-card/40 px-4 py-2 text-[11px] text-foreground/80"
               >
-                <span className="text-lg" aria-hidden>
-                  {service.icon}
-                </span>
+                <PixelishImg
+                  src={service.iconSrc}
+                  alt=""
+                  size={18}
+                  invert={false}
+                  className="dark:invert"
+                  aria-hidden="true"
+                />
                 <span>{service.label}</span>
-              </span>
+              </Badge>
             ))}
           </div>
 
           <div className="space-y-3">
-            <h2 className="text-balance text-3xl font-semibold leading-[1.15] tracking-tight sm:text-4xl md:text-[clamp(2.4rem,4vw,3.4rem)]">
+            <h2 className="text-balance text-4xl font-semibold leading-[1.05] tracking-tight sm:text-5xl md:text-6xl">
               websites, content, and ads that grow your business.
             </h2>
-            <p className="text-balance text-base text-white/70 md:text-lg">
+            <p className="text-balance text-base text-muted-foreground md:text-lg">
               world class design and engineering that puts growth on easy mode.
             </p>
           </div>

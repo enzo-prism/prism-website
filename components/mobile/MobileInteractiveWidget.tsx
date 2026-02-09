@@ -190,7 +190,7 @@ export function MobileInteractiveWidget({
               >
                 <div className="bg-white dark:bg-neutral-800 rounded-lg p-4 border">
                   <Input
-                    placeholder="Enter your business type..."
+                    placeholder="Enter your business type…"
                     className="w-full mb-3"
                   />
                   <Button size="sm" className="w-full">
@@ -228,7 +228,7 @@ export function MobileInteractiveWidget({
         relative overflow-hidden rounded-2xl bg-gradient-to-br from-white via-neutral-50 to-neutral-100 
         dark:from-neutral-900 dark:via-neutral-800 dark:to-neutral-900 
         border-2 border-neutral-200 dark:border-neutral-700
-        shadow-xl hover:shadow-2xl transition-all duration-300
+        shadow-xl hover:shadow-2xl transition-shadow duration-300
         p-6 touch-manipulation
         ${className}
       `}
@@ -340,7 +340,7 @@ export function MobileInteractiveWidget({
           className="absolute bottom-0 left-0 right-0 h-1 bg-neutral-200 dark:bg-neutral-700"
         >
           <div 
-            className="h-full bg-gradient-to-r from-purple-500 to-blue-500 transition-all duration-300"
+            className="h-full bg-gradient-to-r from-purple-500 to-blue-500 transition-[width] duration-300"
             style={{ width: `${(currentStep / 3) * 100}%` }}
           />
         </motion.div>

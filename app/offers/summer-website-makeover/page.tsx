@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     canonical: CANONICAL_URL,
   },
   openGraph: {
-    title: "☀️ summer website makeover - guaranteed growth | prism",
+    title: "summer website makeover - guaranteed growth | prism",
     description:
       "let prism transform your website into a 24/7 growth engine. 3x traffic & conversions in 30 days, or we work for free until we do.",
     url: CANONICAL_URL,
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "☀️ summer website makeover - guaranteed growth | prism",
+    title: "summer website makeover - guaranteed growth | prism",
     description:
       "let prism transform your website into a 24/7 growth engine. 3x traffic & conversions in 30 days, or we work for free until we do.",
     images: ["/prism-opengraph.png"],

@@ -13,6 +13,8 @@ import { trackNavigation } from "@/utils/analytics"
 import { Globe, Calendar, Search, Target, Brain } from "lucide-react"
 import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
 import { ProductSchema } from "@/components/schema-markup"
+import PixelishImg from "@/components/pixelish/PixelishImg"
+import { pixelishForEmoji } from "@/lib/pixelish-emoji"
 
 const dentalPlans = [
   {
@@ -99,7 +101,7 @@ export default function PricingDentalClient() {
 
           <div className="grid gap-8 md:grid-cols-2">
           {/* Starter Plan */}
-          <Card className="flex flex-col border-2 border-neutral-200 transition-all hover:border-neutral-300">
+          <Card className="flex flex-col border-2 border-neutral-200 transition-colors hover:border-neutral-300">
             <CardHeader className="pb-4 pt-5 md:pb-6 md:pt-6">
               <CardTitle className="text-xl md:text-2xl">starter</CardTitle>
               <div className="mt-3 md:mt-4 flex items-baseline justify-center">
@@ -195,7 +197,15 @@ export default function PricingDentalClient() {
               </div>
 
               <p className="mb-3 md:mb-4 text-sm md:text-base font-medium text-left">
-                we build the best for you. sit back and relax 🏝️
+                we build the best for you. sit back and relax{" "}
+                <PixelishImg
+                  src={pixelishForEmoji("🏝️").src}
+                  alt=""
+                  size={18}
+                  invert={false}
+                  aria-hidden="true"
+                  className="inline-block align-[-0.15em]"
+                />
               </p>
 
               <ul className="space-y-2.5 md:space-y-3 text-sm md:text-base mb-6">

@@ -4,6 +4,7 @@ import { ArrowRight, BookOpen, Share2, Sparkles } from "lucide-react"
 
 import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
+import PixelishIcon from "@/components/pixelish/PixelishIcon"
 import { WebPageSchema } from "@/components/schema-markup"
 
 const whyStoriesWin = [
@@ -49,17 +50,20 @@ const howItWorks = [
 
 const whyItWorks = [
   {
-    title: "🧠 It feeds SEO",
+    iconSrc: "/pixelish/lens.svg",
+    title: "It feeds SEO",
     description:
       "Google prioritizes E-E-A-T. Real stories are packed with human phrasing and firsthand experience, signaling authority and trust.",
   },
   {
-    title: "💬 It increases conversions",
+    iconSrc: "/pixelish/chat-dots.svg",
+    title: "It increases conversions",
     description:
       "Specificity sells. Prospects relate when they see someone like them achieving the result they want, which pushes them to take action.",
   },
   {
-    title: "❤️ It strengthens community",
+    iconSrc: "/pixelish/emoji-heart.svg",
+    title: "It strengthens community",
     description:
       "Featuring customers publicly creates fans. You celebrate their wins, they become the loudest champions of your brand.",
   },
@@ -257,7 +261,10 @@ export default function StoryPage() {
                   key={item.title}
                   className="flex h-full flex-col gap-3 rounded-3xl border border-white/10 bg-white/5 p-6 text-left shadow-sm backdrop-blur transition hover:bg-white/10"
                 >
-                  <h3 className="text-lg font-semibold lowercase text-white">{item.title}</h3>
+                  <div className="flex items-center gap-3">
+                    <PixelishIcon src={item.iconSrc} alt="" size={18} aria-hidden="true" />
+                    <h3 className="text-lg font-semibold lowercase text-white">{item.title}</h3>
+                  </div>
                   <p className="text-sm text-white/80">{item.description}</p>
                 </div>
               ))}

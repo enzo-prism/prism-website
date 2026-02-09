@@ -101,7 +101,7 @@ export default function ScalingRoadmapForm() {
           disabled={isSubmitting}
           className="h-12 w-full rounded-full px-6 transition-transform duration-200 ease-out hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0 sm:w-auto"
         >
-          {isSubmitting ? "Sending..." : "Get the roadmap"}
+          {isSubmitting ? "Sending…" : "Get the roadmap"}
         </Button>
       </div>
 

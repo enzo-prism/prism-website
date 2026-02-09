@@ -30,7 +30,7 @@ export default function WebsitePortfolioGrid({ projects }: WebsitePortfolioGridP
           target="_blank"
           rel="noopener noreferrer"
           onClick={() => trackCTAClick("portfolio-click", project.title)}
-          className="group relative overflow-hidden rounded-xl aspect-[9/16] sm:aspect-[3/4] hover:shadow-lg transition-all duration-300"
+          className="group relative overflow-hidden rounded-xl aspect-[9/16] sm:aspect-[3/4] hover:shadow-lg transition-shadow duration-300"
         >
           {/* Actual image */}
           <Image
@@ -65,8 +65,8 @@ export default function WebsitePortfolioGrid({ projects }: WebsitePortfolioGridP
           </div>
 
           {/* Subtle icon */}
-          <div className="absolute top-4 right-4 w-8 h-8 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300">
-            <ArrowUpRight className="w-4 h-4 text-white" />
+          <div className="absolute top-4 right-4 w-8 h-8 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <ArrowUpRight className="w-4 h-4 text-white" aria-hidden="true" focusable="false" />
           </div>
           
           {/* Shine effect on hover */}

@@ -50,7 +50,7 @@ export default function ProofPage() {
         {/* Body copy */}
         <section className="px-4 py-6">
           <div className="container mx-auto px-4 md:px-6 max-w-3xl">
-            <article className="prose prose-neutral max-w-none">
+            <article className="prose prose-neutral dark:prose-invert max-w-none">
               <p><strong>TL;DR:</strong> We capture patient stories, turn them into high‑converting assets, and distribute them everywhere your next patient decides.</p>
 
               <hr />

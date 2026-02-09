@@ -82,8 +82,8 @@ export default async function SeoPage() {
     <>
       <SeoHero
         {...hero}
-        iconSrc="https://res.cloudinary.com/dhqpqfw6w/image/upload/v1767371606/Google_Search_Icon_1_rclfuu.webp"
-        iconAlt="Google Search icon"
+        iconSrc="/pixelish/lens.svg"
+        iconAlt="Search icon"
       />
       <section className="px-4 py-16 sm:py-20">
         <div id="seo-founder-vsl" className="mx-auto max-w-3xl text-left">

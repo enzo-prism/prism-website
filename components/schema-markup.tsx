@@ -142,7 +142,7 @@ export function GlobalSchemaGraph() {
     "@id": "https://www.design-prism.com/#organization",
     name: "Prism",
     url: "https://www.design-prism.com",
-    logo: "https://www.design-prism.com/prism-logo.png",
+    logo: "https://www.design-prism.com/transparent-prism-logo.png",
     sameAs: [
       "https://www.instagram.com/the_design_prism/",
       "https://www.youtube.com/@the_design_prism",
@@ -159,7 +159,7 @@ export function GlobalSchemaGraph() {
     name: "Prism",
     url: "https://www.design-prism.com",
     image: "https://www.design-prism.com/prism-opengraph.png",
-    logo: "https://www.design-prism.com/prism-logo.png",
+    logo: "https://www.design-prism.com/transparent-prism-logo.png",
     address: {
       "@type": "PostalAddress",
       streetAddress: "548 Market St #62411",
@@ -349,7 +349,7 @@ export function BlogPostSchema({
       name: "Prism",
       logo: {
         "@type": "ImageObject",
-        url: "https://www.design-prism.com/prism-logo.png",
+        url: "https://www.design-prism.com/transparent-prism-logo.png",
       },
     },
   }

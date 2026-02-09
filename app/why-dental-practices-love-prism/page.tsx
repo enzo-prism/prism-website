@@ -6,6 +6,7 @@ import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
 import ScrollToTop from "@/components/scroll-to-top"
 import FAQSection from "@/components/faq-section"
+import PixelishIcon from "@/components/pixelish/PixelishIcon"
 import { Button } from "@/components/ui/button"
 import {
   ArrowRight,
@@ -33,6 +34,7 @@ import {
 import VideoCarousel from "@/components/video-carousel"
 import type { CaseStudyMeta } from "@/lib/case-study-data"
 import { CASE_STUDIES } from "@/lib/case-study-data"
+import { pixelishForEmoji } from "@/lib/pixelish-emoji"
 
 const CTA_PRIMARY_LABEL = "Get Started"
 const CTA_SECONDARY_LABEL = "Get Started"
@@ -338,15 +340,18 @@ export default function DentalPracticesPage() {
   return (
     <>
       <Navbar />
-      <main className="bg-white text-neutral-900">
-        <section className="relative overflow-hidden border-b border-neutral-100">
-          <div className="absolute inset-0 bg-gradient-to-b from-neutral-50 via-white to-white" aria-hidden />
-          <div className="container relative mx-auto px-4 py-24 md:py-32">
-            <div className="mx-auto flex max-w-4xl flex-col items-center text-center">
-              <p className="text-sm font-semibold text-neutral-500">🦷 For dentist owners</p>
-              <h1 className="mt-6 text-4xl font-semibold tracking-tight md:text-5xl lg:text-6xl">
-                grow your practice. worry less about marketing + tech.
-              </h1>
+	      <main className="bg-white text-neutral-900">
+	        <section className="relative overflow-hidden border-b border-neutral-100">
+	          <div className="absolute inset-0 bg-gradient-to-b from-neutral-50 via-white to-white" aria-hidden />
+	          <div className="container relative mx-auto px-4 py-24 md:py-32">
+	            <div className="mx-auto flex max-w-4xl flex-col items-center text-center">
+	              <p className="flex items-center justify-center gap-2 text-sm font-semibold text-neutral-500">
+	                <PixelishIcon src={pixelishForEmoji("🦷").src} alt="" size={18} invert={false} aria-hidden />
+	                <span>For dentist owners</span>
+	              </p>
+	              <h1 className="mt-6 text-4xl font-semibold tracking-tight md:text-5xl lg:text-6xl">
+	                grow your practice. worry less about marketing + tech.
+	              </h1>
               <p className="mt-6 text-base text-neutral-600 md:text-lg">
                 prism helps dentists get more new-patient calls, modernize their online presence, and switch off outdated
                 providers — without stress or downtime.
@@ -573,17 +578,25 @@ export default function DentalPracticesPage() {
 
         <section className="border-t border-neutral-100 bg-white">
           <div className="container mx-auto px-4 py-20">
-            <div className="mx-auto max-w-4xl text-center">
-              <p className="text-sm font-semibold uppercase tracking-[0.32em] text-neutral-500">
-                Real Results, Real Voices
-              </p>
-              <h2 className="mt-4 text-3xl font-semibold tracking-tight md:text-4xl">
-                🎥 Hear from real dental teams
-              </h2>
-              <p className="mt-4 text-base leading-relaxed text-neutral-600">
-                These interviews exist so you can hear what changed inside a real practice. You will learn what they
-                fixed first, how they track new patients, and what made the biggest difference.
-              </p>
+	            <div className="mx-auto max-w-4xl text-center">
+	              <p className="text-sm font-semibold uppercase tracking-[0.32em] text-neutral-500">
+	                Real Results, Real Voices
+	              </p>
+	              <h2 className="mt-4 text-3xl font-semibold tracking-tight md:text-4xl">
+	                <PixelishIcon
+	                  src={pixelishForEmoji("🎥").src}
+	                  alt=""
+	                  size={28}
+	                  invert={false}
+	                  aria-hidden
+	                  className="mr-3 inline-block align-[-0.15em]"
+	                />
+	                Hear from real dental teams
+	              </h2>
+	              <p className="mt-4 text-base leading-relaxed text-neutral-600">
+	                These interviews exist so you can hear what changed inside a real practice. You will learn what they
+	                fixed first, how they track new patients, and what made the biggest difference.
+	              </p>
               <div className="mx-auto mt-6 max-w-2xl rounded-3xl border border-neutral-100 bg-neutral-50/80 p-6 text-sm text-neutral-700 shadow-sm">
                 Each conversation shows the real wins and real bottlenecks, from listings and reviews to front-desk
                 follow-up and tracking.
@@ -597,15 +610,15 @@ export default function DentalPracticesPage() {
                 <div
                   key={item.title}
                   className="rounded-2xl border border-neutral-100 bg-white p-5 text-left shadow-sm transition hover:-translate-y-1 hover:shadow-md"
-                >
-                  <div className="flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.32em] text-neutral-500">
-                    <span aria-hidden>🎙️</span>
-                    {item.role}
-                  </div>
-                  <p className="mt-3 text-base font-semibold text-neutral-900">{item.title}</p>
-                  <p className="mt-2 text-sm text-neutral-600">{item.focus}</p>
-                </div>
-              ))}
+	                >
+	                  <div className="flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.32em] text-neutral-500">
+	                    <PixelishIcon src={pixelishForEmoji("🎙️").src} alt="" size={18} invert={false} aria-hidden />
+	                    {item.role}
+	                  </div>
+	                  <p className="mt-3 text-base font-semibold text-neutral-900">{item.title}</p>
+	                  <p className="mt-2 text-sm text-neutral-600">{item.focus}</p>
+	                </div>
+	              ))}
             </div>
           </div>
         </section>
@@ -621,19 +634,17 @@ export default function DentalPracticesPage() {
               </p>
             </div>
             <div className="mt-12 grid gap-6 md:grid-cols-3">
-              {connectedPresenceHighlights.map((highlight) => (
-                <div
-                  key={highlight.title}
-                  className="flex h-full flex-col rounded-2xl border border-neutral-200 bg-white p-8 shadow-sm"
-                >
-                  <span className="text-3xl" aria-hidden>
-                    {highlight.emoji}
-                  </span>
-                  <h3 className="mt-6 text-xl font-semibold text-neutral-900">{highlight.title}</h3>
-                  <ul className="mt-4 space-y-2 text-sm text-neutral-600">
-                    {highlight.bullets.map((bullet) => (
-                      <li key={bullet}>{bullet}</li>
-                    ))}
+	              {connectedPresenceHighlights.map((highlight) => (
+	                <div
+	                  key={highlight.title}
+	                  className="flex h-full flex-col rounded-2xl border border-neutral-200 bg-white p-8 shadow-sm"
+	                >
+	                  <PixelishIcon src={pixelishForEmoji(highlight.emoji).src} alt="" size={34} invert={false} aria-hidden />
+	                  <h3 className="mt-6 text-xl font-semibold text-neutral-900">{highlight.title}</h3>
+	                  <ul className="mt-4 space-y-2 text-sm text-neutral-600">
+	                    {highlight.bullets.map((bullet) => (
+	                      <li key={bullet}>{bullet}</li>
+	                    ))}
                   </ul>
                 </div>
               ))}

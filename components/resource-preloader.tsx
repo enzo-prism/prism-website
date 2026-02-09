@@ -5,8 +5,7 @@ import { useEffect } from "react"
 // List of critical resources to preload
 const criticalResources = [
   // Critical images
-  { type: "image", url: "/prism-logo.png" },
-  { type: "image", url: "/prism-logo.jpeg" },
+  { type: "image", url: "/transparent-prism-logo.png" },
   { type: "image", url: "/favicon-large.png" },
   { type: "image", url: "/favicon-small.png" },
 

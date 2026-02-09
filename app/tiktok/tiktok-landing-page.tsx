@@ -5,10 +5,12 @@ import Link from "next/link"
 import FreeAnalysisSection from "@/components/free-analysis-section"
 import HeroLoopingVideo from "@/components/HeroLoopingVideo"
 import HeroSupportPill from "@/components/HeroSupportPill"
+import PixelishImg from "@/components/pixelish/PixelishImg"
 import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
 import ScrollToTop from "@/components/scroll-to-top"
 import { Button } from "@/components/ui/button"
+import { pixelishForEmoji } from "@/lib/pixelish-emoji"
 
 export default function TikTokLandingPage() {
   return (
@@ -52,7 +54,10 @@ export default function TikTokLandingPage() {
                 </div>
                 <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
                   <Button asChild size="lg" variant="inverted" className="rounded-full px-8 py-3 text-base font-semibold">
-                    <Link href="/get-started">👉 Work With Prism</Link>
+                    <Link href="/get-started" className="inline-flex items-center gap-2">
+                      <PixelishImg src={pixelishForEmoji("👉").src} alt="" size={18} invert={false} aria-hidden="true" />
+                      Work With Prism
+                    </Link>
                   </Button>
                   <Button
                     asChild
@@ -60,7 +65,10 @@ export default function TikTokLandingPage() {
                     variant="outline-inverted"
                     className="rounded-full px-8 py-3 text-base transition"
                   >
-                    <Link href="/refer">💸 Refer &amp; Earn</Link>
+                    <Link href="/refer" className="inline-flex items-center gap-2">
+                      <PixelishImg src={pixelishForEmoji("💸").src} alt="" size={18} invert aria-hidden="true" />
+                      Refer &amp; Earn
+                    </Link>
                   </Button>
                 </div>
               </div>
@@ -103,10 +111,17 @@ export default function TikTokLandingPage() {
                 We help founders and local businesses build the digital foundation for growth:
               </p>
               <ul className="mt-6 space-y-3 text-base text-neutral-800 sm:text-lg">
-                <li>✅ High-converting websites</li>
-                <li>✅ SEO + local listing optimization</li>
-                <li>✅ Ad campaigns (Google, Meta, TikTok, Yelp)</li>
-                <li>✅ Analytics + automation setup</li>
+                {[
+                  "High-converting websites",
+                  "SEO + local listing optimization",
+                  "Ad campaigns (Google, Meta, TikTok, Yelp)",
+                  "Analytics + automation setup",
+                ].map((text) => (
+                  <li key={text} className="flex items-start gap-3">
+                    <PixelishImg src={pixelishForEmoji("✅").src} alt="" size={18} invert={false} aria-hidden="true" className="mt-0.5" />
+                    <span>{text}</span>
+                  </li>
+                ))}
               </ul>
             </div>
             <div>
@@ -156,8 +171,9 @@ export default function TikTokLandingPage() {
               <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">Ready to Grow?</h2>
               <div className="space-y-6 text-base sm:text-lg">
                 <div className="rounded-3xl border border-white/20 bg-white/5 p-6">
-                  <p className="text-neutral-100">
-                    👤 Business Owners: Let’s design a site that turns visitors into customers.
+                  <p className="flex items-start gap-3 text-neutral-100">
+                    <PixelishImg src={pixelishForEmoji("👤").src} alt="" size={18} invert aria-hidden="true" className="mt-0.5" />
+                    <span>Business Owners: Let’s design a site that turns visitors into customers.</span>
                   </p>
                   <div className="mt-4">
                     <Button
@@ -171,7 +187,10 @@ export default function TikTokLandingPage() {
                   </div>
                 </div>
                 <div className="rounded-3xl border border-white/20 bg-white/5 p-6">
-                  <p className="text-neutral-100">💸 Referrals: Earn up to $1,000 when you send a client our way.</p>
+                  <p className="flex items-start gap-3 text-neutral-100">
+                    <PixelishImg src={pixelishForEmoji("💸").src} alt="" size={18} invert aria-hidden="true" className="mt-0.5" />
+                    <span>Referrals: Earn up to $1,000 when you send a client our way.</span>
+                  </p>
                   <div className="mt-4">
                     <Button
                       asChild

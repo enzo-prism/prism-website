@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react"
 import Link from "next/link"
-import { ArrowRight, ArrowUpRight } from "lucide-react"
+import { ArrowUpRight } from "lucide-react"
 
 import {
   Carousel,
@@ -12,6 +12,7 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
+import { Button } from "@/components/ui/button"
 import { trackCTAClick } from "@/utils/analytics"
 import type { WebsiteProject } from "@/lib/website-projects"
 
@@ -55,10 +56,10 @@ export default function RecentLaunchesCarousel({ projects }: RecentLaunchesCarou
   const activeLabel = activeCategory === ALL_CATEGORY ? "all industries" : formatCategoryLabel(activeCategory)
 
   return (
-    <section className="mt-16 rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm sm:p-8">
+    <section className="mt-16 rounded-md border border-border/60 bg-card/30 p-6 shadow-none backdrop-blur-sm sm:p-8">
       <div className="flex flex-col gap-2 text-center sm:text-left">
-        <span className="text-xs font-semibold uppercase tracking-[0.28em] text-neutral-400">recent launches</span>
-        <h2 className="text-2xl font-semibold lowercase text-neutral-900 sm:text-3xl">
+        <span className="text-[10px] font-semibold uppercase tracking-[0.28em] text-muted-foreground font-pixel">recent launches</span>
+        <h2 className="text-2xl font-semibold text-foreground sm:text-3xl">
           see the sites clients launch with prism
         </h2>
       </div>
@@ -70,10 +71,10 @@ export default function RecentLaunchesCarousel({ projects }: RecentLaunchesCarou
           onValueChange={value => setActiveCategory(value || ALL_CATEGORY)}
           variant="outline"
           size="sm"
-          className="mx-auto flex w-full max-w-3xl flex-wrap justify-center gap-2 bg-neutral-50 p-1"
+          className="mx-auto flex w-full max-w-3xl flex-wrap justify-center gap-2 rounded-md border border-border/60 bg-muted/30 p-1"
         >
           <ToggleGroupItem value={ALL_CATEGORY} aria-label="show all website launches" className="px-3">
-            <span className="text-sm font-medium">all ({projects.length})</span>
+            all ({projects.length})
           </ToggleGroupItem>
           {categorySummary.map(category => (
             <ToggleGroupItem
@@ -82,9 +83,7 @@ export default function RecentLaunchesCarousel({ projects }: RecentLaunchesCarou
               aria-label={`show ${category.label.toLowerCase()} websites`}
               className="px-3"
             >
-              <span className="text-sm font-medium">
-                {category.label} ({category.count})
-              </span>
+              {category.label} ({category.count})
             </ToggleGroupItem>
           ))}
         </ToggleGroup>
@@ -102,23 +101,19 @@ export default function RecentLaunchesCarousel({ projects }: RecentLaunchesCarou
                   key={project.id}
                   className="basis-[90%] pl-4 sm:basis-[70%] md:basis-[55%] lg:basis-[45%] xl:basis-[38%]"
                 >
-                  <div className="flex h-full flex-col justify-between rounded-2xl border border-neutral-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
+                  <div className="flex h-full flex-col justify-between rounded-md border border-border/60 bg-card/30 p-6 shadow-none backdrop-blur-sm transition hover:-translate-y-1 hover:bg-card/45">
                     <div className="space-y-2">
-                      <span className="text-xs uppercase tracking-wider text-neutral-500">{project.category}</span>
-                      <h3 className="text-xl font-semibold text-neutral-900">{project.title}</h3>
-                      <p className="text-sm text-neutral-600">{project.description}</p>
+                      <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-muted-foreground font-pixel">{project.category}</span>
+                      <h3 className="text-xl font-semibold text-foreground">{project.title}</h3>
+                      <p className="text-sm text-muted-foreground">{project.description}</p>
                     </div>
                     <div className="mt-6">
-                      <Link
-                        href={project.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 rounded-full bg-neutral-900 px-4 py-2 text-sm font-semibold text-white transition hover:bg-neutral-800"
-                        onClick={() => trackCTAClick("portfolio-click", project.title)}
-                      >
-                        view site
-                        <ArrowUpRight className="h-4 w-4" />
-                      </Link>
+                      <Button asChild className="rounded-md" onClick={() => trackCTAClick("portfolio-click", project.title)}>
+                        <Link href={project.url} target="_blank" rel="noopener noreferrer">
+                          view site
+                          <ArrowUpRight className="h-4 w-4" />
+                        </Link>
+                      </Button>
                     </div>
                   </div>
                 </CarouselItem>

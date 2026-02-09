@@ -7,6 +7,8 @@ import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import PixelishImg from "@/components/pixelish/PixelishImg"
+import { pixelishForEmoji } from "@/lib/pixelish-emoji"
 import { trackCTAClick } from "@/utils/analytics"
 
 const offerHighlights = [
@@ -38,32 +40,32 @@ const howItWorks = [
   {
     icon: "1",
     title: "apply online",
-    description: "📋 fill out the short application form to get started.",
+    description: "fill out the short application form to get started.",
   },
   {
     icon: "2",
     title: "get approved",
-    description: "✅ if you’re a good fit, we’ll add you to the prism models list.",
+    description: "if you’re a good fit, we’ll add you to the prism models list.",
   },
   {
     icon: "3",
     title: "choose your session",
-    description: "🗓️ view available whitening appointments and pick one that fits your schedule.",
+    description: "view available whitening appointments and pick one that fits your schedule.",
   },
   {
     icon: "4",
     title: "whitening day",
-    description: "✨ attend your appointment and enjoy your professional teeth whitening.",
+    description: "attend your appointment and enjoy your professional teeth whitening.",
   },
   {
     icon: "5",
     title: "get paid",
-    description: "💵 receive payment from prism after your session.",
+    description: "receive payment from prism after your session.",
   },
   {
     icon: "6",
     title: "come back anytime",
-    description: "🔁 check the list again whenever you’re ready for your next whitening.",
+    description: "check the list again whenever you’re ready for your next whitening.",
   },
 ]
 
@@ -214,7 +216,7 @@ export default function ModelsPageClient() {
                     rel="noopener noreferrer"
                     aria-label={`visit ${partner.name} website`}
                     onClick={() => trackCTAClick("models_dental_partner", partner.name)}
-                    className="group block min-w-[240px] shrink-0 rounded-3xl border border-neutral-200/70 bg-neutral-50/75 p-6 shadow-sm backdrop-blur transition duration-300 hover:-translate-y-1 hover:border-neutral-300 hover:bg-white hover:shadow-lg focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-neutral-900"
+                    className="group block min-w-[240px] shrink-0 rounded-3xl border border-neutral-200/70 bg-neutral-50/75 p-6 shadow-sm backdrop-blur transition duration-300 hover:-translate-y-1 hover:border-neutral-300 hover:bg-white hover:shadow-lg focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring"
                   >
                     <div className="space-y-2 text-left">
                       <p className="text-sm font-semibold lowercase text-neutral-900">
@@ -243,7 +245,9 @@ export default function ModelsPageClient() {
                   key={highlight.title}
                   className="flex h-full flex-col rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg sm:p-8"
                 >
-                  <div className="text-2xl sm:text-3xl">{highlight.icon}</div>
+                  <div className="inline-flex h-12 w-12 items-center justify-center rounded-2xl border border-neutral-200 bg-neutral-50" aria-hidden="true">
+                    <PixelishImg src={pixelishForEmoji(highlight.icon).src} alt="" size={26} invert={false} aria-hidden="true" />
+                  </div>
                   <h3 className="mt-3 text-lg font-semibold lowercase text-neutral-900 sm:mt-4 sm:text-xl">
                     {highlight.title}
                   </h3>
@@ -269,7 +273,7 @@ export default function ModelsPageClient() {
               {howItWorks.map((step) => (
                 <div
                   key={step.title}
-                  className="group relative overflow-hidden rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-neutral-300 hover:shadow-lg sm:p-8"
+                  className="group relative overflow-hidden rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm transition-[transform,border-color,box-shadow] duration-300 hover:-translate-y-1 hover:border-neutral-300 hover:shadow-lg sm:p-8"
                 >
                   <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-white via-white to-neutral-50 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
                   <div className="relative flex h-full flex-col gap-4">
@@ -451,7 +455,7 @@ export default function ModelsPageClient() {
 
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-6">
                   <Button type="submit" size="lg" className="rounded-full px-10" disabled={isSubmitting}>
-                    {isSubmitting ? "sending..." : "→ apply now"}
+                    {isSubmitting ? "sending…" : "→ apply now"}
                   </Button>
                   <p className="text-xs text-neutral-500 sm:max-w-xs">
                     we review all applications and reach out when there’s a great match in your area.

@@ -4,6 +4,7 @@ import Navbar from "@/components/navbar"
 import { CaseStudySchema } from "@/components/schema-markup"
 import SocialShare from "@/components/social-share"
 import TrackedLink from "@/components/tracked-link"
+import PixelishIcon from "@/components/pixelish/PixelishIcon"
 import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
 import { ArrowLeft, ArrowRight } from "lucide-react"
@@ -28,7 +29,7 @@ export default function FamilyFirstSmileCareCaseStudy() {
     <div className="flex min-h-screen flex-col">
       <Navbar />
 
-      <main className="flex-1 bg-white">
+      <main className="flex-1 bg-background">
         {/* Hero */}
         <section className="border-b px-4 py-16 md:py-24">
           <div className="container mx-auto px-4 md:px-6 max-w-3xl">
@@ -64,7 +65,7 @@ export default function FamilyFirstSmileCareCaseStudy() {
               {/* Overview */}
               <section className="py-8" data-section="overview">
                 <h2 className="text-2xl font-bold tracking-tighter lowercase mb-6">family‑first by design</h2>
-                <div className="prose prose-neutral max-w-none space-y-4 lowercase">
+                <div className="prose prose-neutral dark:prose-invert max-w-none space-y-4 lowercase">
                   <p>Family First Smile Care provides comprehensive dental care for patients of all ages with a family‑oriented approach.</p>
                   <p>We designed a modern website that makes it easy to understand services, appreciate office amenities, and book care quickly.</p>
                 </div>
@@ -73,7 +74,7 @@ export default function FamilyFirstSmileCareCaseStudy() {
               {/* Challenge */}
               <section className="py-8 border-t" data-section="challenge">
                 <h2 className="text-2xl font-bold tracking-tighter lowercase mb-6">the challenge</h2>
-                <div className="prose prose-neutral max-w-none space-y-4 lowercase">
+                <div className="prose prose-neutral dark:prose-invert max-w-none space-y-4 lowercase">
                   <div className="pl-4 border-l-2 border-neutral-200 my-6 space-y-6">
                     <div><h3 className="font-medium lowercase">unclear service structure</h3><p className="text-neutral-600">patients couldn’t easily find what they needed</p></div>
                     <div><h3 className="font-medium lowercase">comforts hidden</h3><p className="text-neutral-600">amenities and technology not highlighted</p></div>
@@ -85,7 +86,7 @@ export default function FamilyFirstSmileCareCaseStudy() {
               {/* Solution */}
               <section className="py-8 border-t" data-section="solution">
                 <h2 className="text-2xl font-bold tracking-tighter lowercase mb-6">our solution</h2>
-                <div className="prose prose-neutral max-w-none space-y-4 lowercase">
+                <div className="prose prose-neutral dark:prose-invert max-w-none space-y-4 lowercase">
                   <div className="pl-4 border-l-2 border-neutral-200 my-6 space-y-6">
                     <div><h3 className="font-medium lowercase">service hubs</h3><p className="text-neutral-600">grouped preventive, cosmetic, and restorative content</p></div>
                     <div><h3 className="font-medium lowercase">comforts & tech</h3><p className="text-neutral-600">amenities (blankets, water, wifi) and CBCT/digital X‑rays</p></div>
@@ -101,15 +102,67 @@ export default function FamilyFirstSmileCareCaseStudy() {
                 <div className="mb-8">
                   <FounderImpactGraph />
                 </div>
-                <div className="prose prose-neutral max-w-none space-y-4 lowercase">
+                <div className="prose prose-neutral dark:prose-invert max-w-none space-y-4 lowercase">
                   <div className="grid gap-4 md:grid-cols-2 my-6">
                     <div className="space-y-4">
-                      <div className="flex items-start gap-3"><span className="text-green-600">✓</span><div><span className="font-semibold lowercase">clarity</span><p className="text-neutral-600 text-sm">patients navigate to the right services faster</p></div></div>
-                      <div className="flex items-start gap-3"><span className="text-green-600">✓</span><div><span className="font-semibold lowercase">comfort</span><p className="text-neutral-600 text-sm">family‑friendly amenities surfaced throughout</p></div></div>
+                      <div className="flex items-start gap-3">
+                        <PixelishIcon
+                          src="/pixelish/checkmark.svg"
+                          alt=""
+                          size={16}
+                          invert={false}
+                          aria-hidden="true"
+                          className="mt-1 opacity-90 dark:invert"
+                        />
+                        <div>
+                          <span className="font-semibold lowercase">clarity</span>
+                          <p className="text-neutral-600 text-sm">patients navigate to the right services faster</p>
+                        </div>
+                      </div>
+                      <div className="flex items-start gap-3">
+                        <PixelishIcon
+                          src="/pixelish/checkmark.svg"
+                          alt=""
+                          size={16}
+                          invert={false}
+                          aria-hidden="true"
+                          className="mt-1 opacity-90 dark:invert"
+                        />
+                        <div>
+                          <span className="font-semibold lowercase">comfort</span>
+                          <p className="text-neutral-600 text-sm">family‑friendly amenities surfaced throughout</p>
+                        </div>
+                      </div>
                     </div>
                     <div className="space-y-4">
-                      <div className="flex items-start gap-3"><span className="text-green-600">✓</span><div><span className="font-semibold lowercase">access</span><p className="text-neutral-600 text-sm">improved call, form, and directions flows</p></div></div>
-                      <div className="flex items-start gap-3"><span className="text-green-600">✓</span><div><span className="font-semibold lowercase">measurement</span><p className="text-neutral-600 text-sm">events and attribution for optimization</p></div></div>
+                      <div className="flex items-start gap-3">
+                        <PixelishIcon
+                          src="/pixelish/checkmark.svg"
+                          alt=""
+                          size={16}
+                          invert={false}
+                          aria-hidden="true"
+                          className="mt-1 opacity-90 dark:invert"
+                        />
+                        <div>
+                          <span className="font-semibold lowercase">access</span>
+                          <p className="text-neutral-600 text-sm">improved call, form, and directions flows</p>
+                        </div>
+                      </div>
+                      <div className="flex items-start gap-3">
+                        <PixelishIcon
+                          src="/pixelish/checkmark.svg"
+                          alt=""
+                          size={16}
+                          invert={false}
+                          aria-hidden="true"
+                          className="mt-1 opacity-90 dark:invert"
+                        />
+                        <div>
+                          <span className="font-semibold lowercase">measurement</span>
+                          <p className="text-neutral-600 text-sm">events and attribution for optimization</p>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>

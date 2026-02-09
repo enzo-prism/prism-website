@@ -46,7 +46,7 @@ export default function FAQSection({
     <section className={cn(
       "px-4",
       paddingClasses[variant],
-      "border-t border-neutral-100 bg-white",
+      "border-t border-border/60 bg-transparent",
       className
     )}>
       <script
@@ -56,11 +56,11 @@ export default function FAQSection({
       
       <div className="max-w-3xl mx-auto">
         <div className="text-center mb-8">
-          <h2 className="text-2xl sm:text-3xl font-semibold text-neutral-900 mb-3 lowercase">
+          <h2 className="mb-3 text-2xl font-semibold text-foreground sm:text-3xl">
             {title}
           </h2>
           {subtitle && (
-            <p className="text-base sm:text-lg text-neutral-600 leading-relaxed">
+            <p className="text-base leading-relaxed text-muted-foreground sm:text-lg">
               {subtitle}
             </p>
           )}
@@ -72,12 +72,12 @@ export default function FAQSection({
               <AccordionItem
                 key={index}
                 value={`faq-${index}`}
-                className="overflow-hidden rounded-lg border border-neutral-200 bg-neutral-50"
+                className="overflow-hidden rounded-md border border-border/60 bg-card/40 shadow-none border-b-0"
               >
-                <AccordionTrigger className="px-6 py-4 text-left text-neutral-900 hover:bg-neutral-100 hover:no-underline [&>svg]:h-5 [&>svg]:w-5 [&>svg]:text-neutral-500">
+                <AccordionTrigger className="px-6 py-4 text-left text-foreground hover:bg-muted/50 hover:no-underline [&>svg]:h-5 [&>svg]:w-5 [&>svg]:text-muted-foreground">
                   <span className="pr-4">{item.question}</span>
                 </AccordionTrigger>
-                <AccordionContent className="px-6 text-base text-neutral-700 leading-relaxed">
+                <AccordionContent className="px-6 text-base text-muted-foreground leading-relaxed">
                   <p>{item.answer}</p>
                 </AccordionContent>
               </AccordionItem>

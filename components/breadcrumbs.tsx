@@ -27,7 +27,7 @@ export default function Breadcrumbs({ items, className }: { items: Breadcrumb[],
       <nav 
         aria-label="Breadcrumb" 
         className={cn(
-          "flex items-center text-sm text-neutral-500 overflow-x-auto scrollbar-hide py-3 mb-4", 
+          "flex items-center overflow-x-auto scrollbar-hide py-3 mb-4 text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground font-pixel", 
           className
         )}
       >
@@ -35,7 +35,7 @@ export default function Breadcrumbs({ items, className }: { items: Breadcrumb[],
           {/* Home icon */}
           <Link 
             href="/" 
-            className="flex items-center hover:text-neutral-900 transition-colors shrink-0" 
+            className="flex items-center shrink-0 transition-colors hover:text-foreground" 
             aria-label="home"
           >
             <Home size={16} strokeWidth={2} />
@@ -47,11 +47,11 @@ export default function Breadcrumbs({ items, className }: { items: Breadcrumb[],
 
             return (
               <div key={item.url + index} className="flex items-center">
-                <ChevronRight size={14} className="mx-2 text-neutral-300 shrink-0" strokeWidth={2} />
+                <ChevronRight size={14} className="mx-2 shrink-0 text-border/70" strokeWidth={2} />
                 
                 {isLastItem ? (
                   <span 
-                    className="font-medium text-neutral-900 truncate max-w-[200px] sm:max-w-md md:max-w-xl" 
+                    className="truncate max-w-[200px] sm:max-w-md md:max-w-xl text-foreground" 
                     aria-current="page"
                     title={item.name}
                   >
@@ -60,7 +60,7 @@ export default function Breadcrumbs({ items, className }: { items: Breadcrumb[],
                 ) : (
                   <Link 
                     href={item.url} 
-                    className="hover:text-neutral-900 transition-colors whitespace-nowrap"
+                    className="whitespace-nowrap transition-colors hover:text-foreground"
                   >
                     {item.name}
                   </Link>

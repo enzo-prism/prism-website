@@ -142,7 +142,7 @@ export default function VideoWithPoster({
         {/* Loading state for poster */}
         {!isPosterLoaded && (
           <div className="absolute inset-0 bg-gray-100 animate-pulse flex items-center justify-center">
-            <div className="text-gray-400 text-sm">Loading poster...</div>
+            <div className="text-gray-400 text-sm">Loading poster…</div>
           </div>
         )}
 
@@ -199,7 +199,7 @@ export default function VideoWithPoster({
       {isPosterLoaded && isVideoLoaded && !showVideo && (
         <div className="absolute inset-0 z-15 flex items-center justify-center">
           <div className="bg-black/50 text-white px-3 py-1 rounded text-xs">
-            Starting video...
+            Starting video…
           </div>
         </div>
       )}

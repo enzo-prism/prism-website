@@ -126,12 +126,13 @@ export default function AITrafficDistributionChart() {
 
         <motion.div className="space-y-3" variants={fadeInUp}>
           {data.map((item, index) => (
-            <motion.div
+            <motion.button
               key={item.name}
+              type="button"
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: index * 0.1 }}
-              className={`p-4 rounded-lg border-2 transition-all cursor-pointer touch-feedback ${
+              className={`p-4 rounded-lg border-2 transition-colors cursor-pointer touch-feedback ${
                 activeIndex === index
                   ? 'border-neutral-300 bg-neutral-50'
                   : 'border-neutral-200 hover:border-neutral-300'
@@ -139,6 +140,7 @@ export default function AITrafficDistributionChart() {
               onMouseEnter={() => setActiveIndex(index)}
               onMouseLeave={() => setActiveIndex(null)}
               onClick={() => setActiveIndex(activeIndex === index ? null : index)}
+              aria-pressed={activeIndex === index}
             >
               <div className="flex flex-col sm:flex-row sm:items-center gap-3 mb-2">
                 <div className="flex items-center gap-3 flex-1">
@@ -151,7 +153,7 @@ export default function AITrafficDistributionChart() {
                 <span className="text-sm font-bold text-neutral-600 ml-7 sm:ml-0">{item.value}%</span>
               </div>
               <p className="text-sm text-neutral-600 leading-relaxed">{item.description}</p>
-            </motion.div>
+            </motion.button>
           ))}
         </motion.div>
       </div>

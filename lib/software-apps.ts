@@ -6,8 +6,7 @@ export type SoftwareApp = {
   hrefLabel: string
   icon: {
     src: string
-    trigger: string
-    delay?: string
+    alt: string
     size: number
   }
 }
@@ -20,10 +19,9 @@ export const PRISM_APPS: SoftwareApp[] = [
     href: "https://density.report",
     hrefLabel: "density.report",
     icon: {
-      src: "https://cdn.lordicon.com/uoljexdg.json",
-      trigger: "loop",
-      delay: "2000",
-      size: 25,
+      src: "/pixelish/bar-chart-average.svg",
+      alt: "Density app icon",
+      size: 28,
     },
   },
   {
@@ -33,10 +31,9 @@ export const PRISM_APPS: SoftwareApp[] = [
     href: "https://hotcontent.app",
     hrefLabel: "hotcontent.app",
     icon: {
-      src: "https://cdn.lordicon.com/excswhey.json",
-      trigger: "loop",
-      delay: "2000",
-      size: 25,
+      src: "/pixelish/media-play.svg",
+      alt: "Hot Content app icon",
+      size: 28,
     },
   },
   {
@@ -45,10 +42,9 @@ export const PRISM_APPS: SoftwareApp[] = [
     href: "https://enzo.engineering",
     hrefLabel: "enzo.engineering",
     icon: {
-      src: "https://cdn.lordicon.com/mudwpdhy.json",
-      trigger: "loop",
-      delay: "2000",
-      size: 25,
+      src: "/pixelish/command.svg",
+      alt: "Engineering Tracker app icon",
+      size: 28,
     },
   },
 ]

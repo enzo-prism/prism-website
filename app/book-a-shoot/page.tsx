@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
+import PixelishIcon from "@/components/pixelish/PixelishIcon"
 
 const PAGE_TITLE = "book a shoot | prism"
 const PAGE_DESCRIPTION =
@@ -75,17 +76,23 @@ export default function BookAShootPage() {
           <div className="container mx-auto max-w-3xl">
             <div className="grid gap-6 md:grid-cols-3">
               <div className="text-center p-4">
-                <p className="text-2xl mb-2">📸</p>
+                <div className="mb-2 flex justify-center" aria-hidden="true">
+                  <PixelishIcon src="/pixelish/device-camera.svg" alt="" size={26} invert={false} aria-hidden="true" />
+                </div>
                 <h3 className="font-semibold text-neutral-900 mb-1">Professional Equipment</h3>
                 <p className="text-sm text-neutral-600">High-quality cameras and lighting for stunning results</p>
               </div>
               <div className="text-center p-4">
-                <p className="text-2xl mb-2">⏱️</p>
+                <div className="mb-2 flex justify-center" aria-hidden="true">
+                  <PixelishIcon src="/pixelish/device-stop-clock.svg" alt="" size={26} invert={false} aria-hidden="true" />
+                </div>
                 <h3 className="font-semibold text-neutral-900 mb-1">One Hour Session</h3>
                 <p className="text-sm text-neutral-600">Efficient shoots that capture everything you need</p>
               </div>
               <div className="text-center p-4">
-                <p className="text-2xl mb-2">🖼️</p>
+                <div className="mb-2 flex justify-center" aria-hidden="true">
+                  <PixelishIcon src="/pixelish/browser.svg" alt="" size={26} invert={false} aria-hidden="true" />
+                </div>
                 <h3 className="font-semibold text-neutral-900 mb-1">Edited Deliverables</h3>
                 <p className="text-sm text-neutral-600">Professionally edited photos delivered within a week</p>
               </div>
@@ -112,7 +119,7 @@ export default function BookAShootPage() {
                     name="email"
                     type="email"
                     required
-                    className="w-full rounded-2xl border-neutral-200 bg-neutral-50 px-4 py-3 text-sm text-neutral-900 focus-visible:border-neutral-900 focus-visible:ring-neutral-900 focus-visible:ring-offset-0"
+                    className="w-full rounded-2xl border-neutral-200 bg-neutral-50 px-4 py-3 text-sm text-neutral-900 focus-visible:border-ring focus-visible:ring-ring focus-visible:ring-offset-0"
                     placeholder="name@practice.com"
                   />
                 </div>
@@ -124,12 +131,12 @@ export default function BookAShootPage() {
                       type="date"
                       name="day_one_date"
                       required
-                      className="rounded-2xl border-neutral-200 bg-neutral-50 px-4 py-3 text-base text-neutral-900 focus-visible:border-neutral-900 focus-visible:ring-neutral-900 focus-visible:ring-offset-0 sm:text-sm"
+                      className="rounded-2xl border-neutral-200 bg-neutral-50 px-4 py-3 text-base text-neutral-900 focus-visible:border-ring focus-visible:ring-ring focus-visible:ring-offset-0 sm:text-sm"
                     />
                     <select
                       name="day_one_time"
                       required
-                      className="rounded-2xl border border-neutral-200 bg-neutral-50 px-4 py-3 text-base text-neutral-900 focus:border-neutral-900 focus:outline-hidden sm:text-sm"
+                      className="rounded-2xl border border-neutral-200 bg-neutral-50 px-4 py-3 text-base text-neutral-900 focus:border-ring focus:outline-hidden focus:ring-1 focus:ring-ring focus:ring-offset-0 sm:text-sm"
                     >
                       <option value="">best one-hour window</option>
                       <option value="08:00">8:00 – 9:00 AM</option>
@@ -151,12 +158,12 @@ export default function BookAShootPage() {
                       type="date"
                       name="day_two_date"
                       required
-                      className="rounded-2xl border-neutral-200 bg-neutral-50 px-4 py-3 text-base text-neutral-900 focus-visible:border-neutral-900 focus-visible:ring-neutral-900 focus-visible:ring-offset-0 sm:text-sm"
+                      className="rounded-2xl border-neutral-200 bg-neutral-50 px-4 py-3 text-base text-neutral-900 focus-visible:border-ring focus-visible:ring-ring focus-visible:ring-offset-0 sm:text-sm"
                     />
                     <select
                       name="day_two_time"
                       required
-                      className="rounded-2xl border border-neutral-200 bg-neutral-50 px-4 py-3 text-base text-neutral-900 focus:border-neutral-900 focus:outline-hidden sm:text-sm"
+                      className="rounded-2xl border border-neutral-200 bg-neutral-50 px-4 py-3 text-base text-neutral-900 focus:border-ring focus:outline-hidden focus:ring-1 focus:ring-ring focus:ring-offset-0 sm:text-sm"
                     >
                       <option value="">best one-hour window</option>
                       <option value="08:00">8:00 – 9:00 AM</option>
@@ -179,7 +186,7 @@ export default function BookAShootPage() {
                     id="notes"
                     name="notes"
                     rows={4}
-                    className="w-full rounded-2xl border-neutral-200 bg-neutral-50 px-4 py-3 text-sm text-neutral-900 shadow-none focus-visible:border-neutral-900 focus-visible:ring-neutral-900 focus-visible:ring-offset-0"
+                    className="w-full rounded-2xl border-neutral-200 bg-neutral-50 px-4 py-3 text-sm text-neutral-900 shadow-none focus-visible:border-ring focus-visible:ring-ring focus-visible:ring-offset-0"
                     placeholder="number of operatories, parking instructions, etc."
                   />
                 </div>

@@ -1,9 +1,8 @@
 import type { Metadata } from "next"
 import Link from "next/link"
 
-import LordIconScript from "@/components/LordIconScript"
+import PixelishIcon from "@/components/pixelish/PixelishIcon"
 import Footer from "@/components/footer"
-import LordIcon from "@/components/lord-icon"
 import Navbar from "@/components/navbar"
 import { ItemListSchema } from "@/components/schema-markup"
 import { Badge } from "@/components/ui/badge"
@@ -37,7 +36,6 @@ export const metadata: Metadata = {
 export default function SoftwarePage() {
   return (
     <div className="flex min-h-screen flex-col bg-background">
-      <LordIconScript />
       <Navbar />
       <main className="flex-1">
         <section className="relative overflow-hidden py-16 sm:py-24 bg-background">
@@ -48,7 +46,7 @@ export default function SoftwarePage() {
               <Badge variant="secondary" className="w-fit">
                 Apps developed by Prism
               </Badge>
-              <h1 className="text-balance text-4xl font-semibold tracking-tight text-foreground sm:text-5xl">
+              <h1 className="text-balance text-5xl font-semibold text-foreground sm:text-6xl lg:text-7xl">
                 Tools to Help You Grow
               </h1>
               <p className="text-balance text-lg text-muted-foreground">
@@ -64,15 +62,15 @@ export default function SoftwarePage() {
               {PRISM_APPS.map((app) => (
                 <Card
                   key={app.title}
-                  className="flex h-full flex-col border-border/60 bg-card/90 transition-transform duration-200 ease-out hover:-translate-y-1 hover:shadow-lg"
+                  className="flex h-full flex-col border-border/60 bg-card/30 backdrop-blur-sm transition-[transform,background-color] duration-200 ease-out hover:-translate-y-1 hover:bg-card/45"
                 >
                   <CardHeader className="space-y-3">
-                    <LordIcon
+                    <PixelishIcon
                       src={app.icon.src}
-                      trigger={app.icon.trigger}
-                      delay={app.icon.delay}
-                      style={{ width: app.icon.size, height: app.icon.size }}
+                      alt={app.icon.alt}
+                      size={app.icon.size}
                       aria-hidden="true"
+                      className="opacity-95"
                     />
                     <CardTitle className="text-xl">{app.title}</CardTitle>
                     <CardDescription className="text-sm text-muted-foreground">
@@ -83,7 +81,7 @@ export default function SoftwarePage() {
                     <Button
                       asChild
                       variant="outline"
-                      className="w-full rounded-full transition-transform duration-200 ease-out hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0"
+                      className="w-full rounded-md transition-transform duration-200 ease-out hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0"
                     >
                       <Link href={app.href} target="_blank" rel="noopener noreferrer">
                         {app.hrefLabel}

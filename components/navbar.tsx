@@ -1,11 +1,11 @@
 "use client"
 
-import { BookOpen, FolderOpen, Heart, Home, LayoutGrid, Menu, Play } from "lucide-react"
-import type { LucideIcon } from "lucide-react"
+import { Menu } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react"
 
+import PixelishIcon from "@/components/pixelish/PixelishIcon"
 import Breadcrumbs from "@/components/breadcrumbs"
 import { Button } from "@/components/ui/button"
 import {
@@ -27,23 +27,25 @@ const aliasMap: Record<string, string> = {
   "/growth": "/prism-flywheel",
 }
 
-const topIconMap: Record<string, { icon: LucideIcon; motionClass: string }> = {
-  home: { icon: Home, motionClass: "nav-icon-home" },
-  "our story": { icon: BookOpen, motionClass: "nav-icon-story" },
-  software: { icon: LayoutGrid, motionClass: "nav-icon-software" },
-  "case studies": { icon: FolderOpen, motionClass: "nav-icon-case-studies" },
-  "wall of love": { icon: Heart, motionClass: "nav-icon-love" },
-  start: { icon: Play, motionClass: "nav-icon-start" },
+const topIconMap: Record<string, { src: string; motionClass: string }> = {
+  home: { src: "/pixelish/house.svg", motionClass: "nav-icon-home" },
+  "our story": { src: "/pixelish/user.svg", motionClass: "nav-icon-story" },
+  software: { src: "/pixelish/device-monitor.svg", motionClass: "nav-icon-software" },
+  "case studies": { src: "/pixelish/folder.svg", motionClass: "nav-icon-case-studies" },
+  "wall of love": { src: "/pixelish/emoji-heart.svg", motionClass: "nav-icon-love" },
+  start: { src: "/pixelish/emoji-rocket.svg", motionClass: "nav-icon-start" },
 }
 
 const getTopIcon = (label?: string) => {
   if (!label) return null
   const iconConfig = topIconMap[label.toLowerCase()]
   if (!iconConfig) return null
-  const Icon = iconConfig.icon
   return (
-    <Icon
-      className={`nav-icon ${iconConfig.motionClass} h-4 w-4 text-neutral-400`}
+    <PixelishIcon
+      src={iconConfig.src}
+      alt=""
+      size={20}
+      className={`nav-icon ${iconConfig.motionClass} h-5 w-5 opacity-75`}
       aria-hidden
     />
   )
@@ -187,7 +189,7 @@ export default function Navbar({ mobileRevealOnFirstTap = false }: NavbarProps) 
                 {item.href ? (
                   <NavigationMenuLink
                     asChild
-                    className={`group nav-link flex items-center gap-2 p-0 text-sm font-medium lowercase transition-colors hover:bg-transparent hover:text-primary focus:bg-transparent focus:text-primary ${
+                    className={`group nav-link flex items-center gap-2 p-0 text-xs font-semibold uppercase font-pixel tracking-[0.22em] transition-colors hover:bg-transparent hover:text-primary focus:bg-transparent focus:text-primary ${
                       isActivePath(item.href) ? "text-primary" : "text-muted-foreground"
                     }`}
                     active={isActivePath(item.href)}
@@ -203,20 +205,20 @@ export default function Navbar({ mobileRevealOnFirstTap = false }: NavbarProps) 
                 ) : (
                   <>
                     <NavigationMenuTrigger
-                      className={`h-auto bg-transparent px-0 py-0 text-sm font-medium lowercase transition-colors hover:bg-transparent hover:text-primary focus:bg-transparent focus:text-primary data-[state=open]:bg-transparent data-[state=open]:text-primary ${
+                      className={`h-auto bg-transparent px-0 py-0 text-xs font-semibold uppercase font-pixel tracking-[0.22em] transition-colors hover:bg-transparent hover:text-primary focus:bg-transparent focus:text-primary data-[state=open]:bg-transparent data-[state=open]:text-primary ${
                         isParentActive(item) ? "text-primary" : "text-muted-foreground"
                       }`}
                     >
                       {item.label}
                     </NavigationMenuTrigger>
                     {item.children && (
-                      <NavigationMenuContent className="rounded-xl border bg-white p-2 shadow-lg">
+                      <NavigationMenuContent className="rounded-md border border-border/60 bg-popover p-2 text-popover-foreground shadow-lg shadow-black/40">
                         <div className="flex w-52 flex-col gap-1">
                           {item.children.map((child) => (
                             <NavigationMenuLink
                               key={child.label}
                               asChild
-                              className={`group nav-link flex items-center gap-2 rounded-md px-3 py-2 text-sm lowercase transition-colors ${
+                              className={`group nav-link flex items-center gap-2 rounded-md px-3 py-2 text-xs font-semibold uppercase font-pixel tracking-[0.18em] transition-colors ${
                                 isActivePath(child.href)
                                   ? "bg-muted text-foreground"
                                   : "text-muted-foreground hover:bg-muted hover:text-foreground"
@@ -258,7 +260,7 @@ export default function Navbar({ mobileRevealOnFirstTap = false }: NavbarProps) 
                       <SheetClose asChild>
                         <Link
                           href={item.href}
-                          className={`group nav-link flex items-center justify-between rounded-lg px-3 py-2 text-base lowercase transition-colors hover:bg-muted ${
+                          className={`group nav-link flex items-center justify-between rounded-md px-3 py-2 text-sm font-semibold uppercase font-pixel tracking-[0.16em] transition-colors hover:bg-muted ${
                             isActivePath(item.href)
                               ? "bg-muted font-semibold text-foreground"
                               : "text-muted-foreground"
@@ -273,7 +275,7 @@ export default function Navbar({ mobileRevealOnFirstTap = false }: NavbarProps) 
                       </SheetClose>
                     ) : (
                       <div
-                        className={`flex items-center justify-between rounded-lg px-3 py-2 text-base lowercase ${
+                        className={`flex items-center justify-between rounded-md px-3 py-2 text-sm font-semibold uppercase font-pixel tracking-[0.16em] ${
                           isParentActive(item) ? "text-foreground" : "text-muted-foreground"
                         }`}
                       >
@@ -286,7 +288,7 @@ export default function Navbar({ mobileRevealOnFirstTap = false }: NavbarProps) 
                           <SheetClose asChild key={child.label}>
                             <Link
                               href={child.href}
-                              className={`group nav-link flex items-center gap-2 rounded-md px-3 py-2 text-base lowercase transition-colors hover:bg-muted ${
+                              className={`group nav-link flex items-center gap-2 rounded-md px-3 py-2 text-sm font-semibold uppercase font-pixel tracking-[0.16em] transition-colors hover:bg-muted ${
                                 isActivePath(child.href)
                                   ? "bg-muted font-medium text-foreground"
                                   : "text-muted-foreground"

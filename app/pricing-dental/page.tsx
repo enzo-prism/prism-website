@@ -18,7 +18,7 @@ export default function PricingDentalPage() {
     <>
       <section className="px-4 pt-8">
         <div className="container mx-auto px-4 md:px-6 max-w-3xl">
-          <div className="prose prose-neutral max-w-none mb-6">
+          <div className="prose prose-neutral dark:prose-invert max-w-none mb-6">
             <h2 className="text-xl font-semibold lowercase">built for dental practices</h2>
             <p>
               packages include seo, online booking, and review capture—everything you need to attract

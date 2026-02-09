@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
 import { useEffect, useState } from "react"
 
 import { useFormValidation } from "@/hooks/use-form-validation"
@@ -62,7 +63,7 @@ export default function FreeAnalysisForm() {
 
   return (
     <form
-      className="space-y-5 rounded-3xl border border-slate-200 bg-white p-6 text-slate-900 shadow-xl"
+      className="space-y-5 rounded-2xl border border-border/60 bg-card/90 p-6 text-foreground shadow-xl shadow-black/30"
       action="https://formspree.io/f/xldarokj"
       method="POST"
       noValidate
@@ -72,10 +73,10 @@ export default function FreeAnalysisForm() {
       <input type="hidden" name="_redirect" value={redirectUrl} />
       <input type="text" name="_gotcha" tabIndex={-1} autoComplete="off" style={{ display: "none" }} aria-hidden="true" />
 
-        <p className="text-sm text-slate-500">We'll send your analysis within 24 hours.</p>
+      <p className="text-sm text-muted-foreground">We'll send your analysis within 24 hours.</p>
 
-      <div className="flex flex-col gap-2 text-sm font-medium text-slate-700">
-        <label htmlFor="analysis-name">Name</label>
+      <div className="grid gap-2">
+        <Label htmlFor="analysis-name">Name</Label>
         <Input
           id="analysis-name"
           name="name"
@@ -90,8 +91,8 @@ export default function FreeAnalysisForm() {
         {renderError("name")}
       </div>
 
-      <div className="flex flex-col gap-2 text-sm font-medium text-slate-700">
-        <label htmlFor="analysis-email">Email</label>
+      <div className="grid gap-2">
+        <Label htmlFor="analysis-email">Email</Label>
         <Input
           id="analysis-email"
           name="email"
@@ -107,8 +108,8 @@ export default function FreeAnalysisForm() {
         {renderError("email")}
       </div>
 
-      <div className="flex flex-col gap-2 text-sm font-medium text-slate-700">
-        <label htmlFor="analysis-website">Website</label>
+      <div className="grid gap-2">
+        <Label htmlFor="analysis-website">Website</Label>
         <Input
           id="analysis-website"
           name="website"
@@ -125,14 +126,14 @@ export default function FreeAnalysisForm() {
         {renderError("website")}
       </div>
 
-      <div className="flex flex-col gap-2 text-sm font-medium text-slate-700">
-        <label htmlFor="analysis-challenge">Main Challenge</label>
+      <div className="grid gap-2">
+        <Label htmlFor="analysis-challenge">Main Challenge</Label>
         <select
           id="analysis-challenge"
           name="challenge"
           required
           defaultValue=""
-          className="h-12 rounded-2xl border border-slate-200 bg-white px-3 text-sm text-slate-700 outline-hidden transition focus:border-slate-900 focus:ring-2 focus:ring-slate-900/10"
+          className="h-12 rounded-md border border-border/60 bg-card px-3 text-sm text-foreground outline-hidden transition focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
           aria-invalid={Boolean(getError("challenge"))}
           aria-describedby={getDescribedBy("challenge")}
           onBlur={handleBlur}
@@ -153,17 +154,18 @@ export default function FreeAnalysisForm() {
       <div className="space-y-3 pt-2">
         <Button
           type="submit"
-          className="w-full rounded-2xl bg-black py-6 text-base font-semibold text-white hover:bg-black/90"
+          variant="inverted"
+          className="w-full rounded-md py-6 text-base font-semibold"
           disabled={isSubmitting}
         >
-          {isSubmitting ? "Submitting..." : "Get My Free Analysis →"}
+          {isSubmitting ? "Submitting…" : "Get My Free Analysis →"}
         </Button>
         {submitError ? (
           <Alert variant="destructive" className="rounded-2xl">
             <AlertDescription>{submitError}</AlertDescription>
           </Alert>
         ) : null}
-        <p className="text-xs text-slate-500">We only use your info to share the analysis and next steps.</p>
+        <p className="text-xs text-muted-foreground">We only use your info to share the analysis and next steps.</p>
       </div>
     </form>
   )

@@ -7,6 +7,8 @@ import { Button } from "@/components/ui/button"
 import { trackCTAClick, trackPageView } from "@/utils/analytics"
 import CoreImage from "@/components/core-image"
 import { LOGO_CONFIG, LOGO_SIZES } from "@/lib/constants"
+import PixelishImg from "@/components/pixelish/PixelishImg"
+import { pixelishForEmoji } from "@/lib/pixelish-emoji"
 
 export default function ThanksCallPageClient() {
   const [isLoaded, setIsLoaded] = useState(false)
@@ -83,15 +85,15 @@ export default function ThanksCallPageClient() {
           <h3 className="text-lg font-semibold mb-3 lowercase">what you'll find on our instagram:</h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm text-gray-600">
             <div className="flex items-center gap-2">
-              <span className="text-lg">🎨</span>
+              <PixelishImg src={pixelishForEmoji("🎨").src} alt="" size={18} invert={false} aria-hidden="true" />
               <span>design inspiration & trends</span>
             </div>
             <div className="flex items-center gap-2">
-              <span className="text-lg">📱</span>
+              <PixelishImg src={pixelishForEmoji("📱").src} alt="" size={18} invert={false} aria-hidden="true" />
               <span>behind-the-scenes content</span>
             </div>
             <div className="flex items-center gap-2">
-              <span className="text-lg">💡</span>
+              <PixelishImg src={pixelishForEmoji("💡").src} alt="" size={18} invert={false} aria-hidden="true" />
               <span>business growth tips</span>
             </div>
           </div>

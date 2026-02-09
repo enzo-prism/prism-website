@@ -11,16 +11,16 @@ type CategoryKey =
   | "default"
 
 const CATEGORY_STYLES: Record<CategoryKey, { bg: string; border: string; text: string }> = {
-  dentistry: { bg: "bg-[#f1f8ff]", border: "border-[#cfe5ff]", text: "text-[#1f4f91]" },
-  retail: { bg: "bg-[#fff3e8]", border: "border-[#ffd9b8]", text: "text-[#a34b18]" },
-  education: { bg: "bg-[#f6efe7]", border: "border-[#e3d4c3]", text: "text-[#7a4c24]" },
-  nonprofit: { bg: "bg-[#e7f9f1]", border: "border-[#c8eddc]", text: "text-[#1c6b4d]" },
-  consulting: { bg: "bg-[#ffecec]", border: "border-[#ffc8c8]", text: "text-[#a02727]" },
-  event: { bg: "bg-[#fff7eb]", border: "border-[#ffdfb8]", text: "text-[#a45a16]" },
-  "private resort": { bg: "bg-[#e9fcff]", border: "border-[#c9f2ff]", text: "text-[#146c82]" },
-  "online community": { bg: "bg-[#f8ecff]", border: "border-[#e8d3ff]", text: "text-[#7a3fa5]" },
-  it: { bg: "bg-[#e8f7ff]", border: "border-[#cdeeff]", text: "text-[#1a6a9b]" },
-  default: { bg: "bg-neutral-100", border: "border-neutral-200", text: "text-neutral-700" },
+  dentistry: { bg: "bg-sky-500/10", border: "border-sky-400/30", text: "text-sky-200" },
+  retail: { bg: "bg-amber-500/10", border: "border-amber-400/30", text: "text-amber-200" },
+  education: { bg: "bg-orange-500/10", border: "border-orange-400/30", text: "text-orange-200" },
+  nonprofit: { bg: "bg-emerald-500/10", border: "border-emerald-400/30", text: "text-emerald-200" },
+  consulting: { bg: "bg-rose-500/10", border: "border-rose-400/30", text: "text-rose-200" },
+  event: { bg: "bg-yellow-500/10", border: "border-yellow-400/30", text: "text-yellow-200" },
+  "private resort": { bg: "bg-cyan-500/10", border: "border-cyan-400/30", text: "text-cyan-200" },
+  "online community": { bg: "bg-purple-500/10", border: "border-purple-400/30", text: "text-purple-200" },
+  it: { bg: "bg-blue-500/10", border: "border-blue-400/30", text: "text-blue-200" },
+  default: { bg: "bg-muted/40", border: "border-border/60", text: "text-muted-foreground" },
 }
 
 export function getCategoryClasses(category?: string) {
@@ -31,5 +31,5 @@ export function getCategoryClasses(category?: string) {
 
 export function buildCategoryPillClasses(category?: string) {
   const { bg, border, text } = getCategoryClasses(category)
-  return `${bg} ${border} ${text} inline-flex items-center justify-center rounded-full border px-3 py-1 text-[11px] font-semibold lowercase leading-tight tracking-tight`
+  return `${bg} ${border} ${text}`
 }

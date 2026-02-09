@@ -1,7 +1,7 @@
 "use client"
 
 import React from "react"
-import { motion } from "framer-motion"
+import { motion, useReducedMotion } from "framer-motion"
 
 interface MobileSectionDividerProps {
   variant?: "default" | "gradient" | "dotted" | "wave" | "minimal"
@@ -22,17 +22,18 @@ export function MobileSectionDivider({
   className = ""
 }: MobileSectionDividerProps) {
   const spacingClass = spacingStyles[spacing]
+  const reduceMotion = useReducedMotion()
 
   if (variant === "gradient") {
     return (
       <motion.div
-        initial={{ opacity: 0, scaleX: 0 }}
+        initial={reduceMotion ? false : { opacity: 0, scaleX: 0 }}
         animate={{ opacity: 1, scaleX: 1 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
+        transition={reduceMotion ? { duration: 0 } : { duration: 0.8, ease: "easeOut" }}
         className={`${spacingClass} ${className}`}
       >
-        <div className="relative h-px bg-gradient-to-r from-transparent via-neutral-300 dark:via-neutral-700 to-transparent mx-8" />
-        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-2 h-2 bg-neutral-400 dark:bg-neutral-600 rounded-full" />
+        <div className="relative mx-8 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
+        <div className="absolute left-1/2 top-1/2 h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-muted-foreground/50" />
       </motion.div>
     )
   }
@@ -40,19 +41,19 @@ export function MobileSectionDivider({
   if (variant === "dotted") {
     return (
       <motion.div
-        initial={{ opacity: 0, y: 10 }}
+        initial={reduceMotion ? false : { opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
+        transition={reduceMotion ? { duration: 0 } : { duration: 0.6, ease: "easeOut" }}
         className={`${spacingClass} ${className}`}
       >
         <div className="flex items-center justify-center gap-2">
           {[...Array(5)].map((_, i) => (
             <motion.div
               key={i}
-              initial={{ opacity: 0, scale: 0 }}
+              initial={reduceMotion ? false : { opacity: 0, scale: 0 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.4, delay: i * 0.1 }}
-              className="w-1.5 h-1.5 bg-neutral-400 dark:bg-neutral-600 rounded-full"
+              transition={reduceMotion ? { duration: 0 } : { duration: 0.4, delay: i * 0.1 }}
+              className="h-1.5 w-1.5 rounded-full bg-muted-foreground/50"
             />
           ))}
         </div>
@@ -63,9 +64,9 @@ export function MobileSectionDivider({
   if (variant === "wave") {
     return (
       <motion.div
-        initial={{ opacity: 0, y: 10 }}
+        initial={reduceMotion ? false : { opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
+        transition={reduceMotion ? { duration: 0 } : { duration: 0.6, ease: "easeOut" }}
         className={`${spacingClass} ${className}`}
       >
         <div className="flex items-center justify-center px-8">
@@ -73,12 +74,11 @@ export function MobileSectionDivider({
             width="100" 
             height="20" 
             viewBox="0 0 100 20" 
-            className="text-neutral-300 dark:text-neutral-700"
+            className="text-muted-foreground/60"
+            aria-hidden="true"
+            focusable="false"
           >
-            <motion.path
-              initial={{ pathLength: 0 }}
-              animate={{ pathLength: 1 }}
-              transition={{ duration: 1.5, ease: "easeInOut" }}
+            <path
               d="M0,10 Q25,0 50,10 T100,10"
               stroke="currentColor"
               strokeWidth="2"
@@ -94,12 +94,12 @@ export function MobileSectionDivider({
   if (variant === "minimal") {
     return (
       <motion.div
-        initial={{ opacity: 0, scaleX: 0 }}
+        initial={reduceMotion ? false : { opacity: 0, scaleX: 0 }}
         animate={{ opacity: 1, scaleX: 1 }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
+        transition={reduceMotion ? { duration: 0 } : { duration: 0.6, ease: "easeOut" }}
         className={`${spacingClass} ${className}`}
       >
-        <div className="w-16 h-px bg-neutral-300 dark:bg-neutral-700 mx-auto" />
+        <div className="mx-auto h-px w-16 bg-border" />
       </motion.div>
     )
   }
@@ -107,19 +107,19 @@ export function MobileSectionDivider({
   // Default variant
   return (
     <motion.div
-      initial={{ opacity: 0, scaleX: 0 }}
+      initial={reduceMotion ? false : { opacity: 0, scaleX: 0 }}
       animate={{ opacity: 1, scaleX: 1 }}
-      transition={{ duration: 0.8, ease: "easeOut" }}
+      transition={reduceMotion ? { duration: 0 } : { duration: 0.8, ease: "easeOut" }}
       className={`${spacingClass} ${className}`}
     >
       <div className="relative flex items-center justify-center">
-        <div className="flex-1 h-px bg-neutral-200 dark:bg-neutral-800 mx-4" />
+        <div className="mx-4 h-px flex-1 bg-border/60" />
         <div className="flex space-x-2">
-          <div className="w-2 h-2 bg-neutral-300 dark:bg-neutral-700 rounded-full" />
-          <div className="w-2 h-2 bg-neutral-400 dark:bg-neutral-600 rounded-full" />
-          <div className="w-2 h-2 bg-neutral-300 dark:bg-neutral-700 rounded-full" />
+          <div className="h-2 w-2 rounded-full bg-muted-foreground/50" />
+          <div className="h-2 w-2 rounded-full bg-muted-foreground/70" />
+          <div className="h-2 w-2 rounded-full bg-muted-foreground/50" />
         </div>
-        <div className="flex-1 h-px bg-neutral-200 dark:bg-neutral-800 mx-4" />
+        <div className="mx-4 h-px flex-1 bg-border/60" />
       </div>
     </motion.div>
   )

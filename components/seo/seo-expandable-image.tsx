@@ -42,7 +42,7 @@ export function SeoExpandableImage({
           type="button"
           aria-label={`Expand image: ${caption ?? alt}`}
           className={cn(
-            "group block w-full cursor-zoom-in bg-transparent p-0 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900/40 focus-visible:ring-offset-2 border-0 appearance-none rounded-3xl",
+            "group block w-full cursor-zoom-in bg-transparent p-0 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/50 focus-visible:ring-offset-2 border-0 appearance-none rounded-3xl",
             className
           )}
         >

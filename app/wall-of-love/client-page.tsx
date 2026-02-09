@@ -6,6 +6,7 @@ import { ArrowRight } from "lucide-react"
 import Link from "next/link"
 import { useEffect, useMemo, useState } from "react"
 import { trackCTAClick } from "@/utils/analytics"
+import PixelishImg from "@/components/pixelish/PixelishImg"
 import {
   quotesData,
   renderFormattedText,
@@ -49,24 +50,27 @@ export default function WallOfLoveClientPage() {
 
   return (
     <>
-      <section className="relative w-full py-10 sm:py-12 bg-white">
+      <section className="relative w-full border-b border-border/60 bg-transparent py-12 sm:py-14">
         <div className="w-full max-w-5xl mx-auto px-4 sm:px-6 text-center">
           <div className="space-y-3">
-            <div className="text-4xl">❤️</div>
-            <h1 className="text-[32px] sm:text-[40px] font-semibold tracking-tight lowercase text-neutral-900">wall of love</h1>
-            <p className="text-[14px] sm:text-[15px] text-neutral-700 italic lowercase">impossible is temporary.</p>
-            <div className="text-[13px] sm:text-[14px] text-neutral-600 lowercase flex items-center justify-center gap-3">
+            <div className="flex justify-center">
+              <PixelishImg src="/pixelish/emoji-heart.svg" alt="Heart icon" size={44} />
+            </div>
+            <p className="text-[10px] font-semibold uppercase tracking-[0.32em] text-muted-foreground font-pixel">testimonials</p>
+            <h1 className="text-5xl font-semibold sm:text-6xl lg:text-7xl">wall of love</h1>
+            <p className="text-[14px] sm:text-[15px] text-muted-foreground italic">impossible is temporary.</p>
+            <div className="flex items-center justify-center gap-3 text-[13px] sm:text-[14px] text-muted-foreground">
               <span>40,000+ on instagram</span>
-              <span className="text-neutral-300">•</span>
+              <span className="text-border/60">•</span>
               <span>5,000+ on tiktok</span>
-              <span className="text-neutral-300">•</span>
+              <span className="text-border/60">•</span>
               <span>24,500+ on youtube</span>
             </div>
             <div className="pt-1 flex items-center justify-center">
               <Link href="/get-started">
                 <Button
-                  size="sm"
-                  className="rounded-full px-6 py-2.5 text-sm lowercase bg-neutral-900 text-white hover:bg-neutral-800"
+                  size="lg"
+                  className="rounded-md px-6"
                   onClick={() => trackCTAClick("wall_of_love_get_started_cta", "/get-started")}
                 >
                   let's make something you'll love <ArrowRight className="ml-2 h-4 w-4" />
@@ -77,9 +81,9 @@ export default function WallOfLoveClientPage() {
         </div>
       </section>
 
-      <div className="bg-neutral-50">
+      <div className="bg-transparent">
         <main className="w-full max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
-          <p className="mb-6 text-xs uppercase tracking-[0.3em] text-neutral-400 text-center">
+          <p className="mb-6 text-[10px] font-semibold uppercase tracking-[0.32em] text-muted-foreground text-center font-pixel">
             {reviewCount.toLocaleString()} voices from our community of founders
           </p>
           <div className="space-y-4 sm:space-y-5 columns-1 md:columns-2 xl:columns-3 gap-5">
@@ -88,18 +92,18 @@ export default function WallOfLoveClientPage() {
               return (
                 <blockquote
                   key={`${item.kind}-${item.data.id}`}
-                  className="mb-4 break-inside-avoid bg-white p-4 sm:p-5 rounded-xl w-full border border-neutral-200 overflow-hidden shadow-sm"
+                  className="mb-4 w-full break-inside-avoid overflow-hidden rounded-md border border-border/60 bg-card/30 p-4 shadow-none backdrop-blur-sm sm:p-5"
                   aria-label={
                     isQuote
                       ? `Testimonial from ${item.data.client}`
                       : `Viewer takeaway from @${(item.data as Takeaway).handle}`
                   }
                 >
-                  <p className="text-[15px] sm:text-base text-neutral-800 leading-relaxed tracking-tight">
+                  <p className="text-[15px] leading-relaxed text-foreground sm:text-base">
                     &ldquo;{renderFormattedText(isQuote ? (item.data as Quote).text : (item.data as Takeaway).text)}&rdquo;
                   </p>
                   <footer className="mt-3 flex items-center justify-end text-right">
-                    <p className="font-medium text-sm sm:text-[15px] text-neutral-900">
+                    <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-muted-foreground font-pixel sm:text-xs">
                       {isQuote ? (item.data as Quote).client : `@${(item.data as Takeaway).handle}`}
                     </p>
                   </footer>

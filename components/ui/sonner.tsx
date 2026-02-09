@@ -14,7 +14,7 @@ type ToasterProps = React.ComponentProps<typeof Sonner>
 const Toaster = ({ theme, ...props }: ToasterProps) => {
   return (
     <Sonner
-      theme={(theme ?? "light") as ToasterProps["theme"]}
+      theme={(theme ?? "dark") as ToasterProps["theme"]}
       className="toaster group"
       icons={{
         success: <CircleCheck className="h-4 w-4" />,

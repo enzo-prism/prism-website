@@ -216,7 +216,7 @@ export default function ScholarshipPageClient() {
                       id="referral"
                       name="referral"
                       required
-                      className="w-full rounded-xl border border-neutral-200 bg-white px-3 py-2 text-sm text-neutral-900 focus:border-neutral-900 focus:outline-hidden focus:ring-1 focus:ring-neutral-900"
+                      className="w-full rounded-xl border border-neutral-200 bg-white px-3 py-2 text-sm text-neutral-900 focus:border-ring focus:outline-hidden focus:ring-1 focus:ring-ring"
                       defaultValue=""
                     >
                       <option value="" disabled>
@@ -257,7 +257,7 @@ export default function ScholarshipPageClient() {
                     className="w-full rounded-full bg-neutral-900 py-3 text-base lowercase text-white hover:bg-neutral-800"
                     disabled={status === "submitting"}
                   >
-                    {status === "submitting" ? "submitting..." : "submit application"}
+                    {status === "submitting" ? "submitting…" : "submit application"}
                   </Button>
                   <p className="text-xs text-neutral-400">
                     we review every entry manually and reach out via email if you are selected. submitting an application does not guarantee selection.

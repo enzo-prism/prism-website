@@ -4,6 +4,7 @@ import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
 import { Button } from "@/components/ui/button"
 import { CheckCircle2, Calendar } from "lucide-react"
+import PixelishIcon from "@/components/pixelish/PixelishIcon"
 
 export const metadata: Metadata = {
   title: "launch checkout received | prism",
@@ -19,32 +20,41 @@ export const metadata: Metadata = {
 
 export default function LaunchThankYouPage() {
   return (
-    <div className="flex min-h-screen flex-col bg-white">
+    <div className="flex min-h-screen flex-col bg-transparent">
       <Navbar />
       <main className="flex-1 flex items-center justify-center py-24 px-6">
         <div className="max-w-lg text-center space-y-6">
           <div className="flex justify-center">
-            <div className="rounded-full bg-green-100 p-4">
-              <CheckCircle2 className="h-12 w-12 text-green-600" />
+            <div className="rounded-md border border-emerald-400/30 bg-emerald-500/10 p-4">
+              <CheckCircle2 className="h-12 w-12 text-emerald-200" />
             </div>
           </div>
-          <h1 className="text-4xl font-semibold tracking-tight">You're Cleared for Launch! 🚀</h1>
-          <p className="text-lg text-zinc-600">
+          <h1 className="text-4xl font-semibold tracking-tight">
+            You're Cleared for Launch!
+            <PixelishIcon
+              src="/pixelish/emoji-rocket.svg"
+              alt=""
+              size={20}
+              aria-hidden="true"
+              className="ml-2 inline-block align-middle"
+            />
+          </h1>
+          <p className="text-lg text-muted-foreground">
             We've received your submission. Our team will get back to you within 48 hours to find a time to meet to discuss the next steps of your project.
           </p>
           
-          <div className="rounded-2xl bg-zinc-50 p-6 mt-6 border border-zinc-100">
-            <p className="text-sm font-medium text-zinc-900 mb-4">
+          <div className="mt-6 rounded-md border border-border/60 bg-card/30 p-6 shadow-none backdrop-blur-sm">
+            <p className="mb-4 text-[10px] font-semibold uppercase tracking-[0.28em] text-muted-foreground font-pixel">
               Want to accelerate the process?
             </p>
             <div className="flex flex-col items-center gap-3">
-              <Button asChild size="lg" className="w-full rounded-full bg-black text-white hover:bg-black/90 shadow-lg shadow-black/5">
+              <Button asChild size="lg" className="w-full rounded-md">
                 <Link href="https://calendar.notion.so/meet/enzosison/sfux4ogo" target="_blank">
                   <Calendar className="mr-2 h-4 w-4" />
                   Book Meeting Now
                 </Link>
               </Button>
-              <Button asChild variant="link" className="text-zinc-500 hover:text-black">
+              <Button asChild variant="link" className="text-muted-foreground hover:text-foreground">
                 <Link href="/">Return to Home</Link>
               </Button>
             </div>

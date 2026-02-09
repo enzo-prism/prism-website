@@ -2,13 +2,12 @@ import type { ReactNode } from "react"
 import Image from "next/image"
 import Link from "next/link"
 
-import LordIconScript from "@/components/LordIconScript"
+import PixelishIcon from "@/components/pixelish/PixelishIcon"
 import Footer from "@/components/footer"
 import ScalingRoadmapForm from "@/components/forms/ScalingRoadmapForm"
 import HeroBenefits from "@/components/home/HeroBenefits"
 import WallOfLoveCarousel from "@/components/home/WallOfLoveCarousel"
 import SearchConsoleSnapshotsRail from "@/components/home/SearchConsoleSnapshotsRail"
-import LordIcon from "@/components/lord-icon"
 import Navbar from "@/components/navbar"
 import {
   Accordion,
@@ -33,66 +32,36 @@ const TRAINING_COURSES = [
   {
     title: "Website Development",
     icons: [
-      { src: "/icons/vercel-alt.svg", alt: "Vercel logo" },
-      {
-        src: "https://res.cloudinary.com/dhqpqfw6w/image/upload/v1766512908/icone-github-noir_wxleps.webp",
-        alt: "GitHub logo",
-      },
-      {
-        src: "https://res.cloudinary.com/dhqpqfw6w/image/upload/v1766512907/cursor-logo-png_seeklogo-611587_zh5z4b.webp",
-        alt: "Cursor logo",
-      },
-      {
-        src: "https://res.cloudinary.com/dhqpqfw6w/image/upload/v1766513146/codex_qt4qbb.webp",
-        alt: "Codex logo",
-      },
-      {
-        src: "https://res.cloudinary.com/dhqpqfw6w/image/upload/v1766513383/New_Replit_Logo.svg_ekzu9u.webp",
-        alt: "Replit logo",
-      },
-      {
-        src: "https://res.cloudinary.com/dhqpqfw6w/image/upload/v1766517079/lovable-logo-icon_ubydgo.webp",
-        alt: "Lovable logo",
-      },
+      { src: "/pixelish/cloud.svg", alt: "Deploy icon" },
+      { src: "/pixelish/command.svg", alt: "Source control icon" },
+      { src: "/pixelish/device-mouse.svg", alt: "Cursor icon" },
+      { src: "/pixelish/robot.svg", alt: "AI coding icon" },
+      { src: "/pixelish/device-laptop.svg", alt: "Builder icon" },
+      { src: "/pixelish/emoji-heart.svg", alt: "Heart icon" },
     ],
   },
   {
     title: "Appear in AI Apps",
     icons: [
-      { src: "/icons/chatgpt-4.svg", alt: "ChatGPT logo" },
-      { src: "/icons/claude-logo.svg", alt: "Claude logo" },
-      {
-        src: "https://res.cloudinary.com/dhqpqfw6w/image/upload/v1766513009/gemini-color_lijrgt.webp",
-        alt: "Gemini logo",
-      },
+      { src: "/pixelish/chat-dots.svg", alt: "AI chat icon" },
+      { src: "/pixelish/chat-circle-dots.svg", alt: "AI assistant icon" },
+      { src: "/pixelish/robot.svg", alt: "AI bot icon" },
     ],
   },
   {
     title: "Ads",
     icons: [
-      { src: "/google-logo.png", alt: "Google logo" },
-      {
-        src: "https://res.cloudinary.com/dhqpqfw6w/image/upload/v1766512453/meta-logo_oxceei.webp",
-        alt: "Meta logo",
-      },
-      { src: "/icons/tiktok-icon.svg", alt: "TikTok logo" },
+      { src: "/pixelish/lens.svg", alt: "Search icon" },
+      { src: "/pixelish/socials-facebook.svg", alt: "Social ads icon" },
+      { src: "/pixelish/socials-tiktok.svg", alt: "Short video icon" },
     ],
   },
   {
     title: "Content",
     icons: [
-      {
-        src: "https://res.cloudinary.com/dhqpqfw6w/image/upload/v1766512757/YouTube_full-color_icon__2017.svg_yr4kgz.webp",
-        alt: "YouTube logo",
-      },
-      {
-        src: "https://res.cloudinary.com/dhqpqfw6w/image/upload/v1766512757/Twitter-X-Logo-vector-svg-cricut_1024x_uztyun.webp",
-        alt: "X logo",
-      },
-      {
-        src: "https://res.cloudinary.com/dhqpqfw6w/image/upload/v1766512757/Instagram_logo_2016.svg_grfivn.webp",
-        alt: "Instagram logo",
-      },
+      { src: "/pixelish/socials-youtube.svg", alt: "YouTube icon" },
+      { src: "/pixelish/socials-x.svg", alt: "X icon" },
+      { src: "/pixelish/socials-instagram.svg", alt: "Instagram icon" },
     ],
   },
 ]
@@ -220,27 +189,27 @@ type HeroClientIcon = {
 }
 
 const HERO_CLIENT_ICONS: HeroClientIcon[] = [
-  { src: "/google-logo.png", alt: "Google logo", label: "Google Search" },
-  { src: "/icons/tiktok-icon.svg", alt: "TikTok logo", label: "TikTok" },
+  { src: "/pixelish/lens.svg", alt: "Search icon", label: "Google Search" },
+  { src: "/pixelish/socials-tiktok.svg", alt: "Short video icon", label: "TikTok" },
   {
-    src: "https://res.cloudinary.com/dhqpqfw6w/image/upload/v1766512757/Instagram_logo_2016.svg_grfivn.webp",
-    alt: "Instagram logo",
+    src: "/pixelish/socials-instagram.svg",
+    alt: "Instagram icon",
     label: "Instagram",
   },
-  { src: "/icons/chatgpt-4.svg", alt: "ChatGPT logo", label: "ChatGPT" },
+  { src: "/pixelish/chat-dots.svg", alt: "AI chat icon", label: "ChatGPT" },
   {
-    src: "https://res.cloudinary.com/dhqpqfw6w/image/upload/v1766513009/gemini-color_lijrgt.webp",
-    alt: "Gemini logo",
+    src: "/pixelish/chat-circle-dots.svg",
+    alt: "AI assistant icon",
     label: "Google Gemini",
   },
   {
-    src: "https://res.cloudinary.com/dhqpqfw6w/image/upload/v1766512757/YouTube_full-color_icon__2017.svg_yr4kgz.webp",
-    alt: "YouTube logo",
+    src: "/pixelish/socials-youtube.svg",
+    alt: "YouTube icon",
     label: "YouTube",
   },
   {
-    src: "https://res.cloudinary.com/dhqpqfw6w/image/upload/v1766512757/Twitter-X-Logo-vector-svg-cricut_1024x_uztyun.webp",
-    alt: "X logo",
+    src: "/pixelish/socials-x.svg",
+    alt: "X icon",
     label: "X (Twitter)",
   },
 ]
@@ -266,8 +235,7 @@ const HERO_SEARCH_CONSOLE_SLIDES = [
   },
 ]
 
-const HERO_SEARCH_ICON =
-  "https://res.cloudinary.com/dhqpqfw6w/image/upload/v1767371606/Google_Search_Icon_1_rclfuu.webp"
+const HERO_SEARCH_ICON = "/pixelish/lens.svg"
 
 const SECTION_SPACING =
   "min-h-screen min-h-[100svh] py-24 sm:py-32 lg:py-40 xl:py-48"
@@ -277,7 +245,6 @@ const HERO_SECTION_CLASSES =
 export default function ClientPage() {
   return (
     <div className="flex min-h-screen flex-col bg-background">
-      <LordIconScript />
       <Navbar mobileRevealOnFirstTap />
       <main className="flex-1">
         <section className={HERO_SECTION_CLASSES}>
@@ -302,7 +269,7 @@ export default function ClientPage() {
                 </Button>
               </div>
               <div className="space-y-3">
-                <p className="text-xs font-medium text-muted-foreground text-center">
+                <p className="text-center text-[10px] font-semibold uppercase tracking-[0.22em] font-pixel text-muted-foreground">
                   get more clients from
                 </p>
                 <div className="flex flex-wrap items-center justify-center gap-2">
@@ -314,13 +281,7 @@ export default function ClientPage() {
                           className="flex h-10 w-10 items-center justify-center rounded-full border border-border/60 bg-background focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
                           aria-label={icon.label}
                         >
-                          <Image
-                            src={icon.src}
-                            alt={icon.alt}
-                            width={20}
-                            height={20}
-                            className="h-5 w-5 object-contain"
-                          />
+                          <PixelishIcon src={icon.src} alt={icon.alt} size={20} className="h-5 w-5 object-contain" />
                         </button>
                       </PopoverTrigger>
                       <PopoverContent
@@ -328,7 +289,7 @@ export default function ClientPage() {
                         align="center"
                         sideOffset={8}
                         role="tooltip"
-                        className="inline-flex w-auto items-center gap-0 rounded-md border border-border/60 bg-popover px-3 py-1.5 text-xs font-semibold text-popover-foreground shadow-md ring-0 whitespace-nowrap"
+                        className="inline-flex w-auto items-center gap-0 whitespace-nowrap rounded-md border border-border/60 bg-popover px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.18em] font-pixel text-popover-foreground shadow-md ring-0"
                       >
                         {icon.label}
                       </PopoverContent>
@@ -391,12 +352,12 @@ export default function ClientPage() {
                   className="flex h-full flex-col border-border/60 bg-card/90 transition-transform duration-200 ease-out hover:-translate-y-1 hover:shadow-lg"
                 >
                   <CardHeader className="space-y-3">
-                    <LordIcon
+                    <PixelishIcon
                       src={app.icon.src}
-                      trigger={app.icon.trigger}
-                      delay={app.icon.delay}
-                      style={{ width: app.icon.size, height: app.icon.size }}
+                      alt={app.icon.alt}
+                      size={app.icon.size}
                       aria-hidden="true"
+                      className="opacity-95"
                     />
                     <CardTitle className="text-xl">{app.title}</CardTitle>
                     <CardDescription className="text-sm text-muted-foreground">
@@ -449,13 +410,7 @@ export default function ClientPage() {
                             key={icon.src}
                             className="flex h-10 w-10 items-center justify-center rounded-full border border-border/60 bg-background"
                           >
-                            <Image
-                              src={icon.src}
-                              alt={icon.alt}
-                              width={20}
-                              height={20}
-                              className="h-5 w-5 object-contain"
-                            />
+                            <PixelishIcon src={icon.src} alt={icon.alt} size={20} className="h-5 w-5 object-contain" />
                           </div>
                         ))}
                       </div>

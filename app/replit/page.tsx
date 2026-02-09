@@ -5,9 +5,11 @@ import { ArrowRight, CheckCircle2, Sparkles } from "lucide-react"
 import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
 import ScrollToTop from "@/components/scroll-to-top"
+import PixelishIcon from "@/components/pixelish/PixelishIcon"
 import { WebPageSchema } from "@/components/schema-markup"
 import { Button } from "@/components/ui/button"
 import { getAllPosts } from "@/lib/mdx-data"
+import { pixelishForEmoji } from "@/lib/pixelish-emoji"
 
 const REPLIT_REFERRAL_URL = "https://replit.com/refer/enzo78"
 const YOUTUBE_CHANNEL_URL = "https://www.youtube.com/@the_design_prism"
@@ -139,7 +141,11 @@ export default async function ReplitPage() {
                   className="h-auto rounded-full px-8 py-4 text-base font-semibold"
                 >
                   <Link href="/get-started">
-                    🚀 get a website built in replit <ArrowRight className="h-5 w-5" aria-hidden />
+                    <span className="inline-flex items-center gap-2">
+                      <PixelishIcon src={pixelishForEmoji("🚀").src} alt="" size={18} invert={false} aria-hidden />
+                      <span>get a website built in replit</span>
+                      <ArrowRight className="h-5 w-5" aria-hidden />
+                    </span>
                   </Link>
                 </Button>
                 <Button
@@ -149,7 +155,11 @@ export default async function ReplitPage() {
                   className="h-auto rounded-full px-8 py-4 text-base font-semibold"
                 >
                   <Link href={REPLIT_REFERRAL_URL} target="_blank" rel="noopener noreferrer">
-                    ✨ start with replit <ArrowRight className="h-5 w-5" aria-hidden />
+                    <span className="inline-flex items-center gap-2">
+                      <PixelishIcon src={pixelishForEmoji("✨").src} alt="" size={18} aria-hidden />
+                      <span>start with replit</span>
+                      <ArrowRight className="h-5 w-5" aria-hidden />
+                    </span>
                   </Link>
                 </Button>
               </div>
@@ -280,7 +290,7 @@ export default async function ReplitPage() {
                       <Link
                         key={post.slug}
                         href={`/blog/${post.slug}`}
-                        className="group flex h-full flex-col justify-between rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg"
+                        className="group flex h-full flex-col justify-between rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm transition-[transform,box-shadow] duration-200 hover:-translate-y-1 hover:shadow-lg"
                       >
                         <div className="space-y-4">
                           <span className="inline-flex items-center rounded-full bg-neutral-100 px-3 py-1 text-xs font-medium tracking-[0.25em] text-neutral-600">

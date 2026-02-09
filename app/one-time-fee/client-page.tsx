@@ -8,9 +8,11 @@ import Navbar from "@/components/navbar"
 import ScrollProgressBar from "@/components/scroll-progress-bar"
 import { Button } from "@/components/ui/button"
 import { useMobile } from "@/hooks/use-mobile"
+import PixelishImg from "@/components/pixelish/PixelishImg"
 
 import { trackCTAClick, trackNavigation } from "@/utils/analytics"
 import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
+import { pixelishForEmoji } from "@/lib/pixelish-emoji"
 
 const services = [
   { name: "logo or wordmark", icon: Palette },
@@ -87,14 +89,14 @@ export default function OneTimeFeeClientPage() {
             <div className="grid gap-6 md:grid-cols-2 max-w-4xl mx-auto">
               {/* Quick Design Option */}
               <div className="bg-white rounded-xl p-6 border-2 border-black shadow-sm">
-                <div className="text-center">
-                  <div className="w-12 h-12 bg-black text-white rounded-full flex items-center justify-center mx-auto mb-4">
-                    <span className="text-xl">⚡</span>
-                  </div>
-                  <h3 className="text-xl font-bold lowercase mb-2">design sprint</h3>
-                  <div className="text-3xl font-bold text-black mb-2">$750</div>
-                  <p className="text-neutral-600 lowercase text-sm mb-4">
-                    perfect for quick branding needs
+                  <div className="text-center">
+                    <div className="w-12 h-12 bg-black text-white rounded-full flex items-center justify-center mx-auto mb-4">
+                    <PixelishImg src={pixelishForEmoji("⚡").src} alt="" size={22} invert aria-hidden="true" />
+                    </div>
+                    <h3 className="text-xl font-bold lowercase mb-2">design sprint</h3>
+                    <div className="text-3xl font-bold text-black mb-2">$750</div>
+                    <p className="text-neutral-600 lowercase text-sm mb-4">
+                      perfect for quick branding needs
                   </p>
                   <ul className="text-left text-sm text-neutral-600 lowercase space-y-1 mb-4">
                     <li>• custom design assets</li>
@@ -113,7 +115,10 @@ export default function OneTimeFeeClientPage() {
                       checkout
                     </a>
                   </div>
-                  <div className="text-xs text-neutral-500 lowercase">👈 you're here</div>
+                  <div className="inline-flex items-center justify-center gap-2 text-xs text-neutral-500 lowercase">
+                    <PixelishImg src={pixelishForEmoji("👈").src} alt="" size={14} invert={false} aria-hidden="true" />
+                    you're here
+                  </div>
                 </div>
               </div>
               
@@ -121,7 +126,7 @@ export default function OneTimeFeeClientPage() {
               <div className="bg-white rounded-xl p-6 border border-neutral-200 shadow-sm hover:shadow-md transition-shadow">
                 <div className="text-center">
                   <div className="w-12 h-12 bg-neutral-100 text-neutral-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <span className="text-xl">🚀</span>
+                    <PixelishImg src={pixelishForEmoji("🚀").src} alt="" size={22} invert={false} aria-hidden="true" />
                   </div>
                   <h3 className="text-xl font-bold lowercase mb-2">subscription tiers</h3>
                   <div className="text-3xl font-bold text-neutral-900 mb-2">from $1,200/mo</div>

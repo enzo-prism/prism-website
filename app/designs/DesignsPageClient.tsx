@@ -16,6 +16,8 @@ import { ChevronLeft, ChevronRight } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { useCallback, useEffect, useState } from "react"
+import PixelishImg from "@/components/pixelish/PixelishImg"
+import { pixelishForEmoji } from "@/lib/pixelish-emoji"
 
 // Quotes data
 const slides = [
@@ -175,7 +177,12 @@ export default function DesignsPageClient() {
                         key={item.label}
                         className="flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm font-medium text-white/90"
                       >
-                        <span aria-hidden className="text-base">{item.icon}</span>
+                        <PixelishImg
+                          src={pixelishForEmoji(item.icon).src}
+                          alt=""
+                          size={16}
+                          aria-hidden="true"
+                        />
                         <span className="leading-tight">{item.label}</span>
                       </div>
                     ))}
@@ -242,7 +249,15 @@ export default function DesignsPageClient() {
                   key={item.title}
                   className="flex items-start gap-3 rounded-2xl border border-neutral-200 bg-white p-4 shadow-sm"
                 >
-                  <span className="mt-0.5 text-lg" aria-hidden>{item.icon}</span>
+                  <span className="mt-0.5 inline-flex" aria-hidden="true">
+                    <PixelishImg
+                      src={pixelishForEmoji(item.icon).src}
+                      alt=""
+                      size={18}
+                      invert={false}
+                      aria-hidden="true"
+                    />
+                  </span>
                   <div className="space-y-1">
                     <p className="text-sm font-semibold uppercase tracking-wide text-neutral-900">{item.title}</p>
                     <p className="text-sm text-neutral-700">{item.desc}</p>
@@ -323,7 +338,7 @@ export default function DesignsPageClient() {
                         setCurrentSlide(index)
                         api?.scrollTo(index)
                       }}
-                      className={`h-2 rounded-full transition-all ${
+                      className={`h-2 rounded-full transition-[width,background-color] duration-200 ${
                         currentSlide === index ? "w-6 bg-black" : "w-2 bg-gray-300"
                       }`}
                       aria-label={`Go to slide ${index + 1}`}
@@ -356,7 +371,7 @@ export default function DesignsPageClient() {
             <div className="grid gap-4 sm:grid-cols-2">
               <Link
                 href="/get-started"
-                className="group flex flex-col items-center justify-center rounded-2xl border border-white/10 bg-white text-neutral-900 px-6 py-6 transition-all duration-200 hover:-translate-y-1 hover:shadow-xl"
+                className="group flex flex-col items-center justify-center rounded-2xl border border-white/10 bg-white text-neutral-900 px-6 py-6 transition-[transform,box-shadow] duration-200 hover:-translate-y-1 hover:shadow-xl"
               >
                 <span className="text-lg font-semibold">get started</span>
                 <span className="text-sm text-neutral-600 group-hover:text-neutral-800">
@@ -365,7 +380,7 @@ export default function DesignsPageClient() {
               </Link>
               <Link
                 href="/contact"
-                className="group flex flex-col items-center justify-center rounded-2xl border border-white/40 bg-transparent px-6 py-6 transition-all duration-200 hover:-translate-y-1 hover:border-white hover:bg-white/10"
+                className="group flex flex-col items-center justify-center rounded-2xl border border-white/40 bg-transparent px-6 py-6 transition-[transform,border-color,background-color] duration-200 hover:-translate-y-1 hover:border-white hover:bg-white/10"
               >
                 <span className="text-lg font-semibold text-white">contact</span>
                 <span className="text-sm text-white/70 group-hover:text-white">

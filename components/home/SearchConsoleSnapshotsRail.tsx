@@ -4,6 +4,8 @@ import Image from "next/image"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import { useCallback, useEffect, useRef, useState } from "react"
 
+import PixelishIcon from "@/components/pixelish/PixelishIcon"
+
 type SearchConsoleSlide = {
   src: string
   alt: string
@@ -126,13 +128,7 @@ export default function SearchConsoleSnapshotsRail({
                     />
                   </div>
                   <div className="flex items-center gap-2">
-                    <Image
-                      src={iconSrc}
-                      alt="Google Search icon"
-                      width={18}
-                      height={18}
-                      className="h-4 w-4"
-                    />
+                    <PixelishIcon src={iconSrc} alt="Search icon" size={18} className="h-4 w-4" />
                     <span className="text-xs text-muted-foreground sm:text-sm">
                       we make Google love your business with SEO (Search Engine Optimization)
                     </span>

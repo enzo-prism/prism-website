@@ -259,7 +259,7 @@ function MobileElegantSteps() {
             key={step.number}
             onClick={() => setActiveStep(step.number)}
             className={cn(
-              "rounded-full transition-all duration-300",
+              "rounded-full transition-colors duration-300",
               activeStep === step.number
                 ? "bg-black"
                 : "bg-neutral-300 hover:bg-neutral-400"

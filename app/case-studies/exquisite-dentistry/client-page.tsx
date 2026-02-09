@@ -5,15 +5,16 @@ import SocialShare from "@/components/social-share"
 import Image from "next/image"
 const EXQUISITE_SITE = "https://exquisitedentistryla.com/?utm_source=chatgpt.com"
 const EXQUISITE_SITE_TITLE = "Exquisite Dentistry: Cosmetic Dentist Los Angeles | Dr. Aguil"
-const linkClassName = "font-medium text-neutral-900 underline underline-offset-4"
+const linkClassName =
+  "font-medium text-foreground underline decoration-border/60 underline-offset-4 hover:decoration-border"
 
 export default function ExquisiteDentistryCaseStudy() {
   return (
     <div className="flex min-h-screen flex-col">
       <Navbar />
-      <main className="flex-1 bg-white">
+      <main className="flex-1 bg-background">
         <div className="container mx-auto px-4 md:px-6 max-w-3xl py-16 md:py-24">
-          <article className="prose prose-neutral max-w-none">
+          <article className="prose prose-neutral dark:prose-invert max-w-none">
             <h1>Case Study: Exquisite Dentistry — Turning a Legacy Beverly Hills Brand Into a Modern, Trackable Growth Engine</h1>
             <p>
               <strong>High-end cosmetic dentistry</strong>

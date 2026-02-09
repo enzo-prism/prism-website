@@ -394,7 +394,7 @@ const logoConcepts: LogoConcept[] = [
 const logoUsageDetails: LogoUsageDetail[] = [
   {
     title: "Website (high impact — #1 priority)",
-    priorityLabel: "⭐ 1 · high impact",
+    priorityLabel: "1 · high impact",
     description: "The website is the apex of Dr. Anderson’s brand.",
     icon: MonitorSmartphone,
     sections: [
@@ -425,7 +425,7 @@ const logoUsageDetails: LogoUsageDetail[] = [
   },
   {
     title: "Google Maps listing + Apple Maps",
-    priorityLabel: "⭐ 2 · massive ROI",
+    priorityLabel: "2 · massive ROI",
     description: "Patients overwhelmingly discover specialists via Maps.",
     icon: MapPin,
     sections: [
@@ -449,7 +449,7 @@ const logoUsageDetails: LogoUsageDetail[] = [
   },
   {
     title: "Yelp · Healthgrades · Zocdoc",
-    priorityLabel: "⭐ 3 · comparison platforms",
+    priorityLabel: "3 · comparison platforms",
     description: "Any profile where patients compare providers should match the brand.",
     icon: Globe,
     sections: [
@@ -469,7 +469,7 @@ const logoUsageDetails: LogoUsageDetail[] = [
   },
   {
     title: "Appointment cards + business cards",
-    priorityLabel: "⭐ 4 · physical touchpoints",
+    priorityLabel: "4 · physical touchpoints",
     description: "Physical materials still matter for a specialist.",
     icon: CreditCard,
     sections: [
@@ -485,7 +485,7 @@ const logoUsageDetails: LogoUsageDetail[] = [
   },
   {
     title: "Referring dentist packets",
-    priorityLabel: "⭐ 5 · critical for specialists",
+    priorityLabel: "5 · critical for specialists",
     description: "This is Dr. Anderson’s highest-leverage growth channel.",
     icon: FileText,
     sections: [
@@ -507,7 +507,7 @@ const logoUsageDetails: LogoUsageDetail[] = [
   },
   {
     title: "Patient forms (digital + paper)",
-    priorityLabel: "⭐ 6 · paperwork",
+    priorityLabel: "6 · paperwork",
     description: "Every touchpoint should feel unified.",
     icon: ClipboardList,
     sections: [
@@ -531,7 +531,7 @@ const logoUsageDetails: LogoUsageDetail[] = [
   },
   {
     title: "In-office art + wall signage",
-    priorityLabel: "⭐ 7 · environmental design",
+    priorityLabel: "7 · environmental design",
     description: "This is where the barn artwork aesthetic becomes a strategic asset.",
     icon: Brush,
     sections: [
@@ -553,7 +553,7 @@ const logoUsageDetails: LogoUsageDetail[] = [
   },
   {
     title: "Email signature + templates",
-    priorityLabel: "⭐ 8 · every send",
+    priorityLabel: "8 · every send",
     description: "Every email should carry the brand.",
     icon: Mail,
     sections: [
@@ -569,7 +569,7 @@ const logoUsageDetails: LogoUsageDetail[] = [
   },
   {
     title: "Social media profiles",
-    priorityLabel: "⭐ 9 · consistency",
+    priorityLabel: "9 · consistency",
     description: "Even if usage is light, the visuals should match the website.",
     icon: Share2,
     sections: [
@@ -591,7 +591,7 @@ const logoUsageDetails: LogoUsageDetail[] = [
   },
   {
     title: "Printed + digital treatment reports",
-    priorityLabel: "⭐ 10 · specialist proof",
+    priorityLabel: "10 · specialist proof",
     description: "Especially relevant for referring dentists.",
     icon: FileText,
     sections: [
@@ -607,7 +607,7 @@ const logoUsageDetails: LogoUsageDetail[] = [
   },
   {
     title: "Invoices + receipts",
-    priorityLabel: "⭐ 11 · operations",
+    priorityLabel: "11 · operations",
     description: "Even these should follow the brand.",
     icon: Receipt,
     sections: [
@@ -623,7 +623,7 @@ const logoUsageDetails: LogoUsageDetail[] = [
   },
   {
     title: "Office signage (exterior)",
-    priorityLabel: "⭐ 12 · arrival",
+    priorityLabel: "12 · arrival",
     description: "If zoning allows, extend the logo outside.",
     icon: Building2,
     sections: [
@@ -642,7 +642,7 @@ const logoUsageDetails: LogoUsageDetail[] = [
   },
   {
     title: "Scrubs · jackets · embroidered items",
-    priorityLabel: "⭐ 13 · team polish",
+    priorityLabel: "13 · team polish",
     description: "Optional, but strong brand reinforcement.",
     icon: ShieldCheck,
     sections: [
@@ -660,7 +660,7 @@ const logoUsageDetails: LogoUsageDetail[] = [
   },
   {
     title: "Postcards + follow-up mailers",
-    priorityLabel: "⭐ 14 · patient touchbacks",
+    priorityLabel: "14 · patient touchbacks",
     description: "Even minimal mailers should match the brand.",
     icon: Mail,
     sections: [
@@ -676,7 +676,7 @@ const logoUsageDetails: LogoUsageDetail[] = [
   },
   {
     title: "Website favicons for third-party tools",
-    priorityLabel: "⭐ 15 · ecosystem",
+    priorityLabel: "15 · ecosystem",
     description: "Extend the icon into every external portal.",
     icon: Globe,
     sections: [
@@ -1015,7 +1015,7 @@ export default function WineCountryRootCanalDesignReview() {
             </div>
             <div className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm">
               <p className="text-xs font-semibold uppercase tracking-[0.35em] text-neutral-500">
-                ⭐ summary (high-impact uses ranked)
+                summary (high-impact uses ranked)
               </p>
               <ol className="mt-4 list-decimal space-y-2 pl-5 text-sm text-neutral-700">
                 {usageSummary.map((item) => (
@@ -1081,7 +1081,7 @@ export default function WineCountryRootCanalDesignReview() {
                         type="radio"
                         name="concept"
                         value={concept.title}
-                        className="h-4 w-4 border-neutral-400 text-neutral-900 focus:ring-neutral-900"
+                        className="h-4 w-4 border-neutral-400 text-neutral-900 focus:ring-ring"
                         checked={selectedConcept === concept.title}
                         onChange={(event) => {
                           setSelectedConcept(event.target.value)

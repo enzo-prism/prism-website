@@ -9,6 +9,7 @@ import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
 import { Button } from "@/components/ui/button"
 import { ArrowRight, Check } from "lucide-react"
+import PixelishImg from "@/components/pixelish/PixelishImg"
 
 const missionPoints = [
   "Make growth simple and accessible",
@@ -140,7 +141,10 @@ export default function InstagramLandingPage() {
               <div className="space-y-4">
                 <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">Next Steps</h2>
                 <p className="text-base text-neutral-200">
-                  👉 If you’re a business owner:
+                  <span className="inline-flex items-center gap-2">
+                    <PixelishImg src="/pixelish/arrow-right.svg" alt="" size={16} aria-hidden="true" />
+                    <span>If you’re a business owner:</span>
+                  </span>
                   <br />
                   Let’s design a website that helps you grow.
                 </p>
@@ -150,7 +154,10 @@ export default function InstagramLandingPage() {
               </div>
               <div className="space-y-4">
                 <p className="text-base text-neutral-200">
-                  💸 If you know one:
+                  <span className="inline-flex items-center gap-2">
+                    <PixelishImg src="/pixelish/currency-dollar.svg" alt="" size={16} aria-hidden="true" />
+                    <span>If you know one:</span>
+                  </span>
                   <br />
                   Earn up to $1,000 when you refer them to Prism.
                 </p>

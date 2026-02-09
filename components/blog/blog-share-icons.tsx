@@ -62,11 +62,11 @@ export default function BlogShareIcons({ url, title, className }: BlogShareIcons
     <TooltipProvider delayDuration={250}>
       <div
         className={cn(
-          "inline-flex items-center gap-1.5 rounded-full border border-neutral-200 bg-white/90 px-1.5 py-1 shadow-sm backdrop-blur supports-[backdrop-filter]:bg-white/60",
+          "inline-flex items-center gap-1.5 rounded-md border border-border/60 bg-card/50 px-1.5 py-1 shadow-sm shadow-black/40 backdrop-blur supports-[backdrop-filter]:bg-card/40",
           className,
         )}
       >
-        <Share2 className="h-3.5 w-3.5 text-neutral-400 sm:h-4 sm:w-4" aria-hidden />
+        <Share2 className="h-3.5 w-3.5 text-muted-foreground sm:h-4 sm:w-4" aria-hidden />
         <div className="flex items-center gap-1.25">
           {shareTargets.map((target) => (
             <Tooltip key={target.name}>
@@ -75,7 +75,7 @@ export default function BlogShareIcons({ url, title, className }: BlogShareIcons
                   type="button"
                   variant="ghost"
                   size="icon"
-                  className="h-7 w-7 rounded-full border border-transparent text-neutral-500 transition-all hover:border-neutral-200 hover:bg-neutral-100 hover:text-neutral-900 sm:h-8 sm:w-8"
+                  className="h-7 w-7 rounded-md border border-transparent text-muted-foreground transition-colors hover:border-border/60 hover:bg-muted/40 hover:text-foreground sm:h-8 sm:w-8"
                   aria-label={target.label}
                   onClick={() => openShareWindow(target.buildUrl(url, title), target.name)}
                 >
@@ -92,8 +92,8 @@ export default function BlogShareIcons({ url, title, className }: BlogShareIcons
                 variant="ghost"
                 size="icon"
                 className={cn(
-                  "h-7 w-7 rounded-full border border-transparent text-neutral-500 transition-all hover:border-neutral-200 hover:bg-neutral-100 hover:text-neutral-900 sm:h-8 sm:w-8",
-                  copied && "border-neutral-900 bg-neutral-900 text-white hover:bg-neutral-900 hover:text-white",
+                  "h-7 w-7 rounded-md border border-transparent text-muted-foreground transition-colors hover:border-border/60 hover:bg-muted/40 hover:text-foreground sm:h-8 sm:w-8",
+                  copied && "border-white/30 bg-primary text-primary-foreground hover:bg-primary/90 hover:text-primary-foreground",
                 )}
                 aria-label="copy link"
                 onClick={handleCopy}

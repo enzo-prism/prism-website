@@ -26,7 +26,7 @@ export default function FlywheelPhaseSelector({ phases }: FlywheelPhaseSelectorP
             <motion.button
               key={phase.number}
               type="button"
-              className={`group flex flex-col items-center space-y-2 transition-all ${
+              className={`group flex flex-col items-center space-y-2 transition-opacity duration-200 ${
                 isActive ? "opacity-100" : "opacity-60 hover:opacity-100"
               }`}
               whileHover={{ y: -2 }}

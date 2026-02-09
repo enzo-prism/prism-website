@@ -1,5 +1,8 @@
 import Link from "next/link"
 
+import PixelishIcon from "@/components/pixelish/PixelishIcon"
+import { pixelishForEmoji } from "@/lib/pixelish-emoji"
+
 const SEGMENTS = [
   {
     emoji: "📱",
@@ -59,8 +62,14 @@ export default function SegmentsRail() {
                   className="group block h-full rounded-3xl border border-neutral-200 bg-white p-5 shadow-sm transition hover:-translate-y-1 hover:shadow-md"
                 >
                   <div className="flex items-center gap-3 text-left">
-                    <span className="text-3xl" aria-hidden>
-                      {segment.emoji}
+                    <span className="flex h-11 w-11 items-center justify-center rounded-full bg-neutral-100" aria-hidden="true">
+                      <PixelishIcon
+                        src={pixelishForEmoji(segment.emoji).src}
+                        alt=""
+                        size={26}
+                        invert={false}
+                        aria-hidden="true"
+                      />
                     </span>
                     <div>
                       <h3 className="text-lg font-semibold lowercase text-neutral-900">

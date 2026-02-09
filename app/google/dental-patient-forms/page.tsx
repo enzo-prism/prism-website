@@ -454,14 +454,14 @@ const steps: StepDefinition[] = [
 ]
 
 const guideSections = [
-  { id: "overview", label: "Overview", emoji: "📋" },
-  { id: "prerequisites", label: "Prerequisites", emoji: "✅" },
-  { id: "steps", label: "Step-by-step", emoji: "🛠️" },
-  { id: "options", label: "Optional Paths", emoji: "🧭" },
-  { id: "truth-table", label: "Truth Table", emoji: "⚖️" },
-  { id: "appendix", label: "Appendix", emoji: "📎" },
-  { id: "checklist", label: "Checklist", emoji: "☑️" },
-  { id: "references", label: "References", emoji: "🔗" },
+  { id: "overview", label: "Overview", iconSrc: "/pixelish/document-letter.svg" },
+  { id: "prerequisites", label: "Prerequisites", iconSrc: "/pixelish/checkmark.svg" },
+  { id: "steps", label: "Step-by-step", iconSrc: "/pixelish/command.svg" },
+  { id: "options", label: "Optional Paths", iconSrc: "/pixelish/lens-plus.svg" },
+  { id: "truth-table", label: "Truth Table", iconSrc: "/pixelish/kanban.svg" },
+  { id: "appendix", label: "Appendix", iconSrc: "/pixelish/folder.svg" },
+  { id: "checklist", label: "Checklist", iconSrc: "/pixelish/circle-checkmark.svg" },
+  { id: "references", label: "References", iconSrc: "/pixelish/copy.svg" },
 ]
 
 const checklistItems = [

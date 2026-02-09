@@ -38,7 +38,7 @@ export default function AppsPortfolioGrid({ projects }: AppsPortfolioGridProps) 
           target="_blank"
           rel="noopener noreferrer"
           onClick={() => trackCTAClick("app-portfolio-click", project.title)}
-          className="group relative overflow-hidden rounded-2xl aspect-[4/5] hover:shadow-xl transition-all duration-300"
+          className="group relative overflow-hidden rounded-2xl aspect-[4/5] hover:shadow-xl transition-shadow duration-300"
         >
           {/* Gradient background */}
           <div className={`absolute inset-0 bg-gradient-to-br ${gradients[index % gradients.length]}`} />
@@ -53,7 +53,7 @@ export default function AppsPortfolioGrid({ projects }: AppsPortfolioGridProps) 
             ) : project.icon ? (
               <img src={project.icon} alt="" width={40} height={40} className="w-10 h-10 object-contain" />
             ) : (
-              <Smartphone className="w-8 h-8 text-white/80" />
+              <Smartphone className="w-8 h-8 text-white/80" aria-hidden="true" focusable="false" />
             )}
           </div>
           
@@ -76,8 +76,8 @@ export default function AppsPortfolioGrid({ projects }: AppsPortfolioGridProps) 
           </div>
 
           {/* Corner icon */}
-          <div className="absolute top-6 right-6 w-10 h-10 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300">
-            <ArrowUpRight className="w-5 h-5 text-white" />
+          <div className="absolute top-6 right-6 w-10 h-10 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <ArrowUpRight className="w-5 h-5 text-white" aria-hidden="true" focusable="false" />
           </div>
           
           {/* Glow effect on hover */}

@@ -4,6 +4,7 @@ import Navbar from "@/components/navbar"
 import { CaseStudySchema } from "@/components/schema-markup"
 import SocialShare from "@/components/social-share"
 import TrackedLink from "@/components/tracked-link"
+import PixelishIcon from "@/components/pixelish/PixelishIcon"
 import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
 import { ArrowLeft, ArrowRight } from "lucide-react"
@@ -29,7 +30,7 @@ export default function GraceDentalSantaRosaCaseStudy() {
     <div className="flex min-h-screen flex-col">
       <Navbar />
 
-      <main className="flex-1 bg-white">
+      <main className="flex-1 bg-background">
         {/* Hero */}
         <section className="border-b px-4 py-16 md:py-24">
           <div className="container mx-auto px-4 md:px-6 max-w-3xl">
@@ -66,7 +67,7 @@ export default function GraceDentalSantaRosaCaseStudy() {
               {/* Overview */}
               <section className="py-8" data-section="overview">
                 <h2 className="text-2xl font-bold tracking-tighter lowercase mb-6">exceptional family dental care, modernized</h2>
-                <div className="prose prose-neutral max-w-none space-y-4 lowercase">
+                <div className="prose prose-neutral dark:prose-invert max-w-none space-y-4 lowercase">
                   <p>Grace Dental in Santa Rosa, led by Dr. Tingjen Ji, provides comprehensive family dentistry—from preventive care to implants and cosmetic treatments.</p>
                   <p>We partnered post‑M&A to relaunch the brand and website, stand up acquisition channels, and implement end‑to‑end tracking.</p>
                 </div>
@@ -75,7 +76,7 @@ export default function GraceDentalSantaRosaCaseStudy() {
               {/* Situation */}
               <section className="py-8 border-t" data-section="situation">
                 <h2 className="text-2xl font-bold tracking-tighter lowercase mb-6">the situation</h2>
-                <div className="prose prose-neutral max-w-none space-y-4 lowercase">
+                <div className="prose prose-neutral dark:prose-invert max-w-none space-y-4 lowercase">
                   <div className="pl-4 border-l-2 border-neutral-200 my-6 space-y-6">
                     <div><h3 className="font-medium lowercase">fragmented brand</h3><p className="text-neutral-600">multiple templates and inconsistent messaging</p></div>
                     <div><h3 className="font-medium lowercase">limited findability</h3><p className="text-neutral-600">service content not structured for search</p></div>
@@ -87,7 +88,7 @@ export default function GraceDentalSantaRosaCaseStudy() {
               {/* Solution */}
               <section className="py-8 border-t" data-section="solution">
                 <h2 className="text-2xl font-bold tracking-tighter lowercase mb-6">our solution</h2>
-                <div className="prose prose-neutral max-w-none space-y-4 lowercase">
+                <div className="prose prose-neutral dark:prose-invert max-w-none space-y-4 lowercase">
                   <div className="pl-4 border-l-2 border-neutral-200 my-6 space-y-6">
                     <div><h3 className="font-medium lowercase">brand refresh</h3><p className="text-neutral-600">tone, typography, and service positioning</p></div>
                     <div><h3 className="font-medium lowercase">custom site</h3><p className="text-neutral-600">fast, mobile‑first pages with clear conversion points</p></div>
@@ -104,15 +105,67 @@ export default function GraceDentalSantaRosaCaseStudy() {
                 <div className="mb-8">
                   <FounderImpactGraph />
                 </div>
-                <div className="prose prose-neutral max-w-none space-y-4 lowercase">
+                <div className="prose prose-neutral dark:prose-invert max-w-none space-y-4 lowercase">
                   <div className="grid gap-4 md:grid-cols-2 my-6">
                     <div className="space-y-4">
-                      <div className="flex items-start gap-3"><span className="text-green-600">✓</span><div><span className="font-semibold lowercase">confident relaunch</span><p className="text-neutral-600 text-sm">patient‑friendly paths to care</p></div></div>
-                      <div className="flex items-start gap-3"><span className="text-green-600">✓</span><div><span className="font-semibold lowercase">findable services</span><p className="text-neutral-600 text-sm">structured hubs for core procedures</p></div></div>
+                      <div className="flex items-start gap-3">
+                        <PixelishIcon
+                          src="/pixelish/checkmark.svg"
+                          alt=""
+                          size={16}
+                          invert={false}
+                          aria-hidden="true"
+                          className="mt-1 opacity-90 dark:invert"
+                        />
+                        <div>
+                          <span className="font-semibold lowercase">confident relaunch</span>
+                          <p className="text-neutral-600 text-sm">patient‑friendly paths to care</p>
+                        </div>
+                      </div>
+                      <div className="flex items-start gap-3">
+                        <PixelishIcon
+                          src="/pixelish/checkmark.svg"
+                          alt=""
+                          size={16}
+                          invert={false}
+                          aria-hidden="true"
+                          className="mt-1 opacity-90 dark:invert"
+                        />
+                        <div>
+                          <span className="font-semibold lowercase">findable services</span>
+                          <p className="text-neutral-600 text-sm">structured hubs for core procedures</p>
+                        </div>
+                      </div>
                     </div>
                     <div className="space-y-4">
-                      <div className="flex items-start gap-3"><span className="text-green-600">✓</span><div><span className="font-semibold lowercase">measurable growth</span><p className="text-neutral-600 text-sm">from click to booked appointment</p></div></div>
-                      <div className="flex items-start gap-3"><span className="text-green-600">✓</span><div><span className="font-semibold lowercase">multi‑channel demand</span><p className="text-neutral-600 text-sm">organic + paid working together</p></div></div>
+                      <div className="flex items-start gap-3">
+                        <PixelishIcon
+                          src="/pixelish/checkmark.svg"
+                          alt=""
+                          size={16}
+                          invert={false}
+                          aria-hidden="true"
+                          className="mt-1 opacity-90 dark:invert"
+                        />
+                        <div>
+                          <span className="font-semibold lowercase">measurable growth</span>
+                          <p className="text-neutral-600 text-sm">from click to booked appointment</p>
+                        </div>
+                      </div>
+                      <div className="flex items-start gap-3">
+                        <PixelishIcon
+                          src="/pixelish/checkmark.svg"
+                          alt=""
+                          size={16}
+                          invert={false}
+                          aria-hidden="true"
+                          className="mt-1 opacity-90 dark:invert"
+                        />
+                        <div>
+                          <span className="font-semibold lowercase">multi‑channel demand</span>
+                          <p className="text-neutral-600 text-sm">organic + paid working together</p>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -121,7 +174,7 @@ export default function GraceDentalSantaRosaCaseStudy() {
               {/* Owner Interview (embed optional video if provided later) */}
               <section className="py-8 border-t" data-section="interview">
                 <h2 className="text-2xl font-bold tracking-tighter lowercase mb-6">owner interview</h2>
-                <div className="prose prose-neutral max-w-none space-y-4 lowercase">
+                <div className="prose prose-neutral dark:prose-invert max-w-none space-y-4 lowercase">
                   <p>Conversation with Dr. Tingjen Ji about the relaunch and patient‑first approach.</p>
                   {/* If a video interview exists in the future, it can be embedded here using YouTubeVideoEmbed */}
                 </div>

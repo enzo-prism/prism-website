@@ -83,7 +83,7 @@ export default function InteractiveChecklist({
                 type="checkbox"
                 checked={checked[index] ?? false}
                 onChange={() => toggleItem(index)}
-                className="mt-1 h-5 w-5 rounded border-neutral-300 text-neutral-900 focus:ring-neutral-900"
+                className="mt-1 h-5 w-5 rounded border-neutral-300 text-neutral-900 focus:ring-ring"
               />
               <span className="flex flex-1 items-start gap-3 text-sm text-neutral-700">
                 <span

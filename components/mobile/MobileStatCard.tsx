@@ -71,7 +71,7 @@ export function MobileStatCard({
       className={`
         relative overflow-hidden rounded-xl border-2 p-6 backdrop-blur-sm
         ${styles.bg} ${styles.border} ${styles.text}
-        shadow-lg transition-all duration-300 hover:shadow-xl
+        shadow-lg transition-shadow duration-300 hover:shadow-xl
         touch-manipulation cursor-pointer
         ${className}
       `}

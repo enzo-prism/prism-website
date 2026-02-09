@@ -3,6 +3,7 @@
 import Link from "next/link"
 import { ArrowUpRight } from "lucide-react"
 
+import PixelishImg from "@/components/pixelish/PixelishImg"
 import { Button } from "@/components/ui/button"
 import { trackCTAClick } from "@/utils/analytics"
 
@@ -33,7 +34,10 @@ export default function ValuesSection() {
                   impossible is temporary.
                 </h2>
                 <p className="text-base text-neutral-200 lowercase md:text-lg dark:text-neutral-200">
-                  our north star is simple — build things people love. 🤍
+                  our north star is simple — build things people love.
+                  <span className="ml-2 inline-flex align-middle" aria-hidden="true">
+                    <PixelishImg src="/pixelish/emoji-heart.svg" alt="" size={16} />
+                  </span>
                 </p>
               </div>
               <div className="hidden h-px w-full bg-white/15 lg:block" aria-hidden="true" />

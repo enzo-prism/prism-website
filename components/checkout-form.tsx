@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
+import PixelishImg from "@/components/pixelish/PixelishImg"
 import { cn } from "@/lib/utils"
 
 interface CheckoutFormProps {
@@ -84,7 +85,6 @@ export default function CheckoutForm({ plan }: CheckoutFormProps) {
             required
             value={formData.name}
             onChange={handleChange}
-            className="bg-zinc-50 border-zinc-200 focus:border-black focus:ring-black transition-all"
           />
         </div>
 
@@ -99,7 +99,6 @@ export default function CheckoutForm({ plan }: CheckoutFormProps) {
               required
               value={formData.email}
               onChange={handleChange}
-              className="bg-zinc-50 border-zinc-200 focus:border-black focus:ring-black transition-all"
             />
           </div>
           <div className="space-y-2">
@@ -111,7 +110,6 @@ export default function CheckoutForm({ plan }: CheckoutFormProps) {
               placeholder="+1 (555) 000-0000"
               value={formData.phone}
               onChange={handleChange}
-              className="bg-zinc-50 border-zinc-200 focus:border-black focus:ring-black transition-all"
             />
           </div>
         </div>
@@ -120,10 +118,10 @@ export default function CheckoutForm({ plan }: CheckoutFormProps) {
           <Label>Ideal Contact Method</Label>
           <div className="flex gap-4">
             <label className={cn(
-              "flex-1 cursor-pointer rounded-xl border p-4 text-center text-sm font-medium transition-all",
+              "flex-1 cursor-pointer rounded-md border p-4 text-center text-xs font-semibold uppercase font-pixel tracking-[0.14em] transition-[background-color,border-color,color,box-shadow] duration-200",
               formData.preferredContact === "email" 
-                ? "border-black bg-black text-white ring-2 ring-black ring-offset-2" 
-                : "border-zinc-200 bg-white text-zinc-600 hover:border-zinc-300 hover:bg-zinc-50"
+                ? "border-primary bg-primary text-primary-foreground ring-2 ring-ring/50 ring-offset-2 ring-offset-background" 
+                : "border-border/60 bg-card/30 text-muted-foreground hover:bg-card/45 hover:text-foreground"
             )}>
               <input
                 type="radio"
@@ -133,13 +131,22 @@ export default function CheckoutForm({ plan }: CheckoutFormProps) {
                 checked={formData.preferredContact === "email"}
                 onChange={() => setFormData(prev => ({ ...prev, preferredContact: "email" }))}
               />
-              📧 Email
+              <span className="inline-flex items-center justify-center gap-2">
+                <PixelishImg
+                  src="/pixelish/mail.svg"
+                  alt=""
+                  size={16}
+                  invert={formData.preferredContact !== "email"}
+                  aria-hidden="true"
+                />
+                <span>Email</span>
+              </span>
             </label>
             <label className={cn(
-              "flex-1 cursor-pointer rounded-xl border p-4 text-center text-sm font-medium transition-all",
+              "flex-1 cursor-pointer rounded-md border p-4 text-center text-xs font-semibold uppercase font-pixel tracking-[0.14em] transition-[background-color,border-color,color,box-shadow] duration-200",
               formData.preferredContact === "phone" 
-                ? "border-black bg-black text-white ring-2 ring-black ring-offset-2" 
-                : "border-zinc-200 bg-white text-zinc-600 hover:border-zinc-300 hover:bg-zinc-50"
+                ? "border-primary bg-primary text-primary-foreground ring-2 ring-ring/50 ring-offset-2 ring-offset-background" 
+                : "border-border/60 bg-card/30 text-muted-foreground hover:bg-card/45 hover:text-foreground"
             )}>
               <input
                 type="radio"
@@ -149,7 +156,16 @@ export default function CheckoutForm({ plan }: CheckoutFormProps) {
                 checked={formData.preferredContact === "phone"}
                 onChange={() => setFormData(prev => ({ ...prev, preferredContact: "phone" }))}
               />
-              📱 iMessage
+              <span className="inline-flex items-center justify-center gap-2">
+                <PixelishImg
+                  src="/pixelish/device-phone.svg"
+                  alt=""
+                  size={16}
+                  invert={formData.preferredContact !== "phone"}
+                  aria-hidden="true"
+                />
+                <span>iMessage</span>
+              </span>
             </label>
           </div>
         </div>
@@ -159,10 +175,10 @@ export default function CheckoutForm({ plan }: CheckoutFormProps) {
           <Textarea
             id="message"
             name="message"
-            placeholder="Tell us a bit about your project or timeline..."
+            placeholder="Tell us a bit about your project or timeline…"
             value={formData.message}
             onChange={handleChange}
-            className="min-h-[120px] resize-none bg-zinc-50 border-zinc-200 focus:border-black focus:ring-black transition-all"
+            className="min-h-[120px] resize-none"
           />
         </div>
 
@@ -174,7 +190,7 @@ export default function CheckoutForm({ plan }: CheckoutFormProps) {
               exit={{ opacity: 0, height: 0 }}
               className="overflow-hidden"
             >
-              <Alert variant="destructive" className="bg-red-50 text-red-600">
+              <Alert variant="destructive" className="bg-destructive/10">
                 <AlertCircle className="h-4 w-4" />
                 <AlertDescription>{errorMessage}</AlertDescription>
               </Alert>
@@ -185,7 +201,8 @@ export default function CheckoutForm({ plan }: CheckoutFormProps) {
         <Button
           type="submit"
           disabled={status === "submitting"}
-          className="w-full h-12 rounded-full text-base font-semibold bg-black hover:bg-black/90 transition-all shadow-lg shadow-black/5"
+          size="lg"
+          className="w-full rounded-md"
         >
           {status === "submitting" ? (
             <>

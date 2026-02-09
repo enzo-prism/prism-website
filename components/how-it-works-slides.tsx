@@ -148,7 +148,7 @@ export default function HowItWorksSlides() {
           className="rounded-full bg-white shadow-sm transition-shadow hover:shadow-md active:scale-95"
           aria-label="Previous step"
         >
-          <ChevronLeft className="h-5 w-5" />
+          <ChevronLeft className="h-5 w-5" aria-hidden="true" focusable="false" />
         </Button>
         <Button
           onClick={nextSlide}
@@ -158,7 +158,7 @@ export default function HowItWorksSlides() {
           className="rounded-full bg-white shadow-sm transition-shadow hover:shadow-md active:scale-95"
           aria-label="Next step"
         >
-          <ChevronRight className="h-5 w-5" />
+          <ChevronRight className="h-5 w-5" aria-hidden="true" focusable="false" />
         </Button>
       </div>
 
@@ -181,7 +181,7 @@ export default function HowItWorksSlides() {
                   index === currentIndex ? "ring-2 ring-neutral-200" : ""
                 }`}
               >
-                <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-neutral-100 transition-all duration-300 transform hover:scale-110">
+                <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-neutral-100 transition-transform duration-300 transform hover:scale-110">
                   <span className="text-3xl">{step.number}</span>
                 </div>
                 <h3 className="mb-3 text-2xl font-bold lowercase">{step.title}</h3>
@@ -201,7 +201,7 @@ export default function HowItWorksSlides() {
             type="button"
             variant="ghost"
             size="icon-xs"
-            className={`h-2 w-2 rounded-full p-0 transition-all duration-300 ${
+            className={`h-2 w-2 rounded-full p-0 transition-colors duration-300 ${
               index === currentIndex ? "bg-neutral-800" : "bg-neutral-300"
             }`}
             aria-label={`Go to step ${index + 1}`}
@@ -212,7 +212,7 @@ export default function HowItWorksSlides() {
       {/* Progress indicator */}
       <div className="absolute bottom-0 left-0 w-full h-1 bg-neutral-200 overflow-hidden rounded-full">
         <div
-          className="h-full bg-neutral-800 transition-all duration-50 ease-linear"
+          className="h-full bg-neutral-800 transition-[width] duration-50 ease-linear"
           style={{ width: `${progress}%` }}
         ></div>
       </div>

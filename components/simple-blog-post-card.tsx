@@ -37,34 +37,34 @@ export default function SimpleBlogPostCard({
       data-cta-location={title}
       className="block h-full"
     >
-      <article className="border border-neutral-200 rounded-xl overflow-hidden h-full flex flex-col transition-transform duration-200 hover:-translate-y-0.5">
+      <article className="h-full overflow-hidden rounded-md border border-border/60 bg-card/30 backdrop-blur-sm flex flex-col transition-[transform,background-color] duration-200 hover:-translate-y-0.5 hover:bg-card/45">
         <div className={cn("relative w-full aspect-[4/3] overflow-hidden", gradientClass)} />
-        <div className="p-5 space-y-3 border-t border-neutral-100 flex-1 flex flex-col">
+        <div className="flex flex-1 flex-col space-y-3 border-t border-border/60 p-5">
           <div className="flex flex-wrap items-center justify-between gap-2">
-            <span className="inline-block px-3 py-1 bg-neutral-100 rounded-full text-xs lowercase">
+            <span className="inline-flex items-center rounded-md border border-border/60 bg-muted/40 px-2.5 py-1 text-[10px] font-semibold uppercase font-pixel tracking-[0.16em] text-muted-foreground">
               {category}
             </span>
-            <div className="flex flex-wrap items-center justify-end gap-x-1 gap-y-1 text-xs text-neutral-500 sm:text-sm">
-              <time className="lowercase" dateTime={new Date(date).toISOString()}>
+            <div className="flex flex-wrap items-center justify-end gap-x-1 gap-y-1 text-xs text-muted-foreground">
+              <time dateTime={new Date(date).toISOString()}>
                 {new Intl.DateTimeFormat(undefined, { year: 'numeric', month: 'short', day: 'numeric' }).format(new Date(date))}
               </time>
-              <span className="text-neutral-300" aria-hidden>
+              <span className="text-border" aria-hidden>
                 &middot;
               </span>
-              <span className="font-medium text-neutral-700 normal-case">By {author}</span>
+              <span className="font-medium text-foreground/80 normal-case">By {author}</span>
             </div>
           </div>
-          <h3 className="text-lg font-semibold leading-snug lowercase text-balance">
+          <h3 className="text-lg font-semibold leading-snug text-balance text-foreground">
             {title}
           </h3>
           {!compact && (
-            <p className="text-neutral-600 text-sm/6 lowercase line-clamp-3">
+            <p className="text-sm/6 text-muted-foreground line-clamp-3">
               {description}
             </p>
           )}
-          <div className="flex items-center text-sm font-medium text-neutral-900 lowercase pt-1">
+          <div className="flex items-center pt-1 text-xs font-semibold uppercase tracking-[0.18em] text-foreground font-pixel">
             read post
-            <ArrowRight className="ml-1 h-4 w-4" />
+            <ArrowRight className="ml-1 h-4 w-4" aria-hidden="true" focusable="false" />
           </div>
         </div>
       </article>

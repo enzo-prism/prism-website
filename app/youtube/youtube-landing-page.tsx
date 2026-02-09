@@ -5,10 +5,12 @@ import Link from "next/link"
 import FreeAnalysisSection from "@/components/free-analysis-section"
 import HeroLoopingVideo from "@/components/HeroLoopingVideo"
 import HeroSupportPill from "@/components/HeroSupportPill"
+import PixelishImg from "@/components/pixelish/PixelishImg"
 import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
 import { Button } from "@/components/ui/button"
 import { ArrowRight, Check, Play } from "lucide-react"
+import { pixelishForEmoji } from "@/lib/pixelish-emoji"
 
 const YOUTUBE_URL = "https://www.youtube.com/@the_design_prism"
 
@@ -66,10 +68,16 @@ export default function YouTubeLandingPage() {
                 </div>
                 <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
                   <Button asChild size="lg" variant="inverted" className="rounded-full px-8 py-3 text-base font-semibold">
-                    <Link href="/get-started">👉 Work With Prism</Link>
+                    <Link href="/get-started" className="inline-flex items-center gap-2">
+                      <PixelishImg src={pixelishForEmoji("👉").src} alt="" size={18} invert={false} aria-hidden="true" />
+                      Work With Prism
+                    </Link>
                   </Button>
                   <Button asChild size="lg" variant="outline-inverted" className="rounded-full px-8 py-3 text-base">
-                    <Link href="/refer">💸 Refer &amp; Earn</Link>
+                    <Link href="/refer" className="inline-flex items-center gap-2">
+                      <PixelishImg src={pixelishForEmoji("💸").src} alt="" size={18} invert aria-hidden="true" />
+                      Refer &amp; Earn
+                    </Link>
                   </Button>
                 </div>
               </div>
@@ -192,16 +200,18 @@ export default function YouTubeLandingPage() {
             <div className="grid gap-12 md:grid-cols-2">
               <div className="space-y-4">
                 <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">Partner with Prism</h2>
-                <p className="text-base text-neutral-200">
-                  👤 Business Owners: Let’s design a system that turns your traffic into customers.
+                <p className="flex items-start gap-3 text-base text-neutral-200">
+                  <PixelishImg src={pixelishForEmoji("👤").src} alt="" size={18} invert aria-hidden="true" className="mt-0.5" />
+                  <span>Business Owners: Let’s design a system that turns your traffic into customers.</span>
                 </p>
                 <Button asChild size="lg" variant="inverted" className="rounded-full px-8 py-3 text-base font-semibold">
                   <Link href="/get-started">Get Started</Link>
                 </Button>
               </div>
               <div className="space-y-4">
-                <p className="text-base text-neutral-200">
-                  💸 Referrals: Earn up to $1,000 when you send a client our way.
+                <p className="flex items-start gap-3 text-base text-neutral-200">
+                  <PixelishImg src={pixelishForEmoji("💸").src} alt="" size={18} invert aria-hidden="true" className="mt-0.5" />
+                  <span>Referrals: Earn up to $1,000 when you send a client our way.</span>
                 </p>
                 <Button
                   asChild

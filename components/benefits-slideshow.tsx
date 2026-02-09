@@ -88,7 +88,7 @@ const BenefitsSlideshow: React.FC<BenefitsSlideshowProps> = ({ benefits }) => {
             type="button"
             variant="ghost"
             size="icon-xs"
-            className={`h-2.5 w-2.5 rounded-full p-0 transition-all duration-300 ${
+            className={`h-2.5 w-2.5 rounded-full p-0 transition-[background-color,transform] duration-300 ${
               index === currentIndex ? "bg-neutral-700 scale-125" : "bg-neutral-300 hover:bg-neutral-400"
             }`}
           />
@@ -103,7 +103,7 @@ const BenefitsSlideshow: React.FC<BenefitsSlideshowProps> = ({ benefits }) => {
         size="icon"
         className="absolute top-1/2 left-2 -translate-y-1/2 rounded-full bg-white/70 text-neutral-700 shadow-md transition-opacity hover:bg-white/90 focus-visible:ring-2 focus-visible:ring-neutral-500 md:left-4"
       >
-        <ChevronLeft className="h-5 w-5" />
+        <ChevronLeft className="h-5 w-5" aria-hidden="true" focusable="false" />
       </Button>
       <Button
         onClick={goToNext}
@@ -113,7 +113,7 @@ const BenefitsSlideshow: React.FC<BenefitsSlideshowProps> = ({ benefits }) => {
         size="icon"
         className="absolute top-1/2 right-2 -translate-y-1/2 rounded-full bg-white/70 text-neutral-700 shadow-md transition-opacity hover:bg-white/90 focus-visible:ring-2 focus-visible:ring-neutral-500 md:right-4"
       >
-        <ChevronRight className="h-5 w-5" />
+        <ChevronRight className="h-5 w-5" aria-hidden="true" focusable="false" />
       </Button>
     </div>
   )

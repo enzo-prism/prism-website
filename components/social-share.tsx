@@ -1,9 +1,9 @@
 "use client"
 
-import { Twitter, Linkedin, Facebook, Link2 } from "lucide-react"
 import { toast } from "sonner"
 import { Button } from "@/components/ui/button"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
+import PixelishIcon from "@/components/pixelish/PixelishIcon"
 
 interface SocialShareProps {
   url: string
@@ -31,33 +31,35 @@ export default function SocialShare({ url, title, description }: SocialShareProp
 
   return (
     <TooltipProvider delayDuration={250}>
-      <div className="flex flex-col items-center space-y-4 p-6 bg-neutral-50 rounded-lg">
-        <h3 className="text-lg font-medium lowercase">share this case study</h3>
+      <div className="flex flex-col items-center gap-4 rounded-xl border border-border/60 bg-card/50 p-6">
+        <h3 className="text-[10px] font-semibold uppercase tracking-[0.22em] font-pixel text-muted-foreground">
+          share this case study
+        </h3>
         <div className="flex gap-2">
           <Tooltip>
             <TooltipTrigger asChild>
               <Button
                 variant="outline"
                 size="icon"
-                className="rounded-full"
+                className="rounded-full border-border/60 bg-background/20 text-foreground hover:bg-muted/40"
                 onClick={() => window.open(shareUrls.twitter, "_blank")}
-                aria-label="Share on Twitter"
+                aria-label="Share on X"
               >
-                <Twitter className="h-4 w-4" />
+                <PixelishIcon src="/pixelish/socials-x.svg" alt="" size={20} className="h-5 w-5" aria-hidden />
               </Button>
             </TooltipTrigger>
-            <TooltipContent side="bottom">Share on Twitter</TooltipContent>
+            <TooltipContent side="bottom">Share on X</TooltipContent>
           </Tooltip>
           <Tooltip>
             <TooltipTrigger asChild>
               <Button
                 variant="outline"
                 size="icon"
-                className="rounded-full"
+                className="rounded-full border-border/60 bg-background/20 text-foreground hover:bg-muted/40"
                 onClick={() => window.open(shareUrls.linkedin, "_blank")}
                 aria-label="Share on LinkedIn"
               >
-                <Linkedin className="h-4 w-4" />
+                <PixelishIcon src="/pixelish/socials-linkedin.svg" alt="" size={20} className="h-5 w-5" aria-hidden />
               </Button>
             </TooltipTrigger>
             <TooltipContent side="bottom">Share on LinkedIn</TooltipContent>
@@ -67,11 +69,11 @@ export default function SocialShare({ url, title, description }: SocialShareProp
               <Button
                 variant="outline"
                 size="icon"
-                className="rounded-full"
+                className="rounded-full border-border/60 bg-background/20 text-foreground hover:bg-muted/40"
                 onClick={() => window.open(shareUrls.facebook, "_blank")}
                 aria-label="Share on Facebook"
               >
-                <Facebook className="h-4 w-4" />
+                <PixelishIcon src="/pixelish/socials-facebook.svg" alt="" size={20} className="h-5 w-5" aria-hidden />
               </Button>
             </TooltipTrigger>
             <TooltipContent side="bottom">Share on Facebook</TooltipContent>
@@ -81,11 +83,11 @@ export default function SocialShare({ url, title, description }: SocialShareProp
               <Button
                 variant="outline"
                 size="icon"
-                className="rounded-full"
+                className="rounded-full border-border/60 bg-background/20 text-foreground hover:bg-muted/40"
                 onClick={copyToClipboard}
                 aria-label="Copy link"
               >
-                <Link2 className="h-4 w-4" />
+                <PixelishIcon src="/pixelish/copy.svg" alt="" size={20} className="h-5 w-5" aria-hidden />
               </Button>
             </TooltipTrigger>
             <TooltipContent side="bottom">Copy link</TooltipContent>

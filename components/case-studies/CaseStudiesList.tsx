@@ -38,10 +38,10 @@ export default function CaseStudiesList({ studies }: { studies: CaseStudyListIte
                 setActiveCategory(category)
                 trackNavigation("case_study_filter", category)
               }}
-              className={`rounded-full border px-3 py-1 text-sm lowercase transition ${
+              className={`rounded-md border px-3 py-2 text-[10px] font-semibold uppercase tracking-[0.16em] font-pixel transition ${
                 isActive
-                  ? "border-neutral-900 bg-neutral-900 text-white"
-                  : "border-neutral-200 bg-white text-neutral-700 hover:border-neutral-300"
+                  ? "border-primary bg-primary text-primary-foreground"
+                  : "border-border/60 bg-muted/40 text-muted-foreground hover:bg-muted/60 hover:text-foreground"
               }`}
             >
               {category}
@@ -61,7 +61,7 @@ export default function CaseStudiesList({ studies }: { studies: CaseStudyListIte
           />
         ))}
         {filteredStudies.length === 0 ? (
-          <div className="col-span-full rounded-2xl border border-dashed border-neutral-200 bg-neutral-50 p-6 text-center text-sm text-neutral-600">
+          <div className="col-span-full rounded-md border border-dashed border-border/60 bg-card/20 p-6 text-center text-sm text-muted-foreground">
             no case studies in this category yet.
           </div>
         ) : null}

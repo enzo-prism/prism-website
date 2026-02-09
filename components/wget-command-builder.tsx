@@ -42,7 +42,7 @@ export default function WgetCommandBuilder({ value, onValueChange, commandUrl }:
         placeholder={DEFAULT_URL}
         value={inputValue}
         onChange={(event) => setValue(event.target.value)}
-        className="h-auto w-full rounded-full border-neutral-200 bg-white px-5 py-3 text-sm text-neutral-900 placeholder:text-neutral-400 focus-visible:ring-neutral-900 sm:text-base"
+        className="h-auto w-full rounded-full border-neutral-200 bg-white px-5 py-3 text-sm text-neutral-900 placeholder:text-neutral-400 focus-visible:ring-ring sm:text-base"
         aria-describedby="wget-command-helper"
       />
       <p id="wget-command-helper" className="text-xs text-neutral-500 sm:text-sm">

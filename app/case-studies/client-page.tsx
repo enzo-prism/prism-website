@@ -16,8 +16,8 @@ export default function CaseStudiesPage() {
         <section className="px-4 py-12 md:py-16">
           <div className="container mx-auto px-4 md:px-6">
             <div className="space-y-3 text-center">
-              <p className="text-xs font-semibold uppercase tracking-[0.32em] text-neutral-500">case studies</p>
-              <h1 className="text-3xl font-bold tracking-tight lowercase sm:text-4xl">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.32em] text-muted-foreground font-pixel">case studies</p>
+              <h1 className="text-4xl font-semibold sm:text-5xl">
                 recent client work
               </h1>
             </div>

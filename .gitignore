@@ -32,6 +32,10 @@ test-results/
 # SEO audit artifacts
 /seo/lighthouse-*.json
 
+# Local generation + scratch artifacts (Codex skills)
+/output/
+/tmp/
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

@@ -18,6 +18,8 @@ import Navbar from "@/components/navbar"
 import ScrollToTop from "@/components/scroll-to-top"
 import { WebPageSchema } from "@/components/schema-markup"
 import { Button } from "@/components/ui/button"
+import PixelishIcon from "@/components/pixelish/PixelishIcon"
+import { pixelishForEmoji } from "@/lib/pixelish-emoji"
 
 const GET_FREE_AUDIT_HREF = "/get-started"
 const CONTACT_HREF = "/contact"
@@ -325,21 +327,15 @@ export default function GoogleDentalAdsPage() {
               <p className="font-semibold text-white">Here’s the short version:</p>
               <ul className="space-y-3 text-sm text-white/80 sm:text-base">
                 <li className="flex items-start gap-3">
-                  <span className="text-lg" aria-hidden>
-                    ✅
-                  </span>
+                  <PixelishIcon src="/pixelish/circle-checkmark.svg" alt="" size={16} aria-hidden="true" />
                   <span>You can advertise dental services — including implants, Invisalign, and whitening.</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <span className="text-lg" aria-hidden>
-                    ⚠️
-                  </span>
+                  <PixelishIcon src="/pixelish/circle-exclamation.svg" alt="" size={16} aria-hidden="true" />
                   <span>You can’t target people based on health conditions (like “missing teeth” or “gum problems”).</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <span className="text-lg" aria-hidden>
-                    🚫
-                  </span>
+                  <PixelishIcon src="/pixelish/close.svg" alt="" size={16} aria-hidden="true" />
                   <span>Some targeting features — like remarketing or custom audiences — are restricted for health-related campaigns.</span>
                 </li>
               </ul>
@@ -411,8 +407,14 @@ export default function GoogleDentalAdsPage() {
                   key={item.title}
                   className="flex items-start gap-4 rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm"
                 >
-                  <span className="text-2xl" aria-hidden>
-                    {item.emoji}
+                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-neutral-100" aria-hidden="true">
+                    <PixelishIcon
+                      src={pixelishForEmoji(item.emoji).src}
+                      alt=""
+                      size={22}
+                      invert={false}
+                      aria-hidden="true"
+                    />
                   </span>
                   <div className="space-y-2">
                     <h3 className="text-lg font-semibold text-neutral-900">{item.title}</h3>
@@ -440,7 +442,10 @@ export default function GoogleDentalAdsPage() {
             </div>
             <div className="grid gap-6 md:w-1/2 md:grid-cols-2">
               <div className="rounded-3xl border border-emerald-200 bg-emerald-50 p-6">
-                <h3 className="text-lg font-semibold text-emerald-900">✅ Allowed</h3>
+                <h3 className="flex items-center gap-2 text-lg font-semibold text-emerald-900">
+                  <PixelishIcon src="/pixelish/checkmark.svg" alt="" size={16} invert={false} aria-hidden="true" />
+                  <span>Allowed</span>
+                </h3>
                 <ul className="mt-4 space-y-3 text-sm text-emerald-900/80">
                   {allowedItems.map((item) => (
                     <li key={item} className="flex items-start gap-2">
@@ -451,7 +456,10 @@ export default function GoogleDentalAdsPage() {
                 </ul>
               </div>
               <div className="rounded-3xl border border-red-200 bg-red-50 p-6">
-                <h3 className="text-lg font-semibold text-red-900">🚫 Restricted / Not Allowed</h3>
+                <h3 className="flex items-center gap-2 text-lg font-semibold text-red-900">
+                  <PixelishIcon src="/pixelish/close.svg" alt="" size={16} invert={false} aria-hidden="true" />
+                  <span>Restricted / Not Allowed</span>
+                </h3>
                 <ul className="mt-4 space-y-3 text-sm text-red-900/80">
                   {restrictedItems.map((item) => (
                     <li key={item} className="flex items-start gap-2">

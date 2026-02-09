@@ -60,18 +60,25 @@ export default function BlogFilterNavigation({
 
   return (
     <div
-      className={`sticky top-[var(--prism-header-height,0px)] z-40 bg-white/95 backdrop-blur-sm border-b border-neutral-200 ${className}`}
+      className={`sticky top-[var(--prism-header-height,0px)] z-40 border-b border-border/60 bg-background/80 backdrop-blur-sm ${className}`}
     >
       <div className="container mx-auto px-4 py-3 md:py-4">
         <div className="space-y-3">
           <div className="relative max-w-2xl">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-neutral-500" />
+            <Search
+              className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground"
+              aria-hidden="true"
+              focusable="false"
+            />
             <Input
               type="text"
+              name="q"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search posts..."
-              className="h-auto w-full rounded-full border-0 bg-neutral-100 py-2.5 pl-10 pr-10 text-sm transition-all duration-200 focus-visible:ring-neutral-900 focus:bg-white"
+              placeholder="Search posts…"
+              aria-label="Search posts"
+              autoComplete="off"
+              className="h-auto w-full rounded-md border border-border/60 bg-card/30 py-2.5 pl-10 pr-10 text-xs font-semibold text-foreground font-pixel tracking-[0.1em] transition-colors duration-200 placeholder:text-muted-foreground focus-visible:ring-ring focus:bg-card/40"
             />
             {searchQuery && (
               <Button
@@ -79,10 +86,10 @@ export default function BlogFilterNavigation({
                 onClick={() => setSearchQuery("")}
                 variant="ghost"
                 size="icon"
-                className="absolute right-2 top-1/2 h-7 w-7 -translate-y-1/2 rounded-full hover:bg-neutral-200"
+                className="absolute right-2 top-1/2 h-7 w-7 -translate-y-1/2 rounded-md hover:bg-muted/40"
                 aria-label="Clear search"
               >
-                <X className="h-3 w-3 text-neutral-500" />
+                <X className="h-3 w-3 text-muted-foreground" aria-hidden="true" focusable="false" />
               </Button>
             )}
           </div>
@@ -100,7 +107,7 @@ export default function BlogFilterNavigation({
               <ToggleGroupItem
                 key={category.slug}
                 value={category.slug}
-                className="rounded-full bg-neutral-100 px-4 py-2 text-sm font-medium lowercase text-neutral-700 transition-all duration-200 hover:bg-neutral-200 hover:text-neutral-900 data-[state=on]:bg-neutral-900 data-[state=on]:text-white"
+                className="rounded-md border border-border/60 bg-muted/20 px-4 py-2 text-xs font-semibold lowercase text-muted-foreground transition-colors duration-200 hover:bg-muted/40 hover:text-foreground data-[state=on]:border-white/30 data-[state=on]:bg-primary data-[state=on]:text-primary-foreground"
               >
                 {category.label.toLowerCase()}
               </ToggleGroupItem>
