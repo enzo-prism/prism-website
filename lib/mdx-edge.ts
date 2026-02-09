@@ -4,6 +4,11 @@
 
 // Import all blog posts statically
 const blogPosts = {
+  'ai-rip-eyes-out-dental-software': {
+    title: "AI Is About to Rip the Eyes Out of Dental Software And That's Great News for Dentists",
+    category: "AI & Dentistry",
+    gradientClass: "bg-gradient-to-br from-rose-300/30 via-amber-300/30 to-emerald-300/30",
+  },
   '2026-belongs-to-the-founders-who-can-delegate': {
     title: "2026 belongs to the founders who can delegate",
     category: "Entrepreneurship",
