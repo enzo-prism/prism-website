@@ -277,7 +277,7 @@ export default function GetStartedForm() {
           className="w-full rounded-full transition-transform duration-200 ease-out hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0 sm:w-auto"
           disabled={isSubmitting}
         >
-          {isSubmitting ? "Submitting..." : "I'm ready to elevate"}
+          {isSubmitting ? "Submitting…" : "I'm ready to elevate"}
         </Button>
         {submitError ? (
           <Alert variant="destructive">

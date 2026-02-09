@@ -250,41 +250,41 @@ export default async function WebsitesPage() {
     .slice(0, 3)
 
   return (
-    <div className="flex min-h-screen flex-col bg-white">
+    <div className="flex min-h-screen flex-col bg-transparent">
       <Navbar />
 
       <main className="flex-1">
         <section className="px-4 py-20 sm:py-24">
           <div className="mx-auto max-w-4xl text-center">
-            <p className="text-sm font-medium uppercase tracking-[0.3em] text-neutral-400">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.32em] text-muted-foreground font-pixel">
               website design & development
             </p>
-            <h1 className="mt-4 text-4xl font-semibold tracking-tight text-neutral-900 sm:text-5xl">
+            <h1 className="mt-4 text-5xl font-semibold sm:text-6xl lg:text-7xl">
               Websites engineered to convert and stay sharp long-term
             </h1>
-            <p className="mt-6 text-base text-neutral-600 sm:text-lg">
+            <p className="mt-6 text-base text-muted-foreground sm:text-lg">
               We plan, design, and build sites that reflect your brand, explain what you do fast, and turn
               the right visitors into booked calls, patients, customers, and donors.
             </p>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-              <Button asChild size="lg" className="rounded-full px-8">
+              <Button asChild size="lg" className="rounded-md px-8">
                 <Link href="/get-started">
                   Get started
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>
-              <Button asChild variant="outline" size="lg" className="rounded-full px-8">
+              <Button asChild variant="outline" size="lg" className="rounded-md px-8">
                 <Link href="#recent-work">See recent launches</Link>
               </Button>
             </div>
-            <p className="mt-4 text-sm text-neutral-500">
+            <p className="mt-4 text-sm text-muted-foreground">
               limited-time build option:{" "}
-              <Link href="/offers/summer-website-makeover" className="font-semibold text-neutral-900 underline underline-offset-4">
+              <Link href="/offers/summer-website-makeover" className="font-semibold text-foreground underline decoration-border/60 underline-offset-4 hover:decoration-border">
                 summer website makeover offer
               </Link>
               .
             </p>
-            <div className="mt-10 overflow-hidden rounded-3xl border border-neutral-200 shadow-[10px_10px_0_0_#00000008]">
+            <div className="mt-10 overflow-hidden rounded-md border border-border/60 bg-card/20 shadow-none">
               <div className="relative aspect-[16/9] w-full">
                 <Image
                   src={heroImage.src}
@@ -297,7 +297,7 @@ export default async function WebsitesPage() {
               </div>
             </div>
             <div id="websites-founder-vsl" className="mx-auto mt-12 max-w-3xl text-left">
-              <p className="text-center text-xs font-semibold uppercase tracking-[0.28em] text-neutral-400">hear from our founder</p>
+              <p className="text-center text-[10px] font-semibold uppercase tracking-[0.32em] text-muted-foreground font-pixel">hear from our founder</p>
               <VideoPlayer
                 className="mt-4"
                 src="https://res.cloudinary.com/dhqpqfw6w/video/upload/v1763160814/prism_websites_vsl_2_ojqiku.mp4"
@@ -323,18 +323,18 @@ export default async function WebsitesPage() {
           </div>
         </section>
 
-        <section className="border-t border-neutral-100 bg-neutral-50 px-4 py-16 sm:py-20">
+        <section className="border-t border-border/60 bg-card/15 px-4 py-16 sm:py-20">
           <div className="mx-auto max-w-5xl text-center">
-            <h2 className="text-3xl font-semibold lowercase text-neutral-900 sm:text-4xl">what you get</h2>
-            <p className="mt-3 text-neutral-600">
+            <h2 className="text-4xl font-semibold sm:text-5xl">what you get</h2>
+            <p className="mt-3 text-muted-foreground">
               Everything you need to launch a high-performing site with zero guesswork.
             </p>
           </div>
           <div className="mx-auto mt-12 grid max-w-5xl gap-6 sm:grid-cols-2">
             {whatWeDeliver.map(item => (
-              <div key={item.title} className="rounded-2xl border border-neutral-200 bg-white p-6 text-left shadow-sm">
-                <h3 className="text-lg font-semibold text-neutral-900">{item.title}</h3>
-                <p className="mt-2 text-sm text-neutral-600">{item.description}</p>
+              <div key={item.title} className="rounded-md border border-border/60 bg-card/30 p-6 text-left shadow-none backdrop-blur-sm">
+                <h3 className="text-lg font-semibold text-foreground">{item.title}</h3>
+                <p className="mt-2 text-sm text-muted-foreground">{item.description}</p>
               </div>
             ))}
           </div>
@@ -343,8 +343,8 @@ export default async function WebsitesPage() {
         <section id="recent-work" className="px-4 py-16 sm:py-20">
           <div className="mx-auto max-w-4xl">
             <div className="mb-10 text-center">
-              <h2 className="text-3xl font-semibold lowercase text-neutral-900 sm:text-4xl">recent launches</h2>
-              <p className="mt-3 text-neutral-600">
+              <h2 className="text-4xl font-semibold sm:text-5xl">recent launches</h2>
+              <p className="mt-3 text-muted-foreground">
                 A sampling of sites we designed, wrote, and built across healthcare, retail, nonprofit, and services—toggle the industries to see the matches.
               </p>
             </div>
@@ -352,21 +352,21 @@ export default async function WebsitesPage() {
           </div>
         </section>
 
-        <section className="border-t border-neutral-100 bg-white px-4 py-16 sm:py-20">
+        <section className="border-t border-border/60 bg-transparent px-4 py-16 sm:py-20">
           <div className="mx-auto max-w-4xl">
-            <span className="text-xs font-semibold uppercase tracking-[0.28em] text-neutral-400">deep dive</span>
-            <div className="mt-4 rounded-3xl border border-neutral-200 bg-neutral-50 p-8 shadow-sm sm:p-10">
-              <h2 className="text-3xl font-semibold lowercase text-neutral-900 sm:text-4xl">{featuredArticle.title}</h2>
-              <p className="mt-4 text-sm leading-6 text-neutral-600 sm:text-base">{featuredArticle.summary}</p>
-              <ul className="mt-6 space-y-2 text-sm text-neutral-600">
+            <span className="text-[10px] font-semibold uppercase tracking-[0.32em] text-muted-foreground font-pixel">deep dive</span>
+            <div className="mt-4 rounded-md border border-border/60 bg-card/30 p-8 shadow-none backdrop-blur-sm sm:p-10">
+              <h2 className="text-4xl font-semibold sm:text-5xl">{featuredArticle.title}</h2>
+              <p className="mt-4 text-sm leading-6 text-muted-foreground sm:text-base">{featuredArticle.summary}</p>
+              <ul className="mt-6 space-y-2 text-sm text-muted-foreground">
                 {featuredArticle.insights.map(point => (
                   <li key={point} className="flex items-start gap-2">
-                    <span className="mt-1 block h-1.5 w-1.5 rounded-full bg-neutral-900" />
+                    <span className="mt-1 block h-1.5 w-1.5 rounded-full bg-foreground/80" />
                     <span>{point}</span>
                   </li>
                 ))}
               </ul>
-              <Button asChild size="lg" className="mt-8 rounded-full px-8">
+              <Button asChild size="lg" className="mt-8 rounded-md px-8">
                 <Link href={featuredArticle.href}>
                   Read the full transformation
                   <ArrowRight className="ml-2 h-4 w-4" />
@@ -376,10 +376,10 @@ export default async function WebsitesPage() {
           </div>
         </section>
 
-        <section className="border-t border-neutral-100 bg-neutral-50 px-4 py-16 sm:py-20">
+        <section className="border-t border-border/60 bg-card/15 px-4 py-16 sm:py-20">
           <div className="mx-auto max-w-5xl text-center">
-            <h2 className="text-3xl font-semibold lowercase text-neutral-900 sm:text-4xl">who we help</h2>
-            <p className="mt-3 text-neutral-600">
+            <h2 className="text-4xl font-semibold sm:text-5xl">who we help</h2>
+            <p className="mt-3 text-muted-foreground">
               Growth-minded local teams across verticals that need a site built to convert, rank, and evolve fast.
             </p>
           </div>
@@ -388,37 +388,36 @@ export default async function WebsitesPage() {
               <Link
                 key={segment.name}
                 href={segment.href}
-                className="group block rounded-2xl border border-neutral-200 bg-white p-6 text-left shadow-sm transition-colors hover:border-neutral-300 hover:bg-neutral-50"
+                className="group block rounded-md border border-border/60 bg-card/30 p-6 text-left shadow-none backdrop-blur-sm transition-colors hover:bg-card/45"
               >
-                <span className="text-xs font-medium uppercase tracking-wide text-neutral-400">segment</span>
+                <span className="text-[10px] font-semibold uppercase tracking-[0.32em] text-muted-foreground font-pixel">segment</span>
                 <div className="mt-2">
-                  <h3 className="text-xl font-semibold text-neutral-900 group-hover:text-neutral-800">{segment.name}</h3>
-                  <p className="mt-2 text-sm text-neutral-600 group-hover:text-neutral-700">{segment.description}</p>
+                  <h3 className="text-xl font-semibold text-foreground">{segment.name}</h3>
+                  <p className="mt-2 text-sm text-muted-foreground">{segment.description}</p>
                 </div>
-                <span className="mt-4 inline-flex items-center text-sm font-medium text-neutral-900/70 group-hover:text-neutral-900">
+                <span className="mt-4 inline-flex items-center text-xs font-semibold uppercase tracking-[0.18em] text-foreground/80 font-pixel">
                   Explore why this works
                   <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </span>
               </Link>
             ))}
           </div>
-          <div className="mx-auto mt-12 max-w-5xl rounded-3xl border border-neutral-200 bg-white p-6 text-left shadow-sm sm:p-8">
+          <div className="mx-auto mt-12 max-w-5xl rounded-md border border-border/60 bg-card/30 p-6 text-left shadow-none backdrop-blur-sm sm:p-8">
             <div className="text-center sm:text-left">
-              <span className="text-xs font-semibold uppercase tracking-[0.28em] text-neutral-400">vertical playbooks</span>
-              <h3 className="mt-3 text-2xl font-semibold lowercase text-neutral-900 sm:text-3xl">
+              <span className="text-[10px] font-semibold uppercase tracking-[0.32em] text-muted-foreground font-pixel">vertical playbooks</span>
+              <h3 className="mt-4 text-3xl font-semibold sm:text-4xl">
                 see how we tailor each launch
               </h3>
-              <p className="mt-3 text-sm text-neutral-600">
+              <p className="mt-3 text-sm text-muted-foreground">
                 switch tabs to explore the modules, messaging, and automations we prioritize for different business models.
               </p>
             </div>
             <Tabs defaultValue={segmentPlaybooks[0]?.id} className="mt-6">
-              <TabsList className="mx-auto flex w-full flex-wrap justify-center gap-2 bg-neutral-100/80 p-1 sm:justify-start">
+              <TabsList className="mx-auto flex w-full flex-wrap justify-center gap-2 sm:justify-start">
                 {segmentPlaybooks.map(playbook => (
                   <TabsTrigger
                     key={playbook.id}
                     value={playbook.id}
-                    className="rounded-full px-4 py-1.5 text-sm font-medium text-neutral-600 data-[state=active]:bg-white data-[state=active]:text-neutral-900 data-[state=active]:shadow-sm"
                   >
                     {playbook.name}
                   </TabsTrigger>
@@ -428,11 +427,11 @@ export default async function WebsitesPage() {
                 <TabsContent key={playbook.id} value={playbook.id} className="mt-6 focus-visible:outline-hidden">
                   <div className="grid gap-6 sm:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)] sm:gap-8">
                     <div>
-                      <p className="text-sm text-neutral-600">{playbook.tagline}</p>
-                      <ul className="mt-5 space-y-3 text-sm text-neutral-700">
+                      <p className="text-sm text-muted-foreground">{playbook.tagline}</p>
+                      <ul className="mt-5 space-y-3 text-sm text-muted-foreground">
                         {playbook.bullets.map(point => (
                           <li key={point} className="flex items-start gap-3">
-                            <span className="mt-1 inline-flex h-5 w-5 flex-none items-center justify-center rounded-full bg-neutral-900/10">
+                            <span className="mt-1 inline-flex h-5 w-5 flex-none items-center justify-center rounded-md border border-border/60 bg-muted/30">
                               <Check className="h-3 w-3" />
                             </span>
                             <span>{point}</span>
@@ -440,19 +439,19 @@ export default async function WebsitesPage() {
                         ))}
                       </ul>
                     </div>
-                    <div className="flex h-full flex-col justify-between rounded-2xl border border-neutral-200 bg-neutral-50 p-6">
+                    <div className="flex h-full flex-col justify-between rounded-md border border-border/60 bg-card/20 p-6">
                       <div>
-                        <span className="text-xs font-semibold uppercase tracking-[0.28em] text-neutral-400">
+                        <span className="text-[10px] font-semibold uppercase tracking-[0.32em] text-muted-foreground font-pixel">
                           impact focus
                         </span>
-                        <p className="mt-2 text-sm font-semibold text-neutral-900">{playbook.spotlight}</p>
-                        <p className="mt-3 text-sm text-neutral-600">{playbook.summary}</p>
+                        <p className="mt-3 text-sm font-semibold text-foreground">{playbook.spotlight}</p>
+                        <p className="mt-3 text-sm text-muted-foreground">{playbook.summary}</p>
                         {playbook.id === "dental" ? (
-                          <p className="mt-4 text-sm text-neutral-600">
+                          <p className="mt-4 text-sm text-muted-foreground">
                             need{" "}
                             <Link
                               href="/dental-website"
-                              className="font-semibold text-neutral-900 underline underline-offset-4"
+                              className="font-semibold text-foreground underline decoration-border/60 underline-offset-4 hover:decoration-border"
                             >
                               a dental practice website
                             </Link>
@@ -463,7 +462,7 @@ export default async function WebsitesPage() {
                       <Button
                         asChild
                         variant="outline"
-                        className="mt-6 inline-flex items-center justify-center rounded-full px-6"
+                        className="mt-6 inline-flex items-center justify-center rounded-md px-6"
                       >
                         <Link href={playbook.href}>
                           {playbook.ctaLabel}
@@ -476,15 +475,15 @@ export default async function WebsitesPage() {
               ))}
             </Tabs>
           </div>
-          <div className="mx-auto mt-12 max-w-4xl rounded-3xl border border-neutral-200 bg-white p-8 text-left shadow-sm sm:flex sm:items-center sm:justify-between sm:gap-8">
+          <div className="mx-auto mt-12 max-w-4xl rounded-md border border-border/60 bg-card/30 p-8 text-left shadow-none backdrop-blur-sm sm:flex sm:items-center sm:justify-between sm:gap-8">
             <div>
-              <span className="text-xs font-semibold uppercase tracking-[0.28em] text-neutral-400">referral program</span>
-              <h3 className="mt-3 text-2xl font-semibold lowercase text-neutral-900">know a team who needs a better website?</h3>
-              <p className="mt-3 text-sm text-neutral-600">
+              <span className="text-[10px] font-semibold uppercase tracking-[0.32em] text-muted-foreground font-pixel">referral program</span>
+              <h3 className="mt-4 text-3xl font-semibold sm:text-4xl">know a team who needs a better website?</h3>
+              <p className="mt-3 text-sm text-muted-foreground">
                 Share Prism’s referral program and we’ll send them a free analysis. If they launch with us, you earn a payout for the intro.
               </p>
             </div>
-            <Button asChild size="lg" className="mt-6 rounded-full px-8 sm:mt-0">
+            <Button asChild size="lg" className="mt-6 rounded-md px-8 sm:mt-0">
               <Link href="/refer">refer a business</Link>
             </Button>
           </div>
@@ -492,8 +491,8 @@ export default async function WebsitesPage() {
 
         <section className="px-4 py-16 sm:py-20">
           <div className="mx-auto max-w-4xl text-center">
-            <h2 className="text-3xl font-semibold lowercase text-neutral-900 sm:text-4xl">our simple process</h2>
-            <p className="mt-3 text-neutral-600">
+            <h2 className="text-4xl font-semibold sm:text-5xl">our simple process</h2>
+            <p className="mt-3 text-muted-foreground">
               Fast to launch, collaborative through revisions, and clear about responsibilities.
             </p>
           </div>
@@ -501,24 +500,24 @@ export default async function WebsitesPage() {
             {processSteps.map((stage, index) => (
               <div
                 key={stage.step}
-                className="flex flex-col gap-3 rounded-2xl border border-neutral-200 p-6 shadow-sm sm:flex-row sm:items-center"
+                className="flex flex-col gap-3 rounded-md border border-border/60 bg-card/20 p-6 shadow-none backdrop-blur-sm sm:flex-row sm:items-center"
               >
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-neutral-900 text-sm font-semibold text-white">
+                <div className="flex h-10 w-10 items-center justify-center rounded-md bg-primary text-[10px] font-semibold text-primary-foreground font-pixel tracking-[0.16em]">
                   {index + 1}
                 </div>
                 <div>
-                  <h3 className="text-lg font-semibold text-neutral-900">{stage.step}</h3>
-                  <p className="mt-1 text-sm text-neutral-600">{stage.description}</p>
+                  <h3 className="text-lg font-semibold text-foreground">{stage.step}</h3>
+                  <p className="mt-1 text-sm text-muted-foreground">{stage.description}</p>
                 </div>
               </div>
             ))}
           </div>
         </section>
 
-        <section className="border-t border-neutral-100 bg-neutral-900 px-4 py-16 text-white sm:py-20">
+        <section className="border-t border-border/60 bg-card/20 px-4 py-16 text-white sm:py-20">
           <div className="mx-auto max-w-4xl text-center">
-            <h2 className="text-3xl font-semibold lowercase sm:text-4xl">performance wins you can see</h2>
-            <p className="mt-3 text-neutral-300">
+            <h2 className="text-4xl font-semibold sm:text-5xl">performance wins you can see</h2>
+            <p className="mt-3 text-muted-foreground">
               Impact that shows up in analytics, search rankings, and how fast prospects choose you.
             </p>
           </div>
@@ -528,7 +527,7 @@ export default async function WebsitesPage() {
                 <div className="mt-1 rounded-full bg-white/10 p-1">
                   <Check className="h-4 w-4" />
                 </div>
-                <p className="text-sm text-neutral-100">{item}</p>
+                <p className="text-sm text-foreground">{item}</p>
               </div>
             ))}
           </div>
@@ -536,12 +535,12 @@ export default async function WebsitesPage() {
 
         <section className="px-4 py-16 sm:py-20">
           <div className="mx-auto max-w-4xl text-center">
-            <h2 className="text-3xl font-semibold lowercase text-neutral-900 sm:text-4xl">what we handle for you</h2>
-            <p className="mt-3 text-neutral-600">Full-service delivery so your team can focus on running the business.</p>
+            <h2 className="text-4xl font-semibold sm:text-5xl">what we handle for you</h2>
+            <p className="mt-3 text-muted-foreground">Full-service delivery so your team can focus on running the business.</p>
           </div>
           <div className="mx-auto mt-10 flex max-w-4xl flex-wrap justify-center gap-3">
             {handledForYou.map(item => (
-              <span key={item} className="rounded-full border border-neutral-200 bg-neutral-50 px-4 py-2 text-sm text-neutral-700">
+              <span key={item} className="rounded-md border border-border/60 bg-muted/30 px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-muted-foreground font-pixel">
                 {item}
               </span>
             ))}
@@ -549,13 +548,13 @@ export default async function WebsitesPage() {
         </section>
 
         {websiteBlogPosts.length > 0 ? (
-          <section className="border-t border-neutral-100 bg-neutral-50 px-4 py-16 sm:py-20">
+          <section className="border-t border-border/60 bg-card/15 px-4 py-16 sm:py-20">
             <div className="mx-auto max-w-4xl text-center">
-              <span className="text-xs font-semibold uppercase tracking-[0.28em] text-neutral-400">from the blog</span>
-              <h2 className="mt-3 text-3xl font-semibold lowercase text-neutral-900 sm:text-4xl">
+              <span className="text-[10px] font-semibold uppercase tracking-[0.32em] text-muted-foreground font-pixel">from the blog</span>
+              <h2 className="mt-4 text-4xl font-semibold sm:text-5xl">
                 website strategy notes
               </h2>
-              <p className="mt-3 text-neutral-600">
+              <p className="mt-3 text-muted-foreground">
                 Fresh playbooks on architecting, writing, and maintaining sites that convert.
               </p>
             </div>
@@ -577,7 +576,7 @@ export default async function WebsitesPage() {
               </SimpleBlogGrid>
             </div>
             <div className="mt-10 text-center">
-              <Button asChild variant="outline" className="rounded-full px-8">
+              <Button asChild variant="outline" className="rounded-md px-8">
                 <Link href="/blog">browse all articles</Link>
               </Button>
             </div>
@@ -588,25 +587,25 @@ export default async function WebsitesPage() {
           title="website design faq"
           subtitle="Straight answers about scope, timeline, and what collaboration looks like."
           items={faqItems}
-          className="bg-neutral-50"
+          className="bg-card/15"
         />
 
-        <section className="border-t border-neutral-100 bg-neutral-50 px-4 py-20 sm:py-24">
+        <section className="border-t border-border/60 bg-card/15 px-4 py-20 sm:py-24">
           <div className="mx-auto max-w-4xl text-center">
-            <h2 className="text-3xl font-semibold tracking-tight text-neutral-900 sm:text-4xl">
+            <h2 className="text-4xl font-semibold sm:text-5xl">
               Ready to launch a better website?
             </h2>
-            <p className="mt-4 text-neutral-600 sm:text-lg">
+            <p className="mt-4 text-muted-foreground sm:text-lg">
               We’ll map a clear plan, design the system, and build a site that keeps working long after launch.
             </p>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-              <Button asChild size="lg" className="rounded-full px-8">
+              <Button asChild size="lg" className="rounded-md px-8">
                 <Link href="/get-started?service=website-design">
                   {FREE_AUDIT_CTA_TEXT}
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>
-              <Button asChild variant="outline" size="lg" className="rounded-full px-8">
+              <Button asChild variant="outline" size="lg" className="rounded-md px-8">
                 <Link href="/contact">Talk to a strategist</Link>
               </Button>
             </div>
@@ -622,11 +621,11 @@ export default async function WebsitesPage() {
           </p>
           <p>
             looking specifically for{" "}
-            <Link href="/local-seo-services" className="font-semibold text-neutral-900 underline underline-offset-4">
+            <Link href="/local-seo-services" className="font-semibold text-foreground underline decoration-border/60 underline-offset-4 hover:decoration-border">
               local seo services
             </Link>
             {" "}or a{" "}
-            <Link href="/local-seo-agency" className="font-semibold text-neutral-900 underline underline-offset-4">
+            <Link href="/local-seo-agency" className="font-semibold text-foreground underline decoration-border/60 underline-offset-4 hover:decoration-border">
               local seo agency
             </Link>{" "}
             partner? see what prism ships beyond the website: listings, reviews, and local content systems that compound.

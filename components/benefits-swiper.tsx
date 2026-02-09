@@ -4,6 +4,7 @@ import { trackBenefitsInteraction } from "@/utils/analytics"
 import { throttle } from "@/utils/scroll-optimization"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import PixelishImg from "@/components/pixelish/PixelishImg"
 import type React from "react"
 import { useCallback, useEffect, useRef, useState } from "react"
 
@@ -23,7 +24,14 @@ const BenefitsSwiper: React.FC = () => {
       title: "step-by-step guide",
       description:
         "follow our proven process to 10x your views in 30 days with actionable steps you can implement immediately",
-      icon: <span className="text-4xl">📝</span>,
+      icon: (
+        <PixelishImg
+          src="/pixelish/document-letter.svg"
+          alt="Guide icon"
+          size={36}
+          invert={false}
+        />
+      ),
       bgColor: "bg-amber-50",
       iconColor: "text-rose-600",
     },
@@ -32,7 +40,14 @@ const BenefitsSwiper: React.FC = () => {
       title: "internal tool map",
       description:
         "access our curated list of the best software and tools to accelerate each step of your growth journey",
-      icon: <span className="text-4xl">🧰</span>,
+      icon: (
+        <PixelishImg
+          src="/pixelish/kanban.svg"
+          alt="Tool map icon"
+          size={36}
+          invert={false}
+        />
+      ),
       bgColor: "bg-orange-50",
       iconColor: "text-blue-600",
     },
@@ -41,7 +56,14 @@ const BenefitsSwiper: React.FC = () => {
       title: "seasoned pros community",
       description:
         "connect with entrepreneurs who've already 10x'd their views and bounce ideas off people who've done it successfully",
-      icon: <span className="text-4xl">👥</span>,
+      icon: (
+        <PixelishImg
+          src="/pixelish/users.svg"
+          alt="Community icon"
+          size={36}
+          invert={false}
+        />
+      ),
       bgColor: "bg-blue-50",
       iconColor: "text-green-600",
     },
@@ -50,7 +72,14 @@ const BenefitsSwiper: React.FC = () => {
       title: "exclusive offers",
       description:
         "get special member-only rates on our professional website and app development services to accelerate your growth",
-      icon: <span className="text-4xl">🎁</span>,
+      icon: (
+        <PixelishImg
+          src="/pixelish/award-plus.svg"
+          alt="Offer icon"
+          size={36}
+          invert={false}
+        />
+      ),
       bgColor: "bg-red-50",
       iconColor: "text-purple-600",
     },
@@ -152,7 +181,7 @@ const BenefitsSwiper: React.FC = () => {
           className="rounded-full bg-white shadow-md transition-colors hover:bg-gray-50"
           aria-label="Previous benefit"
         >
-          <ChevronLeft className="h-5 w-5" />
+          <ChevronLeft className="h-5 w-5" aria-hidden="true" focusable="false" />
         </Button>
         <Button
           onClick={nextSlide}
@@ -162,7 +191,7 @@ const BenefitsSwiper: React.FC = () => {
           className="rounded-full bg-white shadow-md transition-colors hover:bg-gray-50"
           aria-label="Next benefit"
         >
-          <ChevronRight className="h-5 w-5" />
+          <ChevronRight className="h-5 w-5" aria-hidden="true" focusable="false" />
         </Button>
       </div>
 
@@ -206,7 +235,7 @@ const BenefitsSwiper: React.FC = () => {
             type="button"
             variant="ghost"
             size="icon-xs"
-            className={`h-2 w-2 rounded-full p-0 transition-all duration-300 ${
+            className={`h-2 w-2 rounded-full p-0 transition-colors duration-300 ${
               index === currentIndex ? "bg-neutral-800" : "bg-neutral-300"
             }`}
             aria-label={`Go to benefit ${index + 1}`}

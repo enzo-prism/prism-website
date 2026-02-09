@@ -1,5 +1,6 @@
 import { LOGO_CONFIG } from "@/lib/constants"
 import Link from "next/link"
+import Image from "next/image"
 
 type FooterItem = {
   label: string
@@ -74,13 +75,13 @@ const socialLinks = [
 
 export default function Footer() {
   return (
-    <footer className="border-t bg-white">
+    <footer className="border-t border-border/60 bg-background">
       <div className="container mx-auto px-4 py-12 md:px-6">
         <div className="flex flex-col gap-10 lg:flex-row lg:items-start lg:justify-between">
           <div className="max-w-md space-y-4">
             <div className="flex items-center gap-2">
               <div className="relative h-8 w-8 overflow-hidden rounded-lg">
-                <img
+                <Image
                   src={LOGO_CONFIG.fallbackSrc ?? LOGO_CONFIG.src}
                   alt={LOGO_CONFIG.alt}
                   width={32}
@@ -88,20 +89,20 @@ export default function Footer() {
                   className={`h-full w-full object-contain ${LOGO_CONFIG.className}`}
                 />
               </div>
-              <span className="text-2xl font-semibold lowercase">prism</span>
+              <span className="text-2xl font-semibold uppercase font-pixel tracking-[0.12em]">prism</span>
             </div>
-            <p className="text-sm text-neutral-600">impossible is temporary.</p>
-            <p className="text-xs uppercase tracking-[0.3em] text-neutral-400">silicon valley</p>
+            <p className="text-sm text-muted-foreground">impossible is temporary.</p>
+            <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground font-pixel">silicon valley</p>
             <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
               <Link
                 href={homeLink.href!}
-                className="inline-flex w-full items-center justify-center rounded-full border border-neutral-200 px-5 py-2 text-sm font-medium lowercase text-neutral-700 transition hover:border-neutral-900 hover:text-neutral-900 sm:w-auto"
+                className="inline-flex w-full items-center justify-center rounded-md border border-border/60 bg-transparent px-5 py-2 text-xs font-semibold uppercase font-pixel tracking-[0.18em] text-muted-foreground transition hover:border-border hover:bg-muted/60 hover:text-foreground sm:w-auto"
               >
                 go to homepage
               </Link>
               <Link
                 href="/contact"
-                className="inline-flex w-full items-center justify-center rounded-full border border-neutral-900 bg-neutral-900 px-5 py-2 text-sm font-semibold lowercase text-white transition hover:bg-neutral-800 sm:w-auto"
+                className="inline-flex w-full items-center justify-center rounded-md bg-primary px-5 py-2 text-xs font-semibold uppercase font-pixel tracking-[0.18em] text-primary-foreground transition hover:bg-primary/90 sm:w-auto"
               >
                 contact prism
               </Link>
@@ -111,19 +112,21 @@ export default function Footer() {
           <div className="grid flex-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
             {navSections.map((section) => (
               <div key={section.title}>
-                <p className="text-xs font-semibold uppercase tracking-[0.3em] text-neutral-400">{section.title}</p>
-                <ul className="mt-4 space-y-2 text-sm text-neutral-600">
+                <p className="text-xs font-semibold uppercase tracking-[0.3em] text-muted-foreground font-pixel">
+                  {section.title}
+                </p>
+                <ul className="mt-4 space-y-2 text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground font-pixel">
                   {section.items.map((item) => (
                     <li key={item.label}>
                       {item.href ? (
                         <Link
                           href={item.href}
-                          className="transition-colors hover:text-neutral-900"
+                          className="transition-colors hover:text-foreground"
                         >
                           {item.label}
                         </Link>
                       ) : (
-                        <span className="text-neutral-400">{item.label}</span>
+                        <span className="text-muted-foreground">{item.label}</span>
                       )}
                     </li>
                   ))}
@@ -133,32 +136,32 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="mt-10 flex flex-col gap-4 border-t border-neutral-100 pt-6 md:flex-row md:items-center md:justify-between">
-          <div className="space-y-1 text-xs text-neutral-500">
+        <div className="mt-10 flex flex-col gap-4 border-t border-border/60 pt-6 md:flex-row md:items-center md:justify-between">
+          <div className="space-y-1 text-xs text-muted-foreground">
             <p>prism © 2023-2025. all rights reserved.</p>
             <div className="flex gap-4">
               <Link
                 href="/privacy-policy"
-                className="hover:text-neutral-900"
+                className="hover:text-foreground"
               >
                 privacy
               </Link>
               <Link
                 href="/terms-of-service"
-                className="hover:text-neutral-900"
+                className="hover:text-foreground"
               >
                 terms
               </Link>
               <Link
                 href="/careers"
-                className="hover:text-neutral-900"
+                className="hover:text-foreground"
               >
                 careers
               </Link>
             </div>
           </div>
 
-          <div className="flex flex-wrap gap-x-4 gap-y-2 text-sm text-neutral-500">
+          <div className="flex flex-wrap gap-x-4 gap-y-2 text-sm text-muted-foreground">
             {socialLinks.map((social) => (
               <Link
                 key={social.id}
@@ -166,7 +169,7 @@ export default function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={`Prism on ${social.label}`}
-                className="hover:text-neutral-900"
+                className="hover:text-foreground"
               >
                 {social.label}
               </Link>

@@ -26,31 +26,34 @@ export default function StepIndicator({
   className,
 }: StepIndicatorProps) {
   const sizeClasses = {
-    sm: "h-10 w-10 text-lg",
-    md: "h-16 w-16 text-2xl",
-    lg: "h-20 w-20 text-3xl",
+    sm: "h-10 w-10 text-sm",
+    md: "h-14 w-14 text-base",
+    lg: "h-16 w-16 text-lg",
   }
 
-  const baseClasses = "flex items-center justify-center rounded-full font-bold transition-all duration-300"
+  const baseClasses =
+    "flex items-center justify-center rounded-md border font-semibold font-pixel tracking-[0.12em] transition-[transform,background-color,border-color,color,box-shadow] duration-200"
 
   const variantClasses = {
     default: cn(
-      "bg-gradient-to-br from-neutral-100 to-neutral-200 text-neutral-700 shadow-sm",
-      "hover:from-neutral-200 hover:to-neutral-300 hover:shadow-md hover:scale-105",
-      isActive && "from-black to-neutral-800 text-white shadow-lg scale-105",
-      isCompleted && "from-green-100 to-green-200 text-green-700"
+      "border-border/60 bg-card text-foreground shadow-none",
+      "hover:-translate-y-0.5 hover:border-border hover:bg-card/80",
+      isActive &&
+        "border-white/30 bg-primary text-primary-foreground shadow-[0_0_0_1px_rgba(255,255,255,0.14)]",
+      isCompleted && "border-emerald-500/30 bg-emerald-500/10 text-emerald-200"
     ),
     gradient: cn(
-      "bg-gradient-to-br from-blue-50 to-indigo-100 text-indigo-700 shadow-md",
-      "hover:from-blue-100 hover:to-indigo-200 hover:shadow-lg hover:scale-105",
-      isActive && "from-blue-500 to-indigo-600 text-white shadow-xl scale-105",
-      isCompleted && "from-green-400 to-emerald-500 text-white"
+      "border-border/60 bg-card text-foreground shadow-none",
+      "hover:-translate-y-0.5 hover:border-border hover:bg-card/80",
+      isActive &&
+        "border-white/30 bg-primary text-primary-foreground shadow-[0_0_0_1px_rgba(255,255,255,0.14)]",
+      isCompleted && "border-emerald-500/30 bg-emerald-500/10 text-emerald-200"
     ),
     minimal: cn(
-      "bg-white border-2 border-neutral-200 text-neutral-600",
-      "hover:border-neutral-300 hover:bg-neutral-50 hover:scale-105",
-      isActive && "border-black bg-black text-white scale-105",
-      isCompleted && "border-green-500 bg-green-500 text-white"
+      "border-border/60 bg-background text-muted-foreground shadow-none",
+      "hover:-translate-y-0.5 hover:border-border hover:bg-muted/20 hover:text-foreground",
+      isActive && "border-white/30 bg-primary text-primary-foreground",
+      isCompleted && "border-emerald-500/30 bg-emerald-500/10 text-emerald-200"
     ),
   }
 
@@ -69,6 +72,8 @@ export default function StepIndicator({
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
+          aria-hidden="true"
+          focusable="false"
         >
           <path
             strokeLinecap="round"

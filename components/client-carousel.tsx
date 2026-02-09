@@ -120,7 +120,7 @@ export default function ClientCarousel() {
       <div className="relative overflow-hidden">
         <div className="flex justify-center items-center">
           {/* Previous slide (left) */}
-          <div className="relative mx-2 transition-all duration-500 ease-in-out opacity-50 scale-75">
+          <div className="relative mx-2 transition-[opacity,transform] duration-500 ease-in-out opacity-50 scale-75">
             <div className="w-full max-w-[180px] rounded-lg overflow-hidden shadow-sm border">
               <div className="relative" style={{ paddingBottom: "177.78%" }}>
                 {" "}
@@ -141,7 +141,7 @@ export default function ClientCarousel() {
           </div>
 
           {/* Current slide (center) */}
-          <div className="relative mx-2 transition-all duration-500 ease-in-out z-10 scale-100">
+          <div className="relative mx-2 transition-[opacity,transform] duration-500 ease-in-out z-10 scale-100">
             <div className="w-full max-w-[220px] rounded-lg overflow-hidden shadow-md border">
               <div className="relative" style={{ paddingBottom: "177.78%" }}>
                 {" "}
@@ -163,7 +163,7 @@ export default function ClientCarousel() {
           </div>
 
           {/* Next slide (right) */}
-          <div className="relative mx-2 transition-all duration-500 ease-in-out opacity-50 scale-75">
+          <div className="relative mx-2 transition-[opacity,transform] duration-500 ease-in-out opacity-50 scale-75">
             <div className="w-full max-w-[180px] rounded-lg overflow-hidden shadow-sm border">
               <div className="relative" style={{ paddingBottom: "177.78%" }}>
                 {" "}
@@ -196,7 +196,7 @@ export default function ClientCarousel() {
           className="absolute left-2 top-1/2 z-20 -translate-y-1/2 rounded-full bg-white/80 shadow-md transition-colors hover:bg-white"
           aria-label="Previous slide"
         >
-          <ChevronLeft className="h-5 w-5" />
+          <ChevronLeft className="h-5 w-5" aria-hidden="true" focusable="false" />
         </Button>
 
         <Button
@@ -210,7 +210,7 @@ export default function ClientCarousel() {
           className="absolute right-2 top-1/2 z-20 -translate-y-1/2 rounded-full bg-white/80 shadow-md transition-colors hover:bg-white"
           aria-label="Next slide"
         >
-          <ChevronRight className="h-5 w-5" />
+          <ChevronRight className="h-5 w-5" aria-hidden="true" focusable="false" />
         </Button>
       </div>
 
@@ -223,7 +223,7 @@ export default function ClientCarousel() {
             type="button"
             variant="ghost"
             size="icon-xs"
-            className={`h-2 w-2 rounded-full p-0 transition-all ${
+            className={`h-2 w-2 rounded-full p-0 transition-[background-color,width] duration-200 ${
               index === currentIndex ? "bg-neutral-800 w-4" : "bg-neutral-400"
             }`}
             aria-label={`Go to slide ${index + 1}`}

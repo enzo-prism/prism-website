@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   description:
     "make chatgpt, gemini & perplexity name-drop your brand first. specialized ai search optimization that gets you recommended by ai bots 24/7. 90-day guarantee.",
   openGraph: {
-    title: "🤖 ai seo boost™ - own the ai answer box | prism",
+    title: "ai seo boost™ - own the ai answer box | prism",
     description:
       "turn ai search engines into your 24/7 referral machine. get recommended first by chatgpt, gemini & perplexity with our specialized ai seo optimization.",
     images: [

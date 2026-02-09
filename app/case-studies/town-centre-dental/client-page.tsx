@@ -4,6 +4,7 @@ import Navbar from "@/components/navbar"
 import { CaseStudySchema } from "@/components/schema-markup"
 import SocialShare from "@/components/social-share"
 import TrackedLink from "@/components/tracked-link"
+import PixelishIcon from "@/components/pixelish/PixelishIcon"
 import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
 import { ArrowLeft, ArrowRight } from "lucide-react"
@@ -28,7 +29,7 @@ export default function TownCentreDentalCaseStudy() {
     <div className="flex min-h-screen flex-col">
       <Navbar />
 
-      <main className="flex-1 bg-white">
+      <main className="flex-1 bg-background">
         {/* Hero */}
         <section className="border-b px-4 py-16 md:py-24">
           <div className="container mx-auto px-4 md:px-6 max-w-3xl">
@@ -64,7 +65,7 @@ export default function TownCentreDentalCaseStudy() {
               {/* Overview */}
               <section className="py-8" data-section="overview">
                 <h2 className="text-2xl font-bold tracking-tighter lowercase mb-6">family‑centered care, modern digital foundation</h2>
-                <div className="prose prose-neutral max-w-none space-y-4 lowercase">
+                <div className="prose prose-neutral dark:prose-invert max-w-none space-y-4 lowercase">
                   <p>Town Centre Dental provides comprehensive family dentistry in Brentwood, CA led by Dr. Gerard “Dr. G” Banaga and a trusted team.</p>
                   <p>We partnered to modernize their web presence—clarifying services, improving findability, and making it effortless to book.</p>
                 </div>
@@ -73,7 +74,7 @@ export default function TownCentreDentalCaseStudy() {
               {/* Challenge */}
               <section className="py-8 border-t" data-section="challenge">
                 <h2 className="text-2xl font-bold tracking-tighter lowercase mb-6">the challenge</h2>
-                <div className="prose prose-neutral max-w-none space-y-4 lowercase">
+                <div className="prose prose-neutral dark:prose-invert max-w-none space-y-4 lowercase">
                   <div className="pl-4 border-l-2 border-neutral-200 my-6 space-y-6">
                     <div><h3 className="font-medium lowercase">unclear paths to care</h3><p className="text-neutral-600">services and booking were not streamlined</p></div>
                     <div><h3 className="font-medium lowercase">limited local visibility</h3><p className="text-neutral-600">search presence didn’t reflect offline reputation</p></div>
@@ -85,7 +86,7 @@ export default function TownCentreDentalCaseStudy() {
               {/* Solution */}
               <section className="py-8 border-t" data-section="solution">
                 <h2 className="text-2xl font-bold tracking-tighter lowercase mb-6">our solution</h2>
-                <div className="prose prose-neutral max-w-none space-y-4 lowercase">
+                <div className="prose prose-neutral dark:prose-invert max-w-none space-y-4 lowercase">
                   <div className="pl-4 border-l-2 border-neutral-200 my-6 space-y-6">
                     <div><h3 className="font-medium lowercase">custom site</h3><p className="text-neutral-600">fast, accessible pages with family‑friendly ux</p></div>
                     <div><h3 className="font-medium lowercase">content & seo</h3><p className="text-neutral-600">preventive, cosmetic, restorative hubs with schema</p></div>
@@ -101,15 +102,67 @@ export default function TownCentreDentalCaseStudy() {
                 <div className="mb-8">
                   <FounderImpactGraph />
                 </div>
-                <div className="prose prose-neutral max-w-none space-y-4 lowercase">
+                <div className="prose prose-neutral dark:prose-invert max-w-none space-y-4 lowercase">
                   <div className="grid gap-4 md:grid-cols-2 my-6">
                     <div className="space-y-4">
-                      <div className="flex items-start gap-3"><span className="text-green-600">✓</span><div><span className="font-semibold lowercase">frictionless booking</span><p className="text-neutral-600 text-sm">clear paths from homepage to appointment</p></div></div>
-                      <div className="flex items-start gap-3"><span className="text-green-600">✓</span><div><span className="font-semibold lowercase">local discovery</span><p className="text-neutral-600 text-sm">improved visibility for core services</p></div></div>
+                      <div className="flex items-start gap-3">
+                        <PixelishIcon
+                          src="/pixelish/checkmark.svg"
+                          alt=""
+                          size={16}
+                          invert={false}
+                          aria-hidden="true"
+                          className="mt-1 opacity-90 dark:invert"
+                        />
+                        <div>
+                          <span className="font-semibold lowercase">frictionless booking</span>
+                          <p className="text-neutral-600 text-sm">clear paths from homepage to appointment</p>
+                        </div>
+                      </div>
+                      <div className="flex items-start gap-3">
+                        <PixelishIcon
+                          src="/pixelish/checkmark.svg"
+                          alt=""
+                          size={16}
+                          invert={false}
+                          aria-hidden="true"
+                          className="mt-1 opacity-90 dark:invert"
+                        />
+                        <div>
+                          <span className="font-semibold lowercase">local discovery</span>
+                          <p className="text-neutral-600 text-sm">improved visibility for core services</p>
+                        </div>
+                      </div>
                     </div>
                     <div className="space-y-4">
-                      <div className="flex items-start gap-3"><span className="text-green-600">✓</span><div><span className="font-semibold lowercase">measurable funnel</span><p className="text-neutral-600 text-sm">events and goals from click to booked visit</p></div></div>
-                      <div className="flex items-start gap-3"><span className="text-green-600">✓</span><div><span className="font-semibold lowercase">team showcased</span><p className="text-neutral-600 text-sm">practice values and staff experience surfaced</p></div></div>
+                      <div className="flex items-start gap-3">
+                        <PixelishIcon
+                          src="/pixelish/checkmark.svg"
+                          alt=""
+                          size={16}
+                          invert={false}
+                          aria-hidden="true"
+                          className="mt-1 opacity-90 dark:invert"
+                        />
+                        <div>
+                          <span className="font-semibold lowercase">measurable funnel</span>
+                          <p className="text-neutral-600 text-sm">events and goals from click to booked visit</p>
+                        </div>
+                      </div>
+                      <div className="flex items-start gap-3">
+                        <PixelishIcon
+                          src="/pixelish/checkmark.svg"
+                          alt=""
+                          size={16}
+                          invert={false}
+                          aria-hidden="true"
+                          className="mt-1 opacity-90 dark:invert"
+                        />
+                        <div>
+                          <span className="font-semibold lowercase">team showcased</span>
+                          <p className="text-neutral-600 text-sm">practice values and staff experience surfaced</p>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>

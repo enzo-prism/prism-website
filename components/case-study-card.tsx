@@ -16,15 +16,15 @@ export default function CaseStudyCard({ business, category, location, slug }: Ca
   return (
     <Link
       href={`/case-studies/${slug}`}
-      className="block focus:outline-hidden focus-visible:ring-2 focus-visible:ring-neutral-400 rounded-2xl"
+      className="block rounded-md focus:outline-hidden focus-visible:ring-2 focus-visible:ring-ring/60"
     >
-      <Card className="relative h-full rounded-2xl border border-neutral-200 bg-white shadow-none transition hover:-translate-y-1 hover:border-neutral-300 hover:shadow-md">
+      <Card className="relative h-full rounded-md bg-card/30 shadow-none backdrop-blur-sm transition-[transform,background-color] duration-200 hover:-translate-y-1 hover:bg-card/45">
         <CardContent className="space-y-2 p-5 pt-5">
           <Badge className={buildCategoryPillClasses(category)}>{category}</Badge>
-          <h3 className="text-lg font-semibold lowercase text-neutral-900">
+          <h3 className="text-lg font-semibold text-foreground">
             {business}
           </h3>
-          <p className="text-sm lowercase text-neutral-500">{location}</p>
+          <p className="text-sm text-muted-foreground">{location}</p>
         </CardContent>
       </Card>
     </Link>

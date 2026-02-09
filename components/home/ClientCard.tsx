@@ -5,6 +5,7 @@ import type { ClientInfo } from "@/lib/clients"
 import { trackNavigation, trackExternalLinkClick } from "@/utils/analytics"
 import { buildCategoryPillClasses } from "@/lib/category-styles"
 import { ArrowUpRight, MoveRight } from "lucide-react"
+import { Badge } from "@/components/ui/badge"
 
 type Props = ClientInfo & {
   interactive?: boolean
@@ -54,13 +55,11 @@ export default function ClientCard({
         {sublabel}
       </div>
       {category ? (
-        <div
-          className={`mt-2 ${buildCategoryPillClasses(
-            category
-          )} transition-transform duration-300 ease-out group-hover/client:-translate-y-0.5 group-focus-visible/client:-translate-y-0.5`}
+        <Badge
+          className={`mt-2 ${buildCategoryPillClasses(category)} transition-transform duration-300 ease-out group-hover/client:-translate-y-0.5 group-focus-visible/client:-translate-y-0.5`}
         >
-          <span>{category}</span>
-        </div>
+          {category}
+        </Badge>
       ) : null}
     </div>
   )

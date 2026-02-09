@@ -374,7 +374,7 @@ export default async function AdsPage() {
                   <h3 className="text-xl font-semibold text-neutral-900 group-hover:text-neutral-800">{segment.name}</h3>
                   <p className="mt-2 text-sm text-neutral-600 group-hover:text-neutral-700">{segment.description}</p>
                 </div>
-                <span className="mt-4 inline-flex items-center text-sm font-medium text-neutral-900/70 group-hover:text-neutral-900">
+                <span className="mt-4 inline-flex items-center text-sm font-medium text-muted-foreground group-hover:text-foreground">
                   See how we support them
                   <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </span>

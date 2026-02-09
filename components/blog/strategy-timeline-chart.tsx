@@ -124,7 +124,7 @@ export default function StrategyTimelineChart() {
             <motion.div
               key={strategy.id}
               variants={fadeInUp}
-              className={`relative border-2 rounded-lg transition-all duration-300 ${
+              className={`relative border-2 rounded-lg transition-colors duration-300 ${
                 isCompleted 
                   ? 'border-green-500 bg-green-50' 
                   : isSelected 
@@ -136,6 +136,7 @@ export default function StrategyTimelineChart() {
                 <div className="flex items-center justify-between mb-3">
                   <div className="flex items-center gap-3">
                     <motion.button
+                      type="button"
                       onClick={() => toggleComplete(strategy.id)}
                       whileHover={{ scale: 1.1 }}
                       whileTap={{ scale: 0.9 }}
@@ -144,12 +145,14 @@ export default function StrategyTimelineChart() {
                           ? 'bg-green-500 border-green-500 text-white' 
                           : 'border-neutral-300 hover:border-green-500'
                       }`}
+                      aria-label={isCompleted ? `Mark ${strategy.title} incomplete` : `Mark ${strategy.title} complete`}
+                      aria-pressed={isCompleted}
                     >
-                      {isCompleted && <CheckCircle className="w-4 h-4" />}
+                      {isCompleted && <CheckCircle className="w-4 h-4" aria-hidden="true" focusable="false" />}
                     </motion.button>
                     
                     <div className={`w-10 h-10 rounded-lg ${strategy.color} flex items-center justify-center`}>
-                      <Icon className="w-5 h-5 text-white" />
+                      <Icon className="w-5 h-5 text-white" aria-hidden="true" focusable="false" />
                     </div>
                     
                     <div>
@@ -166,7 +169,7 @@ export default function StrategyTimelineChart() {
                       {strategy.impact} Impact
                     </span>
                     <div className="flex items-center gap-1 text-sm text-neutral-500">
-                      <Clock className="w-4 h-4" />
+                      <Clock className="w-4 h-4" aria-hidden="true" focusable="false" />
                       {strategy.timeframe}
                     </div>
                     <motion.button

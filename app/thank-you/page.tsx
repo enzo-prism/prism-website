@@ -6,6 +6,7 @@ import Script from "next/script"
 import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
 import RevealOnScroll from "@/components/reveal-on-scroll"
+import PixelishIcon from "@/components/pixelish/PixelishIcon"
 import { Button } from "@/components/ui/button"
 
 export const metadata: Metadata = {
@@ -44,9 +45,13 @@ export default function ThankYouPage() {
               <RevealOnScroll>
                 <div className="rounded-3xl border border-black/10 bg-white p-8 shadow-sm">
                   <div className="flex flex-col items-center gap-4 text-center">
-                    <span className="text-4xl" aria-hidden>
-                      ✅
-                    </span>
+                    <PixelishIcon
+                      src="/pixelish/circle-checkmark.svg"
+                      alt=""
+                      size={48}
+                      invert={false}
+                      aria-hidden
+                    />
                     <div className="space-y-3">
                       <p className="text-sm font-semibold uppercase tracking-[0.3em] text-slate-500">Received</p>
                       <h1 className="text-3xl font-semibold text-slate-900 sm:text-4xl">

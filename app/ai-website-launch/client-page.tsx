@@ -166,7 +166,7 @@ export default function AiWebsiteLaunchClientPage() {
             {painPoints.map((point) => (
               <li
                 key={point}
-                className="group flex gap-3 rounded-3xl border border-slate-200 bg-white p-4 shadow-sm transition-all hover:-translate-y-0.5 hover:border-rose-300 hover:shadow-[0px_18px_38px_rgba(15,23,42,0.08)] sm:p-5"
+                className="group flex gap-3 rounded-3xl border border-slate-200 bg-white p-4 shadow-sm transition-[transform,box-shadow,border-color,background-color] hover:-translate-y-0.5 hover:border-rose-300 hover:shadow-[0px_18px_38px_rgba(15,23,42,0.08)] sm:p-5"
               >
                 <AlertTriangle
                   className="mt-1 h-5 w-5 text-rose-500 transition-colors group-hover:text-rose-600"
@@ -197,7 +197,7 @@ export default function AiWebsiteLaunchClientPage() {
                 {howItWorksSteps.map((step, index) => (
                   <li
                     key={step}
-                    className="flex gap-4 rounded-3xl border border-slate-200 bg-slate-50 p-5 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md"
+                    className="flex gap-4 rounded-3xl border border-slate-200 bg-slate-50 p-5 shadow-sm transition-[transform,box-shadow,border-color,background-color] hover:-translate-y-0.5 hover:shadow-md"
                   >
                     <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white text-lg font-semibold text-slate-900 shadow-inner">
                       {index + 1}️⃣
@@ -222,7 +222,7 @@ export default function AiWebsiteLaunchClientPage() {
               <p className="text-sm text-slate-500">No contracts. No hidden fees. Just momentum.</p>
             </div>
           </div>
-          <div className="group rounded-[32px] border border-slate-200 bg-slate-50 p-6 transition-all hover:-translate-y-1 hover:border-indigo-300 hover:shadow-[0_30px_60px_rgba(15,23,42,0.12)] sm:p-8">
+          <div className="group rounded-[32px] border border-slate-200 bg-slate-50 p-6 transition-[transform,box-shadow,border-color,background-color] hover:-translate-y-1 hover:border-indigo-300 hover:shadow-[0_30px_60px_rgba(15,23,42,0.12)] sm:p-8">
             <div className="flex items-center gap-3 text-slate-600">
               <Zap className="h-5 w-5" aria-hidden />
               <span className="text-sm uppercase tracking-[0.35em]">intake preview</span>
@@ -260,7 +260,7 @@ export default function AiWebsiteLaunchClientPage() {
                   {valueList.map((item) => (
                     <li
                       key={item}
-                      className="group flex items-start gap-3 rounded-2xl border border-slate-100 bg-slate-50 p-4 shadow-sm transition-all hover:-translate-y-0.5 hover:bg-white hover:shadow-[0px_18px_40px_rgba(15,23,42,0.08)]"
+                      className="group flex items-start gap-3 rounded-2xl border border-slate-100 bg-slate-50 p-4 shadow-sm transition-[transform,box-shadow,border-color,background-color] hover:-translate-y-0.5 hover:bg-white hover:shadow-[0px_18px_40px_rgba(15,23,42,0.08)]"
                     >
                       <CheckCircle2
                         className="mt-0.5 h-5 w-5 text-emerald-500 transition-transform group-hover:rotate-6"
@@ -271,7 +271,7 @@ export default function AiWebsiteLaunchClientPage() {
                   ))}
                 </ul>
               </div>
-              <div className="relative overflow-hidden rounded-3xl border border-slate-100 bg-slate-50 p-6 text-slate-900 transition-all hover:-translate-y-1 hover:border-indigo-300 hover:shadow-[0_30px_60px_rgba(15,23,42,0.14)] lg:max-w-sm">
+              <div className="relative overflow-hidden rounded-3xl border border-slate-100 bg-slate-50 p-6 text-slate-900 transition-[transform,box-shadow,border-color,background-color] hover:-translate-y-1 hover:border-indigo-300 hover:shadow-[0_30px_60px_rgba(15,23,42,0.14)] lg:max-w-sm">
                 <span
                   aria-hidden
                   className="pointer-events-none absolute inset-[-20%] rounded-[40px] bg-gradient-to-r from-sky-100 via-white to-indigo-100 opacity-40"
@@ -330,7 +330,7 @@ export default function AiWebsiteLaunchClientPage() {
             {comparisonRows.map((row) => (
               <div
                 key={row.oldWay}
-                className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm transition-all hover:scale-[1.01] hover:border-blue-300 hover:shadow-[0_20px_45px_rgba(15,23,42,0.08)]"
+                className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm transition-[transform,box-shadow,border-color,background-color] hover:scale-[1.01] hover:border-blue-300 hover:shadow-[0_20px_45px_rgba(15,23,42,0.08)]"
               >
                 <p className="text-xs uppercase tracking-[0.4em] text-slate-500">old way</p>
                 <p className="mt-2 text-base font-medium text-slate-600">{row.oldWay}</p>
@@ -366,7 +366,7 @@ export default function AiWebsiteLaunchClientPage() {
 
       {/* Optional upgrade */}
       <section className="px-4 py-12 sm:py-16 lg:py-20">
-        <div className="mx-auto max-w-5xl rounded-[32px] border border-slate-200 bg-slate-50 px-6 py-10 transition-all hover:-translate-y-1 hover:border-slate-400 hover:shadow-[0_40px_80px_rgba(15,23,42,0.12)] sm:px-10">
+        <div className="mx-auto max-w-5xl rounded-[32px] border border-slate-200 bg-slate-50 px-6 py-10 transition-[transform,box-shadow,border-color,background-color] hover:-translate-y-1 hover:border-slate-400 hover:shadow-[0_40px_80px_rgba(15,23,42,0.12)] sm:px-10">
           <p className="text-sm font-semibold uppercase tracking-[0.35em] text-slate-500">optional upgrade</p>
           <div className="mt-6 space-y-4">
             <h2 className="text-3xl font-semibold text-slate-900">Want traffic, not just a website?</h2>

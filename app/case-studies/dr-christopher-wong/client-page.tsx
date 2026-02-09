@@ -3,7 +3,8 @@ import Navbar from "@/components/navbar"
 import { CaseStudySchema } from "@/components/schema-markup"
 import SocialShare from "@/components/social-share"
 import Link from "next/link"
-const linkClassName = "font-medium text-neutral-900 underline underline-offset-4"
+const linkClassName =
+  "font-medium text-foreground underline decoration-border/60 underline-offset-4 hover:decoration-border"
 const CASE_STUDY_TITLE = "case study: dr. wong — de-risking a dental m&a in palo alto with ai-powered marketing"
 const CASE_STUDY_DESCRIPTION = "from ownership transition risk to a future-proof, ai-powered dental practice in palo alto."
 
@@ -11,9 +12,9 @@ export default function ChristopherWongCaseStudy() {
   return (
     <div className="flex min-h-screen flex-col">
       <Navbar />
-      <main className="flex-1 bg-white">
+      <main className="flex-1 bg-background">
         <div className="container mx-auto max-w-3xl px-4 py-16 md:px-6 md:py-24">
-          <article className="prose prose-neutral max-w-none">
+          <article className="prose prose-neutral dark:prose-invert max-w-none">
             <p>case study</p>
             <h1>{CASE_STUDY_TITLE}</h1>
             <p>

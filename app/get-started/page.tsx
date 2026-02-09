@@ -1,12 +1,12 @@
 import type { ReactNode } from "react"
 import Link from "next/link"
 import type { Metadata } from "next"
-import { ClipboardCheck, Code2, Megaphone, PenTool } from "lucide-react"
 
 import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
 import BookDemoEmbed from "@/components/BookDemoEmbed"
 import VideoPlayer from "@/components/video-player"
+import PixelishIcon from "@/components/pixelish/PixelishIcon"
 import { WebPageSchema } from "@/components/schema-markup"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import { Badge } from "@/components/ui/badge"
@@ -32,10 +32,10 @@ const VSL_SOURCE = {
 }
 
 const PROGRAM_ROLES = [
-  { title: "Website Developer", icon: Code2 },
-  { title: "Designer", icon: PenTool },
-  { title: "Marketer and Storyteller", icon: Megaphone },
-  { title: "Project Manager", icon: ClipboardCheck },
+  { title: "Website Developer", iconSrc: "/pixelish/command.svg", iconAlt: "Developer icon" },
+  { title: "Designer", iconSrc: "/pixelish/device-tablet.svg", iconAlt: "Design icon" },
+  { title: "Marketer and Storyteller", iconSrc: "/pixelish/chat-dots.svg", iconAlt: "Marketing icon" },
+  { title: "Project Manager", iconSrc: "/pixelish/calendar.svg", iconAlt: "Project management icon" },
 ]
 
 const FAQ_ITEMS: FAQItem[] = [
@@ -170,7 +170,16 @@ export default function GetStartedPage() {
             <p className="max-w-2xl text-lg leading-relaxed text-muted-foreground">
               <span className="font-medium text-foreground">Join our Online Presence Transformation program</span>
               <span className="hidden sm:inline"> - </span>
-              <span className="block sm:inline">remove yourself as the bottleneck for growth 📈</span>
+              <span className="block sm:inline">
+                remove yourself as the bottleneck for growth{" "}
+                <PixelishIcon
+                  src="/pixelish/graph-chart-high.svg"
+                  alt=""
+                  size={16}
+                  aria-hidden
+                  className="inline-block align-[-0.12em] opacity-90"
+                />
+              </span>
             </p>
             <VideoPlayer
               src={VSL_SOURCE.src}
@@ -202,7 +211,6 @@ export default function GetStartedPage() {
             </div>
             <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
               {PROGRAM_ROLES.map((role, index) => {
-                const Icon = role.icon
                 return (
                   <Card key={role.title} className="border-border/60 bg-card/90">
                     <CardContent className="p-6">
@@ -211,7 +219,13 @@ export default function GetStartedPage() {
                           Role {String(index + 1).padStart(2, "0")}
                         </p>
                         <div className="flex h-10 w-10 items-center justify-center rounded-full bg-muted/60 text-muted-foreground">
-                          <Icon className="h-5 w-5" aria-hidden="true" />
+                          <PixelishIcon
+                            src={role.iconSrc}
+                            alt={role.iconAlt}
+                            size={20}
+                            aria-hidden="true"
+                            className="h-5 w-5 opacity-90"
+                          />
                         </div>
                       </div>
                       <p className="mt-3 text-lg font-semibold text-foreground">{role.title}</p>

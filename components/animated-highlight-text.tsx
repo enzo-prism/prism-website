@@ -21,14 +21,14 @@ export default function AnimatedHighlightText() {
         <span key={phrase} className="relative">
           {index > 0 && index < phrases.length && <span className="hidden md:inline">,</span>}{" "}
           <span
-            className={`relative transition-all duration-300 ${
-              activeIndex === index ? "text-black font-semibold" : "text-neutral-500"
+            className={`relative transition-colors duration-300 ${
+              activeIndex === index ? "text-foreground font-semibold" : "text-muted-foreground"
             }`}
           >
             {phrase}
             {activeIndex === index && (
               <span
-                className="absolute -bottom-1 left-0 h-[2px] bg-black animate-expandUnderline"
+                className="absolute -bottom-1 left-0 h-[2px] bg-foreground animate-expandUnderline"
                 style={{ width: "0%" }}
               ></span>
             )}

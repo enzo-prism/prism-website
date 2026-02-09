@@ -159,7 +159,7 @@ export function CaseStudySectionNav({
     <div
       ref={navRef}
       className={cn(
-        "sticky top-[var(--prism-header-height)] z-40 border-b bg-background/90 px-4 backdrop-blur supports-[backdrop-filter]:bg-background/70",
+        "sticky top-[var(--prism-header-height)] z-40 border-b border-border/60 bg-background/80 px-4 backdrop-blur-md supports-[backdrop-filter]:bg-background/60",
         className
       )}
     >
@@ -171,20 +171,20 @@ export function CaseStudySectionNav({
                 <Button
                   variant="outline"
                   size="sm"
-                  className="w-full justify-between rounded-full px-4 lowercase"
+                  className="w-full justify-between rounded-md px-4"
                 >
-                  <span className="flex items-center gap-2 text-neutral-600">
+                  <span className="flex items-center gap-2 text-muted-foreground">
                     <BookOpen className="h-4 w-4" />
                     jump to
                   </span>
-                  <span className="max-w-[55%] truncate font-medium text-neutral-900">
+                  <span className="max-w-[55%] truncate font-medium text-foreground">
                     {activeLabel}
                   </span>
                 </Button>
               </SheetTrigger>
-              <SheetContent side="bottom" className="rounded-t-2xl">
+              <SheetContent side="bottom" className="rounded-t-md">
                 <SheetHeader className="text-left">
-                  <SheetTitle className="lowercase">jump to</SheetTitle>
+                  <SheetTitle>jump to</SheetTitle>
                 </SheetHeader>
                 <div className="mt-4 grid gap-2">
                   {sections.map((section) => {
@@ -194,7 +194,7 @@ export function CaseStudySectionNav({
                         key={section.id}
                         type="button"
                         variant={isActive ? "default" : "outline"}
-                        className={cn("justify-start rounded-xl lowercase", !isActive && "bg-background")}
+                        className={cn("justify-start rounded-md", !isActive && "bg-transparent")}
                         onClick={() => {
                           scrollTo(section.id)
                           setIsSheetOpen(false)
@@ -231,7 +231,7 @@ export function CaseStudySectionNav({
                   key={section.id}
                   value={section.id}
                   data-section-id={section.id}
-                  className="rounded-full border-neutral-200 bg-background px-3 lowercase data-[state=on]:border-neutral-900 data-[state=on]:bg-neutral-900 data-[state=on]:text-white sm:px-4"
+                  className="rounded-md border-border/60 bg-muted/30 px-3 text-muted-foreground hover:bg-muted/45 hover:text-foreground data-[state=on]:border-primary data-[state=on]:bg-primary data-[state=on]:text-primary-foreground sm:px-4"
                 >
                   {section.label}
                 </ToggleGroupItem>

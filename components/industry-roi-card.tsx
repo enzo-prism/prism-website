@@ -60,7 +60,7 @@ export default function IndustryROICard({
   }
 
   return (
-    <Card className={`relative overflow-hidden transition-all duration-300 ${
+    <Card className={`relative overflow-hidden transition-[transform,box-shadow,border-color] duration-300 ${
       isActive ? 'scale-105 shadow-xl border-black' : 'scale-100 shadow-sm'
     } hardware-hover gpu-accelerated`}>
       <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-neutral-200 via-neutral-400 to-neutral-200" />
@@ -137,7 +137,7 @@ export default function IndustryROICard({
                     variant="outline" 
                     className="lowercase hover:bg-black hover:text-white transition-colors cursor-pointer"
                   >
-                    {caseStudy.name} <ArrowRight className="ml-1 h-3 w-3" />
+                    {caseStudy.name} <ArrowRight className="ml-1 h-3 w-3" aria-hidden="true" focusable="false" />
                   </Badge>
                 </Link>
               ) : (

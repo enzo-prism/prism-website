@@ -1,5 +1,6 @@
 import Link from "next/link"
 
+import PixelishIcon from "@/components/pixelish/PixelishIcon"
 import { cn } from "@/lib/utils"
 
 const platformNames = {
@@ -45,9 +46,7 @@ export default function HeroSupportPill({ platform, className }: HeroSupportPill
       <div className="relative rounded-2xl px-5 py-4 transition sm:px-6 sm:py-5 group-hover:translate-y-[-1px]">
         <div className="flex flex-wrap items-center gap-4 text-left text-sm leading-relaxed text-white">
           <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white/20 text-lg">
-            <span role="img" aria-label="Heart">
-              🤍
-            </span>
+            <PixelishIcon src="/pixelish/emoji-heart.svg" alt="" size={18} aria-hidden="true" />
           </span>
           <div className="min-w-[12rem] flex-1 space-y-1">
             <p className="text-base font-semibold text-white">{`Thanks for supporting us on ${platformLabel}!`}</p>

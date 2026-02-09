@@ -45,13 +45,13 @@ export default function BlogEmailSignup() {
   }
 
   return (
-    <section className="bg-neutral-50 px-4 py-12 sm:py-14">
-      <Card className="mx-auto max-w-3xl rounded-3xl border border-neutral-200 bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md">
+    <section className="border-t border-border/60 bg-transparent px-4 py-12 sm:py-14">
+      <Card className="mx-auto max-w-3xl rounded-md bg-card/40 shadow-none backdrop-blur-sm transition hover:bg-card/55">
         <CardContent className="flex flex-col gap-6 p-6 sm:p-8 md:flex-row md:items-center md:justify-between">
           <div className="space-y-2 md:max-w-sm">
-            <p className="text-xs font-medium uppercase tracking-[0.32em] text-neutral-500">stay in the loop</p>
-            <h2 className="text-xl font-semibold text-neutral-900 sm:text-2xl">get fresh prism notes via email</h2>
-            <p className="text-sm leading-relaxed text-neutral-600">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.32em] text-muted-foreground font-pixel">stay in the loop</p>
+            <h2 className="text-xl font-semibold text-foreground sm:text-2xl">get fresh prism notes via email</h2>
+            <p className="text-sm leading-relaxed text-muted-foreground">
               when we publish new experiments or playbooks, we’ll send you the highlights so you can apply them faster.
             </p>
           </div>
@@ -66,14 +66,14 @@ export default function BlogEmailSignup() {
               required
               autoComplete="email"
               placeholder="you@company.com"
-              className="h-auto w-full rounded-full border-neutral-200 bg-white px-5 py-3 text-sm text-neutral-900 placeholder:text-neutral-400 focus-visible:ring-neutral-900"
+              className="h-auto w-full rounded-md px-4 py-3 text-sm placeholder:text-muted-foreground focus-visible:ring-ring"
             />
             <Button
               type="submit"
-              className="h-auto w-full rounded-full px-5 py-3 text-sm font-semibold"
+              className="h-auto w-full rounded-md px-5 py-3"
               disabled={status === "submitting"}
             >
-              {status === "submitting" ? "sending..." : "send me updates"}
+              {status === "submitting" ? "sending…" : "send me updates"}
             </Button>
             {message ? (
               <p

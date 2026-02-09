@@ -5,10 +5,12 @@ import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
 import ScrollToTop from "@/components/scroll-to-top"
 import FAQSection from "@/components/faq-section"
+import PixelishIcon from "@/components/pixelish/PixelishIcon"
 import { Button } from "@/components/ui/button"
 import { ArrowRight, CheckCircle2 } from "lucide-react"
 import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
 import { CASE_STUDIES } from "@/lib/case-study-data"
+import { pixelishForEmoji } from "@/lib/pixelish-emoji"
 
 const coreOutcomes = [
   {
@@ -209,7 +211,7 @@ export default function ConsultingCompaniesPage() {
                   key={outcome.title}
                   className="flex h-full flex-col rounded-2xl border border-neutral-100 bg-neutral-50/60 p-6 text-left shadow-sm transition hover:-translate-y-1 hover:shadow-md"
                 >
-                  <span className="text-3xl" aria-hidden>{outcome.icon}</span>
+                  <PixelishIcon src={pixelishForEmoji(outcome.icon).src} alt="" size={34} invert={false} aria-hidden />
                   <h3 className="mt-6 text-lg font-semibold text-neutral-900">{outcome.title}</h3>
                   <p className="mt-3 text-sm text-neutral-600">{outcome.description}</p>
                 </div>
@@ -338,7 +340,7 @@ export default function ConsultingCompaniesPage() {
                   key={benefit.text}
                   className="flex items-start gap-4 rounded-2xl border border-neutral-100 bg-neutral-50/70 p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-md"
                 >
-                  <span className="text-2xl" aria-hidden>{benefit.icon}</span>
+                  <PixelishIcon src={pixelishForEmoji(benefit.icon).src} alt="" size={26} invert={false} aria-hidden />
                   <p className="text-sm text-neutral-700">{benefit.text}</p>
                 </div>
               ))}

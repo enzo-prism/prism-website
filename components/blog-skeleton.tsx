@@ -8,7 +8,7 @@ export function Skeleton({ className }: SkeletonProps) {
   return (
     <div
       className={cn(
-        "animate-pulse rounded-md bg-neutral-200",
+        "animate-pulse rounded-md bg-muted",
         className
       )}
     />
@@ -17,12 +17,12 @@ export function Skeleton({ className }: SkeletonProps) {
 
 export function BlogPostCardSkeleton() {
   return (
-    <div className="border border-neutral-200 rounded-lg overflow-hidden h-full">
+    <div className="h-full overflow-hidden rounded-md border border-border/60 bg-card/20">
       {/* Image skeleton */}
       <Skeleton className="relative w-full aspect-[4/3]" />
       
       {/* Content skeleton */}
-      <div className="p-5 space-y-3 border-t border-neutral-100">
+      <div className="space-y-3 border-t border-border/60 p-5">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2">
           <Skeleton className="h-6 w-20 rounded-full" />
           <Skeleton className="h-4 w-24" />
@@ -81,8 +81,8 @@ export function MDXContentLoader() {
   return (
     <div className="flex items-center justify-center py-8">
       <div className="flex items-center space-x-3">
-        <div className="h-6 w-6 animate-spin rounded-full border-2 border-neutral-300 border-t-neutral-600" />
-        <span className="text-neutral-600 lowercase">loading content...</span>
+        <div className="h-6 w-6 animate-spin rounded-full border-2 border-border border-t-foreground/60" />
+        <span className="text-muted-foreground">loading content…</span>
       </div>
     </div>
   )

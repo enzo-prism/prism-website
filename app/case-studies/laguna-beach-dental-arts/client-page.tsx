@@ -4,6 +4,7 @@ import Navbar from "@/components/navbar"
 import { CaseStudySchema } from "@/components/schema-markup"
 import SocialShare from "@/components/social-share"
 import TrackedLink from "@/components/tracked-link"
+import PixelishIcon from "@/components/pixelish/PixelishIcon"
 import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
 import YouTubeVideoEmbed from "@/components/youtube-video-embed"
@@ -30,7 +31,7 @@ export default function LagunaBeachDentalArtsCaseStudy() {
     <div className="flex min-h-screen flex-col">
       <Navbar />
 
-      <main className="flex-1 bg-white">
+      <main className="flex-1 bg-background">
         {/* Hero (minimal, text-only) */}
         <section className="border-b px-4 py-16 md:py-24">
           <div className="container mx-auto px-4 md:px-6 max-w-3xl">
@@ -83,7 +84,7 @@ export default function LagunaBeachDentalArtsCaseStudy() {
               {/* Overview */}
               <section className="py-8" data-section="overview">
                 <h2 className="text-2xl font-bold tracking-tighter lowercase mb-6">from transition to traction</h2>
-                <div className="prose prose-neutral max-w-none space-y-4 lowercase">
+                <div className="prose prose-neutral dark:prose-invert max-w-none space-y-4 lowercase">
                   <p>
                     After a change in ownership, laguna beach dental arts needed a fast and confident relaunch: a new
                     brand expression, a modern website, and acquisition systems that would sustain the practice while
@@ -99,7 +100,7 @@ export default function LagunaBeachDentalArtsCaseStudy() {
               {/* Situation */}
               <section className="py-8 border-t" data-section="situation">
                 <h2 className="text-2xl font-bold tracking-tighter lowercase mb-6">the situation</h2>
-                <div className="prose prose-neutral max-w-none space-y-4 lowercase">
+                <div className="prose prose-neutral dark:prose-invert max-w-none space-y-4 lowercase">
                   <div className="pl-4 border-l-2 border-neutral-200 my-6 space-y-6">
                     <div>
                       <h3 className="font-medium lowercase">brand and web gap</h3>
@@ -120,7 +121,7 @@ export default function LagunaBeachDentalArtsCaseStudy() {
               {/* Solution */}
               <section className="py-8 border-t" data-section="solution">
                 <h2 className="text-2xl font-bold tracking-tighter lowercase mb-6">our solution</h2>
-                <div className="prose prose-neutral max-w-none space-y-4 lowercase">
+                <div className="prose prose-neutral dark:prose-invert max-w-none space-y-4 lowercase">
                   <div className="pl-4 border-l-2 border-neutral-200 my-6 space-y-6">
                     <div>
                       <h3 className="font-medium lowercase">new brand system</h3>
@@ -152,18 +153,32 @@ export default function LagunaBeachDentalArtsCaseStudy() {
                 <div className="mb-8">
                   <FounderImpactGraph />
                 </div>
-                <div className="prose prose-neutral max-w-none space-y-4 lowercase">
+                <div className="prose prose-neutral dark:prose-invert max-w-none space-y-4 lowercase">
                   <div className="grid gap-4 md:grid-cols-2 my-6">
                     <div className="space-y-4">
                       <div className="flex items-start gap-3">
-                        <span className="text-green-600">✓</span>
+                        <PixelishIcon
+                          src="/pixelish/checkmark.svg"
+                          alt=""
+                          size={16}
+                          invert={false}
+                          aria-hidden="true"
+                          className="mt-1 opacity-90 dark:invert"
+                        />
                         <div>
                           <span className="font-semibold lowercase">frictionless relaunch</span>
                           <p className="text-neutral-600 text-sm">no disruption to patient scheduling post‑m&a</p>
                         </div>
                       </div>
                       <div className="flex items-start gap-3">
-                        <span className="text-green-600">✓</span>
+                        <PixelishIcon
+                          src="/pixelish/checkmark.svg"
+                          alt=""
+                          size={16}
+                          invert={false}
+                          aria-hidden="true"
+                          className="mt-1 opacity-90 dark:invert"
+                        />
                         <div>
                           <span className="font-semibold lowercase">search visibility</span>
                           <p className="text-neutral-600 text-sm">first‑page presence for key local queries</p>
@@ -172,14 +187,28 @@ export default function LagunaBeachDentalArtsCaseStudy() {
                     </div>
                     <div className="space-y-4">
                       <div className="flex items-start gap-3">
-                        <span className="text-green-600">✓</span>
+                        <PixelishIcon
+                          src="/pixelish/checkmark.svg"
+                          alt=""
+                          size={16}
+                          invert={false}
+                          aria-hidden="true"
+                          className="mt-1 opacity-90 dark:invert"
+                        />
                         <div>
                           <span className="font-semibold lowercase">measurable pipeline</span>
                           <p className="text-neutral-600 text-sm">end‑to‑end tracking from click to appointment</p>
                         </div>
                       </div>
                       <div className="flex items-start gap-3">
-                        <span className="text-green-600">✓</span>
+                        <PixelishIcon
+                          src="/pixelish/checkmark.svg"
+                          alt=""
+                          size={16}
+                          invert={false}
+                          aria-hidden="true"
+                          className="mt-1 opacity-90 dark:invert"
+                        />
                         <div>
                           <span className="font-semibold lowercase">multi‑channel growth</span>
                           <p className="text-neutral-600 text-sm">organic + paid acquisition working in tandem</p>
@@ -193,7 +222,7 @@ export default function LagunaBeachDentalArtsCaseStudy() {
               {/* Interview video */}
               <section className="py-8 border-t" data-section="interview">
                 <h2 className="text-2xl font-bold tracking-tighter lowercase mb-6">founder interview</h2>
-                <div className="prose prose-neutral max-w-none space-y-4 lowercase">
+                <div className="prose prose-neutral dark:prose-invert max-w-none space-y-4 lowercase">
                   <p>Conversation with the new owner‑dentist about the relaunch process and outcomes.</p>
                   <YouTubeVideoEmbed
                     videoId="wCQrUajsnk8"

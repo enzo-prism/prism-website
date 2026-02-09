@@ -28,7 +28,7 @@ export default function DesignsPage() {
 
       <section className="px-4 pt-8 pb-12">
         <div className="container mx-auto px-4 md:px-6 max-w-3xl">
-          <div className="prose prose-neutral max-w-none">
+          <div className="prose prose-neutral dark:prose-invert max-w-none">
             <h2 className="text-2xl font-semibold tracking-tight text-neutral-900">design with purpose</h2>
             <p>design is the connective tissue for every engagement we take on.</p>
             <p>

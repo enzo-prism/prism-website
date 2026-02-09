@@ -1,28 +1,16 @@
 "use client"
-import Navbar from "@/components/navbar"
+
+import Link from "next/link"
+
+import PixelishIcon from "@/components/pixelish/PixelishIcon"
 import Footer from "@/components/footer"
+import Navbar from "@/components/navbar"
+import ScrollProgressBar from "@/components/scroll-progress-bar"
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
-import ScrollProgressBar from "@/components/scroll-progress-bar"
-import { useMobile } from "@/hooks/use-mobile"
-import Link from "next/link"
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel"
-import {
-  CheckCircle,
-  ArrowRight,
-  Zap,
-  BarChart,
-  TrendingUp,
-  Sparkles,
-  CalendarDays,
-  Sun,
-  Rocket,
-  HelpCircle,
-  MessageSquare,
-  Mail,
-  Star,
-} from "lucide-react"
+import { useMobile } from "@/hooks/use-mobile"
 
 const CONTACT_CTA_TEXT = "email or text us for next steps"
 
@@ -69,114 +57,115 @@ const faqItems = [
   },
 ]
 
-const FeatureListItem = ({ text }: { text: string }) => (
-  <li className="flex items-start">
-    <CheckCircle className="h-5 w-5 text-green-600/80 mr-3 mt-1 shrink-0" />
-    <span className="text-neutral-700 dark:text-neutral-300">{text}</span>
-  </li>
-)
+function FeatureListItem({ text }: { text: string }) {
+  return (
+    <li className="flex items-start gap-3">
+      <PixelishIcon src="/pixelish/checkmark.svg" alt="" size={16} aria-hidden className="mt-[2px] opacity-90" />
+      <span className="text-sm text-muted-foreground leading-relaxed">{text}</span>
+    </li>
+  )
+}
 
-export default function SummerWebsiteMakeoverOpenAIStylePage() {
+export default function SummerWebsiteMakeoverClientPage() {
   const isMobile = useMobile()
 
+  const features = [
+    {
+      iconSrc: "/pixelish/device-monitor.svg",
+      title: "full-stack site rebuild",
+      items: [
+        "lightning-fast pages (90+ pagespeed)",
+        "mobile-first, accessibility-friendly design",
+        "crystal-clear copy written for humans + search engines",
+      ],
+    },
+    {
+      iconSrc: "/pixelish/graph-chart-high.svg",
+      title: "traffic multiplier engine",
+      items: [
+        "on-page seo, schema, and technical health fixes",
+        "google business profile sync (where applicable)",
+        "launch-ready blog template + 3 custom content briefs",
+      ],
+    },
+    {
+      iconSrc: "/pixelish/award.svg",
+      title: "conversion booster suite",
+      items: ["a/b-tested hero headline + cta", "streamlined inquiry / checkout flow", "live chat widget installed"],
+    },
+    {
+      iconSrc: "/pixelish/bar-chart-average.svg",
+      title: "real-time prism dashboard",
+      items: ["track visitors, leads, and sales 24/7", "compare pre- vs. post-launch kpis at a glance"],
+    },
+  ]
+
   return (
-    <div className="bg-white dark:bg-neutral-950 text-neutral-900 dark:text-neutral-100 font-sans">
+    <div className="bg-background text-foreground">
       <Navbar />
       {isMobile && <ScrollProgressBar />}
+
       <main>
-        {/* Hero Section */}
-        <section className="py-24 md:py-40">
-          <div className="container mx-auto px-6 text-center">
-            <Sun className="h-16 w-16 md:h-20 md:w-20 text-neutral-400 dark:text-neutral-500 mx-auto mb-8" />
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-semibold tracking-tight mb-6 max-w-3xl mx-auto">
-              Summer Website Makeover
-            </h1>
-            <p className="text-xl md:text-2xl text-neutral-800 dark:text-neutral-200 font-medium mb-10 max-w-2xl mx-auto">
-              Triple Your Traffic & Conversions in 30 Days — Guaranteed
-            </p>
-            <p className="text-lg text-neutral-600 dark:text-neutral-400 max-w-2xl mx-auto mb-12">
-              Your site shouldn’t feel like a ghost town. Let Prism turn it into a 24/7 growth engine while you stay
-              focused on running your business.
-            </p>
-            <Button
-              asChild
-              size="lg"
-              className="text-base px-8 py-3 group rounded-md bg-neutral-900 text-white hover:bg-neutral-700 dark:bg-neutral-100 dark:text-neutral-900 dark:hover:bg-neutral-300 transition-colors"
-            >
+        {/* Hero */}
+        <section className="container mx-auto px-4 pt-16 pb-14 md:pt-24 md:pb-18 text-center">
+          <div className="mx-auto mb-6 flex items-center justify-center">
+            <PixelishIcon src="/pixelish/browser.svg" alt="" size={120} aria-hidden className="opacity-95" />
+          </div>
+          <p className="text-[10px] font-semibold !uppercase font-pixel tracking-[0.32em] text-muted-foreground">
+            offer
+          </p>
+          <h1 className="mt-4 text-4xl font-pixel tracking-[0.04em] lowercase leading-tight sm:text-5xl md:text-6xl">
+            summer website makeover
+          </h1>
+          <p className="mt-6 text-base text-muted-foreground max-w-2xl mx-auto leading-relaxed sm:text-lg">
+            triple your traffic & conversions in 30 days, guaranteed.
+          </p>
+          <p className="mt-6 text-sm text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+            your site shouldn’t feel like a ghost town. let prism turn it into a 24/7 growth engine while you stay
+            focused on running your business.
+          </p>
+
+          <div className="mt-10">
+            <Button asChild size="lg" variant="inverted">
               <Link href="/contact">
+                <PixelishIcon src="/pixelish/mail.svg" alt="" size={16} aria-hidden className="opacity-90" />
                 {CONTACT_CTA_TEXT}
-                <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
               </Link>
             </Button>
           </div>
         </section>
 
         {/* Exactly What You Get */}
-        <section className="py-20 md:py-32 bg-neutral-50 dark:bg-neutral-900">
-          <div className="container mx-auto px-6">
-            <h2 className="text-3xl md:text-4xl font-semibold text-center mb-20">Exactly What You Get</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-16">
-              {[
-                {
-                  icon: Zap,
-                  title: "full-stack site rebuild",
-                  items: [
-                    "Lightning-fast pages (90+ PageSpeed)",
-                    "Mobile-first, accessibility-friendly design",
-                    "Crystal-clear copy written for humans + search engines",
-                  ],
-                },
-                {
-                  icon: TrendingUp,
-                  title: "traffic multiplier engine",
-                  items: [
-                    "On-page SEO, schema, and technical health fixes",
-                    "Google Business Profile sync (where applicable)",
-                    "Launch-ready blog template + 3 custom content briefs",
-                  ],
-                },
-                {
-                  icon: Sparkles,
-                  title: "conversion booster suite",
-                  items: [
-                    "A/B-tested hero headline + CTA",
-                    "Streamlined inquiry / checkout flow",
-                    "Live chat + AI receptionist widget installed",
-                  ],
-                },
-                {
-                  icon: BarChart,
-                  title: "real-time prism dashboard",
-                  items: ["Track visitors, leads, and sales 24/7", "Compare pre- vs. post-launch KPIs at a glance"],
-                },
-              ].map((feature, idx) => {
-                const IconComponent = feature.icon
-                return (
-                  <div key={idx}>
-                    <div className="flex items-center mb-5">
-                      <IconComponent className="h-7 w-7 text-neutral-500 dark:text-neutral-400 mr-3" />
-                      <h3 className="text-2xl font-medium">{feature.title}</h3>
-                    </div>
-                    <ul className="space-y-3">
-                      {feature.items.map((item) => (
-                        <FeatureListItem key={item} text={item} />
-                      ))}
-                    </ul>
+        <section className="py-14 border-t border-border/60">
+          <div className="container mx-auto px-4">
+            <h2 className="text-3xl font-pixel tracking-[0.04em] lowercase text-center sm:text-4xl">exactly what you get</h2>
+            <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-16">
+              {features.map((feature) => (
+                <div key={feature.title}>
+                  <div className="flex items-center gap-3 mb-5">
+                    <PixelishIcon src={feature.iconSrc} alt="" size={22} aria-hidden className="opacity-90" />
+                    <h3 className="text-xl font-pixel tracking-[0.06em] lowercase">{feature.title}</h3>
                   </div>
-                )
-              })}
+                  <ul className="space-y-3">
+                    {feature.items.map((item) => (
+                      <FeatureListItem key={item} text={item} />
+                    ))}
+                  </ul>
+                </div>
+              ))}
+
               <div className="md:col-span-2 lg:col-span-1">
-                <Card className="bg-white dark:bg-neutral-800/70 border border-neutral-200 dark:border-neutral-700 shadow-none h-full">
+                <Card className="bg-card/40 border-border/70 shadow-none h-full">
                   <CardContent className="p-6 md:p-8">
-                    <div className="flex items-center mb-4">
-                      <CalendarDays className="h-7 w-7 text-neutral-500 dark:text-neutral-400 mr-3" />
-                      <h3 className="text-2xl font-medium">Bonus “Summer Sizzle” Assets</h3>
+                    <div className="flex items-center gap-3 mb-4">
+                      <PixelishIcon src="/pixelish/calendar.svg" alt="" size={22} aria-hidden className="opacity-90" />
+                      <h3 className="text-xl font-pixel tracking-[0.06em] lowercase">bonus “summer sizzle” assets</h3>
                     </div>
-                    <p className="text-sm text-neutral-500 dark:text-neutral-400 mb-5">(available until July 31)</p>
+                    <p className="text-[11px] text-muted-foreground mb-5">(available until july 31)</p>
                     <ul className="space-y-3">
-                      <FeatureListItem text="Five social posts announcing your makeover 🌴" />
-                      <FeatureListItem text="Branded email blast template to past customers/subscribers" />
-                      <FeatureListItem text="One-hour growth-roadmap call with Enzo (recorded)" />
+                      <FeatureListItem text="five social posts announcing your makeover" />
+                      <FeatureListItem text="branded email blast template to past customers/subscribers" />
+                      <FeatureListItem text="one-hour growth-roadmap call with enzo (recorded)" />
                     </ul>
                   </CardContent>
                 </Card>
@@ -186,49 +175,57 @@ export default function SummerWebsiteMakeoverOpenAIStylePage() {
         </section>
 
         {/* 30-Day 3× Growth Guarantee */}
-        <section className="py-20 md:py-32">
-          <div className="container mx-auto px-6 text-center">
-            <Rocket className="h-16 w-16 text-neutral-400 dark:text-neutral-500 mx-auto mb-8" />
-            <h2 className="text-3xl md:text-4xl font-semibold mb-6">30-Day 3× Growth Guarantee 🚀</h2>
-            <p className="text-lg text-neutral-600 dark:text-neutral-400 max-w-3xl mx-auto">
-              If we don’t hit 300% of your current traffic or conversions within 30 days of launch, we keep optimizing
-              free until we do — or refund you. No fine print.
+        <section className="py-14 border-t border-border/60">
+          <div className="container mx-auto px-4 text-center">
+            <div className="mx-auto mb-6 flex items-center justify-center">
+              <PixelishIcon src="/pixelish/emoji-rocket.svg" alt="" size={72} aria-hidden className="opacity-95" />
+            </div>
+            <h2 className="text-3xl font-pixel tracking-[0.04em] lowercase sm:text-4xl">30-day 3× growth guarantee</h2>
+            <p className="mt-5 text-base text-muted-foreground max-w-3xl mx-auto leading-relaxed sm:text-lg">
+              if we don’t hit 300% of your current traffic or conversions within 30 days of launch, we keep optimizing
+              free until we do, or refund you. no fine print.
             </p>
           </div>
         </section>
 
         {/* What Our Clients Say */}
-        <section className="py-20 md:py-32 bg-neutral-50 dark:bg-neutral-900">
-          <div className="container mx-auto px-6">
-            <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-semibold tracking-tight">What Our Clients Say</h2>
-              <p className="text-neutral-600 dark:text-neutral-400 max-w-xl mx-auto text-lg mt-4">
-                Real feedback from businesses we've helped thrive.
+        <section className="py-14 border-t border-border/60">
+          <div className="container mx-auto px-4">
+            <div className="text-center mb-10">
+              <h2 className="text-3xl font-pixel tracking-[0.04em] lowercase sm:text-4xl">what our clients say</h2>
+              <p className="mt-5 text-base text-muted-foreground max-w-xl mx-auto leading-relaxed sm:text-lg">
+                real feedback from businesses we've helped thrive.
               </p>
             </div>
+
             <Carousel
               opts={{ align: "start", loop: true }}
               className="w-full max-w-xs sm:max-w-xl md:max-w-2xl lg:max-w-4xl xl:max-w-5xl mx-auto"
             >
               <CarouselContent>
-                {carouselTestimonialsData.map((testimonial, index) => (
-                  <CarouselItem key={index} className="sm:basis-1/2 lg:basis-1/3">
+                {carouselTestimonialsData.map((testimonial) => (
+                  <CarouselItem key={testimonial.name} className="sm:basis-1/2 lg:basis-1/3">
                     <div className="p-2 h-full">
-                      <Card className="h-full flex flex-col bg-white dark:bg-neutral-800/70 border border-neutral-200 dark:border-neutral-700 shadow-none hover:border-neutral-300 dark:hover:border-neutral-600 transition-colors">
+                      <Card className="h-full flex flex-col bg-card/40 border-border/70 shadow-none hover:border-border transition-colors">
                         <CardContent className="flex flex-col flex-grow items-start justify-between p-6 space-y-4">
-                          <div className="flex">
-                            {[...Array(5)].map((_, i) => (
-                              <Star key={i} className="w-5 h-5 text-yellow-400 fill-yellow-400" />
+                          <div className="flex gap-1">
+                            {Array.from({ length: 5 }).map((_, i) => (
+                              <PixelishIcon
+                                key={`${testimonial.name}-star-${i}`}
+                                src="/pixelish/award.svg"
+                                alt=""
+                                size={14}
+                                aria-hidden
+                                className="opacity-90"
+                              />
                             ))}
                           </div>
-                          <p className="text-neutral-700 dark:text-neutral-300 text-base leading-relaxed flex-grow">
+                          <p className="text-muted-foreground text-sm leading-relaxed flex-grow">
                             &quot;{testimonial.quote}&quot;
                           </p>
                           <div>
-                            <p className="font-medium text-neutral-800 dark:text-neutral-200 text-sm">
-                              {testimonial.name}
-                            </p>
-                            <p className="text-xs text-neutral-500 dark:text-neutral-400">{testimonial.business}</p>
+                            <p className="font-medium text-foreground text-sm">{testimonial.name}</p>
+                            <p className="text-xs text-muted-foreground">{testimonial.business}</p>
                           </div>
                         </CardContent>
                       </Card>
@@ -236,106 +233,91 @@ export default function SummerWebsiteMakeoverOpenAIStylePage() {
                   </CarouselItem>
                 ))}
               </CarouselContent>
-              <CarouselPrevious className="hidden sm:flex text-neutral-500 hover:text-neutral-700 dark:text-neutral-400 dark:hover:text-neutral-200 left-[-50px]" />
-              <CarouselNext className="hidden sm:flex text-neutral-500 hover:text-neutral-700 dark:text-neutral-400 dark:hover:text-neutral-200 right-[-50px]" />
+              <CarouselPrevious className="hidden sm:flex" />
+              <CarouselNext className="hidden sm:flex" />
             </Carousel>
           </div>
         </section>
 
         {/* Investment & Availability */}
-        <section className="py-20 md:py-32">
-          <div className="container mx-auto px-6 text-center">
-            <h2 className="text-3xl md:text-4xl font-semibold mb-8">Investment & Availability</h2>
-            <p className="text-4xl md:text-5xl font-semibold text-neutral-900 dark:text-neutral-100 mb-2">
-              $4,800 all-inclusive
-            </p>
-            <p className="text-lg text-neutral-600 dark:text-neutral-400 mb-10">(or 2 × $2,500)</p>
-            <div className="bg-yellow-50 dark:bg-yellow-900/30 border border-yellow-300 dark:border-yellow-700 text-yellow-700 dark:text-yellow-300 p-6 rounded-lg max-w-md mx-auto mb-12 shadow-sm">
-              <p className="font-medium text-lg">Only 7 Summer Makeover slots left!</p>
-              <p className="text-sm">Next intake opens in October.</p>
+        <section className="py-14 border-t border-border/60">
+          <div className="container mx-auto px-4 text-center">
+            <h2 className="text-3xl font-pixel tracking-[0.04em] lowercase sm:text-4xl mb-6">
+              investment & availability
+            </h2>
+            <p className="text-4xl font-pixel tracking-[0.08em] mb-2">$4,800 all-inclusive</p>
+            <p className="text-sm text-muted-foreground mb-8">(or 2 × $2,500)</p>
+
+            <div className="border border-border/60 bg-background/40 p-6 rounded-lg max-w-md mx-auto mb-10">
+              <p className="font-pixel tracking-[0.12em] !uppercase text-xs text-foreground">limited slots</p>
+              <p className="mt-3 text-sm text-muted-foreground">only 7 summer makeover slots left. next intake opens in october.</p>
             </div>
-            <Button
-              asChild
-              size="lg"
-              className="text-base px-10 py-4 group rounded-md bg-neutral-900 text-white hover:bg-neutral-700 dark:bg-neutral-100 dark:text-neutral-900 dark:hover:bg-neutral-300 transition-colors"
-            >
+
+            <Button asChild size="lg" variant="inverted">
               <Link href="/contact">
+                <PixelishIcon src="/pixelish/mail.svg" alt="" size={16} aria-hidden className="opacity-90" />
                 {CONTACT_CTA_TEXT}
-                <ArrowRight className="ml-3 h-5 w-5 transition-transform group-hover:translate-x-1" />
               </Link>
             </Button>
           </div>
         </section>
 
-        {/* FAQ Section */}
-        <section className="py-20 md:py-32 bg-neutral-50 dark:bg-neutral-900">
-          <div className="container mx-auto px-6">
-            <div className="flex items-center justify-center mb-16">
-              <HelpCircle className="h-8 w-8 text-neutral-500 dark:text-neutral-400 mr-3" />
-              <h2 className="text-3xl md:text-4xl font-semibold text-center">FAQ</h2>
+        {/* FAQ */}
+        <section className="py-14 border-t border-border/60">
+          <div className="container mx-auto px-4">
+            <div className="flex items-center justify-center gap-3 mb-10">
+              <PixelishIcon src="/pixelish/circle-question.svg" alt="" size={22} aria-hidden className="opacity-90" />
+              <h2 className="text-3xl font-pixel tracking-[0.04em] lowercase sm:text-4xl">faq</h2>
             </div>
+
             <Accordion type="single" collapsible className="w-full max-w-3xl mx-auto">
-              {faqItems.map((item, index) => (
-                <AccordionItem
-                  value={`item-${index}`}
-                  key={index}
-                  className="border-b border-neutral-200 dark:border-neutral-700"
-                >
-                  <AccordionTrigger className="text-lg text-left font-medium py-6 hover:no-underline text-neutral-800 dark:text-neutral-200 hover:text-neutral-600 dark:hover:text-neutral-400 transition-colors">
+              {faqItems.map((item) => (
+                <AccordionItem key={item.question} value={item.question} className="border-b border-border/60">
+                  <AccordionTrigger className="text-left text-sm font-pixel tracking-[0.08em] !uppercase py-6 hover:no-underline text-foreground hover:text-muted-foreground transition-colors">
                     {item.question}
                   </AccordionTrigger>
-                  <AccordionContent className="pt-2 pb-6 text-base text-neutral-600 dark:text-neutral-400">
-                    {item.answer}
-                  </AccordionContent>
+                  <AccordionContent className="pt-2 pb-6 text-sm text-muted-foreground">{item.answer}</AccordionContent>
                 </AccordionItem>
               ))}
             </Accordion>
           </div>
         </section>
 
-        {/* Final CTA Section */}
-        <section className="py-24 md:py-40">
-          <div className="container mx-auto px-6 text-center">
-            <h2 className="text-3xl md:text-4xl font-semibold mb-6 max-w-2xl mx-auto">
-              Ready to Turn Your Website into a Sales Machine?
+        {/* Final CTA */}
+        <section className="py-14 border-t border-border/60">
+          <div className="container mx-auto px-4 text-center">
+            <h2 className="text-3xl font-pixel tracking-[0.04em] lowercase sm:text-4xl max-w-2xl mx-auto">
+              ready to turn your website into a sales machine?
             </h2>
-            <p className="text-lg text-neutral-600 dark:text-neutral-400 mb-4">Stop settling for “meh.”</p>
-            <p className="text-lg text-neutral-600 dark:text-neutral-400 mb-4">
-              Get a site that sells while you sleep.
+            <p className="mt-5 text-base text-muted-foreground mb-10 max-w-2xl mx-auto leading-relaxed sm:text-lg">
+              email or text us to lock in your summer website makeover before the last slots disappear.
             </p>
-            <p className="text-lg text-neutral-600 dark:text-neutral-400 mb-12">
-              Email or text us to lock in your Summer Website Makeover before the last slots disappear.
-            </p>
-            <Button
-              asChild
-              size="lg"
-              className="text-base px-10 py-4 group rounded-md bg-neutral-900 text-white hover:bg-neutral-700 dark:bg-neutral-100 dark:text-neutral-900 dark:hover:bg-neutral-300 transition-colors mb-20"
-            >
+            <Button asChild size="lg" variant="inverted" className="mb-14">
               <Link href="/contact">
+                <PixelishIcon src="/pixelish/mail.svg" alt="" size={16} aria-hidden className="opacity-90" />
                 {CONTACT_CTA_TEXT}
-                <ArrowRight className="ml-3 h-5 w-5 transition-transform group-hover:translate-x-1" />
               </Link>
             </Button>
 
-            <div className="border-t border-neutral-200 dark:border-neutral-700 pt-12 max-w-xl mx-auto">
-              <p className="text-base font-medium text-neutral-800 dark:text-neutral-200 mb-6">
-                Need a quick answer first?
+            <div className="border-t border-border/60 pt-10 max-w-xl mx-auto">
+              <p className="text-[11px] font-pixel tracking-[0.18em] !uppercase text-muted-foreground mb-6">
+                need a quick answer first?
               </p>
-              <div className="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-8">
+              <div className="flex flex-col sm:flex-row justify-center items-center gap-6">
                 <a
                   href="https://www.instagram.com/the_design_prism/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors group"
+                  className="flex items-center gap-2 text-xs font-pixel tracking-[0.18em] !uppercase text-muted-foreground hover:text-foreground transition-colors"
                 >
-                  <MessageSquare className="h-5 w-5 mr-2 text-neutral-500 dark:text-neutral-400 group-hover:text-neutral-700 dark:group-hover:text-neutral-200 transition-colors" />
-                  DM @the_design_prism
+                  <PixelishIcon src="/pixelish/socials-instagram.svg" alt="" size={16} aria-hidden className="opacity-90" />
+                  dm @the_design_prism
                 </a>
                 <a
                   href="mailto:support@design-prism.com"
-                  className="flex items-center text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors group"
+                  className="flex items-center gap-2 text-xs font-pixel tracking-[0.18em] !uppercase text-muted-foreground hover:text-foreground transition-colors"
                 >
-                  <Mail className="h-5 w-5 mr-2 text-neutral-500 dark:text-neutral-400 group-hover:text-neutral-700 dark:group-hover:text-neutral-200 transition-colors" />
+                  <PixelishIcon src="/pixelish/mail.svg" alt="" size={16} aria-hidden className="opacity-90" />
                   support@design-prism.com
                 </a>
               </div>
@@ -343,6 +325,7 @@ export default function SummerWebsiteMakeoverOpenAIStylePage() {
           </div>
         </section>
       </main>
+
       <Footer />
     </div>
   )

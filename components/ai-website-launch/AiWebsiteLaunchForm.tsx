@@ -181,7 +181,7 @@ export default function AiWebsiteLaunchForm({ submitLabel }: AiWebsiteLaunchForm
           onClick={() => trackCTAClick(submitLabel, "final form")}
           disabled={isSubmitting}
         >
-          {isSubmitting ? "Sending..." : submitLabel}
+          {isSubmitting ? "Sending…" : submitLabel}
         </Button>
       </RippleHighlight>
       {submitError ? (

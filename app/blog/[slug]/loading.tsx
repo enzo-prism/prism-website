@@ -11,10 +11,10 @@ export default function BlogPostLoading() {
       <div className="pt-1">
         <Navbar />
         <div className="container mx-auto px-4 md:px-6">
-          <Breadcrumbs items={[{ name: "blog", url: "/blog" }, { name: "loading...", url: "#" }]} />
+          <Breadcrumbs items={[{ name: "blog", url: "/blog" }, { name: "loading…", url: "#" }]} />
         </div>
         <main className="flex-1">
-          <div className="w-full bg-gradient-to-b from-neutral-50 to-white py-12 md:py-16">
+          <div className="w-full bg-transparent py-12 md:py-16">
             <div className="container mx-auto px-4 md:px-6">
               <div className="max-w-3xl mx-auto">
                 {/* Back button skeleton */}

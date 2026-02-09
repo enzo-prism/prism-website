@@ -8,6 +8,8 @@ import { WebPageSchema } from "@/components/schema-markup"
 import { Button } from "@/components/ui/button"
 import { ArrowRight, CheckCircle2, Gift, Handshake, PhoneCall } from "lucide-react"
 import { CASE_STUDIES } from "@/lib/case-study-data"
+import PixelishIcon from "@/components/pixelish/PixelishIcon"
+import { pixelishForEmoji } from "@/lib/pixelish-emoji"
 
 const TYPEFORM_URL = "https://fxuqp40sseh.typeform.com/to/ln0VzAjB"
 
@@ -165,7 +167,12 @@ export default function ReferPage() {
                       refer a business <ArrowRight className="ml-2 h-4 w-4" />
                     </Link>
                   </Button>
-                  <p className="text-sm text-neutral-500 md:text-base">⚡️ takes 2 min</p>
+                  <p className="text-sm text-neutral-500 md:text-base">
+                    <span className="inline-flex items-center gap-2">
+                      <PixelishIcon src="/pixelish/arrow-refresh.svg" alt="" size={14} invert={false} aria-hidden="true" />
+                      <span>takes 2 min</span>
+                    </span>
+                  </p>
                 </div>
               </div>
             </div>
@@ -253,7 +260,15 @@ export default function ReferPage() {
                 >
                   <div>
                     <div className="flex items-center gap-3">
-                      <span className="text-3xl" aria-hidden>{segment.emoji}</span>
+                      <span className="flex h-11 w-11 items-center justify-center rounded-full bg-white" aria-hidden="true">
+                        <PixelishIcon
+                          src={pixelishForEmoji(segment.emoji).src}
+                          alt=""
+                          size={26}
+                          invert={false}
+                          aria-hidden="true"
+                        />
+                      </span>
                       <h3 className="text-lg font-semibold lowercase text-neutral-900">{segment.title}</h3>
                     </div>
                     <p className="mt-4 text-sm text-neutral-600">{segment.description}</p>

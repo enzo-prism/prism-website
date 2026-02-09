@@ -24,6 +24,23 @@ module.exports = {
           '"Noto Sans"',
           "sans-serif",
         ],
+        mono: [
+          "var(--font-mono)",
+          "ui-monospace",
+          "SFMono-Regular",
+          "Menlo",
+          "Monaco",
+          "Consolas",
+          '"Liberation Mono"',
+          '"Courier New"',
+          "monospace",
+        ],
+        pixel: [
+          "var(--font-pixel)",
+          "var(--font-sans)",
+          "system-ui",
+          "sans-serif",
+        ],
       },
       colors: {
         background: "var(--background)",
@@ -76,6 +93,14 @@ module.exports = {
           border: "var(--sidebar-border)",
           ring: "var(--sidebar-ring)",
         },
+      },
+      fontSize: {
+        // Make headings feel more “display” (Pixel-first).
+        "3xl": ["2.25rem", { lineHeight: "1.1" }],
+        "4xl": ["3rem", { lineHeight: "1.05" }],
+        "5xl": ["4rem", { lineHeight: "1.02" }],
+        "6xl": ["5rem", { lineHeight: "1.02" }],
+        "7xl": ["6rem", { lineHeight: "1.02" }],
       },
       borderRadius: {
         lg: "var(--radius)",

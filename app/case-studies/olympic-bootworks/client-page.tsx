@@ -5,7 +5,8 @@ import SocialShare from "@/components/social-share"
 import Image from "next/image"
 import Link from "next/link"
 
-const linkClassName = "font-medium text-neutral-900 underline underline-offset-4"
+const linkClassName =
+  "font-medium text-foreground underline decoration-border/60 underline-offset-4 hover:decoration-border"
 const CASE_STUDY_TITLE = "Olympic Bootworks: the Tahoe shop that finally sells online"
 const CASE_STUDY_DESCRIPTION =
   "Olympic Bootworks already had the hard part: a legendary reputation, Olympians in the fitting room, and customers who drive hours to get it done right."
@@ -14,9 +15,9 @@ export default function OlympicBootworksCaseStudy() {
   return (
     <div className="flex min-h-screen flex-col">
       <Navbar />
-      <main className="flex-1 bg-white">
+      <main className="flex-1 bg-background">
         <div className="container mx-auto max-w-3xl px-4 py-16 md:px-6 md:py-24">
-          <article className="prose prose-neutral max-w-none">
+          <article className="prose prose-neutral dark:prose-invert max-w-none">
             <p>Case Study</p>
             <h1>{CASE_STUDY_TITLE}</h1>
             <p>

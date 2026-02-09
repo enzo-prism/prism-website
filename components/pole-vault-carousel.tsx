@@ -61,9 +61,9 @@ export default function PoleVaultCarousel() {
         type="button"
         variant="ghost"
         size="icon"
-        className="absolute left-2 top-1/2 z-30 -translate-y-1/2 rounded-full bg-white/80 shadow backdrop-blur active:scale-95 sm:-left-4 sm:p-2.5"
+        className="absolute left-2 top-1/2 z-30 -translate-y-1/2 rounded-md border border-border/60 bg-card/60 shadow-lg shadow-black/40 backdrop-blur active:scale-95 sm:-left-4 sm:p-2.5"
       >
-        <ChevronLeft className="h-5 w-5" />
+        <ChevronLeft className="h-5 w-5" aria-hidden="true" focusable="false" />
       </Button>
       <Button
         aria-label="Next"
@@ -73,18 +73,18 @@ export default function PoleVaultCarousel() {
         type="button"
         variant="ghost"
         size="icon"
-        className="absolute right-2 top-1/2 z-30 -translate-y-1/2 rounded-full bg-white/80 shadow backdrop-blur active:scale-95 sm:-right-4 sm:p-2.5"
+        className="absolute right-2 top-1/2 z-30 -translate-y-1/2 rounded-md border border-border/60 bg-card/60 shadow-lg shadow-black/40 backdrop-blur active:scale-95 sm:-right-4 sm:p-2.5"
       >
-        <ChevronRight className="h-5 w-5" />
+        <ChevronRight className="h-5 w-5" aria-hidden="true" focusable="false" />
       </Button>
 
       {/* Dots */}
       <div className="flex items-center justify-center gap-2 mt-3">
         {slides.map((_, i) => (
-          <span key={i} className={`h-1.5 w-1.5 rounded-full ${i === index ? 'bg-neutral-900' : 'bg-neutral-300'}`} />
+          <span key={i} className={`h-1.5 w-1.5 rounded-full ${i === index ? 'bg-foreground' : 'bg-border/60'}`} />
         ))}
       </div>
-      <p className="text-center text-xs text-neutral-500 lowercase mt-1">{current.label}</p>
+      <p className="mt-1 text-center text-[10px] font-semibold uppercase tracking-[0.32em] text-muted-foreground font-pixel">{current.label}</p>
     </div>
   )
 }

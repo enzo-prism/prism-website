@@ -35,7 +35,7 @@ export default function OffersPage() {
     <>
       <section className="px-4 pt-8">
         <div className="container mx-auto px-4 md:px-6 max-w-3xl">
-          <div className="prose prose-neutral max-w-none mb-6">
+          <div className="prose prose-neutral dark:prose-invert max-w-none mb-6">
             <h2 className="text-xl font-semibold lowercase">how our offers work</h2>
             <p>
               time-boxed, high–leverage engagements to ship real outcomes fast. each offer includes

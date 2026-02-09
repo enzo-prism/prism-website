@@ -42,7 +42,7 @@ export default function AnimatedLogo() {
   // Skip animation for mobile and reduced motion users
   const shouldAnimate = !isMobile && !prefersReducedMotion
   const animationClasses = shouldAnimate 
-    ? `transition-all duration-700 ease-out ${isVisible ? "opacity-100 scale-100" : "opacity-0 scale-95"}`
+    ? `transition-[opacity,transform] duration-700 ease-out ${isVisible ? "opacity-100 scale-100" : "opacity-0 scale-95"}`
     : "opacity-100"
 
   return (

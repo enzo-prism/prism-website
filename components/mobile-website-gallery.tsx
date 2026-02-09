@@ -93,7 +93,7 @@ export default function MobileWebsiteGallery({ items }: MobileWebsiteGalleryProp
                 onClick={prevSlide}
                 aria-label="Previous website"
               >
-                <ChevronLeft className="h-5 w-5" />
+                <ChevronLeft className="h-5 w-5" aria-hidden="true" focusable="false" />
               </Button>
               <Button
                 variant="outline"
@@ -102,7 +102,7 @@ export default function MobileWebsiteGallery({ items }: MobileWebsiteGalleryProp
                 onClick={nextSlide}
                 aria-label="Next website"
               >
-                <ChevronRight className="h-5 w-5" />
+                <ChevronRight className="h-5 w-5" aria-hidden="true" focusable="false" />
               </Button>
             </div>
             <div className="text-sm text-neutral-500 lowercase">
@@ -118,7 +118,7 @@ export default function MobileWebsiteGallery({ items }: MobileWebsiteGalleryProp
           <button
             key={item.id}
             onClick={() => setActiveIndex(index)}
-            className={`relative overflow-hidden transition-all rounded ${
+            className={`relative overflow-hidden transition-[opacity,box-shadow] duration-200 rounded ${
               index === activeIndex ? "ring-2 ring-black ring-offset-2" : "opacity-70 hover:opacity-100"
             }`}
           >

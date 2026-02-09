@@ -3,6 +3,7 @@
 import Link from "next/link"
 import { useMemo } from "react"
 
+import PixelishImg from "@/components/pixelish/PixelishImg"
 import { cn } from "@/lib/utils"
 import { getHomepageHeroReviewPool, renderFormattedText } from "@/content/wall-of-love-data"
 import { trackNavigation } from "@/utils/analytics"
@@ -50,9 +51,14 @@ export default function HeroReviewSliderCard({ className }: HeroReviewSliderCard
   return (
     <div className={cn("flex w-full flex-col items-center gap-3 text-center", className)}>
       <div className="inline-flex items-center gap-2 rounded-full bg-neutral-100 px-3 py-1 text-[11px] font-semibold text-neutral-700 dark:bg-neutral-800 dark:text-neutral-200">
-        <span className="text-sm" aria-hidden>
-          ❤️
-        </span>
+        <PixelishImg
+          src="/pixelish/emoji-heart.svg"
+          alt=""
+          size={14}
+          invert={false}
+          className="dark:invert"
+          aria-hidden="true"
+        />
         <span className="tracking-tight">owners love prism</span>
       </div>
 
@@ -64,7 +70,7 @@ export default function HeroReviewSliderCard({ className }: HeroReviewSliderCard
             </span>
           ))
         ) : (
-          <span className="text-xs text-neutral-400">loading...</span>
+          <span className="text-xs text-neutral-400">loading…</span>
         )}
       </div>
 

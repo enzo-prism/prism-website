@@ -90,17 +90,18 @@ export default async function Blog({
   }))
 
   return (
-    <div className="flex min-h-screen flex-col bg-white">
+    <div className="flex min-h-screen flex-col">
       <Navbar />
       <main className="relative flex-1">
         <div className="container mx-auto px-4 md:px-6">
           <Breadcrumbs items={[{ name: "home", url: "/" }, { name: "blog", url: "/blog" }]} />
         </div>
 
-        <section className="border-b border-neutral-100 py-6 md:py-10">
+        <section className="border-b border-border/60 py-10 md:py-14">
           <div className="container mx-auto px-4 md:px-6">
-            <h1 className="text-2xl font-bold tracking-tight lowercase sm:text-3xl md:text-4xl">insights & ideas</h1>
-            <p className="mt-2 lowercase text-neutral-600">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.32em] text-muted-foreground font-pixel">prism blog</p>
+            <h1 className="mt-4 text-4xl font-semibold sm:text-5xl md:text-6xl">insights & ideas</h1>
+            <p className="mt-4 text-muted-foreground">
               thoughts on design, development, and digital strategy from the prism team
             </p>
           </div>
@@ -128,9 +129,9 @@ export default async function Blog({
                 ))}
               </SimpleBlogGrid>
             ) : (
-              <div className="rounded-lg border border-dashed border-neutral-200 py-16 text-center">
-                <h3 className="mb-2 text-xl font-medium lowercase text-neutral-600">no posts found</h3>
-                <p className="lowercase text-neutral-500">try adjusting your filters or search query</p>
+              <div className="rounded-md border border-dashed border-border/60 bg-card/20 py-16 text-center">
+                <h3 className="mb-2 text-xl font-semibold text-foreground">no posts found</h3>
+                <p className="text-muted-foreground">try adjusting your filters or search query</p>
               </div>
             )}
           </div>
@@ -138,11 +139,11 @@ export default async function Blog({
 
         <BlogEmailSignup />
 
-        <section className="bg-neutral-50 py-12 md:py-16">
+        <section className="border-t border-border/60 bg-card/15 py-12 md:py-16">
           <div className="container mx-auto px-4 md:px-6">
             <div className="mx-auto max-w-2xl space-y-4 text-center">
-              <h2 className="text-2xl font-bold lowercase tracking-tighter sm:text-3xl">want to work with us?</h2>
-              <p className="lowercase text-neutral-600">let's discuss how we can help your business grow</p>
+              <h2 className="text-2xl font-semibold sm:text-3xl">want to work with us?</h2>
+              <p className="text-muted-foreground">let's discuss how we can help your business grow</p>
               <div className="pt-4">
                 <BlogCTAButtonLazy />
               </div>

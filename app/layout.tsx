@@ -1,5 +1,7 @@
 import type { Metadata, Viewport } from "next"
-import { Inter } from "next/font/google"
+import { GeistMono } from "geist/font/mono"
+import { GeistPixelGrid, GeistPixelSquare } from "geist/font/pixel"
+import { GeistSans } from "geist/font/sans"
 import Script from "next/script"
 import type React from "react"
 import { Suspense } from "react"
@@ -8,14 +10,10 @@ import "./globals.css"
 import AnalyticsProvider from "@/components/analytics-provider"
 import { GlobalSchemaGraph } from "@/components/schema-markup"
 import RootClientMonitors from "@/components/root-client-monitors"
+import SkipToContent from "@/components/skip-to-content"
 import SentryContextProvider from "@/components/sentry-context-provider"
 import ToasterLazy from "@/components/toaster-lazy"
 import { GA_MEASUREMENT_ID, GOOGLE_ADS_ID, IS_ANALYTICS_ENABLED } from "@/lib/constants"
-
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-sans",
-})
 
 export const metadata: Metadata = {
   title: {
@@ -86,7 +84,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`m-0 p-0 w-full ${inter.variable}`}
+      className={`m-0 p-0 w-full dark ${GeistSans.variable} ${GeistMono.variable} ${GeistPixelSquare.variable} ${GeistPixelGrid.variable}`}
       suppressHydrationWarning
     >
       <head>
@@ -133,7 +131,7 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <meta name="format-detection" content="telephone=no" />
-        <meta name="theme-color" content="#ffffff" />
+        <meta name="theme-color" content="#000000" />
         {/* YouTube Embed Handler */}
         {/* YouTube embeds are now handled natively with iframe - no custom JavaScript needed */}
         {/* Preconnect to Vimeo for faster video loading */}
@@ -152,12 +150,11 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="https://www.youtube.com" />
         <link rel="dns-prefetch" href="https://img.youtube.com" />
       </head>
-      {/* You can also apply inter.className directly to body if preferred,
-        but applying to html covers the entire document.
-        The existing font-sans class from Tailwind will then use this font
-        if tailwind.config.cjs is updated accordingly.
-    */}
+      {/* Fonts are wired via Geist CSS variables on <html>; Tailwind's `font-sans` / `font-mono`
+        resolve via `--font-sans` / `--font-mono` in `app/globals.css`.
+      */}
       <body className="m-0 p-0 w-full min-h-screen font-sans antialiased">
+        <SkipToContent />
 	        <GlobalSchemaGraph />
 	        <RootClientMonitors />
 	        <SentryContextProvider>

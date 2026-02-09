@@ -7,7 +7,7 @@ function Empty({ className, ...props }: React.ComponentProps<"div">) {
     <div
       data-slot="empty"
       className={cn(
-        "flex min-w-0 flex-1 flex-col items-center justify-center gap-6 rounded-2xl border border-dashed border-neutral-200 bg-neutral-50 p-8 text-center text-balance md:p-12",
+        "flex min-w-0 flex-1 flex-col items-center justify-center gap-6 rounded-xl border border-dashed border-border/60 bg-muted/20 p-8 text-center text-balance md:p-12",
         className
       )}
       {...props}
@@ -55,7 +55,7 @@ function EmptyMedia({ className, variant, ...props }: EmptyMediaProps) {
 
 function EmptyTitle({ className, ...props }: React.ComponentProps<"div">) {
   return (
-    <div data-slot="empty-title" className={cn("text-lg font-semibold tracking-tight", className)} {...props} />
+    <div data-slot="empty-title" className={cn("text-lg font-semibold text-foreground font-pixel tracking-[0.08em]", className)} {...props} />
   )
 }
 
@@ -63,7 +63,7 @@ function EmptyDescription({ className, ...props }: React.ComponentProps<"p">) {
   return (
     <p
       data-slot="empty-description"
-      className={cn("text-sm leading-6 text-neutral-600 [&>a]:underline [&>a]:underline-offset-4", className)}
+      className={cn("text-sm leading-6 text-muted-foreground [&>a]:underline [&>a]:underline-offset-4", className)}
       {...props}
     />
   )

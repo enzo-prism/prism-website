@@ -16,11 +16,13 @@
   justify-content: center;
   
   /* Design */
-  background-color: #FFFFFF;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  background-color: var(--background);
+  /* Match Prism’s global typography tokens (Geist Sans + Pixel headings). */
+  font-family: var(--font-sans), system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
   font-size: 16px;
   line-height: 1.5;
-  color: #333333;
+  color: var(--foreground);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -35,13 +37,19 @@
   top: 24px;
   left: 24px;
   font-size: 14px;
-  color: #666666;
+  color: var(--muted-foreground);
   text-decoration: none;
   transition: color 180ms ease-out;
 }
 
 .prism-ai-nav-link:hover {
-  color: #333333;
+  color: var(--foreground);
+}
+
+.prism-ai-nav-link:focus-visible {
+  outline: 2px solid var(--foreground);
+  outline-offset: 4px;
+  border-radius: 8px;
 }
 
 /* Form wrapper */
@@ -65,7 +73,7 @@
 }
 
 .prism-ai-segment {
-  transition: fill 180ms ease-out;
+  transition: opacity 180ms ease-out;
   opacity: 0;
 }
 
@@ -96,12 +104,12 @@
   font-size: 24px;
   font-weight: 600;
   margin: 0 0 8px;
-  color: #333333;
+  color: var(--foreground);
 }
 
 .prism-ai-subtitle {
   font-size: 16px;
-  color: #666666;
+  color: var(--muted-foreground);
   margin: 0 0 48px;
 }
 
@@ -138,10 +146,13 @@
 
 .prism-ai-label {
   display: block;
-  font-size: 14px;
+  font-family: var(--font-pixel);
+  font-size: 12px;
   font-weight: 500;
-  color: #333333;
+  color: var(--foreground);
   margin-bottom: 8px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
 }
 
 .prism-ai-input {
@@ -149,22 +160,23 @@
   padding: 16px;
   font-size: 16px;
   font-family: inherit;
-  color: #333333;
-  background-color: transparent;
-  border: 1px solid #E5E5E5;
+  color: var(--foreground);
+  background-color: var(--card);
+  border: 1px solid var(--border);
   border-radius: 8px;
   outline: none;
-  transition: all 180ms ease-out;
+  transition: border-color 180ms ease-out, box-shadow 180ms ease-out, background-color 180ms ease-out, color 180ms ease-out;
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
 }
 
 .prism-ai-input::placeholder {
-  color: #999999;
+  color: var(--muted-foreground);
+  opacity: 0.75;
 }
 
-.prism-ai-input:focus {
+.prism-ai-input:focus-visible {
   border-color: transparent;
   box-shadow: 0 0 0 3px rgba(255, 0, 110, 0.2),
               0 0 0 3px rgba(251, 86, 7, 0.2),
@@ -183,7 +195,7 @@
   border-color: #FF006E;
 }
 
-.prism-ai-input-error:focus {
+.prism-ai-input-error:focus-visible {
   box-shadow: 0 0 0 3px rgba(255, 0, 110, 0.2);
   background: transparent;
 }
@@ -192,7 +204,7 @@
 .prism-ai-helper {
   display: block;
   font-size: 12px;
-  color: #666666;
+  color: var(--muted-foreground);
   margin-top: 4px;
 }
 
@@ -206,18 +218,19 @@
 
 /* Buttons */
 .prism-ai-button {
+  position: relative;
+  z-index: 0;
+  overflow: hidden;
   padding: 16px 32px;
   font-size: 16px;
   font-weight: 500;
   font-family: inherit;
   color: #FFFFFF;
-  background: linear-gradient(135deg, #FF006E 0%, #FB5607 25%, #FFBE0B 50%, #8338EC 75%, #3A86FF 100%);
-  background-size: 200% 200%;
+  background: transparent;
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  transition: all 180ms ease-out;
-  animation: prism-gradient-shift 3s ease-in-out infinite;
+  transition: transform 180ms ease-out, box-shadow 180ms ease-out, opacity 180ms ease-out;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -225,21 +238,38 @@
   min-width: 120px;
 }
 
-@keyframes prism-gradient-shift {
+/* Compositor-friendly gradient motion: animate transform on a pseudo-element. */
+.prism-ai-button::before {
+  content: "";
+  position: absolute;
+  inset: -60%;
+  border-radius: inherit;
+  background: linear-gradient(135deg, #FF006E 0%, #FB5607 25%, #FFBE0B 50%, #8338EC 75%, #3A86FF 100%);
+  transform: translate3d(-20%, -20%, 0);
+  animation: prism-button-sheen 3s ease-in-out infinite;
+  z-index: -1;
+}
+
+@keyframes prism-button-sheen {
   0% {
-    background-position: 0% 50%;
+    transform: translate3d(-20%, -20%, 0);
   }
   50% {
-    background-position: 100% 50%;
+    transform: translate3d(20%, 20%, 0);
   }
   100% {
-    background-position: 0% 50%;
+    transform: translate3d(-20%, -20%, 0);
   }
 }
 
 .prism-ai-button:hover {
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+}
+
+.prism-ai-button:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px oklch(1 0 0 / 0.18), 0 12px 30px rgba(0, 0, 0, 0.35);
 }
 
 .prism-ai-button:active {
@@ -253,13 +283,22 @@
 
 .prism-ai-button-secondary {
   background: transparent;
-  color: #333333;
-  border: 1px solid #E5E5E5;
+  color: var(--foreground);
+  border: 1px solid var(--border);
   animation: none;
 }
 
+.prism-ai-button-secondary::before {
+  content: none;
+}
+
 .prism-ai-button-secondary:hover {
-  background-color: #F5F5F5;
+  background-color: var(--muted);
+}
+
+.prism-ai-button-secondary:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px oklch(1 0 0 / 0.18);
 }
 
 .prism-ai-button-group {
@@ -309,16 +348,12 @@
 
 @keyframes prism-glow {
   0%, 100% {
-    filter: drop-shadow(0 0 20px rgba(255, 0, 110, 0.5));
-  }
-  25% {
-    filter: drop-shadow(0 0 20px rgba(251, 86, 7, 0.5));
+    opacity: 0.82;
+    transform: translateZ(0) scale(0.995);
   }
   50% {
-    filter: drop-shadow(0 0 20px rgba(255, 190, 11, 0.5));
-  }
-  75% {
-    filter: drop-shadow(0 0 20px rgba(131, 56, 236, 0.5));
+    opacity: 1;
+    transform: translateZ(0) scale(1.02);
   }
 }
 
@@ -326,24 +361,30 @@
   font-size: 28px;
   font-weight: 600;
   margin: 0 0 16px;
-  color: #333333;
+  color: var(--foreground);
 }
 
 .prism-ai-success-message {
   font-size: 18px;
-  color: #666666;
+  color: var(--muted-foreground);
   margin: 0 0 32px;
 }
 
 .prism-ai-back-link {
   font-size: 14px;
-  color: #666666;
+  color: var(--muted-foreground);
   text-decoration: none;
   transition: color 180ms ease-out;
 }
 
 .prism-ai-back-link:hover {
-  color: #333333;
+  color: var(--foreground);
+}
+
+.prism-ai-back-link:focus-visible {
+  outline: 2px solid var(--foreground);
+  outline-offset: 4px;
+  border-radius: 8px;
 }
 
 /* Mobile responsiveness */
@@ -402,10 +443,14 @@
   .prism-ai-gradient-stop-3,
   .prism-ai-gradient-stop-4,
   .prism-ai-gradient-stop-5,
-  .prism-ai-button,
+  .prism-ai-button::before,
   .prism-ai-spinner,
   .prism-ai-triangle-complete {
     animation: none;
+  }
+
+  .prism-ai-button::before {
+    transform: translate3d(0, 0, 0);
   }
 
   @keyframes prism-slide-in {

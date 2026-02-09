@@ -167,7 +167,7 @@ export default function AppsPage() {
             <Link href="/get-started?service=app-development">
               <Button
                 size="lg"
-                className="bg-neutral-900 hover:bg-neutral-800 text-white rounded-none px-8 py-3 text-sm font-light transition-all duration-200 hover:scale-[1.02]"
+                className="bg-neutral-900 hover:bg-neutral-800 text-white rounded-none px-8 py-3 text-sm font-light transition-[transform,background-color,color] duration-200 hover:scale-[1.02]"
               >
                 {FREE_AUDIT_CTA_TEXT}
               </Button>

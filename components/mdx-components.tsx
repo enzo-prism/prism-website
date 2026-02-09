@@ -1,6 +1,7 @@
 import type { ReactNode } from "react"
 import { cn } from "@/lib/utils"
 import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
+import PixelishIcon from "@/components/pixelish/PixelishIcon"
 
 type CTAButtonProps = {
   href: string
@@ -64,7 +65,14 @@ export const MDXComponents = {
   
   CheckItem: ({ children }: { children: ReactNode }) => (
     <li className="flex gap-3">
-      <span className="text-green-500 mt-0.5">✓</span>
+      <PixelishIcon
+        src="/pixelish/checkmark.svg"
+        alt=""
+        size={16}
+        invert={false}
+        aria-hidden="true"
+        className="mt-0.5 opacity-90 dark:invert"
+      />
       <span>{children}</span>
     </li>
   ),

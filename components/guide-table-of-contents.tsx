@@ -3,11 +3,14 @@
 import { useEffect, useMemo, useState } from "react"
 import clsx from "clsx"
 import { Button } from "@/components/ui/button"
+import PixelishImg from "@/components/pixelish/PixelishImg"
 
 type GuideSection = {
   id: string
   label: string
   emoji?: string
+  iconSrc?: string
+  iconAlt?: string
 }
 
 interface GuideTableOfContentsProps {
@@ -76,9 +79,19 @@ export default function GuideTableOfContents({ sections }: GuideTableOfContentsP
                   : "border-neutral-300 bg-white text-neutral-600 hover:border-neutral-400 hover:bg-white hover:text-neutral-900",
               )}
             >
-              {section.emoji && (
-                <span className="mr-2" aria-hidden>
-                  {section.emoji}
+              {(section.iconSrc || section.emoji) && (
+                <span className="mr-2 inline-flex items-center" aria-hidden="true">
+                  {section.iconSrc ? (
+                    <PixelishImg
+                      src={section.iconSrc}
+                      alt=""
+                      size={14}
+                      invert={activeId === section.id}
+                      aria-hidden="true"
+                    />
+                  ) : (
+                    section.emoji
+                  )}
                 </span>
               )}
               {section.label}
@@ -118,7 +131,17 @@ export default function GuideTableOfContents({ sections }: GuideTableOfContentsP
                       )}
                       aria-hidden
                     >
-                      {section.emoji ?? "•"}
+                      {section.iconSrc ? (
+                        <PixelishImg
+                          src={section.iconSrc}
+                          alt=""
+                          size={14}
+                          invert={isActive}
+                          aria-hidden="true"
+                        />
+                      ) : (
+                        (section.emoji ?? "•")
+                      )}
                     </span>
                     <span>{section.label}</span>
                   </Button>

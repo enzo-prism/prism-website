@@ -178,7 +178,7 @@ export function CompactAnimatedFilterButtons({
         <motion.button
           key={category}
           onClick={() => onCategoryChange(category)}
-          className={`px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-all duration-300 ${
+          className={`px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-[background-color,color,box-shadow] duration-300 ${
             selectedCategory === category
               ? 'bg-neutral-900 text-white shadow-lg'
               : 'bg-neutral-100 text-neutral-900 hover:bg-neutral-200'

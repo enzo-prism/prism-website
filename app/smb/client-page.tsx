@@ -5,8 +5,10 @@ import { ArrowRight } from "lucide-react"
 import Link from "next/link"
 
 import AnimatedBackground from "@/components/animated-background"
+import PixelishImg from "@/components/pixelish/PixelishImg"
 import { Button } from "@/components/ui/button"
 import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
+import { pixelishForEmoji } from "@/lib/pixelish-emoji"
 
 export default function SMBClientPage() {
   return (
@@ -104,7 +106,9 @@ export default function SMBClientPage() {
               { emoji: "📊", title: "data analysis & experimentation", desc: "instrumentation, dashboards, and tests to lift conversion and ltv" },
             ].map((item, i) => (
               <div key={i} className="bg-white rounded-2xl p-6 shadow-sm border border-neutral-100 text-left">
-                <div className="text-2xl mb-3">{item.emoji}</div>
+                <div className="mb-3 inline-flex h-11 w-11 items-center justify-center rounded-xl border border-neutral-100 bg-neutral-50" aria-hidden="true">
+                  <PixelishImg src={pixelishForEmoji(item.emoji).src} alt="" size={28} invert={false} aria-hidden="true" />
+                </div>
                 <h3 className="text-lg font-semibold lowercase mb-1">{item.title}</h3>
                 <p className="text-neutral-600 lowercase">{item.desc}</p>
               </div>

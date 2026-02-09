@@ -10,16 +10,16 @@ import SiteRebuildDynamicSteps from "@/components/site-rebuild-dynamic-steps"
 import { WebPageSchema } from "@/components/schema-markup"
 
 const guideSections = [
-  { id: "overview", label: "Overview", emoji: "🧭" },
-  { id: "step-1", label: "Step 1", emoji: "1️⃣" },
-  { id: "step-2", label: "Step 2", emoji: "2️⃣" },
-  { id: "step-3", label: "Step 3", emoji: "3️⃣" },
-  { id: "step-4", label: "Step 4", emoji: "4️⃣" },
-  { id: "step-5", label: "Step 5", emoji: "5️⃣" },
-  { id: "step-6", label: "Step 6", emoji: "6️⃣" },
-  { id: "step-7", label: "Step 7", emoji: "7️⃣" },
-  { id: "folder-overview", label: "Folder layout", emoji: "🗂️" },
-  { id: "wrap-up", label: "Wrap up", emoji: "✅" },
+  { id: "overview", label: "Overview", iconSrc: "/pixelish/lens-plus.svg" },
+  { id: "step-1", label: "Step 1", emoji: "1" },
+  { id: "step-2", label: "Step 2", emoji: "2" },
+  { id: "step-3", label: "Step 3", emoji: "3" },
+  { id: "step-4", label: "Step 4", emoji: "4" },
+  { id: "step-5", label: "Step 5", emoji: "5" },
+  { id: "step-6", label: "Step 6", emoji: "6" },
+  { id: "step-7", label: "Step 7", emoji: "7" },
+  { id: "folder-overview", label: "Folder layout", iconSrc: "/pixelish/folder.svg" },
+  { id: "wrap-up", label: "Wrap up", iconSrc: "/pixelish/checkmark.svg" },
 ]
 
 const PAGE_TITLE = "rebuild any site locally with codex | prism openai guide"

@@ -27,7 +27,7 @@ const mockResults: TestResult[] = [
   {
     query: "best coffee roasters for home use",
     mentioned: true,
-    context: "Sweet Haven is known for their artisan approach to coffee roasting...",
+    context: "Sweet Haven is known for their artisan approach to coffee roasting…",
     suggestions: ["Increase mentions in coffee forums", "Add customer testimonials"]
   },
   {
@@ -39,7 +39,7 @@ const mockResults: TestResult[] = [
   {
     query: "local coffee roasters",
     mentioned: true,
-    context: "Among the top local roasters, Sweet Haven stands out for...",
+    context: "Among the top local roasters, Sweet Haven stands out for…",
     suggestions: ["Strengthen local SEO", "Encourage local reviews"]
   }
 ]

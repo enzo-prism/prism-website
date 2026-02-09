@@ -24,19 +24,19 @@ export default function HeroCtas({
   return (
     <div className={["flex flex-col items-center gap-3", className].filter(Boolean).join(" ")}>
       <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
-        <Button asChild className="w-full rounded-full lowercase sm:w-auto">
+        <Button asChild className="w-full rounded-full sm:w-auto">
           <Link href="/get-started" onClick={() => trackCTAClick("get started", location)}>
             get started
           </Link>
         </Button>
-        <Button variant="outline" asChild className="w-full rounded-full lowercase sm:w-auto">
+        <Button variant="outline" asChild className="w-full rounded-full sm:w-auto">
           <Link href="/case-studies" onClick={() => trackCTAClick("explore case studies", location)}>
             explore case studies
           </Link>
         </Button>
       </div>
       {showNote ? (
-        <p className="text-balance text-xs text-neutral-500 lowercase">{note}</p>
+        <p className="text-balance text-xs text-muted-foreground">{note}</p>
       ) : null}
     </div>
   )

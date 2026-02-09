@@ -134,7 +134,7 @@ export default function MobileFirstWebsiteGallery({ items }: MobileFirstWebsiteG
                     onClick={() => trackCTAClick("visit website", activeItem.title)}
                   >
                     <Button size="lg" className="bg-neutral-900 hover:bg-neutral-800 text-white rounded-full px-8 py-4 lowercase">
-                      visit site <ExternalLink className="ml-2 h-4 w-4" />
+                      visit site <ExternalLink className="ml-2 h-4 w-4" aria-hidden="true" focusable="false" />
                     </Button>
                   </a>
                 </div>
@@ -147,17 +147,17 @@ export default function MobileFirstWebsiteGallery({ items }: MobileFirstWebsiteG
         <div className="hidden lg:block">
           <button
             onClick={prevSlide}
-            className="absolute left-8 top-1/2 transform -translate-y-1/2 bg-neutral-900 text-white rounded-full p-4 shadow-lg hover:bg-neutral-800 transition-all"
+            className="absolute left-8 top-1/2 transform -translate-y-1/2 bg-neutral-900 text-white rounded-full p-4 shadow-lg hover:bg-neutral-800 transition-colors"
             aria-label="Previous website"
           >
-            <ChevronLeft className="h-5 w-5" />
+            <ChevronLeft className="h-5 w-5" aria-hidden="true" focusable="false" />
           </button>
           <button
             onClick={nextSlide}
-            className="absolute right-8 top-1/2 transform -translate-y-1/2 bg-neutral-900 text-white rounded-full p-4 shadow-lg hover:bg-neutral-800 transition-all"
+            className="absolute right-8 top-1/2 transform -translate-y-1/2 bg-neutral-900 text-white rounded-full p-4 shadow-lg hover:bg-neutral-800 transition-colors"
             aria-label="Next website"
           >
-            <ChevronRight className="h-5 w-5" />
+            <ChevronRight className="h-5 w-5" aria-hidden="true" focusable="false" />
           </button>
         </div>
       </div>
@@ -171,7 +171,7 @@ export default function MobileFirstWebsiteGallery({ items }: MobileFirstWebsiteG
               <button
                 key={index}
                 onClick={() => goToSlide(index)}
-                className={`h-3 w-3 rounded-full transition-all duration-300 ${
+                className={`h-3 w-3 rounded-full transition-colors duration-300 ${
                   index === activeIndex ? "bg-neutral-900" : "bg-neutral-300 hover:bg-neutral-500"
                 }`}
                 aria-label={`Go to website ${index + 1}`}
@@ -182,13 +182,13 @@ export default function MobileFirstWebsiteGallery({ items }: MobileFirstWebsiteG
           {/* Mobile navigation buttons */}
           <div className="flex items-center justify-center space-x-4 lg:hidden">
             <Button variant="outline" size="sm" onClick={prevSlide} className="rounded-full px-6 py-2">
-              <ChevronLeft className="h-4 w-4 mr-1" />
+              <ChevronLeft className="h-4 w-4 mr-1" aria-hidden="true" focusable="false" />
               prev
             </Button>
 
             <Button variant="outline" size="sm" onClick={nextSlide} className="rounded-full px-6 py-2">
               next
-              <ChevronRight className="h-4 w-4 ml-1" />
+              <ChevronRight className="h-4 w-4 ml-1" aria-hidden="true" focusable="false" />
             </Button>
           </div>
         </div>

@@ -108,7 +108,7 @@ export default function PrismFlywheelClient() {
             >
               <Button
                 asChild
-                className="group px-8 py-3 bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 font-medium text-sm rounded-full hover:scale-[1.02] transition-all duration-200"
+                className="group px-8 py-3 bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 font-medium text-sm rounded-full hover:scale-[1.02] transition-[transform,background-color,color] duration-200"
               >
                 <TrackedLink
                   href="/get-started"
@@ -327,7 +327,7 @@ export default function PrismFlywheelClient() {
               <Button
                 asChild
                 variant="ghost"
-                className="text-neutral-900 dark:text-white hover:bg-transparent border-b-2 border-transparent hover:border-neutral-900 dark:hover:border-white rounded-none px-0 py-2 transition-all"
+                className="text-neutral-900 dark:text-white hover:bg-transparent border-b-2 border-transparent hover:border-neutral-900 dark:hover:border-white rounded-none px-0 py-2 transition-[border-color,color,background-color] duration-200"
               >
                 <TrackedLink
                   href="/get-started"
@@ -407,7 +407,7 @@ export default function PrismFlywheelClient() {
                     </p>
                     
                     {/* Subtle hover indicator */}
-                    <div className="h-px bg-neutral-200 dark:bg-neutral-800 transition-all group-hover:bg-neutral-900 dark:group-hover:bg-white" />
+                    <div className="h-px bg-neutral-200 dark:bg-neutral-800 transition-colors duration-200 group-hover:bg-neutral-900 dark:group-hover:bg-white" />
                   </div>
                 </div>
               ))}
@@ -435,7 +435,7 @@ export default function PrismFlywheelClient() {
             <Button
               asChild
               variant="outline"
-              className="border-neutral-900 dark:border-white text-neutral-900 dark:text-white hover:bg-neutral-900 hover:text-white dark:hover:bg-white dark:hover:text-neutral-900 rounded-full px-8 py-3 transition-all"
+              className="border-neutral-900 dark:border-white text-neutral-900 dark:text-white hover:bg-neutral-900 hover:text-white dark:hover:bg-white dark:hover:text-neutral-900 rounded-full px-8 py-3 transition-colors duration-200"
             >
               <TrackedLink
                 href="/get-started"
@@ -750,7 +750,7 @@ export default function PrismFlywheelClient() {
             <div className="pt-4">
               <Button
                 asChild
-                className="bg-white text-neutral-900 hover:bg-neutral-100 font-medium text-sm px-10 py-4 rounded-full transition-all hover:scale-[1.02]"
+                className="bg-white text-neutral-900 hover:bg-neutral-100 font-medium text-sm px-10 py-4 rounded-full transition-[transform,background-color,color] duration-200 hover:scale-[1.02]"
               >
                 <TrackedLink
                   href="/get-started"

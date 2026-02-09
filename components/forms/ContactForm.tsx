@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { useEffect, useState } from "react"
 
@@ -56,7 +57,7 @@ export default function ContactForm() {
 
   return (
     <form
-      className="space-y-5 rounded-3xl border border-slate-200 bg-white p-6 shadow-xl"
+      className="space-y-5 rounded-2xl border border-border/60 bg-card/90 p-6 shadow-xl shadow-black/30"
       action="https://formspree.io/f/xjkjbpdb"
       method="POST"
       noValidate
@@ -66,8 +67,8 @@ export default function ContactForm() {
       <input type="hidden" name="_redirect" value={redirectUrl} />
       <input type="text" name="_gotcha" tabIndex={-1} autoComplete="off" style={{ display: "none" }} aria-hidden="true" />
 
-      <div className="flex flex-col gap-2 text-sm font-medium text-slate-700">
-        <label htmlFor="contact-name">Name (optional)</label>
+      <div className="grid gap-2">
+        <Label htmlFor="contact-name">Name (optional)</Label>
         <Input
           id="contact-name"
           name="name"
@@ -81,8 +82,8 @@ export default function ContactForm() {
         {renderError("name")}
       </div>
 
-      <div className="flex flex-col gap-2 text-sm font-medium text-slate-700">
-        <label htmlFor="contact-email">Your Email</label>
+      <div className="grid gap-2">
+        <Label htmlFor="contact-email">Your Email</Label>
         <Input
           id="contact-email"
           name="email"
@@ -98,8 +99,8 @@ export default function ContactForm() {
         {renderError("email")}
       </div>
 
-      <div className="flex flex-col gap-2 text-sm font-medium text-slate-700">
-        <label htmlFor="contact-message">Your Message</label>
+      <div className="grid gap-2">
+        <Label htmlFor="contact-message">Your Message</Label>
         <Textarea
           id="contact-message"
           name="message"
@@ -117,17 +118,18 @@ export default function ContactForm() {
       <div className="space-y-3 pt-2">
         <Button
           type="submit"
-          className="w-full rounded-2xl bg-slate-900 py-6 text-base font-semibold text-white"
+          variant="inverted"
+          className="w-full rounded-md py-6 text-base font-semibold"
           disabled={isSubmitting}
         >
-          {isSubmitting ? "Sending..." : "Send Message →"}
+          {isSubmitting ? "Sending…" : "Send Message →"}
         </Button>
         {submitError ? (
           <Alert variant="destructive" className="rounded-2xl">
             <AlertDescription>{submitError}</AlertDescription>
           </Alert>
         ) : null}
-        <p className="text-xs text-slate-500">We reply within one business day and never share your details.</p>
+        <p className="text-xs text-muted-foreground">We reply within one business day and never share your details.</p>
       </div>
     </form>
   )

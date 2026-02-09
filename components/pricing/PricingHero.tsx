@@ -16,19 +16,19 @@ export default function PricingHero() {
 
   return (
     <>
-      <section className="border-b border-black/10 bg-white text-black">
+      <section className="border-b border-border/60 bg-transparent text-foreground">
         <div className="mx-auto flex max-w-6xl flex-col gap-8 px-6 py-24 sm:py-32">
           <RevealOnScroll delay={0.1}>
             <div className="space-y-6">
-              <h1 className="text-4xl font-semibold leading-tight tracking-tight sm:text-5xl lg:text-6xl">
+              <h1 className="text-5xl font-semibold leading-tight tracking-tight sm:text-6xl lg:text-7xl">
                 buy back your time. build growth that compounds.
               </h1>
               <div className="space-y-2">
-                <p className="text-lg text-black/70 sm:text-xl">
+                <p className="text-lg text-muted-foreground sm:text-xl">
                   three ways to work with prism: launch (fast site), grow (site + content), scale
                   (site + content + ads).
                 </p>
-                <p className="text-sm text-black/60 sm:text-base">with prism, impossible is temporary.</p>
+                <p className="text-sm text-muted-foreground sm:text-base">with prism, impossible is temporary.</p>
               </div>
             </div>
           </RevealOnScroll>
@@ -37,11 +37,11 @@ export default function PricingHero() {
               <Button
                 asChild
                 size="lg"
-                className="w-full rounded-full border border-black bg-black px-8 py-6 text-base font-semibold text-white hover:bg-black/90 sm:w-auto"
+                className="h-auto w-full rounded-md px-8 py-6 text-sm sm:w-auto"
               >
                 <a href="#plans" className="inline-flex items-center gap-2">
                   <span
-                    className="inline-block h-0 w-0 translate-y-[1px] border-x-[6px] border-b-[8px] border-x-transparent border-b-white"
+                    className="inline-block h-0 w-0 translate-y-[1px] border-x-[6px] border-b-[8px] border-x-transparent border-b-black"
                     aria-hidden
                   />
                   <span>see plans + pricing</span>
@@ -53,7 +53,7 @@ export default function PricingHero() {
             <button
               type="button"
               onClick={() => setIsFullscreen(true)}
-              className="group relative w-full overflow-hidden rounded-3xl border border-black/10 bg-zinc-50 shadow-[10px_10px_0_0_#00000008] outline-hidden transition focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+              className="group relative w-full overflow-hidden rounded-md border border-border/60 bg-card/20 shadow-none outline-hidden transition focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
               aria-label="Open pricing hero image in fullscreen"
             >
               <div className="relative aspect-video w-full">
@@ -85,12 +85,12 @@ export default function PricingHero() {
           >
             <button
               type="button"
-              className="absolute right-3 top-3 z-10 rounded-full border border-white/20 bg-black/60 px-3 py-1 text-sm font-semibold text-white shadow-md transition hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+              className="absolute right-3 top-3 z-10 rounded-md border border-white/20 bg-black/60 px-3 py-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-white font-pixel shadow-md transition hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
               onClick={() => setIsFullscreen(false)}
             >
               Close
             </button>
-            <div className="relative aspect-video w-full overflow-hidden rounded-3xl border border-white/10 bg-black">
+            <div className="relative aspect-video w-full overflow-hidden rounded-md border border-white/10 bg-black">
               <Image
                 src={HERO_IMAGE.src}
                 alt={HERO_IMAGE.alt}

@@ -242,7 +242,7 @@ function MobileFilterButton({
       onMouseLeave={() => setIsPressed(false)}
       className={`
         relative px-4 py-2.5 rounded-full font-medium text-sm whitespace-nowrap
-        transition-all duration-200 overflow-hidden
+        transition-[background-color,color,box-shadow] duration-200 overflow-hidden
         ${isMobile ? 'min-h-[44px] min-w-[44px]' : 'min-h-[36px]'}
         ${isSelected 
           ? 'bg-neutral-900 text-white shadow-lg' 
@@ -338,7 +338,7 @@ export function CompactMobileFilterButtons({
             key={category}
             onClick={() => onCategoryChange(category)}
             className={`
-              px-3 py-2 rounded-full text-xs font-medium transition-all duration-200
+              px-3 py-2 rounded-full text-xs font-medium transition-colors duration-200
               min-h-[40px] min-w-[40px]
               ${selectedCategory === category
                 ? 'bg-neutral-900 text-white shadow-md'

@@ -1,6 +1,7 @@
 "use client"
 
 import { ArrowDownRight } from "lucide-react"
+import { Button } from "@/components/ui/button"
 
 export default function ScrollToTimelineButton() {
   const scrollToTimeline = () => {
@@ -9,12 +10,13 @@ export default function ScrollToTimelineButton() {
   }
 
   return (
-    <button
+    <Button
       type="button"
       onClick={scrollToTimeline}
-      className="inline-flex items-center justify-center rounded-full bg-neutral-900 px-6 py-3 text-sm font-semibold text-white transition hover:bg-neutral-800 lowercase"
+      size="lg"
+      className="rounded-md px-6"
     >
       view timeline <ArrowDownRight className="ml-2 h-4 w-4" aria-hidden />
-    </button>
+    </Button>
   )
 }

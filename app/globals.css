@@ -10,7 +10,30 @@ html {
   margin: 0;
   padding: 0;
   width: 100%;
+  /* Canvas background lives on `html` so the global grid can sit behind content. */
+  background-color: var(--background);
+  color: var(--foreground);
+  /* Ensure native controls (scrollbars, inputs, form controls) render for dark UI. */
+  color-scheme: dark;
   /* Remove height: 100% to fix Safari scrolling */
+}
+
+/* Geist Pixel vibe: a subtle, always-on grid behind the entire site. */
+html::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.18;
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(to right, rgba(255, 255, 255, 0.07) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.07) 1px, transparent 1px),
+    radial-gradient(1200px 700px at 50% -10%, rgba(255, 255, 255, 0.1), transparent 60%);
+  background-size: 16px 16px, 16px 16px, 96px 96px, 96px 96px, auto;
+  background-position: 0 0, 0 0, 0 0, 0 0, center;
 }
 
 body {
@@ -24,9 +47,10 @@ body {
     "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
   /* Add Safari-specific scrolling fixes */
   position: relative;
+  z-index: 1;
+  background: transparent;
   overflow-y: auto;
   -webkit-overflow-scrolling: auto; /* Force native scrolling on Safari */
-  text-transform: lowercase !important;
 }
 
 /* Ensure no safe area padding interferes on mobile */
@@ -46,11 +70,6 @@ body {
 body.is-scrolling .animation-paused,
 body.is-scrolling-fast .animation-paused {
   animation-play-state: paused !important;
-}
-
-.uppercase,
-.capitalize {
-  text-transform: lowercase !important;
 }
 
 /* Navbar icon hover motion */
@@ -108,7 +127,7 @@ body.is-scrolling-fast .animation-paused {
 
 /* Prevent white flash during framer-motion whileInView on mobile */
 .testimonial-container > blockquote {
-  background-color: #fff;
+  background-color: var(--background);
 }
 
 @media (max-width: 768px) {
@@ -855,7 +874,7 @@ input, textarea, select {
     box-shadow: 
       0 1px 3px rgba(0, 0, 0, 0.12),
       0 1px 2px rgba(0, 0, 0, 0.24);
-    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    transition: box-shadow 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   }
 
   .depth-shadow:hover {
@@ -1194,6 +1213,12 @@ input, textarea, select {
 
 @layer base {
   :root {
+    /* Font tokens (wired via `geist` next/font variables on <html> in `app/layout.tsx`) */
+    --font-sans: var(--font-geist-sans, ui-sans-serif);
+    --font-mono: var(--font-geist-mono, ui-monospace);
+    --font-pixel: var(--font-geist-pixel-square, var(--font-sans));
+    --font-pixel-accent: var(--font-geist-pixel-grid, var(--font-pixel));
+
     --background: oklch(1 0 0);
     --foreground: oklch(0.145 0 0);
     --card: oklch(1 0 0);
@@ -1220,7 +1245,7 @@ input, textarea, select {
     --chart-5: oklch(0.424 0.199 265.638);
     --chart-6: var(--chart-4);
     --chart-7: var(--chart-5);
-    --radius: 0.625rem;
+    --radius: 0.5rem;
     --sidebar: oklch(0.985 0 0);
     --sidebar-background: var(--sidebar);
     --sidebar-foreground: oklch(0.145 0 0);
@@ -1234,25 +1259,26 @@ input, textarea, select {
     --prism-case-study-nav-height: 0px;
   }
   .dark {
-    --background: oklch(0.145 0 0);
+    --background: oklch(0.09 0 0);
     --foreground: oklch(0.985 0 0);
-    --card: oklch(0.205 0 0);
+    /* Dark-first tokens tuned for high contrast on small text. */
+    --card: oklch(0.105 0 0);
     --card-foreground: oklch(0.985 0 0);
-    --popover: oklch(0.205 0 0);
+    --popover: oklch(0.105 0 0);
     --popover-foreground: oklch(0.985 0 0);
-    --primary: oklch(0.87 0 0);
-    --primary-foreground: oklch(0.205 0 0);
-    --secondary: oklch(0.269 0 0);
+    --primary: oklch(0.985 0 0);
+    --primary-foreground: oklch(0.09 0 0);
+    --secondary: oklch(0.14 0 0);
     --secondary-foreground: oklch(0.985 0 0);
-    --muted: oklch(0.269 0 0);
-    --muted-foreground: oklch(0.708 0 0);
-    --accent: oklch(0.371 0 0);
+    --muted: oklch(0.14 0 0);
+    --muted-foreground: oklch(0.8 0 0);
+    --accent: oklch(0.16 0 0);
     --accent-foreground: oklch(0.985 0 0);
     --destructive: oklch(0.704 0.191 22.216);
     --destructive-foreground: oklch(0.985 0 0);
-    --border: oklch(1 0 0 / 10%);
-    --input: oklch(1 0 0 / 15%);
-    --ring: oklch(0.556 0 0);
+    --border: oklch(1 0 0 / 14%);
+    --input: oklch(1 0 0 / 18%);
+    --ring: oklch(0.8 0 0);
     --chart-1: oklch(0.809 0.105 251.813);
     --chart-2: oklch(0.623 0.214 259.815);
     --chart-3: oklch(0.546 0.245 262.881);
@@ -1260,21 +1286,268 @@ input, textarea, select {
     --chart-5: oklch(0.424 0.199 265.638);
     --chart-6: var(--chart-4);
     --chart-7: var(--chart-5);
-    --sidebar: oklch(0.205 0 0);
+    --sidebar: oklch(0.12 0 0);
     --sidebar-background: var(--sidebar);
     --sidebar-foreground: oklch(0.985 0 0);
-    --sidebar-primary: oklch(0.488 0.243 264.376);
+    --sidebar-primary: oklch(0.8 0 0);
     --sidebar-primary-foreground: oklch(0.985 0 0);
-    --sidebar-accent: oklch(0.269 0 0);
+    --sidebar-accent: oklch(0.16 0 0);
     --sidebar-accent-foreground: oklch(0.985 0 0);
-    --sidebar-border: oklch(1 0 0 / 10%);
-    --sidebar-ring: oklch(0.556 0 0);
+    --sidebar-border: oklch(1 0 0 / 14%);
+    --sidebar-ring: oklch(0.8 0 0);
   }
   * {
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-transparent text-foreground;
+  }
+
+  /* Make Pixel the default “voice” for headings across the site.
+     Body copy stays Geist Sans via `font-sans` on <body>. */
+	  h1,
+	  h2,
+	  h3,
+	  h4,
+	  h5,
+	  h6 {
+	    font-family: var(--font-pixel);
+	    letter-spacing: 0.08em !important;
+	    /* Prevent lonely words/widows in big Pixel headings. */
+	    text-wrap: balance;
+	  }
+
+  .font-pixel-accent {
+    font-family: var(--font-pixel-accent);
+  }
+
+}
+
+@layer utilities {
+  /* Many legacy pages use Tailwind Typography (`prose prose-neutral` / `prose prose-gray`)
+     without `prose-invert`. Since Prism is dark-first, invert prose globally.
+     NOTE: This must live in `@layer utilities` so it overrides typography variant classes. */
+  .dark .prose {
+    @apply prose-invert;
+    /* Make long-form copy unmistakably readable on black. */
+    color: var(--foreground) !important;
+    --tw-prose-body: var(--foreground);
+    --tw-prose-lead: var(--foreground);
+    --tw-prose-headings: var(--foreground);
+    --tw-prose-links: var(--foreground);
+    --tw-prose-bold: var(--foreground);
+    --tw-prose-counters: var(--muted-foreground);
+    --tw-prose-bullets: var(--muted-foreground);
+    --tw-prose-hr: var(--border);
+    --tw-prose-quotes: var(--foreground);
+    --tw-prose-quote-borders: var(--border);
+    --tw-prose-captions: var(--muted-foreground);
+    --tw-prose-code: var(--foreground);
+    --tw-prose-pre-code: var(--foreground);
+    --tw-prose-pre-bg: var(--muted);
+    --tw-prose-th-borders: var(--border);
+    --tw-prose-td-borders: var(--border);
+  }
+
+  /* Legacy light-mode utility mapping.
+     The site is forced into dark mode (`<html class="dark">`), but a large chunk of the
+     codebase still uses light Tailwind utilities like `bg-white` and `text-neutral-900`.
+     These overrides keep the entire site coherent while we progressively token-ize pages. */
+  .dark .bg-white {
+    background-color: var(--card) !important;
+  }
+
+  .dark .bg-neutral-50,
+  .dark .bg-neutral-100 {
+    background-color: var(--muted) !important;
+  }
+
+  .dark .bg-neutral-200 {
+    background-color: var(--accent) !important;
+  }
+
+	  .dark .border-neutral-100,
+	  .dark .border-neutral-200,
+	  .dark .border-neutral-300 {
+	    border-color: var(--border) !important;
+	  }
+
+	  .dark .text-neutral-950,
+	  .dark .text-neutral-900,
+	  .dark .text-neutral-800,
+	  .dark .text-neutral-700 {
+	    color: var(--foreground) !important;
+	  }
+
+  .dark .text-neutral-600,
+  .dark .text-neutral-500,
+  .dark .text-neutral-400 {
+    color: var(--muted-foreground) !important;
+  }
+
+	  /* Slate shows up on several legacy forms. Keep it consistent with dark tokens. */
+	  .dark .bg-slate-50,
+	  .dark .bg-slate-100 {
+	    background-color: var(--muted) !important;
+	  }
+
+  .dark .bg-slate-200 {
+    background-color: var(--accent) !important;
+  }
+
+  .dark .border-slate-200,
+  .dark .border-slate-300 {
+    border-color: var(--border) !important;
+  }
+
+	  .dark .text-slate-950,
+	  .dark .text-slate-900,
+	  .dark .text-slate-800,
+	  .dark .text-slate-700 {
+	    color: var(--foreground) !important;
+	  }
+
+  .dark .text-slate-600,
+  .dark .text-slate-500,
+  .dark .text-slate-400 {
+    color: var(--muted-foreground) !important;
+  }
+
+	  .dark .text-black {
+	    color: var(--foreground) !important;
+	  }
+
+	  /* Gray shows up on legal pages + a few utilities/components. */
+	  .dark .bg-gray-50,
+	  .dark .bg-gray-100 {
+	    background-color: var(--muted) !important;
+	  }
+
+	  .dark .bg-gray-200 {
+	    background-color: var(--accent) !important;
+	  }
+
+	  .dark .border-gray-100,
+	  .dark .border-gray-200,
+	  .dark .border-gray-300 {
+	    border-color: var(--border) !important;
+	  }
+
+	  .dark .text-gray-950,
+	  .dark .text-gray-900,
+	  .dark .text-gray-800,
+	  .dark .text-gray-700 {
+	    color: var(--foreground) !important;
+	  }
+
+	  .dark .text-gray-600,
+	  .dark .text-gray-500,
+	  .dark .text-gray-400 {
+	    color: var(--muted-foreground) !important;
+	  }
+
+    /* Keep “muted” white text readable. Opacity-based white can dip below AA on dark cards. */
+    .dark .text-white\/40,
+    .dark .text-white\/50,
+    .dark .text-white\/60 {
+      color: oklch(0.82 0 0) !important;
+    }
+
+    .dark .text-white\/70 {
+      color: oklch(0.88 0 0) !important;
+    }
+
+	  /* High-opacity white surfaces are almost always legacy light UI (arrows, chips, panels). */
+	  .dark .bg-white\/95 {
+	    background-color: oklch(0.12 0 0 / 0.95) !important;
+	  }
+
+  .dark .bg-white\/90 {
+    background-color: oklch(0.12 0 0 / 0.9) !important;
+  }
+
+  .dark .bg-white\/80 {
+    background-color: oklch(0.12 0 0 / 0.8) !important;
+  }
+
+  .dark .bg-white\/70 {
+    background-color: oklch(0.12 0 0 / 0.7) !important;
+  }
+
+  /* Common hover variants from the legacy light theme. */
+  .dark .hover\:bg-white:hover {
+    background-color: var(--card) !important;
+  }
+
+	  .dark .hover\:bg-neutral-50:hover {
+	    background-color: var(--muted) !important;
+	  }
+
+	  .dark .hover\:bg-neutral-100:hover {
+	    background-color: var(--accent) !important;
+	  }
+
+	  .dark .hover\:bg-gray-50:hover {
+	    background-color: var(--muted) !important;
+	  }
+
+	  .dark .hover\:bg-gray-100:hover {
+	    background-color: var(--accent) !important;
+	  }
+
+	  .dark .hover\:text-neutral-900:hover,
+	  .dark .hover\:text-black:hover {
+	    color: var(--foreground) !important;
+	  }
+
+  .dark .hover\:text-neutral-700:hover,
+  .dark .hover\:text-neutral-600:hover {
+    color: var(--muted-foreground) !important;
+  }
+
+  .dark .hover\:border-neutral-900:hover,
+  .dark .hover\:border-neutral-400:hover,
+  .dark .hover\:border-neutral-300:hover {
+    border-color: var(--border) !important;
+  }
+
+  /* Neutralize legacy light gradients (used in older hero sections + carousels). */
+  .dark .from-white,
+  .dark .from-neutral-50,
+  .dark .from-neutral-100,
+  .dark .from-slate-50,
+  .dark .from-slate-100 {
+    --tw-gradient-from: var(--background) var(--tw-gradient-from-position) !important;
+    --tw-gradient-to: oklch(0.09 0 0 / 0) var(--tw-gradient-to-position) !important;
+    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important;
+  }
+
+  .dark .via-white {
+    --tw-gradient-to: oklch(0.09 0 0 / 0) var(--tw-gradient-to-position) !important;
+    --tw-gradient-stops: var(--tw-gradient-from), var(--card) var(--tw-gradient-via-position), var(--tw-gradient-to) !important;
+  }
+
+  .dark .via-white\/80 {
+    --tw-gradient-to: oklch(0.09 0 0 / 0) var(--tw-gradient-to-position) !important;
+    --tw-gradient-stops: var(--tw-gradient-from), oklch(0.09 0 0 / 0.8) var(--tw-gradient-via-position), var(--tw-gradient-to) !important;
+  }
+
+  .dark .via-white\/70 {
+    --tw-gradient-to: oklch(0.09 0 0 / 0) var(--tw-gradient-to-position) !important;
+    --tw-gradient-stops: var(--tw-gradient-from), oklch(0.09 0 0 / 0.7) var(--tw-gradient-via-position), var(--tw-gradient-to) !important;
+  }
+
+  .dark .via-white\/60 {
+    --tw-gradient-to: oklch(0.09 0 0 / 0) var(--tw-gradient-to-position) !important;
+    --tw-gradient-stops: var(--tw-gradient-from), oklch(0.09 0 0 / 0.6) var(--tw-gradient-via-position), var(--tw-gradient-to) !important;
+  }
+
+  .dark .to-white,
+  .dark .to-neutral-50,
+  .dark .to-neutral-100,
+  .dark .to-slate-50,
+  .dark .to-slate-100 {
+    --tw-gradient-to: var(--background) var(--tw-gradient-to-position) !important;
   }
 }
 
@@ -1283,7 +1556,7 @@ input, textarea, select {
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-transparent text-foreground;
   }
 
   [data-section],
@@ -1582,8 +1855,8 @@ input, textarea, select {
   /* Minimalistic typography - pure and clean */
   font-size: 16px;
   line-height: 1.6;
-  color: #000;
-  font-family: system-ui, -apple-system, sans-serif;
+  color: var(--muted-foreground);
+  font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
 }
 
 .prose-minimal h1,
@@ -1593,7 +1866,7 @@ input, textarea, select {
 .prose-minimal h5,
 .prose-minimal h6 {
   font-weight: 600;
-  color: #000;
+  color: var(--foreground);
   margin-top: 2rem;
   margin-bottom: 1rem;
   line-height: 1.3;
@@ -1620,7 +1893,7 @@ input, textarea, select {
 .prose-minimal p {
   margin-bottom: 1.5rem;
   line-height: 1.6;
-  color: #000;
+  color: var(--muted-foreground);
   max-width: 65ch;
 }
 
@@ -1633,29 +1906,31 @@ input, textarea, select {
 .prose-minimal li {
   margin-bottom: 0.5rem;
   line-height: 1.6;
-  color: #000;
+  color: var(--muted-foreground);
 }
 
 .prose-minimal blockquote {
-  border-left: 2px solid #e5e5e5;
+  border-left: 2px solid var(--border);
   padding-left: 1rem;
   margin: 1.5rem 0;
   font-style: italic;
-  color: #666;
+  color: var(--muted-foreground);
 }
 
 .prose-minimal a {
-  color: #0066cc;
+  color: var(--foreground);
   text-decoration: underline;
+  text-decoration-color: var(--border);
   text-underline-offset: 2px;
 }
 
 .prose-minimal a:hover {
-  color: #0052a3;
+  text-decoration-color: var(--foreground);
 }
 
 .prose-minimal code {
-  background: #f5f5f5;
+  background: var(--muted);
+  color: var(--foreground);
   padding: 0.125rem 0.25rem;
   border-radius: 0.25rem;
   font-size: 0.875rem;
@@ -1663,7 +1938,7 @@ input, textarea, select {
 }
 
 .prose-minimal pre {
-  background: #f5f5f5;
+  background: var(--muted);
   padding: 1rem;
   border-radius: 0.5rem;
   overflow-x: auto;
@@ -1679,37 +1954,38 @@ input, textarea, select {
 
 /* Minimal component styling */
 .minimal-card {
-  background: white;
-  border: 1px solid #e5e5e5;
+  background: var(--card);
+  border: 1px solid var(--border);
+  color: var(--foreground);
   border-radius: 0.5rem;
   padding: 1.5rem;
   margin: 1.5rem 0;
 }
 
 .minimal-button {
-  background: #000;
-  color: white;
+  background: var(--foreground);
+  color: var(--background);
   border: none;
   padding: 0.75rem 1.5rem;
   border-radius: 0.25rem;
   font-size: 0.875rem;
   font-weight: 500;
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  transition: opacity 0.2s ease, background-color 0.2s ease;
 }
 
 .minimal-button:hover {
-  background: #333;
+  opacity: 0.9;
 }
 
 .minimal-button.secondary {
-  background: white;
-  color: #000;
-  border: 1px solid #e5e5e5;
+  background: transparent;
+  color: var(--foreground);
+  border: 1px solid var(--border);
 }
 
 .minimal-button.secondary:hover {
-  background: #f5f5f5;
+  background: var(--muted);
 }
 
 /* Mobile Blog Typography System */
@@ -1720,7 +1996,7 @@ input, textarea, select {
   /* Base mobile typography - optimized for small screens */
   font-size: 16px; /* Base 16px for mobile readability */
   line-height: 1.6;
-  color: #000; /* Pure black for AMOLED efficiency */
+  color: var(--muted-foreground);
 }
 
 .prose-mobile h1,
@@ -1737,7 +2013,7 @@ input, textarea, select {
 .mobile-blog-content h6 {
   @apply font-bold tracking-tight mb-4 mt-8;
   line-height: 1.3;
-  color: #000;
+  color: var(--foreground);
 }
 
 .prose-mobile h1,
@@ -1766,7 +2042,7 @@ input, textarea, select {
   @apply mb-6;
   line-height: 1.6;
   max-width: 60ch; /* Optimal reading line length */
-  color: #000;
+  color: var(--muted-foreground);
 }
 
 .prose-mobile ul,
@@ -1780,33 +2056,40 @@ input, textarea, select {
 .prose-mobile li,
 .mobile-blog-content li {
   line-height: 1.6;
-  color: #000;
+  color: var(--muted-foreground);
 }
 
 .prose-mobile blockquote,
 .mobile-blog-content blockquote {
-  @apply border-l-4 border-neutral-300 pl-4 py-2 my-6 italic;
-  background: #f8f9fa;
+  @apply border-l-4 border-border pl-4 py-2 my-6 italic;
+  background: var(--muted);
   border-radius: 0 8px 8px 0;
+  color: var(--muted-foreground);
 }
 
 .prose-mobile a,
 .mobile-blog-content a {
-  @apply text-blue-600 underline underline-offset-2;
+  @apply text-foreground underline underline-offset-2;
+  text-decoration-color: var(--border);
   min-height: 44px; /* Touch-friendly links */
   display: inline-block;
   padding: 2px 0;
 }
 
+.prose-mobile a:hover,
+.mobile-blog-content a:hover {
+  text-decoration-color: var(--foreground);
+}
+
 .prose-mobile code,
 .mobile-blog-content code {
-  @apply bg-neutral-100 px-2 py-1 rounded text-sm font-mono;
-  color: #000;
+  @apply bg-muted px-2 py-1 rounded text-sm font-mono;
+  color: var(--foreground);
 }
 
 .prose-mobile pre,
 .mobile-blog-content pre {
-  @apply bg-neutral-100 rounded-lg p-4 overflow-x-auto my-6;
+  @apply bg-muted rounded-lg p-4 overflow-x-auto my-6;
   font-size: 14px;
 }
 
@@ -1840,7 +2123,7 @@ input, textarea, select {
 .mobile-card {
   @apply bg-white rounded-lg p-4 shadow-sm border border-neutral-200;
   min-height: 44px; /* Minimum touch target */
-  transition: all 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .mobile-card:active {
@@ -1851,7 +2134,7 @@ input, textarea, select {
   @apply px-4 py-3 rounded-lg font-medium text-center;
   min-height: 44px;
   min-width: 44px;
-  transition: all 0.2s ease;
+  transition: transform 0.2s ease, background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .mobile-button:active {
@@ -1968,7 +2251,7 @@ input, textarea, select {
     border-radius: 1.5rem;
     font-size: 0.875rem;
     font-weight: 500;
-    transition: all 0.2s ease;
+    transition: transform 0.2s ease, background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
     scroll-snap-align: start;
   }
   
@@ -2022,7 +2305,7 @@ input, textarea, select {
     border-radius: 1.5rem;
     font-size: 0.875rem;
     font-weight: 600;
-    transition: all 0.2s ease;
+    transition: transform 0.2s ease, background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
   }
   
   .mobile-cta-button:active {
@@ -2401,13 +2684,20 @@ input, textarea, select {
 
 /* Premium form styles */
 .luxury-textarea {
-  transition: all 0.3s ease;
-  border: 1px solid #e5e5e5;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+  border: 1px solid var(--border);
+  background-color: var(--card);
+  color: var(--foreground);
 }
 
-.luxury-textarea:focus {
-  border-color: #000;
-  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.05);
+.luxury-textarea::placeholder {
+  color: var(--muted-foreground);
+  opacity: 0.75;
+}
+
+.luxury-textarea:focus-visible {
+  border-color: var(--ring);
+  box-shadow: 0 0 0 3px oklch(1 0 0 / 0.12);
 }
 
 /* Countdown timer styles */
@@ -2418,15 +2708,18 @@ input, textarea, select {
 
 /* Share button styles */
 .share-button-premium {
-  background: linear-gradient(135deg, #f5f5f5 0%, #e5e5e5 100%);
-  transition: all 0.3s ease;
+  background: linear-gradient(135deg, var(--card) 0%, var(--muted) 100%);
+  border: 1px solid var(--border);
+  color: var(--foreground);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
 .share-button-premium:hover {
-  background: linear-gradient(135deg, #000 0%, #333 100%);
-  color: white;
+  background: var(--foreground);
+  border-color: var(--foreground);
+  color: var(--background);
   transform: translateY(-2px);
-  box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 12px 24px -10px rgba(0, 0, 0, 0.6);
 }
 
 /* Responsive CTA Button Utilities */

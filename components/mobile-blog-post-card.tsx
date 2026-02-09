@@ -59,7 +59,7 @@ export default function MobileBlogPostCard({
         block focus:outline-hidden focus:ring-2 focus:ring-neutral-500 focus:ring-offset-2 rounded-lg
         mobile-blog-card animate-in
         relative border border-neutral-200 rounded-xl overflow-hidden h-full
-        bg-white shadow-sm hover:shadow-md transition-all duration-200
+        bg-white shadow-sm hover:shadow-md transition-[transform,box-shadow] duration-200
         ${isMobile ? 'min-h-[280px] active:scale-[0.98]' : 'hover:scale-[1.02] hover:-translate-y-1'}
       `}
     >
@@ -207,7 +207,7 @@ export function CompactMobileBlogPostCard({
       className="block focus:outline-hidden focus:ring-2 focus:ring-neutral-500 focus:ring-offset-2 rounded-lg"
     >
       <motion.div
-        className="relative border border-neutral-200 rounded-xl overflow-hidden bg-white shadow-sm hover:shadow-md transition-all duration-200 min-h-[120px] active:scale-[0.98]"
+        className="relative border border-neutral-200 rounded-xl overflow-hidden bg-white shadow-sm hover:shadow-md transition-[transform,box-shadow] duration-200 min-h-[120px] active:scale-[0.98]"
         initial={reducedMotion ? {} : { opacity: 0, y: 20 }}
         animate={reducedMotion ? {} : { opacity: 1, y: 0 }}
         transition={{ duration: 0.4, ease: "easeOut" }}

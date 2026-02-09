@@ -51,14 +51,18 @@ export default function BlogFilterNavigationServer({
   return (
     <div
       className={cn(
-        "sticky top-[var(--prism-header-height,0px)] z-40 border-b border-neutral-200 bg-white/95 backdrop-blur-sm",
+        "sticky top-[var(--prism-header-height,0px)] z-40 border-b border-border/60 bg-background/80 backdrop-blur-md supports-[backdrop-filter]:bg-background/60",
         className,
       )}
     >
       <div className="container mx-auto px-4 py-3 md:py-4">
         <div className="space-y-3">
           <form action="/blog" method="get" className="relative max-w-2xl">
-            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-neutral-500" />
+            <Search
+              className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground"
+              aria-hidden="true"
+              focusable="false"
+            />
             {normalizedSelected !== "all" ? (
               <input type="hidden" name="category" value={normalizedSelected} />
             ) : null}
@@ -66,8 +70,10 @@ export default function BlogFilterNavigationServer({
               type="search"
               name="q"
               defaultValue={normalizedQuery}
-              placeholder="Search posts..."
-              className="h-auto w-full rounded-full border-0 bg-neutral-100 py-2.5 pl-10 pr-10 text-sm transition-all duration-200 focus:bg-white focus-visible:ring-neutral-900"
+              placeholder="Search posts…"
+              aria-label="Search posts"
+              autoComplete="off"
+              className="h-auto w-full rounded-md border border-border/60 bg-card/30 py-2.5 pl-10 pr-10 text-sm transition-colors duration-200 focus:bg-card focus-visible:ring-ring"
             />
             <button type="submit" className="sr-only">
               Search
@@ -78,11 +84,11 @@ export default function BlogFilterNavigationServer({
                 type="button"
                 variant="ghost"
                 size="icon"
-                className="absolute right-2 top-1/2 h-7 w-7 -translate-y-1/2 rounded-full hover:bg-neutral-200"
+                className="absolute right-2 top-1/2 h-7 w-7 -translate-y-1/2 rounded-md hover:bg-muted/60"
                 aria-label="Clear search"
               >
                 <Link href={buildBlogUrl({ category: normalizedSelected, query: "" })} prefetch={false}>
-                  <X className="h-3 w-3 text-neutral-500" />
+                  <X className="h-3 w-3 text-muted-foreground" aria-hidden="true" focusable="false" />
                 </Link>
               </Button>
             ) : null}
@@ -100,12 +106,12 @@ export default function BlogFilterNavigationServer({
                     href={buildBlogUrl({ category: slug, query: normalizedQuery })}
                     prefetch={false}
                     className={cn(
-                      "shrink-0 rounded-full bg-neutral-100 px-4 py-2 text-sm font-medium lowercase text-neutral-700 transition-all duration-200 hover:bg-neutral-200 hover:text-neutral-900",
-                      isActive && "bg-neutral-900 text-white hover:bg-neutral-900 hover:text-white",
+                      "shrink-0 rounded-md border border-border/60 bg-muted/40 px-4 py-2 text-[10px] font-semibold uppercase font-pixel tracking-[0.16em] text-muted-foreground transition-colors duration-200 hover:bg-muted/60 hover:text-foreground",
+                      isActive && "border-primary bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground",
                     )}
                     aria-current={isActive ? "true" : undefined}
                   >
-                    {category.label.toLowerCase()}
+                    {category.label}
                   </Link>
                 )
               })}
@@ -116,4 +122,3 @@ export default function BlogFilterNavigationServer({
     </div>
   )
 }
-

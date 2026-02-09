@@ -6,6 +6,7 @@ import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
 import RevealOnScroll from "@/components/reveal-on-scroll"
 import { Button } from "@/components/ui/button"
+import PixelishIcon from "@/components/pixelish/PixelishIcon"
 
 export const metadata: Metadata = {
   title: "Analysis received | prism",
@@ -29,8 +30,8 @@ export default function AnalysisThankYouPage() {
             <RevealOnScroll>
               <div className="rounded-3xl border border-black/10 bg-white p-8 shadow-sm">
                 <div className="flex flex-col items-center gap-4 text-center">
-                  <span className="text-4xl" aria-hidden>
-                    📬
+                  <span className="flex justify-center" aria-hidden="true">
+                    <PixelishIcon src="/pixelish/mail.svg" alt="" size={36} invert={false} aria-hidden="true" />
                   </span>
                   <div className="space-y-3">
                     <p className="text-sm font-semibold uppercase tracking-[0.3em] text-slate-500">analysis submitted</p>

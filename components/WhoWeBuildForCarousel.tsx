@@ -1,8 +1,10 @@
 'use client';
+import PixelishImg from "@/components/pixelish/PixelishImg";
 import { useRevealAnimation } from '@/hooks/use-reveal-animation';
 import { trackNavigation } from '@/utils/analytics';
 import { useEffect, useState } from 'react';
 import { shuffleArray } from '@/utils/shuffle';
+import { pixelishForEmoji } from "@/lib/pixelish-emoji";
 
 const originalItems = [
   { emoji: '🪥', label: 'cosmetic dentist' },
@@ -43,20 +45,28 @@ export default function WhoWeBuildForCarousel() {
           aria-label="Industries we serve"
         >
           {items.map(({ emoji, label }) => (
-            <div
+            <button
               key={label}
-              className="group shrink-0 snap-start flex flex-col items-center gap-2 bg-neutral-50 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-xl px-6 py-5 transition-all duration-200 hover:bg-neutral-100 dark:hover:bg-neutral-700 hover:border-neutral-300 dark:hover:border-neutral-600 hover:shadow-sm cursor-pointer touch-feedback hardware-hover"
+              type="button"
+              className="group shrink-0 snap-start flex flex-col items-center gap-2 bg-neutral-50 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-xl px-6 py-5 transition-[background-color,border-color,box-shadow] duration-200 hover:bg-neutral-100 dark:hover:bg-neutral-700 hover:border-neutral-300 dark:hover:border-neutral-600 hover:shadow-sm cursor-pointer touch-feedback hardware-hover"
               role="listitem"
               aria-label={label}
               onClick={() => trackNavigation(`Industry clicked: ${label}`, 'who-we-build-for-carousel')}
             >
-              <span aria-hidden="true" className="text-3xl md:text-4xl transition-transform duration-200 group-hover:scale-110">
-                {emoji}
+              <span aria-hidden="true" className="transition-transform duration-200 group-hover:scale-110">
+                <PixelishImg
+                  src={pixelishForEmoji(emoji).src}
+                  alt=""
+                  size={44}
+                  invert={false}
+                  className="dark:invert"
+                  aria-hidden="true"
+                />
               </span>
               <span className="text-sm text-neutral-600 dark:text-neutral-300 group-hover:text-neutral-900 dark:group-hover:text-neutral-100 lowercase whitespace-nowrap">
                 {label}
               </span>
-            </div>
+            </button>
           ))}
         </div>
       </div>

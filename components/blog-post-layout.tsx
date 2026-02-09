@@ -85,7 +85,7 @@ export default function BlogPostLayout({
   const hasToc = toc.length > 0
 
   return (
-    <div className="flex min-h-screen flex-col bg-white">
+    <div className="flex min-h-screen flex-col bg-background text-foreground">
       <BlogScrollProgress />
 
       <Navbar />
@@ -112,24 +112,24 @@ export default function BlogPostLayout({
                       showHeroImage={showHeroImage}
                       slug={slug}
                     />
-                    <div className="flex flex-wrap items-center gap-3 mb-3 text-sm text-neutral-500">
-                      <span className="inline-block px-3 py-1 bg-neutral-100 rounded-full text-xs lowercase text-neutral-700">
+                    <div className="flex flex-wrap items-center gap-3 mb-3 text-sm text-muted-foreground">
+                      <span className="inline-block rounded-md border border-border/60 bg-muted/30 px-3 py-1 text-[10px] font-semibold uppercase font-pixel tracking-[0.16em] text-foreground/90">
                         {category}
                       </span>
                       <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
                         <time className="lowercase" dateTime={new Date(date).toISOString()}>
                           {new Intl.DateTimeFormat(undefined, { year: 'numeric', month: 'short', day: 'numeric' }).format(new Date(date))}
                         </time>
-                        <span className="text-neutral-300" aria-hidden>
+                        <span className="text-border/70" aria-hidden>
                           &middot;
                         </span>
-                        <span className="font-medium text-neutral-700 normal-case">By {author}</span>
+                        <span className="font-medium text-foreground/80 normal-case">By {author}</span>
                       </div>
                     </div>
-                    <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight lowercase leading-tight text-balance">
+                    <h1 className="text-4xl font-semibold leading-tight text-balance sm:text-5xl lg:text-6xl">
                       {h1Title || title}
                     </h1>
-                    <p className="text-neutral-600 mt-3">
+                    <p className="mt-3 text-muted-foreground">
                       {description}
                     </p>
                     <div className="mt-5 flex flex-wrap items-center justify-start gap-3">
@@ -164,11 +164,11 @@ export default function BlogPostLayout({
                 )}
 
                 {relatedPosts.length > 0 && (
-                  <section className="mt-16 border border-neutral-100 rounded-2xl p-6 sm:p-8">
+                  <section className="mt-16 rounded-2xl border border-border/60 bg-card/40 p-6 sm:p-8">
                     <div className="flex flex-col gap-2 mb-6">
-                      <p className="text-xs font-semibold uppercase tracking-[0.35em] text-neutral-500">keep learning</p>
+                      <p className="text-xs font-semibold uppercase tracking-[0.35em] text-muted-foreground font-pixel">keep learning</p>
                       <h2 className="text-2xl font-bold tracking-tight lowercase">related posts</h2>
-                      <p className="text-sm text-neutral-600 lowercase">
+                      <p className="text-sm text-muted-foreground lowercase">
                         more experiments and playbooks from the prism team.
                       </p>
                     </div>
@@ -213,7 +213,7 @@ export default function BlogPostLayout({
                     })()}
                     analyticsLabel={`blog_post_${slug}`}
                     variant="gradient"
-                    className="border-t border-neutral-100"
+                    className="border-t border-border/60"
                   />
                 </div>
               </article>

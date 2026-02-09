@@ -2,6 +2,7 @@ import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
 import TrackedAnchor from "@/components/tracked-anchor"
 import TrackedLink from "@/components/tracked-link"
+import PixelishIcon from "@/components/pixelish/PixelishIcon"
 import { Button } from "@/components/ui/button"
 import { Briefcase, Clock, Mail, MapPin } from "lucide-react"
 import { JobPostingSchema } from "@/components/schema-markup"
@@ -72,7 +73,9 @@ export default function ReplitBuilderPage() {
           <div className="container mx-auto px-4 md:px-6">
             <div className="flex flex-col items-center space-y-6 text-center">
               <div className="space-y-3">
-                <div className="text-4xl">⚡️</div>
+                <div className="flex justify-center" aria-hidden="true">
+                  <PixelishIcon src="/pixelish/arrow-refresh.svg" alt="" size={40} invert={false} aria-hidden="true" />
+                </div>
                 <h1 className="text-4xl font-bold tracking-tighter lowercase sm:text-5xl md:text-6xl">
                   contract replit builder
                 </h1>
@@ -181,8 +184,12 @@ export default function ReplitBuilderPage() {
             <div className="bg-gradient-to-br from-neutral-900 to-neutral-800 rounded-2xl p-8 md:p-12 text-center text-white relative overflow-hidden">
               {/* Background decoration */}
               <div className="absolute inset-0 bg-gradient-to-br from-neutral-900/50 to-transparent"></div>
-              <div className="absolute top-4 right-4 text-6xl opacity-10">✨</div>
-              <div className="absolute bottom-4 left-4 text-4xl opacity-10">⚡️</div>
+              <div className="absolute top-4 right-4 opacity-10" aria-hidden="true">
+                <PixelishIcon src="/pixelish/award-plus.svg" alt="" size={72} aria-hidden="true" />
+              </div>
+              <div className="absolute bottom-4 left-4 opacity-10" aria-hidden="true">
+                <PixelishIcon src="/pixelish/arrow-refresh.svg" alt="" size={52} aria-hidden="true" />
+              </div>
 
               <div className="relative z-10">
                 <h2 className="text-3xl font-bold tracking-tighter lowercase sm:text-4xl mb-4">
@@ -213,9 +220,9 @@ export default function ReplitBuilderPage() {
                   >
                     <Button
                       size="lg"
-                      className="bg-white text-neutral-900 hover:bg-neutral-100 rounded-full px-8 py-4 text-sm font-medium lowercase transition-all duration-200 hover:scale-105 shadow-lg"
+                      className="bg-white text-neutral-900 hover:bg-neutral-100 rounded-full px-8 py-4 text-sm font-medium lowercase transition-[transform,background-color,color,box-shadow] duration-200 hover:scale-105 shadow-lg"
                     >
-                      <Mail className="mr-2 h-4 w-4" />
+                      <Mail className="mr-2 h-4 w-4" aria-hidden="true" focusable="false" />
                       apply now
                     </Button>
                   </TrackedAnchor>

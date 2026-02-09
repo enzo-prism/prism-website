@@ -5,6 +5,9 @@ import type React from "react"
 import Link from "next/link"
 import { useCallback, useEffect, useRef, useState } from "react"
 
+import PixelishImg from "@/components/pixelish/PixelishImg"
+import { pixelishForEmoji } from "@/lib/pixelish-emoji"
+
 // Import the tracking function at the top of the file
 import { trackServiceCardClick } from "@/utils/analytics"
 
@@ -170,10 +173,18 @@ export default function MobileServicesTiles() {
             <div key={index} className="w-full shrink-0 px-4">
               <Link
                 href={service.href}
-                className="block rounded-lg bg-white p-6 shadow-sm transition-all hover:shadow-md"
+                className="block rounded-lg bg-white p-6 shadow-sm transition-shadow hover:shadow-md"
                 onClick={() => trackServiceCardClick(service.title, service.href)}
               >
-                <div className="mb-4 text-3xl">{service.emoji}</div>
+                <div className="mb-4 flex">
+                  <PixelishImg
+                    src={pixelishForEmoji(service.emoji).src}
+                    alt=""
+                    size={40}
+                    invert={false}
+                    aria-hidden="true"
+                  />
+                </div>
                 <h3 className="mb-2 text-xl font-bold lowercase group-hover:underline">{service.title}</h3>
                 <p className="text-neutral-600 lowercase">{service.description}</p>
               </Link>
@@ -188,7 +199,7 @@ export default function MobileServicesTiles() {
           <button
             key={index}
             onClick={() => goToSlide(index)}
-            className={`h-2 w-2 rounded-full transition-all ${
+            className={`h-2 w-2 rounded-full transition-[background-color,width] duration-200 ${
               index === currentIndex ? "bg-neutral-800 w-4" : "bg-neutral-400"
             }`}
             aria-label={`Go to service ${index + 1}`}
@@ -199,7 +210,7 @@ export default function MobileServicesTiles() {
       {/* Progress indicator (at bottom) */}
       <div className="absolute bottom-0 left-0 w-full h-1 bg-neutral-200 overflow-hidden">
         <div
-          className="h-full bg-neutral-800 transition-all duration-50 ease-linear"
+          className="h-full bg-neutral-800 transition-[width] duration-50 ease-linear"
           style={{ width: `${progress}%` }}
         ></div>
       </div>

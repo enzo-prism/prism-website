@@ -35,27 +35,26 @@ export default function SeoTextSection({
       className={cn(
         "px-4",
         paddingClasses[variant],
-        showDivider && "border-t border-neutral-100",
-        "bg-white",
+        showDivider && "border-t border-border/60",
+        "bg-transparent",
         className
       )}
       {...rest}
     >
       <div className={cn("mx-auto", containerClasses[variant])}>
-        <h2 className="text-xl sm:text-2xl font-semibold text-neutral-900 mb-4 lowercase">
+        <h2 className="mb-4 text-lg font-semibold text-foreground sm:text-xl">
           {title}
         </h2>
         {subtitle && (
-          <p className="text-base sm:text-lg text-neutral-600 mb-6 leading-relaxed">
+          <p className="mb-6 text-base leading-relaxed text-muted-foreground sm:text-lg">
             {subtitle}
           </p>
         )}
-        <div className="prose prose-neutral max-w-none text-neutral-700 prose-p:text-base prose-p:leading-relaxed prose-p:mb-4 prose-h3:text-lg prose-h3:font-semibold prose-h3:text-neutral-800 prose-h3:mb-3 prose-ul:my-4 prose-li:text-base">
+        <div className="prose prose-invert max-w-none prose-p:text-base prose-p:leading-relaxed prose-p:mb-4 prose-p:text-muted-foreground prose-li:text-muted-foreground prose-a:text-foreground prose-a:underline prose-a:decoration-border/60 prose-a:underline-offset-4 hover:prose-a:decoration-border prose-strong:text-foreground">
           {children}
         </div>
       </div>
     </section>
   )
 }
-
 

@@ -2,6 +2,7 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import CoreImage from "@/components/core-image"
+import PixelishIcon from "@/components/pixelish/PixelishIcon"
 import GradientCard from "@/components/gradient-card"
 import { ArrowRight } from "lucide-react"
 
@@ -19,7 +20,7 @@ interface Offer {
 const offersData: Offer[] = [
   {
     id: "ai-seo-boost",
-    title: "🤖 ai seo boost™",
+    title: "ai seo boost™",
     description:
       "make chatgpt, gemini & perplexity name-drop your brand first. get recommended by ai bots 24/7 with our specialized ai search optimization.",
     gradientType: "ai-seo",
@@ -28,7 +29,7 @@ const offersData: Offer[] = [
   },
   {
     id: "summer-website-makeover",
-    title: "☀️ summer website makeover",
+    title: "summer website makeover",
     description:
       "triple your traffic & conversions in 30 days with our all-inclusive website rebuild package. full-stack site, seo, conversion boosters, and a 30-day 3x guarantee!",
     gradientType: "website-makeover",
@@ -42,8 +43,8 @@ export default function OffersClientPage() {
     <div className="bg-background text-foreground">
       {/* Updated Hero Section */}
       <section className="container mx-auto px-4 pt-12 pb-8 md:pt-20 md:pb-12 text-center">
-        <div className="text-5xl sm:text-6xl md:text-7xl mb-4" role="img" aria-label="Gift emoji">
-          🎁
+        <div className="mb-5 flex items-center justify-center">
+          <PixelishIcon src="/pixelish/award-plus.svg" alt="" size={96} aria-hidden className="opacity-95" />
         </div>
         <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight">current offers</h1>
         <p className="mt-3 sm:mt-4 text-md sm:text-lg text-muted-foreground max-w-xl md:max-w-2xl mx-auto">
@@ -63,7 +64,7 @@ export default function OffersClientPage() {
             {offersData.map((offer) => (
               <Card
                 key={offer.id}
-                className="flex flex-col overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 w-full"
+                className="flex flex-col overflow-hidden border-border/70 bg-card/40 shadow-none transition-colors duration-300 hover:border-border w-full"
               >
                 <CardHeader className="p-0">
                   <div className="aspect-[16/9] w-full">

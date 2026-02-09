@@ -68,7 +68,24 @@ export default function PrismAIClient() {
     }
 
     setErrors(newErrors)
-    return Object.keys(newErrors).length === 0
+
+    const errorKeys = Object.keys(newErrors)
+    if (errorKeys.length > 0) {
+      const firstFieldName = errorKeys[0]
+      const field = formRef.current?.querySelector<HTMLInputElement | HTMLTextAreaElement>(
+        `[name="${firstFieldName}"]`
+      )
+
+      if (field) {
+        field.focus()
+        field.scrollIntoView({
+          block: "center",
+          behavior: prefersReducedMotion.current ? "auto" : "smooth",
+        })
+      }
+    }
+
+    return errorKeys.length === 0
   }
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -223,12 +240,13 @@ export default function PrismAIClient() {
                     value={formData.websiteName}
                     onChange={handleInputChange}
                     className={`${styles["prism-ai-input"]} ${errors.websiteName ? styles["prism-ai-input-error"] : ""}`}
-                    placeholder="e.g., Acme Corporation"
+                    placeholder="e.g., Acme Corporation…"
+                    autoComplete="off"
                     aria-invalid={!!errors.websiteName}
                     aria-describedby={errors.websiteName ? "websiteName-error" : undefined}
                   />
                   {errors.websiteName && (
-                    <span id="websiteName-error" className={styles["prism-ai-error"]}>
+                    <span id="websiteName-error" className={styles["prism-ai-error"]} aria-live="polite">
                       {errors.websiteName}
                     </span>
                   )}
@@ -245,12 +263,13 @@ export default function PrismAIClient() {
                     value={formData.websiteGoal}
                     onChange={handleInputChange}
                     className={`${styles["prism-ai-input"]} ${errors.websiteGoal ? styles["prism-ai-input-error"] : ""}`}
-                    placeholder="e.g., Showcase our services and generate leads"
+                    placeholder="e.g., Showcase our services and generate leads…"
+                    autoComplete="off"
                     aria-invalid={!!errors.websiteGoal}
                     aria-describedby={errors.websiteGoal ? "websiteGoal-error" : undefined}
                   />
                   {errors.websiteGoal && (
-                    <span id="websiteGoal-error" className={styles["prism-ai-error"]}>
+                    <span id="websiteGoal-error" className={styles["prism-ai-error"]} aria-live="polite">
                       {errors.websiteGoal}
                     </span>
                   )}
@@ -281,7 +300,8 @@ export default function PrismAIClient() {
                     value={formData.styleReferences}
                     onChange={handleInputChange}
                     className={styles["prism-ai-input"]}
-                    placeholder="e.g., https://example.com, modern, minimal"
+                    placeholder="e.g., https://example.com, modern, minimal…"
+                    autoComplete="off"
                   />
                 </div>
 
@@ -298,11 +318,13 @@ export default function PrismAIClient() {
                     min="1"
                     max="50"
                     className={`${styles["prism-ai-input"]} ${errors.numberOfPages ? styles["prism-ai-input-error"] : ""}`}
+                    autoComplete="off"
+                    inputMode="numeric"
                     aria-invalid={!!errors.numberOfPages}
                     aria-describedby={errors.numberOfPages ? "numberOfPages-error" : undefined}
                   />
                   {errors.numberOfPages && (
-                    <span id="numberOfPages-error" className={styles["prism-ai-error"]}>
+                    <span id="numberOfPages-error" className={styles["prism-ai-error"]} aria-live="polite">
                       {errors.numberOfPages}
                     </span>
                   )}
@@ -342,12 +364,13 @@ export default function PrismAIClient() {
                     value={formData.companyName}
                     onChange={handleInputChange}
                     className={`${styles["prism-ai-input"]} ${errors.companyName ? styles["prism-ai-input-error"] : ""}`}
-                    placeholder="Your company name"
+                    placeholder="e.g., Acme Dental…"
+                    autoComplete="organization"
                     aria-invalid={!!errors.companyName}
                     aria-describedby={errors.companyName ? "companyName-error" : undefined}
                   />
                   {errors.companyName && (
-                    <span id="companyName-error" className={styles["prism-ai-error"]}>
+                    <span id="companyName-error" className={styles["prism-ai-error"]} aria-live="polite">
                       {errors.companyName}
                     </span>
                   )}
@@ -364,12 +387,14 @@ export default function PrismAIClient() {
                     value={formData.email}
                     onChange={handleInputChange}
                     className={`${styles["prism-ai-input"]} ${errors.email ? styles["prism-ai-input-error"] : ""}`}
-                    placeholder="you@company.com"
+                    placeholder="you@company.com…"
+                    autoComplete="email"
+                    spellCheck={false}
                     aria-invalid={!!errors.email}
                     aria-describedby={errors.email ? "email-error" : undefined}
                   />
                   {errors.email && (
-                    <span id="email-error" className={styles["prism-ai-error"]}>
+                    <span id="email-error" className={styles["prism-ai-error"]} aria-live="polite">
                       {errors.email}
                     </span>
                   )}
@@ -386,12 +411,14 @@ export default function PrismAIClient() {
                     value={formData.phoneNumber}
                     onChange={handleInputChange}
                     className={`${styles["prism-ai-input"]} ${errors.phoneNumber ? styles["prism-ai-input-error"] : ""}`}
-                    placeholder="+1 (555) 123-4567"
+                    placeholder="+1 (555) 123-4567…"
+                    autoComplete="tel"
+                    inputMode="tel"
                     aria-invalid={!!errors.phoneNumber}
                     aria-describedby={errors.phoneNumber ? "phoneNumber-error" : undefined}
                   />
                   {errors.phoneNumber && (
-                    <span id="phoneNumber-error" className={styles["prism-ai-error"]}>
+                    <span id="phoneNumber-error" className={styles["prism-ai-error"]} aria-live="polite">
                       {errors.phoneNumber}
                     </span>
                   )}
@@ -426,7 +453,7 @@ export default function PrismAIClient() {
                             <path d="M12 2 L22 20 L2 20 Z" fill="currentColor" />
                           </svg>
                         </span>
-                        Building...
+                        Building…
                       </>
                     ) : (
                       "Start Building"
