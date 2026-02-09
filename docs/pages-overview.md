@@ -62,6 +62,9 @@ Quick reference for the pages we edit most often.
 - Hero copy, service strip, and CTAs live in `app/client-page.tsx` with CTA tracking in `components/home/HeroCtas.tsx`.
 - The hero client logo circles use click/tap tooltips; keep the label text in `HERO_CLIENT_ICONS` aligned with the logos.
 - Hero benefit cards are rendered by `components/home/HeroBenefits.tsx`, including randomized Lordicon variants on each load for the “more customers”, “Higher Customer LTV”, and “spend less time on tech” tiles.
+- The hero section uses `HERO_SECTION_CLASSES` in `app/client-page.tsx` to reserve a full-viewport slot for the Unicorn Studio animation, accounting for the sticky header height and safe-area insets.
+- The homepage hero background animation is embedded via `components/home/UnicornHeroScene.tsx`, which loads the Unicorn Studio SDK and mounts the WebGL scene as the entire hero section.
+- The main hero copy, CTA, benefits, and client logos now live in the section immediately following the animation.
 - The hero section uses `HERO_SECTION_CLASSES` in `app/client-page.tsx` to center its content in the viewport while accounting for the sticky header height and safe-area insets.
 - The homepage hero background animation is embedded via `components/home/UnicornHeroScene.tsx`, which loads the Unicorn Studio SDK and mounts the WebGL scene behind the hero copy.
 - On mobile, the homepage navbar starts hidden and fades/slides in after the first tap; this is enabled via `mobileRevealOnFirstTap` on `components/navbar.tsx`.

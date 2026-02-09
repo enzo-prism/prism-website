@@ -249,7 +249,10 @@ export default function ClientPage() {
       <Navbar mobileRevealOnFirstTap />
       <main className="flex-1">
         <section className={HERO_SECTION_CLASSES}>
-          <UnicornHeroScene className="absolute inset-0 -z-10" />
+          <UnicornHeroScene className="absolute inset-0" />
+        </section>
+
+        <section className={`${SECTION_SPACING} bg-background`}>
           <div className="container relative mx-auto px-4 sm:px-6">
             <div className="mx-auto max-w-2xl space-y-6 text-center lg:max-w-3xl">
               <div className="space-y-4">
