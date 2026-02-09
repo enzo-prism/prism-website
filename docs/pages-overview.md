@@ -63,7 +63,7 @@ Quick reference for the pages we edit most often.
 - The hero client logo circles use click/tap tooltips; keep the label text in `HERO_CLIENT_ICONS` aligned with the logos.
 - Hero benefit cards are rendered by `components/home/HeroBenefits.tsx`, including randomized Lordicon variants on each load for the “more customers”, “Higher Customer LTV”, and “spend less time on tech” tiles.
 - The hero animation section uses `HERO_SECTION_CLASSES` in `app/client-page.tsx` to reserve a full-viewport slot, accounting for the sticky header height and safe-area insets.
-- The Unicorn Studio WebGL scene is embedded via `components/home/UnicornHeroScene.tsx` using `unicornstudio-react/next` and mounts as a standalone hero section.
+- The Unicorn Studio WebGL scene is embedded via `components/home/UnicornHeroScene.tsx` using `unicornstudio-react/next` and loads the self-hosted JSON scene at `/public/unicorn/hero-scene.json`.
 - The main hero copy, CTA, benefits, and client logos live in the section immediately following the animation.
 - On mobile, the homepage navbar starts hidden and fades/slides in after the first tap; this is enabled via `mobileRevealOnFirstTap` on `components/navbar.tsx`.
 - Homepage sections use full-screen spacing (`SECTION_SPACING` in `app/client-page.tsx` plus the matching padding in `components/home/WallOfLoveCarousel.tsx`) so each section reads as its own viewport.
