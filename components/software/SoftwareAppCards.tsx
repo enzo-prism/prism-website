@@ -33,7 +33,7 @@ export default function SoftwareAppCards({
                   alt={app.icon.alt}
                   size={app.icon.size}
                   aria-hidden="true"
-                  className="relative h-10 w-10 origin-center scale-[0.1] opacity-95"
+                  className="relative h-10 w-10 origin-center opacity-95"
                 />
               </div>
               <div className="inline-flex items-center gap-2 rounded-full border border-border/70 bg-background/85 px-3 py-1 text-[11px] font-medium tracking-wide text-muted-foreground">
