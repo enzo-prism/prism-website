@@ -98,6 +98,14 @@ export default function MinimalCaseStudyPage({
 }: MinimalCaseStudyProps) {
   const ctaHref = cta?.href ?? "/get-started"
   const ctaTrackLabel = cta?.trackLabel ?? `${pageTrackingTitle.toLowerCase()} case study`
+  const websiteFact = quickFacts.find((fact) => fact.label.toLowerCase() === "website" && Boolean(fact.href))
+  const resolvedHeroButton = heroButton ?? (websiteFact?.href
+    ? {
+      label: `visit ${websiteFact.value}`,
+      href: websiteFact.href,
+      trackLabel: `${pageTrackingTitle.toLowerCase()} client website`,
+    }
+    : undefined)
 
   return (
     <div className="flex min-h-screen flex-col bg-background">
@@ -113,26 +121,26 @@ export default function MinimalCaseStudyPage({
               <h1 className="text-balance text-4xl font-bold tracking-tight sm:text-6xl">{heroTitle}</h1>
               {heroSubtitle && <p className="text-lg text-muted-foreground sm:text-xl">{heroSubtitle}</p>}
               <p className="text-muted-foreground">{summary}</p>
-              {heroButton && (
+              {resolvedHeroButton && (
                 <div className="flex flex-wrap items-center gap-3">
                   <Button asChild variant="outline" className="rounded-full">
-                    {heroButton.trackLabel ? (
+                    {resolvedHeroButton.trackLabel ? (
                       <TrackedLink
-                        href={heroButton.href}
-                        target={heroButton.href.startsWith("http") ? "_blank" : undefined}
-                        rel={heroButton.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                        label={heroButton.label}
-                        location={heroButton.trackLabel}
+                        href={resolvedHeroButton.href}
+                        target={resolvedHeroButton.href.startsWith("http") ? "_blank" : undefined}
+                        rel={resolvedHeroButton.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                        label={resolvedHeroButton.label}
+                        location={resolvedHeroButton.trackLabel}
                       >
-                        {heroButton.label}
+                        {resolvedHeroButton.label}
                       </TrackedLink>
                     ) : (
                       <Link
-                        href={heroButton.href}
-                        target={heroButton.href.startsWith("http") ? "_blank" : undefined}
-                        rel={heroButton.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                        href={resolvedHeroButton.href}
+                        target={resolvedHeroButton.href.startsWith("http") ? "_blank" : undefined}
+                        rel={resolvedHeroButton.href.startsWith("http") ? "noopener noreferrer" : undefined}
                       >
-                        {heroButton.label}
+                        {resolvedHeroButton.label}
                       </Link>
                     )}
                   </Button>

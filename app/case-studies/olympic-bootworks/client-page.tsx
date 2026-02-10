@@ -1,6 +1,7 @@
 import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
 import { CaseStudySchema } from "@/components/schema-markup"
+import { Button } from "@/components/ui/button"
 import SocialShare from "@/components/social-share"
 import Image from "next/image"
 import Link from "next/link"
@@ -10,6 +11,7 @@ const linkClassName =
 const CASE_STUDY_TITLE = "Olympic Bootworks: the Tahoe shop that finally sells online"
 const CASE_STUDY_DESCRIPTION =
   "Olympic Bootworks already had the hard part: a legendary reputation, Olympians in the fitting room, and customers who drive hours to get it done right."
+const CLIENT_SITE = "https://www.olympicbootworks.com"
 
 export default function OlympicBootworksCaseStudy() {
   return (
@@ -32,6 +34,13 @@ export default function OlympicBootworksCaseStudy() {
               Prism rebuilt Olympic Bootworks into a two‑site ecommerce system—POS‑linked inventory, a dedicated Fantic Warehouse microsite, and an owned
               Google + email stack—so the shop can sell while the team stays focused on bootfitting.
             </p>
+            <div className="not-prose">
+              <Button asChild variant="outline" className="rounded-full">
+                <Link href={CLIENT_SITE} target="_blank" rel="noopener noreferrer">
+                  visit olympicbootworks.com
+                </Link>
+              </Button>
+            </div>
             <p>
               <strong>Location:</strong> Tahoe, CA
               <br />

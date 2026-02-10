@@ -20,6 +20,7 @@ const FounderImpactGraph = dynamic(
 )
 
 const HERO_VIDEO_ID = "VIDEO_PLACEHOLDER"
+const CLIENT_SITE = "https://www.matariadental.com"
 const cs = CASE_STUDIES.find((item) => item.slug === "mataria-dental-group")
 
 type ListItem = {
@@ -578,6 +579,13 @@ export default function MatariaDentalGroupCaseStudy() {
               <p className="text-neutral-700">
                 Prism partnered with Dr. Mataria - a multi-location dentist and implant educator - to relaunch Mataria Dental Group in Torrance, retain the existing patient base, and spin up a modern web + content + social engine for growth.
               </p>
+              <div>
+                <Button asChild variant="outline" className="rounded-full">
+                  <Link href={CLIENT_SITE} target="_blank" rel="noopener noreferrer">
+                    visit matariadental.com
+                  </Link>
+                </Button>
+              </div>
               <div className="flex flex-wrap gap-2 pt-2">
                 {quickFacts.map((fact) => (
                   <div key={fact.label} className="rounded-full border border-neutral-200 bg-white px-3 py-1 text-sm text-neutral-700">
