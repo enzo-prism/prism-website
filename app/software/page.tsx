@@ -1,19 +1,9 @@
 import type { Metadata } from "next"
-import Link from "next/link"
-
-import PixelishIcon from "@/components/pixelish/PixelishIcon"
 import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
 import { ItemListSchema } from "@/components/schema-markup"
 import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import {
-  Card,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
+import SoftwareAppCards from "@/components/software/SoftwareAppCards"
 import { PRISM_APPS } from "@/lib/software-apps"
 
 export const metadata: Metadata = {
@@ -58,39 +48,11 @@ export default function SoftwarePage() {
 
         <section className="py-12 sm:py-16 bg-muted/20">
           <div className="container mx-auto px-4 sm:px-6">
-            <div className="grid gap-6 md:grid-cols-2">
-              {PRISM_APPS.map((app) => (
-                <Card
-                  key={app.title}
-                  className="flex h-full flex-col border-border/60 bg-card/30 backdrop-blur-sm transition-[transform,background-color] duration-200 ease-out hover:-translate-y-1 hover:bg-card/45"
-                >
-                  <CardHeader className="space-y-3">
-                    <PixelishIcon
-                      src={app.icon.src}
-                      alt={app.icon.alt}
-                      size={app.icon.size}
-                      aria-hidden="true"
-                      className="h-8 w-8 origin-top-left scale-[0.1] opacity-95"
-                    />
-                    <CardTitle className="text-xl">{app.title}</CardTitle>
-                    <CardDescription className="text-sm text-muted-foreground">
-                      {app.description}
-                    </CardDescription>
-                  </CardHeader>
-                  <CardFooter className="mt-auto">
-                    <Button
-                      asChild
-                      variant="outline"
-                      className="w-full rounded-md transition-transform duration-200 ease-out hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0"
-                    >
-                      <Link href={app.href} target="_blank" rel="noopener noreferrer">
-                        {app.hrefLabel}
-                      </Link>
-                    </Button>
-                  </CardFooter>
-                </Card>
-              ))}
-            </div>
+            <SoftwareAppCards
+              apps={PRISM_APPS}
+              cardClassName="bg-card/35 backdrop-blur-sm"
+              buttonClassName="rounded-lg"
+            />
           </div>
         </section>
       </main>
