@@ -19,21 +19,6 @@ const MONTH_NAMES_LONG = [
   "December",
 ] as const
 
-const MONTH_NAMES_SHORT = [
-  "Jan",
-  "Feb",
-  "Mar",
-  "Apr",
-  "May",
-  "Jun",
-  "Jul",
-  "Aug",
-  "Sep",
-  "Oct",
-  "Nov",
-  "Dec",
-] as const
-
 function parseMonthKey(monthKey: string) {
   const [yearRaw, monthRaw] = monthKey.split("-")
   const year = Number.parseInt(yearRaw ?? "", 10)
@@ -50,12 +35,6 @@ function formatMonthKeyLong(monthKey: string) {
   return `${MONTH_NAMES_LONG[parsed.monthIndex]} ${parsed.year}`
 }
 
-function formatMonthKeyShort(monthKey: string) {
-  const parsed = parseMonthKey(monthKey)
-  if (!parsed) return monthKey
-  return `${MONTH_NAMES_SHORT[parsed.monthIndex]} ${parsed.year}`
-}
-
 type HeroMonthlyLeadsPillProps = {
   className?: string
 }
@@ -65,33 +44,27 @@ export default function HeroMonthlyLeadsPill({ className }: HeroMonthlyLeadsPill
   if (!latest) return null
 
   const monthLong = formatMonthKeyLong(latest.month)
-  const monthShort = formatMonthKeyShort(latest.month)
   const leadsText = latest.leads.toLocaleString("en-US")
 
   return (
     <Link
       href="/case-studies"
-      aria-label={`View case studies: ${monthLong}, ${leadsText} new leads delivered across Prism clients`}
+      aria-label={`View case studies: ${leadsText} new leads delivered to Prism clients in ${monthLong}. Stat updated last day of each month.`}
       className={cn(
-        "group inline-flex max-w-[46rem] flex-wrap items-center justify-center gap-x-2 gap-y-1 rounded-full border border-border/60 bg-background/75 px-4 py-2 text-center text-xs text-muted-foreground shadow-[0_18px_50px_-32px_rgba(0,0,0,0.45)] backdrop-blur-sm transition-[transform,box-shadow,border-color,background-color] duration-200 ease-out hover:-translate-y-0.5 hover:border-border/80 hover:bg-background/85 hover:shadow-[0_26px_60px_-34px_rgba(0,0,0,0.55)] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background sm:px-5 sm:py-2.5 sm:text-sm",
+        "group relative inline-flex w-fit max-w-[25rem] flex-col items-center justify-center gap-0.5 rounded-[1.5rem] border border-border/60 bg-background/80 px-4 py-3 text-center text-xs text-muted-foreground shadow-[0_18px_50px_-32px_rgba(0,0,0,0.45)] backdrop-blur-sm transition-[transform,box-shadow,border-color,background-color] duration-200 ease-out hover:-translate-y-0.5 hover:border-border/80 hover:bg-background/90 hover:shadow-[0_26px_60px_-34px_rgba(0,0,0,0.55)] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background sm:px-6 sm:py-3.5 sm:text-sm",
         className,
       )}
     >
-      <span className="font-semibold text-foreground">
-        <span className="sm:hidden">{monthShort}</span>
-        <span className="hidden sm:inline">{monthLong}</span>
-      </span>
-      <span aria-hidden="true">•</span>
-      <span className="font-semibold text-foreground">{leadsText}</span>
-      <span>new leads delivered across Prism clients</span>
-      <span aria-hidden="true">•</span>
-      <span className="sm:hidden">Updated monthly</span>
-      <span className="hidden sm:inline">Updated last day of each month</span>
+      <span className="font-semibold leading-tight text-foreground">{leadsText} new leads delivered to Prism clients</span>
+      <span className="leading-none">in</span>
+      <span className="font-semibold leading-tight text-foreground">{monthLong}</span>
+      <span className="text-[10px] leading-tight sm:text-xs">*stat updated last day of each month</span>
+      <span className="sr-only">View case studies</span>
       <ArrowUpRight
         aria-hidden="true"
-        className="ml-1 h-4 w-4 opacity-50 transition-opacity group-hover:opacity-80"
+        className="absolute right-3 top-3 h-4 w-4 opacity-45 transition-opacity group-hover:opacity-80"
       />
+      <span aria-hidden="true" className="pointer-events-none absolute inset-0 rounded-[1.5rem] ring-1 ring-inset ring-white/5" />
     </Link>
   )
 }
-
