@@ -168,6 +168,7 @@ Each uses card-based layouts: confirmation message + kickoff-call CTA + contact 
 
 ## About (`app/about/client-page.tsx`)
 - Uses `VideoPlayer` for the founder message plus the Olympic journey carousel, mission section, and CTA.
+- Includes an “official marks” logo grid sourced from `lib/logo-assets.ts` (Cloudinary-hosted Olympic and federation logos) to reinforce Enzo’s athletics context.
 - The video block tracks visibility via `trackVideoInteraction`; keep that instrumentation intact when editing.
 
 ## Supporting Components
