@@ -21,7 +21,7 @@ export const PRISM_APPS: SoftwareApp[] = [
     icon: {
       src: "/pixelish/bar-chart-average.svg",
       alt: "Density app icon",
-      size: 28,
+      size: 6,
     },
   },
   {
@@ -33,7 +33,7 @@ export const PRISM_APPS: SoftwareApp[] = [
     icon: {
       src: "/pixelish/media-play.svg",
       alt: "Hot Content app icon",
-      size: 28,
+      size: 6,
     },
   },
   {
@@ -44,7 +44,7 @@ export const PRISM_APPS: SoftwareApp[] = [
     icon: {
       src: "/pixelish/command.svg",
       alt: "Engineering Tracker app icon",
-      size: 28,
+      size: 6,
     },
   },
 ]
