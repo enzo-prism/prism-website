@@ -9,7 +9,6 @@ import Link from "next/link"
 import { ArrowUpRight } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { OLYMPIC_LOGO_ASSETS } from "@/lib/logo-assets"
 
 export default function AboutClientPage() {
   return (
@@ -84,35 +83,6 @@ export default function AboutClientPage() {
             {/* Minimal carousel of training/competition clips */}
             <div className="flex justify-center">
               <PoleVaultCarousel />
-            </div>
-          </div>
-        </section>
-
-
-
-        <section className="border-t border-border/60 bg-background px-4 py-12 md:py-16">
-          <div className="container mx-auto max-w-5xl px-4 md:px-6">
-            <div className="text-center mb-8 space-y-3">
-              <p className="text-[10px] font-semibold uppercase tracking-[0.32em] text-muted-foreground font-pixel">official marks</p>
-              <h2 className="text-3xl font-semibold sm:text-4xl">logos from Enzo's competition ecosystem</h2>
-              <p className="mx-auto max-w-2xl text-muted-foreground">We reviewed your Cloudinary collection and integrated the strongest logo assets directly into the About experience for added trust and context.</p>
-            </div>
-
-            <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
-              {OLYMPIC_LOGO_ASSETS.map((logo) => (
-                <div
-                  key={logo.name}
-                  className="flex min-h-28 items-center justify-center rounded-xl border border-border/60 bg-card/40 p-4"
-                >
-                  <Image
-                    src={logo.src}
-                    alt={logo.alt}
-                    width={220}
-                    height={160}
-                    className="h-auto max-h-16 w-auto object-contain"
-                  />
-                </div>
-              ))}
             </div>
           </div>
         </section>
