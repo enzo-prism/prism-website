@@ -20,7 +20,7 @@ The blog styling system has been improved to provide clean, consistent, and read
    - Table of contents links are generated from H2/H3 headings
 
 3. **Clean Content**
-   - The MDX renderer automatically removes conflicting inline styles
+   - Avoid inline Tailwind classes/styles in MDX (they can cause visual drift)
    - Preserves special components like CTAs and embeds
    - Maintains the lowercase aesthetic while improving readability
 
@@ -31,11 +31,11 @@ The blog styling system has been improved to provide clean, consistent, and read
 Simply write your content using standard Markdown/HTML elements. They will be automatically styled:
 
 ```mdx
-# This is a heading
-
 This is a paragraph of text. It will be automatically styled with proper spacing and typography.
 
-## Another heading
+## A section heading
+
+Use `##` and `###` in the body so the page keeps a single H1 (the title is already rendered from frontmatter).
 
 - List items are automatically styled
 - With proper spacing
@@ -88,7 +88,7 @@ This is an informational callout box.
 ## Best Practices
 
 1. **Avoid Inline Styles**: Let the prose system handle styling
-2. **Use Semantic HTML**: Use proper heading hierarchy (h1 → h2 → h3)
+2. **Use Semantic HTML**: Keep a single H1 per page (the layout renders the H1 from frontmatter). Use H2/H3 in the MDX body.
 3. **Keep TOC Clean**: Use H2 for major sections and H3 for sub-sections
 4. **Keep It Simple**: Focus on content, not styling
 5. **Use Components**: For special formatting, use the provided MDX components
@@ -104,7 +104,7 @@ The blog styling system consists of:
 
 ## Migration from Old Posts
 
-Existing blog posts with inline styles will automatically have common style conflicts removed by the MDX renderer. However, for the best results, consider:
+Existing blog posts with inline styles may look inconsistent as the system evolves. For the best results, consider:
 
 1. Removing inline text sizing classes (text-lg, text-xl, etc.)
 2. Removing spacing utilities (mt-4, mb-6, etc.)

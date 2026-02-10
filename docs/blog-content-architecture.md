@@ -82,7 +82,7 @@ If you rebrand or change domains, update the `CANONICAL_HOST` constant to keep f
 1. Create `content/blog/my-post-slug.mdx`.
 2. Populate required frontmatter fields.
 3. Write content in Markdown/MDX. Avoid inline styling—`prose-blog` handles typography.
-4. Use H2 for major sections and H3 for sub-sections so the table of contents stays accurate.
+4. The layout renders the post title as the single H1. Use H2 for major sections and H3 for sub-sections so the table of contents stays accurate.
 5. Run `pnpm run typecheck` to ensure the post parses correctly.
 6. Commit the MDX file. The sitemap, blog page, related posts, and RSS feed update automatically.
 

@@ -62,12 +62,12 @@ export default function BlogTableOfContents({ items, className }: BlogTableOfCon
   return (
     <div className={cn("space-y-6", className)}>
       <div className="lg:hidden">
-        <div className="rounded-2xl border border-neutral-200 bg-white p-4 shadow-sm">
+        <div className="rounded-2xl border border-border/60 bg-card/40 p-4 shadow-sm shadow-black/40 backdrop-blur supports-[backdrop-filter]:bg-card/30">
           <div className="flex items-center justify-between">
-            <p className="text-xs font-semibold uppercase tracking-[0.35em] text-neutral-500">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.32em] text-muted-foreground font-pixel">
               on this page
             </p>
-            <span className="text-xs text-neutral-400">{items.length} sections</span>
+            <span className="text-xs text-muted-foreground/80">{items.length} sections</span>
           </div>
           <div className="mt-3 flex gap-2 overflow-x-auto pb-2 sm:flex-wrap sm:overflow-visible">
             {items.map((item) => {
@@ -77,12 +77,12 @@ export default function BlogTableOfContents({ items, className }: BlogTableOfCon
                   key={item.id}
                   href={`#${item.id}`}
                   onClick={(event) => handleAnchorClick(event, item.id)}
-                  aria-current={isActive ? "true" : undefined}
+                  aria-current={isActive ? "location" : undefined}
                   className={cn(
-                    "shrink-0 rounded-full border px-3 py-1.5 text-sm font-medium transition",
+                    "shrink-0 inline-flex min-h-[48px] items-center rounded-full border px-4 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
                     isActive
-                      ? "border-neutral-900 bg-neutral-900 text-white"
-                      : "border-neutral-200 bg-white text-neutral-600 hover:border-neutral-400 hover:text-neutral-900",
+                      ? "border-border/60 bg-foreground text-background shadow-sm"
+                      : "border-border/60 bg-background/40 text-muted-foreground hover:bg-muted/40 hover:text-foreground",
                   )}
                 >
                   {item.label}
@@ -94,10 +94,10 @@ export default function BlogTableOfContents({ items, className }: BlogTableOfCon
       </div>
 
       <nav className="hidden lg:block" aria-label="Table of contents">
-        <div className="sticky top-28 rounded-3xl border border-neutral-200 bg-white p-5 shadow-sm">
+        <div className="sticky top-28 rounded-3xl border border-border/60 bg-card/40 p-5 shadow-sm shadow-black/40 backdrop-blur supports-[backdrop-filter]:bg-card/30">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.35em] text-neutral-500">on this page</p>
-            <p className="mt-1 text-sm text-neutral-500">Jump to the section you need.</p>
+            <p className="text-[10px] font-semibold uppercase tracking-[0.32em] text-muted-foreground font-pixel">on this page</p>
+            <p className="mt-1 text-sm text-muted-foreground">jump to the section you need.</p>
           </div>
           <ul className="mt-4 space-y-1.5">
             {items.map((item) => {
@@ -107,21 +107,21 @@ export default function BlogTableOfContents({ items, className }: BlogTableOfCon
                   <a
                     href={`#${item.id}`}
                     onClick={(event) => handleAnchorClick(event, item.id)}
-                    aria-current={isActive ? "true" : undefined}
+                    aria-current={isActive ? "location" : undefined}
                     className={cn(
-                      "flex w-full items-center gap-2 rounded-2xl px-3 py-2 text-sm font-medium transition",
+                      "flex w-full items-center gap-2 rounded-2xl px-3 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
                       isActive
-                        ? "bg-neutral-900 text-white shadow-sm"
-                        : "text-neutral-600 hover:bg-neutral-100 hover:text-neutral-900",
-                      item.level === 3 && "pl-6 text-neutral-500",
+                        ? "bg-foreground text-background shadow-sm"
+                        : "text-muted-foreground hover:bg-muted/40 hover:text-foreground",
+                      item.level === 3 && "pl-6 text-muted-foreground/80",
                     )}
                   >
                     <span
                       className={cn(
                         "flex h-6 w-6 items-center justify-center rounded-full border text-xs font-semibold transition",
                         isActive
-                          ? "border-white/40 bg-white/10 text-white"
-                          : "border-neutral-300 bg-white text-neutral-500",
+                          ? "border-background/40 bg-background/10 text-background"
+                          : "border-border/60 bg-background/60 text-muted-foreground",
                       )}
                       aria-hidden
                     >

@@ -62,7 +62,7 @@ export default function BlogShareIcons({ url, title, className }: BlogShareIcons
     <TooltipProvider delayDuration={250}>
       <div
         className={cn(
-          "inline-flex items-center gap-1.5 rounded-md border border-border/60 bg-card/50 px-1.5 py-1 shadow-sm shadow-black/40 backdrop-blur supports-[backdrop-filter]:bg-card/40",
+          "inline-flex items-center gap-2 rounded-md border border-border/60 bg-card/50 px-2 py-2 shadow-sm shadow-black/40 backdrop-blur supports-[backdrop-filter]:bg-card/40",
           className,
         )}
       >
@@ -75,11 +75,11 @@ export default function BlogShareIcons({ url, title, className }: BlogShareIcons
                   type="button"
                   variant="ghost"
                   size="icon"
-                  className="h-7 w-7 rounded-md border border-transparent text-muted-foreground transition-colors hover:border-border/60 hover:bg-muted/40 hover:text-foreground sm:h-8 sm:w-8"
+                  className="h-12 w-12 rounded-md border border-transparent text-muted-foreground transition-colors hover:border-border/60 hover:bg-muted/40 hover:text-foreground"
                   aria-label={target.label}
                   onClick={() => openShareWindow(target.buildUrl(url, title), target.name)}
                 >
-                  <target.icon className="h-3 w-3 sm:h-3.5 sm:w-3.5" aria-hidden />
+                  <target.icon className="h-4 w-4" aria-hidden />
                 </Button>
               </TooltipTrigger>
               <TooltipContent side="bottom">{target.label}</TooltipContent>
@@ -92,13 +92,13 @@ export default function BlogShareIcons({ url, title, className }: BlogShareIcons
                 variant="ghost"
                 size="icon"
                 className={cn(
-                  "h-7 w-7 rounded-md border border-transparent text-muted-foreground transition-colors hover:border-border/60 hover:bg-muted/40 hover:text-foreground sm:h-8 sm:w-8",
+                  "h-12 w-12 rounded-md border border-transparent text-muted-foreground transition-colors hover:border-border/60 hover:bg-muted/40 hover:text-foreground",
                   copied && "border-white/30 bg-primary text-primary-foreground hover:bg-primary/90 hover:text-primary-foreground",
                 )}
                 aria-label="copy link"
                 onClick={handleCopy}
               >
-                <Link2 className="h-3 w-3 sm:h-3.5 sm:w-3.5" aria-hidden />
+                <Link2 className="h-4 w-4" aria-hidden />
               </Button>
             </TooltipTrigger>
             <TooltipContent side="bottom">{copied ? "link copied" : "copy link"}</TooltipContent>

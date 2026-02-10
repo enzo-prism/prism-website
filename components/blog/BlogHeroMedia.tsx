@@ -26,7 +26,7 @@ export default function BlogHeroMedia({
   if (showHeroImage && image && !hasImageError) {
     const effectiveSrc = toLocalPathIfSameOrigin(image)
     return (
-      <div className="rounded-lg overflow-hidden mb-6">
+      <div className="relative mb-6 overflow-hidden rounded-2xl border border-border/60 bg-card/20 shadow-sm shadow-black/40">
         <CoreImage
           src={effectiveSrc}
           alt={title}
@@ -43,5 +43,12 @@ export default function BlogHeroMedia({
     )
   }
 
-  return <div className={cn("aspect-[16/9] rounded-lg overflow-hidden mb-6", gradientClass)} />
+  return (
+    <div
+      className={cn(
+        "aspect-[16/9] sm:aspect-[21/9] relative mb-6 overflow-hidden rounded-2xl border border-border/60 bg-card/20 shadow-sm shadow-black/40",
+        gradientClass,
+      )}
+    />
+  )
 }

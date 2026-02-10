@@ -112,7 +112,7 @@ export default function BlogPostLayout({
                       showHeroImage={showHeroImage}
                       slug={slug}
                     />
-                    <div className="flex flex-wrap items-center gap-3 mb-3 text-sm text-muted-foreground">
+                    <div className="mb-3 flex flex-wrap items-center gap-x-3 gap-y-2 text-xs text-muted-foreground sm:text-sm">
                       <span className="inline-block rounded-md border border-border/60 bg-muted/30 px-3 py-1 text-[10px] font-semibold uppercase font-pixel tracking-[0.16em] text-foreground/90">
                         {category}
                       </span>
@@ -126,10 +126,10 @@ export default function BlogPostLayout({
                         <span className="font-medium text-foreground/80 normal-case">By {author}</span>
                       </div>
                     </div>
-                    <h1 className="text-4xl font-semibold leading-tight text-balance sm:text-5xl lg:text-6xl">
+                    <h1 className="type-h1 font-semibold text-balance">
                       {h1Title || title}
                     </h1>
-                    <p className="mt-3 text-muted-foreground">
+                    <p className="mt-4 max-w-[68ch] type-lead">
                       {description}
                     </p>
                     <div className="mt-5 flex flex-wrap items-center justify-start gap-3">
