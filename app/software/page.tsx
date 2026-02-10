@@ -70,7 +70,7 @@ export default function SoftwarePage() {
                       alt={app.icon.alt}
                       size={app.icon.size}
                       aria-hidden="true"
-                      className="h-8 w-8 opacity-95"
+                      className="h-8 w-8 origin-top-left scale-[0.1] opacity-95"
                     />
                     <CardTitle className="text-xl">{app.title}</CardTitle>
                     <CardDescription className="text-sm text-muted-foreground">
