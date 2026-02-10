@@ -1,5 +1,3 @@
-import { PRISM_PRIMARY_LOGO } from "@/lib/logo-assets"
-
 // Google Analytics configuration
 const FALLBACK_GA_MEASUREMENT_ID = "G-P9VY77PRC0"
 
@@ -11,10 +9,11 @@ export const GOOGLE_ADS_ID = "AW-11373090310"
 
 // Logo configuration
 export const LOGO_CONFIG = {
-  src: PRISM_PRIMARY_LOGO.src,
-  fallbackSrc: PRISM_PRIMARY_LOGO.fallbackSrc,
-  alt: PRISM_PRIMARY_LOGO.alt,
-  className: PRISM_PRIMARY_LOGO.className,
+  src: "/prism-logo.jpeg",
+  fallbackSrc: "/prism-logo.jpeg",
+  alt: "Prism logo",
+  // Consistent corner radius class for all logo instances
+  className: "rounded-lg", // This applies an 8px border-radius
 }
 
 // Logo sizes for different use cases
