@@ -2,6 +2,7 @@ import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
 import { CaseStudySchema } from "@/components/schema-markup"
 import SocialShare from "@/components/social-share"
+import { Button } from "@/components/ui/button"
 import Image from "next/image"
 const EXQUISITE_SITE = "https://exquisitedentistryla.com/?utm_source=chatgpt.com"
 const EXQUISITE_SITE_TITLE = "Exquisite Dentistry: Cosmetic Dentist Los Angeles | Dr. Aguil"
@@ -34,6 +35,13 @@ export default function ExquisiteDentistryCaseStudy() {
             <p>
               <strong>Scope:</strong> Website rebuild, SEO preservation + upgrades, local listings cleanup, funnel + forms rebuild, analytics + attribution, ongoing optimization
             </p>
+            <div className="not-prose">
+              <Button asChild variant="outline" className="rounded-full">
+                <a href={EXQUISITE_SITE} title={EXQUISITE_SITE_TITLE} target="_blank" rel="noopener noreferrer">
+                  visit exquisitedentistryla.com
+                </a>
+              </Button>
+            </div>
             <hr />
 
             <h2>“We’re one of the best practices in the city… so why does our website look like it isn’t?”</h2>

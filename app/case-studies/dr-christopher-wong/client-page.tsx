@@ -2,11 +2,13 @@ import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
 import { CaseStudySchema } from "@/components/schema-markup"
 import SocialShare from "@/components/social-share"
+import { Button } from "@/components/ui/button"
 import Link from "next/link"
 const linkClassName =
   "font-medium text-foreground underline decoration-border/60 underline-offset-4 hover:decoration-border"
 const CASE_STUDY_TITLE = "case study: dr. wong — de-risking a dental m&a in palo alto with ai-powered marketing"
 const CASE_STUDY_DESCRIPTION = "from ownership transition risk to a future-proof, ai-powered dental practice in palo alto."
+const CLIENT_SITE = "https://www.chriswongdds.com"
 
 export default function ChristopherWongCaseStudy() {
   return (
@@ -32,6 +34,13 @@ export default function ChristopherWongCaseStudy() {
               watch enzo’s interview with dr. wong on how the handoff worked, what changed across the site and local presence, and how ai-first workflows
               now power the practice.
             </p>
+            <div className="not-prose">
+              <Button asChild variant="outline" className="rounded-full">
+                <Link href={CLIENT_SITE} target="_blank" rel="noopener noreferrer">
+                  visit chriswongdds.com
+                </Link>
+              </Button>
+            </div>
             <p>
               visit the practice site at <strong>chriswongdds.com</strong>.
             </p>
