@@ -6,6 +6,7 @@ import PixelishIcon from "@/components/pixelish/PixelishIcon"
 import Footer from "@/components/footer"
 import ScalingRoadmapForm from "@/components/forms/ScalingRoadmapForm"
 import HeroBenefits from "@/components/home/HeroBenefits"
+import HeroMonthlyLeadsPill from "@/components/home/HeroMonthlyLeadsPill"
 import UnicornHeroScene from "@/components/home/UnicornHeroScene"
 import WallOfLoveCarousel from "@/components/home/WallOfLoveCarousel"
 import SearchConsoleSnapshotsRail from "@/components/home/SearchConsoleSnapshotsRail"
@@ -249,7 +250,10 @@ export default function ClientPage() {
       <Navbar mobileRevealOnFirstTap />
       <main className="flex-1">
         <section className={HERO_SECTION_CLASSES}>
-          <UnicornHeroScene className="absolute inset-0" />
+          <UnicornHeroScene className="absolute inset-0 z-0" />
+          <div className="container relative z-10 mx-auto flex justify-center px-4 sm:px-6">
+            <HeroMonthlyLeadsPill />
+          </div>
         </section>
 
         <section className={`${SECTION_SPACING} bg-background`}>
