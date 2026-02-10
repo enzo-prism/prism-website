@@ -26,6 +26,7 @@ describe("HeroMonthlyLeadsPill", () => {
     const latest = HOME_HERO_MONTHLY_LEADS_STATS[0]
     expect(latest).toBeTruthy()
 
+    expect(link).toHaveTextContent(`${latest.leads.toLocaleString("en-US")} leads delivered to clients last month 🥳`)
     expect(link).toHaveTextContent(`${latest.leads.toLocaleString("en-US")} leads delivered to clients in last month 🥳`)
     expect(link).toHaveTextContent("stat updated monthly")
   })
