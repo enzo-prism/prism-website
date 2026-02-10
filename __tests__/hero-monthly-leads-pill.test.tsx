@@ -16,33 +16,8 @@ jest.mock("next/link", () => ({
   },
 }))
 
-const MONTH_NAMES_LONG = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
-] as const
-
-function formatMonthKeyLong(monthKey: string) {
-  const [yearRaw, monthRaw] = monthKey.split("-")
-  const year = Number.parseInt(yearRaw ?? "", 10)
-  const month = Number.parseInt(monthRaw ?? "", 10)
-  if (!Number.isFinite(year) || !Number.isFinite(month) || month < 1 || month > 12) {
-    return monthKey
-  }
-  return `${MONTH_NAMES_LONG[month - 1]} ${year}`
-}
-
 describe("HeroMonthlyLeadsPill", () => {
-  it("renders a link to /case-studies with the latest stat", () => {
+  it("renders a link to /case-studies with simplified monthly stat copy", () => {
     render(<HeroMonthlyLeadsPill />)
 
     const link = screen.getByRole("link")
@@ -51,8 +26,8 @@ describe("HeroMonthlyLeadsPill", () => {
     const latest = HOME_HERO_MONTHLY_LEADS_STATS[0]
     expect(latest).toBeTruthy()
 
-    expect(link).toHaveTextContent(latest.leads.toLocaleString("en-US"))
-    expect(link).toHaveTextContent(formatMonthKeyLong(latest.month))
+    expect(link).toHaveTextContent(`${latest.leads.toLocaleString("en-US")} leads delivered to clients in last month 🥳`)
+    expect(link).toHaveTextContent("stat updated monthly")
   })
 })
 
