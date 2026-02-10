@@ -34,7 +34,8 @@ Quick reference for the pages we edit most often.
 
 ## Software (`app/software/page.tsx`)
 - Growth tools hub listing Prism-built software (currently Density, Hot Content, and Engineering Tracker).
-- App card data is shared via `lib/software-apps.ts` (including Lordicon animation config for the card icons); update this list to keep the homepage section and `/software` in sync.
+- App card data is shared via `lib/software-apps.ts`; update this list to keep the homepage section and `/software` in sync.
+- The homepage + `/software` cards are rendered by `components/software/SoftwareAppCards.tsx`, including the framed icon treatment sized for small pixel icons.
 
 ## Podcast (`app/podcast/page.tsx`)
 - Podcast hub + recent episode preview cards.

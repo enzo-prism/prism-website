@@ -18,6 +18,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion"
 import { Badge } from "@/components/ui/badge"
+import SoftwareAppCards from "@/components/software/SoftwareAppCards"
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -354,39 +355,11 @@ export default function ClientPage() {
                 </p>
               </div>
             </div>
-            <div className="grid gap-6 md:grid-cols-2">
-              {PRISM_APPS.map((app) => (
-                <Card
-                  key={app.title}
-                  className="flex h-full flex-col border-border/60 bg-card/90 transition-transform duration-200 ease-out hover:-translate-y-1 hover:shadow-lg"
-                >
-                  <CardHeader className="space-y-3">
-                    <PixelishIcon
-                      src={app.icon.src}
-                      alt={app.icon.alt}
-                      size={app.icon.size}
-                      aria-hidden="true"
-                      className="h-8 w-8 origin-top-left scale-[0.1] opacity-95"
-                    />
-                    <CardTitle className="text-xl">{app.title}</CardTitle>
-                    <CardDescription className="text-sm text-muted-foreground">
-                      {app.description}
-                    </CardDescription>
-                  </CardHeader>
-                  <CardFooter className="mt-auto">
-                    <Button
-                      asChild
-                      variant="outline"
-                      className="w-full rounded-full transition-transform duration-200 ease-out hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0"
-                    >
-                      <Link href={app.href} target="_blank" rel="noopener noreferrer">
-                        {app.hrefLabel}
-                      </Link>
-                    </Button>
-                  </CardFooter>
-                </Card>
-              ))}
-            </div>
+            <SoftwareAppCards
+              apps={PRISM_APPS}
+              cardClassName="bg-card/90"
+              buttonClassName="rounded-full"
+            />
           </div>
         </section>
 
