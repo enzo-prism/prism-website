@@ -1,6 +1,11 @@
 const nextConfig = require("eslint-config-next/core-web-vitals")
 
 module.exports = [
+  // Ignore generated build output and scratch artifacts that can contain
+  // transformed code which doesn't follow our source lint rules.
+  {
+    ignores: [".next/**", ".vercel/**", "out/**", "build/**", "output/**", "tmp/**"],
+  },
   ...nextConfig,
   {
     files: ["**/*.{js,jsx,mjs,ts,tsx,mts,cts}"],
