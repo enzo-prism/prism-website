@@ -51,7 +51,7 @@ export default function BlogPostsList({ posts }: { posts: BlogPost[] }) {
                   author={post.author}
                   description={post.description}
                   slug={post.slug}
-                  image={post.image || '/blog/ai-digital-marketing.png'}
+                  image={post.image}
                   featured={post.featured}
                   gradientClass={post.gradientClass}
                 />

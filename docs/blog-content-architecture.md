@@ -30,6 +30,8 @@ Each MDX file must define:
 | `image` | optional | Relative path for hero image + cards |
 | `h1Title`, `showHeroImage`, `openGraph`, `twitter`, `canonical` | optional | Overrides for layout & SEO |
 
+Blog cards render the frontmatter `image` when available. If `image` is omitted, cards automatically fall back to the post `gradientClass` for the preview frame background.
+
 `lib/mdx.tsx` automatically derives `categorySlug` from the `category` label by lowercasing and replacing non-alphanumeric characters with hyphens. Stick to meaningful labels; the slug keeps filters URL-safe.
 
 Open Graph behavior: if `openGraph.images` is present in frontmatter, those images are used for metadata. Otherwise the blog post falls back to the dynamic OG generator at `/api/og/blog/[slug]`, which uses `gradientClass` for the background. Add matching `twitter.images` if you want Twitter previews to use the same custom asset.

@@ -17,7 +17,6 @@ type LatestPost = {
   gradientClass?: string | null
 }
 
-const FALLBACK_IMAGE = "/blog/ai-digital-marketing.png"
 const FALLBACK_GRADIENT = "bg-gradient-to-br from-neutral-200 via-neutral-100 to-white"
 const MAX_RETRIES = 3
 const RETRY_DELAY_MS = 1500
@@ -154,7 +153,7 @@ export default function LatestPostsSection() {
                 author={post.author}
                 description={post.description}
                 slug={post.slug}
-                image={post.image ?? FALLBACK_IMAGE}
+                image={post.image}
                 gradientClass={post.gradientClass ?? FALLBACK_GRADIENT}
                 compact
               />
