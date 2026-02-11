@@ -28,6 +28,7 @@ export type BlogFrontmatter = {
 }
 
 const BLOG_PATH = path.join(process.cwd(), "content", "blog")
+const PUBLIC_PATH = path.join(process.cwd(), "public")
 
 const CODEX_REGEX = /\bcode?x\b/gi
 const DEFAULT_CATEGORY_SLUG = "general"
@@ -66,6 +67,48 @@ function normalizeCodexCasing<T>(value: T): T {
   return value
 }
 
+const INVALID_IMAGE_VALUES = new Set(["", "null", "undefined", "none", "false"])
+
+function isExternalImageUrl(value: string) {
+  return /^https?:\/\//i.test(value)
+}
+
+function isApiImageRoute(value: string) {
+  return value.startsWith("/api/")
+}
+
+function getPublicAssetPath(imagePath: string) {
+  const normalizedPath = imagePath.split(/[?#]/, 1)[0]
+  return path.join(PUBLIC_PATH, normalizedPath.replace(/^\/+/, ""))
+}
+
+async function resolveFrontmatterImage(imageValue: unknown, slug: string): Promise<string | undefined> {
+  if (typeof imageValue !== "string") return undefined
+
+  const trimmedImage = imageValue.trim()
+  if (INVALID_IMAGE_VALUES.has(trimmedImage.toLowerCase())) return undefined
+
+  if (isExternalImageUrl(trimmedImage) || isApiImageRoute(trimmedImage)) {
+    return trimmedImage
+  }
+
+  if (!trimmedImage.startsWith("/")) {
+    return trimmedImage
+  }
+
+  const publicAssetPath = getPublicAssetPath(trimmedImage)
+
+  try {
+    await fs.access(publicAssetPath)
+    return trimmedImage
+  } catch {
+    console.warn(
+      `[MDXLib] Post "${slug}" references missing image "${trimmedImage}". Falling back to gradient placeholder.`,
+    )
+    return undefined
+  }
+}
+
 export async function getPost(
   slug: string,
 ): Promise<{ frontmatter: BlogFrontmatter; content: string } | null> {
@@ -90,6 +133,8 @@ export async function getPost(
     const author =
       typeof rawAuthor === "string" && rawAuthor.trim().length > 0 ? rawAuthor.trim() : "Prism Team"
 
+    const image = await resolveFrontmatterImage(normalizedData.image, slug)
+
     const frontmatter: BlogFrontmatter = {
       title: normalizedData.title,
       h1Title: normalizedData.h1Title,
@@ -98,7 +143,7 @@ export async function getPost(
       date: normalizedData.date,
       category: normalizedData.category.trim(),
       categorySlug: slugify(normalizedData.category.trim()),
-      image: normalizedData.image,
+      image,
       gradientClass:
         normalizedData.gradientClass ||
         "bg-gradient-to-br from-blue-300/30 via-purple-300/30 to-pink-300/30",
