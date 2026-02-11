@@ -54,7 +54,7 @@ export default function BlogFilterNavigation({
   }, [posts, searchQuery, selectedCategory, onFilteredPostsChange])
 
   const buttonCategories = [
-    { slug: "all", label: "all" },
+    { slug: "all", label: "All" },
     ...categories.map((c) => ({ slug: c.slug, label: c.label })),
   ]
 
@@ -107,9 +107,9 @@ export default function BlogFilterNavigation({
               <ToggleGroupItem
                 key={category.slug}
                 value={category.slug}
-                className="rounded-md border border-border/60 bg-muted/20 px-4 py-2 text-xs font-semibold lowercase text-muted-foreground transition-colors duration-200 hover:bg-muted/40 hover:text-foreground data-[state=on]:border-white/30 data-[state=on]:bg-primary data-[state=on]:text-primary-foreground"
+                className="rounded-md border border-border/60 bg-muted/20 px-4 py-2 text-xs font-semibold text-muted-foreground transition-colors duration-200 hover:bg-muted/40 hover:text-foreground data-[state=on]:border-white/30 data-[state=on]:bg-primary data-[state=on]:text-primary-foreground"
               >
-                {category.label.toLowerCase()}
+                {category.label}
               </ToggleGroupItem>
             ))}
           </ToggleGroup>

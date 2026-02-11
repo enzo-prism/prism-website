@@ -333,7 +333,7 @@ export function PerformantMobileBlogGrid({ children, posts, className = "" }: Mo
             onClick={handleLoadMore}
             className="
               px-6 py-3 bg-neutral-900 text-white rounded-full
-              font-medium text-sm lowercase
+              font-medium text-sm
               hover:bg-neutral-800 transition-colors
               focus:outline-hidden focus:ring-2 focus:ring-neutral-500
               active:scale-95 transition-transform

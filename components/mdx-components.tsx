@@ -127,8 +127,8 @@ export const MDXComponents = {
     href?: string;
   }) => (
     <div className="my-12 p-8 bg-neutral-50 dark:bg-neutral-900 rounded-xl border border-neutral-200 dark:border-neutral-800">
-      <h3 className="text-xl font-bold mb-2 lowercase">{title}</h3>
-      <p className="text-neutral-600 dark:text-neutral-400 mb-6 lowercase">{description}</p>
+      <h3 className="text-xl font-bold mb-2">{title}</h3>
+      <p className="text-neutral-600 dark:text-neutral-400 mb-6">{description}</p>
       <CTAButton href={href}>
         {href?.startsWith("/get-started") ? FREE_AUDIT_CTA_TEXT : buttonText ?? FREE_AUDIT_CTA_TEXT}
       </CTAButton>
@@ -183,7 +183,7 @@ export const MDXComponents = {
     children: ReactNode;
   }) => (
     <div className="border border-neutral-200 dark:border-neutral-800 p-4 rounded-lg">
-      {title && <h4 className="font-semibold mb-2 lowercase">{title}</h4>}
+      {title && <h4 className="font-semibold mb-2">{title}</h4>}
       <div className="text-neutral-600 dark:text-neutral-400">{children}</div>
     </div>
   ),
