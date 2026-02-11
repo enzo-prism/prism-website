@@ -49,10 +49,10 @@ export default function BlogEmailSignup() {
       <Card className="mx-auto max-w-3xl rounded-md bg-card/40 shadow-none backdrop-blur-sm transition hover:bg-card/55">
         <CardContent className="flex flex-col gap-6 p-6 sm:p-8 md:flex-row md:items-center md:justify-between">
           <div className="space-y-2 md:max-w-sm">
-            <p className="text-[10px] font-semibold uppercase tracking-[0.32em] text-muted-foreground font-pixel">stay in the loop</p>
-            <h2 className="text-xl font-semibold text-foreground sm:text-2xl">get fresh prism notes via email</h2>
-            <p className="text-sm leading-relaxed text-muted-foreground">
-              when we publish new experiments or playbooks, we’ll send you the highlights so you can apply them faster.
+            <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-muted-foreground">stay in the loop</p>
+            <h2 className="text-2xl font-semibold text-foreground">Get fresh Prism notes via email</h2>
+            <p className="text-base leading-7 text-muted-foreground">
+              When we publish new experiments or playbooks, we’ll send you the highlights so you can apply them faster.
             </p>
           </div>
           <form onSubmit={handleSubmit} className="flex w-full flex-col gap-3 md:max-w-sm">

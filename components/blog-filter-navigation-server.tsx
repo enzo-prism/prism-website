@@ -73,7 +73,7 @@ export default function BlogFilterNavigationServer({
               placeholder="Search posts…"
               aria-label="Search posts"
               autoComplete="off"
-              className="h-auto w-full rounded-md border border-border/60 bg-card/30 py-2.5 pl-10 pr-10 text-sm transition-colors duration-200 focus:bg-card focus-visible:ring-ring"
+              className="h-auto w-full rounded-md border border-border/60 bg-card/30 py-3 pl-10 pr-10 text-base leading-6 transition-colors duration-200 focus:bg-card focus-visible:ring-ring"
             />
             <button type="submit" className="sr-only">
               Search
@@ -106,7 +106,7 @@ export default function BlogFilterNavigationServer({
                     href={buildBlogUrl({ category: slug, query: normalizedQuery })}
                     prefetch={false}
                     className={cn(
-                      "shrink-0 rounded-md border border-border/60 bg-muted/40 px-4 py-2 text-[10px] font-semibold uppercase font-pixel tracking-[0.16em] text-muted-foreground transition-colors duration-200 hover:bg-muted/60 hover:text-foreground",
+                      "shrink-0 rounded-md border border-border/60 bg-muted/40 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.12em] text-muted-foreground transition-colors duration-200 hover:bg-muted/60 hover:text-foreground",
                       isActive && "border-primary bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground",
                     )}
                     aria-current={isActive ? "true" : undefined}

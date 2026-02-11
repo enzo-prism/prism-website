@@ -41,7 +41,7 @@ export default function SimpleBlogPostCard({
         <div className={cn("relative w-full aspect-[4/3] overflow-hidden", gradientClass)} />
         <div className="flex flex-1 flex-col space-y-3 border-t border-border/60 p-5">
           <div className="flex flex-wrap items-center justify-between gap-2">
-            <span className="inline-flex items-center rounded-md border border-border/60 bg-muted/40 px-2.5 py-1 text-[10px] font-semibold uppercase font-pixel tracking-[0.16em] text-muted-foreground">
+            <span className="inline-flex items-center rounded-md border border-border/60 bg-muted/40 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
               {category}
             </span>
             <div className="flex flex-wrap items-center justify-end gap-x-1 gap-y-1 text-xs text-muted-foreground">
@@ -54,16 +54,16 @@ export default function SimpleBlogPostCard({
               <span className="font-medium text-foreground/80 normal-case">By {author}</span>
             </div>
           </div>
-          <h3 className="text-lg font-semibold leading-snug text-balance text-foreground">
+          <h3 className="blog-card-title text-balance text-foreground">
             {title}
           </h3>
           {!compact && (
-            <p className="text-sm/6 text-muted-foreground line-clamp-3">
+            <p className="blog-card-description text-muted-foreground line-clamp-3">
               {description}
             </p>
           )}
-          <div className="flex items-center pt-1 text-xs font-semibold uppercase tracking-[0.18em] text-foreground font-pixel">
-            read post
+          <div className="flex items-center pt-1 text-xs font-semibold uppercase tracking-[0.12em] text-foreground">
+            Read post
             <ArrowRight className="ml-1 h-4 w-4" aria-hidden="true" focusable="false" />
           </div>
         </div>
