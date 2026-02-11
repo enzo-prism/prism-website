@@ -29,6 +29,8 @@ export type BlogFrontmatter = {
 
 const BLOG_PATH = path.join(process.cwd(), "content", "blog")
 const PUBLIC_PATH = path.join(process.cwd(), "public")
+const DEFAULT_BLOG_FEATURED_IMAGE =
+  "https://res.cloudinary.com/dhqpqfw6w/image/upload/v1770786137/Prism_rgeypo.png"
 
 const CODEX_REGEX = /\bcode?x\b/gi
 const DEFAULT_CATEGORY_SLUG = "general"
@@ -83,10 +85,10 @@ function getPublicAssetPath(imagePath: string) {
 }
 
 async function resolveFrontmatterImage(imageValue: unknown, slug: string): Promise<string | undefined> {
-  if (typeof imageValue !== "string") return undefined
+  if (typeof imageValue !== "string") return DEFAULT_BLOG_FEATURED_IMAGE
 
   const trimmedImage = imageValue.trim()
-  if (INVALID_IMAGE_VALUES.has(trimmedImage.toLowerCase())) return undefined
+  if (INVALID_IMAGE_VALUES.has(trimmedImage.toLowerCase())) return DEFAULT_BLOG_FEATURED_IMAGE
 
   if (isExternalImageUrl(trimmedImage) || isApiImageRoute(trimmedImage)) {
     return trimmedImage
@@ -103,9 +105,9 @@ async function resolveFrontmatterImage(imageValue: unknown, slug: string): Promi
     return trimmedImage
   } catch {
     console.warn(
-      `[MDXLib] Post "${slug}" references missing image "${trimmedImage}". Falling back to gradient placeholder.`,
+      `[MDXLib] Post "${slug}" references missing image "${trimmedImage}". Falling back to default featured image.`,
     )
-    return undefined
+    return DEFAULT_BLOG_FEATURED_IMAGE
   }
 }
 
