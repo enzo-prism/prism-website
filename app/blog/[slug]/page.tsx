@@ -1,29 +1,34 @@
 import BlogPostLayout from '@/components/blog-post-layout'
-import BlogEmailSignup from "@/components/blog-email-signup"
-import { getAllPosts, getPost } from "@/lib/mdx-data"
-import { renderPost } from "@/lib/mdx"
-import { getMdxToc } from "@/lib/mdx-toc"
+import BlogEmailSignup from '@/components/blog-email-signup'
+import { getAllPosts, getPost } from '@/lib/mdx-data'
+import { renderPost } from '@/lib/mdx'
+import { getMdxToc } from '@/lib/mdx-toc'
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 
-interface PageProps { params: Promise<{ slug: string }> }
+interface PageProps {
+  params: Promise<{ slug: string }>
+}
 
 export const dynamicParams = false
 
 export async function generateStaticParams() {
   const posts = await getAllPosts()
   if (!posts) return []
-  return posts.map(post => ({ slug: post.slug }))
+  return posts.map((post) => ({ slug: post.slug }))
 }
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
   const { slug } = await params
   const post = await getPost(slug)
   if (!post) notFound()
   const { frontmatter } = post
-  
+
   // Prefer explicit OG images from frontmatter; fall back to dynamic generator.
-  const base = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.design-prism.com'
+  const base =
+    process.env.NEXT_PUBLIC_BASE_URL || 'https://www.design-prism.com'
   const frontmatterOpenGraphImages = frontmatter.openGraph?.images
   const normalizedOpenGraphImages = Array.isArray(frontmatterOpenGraphImages)
     ? frontmatterOpenGraphImages
@@ -49,7 +54,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       ? [frontmatterTwitterImages]
       : []
   const openGraphImageUrls = normalizedOpenGraphImages
-    .map(image => (typeof image === "string" ? image : image?.url))
+    .map((image) => (typeof image === 'string' ? image : image?.url))
     .filter(Boolean)
   const twitterImages =
     normalizedTwitterImages.length > 0
@@ -57,7 +62,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       : openGraphImageUrls.length > 0
         ? openGraphImageUrls
         : [fallbackOgImage]
-  
+
   // Normalize canonical to www host regardless of frontmatter
   let canonicalUrl: string
   try {
@@ -70,8 +75,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   // Compute concise SEO title (avoid layout template and long strings)
   const maxTitleLength = 60
-  const rawTitle = frontmatter.title || "Blog post"
-  const brandSuffix = " | prism"
+  const rawTitle = frontmatter.title || 'Blog post'
+  const brandSuffix = ' | prism'
   const seoTitle =
     rawTitle.length + brandSuffix.length <= maxTitleLength
       ? `${rawTitle}${brandSuffix}`
@@ -121,9 +126,7 @@ export default async function BlogPostPage({ params }: PageProps) {
       description={frontmatter.description}
       date={frontmatter.date}
       category={frontmatter.category}
-      gradientClass={frontmatter.gradientClass}
       image={frontmatter.image}
-      showHeroImage={frontmatter.showHeroImage}
       openGraph={frontmatter.openGraph}
       canonical={frontmatter.canonical}
       relatedPosts={prioritized.slice(0, 3)}
