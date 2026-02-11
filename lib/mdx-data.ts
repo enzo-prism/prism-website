@@ -1,7 +1,9 @@
-import fs from "fs/promises"
-import matter from "gray-matter"
-import path from "path"
-import "server-only"
+import fs from 'fs/promises'
+import matter from 'gray-matter'
+import path from 'path'
+import 'server-only'
+
+import { DEFAULT_BLOG_FEATURED_IMAGE } from '@/lib/blog-images'
 
 export type BlogFrontmatter = {
   title: string
@@ -27,17 +29,14 @@ export type BlogFrontmatter = {
   }
 }
 
-const BLOG_PATH = path.join(process.cwd(), "content", "blog")
-const PUBLIC_PATH = path.join(process.cwd(), "public")
-const DEFAULT_BLOG_FEATURED_IMAGE =
-  "https://res.cloudinary.com/dhqpqfw6w/image/upload/v1770786137/Prism_rgeypo.png"
-
+const BLOG_PATH = path.join(process.cwd(), 'content', 'blog')
+const PUBLIC_PATH = path.join(process.cwd(), 'public')
 const CODEX_REGEX = /\bcode?x\b/gi
-const DEFAULT_CATEGORY_SLUG = "general"
+const DEFAULT_CATEGORY_SLUG = 'general'
 
 function normalizeCodexWord(value: string) {
-  return value.replace(CODEX_REGEX, match =>
-    match.charAt(0) === match.charAt(0).toLowerCase() ? "codex" : "Codex",
+  return value.replace(CODEX_REGEX, (match) =>
+    match.charAt(0) === match.charAt(0).toLowerCase() ? 'codex' : 'Codex',
   )
 }
 
@@ -45,56 +44,83 @@ function slugify(value: string): string {
   return (
     value
       .toLowerCase()
-      .replace(/&/g, "and")
-      .replace(/[^a-z0-9]+/g, "-")
-      .replace(/^-+|-+$/g, "") || DEFAULT_CATEGORY_SLUG
+      .replace(/&/g, 'and')
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '') || DEFAULT_CATEGORY_SLUG
   )
 }
 
 function normalizeCodexCasing<T>(value: T): T {
-  if (typeof value === "string") {
+  if (typeof value === 'string') {
     return normalizeCodexWord(value) as T
   }
 
   if (Array.isArray(value)) {
-    return value.map(item => normalizeCodexCasing(item)) as unknown as T
+    return value.map((item) => normalizeCodexCasing(item)) as unknown as T
   }
 
-  if (value && typeof value === "object") {
+  if (value && typeof value === 'object') {
     return Object.fromEntries(
-      Object.entries(value as Record<string, unknown>).map(([key, val]) => [key, normalizeCodexCasing(val)]),
+      Object.entries(value as Record<string, unknown>).map(([key, val]) => [
+        key,
+        normalizeCodexCasing(val),
+      ]),
     ) as T
   }
 
   return value
 }
 
-const INVALID_IMAGE_VALUES = new Set(["", "null", "undefined", "none", "false"])
+const INVALID_IMAGE_VALUES = new Set(['', 'null', 'undefined', 'none', 'false'])
 
 function isExternalImageUrl(value: string) {
   return /^https?:\/\//i.test(value)
 }
 
 function isApiImageRoute(value: string) {
-  return value.startsWith("/api/")
+  return value.startsWith('/api/')
 }
 
 function getPublicAssetPath(imagePath: string) {
   const normalizedPath = imagePath.split(/[?#]/, 1)[0]
-  return path.join(PUBLIC_PATH, normalizedPath.replace(/^\/+/, ""))
+  return path.join(PUBLIC_PATH, normalizedPath.replace(/^\/+/, ''))
 }
 
-async function resolveFrontmatterImage(imageValue: unknown, slug: string): Promise<string | undefined> {
-  if (typeof imageValue !== "string") return DEFAULT_BLOG_FEATURED_IMAGE
+function isSvgMarkup(value: string) {
+  return value.startsWith('<svg') || value.startsWith('<?xml')
+}
+
+async function hasMismatchedImageFormat(assetPath: string, imagePath: string) {
+  const normalizedPath = imagePath.split(/[?#]/, 1)[0].toLowerCase()
+  const rasterExtension = /\.(png|jpe?g|webp|gif|avif)$/i
+  if (!rasterExtension.test(normalizedPath)) return false
+
+  try {
+    const header = (await fs.readFile(assetPath, 'utf8'))
+      .trimStart()
+      .slice(0, 200)
+      .toLowerCase()
+    return isSvgMarkup(header)
+  } catch {
+    return false
+  }
+}
+
+async function resolveFrontmatterImage(
+  imageValue: unknown,
+  slug: string,
+): Promise<string | undefined> {
+  if (typeof imageValue !== 'string') return DEFAULT_BLOG_FEATURED_IMAGE
 
   const trimmedImage = imageValue.trim()
-  if (INVALID_IMAGE_VALUES.has(trimmedImage.toLowerCase())) return DEFAULT_BLOG_FEATURED_IMAGE
+  if (INVALID_IMAGE_VALUES.has(trimmedImage.toLowerCase()))
+    return DEFAULT_BLOG_FEATURED_IMAGE
 
   if (isExternalImageUrl(trimmedImage) || isApiImageRoute(trimmedImage)) {
     return trimmedImage
   }
 
-  if (!trimmedImage.startsWith("/")) {
+  if (!trimmedImage.startsWith('/')) {
     return trimmedImage
   }
 
@@ -102,6 +128,14 @@ async function resolveFrontmatterImage(imageValue: unknown, slug: string): Promi
 
   try {
     await fs.access(publicAssetPath)
+
+    if (await hasMismatchedImageFormat(publicAssetPath, trimmedImage)) {
+      console.warn(
+        `[MDXLib] Post "${slug}" references image "${trimmedImage}" with mismatched format. Falling back to default featured image.`,
+      )
+      return DEFAULT_BLOG_FEATURED_IMAGE
+    }
+
     return trimmedImage
   } catch {
     console.warn(
@@ -116,12 +150,17 @@ export async function getPost(
 ): Promise<{ frontmatter: BlogFrontmatter; content: string } | null> {
   const filePath = path.join(BLOG_PATH, `${slug}.mdx`)
   try {
-    const rawFileContent = await fs.readFile(filePath, "utf8")
+    const rawFileContent = await fs.readFile(filePath, 'utf8')
     const { data, content } = matter(rawFileContent)
     const normalizedData = normalizeCodexCasing(data)
     const normalizedContent = normalizeCodexWord(content)
 
-    if (!normalizedData.title || !normalizedData.description || !normalizedData.date || !normalizedData.category) {
+    if (
+      !normalizedData.title ||
+      !normalizedData.description ||
+      !normalizedData.date ||
+      !normalizedData.category
+    ) {
       console.error(`[MDXLib] Post "${slug}" missing required fields:`, {
         title: !!normalizedData.title,
         description: !!normalizedData.description,
@@ -131,9 +170,14 @@ export async function getPost(
       return null
     }
 
-    const rawAuthor = normalizedData.author ?? normalizedData.openGraph?.authors?.[0] ?? "Prism Team"
+    const rawAuthor =
+      normalizedData.author ??
+      normalizedData.openGraph?.authors?.[0] ??
+      'Prism Team'
     const author =
-      typeof rawAuthor === "string" && rawAuthor.trim().length > 0 ? rawAuthor.trim() : "Prism Team"
+      typeof rawAuthor === 'string' && rawAuthor.trim().length > 0
+        ? rawAuthor.trim()
+        : 'Prism Team'
 
     const image = await resolveFrontmatterImage(normalizedData.image, slug)
 
@@ -148,8 +192,11 @@ export async function getPost(
       image,
       gradientClass:
         normalizedData.gradientClass ||
-        "bg-gradient-to-br from-blue-300/30 via-purple-300/30 to-pink-300/30",
-      showHeroImage: typeof normalizedData.showHeroImage === "boolean" ? normalizedData.showHeroImage : true,
+        'bg-gradient-to-br from-blue-300/30 via-purple-300/30 to-pink-300/30',
+      showHeroImage:
+        typeof normalizedData.showHeroImage === 'boolean'
+          ? normalizedData.showHeroImage
+          : true,
       openGraph: normalizedData.openGraph,
       twitter: normalizedData.twitter,
       canonical: normalizedData.canonical,
@@ -158,38 +205,50 @@ export async function getPost(
 
     return { frontmatter, content: normalizedContent }
   } catch (error: unknown) {
-    console.error(`[MDXLib] Failed to get post "${slug}" from "${filePath}":`, error)
+    console.error(
+      `[MDXLib] Failed to get post "${slug}" from "${filePath}":`,
+      error,
+    )
     return null
   }
 }
 
-export async function getAllPosts(): Promise<Array<{ slug: string } & BlogFrontmatter> | null> {
+export async function getAllPosts(): Promise<Array<
+  { slug: string } & BlogFrontmatter
+> | null> {
   try {
     const files = await fs.readdir(BLOG_PATH)
-    const mdxFiles = files.filter(fileName => fileName.endsWith(".mdx"))
+    const mdxFiles = files.filter((fileName) => fileName.endsWith('.mdx'))
     if (mdxFiles.length === 0) {
       console.warn(`[MDXLib] No .mdx files found in ${BLOG_PATH}`)
       return []
     }
 
     const postsData = await Promise.all(
-      mdxFiles.map(async fileName => {
-        const slug = fileName.replace(/\.mdx$/, "")
+      mdxFiles.map(async (fileName) => {
+        const slug = fileName.replace(/\.mdx$/, '')
         const post = await getPost(slug)
         return post ? { slug, ...post.frontmatter } : null
       }),
     )
 
-    const validPosts = postsData.filter(Boolean) as Array<{ slug: string } & BlogFrontmatter>
+    const validPosts = postsData.filter(Boolean) as Array<
+      { slug: string } & BlogFrontmatter
+    >
     if (validPosts.length === 0 && mdxFiles.length > 0) {
       console.warn(
         `[MDXLib] MDX files were found in ${BLOG_PATH}, but no valid posts could be processed. Check getPost errors above.`,
       )
     }
 
-    return validPosts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+    return validPosts.sort(
+      (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+    )
   } catch (error: unknown) {
-    console.error(`[MDXLib] Failed to get all posts from "${BLOG_PATH}":`, error)
+    console.error(
+      `[MDXLib] Failed to get all posts from "${BLOG_PATH}":`,
+      error,
+    )
     return null
   }
 }

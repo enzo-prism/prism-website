@@ -1,6 +1,7 @@
-import { cn } from "@/lib/utils"
-import { ArrowRight } from "lucide-react"
-import Link from "next/link"
+import { cn } from '@/lib/utils'
+import { DEFAULT_BLOG_FEATURED_IMAGE } from '@/lib/blog-images'
+import { ArrowRight } from 'lucide-react'
+import Link from 'next/link'
 
 interface SimpleBlogPostCardProps {
   title: string
@@ -29,7 +30,10 @@ export default function SimpleBlogPostCard({
   gradientClass,
   prefetch,
 }: SimpleBlogPostCardProps) {
-  const hasFeaturedImage = typeof image === "string" && image.trim().length > 0
+  const featuredImage =
+    typeof image === 'string' && image.trim().length > 0
+      ? image
+      : DEFAULT_BLOG_FEATURED_IMAGE
 
   return (
     <Link
@@ -40,16 +44,19 @@ export default function SimpleBlogPostCard({
       className="block h-full"
     >
       <article className="h-full overflow-hidden rounded-md border border-border/60 bg-card/30 backdrop-blur-sm flex flex-col transition-[transform,background-color] duration-200 hover:-translate-y-0.5 hover:bg-card/45">
-        <div className={cn("relative w-full aspect-[4/3] overflow-hidden", !hasFeaturedImage && gradientClass)}>
-          {hasFeaturedImage ? (
-            <img
-              src={image}
-              alt={`${title} featured image`}
-              loading="lazy"
-              decoding="async"
-              className="h-full w-full object-cover"
-            />
-          ) : null}
+        <div
+          className={cn(
+            'relative w-full aspect-[4/3] overflow-hidden',
+            gradientClass,
+          )}
+        >
+          <img
+            src={featuredImage}
+            alt={`${title} featured image`}
+            loading="lazy"
+            decoding="async"
+            className="h-full w-full object-cover"
+          />
         </div>
         <div className="flex flex-1 flex-col space-y-3 border-t border-border/60 p-5">
           <div className="flex flex-wrap items-center justify-between gap-2">
@@ -58,12 +65,18 @@ export default function SimpleBlogPostCard({
             </span>
             <div className="flex flex-wrap items-center justify-end gap-x-1 gap-y-1 text-xs text-muted-foreground">
               <time dateTime={new Date(date).toISOString()}>
-                {new Intl.DateTimeFormat(undefined, { year: 'numeric', month: 'short', day: 'numeric' }).format(new Date(date))}
+                {new Intl.DateTimeFormat(undefined, {
+                  year: 'numeric',
+                  month: 'short',
+                  day: 'numeric',
+                }).format(new Date(date))}
               </time>
               <span className="text-border" aria-hidden>
                 &middot;
               </span>
-              <span className="font-medium text-foreground/80 normal-case">By {author}</span>
+              <span className="font-medium text-foreground/80 normal-case">
+                By {author}
+              </span>
             </div>
           </div>
           <h3 className="blog-card-title text-balance text-foreground normal-case">
@@ -76,7 +89,11 @@ export default function SimpleBlogPostCard({
           )}
           <div className="flex items-center pt-1 text-xs font-semibold uppercase tracking-[0.12em] text-foreground">
             Read post
-            <ArrowRight className="ml-1 h-4 w-4" aria-hidden="true" focusable="false" />
+            <ArrowRight
+              className="ml-1 h-4 w-4"
+              aria-hidden="true"
+              focusable="false"
+            />
           </div>
         </div>
       </article>

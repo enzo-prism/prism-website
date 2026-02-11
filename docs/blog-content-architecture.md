@@ -19,18 +19,18 @@ Use this document when adding posts or customizing the discovery experience.
 
 Each MDX file must define:
 
-| Field | Required | Notes |
-| --- | --- | --- |
-| `title` | ✅ | Used for metadata + card headings |
-| `author` | optional | Byline for cards + post header (defaults to "Prism Team") |
-| `description` | ✅ | Summary for cards, RSS, and SEO |
-| `date` | ✅ | ISO string (`YYYY-MM-DD`) |
-| `category` | ✅ | Free-form label; slug auto-generated |
-| `gradientClass` | ✅ | Tailwind gradient utilities for OG art |
-| `image` | optional | Relative path for hero image + cards |
-| `h1Title`, `showHeroImage`, `openGraph`, `twitter`, `canonical` | optional | Overrides for layout & SEO |
+| Field                                          | Required | Notes                                                     |
+| ---------------------------------------------- | -------- | --------------------------------------------------------- |
+| `title`                                        | ✅       | Used for metadata + card headings                         |
+| `author`                                       | optional | Byline for cards + post header (defaults to "Prism Team") |
+| `description`                                  | ✅       | Summary for cards, RSS, and SEO                           |
+| `date`                                         | ✅       | ISO string (`YYYY-MM-DD`)                                 |
+| `category`                                     | ✅       | Free-form label; slug auto-generated                      |
+| `gradientClass`                                | ✅       | Tailwind gradient utilities for OG art                    |
+| `image`                                        | optional | Relative path for hero image + cards                      |
+| `h1Title`, `openGraph`, `twitter`, `canonical` | optional | Overrides for layout & SEO                                |
 
-Blog cards render the frontmatter `image` when available. If `image` is omitted, cards automatically fall back to the post `gradientClass` for the preview frame background.
+Blog cards and post hero sections render the frontmatter `image` when available. If `image` is omitted or invalid, they fall back to the shared default featured image (`https://res.cloudinary.com/dhqpqfw6w/image/upload/v1770786137/Prism_rgeypo.png`).
 
 `lib/mdx.tsx` automatically derives `categorySlug` from the `category` label by lowercasing and replacing non-alphanumeric characters with hyphens. Stick to meaningful labels; the slug keeps filters URL-safe.
 
