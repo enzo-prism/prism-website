@@ -492,7 +492,7 @@ export default async function AdsPage() {
                     author={post.author}
                     description={post.description}
                     slug={post.slug}
-                    image={post.image || "/blog/ai-digital-marketing.png"}
+                    image={post.image}
                     gradientClass={post.gradientClass}
                   />
                 ))}

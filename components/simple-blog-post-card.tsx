@@ -9,7 +9,7 @@ interface SimpleBlogPostCardProps {
   author: string
   description: string
   slug: string
-  image: string
+  image?: string | null
   featured?: boolean
   compact?: boolean
   gradientClass: string
@@ -29,6 +29,8 @@ export default function SimpleBlogPostCard({
   gradientClass,
   prefetch,
 }: SimpleBlogPostCardProps) {
+  const hasFeaturedImage = typeof image === "string" && image.trim().length > 0
+
   return (
     <Link
       href={`/blog/${slug}`}
@@ -38,7 +40,17 @@ export default function SimpleBlogPostCard({
       className="block h-full"
     >
       <article className="h-full overflow-hidden rounded-md border border-border/60 bg-card/30 backdrop-blur-sm flex flex-col transition-[transform,background-color] duration-200 hover:-translate-y-0.5 hover:bg-card/45">
-        <div className={cn("relative w-full aspect-[4/3] overflow-hidden", gradientClass)} />
+        <div className={cn("relative w-full aspect-[4/3] overflow-hidden", !hasFeaturedImage && gradientClass)}>
+          {hasFeaturedImage ? (
+            <img
+              src={image}
+              alt={`${title} featured image`}
+              loading="lazy"
+              decoding="async"
+              className="h-full w-full object-cover"
+            />
+          ) : null}
+        </div>
         <div className="flex flex-1 flex-col space-y-3 border-t border-border/60 p-5">
           <div className="flex flex-wrap items-center justify-between gap-2">
             <span className="inline-flex items-center rounded-md border border-border/60 bg-muted/40 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">

@@ -182,7 +182,7 @@ export default function BlogPostLayout({
                             author={related.author}
                             description={related.description}
                             slug={related.slug}
-                            image={related.image ?? "/blog/ai-digital-marketing.png"}
+                            image={related.image}
                             gradientClass={related.gradientClass}
                             compact
                         />
