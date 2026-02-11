@@ -54,8 +54,8 @@ Custom confirmation routes live in `app/thank-you/` and `app/analysis-thank-you/
 Any CTA labeled “free analysis” should point to `/free-analysis`. When you add a new CTA, double-check the href so we don’t regress to `/get-started` accidentally.
 
 ## Typography & Casing
-- The global stylesheet forces the brand’s lowercase aesthetic via `body { text-transform: lowercase !important; }`.
-- All UI text should stay lowercase end-to-end; do not introduce casing overrides or `text-transform: none` escape hatches.
+- Do not enforce global lowercase transforms for site copy; preserve natural capitalization for readability.
+- Use Tailwind text-transform utilities only when a specific component intentionally needs stylistic casing.
 
 ## UI Components (shadcn/ui)
 The site uses shadcn/ui primitives under `components/ui/` (Tailwind + Radix + `cn()` helpers) with the `radix-vega` preset (neutral palette + subtle menu accent, Inter as `--font-sans`). Add new primitives via the CLI so we stay aligned with upstream.

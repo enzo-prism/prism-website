@@ -69,7 +69,7 @@ export default function BlogPostCard({
   }
 
   return (
-    <Link href={`/blog/${slug}`} onClick={() => trackCTAClick(`view blog post`, title)} className="block">
+    <Link href={`/blog/${slug}`} onClick={() => trackCTAClick(`View blog post`, title)} className="block">
       <motion.div
         ref={ref}
         className="relative h-full cursor-pointer group"
@@ -92,14 +92,14 @@ export default function BlogPostCard({
           {featured && (
             <Badge
               asChild
-              className="absolute left-3 top-3 z-10 rounded-full bg-black/80 px-3 py-1 text-xs lowercase text-white"
+              className="absolute left-3 top-3 z-10 rounded-full bg-black/80 px-3 py-1 text-xs text-white"
             >
               <motion.div
                 initial={{ scale: 0, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 transition={{ delay: 0.3, duration: 0.3 }}
               >
-                featured
+                Featured
               </motion.div>
             </Badge>
           )}
@@ -131,34 +131,34 @@ export default function BlogPostCard({
               >
                 <Badge
                   variant="secondary"
-                  className="rounded-full bg-neutral-100 px-3 py-1 text-xs lowercase text-neutral-700"
+                  className="rounded-full bg-neutral-100 px-3 py-1 text-xs text-neutral-700"
                 >
                   {category}
                 </Badge>
               </motion.div>
-              <div className="text-sm text-neutral-500 lowercase">{date}</div>
+              <div className="text-sm text-neutral-500">{date}</div>
             </div>
             <motion.h3 
-              className="text-lg font-bold lowercase"
+              className="text-lg font-bold"
               style={{ transform: "translateZ(30px)" }}
             >
               {title}
             </motion.h3>
             {!compact && (
               <motion.p 
-                className="text-neutral-600 lowercase"
+                className="text-neutral-600"
                 style={{ transform: "translateZ(20px)" }}
               >
                 {description}
               </motion.p>
             )}
             <motion.div 
-              className="flex items-center pt-2 text-sm font-medium text-neutral-900 lowercase"
+              className="flex items-center pt-2 text-sm font-medium text-neutral-900"
               style={{ transform: "translateZ(40px)" }}
               whileHover={{ x: 4 }}
               transition={{ duration: 0.2 }}
             >
-              read post 
+              Read post 
               <motion.div
                 animate={{ x: [0, 4, 0] }}
                 transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}

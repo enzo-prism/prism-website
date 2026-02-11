@@ -59,9 +59,9 @@ export default function BlogPostsList({ posts }: { posts: BlogPost[] }) {
             </SimpleBlogGrid>
           ) : (
             <div className="rounded-md border border-dashed border-border/60 bg-card/20 py-16 text-center">
-              <h3 className="mb-2 text-xl font-semibold text-foreground">no posts found</h3>
+              <h3 className="mb-2 text-xl font-semibold text-foreground">No posts found</h3>
               <p className="text-muted-foreground">
-                try adjusting your filters or search query
+                Try adjusting your filters or search query
               </p>
             </div>
           )}

@@ -43,7 +43,7 @@ export default function BlogCTAButton() {
     <Link href="/free-analysis">
       <motion.button
         ref={ref}
-        className="relative inline-flex items-center justify-center rounded-full bg-neutral-900 px-6 py-3 text-sm font-medium text-white lowercase overflow-hidden group"
+        className="relative inline-flex items-center justify-center rounded-full bg-neutral-900 px-6 py-3 text-sm font-medium text-white overflow-hidden group"
         onClick={() => trackCTAClick(FREE_AUDIT_CTA_TEXT, "blog page")}
         onMouseMove={handleMouseMove}
         onMouseEnter={() => setIsHovered(true)}

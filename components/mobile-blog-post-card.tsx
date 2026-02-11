@@ -67,12 +67,12 @@ export default function MobileBlogPostCard({
         {/* Featured badge */}
         {featured && (
           <motion.div 
-            className="absolute top-3 left-3 text-xs text-white bg-black/80 px-3 py-1 rounded-full lowercase z-10"
+            className="absolute top-3 left-3 text-xs text-white bg-black/80 px-3 py-1 rounded-full z-10"
             initial={{ scale: 0, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ delay: 0.2, duration: 0.3 }}
           >
-            featured
+            Featured
           </motion.div>
         )}
         
@@ -99,7 +99,7 @@ export default function MobileBlogPostCard({
           {/* Category and metadata */}
           <div className="flex items-center justify-between gap-2">
             <motion.div 
-              className="inline-flex items-center px-3 py-1 bg-neutral-100 rounded-full text-xs font-medium lowercase"
+              className="inline-flex items-center px-3 py-1 bg-neutral-100 rounded-full text-xs font-medium"
               whileHover={!isMobile && !reducedMotion ? { scale: 1.05 } : {}}
               transition={{ duration: 0.2 }}
             >
@@ -120,7 +120,7 @@ export default function MobileBlogPostCard({
           
           {/* Title */}
           <h3 className={`
-            font-bold lowercase leading-tight
+            font-bold leading-tight
             ${isMobile ? 'text-lg' : 'text-xl'}
             ${compact ? 'line-clamp-2' : 'line-clamp-3'}
           `}>
@@ -130,7 +130,7 @@ export default function MobileBlogPostCard({
           {/* Description */}
           {!compact && (
             <p className={`
-              text-neutral-600 lowercase leading-relaxed
+              text-neutral-600 leading-relaxed
               ${isMobile ? 'text-sm line-clamp-2' : 'text-base line-clamp-3'}
             `}>
               {description}
@@ -140,11 +140,11 @@ export default function MobileBlogPostCard({
           {/* Read more link */}
           <div className="flex items-center justify-between pt-2">
             <motion.div 
-              className="flex items-center text-sm font-medium text-neutral-900 lowercase"
+              className="flex items-center text-sm font-medium text-neutral-900"
               whileHover={!isMobile && !reducedMotion ? { x: 4 } : {}}
               transition={{ duration: 0.2 }}
             >
-              <span>read post</span>
+              <span>Read post</span>
               <motion.div
                 className="ml-1"
                 animate={!reducedMotion ? { x: [0, 4, 0] } : {}}
@@ -236,17 +236,17 @@ export function CompactMobileBlogPostCard({
           <div className="flex-1 p-4 flex flex-col justify-between min-h-0">
             <div className="space-y-2">
               <div className="flex items-center gap-2">
-                <span className="text-xs px-2 py-1 bg-neutral-100 rounded-full lowercase">
+                <span className="text-xs px-2 py-1 bg-neutral-100 rounded-full">
                   {category}
                 </span>
                 {featured && (
-                  <span className="text-xs px-2 py-1 bg-black text-white rounded-full lowercase">
-                    featured
+                  <span className="text-xs px-2 py-1 bg-black text-white rounded-full">
+                    Featured
                   </span>
                 )}
               </div>
               
-              <h3 className="text-sm font-bold lowercase leading-tight line-clamp-2">
+              <h3 className="text-sm font-bold leading-tight line-clamp-2">
                 {title}
               </h3>
               
@@ -258,7 +258,7 @@ export function CompactMobileBlogPostCard({
             </div>
             
             <div className="flex items-center justify-between mt-2">
-              <span className="text-xs text-neutral-600 lowercase">read post</span>
+              <span className="text-xs text-neutral-600">Read post</span>
               <ArrowRight className="h-3 w-3 text-neutral-400" />
             </div>
           </div>

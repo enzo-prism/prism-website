@@ -82,30 +82,30 @@ function BlogErrorFallback({ error, retry }: { error: Error; retry: () => void }
       <div className="text-center max-w-md mx-auto">
         <div className="mb-6">
           <AlertTriangle className="h-16 w-16 text-red-500 mx-auto mb-4" />
-          <h2 className="text-2xl font-bold text-neutral-900 lowercase mb-2">
-            {isMDXError ? 'blog post failed to load' : 'something went wrong'}
+          <h2 className="text-2xl font-bold text-neutral-900 mb-2">
+            {isMDXError ? 'Blog post failed to load' : 'Something went wrong'}
           </h2>
-          <p className="text-neutral-600 lowercase">
+          <p className="text-neutral-600">
             {isMDXError 
-              ? 'there was an error loading this blog post. please try again or go back to the blog list.'
-              : 'we encountered an unexpected error. please try refreshing the page.'
+              ? 'There was an error loading this blog post. Please try again or go back to the blog list.'
+              : 'We encountered an unexpected error. Please try refreshing the page.'
             }
           </p>
         </div>
         
         <div className="space-y-3">
-          <Button onClick={retry} className="lowercase bg-neutral-900 text-white hover:bg-neutral-800">
+          <Button onClick={retry} className="bg-neutral-900 text-white hover:bg-neutral-800">
             <RefreshCw />
-            try again
+            Try again
           </Button>
           
           <div>
             <Link
               href="/blog"
-              className="inline-flex items-center px-4 py-2 text-neutral-600 hover:text-neutral-900 transition-colors lowercase"
+              className="inline-flex items-center px-4 py-2 text-neutral-600 hover:text-neutral-900 transition-colors"
             >
               <ArrowLeft className="h-4 w-4 mr-2" />
-              back to blog
+              Back to blog
             </Link>
           </div>
         </div>
@@ -135,16 +135,16 @@ export function BlogPostErrorBoundary({ children }: { children: React.ReactNode 
             <div className="flex items-start">
               <AlertTriangle className="h-5 w-5 text-red-600 mt-0.5 mr-3 shrink-0" />
               <div>
-                <h3 className="text-lg font-semibold text-red-900 lowercase mb-2">
-                  failed to render blog content
+                <h3 className="text-lg font-semibold text-red-900 mb-2">
+                  Failed to render blog content
                 </h3>
-                <p className="text-red-700 lowercase mb-4">
-                  there was an error processing the blog post content. this might be due to invalid 
+                <p className="text-red-700 mb-4">
+                  There was an error processing the blog post content. This might be due to invalid 
                   formatting or a temporary issue.
                 </p>
-                <Button onClick={retry} variant="destructive" size="sm" className="lowercase">
+                <Button onClick={retry} variant="destructive" size="sm">
                   <RefreshCw />
-                  retry loading
+                  Retry loading
                 </Button>
               </div>
             </div>
@@ -174,15 +174,15 @@ export function BlogListErrorBoundary({ children }: { children: React.ReactNode 
           <div className="container mx-auto px-4 md:px-6">
             <div className="text-center py-16 border border-dashed border-red-200 rounded-lg bg-red-50">
               <AlertTriangle className="h-12 w-12 text-red-500 mx-auto mb-4" />
-              <h3 className="text-xl font-medium text-red-900 lowercase mb-2">
-                failed to load blog posts
+              <h3 className="text-xl font-medium text-red-900 mb-2">
+                Failed to load blog posts
               </h3>
-              <p className="text-red-700 lowercase mb-6">
-                we couldn't load the blog posts right now. please try again.
+              <p className="text-red-700 mb-6">
+                We couldn't load the blog posts right now. Please try again.
               </p>
-              <Button onClick={retry} variant="destructive" className="lowercase">
+              <Button onClick={retry} variant="destructive">
                 <RefreshCw />
-                retry loading
+                Retry loading
               </Button>
             </div>
           </div>

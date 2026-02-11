@@ -40,13 +40,13 @@ export default function BlogPage({ posts }: { posts: BlogPost[] }) {
       <Navbar />
       <main className="flex-1 relative">
         <div className="container mx-auto px-4 md:px-6">
-          <Breadcrumbs items={[{ name: "home", url: "/" }, { name: "blog", url: "/blog" }]} />
+          <Breadcrumbs items={[{ name: "Home", url: "/" }, { name: "Blog", url: "/blog" }]} />
         </div>
         {/* Minimal hero */}
         <section className="py-6 md:py-10 border-b border-neutral-100">
           <div className="container mx-auto px-4 md:px-6">
-            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight lowercase">insights & ideas</h1>
-            <p className="text-neutral-600 mt-2 lowercase">thoughts on design, development, and digital strategy from the prism team</p>
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight">Insights & ideas</h1>
+            <p className="text-neutral-600 mt-2">Thoughts on design, development, and digital strategy from the Prism team</p>
           </div>
         </section>
 
@@ -61,8 +61,8 @@ export default function BlogPage({ posts }: { posts: BlogPost[] }) {
         <section className="py-12 md:py-16 bg-neutral-50">
           <div className="container mx-auto px-4 md:px-6">
             <div className="mx-auto max-w-2xl space-y-4 text-center">
-              <h2 className="text-2xl font-bold tracking-tighter lowercase sm:text-3xl">want to work with us?</h2>
-              <p className="text-neutral-600 lowercase">let's discuss how we can help your business grow</p>
+              <h2 className="text-2xl font-bold tracking-tighter sm:text-3xl">Want to work with us?</h2>
+              <p className="text-neutral-600">Let's discuss how we can help your business grow</p>
               <div className="pt-4">
                 <BlogCTAButton />
               </div>
@@ -71,10 +71,10 @@ export default function BlogPage({ posts }: { posts: BlogPost[] }) {
         </section>
 
         {/* SEO supporting copy */}
-        <SeoTextSection title="prism blog: design, development, and growth">
+        <SeoTextSection title="Prism blog: design, development, and growth">
           <p>
-            we publish practical notes on product design, engineering, and modern seo—how to ship faster,
-            write clearer interfaces, and measure what matters. each post is written from real client work
+            We publish practical notes on product design, engineering, and modern SEO—how to ship faster,
+            write clearer interfaces, and measure what matters. Each post is written from real client work
             and experiments, not theory.
           </p>
         </SeoTextSection>

@@ -151,10 +151,10 @@ export default async function Blog({
           </div>
         </section>
 
-        <SeoTextSection title="prism blog: design, development, and growth">
+        <SeoTextSection title="Prism blog: design, development, and growth">
           <p>
-            we publish practical notes on product design, engineering, and modern seo—how to ship faster,
-            write clearer interfaces, and measure what matters. each post is written from real client work
+            We publish practical notes on product design, engineering, and modern SEO—how to ship faster,
+            write clearer interfaces, and measure what matters. Each post is written from real client work
             and experiments, not theory.
           </p>
         </SeoTextSection>

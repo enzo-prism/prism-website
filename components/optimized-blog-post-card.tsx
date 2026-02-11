@@ -78,8 +78,8 @@ export default function OptimizedBlogPostCard({
           )}
         >
           {featured && (
-            <div className="absolute top-3 left-3 text-xs text-white bg-black/80 px-3 py-1 rounded-full lowercase z-10 hardware-accelerated">
-              featured
+            <div className="absolute top-3 left-3 text-xs text-white bg-black/80 px-3 py-1 rounded-full z-10 hardware-accelerated">
+              Featured
             </div>
           )}
           
@@ -110,7 +110,7 @@ export default function OptimizedBlogPostCard({
           <div className="p-5 space-y-3 border-t border-neutral-100 flex-1 flex flex-col">
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
               <motion.div 
-                className="inline-block px-3 py-1 bg-neutral-100 rounded-full text-xs lowercase w-fit"
+                className="inline-block px-3 py-1 bg-neutral-100 rounded-full text-xs w-fit"
                 animate={{
                   scale: isHovered ? 1.05 : 1
                 }}
@@ -118,27 +118,27 @@ export default function OptimizedBlogPostCard({
               >
                 {category}
               </motion.div>
-              <div className="text-sm text-neutral-500 lowercase">{date}</div>
+              <div className="text-sm text-neutral-500">{date}</div>
             </div>
             
-            <h3 className="text-lg font-bold lowercase">
+            <h3 className="text-lg font-bold">
               {title}
             </h3>
             
             {!compact && (
-              <p className="text-neutral-600 lowercase flex-1">
+              <p className="text-neutral-600 flex-1">
                 {description}
               </p>
             )}
             
             <motion.div 
-              className="flex items-center text-sm font-medium text-neutral-900 lowercase pt-2"
+              className="flex items-center text-sm font-medium text-neutral-900 pt-2"
               animate={{
                 x: isHovered ? 4 : 0
               }}
               transition={{ duration: 0.2 }}
             >
-              read post 
+              Read post 
               <ArrowRight className="ml-1 h-4 w-4" />
             </motion.div>
           </div>
