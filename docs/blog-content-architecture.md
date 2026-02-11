@@ -34,7 +34,7 @@ Blog cards and post hero sections render the frontmatter `image` when available.
 
 `lib/mdx.tsx` automatically derives `categorySlug` from the `category` label by lowercasing and replacing non-alphanumeric characters with hyphens. Stick to meaningful labels; the slug keeps filters URL-safe.
 
-Open Graph behavior: if `openGraph.images` is present in frontmatter, those images are used for metadata. Otherwise the blog post falls back to the dynamic OG generator at `/api/og/blog/[slug]`, which uses `gradientClass` for the background. Add matching `twitter.images` if you want Twitter previews to use the same custom asset.
+Open Graph behavior is date-based in `app/blog/[slug]/page.tsx`: posts before 2026 always use the shared Prism OG image (`https://res.cloudinary.com/dhqpqfw6w/image/upload/v1770786137/Prism_rgeypo.png`), while posts in 2026 and later use each post’s resolved featured image (`frontmatter.image`). Twitter images still honor explicit `twitter.images` first, then `openGraph.images`, then the date-based OG fallback.
 
 Headings (H2/H3) are assigned stable anchor IDs during MDX rendering (`rehype-slug`), and `lib/mdx-toc.ts` parses the MDX source to build the table of contents.
 

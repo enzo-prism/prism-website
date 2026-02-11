@@ -1,6 +1,7 @@
 import BlogPostLayout from '@/components/blog-post-layout'
 import BlogEmailSignup from '@/components/blog-email-signup'
 import { getAllPosts, getPost } from '@/lib/mdx-data'
+import { getBlogOpenGraphImage } from '@/lib/blog-images'
 import { renderPost } from '@/lib/mdx'
 import { getMdxToc } from '@/lib/mdx-toc'
 import type { Metadata } from 'next'
@@ -26,7 +27,6 @@ export async function generateMetadata({
   if (!post) notFound()
   const { frontmatter } = post
 
-  // Prefer explicit OG images from frontmatter; fall back to dynamic generator.
   const base =
     process.env.NEXT_PUBLIC_BASE_URL || 'https://www.design-prism.com'
   const frontmatterOpenGraphImages = frontmatter.openGraph?.images
@@ -35,18 +35,19 @@ export async function generateMetadata({
     : frontmatterOpenGraphImages
       ? [frontmatterOpenGraphImages]
       : []
-  const hasCustomOpenGraphImages = normalizedOpenGraphImages.length > 0
-  const fallbackOgImage = `${base}/api/og/blog/${slug}`
-  const ogImages = hasCustomOpenGraphImages
-    ? normalizedOpenGraphImages
-    : [
-        {
-          url: fallbackOgImage,
-          width: 1200,
-          height: 630,
-          alt: frontmatter.title,
-        },
-      ]
+  const datedOpenGraphImage = getBlogOpenGraphImage(
+    frontmatter.date,
+    frontmatter.image,
+    base,
+  )
+  const ogImages = [
+    {
+      url: datedOpenGraphImage,
+      width: 1200,
+      height: 630,
+      alt: frontmatter.title,
+    },
+  ]
   const frontmatterTwitterImages = frontmatter.twitter?.images
   const normalizedTwitterImages = Array.isArray(frontmatterTwitterImages)
     ? frontmatterTwitterImages
@@ -61,7 +62,7 @@ export async function generateMetadata({
       ? normalizedTwitterImages
       : openGraphImageUrls.length > 0
         ? openGraphImageUrls
-        : [fallbackOgImage]
+        : [datedOpenGraphImage]
 
   // Normalize canonical to www host regardless of frontmatter
   let canonicalUrl: string
