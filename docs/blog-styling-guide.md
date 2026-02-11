@@ -19,6 +19,7 @@ The blog styling system has been improved to provide clean, consistent, and read
    - Consistent appearance across all blog posts
    - Dark mode support built-in
    - Table of contents links are generated from H2/H3 headings
+   - Blog card titles/descriptions keep authored capitalization (no forced lowercase transforms)
 
 3. **Clean Content**
    - Avoid inline Tailwind classes/styles in MDX (they can cause visual drift)

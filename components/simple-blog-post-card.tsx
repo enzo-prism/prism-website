@@ -54,11 +54,11 @@ export default function SimpleBlogPostCard({
               <span className="font-medium text-foreground/80 normal-case">By {author}</span>
             </div>
           </div>
-          <h3 className="blog-card-title text-balance text-foreground">
+          <h3 className="blog-card-title text-balance text-foreground normal-case">
             {title}
           </h3>
           {!compact && (
-            <p className="blog-card-description text-muted-foreground line-clamp-3">
+            <p className="blog-card-description text-muted-foreground line-clamp-3 normal-case">
               {description}
             </p>
           )}
