@@ -113,11 +113,11 @@ export default function BlogPostLayout({
                       slug={slug}
                     />
                     <div className="mb-3 flex flex-wrap items-center gap-x-3 gap-y-2 text-xs text-muted-foreground sm:text-sm">
-                      <span className="inline-block rounded-md border border-border/60 bg-muted/30 px-3 py-1 text-[10px] font-semibold uppercase font-pixel tracking-[0.16em] text-foreground/90">
+                      <span className="inline-block rounded-md border border-border/60 bg-muted/30 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-foreground/90">
                         {category}
                       </span>
                       <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
-                        <time className="lowercase" dateTime={new Date(date).toISOString()}>
+                        <time dateTime={new Date(date).toISOString()}>
                           {new Intl.DateTimeFormat(undefined, { year: 'numeric', month: 'short', day: 'numeric' }).format(new Date(date))}
                         </time>
                         <span className="text-border/70" aria-hidden>
@@ -126,10 +126,10 @@ export default function BlogPostLayout({
                         <span className="font-medium text-foreground/80 normal-case">By {author}</span>
                       </div>
                     </div>
-                    <h1 className="type-h1 font-semibold text-balance">
+                    <h1 className="blog-post-title text-balance">
                       {h1Title || title}
                     </h1>
-                    <p className="mt-4 max-w-[68ch] type-lead">
+                    <p className="blog-post-lead mt-4 max-w-[70ch]">
                       {description}
                     </p>
                     <div className="mt-5 flex flex-wrap items-center justify-start gap-3">
@@ -166,10 +166,10 @@ export default function BlogPostLayout({
                 {relatedPosts.length > 0 && (
                   <section className="mt-16 rounded-2xl border border-border/60 bg-card/40 p-6 sm:p-8">
                     <div className="flex flex-col gap-2 mb-6">
-                      <p className="text-xs font-semibold uppercase tracking-[0.35em] text-muted-foreground font-pixel">keep learning</p>
-                      <h2 className="text-2xl font-bold tracking-tight lowercase">related posts</h2>
-                      <p className="text-sm text-muted-foreground lowercase">
-                        more experiments and playbooks from the prism team.
+                      <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">Keep learning</p>
+                      <h2 className="text-2xl font-bold tracking-tight">Related posts</h2>
+                      <p className="text-sm text-muted-foreground">
+                        More experiments and playbooks from the Prism team.
                       </p>
                     </div>
                     <div className="grid grid-cols-1 gap-6 md:grid-cols-3">

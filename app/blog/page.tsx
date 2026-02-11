@@ -90,7 +90,7 @@ export default async function Blog({
   }))
 
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className="blog-reading-surface flex min-h-screen flex-col">
       <Navbar />
       <main className="relative flex-1">
         <div className="container mx-auto px-4 md:px-6">
@@ -99,10 +99,10 @@ export default async function Blog({
 
         <section className="border-b border-border/60 py-10 md:py-14">
           <div className="container mx-auto px-4 md:px-6">
-            <p className="text-[10px] font-semibold uppercase tracking-[0.32em] text-muted-foreground font-pixel">prism blog</p>
-            <h1 className="mt-4 text-4xl font-semibold sm:text-5xl md:text-6xl">insights & ideas</h1>
-            <p className="mt-4 text-muted-foreground">
-              thoughts on design, development, and digital strategy from the prism team
+            <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">prism blog</p>
+            <h1 className="blog-display-title mt-4 text-foreground">Insights & ideas</h1>
+            <p className="blog-hero-subtitle mt-4 text-muted-foreground">
+              Thoughtful breakdowns on design, development, and digital strategy from the Prism team.
             </p>
           </div>
         </section>
@@ -142,8 +142,8 @@ export default async function Blog({
         <section className="border-t border-border/60 bg-card/15 py-12 md:py-16">
           <div className="container mx-auto px-4 md:px-6">
             <div className="mx-auto max-w-2xl space-y-4 text-center">
-              <h2 className="text-2xl font-semibold sm:text-3xl">want to work with us?</h2>
-              <p className="text-muted-foreground">let's discuss how we can help your business grow</p>
+              <h2 className="text-2xl font-semibold sm:text-3xl">Want to work with us?</h2>
+              <p className="text-muted-foreground">Let's discuss how we can help your business grow.</p>
               <div className="pt-4">
                 <BlogCTAButtonLazy />
               </div>

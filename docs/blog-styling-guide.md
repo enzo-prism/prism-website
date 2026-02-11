@@ -7,7 +7,8 @@ The blog styling system has been improved to provide clean, consistent, and read
 ## Key Improvements
 
 1. **Better Readability**
-   - Optimized font size (17px base) for comfortable reading
+   - Blog index + post pages now use the Inter typeface (`next/font/google`)
+   - Optimized body font size (`clamp(1.06rem, 0.98rem + 0.24vw, 1.2rem)`) for comfortable reading
    - Improved line height and spacing between elements
    - Softer text colors to reduce eye strain
    - Consistent spacing throughout the article
@@ -22,7 +23,7 @@ The blog styling system has been improved to provide clean, consistent, and read
 3. **Clean Content**
    - Avoid inline Tailwind classes/styles in MDX (they can cause visual drift)
    - Preserves special components like CTAs and embeds
-   - Maintains the lowercase aesthetic while improving readability
+   - Prioritizes sentence case and cleaner letter spacing for long-form readability
 
 ## Writing Blog Posts
 
@@ -97,8 +98,8 @@ This is an informational callout box.
 
 The blog styling system consists of:
 
-1. **prose-blog** class: Custom Tailwind prose configuration
-2. **lowercase-prose** class: Maintains the brand's lowercase aesthetic
+1. **`app/blog/layout.tsx`**: Applies Inter only within the blog route segment
+2. **`blog-reading-surface` + `prose-blog` classes**: Route-scoped typography tuning for long-form reading
 3. **MDX renderer**: Cleans up inline styles automatically
 4. **Dark mode**: Automatic color adjustments for dark theme
 

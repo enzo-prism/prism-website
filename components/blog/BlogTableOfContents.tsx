@@ -64,7 +64,7 @@ export default function BlogTableOfContents({ items, className }: BlogTableOfCon
       <div className="lg:hidden">
         <div className="rounded-2xl border border-border/60 bg-card/40 p-4 shadow-sm shadow-black/40 backdrop-blur supports-[backdrop-filter]:bg-card/30">
           <div className="flex items-center justify-between">
-            <p className="text-[10px] font-semibold uppercase tracking-[0.32em] text-muted-foreground font-pixel">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-muted-foreground">
               on this page
             </p>
             <span className="text-xs text-muted-foreground/80">{items.length} sections</span>
@@ -96,8 +96,8 @@ export default function BlogTableOfContents({ items, className }: BlogTableOfCon
       <nav className="hidden lg:block" aria-label="Table of contents">
         <div className="sticky top-28 rounded-3xl border border-border/60 bg-card/40 p-5 shadow-sm shadow-black/40 backdrop-blur supports-[backdrop-filter]:bg-card/30">
           <div>
-            <p className="text-[10px] font-semibold uppercase tracking-[0.32em] text-muted-foreground font-pixel">on this page</p>
-            <p className="mt-1 text-sm text-muted-foreground">jump to the section you need.</p>
+            <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-muted-foreground">on this page</p>
+            <p className="mt-1 text-sm leading-6 text-muted-foreground">jump to the section you need.</p>
           </div>
           <ul className="mt-4 space-y-1.5">
             {items.map((item) => {
