@@ -52,6 +52,7 @@ Quick reference for the pages we edit most often.
 
 ## Get Started (`app/get-started/page.tsx`)
 - The hero animation uses `components/get-started/GetStartedHeroScene.tsx` with the Unicorn Studio JSON at `/public/unicorn/get-started-hero.json`.
+- `GetStartedHeroScene` now uses the shared local Unicorn SDK (`/public/unicorn/unicornStudio.umd.js`) with eager loading (`lazyLoad={false}`), a balanced render profile (desktop `fps=60`/`dpi=1.5`, mobile/coarse/reduced-data `fps=30`/`dpi=1`), and the shared `.unicorn-hero-scene__placeholder` fallback so first paint is never blank.
 - The original hero (badge, copy, VSL, CTA) now follows the animation section; keep the CTA anchored to `#book-call`.
 
 ## Contact (`app/contact/page.tsx`)
@@ -68,9 +69,9 @@ Quick reference for the pages we edit most often.
 - The hero client logo circles use click/tap tooltips; keep the label text in `HERO_CLIENT_ICONS` aligned with the logos.
 - Hero benefit cards are rendered by `components/home/HeroBenefits.tsx`, including randomized Lordicon variants on each load for the “more customers”, “Higher Customer LTV”, and “spend less time on tech” tiles.
 - The hero animation section uses `HERO_SECTION_CLASSES` in `app/client-page.tsx` to reserve a full-viewport slot, accounting for the sticky header height and safe-area insets.
-- The Unicorn Studio WebGL scene is embedded via `components/home/UnicornHeroScene.tsx` using `unicornstudio-react/next`. It loads the self-hosted JSON scene at `/public/unicorn/hero-scene.json` and the locally hosted Unicorn Studio SDK at `/public/unicorn/unicornStudio.umd.js`.
+- The Unicorn Studio WebGL scene is embedded via `components/home/UnicornHeroScene.tsx` using `unicornstudio-react/next`. It loads the self-hosted JSON scene at `/public/unicorn/hero-scene.json` and the shared local Unicorn SDK at `/public/unicorn/unicornStudio.umd.js`.
+- `UnicornHeroScene` uses eager loading (`lazyLoad={false}`), the same balanced render profile (desktop `fps=60`/`dpi=1.5`, mobile/coarse/reduced-data `fps=30`/`dpi=1`), and `.unicorn-hero-scene__placeholder` so users always see a hero visual while WebGL initializes.
 - The hero animation also overlays a monthly leads pill (`components/home/HeroMonthlyLeadsPill.tsx`) that links to `/case-studies` and displays copy like “7,886 leads delivered to clients last month 🥳” with a subtle “stat updated monthly” label; update it by adding a new newest-first entry in `content/home-hero-leads.ts`.
-- The hero animation also overlays a monthly leads pill (`components/home/HeroMonthlyLeadsPill.tsx`) that links to `/case-studies` and displays copy like “7,886 leads delivered to clients in last month 🥳” with a subtle “stat updated monthly” label; update it by adding a new newest-first entry in `content/home-hero-leads.ts`.
 - The main hero copy, CTA, benefits, and client logos live in the section immediately following the animation.
 - On mobile, the homepage navbar starts hidden and fades/slides in after the first tap; this is enabled via `mobileRevealOnFirstTap` on `components/navbar.tsx`.
 - Homepage sections use full-screen spacing (`SECTION_SPACING` in `app/client-page.tsx` plus the matching padding in `components/home/WallOfLoveCarousel.tsx`) so each section reads as its own viewport.

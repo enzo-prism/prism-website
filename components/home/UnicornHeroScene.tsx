@@ -2,9 +2,9 @@
 
 import { useMemo } from "react"
 import UnicornScene from "unicornstudio-react/next"
+import { getHeroRenderProfile, UNICORN_SDK_URL } from "@/lib/unicorn-hero-config"
 
 const JSON_FILE_PATH = "/unicorn/hero-scene.json"
-const SDK_URL = "/unicorn/unicornStudio.umd.js"
 
 type UnicornHeroSceneProps = {
   className?: string
@@ -12,6 +12,7 @@ type UnicornHeroSceneProps = {
 
 export default function UnicornHeroScene({ className }: UnicornHeroSceneProps) {
   const rootClassName = ["unicorn-hero-scene", className].filter(Boolean).join(" ")
+  const renderProfile = useMemo(() => getHeroRenderProfile(), [])
   const shouldReduceMotion = useMemo(() => {
     if (typeof window === "undefined") return false
     if (typeof window.matchMedia !== "function") return false
@@ -28,9 +29,13 @@ export default function UnicornHeroScene({ className }: UnicornHeroSceneProps) {
       ) : (
         <UnicornScene
           jsonFilePath={JSON_FILE_PATH}
-          sdkUrl={SDK_URL}
+          sdkUrl={UNICORN_SDK_URL}
           width="100%"
           height="100%"
+          fps={renderProfile.fps}
+          dpi={renderProfile.dpi}
+          lazyLoad={false}
+          placeholderClassName="unicorn-hero-scene__placeholder"
         />
       )}
     </div>
