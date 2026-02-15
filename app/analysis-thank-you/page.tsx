@@ -7,18 +7,14 @@ import Navbar from "@/components/navbar"
 import RevealOnScroll from "@/components/reveal-on-scroll"
 import { Button } from "@/components/ui/button"
 import PixelishIcon from "@/components/pixelish/PixelishIcon"
+import { buildRouteMetadata } from "@/lib/seo/metadata"
 
-export const metadata: Metadata = {
-  title: "Analysis received | prism",
+export const metadata: Metadata = buildRouteMetadata({
+  titleStem: "Analysis received | prism",
   description: "We're preparing your free analysis—book a call if you want a live walkthrough.",
-  robots: {
-    index: false,
-    follow: false,
-  },
-  alternates: {
-    canonical: "https://www.design-prism.com/analysis-thank-you",
-  },
-}
+  path: "/analysis-thank-you",
+  index: false,
+})
 
 export default function AnalysisThankYouPage() {
   return (

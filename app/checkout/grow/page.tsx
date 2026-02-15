@@ -5,18 +5,14 @@ import Footer from "@/components/footer"
 import CheckoutForm from "@/components/checkout-form"
 import { Button } from "@/components/ui/button"
 import type { Metadata } from "next"
+import { buildRouteMetadata } from "@/lib/seo/metadata"
 
-export const metadata: Metadata = {
-  title: "grow plan checkout | prism",
+export const metadata: Metadata = buildRouteMetadata({
+  titleStem: "grow plan checkout | prism",
   description: "confirm your prism grow website plan and finalize billing details.",
-  alternates: {
-    canonical: "https://www.design-prism.com/checkout/grow",
-  },
-  robots: {
-    index: false,
-    follow: false,
-  },
-}
+  path: "/checkout/grow",
+  index: false,
+})
 
 export default function GrowCheckoutPage() {
   return (

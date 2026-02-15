@@ -4,25 +4,19 @@ import { WebPageSchema } from "@/components/schema-markup"
 import type { Metadata } from "next"
 import Link from "next/link"
 import ProofCTAs from "./ProofCTAs"
+import { buildRouteMetadata } from "@/lib/seo/metadata"
 
 const PAGE_TITLE = "prism proof | testimonial engine for dentists"
 const PAGE_DESCRIPTION =
   "capture authentic patient stories once and repurpose them into case studies, schema, reels, and google business profile posts that lift trust and acceptance."
 const CANONICAL_URL = "https://www.design-prism.com/proof"
 
-export const metadata: Metadata = {
-  title: PAGE_TITLE,
+export const metadata: Metadata = buildRouteMetadata({
+  titleStem: PAGE_TITLE,
   description: PAGE_DESCRIPTION,
-  openGraph: {
-    title: PAGE_TITLE,
-    description: PAGE_DESCRIPTION,
-    url: CANONICAL_URL,
-    images: ["/prism-opengraph.png"],
-  },
-  alternates: {
-    canonical: CANONICAL_URL,
-  },
-}
+  path: "/proof",
+  ogImage: "/prism-opengraph.png",
+})
 
 export default function ProofPage() {
   return (

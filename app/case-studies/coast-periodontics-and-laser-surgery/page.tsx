@@ -1,19 +1,12 @@
 import type { Metadata } from "next"
 import CoastPeriodonticsCaseStudy from "./client-page"
+import { buildRouteMetadata } from "@/lib/seo/metadata"
 
-export const metadata: Metadata = {
-  title: "coast periodontics case study | dental growth",
-  description:
-    "see how prism is partnering with coast periodontics & laser surgery to deliver a calm website, local visibility, and conversion tracking essentials.",
-  alternates: {
-    canonical:
-      "https://www.design-prism.com/case-studies/coast-periodontics-and-laser-surgery",
-  },
-  openGraph: {
-    title: "coast periodontics & laser surgery × prism case study",
-    description: "specialty dental growth groundwork with website design and local presence support.",
-  },
-}
+export const metadata: Metadata = buildRouteMetadata({
+  titleStem: "coast periodontics case study | dental growth",
+  description: "see how prism is partnering with coast periodontics & laser surgery to deliver a calm website, local visibility, and conversion tracking essentials.",
+  path: "/case-studies/coast-periodontics-and-laser-surgery",
+})
 
 export default function CoastPeriodonticsCaseStudyPage() {
   return <CoastPeriodonticsCaseStudy />

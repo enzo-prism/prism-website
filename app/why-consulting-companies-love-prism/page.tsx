@@ -11,6 +11,7 @@ import { ArrowRight, CheckCircle2 } from "lucide-react"
 import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
 import { CASE_STUDIES } from "@/lib/case-study-data"
 import { pixelishForEmoji } from "@/lib/pixelish-emoji"
+import { buildRouteMetadata } from "@/lib/seo/metadata"
 
 const coreOutcomes = [
   {
@@ -137,31 +138,11 @@ const retentionBenefits = [
 const consultingCaseStudies = CASE_STUDIES.filter((study) => study.segments.includes("consulting"))
 const consultingGradientClasses = ["from-blue-100 via-white to-blue-50", "from-amber-100 via-white to-amber-50"]
 
-export const metadata: Metadata = {
-  title: "why consulting companies love prism",
+export const metadata: Metadata = buildRouteMetadata({
+  titleStem: "why consulting companies love prism",
   description: "discover how prism helps consulting firms earn trust online, convert qualified leads, and automate growth while they focus on clients.",
-  alternates: {
-    canonical: "https://www.design-prism.com/why-consulting-companies-love-prism"
-  },
-  openGraph: {
-    title: "why consulting companies love prism",
-    description: "build trust, attract clients, and scale your impact without worrying about your website. prism keeps your digital engine running.",
-    url: "https://www.design-prism.com/why-consulting-companies-love-prism",
-    siteName: "Prism",
-    locale: "en_US",
-    type: "website"
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "why consulting companies love prism",
-    description: "prism helps consulting firms stand out online, capture qualified leads, and turn insights into measurable growth.",
-    creator: "@designprism"
-  },
-  robots: {
-    index: true,
-    follow: true
-  }
-}
+  path: "/why-consulting-companies-love-prism",
+})
 
 export default function ConsultingCompaniesPage() {
   return (

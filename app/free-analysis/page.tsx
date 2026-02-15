@@ -6,38 +6,19 @@ import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
 import PixelishIcon from "@/components/pixelish/PixelishIcon"
 import { WebPageSchema } from "@/components/schema-markup"
+import { buildRouteMetadata } from "@/lib/seo/metadata"
 
 const PAGE_TITLE = "Free analysis | prism"
 const PAGE_DESCRIPTION =
   "Request a free review of your current website, Google listing, and visibility metrics."
 const CANONICAL_URL = "https://www.design-prism.com/free-analysis"
 
-export const metadata: Metadata = {
-  title: PAGE_TITLE,
+export const metadata: Metadata = buildRouteMetadata({
+  titleStem: PAGE_TITLE,
   description: PAGE_DESCRIPTION,
-  alternates: {
-    canonical: CANONICAL_URL,
-  },
-  openGraph: {
-    title: PAGE_TITLE,
-    description: PAGE_DESCRIPTION,
-    url: CANONICAL_URL,
-    images: [
-      {
-        url: "/prism-opengraph.png",
-        width: 1200,
-        height: 630,
-        alt: "Prism free analysis",
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: PAGE_TITLE,
-    description: PAGE_DESCRIPTION,
-    images: ["/prism-opengraph.png"],
-  },
-}
+  path: "/free-analysis",
+  ogImage: "/prism-opengraph.png",
+})
 
 export default function FreeAnalysisPage() {
   return (

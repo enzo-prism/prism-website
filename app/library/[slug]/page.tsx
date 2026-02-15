@@ -11,6 +11,7 @@ import { canonicalUrl } from "@/lib/canonical"
 import { getTikTokEmbedHtml } from "@/lib/library/embeds"
 import { getLibraryPosts } from "@/lib/library/getLibraryPosts"
 import type { LibraryPost } from "@/lib/library/types"
+import { buildAbsoluteTitle, normalizeDescription } from "@/lib/seo/rules"
 
 interface PageProps {
   params: Promise<{ slug: string }>
@@ -20,8 +21,12 @@ const buildMetadata = (post: LibraryPost): Metadata => {
   const canonical = canonicalUrl(`/library/${post.slug}`)
   const speakerName = post.editorial?.speaker?.name
   const rawTitle = speakerName ? `${speakerName}: ${post.title}` : post.title
-  const description =
-    post.editorial?.takeaways?.[0] ?? post.caption ?? "Prism Library short lesson."
+  const title = buildAbsoluteTitle(rawTitle)
+  const description = normalizeDescription(
+    post.editorial?.takeaways?.[0] ??
+      post.caption ??
+      `Short lesson from Prism Library: ${post.title}.`,
+  )
   const ogImage =
     post.thumbnailUrl && post.thumbnailUrl.startsWith("http")
       ? post.thumbnailUrl
@@ -30,17 +35,17 @@ const buildMetadata = (post: LibraryPost): Metadata => {
       : null
 
   return {
-    title: { absolute: `${rawTitle} | Prism Library` },
+    title: { absolute: title },
     description,
     openGraph: {
-      title: rawTitle,
+      title,
       description,
       url: canonical,
       images: ogImage ? [{ url: ogImage, alt: post.title }] : undefined,
     },
     twitter: {
       card: "summary_large_image",
-      title: rawTitle,
+      title,
       description,
       images: ogImage ? [ogImage] : undefined,
     },

@@ -5,29 +5,14 @@ import FAQSection from "@/components/faq-section"
 import { SeoHero } from "@/components/seo/seo-hero"
 import { SeoSection } from "@/components/seo/seo-section"
 import { HowToSchema, ServiceSchema } from "@/components/schema-markup"
+import { buildRouteMetadata } from "@/lib/seo/metadata"
 
-export const metadata: Metadata = {
-  title: "seo audit service | prism",
-  description:
-    "seo audit service that finds the technical, on-page, and trust issues blocking rankings, then delivers a prioritized plan tied to leads.",
-  alternates: {
-    canonical: "https://www.design-prism.com/seo/audit",
-  },
-  openGraph: {
-    title: "seo audit service | prism",
-    description:
-      "seo audit service that finds the technical, on-page, and trust issues blocking rankings, then delivers a prioritized plan tied to leads.",
-    url: "https://www.design-prism.com/seo/audit",
-    images: [
-      {
-        url: "/prism-opengraph.png",
-        width: 1200,
-        height: 630,
-        alt: "prism seo audit service",
-      },
-    ],
-  },
-}
+export const metadata: Metadata = buildRouteMetadata({
+  titleStem: "seo audit service | prism",
+  description: "seo audit service that finds the technical, on-page, and trust issues blocking rankings, then delivers a prioritized plan tied to leads.",
+  path: "/seo/audit",
+  ogImage: "/prism-opengraph.png",
+})
 
 const auditCoverage = [
   {

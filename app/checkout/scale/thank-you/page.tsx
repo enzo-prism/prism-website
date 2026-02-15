@@ -5,18 +5,14 @@ import Footer from "@/components/footer"
 import { Button } from "@/components/ui/button"
 import { CheckCircle2, Calendar } from "lucide-react"
 import PixelishIcon from "@/components/pixelish/PixelishIcon"
+import { buildRouteMetadata } from "@/lib/seo/metadata"
 
-export const metadata: Metadata = {
-  title: "scale checkout received | prism",
+export const metadata: Metadata = buildRouteMetadata({
+  titleStem: "scale checkout received | prism",
   description: "we received your scale plan submission—book a kickoff call to accelerate next steps.",
-  robots: {
-    index: false,
-    follow: false,
-  },
-  alternates: {
-    canonical: "https://www.design-prism.com/checkout/scale/thank-you",
-  },
-}
+  path: "/checkout/scale/thank-you",
+  index: false,
+})
 
 export default function ScaleThankYouPage() {
   return (

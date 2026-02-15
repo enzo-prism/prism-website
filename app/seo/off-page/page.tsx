@@ -6,29 +6,14 @@ import { SeoSection } from "@/components/seo/seo-section"
 import VideoPlayer from "@/components/video-player"
 import { type SeoVideoContent, seoOffPageContent } from "@/content/seo"
 import { HowToSchema, ServiceSchema } from "@/components/schema-markup"
+import { buildRouteMetadata } from "@/lib/seo/metadata"
 
-export const metadata: Metadata = {
-  title: "off-page seo systems | prism",
-  description:
-    "prism tightens listings, review flows, backlinks, and real-world engagement so search engines trust your brand and keep surfacing it.",
-  alternates: {
-    canonical: "https://www.design-prism.com/seo/off-page",
-  },
-  openGraph: {
-    title: "off-page seo systems | prism",
-    description:
-      "quality backlinks, dialed-in listings, steady reviews, and branded signals — see how prism builds the trust graph around your business.",
-    url: "https://www.design-prism.com/seo/off-page",
-    images: [
-      {
-        url: "/prism-opengraph.png",
-        width: 1200,
-        height: 630,
-        alt: "prism off-page seo",
-      },
-    ],
-  },
-}
+export const metadata: Metadata = buildRouteMetadata({
+  titleStem: "off-page seo systems | prism",
+  description: "prism tightens listings, review flows, backlinks, and real-world engagement so search engines trust your brand and keep surfacing it.",
+  path: "/seo/off-page",
+  ogImage: "/prism-opengraph.png",
+})
 
 export default function SeoOffPagePage() {
   const { hero, intro, levers, closing } = seoOffPageContent

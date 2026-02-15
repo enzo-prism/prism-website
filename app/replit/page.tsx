@@ -10,6 +10,7 @@ import { WebPageSchema } from "@/components/schema-markup"
 import { Button } from "@/components/ui/button"
 import { getAllPosts } from "@/lib/mdx-data"
 import { pixelishForEmoji } from "@/lib/pixelish-emoji"
+import { buildRouteMetadata } from "@/lib/seo/metadata"
 
 const REPLIT_REFERRAL_URL = "https://replit.com/refer/enzo78"
 const YOUTUBE_CHANNEL_URL = "https://www.youtube.com/@the_design_prism"
@@ -66,32 +67,12 @@ const PAGE_DESCRIPTION =
   "prism partners with replit to design, build, and teach modern website creation with free guides and tutorials."
 const CANONICAL_URL = "https://www.design-prism.com/replit"
 
-export const metadata: Metadata = {
-  title: PAGE_TITLE,
+export const metadata: Metadata = buildRouteMetadata({
+  titleStem: PAGE_TITLE,
   description: PAGE_DESCRIPTION,
-  alternates: {
-    canonical: CANONICAL_URL
-  },
-  openGraph: {
-    title: PAGE_TITLE,
-    description: PAGE_DESCRIPTION,
-    url: CANONICAL_URL,
-    siteName: "prism",
-    locale: "en_US",
-    type: "website",
-    images: ["/prism-opengraph.png"]
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: PAGE_TITLE,
-    description: PAGE_DESCRIPTION,
-    images: ["/prism-opengraph.png"]
-  },
-  robots: {
-    index: true,
-    follow: true
-  }
-}
+  path: "/replit",
+  ogImage: "/prism-opengraph.png",
+})
 
 export default async function ReplitPage() {
   const allPosts = await getAllPosts()

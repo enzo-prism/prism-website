@@ -10,38 +10,19 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { HOTTEST_CONTENT } from "@/lib/hottest-content"
 import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
+import { buildRouteMetadata } from "@/lib/seo/metadata"
 
 const PAGE_TITLE = "prism's hottest content library"
 const PAGE_DESCRIPTION =
   "see prism’s top-performing instagram reels exactly as they appeared on the platform. live embeds with full context from the original posts."
 const CANONICAL_URL = "https://www.design-prism.com/hottest-content"
 
-export const metadata: Metadata = {
-  title: PAGE_TITLE,
+export const metadata: Metadata = buildRouteMetadata({
+  titleStem: PAGE_TITLE,
   description: PAGE_DESCRIPTION,
-  alternates: {
-    canonical: CANONICAL_URL,
-  },
-  openGraph: {
-    title: PAGE_TITLE,
-    description: PAGE_DESCRIPTION,
-    url: CANONICAL_URL,
-    images: [
-      {
-        url: "/prism-opengraph.png",
-        width: 1200,
-        height: 630,
-        alt: "Prism hottest content",
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: PAGE_TITLE,
-    description: PAGE_DESCRIPTION,
-    images: ["/prism-opengraph.png"],
-  },
-}
+  path: "/hottest-content",
+  ogImage: "/prism-opengraph.png",
+})
 
 export default function HottestContentPage() {
   const uniqueContent = Array.from(

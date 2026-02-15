@@ -7,9 +7,11 @@ import { DEFAULT_BLOG_FEATURED_IMAGE } from '@/lib/blog-images'
 
 export type BlogFrontmatter = {
   title: string
+  seoTitle?: string
   h1Title?: string
   author: string
   description: string
+  seoDescription?: string
   date: string
   category: string
   categorySlug: string
@@ -183,9 +185,11 @@ export async function getPost(
 
     const frontmatter: BlogFrontmatter = {
       title: normalizedData.title,
+      seoTitle: normalizedData.seoTitle,
       h1Title: normalizedData.h1Title,
       author,
       description: normalizedData.description,
+      seoDescription: normalizedData.seoDescription,
       date: normalizedData.date,
       category: normalizedData.category.trim(),
       categorySlug: slugify(normalizedData.category.trim()),

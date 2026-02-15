@@ -10,45 +10,14 @@ import { Button } from "@/components/ui/button"
 import SeoTextSection from "@/components/seo-text-section"
 import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
 import { ArrowRight } from "lucide-react"
+import { buildRouteMetadata } from "@/lib/seo/metadata"
 
-export const metadata: Metadata = {
-  title: {
-    absolute: "AI SEO Services | Prism",
-  },
-  description:
-    "AI SEO services that help your brand get cited in Google AI Overviews, ChatGPT, Gemini, and Perplexity—built on clear pages, proof, and iteration.",
-  alternates: {
-    canonical: "https://www.design-prism.com/ai-seo-services",
-  },
-  openGraph: {
-    title: "AI SEO Services | Prism",
-    description:
-      "AI SEO services that help your brand get cited in Google AI Overviews, ChatGPT, Gemini, and Perplexity—built on clear pages, proof, and iteration.",
-    url: "https://www.design-prism.com/ai-seo-services",
-    siteName: "prism",
-    locale: "en_US",
-    type: "website",
-    images: [
-      {
-        url: "/prism-opengraph.png",
-        width: 1200,
-        height: 630,
-        alt: "Prism AI SEO services",
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "AI SEO Services | Prism",
-    description:
-      "AI SEO services that help your brand get cited in Google AI Overviews, ChatGPT, Gemini, and Perplexity—built on clear pages, proof, and iteration.",
-    images: ["/prism-opengraph.png"],
-  },
-  robots: {
-    index: true,
-    follow: true,
-  },
-}
+export const metadata: Metadata = buildRouteMetadata({
+  titleStem: "AI SEO Services | Prism",
+  description: "AI SEO services that help your brand get cited in Google AI Overviews, ChatGPT, Gemini, and Perplexity—built on clear pages, proof, and iteration.",
+  path: "/ai-seo-services",
+  ogImage: "/prism-opengraph.png",
+})
 
 const primaryCta = {
   label: FREE_AUDIT_CTA_TEXT,

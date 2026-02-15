@@ -20,6 +20,7 @@ import { WebPageSchema } from "@/components/schema-markup"
 import { Button } from "@/components/ui/button"
 import PixelishIcon from "@/components/pixelish/PixelishIcon"
 import { pixelishForEmoji } from "@/lib/pixelish-emoji"
+import { buildRouteMetadata } from "@/lib/seo/metadata"
 
 const GET_FREE_AUDIT_HREF = "/get-started"
 const CONTACT_HREF = "/contact"
@@ -162,32 +163,12 @@ const PAGE_DESCRIPTION =
   "prism helps dental practices attract more patients with compliant google ads for implants, invisalign, and general dentistry—built for policy safety."
 const CANONICAL_URL = "https://www.design-prism.com/google/dental-ads"
 
-export const metadata: Metadata = {
-  title: PAGE_TITLE,
+export const metadata: Metadata = buildRouteMetadata({
+  titleStem: PAGE_TITLE,
   description: PAGE_DESCRIPTION,
-  alternates: {
-    canonical: CANONICAL_URL,
-  },
-  openGraph: {
-    title: PAGE_TITLE,
-    description: PAGE_DESCRIPTION,
-    url: CANONICAL_URL,
-    siteName: "prism",
-    locale: "en_US",
-    type: "website",
-    images: ["/prism-opengraph.png"],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: PAGE_TITLE,
-    description: PAGE_DESCRIPTION,
-    images: ["/prism-opengraph.png"],
-  },
-  robots: {
-    index: true,
-    follow: true
-  }
-}
+  path: "/google/dental-ads",
+  ogImage: "/prism-opengraph.png",
+})
 
 export default function GoogleDentalAdsPage() {
   return (

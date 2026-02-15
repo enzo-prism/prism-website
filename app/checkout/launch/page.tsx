@@ -7,18 +7,14 @@ import { Button } from "@/components/ui/button"
 import type { Metadata } from "next"
 import RecentLaunchesCarousel from "@/components/checkout/recent-launches-carousel"
 import { websiteProjects } from "@/lib/website-projects"
+import { buildRouteMetadata } from "@/lib/seo/metadata"
 
-export const metadata: Metadata = {
-  title: "launch plan checkout | prism",
+export const metadata: Metadata = buildRouteMetadata({
+  titleStem: "launch plan checkout | prism",
   description: "confirm your prism launch website plan and finalize billing details.",
-  alternates: {
-    canonical: "https://www.design-prism.com/checkout/launch",
-  },
-  robots: {
-    index: false,
-    follow: false,
-  },
-}
+  path: "/checkout/launch",
+  index: false,
+})
 
 export default function LaunchCheckoutPage() {
   return (

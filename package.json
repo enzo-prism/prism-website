@@ -32,6 +32,7 @@
     "git:hooks-remove": "node scripts/setup-git-hooks.js remove",
     "check:external": "node scripts/check-external-links.js",
     "seo:inventory": "npx ts-node scripts/seo-inventory.ts",
+    "seo:lint": "npx ts-node scripts/seo-lint.ts",
     "canonical:check": "npx ts-node scripts/verify-canonical.ts"
   },
   "dependencies": {

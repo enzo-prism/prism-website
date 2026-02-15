@@ -7,6 +7,7 @@ import Navbar from "@/components/navbar"
 import ScrollToTop from "@/components/scroll-to-top"
 import { WebPageSchema } from "@/components/schema-markup"
 import { Button } from "@/components/ui/button"
+import { buildRouteMetadata } from "@/lib/seo/metadata"
 
 const GET_STARTED_HREF = "/get-started"
 const PRICING_HREF = "/get-started"
@@ -74,32 +75,12 @@ const PAGE_DESCRIPTION =
   "prism is a google partner helping small businesses grow with workspace, ads, analytics, and business profile optimization. get started with partner pricing."
 const CANONICAL_URL = "https://www.design-prism.com/google"
 
-export const metadata: Metadata = {
-  title: PAGE_TITLE,
+export const metadata: Metadata = buildRouteMetadata({
+  titleStem: PAGE_TITLE,
   description: PAGE_DESCRIPTION,
-  alternates: {
-    canonical: CANONICAL_URL,
-  },
-  openGraph: {
-    title: PAGE_TITLE,
-    description: PAGE_DESCRIPTION,
-    url: CANONICAL_URL,
-    siteName: "prism",
-    locale: "en_US",
-    type: "website",
-    images: ["/prism-opengraph.png"],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: PAGE_TITLE,
-    description: PAGE_DESCRIPTION,
-    images: ["/prism-opengraph.png"],
-  },
-  robots: {
-    index: true,
-    follow: true
-  }
-}
+  path: "/google",
+  ogImage: "/prism-opengraph.png",
+})
 
 export default function GooglePage() {
   return (

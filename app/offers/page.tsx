@@ -4,31 +4,19 @@ import ScrollToTop from "@/components/scroll-to-top"
 import { WebPageSchema } from "@/components/schema-markup"
 import type { Metadata } from "next"
 import OffersClientPage from "./client-page"
+import { buildRouteMetadata } from "@/lib/seo/metadata"
 
 const PAGE_TITLE = "special offers for prism clients"
 const PAGE_DESCRIPTION =
   "browse the latest limited-time offers from prism for websites, apps, and design support, all crafted to launch momentum quickly."
 const CANONICAL_URL = "https://www.design-prism.com/offers"
 
-export const metadata: Metadata = {
-  title: PAGE_TITLE,
+export const metadata: Metadata = buildRouteMetadata({
+  titleStem: PAGE_TITLE,
   description: PAGE_DESCRIPTION,
-  openGraph: {
-    title: PAGE_TITLE,
-    description: "exclusive offers on our web design, app development, and design services.",
-    url: CANONICAL_URL,
-    images: ["/prism-opengraph.png"],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: PAGE_TITLE,
-    description: "exclusive offers on our web design, app development, and design services.",
-    images: ["/prism-opengraph.png"],
-  },
-  alternates: {
-    canonical: CANONICAL_URL,
-  },
-}
+  path: "/offers",
+  ogImage: "/prism-opengraph.png",
+})
 
 export default function OffersPage() {
   return (

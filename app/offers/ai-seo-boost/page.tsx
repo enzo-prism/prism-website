@@ -1,28 +1,14 @@
 import type { Metadata } from "next"
 import AISEOBoostClientPage from "./client-page"
 import { ServiceSchema } from "@/components/schema-markup"
+import { buildRouteMetadata } from "@/lib/seo/metadata"
 
-export const metadata: Metadata = {
-  title: "ai seo boost™ - get recommended by ai bots | prism",
-  description:
-    "make chatgpt, gemini & perplexity name-drop your brand first. specialized ai search optimization that gets you recommended by ai bots 24/7. 90-day guarantee.",
-  openGraph: {
-    title: "ai seo boost™ - own the ai answer box | prism",
-    description:
-      "turn ai search engines into your 24/7 referral machine. get recommended first by chatgpt, gemini & perplexity with our specialized ai seo optimization.",
-    images: [
-      {
-        url: "/offers/ai-seo-boost-card.png",
-        width: 1200,
-        height: 630,
-        alt: "Prism AI SEO Boost Offer - Get Recommended by AI Bots",
-      },
-    ],
-  },
-  alternates: {
-    canonical: "https://www.design-prism.com/offers/ai-seo-boost",
-  },
-}
+export const metadata: Metadata = buildRouteMetadata({
+  titleStem: "ai seo boost™ - get recommended by ai bots | prism",
+  description: "make chatgpt, gemini & perplexity name-drop your brand first. specialized ai search optimization that gets you recommended by ai bots 24/7. 90-day guarantee.",
+  path: "/offers/ai-seo-boost",
+  ogImage: "/offers/ai-seo-boost-card.png",
+})
 
 export default function AISEOBoostPage() {
   return (

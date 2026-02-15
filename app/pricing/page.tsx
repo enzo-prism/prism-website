@@ -2,23 +2,14 @@ import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
 import type { Metadata } from "next"
 import PricingPageClient from "./client-page"
+import { buildRouteMetadata } from "@/lib/seo/metadata"
 
-export const metadata: Metadata = {
-  title: {
-    absolute: "Pricing | Prism",
-  },
-  description:
-    "Clear pricing for Prism’s website builds and growth systems. Start with a plan, then launch fast with a high-performing site.",
-  openGraph: {
-    title: "Pricing | Prism",
-    description:
-      "Clear pricing for Prism’s website builds and growth systems. Start with a plan, then launch fast with a high-performing site.",
-    images: ["/prism-opengraph.png"],
-  },
-  alternates: {
-    canonical: "https://www.design-prism.com/pricing",
-  },
-}
+export const metadata: Metadata = buildRouteMetadata({
+  titleStem: "Pricing | Prism",
+  description: "Clear pricing for Prism’s website builds and growth systems. Start with a plan, then launch fast with a high-performing site.",
+  path: "/pricing",
+  ogImage: "/prism-opengraph.png",
+})
 
 export default function PricingPage() {
   return (

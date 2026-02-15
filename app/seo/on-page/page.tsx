@@ -6,29 +6,14 @@ import { SeoSection } from "@/components/seo/seo-section"
 import VideoPlayer from "@/components/video-player"
 import { seoOnPageContent } from "@/content/seo"
 import { HowToSchema, ServiceSchema } from "@/components/schema-markup"
+import { buildRouteMetadata } from "@/lib/seo/metadata"
 
-export const metadata: Metadata = {
-  title: "on-page seo services | prism",
-  description:
-    "see how prism structures content, technical seo, and engagement signals so every page feels like the perfect answer for local searches.",
-  alternates: {
-    canonical: "https://www.design-prism.com/seo/on-page",
-  },
-  openGraph: {
-    title: "on-page seo services | prism",
-    description:
-      "content, technical structure, ux, and local proof — all built into every prism website so you rank and convert.",
-    url: "https://www.design-prism.com/seo/on-page",
-    images: [
-      {
-        url: "/prism-opengraph.png",
-        width: 1200,
-        height: 630,
-        alt: "prism on-page seo",
-      },
-    ],
-  },
-}
+export const metadata: Metadata = buildRouteMetadata({
+  titleStem: "on-page seo services | prism",
+  description: "see how prism structures content, technical seo, and engagement signals so every page feels like the perfect answer for local searches.",
+  path: "/seo/on-page",
+  ogImage: "/prism-opengraph.png",
+})
 
 export default function SeoOnPagePage() {
   const { hero, intro, pillars, closing, closingBullets } = seoOnPageContent

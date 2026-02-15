@@ -8,21 +8,14 @@ import { Button } from "@/components/ui/button"
 import type { Metadata } from "next"
 import Link from "next/link"
 import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
+import { buildRouteMetadata } from "@/lib/seo/metadata"
 
-export const metadata: Metadata = {
-  title: "mobile app development portfolio & services",
-  description:
-    "explore custom mobile apps for restaurants, healthcare, and small businesses. interactive demos highlight native ios and android builds that boost engagement.",
-  openGraph: {
-    title: "mobile app development portfolio & services | prism",
-    description:
-      "explore custom mobile apps for restaurants, healthcare, and small businesses. interactive demos highlight native ios and android builds that boost engagement.",
-    images: ["/prism-opengraph.png"],
-  },
-  alternates: {
-    canonical: "https://www.design-prism.com/apps",
-  },
-}
+export const metadata: Metadata = buildRouteMetadata({
+  titleStem: "mobile app development portfolio & services",
+  description: "explore custom mobile apps for restaurants, healthcare, and small businesses. interactive demos highlight native ios and android builds that boost engagement.",
+  path: "/apps",
+  ogImage: "/prism-opengraph.png",
+})
 
 const appProjects = [
   {

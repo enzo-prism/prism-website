@@ -6,6 +6,7 @@ import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
 import PixelishIcon from "@/components/pixelish/PixelishIcon"
 import { WebPageSchema } from "@/components/schema-markup"
+import { buildRouteMetadata } from "@/lib/seo/metadata"
 
 const whyStoriesWin = [
   "Build trust faster than any ad can.",
@@ -81,33 +82,12 @@ const PAGE_DESCRIPTION =
   "Turn customer impact into a growth engine. Prism’s Customer Signal Engine captures real stories and turns them into SEO, conversions, and community."
 const CANONICAL_URL = "https://www.design-prism.com/story"
 
-export const metadata: Metadata = {
-  title: PAGE_TITLE,
+export const metadata: Metadata = buildRouteMetadata({
+  titleStem: PAGE_TITLE,
   description: PAGE_DESCRIPTION,
-  alternates: {
-    canonical: CANONICAL_URL,
-  },
-  openGraph: {
-    title: PAGE_TITLE,
-    description:
-      "Capture customer stories, expand them into narratives, and distribute them everywhere with Prism’s Customer Signal Engine.",
-    url: CANONICAL_URL,
-    images: [
-      {
-        url: "/prism-opengraph.png",
-        width: 1200,
-        height: 630,
-        alt: "Prism Story-Driven Marketing",
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: PAGE_TITLE,
-    description: PAGE_DESCRIPTION,
-    images: ["/prism-opengraph.png"],
-  },
-}
+  path: "/story",
+  ogImage: "/prism-opengraph.png",
+})
 
 export default function StoryPage() {
   return (

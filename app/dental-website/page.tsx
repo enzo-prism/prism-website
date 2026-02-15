@@ -12,6 +12,7 @@ import DentalClientsSection from "@/components/dental-clients-section"
 import VideoCarousel from "@/components/video-carousel"
 import HeroLoopingVideo from "@/components/HeroLoopingVideo"
 import { FAQSchema, ServiceSchema } from "@/components/schema-markup"
+import { buildRouteMetadata } from "@/lib/seo/metadata"
 
 const lovePoints = [
   {
@@ -161,35 +162,12 @@ const faqs = [
   }
 ]
 
-export const metadata: Metadata = {
-  title: {
-    absolute: "Dental Practice Website Design That Converts | Prism",
-  },
-  description:
-    "Modern dental practice websites that get found, build trust, and convert visits into booked appointments. Fast, mobile-first, and built for long-term content.",
-  alternates: {
-    canonical: "https://www.design-prism.com/dental-website"
-  },
-  openGraph: {
-    title: "Dental Practice Website Design That Converts | Prism",
-    description:
-      "Modern dental practice websites that get found, build trust, and convert visits into booked appointments. Fast, mobile-first, and built for long-term content.",
-    url: "https://www.design-prism.com/dental-website",
-    type: "website",
-    images: ["/prism-opengraph.png"],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Dental Practice Website Design That Converts | Prism",
-    description:
-      "Modern dental practice websites that get found, build trust, and convert visits into booked appointments. Fast, mobile-first, and built for long-term content.",
-    images: ["/prism-opengraph.png"],
-  },
-  robots: {
-    index: true,
-    follow: true
-  }
-}
+export const metadata: Metadata = buildRouteMetadata({
+  titleStem: "Dental Practice Website Design That Converts | Prism",
+  description: "Modern dental practice websites that get found, build trust, and convert visits into booked appointments. Fast, mobile-first, and built for long-term content.",
+  path: "/dental-website",
+  ogImage: "/prism-opengraph.png",
+})
 
 export default function DentalWebsitePage() {
   return (

@@ -8,18 +8,14 @@ import Navbar from "@/components/navbar"
 import RevealOnScroll from "@/components/reveal-on-scroll"
 import PixelishIcon from "@/components/pixelish/PixelishIcon"
 import { Button } from "@/components/ui/button"
+import { buildRouteMetadata } from "@/lib/seo/metadata"
 
-export const metadata: Metadata = {
-  title: "Thank you | prism",
+export const metadata: Metadata = buildRouteMetadata({
+  titleStem: "Thank you | prism",
   description: "We received your AI site brief—book a kickoff call to see your plan faster.",
-  robots: {
-    index: false,
-    follow: false,
-  },
-  alternates: {
-    canonical: "https://www.design-prism.com/thank-you",
-  },
-}
+  path: "/thank-you",
+  index: false,
+})
 
 export default function ThankYouPage() {
   return (

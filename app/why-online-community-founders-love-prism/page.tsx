@@ -11,6 +11,7 @@ import { ArrowRight, CheckCircle2 } from "lucide-react"
 import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
 import { CASE_STUDIES } from "@/lib/case-study-data"
 import { pixelishForEmoji } from "@/lib/pixelish-emoji"
+import { buildRouteMetadata } from "@/lib/seo/metadata"
 
 const coreOutcomes = [
   {
@@ -136,31 +137,11 @@ const retentionBenefits = [
 const communityCaseStudies = CASE_STUDIES.filter((study) => study.segments.includes("community"))
 const communityGradientClasses = ["from-rose-100 via-white to-rose-50", "from-emerald-100 via-white to-emerald-50"]
 
-export const metadata: Metadata = {
-  title: "why online community founders love prism",
+export const metadata: Metadata = buildRouteMetadata({
+  titleStem: "why online community founders love prism",
   description: "see how prism helps online community founders grow faster by uniting design, technology, and data so you can focus on your members.",
-  alternates: {
-    canonical: "https://www.design-prism.com/why-online-community-founders-love-prism"
-  },
-  openGraph: {
-    title: "why online community founders love prism",
-    description: "build a thriving community without drowning in tech or design work. prism handles systems, design, and data so you can stay focused on people.",
-    url: "https://www.design-prism.com/why-online-community-founders-love-prism",
-    siteName: "Prism",
-    locale: "en_US",
-    type: "website"
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "why online community founders love prism",
-    description: "prism helps community founders grow faster by handling systems, design, and data.",
-    creator: "@designprism"
-  },
-  robots: {
-    index: true,
-    follow: true
-  }
-}
+  path: "/why-online-community-founders-love-prism",
+})
 
 export default function CommunityFoundersPage() {
   return (

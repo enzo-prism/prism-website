@@ -8,6 +8,7 @@ import ScrollToTop from "@/components/scroll-to-top"
 import { FAQSchema, WebPageSchema } from "@/components/schema-markup"
 import { Button } from "@/components/ui/button"
 import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
+import { buildRouteMetadata } from "@/lib/seo/metadata"
 
 const tldrPoints = [
   "Looks professional and trustworthy to patients and partners.",
@@ -127,39 +128,12 @@ const PAGE_DESCRIPTION =
   "why name@yourpractice.com beats free mailboxes. prism sets up secure, professional email so dental practices look legit, hire faster, and stay compliant."
 const CANONICAL_URL = "https://www.design-prism.com/custom-email-for-dental-practices"
 
-export const metadata: Metadata = {
-  title: PAGE_TITLE,
+export const metadata: Metadata = buildRouteMetadata({
+  titleStem: PAGE_TITLE,
   description: PAGE_DESCRIPTION,
-  alternates: {
-    canonical: CANONICAL_URL,
-  },
-  openGraph: {
-    title: PAGE_TITLE,
-    description:
-      "give your dental practice a professional email foundation. prism handles workspace or 365 setup, deliverability, hipaa safeguards, and team training.",
-    url: CANONICAL_URL,
-    type: "website",
-    images: [
-      {
-        url: "/prism-opengraph.png",
-        width: 1200,
-        height: 630,
-        alt: "Prism custom email for dental practices",
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: PAGE_TITLE,
-    description:
-      "own your inbox, build trust, and protect patient communication. prism configures professional email that works for modern dental teams.",
-    images: ["/prism-opengraph.png"],
-  },
-  robots: {
-    index: true,
-    follow: true,
-  },
-}
+  path: "/custom-email-for-dental-practices",
+  ogImage: "/prism-opengraph.png",
+})
 
 export default function CustomEmailDentalPage() {
   return (

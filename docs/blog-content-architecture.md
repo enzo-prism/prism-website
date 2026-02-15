@@ -28,13 +28,16 @@ Each MDX file must define:
 | `category`                                     | ✅       | Free-form label; slug auto-generated                      |
 | `gradientClass`                                | ✅       | Tailwind gradient utilities for OG art                    |
 | `image`                                        | optional | Relative path for hero image + cards                      |
-| `h1Title`, `openGraph`, `twitter`, `canonical` | optional | Overrides for layout & SEO                                |
+| `seoTitle`, `seoDescription`                   | optional | Manual SEO overrides for search snippets                   |
+| `h1Title`, `openGraph`, `twitter`, `canonical` | optional | Overrides for layout + social metadata                     |
 
 Blog cards and post hero sections render the frontmatter `image` when available. If `image` is omitted or invalid, they fall back to the shared default featured image (`https://res.cloudinary.com/dhqpqfw6w/image/upload/v1770786137/Prism_rgeypo.png`).
 
 `lib/mdx.tsx` automatically derives `categorySlug` from the `category` label by lowercasing and replacing non-alphanumeric characters with hyphens. Stick to meaningful labels; the slug keeps filters URL-safe.
 
 Open Graph behavior is date-based in `app/blog/[slug]/page.tsx`: posts before 2026 always use the shared Prism OG image (`https://res.cloudinary.com/dhqpqfw6w/image/upload/v1770786137/Prism_rgeypo.png`), while posts in 2026 and later use each post’s resolved featured image (`frontmatter.image`). Twitter images still honor explicit `twitter.images` first, then `openGraph.images`, then the date-based OG fallback.
+
+`seoTitle` and `seoDescription` are optional manual overrides used by the post metadata generator. If omitted, the generator falls back to `title` and `description`, then normalizes with the shared SEO rules (`lib/seo/rules.ts`) to enforce sentence case, canonical host, and a single `| Prism` title suffix.
 
 Headings (H2/H3) are assigned stable anchor IDs during MDX rendering (`rehype-slug`), and `lib/mdx-toc.ts` parses the MDX source to build the table of contents.
 

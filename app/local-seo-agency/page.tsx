@@ -10,38 +10,14 @@ import { Button } from "@/components/ui/button"
 import { HowToSchema, ServiceSchema } from "@/components/schema-markup"
 import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
 import { ArrowRight, Check } from "lucide-react"
+import { buildRouteMetadata } from "@/lib/seo/metadata"
 
-export const metadata: Metadata = {
-  title: {
-    absolute: "Local SEO Agency for Small Businesses | Prism",
-  },
-  description:
-    "Prism is a local SEO agency for small businesses, improving Google Maps and local search with listings, reviews, local pages, and reporting tied to calls.",
-  alternates: {
-    canonical: "https://www.design-prism.com/local-seo-agency",
-  },
-  openGraph: {
-    title: "Local SEO Agency for Small Businesses | Prism",
-    description:
-      "A local SEO agency partner for small businesses: clear strategy, consistent execution, and reporting tied to real customer actions.",
-    url: "https://www.design-prism.com/local-seo-agency",
-    images: [
-      {
-        url: "/prism-opengraph.png",
-        width: 1200,
-        height: 630,
-        alt: "Prism local SEO agency",
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Local SEO Agency for Small Businesses | Prism",
-    description:
-      "Prism is a local SEO agency for small businesses, improving Google Maps and local search with listings, reviews, local pages, and reporting tied to calls.",
-    images: ["/prism-opengraph.png"],
-  },
-}
+export const metadata: Metadata = buildRouteMetadata({
+  titleStem: "Local SEO Agency for Small Businesses | Prism",
+  description: "Prism is a local SEO agency for small businesses, improving Google Maps and local search with listings, reviews, local pages, and reporting tied to calls.",
+  path: "/local-seo-agency",
+  ogImage: "/prism-opengraph.png",
+})
 
 const agencyPillars = [
   {

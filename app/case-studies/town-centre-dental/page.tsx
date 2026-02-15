@@ -1,20 +1,12 @@
 import type { Metadata } from "next"
 import TownCentreDentalCaseStudy from "./client-page"
+import { buildRouteMetadata } from "@/lib/seo/metadata"
 
-export const metadata: Metadata = {
-  title: "town centre dental case study — family dentistry growth",
-  description:
-    "how we helped town centre dental modernize their web presence, streamline booking, and build sustainable acquisition in brentwood, ca.",
-  openGraph: {
-    title: "town centre dental × prism — case study",
-    description:
-      "family dentistry growth system: new site, clear services, and measurable acquisition built for brentwood, ca",
-    images: [],
-  },
-  alternates: {
-    canonical: "https://www.design-prism.com/case-studies/town-centre-dental",
-  },
-}
+export const metadata: Metadata = buildRouteMetadata({
+  titleStem: "town centre dental case study — family dentistry growth",
+  description: "how we helped town centre dental modernize their web presence, streamline booking, and build sustainable acquisition in brentwood, ca.",
+  path: "/case-studies/town-centre-dental",
+})
 
 export default function TownCentreDentalCase() {
   return <TownCentreDentalCaseStudy />

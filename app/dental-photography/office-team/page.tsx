@@ -9,43 +9,19 @@ import ScrollToTop from "@/components/scroll-to-top"
 import { WebPageSchema } from "@/components/schema-markup"
 import { Button } from "@/components/ui/button"
 import RecentShootsSection from "./recent-shoots-section"
+import { buildRouteMetadata } from "@/lib/seo/metadata"
 
 const PAGE_TITLE = "office & team photography for dental practices | prism"
 const PAGE_DESCRIPTION =
   "book a single shoot day to capture your team, lobby, and operatory moments so every digital touchpoint feels authentic."
 const CANONICAL_URL = "https://www.design-prism.com/dental-photography/office-team"
 
-export const metadata: Metadata = {
-  title: PAGE_TITLE,
+export const metadata: Metadata = buildRouteMetadata({
+  titleStem: PAGE_TITLE,
   description: PAGE_DESCRIPTION,
-  alternates: {
-    canonical: CANONICAL_URL,
-  },
-  openGraph: {
-    title: PAGE_TITLE,
-    description: "tap one CTA to schedule your shoot—prism handles the rest.",
-    url: CANONICAL_URL,
-    type: "website",
-    images: [
-      {
-        url: "/prism-opengraph.png",
-        width: 1200,
-        height: 630,
-        alt: "Prism office and team photography",
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: PAGE_TITLE,
-    description: "authentic portraits and office stories captured in a single day.",
-    images: ["/prism-opengraph.png"],
-  },
-  robots: {
-    index: true,
-    follow: true
-  }
-}
+  path: "/dental-photography/office-team",
+  ogImage: "/prism-opengraph.png",
+})
 
 const recentShoots = [
   {

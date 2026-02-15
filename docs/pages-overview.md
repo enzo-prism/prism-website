@@ -30,7 +30,8 @@ Quick reference for the pages we edit most often.
 ## Apps (`app/apps/page.tsx`)
 - Mobile app portfolio + process overview.
 - Uses `ItemList` JSON-LD for the showcased projects; avoid `SoftwareApplication` rich-result schema unless we can supply accurate pricing + reviews/ratings.
-- `metadata.title` is combined with the root title template, so keep it free of `| prism` to avoid duplicate “| prism | prism” titles.
+- Route metadata now comes from `buildRouteMetadata` (`lib/seo/metadata.ts`) and always normalizes to a single `| Prism` suffix.
+- For static pages, set `titleStem` + `description` in the page metadata call and let the helper generate canonical/Open Graph/Twitter/robots fields consistently.
 
 ## Software (`app/software/page.tsx`)
 - Growth tools hub listing Prism-built software (currently Density, Hot Content, and Engineering Tracker).

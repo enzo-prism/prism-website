@@ -6,20 +6,14 @@ import Navbar from "@/components/navbar"
 import PixelishIcon from "@/components/pixelish/PixelishIcon"
 import { Button } from "@/components/ui/button"
 import { ContactPageSchema } from "@/components/schema-markup"
+import { buildRouteMetadata } from "@/lib/seo/metadata"
 
-export const metadata: Metadata = {
-  title: "Contact | prism",
+export const metadata: Metadata = buildRouteMetadata({
+  titleStem: "Contact | prism",
   description: "Reach Prism to talk through the right plan for your AI-powered website and growth goals.",
-  openGraph: {
-    title: "Contact | prism",
-    description: "Reach Prism to talk through the right plan for your AI-powered website and growth goals.",
-    url: "https://www.design-prism.com/contact",
-    images: ["/prism-opengraph.png"],
-  },
-  alternates: {
-    canonical: "https://www.design-prism.com/contact",
-  },
-}
+  path: "/contact",
+  ogImage: "/prism-opengraph.png",
+})
 
 export default function ContactPage() {
   return (

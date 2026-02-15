@@ -30,6 +30,7 @@ import ScrollProgressBar from "@/components/scroll-progress-bar"
 import ScrollToTop from "@/components/scroll-to-top"
 import { WebPageSchema } from "@/components/schema-markup"
 import { Button } from "@/components/ui/button"
+import { buildRouteMetadata } from "@/lib/seo/metadata"
 
 const GOOGLE_WORKSPACE_LINK =
   "https://c.gle/APy2Ad08G18tc2DVKTvFnIX7ZsIi8C_16CofJocN9aFYsQDXBJRKDAH3FRQb6BfrqNgPv1Buz5DypvRjWF8E2rqpEvohTLTUWmLF6UOh4oCinNkIBx-wbk3wUX2jqxqDYiPNn4cWz4pfBlfNZT7je1YO"
@@ -525,34 +526,12 @@ const PAGE_DESCRIPTION =
   "step-by-step hipaa guide for dentists using google workspace: secure shared drives, vault, compliant forms, and patient data safeguards."
 const CANONICAL_URL = "https://www.design-prism.com/google/dental-patient-forms"
 
-export const metadata: Metadata = {
-  title: PAGE_TITLE,
+export const metadata: Metadata = buildRouteMetadata({
+  titleStem: PAGE_TITLE,
   description: PAGE_DESCRIPTION,
-  alternates: {
-    canonical: CANONICAL_URL,
-  },
-  openGraph: {
-    title: PAGE_TITLE,
-    description:
-      "follow this hipaa-aligned implementation guide to collect dental patient intake forms with google workspace and keep ephi protected.",
-    url: CANONICAL_URL,
-    siteName: "prism",
-    locale: "en_US",
-    type: "article",
-    images: ["/prism-opengraph.png"],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: PAGE_TITLE,
-    description:
-      "dentist-focused checklist to configure google forms, shared drives, vault, and dlp for hipaa-compliant patient intake.",
-    images: ["/prism-opengraph.png"],
-  },
-  robots: {
-    index: true,
-    follow: true,
-  },
-}
+  path: "/google/dental-patient-forms",
+  ogImage: "/prism-opengraph.png",
+})
 
 export default function GoogleDentalPatientFormsGuide() {
   return (

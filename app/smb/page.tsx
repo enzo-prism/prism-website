@@ -4,32 +4,19 @@ import SeoTextSection from "@/components/seo-text-section"
 import { WebPageSchema } from "@/components/schema-markup"
 import type { Metadata } from "next"
 import SMBClientPage from "./client-page"
+import { buildRouteMetadata } from "@/lib/seo/metadata"
 
 const PAGE_TITLE = "small business ai services | gpt-5 solutions by prism"
 const PAGE_DESCRIPTION =
   "leverage gpt-5 across marketing, operations, and support. prism sets up, trains, and tunes ai workflows tailored to your small business."
 const CANONICAL_URL = "https://www.design-prism.com/smb"
 
-export const metadata: Metadata = {
-  title: PAGE_TITLE,
+export const metadata: Metadata = buildRouteMetadata({
+  titleStem: PAGE_TITLE,
   description: PAGE_DESCRIPTION,
-  alternates: {
-    canonical: CANONICAL_URL,
-  },
-  openGraph: {
-    title: PAGE_TITLE,
-    description: PAGE_DESCRIPTION,
-    url: CANONICAL_URL,
-    images: [
-      {
-        url: "/prism-opengraph.png",
-        width: 1200,
-        height: 630,
-        alt: "Prism — Small Business AI (GPT‑5)",
-      },
-    ],
-  },
-}
+  path: "/smb",
+  ogImage: "/prism-opengraph.png",
+})
 
 export default function SMBPage() {
   return (

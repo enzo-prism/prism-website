@@ -3,15 +3,13 @@ import Navbar from "@/components/navbar"
 import type { Metadata } from "next"
 import Link from "next/link"
 import PricingDentalClient from "./client-page"
+import { buildRouteMetadata } from "@/lib/seo/metadata"
 
-export const metadata: Metadata = {
-  title: "dental marketing pricing | prism",
-  description:
-    "transparent pricing plans designed specifically for dental practices. choose between starter and pro plans to grow your practice and attract more patients.",
-  alternates: {
-    canonical: "https://www.design-prism.com/pricing-dental",
-  },
-}
+export const metadata: Metadata = buildRouteMetadata({
+  titleStem: "dental marketing pricing | prism",
+  description: "transparent pricing plans designed specifically for dental practices. choose between starter and pro plans to grow your practice and attract more patients.",
+  path: "/pricing-dental",
+})
 
 export default function PricingDentalPage() {
   return (

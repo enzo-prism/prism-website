@@ -4,25 +4,15 @@ import { Button } from "@/components/ui/button"
 import type { Metadata } from "next"
 import Link from "next/link"
 import { CheckCircle2 } from "lucide-react"
+import { buildRouteMetadata } from "@/lib/seo/metadata"
 
-export const metadata: Metadata = {
-  title: "plan sent | next steps from prism",
-  description:
-    "thanks for sending your prism pricing plan. we'll review your selections and follow up with next steps shortly.",
-  openGraph: {
-    title: "plan sent | next steps from prism",
-    description:
-      "thanks for sending your prism pricing plan. we'll review your selections and follow up with next steps shortly.",
-    images: ["/prism-opengraph.png"],
-  },
-  robots: {
-    index: false,
-    follow: false,
-  },
-  alternates: {
-    canonical: "https://www.design-prism.com/pricing/thank-you",
-  },
-}
+export const metadata: Metadata = buildRouteMetadata({
+  titleStem: "plan sent | next steps from prism",
+  description: "thanks for sending your prism pricing plan. we'll review your selections and follow up with next steps shortly.",
+  path: "/pricing/thank-you",
+  index: false,
+  ogImage: "/prism-opengraph.png",
+})
 
 export default function PricingThankYouPage() {
   return (

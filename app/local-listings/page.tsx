@@ -12,31 +12,14 @@ import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
 import { ServiceSchema } from "@/components/schema-markup"
 import { getAllPosts } from "@/lib/mdx-data"
 import VideoPlayer from "@/components/video-player"
+import { buildRouteMetadata } from "@/lib/seo/metadata"
 
-export const metadata: Metadata = {
-  title: {
-    absolute: "Local Listing Optimization for Small Businesses | Prism",
-  },
-  description:
-    "Accurate listings across Google, Apple, Yelp, Bing, Facebook, and more—so you rank higher and win more local customers.",
-  openGraph: {
-    title: "Local Listing Optimization for Small Businesses | Prism",
-    description:
-      "Accurate listings across Google, Apple, Yelp, Bing, Facebook, and more—so you rank higher and win more local customers.",
-    url: "https://www.design-prism.com/local-listings",
-    images: [
-      {
-        url: "/prism-opengraph.png",
-        width: 1200,
-        height: 630,
-        alt: "Prism Local Listing Optimization",
-      },
-    ],
-  },
-  alternates: {
-    canonical: "https://www.design-prism.com/local-listings",
-  },
-}
+export const metadata: Metadata = buildRouteMetadata({
+  titleStem: "Local Listing Optimization for Small Businesses | Prism",
+  description: "Accurate listings across Google, Apple, Yelp, Bing, Facebook, and more—so you rank higher and win more local customers.",
+  path: "/local-listings",
+  ogImage: "/prism-opengraph.png",
+})
 
 const whatYouGet = [
   {

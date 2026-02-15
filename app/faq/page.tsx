@@ -3,27 +3,14 @@ import Navbar from "@/components/navbar"
 import { FAQSchema } from "@/components/schema-markup"
 import type { Metadata } from "next"
 import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
+import { buildRouteMetadata } from "@/lib/seo/metadata"
 
-export const metadata: Metadata = {
-  title: "frequently asked questions | prism agency",
+export const metadata: Metadata = buildRouteMetadata({
+  titleStem: "frequently asked questions | prism agency",
   description: "get answers to common questions about prism agency’s web, app, and marketing services, including pricing, timelines, and our ai-powered approach.",
-  alternates: {
-    canonical: "https://www.design-prism.com/faq",
-  },
-  openGraph: {
-    title: "faq - prism agency",
-    description: "common questions about web development, app development, and digital marketing services at prism agency.",
-    url: "https://www.design-prism.com/faq",
-    images: [
-      {
-        url: "/prism-opengraph.png",
-        width: 1200,
-        height: 630,
-        alt: "Prism Agency FAQ",
-      },
-    ],
-  },
-}
+  path: "/faq",
+  ogImage: "/prism-opengraph.png",
+})
 
 const faqs = [
   {

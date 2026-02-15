@@ -5,18 +5,14 @@ import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
 import ScrollToTop from "@/components/scroll-to-top"
 import { Button } from "@/components/ui/button"
+import { buildRouteMetadata } from "@/lib/seo/metadata"
 
-export const metadata: Metadata = {
-  title: "shoot request received | prism",
+export const metadata: Metadata = buildRouteMetadata({
+  titleStem: "shoot request received | prism",
   description: "Your photography windows are on our calendar—look for a confirmation email with next steps.",
-  robots: {
-    index: false,
-    follow: false,
-  },
-  alternates: {
-    canonical: "https://www.design-prism.com/book-a-shoot/thank-you",
-  },
-}
+  path: "/book-a-shoot/thank-you",
+  index: false,
+})
 
 export default function BookAShootThankYouPage() {
   return (

@@ -8,6 +8,7 @@ import ScrollProgressBar from "@/components/scroll-progress-bar"
 import ScrollToTop from "@/components/scroll-to-top"
 import SiteRebuildDynamicSteps from "@/components/site-rebuild-dynamic-steps"
 import { WebPageSchema } from "@/components/schema-markup"
+import { buildRouteMetadata } from "@/lib/seo/metadata"
 
 const guideSections = [
   { id: "overview", label: "Overview", iconSrc: "/pixelish/lens-plus.svg" },
@@ -27,34 +28,12 @@ const PAGE_DESCRIPTION =
   "Follow Prism’s no-fluff playbook to download a live site, extract its content, prep Codex context, and rebuild the experience on your machine."
 const CANONICAL_URL = "https://www.design-prism.com/openai/site-rebuild"
 
-export const metadata: Metadata = {
-  title: PAGE_TITLE,
+export const metadata: Metadata = buildRouteMetadata({
+  titleStem: PAGE_TITLE,
   description: PAGE_DESCRIPTION,
-  alternates: {
-    canonical: CANONICAL_URL,
-  },
-  openGraph: {
-    title: PAGE_TITLE,
-    description:
-      "Seven precise steps to mirror a live website, feed Codex, and launch the Next.js rebuild on your localhost.",
-    url: CANONICAL_URL,
-    images: [
-      {
-        url: "/prism-opengraph.png",
-        width: 1200,
-        height: 630,
-        alt: "Prism OpenAI Site Rebuild Guide",
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: PAGE_TITLE,
-    description:
-      "Download the current site, capture the copy, and let Codex rebuild it locally with Next.js and Tailwind.",
-    images: ["/prism-opengraph.png"],
-  },
-}
+  path: "/openai/site-rebuild",
+  ogImage: "/prism-opengraph.png",
+})
 
 export default function OpenAISiteRebuildGuidePage() {
   return (

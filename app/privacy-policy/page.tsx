@@ -3,32 +3,19 @@ import Navbar from "@/components/navbar"
 import { WebPageSchema } from "@/components/schema-markup"
 import type { Metadata } from "next"
 import Link from "next/link"
+import { buildRouteMetadata } from "@/lib/seo/metadata"
 
 const PAGE_TITLE = "privacy policy | prism agency"
 const PAGE_DESCRIPTION =
   "learn how prism agency collects, uses, and protects your personal information across our website and services."
 const CANONICAL_URL = "https://www.design-prism.com/privacy-policy"
 
-export const metadata: Metadata = {
-  title: PAGE_TITLE,
+export const metadata: Metadata = buildRouteMetadata({
+  titleStem: PAGE_TITLE,
   description: PAGE_DESCRIPTION,
-  openGraph: {
-    title: PAGE_TITLE,
-    description: PAGE_DESCRIPTION,
-    url: CANONICAL_URL,
-    images: [
-      {
-        url: "/prism-opengraph.png",
-        width: 1200,
-        height: 630,
-        alt: "Prism Agency Privacy Policy",
-      },
-    ],
-  },
-  alternates: {
-    canonical: CANONICAL_URL,
-  },
-}
+  path: "/privacy-policy",
+  ogImage: "/prism-opengraph.png",
+})
 
 export default function PrivacyPolicyPage() {
   const lastUpdated = "January 1, 2025"

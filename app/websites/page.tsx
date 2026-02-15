@@ -17,32 +17,14 @@ import { getAllPosts } from "@/lib/mdx-data"
 import { ServiceSchema } from "@/components/schema-markup"
 import Image from "next/image"
 import { websiteProjects } from "@/lib/website-projects"
+import { buildRouteMetadata } from "@/lib/seo/metadata"
 
-export const metadata: Metadata = {
-  title: {
-    absolute: "Small Business Website Design & Builds | Prism",
-  },
-  description:
-    "Websites engineered to convert and stay sharp long-term. Strategy, design, development, and SEO-ready foundations.",
-  openGraph: {
-    title: "Small Business Website Design & Builds | Prism",
-    description:
-      "Websites engineered to convert and stay sharp long-term. Strategy, design, development, and SEO-ready foundations.",
-    url: "https://www.design-prism.com/websites",
-    type: "website",
-    images: ["/prism-opengraph.png"],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Small Business Website Design & Builds | Prism",
-    description:
-      "Websites engineered to convert and stay sharp long-term. Strategy, design, development, and SEO-ready foundations.",
-    images: ["/prism-opengraph.png"],
-  },
-  alternates: {
-    canonical: "https://www.design-prism.com/websites",
-  },
-}
+export const metadata: Metadata = buildRouteMetadata({
+  titleStem: "Small Business Website Design & Builds | Prism",
+  description: "Websites engineered to convert and stay sharp long-term. Strategy, design, development, and SEO-ready foundations.",
+  path: "/websites",
+  ogImage: "/prism-opengraph.png",
+})
 
 const whatWeDeliver = [
   {

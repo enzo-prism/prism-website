@@ -11,6 +11,7 @@ import { ArrowRight, CheckCircle2 } from "lucide-react"
 import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
 import { CASE_STUDIES } from "@/lib/case-study-data"
 import { pixelishForEmoji } from "@/lib/pixelish-emoji"
+import { buildRouteMetadata } from "@/lib/seo/metadata"
 
 const coreOutcomes = [
   {
@@ -142,34 +143,11 @@ const stayingReasons = [
   { icon: "💬", text: "Direct line to the founder for ongoing support." }
 ]
 
-export const metadata: Metadata = {
-  title: "why nonprofits partner with prism",
-  description:
-    "prism helps nonprofits tell their story beautifully, attract donors and supporters, and manage technology effortlessly so they can focus on mission-driven work.",
-  alternates: {
-    canonical: "https://www.design-prism.com/why-nonprofits-love-prism"
-  },
-  openGraph: {
-    title: "why nonprofits partner with prism",
-    description:
-      "share your mission, reach more people, and simplify your tech stack. prism gives nonprofits modern tools, empathetic design, and effortless support.",
-    url: "https://www.design-prism.com/why-nonprofits-love-prism",
-    siteName: "Prism",
-    locale: "en_US",
-    type: "website"
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "why nonprofits partner with prism",
-    description:
-      "prism amplifies nonprofit impact with beautiful storytelling, donor journeys, and technology that runs quietly in the background.",
-    creator: "@designprism"
-  },
-  robots: {
-    index: true,
-    follow: true
-  }
-}
+export const metadata: Metadata = buildRouteMetadata({
+  titleStem: "why nonprofits partner with prism",
+  description: "prism helps nonprofits tell their story beautifully, attract donors and supporters, and manage technology effortlessly so they can focus on mission-driven work.",
+  path: "/why-nonprofits-love-prism",
+})
 
 export default function NonprofitsPage() {
   return (

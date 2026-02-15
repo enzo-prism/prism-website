@@ -1,19 +1,12 @@
 import type { Metadata } from "next"
 import FamilyFirstSmileCareCaseStudy from "./client-page"
+import { buildRouteMetadata } from "@/lib/seo/metadata"
 
-export const metadata: Metadata = {
-  title: "family first smile care case study | dental website",
-  description:
-    "how we created a modern, patient‑friendly website for family first smile care with clear services, comfort highlights, and conversion paths.",
-  openGraph: {
-    title: "family first smile care × prism — case study",
-    description: "family‑focused website: services clarity, office amenities, and measurable conversion flows",
-    images: [],
-  },
-  alternates: {
-    canonical: "https://www.design-prism.com/case-studies/family-first-smile-care",
-  },
-}
+export const metadata: Metadata = buildRouteMetadata({
+  titleStem: "family first smile care case study | dental website",
+  description: "how we created a modern, patient‑friendly website for family first smile care with clear services, comfort highlights, and conversion paths.",
+  path: "/case-studies/family-first-smile-care",
+})
 
 export default function FamilyFirstSmileCareCase() {
   return <FamilyFirstSmileCareCaseStudy />

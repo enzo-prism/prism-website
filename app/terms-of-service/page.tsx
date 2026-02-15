@@ -3,32 +3,19 @@ import Navbar from "@/components/navbar"
 import { WebPageSchema } from "@/components/schema-markup"
 import type { Metadata } from "next"
 import Link from "next/link"
+import { buildRouteMetadata } from "@/lib/seo/metadata"
 
 const PAGE_TITLE = "terms of service | prism agency"
 const PAGE_DESCRIPTION =
   "read prism agency’s terms and conditions for using our web development, app development, and digital marketing services."
 const CANONICAL_URL = "https://www.design-prism.com/terms-of-service"
 
-export const metadata: Metadata = {
-  title: PAGE_TITLE,
+export const metadata: Metadata = buildRouteMetadata({
+  titleStem: PAGE_TITLE,
   description: PAGE_DESCRIPTION,
-  openGraph: {
-    title: PAGE_TITLE,
-    description: "read prism agency’s terms and conditions for using our services.",
-    url: CANONICAL_URL,
-    images: [
-      {
-        url: "/prism-opengraph.png",
-        width: 1200,
-        height: 630,
-        alt: "Prism Agency Terms of Service",
-      },
-    ],
-  },
-  alternates: {
-    canonical: CANONICAL_URL,
-  },
-}
+  path: "/terms-of-service",
+  ogImage: "/prism-opengraph.png",
+})
 
 export default function TermsOfServicePage() {
   const lastUpdated = "January 1, 2025"

@@ -6,38 +6,19 @@ import Navbar from "@/components/navbar"
 import LibraryClient from "@/components/library/LibraryClient"
 import { CollectionPageSchema, ItemListSchema } from "@/components/schema-markup"
 import { getFeaturedPost, getLibraryPosts } from "@/lib/library"
+import { buildRouteMetadata } from "@/lib/seo/metadata"
 
 const PAGE_TITLE = "prism library | founder + athlete short lessons"
 const PAGE_DESCRIPTION =
   "short lessons from founders and world-class athletes, curated to help you build a stronger company and a stronger competitive mindset."
 const CANONICAL_URL = "https://www.design-prism.com/library"
 
-export const metadata: Metadata = {
-  title: PAGE_TITLE,
+export const metadata: Metadata = buildRouteMetadata({
+  titleStem: PAGE_TITLE,
   description: PAGE_DESCRIPTION,
-  alternates: {
-    canonical: CANONICAL_URL,
-  },
-  openGraph: {
-    title: PAGE_TITLE,
-    description: PAGE_DESCRIPTION,
-    url: CANONICAL_URL,
-    images: [
-      {
-        url: "/prism-opengraph.png",
-        width: 1200,
-        height: 630,
-        alt: "Prism Library",
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: PAGE_TITLE,
-    description: PAGE_DESCRIPTION,
-    images: ["/prism-opengraph.png"],
-  },
-}
+  path: "/library",
+  ogImage: "/prism-opengraph.png",
+})
 
 export default async function LibraryPage() {
   const posts = await getLibraryPosts()

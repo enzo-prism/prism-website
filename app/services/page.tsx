@@ -5,6 +5,7 @@ import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
 import { ServiceSchema } from "@/components/schema-markup"
 import FAQSection from "@/components/faq-section"
+import { buildRouteMetadata } from "@/lib/seo/metadata"
 
 type CoreService = {
   name: string
@@ -208,37 +209,12 @@ const faqItems = [
 
 const slugify = (value: string) => value.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)+/g, "")
 
-export const metadata: Metadata = {
-  title: {
-    absolute: "Prism Services | Websites, Local Presence, Ads & Analytics",
-  },
-  description:
-    "One partner for websites, local presence, paid media, content systems, and analytics—so your business gets found, trusted, and chosen.",
-  alternates: {
-    canonical: "https://www.design-prism.com/services",
-  },
-  openGraph: {
-    title: "Prism Services | Websites, Local Presence, Ads & Analytics",
-    description:
-      "One partner for websites, local presence, paid media, content systems, and analytics—so your business gets found, trusted, and chosen.",
-    url: "https://www.design-prism.com/services",
-    images: [
-      {
-        url: "/prism-opengraph.png",
-        width: 1200,
-        height: 630,
-        alt: "Prism Services",
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Prism Services | Websites, Local Presence, Ads & Analytics",
-    description:
-      "One partner for websites, local presence, paid media, content systems, and analytics—so your business gets found, trusted, and chosen.",
-    images: ["/prism-opengraph.png"],
-  },
-}
+export const metadata: Metadata = buildRouteMetadata({
+  titleStem: "Prism Services | Websites, Local Presence, Ads & Analytics",
+  description: "One partner for websites, local presence, paid media, content systems, and analytics—so your business gets found, trusted, and chosen.",
+  path: "/services",
+  ogImage: "/prism-opengraph.png",
+})
 
 export default function ServicesPage() {
   return (

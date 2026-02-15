@@ -9,45 +9,14 @@ import ScrollToTop from "@/components/scroll-to-top"
 import { HowToSchema, PersonSchema, ServiceSchema } from "@/components/schema-markup"
 import { Button } from "@/components/ui/button"
 import { CASE_STUDIES } from "@/lib/case-study-data"
+import { buildRouteMetadata } from "@/lib/seo/metadata"
 
-export const metadata: Metadata = {
-  title: {
-    absolute: "Dentist SEO | Prism",
-  },
-  description:
-    "Dentist SEO that helps practices rank in Google Maps and organic search with listings, reviews, and treatment pages tied to calls.",
-  openGraph: {
-    title: "Dentist SEO | Prism",
-    description:
-      "Dentist SEO that helps practices rank in Google Maps and organic search with listings, reviews, and treatment pages tied to calls.",
-    url: "https://www.design-prism.com/dental-practice-seo-expert",
-    siteName: "prism",
-    locale: "en_US",
-    type: "website",
-    images: [
-      {
-        url: "/prism-opengraph.png",
-        width: 1200,
-        height: 630,
-        alt: "Prism dental SEO",
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Dentist SEO | Prism",
-    description:
-      "Dentist SEO that helps practices rank in Google Maps and organic search with listings, reviews, and treatment pages tied to calls.",
-    images: ["/prism-opengraph.png"],
-  },
-  alternates: {
-    canonical: "https://www.design-prism.com/dental-practice-seo-expert",
-  },
-  robots: {
-    index: true,
-    follow: true,
-  },
-}
+export const metadata: Metadata = buildRouteMetadata({
+  titleStem: "Dentist SEO | Prism",
+  description: "Dentist SEO that helps practices rank in Google Maps and organic search with listings, reviews, and treatment pages tied to calls.",
+  path: "/dental-practice-seo-expert",
+  ogImage: "/prism-opengraph.png",
+})
 
 const primaryCta = {
   label: "Get a free analysis",

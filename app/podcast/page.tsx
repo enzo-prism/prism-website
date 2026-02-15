@@ -5,21 +5,14 @@ import { PODCAST_EPISODES } from "@/content/podcast/episodes"
 import type { Metadata } from "next"
 import PodcastClientPage from "./client-page"
 import { PodcastEpisodeSchema, PodcastSeriesSchema } from "@/components/schema-markup"
+import { buildRouteMetadata } from "@/lib/seo/metadata"
 
-export const metadata: Metadata = {
-  title: "prism podcast | founders · journeys · lessons",
-  description:
-    "each episode, founder enzo sison sits down with builders in the arena to unpack wins, missteps, and frameworks you can apply to your business.",
-  openGraph: {
-    title: "prism podcast | founders · journeys · lessons",
-    description:
-      "each episode, founder enzo sison sits down with builders in the arena to unpack wins, missteps, and frameworks you can apply to your business.",
-    images: ["/prism-opengraph.png"],
-  },
-  alternates: {
-    canonical: "https://www.design-prism.com/podcast",
-  },
-}
+export const metadata: Metadata = buildRouteMetadata({
+  titleStem: "prism podcast | founders · journeys · lessons",
+  description: "each episode, founder enzo sison sits down with builders in the arena to unpack wins, missteps, and frameworks you can apply to your business.",
+  path: "/podcast",
+  ogImage: "/prism-opengraph.png",
+})
 
 export default function PodcastPage() {
   const seriesId = "prism-podcast"

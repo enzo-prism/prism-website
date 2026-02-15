@@ -9,36 +9,19 @@ import { WebPageSchema } from "@/components/schema-markup"
 import { Button } from "@/components/ui/button"
 
 import GuideTabs from "./GuideTabs"
+import { buildRouteMetadata } from "@/lib/seo/metadata"
 
 const PAGE_TITLE = "dental before + after system: in-practice guide | prism"
 const PAGE_DESCRIPTION =
   "follow prism's 0→100% workflow to capture dental before-and-after photos in-house, with gear tiers, scripts, storage, and rollout tips."
 const CANONICAL_URL = "https://www.design-prism.com/dental-photography/before-after"
 
-export const metadata: Metadata = {
-  title: PAGE_TITLE,
+export const metadata: Metadata = buildRouteMetadata({
+  titleStem: PAGE_TITLE,
   description: PAGE_DESCRIPTION,
-  alternates: {
-    canonical: CANONICAL_URL,
-  },
-  openGraph: {
-    title: PAGE_TITLE,
-    description: PAGE_DESCRIPTION,
-    url: CANONICAL_URL,
-    type: "website",
-    images: ["/prism-opengraph.png"],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: PAGE_TITLE,
-    description: PAGE_DESCRIPTION,
-    images: ["/prism-opengraph.png"],
-  },
-  robots: {
-    index: true,
-    follow: true
-  }
-}
+  path: "/dental-photography/before-after",
+  ogImage: "/prism-opengraph.png",
+})
 
 export default function BeforeAfterPhotographyPage() {
   return (

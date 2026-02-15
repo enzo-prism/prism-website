@@ -4,6 +4,7 @@ import type { Metadata } from "next"
 import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
 import { WebPageSchema } from "@/components/schema-markup"
+import { buildRouteMetadata } from "@/lib/seo/metadata"
 
 const openAiStack = [
   {
@@ -84,34 +85,12 @@ const PAGE_DESCRIPTION =
   "See how Prism uses OpenAI tools, copilots, and distribution intelligence to expand your practice across chat, search, and assistant surfaces."
 const CANONICAL_URL = "https://www.design-prism.com/openai"
 
-export const metadata: Metadata = {
-  title: PAGE_TITLE,
+export const metadata: Metadata = buildRouteMetadata({
+  titleStem: PAGE_TITLE,
   description: PAGE_DESCRIPTION,
-  alternates: {
-    canonical: CANONICAL_URL,
-  },
-  openGraph: {
-    title: PAGE_TITLE,
-    description:
-      "Prism trains OpenAI copilots on your brand, publishes AI-assisted campaigns, and studies distribution so you show up across new surfaces.",
-    url: CANONICAL_URL,
-    images: [
-      {
-        url: "/prism-opengraph.png",
-        width: 1200,
-        height: 630,
-        alt: "Prism OpenAI Growth Systems",
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: PAGE_TITLE,
-    description:
-      "Prism uses OpenAI copilots and distribution intelligence to get your practice discovered across AI-powered channels.",
-    images: ["/prism-opengraph.png"],
-  },
-}
+  path: "/openai",
+  ogImage: "/prism-opengraph.png",
+})
 
 export default function OpenAIPage() {
   return (

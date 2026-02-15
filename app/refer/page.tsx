@@ -10,6 +10,7 @@ import { ArrowRight, CheckCircle2, Gift, Handshake, PhoneCall } from "lucide-rea
 import { CASE_STUDIES } from "@/lib/case-study-data"
 import PixelishIcon from "@/components/pixelish/PixelishIcon"
 import { pixelishForEmoji } from "@/lib/pixelish-emoji"
+import { buildRouteMetadata } from "@/lib/seo/metadata"
 
 const TYPEFORM_URL = "https://fxuqp40sseh.typeform.com/to/ln0VzAjB"
 
@@ -107,35 +108,12 @@ const PAGE_DESCRIPTION =
   "know someone who needs a better website, listings, or ad strategy? refer them to prism for a free analysis and earn up to $1,000 when they become a client."
 const CANONICAL_URL = "https://www.design-prism.com/refer"
 
-export const metadata: Metadata = {
-  title: PAGE_TITLE,
+export const metadata: Metadata = buildRouteMetadata({
+  titleStem: PAGE_TITLE,
   description: PAGE_DESCRIPTION,
-  alternates: {
-    canonical: CANONICAL_URL,
-  },
-  openGraph: {
-    title: PAGE_TITLE,
-    description:
-      "invite a business you care about to prism. we deliver a free analysis — you earn up to $1,000 when they sign.",
-    url: CANONICAL_URL,
-    siteName: "Prism",
-    locale: "en_US",
-    type: "website",
-    images: ["/prism-opengraph.png"],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: PAGE_TITLE,
-    description:
-      "help a friend upgrade their marketing and earn up to $1,000 when they become a prism client.",
-    creator: "@designprism",
-    images: ["/prism-opengraph.png"],
-  },
-  robots: {
-    index: true,
-    follow: true
-  }
-}
+  path: "/refer",
+  ogImage: "/prism-opengraph.png",
+})
 
 export default function ReferPage() {
   const caseStudyMap = new Map(CASE_STUDIES.map((study) => [study.slug, study]))

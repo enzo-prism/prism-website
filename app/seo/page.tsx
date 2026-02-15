@@ -11,36 +11,14 @@ import SimpleBlogPostCard from "@/components/simple-blog-post-card"
 import { Button } from "@/components/ui/button"
 import { getAllPosts } from "@/lib/mdx-data"
 import VideoPlayer from "@/components/video-player"
+import { buildRouteMetadata } from "@/lib/seo/metadata"
 
-export const metadata: Metadata = {
-  title: "seo that compounds | prism",
-  description:
-    "prism bakes on-page and off-page seo into every build. see how we structure sites, listings, reviews, and authority signals so local brands outrank competitors.",
-  alternates: {
-    canonical: "https://www.design-prism.com/seo",
-  },
-  openGraph: {
-    title: "seo that compounds | prism",
-    description:
-      "seo is more than keywords. prism pairs on-page structure with off-page trust so your brand keeps showing up and capturing demand.",
-    url: "https://www.design-prism.com/seo",
-    images: [
-      {
-        url: "/prism-opengraph.png",
-        width: 1200,
-        height: 630,
-        alt: "prism seo",
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "seo that compounds | prism",
-    description:
-      "seo is more than keywords. prism pairs on-page structure with off-page trust so your brand keeps showing up and capturing demand.",
-    images: ["/prism-opengraph.png"],
-  },
-}
+export const metadata: Metadata = buildRouteMetadata({
+  titleStem: "seo that compounds | prism",
+  description: "prism bakes on-page and off-page seo into every build. see how we structure sites, listings, reviews, and authority signals so local brands outrank competitors.",
+  path: "/seo",
+  ogImage: "/prism-opengraph.png",
+})
 
 export default async function SeoPage() {
   const { hero, scoringQuestions, seoModes, onPagePreview, offPagePreview, packages, benefits } = seoOverviewContent

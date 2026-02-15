@@ -1,17 +1,12 @@
 import type { Metadata } from "next"
 import MichaelNjoCaseStudy from "./client-page"
+import { buildRouteMetadata } from "@/lib/seo/metadata"
 
-export const metadata: Metadata = {
-  title: "michael njo, dds case study — modern dental presence",
+export const metadata: Metadata = buildRouteMetadata({
+  titleStem: "michael njo, dds case study — modern dental presence",
   description: "how we launched a credibility-first website with clear services, patient flows, and tracking.",
-  alternates: {
-    canonical: "https://www.design-prism.com/case-studies/michael-njo-dds",
-  },
-  openGraph: {
-    title: "michael njo, dds × prism — case study",
-    description: "credibility-first dental site with service clarity, patient flows, and analytics.",
-  },
-}
+  path: "/case-studies/michael-njo-dds",
+})
 
 export default function MichaelNjoCaseStudyPage() {
   return <MichaelNjoCaseStudy />

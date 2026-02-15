@@ -5,39 +5,19 @@ import Navbar from "@/components/navbar"
 import { WebPageSchema } from "@/components/schema-markup"
 
 import AiWebsiteLaunchClientPage from "./client-page"
+import { buildRouteMetadata } from "@/lib/seo/metadata"
 
 const PAGE_TITLE = "AI Website Builder for Small Businesses | Prism"
 const PAGE_DESCRIPTION =
   "Get a modern, SEO-ready website built with AI in 48 hours for just $400. No subscriptions—launch fast and start growing with Prism."
 const CANONICAL_URL = "https://www.design-prism.com/ai-website-launch"
 
-export const metadata: Metadata = {
-  title: PAGE_TITLE,
+export const metadata: Metadata = buildRouteMetadata({
+  titleStem: PAGE_TITLE,
   description: PAGE_DESCRIPTION,
-  alternates: {
-    canonical: "https://www.design-prism.com/ai-website-launch",
-  },
-  openGraph: {
-    title: PAGE_TITLE,
-    description: PAGE_DESCRIPTION,
-    url: CANONICAL_URL,
-    type: "website",
-    images: [
-      {
-        url: "/prism-opengraph.png",
-        width: 1200,
-        height: 630,
-        alt: "Prism helps small businesses launch high-performing websites fast.",
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: PAGE_TITLE,
-    description: PAGE_DESCRIPTION,
-    images: ["/prism-opengraph.png"],
-  },
-}
+  path: "/ai-website-launch",
+  ogImage: "/prism-opengraph.png",
+})
 
 export default function AiWebsiteLaunchPage() {
   return (

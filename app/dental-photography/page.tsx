@@ -8,6 +8,7 @@ import ScrollToTop from "@/components/scroll-to-top"
 import { WebPageSchema } from "@/components/schema-markup"
 import { Button } from "@/components/ui/button"
 import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
+import { buildRouteMetadata } from "@/lib/seo/metadata"
 
 const proofPoints = [
   {
@@ -114,38 +115,12 @@ const PAGE_DESCRIPTION =
   "prism captures on-site dental photography and video that power websites, paid ads, local listings, and social media launches."
 const CANONICAL_URL = "https://www.design-prism.com/dental-photography"
 
-export const metadata: Metadata = {
-  title: PAGE_TITLE,
+export const metadata: Metadata = buildRouteMetadata({
+  titleStem: PAGE_TITLE,
   description: PAGE_DESCRIPTION,
-  alternates: {
-    canonical: CANONICAL_URL,
-  },
-  openGraph: {
-    title: PAGE_TITLE,
-    description:
-      "authentic chairside visuals replace stock so your website, ads, local listings, and social feeds convert faster.",
-    url: CANONICAL_URL,
-    type: "website",
-    images: [
-      {
-        url: "/prism-opengraph.png",
-        width: 1200,
-        height: 630,
-        alt: "Prism dental photography",
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: PAGE_TITLE,
-    description: "on-site shoots that supercharge websites, ad libraries, map packs, and content calendars.",
-    images: ["/prism-opengraph.png"],
-  },
-  robots: {
-    index: true,
-    follow: true
-  }
-}
+  path: "/dental-photography",
+  ogImage: "/prism-opengraph.png",
+})
 
 export default function DentalPhotographyPage() {
   return (

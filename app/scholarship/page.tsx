@@ -1,38 +1,19 @@
 import type { Metadata } from "next"
 import { WebPageSchema } from "@/components/schema-markup"
 import ScholarshipPageClient from "./ScholarshipPageClient"
+import { buildRouteMetadata } from "@/lib/seo/metadata"
 
 const PAGE_TITLE = "community website scholarship | prism"
 const PAGE_DESCRIPTION =
   "each month prism builds a free website for a community member. apply for the scholarship and we'll review your story before the next pick."
 const CANONICAL_URL = "https://www.design-prism.com/scholarship"
 
-export const metadata: Metadata = {
-  title: PAGE_TITLE,
+export const metadata: Metadata = buildRouteMetadata({
+  titleStem: PAGE_TITLE,
   description: PAGE_DESCRIPTION,
-  alternates: {
-    canonical: CANONICAL_URL,
-  },
-  openGraph: {
-    title: PAGE_TITLE,
-    description: PAGE_DESCRIPTION,
-    url: CANONICAL_URL,
-    images: [
-      {
-        url: "/prism-opengraph.png",
-        width: 1200,
-        height: 630,
-        alt: "Prism community scholarship",
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: PAGE_TITLE,
-    description: PAGE_DESCRIPTION,
-    images: ["/prism-opengraph.png"],
-  },
-}
+  path: "/scholarship",
+  ogImage: "/prism-opengraph.png",
+})
 
 export default function ScholarshipPage() {
   return (

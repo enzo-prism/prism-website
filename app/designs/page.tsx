@@ -2,24 +2,19 @@ import SeoTextSection from "@/components/seo-text-section"
 import type { Metadata } from "next"
 import { WebPageSchema } from "@/components/schema-markup"
 import DesignsPageClient from "./DesignsPageClient"
+import { buildRouteMetadata } from "@/lib/seo/metadata"
 
 const PAGE_TITLE = "graphic design portfolio & creative services | prism"
 const PAGE_DESCRIPTION =
   "browse award-winning logos, branding, marketing assets, and social graphics that show how intentional design elevates your brand and captures attention."
 const CANONICAL_URL = "https://www.design-prism.com/designs"
 
-export const metadata: Metadata = {
-  title: PAGE_TITLE,
+export const metadata: Metadata = buildRouteMetadata({
+  titleStem: PAGE_TITLE,
   description: PAGE_DESCRIPTION,
-  openGraph: {
-    title: PAGE_TITLE,
-    description: PAGE_DESCRIPTION,
-    images: ["/prism-opengraph.png"],
-  },
-  alternates: {
-    canonical: CANONICAL_URL,
-  },
-}
+  path: "/designs",
+  ogImage: "/prism-opengraph.png",
+})
 
 export default function DesignsPage() {
   return (

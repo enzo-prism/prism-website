@@ -11,6 +11,7 @@ import { ArrowRight, CheckCircle2 } from "lucide-react"
 import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
 import { CASE_STUDIES } from "@/lib/case-study-data"
 import { pixelishForEmoji } from "@/lib/pixelish-emoji"
+import { buildRouteMetadata } from "@/lib/seo/metadata"
 
 const coreOutcomes = [
   {
@@ -143,34 +144,11 @@ const stayingReasons = [
   { icon: "💬", text: "Direct line to the founder for support" }
 ]
 
-export const metadata: Metadata = {
-  title: "why local shop owners love prism",
-  description:
-    "prism helps local shops stand out online, bring more people through the door, and run smoother — without tech headaches or outdated marketing systems.",
-  alternates: {
-    canonical: "https://www.design-prism.com/why-local-shop-owners-love-prism"
-  },
-  openGraph: {
-    title: "why local shop owners love prism",
-    description:
-      "more customers. less tech stress. prism manages your local seo, listings, ads, and design so you can focus on running your shop.",
-    url: "https://www.design-prism.com/why-local-shop-owners-love-prism",
-    siteName: "Prism",
-    locale: "en_US",
-    type: "website"
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "why local shop owners love prism",
-    description:
-      "prism brings design, technology, and data together so local business owners can grow online and offline without the tech stress.",
-    creator: "@designprism"
-  },
-  robots: {
-    index: true,
-    follow: true
-  }
-}
+export const metadata: Metadata = buildRouteMetadata({
+  titleStem: "why local shop owners love prism",
+  description: "prism helps local shops stand out online, bring more people through the door, and run smoother — without tech headaches or outdated marketing systems.",
+  path: "/why-local-shop-owners-love-prism",
+})
 
 export default function LocalShopOwnersPage() {
   return (

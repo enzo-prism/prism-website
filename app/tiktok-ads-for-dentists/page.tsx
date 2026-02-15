@@ -9,45 +9,14 @@ import ScrollToTop from "@/components/scroll-to-top"
 import { ServiceSchema } from "@/components/schema-markup"
 import { Button } from "@/components/ui/button"
 import { CASE_STUDIES } from "@/lib/case-study-data"
+import { buildRouteMetadata } from "@/lib/seo/metadata"
 
-export const metadata: Metadata = {
-  title: {
-    absolute: "TikTok Ads for Dentists | Prism",
-  },
-  description:
-    "Prism runs TikTok ads for dentists with creative, landing pages, and tracking that turn attention into booked consults—without spam.",
-  alternates: {
-    canonical: "https://www.design-prism.com/tiktok-ads-for-dentists",
-  },
-  openGraph: {
-    title: "TikTok Ads for Dentists | Prism",
-    description:
-      "Prism runs TikTok ads for dentists with creative, landing pages, and tracking that turn attention into booked consults—without spam.",
-    url: "https://www.design-prism.com/tiktok-ads-for-dentists",
-    siteName: "prism",
-    locale: "en_US",
-    type: "website",
-    images: [
-      {
-        url: "/prism-opengraph.png",
-        width: 1200,
-        height: 630,
-        alt: "Prism TikTok ads for dentists",
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "TikTok Ads for Dentists | Prism",
-    description:
-      "Prism runs TikTok ads for dentists with creative, landing pages, and tracking that turn attention into booked consults—without spam.",
-    images: ["/prism-opengraph.png"],
-  },
-  robots: {
-    index: true,
-    follow: true,
-  },
-}
+export const metadata: Metadata = buildRouteMetadata({
+  titleStem: "TikTok Ads for Dentists | Prism",
+  description: "Prism runs TikTok ads for dentists with creative, landing pages, and tracking that turn attention into booked consults—without spam.",
+  path: "/tiktok-ads-for-dentists",
+  ogImage: "/prism-opengraph.png",
+})
 
 const primaryCta = {
   label: "Get a free analysis",

@@ -2,8 +2,10 @@ import BlogPostLayout from '@/components/blog-post-layout'
 import BlogEmailSignup from '@/components/blog-email-signup'
 import { getAllPosts, getPost } from '@/lib/mdx-data'
 import { getBlogOpenGraphImage } from '@/lib/blog-images'
+import { canonicalUrl } from '@/lib/canonical'
 import { renderPost } from '@/lib/mdx'
 import { getMdxToc } from '@/lib/mdx-toc'
+import { buildAbsoluteTitle, normalizeDescription } from '@/lib/seo/rules'
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 
@@ -64,40 +66,29 @@ export async function generateMetadata({
         ? openGraphImageUrls
         : [datedOpenGraphImage]
 
-  // Normalize canonical to www host regardless of frontmatter
-  let canonicalUrl: string
-  try {
-    const u = new URL(frontmatter.canonical || `${base}/blog/${slug}`)
-    u.hostname = 'www.design-prism.com'
-    canonicalUrl = u.toString()
-  } catch {
-    canonicalUrl = `${base}/blog/${slug}`
-  }
-
-  // Compute concise SEO title (avoid layout template and long strings)
-  const maxTitleLength = 60
-  const rawTitle = frontmatter.title || 'Blog post'
-  const brandSuffix = ' | prism'
-  const seoTitle =
-    rawTitle.length + brandSuffix.length <= maxTitleLength
-      ? `${rawTitle}${brandSuffix}`
-      : rawTitle.length > maxTitleLength
-        ? `${rawTitle.slice(0, maxTitleLength - 1)}…`
-        : rawTitle
+  const canonical = canonicalUrl(frontmatter.canonical || `/blog/${slug}`)
+  const seoTitle = buildAbsoluteTitle(frontmatter.seoTitle || frontmatter.title || 'Blog post')
+  const seoDescription = normalizeDescription(
+    frontmatter.seoDescription || frontmatter.description,
+  )
 
   return {
     title: { absolute: seoTitle },
-    description: frontmatter.description,
+    description: seoDescription,
     openGraph: {
       ...frontmatter.openGraph,
-      url: canonicalUrl,
+      title: seoTitle,
+      description: seoDescription,
+      url: canonical,
       images: ogImages,
     },
     twitter: {
       ...frontmatter.twitter,
+      title: seoTitle,
+      description: seoDescription,
       images: twitterImages,
     },
-    alternates: { canonical: canonicalUrl },
+    alternates: { canonical },
   }
 }
 

@@ -12,38 +12,14 @@ import type { Metadata } from "next"
 import Link from "next/link"
 import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
 import { getAllPosts } from "@/lib/mdx-data"
+import { buildRouteMetadata } from "@/lib/seo/metadata"
 
-export const metadata: Metadata = {
-  title: {
-    absolute: "Paid Ads Management for Small Businesses | Prism",
-  },
-  description:
-    "Google, Meta, TikTok, and Yelp ads planned and optimized to drive more calls, form fills, and booked appointments.",
-  openGraph: {
-    title: "Paid Ads Management for Small Businesses | Prism",
-    description:
-      "Google, Meta, TikTok, and Yelp ads planned and optimized to drive more calls, form fills, and booked appointments.",
-    url: "https://www.design-prism.com/ads",
-    images: [
-      {
-        url: "/prism-opengraph.png",
-        width: 1200,
-        height: 630,
-        alt: "Prism Ads Services",
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Paid Ads Management for Small Businesses | Prism",
-    description:
-      "Google, Meta, TikTok, and Yelp ads planned and optimized to drive more calls, form fills, and booked appointments.",
-    images: ["/prism-opengraph.png"],
-  },
-  alternates: {
-    canonical: "https://www.design-prism.com/ads",
-  },
-}
+export const metadata: Metadata = buildRouteMetadata({
+  titleStem: "Paid Ads Management for Small Businesses | Prism",
+  description: "Google, Meta, TikTok, and Yelp ads planned and optimized to drive more calls, form fills, and booked appointments.",
+  path: "/ads",
+  ogImage: "/prism-opengraph.png",
+})
 
 const whatYouGet = [
   {

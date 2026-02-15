@@ -5,38 +5,14 @@ import type { Metadata } from "next"
 import WallOfLoveClientPage from "./client-page"
 import { quotesData } from "@/content/wall-of-love-data"
 import { sanitizeReviewText } from "@/lib/schema-helpers"
+import { buildRouteMetadata } from "@/lib/seo/metadata"
 
-export const metadata: Metadata = {
-  title: "testimonials | dentists & local brands working with prism",
-  description:
-    "explore feedback from dental practices, nonprofits, and local retailers that partner with prism for high-performing websites and growth systems.",
-  openGraph: {
-    title: "testimonials | dentists & local brands working with prism",
-    description:
-      "explore feedback from dental practices, nonprofits, and local retailers that partner with prism for high-performing websites and growth systems.",
-    url: "https://www.design-prism.com/wall-of-love",
-    images: [
-      {
-        url: "/prism-opengraph.png", // Using existing opengraph image
-        width: 1200,
-        height: 630,
-        alt: "Prism Client Testimonials",
-      },
-    ],
-    locale: "en_US",
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "testimonials | dentists & local brands working with prism",
-    description:
-      "explore feedback from dental practices, nonprofits, and local retailers that partner with prism for high-performing websites and growth systems.",
-    images: ["/prism-opengraph.png"],
-  },
-  alternates: {
-    canonical: "https://www.design-prism.com/wall-of-love",
-  },
-}
+export const metadata: Metadata = buildRouteMetadata({
+  titleStem: "testimonials | dentists & local brands working with prism",
+  description: "explore feedback from dental practices, nonprofits, and local retailers that partner with prism for high-performing websites and growth systems.",
+  path: "/wall-of-love",
+  ogImage: "/prism-opengraph.png",
+})
 
 export default function WallOfLovePage() {
   const defaultReviewRating = {

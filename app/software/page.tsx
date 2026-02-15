@@ -5,23 +5,14 @@ import { ItemListSchema } from "@/components/schema-markup"
 import { Badge } from "@/components/ui/badge"
 import SoftwareAppCards from "@/components/software/SoftwareAppCards"
 import { PRISM_APPS } from "@/lib/software-apps"
+import { buildRouteMetadata } from "@/lib/seo/metadata"
 
-export const metadata: Metadata = {
-  title: {
-    absolute: "prism | software tools to help you grow",
-  },
-  description:
-    "Free software built by Prism to increase leads, conversions, and customer lifetime value. Explore Density and Hot Content.",
-  openGraph: {
-    title: "prism | software tools to help you grow",
-    description:
-      "Free software built by Prism to increase leads, conversions, and customer lifetime value. Explore Density and Hot Content.",
-    images: ["/prism-opengraph.png"],
-  },
-  alternates: {
-    canonical: "https://www.design-prism.com/software",
-  },
-}
+export const metadata: Metadata = buildRouteMetadata({
+  titleStem: "prism | software tools to help you grow",
+  description: "Free software built by Prism to increase leads, conversions, and customer lifetime value. Explore Density and Hot Content.",
+  path: "/software",
+  ogImage: "/prism-opengraph.png",
+})
 
 export default function SoftwarePage() {
   return (

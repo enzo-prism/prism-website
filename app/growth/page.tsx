@@ -6,6 +6,7 @@ import RevealOnScroll from "@/components/reveal-on-scroll"
 import { WebPageSchema } from "@/components/schema-markup"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
+import { buildRouteMetadata } from "@/lib/seo/metadata"
 
 const services = [
   {
@@ -45,32 +46,12 @@ const PAGE_DESCRIPTION =
   "Turn your Prism-built site into a full growth engine with SEO, ads, and automation retainers."
 const CANONICAL_URL = "https://www.design-prism.com/growth"
 
-export const metadata: Metadata = {
-  title: PAGE_TITLE,
+export const metadata: Metadata = buildRouteMetadata({
+  titleStem: PAGE_TITLE,
   description: PAGE_DESCRIPTION,
-  alternates: {
-    canonical: CANONICAL_URL,
-  },
-  openGraph: {
-    title: PAGE_TITLE,
-    description: PAGE_DESCRIPTION,
-    url: CANONICAL_URL,
-    images: [
-      {
-        url: "/prism-opengraph.png",
-        width: 1200,
-        height: 630,
-        alt: "Prism growth retainers",
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: PAGE_TITLE,
-    description: PAGE_DESCRIPTION,
-    images: ["/prism-opengraph.png"],
-  },
-}
+  path: "/growth",
+  ogImage: "/prism-opengraph.png",
+})
 
 export default function GrowthPage() {
   return (

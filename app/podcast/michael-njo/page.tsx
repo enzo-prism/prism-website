@@ -5,6 +5,7 @@ import type { Metadata } from "next"
 import Link from "next/link"
 import { ArrowUpRight } from "lucide-react"
 import { PodcastEpisodeSchema, VideoObjectSchema } from "@/components/schema-markup"
+import { buildRouteMetadata } from "@/lib/seo/metadata"
 
 const episodeYoutubeUrl = "https://youtu.be/0SS1C5d3m1w"
 const episodeEmbedUrl = "https://www.youtube.com/embed/0SS1C5d3m1w"
@@ -34,35 +35,12 @@ const lessons = [
   },
 ]
 
-export const metadata: Metadata = {
-  title: "Dr. Michael Njo, DDS | Prism Podcast",
-  description:
-    "Read Dr. Michael Njo's story of discipline, reinvention, and mentorship—from building a practice to guiding dentists through Practice Transitions Institute.",
-  openGraph: {
-    title: "Dr. Michael Njo, DDS | Prism Podcast",
-    description:
-      "A journey of dedication, reinvention, and mentorship featuring Prism Podcast guest Dr. Michael Njo.",
-    url: "https://www.design-prism.com/podcast/michael-njo",
-    images: [
-      {
-        url: "/prism-opengraph.png",
-        width: 1200,
-        height: 630,
-        alt: "Prism Podcast - Dr. Michael Njo",
-      },
-    ],
-  },
-  alternates: {
-    canonical: "https://www.design-prism.com/podcast/michael-njo",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Dr. Michael Njo, DDS | Prism Podcast",
-    description:
-      "Read Dr. Michael Njo's story of discipline, reinvention, and mentorship—from building a practice to guiding dentists through Practice Transitions Institute.",
-    images: ["/prism-opengraph.png"],
-  },
-}
+export const metadata: Metadata = buildRouteMetadata({
+  titleStem: "Dr. Michael Njo, DDS | Prism Podcast",
+  description: "Read Dr. Michael Njo's story of discipline, reinvention, and mentorship—from building a practice to guiding dentists through Practice Transitions Institute.",
+  path: "/podcast/michael-njo",
+  ogImage: "/prism-opengraph.png",
+})
 
 export default function MichaelNjoPage() {
   return (

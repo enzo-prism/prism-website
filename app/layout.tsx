@@ -16,10 +16,7 @@ import ToasterLazy from "@/components/toaster-lazy"
 import { GA_MEASUREMENT_ID, GOOGLE_ADS_ID, IS_ANALYTICS_ENABLED } from "@/lib/constants"
 
 export const metadata: Metadata = {
-  title: {
-    template: "%s | prism",
-    default: "prism | growth engine for local brands",
-  },
+  title: "Prism",
   description:
     "prism builds high-converting websites, manages paid ads, and optimizes local listings so small businesses consistently attract qualified local customers.",
   openGraph: {
