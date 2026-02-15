@@ -31,6 +31,7 @@ const topIconMap: Record<string, { src: string; motionClass: string }> = {
   home: { src: "/pixelish/house.svg", motionClass: "nav-icon-home" },
   "our story": { src: "/pixelish/user.svg", motionClass: "nav-icon-story" },
   software: { src: "/pixelish/device-monitor.svg", motionClass: "nav-icon-software" },
+  blog: { src: "/pixelish/document-letter.svg", motionClass: "nav-icon-blog" },
   "case studies": { src: "/pixelish/folder.svg", motionClass: "nav-icon-case-studies" },
   "wall of love": { src: "/pixelish/emoji-heart.svg", motionClass: "nav-icon-love" },
   start: { src: "/pixelish/emoji-rocket.svg", motionClass: "nav-icon-start" },

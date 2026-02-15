@@ -97,6 +97,12 @@ body.is-scrolling-fast .animation-paused {
   color: #10b981;
 }
 
+.nav-link:hover .nav-icon-blog,
+.nav-link:focus-visible .nav-icon-blog {
+  transform: translate3d(0, -1px, 0) rotate(-3deg);
+  color: #f97316;
+}
+
 .nav-link:hover .nav-icon-case-studies,
 .nav-link:focus-visible .nav-icon-case-studies {
   transform: translate3d(2px, -1px, 0) rotate(4deg);
