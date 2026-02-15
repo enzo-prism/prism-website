@@ -129,6 +129,11 @@ const blogPosts = {
     category: "Local Growth Strategy",
     gradientClass: "bg-gradient-to-br from-amber-300/30 via-sky-300/30 to-emerald-300/30",
   },
+  'who-prism-is-for': {
+    title: "I Tried Squarespace, Hired an Agency, and Built Prism Instead. Here's Who It's Actually For.",
+    category: "Local Growth Strategy",
+    gradientClass: "bg-gradient-to-br from-amber-300/30 via-sky-300/30 to-emerald-300/30",
+  },
   'riding-the-ai-wave': {
     title: "Riding the ai wave",
     category: "AI Trends",
