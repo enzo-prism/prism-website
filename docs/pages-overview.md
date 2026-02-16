@@ -41,6 +41,7 @@ Quick reference for the pages we edit most often.
 ## Podcast (`app/podcast/page.tsx`)
 - Podcast hub + recent episode preview cards.
 - Uses `PodcastSeriesSchema` plus `PodcastEpisodeSchema` (with nested `VideoObject` metadata). Keep episode publish dates, YouTube URLs, and thumbnails up to date so Video structured data stays valid.
+- Individual episode spotlights (for example `app/podcast/michael-njo/page.tsx`) should keep CTA buttons mobile-safe by allowing full-width wrapping on small screens so no horizontal scrolling is introduced in quote/CTA cards.
 
 ## Dental Website (`app/dental-website/page.tsx`)
 - Dentist-focused website page targeting “dentist website design”.
