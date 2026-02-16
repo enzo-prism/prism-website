@@ -36,7 +36,7 @@ const lessons = [
 ]
 
 export const metadata: Metadata = buildRouteMetadata({
-  titleStem: "Dr. Michael Njo, DDS | Prism Podcast",
+  titleStem: "Dr. Michael Njo | Prism Podcast",
   description: "Read Dr. Michael Njo's story of discipline, reinvention, and mentorship—from building a practice to guiding dentists through Practice Transitions Institute.",
   path: "/podcast/michael-njo",
   ogImage: "/prism-opengraph.png",
@@ -51,7 +51,7 @@ export default function MichaelNjoPage() {
           <div className="container mx-auto max-w-4xl px-4 py-16 text-center sm:py-20 md:px-6">
             <p className="text-xs font-semibold uppercase tracking-[0.35em] text-white/70">podcast feature</p>
             <h1 className="mt-6 text-4xl font-semibold tracking-tight sm:text-5xl md:text-6xl">
-              Dr. Michael Njo, DDS
+              Dr. Michael Njo
             </h1>
             <p className="mt-4 text-lg text-white/80 sm:text-xl">
               A journey of dedication, reinvention, and mentorship.
@@ -72,7 +72,7 @@ export default function MichaelNjoPage() {
                 <iframe
                   className="h-full w-full"
                   src={`${episodeEmbedUrl}?rel=0`}
-                  title="Dr. Michael Njo, DDS - Prism Podcast Episode"
+                  title="Dr. Michael Njo - Prism Podcast Episode"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
                 />
@@ -183,7 +183,7 @@ export default function MichaelNjoPage() {
               it made me stronger in every other way. Dentistry gave me a career; mentorship gave me purpose."
             </p>
             <div className="text-sm uppercase tracking-[0.3em] text-neutral-500">
-              Dr. Michael Njo, DDS · Dentist · Mentor · Consultant · Educator
+              Michael Njo DDS · Dentist · Mentor · Consultant · Educator
             </div>
             <div className="flex flex-wrap items-center gap-4 pt-4">
               <a
