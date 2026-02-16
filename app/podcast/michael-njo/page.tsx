@@ -182,7 +182,7 @@ export default function MichaelNjoPage() {
               "Life gives you moments that will either break you or make you stronger. My injury broke me physically--but
               it made me stronger in every other way. Dentistry gave me a career; mentorship gave me purpose."
             </p>
-            <div className="text-sm uppercase tracking-[0.3em] text-neutral-500">
+            <div className="text-sm uppercase tracking-[0.2em] text-neutral-500 [overflow-wrap:anywhere] sm:tracking-[0.3em]">
               Michael Njo DDS · Dentist · Mentor · Consultant · Educator
             </div>
             <div className="flex flex-wrap items-center gap-4 pt-4">
@@ -190,8 +190,9 @@ export default function MichaelNjoPage() {
                 href="https://practicetransitionsinstitute.com"
                 target="_blank"
                 rel="noopener noreferrer"
+                className="w-full sm:w-auto"
               >
-                <Button className="rounded-full bg-neutral-900 px-6 py-5 text-base text-white hover:bg-neutral-800">
+                <Button className="h-auto w-full max-w-full rounded-full bg-neutral-900 px-5 py-4 text-center text-sm leading-relaxed whitespace-normal break-words text-white hover:bg-neutral-800 sm:w-auto sm:px-6 sm:py-5 sm:text-base sm:whitespace-nowrap">
                   Visit Practice Transitions Institute
                   <ArrowUpRight className="h-5 w-5" />
                 </Button>
