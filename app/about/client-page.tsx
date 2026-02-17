@@ -1,6 +1,7 @@
 import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
 import ScrollToTimelineButton from "@/components/about/ScrollToTimelineButton"
+import AsciiHeroCard from "@/components/ascii/AsciiHeroCard"
 import { BreadcrumbSchema, PersonSchema } from "@/components/schema-markup"
 import ScrollingTimeline from "@/components/scrolling-timeline"
 import PoleVaultCarousel from "@/components/pole-vault-carousel"
@@ -16,41 +17,43 @@ export default function AboutClientPage() {
       <Navbar />
       <main className="flex-1">
         {/* Hero Section */}
-        <section className="px-4 py-16 md:py-24 lg:py-32">
+        <section className="px-4 py-10 md:py-14">
           <div className="container mx-auto px-4 md:px-6">
-            <div className="flex flex-col items-center space-y-6 text-center">
-              <div className="relative inline-flex items-center justify-center group hardware-hover touch-feedback">
-                <span className="pointer-events-none absolute inset-0 scale-110 rounded-md bg-gradient-to-r from-purple-500 via-pink-500 to-amber-400 opacity-0 blur-md transition duration-300 group-hover:opacity-70" />
-                <div className="relative h-28 w-28 overflow-hidden rounded-md border border-border/60 bg-card/20 shadow-none transition">
-                  <Image
-                    src="https://res.cloudinary.com/dhqpqfw6w/image/upload/v1765426902/Enzo_s_Headshot_xg546f.webp"
-                    alt="Enzo Sison headshot"
-                    width={160}
-                    height={160}
-                    className="h-full w-full object-cover"
-                    priority
-                  />
+            <AsciiHeroCard
+              animationName="fire"
+              frameCount={78}
+              fps={18}
+              eyebrow="enzo sison · founder, prism"
+              title="our story"
+              description="enzo sison built prism to pursue his passions for tech, business, and athletics at the highest level — and to connect with others chasing excellence in their own fields."
+              preEyebrow={
+                <div className="flex flex-col items-center gap-4">
+                  <div className="relative h-24 w-24 overflow-hidden rounded-md border border-border/60 bg-card/20 shadow-none sm:h-28 sm:w-28">
+                    <Image
+                      src="https://res.cloudinary.com/dhqpqfw6w/image/upload/v1765426902/Enzo_s_Headshot_xg546f.webp"
+                      alt="Enzo Sison headshot"
+                      width={160}
+                      height={160}
+                      className="h-full w-full object-cover"
+                      priority
+                    />
+                  </div>
+                  <Badge variant="secondary" className="w-fit">
+                    founded in 2023
+                  </Badge>
                 </div>
+              }
+              ariaLabel="Fire ASCII animation behind the About page hero"
+            >
+              <div className="flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-4">
+                <ScrollToTimelineButton />
+                <Button asChild variant="outline" size="lg" className="rounded-md px-6">
+                  <Link href="https://enzosison.com" target="_blank" rel="noopener noreferrer">
+                    enzosison.com <ArrowUpRight className="ml-2 h-4 w-4" aria-hidden />
+                  </Link>
+                </Button>
               </div>
-              <p className="text-[10px] font-semibold uppercase tracking-[0.32em] text-muted-foreground font-pixel">
-                enzo sison · founder, prism
-              </p>
-              <Badge variant="secondary" className="w-fit">founded in 2023</Badge>
-              <div className="space-y-3">
-                <h1 className="text-5xl font-semibold sm:text-6xl lg:text-7xl">our story</h1>
-                <p className="mx-auto mt-4 max-w-[700px] text-muted-foreground md:text-xl">
-                  enzo sison built prism to pursue his passions for tech, business, and athletics at the highest level — and to connect with others chasing excellence in their own fields.
-                </p>
-                <div className="flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-4">
-                  <ScrollToTimelineButton />
-                  <Button asChild variant="outline" size="lg" className="rounded-md px-6">
-                    <Link href="https://enzosison.com" target="_blank" rel="noopener noreferrer">
-                      enzosison.com <ArrowUpRight className="ml-2 h-4 w-4" aria-hidden />
-                    </Link>
-                  </Button>
-                </div>
-              </div>
-            </div>
+            </AsciiHeroCard>
           </div>
         </section>
 

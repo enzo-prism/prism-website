@@ -1,4 +1,5 @@
 import type { Metadata } from "next"
+import AsciiHeroCard from "@/components/ascii/AsciiHeroCard"
 import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
 import { ItemListSchema } from "@/components/schema-markup"
@@ -19,21 +20,22 @@ export default function SoftwarePage() {
     <div className="flex min-h-screen flex-col bg-background">
       <Navbar />
       <main className="flex-1">
-        <section className="relative overflow-hidden py-16 sm:py-24 bg-background">
-          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-muted/50 via-background to-background" />
-          <div className="pointer-events-none absolute -right-24 top-10 h-72 w-72 rounded-full bg-primary/10 blur-3xl" />
-          <div className="container relative mx-auto px-4 sm:px-6">
-            <div className="mx-auto flex max-w-3xl flex-col items-center gap-4 text-center">
-              <Badge variant="secondary" className="w-fit">
-                Apps developed by Prism
-              </Badge>
-              <h1 className="text-balance text-5xl font-semibold text-foreground sm:text-6xl lg:text-7xl">
-                Tools to Help You Grow
-              </h1>
-              <p className="text-balance text-lg text-muted-foreground">
-                Free software to help you increase leads, conversions, and customer LTV
-              </p>
-            </div>
+        <section className="px-4 py-10 md:py-14">
+          <div className="container mx-auto px-4 sm:px-6">
+            <AsciiHeroCard
+              animationName="computer"
+              frameCount={78}
+              fps={18}
+              eyebrow="software"
+              title="Tools to Help You Grow"
+              description="Free software to help you increase leads, conversions, and customer LTV"
+              preEyebrow={
+                <Badge variant="secondary" className="w-fit">
+                  Apps developed by Prism
+                </Badge>
+              }
+              ariaLabel="Computer ASCII animation behind the Software page hero"
+            />
           </div>
         </section>
 

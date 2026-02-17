@@ -4,6 +4,7 @@ import { notFound } from "next/navigation"
 import BlogEmailSignup from "@/components/blog-email-signup"
 import BlogFilterNavigationServer from "@/components/blog-filter-navigation-server"
 import Breadcrumbs from "@/components/breadcrumbs"
+import AsciiHeroCard from "@/components/ascii/AsciiHeroCard"
 import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
 import { CollectionPageSchema, ItemListSchema } from "@/components/schema-markup"
@@ -74,13 +75,18 @@ export default async function Blog({
           <Breadcrumbs items={[{ name: "home", url: "/" }, { name: "blog", url: "/blog" }]} />
         </div>
 
-        <section className="border-b border-border/60 py-10 md:py-14">
+        <section className="px-4 py-10 md:py-14">
           <div className="container mx-auto px-4 md:px-6">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">prism blog</p>
-            <h1 className="blog-display-title mt-4 text-foreground">Insights & ideas</h1>
-            <p className="blog-hero-subtitle mt-4 text-muted-foreground">
-              Thoughtful breakdowns on design, development, and digital strategy from the Prism team.
-            </p>
+            <AsciiHeroCard
+              animationName="mail"
+              frameCount={56}
+              fps={18}
+              eyebrow="prism blog"
+              title="Insights & ideas"
+              description="Thoughtful breakdowns on design, development, and digital strategy from the Prism team."
+              ariaLabel="Mail ASCII animation behind the Blog page hero"
+              className="blog-reading-surface"
+            />
           </div>
         </section>
 

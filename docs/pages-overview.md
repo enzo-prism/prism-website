@@ -39,6 +39,11 @@ Quick reference for the pages we edit most often.
 - Growth tools hub listing Prism-built software (currently Density, Hot Content, and Engineering Tracker).
 - App card data is shared via `lib/software-apps.ts`; update this list to keep the homepage section and `/software` in sync.
 - The homepage + `/software` cards are rendered by `components/software/SoftwareAppCards.tsx`, including the framed icon treatment sized for small pixel icons.
+- The hero now uses `components/ascii/AsciiHeroCard.tsx` with the high-quality `computer` ASCII frames in `public/animations/computer/high`.
+
+## Blog (`app/blog/page.tsx`)
+- Blog index layout includes breadcrumbs, the animated hero card, filters, post grid, signup, and the final CTA section.
+- The hero now uses `components/ascii/AsciiHeroCard.tsx` with the high-quality `mail` ASCII frames in `public/animations/mail/high`.
 
 ## Podcast (`app/podcast/page.tsx`)
 - Podcast hub + recent episode preview cards.
@@ -180,10 +185,13 @@ Each uses card-based layouts: confirmation message + kickoff-call CTA + contact 
 - Client-specific review hubs live alongside the main page. Example: `/designs/wine-country-root-canal` contains a hero recap, deliverables grid, timeline, checklist, and CTA so Dr. Anderson’s team can review assets async.
 
 ## About (`app/about/client-page.tsx`)
-- Uses `VideoPlayer` for the founder message plus the Olympic journey carousel, mission section, and CTA.
-- The video block tracks visibility via `trackVideoInteraction`; keep that instrumentation intact when editing.
+- Hero now mirrors the `/case-studies` and `/wall-of-love` treatment using `components/ascii/AsciiHeroCard.tsx` with high-quality `fire` frames in `public/animations/fire/high`.
+- Keep the founder headshot, timeline CTA (`ScrollToTimelineButton`), and external profile CTA in the hero; they are intentionally part of the hero content layer.
+- The Olympic journey and timeline sections remain below the hero and should keep their existing CTA flow.
 
 ## Supporting Components
+- `components/ascii/AsciiHeroCard.tsx`: shared cinematic hero wrapper used by `/about`, `/software`, and `/blog`.
+- `components/ascii/AsciiAnimation.tsx`: high-quality ASCII frame player (quality fallback, lazy loading, reduced-motion pause, intersection-aware playback).
 - `components/reveal-on-scroll.tsx`: lightweight framer-motion wrapper used across marketing sections.
 - `components/forms/*`: shared form components noted in [forms.md](./forms.md).
 - `components/video-player.tsx`: shared CTA/VSL embed with structured-data support. Pass poster + schema props so every marketing video emits valid `VideoObject` JSON-LD.
