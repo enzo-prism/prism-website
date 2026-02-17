@@ -29,7 +29,7 @@ export default function CaseStudiesPage() {
                 preload="metadata"
                 poster={CASE_STUDIES_HERO_POSTER}
                 aria-hidden="true"
-                className="absolute inset-0 h-full w-full object-cover opacity-25"
+                className="absolute inset-0 h-full w-full object-cover opacity-40"
               >
                 <source src={CASE_STUDIES_HERO_VIDEO} type="video/mp4" />
               </video>
