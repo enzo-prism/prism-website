@@ -7,6 +7,7 @@ import { trackNavigation } from "@/utils/analytics"
 export type CaseStudyListItem = {
   id: string
   client: string
+  clientLogo?: string
   category: string
   location: string
   slug: string
@@ -55,6 +56,7 @@ export default function CaseStudiesList({ studies }: { studies: CaseStudyListIte
           <CaseStudyCard
             key={study.id}
             business={study.client}
+            clientLogo={study.clientLogo}
             category={study.category}
             location={study.location}
             slug={study.slug}

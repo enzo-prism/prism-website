@@ -9,6 +9,7 @@ Quick reference for the pages we edit most often.
 - The “buy back time / grow customers” interactive graph is `components/case-studies/FounderImpactGraph.tsx` (shadcn `Tabs` + recharts; “with prism” vs “without prism” scenarios).
 - The shared curve/data generator lives in `lib/case-study-impact-graph.ts` (bounded 0–100 index with exponential “customers compound” growth + “effort decays to zero”; tune via `curves.*K` if we ever switch to case-specific numbers).
 - Minimal case studies use `components/case-study-minimal.tsx`, which automatically includes the graph and now surfaces a top-of-page "visit <client-site>" button whenever a `website` quick fact includes an external `href`.
+- The `/case-studies` card grid reads optional `clientLogo` URLs from `lib/case-study-data.ts`; cards render logos when provided and fall back to text-only cards when absent.
 
 ## Pricing (`app/pricing/client-page.tsx`)
 - Core sections (plans grid, founder VSL block, “everything included” features, “Website Use Cases”, smooth handoff section, clients rail, FAQ, and final CTA) live here; the hero + fullscreen modal live in `components/pricing/PricingHero.tsx`.

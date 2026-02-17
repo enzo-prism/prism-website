@@ -22,6 +22,7 @@ export type CaseStudyMeta = {
   id: string
   title: string
   client: string
+  clientLogo?: string
   category: CaseStudyCategory
   founder?: string
   industry: string
@@ -46,6 +47,8 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
     id: "1",
     title: "Powering a Seamless Transition",
     client: "Dr. Christopher B. Wong",
+    clientLogo:
+      "https://res.cloudinary.com/dhqpqfw6w/image/upload/v1771353638/Chris-Wong_avwdmb.webp",
     category: "dentistry",
     founder: "Dr. Christopher B. Wong",
     industry: "Dentistry",
@@ -76,6 +79,8 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
     id: "2",
     title: "Aligning Digital Excellence with Luxury Care",
     client: "Exquisite Dentistry",
+    clientLogo:
+      "https://res.cloudinary.com/dhqpqfw6w/image/upload/v1771353638/Exquisite-dentistry_qp4a85.webp",
     category: "dentistry",
     industry: "High-End Dentistry",
     location: "Beverly Hills, CA",
@@ -87,6 +92,8 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
     id: "3",
     title: "Olympic Bootworks: the Tahoe shop that finally sells online",
     client: "Olympic Bootworks",
+    clientLogo:
+      "https://res.cloudinary.com/dhqpqfw6w/image/upload/v1771353639/Olympic-bootworks_fwtza3.webp",
     category: "retail",
     industry: "Retail & E-Commerce",
     location: "Tahoe, CA",
@@ -115,6 +122,8 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
     id: "4",
     title: "Post‑M&A Relaunch with Measurable Growth",
     client: "Laguna Beach Dental Arts",
+    clientLogo:
+      "https://res.cloudinary.com/dhqpqfw6w/image/upload/v1771353640/Laguna-Beach-dental-arts_syypqz.webp",
     category: "dentistry",
     industry: "Dentistry",
     location: "Laguna Beach, CA",
@@ -126,6 +135,8 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
     id: "5",
     title: "Family‑Focused Website with Clear Conversion",
     client: "Family First Smile Care",
+    clientLogo:
+      "https://res.cloudinary.com/dhqpqfw6w/image/upload/v1771353638/Family-First-Smile-Care_xo7qhz.webp",
     category: "dentistry",
     founder: "Dr. Jayleen Pang",
     industry: "Dentistry",
