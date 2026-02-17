@@ -23,8 +23,8 @@ export default function SoftwarePage() {
         <section className="px-4 py-10 md:py-14">
           <div className="container mx-auto px-4 sm:px-6">
             <AsciiHeroCard
-              animationName="computer"
-              frameCount={78}
+              animationName="wave"
+              frameCount={300}
               fps={18}
               eyebrow="software"
               title="Tools to Help You Grow"
@@ -34,7 +34,7 @@ export default function SoftwarePage() {
                   Apps developed by Prism
                 </Badge>
               }
-              ariaLabel="Computer ASCII animation behind the Software page hero"
+              ariaLabel="Wave ASCII animation behind the Software page hero"
             />
           </div>
         </section>

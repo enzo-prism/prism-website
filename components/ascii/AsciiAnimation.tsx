@@ -46,11 +46,92 @@ class AnimationManager {
 }
 
 type Quality = "low" | "medium" | "high"
+type ScaleMode = "contain" | "cover"
+type FrameBounds = {
+  minRow: number
+  maxRow: number
+  minCol: number
+  maxCol: number
+}
 
 const FALLBACK_ORDER: Record<Quality, Quality[]> = {
   low: ["low", "high", "medium"],
   medium: ["medium", "high", "low"],
   high: ["high", "low", "medium"],
+}
+
+function splitFrameLines(frame: string): string[] {
+  const lines = frame.replace(/\r/g, "").split("\n")
+  while (lines.length > 0 && lines[lines.length - 1] === "") {
+    lines.pop()
+  }
+  return lines
+}
+
+function getFrameBounds(lines: string[]): FrameBounds | null {
+  let minRow = Number.POSITIVE_INFINITY
+  let maxRow = Number.NEGATIVE_INFINITY
+  let minCol = Number.POSITIVE_INFINITY
+  let maxCol = Number.NEGATIVE_INFINITY
+
+  for (let row = 0; row < lines.length; row += 1) {
+    const line = lines[row]
+    const firstNonSpace = line.search(/\S/)
+    if (firstNonSpace === -1) continue
+
+    let lastNonSpace = line.length - 1
+    while (lastNonSpace >= 0 && /\s/.test(line[lastNonSpace])) {
+      lastNonSpace -= 1
+    }
+
+    minRow = Math.min(minRow, row)
+    maxRow = Math.max(maxRow, row)
+    minCol = Math.min(minCol, firstNonSpace)
+    maxCol = Math.max(maxCol, lastNonSpace)
+  }
+
+  if (
+    minRow === Number.POSITIVE_INFINITY ||
+    maxRow === Number.NEGATIVE_INFINITY ||
+    minCol === Number.POSITIVE_INFINITY ||
+    maxCol === Number.NEGATIVE_INFINITY
+  ) {
+    return null
+  }
+
+  return { minRow, maxRow, minCol, maxCol }
+}
+
+function mergeFrameBounds(a: FrameBounds | null, b: FrameBounds | null): FrameBounds | null {
+  if (!a) return b
+  if (!b) return a
+
+  return {
+    minRow: Math.min(a.minRow, b.minRow),
+    maxRow: Math.max(a.maxRow, b.maxRow),
+    minCol: Math.min(a.minCol, b.minCol),
+    maxCol: Math.max(a.maxCol, b.maxCol),
+  }
+}
+
+function cropFrameToBounds(lines: string[], bounds: FrameBounds): string {
+  const width = bounds.maxCol - bounds.minCol + 1
+  const clipped: string[] = []
+
+  for (let row = bounds.minRow; row <= bounds.maxRow; row += 1) {
+    const line = lines[row] ?? ""
+    const sliced = line.slice(bounds.minCol, bounds.maxCol + 1)
+    clipped.push(sliced.padEnd(width, " "))
+  }
+
+  return clipped.join("\n")
+}
+
+function normalizeSingleFrame(frame: string): string {
+  const lines = splitFrameLines(frame)
+  const bounds = getFrameBounds(lines)
+  if (!bounds) return frame
+  return cropFrameToBounds(lines, bounds)
 }
 
 /**
@@ -112,6 +193,9 @@ interface ASCIIAnimationProps {
   lazy?: boolean
   color?: string
   gradient?: string
+  fit?: ScaleMode
+  zoom?: number
+  offsetY?: number
 }
 
 export default function ASCIIAnimation({
@@ -127,6 +211,9 @@ export default function ASCIIAnimation({
   lazy = true,
   color,
   gradient,
+  fit = "contain",
+  zoom = 1,
+  offsetY = 0,
 }: ASCIIAnimationProps) {
   const [frames, setFrames] = useState<string[]>([])
   const [isLoading, setIsLoading] = useState(true)
@@ -196,7 +283,19 @@ export default function ASCIIAnimation({
       })
 
       const loadedFrames = await Promise.all(framePromises)
-      setFrames(loadedFrames)
+      const parsedFrames = loadedFrames.map(splitFrameLines)
+      let mergedBounds: FrameBounds | null = null
+
+      for (let i = 0; i < parsedFrames.length; i += 1) {
+        mergedBounds = mergeFrameBounds(mergedBounds, getFrameBounds(parsedFrames[i]))
+      }
+
+      let normalizedFrames = loadedFrames
+      if (mergedBounds) {
+        normalizedFrames = parsedFrames.map(lines => cropFrameToBounds(lines, mergedBounds))
+      }
+
+      setFrames(normalizedFrames)
       currentFrameRef.current = 0
     } catch (error) {
       console.error("Failed to load ASCII frames:", error)
@@ -234,7 +333,7 @@ export default function ASCIIAnimation({
         const response = await fetch(`${source.baseUrl}/${frameFiles[0]}`)
         if (!response.ok) throw new Error(`Failed to fetch preview frame`)
         const firstFrame = await response.text()
-        setFrames([firstFrame])
+        setFrames([normalizeSingleFrame(firstFrame)])
         currentFrameRef.current = 0
       } catch (error) {
         console.error("Failed to load preview frame:", error)
@@ -301,12 +400,13 @@ export default function ASCIIAnimation({
 
       if (naturalWidth === 0 || naturalHeight === 0) return
 
-      const newScale = Math.min(
-        availableWidth / naturalWidth,
-        availableHeight / naturalHeight
-      )
+      const baseScale =
+        fit === "cover"
+          ? Math.max(availableWidth / naturalWidth, availableHeight / naturalHeight)
+          : Math.min(availableWidth / naturalWidth, availableHeight / naturalHeight)
 
-      setScale(newScale * 0.95)
+      const fitAdjustment = fit === "cover" ? 1 : 0.95
+      setScale(baseScale * fitAdjustment * zoom)
 
       // First measurement done — safe to reveal
       if (!scaled) setScaled(true)
@@ -320,7 +420,7 @@ export default function ASCIIAnimation({
     return () => {
       resizeObserver.disconnect()
     }
-  }, [frames, quality, scaled])
+  }, [frames, quality, scaled, fit, zoom, offsetY])
 
   if (isLoading && frames.length === 0) {
     return (
@@ -360,7 +460,7 @@ export default function ASCIIAnimation({
   return (
     <div
       ref={containerRef}
-      className={`relative overflow-hidden w-full h-full flex items-center justify-center  text-foreground ${className}`}
+      className={`overflow-hidden w-full h-full flex items-center justify-center text-foreground ${className}`}
       {...(ariaLabel ? { role: 'img', 'aria-label': ariaLabel } : {})}
     >
       {showFrameCounter && (
@@ -375,7 +475,8 @@ export default function ASCIIAnimation({
         ref={preRef}
         className={`leading-none origin-center ${textSize}`}
         style={{
-          transform: `scale(${scale})`,
+          transform: `translateY(${offsetY}%) scale(${scale})`,
+          willChange: "transform, opacity",
           opacity: scaled ? 1 : 0,
           transition: "opacity 0.5s ease-in",
           ...(gradient

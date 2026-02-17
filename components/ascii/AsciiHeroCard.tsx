@@ -32,7 +32,7 @@ export default function AsciiHeroCard({
   className,
   contentClassName,
   ariaLabel,
-  animationTextSize = "text-[1.8px] sm:text-[2.2px] md:text-[2.6px]",
+  animationTextSize = "text-[2.4px] sm:text-[2.9px] md:text-[3.5px]",
 }: AsciiHeroCardProps) {
   return (
     <div
@@ -46,14 +46,17 @@ export default function AsciiHeroCard({
         frameCount={frameCount}
         fps={fps}
         quality="high"
+        fit="cover"
+        zoom={1}
+        offsetY={0}
         ariaLabel={ariaLabel ?? `${title} ASCII animation`}
         textSize={animationTextSize}
-        className="absolute inset-0 h-full w-full opacity-45 [image-rendering:pixelated]"
-        color="hsl(var(--foreground) / 0.42)"
+        className="absolute inset-0 h-full w-full opacity-95 [image-rendering:pixelated] [-webkit-mask-image:radial-gradient(ellipse_at_center,transparent_0%,transparent_42%,black_88%)] [mask-image:radial-gradient(ellipse_at_center,transparent_0%,transparent_42%,black_88%)]"
+        color="hsl(var(--foreground) / 0.95)"
       />
       <div
         aria-hidden="true"
-        className="absolute inset-0 bg-gradient-to-b from-background/52 via-background/74 to-background/90"
+        className="absolute inset-0 bg-[radial-gradient(circle_at_center,hsl(var(--background)/0.78)_0%,hsl(var(--background)/0.62)_34%,hsl(var(--background)/0.36)_68%,hsl(var(--background)/0.2)_100%)]"
       />
 
       <div

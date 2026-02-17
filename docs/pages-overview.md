@@ -39,11 +39,11 @@ Quick reference for the pages we edit most often.
 - Growth tools hub listing Prism-built software (currently Density, Hot Content, and Engineering Tracker).
 - App card data is shared via `lib/software-apps.ts`; update this list to keep the homepage section and `/software` in sync.
 - The homepage + `/software` cards are rendered by `components/software/SoftwareAppCards.tsx`, including the framed icon treatment sized for small pixel icons.
-- The hero now uses `components/ascii/AsciiHeroCard.tsx` with the high-quality `computer` ASCII frames in `public/animations/computer/high`.
+- The hero now uses `components/ascii/AsciiHeroCard.tsx` with the high-quality `wave` ASCII frames in `public/animations/wave/high`.
 
 ## Blog (`app/blog/page.tsx`)
 - Blog index layout includes breadcrumbs, the animated hero card, filters, post grid, signup, and the final CTA section.
-- The hero now uses `components/ascii/AsciiHeroCard.tsx` with the high-quality `mail` ASCII frames in `public/animations/mail/high`.
+- The hero now uses `components/ascii/AsciiHeroCard.tsx` with the high-quality `hands` ASCII frames in `public/animations/hands/high`.
 
 ## Podcast (`app/podcast/page.tsx`)
 - Podcast hub + recent episode preview cards.
@@ -185,7 +185,7 @@ Each uses card-based layouts: confirmation message + kickoff-call CTA + contact 
 - Client-specific review hubs live alongside the main page. Example: `/designs/wine-country-root-canal` contains a hero recap, deliverables grid, timeline, checklist, and CTA so Dr. Anderson’s team can review assets async.
 
 ## About (`app/about/client-page.tsx`)
-- Hero now mirrors the `/case-studies` and `/wall-of-love` treatment using `components/ascii/AsciiHeroCard.tsx` with high-quality `fire` frames in `public/animations/fire/high`.
+- Hero now mirrors the `/case-studies` and `/wall-of-love` treatment using `components/ascii/AsciiHeroCard.tsx` with high-quality `fire-2` frames in `public/animations/fire-2/high`.
 - Keep the founder headshot, timeline CTA (`ScrollToTimelineButton`), and external profile CTA in the hero; they are intentionally part of the hero content layer.
 - The Olympic journey and timeline sections remain below the hero and should keep their existing CTA flow.
 

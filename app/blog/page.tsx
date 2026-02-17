@@ -78,13 +78,13 @@ export default async function Blog({
         <section className="px-4 py-10 md:py-14">
           <div className="container mx-auto px-4 md:px-6">
             <AsciiHeroCard
-              animationName="mail"
-              frameCount={56}
+              animationName="hands"
+              frameCount={152}
               fps={18}
               eyebrow="prism blog"
               title="Insights & ideas"
               description="Thoughtful breakdowns on design, development, and digital strategy from the Prism team."
-              ariaLabel="Mail ASCII animation behind the Blog page hero"
+              ariaLabel="Hands ASCII animation behind the Blog page hero"
               className="blog-reading-surface"
             />
           </div>

@@ -20,8 +20,8 @@ export default function AboutClientPage() {
         <section className="px-4 py-10 md:py-14">
           <div className="container mx-auto px-4 md:px-6">
             <AsciiHeroCard
-              animationName="fire"
-              frameCount={78}
+              animationName="fire-2"
+              frameCount={94}
               fps={18}
               eyebrow="enzo sison · founder, prism"
               title="our story"
