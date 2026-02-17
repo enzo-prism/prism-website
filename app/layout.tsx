@@ -8,6 +8,7 @@ import { Suspense } from "react"
 import "./globals.css"
 // Import the schema components
 import AnalyticsProvider from "@/components/analytics-provider"
+import CopyPageMarkdownButton from "@/components/copy-page-markdown-button"
 import { GlobalSchemaGraph } from "@/components/schema-markup"
 import RootClientMonitors from "@/components/root-client-monitors"
 import SkipToContent from "@/components/skip-to-content"
@@ -158,6 +159,7 @@ export default function RootLayout({
             <ToasterLazy />
             <Suspense fallback={null}>
               <AnalyticsProvider>{children}</AnalyticsProvider>
+              <CopyPageMarkdownButton />
             </Suspense>
         </SentryContextProvider>
       </body>
