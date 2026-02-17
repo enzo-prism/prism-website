@@ -85,6 +85,11 @@ Quick reference for the pages we edit most often.
 - The impact graph section below the hero is `components/home/ImpactGraphSection.tsx`, which lazy-mounts `FounderImpactGraph` so Recharts only loads when near the viewport.
 - The Wall of Love slider uses `components/home/WallOfLoveCarousel.tsx` and a native scroll-snap rail (no Embla); adjust the quote pool via `pinned` / `heroSpotlight` in `content/wall-of-love-data.tsx`.
 
+## Wall Of Love (`app/wall-of-love/client-page.tsx`)
+- Hero now uses a split layout with a dedicated ASCII animation panel (`planet` loop) to showcase social proof with motion.
+- Hero media assets are `public/ascii/motion/wall-of-love/planet.mp4` with reduced-motion and error fallback poster `public/ascii/static/wall-of-love/planet.png`.
+- Keep CTA tracking on the primary button (`trackCTAClick("wall_of_love_get_started_cta", "/get-started")`) and keep the testimonials feed anchored at `#testimonials-feed`.
+
 ## Prism Library (`app/library/page.tsx`)
 - Library layout (hero, featured post, and grid) lives in `components/library/LibraryClient.tsx`; the list page intentionally avoids embeds and extra UI chrome.
 - Data comes from `lib/library/getLibraryPosts.ts` and merges the `content/library/seed.ts` fallback with `content/library/editorial.ts` curation metadata.
