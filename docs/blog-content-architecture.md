@@ -10,6 +10,7 @@ Recent updates introduced:
 - **Related post recommendations** per article
 - **An RSS feed** served from `/blog/feed.xml`
 - **Automatic table of contents generation** from H2/H3 headings
+- **A header-level "Copy markdown" action** that copies the full post MDX source for AI workflows
 
 Use this document when adding posts or customizing the discovery experience.
 
@@ -36,6 +37,8 @@ Blog cards and post hero sections render the frontmatter `image` when available.
 `lib/mdx.tsx` automatically derives `categorySlug` from the `category` label by lowercasing and replacing non-alphanumeric characters with hyphens. Stick to meaningful labels; the slug keeps filters URL-safe.
 
 Open Graph behavior is date-based in `app/blog/[slug]/page.tsx`: posts before 2026 always use the shared Prism OG image (`https://res.cloudinary.com/dhqpqfw6w/image/upload/v1770786137/Prism_rgeypo.png`), while posts in 2026 and later use each post’s resolved featured image (`frontmatter.image`). Twitter images still honor explicit `twitter.images` first, then `openGraph.images`, then the date-based OG fallback.
+
+`components/blog/copy-blog-markdown-button.tsx` powers the header "Copy markdown" action. It fetches the raw MDX source from `app/api/blog/[slug]/markdown/route.ts` on demand, then copies the full post (frontmatter + body) for use in AI tools without inflating initial page payloads.
 
 `seoTitle` and `seoDescription` are optional manual overrides used by the post metadata generator. If omitted, the generator falls back to `title` and `description`, then normalizes with the shared SEO rules (`lib/seo/rules.ts`) to enforce sentence case, canonical host, and a single `| Prism` title suffix.
 

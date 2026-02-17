@@ -35,6 +35,7 @@ const BLOG_PATH = path.join(process.cwd(), 'content', 'blog')
 const PUBLIC_PATH = path.join(process.cwd(), 'public')
 const CODEX_REGEX = /\bcode?x\b/gi
 const DEFAULT_CATEGORY_SLUG = 'general'
+const BLOG_SLUG_REGEX = /^[a-z0-9-]+$/
 
 function normalizeCodexWord(value: string) {
   return value.replace(CODEX_REGEX, (match) =>
@@ -150,6 +151,10 @@ async function resolveFrontmatterImage(
 export async function getPost(
   slug: string,
 ): Promise<{ frontmatter: BlogFrontmatter; content: string } | null> {
+  if (!BLOG_SLUG_REGEX.test(slug)) {
+    return null
+  }
+
   const filePath = path.join(BLOG_PATH, `${slug}.mdx`)
   try {
     const rawFileContent = await fs.readFile(filePath, 'utf8')
@@ -211,6 +216,24 @@ export async function getPost(
   } catch (error: unknown) {
     console.error(
       `[MDXLib] Failed to get post "${slug}" from "${filePath}":`,
+      error,
+    )
+    return null
+  }
+}
+
+export async function getPostMarkdownSource(slug: string): Promise<string | null> {
+  if (!BLOG_SLUG_REGEX.test(slug)) {
+    return null
+  }
+
+  const filePath = path.join(BLOG_PATH, `${slug}.mdx`)
+
+  try {
+    return await fs.readFile(filePath, 'utf8')
+  } catch (error: unknown) {
+    console.error(
+      `[MDXLib] Failed to get markdown source for post "${slug}" from "${filePath}":`,
       error,
     )
     return null

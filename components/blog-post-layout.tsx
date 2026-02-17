@@ -1,6 +1,7 @@
 import { BlogPostErrorBoundary } from '@/components/blog-error-boundary'
 import BlogHeroMedia from '@/components/blog/BlogHeroMedia'
 import BlogScrollProgress from '@/components/blog/BlogScrollProgress'
+import CopyBlogMarkdownButton from '@/components/blog/copy-blog-markdown-button'
 import GetStartedCTA from '@/components/GetStartedCTA'
 import Footer from '@/components/footer'
 import Navbar from '@/components/navbar'
@@ -130,6 +131,7 @@ export default function BlogPostLayout({
                       {description}
                     </p>
                     <div className="mt-5 flex flex-wrap items-center justify-start gap-3">
+                      <CopyBlogMarkdownButton slug={slug} />
                       <BlogShareIcons url={shareUrl} title={title} />
                     </div>
                   </div>
