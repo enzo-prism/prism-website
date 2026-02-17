@@ -51,7 +51,7 @@ export default function AsciiHeroCard({
         offsetY={0}
         ariaLabel={ariaLabel ?? `${title} ASCII animation`}
         textSize={animationTextSize}
-        className="absolute inset-0 h-full w-full opacity-28 sm:opacity-46 md:opacity-68 lg:opacity-88 [image-rendering:pixelated] md:[-webkit-mask-image:radial-gradient(ellipse_at_center,transparent_0%,transparent_42%,black_88%)] md:[mask-image:radial-gradient(ellipse_at_center,transparent_0%,transparent_42%,black_88%)]"
+        className="absolute inset-0 h-full w-full opacity-[0.39] sm:opacity-[0.64] md:opacity-68 lg:opacity-88 [image-rendering:pixelated] md:[-webkit-mask-image:radial-gradient(ellipse_at_center,transparent_0%,transparent_42%,black_88%)] md:[mask-image:radial-gradient(ellipse_at_center,transparent_0%,transparent_42%,black_88%)]"
         color="hsl(var(--foreground) / 0.95)"
       />
       <div
