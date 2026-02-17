@@ -110,7 +110,7 @@ export default function WallOfLoveClientPage() {
                 Wall of Love
               </h1>
               <p className="mt-5 max-w-2xl text-sm text-muted-foreground sm:text-base">
-                Prism shares content for world class founders and athletes
+                Prism shares content for world-class founders and athletes
               </p>
 
               <p className="mt-6 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-xs font-semibold text-foreground sm:text-sm">
