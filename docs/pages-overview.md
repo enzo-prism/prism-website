@@ -190,7 +190,7 @@ Each uses card-based layouts: confirmation message + kickoff-call CTA + contact 
 - The Olympic journey and timeline sections remain below the hero and should keep their existing CTA flow.
 
 ## Supporting Components
-- `components/ascii/AsciiHeroCard.tsx`: shared cinematic hero wrapper used by `/about`, `/software`, and `/blog`.
+- `components/ascii/AsciiHeroCard.tsx`: shared cinematic hero wrapper used by `/about`, `/software`, and `/blog`; mobile readability now intentionally matches `/wall-of-love` via lower small-screen animation opacity plus layered gradient/radial overlays.
 - `components/ascii/AsciiAnimation.tsx`: high-quality ASCII frame player (quality fallback, lazy loading, reduced-motion pause, intersection-aware playback).
 - `components/reveal-on-scroll.tsx`: lightweight framer-motion wrapper used across marketing sections.
 - `components/forms/*`: shared form components noted in [forms.md](./forms.md).
