@@ -48,12 +48,14 @@ Use the same structure as `/dental-photography`, `/models`, `/case-studies`, and
 </section>
 ```
 
-`HeroBackgroundLoop` intentionally never mounts the autoplay `<video>` on touch/coarse-pointer devices, which prevents the iOS Safari fullscreen autoplay edge case.
+`HeroBackgroundLoop` follows the shared playback policy in `lib/hero-media-policy.ts`, so autoplay decisions remain explicit and testable.
+`HeroBackgroundLoop` intentionally never mounts the autoplay `<video>` on policy-restricted contexts, which prevents the iOS Safari fullscreen autoplay edge case.
 
 Tailwind overlay (`bg-neutral-950/80`) keeps text readable. Use Cloudinary URLs for both the MP4 and poster.
 
 When the wrapper can’t be used, require that all autoplay videos in decorative contexts:
 
+- use `resolveHeroPlaybackPolicy(...)` for the same autoplay decision path
 - are wrapped with touch/coarse gating before mount
 - include `data-hero-loop="true"`
 - keep non-interactive attributes (`playsInline`, `webkit-playsinline`, `disablePictureInPicture`, `disableRemotePlayback`)
@@ -61,6 +63,16 @@ When the wrapper can’t be used, require that all autoplay videos in decorative
 
 For regressions, run:
 `pnpm exec jest __tests__/hero-loop-gating.test.tsx __tests__/hero-autoplay-safety.test.ts`.
+
+## 3.1 ASCII fallback policy (desktop + mobile)
+
+When the hero uses `components/ascii/AsciiAnimation`, prefer the resilience settings in production routes:
+
+- `loadStrategy="batch"` (default) with bounded batches on large sequences
+- `batchSize={24}` and `maxConcurrentFetches={6}`
+- `continueOnFrameError={true}`
+
+This keeps `/software` and `/blog` hero animations moving even when a subset of frame fetches fails.
 
 ## 4. Carousel shorthand
 

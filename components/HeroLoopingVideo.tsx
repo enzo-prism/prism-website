@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import Image from 'next/image'
 
 import { cn } from '@/lib/utils'
@@ -8,6 +8,12 @@ import {
   isTouchCoarseEnvironment,
   TOUCH_MEDIA_QUERY,
 } from '@/lib/media-environment'
+import {
+  resolveHeroPlaybackPolicy,
+  resolveHeroPlaybackPlatform,
+  type HeroPlaybackIntent,
+  type HeroPlaybackPolicyOverride,
+} from '@/lib/hero-media-policy'
 
 const DEFAULT_VIDEO_SRC =
   'https://res.cloudinary.com/dhqpqfw6w/video/upload/v1761612491/surfer_loop_vduya4.mp4'
@@ -23,6 +29,8 @@ type HeroLoopingVideoProps = {
   alt?: string
   priority?: boolean
   posterSizes?: string
+  playbackPolicy?: HeroPlaybackPolicyOverride
+  onPlaybackStateChange?: (intent: HeroPlaybackIntent) => void
 }
 
 export default function HeroLoopingVideo({
@@ -34,11 +42,39 @@ export default function HeroLoopingVideo({
   alt = 'Surfer looping background preview',
   priority = true,
   posterSizes = '(min-width: 1280px) 1024px, (min-width: 768px) 80vw, 100vw',
+  playbackPolicy = 'auto',
+  onPlaybackStateChange,
 }: HeroLoopingVideoProps) {
   const [isPosterLoaded, setIsPosterLoaded] = useState(false)
   const [isVideoReady, setIsVideoReady] = useState(false)
   const [hasVideoError, setHasVideoError] = useState(false)
-  const [showVideo, setShowVideo] = useState(false)
+  const [playbackIntent, setPlaybackIntent] = useState(() =>
+    resolveHeroPlaybackPolicy({
+      playbackPolicy,
+      reducedMotion: false,
+      isTouchCoarse: false,
+      viewportWidth: Number.NaN,
+      hasAutoplayError: false,
+    }),
+  )
+
+  const evaluatePlayback = useCallback(() => {
+    if (typeof window === 'undefined' || typeof navigator === 'undefined') {
+      return
+    }
+
+    const intent = resolveHeroPlaybackPolicy({
+      playbackPolicy,
+      reducedMotion: window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+      isTouchCoarse: isTouchCoarseEnvironment(),
+      viewportWidth: window.innerWidth,
+      hasAutoplayError: hasVideoError,
+      platform: resolveHeroPlaybackPlatform(navigator.userAgent),
+    })
+
+    setPlaybackIntent(intent)
+    onPlaybackStateChange?.(intent)
+  }, [hasVideoError, playbackPolicy, onPlaybackStateChange])
 
   useEffect(() => {
     if (typeof window === 'undefined') {
@@ -46,20 +82,18 @@ export default function HeroLoopingVideo({
     }
 
     const mediaQuery = window.matchMedia(TOUCH_MEDIA_QUERY)
-
-    // Avoid iOS Safari autoplay fullscreen behavior on touch devices by not
-    // mounting this decorative hero video in coarse-pointer environments.
-    const evaluatePlayback = () => {
-      setShowVideo(!isTouchCoarseEnvironment() && !hasVideoError)
-    }
-
+    const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
     const listener = () => evaluatePlayback()
     evaluatePlayback()
+
     if (mediaQuery.addEventListener) {
       mediaQuery.addEventListener('change', listener)
+      reducedMotionQuery.addEventListener('change', listener)
     } else {
       mediaQuery.addListener(listener)
+      reducedMotionQuery.addListener(listener)
     }
+    window.addEventListener('resize', listener)
 
     return () => {
       if (mediaQuery.removeEventListener) {
@@ -67,10 +101,26 @@ export default function HeroLoopingVideo({
       } else {
         mediaQuery.removeListener(listener)
       }
+      if (reducedMotionQuery.removeEventListener) {
+        reducedMotionQuery.removeEventListener('change', listener)
+      } else {
+        reducedMotionQuery.removeListener(listener)
+      }
+      window.removeEventListener('resize', listener)
     }
-  }, [hasVideoError])
+  }, [evaluatePlayback])
 
-  const shouldRenderVideo = showVideo
+  useEffect(() => {
+    evaluatePlayback()
+  }, [evaluatePlayback])
+
+  const shouldRenderVideo = playbackIntent.mode === 'video-autoplay'
+
+  useEffect(() => {
+    if (!shouldRenderVideo) {
+      setIsVideoReady(false)
+    }
+  }, [shouldRenderVideo])
 
   return (
     <div

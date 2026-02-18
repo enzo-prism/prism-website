@@ -1,6 +1,13 @@
 "use client"
 
-import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react"
+import {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react"
 
 class AnimationManager {
   private _animation: number | null = null
@@ -53,12 +60,16 @@ type FrameBounds = {
   minCol: number
   maxCol: number
 }
+type AsciiLoadStrategy = "batch" | "all"
 
 const FALLBACK_ORDER: Record<Quality, Quality[]> = {
   low: ["low", "high", "medium"],
   medium: ["medium", "high", "low"],
   high: ["high", "low", "medium"],
 }
+
+const DEFAULT_BATCH_SIZE = 24
+const DEFAULT_MAX_CONCURRENT_FETCHES = 6
 
 function splitFrameLines(frame: string): string[] {
   const lines = frame.replace(/\r/g, "").split("\n")
@@ -142,7 +153,7 @@ function normalizeSingleFrame(frame: string): string {
 async function resolveFrameSource(
   frameFolder: string,
   quality: Quality,
-  firstFrameFile: string
+  firstFrameFile: string,
 ): Promise<{ baseUrl: string; isFlat: boolean } | null> {
   const fallbackQualities = FALLBACK_ORDER[quality]
 
@@ -153,7 +164,7 @@ async function resolveFrameSource(
       if (probeResponse.ok) {
         if (candidate !== quality) {
           console.warn(
-            `ASCIIAnimation: quality "${quality}" not found in "${frameFolder}", falling back to "${candidate}"`
+            `ASCIIAnimation: quality "${quality}" not found in "${frameFolder}", falling back to "${candidate}"`,
           )
         }
         return { baseUrl: `/${frameFolder}/${candidate}`, isFlat: false }
@@ -168,7 +179,7 @@ async function resolveFrameSource(
     const legacyProbe = await fetch(`/${frameFolder}/${firstFrameFile}`)
     if (legacyProbe.ok) {
       console.warn(
-        `ASCIIAnimation: no quality subfolders found in "${frameFolder}", using flat folder structure`
+        `ASCIIAnimation: no quality subfolders found in "${frameFolder}", using flat folder structure`,
       )
       return { baseUrl: `/${frameFolder}`, isFlat: true }
     }
@@ -179,7 +190,7 @@ async function resolveFrameSource(
   return null
 }
 
-interface ASCIIAnimationProps {
+export interface ASCIIAnimationProps {
   frames?: string[]
   className?: string
   fps?: number
@@ -196,7 +207,13 @@ interface ASCIIAnimationProps {
   fit?: ScaleMode
   zoom?: number
   offsetY?: number
+  loadStrategy?: AsciiLoadStrategy
+  batchSize?: number
+  maxConcurrentFetches?: number
+  continueOnFrameError?: boolean
 }
+
+type LoadedFramesStore = Array<string[] | null>
 
 export default function ASCIIAnimation({
   frames: providedFrames,
@@ -214,6 +231,10 @@ export default function ASCIIAnimation({
   fit = "contain",
   zoom = 1,
   offsetY = 0,
+  loadStrategy = "batch",
+  batchSize = DEFAULT_BATCH_SIZE,
+  maxConcurrentFetches = DEFAULT_MAX_CONCURRENT_FETCHES,
+  continueOnFrameError = true,
 }: ASCIIAnimationProps) {
   const [frames, setFrames] = useState<string[]>([])
   const [isLoading, setIsLoading] = useState(true)
@@ -223,149 +244,282 @@ export default function ASCIIAnimation({
   const [scale, setScale] = useState(1)
   const [scaled, setScaled] = useState(false)
 
-  // Direct DOM refs for animation — bypasses React re-renders
+  // Direct DOM refs for animation — bypasses React re-renders.
   const currentFrameRef = useRef(0)
   const framesRef = useRef<string[]>([])
+  const loadedFrameLines = useRef<LoadedFramesStore>([])
+  const fullLoadTriggered = useRef(false)
+  const resolvedSource = useRef<{ baseUrl: string; isFlat: boolean } | null>(null)
 
-  // Keep framesRef in sync with state
+  // Keep framesRef synced with React state.
   useEffect(() => {
     framesRef.current = frames
   }, [frames])
 
-  // Track whether the full frame set has been loaded (or is loading)
-  const fullLoadTriggered = useRef(false)
-  // Store the resolved base URL so phase 2 doesn't re-probe
-  const resolvedSource = useRef<{ baseUrl: string; isFlat: boolean } | null>(null)
-
   const animationManager = useMemo(
     () =>
       new AnimationManager(() => {
-        const f = framesRef.current
-        if (f.length === 0) return
-        const nextFrame = (currentFrameRef.current + 1) % f.length
+        const allFrames = framesRef.current
+        if (allFrames.length < 2) return
+
+        const nextFrame = (currentFrameRef.current + 1) % allFrames.length
         currentFrameRef.current = nextFrame
 
-        // Direct DOM write — no React re-render
         if (preRef.current) {
-          preRef.current.textContent = f[nextFrame]
+          preRef.current.textContent = allFrames[nextFrame]
         }
         if (frameCounterRef.current) {
-          frameCounterRef.current.textContent = `Frame: ${nextFrame + 1}/${f.length}`
+          frameCounterRef.current.textContent = `Frame: ${nextFrame + 1}/${allFrames.length}`
         }
       }, fps),
-    [fps]
+    [fps],
   )
 
   const frameFiles = useMemo(
     () =>
       Array.from(
         { length: frameCount },
-        (_, i) => `frame_${String(i + 1).padStart(5, "0")}.txt`
+        (_, i) => `frame_${String(i + 1).padStart(5, "0")}.txt`,
       ),
-    [frameCount]
+    [frameCount],
   )
 
-  // Load all remaining frames (phase 2)
-  const loadAllFrames = useCallback(async () => {
+  const rebuildRenderableFrames = useCallback(() => {
+    const rawFrames = loadedFrameLines.current
+    if (rawFrames.length === 0) {
+      setFrames([])
+      return
+    }
+
+    let mergedBounds: FrameBounds | null = null
+    for (const lines of rawFrames) {
+      if (!lines) continue
+      mergedBounds = mergeFrameBounds(mergedBounds, getFrameBounds(lines))
+    }
+
+    const nextFrames = rawFrames
+      .map((lines) => {
+        if (!lines) return null
+        if (!mergedBounds) {
+          return lines.join("\n")
+        }
+        return cropFrameToBounds(lines, mergedBounds)
+      })
+      .filter((frame): frame is string => frame !== null)
+
+    setFrames((previous) => {
+      if (previous.length === nextFrames.length) {
+        return previous
+      }
+      return nextFrames
+    })
+
+    if (nextFrames.length > 0 && currentFrameRef.current >= nextFrames.length) {
+      currentFrameRef.current = 0
+    }
+  }, [])
+
+  const fetchFrameLines = useCallback(
+    async (baseUrl: string, filename: string): Promise<string[]> => {
+      const response = await fetch(`${baseUrl}/${filename}`)
+      if (!response.ok) {
+        throw new Error(`Failed to fetch ${filename}: ${response.status}`)
+      }
+      const text = await response.text()
+      return splitFrameLines(text)
+    },
+    [],
+  )
+
+  // Load remaining frames (phase 2)
+  const loadRemainingFrames = useCallback(async () => {
     if (fullLoadTriggered.current) return
     fullLoadTriggered.current = true
 
     const source = resolvedSource.current
-    if (!source) return
+    if (!source) {
+      setIsLoading(false)
+      return
+    }
+
+    const totalFrames = frameFiles.length
+    const candidateIndices = Array.from(
+      { length: Math.max(0, totalFrames - 1) },
+      (_, i) => i + 1,
+    )
+
+    if (candidateIndices.length === 0) {
+      setIsLoading(false)
+      return
+    }
+
+    const normalizedBatchSize =
+      loadStrategy === "all" ? candidateIndices.length : Math.max(1, batchSize)
+    const normalizedConcurrency = Math.max(1, maxConcurrentFetches)
+    let encounteredError = false
+
+    const runBatch = async (indices: number[]) => {
+      for (let offset = 0; offset < indices.length; offset += normalizedConcurrency) {
+        const batch = indices.slice(offset, offset + normalizedConcurrency)
+
+        const batchResults = await Promise.allSettled(
+          batch.map((frameIndex) => {
+            if (loadedFrameLines.current[frameIndex]) {
+              const cachedFrame = loadedFrameLines.current[frameIndex]
+              if (!cachedFrame) {
+                return Promise.reject(new Error(`Missing cached frame ${frameIndex}`))
+              }
+
+              return Promise.resolve({
+                index: frameIndex,
+                lines: cachedFrame,
+              })
+            }
+
+            return fetchFrameLines(source.baseUrl, frameFiles[frameIndex]).then((lines) => ({
+              index: frameIndex,
+              lines,
+            }))
+          }),
+        )
+
+        const chunkLoaded: Array<{ index: number; lines: string[] }> = []
+        batchResults.forEach((result, batchIdx) => {
+          const index = batch[batchIdx]
+          if (result.status === "rejected") {
+            encounteredError = true
+            if (!continueOnFrameError) {
+              console.error(
+                `ASCIIAnimation: failed to load frame index ${index}: ${result.reason}`,
+              )
+            }
+            return
+          }
+
+          const loaded = result.value
+          chunkLoaded.push(loaded)
+        })
+
+        if (chunkLoaded.length === 0) {
+          continue
+        }
+
+        chunkLoaded.forEach(({ index, lines }) => {
+          loadedFrameLines.current[index] = lines
+        })
+        rebuildRenderableFrames()
+      }
+    }
 
     try {
-      const framePromises = frameFiles.map(async filename => {
-        const response = await fetch(`${source.baseUrl}/${filename}`)
-        if (!response.ok) {
-          throw new Error(`Failed to fetch ${filename}: ${response.status}`)
-        }
-        return await response.text()
-      })
-
-      const loadedFrames = await Promise.all(framePromises)
-      const parsedFrames = loadedFrames.map(splitFrameLines)
-      let mergedBounds: FrameBounds | null = null
-
-      for (let i = 0; i < parsedFrames.length; i += 1) {
-        mergedBounds = mergeFrameBounds(mergedBounds, getFrameBounds(parsedFrames[i]))
+      for (
+        let segmentStart = 0;
+        segmentStart < candidateIndices.length;
+        segmentStart += normalizedBatchSize
+      ) {
+        const segment = candidateIndices.slice(
+          segmentStart,
+          segmentStart + normalizedBatchSize,
+        )
+        await runBatch(segment)
       }
 
-      let normalizedFrames = loadedFrames
-      if (mergedBounds) {
-        normalizedFrames = parsedFrames.map(lines => cropFrameToBounds(lines, mergedBounds))
+      if (!continueOnFrameError && encounteredError) {
+        throw new Error("ASCIIAnimation: partial frame load failure")
       }
-
-      setFrames(normalizedFrames)
-      currentFrameRef.current = 0
     } catch (error) {
-      console.error("Failed to load ASCII frames:", error)
+      console.error(error)
     } finally {
       setIsLoading(false)
     }
-  }, [frameFiles])
+  }, [
+    continueOnFrameError,
+    frameFiles,
+    fetchFrameLines,
+    loadStrategy,
+    maxConcurrentFetches,
+    rebuildRenderableFrames,
+    batchSize,
+  ])
 
-  // Phase 1: Load the first frame (preview) immediately on mount
+  // Phase 1: load first frame immediately, then stream the rest progressively.
   useEffect(() => {
     fullLoadTriggered.current = false
     resolvedSource.current = null
+    loadedFrameLines.current = []
+    setScaled(false)
+    setIsLoading(true)
+    currentFrameRef.current = 0
 
     const loadPreview = async () => {
       if (providedFrames) {
+        loadedFrameLines.current = providedFrames.map((frame) => splitFrameLines(frame))
         setFrames(providedFrames)
-        setIsLoading(false)
         fullLoadTriggered.current = true
+        setIsLoading(false)
         return
       }
 
       const source = await resolveFrameSource(frameFolder, quality, frameFiles[0])
       if (!source) {
         console.error(
-          `ASCIIAnimation: could not find frames in any quality folder or flat structure for "${frameFolder}"`
+          `ASCIIAnimation: could not find frames in any quality folder or flat structure for "${frameFolder}"`,
         )
         setIsLoading(false)
         return
       }
 
       resolvedSource.current = source
+      loadedFrameLines.current = Array(frameCount).fill(null)
 
-      // Fetch only the first frame as a preview
       try {
         const response = await fetch(`${source.baseUrl}/${frameFiles[0]}`)
-        if (!response.ok) throw new Error(`Failed to fetch preview frame`)
+        if (!response.ok) throw new Error("Failed to fetch preview frame")
         const firstFrame = await response.text()
-        setFrames([normalizeSingleFrame(firstFrame)])
+        const parsedFirst = splitFrameLines(firstFrame)
+        loadedFrameLines.current[0] = parsedFirst
+        const normalized = normalizeSingleFrame(firstFrame)
+        setFrames([normalized])
         currentFrameRef.current = 0
       } catch (error) {
         console.error("Failed to load preview frame:", error)
       }
 
-      // If not lazy, immediately load all frames
       if (!lazy) {
-        await loadAllFrames()
+        await loadRemainingFrames()
       } else {
-        // Preview is loaded, stop showing spinner
         setIsLoading(false)
       }
     }
 
     loadPreview()
-  }, [providedFrames, frameCount, frameFolder, quality, lazy, frameFiles, loadAllFrames])
+  }, [frameCount, frameFiles, frameFolder, lazy, loadRemainingFrames, providedFrames, quality])
 
   // IntersectionObserver: triggers lazy load + controls playback
   useEffect(() => {
-    if (frames.length === 0 || !containerRef.current) return
+    if (
+      frames.length === 0 ||
+      !containerRef.current ||
+      typeof window === "undefined" ||
+      typeof IntersectionObserver === "undefined"
+    ) {
+      return
+    }
 
-    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    const reducedMotionQuery =
+      typeof window.matchMedia === "function"
+        ? window.matchMedia("(prefers-reduced-motion: reduce)")
+        : null
 
     const observer = new IntersectionObserver(
-      entries => {
-        entries.forEach(entry => {
+      (entries) => {
+        entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            // Trigger lazy load of remaining frames on first intersection
             if (lazy && !fullLoadTriggered.current) {
-              loadAllFrames()
+              loadRemainingFrames()
             }
-            if (!reducedMotion) {
+
+            if (!reducedMotionQuery?.matches) {
               animationManager.start()
             }
           } else {
@@ -373,7 +527,7 @@ export default function ASCIIAnimation({
           }
         })
       },
-      { threshold: 0.1 }
+      { threshold: 0.1 },
     )
 
     observer.observe(containerRef.current)
@@ -382,11 +536,18 @@ export default function ASCIIAnimation({
       observer.disconnect()
       animationManager.pause()
     }
-  }, [animationManager, frames.length, lazy, loadAllFrames])
+  }, [animationManager, frames.length, lazy, loadRemainingFrames])
 
-  // Handle resize and scaling
+  // Handle resize and scaling.
   useLayoutEffect(() => {
-    if (!containerRef.current || !preRef.current || frames.length === 0) return
+    if (
+      !containerRef.current ||
+      !preRef.current ||
+      frames.length === 0 ||
+      typeof ResizeObserver === "undefined"
+    ) {
+      return
+    }
 
     const updateScale = () => {
       const container = containerRef.current
@@ -408,8 +569,9 @@ export default function ASCIIAnimation({
       const fitAdjustment = fit === "cover" ? 1 : 0.95
       setScale(baseScale * fitAdjustment * zoom)
 
-      // First measurement done — safe to reveal
-      if (!scaled) setScaled(true)
+      if (!scaled) {
+        setScaled(true)
+      }
     }
 
     updateScale()
@@ -420,7 +582,7 @@ export default function ASCIIAnimation({
     return () => {
       resizeObserver.disconnect()
     }
-  }, [frames, quality, scaled, fit, zoom, offsetY])
+  }, [frames, fit, zoom, scaled])
 
   if (isLoading && frames.length === 0) {
     return (
@@ -481,11 +643,11 @@ export default function ASCIIAnimation({
           transition: "opacity 0.5s ease-in",
           ...(gradient
             ? {
-              background: gradient,
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              backgroundClip: "text",
-            }
+                background: gradient,
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+              }
             : color
               ? { color }
               : {}),

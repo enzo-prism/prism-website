@@ -30,11 +30,11 @@ export default function CaseStudiesPage() {
         <section className="px-4 py-10 md:py-14">
           <div className="container mx-auto px-4 md:px-6">
             <div className="relative isolate overflow-hidden rounded-3xl border border-border/60 bg-card/50 shadow-[0_30px_90px_-50px_rgba(0,0,0,0.7)]">
-              <HeroBackgroundLoop
-                videoSrc={CASE_STUDIES_HERO_VIDEO}
-                posterSrc={CASE_STUDIES_HERO_POSTER}
-                posterAlt="ASCII ocean animation preview"
-                posterClassName="hero-loop-touch-poster absolute inset-0 h-full w-full object-cover opacity-45 sm:hidden"
+            <HeroBackgroundLoop
+              videoSrc={CASE_STUDIES_HERO_VIDEO}
+              posterSrc={CASE_STUDIES_HERO_POSTER}
+              posterAlt="ASCII ocean animation preview"
+                posterClassName="absolute inset-0 h-full w-full object-cover opacity-45 sm:hidden"
                 videoClassName="pointer-events-none absolute inset-0 hidden h-full w-full object-cover opacity-40 sm:block"
                 posterUnoptimized
               />

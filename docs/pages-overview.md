@@ -12,8 +12,9 @@ Quick reference for the pages we edit most often.
 - Minimal case studies use `components/case-study-minimal.tsx`, which automatically includes the graph and now surfaces a top-of-page "visit <client-site>" button whenever a `website` quick fact includes an external `href`.
 - The `/case-studies` card grid reads optional `clientLogo` URLs from `lib/case-study-data.ts`; cards render logos when provided and fall back to text-only cards when absent.
 - The `/case-studies` list hero uses a looping Cloudinary background in `app/case-studies/client-page.tsx` (`CASE_STUDIES_HERO_VIDEO` + `CASE_STUDIES_HERO_POSTER`) with a readability gradient and current video opacity `40%`.
-- Mobile safety: the `/case-studies` hero keeps a poster fallback on touch devices and now uses `components/HeroBackgroundLoop.tsx` so autoplay `<video>` is never mounted on touch/coarse-pointer environments.
-- Global mobile safety pattern for decorative hero loops: prefer `components/HeroBackgroundLoop.tsx` (or equivalent device-gating) so autoplay markup is gated before mount. For direct markup fallback, pair `hero-loop-video` with `hero-loop-touch-poster`, add `data-hero-loop="true"`, and keep non-interactive attributes (`playsInline`, `webkit-playsinline`, `disablePictureInPicture`, `disableRemotePlayback`) on all decorative videos.
+- Mobile safety: the `/case-studies` hero keeps a poster fallback on touch devices and now uses `components/HeroBackgroundLoop.tsx` with `lib/hero-media-policy.ts` so autoplay `<video>` is never mounted when policy denies inline autoplay.
+- Global mobile safety pattern for decorative hero loops: prefer `components/HeroBackgroundLoop.tsx` or `components/HeroLoopingVideo.tsx` and `resolveHeroPlaybackPolicy(...)` so all autoplay decisions remain centralized and debuggable via `onPlaybackStateChange`.
+- In legacy direct markup, keep `hero-loop-video` as a safety class, add `data-hero-loop="true"`, and keep non-interactive video attributes (`playsInline`, `webkit-playsinline`, `disablePictureInPicture`, `disableRemotePlayback`).
 
 ## Pricing (`app/pricing/client-page.tsx`)
 
@@ -49,11 +50,13 @@ Quick reference for the pages we edit most often.
 - App card data is shared via `lib/software-apps.ts`; update this list to keep the homepage section and `/software` in sync.
 - The homepage + `/software` cards are rendered by `components/software/SoftwareAppCards.tsx`, including the framed icon treatment sized for small pixel icons.
 - The hero now uses `components/ascii/AsciiHeroCard.tsx` with the high-quality `wave` ASCII frames in `public/animations/wave/high`.
+- ASCII playback uses the shared resilience defaults in `components/ascii/ASCIIAnimation.tsx` (`loadStrategy="batch"`, `batchSize=24`, `maxConcurrentFetches=6`) to avoid full-sequence failure lockups.
 
 ## Blog (`app/blog/page.tsx`)
 
 - Blog index layout includes breadcrumbs, the animated hero card, filters, post grid, signup, and the final CTA section.
 - The hero now uses `components/ascii/AsciiHeroCard.tsx` with the high-quality `hands` ASCII frames in `public/animations/hands/high`.
+- For performance reliability, keep the default batch strategy in place and confirm partial-frame fallback behavior in tests when changing sequence size or source reliability assumptions.
 
 ## Podcast (`app/podcast/page.tsx`)
 
@@ -112,6 +115,7 @@ Quick reference for the pages we edit most often.
 
 - Hero now mirrors the `/case-studies` cinematic style (single rounded container, looping background media, centered foreground copy + CTA).
 - Hero media uses `public/ascii/motion/wall-of-love/planet-lite.mp4` with reduced-motion/error fallback poster `public/ascii/static/wall-of-love/planet.png`; current crop/visibility tuning is `object-[center_80%]` with `opacity-100`.
+- Route-level policy now passes autoplay decisions to `components/HeroBackgroundLoop.tsx` via policy input instead of branching on route logic.
 - Keep CTA tracking on the primary button (`trackCTAClick("wall_of_love_become_client_cta", "/get-started")`) and keep the testimonials feed anchored at `#testimonials-feed`.
 - Social proof copy in the hero is intentionally hard-coded as: `Instagram: 39,000+`, `TikTok: 6,000+`, `YouTube: 24,000+`.
 
@@ -220,7 +224,9 @@ Each uses card-based layouts: confirmation message + kickoff-call CTA + contact 
 ## Supporting Components
 
 - `components/ascii/AsciiHeroCard.tsx`: shared cinematic hero wrapper used by `/about`, `/software`, and `/blog`; mobile readability now intentionally matches `/wall-of-love` via lower small-screen animation opacity plus layered gradient/radial overlays.
-- `components/ascii/AsciiAnimation.tsx`: high-quality ASCII frame player (quality fallback, lazy loading, reduced-motion pause, intersection-aware playback).
+- `components/ascii/AsciiAnimation.tsx`: high-quality ASCII frame player (quality fallback, batched resilience loading with partial-failure tolerance, reduced-motion pause, intersection-aware playback).
+- `components/ascii/AsciiHeroBackdrop.tsx`: shared background-media layer used by `AsciiHeroCard` to keep hero composition and ASCII defaults consistent.
+- `lib/hero-media-policy.ts`: single policy engine used by `HeroBackgroundLoop` and `HeroLoopingVideo` for autoplay, poster fallback, and reduced-motion decisions.
 - `components/reveal-on-scroll.tsx`: lightweight framer-motion wrapper used across marketing sections.
 - `components/forms/*`: shared form components noted in [forms.md](./forms.md).
 - `components/video-player.tsx`: shared CTA/VSL embed with structured-data support. Pass poster + schema props so every marketing video emits valid `VideoObject` JSON-LD.

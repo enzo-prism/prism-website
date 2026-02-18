@@ -2,7 +2,6 @@
 
 import { Button } from '@/components/ui/button'
 import { ArrowRight } from 'lucide-react'
-import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect, useMemo, useState } from 'react'
 import { trackCTAClick } from '@/utils/analytics'
@@ -44,7 +43,6 @@ export default function WallOfLoveClientPage() {
 
   const [feed, setFeed] = useState<FeedItem[]>(combinedFeed)
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false)
-  const [videoFailed, setVideoFailed] = useState(false)
   const reviewCount = combinedFeed.length
 
   useEffect(() => {
@@ -69,28 +67,15 @@ export default function WallOfLoveClientPage() {
       <section className="px-4 py-10 md:py-14">
         <div className="mx-auto w-full max-w-6xl px-4 sm:px-6">
           <div className="relative isolate overflow-hidden rounded-3xl border border-border/60 bg-card/50 shadow-[0_30px_90px_-50px_rgba(0,0,0,0.7)]">
-            {prefersReducedMotion || videoFailed ? (
-              <Image
-                src={PLANET_POSTER_SRC}
-                alt="ASCII planet animation preview"
-                fill
-                unoptimized
-                className="absolute inset-0 h-full w-full object-cover object-[center_80%] opacity-100 [image-rendering:pixelated]"
-                sizes="(max-width: 768px) 100vw, 1200px"
-              />
-            ) : (
-              <>
-                <HeroBackgroundLoop
-                  videoSrc={PLANET_VIDEO_SRC}
-                  posterSrc={PLANET_POSTER_SRC}
-                  posterAlt="ASCII planet animation preview"
-                  posterClassName="hero-loop-touch-poster absolute inset-0 h-full w-full object-cover object-[center_80%] opacity-100 [image-rendering:pixelated] sm:hidden"
-                  videoClassName="pointer-events-none absolute inset-0 hidden h-full w-full object-cover object-[center_80%] opacity-100 [image-rendering:pixelated] sm:block"
-                  posterUnoptimized
-                  onVideoError={() => setVideoFailed(true)}
-                />
-              </>
-            )}
+            <HeroBackgroundLoop
+              videoSrc={PLANET_VIDEO_SRC}
+              posterSrc={PLANET_POSTER_SRC}
+              posterAlt="ASCII planet animation preview"
+              posterClassName="absolute inset-0 h-full w-full object-cover object-[center_80%] opacity-100 [image-rendering:pixelated] sm:hidden"
+              videoClassName="pointer-events-none absolute inset-0 hidden h-full w-full object-cover object-[center_80%] opacity-100 [image-rendering:pixelated] sm:block"
+              posterUnoptimized
+              playbackPolicy={prefersReducedMotion ? "forcePoster" : "auto"}
+            />
 
             <div
               aria-hidden="true"

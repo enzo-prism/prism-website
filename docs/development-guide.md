@@ -58,13 +58,30 @@ Custom confirmation routes live in `app/thank-you/` and `app/analysis-thank-you/
 ## Mobile Hero Video Safety
 
 - Decorative autoplaying background videos must not use raw `<video autoPlay ...>` markup directly on touch/coarse devices.
-- Prefer `components/HeroBackgroundLoop.tsx` (for static hero posters + loop background) or `components/HeroLoopingVideo.tsx` (general looping hero card component). Both components gate autoplay via `lib/media-environment.ts` and keep `<video>` unmounted on mobile touch pointers.
+- Use the shared policy in `lib/hero-media-policy.ts` for a single source of truth:
+  - `resolveHeroPlaybackPolicy(...)`
+  - `HeroPlaybackMode` (`video-autoplay` / `video-fallback-poster` / `poster-only`)
+  - optional route override (`playbackPolicy="forcePoster"`)
+- Prefer `components/HeroBackgroundLoop.tsx` (for static hero posters + loop background) or `components/HeroLoopingVideo.tsx` (general looping hero card component). Both components now consume policy state and keep `<video>` unmounted unless autoplay is explicitly allowed.
 - This prevents the iOS Safari fullscreen/autoplay takeover edge case we observed on routes like `/wall-of-love` and similar hero-heavy pages.
 - Keep a poster-first UX for reduced-motion, touch, or media load failure states.
+- If a page needs a forced fallback, pass `playbackPolicy="forcePoster"` and let the shared policy pick poster-only behavior.
 - Add regression guardrails with:
   - `pnpm exec jest __tests__/hero-loop-gating.test.tsx`
   - `pnpm exec jest __tests__/hero-autoplay-safety.test.ts`
 - If you introduce any new decorative autoplay video, update this section and run the above tests before merge.
+
+## Mobile Hero ASCII Resilience
+
+- ASCII animations use preview-first loading plus optional partial-frame batching in `components/ascii/AsciiAnimation.tsx`.
+- New props for fault-tolerant loading:
+  - `loadStrategy?: "batch" | "all"` (default: `"batch"`)
+  - `batchSize?: number` (default: `24`)
+  - `maxConcurrentFetches?: number` (default: `6`)
+  - `continueOnFrameError?: boolean` (default: `true`)
+- Keep the placeholder/preview frame visible while additional chunks stream in so mobile motion starts quickly even when the full set is large.
+- Never fail the entire animation because of a single frame request; keep partial sequence playback when at least 2 frames are available.
+- If zero frames load, render the deterministic fallback `"No frames loaded"`.
 
 ## Pricing Page Content
 

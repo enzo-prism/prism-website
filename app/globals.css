@@ -72,16 +72,6 @@ video[data-hero-loop="true"] {
   user-select: none;
 }
 
-@media (hover: none), (pointer: coarse) {
-  .hero-loop-video {
-    display: none !important;
-  }
-
-  .hero-loop-touch-poster {
-    display: block !important;
-  }
-}
-
 /* Ensure no safe area padding interferes on mobile */
 @supports (padding: max(0px)) {
   body {

@@ -32,6 +32,45 @@ function setMatchMedia({ pointerCoarse }: MatchMediaConfig) {
 }
 
 describe('Hero background loops are device-gated on touch', () => {
+  it('honors explicit forcePoster policy for background loops', () => {
+    setMatchMedia({ pointerCoarse: false })
+
+    render(
+      <HeroBackgroundLoop
+        videoSrc="https://example.com/video.mp4"
+        posterSrc="https://example.com/poster.jpg"
+        posterAlt="Hero poster"
+        videoClassName="hero-video"
+        playbackPolicy="forcePoster"
+      />,
+    )
+
+    expect(screen.getByRole('img', { name: 'Hero poster' })).toBeInTheDocument()
+    expect(
+      document.querySelector('video[data-hero-loop="true"]'),
+    ).not.toBeInTheDocument()
+  })
+
+  it('honors explicit forcePoster policy for hero looping video', () => {
+    setMatchMedia({ pointerCoarse: false })
+
+    render(
+      <HeroLoopingVideo
+        videoSrc="https://example.com/video.mp4"
+        posterSrc="https://example.com/poster.jpg"
+        alt="Hero looping preview"
+        playbackPolicy="forcePoster"
+      />,
+    )
+
+    expect(
+      screen.getByRole('img', { name: 'Hero looping preview' }),
+    ).toBeInTheDocument()
+    expect(
+      document.querySelector('video[data-hero-loop="true"]'),
+    ).not.toBeInTheDocument()
+  })
+
   it('does not render background autoplay video for coarse/touch pointers', () => {
     setMatchMedia({ pointerCoarse: true })
 

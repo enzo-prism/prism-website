@@ -1,12 +1,18 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import Image from 'next/image'
 
 import {
   isTouchCoarseEnvironment,
   TOUCH_MEDIA_QUERY,
 } from '@/lib/media-environment'
+import {
+  resolveHeroPlaybackPolicy,
+  resolveHeroPlaybackPlatform,
+  type HeroPlaybackIntent,
+  type HeroPlaybackPolicyOverride,
+} from '@/lib/hero-media-policy'
 
 type HeroBackgroundLoopProps = {
   videoSrc: string
@@ -20,6 +26,8 @@ type HeroBackgroundLoopProps = {
   posterPriority?: boolean
   posterUnoptimized?: boolean
   onVideoError?: () => void
+  playbackPolicy?: HeroPlaybackPolicyOverride
+  onPlaybackStateChange?: (intent: HeroPlaybackIntent) => void
 }
 
 export default function HeroBackgroundLoop({
@@ -34,9 +42,37 @@ export default function HeroBackgroundLoop({
   posterPriority = false,
   posterUnoptimized = false,
   onVideoError,
+  playbackPolicy = 'auto',
+  onPlaybackStateChange,
 }: HeroBackgroundLoopProps) {
   const [videoError, setVideoError] = useState(false)
-  const [showVideo, setShowVideo] = useState(false)
+  const [playbackIntent, setPlaybackIntent] = useState(() =>
+    resolveHeroPlaybackPolicy({
+      playbackPolicy,
+      reducedMotion: false,
+      isTouchCoarse: false,
+      viewportWidth: Number.NaN,
+      hasAutoplayError: false,
+    }),
+  )
+
+  const evaluatePlayback = useCallback(() => {
+    if (typeof window === 'undefined' || typeof navigator === 'undefined') {
+      return
+    }
+
+    const intent = resolveHeroPlaybackPolicy({
+      playbackPolicy,
+      reducedMotion: window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+      isTouchCoarse: isTouchCoarseEnvironment(),
+      viewportWidth: window.innerWidth,
+      hasAutoplayError: videoError,
+      platform: resolveHeroPlaybackPlatform(navigator.userAgent),
+    })
+
+    setPlaybackIntent(intent)
+    onPlaybackStateChange?.(intent)
+  }, [playbackPolicy, videoError, onPlaybackStateChange])
 
   useEffect(() => {
     if (typeof window === 'undefined') {
@@ -44,20 +80,20 @@ export default function HeroBackgroundLoop({
     }
 
     const mediaQuery = window.matchMedia(TOUCH_MEDIA_QUERY)
-
-    // Avoid iOS Safari fullscreen takeover from autoplayed off-screen/hidden video:
-    // mount decorative loops only on non-touch/coarse-pointer environments.
-    const evaluatePlayback = () => {
-      setShowVideo(!isTouchCoarseEnvironment() && !videoError)
-    }
+    const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
 
     const listener = () => evaluatePlayback()
     evaluatePlayback()
+
     if (mediaQuery.addEventListener) {
       mediaQuery.addEventListener('change', listener)
+      reducedMotionQuery.addEventListener('change', listener)
     } else {
       mediaQuery.addListener(listener)
+      reducedMotionQuery.addListener(listener)
     }
+
+    window.addEventListener('resize', listener)
 
     return () => {
       if (mediaQuery.removeEventListener) {
@@ -65,13 +101,25 @@ export default function HeroBackgroundLoop({
       } else {
         mediaQuery.removeListener(listener)
       }
+      if (reducedMotionQuery.removeEventListener) {
+        reducedMotionQuery.removeEventListener('change', listener)
+      } else {
+        reducedMotionQuery.removeListener(listener)
+      }
+      window.removeEventListener('resize', listener)
     }
-  }, [videoError])
+  }, [evaluatePlayback])
+
+  useEffect(() => {
+    evaluatePlayback()
+  }, [evaluatePlayback])
 
   const handleVideoError = () => {
     setVideoError(true)
     onVideoError?.()
   }
+
+  const shouldRenderVideo = playbackIntent.mode === 'video-autoplay'
 
   return (
     <>
@@ -84,7 +132,7 @@ export default function HeroBackgroundLoop({
         sizes={posterSizes}
         className={posterClassName}
       />
-      {showVideo ? (
+      {shouldRenderVideo ? (
         <video
           className={`hero-loop-video ${videoClassName}`}
           autoPlay
