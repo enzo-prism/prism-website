@@ -64,6 +64,45 @@ If you introduce a new category label in MDX, it automatically appears as soon a
 
 To tweak behavior (e.g., change the count or ranking), adjust the logic in `app/blog/[slug]/page.tsx`.
 
+## Unified "How this translates at Prism" section
+
+All blog posts now receive a shared Prism-impact footer from the rendering layer instead of manual edits in each MDX file.
+
+The flow is driven by:
+
+- `components/blog-post-layout.tsx` receives an optional `prismImpact` prop and renders the section after article body content and before related posts.
+- `app/blog/[slug]/page.tsx` resolves the config at request time and passes `prismImpact={getPrismImpactForPost(...)}`.
+- `lib/prism-blog-impact.ts` stores all resolver behavior and shared link strategies.
+
+The resolver strategy in `lib/prism-blog-impact.ts`:
+
+1. checks for a slug-specific override in `SLUG_OVERRIDES`
+2. falls back to category rules in `CATEGORY_RULES`
+3. falls back to `DEFAULT_IMPACT`
+4. applies optional skip guard when a post already contains a Prism-specific closeout section
+
+`PrismImpactConfig` has:
+
+```
+- title (optional)
+- impactSummary
+- clientOutcomes (2-4 bullets)
+- serviceLinks (2-4 internal links)
+- referenceLinks (2-4 external links)
+- forceRender?: boolean
+```
+
+`PrismLink` (alias of `PrismImpactLink`) enforces `label`, `href`, `kind` (`internal` | `external`), and `reason`.
+
+To add or change links:
+
+1. Open `lib/prism-blog-impact.ts`.
+2. Adjust `SLUG_OVERRIDES` for topic-specific posts.
+3. Adjust `CATEGORY_RULES` for a taxonomy shift.
+4. Update `PrismImpactConfig` objects to add internal service links and external references.
+
+Outbound link behavior is enforced in `components/mdx-components.tsx` so all Markdown HTTP/HTTPS links open in a new tab with `rel="noopener noreferrer"` automatically. This also applies to links added later in Markdown content.
+
 ---
 
 ## RSS Feed (`/blog/feed.xml`)

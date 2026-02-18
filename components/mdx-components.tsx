@@ -1,4 +1,4 @@
-import type { ReactNode } from "react"
+import type { AnchorHTMLAttributes, ReactNode } from "react"
 import { cn } from "@/lib/utils"
 import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
 import PixelishIcon from "@/components/pixelish/PixelishIcon"
@@ -48,8 +48,31 @@ const CTAButton = ({
   )
 }
 
+const isExternalUrl = (href?: string) => /^https?:\/\//i.test(href ?? "")
+
+const MDXAnchor = ({
+  href = "",
+  children,
+  target,
+  rel,
+  ...props
+}: AnchorHTMLAttributes<HTMLAnchorElement>) => {
+  const external = isExternalUrl(href)
+  return (
+    <a
+      href={href}
+      target={target ?? (external ? "_blank" : undefined)}
+      rel={rel ?? (external ? "noopener noreferrer" : undefined)}
+      {...props}
+    >
+      {children}
+    </a>
+  )
+}
+
 export const MDXComponents = {
   // Typography components
+  a: MDXAnchor,
   Lead: ({ children, className }: { children: ReactNode; className?: string }) => (
     <p className={cn("text-lg leading-relaxed text-neutral-700 dark:text-neutral-300", className)}>
       {children}

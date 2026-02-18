@@ -12,6 +12,7 @@ import BlogTableOfContents, {
 import { BlogPostSchema, HowToSchema } from '@/components/schema-markup'
 import SimpleBlogPostCard from '@/components/simple-blog-post-card'
 import Breadcrumbs from '@/components/breadcrumbs'
+import type { PrismImpactConfig } from '@/lib/prism-blog-impact'
 import { cn } from '@/lib/utils'
 import { toAbsoluteUrl } from '@/lib/url'
 
@@ -56,6 +57,7 @@ interface Props {
     supplies?: string[]
     tools?: string[]
   }
+  prismImpact?: PrismImpactConfig
 }
 
 export default function BlogPostLayout({
@@ -73,6 +75,7 @@ export default function BlogPostLayout({
   relatedPosts = [],
   toc = [],
   howTo,
+  prismImpact,
 }: Props) {
   const effectiveImageUrl = image
     ? toAbsoluteUrl(image)
@@ -81,6 +84,21 @@ export default function BlogPostLayout({
   const shareUrl =
     openGraph?.url || canonical || `https://www.design-prism.com/blog/${slug}`
   const hasToc = toc.length > 0
+  const activePrismImpact =
+    prismImpact && prismImpact.forceRender !== false ? prismImpact : null
+
+  const isExternalLink = (href: string) => /^https?:\/\//i.test(href)
+
+  const renderPrismLink = (href: string, label: string) => (
+    <a
+      href={href}
+      target={isExternalLink(href) ? '_blank' : undefined}
+      rel={isExternalLink(href) ? 'noopener noreferrer' : undefined}
+      className="font-medium text-foreground underline decoration-neutral-500 underline-offset-3 transition-colors hover:decoration-neutral-700"
+    >
+      {label}
+    </a>
+  )
 
   return (
     <div className="flex min-h-screen flex-col bg-background text-foreground">
@@ -157,6 +175,67 @@ export default function BlogPostLayout({
                     </BlogPostErrorBoundary>
                   </div>
                 )}
+
+                {activePrismImpact ? (
+                  <section className="mt-16 rounded-2xl border border-border/60 bg-card/40 p-6 sm:p-8">
+                    <div className="mb-6">
+                      <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+                        Productized execution
+                      </p>
+                      <h2 className="mt-2 text-2xl font-bold tracking-tight">
+                        How this translates at Prism
+                      </h2>
+                      <p className="mt-3 max-w-[70ch] text-sm text-muted-foreground">
+                        {activePrismImpact.impactSummary}
+                      </p>
+                    </div>
+
+                    <div className="mt-6">
+                      <h3 className="text-lg font-semibold">What this improves</h3>
+                      <ul className="mt-3 list-disc space-y-2 pl-5 text-sm text-muted-foreground">
+                        {activePrismImpact.clientOutcomes.map((outcome) => (
+                          <li key={outcome}>{outcome}</li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    <div className="mt-8">
+                      <h3 className="text-lg font-semibold">How we apply this at Prism</h3>
+                      <ul className="mt-3 space-y-2 text-sm">
+                        {activePrismImpact.serviceLinks.map((link) => (
+                          <li
+                            key={`${link.label}-${link.href}`}
+                            className="list-none"
+                          >
+                            <div className="flex flex-wrap gap-2">
+                              {renderPrismLink(link.href, link.label)}
+                              <span className="text-muted-foreground">{link.reason}</span>
+                            </div>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    <div className="mt-8">
+                      <h3 className="text-lg font-semibold">
+                        Further reading / sources
+                      </h3>
+                      <ul className="mt-3 space-y-2 text-sm">
+                        {activePrismImpact.referenceLinks.map((link) => (
+                          <li
+                            key={`${link.label}-${link.href}`}
+                            className="list-none"
+                          >
+                            <div className="flex flex-wrap gap-2">
+                              {renderPrismLink(link.href, link.label)}
+                              <span className="text-muted-foreground">{link.reason}</span>
+                            </div>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </section>
+                ) : null}
 
                 {relatedPosts.length > 0 && (
                   <section className="mt-16 rounded-2xl border border-border/60 bg-card/40 p-6 sm:p-8">

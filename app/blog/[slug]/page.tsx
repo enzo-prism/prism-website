@@ -5,6 +5,7 @@ import { getBlogOpenGraphImage } from '@/lib/blog-images'
 import { canonicalUrl } from '@/lib/canonical'
 import { renderPost } from '@/lib/mdx'
 import { getMdxToc } from '@/lib/mdx-toc'
+import { getPrismImpactForPost } from '@/lib/prism-blog-impact'
 import { buildAbsoluteTitle, normalizeDescription } from '@/lib/seo/rules'
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
@@ -103,6 +104,11 @@ export default async function BlogPostPage({ params }: PageProps) {
   const relatedPosts = allPosts
     .filter((p) => p.slug !== slug)
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+  const prismImpact = getPrismImpactForPost({
+    slug,
+    category: frontmatter.category,
+    content: post.content,
+  })
 
   const prioritized = [
     ...relatedPosts.filter((p) => p.categorySlug === frontmatter.categorySlug),
@@ -124,6 +130,7 @@ export default async function BlogPostPage({ params }: PageProps) {
       relatedPosts={prioritized.slice(0, 3)}
       toc={toc}
       howTo={frontmatter.howTo}
+      prismImpact={prismImpact ?? undefined}
     >
       {content}
       <div className="mt-16">
