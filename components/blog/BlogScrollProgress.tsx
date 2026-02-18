@@ -34,8 +34,11 @@ export default function BlogScrollProgress() {
       aria-valuemin={0}
       aria-valuemax={100}
       aria-valuenow={Math.round(scrollProgress)}
-      className="fixed inset-x-0 top-0 z-50 h-[2px] bg-border/55"
-      style={{ pointerEvents: "none" }}
+      className="fixed inset-x-0 z-40 h-[2px] bg-border/55"
+      style={{
+        top: "calc(var(--prism-header-height, 4rem) - 1px)",
+        pointerEvents: "none",
+      }}
     >
       <div
         className="h-full bg-gradient-to-r from-cyan-300 via-sky-400 to-blue-300 shadow-[0_0_16px_rgba(56,189,248,0.5)] transition-[width] duration-200 motion-reduce:transition-none"
