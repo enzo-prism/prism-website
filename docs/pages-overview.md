@@ -11,6 +11,7 @@ Quick reference for the pages we edit most often.
 - Minimal case studies use `components/case-study-minimal.tsx`, which automatically includes the graph and now surfaces a top-of-page "visit <client-site>" button whenever a `website` quick fact includes an external `href`.
 - The `/case-studies` card grid reads optional `clientLogo` URLs from `lib/case-study-data.ts`; cards render logos when provided and fall back to text-only cards when absent.
 - The `/case-studies` list hero uses a looping Cloudinary background in `app/case-studies/client-page.tsx` (`CASE_STUDIES_HERO_VIDEO` + `CASE_STUDIES_HERO_POSTER`) with a readability gradient and current video opacity `40%`.
+- Mobile safety: the `/case-studies` hero now renders the poster image on small screens (`sm` breakpoint and below) and only plays the looping video on `sm+` to prevent iOS fullscreen takeover behavior.
 
 ## Pricing (`app/pricing/client-page.tsx`)
 - Core sections (plans grid, founder VSL block, “everything included” features, “Website Use Cases”, smooth handoff section, clients rail, FAQ, and final CTA) live here; the hero + fullscreen modal live in `components/pricing/PricingHero.tsx`.

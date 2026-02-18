@@ -54,6 +54,11 @@ body {
   -webkit-overflow-scrolling: auto; /* Force native scrolling on Safari */
 }
 
+/* Decorative videos should never capture taps or trigger native fullscreen. */
+video[aria-hidden="true"] {
+  pointer-events: none;
+}
+
 /* Ensure no safe area padding interferes on mobile */
 @supports (padding: max(0px)) {
   body {
