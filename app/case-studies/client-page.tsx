@@ -1,15 +1,18 @@
-import Breadcrumbs from "@/components/breadcrumbs"
-import CaseStudiesList from "@/components/case-studies/CaseStudiesList"
-import Footer from "@/components/footer"
-import Navbar from "@/components/navbar"
-import { CollectionPageSchema, ItemListSchema } from "@/components/schema-markup"
-import { CASE_STUDIES } from "@/lib/case-study-data"
-import Image from "next/image"
+import Breadcrumbs from '@/components/breadcrumbs'
+import CaseStudiesList from '@/components/case-studies/CaseStudiesList'
+import Footer from '@/components/footer'
+import Navbar from '@/components/navbar'
+import HeroBackgroundLoop from '@/components/HeroBackgroundLoop'
+import {
+  CollectionPageSchema,
+  ItemListSchema,
+} from '@/components/schema-markup'
+import { CASE_STUDIES } from '@/lib/case-study-data'
 
 const CASE_STUDIES_HERO_VIDEO =
-  "https://res.cloudinary.com/dhqpqfw6w/video/upload/v1771353172/ocean-ascii-hq_lbqose.mp4"
+  'https://res.cloudinary.com/dhqpqfw6w/video/upload/v1771353172/ocean-ascii-hq_lbqose.mp4'
 const CASE_STUDIES_HERO_POSTER =
-  "https://res.cloudinary.com/dhqpqfw6w/image/upload/v1771353245/Screenshot_2026-02-17_at_10.33.32_AM_lsxdpz.webp"
+  'https://res.cloudinary.com/dhqpqfw6w/image/upload/v1771353245/Screenshot_2026-02-17_at_10.33.32_AM_lsxdpz.webp'
 
 export default function CaseStudiesPage() {
   return (
@@ -17,39 +20,24 @@ export default function CaseStudiesPage() {
       <Navbar />
       <main className="flex-1">
         <div className="container mx-auto px-4 md:px-6">
-          <Breadcrumbs items={[{ name: "home", url: "/" }, { name: "case studies", url: "/case-studies" }]} />
+          <Breadcrumbs
+            items={[
+              { name: 'home', url: '/' },
+              { name: 'case studies', url: '/case-studies' },
+            ]}
+          />
         </div>
         <section className="px-4 py-10 md:py-14">
           <div className="container mx-auto px-4 md:px-6">
             <div className="relative isolate overflow-hidden rounded-3xl border border-border/60 bg-card/50 shadow-[0_30px_90px_-50px_rgba(0,0,0,0.7)]">
-              <Image
-                src={CASE_STUDIES_HERO_POSTER}
-                alt="ASCII ocean animation preview"
-                fill
-                unoptimized
-                className="hero-loop-touch-poster absolute inset-0 h-full w-full object-cover opacity-45 sm:hidden"
-                sizes="100vw"
+              <HeroBackgroundLoop
+                videoSrc={CASE_STUDIES_HERO_VIDEO}
+                posterSrc={CASE_STUDIES_HERO_POSTER}
+                posterAlt="ASCII ocean animation preview"
+                posterClassName="hero-loop-touch-poster absolute inset-0 h-full w-full object-cover opacity-45 sm:hidden"
+                videoClassName="pointer-events-none absolute inset-0 hidden h-full w-full object-cover opacity-40 sm:block"
+                posterUnoptimized
               />
-              <video
-                autoPlay
-                loop
-                muted
-                playsInline
-                webkit-playsinline="true"
-                x-webkit-airplay="deny"
-                preload="metadata"
-                poster={CASE_STUDIES_HERO_POSTER}
-                aria-hidden="true"
-                controls={false}
-                disablePictureInPicture
-                disableRemotePlayback
-                tabIndex={-1}
-                draggable={false}
-                data-hero-loop="true"
-                className="hero-loop-video pointer-events-none absolute inset-0 hidden h-full w-full object-cover opacity-40 sm:block"
-              >
-                <source src={CASE_STUDIES_HERO_VIDEO} type="video/mp4" />
-              </video>
               <div
                 aria-hidden="true"
                 className="absolute inset-0 bg-gradient-to-b from-background/55 via-background/75 to-background/90"
@@ -62,7 +50,9 @@ export default function CaseStudiesPage() {
                   recent client work
                 </h1>
                 <p className="mt-5 max-w-2xl text-sm text-muted-foreground sm:text-base">
-                  Real redesigns, growth experiments, and execution playbooks built with clients across dental, local, nonprofit, and consulting brands.
+                  Real redesigns, growth experiments, and execution playbooks
+                  built with clients across dental, local, nonprofit, and
+                  consulting brands.
                 </p>
               </div>
             </div>
@@ -87,7 +77,7 @@ export default function CaseStudiesPage() {
           name: study.title,
           description: study.description,
           url: `https://www.design-prism.com/case-studies/${study.slug}`,
-          itemType: "CaseStudy",
+          itemType: 'CaseStudy',
         }))}
       />
     </div>

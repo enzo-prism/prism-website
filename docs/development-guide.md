@@ -55,6 +55,17 @@ Custom confirmation routes live in `app/thank-you/` and `app/analysis-thank-you/
 - Any route-level conversion (e.g., `/thank-you`) should load its own `<Script>` that fires the relevant `gtag('event', 'conversion', { send_to: 'AW-…' })`. See `app/thank-you/page.tsx` for the exact snippet tied to `AW-11373090310/hBMrCMijk70bEIasjq8q`.
 - When building a new landing page with a Formspree form, make sure the success handler navigates to `/thank-you` so the Ads conversion snippet runs and the GA pageview records properly.
 
+## Mobile Hero Video Safety
+
+- Decorative autoplaying background videos must not use raw `<video autoPlay ...>` markup directly on touch/coarse devices.
+- Prefer `components/HeroBackgroundLoop.tsx` (for static hero posters + loop background) or `components/HeroLoopingVideo.tsx` (general looping hero card component). Both components gate autoplay via `lib/media-environment.ts` and keep `<video>` unmounted on mobile touch pointers.
+- This prevents the iOS Safari fullscreen/autoplay takeover edge case we observed on routes like `/wall-of-love` and similar hero-heavy pages.
+- Keep a poster-first UX for reduced-motion, touch, or media load failure states.
+- Add regression guardrails with:
+  - `pnpm exec jest __tests__/hero-loop-gating.test.tsx`
+  - `pnpm exec jest __tests__/hero-autoplay-safety.test.ts`
+- If you introduce any new decorative autoplay video, update this section and run the above tests before merge.
+
 ## Pricing Page Content
 
 - Pricing UI is in `app/pricing/client-page.tsx` with the hero modal split into `components/pricing/PricingHero.tsx`.

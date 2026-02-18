@@ -1,26 +1,27 @@
-"use client"
+'use client'
 
-import { Button } from "@/components/ui/button"
-import { ArrowRight } from "lucide-react"
-import Image from "next/image"
-import Link from "next/link"
-import { useEffect, useMemo, useState } from "react"
-import { trackCTAClick } from "@/utils/analytics"
-import PixelishImg from "@/components/pixelish/PixelishImg"
+import { Button } from '@/components/ui/button'
+import { ArrowRight } from 'lucide-react'
+import Image from 'next/image'
+import Link from 'next/link'
+import { useEffect, useMemo, useState } from 'react'
+import { trackCTAClick } from '@/utils/analytics'
+import PixelishImg from '@/components/pixelish/PixelishImg'
+import HeroBackgroundLoop from '@/components/HeroBackgroundLoop'
 import {
   quotesData,
   renderFormattedText,
   takeawaysData,
   type Quote,
   type Takeaway,
-} from "@/content/wall-of-love-data"
+} from '@/content/wall-of-love-data'
 
 type FeedItem =
-  | { kind: "quote"; data: Quote }
-  | { kind: "takeaway"; data: Takeaway }
+  | { kind: 'quote'; data: Quote }
+  | { kind: 'takeaway'; data: Takeaway }
 
-const PLANET_VIDEO_SRC = "/ascii/motion/wall-of-love/planet-lite.mp4"
-const PLANET_POSTER_SRC = "/ascii/static/wall-of-love/planet.png"
+const PLANET_VIDEO_SRC = '/ascii/motion/wall-of-love/planet-lite.mp4'
+const PLANET_POSTER_SRC = '/ascii/static/wall-of-love/planet.png'
 
 // Generic Fisher–Yates shuffle
 const shuffleArray = <T,>(array: T[]): T[] => {
@@ -35,10 +36,10 @@ const shuffleArray = <T,>(array: T[]): T[] => {
 export default function WallOfLoveClientPage() {
   const combinedFeed: FeedItem[] = useMemo(
     () => [
-      ...quotesData.map((q) => ({ kind: "quote", data: q } as FeedItem)),
-      ...takeawaysData.map((t) => ({ kind: "takeaway", data: t } as FeedItem)),
+      ...quotesData.map((q) => ({ kind: 'quote', data: q }) as FeedItem),
+      ...takeawaysData.map((t) => ({ kind: 'takeaway', data: t }) as FeedItem),
     ],
-    []
+    [],
   )
 
   const [feed, setFeed] = useState<FeedItem[]>(combinedFeed)
@@ -51,15 +52,15 @@ export default function WallOfLoveClientPage() {
   }, [combinedFeed])
 
   useEffect(() => {
-    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)")
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
     setPrefersReducedMotion(mediaQuery.matches)
 
     const handleChange = (event: MediaQueryListEvent) => {
       setPrefersReducedMotion(event.matches)
     }
 
-    mediaQuery.addEventListener("change", handleChange)
-    return () => mediaQuery.removeEventListener("change", handleChange)
+    mediaQuery.addEventListener('change', handleChange)
+    return () => mediaQuery.removeEventListener('change', handleChange)
   }, [])
   // minimal vertical list – no carousels, observers, or shuffling
 
@@ -79,35 +80,15 @@ export default function WallOfLoveClientPage() {
               />
             ) : (
               <>
-                <Image
-                  src={PLANET_POSTER_SRC}
-                  alt="ASCII planet animation preview"
-                  fill
-                  unoptimized
-                  className="hero-loop-touch-poster absolute inset-0 h-full w-full object-cover object-[center_80%] opacity-100 [image-rendering:pixelated] sm:hidden"
-                  sizes="100vw"
+                <HeroBackgroundLoop
+                  videoSrc={PLANET_VIDEO_SRC}
+                  posterSrc={PLANET_POSTER_SRC}
+                  posterAlt="ASCII planet animation preview"
+                  posterClassName="hero-loop-touch-poster absolute inset-0 h-full w-full object-cover object-[center_80%] opacity-100 [image-rendering:pixelated] sm:hidden"
+                  videoClassName="pointer-events-none absolute inset-0 hidden h-full w-full object-cover object-[center_80%] opacity-100 [image-rendering:pixelated] sm:block"
+                  posterUnoptimized
+                  onVideoError={() => setVideoFailed(true)}
                 />
-                <video
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                  webkit-playsinline="true"
-                  x-webkit-airplay="deny"
-                  controls={false}
-                  disablePictureInPicture
-                  disableRemotePlayback
-                  tabIndex={-1}
-                  draggable={false}
-                  preload="metadata"
-                  poster={PLANET_POSTER_SRC}
-                  aria-hidden="true"
-                  data-hero-loop="true"
-                  className="hero-loop-video pointer-events-none absolute inset-0 hidden h-full w-full object-cover object-[center_80%] opacity-100 [image-rendering:pixelated] sm:block"
-                  onError={() => setVideoFailed(true)}
-                >
-                  <source src={PLANET_VIDEO_SRC} type="video/mp4" />
-                </video>
               </>
             )}
 
@@ -118,7 +99,11 @@ export default function WallOfLoveClientPage() {
 
             <div className="relative z-10 mx-auto flex min-h-[320px] max-w-4xl flex-col items-center justify-center px-6 py-14 text-center sm:min-h-[360px] md:px-10 md:py-20">
               <div className="inline-flex items-center gap-3 rounded-full border border-border/70 bg-card/50 px-4 py-2 shadow-sm backdrop-blur-sm">
-                <PixelishImg src="/pixelish/emoji-heart.svg" alt="Heart icon" size={24} />
+                <PixelishImg
+                  src="/pixelish/emoji-heart.svg"
+                  alt="Heart icon"
+                  size={24}
+                />
                 <p className="text-[10px] font-semibold uppercase tracking-[0.32em] text-muted-foreground font-pixel">
                   testimonials
                 </p>
@@ -133,9 +118,13 @@ export default function WallOfLoveClientPage() {
 
               <p className="mt-6 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-xs font-semibold text-foreground sm:text-sm">
                 <span>Instagram: 39,000+</span>
-                <span className="hidden text-muted-foreground sm:inline">•</span>
+                <span className="hidden text-muted-foreground sm:inline">
+                  •
+                </span>
                 <span>TikTok: 6,000+</span>
-                <span className="hidden text-muted-foreground sm:inline">•</span>
+                <span className="hidden text-muted-foreground sm:inline">
+                  •
+                </span>
                 <span>YouTube: 24,000+</span>
               </p>
 
@@ -144,7 +133,12 @@ export default function WallOfLoveClientPage() {
                   <Button
                     size="lg"
                     className="rounded-md px-6"
-                    onClick={() => trackCTAClick("wall_of_love_become_client_cta", "/get-started")}
+                    onClick={() =>
+                      trackCTAClick(
+                        'wall_of_love_become_client_cta',
+                        '/get-started',
+                      )
+                    }
                   >
                     Become a Client <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
@@ -156,13 +150,16 @@ export default function WallOfLoveClientPage() {
       </section>
 
       <div className="bg-transparent">
-        <main id="testimonials-feed" className="w-full max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
+        <main
+          id="testimonials-feed"
+          className="w-full max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-12"
+        >
           <p className="mb-6 text-[10px] font-semibold uppercase tracking-[0.32em] text-muted-foreground text-center font-pixel">
             {reviewCount.toLocaleString()} voices from our community of founders
           </p>
           <div className="space-y-4 sm:space-y-5 columns-1 md:columns-2 xl:columns-3 gap-5">
             {feed.map((item) => {
-              const isQuote = item.kind === "quote"
+              const isQuote = item.kind === 'quote'
               return (
                 <blockquote
                   key={`${item.kind}-${item.data.id}`}
@@ -174,11 +171,19 @@ export default function WallOfLoveClientPage() {
                   }
                 >
                   <p className="text-[15px] leading-relaxed text-foreground sm:text-base">
-                    &ldquo;{renderFormattedText(isQuote ? (item.data as Quote).text : (item.data as Takeaway).text)}&rdquo;
+                    &ldquo;
+                    {renderFormattedText(
+                      isQuote
+                        ? (item.data as Quote).text
+                        : (item.data as Takeaway).text,
+                    )}
+                    &rdquo;
                   </p>
                   <footer className="mt-3 flex items-center justify-end text-right">
                     <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-muted-foreground font-pixel sm:text-xs">
-                      {isQuote ? (item.data as Quote).client : `@${(item.data as Takeaway).handle}`}
+                      {isQuote
+                        ? (item.data as Quote).client
+                        : `@${(item.data as Takeaway).handle}`}
                     </p>
                   </footer>
                 </blockquote>

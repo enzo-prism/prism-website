@@ -1,14 +1,18 @@
-"use client"
+'use client'
 
-import { useEffect, useState } from "react"
-import Image from "next/image"
+import { useEffect, useState } from 'react'
+import Image from 'next/image'
 
-import { cn } from "@/lib/utils"
+import { cn } from '@/lib/utils'
+import {
+  isTouchCoarseEnvironment,
+  TOUCH_MEDIA_QUERY,
+} from '@/lib/media-environment'
 
 const DEFAULT_VIDEO_SRC =
-  "https://res.cloudinary.com/dhqpqfw6w/video/upload/v1761612491/surfer_loop_vduya4.mp4"
+  'https://res.cloudinary.com/dhqpqfw6w/video/upload/v1761612491/surfer_loop_vduya4.mp4'
 const DEFAULT_POSTER_SRC =
-  "https://res.cloudinary.com/dhqpqfw6w/image/upload/v1761612479/Frame_63_gbe1tk.png"
+  'https://res.cloudinary.com/dhqpqfw6w/image/upload/v1761612479/Frame_63_gbe1tk.png'
 
 type HeroLoopingVideoProps = {
   className?: string
@@ -27,43 +31,64 @@ export default function HeroLoopingVideo({
   videoClassName,
   videoSrc = DEFAULT_VIDEO_SRC,
   posterSrc = DEFAULT_POSTER_SRC,
-  alt = "Surfer looping background preview",
+  alt = 'Surfer looping background preview',
   priority = true,
-  posterSizes = "(min-width: 1280px) 1024px, (min-width: 768px) 80vw, 100vw",
+  posterSizes = '(min-width: 1280px) 1024px, (min-width: 768px) 80vw, 100vw',
 }: HeroLoopingVideoProps) {
   const [isPosterLoaded, setIsPosterLoaded] = useState(false)
   const [isVideoReady, setIsVideoReady] = useState(false)
   const [hasVideoError, setHasVideoError] = useState(false)
-  const [isTouchDevice, setIsTouchDevice] = useState(false)
+  const [showVideo, setShowVideo] = useState(false)
 
   useEffect(() => {
-    if (typeof window === "undefined") return
-
-    const mediaQuery = window.matchMedia("(hover: none), (pointer: coarse)")
-    const handleChange = () => {
-      setIsTouchDevice(mediaQuery.matches)
+    if (typeof window === 'undefined') {
+      return
     }
 
-    handleChange()
+    const mediaQuery = window.matchMedia(TOUCH_MEDIA_QUERY)
 
-    mediaQuery.addEventListener("change", handleChange)
-    return () => mediaQuery.removeEventListener("change", handleChange)
-  }, [])
+    // Avoid iOS Safari autoplay fullscreen behavior on touch devices by not
+    // mounting this decorative hero video in coarse-pointer environments.
+    const evaluatePlayback = () => {
+      setShowVideo(!isTouchCoarseEnvironment() && !hasVideoError)
+    }
 
-  const shouldRenderVideo = !isTouchDevice && !hasVideoError
+    const listener = () => evaluatePlayback()
+    evaluatePlayback()
+    if (mediaQuery.addEventListener) {
+      mediaQuery.addEventListener('change', listener)
+    } else {
+      mediaQuery.addListener(listener)
+    }
+
+    return () => {
+      if (mediaQuery.removeEventListener) {
+        mediaQuery.removeEventListener('change', listener)
+      } else {
+        mediaQuery.removeListener(listener)
+      }
+    }
+  }, [hasVideoError])
+
+  const shouldRenderVideo = showVideo
 
   return (
     <div
       className={cn(
-        "relative w-full overflow-hidden rounded-3xl border border-neutral-200 bg-neutral-950/5 shadow-lg",
-        className
+        'relative w-full overflow-hidden rounded-3xl border border-neutral-200 bg-neutral-950/5 shadow-lg',
+        className,
       )}
     >
-      <div className={cn("relative aspect-[4/5] w-full sm:aspect-[16/9]", aspectClassName)}>
+      <div
+        className={cn(
+          'relative aspect-[4/5] w-full sm:aspect-[16/9]',
+          aspectClassName,
+        )}
+      >
         <div
           className={cn(
-            "pointer-events-none absolute inset-0 z-20 overflow-hidden transition-opacity duration-700",
-            isVideoReady && shouldRenderVideo ? "opacity-0" : "opacity-100"
+            'pointer-events-none absolute inset-0 z-20 overflow-hidden transition-opacity duration-700',
+            isVideoReady && shouldRenderVideo ? 'opacity-0' : 'opacity-100',
           )}
         >
           <Image
@@ -73,17 +98,22 @@ export default function HeroLoopingVideo({
             priority={priority}
             sizes={posterSizes}
             className="h-full w-full object-cover"
-            onLoadingComplete={() => setIsPosterLoaded(true)}
+            onLoad={() => setIsPosterLoaded(true)}
           />
-          {!isPosterLoaded && <div className="absolute inset-0 animate-pulse bg-neutral-200" aria-hidden />}
+          {!isPosterLoaded && (
+            <div
+              className="absolute inset-0 animate-pulse bg-neutral-200"
+              aria-hidden
+            />
+          )}
         </div>
 
         {shouldRenderVideo && (
           <video
             className={cn(
-              "hero-loop-video pointer-events-none absolute inset-0 z-10 hidden h-full w-full object-cover transition-opacity duration-700 sm:block",
-              isVideoReady ? "opacity-100" : "opacity-0",
-              videoClassName
+              'hero-loop-video pointer-events-none absolute inset-0 z-10 hidden h-full w-full object-cover transition-opacity duration-700 sm:block',
+              isVideoReady ? 'opacity-100' : 'opacity-0',
+              videoClassName,
             )}
             autoPlay
             loop

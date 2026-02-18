@@ -1,13 +1,15 @@
-import { render, screen } from "@testing-library/react"
+import { render, screen } from '@testing-library/react'
 
-import HeroMonthlyLeadsPill from "@/components/home/HeroMonthlyLeadsPill"
-import { HOME_HERO_MONTHLY_LEADS_STATS } from "@/content/home-hero-leads"
+import HeroMonthlyLeadsPill from '@/components/home/HeroMonthlyLeadsPill'
+import { HOME_HERO_MONTHLY_LEADS_STATS } from '@/content/home-hero-leads'
 
-jest.mock("next/link", () => ({
+jest.mock('next/link', () => ({
   __esModule: true,
   default: ({ href, children, ...props }: any) => {
     const hrefString =
-      typeof href === "string" ? href : (href?.pathname as string | undefined) ?? ""
+      typeof href === 'string'
+        ? href
+        : ((href?.pathname as string | undefined) ?? '')
     return (
       <a href={hrefString} {...props}>
         {children}
@@ -16,17 +18,22 @@ jest.mock("next/link", () => ({
   },
 }))
 
-describe("HeroMonthlyLeadsPill", () => {
-  it("renders a link to /get-started with monthly stat copy", () => {
+describe('HeroMonthlyLeadsPill', () => {
+  it('renders a link to /get-started with monthly stat copy', () => {
     render(<HeroMonthlyLeadsPill />)
 
-    const link = screen.getByRole("link")
-    expect(link).toHaveAttribute("href", "/get-started")
+    const link = screen.getByRole('link')
+    expect(link).toHaveAttribute('href', '/get-started')
 
     const latest = HOME_HERO_MONTHLY_LEADS_STATS[0]
     expect(latest).toBeTruthy()
 
-    expect(link).toHaveTextContent(`${latest.leads.toLocaleString("en-US")} leads delivered to clients last month 🥳`)
-    expect(link).toHaveTextContent("stat updated monthly")
+    expect(link).toHaveTextContent(
+      `${latest.leads.toLocaleString('en-US')} leads delivered to clients last month`,
+    )
+    expect(link).toHaveTextContent('Get started with Prism')
+    expect(link).toHaveAccessibleName(
+      `Get started with Prism: ${latest.leads.toLocaleString('en-US')} leads delivered to clients last month.`,
+    )
   })
 })

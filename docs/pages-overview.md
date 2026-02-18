@@ -3,6 +3,7 @@
 Quick reference for the pages we edit most often.
 
 ## Case Studies (`app/case-studies/*`)
+
 - Individual case study pages live under `app/case-studies/<slug>/` and render server components with client-only subcomponents for the interactive sections.
 - Sticky section navigation is `components/case-studies/CaseStudySectionNav.tsx` (shadcn `ToggleGroup` + `Sheet` + `ScrollArea`); sections must use `data-section="<id>"` or `id="<id>"` so scrolling and active state work.
 - Reusable “data note / in progress” callouts are `components/case-studies/CaseStudyCallout.tsx` (shadcn `Alert`).
@@ -11,70 +12,84 @@ Quick reference for the pages we edit most often.
 - Minimal case studies use `components/case-study-minimal.tsx`, which automatically includes the graph and now surfaces a top-of-page "visit <client-site>" button whenever a `website` quick fact includes an external `href`.
 - The `/case-studies` card grid reads optional `clientLogo` URLs from `lib/case-study-data.ts`; cards render logos when provided and fall back to text-only cards when absent.
 - The `/case-studies` list hero uses a looping Cloudinary background in `app/case-studies/client-page.tsx` (`CASE_STUDIES_HERO_VIDEO` + `CASE_STUDIES_HERO_POSTER`) with a readability gradient and current video opacity `40%`.
-- Mobile safety: the `/case-studies` hero keeps a poster fallback on touch devices and limits looping playback to non-touch contexts to prevent iOS/Safari fullscreen takeover behavior.
-- Global mobile safety pattern for decorative hero loops: pair `hero-loop-video` with `hero-loop-touch-poster`, add `data-hero-loop="true"`, and keep non-interactive attributes (`playsInline`, `webkit-playsinline`, `disablePictureInPicture`, `disableRemotePlayback`) on all decorative videos.
+- Mobile safety: the `/case-studies` hero keeps a poster fallback on touch devices and now uses `components/HeroBackgroundLoop.tsx` so autoplay `<video>` is never mounted on touch/coarse-pointer environments.
+- Global mobile safety pattern for decorative hero loops: prefer `components/HeroBackgroundLoop.tsx` (or equivalent device-gating) so autoplay markup is gated before mount. For direct markup fallback, pair `hero-loop-video` with `hero-loop-touch-poster`, add `data-hero-loop="true"`, and keep non-interactive attributes (`playsInline`, `webkit-playsinline`, `disablePictureInPicture`, `disableRemotePlayback`) on all decorative videos.
 
 ## Pricing (`app/pricing/client-page.tsx`)
+
 - Core sections (plans grid, founder VSL block, “everything included” features, “Website Use Cases”, smooth handoff section, clients rail, FAQ, and final CTA) live here; the hero + fullscreen modal live in `components/pricing/PricingHero.tsx`.
 - The primary “pricing breakdown” CTA and the final CTA link to `#plans`; keep that anchor intact when editing.
 - The video directly under the pricing cards uses `VideoPlayer` plus structured data—when swapping the asset, update the Cloudinary `src`, poster, and metadata inside `PricingSection`.
 - Clients are rendered via `components/home/ClientsRail.tsx` to keep the same scroller behavior and the “view case studies” link.
 
 ## Checkout (`app/checkout/*/page.tsx`)
+
 - Launch, Grow, and Scale checkout pages are intentionally **noindex/no-follow** and excluded from the sitemap.
 - Keep canonical URLs set, but avoid adding these routes to marketing navs or sitemap entries.
 
 ## Dental Pricing (`app/pricing-dental/client-page.tsx`)
+
 - Plan definitions live in `dentalPlans`; keep prices and product images aligned with what's shown on the page so Merchant listing structured data stays valid.
 
 ## Websites (`app/websites/page.tsx`)
+
 - Includes hero, founder VSL, benefits, showcases, vertical playbooks, FAQs, SEO copy, and service schema.
 - The VSL near the hero is the canonical marketing video (reused on `/ai-website-launch`); changes here should propagate to any page referencing the same clip.
 
 ## Apps (`app/apps/page.tsx`)
+
 - Mobile app portfolio + process overview.
 - Uses `ItemList` JSON-LD for the showcased projects; avoid `SoftwareApplication` rich-result schema unless we can supply accurate pricing + reviews/ratings.
 - Route metadata now comes from `buildRouteMetadata` (`lib/seo/metadata.ts`) and always normalizes to a single `| Prism` suffix.
 - For static pages, set `titleStem` + `description` in the page metadata call and let the helper generate canonical/Open Graph/Twitter/robots fields consistently.
 
 ## Software (`app/software/page.tsx`)
+
 - Growth tools hub listing Prism-built software (currently Density, Hot Content, and Engineering Tracker).
 - App card data is shared via `lib/software-apps.ts`; update this list to keep the homepage section and `/software` in sync.
 - The homepage + `/software` cards are rendered by `components/software/SoftwareAppCards.tsx`, including the framed icon treatment sized for small pixel icons.
 - The hero now uses `components/ascii/AsciiHeroCard.tsx` with the high-quality `wave` ASCII frames in `public/animations/wave/high`.
 
 ## Blog (`app/blog/page.tsx`)
+
 - Blog index layout includes breadcrumbs, the animated hero card, filters, post grid, signup, and the final CTA section.
 - The hero now uses `components/ascii/AsciiHeroCard.tsx` with the high-quality `hands` ASCII frames in `public/animations/hands/high`.
 
 ## Podcast (`app/podcast/page.tsx`)
+
 - Podcast hub + recent episode preview cards.
 - Uses `PodcastSeriesSchema` plus `PodcastEpisodeSchema` (with nested `VideoObject` metadata). Keep episode publish dates, YouTube URLs, and thumbnails up to date so Video structured data stays valid.
 - Individual episode spotlights (for example `app/podcast/michael-njo/page.tsx`) should keep CTA buttons mobile-safe by allowing full-width wrapping on small screens so no horizontal scrolling is introduced in quote/CTA cards.
 
 ## Dental Website (`app/dental-website/page.tsx`)
+
 - Dentist-focused website page targeting “dentist website design”.
 - Includes `ServiceSchema` plus FAQ structured data (via `FAQSchema`) and cross-links into the dental SEO and ads funnels.
 - Aliases in `next.config.mjs` (redirect to `/dental-website`): `/dentist-website-design`, `/dental-website-design`, `/dental-clinic-website-design`.
 
 ## Free Analysis (`app/free-analysis/page.tsx`)
+
 - Minimal layout: hero card + deliverables card + `FreeAnalysisForm`.
 - Update copy here when the offer changes.
 
 ## Get Started (`app/get-started/page.tsx`)
+
 - The hero animation uses `components/get-started/GetStartedHeroScene.tsx` with the Unicorn Studio JSON at `/public/unicorn/get-started-hero.json`.
 - `GetStartedHeroScene` now uses the shared local Unicorn SDK (`/public/unicorn/unicornStudio.umd.js`) with eager loading (`lazyLoad={false}`), a balanced render profile (desktop `fps=60`/`dpi=1.5`, mobile/coarse/reduced-data `fps=30`/`dpi=1`), and the shared `.unicorn-hero-scene__placeholder` fallback so first paint is never blank.
 - The original hero (badge, copy, VSL, CTA) now follows the animation section; keep the CTA anchored to `#book-call`.
 
 ## Contact (`app/contact/page.tsx`)
+
 - Simple hero, form card, kickoff-call button, and contact info.
 - Uses `ContactForm` for all validation/submission logic.
 
 ## Structured data (global)
+
 - `app/layout.tsx` injects `GlobalSchemaGraph` from `components/schema-markup.tsx` (Organization, WebSite, LocalBusiness).
 - `components/breadcrumbs.tsx` emits `BreadcrumbList` JSON-LD with canonical URLs.
 
 ## Homepage (`app/client-page.tsx`)
+
 - The hero proof strip uses `HeroReviewSliderCard` (`components/home/HeroReviewSliderCard.tsx`) with two curated quotes and the “250+ more” CTA kept above the fold.
 - Hero copy, service strip, and CTAs live in `app/client-page.tsx` with CTA tracking in `components/home/HeroCtas.tsx`.
 - The hero client logo circles use click/tap tooltips; keep the label text in `HERO_CLIENT_ICONS` aligned with the logos.
@@ -94,12 +109,14 @@ Quick reference for the pages we edit most often.
 - The Wall of Love slider uses `components/home/WallOfLoveCarousel.tsx` and a native scroll-snap rail (no Embla); adjust the quote pool via `pinned` / `heroSpotlight` in `content/wall-of-love-data.tsx`.
 
 ## Wall Of Love (`app/wall-of-love/client-page.tsx`)
+
 - Hero now mirrors the `/case-studies` cinematic style (single rounded container, looping background media, centered foreground copy + CTA).
 - Hero media uses `public/ascii/motion/wall-of-love/planet-lite.mp4` with reduced-motion/error fallback poster `public/ascii/static/wall-of-love/planet.png`; current crop/visibility tuning is `object-[center_80%]` with `opacity-100`.
 - Keep CTA tracking on the primary button (`trackCTAClick("wall_of_love_become_client_cta", "/get-started")`) and keep the testimonials feed anchored at `#testimonials-feed`.
 - Social proof copy in the hero is intentionally hard-coded as: `Instagram: 39,000+`, `TikTok: 6,000+`, `YouTube: 24,000+`.
 
 ## Prism Library (`app/library/page.tsx`)
+
 - Library layout (hero, featured post, and grid) lives in `components/library/LibraryClient.tsx`; the list page intentionally avoids embeds and extra UI chrome.
 - Data comes from `lib/library/getLibraryPosts.ts` and merges the `content/library/seed.ts` fallback with `content/library/editorial.ts` curation metadata.
 - Detail pages live at `app/library/[slug]/page.tsx` and are intentionally simple: text plus a single Instagram/TikTok embed.
@@ -108,13 +125,16 @@ Quick reference for the pages we edit most often.
 - When API tokens are missing, the Library falls back to `content/library/seed.ts`.
 
 ## Thank-you routes
+
 - `app/thank-you/page.tsx`
 - `app/analysis-thank-you/page.tsx`
 
 Each uses card-based layouts: confirmation message + kickoff-call CTA + contact details. When adding new forms, reuse one of these routes for consistency.
+
 - These routes are noindex/no-follow and should remain crawlable (don’t block them in `robots.txt`) so search engines can read the meta noindex directive.
 
 ## AI Website Launch (`app/ai-website-launch/client-page.tsx`)
+
 - High-conversion landing page for ads traffic. Sections include hero, founder VSL, pains, how-it-works, deliverables, clients carousel, comparison table, optional-upgrade CTA, and the Formspree intake.
 - The VSL (`VideoPlayer`) lives immediately after the hero; reuse the same video + schema props that `/websites` uses when marketing needs a consistent message.
 - The inline intake form lives in `components/ai-website-launch/AiWebsiteLaunchForm.tsx`; it uses `useFormValidation` with Formspree `fetch`, redirects to `/thank-you`, and tracks submissions via `trackFormSubmission`.
@@ -153,20 +173,24 @@ Each uses card-based layouts: confirmation message + kickoff-call CTA + contact 
 - Cross-links into `/seo` and `/free-analysis` to separate the full audit from the free snapshot.
 
 ## Local Listings (`app/local-listings/page.tsx`)
+
 - Hero, benefits grid, platform cards, and the founder VSL render before the audience + FAQ sections.
 - The video mirrors the copy on `/websites` but points at the local-listings Cloudinary asset—update the `VideoPlayer` block in this file when you need a new transcript or duration.
 
 ## Local SEO Services (`app/local-seo-services/page.tsx`)
+
 - Primary landing page targeting “local seo services” and related local SEO service intent.
 - Cross-links into `/seo` (methodology) and `/local-listings` (listings subsystem) so internal linking reinforces the topical cluster without duplicating content.
 - Includes structured data (`ServiceSchema`, `HowToSchema`, and `FAQSection`) and should be kept human-first (avoid doorway patterns or keyword stuffing).
 
 ## Local SEO Agency (`app/local-seo-agency/page.tsx`)
+
 - Primary landing page targeting “local seo agency” (agency intent: selection, proof, process, and reporting).
 - Links to `/local-seo-services` for the deliverables breakdown, and to `/seo` + `/local-listings` for supporting context.
 - Includes structured data (`ServiceSchema`, `HowToSchema`, and `FAQSection`) and a “what we won’t do” section to keep messaging aligned with Google spam policies.
 
 ## Ads (`app/ads/page.tsx`)
+
 - Same layout pattern as Local Listings: hero, benefits, platforms, audience grid, then the ads-focused founder VSL.
 - `VideoPlayer` is imported directly in `app/ads/page.tsx`; keep schema metadata up to date (id, upload date, duration) when swapping clips so Google’s video rich results stay accurate.
 
@@ -182,16 +206,19 @@ Each uses card-based layouts: confirmation message + kickoff-call CTA + contact 
 - Includes `ServiceSchema` plus on-page FAQ structured data (via `FAQSection`) and cross-links into `/ads` and `/google/dental-ads`.
 
 ## Designs (`app/designs/DesignsPageClient.tsx`)
+
 - The hero, quote slider, CTA blocks, and the founder VSL all live inside the client component.
 - The video section appears directly after the hero copy so it inherits the same styling as the `/websites` embed.
 - Client-specific review hubs live alongside the main page. Example: `/designs/wine-country-root-canal` contains a hero recap, deliverables grid, timeline, checklist, and CTA so Dr. Anderson’s team can review assets async.
 
 ## About (`app/about/client-page.tsx`)
+
 - Hero now mirrors the `/case-studies` and `/wall-of-love` treatment using `components/ascii/AsciiHeroCard.tsx` with high-quality `fire-2` frames in `public/animations/fire-2/high`.
 - Keep the founder headshot, timeline CTA (`ScrollToTimelineButton`), and external profile CTA in the hero; they are intentionally part of the hero content layer.
 - The Olympic journey and timeline sections remain below the hero and should keep their existing CTA flow.
 
 ## Supporting Components
+
 - `components/ascii/AsciiHeroCard.tsx`: shared cinematic hero wrapper used by `/about`, `/software`, and `/blog`; mobile readability now intentionally matches `/wall-of-love` via lower small-screen animation opacity plus layered gradient/radial overlays.
 - `components/ascii/AsciiAnimation.tsx`: high-quality ASCII frame player (quality fallback, lazy loading, reduced-motion pause, intersection-aware playback).
 - `components/reveal-on-scroll.tsx`: lightweight framer-motion wrapper used across marketing sections.

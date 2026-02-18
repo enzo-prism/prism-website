@@ -15,12 +15,12 @@ Guidance for future Codex sessions so we can ship faster without rediscovering c
 
 We now have four tightly coupled routes – keep their navigation in sync.
 
-| Route | Purpose | Key links |
-| --- | --- | --- |
-| `/dental-photography` | Hub with background video hero, summary cards, and cross-links. | Buttons must point to `/dental-photography/office-team` and `/dental-photography/before-after`; secondary CTAs can reference `/book-a-shoot` when relevant. |
-| `/dental-photography/office-team` | Bookable service showcasing recent shoots + Apple Maps proof. | All primary CTAs go to `/book-a-shoot`. Apple Maps block links to `/local-listings`. The recent-shoots slider now lives in `app/dental-photography/office-team/recent-shoots-section.tsx`; update the `recentShoots` data + optional `website` URL there so the “visit website” / progress bar behave. Keep the dark proof section linking to `/dental-photography/before-after`. |
-| `/dental-photography/before-after` | DIY equipment + workflow guide (no booking). | Keep “jump to the protocol” anchor and the CTA that routes to `/dental-photography/office-team` so visitors can move from the guide to the done-for-you service. |
-| `/book-a-shoot` | Formspree capture for shoot scheduling. | Links back to the other pages so visitors can revisit context. |
+| Route                              | Purpose                                                         | Key links                                                                                                                                                                                                                                                                                                                                                                         |
+| ---------------------------------- | --------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `/dental-photography`              | Hub with background video hero, summary cards, and cross-links. | Buttons must point to `/dental-photography/office-team` and `/dental-photography/before-after`; secondary CTAs can reference `/book-a-shoot` when relevant.                                                                                                                                                                                                                       |
+| `/dental-photography/office-team`  | Bookable service showcasing recent shoots + Apple Maps proof.   | All primary CTAs go to `/book-a-shoot`. Apple Maps block links to `/local-listings`. The recent-shoots slider now lives in `app/dental-photography/office-team/recent-shoots-section.tsx`; update the `recentShoots` data + optional `website` URL there so the “visit website” / progress bar behave. Keep the dark proof section linking to `/dental-photography/before-after`. |
+| `/dental-photography/before-after` | DIY equipment + workflow guide (no booking).                    | Keep “jump to the protocol” anchor and the CTA that routes to `/dental-photography/office-team` so visitors can move from the guide to the done-for-you service.                                                                                                                                                                                                                  |
+| `/book-a-shoot`                    | Formspree capture for shoot scheduling.                         | Links back to the other pages so visitors can revisit context.                                                                                                                                                                                                                                                                                                                    |
 
 When adding new sections:
 
@@ -28,23 +28,39 @@ When adding new sections:
 2. Mirror links on subpages so the triangle (hub ⇄ subpages ⇄ booking) stays intact and the new `/before-after ⇄ /office-team` loop keeps working.
 3. Mention whether a page is “bookable” vs “guide” so we don’t mislead visitors.
 
-## 3. Background video hero pattern
+## 3. Background video hero pattern (mobile-safe)
 
-Use the same structure as `/dental-photography` and `/models`:
+Use the same structure as `/dental-photography`, `/models`, `/case-studies`, and `/wall-of-love`:
 
 ```tsx
 <section className="relative overflow-hidden ...">
   <div className="absolute inset-0">
-    <video src="...mp4" autoPlay loop muted playsInline poster="...webp" />
+    <HeroBackgroundLoop
+      videoSrc="https://..."
+      posterSrc="https://..."
+      posterAlt="..."
+      posterClassName="hero-loop-touch-poster ... sm:hidden"
+      videoClassName="hero-loop-video ..."
+    />
     <div className="absolute inset-0 bg-neutral-950/80" />
   </div>
-  <div className="container relative ...">
-    {/* text + CTAs */}
-  </div>
+  <div className="container relative ...">{/* text + CTAs */}</div>
 </section>
 ```
 
+`HeroBackgroundLoop` intentionally never mounts the autoplay `<video>` on touch/coarse-pointer devices, which prevents the iOS Safari fullscreen autoplay edge case.
+
 Tailwind overlay (`bg-neutral-950/80`) keeps text readable. Use Cloudinary URLs for both the MP4 and poster.
+
+When the wrapper can’t be used, require that all autoplay videos in decorative contexts:
+
+- are wrapped with touch/coarse gating before mount
+- include `data-hero-loop="true"`
+- keep non-interactive attributes (`playsInline`, `webkit-playsinline`, `disablePictureInPicture`, `disableRemotePlayback`)
+- preserve a poster fallback path for touch/reduced-motion.
+
+For regressions, run:
+`pnpm exec jest __tests__/hero-loop-gating.test.tsx __tests__/hero-autoplay-safety.test.ts`.
 
 ## 4. Carousel shorthand
 
