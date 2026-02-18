@@ -33,7 +33,8 @@
     "check:external": "node scripts/check-external-links.js",
     "seo:inventory": "npx ts-node scripts/seo-inventory.ts",
     "seo:lint": "npx ts-node scripts/seo-lint.ts",
-    "canonical:check": "npx ts-node scripts/verify-canonical.ts"
+    "canonical:check": "npx ts-node scripts/verify-canonical.ts",
+    "validate:blog-links": "npx ts-node --compiler-options '{\"module\":\"commonjs\"}' scripts/validate-blog-links.ts"
   },
   "dependencies": {
     "@base-ui/react": "^1.0.0",

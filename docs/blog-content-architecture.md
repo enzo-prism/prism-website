@@ -103,6 +103,56 @@ To add or change links:
 
 Outbound link behavior is enforced in `components/mdx-components.tsx` so all Markdown HTTP/HTTPS links open in a new tab with `rel="noopener noreferrer"` automatically. This also applies to links added later in Markdown content.
 
+## Outbound link enrichment for all 71 posts
+
+To add outbound references without editing each `.mdx` file, outbound-link injection now runs in the blog rendering pipeline:
+
+- `lib/blog-inline-link-rules.ts` defines resolver data:
+  - `OutboundLinkRule`
+  - `BlogOutboundLinkProfile`
+  - `getOutboundLinkRulesForPost({ slug, category, title, content })`
+- `lib/blog-inline-link-injector.ts` performs safe text-only injection with:
+  - protection for code blocks, inline code, existing markdown links, and inline HTML
+  - boundary-aware phrase matching
+  - max-link caps (default 6)
+  - dedupe by sentence/paragraph context
+- `app/blog/[slug]/page.tsx` resolves a profile for each post and injects links into the MDX string before passing it into `renderPost(...)`.
+- `components/blog-post-layout.tsx` receives the rendered post and keeps section logic unchanged.
+
+Resolver behavior:
+1. Slug-level overrides
+2. Category-level defaults
+3. Global defaults
+
+Injected links use:
+- `target="_blank"`
+- `rel="noopener noreferrer"`
+- `className="blog-inline-link"` for styling
+
+A link-quality validation script is available:
+
+- `pnpm validate:blog-links` runs `scripts/validate-blog-links.ts`
+- checks link counts per post
+- checks for duplicate injected phrases and unbalanced anchor markup
+- checks resolver URLs for HTTP status
+
+This keeps editorial copy untouched while making outbound references consistent across all posts.
+
+## Reading and feedback enhancements
+
+Post-page UX includes two additional client-side interaction layers that run without editing MDX:
+
+- Reading mode toggle
+  - `components/blog/blog-reading-mode-toggle.tsx` adds a compact `Reading mode` control in the article header.
+  - Toggle state is stored in `localStorage` (`prism-blog-reading-mode`).
+  - When enabled, the page adds `blog-reading-mode` to the root element; typography is adjusted via `app/globals.css` for improved scan speed and comfort.
+- Helpful feedback micro-interaction
+  - `components/blog/blog-post-feedback.tsx` adds a post-level `Was this post helpful?` prompt.
+  - Feedback is saved in `localStorage` per slug (`prism-blog-feedback-<slug>`) to prevent repeated prompts.
+  - No editorial copy changes are required because it renders in the shared layout after article body sections.
+
+Both components are intentionally lightweight and intentionally scoped to preserve the existing metadata flow (`app/blog/[slug]/page.tsx` and `components/blog-post-layout.tsx`) unchanged.
+
 ---
 
 ## RSS Feed (`/blog/feed.xml`)

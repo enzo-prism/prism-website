@@ -6,7 +6,7 @@ import AiSeoServicesPage from "@/app/ai-seo-services/page"
 
 jest.mock("next/link", () => ({
   __esModule: true,
-  default: ({
+  default: function MockNextLink({
     href,
     children,
     legacyBehavior: _legacyBehavior,
@@ -18,18 +18,32 @@ jest.mock("next/link", () => ({
     legacyBehavior?: boolean
     passHref?: boolean
     [key: string]: unknown
-  }) => (
-    <a href={href} {...props}>
-      {children}
-    </a>
-  ),
+  }) {
+    return (
+      <a href={href} {...props}>
+        {children}
+      </a>
+    )
+  },
 }))
 
-jest.mock("@/components/core-image", () => () => <div data-testid="core-image-mock" />)
-jest.mock("@/components/pixelish/PixelishIcon", () => () => <div data-testid="pixelish-icon-mock" />)
+jest.mock("@/components/core-image", () => ({
+  __esModule: true,
+  default: function MockCoreImage() {
+    return <div data-testid="core-image-mock" />
+  },
+}))
+jest.mock("@/components/pixelish/PixelishIcon", () => ({
+  __esModule: true,
+  default: function MockPixelishIcon() {
+    return <div data-testid="pixelish-icon-mock" />
+  },
+}))
 jest.mock("@/components/gradient-card", () => ({
   __esModule: true,
-  default: () => <div data-testid="gradient-card-mock" />,
+  default: function MockGradientCard() {
+    return <div data-testid="gradient-card-mock" />
+  },
 }))
 
 describe("AEO discoverability links", () => {

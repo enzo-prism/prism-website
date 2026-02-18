@@ -2,6 +2,7 @@ import type { AnchorHTMLAttributes, ReactNode } from "react"
 import { cn } from "@/lib/utils"
 import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
 import PixelishIcon from "@/components/pixelish/PixelishIcon"
+import { isValidElement } from "react"
 
 type CTAButtonProps = {
   href: string
@@ -50,6 +51,23 @@ const CTAButton = ({
 
 const isExternalUrl = (href?: string) => /^https?:\/\//i.test(href ?? "")
 
+const toPlainText = (node: ReactNode): string => {
+  if (typeof node === "string") return node
+  if (typeof node === "number") return String(node)
+  if (!node) return ""
+
+  if (Array.isArray(node)) {
+    return node.map(toPlainText).join(" ")
+  }
+
+  if (isValidElement(node)) {
+    const children = (node.props as { children?: ReactNode })?.children
+    return toPlainText(children)
+  }
+
+  return ""
+}
+
 const MDXAnchor = ({
   href = "",
   children,
@@ -58,14 +76,22 @@ const MDXAnchor = ({
   ...props
 }: AnchorHTMLAttributes<HTMLAnchorElement>) => {
   const external = isExternalUrl(href)
+  const explicitAriaLabel = (props as { "aria-label"?: string })["aria-label"]
+  const computedLabel =
+    external && !explicitAriaLabel
+      ? `${toPlainText(children)} (opens in a new tab)`
+      : explicitAriaLabel
+
   return (
     <a
+      {...props}
       href={href}
       target={target ?? (external ? "_blank" : undefined)}
       rel={rel ?? (external ? "noopener noreferrer" : undefined)}
-      {...props}
+      aria-label={computedLabel}
     >
       {children}
+      {external ? <span className="sr-only"> (opens in a new tab)</span> : null}
     </a>
   )
 }

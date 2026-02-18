@@ -24,11 +24,11 @@ function createMockResponse(overrides: MockResponseOverrides = {}): Response {
   const ok = overrides.ok ?? true
   const status = overrides.status ?? (ok ? 200 : 500)
 
-  return {
+  return ({
     ok,
     status,
-    text: jest.fn(),
-  } as Response
+    text: jest.fn().mockResolvedValue(""),
+  } as unknown) as Response
 }
 
 describe("AeoAssessmentForm", () => {

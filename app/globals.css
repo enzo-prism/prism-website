@@ -1778,15 +1778,47 @@ input, textarea, select {
   margin-bottom: 0.8rem;
 }
 
-.prose-blog a:not(.mdx-cta) {
+.prose-blog a:not(.mdx-cta),
+.prose-blog a[href^="http://"],
+.prose-blog a[href^="https://"] {
   @apply text-neutral-900 dark:text-neutral-100 underline decoration-neutral-500 dark:decoration-neutral-400 underline-offset-2 transition-colors;
 }
 
-.prose-blog a:not(.mdx-cta):hover {
+.prose-blog a:not(.mdx-cta):hover,
+.prose-blog a[href^="http://"]:hover,
+.prose-blog a[href^="https://"]:hover {
   @apply decoration-neutral-700 dark:decoration-neutral-200;
 }
 
+.prose-blog .blog-inline-link {
+  @apply decoration-sky-500 text-sky-700 dark:decoration-sky-300/90 dark:text-sky-200;
+}
+
+.prose-blog .blog-inline-link:hover {
+  @apply decoration-sky-700 dark:decoration-sky-100;
+}
+
+.prose-blog a:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+}
+
 .prose-blog a.mdx-cta { text-decoration: none; }
+
+.blog-reading-mode .prose-blog {
+  font-size: clamp(1.06rem, 1rem + 0.3vw, 1.28rem);
+  line-height: 2.05;
+  letter-spacing: 0.01em;
+}
+
+.blog-reading-mode .prose-blog p {
+  line-height: 2.12;
+  margin-bottom: 1.95rem;
+}
+
+.blog-reading-mode .prose-blog li {
+  line-height: 2;
+}
 
 .prose-blog blockquote {
   @apply border-l-4 border-neutral-300 dark:border-neutral-700 pl-6 py-1 my-9 italic;

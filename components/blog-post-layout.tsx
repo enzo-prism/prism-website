@@ -15,6 +15,9 @@ import Breadcrumbs from '@/components/breadcrumbs'
 import type { PrismImpactConfig } from '@/lib/prism-blog-impact'
 import { cn } from '@/lib/utils'
 import { toAbsoluteUrl } from '@/lib/url'
+import BlogBackToTopButton from '@/components/blog/blog-back-to-top'
+import BlogPostFeedback from '@/components/blog/blog-post-feedback'
+import BlogReadingModeToggle from '@/components/blog/blog-reading-mode-toggle'
 
 interface Props {
   children: React.ReactNode
@@ -24,8 +27,12 @@ interface Props {
   author: string
   description: string
   date: string
+  publishedDate?: string
+  updatedDate?: string
+  readingTimeMinutes?: number
   category: string
   image?: string
+  keyTakeaways?: string[]
   openGraph?: {
     type?: string
     title?: string
@@ -68,8 +75,12 @@ export default function BlogPostLayout({
   author,
   description,
   date,
+  publishedDate,
+  updatedDate,
+  readingTimeMinutes,
   category,
   image,
+  keyTakeaways = [],
   openGraph,
   canonical,
   relatedPosts = [],
@@ -86,6 +97,18 @@ export default function BlogPostLayout({
   const hasToc = toc.length > 0
   const activePrismImpact =
     prismImpact && prismImpact.forceRender !== false ? prismImpact : null
+
+  const publishedLabel = publishedDate || new Intl.DateTimeFormat(undefined, {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+  }).format(new Date(date))
+  const updatedLabel = updatedDate || undefined
+  const isUpdated = Boolean(updatedLabel && updatedLabel !== publishedLabel)
+  const readingTime =
+    typeof readingTimeMinutes === 'number' && readingTimeMinutes > 0
+      ? `${readingTimeMinutes} min read`
+      : undefined
 
   const isExternalLink = (href: string) => /^https?:\/\//i.test(href)
 
@@ -128,12 +151,20 @@ export default function BlogPostLayout({
                       </span>
                       <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
                         <time dateTime={new Date(date).toISOString()}>
-                          {new Intl.DateTimeFormat(undefined, {
-                            year: 'numeric',
-                            month: 'short',
-                            day: 'numeric',
-                          }).format(new Date(date))}
+                          {publishedLabel}
                         </time>
+                        {isUpdated ? (
+                          <>
+                            <span className="text-border/70" aria-hidden>
+                              &middot;
+                            </span>
+                            <span>Updated {updatedLabel}</span>
+                          </>
+                        ) : null}
+                        <span className="text-border/70" aria-hidden>
+                          &middot;
+                        </span>
+                        <span>{readingTime || '1 min read'}</span>
                         <span className="text-border/70" aria-hidden>
                           &middot;
                         </span>
@@ -149,8 +180,12 @@ export default function BlogPostLayout({
                       {description}
                     </p>
                     <div className="mt-5 flex flex-wrap items-center justify-start gap-3">
+                      <p className="text-xs uppercase tracking-[0.16em] text-muted-foreground">
+                        share this post
+                      </p>
                       <CopyBlogMarkdownButton slug={slug} />
                       <BlogShareIcons url={shareUrl} title={title} />
+                      <BlogReadingModeToggle />
                     </div>
                   </div>
                 </header>
@@ -175,6 +210,21 @@ export default function BlogPostLayout({
                     </BlogPostErrorBoundary>
                   </div>
                 )}
+
+                {keyTakeaways.length > 0 ? (
+                  <section className="mt-12 rounded-2xl border border-border/60 bg-card/40 p-6 sm:p-8">
+                    <h2 className="text-2xl font-bold tracking-tight">Key takeaways</h2>
+                    <ul className="mt-4 list-disc space-y-2 pl-5 text-sm text-muted-foreground">
+                      {keyTakeaways.map((takeaway) => (
+                        <li key={takeaway}>
+                          {takeaway}
+                        </li>
+                      ))}
+                    </ul>
+                  </section>
+                ) : null}
+
+                <BlogPostFeedback slug={slug} />
 
                 {activePrismImpact ? (
                   <section className="mt-16 rounded-2xl border border-border/60 bg-card/40 p-6 sm:p-8">
@@ -312,6 +362,7 @@ export default function BlogPostLayout({
                     className="border-t border-border/60"
                   />
                 </div>
+                <BlogBackToTopButton />
               </article>
             </div>
           </div>

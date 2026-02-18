@@ -11,29 +11,57 @@ jest.mock("next/navigation", () => ({
 
 jest.mock("next/link", () => ({
   __esModule: true,
-  default: ({ href, children, ...props }: { href: string | { pathname?: string }; children: React.ReactNode; [key: string]: unknown }) => (
-    <a href={typeof href === "string" ? href : href?.pathname ?? ""} {...props}>
-      {children}
-    </a>
-  ),
+  default: function MockNextLink({
+    href,
+    children,
+    ...props
+  }: {
+    href: string | { pathname?: string }
+    children: React.ReactNode
+    [key: string]: unknown
+  }) {
+    return (
+      <a href={typeof href === "string" ? href : href?.pathname ?? ""} {...props}>
+        {children}
+      </a>
+    )
+  },
 }))
 
 jest.mock("next/script", () => ({
   __esModule: true,
-  default: ({ id, children }: { id?: string; children?: React.ReactNode }) =>
-    <script id={id}>{children}</script>,
+  default: function MockNextScript({ id, children }: { id?: string; children?: React.ReactNode }) {
+    return <script id={id}>{children}</script>
+  },
 }))
 
-jest.mock("@/components/navbar", () => () => <header data-testid="navbar-mock" />)
-jest.mock("@/components/footer", () => () => <footer data-testid="footer-mock" />)
-jest.mock("@/components/scroll-to-top", () => () => <div data-testid="scroll-to-top-mock" />)
+jest.mock("@/components/navbar", () => ({
+  __esModule: true,
+  default: function MockNavbar() {
+    return <header data-testid="navbar-mock" />
+  },
+}))
+jest.mock("@/components/footer", () => ({
+  __esModule: true,
+  default: function MockFooter() {
+    return <footer data-testid="footer-mock" />
+  },
+}))
+jest.mock("@/components/scroll-to-top", () => ({
+  __esModule: true,
+  default: function MockScrollToTop() {
+    return <div data-testid="scroll-to-top-mock" />
+  },
+}))
 jest.mock("@/components/reveal-on-scroll", () => ({
   __esModule: true,
-  default: ({ children }: { children: React.ReactNode }) => <>{children}</>,
+  default: function MockRevealOnScroll({ children }: { children: React.ReactNode }) {
+    return <>{children}</>
+  },
 }))
 jest.mock("@/components/faq-section", () => ({
   __esModule: true,
-  default: ({
+  default: function MockFaqSection({
     title,
     subtitle,
     items,
@@ -41,23 +69,31 @@ jest.mock("@/components/faq-section", () => ({
     title: string
     subtitle: string
     items: Array<{ question: string; answer: string }>
-  }) => (
-    <section>
-      <h2>{title}</h2>
-      <p>{subtitle}</p>
-      {items.map((item) => (
-        <div key={item.question}>
-          <h3>{item.question}</h3>
-          <p>{item.answer}</p>
-        </div>
-      ))}
-    </section>
-  ),
+  }) {
+    return (
+      <section>
+        <h2>{title}</h2>
+        <p>{subtitle}</p>
+        {items.map((item) => (
+          <div key={item.question}>
+            <h3>{item.question}</h3>
+            <p>{item.answer}</p>
+          </div>
+        ))}
+      </section>
+    )
+  },
 }))
 jest.mock("@/components/schema-markup", () => ({
-  FAQSchema: () => null,
-  HowToSchema: () => null,
-  ServiceSchema: () => null,
+  FAQSchema: function MockFAQSchema() {
+    return null
+  },
+  HowToSchema: function MockHowToSchema() {
+    return null
+  },
+  ServiceSchema: function MockServiceSchema() {
+    return null
+  },
 }))
 
 describe("AEO landing and thank-you routes", () => {

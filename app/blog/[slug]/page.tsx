@@ -7,6 +7,11 @@ import { renderPost } from '@/lib/mdx'
 import { getMdxToc } from '@/lib/mdx-toc'
 import { getPrismImpactForPost } from '@/lib/prism-blog-impact'
 import { buildAbsoluteTitle, normalizeDescription } from '@/lib/seo/rules'
+import {
+  getOutboundLinkRulesForPost,
+  type BlogOutboundLinkProfile,
+} from '@/lib/blog-inline-link-rules'
+import { injectOutboundLinks } from '@/lib/blog-inline-link-injector'
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 
@@ -15,6 +20,42 @@ interface PageProps {
 }
 
 export const dynamicParams = false
+
+const WORDS_PER_MINUTE = 225
+
+const formatReadableDate = (value: string) => {
+  const date = new Date(value)
+  if (Number.isNaN(date.getTime())) return value
+  return new Intl.DateTimeFormat(undefined, {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  }).format(date)
+}
+
+const stripMarkdown = (value: string) =>
+  value
+    .replace(/```[\s\S]*?```/g, " ")
+    .replace(/!\[[^\]]*\]\([^)]+\)/g, " ")
+    .replace(/\[[^\]]*\]\([^)]+\)/g, " ")
+    .replace(/#+\s+/g, " ")
+    .replace(/[`*_>{}/[\]().,:;]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim()
+
+const estimateReadingMinutes = (content: string) => {
+  if (!content) return 1
+  const words = stripMarkdown(content).split(/\s+/).filter(Boolean)
+  return Math.max(1, Math.ceil(words.length / WORDS_PER_MINUTE))
+}
+
+function deriveTakeawaysFromToc(toc: Array<{ id: string; label: string; level: number }>) {
+  return toc
+    .filter((item) => item.level === 2)
+    .map((item) => item.label.trim())
+    .filter(Boolean)
+    .slice(0, 4)
+}
 
 export async function generateStaticParams() {
   const posts = await getAllPosts()
@@ -99,11 +140,23 @@ export default async function BlogPostPage({ params }: PageProps) {
   if (!post) notFound()
   const { frontmatter } = post
   const toc = await getMdxToc(post.content)
-  const content = await renderPost(slug)
+  const outboundProfile: BlogOutboundLinkProfile =
+    getOutboundLinkRulesForPost({
+      slug,
+      category: frontmatter.category,
+      title: frontmatter.title,
+      content: post.content,
+    })
+  const enrichedContent = injectOutboundLinks(post.content, outboundProfile)
+  const readingTimeMinutes = estimateReadingMinutes(post.content)
+  const updatedDate = frontmatter.openGraph?.modifiedTime
+  const publishedDate = frontmatter.openGraph?.publishedTime || frontmatter.date
+  const content = await renderPost(slug, { content: enrichedContent })
   const allPosts = (await getAllPosts()) ?? []
   const relatedPosts = allPosts
     .filter((p) => p.slug !== slug)
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+  const keyTakeaways = deriveTakeawaysFromToc(toc)
   const prismImpact = getPrismImpactForPost({
     slug,
     category: frontmatter.category,
@@ -123,6 +176,9 @@ export default async function BlogPostPage({ params }: PageProps) {
       author={frontmatter.author}
       description={frontmatter.description}
       date={frontmatter.date}
+      publishedDate={formatReadableDate(publishedDate)}
+      updatedDate={updatedDate ? formatReadableDate(updatedDate) : undefined}
+      readingTimeMinutes={readingTimeMinutes}
       category={frontmatter.category}
       image={frontmatter.image}
       openGraph={frontmatter.openGraph}
@@ -130,6 +186,7 @@ export default async function BlogPostPage({ params }: PageProps) {
       relatedPosts={prioritized.slice(0, 3)}
       toc={toc}
       howTo={frontmatter.howTo}
+      keyTakeaways={keyTakeaways}
       prismImpact={prismImpact ?? undefined}
     >
       {content}

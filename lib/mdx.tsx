@@ -88,8 +88,16 @@ const mdxComponents = {
  * Safely renders MDX content using next-mdx-remote/rsc
  * This replaces the dangerous dangerouslySetInnerHTML approach
  */
-export async function renderPost(slug: string) {
-  const post = await getPost(slug)
+type RenderPostOptions = {
+  content?: string
+}
+
+export async function renderPost(slug: string, options?: RenderPostOptions) {
+  const post = options?.content
+    ? {
+        content: options.content,
+      }
+    : await getPost(slug)
 
   if (!post || typeof post.content !== "string") {
     console.error(`[MDXLib] Post "${slug}" not found or content is invalid for renderPost.`)
