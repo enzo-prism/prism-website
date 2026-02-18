@@ -78,19 +78,37 @@ export default function WallOfLoveClientPage() {
                 sizes="(max-width: 768px) 100vw, 1200px"
               />
             ) : (
-              <video
-                autoPlay
-                loop
-                muted
-                playsInline
-                preload="metadata"
-                poster={PLANET_POSTER_SRC}
-                aria-hidden="true"
-                className="absolute inset-0 h-full w-full object-cover object-[center_80%] opacity-100 [image-rendering:pixelated]"
-                onError={() => setVideoFailed(true)}
-              >
-                <source src={PLANET_VIDEO_SRC} type="video/mp4" />
-              </video>
+              <>
+                <Image
+                  src={PLANET_POSTER_SRC}
+                  alt="ASCII planet animation preview"
+                  fill
+                  unoptimized
+                  className="hero-loop-touch-poster absolute inset-0 h-full w-full object-cover object-[center_80%] opacity-100 [image-rendering:pixelated] sm:hidden"
+                  sizes="100vw"
+                />
+                <video
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  webkit-playsinline="true"
+                  x-webkit-airplay="deny"
+                  controls={false}
+                  disablePictureInPicture
+                  disableRemotePlayback
+                  tabIndex={-1}
+                  draggable={false}
+                  preload="metadata"
+                  poster={PLANET_POSTER_SRC}
+                  aria-hidden="true"
+                  data-hero-loop="true"
+                  className="hero-loop-video pointer-events-none absolute inset-0 hidden h-full w-full object-cover object-[center_80%] opacity-100 [image-rendering:pixelated] sm:block"
+                  onError={() => setVideoFailed(true)}
+                >
+                  <source src={PLANET_VIDEO_SRC} type="video/mp4" />
+                </video>
+              </>
             )}
 
             <div

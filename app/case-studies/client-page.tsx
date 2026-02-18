@@ -27,7 +27,7 @@ export default function CaseStudiesPage() {
                 alt="ASCII ocean animation preview"
                 fill
                 unoptimized
-                className="absolute inset-0 h-full w-full object-cover opacity-45 sm:hidden"
+                className="hero-loop-touch-poster absolute inset-0 h-full w-full object-cover opacity-45 sm:hidden"
                 sizes="100vw"
               />
               <video
@@ -35,6 +35,8 @@ export default function CaseStudiesPage() {
                 loop
                 muted
                 playsInline
+                webkit-playsinline="true"
+                x-webkit-airplay="deny"
                 preload="metadata"
                 poster={CASE_STUDIES_HERO_POSTER}
                 aria-hidden="true"
@@ -43,7 +45,8 @@ export default function CaseStudiesPage() {
                 disableRemotePlayback
                 tabIndex={-1}
                 draggable={false}
-                className="absolute inset-0 hidden h-full w-full object-cover opacity-40 sm:block"
+                data-hero-loop="true"
+                className="hero-loop-video pointer-events-none absolute inset-0 hidden h-full w-full object-cover opacity-40 sm:block"
               >
                 <source src={CASE_STUDIES_HERO_VIDEO} type="video/mp4" />
               </video>

@@ -62,16 +62,32 @@ export default function OfficeTeamPhotographyPage() {
       <Navbar />
       <main className="bg-white text-neutral-900">
         <section className="relative overflow-hidden border-b border-neutral-200 text-white">
-          <div className="absolute inset-0">
+          <div
+            className="absolute inset-0"
+            style={{
+              backgroundImage:
+                "url('https://res.cloudinary.com/dhqpqfw6w/image/upload/v1761853323/thumbnail_yscklx.webp')",
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+            }}
+          >
             <video
-              className="h-full w-full object-cover"
+              className="hero-loop-video pointer-events-none hidden h-full w-full object-cover sm:block"
               src="https://res.cloudinary.com/dhqpqfw6w/video/upload/v1761852734/models_2_x9gxtj.mp4"
               autoPlay
               loop
               muted
               playsInline
+              webkit-playsinline="true"
+              x-webkit-airplay="deny"
+              controls={false}
+              disablePictureInPicture
+              disableRemotePlayback
+              tabIndex={-1}
+              draggable={false}
               poster="https://res.cloudinary.com/dhqpqfw6w/image/upload/v1761853323/thumbnail_yscklx.webp"
               aria-hidden="true"
+              data-hero-loop="true"
             />
             <div className="absolute inset-0 bg-neutral-950/80" aria-hidden />
           </div>

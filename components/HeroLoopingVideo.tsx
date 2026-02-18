@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Image from "next/image"
 
 import { cn } from "@/lib/utils"
@@ -34,6 +34,23 @@ export default function HeroLoopingVideo({
   const [isPosterLoaded, setIsPosterLoaded] = useState(false)
   const [isVideoReady, setIsVideoReady] = useState(false)
   const [hasVideoError, setHasVideoError] = useState(false)
+  const [isTouchDevice, setIsTouchDevice] = useState(false)
+
+  useEffect(() => {
+    if (typeof window === "undefined") return
+
+    const mediaQuery = window.matchMedia("(hover: none), (pointer: coarse)")
+    const handleChange = () => {
+      setIsTouchDevice(mediaQuery.matches)
+    }
+
+    handleChange()
+
+    mediaQuery.addEventListener("change", handleChange)
+    return () => mediaQuery.removeEventListener("change", handleChange)
+  }, [])
+
+  const shouldRenderVideo = !isTouchDevice && !hasVideoError
 
   return (
     <div
@@ -46,7 +63,7 @@ export default function HeroLoopingVideo({
         <div
           className={cn(
             "pointer-events-none absolute inset-0 z-20 overflow-hidden transition-opacity duration-700",
-            isVideoReady && !hasVideoError ? "opacity-0" : "opacity-100"
+            isVideoReady && shouldRenderVideo ? "opacity-0" : "opacity-100"
           )}
         >
           <Image
@@ -61,10 +78,10 @@ export default function HeroLoopingVideo({
           {!isPosterLoaded && <div className="absolute inset-0 animate-pulse bg-neutral-200" aria-hidden />}
         </div>
 
-        {!hasVideoError && (
+        {shouldRenderVideo && (
           <video
             className={cn(
-              "absolute inset-0 z-10 h-full w-full object-cover transition-opacity duration-700",
+              "hero-loop-video pointer-events-none absolute inset-0 z-10 hidden h-full w-full object-cover transition-opacity duration-700 sm:block",
               isVideoReady ? "opacity-100" : "opacity-0",
               videoClassName
             )}
@@ -72,9 +89,17 @@ export default function HeroLoopingVideo({
             loop
             muted
             playsInline
+            webkit-playsinline="true"
+            x-webkit-airplay="deny"
+            controls={false}
+            disablePictureInPicture
+            disableRemotePlayback
+            tabIndex={-1}
+            draggable={false}
             poster={posterSrc}
             preload="auto"
             aria-hidden="true"
+            data-hero-loop="true"
             onCanPlay={() => setIsVideoReady(true)}
             onLoadedData={() => setIsVideoReady(true)}
             onError={() => {

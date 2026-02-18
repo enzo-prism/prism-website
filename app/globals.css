@@ -59,6 +59,29 @@ video[aria-hidden="true"] {
   pointer-events: none;
 }
 
+.hero-loop-video {
+  pointer-events: none;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+
+video[data-hero-loop="true"] {
+  touch-action: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+@media (hover: none), (pointer: coarse) {
+  .hero-loop-video {
+    display: none !important;
+  }
+
+  .hero-loop-touch-poster {
+    display: block !important;
+  }
+}
+
 /* Ensure no safe area padding interferes on mobile */
 @supports (padding: max(0px)) {
   body {
