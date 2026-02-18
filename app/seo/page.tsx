@@ -451,7 +451,14 @@ export default async function SeoPage() {
               >
                 ai seo services
               </Link>
-              . if you’re looking for a focused sprint, see{" "}
+              , get a quick diagnostic with{" "}
+              <Link
+                href="/aeo"
+                className="font-semibold lowercase text-neutral-900 underline decoration-neutral-300 underline-offset-4"
+              >
+                free aeo assessment
+              </Link>
+              , or if you’re looking for a focused sprint, see{" "}
               <Link
                 href="/offers/ai-seo-boost"
                 className="font-semibold lowercase text-neutral-900 underline decoration-neutral-300 underline-offset-4"

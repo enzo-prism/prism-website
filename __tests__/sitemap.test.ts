@@ -10,6 +10,7 @@ describe("sitemap", () => {
     expect(urls).toEqual(expect.arrayContaining([
       "https://www.design-prism.com",
       "https://www.design-prism.com/services",
+      "https://www.design-prism.com/aeo",
       "https://www.design-prism.com/websites",
       "https://www.design-prism.com/ads",
       "https://www.design-prism.com/local-listings",
@@ -35,5 +36,6 @@ describe("sitemap", () => {
 
     expect(urls.some((url) => url.includes("/library/"))).toBe(true)
     expect(urls.some((url) => url.startsWith("https://www.design-prism.com/podcast/"))).toBe(true)
+    expect(urls.some((url) => url.endsWith("/aeo-thank-you"))).toBe(false)
   })
 })

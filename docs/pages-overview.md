@@ -232,3 +232,16 @@ Each uses card-based layouts: confirmation message + kickoff-call CTA + contact 
 - `components/video-player.tsx`: shared CTA/VSL embed with structured-data support. Pass poster + schema props so every marketing video emits valid `VideoObject` JSON-LD.
 
 Keeping these files tidy makes copy refreshes and landing-page experiments fast.
+
+## AEO Assessment Landing Page (`/aeo`)
+
+- Added page route `/aeo` with dedicated lead capture and an outlined AEO framework (`content`, `technical`, `authority`, `measurement`) plus FAQs.
+- Form route wiring uses `components/forms/AeoAssessmentForm.tsx` (`email` + `website`, Formspree POST, dedicated `_redirect` target `/aeo-thank-you`).
+- Thank-you route is `/aeo-thank-you` and is excluded from sitemap indexing via `app/sitemap.ts` (`NOINDEX_ROUTES`).
+- Discoverability touchpoints added:
+  - `/offers` card link to `/aeo`
+  - inline link from `/ai-seo-services`
+  - inline link from `/seo`
+- SEO/schema notes:
+  - `buildRouteMetadata` is used for canonical and OG metadata.
+  - `ServiceSchema` + `HowToSchema` + `FAQSchema` are present on `/aeo` for structured visibility.

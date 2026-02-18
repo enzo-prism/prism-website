@@ -24,10 +24,7 @@ const { handleSubmit, getError, isSubmitting } = useFormValidation({
 - `components/forms/ContactForm.tsx`
 - `components/forms/ScalingRoadmapForm.tsx`
 - `components/ai-website-launch/AiWebsiteLaunchForm.tsx` (inline card form for the AI launch offer; embedded in `app/ai-website-launch/client-page.tsx` and wired with `useFormValidation`)
-
-The `/get-started` page now uses an embedded Notion calendar scheduler instead of a Formspree form. The embed sizing lives in `components/BookDemoEmbed.tsx` and uses a width-based height map (>=1024: 776px, >=770: 1027px, <770: 1925px, plus a small buffer) to avoid nested iframe scrolling. On mobile, the embed is allowed to bleed edge-to-edge so the scheduler isn't clipped.
-
-All Formspree-backed forms use the hook above so users always land on `/thank-you` or `/analysis-thank-you`. They already include `_subject` + `_gotcha` honeypot fields; reuse those when cloning.
+- `components/forms/AeoAssessmentForm.tsx`
 
 ## Adding a new form
 1. Create a component under `components/forms/`.
@@ -35,9 +32,32 @@ All Formspree-backed forms use the hook above so users always land on `/thank-yo
 3. On success, push to one of the thank-you routes.
 4. Add your form component to the relevant route page.
 
+## New flow: `/aeo` + free AEO assessment
+
+`components/forms/AeoAssessmentForm.tsx` handles the free AEO assessment capture and is embedded on `app/aeo/page.tsx`.
+
+- Required payload fields:
+  - `email` (`type="email"`, required)
+  - `website` (`type="url"`, required)
+- Optional payload metadata fields:
+  - `_subject` (`New AEO assessment request`)
+  - `_redirect` (`/aeo-thank-you`)
+  - `form_name` (`aeo_assessment`)
+  - `_gotcha` (honeypot trap)
+- Endpoint strategy:
+  - `NEXT_PUBLIC_AEO_FORM_ENDPOINT` (falls back to `https://formspree.io/f/xldarokj`)
+- Success flow:
+  - POST via `fetch(form.action, { method: 'POST', headers: { Accept: 'application/json' }, body: new FormData(form) })`
+  - On success, `router.push("/aeo-thank-you")`
+  - On failure, inline error state remains visible and user stays on the form
+- Analytics:
+  - `trackFormSubmission("aeo_assessment", "hero_form")` on successful submit
+  - `trackCTAClick("get free aeo assessment", "aeo hero form")` on the submit button click
+
 ## Thank-you pages
 - `/thank-you` ([`app/thank-you/page.tsx`](../app/thank-you/page.tsx)) — used by Get Started + Contact.
 - `/analysis-thank-you` ([`app/analysis-thank-you/page.tsx`](../app/analysis-thank-you/page.tsx)) — used by the Free Analysis form.
+- `/aeo-thank-you` ([`app/aeo-thank-you/page.tsx`](../app/aeo-thank-you/page.tsx)) — used by the AEO assessment form.
 
 Each page is intentionally minimal: confirmation card, kickoff-call CTA, and contact info.
 These routes are noindex/no-follow and **not** blocked in `robots.txt` so search engines can read the meta noindex directive.

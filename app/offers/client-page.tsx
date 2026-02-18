@@ -36,6 +36,15 @@ const offersData: Offer[] = [
     link: "/offers/summer-website-makeover",
     ctaText: "view makeover details",
   },
+  {
+    id: "aeo-assessment",
+    title: "free aeo assessment",
+    description:
+      "get a free assessment of your website’s AI answer-engine readiness with focused recommendations for pages, technical setup, and trust signals.",
+    gradientType: "ai-seo",
+    link: "/aeo",
+    ctaText: "get your aeo assessment",
+  },
 ]
 
 export default function OffersClientPage() {

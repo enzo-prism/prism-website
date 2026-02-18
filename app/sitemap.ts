@@ -24,6 +24,7 @@ const NOINDEX_ROUTES = new Set([
   "/book-a-shoot/thank-you",
   "/pricing/thank-you",
   "/thank-you",
+  "/aeo-thank-you",
   "/thanks",
   "/thanks-call",
 ])
@@ -86,6 +87,7 @@ async function getNestedRouteSlugs(routeDir: string): Promise<string[]> {
 function segmentRoutes(base: string): StaticRouteInput[] {
   const segmentSlugs = [
     "ai",
+    "aeo",
     "ai-website-launch",
     "apps",
     "book-a-shoot",

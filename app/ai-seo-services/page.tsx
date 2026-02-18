@@ -165,6 +165,10 @@ export default function AiSeoServicesPage() {
               <Link href="/seo" className="font-semibold text-neutral-900 underline underline-offset-4">
                 seo overview
               </Link>
+              . for a fast diagnosis before choosing a plan, check{" "}
+              <Link href="/aeo" className="font-semibold text-neutral-900 underline underline-offset-4">
+                free aeo assessment
+              </Link>
               . need a baseline first?{" "}
               <Link href="/seo/audit" className="font-semibold text-neutral-900 underline underline-offset-4">
                 seo audit service
