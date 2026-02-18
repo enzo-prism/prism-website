@@ -30,6 +30,15 @@ Key details:
 - Use the `_subject` hidden field for inbox filtering and `_gotcha` as the honeypot.
 - When adding a new Formspree endpoint, import `useFormValidation({ onValidSubmit })` and only navigate after the request returns `response.ok`.
 
+### AEO assessment landing regression tests
+
+- The AEO funnel adds a dedicated endpoint and dedicated thank-you route:
+  - `/aeo` page form submit target: `"/aeo-thank-you"`
+  - `AeoAssessmentForm` payload fields: `email`, `website`, `_subject`, `_redirect`, `form_name`, `_gotcha`
+- Run this focused command before merging any AEO landing or form edits:
+  - `pnpm exec jest __tests__/aeo-form.test.tsx __tests__/aeo-pages.test.tsx __tests__/aeo-discoverability.test.tsx __tests__/sitemap.test.ts`
+- If conversion tracking changed (`trackCTAClick`/`trackFormSubmission` args), also verify with any available analytics smoke test you run locally.
+
 ## Thank-You Screens
 
 Custom confirmation routes live in `app/thank-you/` and `app/analysis-thank-you/`. Each page is a simple card layout (hero card, CTA card, contact info). If you add new flows, point them to one of these routes for consistency.

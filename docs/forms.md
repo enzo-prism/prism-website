@@ -54,6 +54,40 @@ const { handleSubmit, getError, isSubmitting } = useFormValidation({
   - `trackFormSubmission("aeo_assessment", "hero_form")` on successful submit
   - `trackCTAClick("get free aeo assessment", "aeo hero form")` on the submit button click
 
+### Codex handoff: AEO form contracts + validation tests
+
+- Required payload contract:
+  - `email` (`type="email"`, required)
+  - `website` (`type="url"`, required)
+- Hidden metadata contract:
+  - `_subject` = `New AEO assessment request`
+  - `_redirect` = `/aeo-thank-you`
+  - `form_name` = `aeo_assessment`
+  - `_gotcha` (honeypot)
+- Endpoint contract:
+  - Dedicated endpoint via `NEXT_PUBLIC_AEO_FORM_ENDPOINT` (fallback to `https://formspree.io/f/xldarokj`)
+- Success contract:
+  - `fetch` must send `Accept: application/json`
+  - On `response.ok`, route navigation must be `"/aeo-thank-you"`
+
+### Recommended tests to run for future edits
+
+- `pnpm exec jest __tests__/aeo-form.test.tsx`
+- `pnpm exec jest __tests__/aeo-pages.test.tsx`
+- `pnpm exec jest __tests__/aeo-discoverability.test.tsx`
+- `pnpm exec jest __tests__/sitemap.test.ts`
+
+Success criteria from these tests:
+- Form renders both required fields and hidden metadata.
+- Blank email + malformed URL block submit and surface native-style inline validation.
+- Valid submit includes expected form fields in request payload and redirects to `/aeo-thank-you`.
+- Failed network call keeps user on page with inline failure copy.
+- `/aeo` metadata includes intended SEO intent (title + description + canonical).
+- `/aeo` content includes framework, evidence, FAQ, and CTA wiring.
+- `/aeo-thank-you` returns noindex metadata.
+- `/offers`, `/ai-seo-services`, `/seo` include discoverability links to `/aeo`.
+- Sitemap includes `/aeo` and excludes `/aeo-thank-you`.
+
 ## Thank-you pages
 - `/thank-you` ([`app/thank-you/page.tsx`](../app/thank-you/page.tsx)) — used by Get Started + Contact.
 - `/analysis-thank-you` ([`app/analysis-thank-you/page.tsx`](../app/analysis-thank-you/page.tsx)) — used by the Free Analysis form.
