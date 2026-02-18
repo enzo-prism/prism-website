@@ -53,6 +53,117 @@ function slugify(value: string): string {
   )
 }
 
+function normalizeHeadingForComparison(value: string): string {
+  return value
+    .toLowerCase()
+    .replace(/\[[^\]]+]\([^)]+\)/g, (match) =>
+      match.replace(/^\[([^\]]+)]\([^)]+\)$/, '$1'),
+    )
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/[*_`~]/g, '')
+    .replace(/[^a-z0-9\s]+/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim()
+}
+
+function isDuplicateTitleHeading(heading: string, title: string): boolean {
+  if (!heading || !title) return false
+  if (heading === title) return true
+
+  const MIN_PREFIX_MATCH_LENGTH = 18
+  if (heading.length >= MIN_PREFIX_MATCH_LENGTH && title.startsWith(`${heading} `)) {
+    return true
+  }
+
+  if (title.length >= MIN_PREFIX_MATCH_LENGTH && heading.startsWith(`${title} `)) {
+    return true
+  }
+
+  return false
+}
+
+function stripDuplicateLeadHeading(content: string, titles: string[]): string {
+  const normalizedTitles = Array.from(
+    new Set(
+      titles
+        .filter((value): value is string => typeof value === 'string')
+        .map((value) => normalizeHeadingForComparison(value))
+        .filter(Boolean),
+    ),
+  )
+
+  if (normalizedTitles.length === 0) return content
+
+  const lines = content.split(/\r?\n/)
+  let inCodeFence = false
+  const maxScanLines = Math.min(lines.length, 160)
+
+  for (let index = 0; index < maxScanLines; index += 1) {
+    const trimmed = lines[index].trim()
+    if (trimmed.startsWith('```')) {
+      inCodeFence = !inCodeFence
+      continue
+    }
+    if (inCodeFence) continue
+
+    const headingMatch = lines[index].match(/^#{1,6}\s+(.+?)\s*#*\s*$/)
+    if (!headingMatch) continue
+
+    const normalizedHeading = normalizeHeadingForComparison(headingMatch[1])
+    if (!normalizedHeading) continue
+
+    const shouldStrip = normalizedTitles.some((title) =>
+      isDuplicateTitleHeading(normalizedHeading, title),
+    )
+
+    if (!shouldStrip) continue
+
+    lines.splice(index, 1)
+
+    while (
+      index < lines.length &&
+      lines[index]?.trim() === '' &&
+      index > 0 &&
+      lines[index - 1]?.trim() === ''
+    ) {
+      lines.splice(index, 1)
+    }
+
+    return lines.join('\n')
+  }
+
+  return content
+}
+
+function demoteMarkdownBodyH1(content: string): string {
+  const lines = content.split(/\r?\n/)
+  let inCodeFence = false
+
+  for (let index = 0; index < lines.length; index += 1) {
+    const line = lines[index]
+    const trimmed = line.trim()
+
+    if (trimmed.startsWith('```')) {
+      inCodeFence = !inCodeFence
+      continue
+    }
+
+    if (inCodeFence) continue
+
+    const h1Match = line.match(/^(\s*)#\s+(.+)$/)
+    if (!h1Match) continue
+
+    lines[index] = `${h1Match[1]}## ${h1Match[2]}`
+  }
+
+  return lines.join('\n')
+}
+
+function normalizeBlogContent(content: string, titles: string[]): string {
+  const withoutDuplicateLeadHeading = stripDuplicateLeadHeading(content, titles)
+  return demoteMarkdownBodyH1(withoutDuplicateLeadHeading)
+}
+
 function normalizeCodexCasing<T>(value: T): T {
   if (typeof value === 'string') {
     return normalizeCodexWord(value) as T
@@ -160,7 +271,10 @@ export async function getPost(
     const rawFileContent = await fs.readFile(filePath, 'utf8')
     const { data, content } = matter(rawFileContent)
     const normalizedData = normalizeCodexCasing(data)
-    const normalizedContent = normalizeCodexWord(content)
+    const normalizedContent = normalizeBlogContent(normalizeCodexWord(content), [
+      normalizedData.h1Title,
+      normalizedData.title,
+    ])
 
     if (
       !normalizedData.title ||
