@@ -61,7 +61,7 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
       heroImage: "https://www.design-prism.com/dr-wong-polaroids.png",
       heroVideoId: "HrksJeYb02Q",
       datePublished: "2025-01-15T00:00:00.000Z",
-      dateModified: "2025-01-15T00:00:00.000Z",
+      dateModified: "2026-02-19T00:00:00.000Z",
       outcomes: [
         "The M&A transition was supported by a clear, story-driven online presence rather than leaving patients to guess what happened.",
         "The practice now runs on a modern dental website with strong SEO foundations and clean UX.",

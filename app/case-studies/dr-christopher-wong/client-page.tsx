@@ -7,7 +7,7 @@ import Link from "next/link"
 const linkClassName =
   "font-medium text-foreground underline decoration-border/60 underline-offset-4 hover:decoration-border"
 const CASE_STUDY_TITLE = "case study: dr. wong — de-risking a dental m&a in palo alto with ai-powered marketing"
-const CASE_STUDY_DESCRIPTION = "from ownership transition risk to a future-proof, ai-powered dental practice in palo alto."
+const CASE_STUDY_DESCRIPTION = "measured website + SEO + ads outcomes from chris wong dds after a dental practice transition."
 const CLIENT_SITE = "https://www.chriswongdds.com"
 
 export default function ChristopherWongCaseStudy() {
@@ -414,6 +414,36 @@ export default function ChristopherWongCaseStudy() {
               <li>acquisition moved from passive to intentional (seo + ads working together)</li>
               <li>the tech stack now supports continuous improvement rather than “big risky rebuilds”</li>
             </ul>
+
+            <h2>current performance snapshot (30-day view)</h2>
+            <p>last 30 days: 2026-01-19 → 2026-02-17 (measurement window used for this update)</p>
+            <ul>
+              <li><strong>website sessions:</strong> 258 (down 20.1% vs prior 30 days)</li>
+              <li><strong>users:</strong> 221 (down 16.0%)</li>
+              <li><strong>pageviews:</strong> 431 (down 16.5%)</li>
+              <li><strong>bounce rate:</strong> 65.1% (+0.6% vs prior period)</li>
+              <li><strong>avg session duration:</strong> 94.4s (-3.1%)</li>
+              <li><strong>top landing pages:</strong> / (191), /schedule (58), /about (71)</li>
+            </ul>
+
+            <h3>search visibility (google search console)</h3>
+            <p>organic demand remains branded and trust-search heavy, with clear opportunity in service-intent page optimization.</p>
+            <ul>
+              <li><strong>clicks:</strong> 48 (-4.0%)</li>
+              <li><strong>impressions:</strong> 2,740 (-6.3%)</li>
+              <li><strong>CTR:</strong> 1.75%</li>
+              <li><strong>avg position:</strong> 21.8</li>
+              <li><strong>top queries:</strong> christopher wong dds (7 clicks, pos 2.5), chris wong dds (4 clicks, pos 2.5), kris hamamoto (3 clicks, pos 1.0)</li>
+            </ul>
+
+            <h3>paid acquisition (google ads)</h3>
+            <p>campaign benchmark from the latest active campaign audit:</p>
+            <ul>
+              <li><strong>Wong-DDS spend:</strong> $135.59</li>
+              <li><strong>conversions:</strong> 8</li>
+              <li><strong>cost / conversion:</strong> $16.95</li>
+              <li><strong>trend signal:</strong> stable, with policy and message-precision work still available before scaling</li>
+            </ul>
             <hr />
 
             <h2>what this means for other dental practices</h2>
@@ -504,7 +534,7 @@ export default function ChristopherWongCaseStudy() {
         url="https://www.design-prism.com/case-studies/dr-christopher-wong"
         imageUrl="https://www.design-prism.com/dr-wong-polaroids.png"
         datePublished="2025-01-15T00:00:00.000Z"
-        dateModified="2025-01-15T00:00:00.000Z"
+        dateModified="2026-02-19T00:00:00.000Z"
         clientName="Dr. Christopher B. Wong"
         outcome="patients feel less uncertainty, the practice looks modern, and the system becomes easier to improve"
       />
