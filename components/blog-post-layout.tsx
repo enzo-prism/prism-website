@@ -17,7 +17,6 @@ import { cn } from '@/lib/utils'
 import { toAbsoluteUrl } from '@/lib/url'
 import BlogBackToTopButton from '@/components/blog/blog-back-to-top'
 import BlogPostFeedback from '@/components/blog/blog-post-feedback'
-import BlogReadingModeToggle from '@/components/blog/blog-reading-mode-toggle'
 
 interface Props {
   children: React.ReactNode
@@ -185,7 +184,6 @@ export default function BlogPostLayout({
                       </p>
                       <CopyBlogMarkdownButton slug={slug} />
                       <BlogShareIcons url={shareUrl} title={title} />
-                      <BlogReadingModeToggle />
                     </div>
                   </div>
                 </header>

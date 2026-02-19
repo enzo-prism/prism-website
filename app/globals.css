@@ -1805,21 +1805,6 @@ input, textarea, select {
 
 .prose-blog a.mdx-cta { text-decoration: none; }
 
-.blog-reading-mode .prose-blog {
-  font-size: clamp(1.06rem, 1rem + 0.3vw, 1.28rem);
-  line-height: 2.05;
-  letter-spacing: 0.01em;
-}
-
-.blog-reading-mode .prose-blog p {
-  line-height: 2.12;
-  margin-bottom: 1.95rem;
-}
-
-.blog-reading-mode .prose-blog li {
-  line-height: 2;
-}
-
 .prose-blog blockquote {
   @apply border-l-4 border-neutral-300 dark:border-neutral-700 pl-6 py-1 my-9 italic;
   color: hsl(var(--muted-foreground));

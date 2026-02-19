@@ -157,14 +157,10 @@ When adjusting precision:
 
 This keeps editorial copy untouched while making outbound references consistent across all posts.
 
-## Reading and feedback enhancements
+## Feedback and utility enhancements
 
-Post-page UX includes two additional client-side interaction layers that run without editing MDX:
+Post-page UX includes this client-side interaction that runs without editing MDX:
 
-- Reading mode toggle
-  - `components/blog/blog-reading-mode-toggle.tsx` adds a compact `Reading mode` control in the article header.
-  - Toggle state is stored in `localStorage` (`prism-blog-reading-mode`).
-  - When enabled, the page adds `blog-reading-mode` to the root element; typography is adjusted via `app/globals.css` for improved scan speed and comfort.
 - Helpful feedback micro-interaction
   - `components/blog/blog-post-feedback.tsx` adds a post-level `Was this post helpful?` prompt.
   - Feedback is saved in `localStorage` per slug (`prism-blog-feedback-<slug>`) to prevent repeated prompts.
