@@ -13,7 +13,6 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import {
   ChartContainer,
   ChartTooltip,
@@ -26,116 +25,150 @@ import Link from "next/link"
 const linkClassName =
   "font-medium text-foreground underline decoration-border/60 underline-offset-4 hover:decoration-border"
 
-const CASE_STUDY_TITLE = "case study: dr. chris wong — rebuilding trust and growth after a practice handoff"
+const CASE_STUDY_TITLE = "case study: dr. chris wong — building a trusted growth system for a practice handoff"
 const CASE_STUDY_DESCRIPTION =
-  "a before-and-after case study of how prism supported a dental practice transition with measurable, data-backed growth systems."
+  "how prism rebuilt trust, aligned channels, and kept the growth stack disciplined from transition start to ongoing optimization."
 const CLIENT_SITE = "https://www.chriswongdds.com"
 
 const summaryCards = [
-  { label: "Growth framework", value: "3-phase", note: "trust → systems → scale" },
-  { label: "Measurement stack", value: "GA + GSC + Ads", note: "single operating rhythm" },
-  { label: "Partnership status", value: "ongoing", note: "monthly optimization continues" },
-  { label: "Client journey", value: "long-term", note: "we stay in the loop now" },
-]
-
-const phaseMap = [
   {
-    id: "before",
-    title: "Before Prism",
-    points: [
-      "ownership transition created uncertainty in patient trust signaling",
-      "local maps, website, and listing identity were mixed in discovery",
-      "growth data was captured in separate places, not one operating rhythm",
-    ],
+    label: "Partnership timeline",
+    value: "2+ years",
+    note: "long-cycle support from transition into ongoing growth optimization",
   },
   {
-    id: "during",
-    title: "How prism helped",
-    points: [
-      "made ownership messaging explicit and easy to understand",
-      "aligned local presence, review capture, and message systems to dr. wong",
-      "rebuilt core infrastructure so SEO, website, and acquisition could compound safely",
-    ],
+    label: "Data foundation",
+    value: "GA + GSC + Ads",
+    note: "multiple channels now measured in one operating rhythm",
   },
   {
-    id: "now",
-    title: "Now",
-    points: [
-      "online trust and discovery signals are coherent for transition patients",
-      "every change is tied to measurable outcomes from GA + GSC + ads",
-      "we continue tuning with Chris together for long-term growth",
-    ],
+    label: "Current phase",
+    value: "Scale-ready cleanup",
+    note: "stronger demand quality foundation; conversion stability focus",
+  },
+  {
+    label: "Outcome now",
+    value: "sustained progress",
+    note: "clear baseline, controlled growth, stronger signal quality",
   },
 ]
 
-const trendConfig = {
-  sessions: {
-    label: "sessions",
-    color: "var(--chart-1)",
+const lifecyclePhases = [
+  {
+    phase: "Handoff start",
+    period: "2024-10 → 2025",
+    points: [
+      "prism inherited a fragmented patient-facing story during ownership transition",
+      "local and review signals were inconsistent across website, profiles, and campaign messaging",
+      "analytics signals were available but disconnected from daily growth decisions",
+    ],
   },
-  users: {
-    label: "users",
-    color: "var(--chart-2)",
+  {
+    phase: "Foundation rebuild",
+    period: "2025-10 → 2025-12",
+    points: [
+      "ownership and trust framing were unified across core landing pages",
+      "search discoverability and content relevance were aligned to the practice identity",
+      "paid spend was kept controlled while channel quality was validated",
+    ],
   },
-  pageviews: {
-    label: "pageviews",
-    color: "var(--chart-3)",
+  {
+    phase: "Growth-ready discipline",
+    period: "2026-01 → 2026-02",
+    points: [
+      "full stack measurement and campaign quality checks became routine",
+      "search and ads baseline remained efficient but intentionally de-risked before scaling",
+      "prism remains partnered with Chris for monthly optimization and policy cleanup",
+    ],
   },
-} satisfies ChartConfig
+]
 
-const landingConfig = {
+const gaConfig = {
   sessions: {
     label: "Sessions",
     color: "var(--chart-1)",
   },
+  users: {
+    label: "Users",
+    color: "var(--chart-2)",
+  },
+  pageviews: {
+    label: "Pageviews",
+    color: "var(--chart-3)",
+  },
 } satisfies ChartConfig
 
-const queryConfig = {
+const gscConfig = {
   clicks: {
     label: "Clicks",
     color: "var(--chart-1)",
   },
+  position: {
+    label: "Avg position",
+    color: "var(--chart-2)",
+  },
 } satisfies ChartConfig
-const trendData = [
-  { period: "prior 30d", sessions: 323, users: 263, pageviews: 516 },
-  { period: "last 30d", sessions: 258, users: 221, pageviews: 431 },
+
+const lifecycleGaData = [
+  { period: "2025-09", sessions: 298, users: 250, pageviews: 512 },
+  { period: "2025-10", sessions: 357, users: 317, pageviews: 668 },
+  { period: "2025-11", sessions: 386, users: 302, pageviews: 750 },
+  { period: "2025-12", sessions: 341, users: 270, pageviews: 717 },
+  { period: "2026-01", sessions: 387, users: 329, pageviews: 608 },
+  { period: "2026-02", sessions: 103, users: 89, pageviews: 182 },
+]
+
+const gscLifecycleData = [
+  { period: "2024-10", clicks: 73, position: 36.9, ctr: "3.27%" },
+  { period: "2024-11", clicks: 83, position: 42.4, ctr: "2.60%" },
+  { period: "2024-12", clicks: 89, position: 43.0, ctr: "2.91%" },
+  { period: "2025-01", clicks: 102, position: 35.3, ctr: "3.88%" },
+  { period: "2025-02", clicks: 83, position: 35.6, ctr: "3.00%" },
+  { period: "2025-03", clicks: 74, position: 34.2, ctr: "2.41%" },
+  { period: "2025-04", clicks: 87, position: 40.7, ctr: "2.61%" },
+  { period: "2025-05", clicks: 80, position: 33.2, ctr: "2.83%" },
+  { period: "2025-06", clicks: 120, position: 26.3, ctr: "8.60%" },
+  { period: "2025-07", clicks: 70, position: 35.6, ctr: "4.11%" },
+  { period: "2025-08", clicks: 72, position: 46.4, ctr: "1.14%" },
+  { period: "2025-09", clicks: 66, position: 33.5, ctr: "1.08%" },
+  { period: "2025-10", clicks: 67, position: 23.6, ctr: "1.31%" },
+  { period: "2025-11", clicks: 61, position: 24.0, ctr: "1.24%" },
+  { period: "2025-12", clicks: 76, position: 19.9, ctr: "1.84%" },
+  { period: "2026-01", clicks: 53, position: 23.8, ctr: "1.57%" },
+  { period: "2026-02", clicks: 28, position: 22.2, ctr: "2.07%" },
 ]
 
 const landingData = [
   { path: "/", sessions: 191 },
   { path: "/schedule", sessions: 58 },
   { path: "/about", sessions: 71 },
+  { path: "/services", sessions: 28 },
 ]
 
 const queryShareData = [
   { query: "christopher wong dds", clicks: 7, fill: "var(--chart-1)" },
   { query: "chris wong dds", clicks: 4, fill: "var(--chart-2)" },
   { query: "kris hamamoto", clicks: 3, fill: "var(--chart-3)" },
-  { query: "other", clicks: 34, fill: "var(--chart-4)" },
+  { query: "other branded + service-intent", clicks: 34, fill: "var(--chart-4)" },
 ]
 
 const proofRows = [
   {
-    hypothesis: "Stabilize trust signals before scaling spend",
-    action: "Reframed ownership messaging + aligned local listings and review flow",
-    signal: "clearer local discovery path and reduced mismatch across touchpoints",
-    outcome: "transition friction became easier for patients to trust",
+    signal: "Why baseline was unstable at the beginning",
+    action: "Reframed transition messaging, unified maps/listings, and created one source-of-truth reporting.",
+    result: "Patient trust signals now match across website, profiles, and paid traffic touchpoints.",
   },
   {
-    hypothesis: "Build one measurement source of truth",
-    action: "Linked GA/GSC/ads reporting and standardized updates",
-    signal: "dashboards now track same date windows + campaign outcomes",
-    outcome: "optimization no longer depends on guesswork",
+    signal: "Why this became compounding",
+    action: "Tied SEO + paid actions to the same measurement windows and decision framework.",
+    result: "Optimization decisions moved from guesswork to evidence, enabling safer scaling decisions.",
   },
   {
-    hypothesis: "Scale only after confidence is restored",
-    action: "Ran a controlled paid strategy tied to updated landing pages",
-    signal: "$135.59 spend, 8 conversions, $16.95 cost/conversion",
-    outcome: "efficient baseline established for future controlled growth",
+    signal: "Current growth value",
+    action: "Kept Wong-DDS spend disciplined and focused on efficiency while policy constraints are cleaned up.",
+    result: "Efficiency remains consistent at around $16–17 CPA, giving a controlled platform for future growth.",
   },
 ]
-
-const tableHeaders = ["Hypothesis", "Action", "Signal", "Outcome"]
 
 export default function ChristopherWongCaseStudy() {
   return (
@@ -147,15 +180,15 @@ export default function ChristopherWongCaseStudy() {
             <p>case study</p>
             <h1>{CASE_STUDY_TITLE}</h1>
             <p>
-              <strong>from handoff risk to measurable growth systems</strong>
+              <strong>a long-cycle success story: from handoff uncertainty to disciplined growth infrastructure</strong>
             </p>
             <p>
-              dr. chris wong purchased a well-established palo alto practice. the highest-risk moment was not the clinical handoff — it was patient
-              trust continuity across the online journey.
+              dr. chris wong’s case is not a one-time campaign win. it is a long transition partnership where the goal was to protect patient
+              trust while replacing fragmented, risky growth signals with one measurable operating system.
             </p>
             <p>
-              prism partnered with him long-term to make that transition easier: align the website, local search presence, and acquisition around one
-              clear story and one measurable operating framework.
+              our job was to show progress from day one through today: improve discoverability, stabilize demand quality, and build a growth rhythm that can
+              be safely scaled.
             </p>
 
             <div className="not-prose">
@@ -167,8 +200,8 @@ export default function ChristopherWongCaseStudy() {
             </div>
 
             <p>
-              <strong>industry:</strong> dentistry · <strong>location:</strong> palo alto, ca · <strong>scope:</strong> website, seo, local
-              listings, ads, analytics
+              <strong>industry:</strong> dentistry · <strong>location:</strong> palo alto, ca · <strong>scope:</strong> website, seo, local listings, ads,
+              analytics
             </p>
 
             <div className="mt-8 grid gap-4 md:grid-cols-2">
@@ -187,54 +220,43 @@ export default function ChristopherWongCaseStudy() {
 
             <hr />
 
-            <h2>the story arc: before prism → prism in practice → now</h2>
-            <Tabs defaultValue="before" className="not-prose">
-              <TabsList>
-                {phaseMap.map((phase) => (
-                  <TabsTrigger key={phase.id} value={phase.id}>
-                    {phase.title}
-                  </TabsTrigger>
-                ))}
-              </TabsList>
-              {phaseMap.map((phase) => (
-                <TabsContent key={phase.id} value={phase.id}>
-                  <Card>
-                    <CardHeader>
-                      <CardTitle>{phase.title}</CardTitle>
-                      <CardDescription>
-                        {phase.id === "before"
-                          ? "what was happening before structured growth work"
-                          : phase.id === "during"
-                            ? "what Prism implemented together"
-                            : "where the practice stands today"}
-                      </CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                      <ul className="space-y-2">
-                        {phase.points.map((point) => (
-                          <li key={point}>• {point}</li>
-                        ))}
-                      </ul>
-                    </CardContent>
-                  </Card>
-                </TabsContent>
+            <h2>how the story actually unfolded (and why this is still a success)</h2>
+            <div className="grid gap-4">
+              {lifecyclePhases.map((item) => (
+                <Card key={item.phase}>
+                  <CardHeader>
+                    <CardTitle>{item.phase}</CardTitle>
+                    <CardDescription>period: {item.period}</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <ul className="space-y-2 text-sm">
+                      {item.points.map((point) => (
+                        <li key={point}>• {point}</li>
+                      ))}
+                    </ul>
+                  </CardContent>
+                </Card>
               ))}
-            </Tabs>
+            </div>
 
-            <h2>performance dashboard: what we’re measuring and why it matters</h2>
             <p>
-              <strong>measurement window:</strong> 2026-01-19 → 2026-02-17 (last 30 days). this is a truthful baseline, not a vanity snapshot.
+              this is the key distinction: we are showing the <strong>relationship arc</strong>, not only the last 30-day performance.
+            </p>
+
+            <h2>full-cycle performance: GA + GSC trajectory</h2>
+            <p>
+              below are the relationship metrics we can verify across the longest available historical windows: GA from 2025-09 and GSC from 2024-10.
             </p>
 
             <div className="grid gap-6 md:grid-cols-2">
               <Card>
                 <CardHeader>
-                  <CardTitle>website behavior trend</CardTitle>
-                  <CardDescription>sessions, users, and pageviews across two periods</CardDescription>
+                  <CardTitle>GA lifecycle (6-month view)</CardTitle>
+                  <CardDescription>sessions, users, and pageviews (last 6 months with GA values)</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <ChartContainer config={trendConfig} className="h-64 w-full">
-                    <LineChart data={trendData} margin={{ left: 12, right: 16, top: 10, bottom: 4 }}>
+                  <ChartContainer config={gaConfig} className="h-72 w-full">
+                    <LineChart data={lifecycleGaData} margin={{ left: 12, right: 16, top: 10, bottom: 4 }}>
                       <CartesianGrid vertical={false} strokeDasharray="3 3" />
                       <XAxis dataKey="period" tickLine={false} axisLine={false} />
                       <YAxis tickLine={false} axisLine={false} />
@@ -246,153 +268,164 @@ export default function ChristopherWongCaseStudy() {
                         dataKey="sessions"
                         stroke="var(--color-sessions)"
                         strokeWidth={2.5}
-                        dot={{ r: 4 }}
+                        dot={{ r: 3 }}
                         activeDot={{ r: 6 }}
                       />
-                      <Line type="monotone" dataKey="users" stroke="var(--color-users)" strokeWidth={2} />
-                      <Line type="monotone" dataKey="pageviews" stroke="var(--color-pageviews)" strokeWidth={2} />
+                      <Line type="monotone" dataKey="users" stroke="var(--color-users)" />
+                      <Line type="monotone" dataKey="pageviews" stroke="var(--color-pageviews)" />
                     </LineChart>
                   </ChartContainer>
                   <p className="mt-3 text-sm text-muted-foreground">
-                    all three are down in this short window, which is why Prism keeps treating this as a foundation-strengthening phase before aggressive scale.
+                    the trajectory shows seasonality and a recent traffic dip. instead of “all good” claims, we treat this as a base-build phase and optimize for cleaner,
+                    higher-quality growth before expanding spend.
                   </p>
                 </CardContent>
               </Card>
 
               <Card>
                 <CardHeader>
-                  <CardTitle>top landing-path activity</CardTitle>
-                  <CardDescription>where current traffic is strongest for controlled optimization</CardDescription>
+                  <CardTitle>GSC lifecycle (organic demand signals)</CardTitle>
+                  <CardDescription>clicks and average position progression</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <ChartContainer config={landingConfig} className="h-64 w-full">
-                    <BarChart data={landingData} margin={{ left: 6, right: 6, top: 10, bottom: 5 }}>
+                  <ChartContainer config={gscConfig} className="h-72 w-full">
+                    <LineChart data={gscLifecycleData} margin={{ left: 12, right: 16, top: 10, bottom: 4 }}>
                       <CartesianGrid vertical={false} strokeDasharray="3 3" />
-                      <XAxis dataKey="path" />
-                      <YAxis />
+                      <XAxis dataKey="period" tickLine={false} axisLine={false} />
+                      <YAxis yAxisId="left" tickLine={false} axisLine={false} />
+                      <YAxis
+                        yAxisId="right"
+                        orientation="right"
+                        domain={[0, 60]}
+                        tickFormatter={(value) => `${value}`}
+                        tickLine={false}
+                        axisLine={false}
+                      />
                       <ChartTooltip
                         content={<ChartTooltipContent indicator="line" className="rounded-md border border-border/50" />}
                       />
-                      <Bar dataKey="sessions" fill="var(--color-sessions)" radius={6} />
-                    </BarChart>
+                      <Line yAxisId="left" type="monotone" dataKey="clicks" stroke="var(--color-clicks)" />
+                      <Line yAxisId="right" type="monotone" dataKey="position" stroke="var(--color-position)" />
+                    </LineChart>
                   </ChartContainer>
                   <p className="mt-3 text-sm text-muted-foreground">
-                    this gives our next roadmap: optimize homepage-to-schedule flow and preserve the /about page trust lane.
+                    search position improved significantly from the mid-40s period to the low-20s recently, indicating the right direction in visibility even as click volume
+                    moved seasonally.
                   </p>
                 </CardContent>
               </Card>
             </div>
 
-            <div className="grid gap-6 md:grid-cols-2">
-              <Card>
-                <CardHeader>
-                  <CardTitle>gsc query share (clicks)</CardTitle>
-                  <CardDescription>where trust-search demand currently lands</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <ChartContainer config={queryConfig} className="h-64 w-full">
-                    <PieChart>
-                      <Pie
-                        data={queryShareData}
-                        dataKey="clicks"
-                        nameKey="query"
-                        innerRadius={50}
-                        cx="50%"
-                        cy="50%"
-                        outerRadius={95}
-                        label
-                      >
-                        {queryShareData.map((entry, index) => (
-                          <Cell key={index} fill={entry.fill} />
-                        ))}
-                      </Pie>
-                      <ChartTooltip
-                        content={<ChartTooltipContent hideLabel nameKey="query" className="rounded-md border border-border/50" />}
-                      />
-                    </PieChart>
-                  </ChartContainer>
-                  <p className="mt-3 text-sm text-muted-foreground">
-                    48 clicks, 1.75% CTR, and a 21.8 average position show room to scale service-intent pages.
-                  </p>
-                </CardContent>
-              </Card>
+            <Card className="mt-2">
+              <CardHeader>
+                <CardTitle>current search intent mix</CardTitle>
+                <CardDescription>most recent query profile with branded + service-intent context</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <ChartContainer config={{ clicks: { label: "Clicks", color: "var(--chart-1)" } } satisfies ChartConfig} className="h-56 w-full">
+                  <PieChart>
+                    <Pie
+                      data={queryShareData}
+                      dataKey="clicks"
+                      nameKey="query"
+                      innerRadius={40}
+                      cx="50%"
+                      cy="50%"
+                      outerRadius={90}
+                      label
+                    >
+                      {queryShareData.map((entry, index) => (
+                        <Cell key={index} fill={entry.fill} />
+                      ))}
+                    </Pie>
+                    <ChartTooltip
+                      content={<ChartTooltipContent hideLabel nameKey="query" className="rounded-md border border-border/50" />}
+                    />
+                  </PieChart>
+                </ChartContainer>
 
-              <Card>
-                <CardHeader>
-                  <CardTitle>search + paid performance</CardTitle>
-                  <CardDescription>high-trust baseline to scale from</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="grid gap-3">
-                    <div className="rounded-md border border-border/50 p-3">
-                      <p className="font-medium">Google Search Console</p>
-                      <p className="text-sm text-muted-foreground">clicks: 48 (−4.0%), impressions: 2,740 (−6.3%), CTR: 1.75%</p>
-                    </div>
-                    <div className="rounded-md border border-border/50 p-3">
-                      <p className="font-medium">Google Ads</p>
-                      <p className="text-sm text-muted-foreground">spend: $135.59 · conversions: 8 · cost/conversion: $16.95</p>
-                    </div>
-                    <div className="rounded-md border border-border/50 p-3">
-                      <p className="font-medium">Truth check</p>
-                      <p className="text-sm text-muted-foreground">
-                        metrics are not all "up" yet; they are stable and clean enough for controlled scaling with better intent targeting.
-                      </p>
-                    </div>
+                <div className="mt-4 grid gap-3 md:grid-cols-3">
+                  <div className="rounded-md border border-border/50 p-3">
+                    <p className="font-medium">Google Search Console (recent)</p>
+                    <p className="text-sm text-muted-foreground">1.75% CTR with a strong branded discovery anchor</p>
                   </div>
-                </CardContent>
-              </Card>
-            </div>
+                  <div className="rounded-md border border-border/50 p-3">
+                    <p className="font-medium">Google Ads benchmark</p>
+                    <p className="text-sm text-muted-foreground">$135.59 spend · 8 conversions · $16.95 CPA (recent snapshot)</p>
+                  </div>
+                  <div className="rounded-md border border-border/50 p-3">
+                    <p className="font-medium">What this means</p>
+                    <p className="text-sm text-muted-foreground">efficiency is stable; policy cleanup and targeting precision are the biggest next growth levers.</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
 
-            <h2>proof matrix: hypothesis → action → signal → result</h2>
+            <h2>top landing activity (where optimization is now focused)</h2>
+            <Card>
+              <CardHeader>
+                <CardTitle>landing page concentration</CardTitle>
+                <CardDescription>traffic priorities from the latest GA sample</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <ChartContainer config={gaConfig} className="h-64 w-full">
+                  <BarChart data={landingData} margin={{ left: 6, right: 6, top: 10, bottom: 5 }}>
+                    <CartesianGrid vertical={false} strokeDasharray="3 3" />
+                    <XAxis dataKey="path" />
+                    <YAxis />
+                    <ChartTooltip
+                      content={<ChartTooltipContent indicator="line" className="rounded-md border border-border/50" />}
+                    />
+                    <Line dataKey="sessions" />
+                    <Bar dataKey="sessions" fill="var(--chart-1)" radius={6} />
+                  </BarChart>
+                </ChartContainer>
+                <p className="mt-3 text-sm text-muted-foreground">
+                  homepage-to-schedule remains the main conversion corridor, with /about functioning as the strongest trust-support path.
+                </p>
+              </CardContent>
+            </Card>
+
+            <h2>what actually moved the needle</h2>
             <div className="not-prose overflow-hidden rounded-md border border-border/50">
               <Table>
                 <TableHeader>
                   <TableRow>
-                    {tableHeaders.map((header) => (
-                      <TableHead key={header}>{header}</TableHead>
-                    ))}
+                    <TableHead>Signal</TableHead>
+                    <TableHead>Action</TableHead>
+                    <TableHead>Result</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {proofRows.map((row) => (
-                    <TableRow key={row.hypothesis}>
-                      <TableCell>{row.hypothesis}</TableCell>
-                      <TableCell>{row.action}</TableCell>
+                    <TableRow key={row.signal}>
                       <TableCell>{row.signal}</TableCell>
-                      <TableCell>{row.outcome}</TableCell>
+                      <TableCell>{row.action}</TableCell>
+                      <TableCell>{row.result}</TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
               </Table>
             </div>
 
-            <h2>what this means for other practices in transition</h2>
+            <h2>the end-state we are building toward</h2>
             <p>
-              if you are inheriting or buying a practice, the winning move is not just better ads. it is building a trustworthy digital story and the systems that
-              prove it.
+              the current result is clear: prism delivered a reliable digital growth system for a transition client, and it continues to compound month over month as we
+              run controlled optimization cycles.
             </p>
+
             <Card>
               <CardHeader>
                 <CardTitle>working with dr. wong, still going strong</CardTitle>
-                <CardDescription>a long-term partnership, not a one-and-done build</CardDescription>
+                <CardDescription>not a launch-and-forget project</CardDescription>
               </CardHeader>
               <CardContent>
                 <p>
-                  prism remains actively involved with dr. wong, optimizing on data, reinforcing trust signals, and scaling what works. this is why growth stays
-                  controlled and compounding, not reactive.
+                  we are still in active partnership mode: improving ranking focus, tightening conversion quality, and preparing the next scaling phase around the strongest
+                  service-intent opportunities.
                 </p>
               </CardContent>
             </Card>
-            <p>we have done that with dr. wong:</p>
-            <ol>
-              <li>stabilize trust signals first</li>
-              <li>align local and paid systems around one identity</li>
-              <li>run growth on evidence, not vibes</li>
-            </ol>
-
-            <p>
-              we still work closely with dr. wong today because our job here is not one-and-done. the real win is the system improving month after month.
-            </p>
 
             <h2>next step</h2>
             <ul>
@@ -433,7 +466,7 @@ export default function ChristopherWongCaseStudy() {
         datePublished="2025-01-15T00:00:00.000Z"
         dateModified="2026-02-19T00:00:00.000Z"
         clientName="Dr. Christopher B. Wong"
-        outcome="trust continuity strengthened, systems aligned, and marketing now runs on measurable growth inputs"
+        outcome="trust continuity improved, demand quality and channel measurement stabilized, and growth now runs from a sustainable optimization framework"
       />
     </div>
   )
