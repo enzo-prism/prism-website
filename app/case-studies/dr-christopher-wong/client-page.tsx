@@ -371,6 +371,18 @@ export default function ChristopherWongCaseStudy() {
               if you are inheriting or buying a practice, the winning move is not just better ads. it is building a trustworthy digital story and the systems that
               prove it.
             </p>
+            <Card>
+              <CardHeader>
+                <CardTitle>working with dr. wong, still going strong</CardTitle>
+                <CardDescription>a long-term partnership, not a one-and-done build</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p>
+                  prism remains actively involved with dr. wong, optimizing on data, reinforcing trust signals, and scaling what works. this is why growth stays
+                  controlled and compounding, not reactive.
+                </p>
+              </CardContent>
+            </Card>
             <p>we have done that with dr. wong:</p>
             <ol>
               <li>stabilize trust signals first</li>
