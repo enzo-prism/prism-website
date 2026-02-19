@@ -20,6 +20,7 @@ export type BlogOutboundLinkContext = {
 export type BlogOutboundLinkProfile = {
   rules: OutboundLinkRule[]
   skipWhenAlreadyLinked?: boolean
+  disableAiSignalRules?: boolean
   maxLinks?: number
   skipIfNotHighConfidence?: boolean
   title?: string
@@ -673,6 +674,11 @@ const SLUG_OVERRIDES: Record<string, BlogOutboundLinkProfile> = {
     rules: [...BUSINESS_RULES, ...AI_RULES, ...DESIGN_RULES],
     maxLinks: 6,
   }),
+  "the-founders-guide-to-shipping-apps-on-the-apple-app-store-in-2026": withDefaults({
+    rules: [],
+    maxLinks: 6,
+    disableAiSignalRules: true,
+  }),
   "dentist-website-design-checklist": withDefaults({
     rules: [...DENTISTRY_RULES, ...WEBOPS_RULES],
     maxLinks: 6,
@@ -704,7 +710,7 @@ export function getOutboundLinkRulesForPost({
     ...selected,
     rules: [
       ...selected.rules,
-      ...(hasAiSignal ? AI_RULES : []),
+      ...(hasAiSignal && !selected.disableAiSignalRules ? AI_RULES : []),
       ...(hasDentalSignal ? DENTISTRY_RULES : []),
       ...(hasWebsiteSignal && hasMarketingSignal ? WEBOPS_RULES : []),
       ...(hasWebsiteSignal && !hasMarketingSignal ? [ ...DEFAULT_RULES ] : []),
