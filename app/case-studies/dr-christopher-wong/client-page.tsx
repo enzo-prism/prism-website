@@ -34,7 +34,7 @@ const summaryCards = [
   {
     label: "Partnership timeline",
     value: "2+ years",
-    note: "long-cycle support from transition into ongoing growth optimization",
+    note: "from legacy transition to a modern, performance-forward growth platform",
   },
   {
     label: "Data foundation",
@@ -55,21 +55,23 @@ const summaryCards = [
 
 const lifecyclePhases = [
   {
-    phase: "Handoff start",
+    phase: "Legacy to modern foundation",
     period: "2024-10 → 2025",
     points: [
       "prism inherited a fragmented patient-facing story during ownership transition",
+      "legacy vendor tools and an old technical stack were slowing updates, reporting, and trust signaling",
       "local and review signals were inconsistent across website, profiles, and campaign messaging",
       "analytics signals were available but disconnected from daily growth decisions",
     ],
   },
   {
-    phase: "Foundation rebuild",
+    phase: "Modernization phase",
     period: "2025-10 → 2025-12",
     points: [
-      "ownership and trust framing were unified across core landing pages",
-      "search discoverability and content relevance were aligned to the practice identity",
-      "paid spend was kept controlled while channel quality was validated",
+      "migrated from legacy website/vendor operations to modern hosting and workflow tooling",
+      "rebuilt dr. wong branding across website, social clips, and ads with a new image system",
+      "designed a contemporary logo direction and refreshed brand language",
+      "created a professional photo set to use across web, social, and campaigns",
     ],
   },
   {
@@ -77,6 +79,8 @@ const lifecyclePhases = [
     period: "2026-01 → 2026-02",
     points: [
       "full stack measurement and campaign quality checks became routine",
+      "mobile-first pages and conversion flow were finalized for better usability",
+      "video interview content and social clips were integrated to strengthen trust and authority",
       "search and ads baseline remained efficient but intentionally de-risked before scaling",
       "prism remains partnered with Chris for monthly optimization and policy cleanup",
     ],
@@ -190,6 +194,20 @@ export default function ChristopherWongCaseStudy() {
               our job was to show progress from day one through today: improve discoverability, stabilize demand quality, and build a growth rhythm that can
               be safely scaled.
             </p>
+
+            <div className="rounded-md border border-border/50 bg-muted/30 p-4 mt-4">
+              <p>
+                the technical and brand rebuild was just as important as the marketing layer. the legacy website and operational stack were upgraded from outdated systems,
+                giving the team true control over speed, updates, and trust-first messaging.
+              </p>
+              <ul className="mt-3 space-y-2 text-sm">
+                <li>• migrated site operations onto a modern stack to support rapid, reliable updates and cleaner reporting</li>
+                <li>• redesigned brand elements, including a new logo direction, to keep the practice positioning modern and premium</li>
+                <li>• created new office photo assets that now power the site, social feed, and campaign visuals</li>
+                <li>• captured a video interview to humanize the practice story and support trust-building content</li>
+                <li>• connected everything to one operating rhythm: website, local listings, Google Ads, and performance analytics</li>
+              </ul>
+            </div>
 
             <div className="not-prose">
               <Button asChild variant="outline" className="rounded-full">
@@ -316,7 +334,7 @@ export default function ChristopherWongCaseStudy() {
               </Card>
             </div>
 
-            <Card className="mt-2">
+            <Card className="mt-6">
               <CardHeader>
                 <CardTitle>current search intent mix</CardTitle>
                 <CardDescription>most recent query profile with branded + service-intent context</CardDescription>
@@ -347,7 +365,7 @@ export default function ChristopherWongCaseStudy() {
                 <div className="mt-4 grid gap-3 md:grid-cols-3">
                   <div className="rounded-md border border-border/50 p-3">
                     <p className="font-medium">Google Search Console (recent)</p>
-                    <p className="text-sm text-muted-foreground">1.75% CTR with a strong branded discovery anchor</p>
+                    <p className="text-sm text-muted-foreground">1.75% CTR with a strong branded discovery anchor and stronger service intent mix.</p>
                   </div>
                   <div className="rounded-md border border-border/50 p-3">
                     <p className="font-medium">Google Ads benchmark</p>
@@ -360,6 +378,40 @@ export default function ChristopherWongCaseStudy() {
                 </div>
               </CardContent>
             </Card>
+
+            <h2>brand and content assets that supported the growth engine</h2>
+            <div className="grid gap-3 md:grid-cols-3">
+              <Card>
+                <CardHeader>
+                  <CardTitle>modern brand system</CardTitle>
+                  <CardDescription>design + logo + identity refresh</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-sm text-muted-foreground">new identity direction reduced outdated cues and made web, social, and campaign visuals look coherent and premium.</p>
+                </CardContent>
+              </Card>
+              <Card>
+                <CardHeader>
+                  <CardTitle>content assets</CardTitle>
+                  <CardDescription>photo shoot + clinic video interview</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-sm text-muted-foreground">
+                    we built real, high-trust assets from actual office photos and a clinic interview. the full interview is now live on the podcasts page.
+                    <Link href="/podcasts" className={linkClassName}> watch the interview</Link>
+                  </p>
+                </CardContent>
+              </Card>
+              <Card>
+                <CardHeader>
+                  <CardTitle>mobile-first experience</CardTitle>
+                  <CardDescription>better journeys for real patients</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-sm text-muted-foreground">site speed, page hierarchy, and conversion paths were rebuilt so patient intent moved to action more reliably.</p>
+                </CardContent>
+              </Card>
+            </div>
 
             <h2>top landing activity (where optimization is now focused)</h2>
             <Card>
@@ -422,7 +474,7 @@ export default function ChristopherWongCaseStudy() {
               <CardContent>
                 <p>
                   we are still in active partnership mode: improving ranking focus, tightening conversion quality, and preparing the next scaling phase around the strongest
-                  service-intent opportunities.
+                  service-intent opportunities while continuing the brand evolution work.
                 </p>
               </CardContent>
             </Card>
