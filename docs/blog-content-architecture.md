@@ -137,6 +137,24 @@ A link-quality validation script is available:
 - checks for duplicate injected phrases and unbalanced anchor markup
 - checks resolver URLs for HTTP status
 
+## Autolink scoring and disambiguation
+
+The ranking model in `lib/blog-inline-link-injector.ts` can be tuned by editing these values:
+
+- `SHORT_TERM_CONTEXT_WINDOW` (`lib/blog-inline-link-injector.ts`): context window around a short match used for keyword hint checks.
+- `DEFAULT_MIN_SCORE`: global floor below which candidate links are skipped.
+- `SHORT_TERM_CONTEXT_HINTS`: per-phrase context tokens that help prevent false positives for ambiguous short terms.
+
+Current short-term context gating is enabled for `ai` (including `gpt`, `claude`, `chatgpt`, `agent`, etc.) so generic "AI"/"Agents"-style matches only score high when surrounding copy indicates AI tooling context.
+
+For rule-level disambiguation, use precise variants in `lib/blog-inline-link-rules.ts` and avoid extremely broad variants (for example, the generic `agents` variant was replaced with `AI agents` to reduce accidental matches).
+
+When adjusting precision:
+
+1. Start by reducing broad variants in `AI_RULES` and similar pools.
+2. Then tighten `DEFAULT_MIN_SCORE` and/or expand `SHORT_TERM_CONTEXT_HINTS`.
+3. Keep `validate:blog-links` passing after rule edits to avoid silent coverage/regression issues.
+
 This keeps editorial copy untouched while making outbound references consistent across all posts.
 
 ## Reading and feedback enhancements
