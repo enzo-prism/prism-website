@@ -198,7 +198,7 @@ const AI_RULES: OutboundLinkRule[] = [
     reason:
       "How agentic systems are built, constrained, and evaluated in production.",
     confidence: "medium",
-    variants: ["agentic", "agents"],
+    variants: ["agentic", "AI agents"],
   },
 ]
 

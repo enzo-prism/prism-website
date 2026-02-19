@@ -1,4 +1,4 @@
-import type { BlogOutboundLinkProfile } from "@/lib/blog-inline-link-rules"
+import type { BlogOutboundLinkProfile, OutboundLinkRule } from "@/lib/blog-inline-link-rules"
 
 type OutboundLinkCandidate = {
   href: string
@@ -6,6 +6,36 @@ type OutboundLinkCandidate = {
   matchText: string
   start: number
   end: number
+  score: number
+  ruleKey: string
+  canonicalPhrase: string
+  confidence: "high" | "medium"
+  isCanonical: boolean
+}
+
+type ScoredRule = OutboundLinkRule & {
+  confidence: "high" | "medium"
+}
+
+const SHORT_TERM_CONTEXT_WINDOW = 90
+const DEFAULT_MIN_SCORE = 35
+
+const SHORT_TERM_CONTEXT_HINTS: Record<string, string[]> = {
+  ai: [
+    "artificial",
+    "intelligence",
+    "chatgpt",
+    "claude",
+    "anthropic",
+    "openai",
+    "codex",
+    "agentic",
+    "agent",
+    "coding",
+    "gpt",
+    "llm",
+    "app",
+  ],
 }
 
 function normalizeForSearch(value: string) {
@@ -25,15 +55,73 @@ function isBoundaryMatch(value: string, start: number, end: number) {
   return true
 }
 
-function findFirstMatchInText(
+function normalizeLinkText(value: string) {
+  return value.toLowerCase().replace(/[^\w]+/g, " ").trim()
+}
+
+function confidenceWeight(confidence: "high" | "medium") {
+  return confidence === "high" ? 45 : 30
+}
+
+function hasContextHint(text: string, start: number, end: number, phrase: string) {
+  const key = normalizeForSearch(phrase)
+  const hints = SHORT_TERM_CONTEXT_HINTS[key]
+  if (!hints?.length) return true
+
+  const windowStart = Math.max(0, start - SHORT_TERM_CONTEXT_WINDOW)
+  const windowEnd = Math.min(text.length, end + SHORT_TERM_CONTEXT_WINDOW)
+  const window = text.slice(windowStart, windowEnd).toLowerCase()
+
+  return hints.some((hint) => window.includes(` ${hint} `) || window.includes(`${hint} `))
+}
+
+function scoreMatch({
+  phrase,
+  confidence,
+  isCanonical,
+  matchText,
+  normalizedText,
+  start,
+  end,
+}: {
+  phrase: string
+  confidence: "high" | "medium"
+  isCanonical: boolean
+  matchText: string
+  normalizedText: string
+  start: number
+  end: number
+}) {
+  let score = confidenceWeight(confidence)
+  const phraseLength = phrase.length
+
+  score += Math.min(18, phraseLength * 1.8)
+  if (isCanonical) score += 10
+  if (phraseLength <= 2) score -= 22
+  if (/^[A-Z]{2,4}$/.test(matchText)) score += 8
+  if (phraseLength > 0) {
+    score += Math.max(0, (phraseLength - 3) * 0.8)
+  }
+
+  if (phraseLength <= 3 && !hasContextHint(normalizedText, start, end, phrase)) {
+    score -= 32
+  }
+
+  if (start < 80) score += 2
+  if (start < 20) score += 2
+
+  return Math.round(score)
+}
+
+function collectCandidatesForRule(
   text: string,
   normalizedText: string,
-  rule: { phrase: string; variants?: string[] },
-  searchFrom: number,
+  rule: ScoredRule,
+  ruleKey: string,
 ) {
-  let bestMatch: OutboundLinkCandidate | null = null
+  const candidates: OutboundLinkCandidate[] = []
   const phrases = [rule.phrase, ...(rule.variants ?? [])]
-    .map(normalizeForSearch)
+    .map((candidate) => normalizeForSearch(candidate))
     .filter(Boolean)
 
   const seen = new Set<string>()
@@ -41,28 +129,117 @@ function findFirstMatchInText(
   for (const phrase of phrases) {
     if (seen.has(phrase)) continue
     seen.add(phrase)
+    let start = normalizedText.indexOf(phrase, 0)
+    const isCanonical = phrase === normalizeForSearch(rule.phrase)
 
-    let start = normalizedText.indexOf(phrase, searchFrom)
     while (start !== -1) {
       const end = start + phrase.length
       if (isBoundaryMatch(text, start, end)) {
         const matchText = text.slice(start, end)
-        if (!bestMatch || start < bestMatch.start) {
-          bestMatch = {
+        candidates.push({
+          phrase,
+          href: rule.href,
+          matchText,
+          start,
+          end,
+          confidence: rule.confidence ?? "medium",
+          isCanonical,
+          canonicalPhrase: rule.phrase,
+          ruleKey,
+          score: scoreMatch({
             phrase,
-            href: "",
+            confidence: rule.confidence ?? "medium",
+            isCanonical,
             matchText,
+            normalizedText,
             start,
             end,
-          }
-        }
-        break
+          }),
+        })
       }
       start = normalizedText.indexOf(phrase, start + 1)
     }
   }
 
-  return bestMatch
+  return candidates
+}
+
+function collectCandidatesForLine(
+  line: string,
+  normalizedLine: string,
+  rules: ScoredRule[],
+) {
+  const candidates: OutboundLinkCandidate[] = []
+
+  for (const rule of rules) {
+    const ruleKey = rule.phrase.toLowerCase()
+    candidates.push(...collectCandidatesForRule(line, normalizedLine, rule, ruleKey))
+  }
+
+  return candidates
+}
+
+function overlaps(existing: Array<{ start: number; end: number }>, candidateStart: number, candidateEnd: number) {
+  return existing.some(({ start, end }) => candidateStart < end && candidateEnd > start)
+}
+
+function bestCandidateForLine({
+  lineCandidates,
+  usedRules,
+  usedParagraphAnchors,
+  usedSpans,
+}: {
+  lineCandidates: OutboundLinkCandidate[]
+  usedRules: Set<string>
+  usedParagraphAnchors: Set<string>
+  usedSpans: Array<{ start: number; end: number }>
+}) {
+  const sortedCandidates = [...lineCandidates].sort((a, b) => {
+    if (a.score !== b.score) return b.score - a.score
+    if (a.start !== b.start) return a.start - b.start
+    if (a.end - a.start !== b.end - b.start) {
+      return (b.end - b.start) - (a.end - a.start)
+    }
+    return a.phrase.localeCompare(b.phrase)
+  })
+
+  for (const candidate of sortedCandidates) {
+    const normalized = normalizeLinkText(candidate.matchText)
+    if (candidate.score < DEFAULT_MIN_SCORE) continue
+    if (candidate.start < 0 || candidate.end < candidate.start) continue
+    if (usedRules.has(candidate.ruleKey)) continue
+    if (usedParagraphAnchors.has(normalized)) continue
+    if (overlaps(usedSpans, candidate.start, candidate.end)) continue
+    if (candidate.phrase.length <= 2 && candidate.score < 44) continue
+
+    return candidate
+  }
+
+  return null
+}
+
+function buildLineWithLinks(line: string, accepted: OutboundLinkCandidate[], linkIndexStart: number) {
+  if (!accepted.length) return line
+
+  const sortedAccepted = [...accepted].sort((a, b) => a.start - b.start)
+  let cursor = 0
+  let rebuilt = ""
+  let linkIndex = linkIndexStart
+
+  for (const candidate of sortedAccepted) {
+    rebuilt += line.slice(cursor, candidate.start)
+    rebuilt += buildLinkNode(
+      candidate.href,
+      candidate.matchText,
+      candidate.canonicalPhrase,
+      linkIndex,
+    )
+    cursor = candidate.end
+    linkIndex += 1
+  }
+
+  rebuilt += line.slice(cursor)
+  return rebuilt
 }
 
 function buildLinkNode(href: string, matchText: string, phrase: string, index: number) {
@@ -96,17 +273,17 @@ function splitProtectedSegments(content: string) {
   return segments
 }
 
-function normalizeLinkText(value: string) {
-  return value.toLowerCase().replace(/[^\w]+/g, " ").trim()
-}
-
 export function injectOutboundLinks(content: string, profile: BlogOutboundLinkProfile) {
   if (!content || !profile || !profile.rules?.length) return content
 
   const maxLinks = Math.max(1, Math.min(profile.maxLinks ?? 6, 8))
-  const filteredRules = profile.rules.filter((rule) =>
-    profile.skipIfNotHighConfidence ? rule.confidence === "high" : true,
-  )
+  const filteredRules = profile.rules
+    .slice(0, maxLinks * 2)
+    .filter((rule) => profile.skipIfNotHighConfidence ? rule.confidence === "high" : true)
+    .map((rule) => ({
+      ...rule,
+      confidence: rule.confidence ?? "medium",
+    })) as ScoredRule[]
 
   if (!filteredRules.length) return content
 
@@ -122,8 +299,6 @@ export function injectOutboundLinks(content: string, profile: BlogOutboundLinkPr
   }
 
   const segments = splitProtectedSegments(content)
-  const resolvedRules = filteredRules.slice(0, maxLinks * 2)
-
   const rendered: string[] = []
 
   for (const segment of segments) {
@@ -161,70 +336,38 @@ export function injectOutboundLinks(content: string, profile: BlogOutboundLinkPr
         continue
       }
 
-      let modifiedLine = ""
-      let cursor = 0
-  const normalizedLine = line.toLowerCase()
-      let searchFrom = 0
-      let safetyCounter = 0
+      const normalizedLine = line.toLowerCase()
+      const lineCandidates = collectCandidatesForLine(line, normalizedLine, filteredRules)
+      const acceptedCandidates: OutboundLinkCandidate[] = []
+      const usedSpans: Array<{ start: number; end: number }> = []
 
-      while (totalInserted < maxLinks && safetyCounter < 20) {
-        safetyCounter += 1
-        let candidate: (OutboundLinkCandidate & {
-          href: string
-          ruleKey: string
-          canonicalPhrase: string
-        }) | null = null
-
-        for (const rule of resolvedRules) {
-          const ruleKey = rule.phrase.toLowerCase()
-          if (usedRules.has(ruleKey)) continue
-
-          const match = findFirstMatchInText(line, normalizedLine, rule, searchFrom)
-          if (!match) continue
-          if (match.start < searchFrom) continue
-          if (usedParagraphAnchors.has(normalizeLinkText(match.matchText))) continue
-          if (candidate === null || match.start < candidate.start) {
-            candidate = {
-              ...match,
-              href: rule.href,
-              ruleKey,
-              canonicalPhrase: rule.phrase,
-            }
-          }
-        }
+      while (totalInserted < maxLinks && acceptedCandidates.length < maxLinks && paragraphLinkCount < maxLinks) {
+        const candidate = bestCandidateForLine({
+          lineCandidates,
+          usedRules,
+          usedParagraphAnchors,
+          usedSpans,
+        })
 
         if (!candidate) break
 
-        const { start, end, href, matchText, phrase, ruleKey, canonicalPhrase } = candidate
-        const normalizedPhrase = phrase.toLowerCase()
-        const linkText = normalizeLinkText(matchText)
+        const normalizedPhrase = normalizeLinkText(candidate.matchText)
 
-        if (usedParagraphAnchors.has(linkText)) {
-          searchFrom = end
-          continue
-        }
-
-        modifiedLine += line.slice(cursor, start)
-        modifiedLine += buildLinkNode(
-          href,
-          matchText,
-          canonicalPhrase.toLowerCase(),
-          linkCounter,
-        )
-        cursor = end
-
-        usedRules.add(ruleKey)
-        usedParagraphAnchors.add(linkText)
+        usedRules.add(candidate.ruleKey)
+        usedParagraphAnchors.add(normalizedPhrase)
+        usedSpans.push({ start: candidate.start, end: candidate.end })
+        acceptedCandidates.push(candidate)
         totalInserted += 1
         paragraphLinkCount += 1
         linkCounter += 1
-        searchFrom = end
-
-        if (paragraphLinkCount >= maxLinks) break
       }
 
-      modifiedLine += line.slice(cursor)
-      rendered.push(modifiedLine)
+      if (acceptedCandidates.length > 0) {
+        const lineLinkStartIndex = Math.max(0, linkCounter - acceptedCandidates.length)
+        rendered.push(buildLineWithLinks(line, acceptedCandidates, lineLinkStartIndex))
+      } else {
+        rendered.push(line)
+      }
       if (lineIndex < lines.length - 1) rendered.push("\n")
     }
   }

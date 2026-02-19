@@ -115,7 +115,8 @@ To add outbound references without editing each `.mdx` file, outbound-link injec
   - protection for code blocks, inline code, existing markdown links, and inline HTML
   - boundary-aware phrase matching
   - max-link caps (default 6)
-  - dedupe by sentence/paragraph context
+  - candidate scoring across the full line, with context-aware disambiguation for short terms
+  - dedupe by paragraph anchor and overlap avoidance
 - `app/blog/[slug]/page.tsx` resolves a profile for each post and injects links into the MDX string before passing it into `renderPost(...)`.
 - `components/blog-post-layout.tsx` receives the rendered post and keeps section logic unchanged.
 
