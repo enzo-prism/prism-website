@@ -158,14 +158,19 @@ const queryShareData = [
 
 const proofRows = [
   {
-    signal: "Why baseline was unstable at the beginning",
-    action: "Reframed transition messaging, unified maps/listings, and created one source-of-truth reporting.",
-    result: "Patient trust signals now match across website, profiles, and paid traffic touchpoints.",
+    signal: "Legacy cleanup + trust recovery",
+    action: "Replaced fragmented legacy vendor workflows with one centralized operating rhythm and rebuilt patient-facing brand and messaging.",
+    result: "Patient trust signals now match across website, profiles, and paid traffic touchpoints, reducing uncertainty during handoff.",
   },
   {
-    signal: "Why this became compounding",
-    action: "Tied SEO + paid actions to the same measurement windows and decision framework.",
-    result: "Optimization decisions moved from guesswork to evidence, enabling safer scaling decisions.",
+    signal: "Compounding operations",
+    action: "Tied SEO + paid actions + local pages to one shared measurement and weekly planning cadence.",
+    result: "Decisions moved from guesswork to evidence, letting the team prioritize high-signal opportunities and protect quality.",
+  },
+  {
+    signal: "Brand and media value",
+    action: "Captured fresh clinic photography and a patient-focused video interview, then deployed assets across site, social, and ads.",
+    result: "A consistent, premium brand presence now supports stronger trust and conversion-ready positioning across channels.",
   },
   {
     signal: "Current growth value",
@@ -184,15 +189,16 @@ export default function ChristopherWongCaseStudy() {
             <p>case study</p>
             <h1>{CASE_STUDY_TITLE}</h1>
             <p>
-              <strong>a long-cycle success story: from handoff uncertainty to disciplined growth infrastructure</strong>
+              <strong>a long-cycle success story: from handoff uncertainty to a modern, trusted growth system</strong>
             </p>
             <p>
-              dr. chris wong’s case is not a one-time campaign win. it is a long transition partnership where the goal was to protect patient
-              trust while replacing fragmented, risky growth signals with one measurable operating system.
+              dr. chris wong’s case is not a one-time campaign win.
+              it is a long transition partnership where we inherited legacy systems, rebuilt the patient-facing brand and
+              digital operations, and then aligned website, SEO, and paid channels into one growth system.
             </p>
             <p>
-              our job was to show progress from day one through today: improve discoverability, stabilize demand quality, and build a growth rhythm that can
-              be safely scaled.
+              our job was to show progress from day one through today: improve discoverability, stabilize demand quality, and build a growth rhythm that can be
+              scaled without losing trust.
             </p>
 
             <div className="rounded-md border border-border/50 bg-muted/30 p-4 mt-4">
@@ -208,6 +214,35 @@ export default function ChristopherWongCaseStudy() {
                 <li>• connected everything to one operating rhythm: website, local listings, Google Ads, and performance analytics</li>
               </ul>
             </div>
+
+            <Card className="mt-8">
+              <CardHeader>
+                <CardTitle>what this partnership changed at every level</CardTitle>
+                <CardDescription>legacy cleanup → modernization → measurable growth</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="grid gap-3 md:grid-cols-3">
+                  <div className="rounded-md border border-border/50 p-3">
+                    <p className="font-medium">for patients</p>
+                    <p className="text-sm text-muted-foreground mt-2">
+                      clear ownership messaging, updated site visuals, and a faster mobile experience helped patients immediately understand the new practice direction.
+                    </p>
+                  </div>
+                  <div className="rounded-md border border-border/50 p-3">
+                    <p className="font-medium">for the practice team</p>
+                    <p className="text-sm text-muted-foreground mt-2">
+                      operations moved from disconnected tools to one reporting rhythm, so decisions in SEO, ads, and local visibility are now synchronized.
+                    </p>
+                  </div>
+                  <div className="rounded-md border border-border/50 p-3">
+                    <p className="font-medium">for growth</p>
+                    <p className="text-sm text-muted-foreground mt-2">
+                      brand assets were modernized and reused across channels to make every touchpoint support conversion, trust, and long-term scale.
+                    </p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
 
             <div className="not-prose">
               <Button asChild variant="outline" className="rounded-full">
@@ -245,6 +280,7 @@ export default function ChristopherWongCaseStudy() {
                   <CardHeader>
                     <CardTitle>{item.phase}</CardTitle>
                     <CardDescription>period: {item.period}</CardDescription>
+                <p className="text-xs text-muted-foreground">focus: stabilization + modernization + measured scale</p>
                   </CardHeader>
                   <CardContent>
                     <ul className="space-y-2 text-sm">
@@ -369,11 +405,12 @@ export default function ChristopherWongCaseStudy() {
                   </div>
                   <div className="rounded-md border border-border/50 p-3">
                     <p className="font-medium">Google Ads benchmark</p>
-                    <p className="text-sm text-muted-foreground">$135.59 spend · 8 conversions · $16.95 CPA (recent snapshot)</p>
+                    <p className="text-sm text-muted-foreground">$135.59 spend · 8 conversions · $16.95 CPA (recent snapshot). stable enough to scale thoughtfully after policy and targeting refinements.</p>
                   </div>
                   <div className="rounded-md border border-border/50 p-3">
                     <p className="font-medium">What this means</p>
-                    <p className="text-sm text-muted-foreground">efficiency is stable; policy cleanup and targeting precision are the biggest next growth levers.</p>
+                    <p className="text-sm text-muted-foreground">efficiency is stable; policy cleanup and targeting precision are the biggest next growth levers before we
+                    scale more aggressively on stronger service-intent demand.</p>
                   </div>
                 </div>
               </CardContent>
@@ -414,6 +451,7 @@ export default function ChristopherWongCaseStudy() {
             </div>
 
             <h2>top landing activity (where optimization is now focused)</h2>
+            <p className="text-sm text-muted-foreground">this map shows where patient attention is strongest so we can optimize every conversion step, not just traffic.</p>
             <Card>
               <CardHeader>
                 <CardTitle>landing page concentration</CardTitle>
@@ -462,8 +500,8 @@ export default function ChristopherWongCaseStudy() {
 
             <h2>the end-state we are building toward</h2>
             <p>
-              the current result is clear: prism delivered a reliable digital growth system for a transition client, and it continues to compound month over month as we
-              run controlled optimization cycles.
+              the current result is clear: prism delivered a modern, reliable, patient-first digital platform for this transition client.
+              the partnership now compounds monthly through controlled optimization, not guesswork, and the team has a foundation they can scale with confidence.
             </p>
 
             <Card>
@@ -473,8 +511,8 @@ export default function ChristopherWongCaseStudy() {
               </CardHeader>
               <CardContent>
                 <p>
-                  we are still in active partnership mode: improving ranking focus, tightening conversion quality, and preparing the next scaling phase around the strongest
-                  service-intent opportunities while continuing the brand evolution work.
+                  we are still in active partnership mode: improving ranking focus, tightening conversion quality, and preparing the next scaling phase around the
+                  strongest service-intent opportunities while continuing the brand evolution work.
                 </p>
               </CardContent>
             </Card>
