@@ -12,35 +12,29 @@ import {
   isValidBlogFilter,
 } from "@/lib/blog-topic-filters"
 
-interface BlogFilterNavigationProps {
-  posts: Array<{
-    topic: Exclude<BlogFilterBucket, "all">
-    category: string
-    categorySlug: string
-    title: string
-    description: string
-    date: string
-  }>
+type BlogFilterPost = {
+  topic: Exclude<BlogFilterBucket, "all">
+  category: string
+  title: string
+  description: string
+  date: string
+}
+
+interface BlogFilterNavigationProps<T extends BlogFilterPost> {
+  posts: T[]
   selectedCategory: BlogFilterBucket
   onCategoryChange: (categorySlug: BlogFilterBucket) => void
-  onFilteredPostsChange: (posts: Array<{
-    topic: Exclude<BlogFilterBucket, "all">
-    category: string
-    categorySlug: string
-    title: string
-    description: string
-    date: string
-  }>) => void
+  onFilteredPostsChange: (posts: T[]) => void
   className?: string
 }
 
-export default function BlogFilterNavigation({
+export default function BlogFilterNavigation<T extends BlogFilterPost>({
   posts,
   selectedCategory,
   onCategoryChange,
   onFilteredPostsChange,
   className = ""
-}: BlogFilterNavigationProps) {
+}: BlogFilterNavigationProps<T>) {
   const [searchQuery, setSearchQuery] = useState("")
 
   useEffect(() => {
