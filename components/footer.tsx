@@ -12,7 +12,7 @@ type FooterSection = {
   items: FooterItem[]
 }
 
-const homeLink: FooterItem = { label: "Home", href: "/" }
+const homeLink: FooterItem = { label: "Homepage", href: "/" }
 
 const footerSections: FooterSection[] = [
   {
@@ -59,7 +59,7 @@ const footerSections: FooterSection[] = [
   },
 ]
 
-const navSections: FooterSection[] = [{ title: "Home", items: [homeLink] }, ...footerSections]
+const navSections: FooterSection[] = [{ title: "Site links", items: [homeLink] }, ...footerSections]
 
 const socialLinks = [
   { label: "Instagram", href: "https://www.instagram.com/the_design_prism/", id: "instagram" },
