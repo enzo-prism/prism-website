@@ -363,10 +363,11 @@ interface HowToSchemaProps {
   totalTime?: string
   supplies?: string[]
   tools?: string[]
-  steps: { name: string; text: string }[]
+  steps?: { name: string; text: string }[]
 }
 
 export function HowToSchema({ name, description, totalTime, supplies, tools, steps }: HowToSchemaProps) {
+  const howToSteps = steps ?? []
   const data = {
     "@context": "https://schema.org",
     "@type": "HowTo",
@@ -375,7 +376,7 @@ export function HowToSchema({ name, description, totalTime, supplies, tools, ste
     totalTime,
     supply: supplies?.map((item) => ({ "@type": "HowToSupply", name: item })),
     tool: tools?.map((item) => ({ "@type": "HowToTool", name: item })),
-    step: steps.map((step, index) => ({
+    step: howToSteps.map((step, index) => ({
       "@type": "HowToStep",
       position: index + 1,
       name: step.name,

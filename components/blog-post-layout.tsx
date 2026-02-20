@@ -96,6 +96,9 @@ export default function BlogPostLayout({
   const hasToc = toc.length > 0
   const activePrismImpact =
     prismImpact && prismImpact.forceRender !== false ? prismImpact : null
+  const howToSteps = howTo?.steps ?? []
+  const howToSupplies = howTo?.supplies ?? []
+  const howToTools = howTo?.tools ?? []
 
   const publishedLabel = publishedDate || new Intl.DateTimeFormat(undefined, {
     year: 'numeric',
@@ -385,9 +388,9 @@ export default function BlogPostLayout({
           name={howTo.title}
           description={howTo.description}
           totalTime={howTo.totalTime}
-          supplies={howTo.supplies}
-          tools={howTo.tools}
-          steps={howTo.steps.map((step) => ({
+          supplies={howToSupplies}
+          tools={howToTools}
+          steps={howToSteps.map((step) => ({
             name: step.title,
             text: step.text,
           }))}

@@ -11,7 +11,7 @@ interface StrategyCardProps {
   difficulty: "Easy" | "Medium" | "Hard"
   timeframe: string
   impact: "High" | "Medium" | "Low"
-  steps: string[]
+  steps?: string[]
   tips?: string[]
   className?: string
 }
@@ -23,8 +23,8 @@ export default function StrategyCard({
   difficulty,
   timeframe,
   impact,
-  steps,
-  tips,
+  steps = [],
+  tips = [],
   className = ""
 }: StrategyCardProps) {
   const getIcon = (iconName: string) => {
@@ -95,6 +95,9 @@ export default function StrategyCard({
       <motion.div variants={fadeInUp}>
         <h4 className="font-semibold text-neutral-900 mb-3 text-center sm:text-left">Implementation Steps:</h4>
         <div className="space-y-3 mb-4">
+          {steps.length === 0 ? (
+            <p className="text-sm text-neutral-600">Steps are being prepared.</p>
+          ) : null}
           {steps.map((step, index) => (
             <motion.div
               key={index}

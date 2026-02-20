@@ -8,7 +8,7 @@ interface MobileStrategyCardProps {
   difficulty: "Easy" | "Medium" | "Hard"
   timeframe: string
   impact: "Low" | "Medium" | "High"
-  steps: string[]
+  steps?: string[]
   tips?: string[]
   icon?: "target" | "users" | "zap" | "message-circle" | "layout-grid" | "gauge" | "scale"
   className?: string
@@ -20,8 +20,8 @@ export function MobileStrategyCard({
   difficulty,
   timeframe,
   impact,
-  steps,
-  tips,
+  steps = [],
+  tips = [],
   className = ""
 }: MobileStrategyCardProps) {
   return (
@@ -63,7 +63,7 @@ export function MobileStrategyCard({
       </div>
       
       {/* Tips */}
-      {tips && tips.length > 0 && (
+      {tips.length > 0 && (
         <div>
           <h4 className="text-sm font-medium text-neutral-900 mb-3">Tips:</h4>
           <ul className="space-y-2">

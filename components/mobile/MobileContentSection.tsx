@@ -115,13 +115,13 @@ export function MobileParagraph({
 }
 
 interface MobileListProps {
-  items: string[]
+  items?: string[]
   type?: "bullet" | "numbered"
   className?: string
 }
 
 export function MobileList({
-  items,
+  items = [],
   type = "bullet",
   className = ""
 }: MobileListProps) {
