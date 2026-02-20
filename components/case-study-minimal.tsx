@@ -91,6 +91,7 @@ export default function MinimalCaseStudyPage({
   summary,
   heroButton,
   showDentalWebsiteSystemLink = false,
+  caseStudySlug,
   quickFacts,
   sections,
   comingSoon,
