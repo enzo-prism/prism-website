@@ -3,6 +3,7 @@ import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
 import { CaseStudySchema } from "@/components/schema-markup"
 import SocialShare from "@/components/social-share"
+import { CaseStudyWorkHighlights } from "@/components/case-studies/CaseStudyWorkHighlights"
 import TrackedLink from "@/components/tracked-link"
 import PixelishIcon from "@/components/pixelish/PixelishIcon"
 import { Button } from "@/components/ui/button"
@@ -44,6 +45,7 @@ export default function TownCentreDentalCaseStudy() {
                   </Link>
                 </Button>
               </div>
+              <CaseStudyWorkHighlights caseStudySlug="town-centre-dental" />
             </div>
           </div>
         </section>

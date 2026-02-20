@@ -70,6 +70,7 @@ const schema = {
 export default function PracticeTransitionsInstituteCaseStudy() {
   return (
     <MinimalCaseStudyPage
+      caseStudySlug="practice-transitions-institute"
       pageTrackingTitle="Practice Transitions Institute Case Study"
       heroTitle="practice transitions institute — consulting launchpad"
       heroSubtitle="making complex practice transitions easy to understand online"

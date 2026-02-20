@@ -3,6 +3,7 @@ import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
 import { CaseStudySchema } from "@/components/schema-markup"
 import SocialShare from "@/components/social-share"
+import { CaseStudyWorkHighlights } from "@/components/case-studies/CaseStudyWorkHighlights"
 import TrackedLink from "@/components/tracked-link"
 import PixelishIcon from "@/components/pixelish/PixelishIcon"
 import { Button } from "@/components/ui/button"
@@ -37,7 +38,7 @@ export default function LagunaBeachDentalArtsCaseStudy() {
           <div className="container mx-auto px-4 md:px-6 max-w-3xl">
             <div className="space-y-6">
               <div className="inline-block px-4 py-1 bg-neutral-100 rounded-full text-sm lowercase">case study</div>
-              <h1 className="text-3xl font-bold tracking-tighter lowercase sm:text-4xl">
+            <h1 className="text-3xl font-bold tracking-tighter lowercase sm:text-4xl">
                 post‑m&a relaunch for laguna beach dental arts
               </h1>
               <p className="text-xl text-neutral-600 lowercase">
@@ -50,6 +51,7 @@ export default function LagunaBeachDentalArtsCaseStudy() {
                   </Link>
                 </Button>
               </div>
+              <CaseStudyWorkHighlights caseStudySlug="laguna-beach-dental-arts" />
             </div>
           </div>
         </section>

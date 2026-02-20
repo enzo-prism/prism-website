@@ -4,6 +4,7 @@ import { CaseStudySchema } from "@/components/schema-markup"
 import SocialShare from "@/components/social-share"
 import TrackedLink from "@/components/tracked-link"
 import { CaseStudyCallout } from "@/components/case-studies/CaseStudyCallout"
+import { CaseStudyWorkHighlights } from "@/components/case-studies/CaseStudyWorkHighlights"
 import { CaseStudySectionNav } from "@/components/case-studies/CaseStudySectionNav"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -67,6 +68,7 @@ type HeroButtonConfig = {
 
 interface MinimalCaseStudyProps {
   pageTrackingTitle: string
+  caseStudySlug: string
   heroEyebrow?: string
   heroTitle: string
   heroSubtitle?: string
@@ -149,6 +151,8 @@ export default function MinimalCaseStudyPage({
             </div>
           </div>
         </section>
+
+        <CaseStudyWorkHighlights caseStudySlug={caseStudySlug} />
 
         {sections?.length ? (
           <CaseStudySectionNav

@@ -3,6 +3,7 @@ import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
 import { CaseStudySchema } from "@/components/schema-markup"
 import SocialShare from "@/components/social-share"
+import { CaseStudyWorkHighlights } from "@/components/case-studies/CaseStudyWorkHighlights"
 import TrackedLink from "@/components/tracked-link"
 import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
@@ -594,6 +595,7 @@ export default function MatariaDentalGroupCaseStudy() {
                 ))}
               </div>
             </div>
+            <CaseStudyWorkHighlights caseStudySlug="mataria-dental-group" />
 
             <div className="grid items-start gap-8 lg:grid-cols-[1.2fr_1fr]">
               <div className="overflow-hidden rounded-xl border bg-white shadow-sm">

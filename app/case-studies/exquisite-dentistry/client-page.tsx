@@ -2,6 +2,7 @@ import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
 import { CaseStudySchema } from "@/components/schema-markup"
 import SocialShare from "@/components/social-share"
+import { CaseStudyWorkHighlights } from "@/components/case-studies/CaseStudyWorkHighlights"
 import { Button } from "@/components/ui/button"
 const EXQUISITE_SITE = "https://exquisitedentistryla.com/?utm_source=chatgpt.com"
 const EXQUISITE_SITE_TITLE = "Exquisite Dentistry: Cosmetic Dentist Los Angeles | Dr. Aguil"
@@ -69,6 +70,7 @@ export default function ExquisiteDentistryCaseStudy() {
         <div className="container mx-auto px-4 md:px-6 max-w-3xl py-16 md:py-24">
           <article className="prose prose-neutral dark:prose-invert max-w-none">
             <h1>Case Study: Exquisite Dentistry — Turning a Legacy Beverly Hills Brand Into a Modern, Trackable Growth Engine</h1>
+            <CaseStudyWorkHighlights caseStudySlug="exquisite-dentistry" />
             <p>
               <strong>High-end cosmetic dentistry</strong>
             </p>

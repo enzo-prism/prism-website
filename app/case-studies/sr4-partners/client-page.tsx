@@ -64,6 +64,7 @@ const schema = {
 export default function Sr4PartnersCaseStudy() {
   return (
     <MinimalCaseStudyPage
+      caseStudySlug="sr4-partners"
       pageTrackingTitle="sr4 Partners Case Study"
       heroTitle="sr4 partners — consulting presence refresh"
       heroSubtitle="translating culture-first advisory work into a modern digital presence"

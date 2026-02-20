@@ -62,6 +62,7 @@ const schema = {
 export default function MichaelNjoCaseStudy() {
   return (
     <MinimalCaseStudyPage
+      caseStudySlug="michael-njo-dds"
       pageTrackingTitle="Michael Njo, DDS Case Study"
       heroTitle="michael njo, dds — modern dental presence"
       heroSubtitle="credibility-first website with clear services, patient flows, and tracking"

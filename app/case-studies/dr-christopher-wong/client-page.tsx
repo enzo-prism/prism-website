@@ -4,6 +4,7 @@ import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
 import { CaseStudySchema } from "@/components/schema-markup"
 import SocialShare from "@/components/social-share"
+import { CaseStudyWorkHighlights } from "@/components/case-studies/CaseStudyWorkHighlights"
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -215,6 +216,7 @@ export default function ChristopherWongCaseStudy() {
           <article className="prose prose-neutral dark:prose-invert max-w-none">
             <p>case study</p>
             <h1>{CASE_STUDY_TITLE}</h1>
+            <CaseStudyWorkHighlights caseStudySlug="dr-christopher-wong" />
             <p>
               <strong>a long-cycle success story: from handoff uncertainty to a modern, trusted growth system</strong>
             </p>

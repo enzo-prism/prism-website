@@ -64,6 +64,7 @@ const schema = {
 export default function LeadershipRetreatCaseStudy() {
   return (
     <MinimalCaseStudyPage
+      caseStudySlug="leadership-retreat"
       pageTrackingTitle="Leadership Retreat Case Study"
       heroTitle="leadership retreat — conversion-first landing experience"
       heroSubtitle="making it easy to review the agenda, trust the experience, and apply fast"

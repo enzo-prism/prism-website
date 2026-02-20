@@ -64,6 +64,7 @@ const schema = {
 export default function BelizeKidsFoundationCaseStudy() {
   return (
     <MinimalCaseStudyPage
+      caseStudySlug="belize-kids-foundation"
       pageTrackingTitle="Belize Kids Foundation Case Study"
       heroTitle="belize kids foundation — nonprofit story hub"
       heroSubtitle="amplifying youth programs with a clear, uplifting digital experience"

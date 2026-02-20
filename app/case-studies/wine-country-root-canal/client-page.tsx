@@ -70,6 +70,7 @@ const schema = {
 export default function WineCountryRootCanalCaseStudy() {
   return (
     <MinimalCaseStudyPage
+      caseStudySlug="wine-country-root-canal"
       pageTrackingTitle="Wine Country Root Canal Case Study"
       heroTitle="wine country root canal — endodontic growth system"
       heroSubtitle="pairing specialty credibility with a smooth patient journey"

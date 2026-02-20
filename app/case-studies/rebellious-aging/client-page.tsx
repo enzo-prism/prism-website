@@ -64,6 +64,7 @@ const schema = {
 export default function RebelliousAgingCaseStudy() {
   return (
     <MinimalCaseStudyPage
+      caseStudySlug="rebellious-aging"
       pageTrackingTitle="Rebellious Aging Case Study"
       heroTitle="rebellious aging — community platform foundations"
       heroSubtitle="building a welcoming digital home for every stage of the journey"

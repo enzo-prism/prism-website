@@ -3,6 +3,7 @@ import Navbar from "@/components/navbar"
 import { CaseStudySchema } from "@/components/schema-markup"
 import { Button } from "@/components/ui/button"
 import SocialShare from "@/components/social-share"
+import { CaseStudyWorkHighlights } from "@/components/case-studies/CaseStudyWorkHighlights"
 import Image from "next/image"
 import Link from "next/link"
 
@@ -22,6 +23,7 @@ export default function OlympicBootworksCaseStudy() {
           <article className="prose prose-neutral dark:prose-invert max-w-none">
             <p>Case Study</p>
             <h1>{CASE_STUDY_TITLE}</h1>
+            <CaseStudyWorkHighlights caseStudySlug="olympic-bootworks" />
             <p>
               Olympic Bootworks already had the hard part: a legendary reputation, Olympians in the fitting room, and customers who drive hours to get it
               done right.

@@ -64,6 +64,7 @@ const schema = {
 export default function WeAreSaplingsCaseStudy() {
   return (
     <MinimalCaseStudyPage
+      caseStudySlug="we-are-saplings"
       pageTrackingTitle="We Are Saplings Case Study"
       heroTitle="we are saplings — education platform foundations"
       heroSubtitle="pairing joyful storytelling with a modern enrollment journey"

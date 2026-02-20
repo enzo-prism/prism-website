@@ -3,6 +3,7 @@ import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
 import { CaseStudySchema } from "@/components/schema-markup"
 import SocialShare from "@/components/social-share"
+import { CaseStudyWorkHighlights } from "@/components/case-studies/CaseStudyWorkHighlights"
 import TrackedLink from "@/components/tracked-link"
 import PixelishIcon from "@/components/pixelish/PixelishIcon"
 import { Button } from "@/components/ui/button"
@@ -35,17 +36,18 @@ export default function FamilyFirstSmileCareCaseStudy() {
           <div className="container mx-auto px-4 md:px-6 max-w-3xl">
             <div className="space-y-6">
               <div className="inline-block px-4 py-1 bg-neutral-100 rounded-full text-sm lowercase">case study</div>
-              <h1 className="text-3xl font-bold tracking-tighter lowercase sm:text-4xl">family‑focused website for family first smile care</h1>
-              <p className="text-xl text-neutral-600 lowercase">clear services, comfort highlights, and conversion‑friendly flows</p>
-              <div className="flex flex-wrap items-center gap-3">
-                <Button asChild variant="outline" className="rounded-full lowercase">
-                  <Link href={CLIENT_SITE} target="_blank" rel="noreferrer">
-                    visit famfirstsmile.com
-                  </Link>
-                </Button>
-              </div>
+            <h1 className="text-3xl font-bold tracking-tighter lowercase sm:text-4xl">family‑focused website for family first smile care</h1>
+            <p className="text-xl text-neutral-600 lowercase">clear services, comfort highlights, and conversion‑friendly flows</p>
+            <div className="flex flex-wrap items-center gap-3">
+              <Button asChild variant="outline" className="rounded-full lowercase">
+                <Link href={CLIENT_SITE} target="_blank" rel="noreferrer">
+                  visit famfirstsmile.com
+                </Link>
+              </Button>
             </div>
+            <CaseStudyWorkHighlights caseStudySlug="family-first-smile-care" />
           </div>
+        </div>
         </section>
 
         <CaseStudySectionNav sections={[...sectionNav]} containerClassName="max-w-3xl" />

@@ -1,6 +1,7 @@
 import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
 import { CaseStudySchema } from "@/components/schema-markup"
+import { CaseStudyWorkHighlights } from "@/components/case-studies/CaseStudyWorkHighlights"
 import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
 import { CASE_STUDIES } from "@/lib/case-study-data"
@@ -31,6 +32,7 @@ export default function SaorsaGrowthPartnersCaseStudy() {
           <div className="container mx-auto max-w-3xl px-4 md:px-6 space-y-4 text-left">
             <p className="text-xs font-semibold uppercase tracking-[0.3em] text-neutral-500">case study</p>
             <h1 className="text-3xl font-bold tracking-tight lowercase sm:text-4xl">Saorsa Growth Partners</h1>
+            <CaseStudyWorkHighlights caseStudySlug="saorsa-growth-partners" />
             <div className="flex flex-wrap items-center gap-3 text-sm text-neutral-600 lowercase">
               <span className="inline-flex items-center gap-2 rounded-full border border-neutral-200 px-3 py-1 font-semibold text-neutral-800">
                 consulting

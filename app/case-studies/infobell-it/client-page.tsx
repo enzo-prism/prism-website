@@ -64,6 +64,7 @@ const schema = {
 export default function InfobellItCaseStudy() {
   return (
     <MinimalCaseStudyPage
+      caseStudySlug="infobell-it"
       pageTrackingTitle="Infobell IT Case Study"
       heroTitle="infobell it — saas enablement foundations"
       heroSubtitle="clarifying a technical offer with a modern, modular web home"
