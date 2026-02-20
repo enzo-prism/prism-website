@@ -349,7 +349,11 @@ export function CaseStudyWorkHighlights({ caseStudySlug }: CaseStudyWorkHighligh
       : getServiceColor(profile, selectedItem.name)
     : undefined
   const SelectedIcon =
-    selectedItem && (selectedItem.type === "service" ? getServiceIcon(selectedItem.name) : getTechIcon(selectedItem.name))
+    (selectedItem
+      ? selectedItem.type === "service"
+        ? getServiceIcon(selectedItem.name)
+        : getTechIcon(selectedItem.name)
+      : FALLBACK_SERVICE_ICON)
 
   if (!profile.services.length && !profile.techStack.length) {
     return null
