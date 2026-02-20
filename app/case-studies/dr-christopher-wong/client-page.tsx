@@ -179,6 +179,33 @@ const proofRows = [
   },
 ]
 
+const RESEARCH_EVIDENCE: Array<{ label: string; window: string; status: string; source: string }> = [
+  {
+    label: "Repo history",
+    window: "2025-03-22 → 2026-02-11",
+    status: "full history reviewed",
+    source: "github.com/enzo-prism/chris-dentist.git",
+  },
+  {
+    label: "GA data",
+    window: "2023-01 → 2026-02",
+    status: "earliest-to-latest audited",
+    source: "local data/ga-report-503642498-2023-01.json through 2026-02 snapshots",
+  },
+  {
+    label: "GSC data",
+    window: "2023-01 → 2026-02",
+    status: "earliest-to-latest audited",
+    source: "local data/reports/gsc-chriswongdds-com-2023-01.json through 2026-02.json",
+  },
+  {
+    label: "Ads data",
+    window: "2026-02-18 snapshot",
+    status: "historical exports not present in workspace",
+    source: "most recent live campaign pull (policy + targeting constraints reviewed)",
+  },
+]
+
 export default function ChristopherWongCaseStudy() {
   return (
     <div className="flex min-h-screen flex-col">
@@ -257,6 +284,30 @@ export default function ChristopherWongCaseStudy() {
               analytics
             </p>
 
+            <h2>research foundation used for this write</h2>
+            <p>
+              we only wrote this update after completing a full-stack evidence pass: repo timeline, full GA + GSC windows, and latest ads/operations snapshot.
+              this is the exact evidence layer behind each section below.
+            </p>
+            <div className="grid gap-3">
+              {RESEARCH_EVIDENCE.map((item) => (
+                <Card key={item.label}>
+                  <CardHeader>
+                    <CardTitle>{item.label}</CardTitle>
+                    <CardDescription>{item.window}</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-sm text-muted-foreground">
+                      <span className="font-medium">status:</span> {item.status}
+                    </p>
+                    <p className="text-sm text-muted-foreground mt-1">
+                      <span className="font-medium">source:</span> {item.source}
+                    </p>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+
             <div className="mt-8 grid gap-4 md:grid-cols-2">
               {summaryCards.map((card) => (
                 <Card key={card.label}>
@@ -299,7 +350,8 @@ export default function ChristopherWongCaseStudy() {
 
             <h2>full-cycle performance: GA + GSC trajectory</h2>
             <p>
-              below are the relationship metrics we can verify across the longest available historical windows: GA from 2025-09 and GSC from 2024-10.
+              below are the relationship metrics we can verify across the full audited windows and the latest 6-month subset shown below:
+              GA 2023-01 → 2026-02 and GSC 2023-01 → 2026-02.
             </p>
 
             <div className="grid gap-6 md:grid-cols-2">
@@ -476,6 +528,35 @@ export default function ChristopherWongCaseStudy() {
               </CardContent>
             </Card>
 
+            <h2>live-page proof links used in this case study</h2>
+            <ul className="text-sm text-muted-foreground list-disc pl-5 space-y-1">
+              <li>
+                <Link href="https://www.chriswongdds.com/" className={linkClassName} target="_blank" rel="noopener noreferrer">
+                  homepage
+                </Link>
+              </li>
+              <li>
+                <Link href="https://www.chriswongdds.com/schedule" className={linkClassName} target="_blank" rel="noopener noreferrer">
+                  scheduling flow
+                </Link>
+              </li>
+              <li>
+                <Link href="https://www.chriswongdds.com/about" className={linkClassName} target="_blank" rel="noopener noreferrer">
+                  about / trust page
+                </Link>
+              </li>
+              <li>
+                <Link href="https://www.chriswongdds.com/our-services" className={linkClassName} target="_blank" rel="noopener noreferrer">
+                  services architecture
+                </Link>
+              </li>
+              <li>
+                <Link href="/podcasts" className={linkClassName}>
+                  podcast interview artifact
+                </Link>
+              </li>
+            </ul>
+
             <h2>what actually moved the needle</h2>
             <div className="not-prose overflow-hidden rounded-md border border-border/50">
               <Table>
@@ -497,6 +578,16 @@ export default function ChristopherWongCaseStudy() {
                 </TableBody>
               </Table>
             </div>
+
+            <h2>what is already proven vs what is in progress</h2>
+            <ul className="text-sm text-muted-foreground list-disc pl-5 space-y-1">
+              <li>
+                <strong>Proven:</strong> unified reporting cadence, trust-oriented brand rebuild, and measurable SEO movement in long-form search visibility indicators.
+              </li>
+              <li>
+                <strong>In progress:</strong> deeper paid-media scaling, stronger service-intent conversion concentration, and sustained improvement of organic page authority.
+              </li>
+            </ul>
 
             <h2>the end-state we are building toward</h2>
             <p>
