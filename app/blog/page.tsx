@@ -12,6 +12,10 @@ import SeoTextSection from "@/components/seo-text-section"
 import SimpleBlogGrid from "@/components/simple-blog-grid"
 import SimpleBlogPostCard from "@/components/simple-blog-post-card"
 import { getAllPosts } from "@/lib/mdx-data"
+import {
+  getBlogFilterFromCategory,
+  normalizeBlogFilter,
+} from "@/lib/blog-topic-filters"
 import BlogCTAButtonLazy from "./BlogCTAButtonLazy"
 import { buildRouteMetadata } from "@/lib/seo/metadata"
 
@@ -33,24 +37,16 @@ export default async function Blog({
 
   const posts = await getAllPosts()
   if (!posts) notFound()
+  const postsWithTopic = posts.map((post) => ({
+    ...post,
+    topic: getBlogFilterFromCategory(post.category),
+  }))
 
-  const categoryMap = new Map<string, string>()
-  posts.forEach((post) => {
-    if (!categoryMap.has(post.categorySlug)) {
-      categoryMap.set(post.categorySlug, post.category)
-    }
-  })
-  const categories = Array.from(categoryMap.entries()).map(([slug, label]) => ({ slug, label }))
-
-  const allowedCategories = new Set(categories.map((c) => c.slug.toLowerCase()))
-  const selectedCategory =
-    rawCategory && rawCategory.toLowerCase() !== "all" && allowedCategories.has(rawCategory.toLowerCase())
-      ? rawCategory.toLowerCase()
-      : "all"
+  const selectedCategory = normalizeBlogFilter(rawCategory.trim().toLowerCase())
 
   const normalizedQuery = searchQuery.trim().toLowerCase()
-  const filteredPosts = posts.filter((post) => {
-    if (selectedCategory !== "all" && post.categorySlug !== selectedCategory) return false
+  const filteredPosts = postsWithTopic.filter((post) => {
+    if (selectedCategory !== "all" && post.topic !== selectedCategory) return false
     if (!normalizedQuery) return true
 
     return (
@@ -90,7 +86,7 @@ export default async function Blog({
           </div>
         </section>
 
-        <BlogFilterNavigationServer categories={categories} selectedCategory={selectedCategory} query={searchQuery} />
+        <BlogFilterNavigationServer selectedCategory={selectedCategory} query={searchQuery} />
 
         <section className="py-8 md:py-12">
           <div className="container mx-auto px-4 md:px-6">

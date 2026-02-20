@@ -3,16 +3,15 @@ import { Search, X } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import {
+  BLOG_FILTER_ITEMS,
+  type BlogFilterBucket,
+  normalizeBlogFilter,
+} from "@/lib/blog-topic-filters"
 import { cn } from "@/lib/utils"
 
-type BlogCategory = {
-  label: string
-  slug: string
-}
-
 interface BlogFilterNavigationServerProps {
-  categories: BlogCategory[]
-  selectedCategory: string
+  selectedCategory: BlogFilterBucket | string
   query: string
   className?: string
 }
@@ -35,18 +34,12 @@ function buildBlogUrl({ category, query }: { category: string; query: string }) 
 }
 
 export default function BlogFilterNavigationServer({
-  categories,
   selectedCategory,
   query,
   className,
 }: BlogFilterNavigationServerProps) {
-  const normalizedSelected = selectedCategory.trim().toLowerCase() || "all"
+  const normalizedSelected = normalizeBlogFilter(selectedCategory).toLowerCase()
   const normalizedQuery = query.trim()
-
-  const buttonCategories = [
-    { slug: "all", label: "all" },
-    ...categories.map((c) => ({ slug: c.slug, label: c.label })),
-  ]
 
   return (
     <div
@@ -96,7 +89,7 @@ export default function BlogFilterNavigationServer({
 
           <div className="w-full overflow-x-auto scrollbar-hide pb-1">
             <div className="flex w-max min-w-full flex-nowrap items-center justify-start gap-2">
-              {buttonCategories.map((category) => {
+              {BLOG_FILTER_ITEMS.map((category) => {
                 const slug = category.slug.toLowerCase()
                 const isActive = slug === normalizedSelected
 
@@ -106,11 +99,18 @@ export default function BlogFilterNavigationServer({
                     href={buildBlogUrl({ category: slug, query: normalizedQuery })}
                     prefetch={false}
                     className={cn(
-                      "shrink-0 rounded-md border border-border/60 bg-muted/40 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.12em] text-muted-foreground transition-colors duration-200 hover:bg-muted/60 hover:text-foreground",
+                      "shrink-0 inline-flex items-center gap-2 rounded-md border border-border/60 bg-muted/40 px-3 py-2 text-xs font-semibold tracking-[0.12em] text-muted-foreground transition-colors duration-200 hover:bg-muted/60 hover:text-foreground",
                       isActive && "border-primary bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground",
                     )}
                     aria-current={isActive ? "true" : undefined}
                   >
+                    {category.icon ? (
+                      <category.icon
+                        className={cn("h-3.5 w-3.5 shrink-0", isActive ? "text-primary-foreground" : "text-muted-foreground")}
+                        aria-hidden="true"
+                        focusable="false"
+                      />
+                    ) : null}
                     {category.label}
                   </Link>
                 )

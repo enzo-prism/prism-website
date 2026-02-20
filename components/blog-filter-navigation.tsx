@@ -6,24 +6,35 @@ import { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
+import {
+  BLOG_FILTER_ITEMS,
+  type BlogFilterBucket,
+  isValidBlogFilter,
+} from "@/lib/blog-topic-filters"
 
 interface BlogFilterNavigationProps {
-  categories: Array<{ label: string; slug: string }>
   posts: Array<{
+    topic: Exclude<BlogFilterBucket, "all">
     category: string
     categorySlug: string
     title: string
     description: string
     date: string
   }>
-  selectedCategory: string
-  onCategoryChange: (categorySlug: string) => void
-  onFilteredPostsChange: (posts: any[]) => void
+  selectedCategory: BlogFilterBucket
+  onCategoryChange: (categorySlug: BlogFilterBucket) => void
+  onFilteredPostsChange: (posts: Array<{
+    topic: Exclude<BlogFilterBucket, "all">
+    category: string
+    categorySlug: string
+    title: string
+    description: string
+    date: string
+  }>) => void
   className?: string
 }
 
 export default function BlogFilterNavigation({
-  categories,
   posts,
   selectedCategory,
   onCategoryChange,
@@ -36,7 +47,7 @@ export default function BlogFilterNavigation({
     let filtered = [...posts]
 
     if (selectedCategory !== "all") {
-      filtered = filtered.filter((post) => post.categorySlug === selectedCategory)
+      filtered = filtered.filter((post) => post.topic === selectedCategory)
     }
 
     if (searchQuery) {
@@ -53,10 +64,7 @@ export default function BlogFilterNavigation({
     onFilteredPostsChange(filtered)
   }, [posts, searchQuery, selectedCategory, onFilteredPostsChange])
 
-  const buttonCategories = [
-    { slug: "all", label: "All" },
-    ...categories.map((c) => ({ slug: c.slug, label: c.label })),
-  ]
+  const buttonCategories = BLOG_FILTER_ITEMS
 
   return (
     <div
@@ -98,7 +106,12 @@ export default function BlogFilterNavigation({
             type="single"
             value={selectedCategory}
             onValueChange={(value) => {
-              if (value) onCategoryChange(value)
+              if (!value) return
+
+              const normalizedValue = value.toLowerCase()
+              if (isValidBlogFilter(normalizedValue)) {
+                onCategoryChange(normalizedValue)
+              }
             }}
             wrap={false}
             className="w-full flex-nowrap justify-start gap-2 overflow-x-auto scrollbar-hide pb-1"
@@ -107,8 +120,15 @@ export default function BlogFilterNavigation({
               <ToggleGroupItem
                 key={category.slug}
                 value={category.slug}
-                className="rounded-md border border-border/60 bg-muted/20 px-4 py-2 text-xs font-semibold text-muted-foreground transition-colors duration-200 hover:bg-muted/40 hover:text-foreground data-[state=on]:border-white/30 data-[state=on]:bg-primary data-[state=on]:text-primary-foreground"
+                className="inline-flex items-center gap-2 rounded-md border border-border/60 bg-muted/20 px-3 py-2 text-xs font-semibold tracking-[0.12em] text-muted-foreground transition-colors duration-200 hover:bg-muted/40 hover:text-foreground data-[state=on]:border-white/30 data-[state=on]:bg-primary data-[state=on]:text-primary-foreground"
               >
+                {category.icon ? (
+                  <category.icon
+                    className="h-3.5 w-3.5"
+                    aria-hidden="true"
+                    focusable="false"
+                  />
+                ) : null}
                 {category.label}
               </ToggleGroupItem>
             ))}

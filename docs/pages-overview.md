@@ -93,6 +93,7 @@ Quick reference for the pages we edit most often.
 
 ## Homepage (`app/client-page.tsx`)
 
+- `app/client-page.tsx` now renders as a server component by default; interactive sections are mounted as client islands via `next/dynamic` (`UnicornHeroScene`, `SearchConsoleSnapshotsRail`, FAQ block, roadmap form, and `WallOfLoveCarousel`) to keep above-the-fold HTML lightweight.
 - The hero proof strip uses `HeroReviewSliderCard` (`components/home/HeroReviewSliderCard.tsx`) with two curated quotes and the “250+ more” CTA kept above the fold.
 - Hero copy, service strip, and CTAs live in `app/client-page.tsx` with CTA tracking in `components/home/HeroCtas.tsx`.
 - The hero client logo circles use click/tap tooltips; keep the label text in `HERO_CLIENT_ICONS` aligned with the logos.
@@ -110,6 +111,7 @@ Quick reference for the pages we edit most often.
 - Testimonial copy for the proof strip lives in `content/wall-of-love-data.tsx`; adjust `HERO_PRIORITY_IDS` to control the surfaced quotes.
 - The impact graph section below the hero is `components/home/ImpactGraphSection.tsx`, which lazy-mounts `FounderImpactGraph` so Recharts only loads when near the viewport.
 - The Wall of Love slider uses `components/home/WallOfLoveCarousel.tsx` and a native scroll-snap rail (no Embla); adjust the quote pool via `pinned` / `heroSpotlight` in `content/wall-of-love-data.tsx`.
+- Runtime telemetry helpers (`AnalyticsProvider`, `CopyPageMarkdownButton`, Sentry/monitoring clients, toaster) are initialized in `components/runtime-client-shell.tsx`, mounted from `app/layout.tsx`.
 
 ## Wall Of Love (`app/wall-of-love/client-page.tsx`)
 

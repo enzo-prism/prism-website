@@ -27,20 +27,79 @@ const aliasMap: Record<string, string> = {
   "/growth": "/prism-flywheel",
 }
 
-const topIconMap: Record<string, { src: string; motionClass: string }> = {
-  home: { src: "/pixelish/house.svg", motionClass: "nav-icon-home" },
-  "our story": { src: "/pixelish/user.svg", motionClass: "nav-icon-story" },
-  software: { src: "/pixelish/device-monitor.svg", motionClass: "nav-icon-software" },
-  blog: { src: "/pixelish/document-letter.svg", motionClass: "nav-icon-blog" },
-  "case studies": { src: "/pixelish/folder.svg", motionClass: "nav-icon-case-studies" },
-  "wall of love": { src: "/pixelish/emoji-heart.svg", motionClass: "nav-icon-love" },
-  start: { src: "/pixelish/emoji-rocket.svg", motionClass: "nav-icon-start" },
+type TopNavIconConfig = {
+  src: string
+  motionClass: string
+  activeColor: string
 }
 
-const getTopIcon = (label?: string) => {
+const topIconMap: Record<string, TopNavIconConfig> = {
+  home: {
+    src: "/pixelish/house.svg",
+    motionClass: "nav-icon-home",
+    activeColor: "#ffafed",
+  },
+  "our story": {
+    src: "/pixelish/user.svg",
+    motionClass: "nav-icon-story",
+    activeColor: "#9effd1",
+  },
+  software: {
+    src: "/pixelish/device-monitor.svg",
+    motionClass: "nav-icon-software",
+    activeColor: "#9cd6ff",
+  },
+  blog: {
+    src: "/pixelish/document-letter.svg",
+    motionClass: "nav-icon-blog",
+    activeColor: "#ffdf8e",
+  },
+  "case studies": {
+    src: "/pixelish/folder.svg",
+    motionClass: "nav-icon-case-studies",
+    activeColor: "#c9a2ff",
+  },
+  "wall of love": {
+    src: "/pixelish/emoji-heart.svg",
+    motionClass: "nav-icon-love",
+    activeColor: "#ffb4c8",
+  },
+  start: {
+    src: "/pixelish/emoji-rocket.svg",
+    motionClass: "nav-icon-start",
+    activeColor: "#9eff9a",
+  },
+}
+
+const buildActivePixelishIcon = (src: string, color: string) => {
+  return (
+    <span
+      aria-hidden="true"
+      className="inline-block h-5 w-5 shrink-0"
+      style={{
+        backgroundColor: color,
+        maskImage: `url(${src})`,
+        maskRepeat: "no-repeat",
+        maskPosition: "center",
+        maskSize: "contain",
+        WebkitMaskImage: `url(${src})`,
+        WebkitMaskRepeat: "no-repeat",
+        WebkitMaskPosition: "center",
+        WebkitMaskSize: "contain",
+      }}
+    />
+  )
+}
+
+const getTopIcon = (label?: string, isActive = false) => {
   if (!label) return null
   const iconConfig = topIconMap[label.toLowerCase()]
   if (!iconConfig) return null
+
+  if (isActive) {
+    return buildActivePixelishIcon(iconConfig.src, iconConfig.activeColor)
+  }
+
   return (
     <PixelishIcon
       src={iconConfig.src}
@@ -52,7 +111,7 @@ const getTopIcon = (label?: string) => {
   )
 }
 
-const getNavIcon = getTopIcon
+const getNavIcon = (label?: string, isActive = false) => getTopIcon(label, isActive)
 
 type NavbarProps = {
   mobileRevealOnFirstTap?: boolean
@@ -199,7 +258,7 @@ export default function Navbar({ mobileRevealOnFirstTap = false }: NavbarProps) 
                       href={item.href}
                       onClick={() => trackNavigation(item.label, item.href!)}
                     >
-                      {getTopIcon(item.label)}
+                      {getTopIcon(item.label, isActivePath(item.href))}
                       <span>{item.label}</span>
                     </Link>
                   </NavigationMenuLink>
@@ -230,7 +289,7 @@ export default function Navbar({ mobileRevealOnFirstTap = false }: NavbarProps) 
                                 href={child.href}
                                 onClick={() => trackNavigation(child.label, child.href)}
                               >
-                                {getNavIcon(child.label)}
+                                {getNavIcon(child.label, isActivePath(child.href))}
                                 {child.label}
                               </Link>
                             </NavigationMenuLink>
@@ -269,7 +328,7 @@ export default function Navbar({ mobileRevealOnFirstTap = false }: NavbarProps) 
                           onClick={() => trackNavigation(item.label, item.href!)}
                         >
                           <span className="flex items-center gap-2">
-                            {getTopIcon(item.label)}
+                            {getTopIcon(item.label, isActivePath(item.href))}
                             {item.label}
                           </span>
                         </Link>
@@ -296,7 +355,7 @@ export default function Navbar({ mobileRevealOnFirstTap = false }: NavbarProps) 
                               }`}
                               onClick={() => trackNavigation(child.label, child.href)}
                             >
-                              {getNavIcon(child.label)}
+                              {getNavIcon(child.label, isActivePath(child.href))}
                               {child.label}
                             </Link>
                           </SheetClose>

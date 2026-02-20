@@ -1,22 +1,18 @@
-import type { ReactNode } from "react"
 import Image from "next/image"
 import Link from "next/link"
 
 import PixelishIcon from "@/components/pixelish/PixelishIcon"
 import Footer from "@/components/footer"
-import ScalingRoadmapForm from "@/components/forms/ScalingRoadmapForm"
 import HeroBenefits from "@/components/home/HeroBenefits"
 import HeroMonthlyLeadsPill from "@/components/home/HeroMonthlyLeadsPill"
-import UnicornHeroScene from "@/components/home/UnicornHeroScene"
-import WallOfLoveCarousel from "@/components/home/WallOfLoveCarousel"
-import SearchConsoleSnapshotsRail from "@/components/home/SearchConsoleSnapshotsRail"
-import Navbar from "@/components/navbar"
 import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion"
+  HomeFAQSection,
+  HomeHeroScene,
+  HomeScalingRoadmapForm,
+  HomeSearchConsoleRail,
+  HomeWallOfLoveCarousel,
+} from "@/components/home/HomeDynamicSections"
+import Navbar from "@/components/navbar"
 import { Badge } from "@/components/ui/badge"
 import SoftwareAppCards from "@/components/software/SoftwareAppCards"
 import { Button } from "@/components/ui/button"
@@ -70,7 +66,7 @@ const TRAINING_COURSES = [
 ]
 
 type FAQBlock =
-  | { type: "paragraph"; content: ReactNode }
+  | { type: "paragraph"; content: string }
   | { type: "list"; items: string[] }
 
 type FAQItem = {
@@ -99,7 +95,7 @@ const FAQ_ITEMS: FAQItem[] = [
     answer: [
       {
         type: "paragraph",
-        content: <strong>The first step is simple: book a demo.</strong>,
+        content: "The first step is simple: **book a demo.**",
       },
       {
         type: "paragraph",
@@ -126,13 +122,8 @@ const FAQ_ITEMS: FAQItem[] = [
     answer: [
       {
         type: "paragraph",
-        content: (
-          <>
-            Prism is for founders who already have <strong>product-market fit</strong>
-            --customers want what you sell--and you're ready to scale your online
-            presence without becoming the in-house marketing/tech team.
-          </>
-        ),
+        content:
+          "Prism is for founders who already have **product-market fit** -- customers want what you sell -- and you're ready to scale your online presence without becoming the in-house marketing/tech team.",
       },
       {
         type: "paragraph",
@@ -149,13 +140,8 @@ const FAQ_ITEMS: FAQItem[] = [
       },
       {
         type: "paragraph",
-        content: (
-          <>
-            Prism is <strong>not</strong> a fit if you're pre-offer, still figuring
-            out what you sell, or looking for a one-off &quot;quick website&quot; with
-            no growth system behind it.
-          </>
-        ),
+        content:
+          "Prism is **not** a fit if you're pre-offer, still figuring out what you sell, or looking for a one-off quick website with no growth system behind it.",
       },
     ],
   },
@@ -251,7 +237,7 @@ export default function ClientPage() {
       <Navbar mobileRevealOnFirstTap />
       <main className="flex-1" id="main-content" tabIndex={-1}>
         <section className={HERO_SECTION_CLASSES}>
-          <UnicornHeroScene className="absolute inset-0 z-0" />
+          <HomeHeroScene className="absolute inset-0 z-0" />
           <div className="container relative z-10 mx-auto flex justify-center px-4 sm:px-6">
             <HeroMonthlyLeadsPill />
           </div>
@@ -332,7 +318,7 @@ export default function ClientPage() {
                 </Link>
               </div>
 
-              <SearchConsoleSnapshotsRail
+              <HomeSearchConsoleRail
                 slides={HERO_SEARCH_CONSOLE_SLIDES}
                 iconSrc={HERO_SEARCH_ICON}
               />
@@ -425,35 +411,7 @@ export default function ClientPage() {
                 </h2>
               </div>
             </div>
-            <Card className="border-border/60 bg-card/90">
-              <CardContent className="p-0">
-                <Accordion type="single" collapsible className="px-6">
-                  {FAQ_ITEMS.map((item) => (
-                    <AccordionItem key={item.question} value={item.question}>
-                      <AccordionTrigger className="text-left text-base font-semibold text-foreground">
-                        {item.question}
-                      </AccordionTrigger>
-                      <AccordionContent className="space-y-3 text-sm text-muted-foreground">
-                        {item.answer.map((block, index) => {
-                          if (block.type === "list") {
-                            return (
-                              <ul key={`list-${index}`} className="space-y-2 pl-4">
-                                {block.items.map((itemText) => (
-                                  <li key={itemText} className="list-disc">
-                                    {itemText}
-                                  </li>
-                                ))}
-                              </ul>
-                            )
-                          }
-                          return <p key={`paragraph-${index}`}>{block.content}</p>
-                        })}
-                      </AccordionContent>
-                    </AccordionItem>
-                  ))}
-                </Accordion>
-              </CardContent>
-            </Card>
+            <HomeFAQSection faqItems={FAQ_ITEMS} />
           </div>
         </section>
 
@@ -536,7 +494,7 @@ export default function ClientPage() {
                         One email with the full framework and the steps to execute it.
                       </p>
                     </div>
-                    <ScalingRoadmapForm />
+                    <HomeScalingRoadmapForm />
                   </div>
                 </div>
               </div>
@@ -544,7 +502,7 @@ export default function ClientPage() {
           </div>
         </section>
 
-        <WallOfLoveCarousel enableMobileArrows />
+        <HomeWallOfLoveCarousel enableMobileArrows />
       </main>
       <Footer />
     </div>

@@ -7,13 +7,9 @@ import type React from "react"
 import { Suspense } from "react"
 import "./globals.css"
 // Import the schema components
-import AnalyticsProvider from "@/components/analytics-provider"
-import CopyPageMarkdownButton from "@/components/copy-page-markdown-button"
 import { GlobalSchemaGraph } from "@/components/schema-markup"
-import RootClientMonitors from "@/components/root-client-monitors"
+import RuntimeClientShell from "@/components/runtime-client-shell"
 import SkipToContent from "@/components/skip-to-content"
-import SentryContextProvider from "@/components/sentry-context-provider"
-import ToasterLazy from "@/components/toaster-lazy"
 import { GA_MEASUREMENT_ID, GOOGLE_ADS_ID, IS_ANALYTICS_ENABLED } from "@/lib/constants"
 
 export const metadata: Metadata = {
@@ -91,12 +87,12 @@ export default function RootLayout({
             {/* Google tag (gtag.js) */}
             <Script
               id="ga-loader"
-              strategy="afterInteractive"
+              strategy="lazyOnload"
               src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
             />
             <Script
               id="ga-config"
-              strategy="afterInteractive"
+              strategy="lazyOnload"
               dangerouslySetInnerHTML={{
                 __html: `
                   window.dataLayer = window.dataLayer || [];
@@ -132,36 +128,20 @@ export default function RootLayout({
         <meta name="theme-color" content="#000000" />
         {/* YouTube Embed Handler */}
         {/* YouTube embeds are now handled natively with iframe - no custom JavaScript needed */}
-        {/* Preconnect to Vimeo for faster video loading */}
-        <link rel="preconnect" href="https://player.vimeo.com" crossOrigin="anonymous" />
-        <link rel="preconnect" href="https://i.vimeocdn.com" crossOrigin="anonymous" />
-        <link rel="preconnect" href="https://f.vimeocdn.com" crossOrigin="anonymous" />
-        <link rel="dns-prefetch" href="https://player.vimeo.com" />
-        <link rel="dns-prefetch" href="https://i.vimeocdn.com" />
-        <link rel="dns-prefetch" href="https://f.vimeocdn.com" />
         {/* Preconnect to Cloudinary for faster image/video loading */}
         <link rel="preconnect" href="https://res.cloudinary.com" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://res.cloudinary.com" />
-        {/* Preconnect to YouTube for faster video loading */}
-        <link rel="preconnect" href="https://www.youtube.com" crossOrigin="anonymous" />
-        <link rel="preconnect" href="https://img.youtube.com" crossOrigin="anonymous" />
-        <link rel="dns-prefetch" href="https://www.youtube.com" />
-        <link rel="dns-prefetch" href="https://img.youtube.com" />
       </head>
       {/* Fonts are wired via Geist CSS variables on <html>; Tailwind's `font-sans` / `font-mono`
         resolve via `--font-sans` / `--font-mono` in `app/globals.css`.
       */}
       <body className="m-0 p-0 w-full min-h-screen font-mono antialiased">
         <SkipToContent />
-	        <GlobalSchemaGraph />
-	        <RootClientMonitors />
-	        <SentryContextProvider>
-            <ToasterLazy />
-            <Suspense fallback={null}>
-              <AnalyticsProvider>{children}</AnalyticsProvider>
-              <CopyPageMarkdownButton />
-            </Suspense>
-        </SentryContextProvider>
+        <GlobalSchemaGraph />
+        <RuntimeClientShell />
+        <Suspense fallback={null}>
+          {children}
+        </Suspense>
       </body>
     </html>
   )

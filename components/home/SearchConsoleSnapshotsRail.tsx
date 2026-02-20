@@ -122,7 +122,7 @@ export default function SearchConsoleSnapshotsRail({
                       src={slide.src}
                       alt={slide.alt}
                       fill
-                      priority={index === 0}
+                      loading={index === 0 ? "eager" : "lazy"}
                       sizes="(min-width: 1024px) 520px, (min-width: 640px) 460px, 92vw"
                       className="object-contain"
                     />

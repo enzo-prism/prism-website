@@ -8,7 +8,7 @@ import ErrorTracker from "./error-tracker"
 import ScrollTracker from "./scroll-tracker"
 
 interface AnalyticsProviderProps {
-  children: React.ReactNode
+  children?: React.ReactNode
 }
 
 export default function AnalyticsProvider({ children }: AnalyticsProviderProps) {
