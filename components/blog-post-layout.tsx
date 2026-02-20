@@ -17,6 +17,7 @@ import { cn } from '@/lib/utils'
 import { toAbsoluteUrl } from '@/lib/url'
 import BlogBackToTopButton from '@/components/blog/blog-back-to-top'
 import BlogPostFeedback from '@/components/blog/blog-post-feedback'
+import Link from 'next/link'
 
 interface Props {
   children: React.ReactNode
@@ -112,6 +113,9 @@ export default function BlogPostLayout({
       ? `${readingTimeMinutes} min read`
       : undefined
 
+  const normalizedAuthor = author.trim()
+  const isEnzoAuthor = normalizedAuthor.toLowerCase() === 'enzo sison'
+
   const isExternalLink = (href: string) => /^https?:\/\//i.test(href)
 
   const renderPrismLink = (href: string, label: string) => (
@@ -171,7 +175,17 @@ export default function BlogPostLayout({
                           &middot;
                         </span>
                         <span className="font-medium text-foreground/80 normal-case">
-                          By {author}
+                          By{" "}
+                          {isEnzoAuthor ? (
+                            <Link
+                              href="/about"
+                              className="underline underline-offset-4 transition-colors hover:text-foreground"
+                            >
+                              {author}
+                            </Link>
+                          ) : (
+                            author
+                          )}
                         </span>
                       </div>
                     </div>
