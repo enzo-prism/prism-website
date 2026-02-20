@@ -32,9 +32,10 @@ const sections = [
 ]
 
 const comingSoon = {
-  title: "metrics and testimonials coming soon",
-  description: "detailed performance lifts, patient feedback, and channel metrics will be added after the next quarter.",
-  bullets: ["organic traffic lift", "call conversion", "review velocity"],
+  title: "current outcomes snapshot",
+  description:
+    "this page now captures the strategic foundation, launch scope, and measurable signals available today. we will continue to append deeper metrics and stories as new reporting windows close.",
+  bullets: ["strategy and positioning complete", "launch and tracking foundations live", "ongoing optimization cadence in motion"],
 }
 
 const cta = {

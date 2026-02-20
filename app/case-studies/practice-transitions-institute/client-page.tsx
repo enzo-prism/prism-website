@@ -32,10 +32,10 @@ const sections = [
 ]
 
 const comingSoon = {
-  title: "deal stories and metrics coming soon",
+  title: "current outcomes snapshot",
   description:
-    "detailed transition playbooks, client spotlights, and pipeline metrics are being produced and will be layered into this study.",
-  bullets: ["video case story", "lead pipeline insights", "client testimonials"],
+    "this page now captures the strategic foundation, launch scope, and measurable signals available today. we will continue to append deeper metrics and stories as new reporting windows close.",
+  bullets: ["strategy and positioning complete", "launch and tracking foundations live", "ongoing optimization cadence in motion"],
 }
 
 const cta = {

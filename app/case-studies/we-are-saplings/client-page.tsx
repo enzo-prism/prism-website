@@ -32,10 +32,10 @@ const sections = [
 ]
 
 const comingSoon = {
-  title: "classroom stories coming soon",
+  title: "current outcomes snapshot",
   description:
-    "video spotlights, enrollment metrics, and new curriculum sneak peeks will join this case study shortly.",
-  bullets: ["video story", "enrollment performance", "curriculum highlights"],
+    "this page now captures the strategic foundation, launch scope, and measurable signals available today. we will continue to append deeper metrics and stories as new reporting windows close.",
+  bullets: ["strategy and positioning complete", "launch and tracking foundations live", "ongoing optimization cadence in motion"],
 }
 
 const cta = {

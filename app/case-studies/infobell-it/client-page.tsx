@@ -32,10 +32,10 @@ const sections = [
 ]
 
 const comingSoon = {
-  title: "performance highlights coming soon",
+  title: "current outcomes snapshot",
   description:
-    "conversion lifts, customer spotlights, and a walkthrough of the support center are in progress and will be added shortly.",
-  bullets: ["video overview", "traffic-to-demo insights", "client testimonials"],
+    "this page now captures the strategic foundation, launch scope, and measurable signals available today. we will continue to append deeper metrics and stories as new reporting windows close.",
+  bullets: ["strategy and positioning complete", "launch and tracking foundations live", "ongoing optimization cadence in motion"],
 }
 
 const cta = {

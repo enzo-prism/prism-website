@@ -32,10 +32,10 @@ const sections = [
 ]
 
 const comingSoon = {
-  title: "impact dashboard coming soon",
+  title: "current outcomes snapshot",
   description:
-    "a video walkthrough, student spotlights, and donation performance insights are being captured and will be added shortly.",
-  bullets: ["video story", "program metrics", "supporter testimonials"],
+    "this page now captures the strategic foundation, launch scope, and measurable signals available today. we will continue to append deeper metrics and stories as new reporting windows close.",
+  bullets: ["strategy and positioning complete", "launch and tracking foundations live", "ongoing optimization cadence in motion"],
 }
 
 const cta = {

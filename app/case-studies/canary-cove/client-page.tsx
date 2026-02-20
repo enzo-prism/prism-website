@@ -32,10 +32,10 @@ const sections = [
 ]
 
 const comingSoon = {
-  title: "immersive media coming soon",
+  title: "current outcomes snapshot",
   description:
-    "we are capturing new photo and video assets, plus stay highlights, to layer into the experience and this case study.",
-  bullets: ["video tour", "guest journey metrics", "concierge spotlight"],
+    "this page now captures the strategic foundation, launch scope, and measurable signals available today. we will continue to append deeper metrics and stories as new reporting windows close.",
+  bullets: ["strategy and positioning complete", "launch and tracking foundations live", "ongoing optimization cadence in motion"],
 }
 
 const cta = {
