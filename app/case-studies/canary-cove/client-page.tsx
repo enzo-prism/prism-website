@@ -1,76 +1,49 @@
 import MinimalCaseStudyPage from "@/components/case-study-minimal"
 
 const quickFacts = [
-  { label: "segment", value: "private vacation property" },
-  { label: "location", value: "san pedro, belize" },
-  { label: "client since", value: "march 2025" },
-  { label: "services", value: "website" },
-  { label: "website", value: "canarycove.com", href: "https://canarycove.com" },
-]
-
-const sections = [
-  {
-    id: "vision",
-    title: "translating the retreat experience",
-    description: "we set out to capture canary cove’s sense of place across every screen.",
-    bullets: [
-      "crafted storytelling around the private island residence, experiences, and concierge services",
-      "planned a media library that balances cinematic imagery with fast-loading performance",
-      "built itineraries and amenity highlights that help guests visualize their stay day by day",
-    ],
-  },
-  {
-    id: "digital-journey",
-    title: "designing the digital journey",
-    description: "from discovery to booking, every touchpoint needed to feel personal and effortless.",
-    bullets: [
-      "designed a polished, mobile-first site with clear inquiry paths for families, retreats, and celebrations",
-      "connected the booking conversation to crm and concierge workflows for quick follow-up",
-      "set up analytics to understand which experiences and visuals spark the most interest",
-    ],
-  },
+  { label: "status", value: "coming soon" },
+  { label: "client", value: "Canary Cove" },
+  { label: "project", value: "prism case study" },
+  { label: "scope", value: "website + growth systems" },
 ]
 
 const comingSoon = {
-  title: "immersive media coming soon",
+  title: "full case study coming soon",
   description:
-    "we are capturing new photo and video assets, plus stay highlights, to layer into the experience and this case study.",
-  bullets: ["video tour", "guest journey metrics", "concierge spotlight"],
+    "we're finalizing the complete story with verified proof: client context, prism intervention, data windows, live-page artifacts, and outcomes.",
+  bullets: ["challenge + context", "prism intervention", "verified outcomes + proof links"],
 }
 
 const cta = {
-  title: "elevate your destination’s digital welcome",
-  body: "we help hospitality brands translate on-site experiences into online storytelling that converts inquiries into stays.",
-  trackLabel: "canary cove case study cta",
+  title: "want this kind of execution for your brand?",
+  body: "book a strategy call and we’ll map the highest-leverage path for your website and growth stack.",
+  trackLabel: "canary-cove case study cta",
 }
 
 const share = {
   url: "https://www.design-prism.com/case-studies/canary-cove",
-  title: "canary cove × prism case study",
-  description: "luxury retreat storytelling with modern web design and guest journey planning.",
+  title: "Canary Cove × prism case study (coming soon)",
+  description: "full case study in progress with verified implementation details and outcomes.",
 }
 
 const schema = {
-  title: "canary cove — private retreat storytelling",
-  description:
-    "how we are crafting a refined digital experience for canary cove with immersive visuals, booking clarity, and brand cohesion.",
+  title: "Canary Cove — case study coming soon",
+  description: "full case study in progress with verified implementation details and outcomes.",
   url: "https://www.design-prism.com/case-studies/canary-cove",
   clientName: "Canary Cove",
-  outcome: "delivered storytelling, booking flows, and analytics groundwork for a private retreat experience.",
-  datePublished: "2025-03-01T00:00:00.000Z",
-  dateModified: "2025-03-01T00:00:00.000Z",
+  outcome: "Full case study narrative and verified evidence are in progress.",
+  datePublished: "2026-02-20T00:00:00.000Z",
+  dateModified: "2026-02-20T00:00:00.000Z",
 }
 
 export default function CanaryCoveCaseStudy() {
   return (
     <MinimalCaseStudyPage
-      caseStudySlug="canary-cove"
       pageTrackingTitle="Canary Cove Case Study"
-      heroTitle="canary cove — private retreat storytelling"
-      heroSubtitle="capturing a private belize retreat with an elegant, conversion-ready web experience"
-      summary="canary cove partnered with prism to translate their secluded luxury experience into an online journey that feels personal from the first glance."
+      heroTitle="Canary Cove — case study coming soon"
+      heroSubtitle="full breakdown in production"
+      summary="we're publishing the full case study soon with validated data, live implementation proof, and clear before/after outcomes."
       quickFacts={quickFacts}
-      sections={sections}
       comingSoon={comingSoon}
       share={share}
       schema={schema}

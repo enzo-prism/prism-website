@@ -1,76 +1,49 @@
 import MinimalCaseStudyPage from "@/components/case-study-minimal"
 
 const quickFacts = [
-  { label: "segment", value: "education" },
-  { label: "location", value: "to be announced" },
-  { label: "client since", value: "march 2025" },
-  { label: "services", value: "website" },
-  { label: "website", value: "wearesaplings.com", href: "https://wearesaplings.com" },
-]
-
-const sections = [
-  {
-    id: "story",
-    title: "shaping the story",
-    description: "we are saplings inspires early learners through curiosity-led curriculum.",
-    bullets: [
-      "distilled the brand voice into parent-friendly messaging anchored by outcomes, not jargon",
-      "organized program tiers so families can compare learning paths at a glance",
-      "mapped a future-ready blog and resources hub to share lesson ideas and family activities",
-    ],
-  },
-  {
-    id: "experience",
-    title: "designing the experience",
-    description: "we are crafting a joyful, accessible digital home for parents and educators alike.",
-    bullets: [
-      "designed a bright, friendly interface with clear calls to explore curriculum, schedule tours, or enroll",
-      "outlined onboarding flows that collect student needs while respecting parent time",
-      "implemented analytics guardrails to track interest by program, age group, and content category",
-    ],
-  },
+  { label: "status", value: "coming soon" },
+  { label: "client", value: "We Are Saplings" },
+  { label: "project", value: "prism case study" },
+  { label: "scope", value: "website + growth systems" },
 ]
 
 const comingSoon = {
-  title: "classroom stories coming soon",
+  title: "full case study coming soon",
   description:
-    "video spotlights, enrollment metrics, and new curriculum sneak peeks will join this case study shortly.",
-  bullets: ["video story", "enrollment performance", "curriculum highlights"],
+    "we're finalizing the complete story with verified proof: client context, prism intervention, data windows, live-page artifacts, and outcomes.",
+  bullets: ["challenge + context", "prism intervention", "verified outcomes + proof links"],
 }
 
 const cta = {
-  title: "bring your education brand to life online",
-  body: "we build joyful, conversion-ready experiences that make it easy for families to choose your programs.",
-  trackLabel: "we are saplings case study cta",
+  title: "want this kind of execution for your brand?",
+  body: "book a strategy call and we’ll map the highest-leverage path for your website and growth stack.",
+  trackLabel: "we-are-saplings case study cta",
 }
 
 const share = {
   url: "https://www.design-prism.com/case-studies/we-are-saplings",
-  title: "we are saplings × prism case study",
-  description: "education brand clarity with website design and onboarding pathways.",
+  title: "We Are Saplings × prism case study (coming soon)",
+  description: "full case study in progress with verified implementation details and outcomes.",
 }
 
 const schema = {
-  title: "we are saplings — education platform foundations",
-  description:
-    "how we are helping we are saplings launch a modern educational platform with clear storytelling and parent-friendly journeys.",
+  title: "We Are Saplings — case study coming soon",
+  description: "full case study in progress with verified implementation details and outcomes.",
   url: "https://www.design-prism.com/case-studies/we-are-saplings",
   clientName: "We Are Saplings",
-  outcome: "delivered joyful website design, enrollment flows, and analytics groundwork for education growth.",
-  datePublished: "2025-03-01T00:00:00.000Z",
-  dateModified: "2025-03-01T00:00:00.000Z",
+  outcome: "Full case study narrative and verified evidence are in progress.",
+  datePublished: "2026-02-20T00:00:00.000Z",
+  dateModified: "2026-02-20T00:00:00.000Z",
 }
 
 export default function WeAreSaplingsCaseStudy() {
   return (
     <MinimalCaseStudyPage
-      caseStudySlug="we-are-saplings"
       pageTrackingTitle="We Are Saplings Case Study"
-      heroTitle="we are saplings — education platform foundations"
-      heroSubtitle="pairing joyful storytelling with a modern enrollment journey"
-      summary="we are saplings asked prism to create a welcoming digital space that introduces their curiosity-led curriculum and guides families into the right program."
+      heroTitle="We Are Saplings — case study coming soon"
+      heroSubtitle="full breakdown in production"
+      summary="we're publishing the full case study soon with validated data, live implementation proof, and clear before/after outcomes."
       quickFacts={quickFacts}
-      sections={sections}
       comingSoon={comingSoon}
       share={share}
       schema={schema}

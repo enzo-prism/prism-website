@@ -1,77 +1,49 @@
 import MinimalCaseStudyPage from "@/components/case-study-minimal"
 
 const quickFacts = [
-  { label: "segment", value: "periodontics" },
-  { label: "location", value: "san luis obispo, ca" },
-  { label: "client since", value: "september 2024" },
-  { label: "services", value: "website, local listing optimization" },
-  { label: "website", value: "coastperiodontics.com", href: "http://coastperiodontics.com" },
-]
-
-const sections = [
-  {
-    id: "patient-story",
-    title: "reassuring the patient story",
-    description: "coast periodontics needed a web presence that calms nerves and builds trust instantly.",
-    bullets: [
-      "identified the questions patients ask after a referral and surfaced answers within two clicks",
-      "wrote procedure explainers and recovery guidance in approachable language",
-      "highlighted technology, credentials, and comfort-focused experience across the site",
-    ],
-  },
-  {
-    id: "foundation",
-    title: "foundation we delivered",
-    description: "we focused on clarity, access, and measurement—the pillars of a dependable acquisition system.",
-    bullets: [
-      "designed a calming, mobile-first site with clear appointment and referral prompts",
-      "implemented local listing optimization to reinforce expertise across the central coast",
-      "stood up analytics guardrails to monitor calls, form submissions, and referral volume",
-    ],
-  },
+  { label: "status", value: "coming soon" },
+  { label: "client", value: "Coast Periodontics and Laser Surgery" },
+  { label: "project", value: "prism case study" },
+  { label: "scope", value: "website + growth systems" },
 ]
 
 const comingSoon = {
-  title: "deep-dive metrics coming soon",
+  title: "full case study coming soon",
   description:
-    "case acceptance lifts, local visibility trends, and a clinician interview are in production and will be added to this study.",
-  bullets: ["video story", "call conversion insights", "referring dentist testimonials"],
+    "we're finalizing the complete story with verified proof: client context, prism intervention, data windows, live-page artifacts, and outcomes.",
+  bullets: ["challenge + context", "prism intervention", "verified outcomes + proof links"],
 }
 
 const cta = {
-  title: "build trust for your specialty practice",
-  body: "we help dental specialists create digital experiences that calm patients, support referrals, and prove results.",
-  trackLabel: "coast periodontics case study cta",
+  title: "want this kind of execution for your brand?",
+  body: "book a strategy call and we’ll map the highest-leverage path for your website and growth stack.",
+  trackLabel: "coast-periodontics-and-laser-surgery case study cta",
 }
 
 const share = {
   url: "https://www.design-prism.com/case-studies/coast-periodontics-and-laser-surgery",
-  title: "coast periodontics & laser surgery × prism case study",
-  description: "specialty dental growth groundwork with website design and local presence support.",
+  title: "Coast Periodontics and Laser Surgery × prism case study (coming soon)",
+  description: "full case study in progress with verified implementation details and outcomes.",
 }
 
 const schema = {
-  title: "coast periodontics & laser surgery — specialty dental foundations",
-  description:
-    "how we are partnering with coast periodontics & laser surgery to deliver a calm website, local visibility, and conversion tracking essentials.",
+  title: "Coast Periodontics and Laser Surgery — case study coming soon",
+  description: "full case study in progress with verified implementation details and outcomes.",
   url: "https://www.design-prism.com/case-studies/coast-periodontics-and-laser-surgery",
   clientName: "Coast Periodontics and Laser Surgery",
-  outcome: "delivered calming website design, local visibility, and analytics groundwork for specialty dental growth.",
-  datePublished: "2024-09-01T00:00:00.000Z",
-  dateModified: "2024-09-01T00:00:00.000Z",
+  outcome: "Full case study narrative and verified evidence are in progress.",
+  datePublished: "2026-02-20T00:00:00.000Z",
+  dateModified: "2026-02-20T00:00:00.000Z",
 }
 
-export default function CoastPeriodonticsCaseStudy() {
+export default function CoastPeriodonticsAndLaserSurgeryCaseStudy() {
   return (
     <MinimalCaseStudyPage
-      caseStudySlug="coast-periodontics-and-laser-surgery"
-      pageTrackingTitle="Coast Periodontics & Laser Surgery Case Study"
-      heroTitle="coast periodontics & laser surgery — specialty dental foundations"
-      heroSubtitle="giving patients and referring dentists a calm, trustworthy digital home"
-      summary="coast periodontics & laser surgery partnered with prism to pair a reassuring website with local visibility and measurement systems that support every referral."
-      showDentalWebsiteSystemLink
+      pageTrackingTitle="Coast Periodontics and Laser Surgery Case Study"
+      heroTitle="Coast Periodontics and Laser Surgery — case study coming soon"
+      heroSubtitle="full breakdown in production"
+      summary="we're publishing the full case study soon with validated data, live implementation proof, and clear before/after outcomes."
       quickFacts={quickFacts}
-      sections={sections}
       comingSoon={comingSoon}
       share={share}
       schema={schema}

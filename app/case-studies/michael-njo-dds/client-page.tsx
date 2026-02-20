@@ -1,75 +1,49 @@
 import MinimalCaseStudyPage from "@/components/case-study-minimal"
 
 const quickFacts = [
-  { label: "segment", value: "dentistry" },
-  { label: "location", value: "bay area, ca" },
-  { label: "client since", value: "april 2025" },
-  { label: "services", value: "website, local listing optimization, analytics" },
-  { label: "website", value: "michaelnjodds.com", href: "https://michaelnjodds.com" },
-]
-
-const sections = [
-  {
-    id: "starting-point",
-    title: "where we started",
-    description: "dr. njo needed a modern site that instantly communicates trust and drives inquiries.",
-    bullets: [
-      "audited existing pages and rewrote services to highlight expertise and patient outcomes",
-      "structured navigation for preventive, cosmetic, and restorative care with clear ctas",
-      "captured photography and reviews to reinforce credibility above the fold",
-    ],
-  },
-  {
-    id: "foundation",
-    title: "what we launched",
-    description: "a credibility-first experience backed by measurement.",
-    bullets: [
-      "custom, mobile-first site with primary calls to call or request an appointment",
-      "local listing optimization and on-page schema for high-intent services",
-      "analytics events for calls, forms, and directions to attribute growth by channel",
-    ],
-  },
+  { label: "status", value: "coming soon" },
+  { label: "client", value: "Michael Njo DDS" },
+  { label: "project", value: "prism case study" },
+  { label: "scope", value: "website + growth systems" },
 ]
 
 const comingSoon = {
-  title: "metrics and testimonials coming soon",
-  description: "detailed performance lifts, patient feedback, and channel metrics will be added after the next quarter.",
-  bullets: ["organic traffic lift", "call conversion", "review velocity"],
+  title: "full case study coming soon",
+  description:
+    "we're finalizing the complete story with verified proof: client context, prism intervention, data windows, live-page artifacts, and outcomes.",
+  bullets: ["challenge + context", "prism intervention", "verified outcomes + proof links"],
 }
 
 const cta = {
-  title: "want a credibility-first dental site?",
-  body: "we pair fast, modern design with tracking so every visit can turn into a patient relationship.",
-  trackLabel: "michael njo case study cta",
+  title: "want this kind of execution for your brand?",
+  body: "book a strategy call and we’ll map the highest-leverage path for your website and growth stack.",
+  trackLabel: "michael-njo-dds case study cta",
 }
 
 const share = {
   url: "https://www.design-prism.com/case-studies/michael-njo-dds",
-  title: "michael njo, dds × prism case study",
-  description: "credibility-first dental site with service clarity, patient flows, and analytics.",
+  title: "Michael Njo DDS × prism case study (coming soon)",
+  description: "full case study in progress with verified implementation details and outcomes.",
 }
 
 const schema = {
-  title: "michael njo, dds — modern dental presence",
-  description: "how we launched a credibility-first website with clear services, patient flows, and tracking.",
+  title: "Michael Njo DDS — case study coming soon",
+  description: "full case study in progress with verified implementation details and outcomes.",
   url: "https://www.design-prism.com/case-studies/michael-njo-dds",
-  clientName: "Michael Njo, DDS",
-  outcome: "delivered a modern dental site with clear service paths, local optimization, and analytics.",
-  datePublished: "2025-04-10T00:00:00.000Z",
-  dateModified: "2025-04-10T00:00:00.000Z",
+  clientName: "Michael Njo DDS",
+  outcome: "Full case study narrative and verified evidence are in progress.",
+  datePublished: "2026-02-20T00:00:00.000Z",
+  dateModified: "2026-02-20T00:00:00.000Z",
 }
 
-export default function MichaelNjoCaseStudy() {
+export default function MichaelNjoDdsCaseStudy() {
   return (
     <MinimalCaseStudyPage
-      caseStudySlug="michael-njo-dds"
-      pageTrackingTitle="Michael Njo, DDS Case Study"
-      heroTitle="michael njo, dds — modern dental presence"
-      heroSubtitle="credibility-first website with clear services, patient flows, and tracking"
-      summary="dr. michael njo partnered with prism to relaunch his digital presence with service clarity, trust signals, and measurement that ties calls and form fills back to marketing channels."
-      showDentalWebsiteSystemLink
+      pageTrackingTitle="Michael Njo DDS Case Study"
+      heroTitle="Michael Njo DDS — case study coming soon"
+      heroSubtitle="full breakdown in production"
+      summary="we're publishing the full case study soon with validated data, live implementation proof, and clear before/after outcomes."
       quickFacts={quickFacts}
-      sections={sections}
       comingSoon={comingSoon}
       share={share}
       schema={schema}

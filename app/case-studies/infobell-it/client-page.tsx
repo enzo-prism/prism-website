@@ -1,76 +1,49 @@
 import MinimalCaseStudyPage from "@/components/case-study-minimal"
 
 const quickFacts = [
-  { label: "segment", value: "it services" },
-  { label: "location", value: "to be announced" },
-  { label: "client since", value: "october 2025" },
-  { label: "services", value: "website" },
-  { label: "website", value: "infobellit.com", href: "https://www.infobellit.com" },
-]
-
-const sections = [
-  {
-    id: "positioning",
-    title: "positioning the platform",
-    description: "infobell it delivers managed solutions for growing companies. we began by clarifying the offer.",
-    bullets: [
-      "interviewed stakeholders to translate technical capabilities into benefit-led language",
-      "organized service tiers and industries to guide prospects to the right solution quickly",
-      "mapped a conversion path for outbound, inbound, and partner-driven leads",
-    ],
-  },
-  {
-    id: "experience-foundations",
-    title: "experience foundations",
-    description: "the first release focuses on clarity, credibility, and measurement.",
-    bullets: [
-      "designed a clean, modular website system that scales with new product lines",
-      "implemented lightweight motion and iconography to reinforce reliability without clutter",
-      "embedded analytics checkpoints to watch demo requests, support calls, and knowledge-base usage",
-    ],
-  },
+  { label: "status", value: "coming soon" },
+  { label: "client", value: "Infobell IT" },
+  { label: "project", value: "prism case study" },
+  { label: "scope", value: "website + growth systems" },
 ]
 
 const comingSoon = {
-  title: "performance highlights coming soon",
+  title: "full case study coming soon",
   description:
-    "conversion lifts, customer spotlights, and a walkthrough of the support center are in progress and will be added shortly.",
-  bullets: ["video overview", "traffic-to-demo insights", "client testimonials"],
+    "we're finalizing the complete story with verified proof: client context, prism intervention, data windows, live-page artifacts, and outcomes.",
+  bullets: ["challenge + context", "prism intervention", "verified outcomes + proof links"],
 }
 
 const cta = {
-  title: "translate complex it services into clear stories",
-  body: "we help it firms express their value in plain language and set up the systems that prove results.",
-  trackLabel: "infobell it case study cta",
+  title: "want this kind of execution for your brand?",
+  body: "book a strategy call and we’ll map the highest-leverage path for your website and growth stack.",
+  trackLabel: "infobell-it case study cta",
 }
 
 const share = {
   url: "https://www.design-prism.com/case-studies/infobell-it",
-  title: "infobell it × prism case study",
-  description: "it services storytelling through modern web design and analytics setup.",
+  title: "Infobell IT × prism case study (coming soon)",
+  description: "full case study in progress with verified implementation details and outcomes.",
 }
 
 const schema = {
-  title: "infobell it — saas enablement foundations",
-  description:
-    "how we are partnering with infobell it to build a modern website, clarify offerings, and set up performance tracking.",
+  title: "Infobell IT — case study coming soon",
+  description: "full case study in progress with verified implementation details and outcomes.",
   url: "https://www.design-prism.com/case-studies/infobell-it",
   clientName: "Infobell IT",
-  outcome: "delivered positioning, modular web design, and analytics groundwork for it services growth.",
-  datePublished: "2025-10-01T00:00:00.000Z",
-  dateModified: "2025-10-01T00:00:00.000Z",
+  outcome: "Full case study narrative and verified evidence are in progress.",
+  datePublished: "2026-02-20T00:00:00.000Z",
+  dateModified: "2026-02-20T00:00:00.000Z",
 }
 
 export default function InfobellItCaseStudy() {
   return (
     <MinimalCaseStudyPage
-      caseStudySlug="infobell-it"
       pageTrackingTitle="Infobell IT Case Study"
-      heroTitle="infobell it — saas enablement foundations"
-      heroSubtitle="clarifying a technical offer with a modern, modular web home"
-      summary="infobell it tapped prism to translate their managed it solutions into an approachable digital experience with clear messaging and trackable results."
+      heroTitle="Infobell IT — case study coming soon"
+      heroSubtitle="full breakdown in production"
+      summary="we're publishing the full case study soon with validated data, live implementation proof, and clear before/after outcomes."
       quickFacts={quickFacts}
-      sections={sections}
       comingSoon={comingSoon}
       share={share}
       schema={schema}

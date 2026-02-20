@@ -1,76 +1,49 @@
 import MinimalCaseStudyPage from "@/components/case-study-minimal"
 
 const quickFacts = [
-  { label: "segment", value: "nonprofit" },
-  { label: "location", value: "san pedro, belize" },
-  { label: "client since", value: "march 2025" },
-  { label: "services", value: "website" },
-  { label: "website", value: "belizekids.org", href: "https://belizekids.org" },
-]
-
-const sections = [
-  {
-    id: "story-first",
-    title: "putting stories first",
-    description: "families, volunteers, and donors needed a clear view of programs and immediate ways to help.",
-    bullets: [
-      "curated program pages that highlight education, wellness, and community projects with consistent layouts",
-      "wrote story prompts that keep the focus on families and measurable outcomes",
-      "defined volunteer and donor flows so people can commit support within a single visit",
-    ],
-  },
-  {
-    id: "digital-foundation",
-    title: "the digital foundation",
-    description: "we laid the groundwork for a site that is easy to maintain and ready for growth.",
-    bullets: [
-      "designed an uplifting, mobile-first experience that works across low-bandwidth connections",
-      "created reusable campaign blocks for fundraisers, events, and impact updates",
-      "stood up analytics dashboards and tagging to connect marketing efforts with donations",
-    ],
-  },
+  { label: "status", value: "coming soon" },
+  { label: "client", value: "Belize Kids Foundation" },
+  { label: "project", value: "prism case study" },
+  { label: "scope", value: "website + growth systems" },
 ]
 
 const comingSoon = {
-  title: "impact dashboard coming soon",
+  title: "full case study coming soon",
   description:
-    "a video walkthrough, student spotlights, and donation performance insights are being captured and will be added shortly.",
-  bullets: ["video story", "program metrics", "supporter testimonials"],
+    "we're finalizing the complete story with verified proof: client context, prism intervention, data windows, live-page artifacts, and outcomes.",
+  bullets: ["challenge + context", "prism intervention", "verified outcomes + proof links"],
 }
 
 const cta = {
-  title: "share the impact your nonprofit delivers",
-  body: "we build digital spaces that make it simple for supporters to understand the mission and get involved right away.",
-  trackLabel: "belize kids foundation case study cta",
+  title: "want this kind of execution for your brand?",
+  body: "book a strategy call and we’ll map the highest-leverage path for your website and growth stack.",
+  trackLabel: "belize-kids-foundation case study cta",
 }
 
 const share = {
   url: "https://www.design-prism.com/case-studies/belize-kids-foundation",
-  title: "belize kids foundation × prism case study",
-  description: "nonprofit storytelling infrastructure with website design and local presence support.",
+  title: "Belize Kids Foundation × prism case study (coming soon)",
+  description: "full case study in progress with verified implementation details and outcomes.",
 }
 
 const schema = {
-  title: "belize kids foundation — nonprofit story hub",
-  description:
-    "how we are supporting belize kids foundation with a refreshed website, donor pathways, and local visibility groundwork.",
+  title: "Belize Kids Foundation — case study coming soon",
+  description: "full case study in progress with verified implementation details and outcomes.",
   url: "https://www.design-prism.com/case-studies/belize-kids-foundation",
   clientName: "Belize Kids Foundation",
-  outcome: "delivered story-first web design, supporter pathways, and analytics groundwork for mission growth.",
-  datePublished: "2025-03-01T00:00:00.000Z",
-  dateModified: "2025-03-01T00:00:00.000Z",
+  outcome: "Full case study narrative and verified evidence are in progress.",
+  datePublished: "2026-02-20T00:00:00.000Z",
+  dateModified: "2026-02-20T00:00:00.000Z",
 }
 
 export default function BelizeKidsFoundationCaseStudy() {
   return (
     <MinimalCaseStudyPage
-      caseStudySlug="belize-kids-foundation"
       pageTrackingTitle="Belize Kids Foundation Case Study"
-      heroTitle="belize kids foundation — nonprofit story hub"
-      heroSubtitle="amplifying youth programs with a clear, uplifting digital experience"
-      summary="belize kids foundation partnered with prism to create a website that highlights programs, shares outcomes, and speeds up the path to giving."
+      heroTitle="Belize Kids Foundation — case study coming soon"
+      heroSubtitle="full breakdown in production"
+      summary="we're publishing the full case study soon with validated data, live implementation proof, and clear before/after outcomes."
       quickFacts={quickFacts}
-      sections={sections}
       comingSoon={comingSoon}
       share={share}
       schema={schema}
