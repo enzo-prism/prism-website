@@ -249,7 +249,7 @@ export default function ClientPage() {
   return (
     <div className="flex min-h-screen flex-col bg-background">
       <Navbar mobileRevealOnFirstTap />
-      <main className="flex-1">
+      <main className="flex-1" id="main-content" tabIndex={-1}>
         <section className={HERO_SECTION_CLASSES}>
           <UnicornHeroScene className="absolute inset-0 z-0" />
           <div className="container relative z-10 mx-auto flex justify-center px-4 sm:px-6">
