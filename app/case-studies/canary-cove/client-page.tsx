@@ -39,6 +39,7 @@ const schema = {
 export default function CanaryCoveCaseStudy() {
   return (
     <MinimalCaseStudyPage
+      caseStudySlug="canary-cove"
       pageTrackingTitle="Canary Cove Case Study"
       heroTitle="Canary Cove — case study coming soon"
       heroSubtitle="full breakdown in production"

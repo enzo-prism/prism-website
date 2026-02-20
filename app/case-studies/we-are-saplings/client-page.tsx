@@ -39,6 +39,7 @@ const schema = {
 export default function WeAreSaplingsCaseStudy() {
   return (
     <MinimalCaseStudyPage
+      caseStudySlug="we-are-saplings"
       pageTrackingTitle="We Are Saplings Case Study"
       heroTitle="We Are Saplings — case study coming soon"
       heroSubtitle="full breakdown in production"

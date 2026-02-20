@@ -39,6 +39,7 @@ const schema = {
 export default function MichaelNjoDdsCaseStudy() {
   return (
     <MinimalCaseStudyPage
+      caseStudySlug="michael-njo-dds"
       pageTrackingTitle="Michael Njo DDS Case Study"
       heroTitle="Michael Njo DDS — case study coming soon"
       heroSubtitle="full breakdown in production"

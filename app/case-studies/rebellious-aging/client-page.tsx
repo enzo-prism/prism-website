@@ -39,6 +39,7 @@ const schema = {
 export default function RebelliousAgingCaseStudy() {
   return (
     <MinimalCaseStudyPage
+      caseStudySlug="rebellious-aging"
       pageTrackingTitle="Rebellious Aging Case Study"
       heroTitle="Rebellious Aging — case study coming soon"
       heroSubtitle="full breakdown in production"

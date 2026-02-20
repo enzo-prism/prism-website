@@ -39,6 +39,7 @@ const schema = {
 export default function CoastPeriodonticsAndLaserSurgeryCaseStudy() {
   return (
     <MinimalCaseStudyPage
+      caseStudySlug="coast-periodontics-and-laser-surgery"
       pageTrackingTitle="Coast Periodontics and Laser Surgery Case Study"
       heroTitle="Coast Periodontics and Laser Surgery — case study coming soon"
       heroSubtitle="full breakdown in production"
