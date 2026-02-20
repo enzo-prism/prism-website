@@ -368,7 +368,7 @@ export function CaseStudyWorkHighlights({ caseStudySlug }: CaseStudyWorkHighligh
         }}
       >
         <DialogContent className="sm:max-w-xl">
-          <DialogHeader>
+        <DialogHeader className="text-left sm:text-left">
             <DialogTitle className="flex items-start justify-between gap-2 pr-8">
               <span>{selectedItem?.name}</span>
               <DialogClose asChild>
