@@ -9,6 +9,100 @@ const EXQUISITE_SITE_TITLE = "Exquisite Dentistry: Cosmetic Dentist Los Angeles 
 const linkClassName =
   "font-medium text-foreground underline decoration-border/60 underline-offset-4 hover:decoration-border"
 
+const researchEvidence = [
+  {
+    label: "repoHistory",
+    title: "Repo history",
+    window: "2025-03-24 → 2026-02-16",
+    status: "full local commit history reviewed",
+    source: "github.com/enzo-prism/exquisite-dentistry",
+  },
+  {
+    label: "ga",
+    title: "GA4 exports",
+    window: "2025-12 → 2026-02",
+    status: "continuity reviewed; note 2026-02-fresh partial",
+    source: "data/ga-report-498175984-2025-12.json to data/ga-report-498175984-2026-02(-fresh).json",
+  },
+  {
+    label: "gsc",
+    title: "GSC exports",
+    window: "2025-12 → 2026-02",
+    status: "continuity reviewed with partial fresh-window note",
+    source:
+      "data/reports/gsc-exquisitedentistryla-com-2025-12.json through gsc-exquisitedentistryla-com-2026-02.json",
+  },
+  {
+    label: "ads",
+    title: "Google Ads",
+    window: "2026-02-18",
+    status: "latest snapshot only in workspace",
+    source:
+      "reports/prism-google-ads-live-browser-relay-log-2026-02-18.md and cross-analysis notes",
+  },
+]
+
+const screenshotEvidence = [
+  {
+    image: "/exquisite-dentistry-mobile.png",
+    source: "https://exquisitedentistryla.com/",
+    viewport: "mobile (390x844)",
+    captured: "2026-02-19",
+    caption: "Homepage and hero trust hierarchy on mobile context",
+    claim: "Brand quality and trust cues are visible at first touch",
+  },
+  {
+    image: "/exquisite-dentistry.webp",
+    source: "https://exquisitedentistryla.com/",
+    viewport: "desktop",
+    captured: "2026-02-19",
+    caption: "Desktop homepage visual system and conversion hierarchy",
+    claim: "Premium service-level positioning appears across the first fold",
+  },
+  {
+    image: "/exquisite-dentistry-consultation.png",
+    source: "https://exquisitedentistryla.com/schedule-consultation",
+    viewport: "desktop",
+    captured: "2026-02-19",
+    caption: "Consultation-entry context and CTA framing",
+    claim: "Booking narrative is direct and conversion-aligned",
+  },
+  {
+    image: "/exquisite dentistry.png",
+    source: "https://exquisitedentistryla.com/about/",
+    viewport: "desktop",
+    captured: "2026-02-19",
+    caption: "Practice context and trust framing",
+    claim: "Trust proof context is centralized and accessible",
+  },
+]
+
+const proofMatrix = [
+  {
+    claim: "Premium brand was not reflected online",
+    evidence: "Repo history + screenshot evidence",
+  },
+  {
+    claim: "Tracking and attribution were fragmented",
+    evidence: "GA + GSC continuity + funnel cleanup notes",
+  },
+  {
+    claim: "Site rebuild preserved search visibility while improving structure",
+    evidence: "Repo refactor evidence + GSC exports + redirect/canonical hardening",
+  },
+]
+
+const provenItems = [
+  "Mobile-first trust-first presentation is now consistently visible on key pages.",
+  "Technical fragility was reduced through consolidation and clearer route/asset controls.",
+  "Attribution now has a practical baseline for channel-to-consultation review.",
+]
+
+const inProgressItems = [
+  "Service-page ranking growth into stronger top-of-funnel dominance is ongoing.",
+  "Google Ads policy-limit cleanup and budget broadening are next optimization steps.",
+]
+
 export default function ExquisiteDentistryCaseStudy() {
   return (
     <div className="flex min-h-screen flex-col">
@@ -42,6 +136,63 @@ export default function ExquisiteDentistryCaseStudy() {
                 </a>
               </Button>
             </div>
+
+            <div className="not-prose my-8 rounded-xl border border-neutral-200 p-4">
+              <h2>Research foundation used for this update</h2>
+              <ul className="list-disc pl-5 text-sm">
+                {researchEvidence.map((row) => (
+                  <li key={row.label}>
+                    <strong>{row.title}:</strong> {row.window} · {row.status} · Source: {row.source}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="not-prose my-8 rounded-xl border border-neutral-200 p-4">
+              <h2>Live website proof links</h2>
+              <ul className="list-disc pl-5 text-sm">
+                <li>
+                  <a className={linkClassName} href="https://exquisitedentistryla.com/" target="_blank" rel="noreferrer">
+                    Homepage
+                  </a>
+                </li>
+                <li>
+                  <a className={linkClassName} href="https://exquisitedentistryla.com/schedule-consultation" target="_blank" rel="noreferrer">
+                    Schedule consultation
+                  </a>
+                </li>
+                <li>
+                  <a className={linkClassName} href="https://exquisitedentistryla.com/about/" target="_blank" rel="noreferrer">
+                    About / trust context
+                  </a>
+                </li>
+                <li>
+                  <a className={linkClassName} href="https://exquisitedentistryla.com/veneers/" target="_blank" rel="noreferrer">
+                    Service page anchor
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            <div className="not-prose my-8 space-y-4">
+              <h2>Screenshot evidence pack (mobile-first)</h2>
+              <p className="text-sm text-muted-foreground">Captured for this case-study refresh from the live Exquisite Dentistry site.</p>
+              <div className="grid gap-4 sm:grid-cols-2">
+                {screenshotEvidence.map((shot) => (
+                  <figure key={shot.image} className="space-y-2">
+                    <Image src={shot.image} alt={shot.caption} width={513} height={943} className="h-auto w-full rounded-xl border border-border/50" />
+                    <figcaption className="text-sm text-muted-foreground">
+                      <strong>{shot.caption}</strong>
+                      <br />
+                      {shot.source} · {shot.viewport} · {shot.captured}
+                      <br />
+                      Claim mapping: {shot.claim}
+                    </figcaption>
+                  </figure>
+                ))}
+              </div>
+            </div>
+
             <hr />
 
             <h2>“We’re one of the best practices in the city… so why does our website look like it isn’t?”</h2>
@@ -418,6 +569,39 @@ export default function ExquisiteDentistryCaseStudy() {
               <li>cleaner analytics</li>
               <li>better insight into what channels drive real consults</li>
             </ul>
+
+            <div className="not-prose my-8 rounded-xl border border-neutral-200 p-4">
+              <h2>Claim-to-evidence mapping</h2>
+              <ul className="list-disc pl-5 text-sm">
+                {proofMatrix.map((row) => (
+                  <li key={row.claim}>
+                    <strong>{row.claim}</strong>
+                    <br />
+                    Evidence: {row.evidence}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <h2>What is already proven vs what is in progress</h2>
+            <div className="not-prose grid gap-4 md:grid-cols-2">
+              <div>
+                <h3>Proven</h3>
+                <ul className="list-disc pl-5">
+                  {provenItems.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+              </div>
+              <div>
+                <h3>In progress</h3>
+                <ul className="list-disc pl-5">
+                  {inProgressItems.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+              </div>
+            </div>
             <hr />
 
             <h2>What This Means for Other Practice Owners</h2>
