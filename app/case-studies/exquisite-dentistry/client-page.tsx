@@ -3,92 +3,50 @@ import Navbar from "@/components/navbar"
 import { CaseStudySchema } from "@/components/schema-markup"
 import SocialShare from "@/components/social-share"
 import { Button } from "@/components/ui/button"
-import Image from "next/image"
 const EXQUISITE_SITE = "https://exquisitedentistryla.com/?utm_source=chatgpt.com"
 const EXQUISITE_SITE_TITLE = "Exquisite Dentistry: Cosmetic Dentist Los Angeles | Dr. Aguil"
 const linkClassName =
   "font-medium text-foreground underline decoration-border/60 underline-offset-4 hover:decoration-border"
 
-const researchEvidence = [
+const evidenceOverview = [
   {
-    label: "repoHistory",
-    title: "Repo history",
-    window: "2025-03-24 → 2026-02-16",
-    status: "full local commit history reviewed",
-    source: "github.com/enzo-prism/exquisite-dentistry",
+    title: "What changed first",
+    bullets: [
+      "We mapped technical debt and preserved SEO-critical assets before rebuilding.",
+      "We rebuilt the funnel flow and attribution layer so leads were measurable.",
+      "We tightened listings, tracking, and local consistency so the practice looked coherent everywhere.",
+    ],
   },
   {
-    label: "ga",
-    title: "GA4 exports",
-    window: "2025-12 → 2026-02",
-    status: "continuity reviewed; note 2026-02-fresh partial",
-    source: "data/ga-report-498175984-2025-12.json to data/ga-report-498175984-2026-02(-fresh).json",
+    title: "How we measured progress",
+    bullets: [
+      "Search visibility risk was controlled through staged rebuilds and validation checkpoints.",
+      "Conversion friction was reduced first in mobile paths, then reinforced through scheduling and forms.",
+      "Attribution was reworked into source-aware pipelines that made channel performance legible.",
+    ],
   },
   {
-    label: "gsc",
-    title: "GSC exports",
-    window: "2025-12 → 2026-02",
-    status: "continuity reviewed with partial fresh-window note",
-    source:
-      "data/reports/gsc-exquisitedentistryla-com-2025-12.json through gsc-exquisitedentistryla-com-2026-02.json",
-  },
-  {
-    label: "ads",
-    title: "Google Ads",
-    window: "2026-02-18",
-    status: "latest snapshot only in workspace",
-    source:
-      "reports/prism-google-ads-live-browser-relay-log-2026-02-18.md and cross-analysis notes",
-  },
-]
-
-const screenshotEvidence = [
-  {
-    image: "/exquisite-dentistry-mobile.png",
-    source: "https://exquisitedentistryla.com/",
-    viewport: "mobile (390x844)",
-    captured: "2026-02-19",
-    caption: "Homepage and hero trust hierarchy on mobile context",
-    claim: "Brand quality and trust cues are visible at first touch",
-  },
-  {
-    image: "/exquisite-dentistry.webp",
-    source: "https://exquisitedentistryla.com/",
-    viewport: "desktop",
-    captured: "2026-02-19",
-    caption: "Desktop homepage visual system and conversion hierarchy",
-    claim: "Premium service-level positioning appears across the first fold",
-  },
-  {
-    image: "/exquisite-dentistry-consultation.png",
-    source: "https://exquisitedentistryla.com/schedule-consultation",
-    viewport: "desktop",
-    captured: "2026-02-19",
-    caption: "Consultation-entry context and CTA framing",
-    claim: "Booking narrative is direct and conversion-aligned",
-  },
-  {
-    image: "/exquisite dentistry.png",
-    source: "https://exquisitedentistryla.com/about/",
-    viewport: "desktop",
-    captured: "2026-02-19",
-    caption: "Practice context and trust framing",
-    claim: "Trust proof context is centralized and accessible",
+    title: "Operational impact",
+    bullets: [
+      "The site now presents the practice’s premium position at first touch.",
+      "Local discovery and trust signals became less fragmented across platforms.",
+      "Growth work moved from ad-hoc fixes to a repeatable system.",
+    ],
   },
 ]
 
 const proofMatrix = [
   {
     claim: "Premium brand was not reflected online",
-    evidence: "Repo history + screenshot evidence",
+    evidence: "site audit, internal discovery notes, and user-flow review",
   },
   {
     claim: "Tracking and attribution were fragmented",
-    evidence: "GA + GSC continuity + funnel cleanup notes",
+    evidence: "form routing map, channel tagging standards, and analytics setup refresh",
   },
   {
     claim: "Site rebuild preserved search visibility while improving structure",
-    evidence: "Repo refactor evidence + GSC exports + redirect/canonical hardening",
+    evidence: "indexation checks, crawlability cleanup, and routing/link hygiene",
   },
 ]
 
@@ -138,17 +96,6 @@ export default function ExquisiteDentistryCaseStudy() {
             </div>
 
             <div className="not-prose my-8 rounded-xl border border-neutral-200 p-4">
-              <h2>Research foundation used for this update</h2>
-              <ul className="list-disc pl-5 text-sm">
-                {researchEvidence.map((row) => (
-                  <li key={row.label}>
-                    <strong>{row.title}:</strong> {row.window} · {row.status} · Source: {row.source}
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div className="not-prose my-8 rounded-xl border border-neutral-200 p-4">
               <h2>Live website proof links</h2>
               <ul className="list-disc pl-5 text-sm">
                 <li>
@@ -175,20 +122,20 @@ export default function ExquisiteDentistryCaseStudy() {
             </div>
 
             <div className="not-prose my-8 space-y-4">
-              <h2>Screenshot evidence pack (mobile-first)</h2>
-              <p className="text-sm text-muted-foreground">Captured for this case-study refresh from the live Exquisite Dentistry site.</p>
-              <div className="grid gap-4 sm:grid-cols-2">
-                {screenshotEvidence.map((shot) => (
-                  <figure key={shot.image} className="space-y-2">
-                    <Image src={shot.image} alt={shot.caption} width={513} height={943} className="h-auto w-full rounded-xl border border-border/50" />
-                    <figcaption className="text-sm text-muted-foreground">
-                      <strong>{shot.caption}</strong>
-                      <br />
-                      {shot.source} · {shot.viewport} · {shot.captured}
-                      <br />
-                      Claim mapping: {shot.claim}
-                    </figcaption>
-                  </figure>
+              <h2>How we approached this refresh, without guesswork</h2>
+              <p className="text-sm text-muted-foreground">
+                The workflow moved from evidence-first diagnosis to staged implementation. No vanity rewrites; just clarity and measurable outcomes.
+              </p>
+              <div className="grid gap-4">
+                {evidenceOverview.map((section) => (
+                  <div key={section.title} className="rounded-xl border border-neutral-200 p-4">
+                    <h3 className="mt-0">{section.title}</h3>
+                    <ul className="list-disc pl-5">
+                      {section.bullets.map((bullet) => (
+                        <li key={bullet}>{bullet}</li>
+                      ))}
+                    </ul>
+                  </div>
                 ))}
               </div>
             </div>
@@ -287,55 +234,42 @@ export default function ExquisiteDentistryCaseStudy() {
             </ul>
             <p>When tracking is messy, you end up guessing.</p>
             <p>And guessing is expensive.</p>
-            <figure className="not-prose my-6 rounded-2xl border border-neutral-200 bg-white p-3 shadow-sm">
-              <Image
-                src="https://res.cloudinary.com/dhqpqfw6w/image/upload/v1767372937/keyword-tracking-semrush_m3aql3.png"
-                alt="Keyword tracking performance in Semrush for Exquisite Dentistry"
-                width={1973}
-                height={1235}
-                className="h-auto w-full rounded-xl"
-                sizes="(min-width: 1024px) 768px, 100vw"
-              />
-              <figcaption className="mt-3 text-xs font-semibold uppercase tracking-[0.28em] text-neutral-500">
-                keyword tracking momentum
-              </figcaption>
-            </figure>
+            <div className="not-prose my-6 rounded-2xl border border-neutral-200 p-4">
+              <h3 className="mt-0">Keyword and discovery baseline</h3>
+              <p>
+                We audited current keyword performance and query intent to separate what was already working from what had
+                become noise. That made the rebuild safer: improvements were prioritized where retention and intent overlap.
+              </p>
+              <p className="text-sm text-muted-foreground">
+                The analysis focused on preserving proven demand while closing conversion gaps in top-intent pages.
+              </p>
+            </div>
             <hr />
 
             <h2>Competitor Analysis</h2>
             <p>We mapped the competitive landscape to understand what was outranking Exquisite Dentistry and why.</p>
             <p>That let us prioritize the fastest visibility gains without risking the legacy SEO equity.</p>
-            <figure className="not-prose my-6 rounded-2xl border border-neutral-200 bg-white p-3 shadow-sm">
-              <Image
-                src="https://res.cloudinary.com/dhqpqfw6w/image/upload/v1767373072/seo-competitor-analysis_o3w4ks.png"
-                alt="SEO competitor analysis for Exquisite Dentistry"
-                width={1002}
-                height={384}
-                className="h-auto w-full rounded-xl"
-                sizes="(min-width: 1024px) 768px, 100vw"
-              />
-              <figcaption className="mt-3 text-xs font-semibold uppercase tracking-[0.28em] text-neutral-500">
-                competitor visibility map
-              </figcaption>
-            </figure>
+            <div className="not-prose my-6 rounded-2xl border border-neutral-200 p-4">
+              <p>
+                The competitor review helped us isolate service-matched messaging gaps and technical signals that were
+                under-optimized on core pages.
+              </p>
+              <p>
+                We then redesigned landing architecture around trust, clarity, and intent matching, instead of copying the
+                broadest dental template patterns.
+              </p>
+            </div>
             <hr />
 
             <h2>Toxic Backlink Audit</h2>
             <p>We audited the backlink profile to isolate risky links and confirm which signals were safe to keep.</p>
             <p>This protects rankings while we build higher-quality authority over time.</p>
-            <figure className="not-prose my-6 rounded-2xl border border-neutral-200 bg-white p-3 shadow-sm">
-              <Image
-                src="https://res.cloudinary.com/dhqpqfw6w/image/upload/v1767373231/seo-toxic-backlink-audit_audrut.webp"
-                alt="Toxic backlink audit for Exquisite Dentistry"
-                width={762}
-                height={481}
-                className="h-auto w-full rounded-xl"
-                sizes="(min-width: 1024px) 768px, 100vw"
-              />
-              <figcaption className="mt-3 text-xs font-semibold uppercase tracking-[0.28em] text-neutral-500">
-                toxic backlink audit
-              </figcaption>
-            </figure>
+            <div className="not-prose my-6 rounded-2xl border border-neutral-200 p-4">
+              <p>
+                We separated high-risk links from stable, legitimate signals and then planned link cleanup in phases so
+                authority signals did not get disrupted during the site rebuild.
+              </p>
+            </div>
             <hr />
 
             <h2>Prism’s Approach: Don’t Swing the Wrecking Ball First</h2>
