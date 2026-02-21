@@ -12,6 +12,7 @@ import {
   HomeSearchConsoleRail,
   HomeWallOfLoveCarousel,
 } from "@/components/home/HomeDynamicSections"
+import PrismEcosystemAnimation from "@/components/home/PrismEcosystemAnimation"
 import Navbar from "@/components/navbar"
 import { Badge } from "@/components/ui/badge"
 import SoftwareAppCards from "@/components/software/SoftwareAppCards"
@@ -240,6 +241,30 @@ export default function ClientPage() {
           <HomeHeroScene className="absolute inset-0 z-0" />
           <div className="container relative z-10 mx-auto flex justify-center px-4 sm:px-6">
             <HeroMonthlyLeadsPill />
+          </div>
+        </section>
+        <section className={`${SECTION_SPACING} bg-background`}>
+          <div className="container relative mx-auto px-4 sm:px-6">
+            <div className="mx-auto grid w-full max-w-6xl items-center gap-8 lg:grid-cols-[minmax(0,560px)_minmax(0,1fr)] lg:gap-10">
+              <div className="mx-auto w-full max-w-[560px]">
+                <PrismEcosystemAnimation />
+              </div>
+              <div className="space-y-4 text-center lg:text-left">
+                <p className="text-xs font-semibold uppercase tracking-[0.22em] text-muted-foreground">
+                  cohesive growth ecosystem
+                </p>
+                <h2 className="text-balance text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
+                  every channel compounds the next
+                </h2>
+                <p className="text-balance text-base text-muted-foreground sm:text-lg">
+                  Prism connects your website, AI visibility, search, and social into one coordinated system so every
+                  customer touchpoint reinforces the others.
+                </p>
+                <p className="text-sm text-muted-foreground">
+                  strategy + execution + feedback loops, all in one place.
+                </p>
+              </div>
+            </div>
           </div>
         </section>
 
