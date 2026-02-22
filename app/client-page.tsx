@@ -329,7 +329,7 @@ export default function ClientPage() {
                 We&apos;ve implemented this same strategy for 20+ businesses — here are recent examples.
               </p>
             </div>
-            <div className="mt-10 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+            <div className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-6 [&>*]:lg:col-span-2 [&>*:nth-child(4)]:lg:col-start-2 [&>*:nth-child(5)]:lg:col-start-4">
               {HOMEPAGE_CASE_STUDIES.map((study) => (
                 <CaseStudyCard
                   key={study.id}
