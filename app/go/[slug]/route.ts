@@ -10,6 +10,7 @@ const RESERVED_PARAMS = new Set([
   "utm_campaign",
   "utm_content",
   "utm_term",
+  "slug",
 ])
 
 function toAbsoluteUrl(input: string, req: NextRequest): URL {
