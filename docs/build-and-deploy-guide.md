@@ -17,6 +17,33 @@ Keep Prism's Next.js builds predictable by following this checklist whenever you
 
 If any of these steps fail locally, fix them before opening a PR. The CI build logs show only the first failure; running the full chain locally shortens feedback loops considerably.
 
+## GitHub CLI + Vercel CLI playbook
+
+Use this flow when switching between local, preview, and production changes:
+
+### GitHub CLI
+
+- `gh auth login` to initialize CLI auth.
+- `gh auth status` before doing sync-sensitive work.
+- `gh pr status -R enzo/prism-website` to confirm merge state quickly.
+- `gh issue list -R enzo/prism-website --state open` to see active blockers.
+- `gh run list -R enzo/prism-website --limit 20` to review CI health.
+- `gh run view <run_id> --log` to inspect full failing logs from the exact CI run.
+
+### Vercel CLI
+
+- `pnpm add -g vercel` (or `pnpm dlx vercel`) to install the CLI.
+- `vercel login` (single sign-on for deploy and log access).
+- `vercel link` (first run in this repo) so the CLI is scoped to `v0-prism-website-design`.
+- `vercel pull --yes` to sync deployment env vars locally (`--environment=production` for prod parity).
+- `pnpm build` then `vercel deploy --prebuilt` for deterministic production-equivalent deploys.
+- `vercel deploy` for a preview deployment while testing branch work.
+- `vercel ls` for recent deployment inventory.
+- `vercel logs <deployment-url> --follow` for runtime-level troubleshooting.
+- `vercel inspect <deployment-url>` when you need build/runtime metadata during rollout checks.
+- `vercel rollback <deployment-url>` for fast production rollback.
+- `vercel open` to jump directly to the currently selected deployment in the browser.
+
 ## Common gotchas
 - **Const arrays feeding components** – When you export `const foo = [...] as const`, every member must include the same structural properties. TypeScript will yell during `pnpm typecheck`, but dev mode might not. Example: `pricingTiers` in `app/pricing/client-page.tsx` needs `featured` on every entry so the card styling guard is type-safe.
 - **Dynamic imports & "use client" boundaries** – Any new shared component in `components/` that uses hooks must include a `"use client"` pragma or be imported with `dynamic(..., { ssr: false })`. Lint passes but the Next build will fail during the React Server Components graph evaluation.

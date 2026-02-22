@@ -60,6 +60,21 @@ The repo assumes pnpm; npm/yarn installs will fall out of sync.
 - [`docs/environment-setup.md`](./docs/environment-setup.md) – Environment variable reference and verification checklist.
 - [`docs/codex-workflow.md`](./docs/codex-workflow.md) – Codex-specific playbook for editing the dental-photography surfaces and booking form.
 
+## CLI workflows (GitHub + Vercel)
+
+- `gh auth login` then `gh auth setup-git` to authenticate GitHub CLI and map credentials into git.
+- `gh repo clone enzo/prism-website` for first-time checkout, or `git pull --ff-only origin main` for an existing local checkout.
+- `gh pr status` to check PR/state before deciding between local work and merge-then-preview flow.
+- `gh run list -R enzo/prism-website --limit 10` to inspect latest CI jobs; use `gh run view <run_id> --log` for failing logs.
+
+- `pnpm add -g vercel` or `pnpm dlx vercel` for CLI access.
+- `vercel login` then `vercel link` (first time in repo) to target the project.
+- `vercel pull --yes --environment=production` to sync remote env vars for parity checks.
+- `vercel deploy --prebuilt` for a manual production-style deploy from a local build.
+- `vercel deploy` for preview deployments.
+- `vercel ls` for deployment history, `vercel inspect <deployment-url>` for metadata, and `vercel logs <deployment-url> --follow` for runtime debugging.
+- `vercel rollback <deployment-url>` when rollback is needed.
+
 ## Deployment
 
 - Merges to `main` auto-deploy through Vercel (`https://vercel.com/enzo-design-prisms-projects/v0-prism-website-design`).
