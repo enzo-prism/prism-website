@@ -22,6 +22,19 @@ Use clean public links via `/go/:slug` while preserving attribution.
 - Use normalized mediums: `social`, `email`, `referral`, `paid_social`, `paid_search`.
 - Keep one intent per slug.
 
+## Current starter slug pack
+- `/go/ig-bio`
+- `/go/x-profile`
+- `/go/linkedin-profile`
+- `/go/tiktok-bio`
+- `/go/yt-description`
+- `/go/podcast-show-notes`
+- `/go/newsletter`
+- `/go/email-signature`
+- `/go/meta-ad-01`
+- `/go/google-ad-01`
+- `/go/partner-referral`
+
 ## Attribution persistence
 Client analytics stores campaign context in first-party localStorage (`prism_attribution_v1`) for 30 days, then enriches downstream events with:
 - current or stored `utm_*`
