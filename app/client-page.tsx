@@ -320,6 +320,69 @@ export default function ClientPage() {
 
         <section className={`${SECTION_SPACING_DEFAULT} bg-background`}>
           <div className="container relative mx-auto px-4 sm:px-6">
+            <div className="mx-auto max-w-6xl rounded-3xl border border-zinc-800 bg-zinc-950 px-6 py-8 text-zinc-100 sm:px-10 sm:py-10">
+              <div className="space-y-3">
+                <p className="text-xs font-semibold uppercase tracking-[0.24em] text-orange-300/90">Features</p>
+                <h2 className="text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
+                  Everything your brand needs to grow, in one system
+                </h2>
+              </div>
+
+              <div className="mt-8 grid gap-4 lg:grid-cols-3 lg:grid-rows-2">
+                <Card className="border-zinc-800 bg-zinc-900/80 text-zinc-100 lg:row-span-2">
+                  <CardHeader className="space-y-4">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-orange-400/40 bg-orange-400/10 text-orange-300">
+                      01
+                    </div>
+                    <CardTitle className="text-xl text-zinc-50">High-converting websites</CardTitle>
+                    <CardDescription className="text-zinc-300">
+                      We build and optimize pages that turn attention into qualified leads, with clean UX, fast load speed, and conversion-focused structure.
+                    </CardDescription>
+                  </CardHeader>
+                </Card>
+
+                <Card className="border-zinc-800 bg-zinc-900/80 text-zinc-100">
+                  <CardHeader className="space-y-3">
+                    <div className="flex h-9 w-9 items-center justify-center rounded-lg border border-orange-400/40 bg-orange-400/10 text-orange-300">
+                      02
+                    </div>
+                    <CardTitle className="text-lg text-zinc-50">Search + AI visibility</CardTitle>
+                    <CardDescription className="text-zinc-300">
+                      Show up in Google and AI-driven discovery with a system that compounds every month.
+                    </CardDescription>
+                  </CardHeader>
+                </Card>
+
+                <Card className="border-zinc-800 bg-zinc-900/80 text-zinc-100">
+                  <CardHeader className="space-y-3">
+                    <div className="flex h-9 w-9 items-center justify-center rounded-lg border border-orange-400/40 bg-orange-400/10 text-orange-300">
+                      03
+                    </div>
+                    <CardTitle className="text-lg text-zinc-50">Paid ads that scale</CardTitle>
+                    <CardDescription className="text-zinc-300">
+                      Launch and optimize campaigns across channels with clear attribution and ROI tracking.
+                    </CardDescription>
+                  </CardHeader>
+                </Card>
+
+                <Card className="border-zinc-800 bg-zinc-900/80 text-zinc-100 lg:row-span-2">
+                  <CardHeader className="space-y-4">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-orange-400/40 bg-orange-400/10 text-orange-300">
+                      04
+                    </div>
+                    <CardTitle className="text-xl text-zinc-50">Analytics that drive decisions</CardTitle>
+                    <CardDescription className="text-zinc-300">
+                      We connect tracking, attribution, and reporting so you can make decisions from real data instead of guesswork.
+                    </CardDescription>
+                  </CardHeader>
+                </Card>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className={`${SECTION_SPACING_DEFAULT} bg-background`}>
+          <div className="container relative mx-auto px-4 sm:px-6">
             <div className="space-y-3 text-center">
               <p className="text-xs font-semibold uppercase tracking-[0.22em] text-muted-foreground">
                 proven results
@@ -328,7 +391,7 @@ export default function ClientPage() {
                 20+ businesses, one growth ecosystem
               </h2>
               <p className="text-base text-muted-foreground sm:text-lg">
-                We&apos;ve implemented this same strategy for 20+ businesses — here are recent examples.
+                We&apos;ve implemented this same strategy for 20+ businesses, here are recent examples.
               </p>
             </div>
             <div className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-6 [&>*]:lg:col-span-2 [&>*:nth-child(4)]:lg:col-start-2 [&>*:nth-child(5)]:lg:col-start-4">
