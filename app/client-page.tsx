@@ -2,6 +2,7 @@ import Image from "next/image"
 import Link from "next/link"
 
 import PixelishIcon from "@/components/pixelish/PixelishIcon"
+import CaseStudyCard from "@/components/case-study-card"
 import Footer from "@/components/footer"
 import HeroBenefits from "@/components/home/HeroBenefits"
 import HeroMonthlyLeadsPill from "@/components/home/HeroMonthlyLeadsPill"
@@ -27,6 +28,7 @@ import {
 } from "@/components/ui/card"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { PRISM_APPS } from "@/lib/software-apps"
+import { CASE_STUDIES } from "@/lib/case-study-data"
 
 const TRAINING_COURSES = [
   {
@@ -226,6 +228,25 @@ const HERO_SEARCH_CONSOLE_SLIDES = [
 ]
 
 const HERO_SEARCH_ICON = "/pixelish/lens.svg"
+const HOMEPAGE_CASE_STUDY_SLUGS = [
+  "exquisite-dentistry",
+  "saorsa-growth-partners",
+  "olympic-bootworks",
+  "rebellious-aging",
+  "canary-foundation",
+]
+
+const HOMEPAGE_CASE_STUDIES = HOMEPAGE_CASE_STUDY_SLUGS.map((slug) =>
+  CASE_STUDIES.find((study) => study.slug === slug),
+)
+  .filter((study): study is (typeof CASE_STUDIES)[number] => Boolean(study))
+  .map((study) => ({
+    id: study.id,
+    client: study.client,
+    category: study.category,
+    location: study.location,
+    slug: study.slug,
+  }))
 
 const SECTION_SPACING =
   "min-h-screen min-h-[100svh] py-24 sm:py-32 lg:py-40 xl:py-48"
@@ -257,13 +278,72 @@ export default function ClientPage() {
                   every channel compounds the next
                 </h2>
                 <p className="text-balance text-base text-muted-foreground sm:text-lg">
-                  Prism connects your website, AI visibility, search, and social into one coordinated system so every
-                  customer touchpoint reinforces the others.
+                  Prism connects your{" "}
+                  <Link
+                    href="/websites"
+                    className="underline decoration-border/60 underline-offset-4 hover:decoration-border"
+                  >
+                    website
+                  </Link>
+                  ,{" "}
+                  <Link
+                    href="/openai"
+                    className="underline decoration-border/60 underline-offset-4 hover:decoration-border"
+                  >
+                    AI visibility
+                  </Link>
+                  ,{" "}
+                  <Link
+                    href="/seo"
+                    className="underline decoration-border/60 underline-offset-4 hover:decoration-border"
+                  >
+                    search
+                  </Link>
+                  , and{" "}
+                  <Link
+                    href="/ads"
+                    className="underline decoration-border/60 underline-offset-4 hover:decoration-border"
+                  >
+                    social media
+                  </Link>{" "}
+                  into one coordinated system so every customer touchpoint reinforces the others.
                 </p>
                 <p className="text-sm text-muted-foreground">
                   strategy + execution + feedback loops, all in one place.
                 </p>
               </div>
+            </div>
+          </div>
+        </section>
+
+        <section className={`${SECTION_SPACING} bg-background`}>
+          <div className="container relative mx-auto px-4 sm:px-6">
+            <div className="space-y-3 text-center">
+              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-muted-foreground">
+                proven results
+              </p>
+              <h2 className="text-balance text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
+                20+ businesses, one growth ecosystem
+              </h2>
+              <p className="text-base text-muted-foreground sm:text-lg">
+                We&apos;ve implemented this same strategy for 20+ businesses — here are recent examples.
+              </p>
+            </div>
+            <div className="mt-10 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+              {HOMEPAGE_CASE_STUDIES.map((study) => (
+                <CaseStudyCard
+                  key={study.id}
+                  business={study.client}
+                  category={study.category}
+                  location={study.location}
+                  slug={study.slug}
+                />
+              ))}
+            </div>
+            <div className="mt-8 text-center">
+              <Button asChild variant="outline" className="rounded-full">
+                <Link href="/case-studies">View all case studies</Link>
+              </Button>
             </div>
           </div>
         </section>
@@ -276,7 +356,7 @@ export default function ClientPage() {
                   Looking to elevate your online presence?
                 </h1>
                 <p className="text-balance text-lg text-muted-foreground">
-                  Done-for-you growth from a team that's driven millions of monthly impressions for 20+ businesses.
+                  Done-for-you growth from a team focused on the KPIs that matter most to you.
                 </p>
                 <HeroBenefits />
               </div>
@@ -321,6 +401,8 @@ export default function ClientPage() {
             </div>
           </div>
         </section>
+
+        <HomeWallOfLoveCarousel enableMobileArrows />
 
         <section className={`relative ${SECTION_SPACING} bg-background`}>
           <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(60%_60%_at_10%_0%,rgba(0,0,0,0.06),transparent_60%),radial-gradient(60%_60%_at_90%_20%,rgba(0,0,0,0.04),transparent_65%)]" />
@@ -526,8 +608,6 @@ export default function ClientPage() {
             </Card>
           </div>
         </section>
-
-        <HomeWallOfLoveCarousel enableMobileArrows />
       </main>
       <Footer />
     </div>
