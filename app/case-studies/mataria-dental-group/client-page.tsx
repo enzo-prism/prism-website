@@ -21,7 +21,7 @@ const FounderImpactGraph = dynamic(
 )
 
 const HERO_VIDEO_ID = "VIDEO_PLACEHOLDER"
-const CLIENT_SITE = "https://www.matariadental.com"
+const CLIENT_SITE = "https://www.matariadentalgroup.com"
 const cs = CASE_STUDIES.find((item) => item.slug === "mataria-dental-group")
 
 type ListItem = {
@@ -583,7 +583,7 @@ export default function MatariaDentalGroupCaseStudy() {
               <div>
                 <Button asChild variant="outline" className="rounded-full">
                   <Link href={CLIENT_SITE} target="_blank" rel="noopener noreferrer">
-                    visit matariadental.com
+                    visit matariadentalgroup.com
                   </Link>
                 </Button>
               </div>
