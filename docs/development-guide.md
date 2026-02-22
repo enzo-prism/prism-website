@@ -7,6 +7,7 @@ This guide highlights the workflows we lean on most often while iterating on the
 - Install deps with `pnpm install` (repo assumes pnpm).
 - Start the Next.js dev server with `pnpm dev`.
 - Run `pnpm lint` before committing so the shared Tailwind + ESLint rules stay consistent.
+- Run `pnpm typecheck` and `pnpm test` before opening a PR (combine as `pnpm lint && pnpm typecheck && pnpm test`).
 - Run `pnpm test:visual` before merging changes that touch the UI of `/`, `/about`, or `/pricing` (screenshot-locked routes).
 - Run `pnpm exec playwright test __tests__/visual/blog-copy-markdown.spec.ts --project=desktop-chromium` when changing the blog markdown copy button or `/api/blog/[slug]/markdown`.
 - Run `pnpm exec playwright test __tests__/visual/page-copy-markdown-global.spec.ts --project=desktop-chromium` when changing the global page markdown copy button.
