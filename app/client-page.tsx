@@ -14,6 +14,7 @@ import {
   HomeWallOfLoveCarousel,
 } from "@/components/home/HomeDynamicSections"
 import PrismEcosystemAnimation from "@/components/home/PrismEcosystemAnimation"
+import ServiceIllustration from "@/components/animated/ServiceIllustration"
 import Navbar from "@/components/navbar"
 import { Badge } from "@/components/ui/badge"
 import SoftwareAppCards from "@/components/software/SoftwareAppCards"
@@ -331,15 +332,7 @@ export default function ClientPage() {
               <div className="mt-8 grid gap-4 lg:grid-cols-3 lg:grid-rows-2">
                 <Card className="group border-zinc-800 bg-zinc-900/80 text-zinc-100 lg:row-span-2">
                   <CardHeader className="space-y-4">
-                    <svg viewBox="0 0 64 64" className="h-36 w-full" fill="none" aria-hidden>
-                      <path d="M32 12L16 22V42L32 52L48 42V22L32 12Z" stroke="currentColor" strokeWidth="1.5" className="text-zinc-500/80 transition-colors duration-300 group-hover:text-zinc-300 group-active:text-zinc-300" />
-                      <path d="M16 22L32 32L48 22" stroke="currentColor" strokeWidth="1.5" className="text-zinc-500/80 transition-colors duration-300 group-hover:text-zinc-300 group-active:text-zinc-300" />
-                      <path d="M32 52V32" stroke="currentColor" strokeWidth="1.5" className="text-zinc-500/80 transition-colors duration-300 group-hover:text-zinc-300 group-active:text-zinc-300" />
-                      <circle cx="32" cy="32" r="2" fill="currentColor" className="text-orange-400 transition-all duration-300 group-hover:scale-125 group-active:scale-125 group-hover:drop-shadow-[0_0_8px_rgba(251,146,60,0.9)] group-active:drop-shadow-[0_0_8px_rgba(251,146,60,0.9)]" />
-                      <circle cx="32" cy="12" r="1.5" fill="currentColor" className="text-zinc-400 transition-all duration-300 group-hover:-translate-y-0.5 group-active:-translate-y-0.5 group-hover:text-orange-300 group-active:text-orange-300" />
-                      <circle cx="16" cy="22" r="1.5" fill="currentColor" className="text-zinc-400 transition-all duration-300 group-hover:-translate-x-0.5 group-active:-translate-x-0.5 group-hover:text-orange-300 group-active:text-orange-300" />
-                      <circle cx="48" cy="42" r="1.5" fill="currentColor" className="text-zinc-400 transition-all duration-300 group-hover:translate-x-0.5 group-active:translate-x-0.5 group-hover:text-orange-300 group-active:text-orange-300" />
-                    </svg>
+                    <ServiceIllustration variant="websites" className="h-36 w-full" />
                     <CardTitle className="text-xl text-zinc-50">High-converting websites</CardTitle>
                     <CardDescription className="text-zinc-300">
                       We build and optimize pages that turn attention into qualified leads, with clean UX, fast load speed, and conversion-focused structure.
@@ -349,14 +342,7 @@ export default function ClientPage() {
 
                 <Card className="group border-zinc-800 bg-zinc-900/80 text-zinc-100">
                   <CardHeader className="space-y-3">
-                    <svg viewBox="0 0 64 64" className="h-24 w-full" fill="none" aria-hidden>
-                      <path d="M16 20H48" stroke="currentColor" strokeWidth="1.5" className="text-zinc-500/80" />
-                      <path d="M16 32H48" stroke="currentColor" strokeWidth="1.5" className="text-zinc-500/80" />
-                      <path d="M16 44H48" stroke="currentColor" strokeWidth="1.5" className="text-zinc-500/80" />
-                      <rect x="18" y="17" width="6" height="6" rx="1" fill="currentColor" className="text-zinc-400 transition-transform duration-300 group-hover:translate-x-1.5 group-active:translate-x-1.5" />
-                      <rect x="36" y="29" width="10" height="6" rx="1" fill="currentColor" className="text-orange-400 transition-transform duration-300 group-hover:-translate-x-1 group-active:-translate-x-1" />
-                      <rect x="22" y="41" width="8" height="6" rx="1" fill="currentColor" className="text-zinc-400 transition-transform duration-300 group-hover:translate-x-2 group-active:translate-x-2" />
-                    </svg>
+                    <ServiceIllustration variant="seo" className="h-24 w-full" />
                     <CardTitle className="text-lg text-zinc-50">Search + AI visibility</CardTitle>
                     <CardDescription className="text-zinc-300">
                       Show up in Google and AI-driven discovery with a system that compounds every month.
@@ -366,14 +352,7 @@ export default function ClientPage() {
 
                 <Card className="group border-zinc-800 bg-zinc-900/80 text-zinc-100">
                   <CardHeader className="space-y-3">
-                    <svg viewBox="0 0 64 64" className="h-24 w-full" fill="none" aria-hidden>
-                      <path d="M16 48H48" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" className="text-zinc-500/80" />
-                      <path d="M16 16V48" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" className="text-zinc-500/80" />
-                      <polyline points="18,44 26,34 34,40 46,20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-zinc-400 transition-colors duration-300 group-hover:text-zinc-200 group-active:text-zinc-200" />
-                      <g className="transition-transform duration-500 group-hover:translate-x-7 group-active:translate-x-7 group-hover:-translate-y-6 group-active:-translate-y-6">
-                        <circle cx="18" cy="44" r="4" fill="currentColor" className="text-orange-400" />
-                      </g>
-                    </svg>
+                    <ServiceIllustration variant="ads" className="h-24 w-full" />
                     <CardTitle className="text-lg text-zinc-50">Paid ads that scale</CardTitle>
                     <CardDescription className="text-zinc-300">
                       Launch and optimize campaigns across channels with clear attribution and ROI tracking.
@@ -383,12 +362,7 @@ export default function ClientPage() {
 
                 <Card className="group border-zinc-800 bg-zinc-900/80 text-zinc-100 lg:row-span-2">
                   <CardHeader className="space-y-4">
-                    <svg viewBox="0 0 64 64" className="h-36 w-full" fill="none" aria-hidden>
-                      <rect x="14" y="14" width="36" height="36" rx="2" stroke="currentColor" strokeWidth="1.5" className="text-zinc-500/80" />
-                      <rect x="20" y="20" width="10" height="10" rx="1" fill="currentColor" className="text-zinc-400 transition-all duration-300 group-hover:scale-105 group-active:scale-105 group-hover:text-zinc-300 group-active:text-zinc-300" />
-                      <rect x="34" y="20" width="10" height="18" rx="1" fill="currentColor" className="text-zinc-400 transition-all duration-300 group-hover:scale-105 group-active:scale-105 group-hover:text-zinc-300 group-active:text-zinc-300" />
-                      <rect x="20" y="34" width="24" height="10" rx="1" fill="currentColor" className="text-orange-400 opacity-0 transition-opacity duration-500 group-hover:opacity-100 group-active:opacity-100" />
-                    </svg>
+                    <ServiceIllustration variant="analytics" className="h-36 w-full" />
                     <CardTitle className="text-xl text-zinc-50">Analytics that drive decisions</CardTitle>
                     <CardDescription className="text-zinc-300">
                       We connect tracking, attribution, and reporting so you can make decisions from real data instead of guesswork.
