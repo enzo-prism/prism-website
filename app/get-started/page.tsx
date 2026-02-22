@@ -6,7 +6,7 @@ import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
 import BookDemoEmbed from "@/components/BookDemoEmbed"
 import VideoPlayer from "@/components/video-player"
-import ServiceIllustration from "@/components/animated/ServiceIllustration"
+import PixelishIcon from "@/components/pixelish/PixelishIcon"
 import GetStartedHeroScene from "@/components/get-started/GetStartedHeroScene"
 import { WebPageSchema } from "@/components/schema-markup"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
@@ -34,10 +34,10 @@ const VSL_SOURCE = {
 }
 
 const PROGRAM_ROLES = [
-  { title: "Website Developer", variant: "role-developer" as const },
-  { title: "Designer", variant: "role-designer" as const },
-  { title: "Marketer and Storyteller", variant: "role-marketer" as const },
-  { title: "Project Manager", variant: "role-manager" as const },
+  { title: "Website Developer", icon: "/pixelish/device-laptop.svg", iconAlt: "Website developer icon" },
+  { title: "Designer", icon: "/pixelish/device-camera.svg", iconAlt: "Designer icon" },
+  { title: "Marketer and Storyteller", icon: "/pixelish/chat-dots.svg", iconAlt: "Marketer and storyteller icon" },
+  { title: "Project Manager", icon: "/pixelish/kanban.svg", iconAlt: "Project manager icon" },
 ]
 
 const FAQ_ITEMS: FAQItem[] = [
@@ -199,9 +199,11 @@ export default function GetStartedPage() {
                         Role {String(index + 1).padStart(2, "0")}
                       </p>
                       <div className="flex h-10 w-10 items-center justify-center rounded-full bg-muted/60 text-muted-foreground">
-                        <ServiceIllustration
-                          variant={role.variant}
-                          className="h-6 w-6 text-neutral-500 group-hover:text-orange-500 group-focus-visible:text-orange-500 group-active:text-orange-600"
+                        <PixelishIcon
+                          src={role.icon}
+                          alt={role.iconAlt}
+                          size={20}
+                          className="h-5 w-5 opacity-75 transition-transform duration-300 ease-out group-hover:-translate-y-0.5 group-focus-visible:-translate-y-0.5 group-active:translate-y-0"
                         />
                       </div>
                     </div>
