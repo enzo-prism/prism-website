@@ -5,6 +5,7 @@ import { ArrowRight, CheckCircle2, Handshake, LineChart, ShieldCheck, Sparkles }
 import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
 import ScrollToTop from "@/components/scroll-to-top"
+import ServiceIllustration from "@/components/animated/ServiceIllustration"
 import { Button } from "@/components/ui/button"
 import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
 import DentalTrendsChart from "@/components/dental-trends-chart"
@@ -177,29 +178,42 @@ export default function DentalWebsitePage() {
         <section className="relative overflow-hidden border-b border-neutral-200 bg-neutral-950 text-white">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(76,201,240,0.15),_transparent_55%)]" aria-hidden />
           <div className="container relative mx-auto px-4 py-24 md:py-28">
-            <div className="mx-auto flex max-w-4xl flex-col items-center text-center">
-              <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-4 py-1 text-xs uppercase tracking-[0.28em] text-neutral-200">
-                dental practice website blueprint
-              </span>
-              <h1 className="text-4xl font-semibold tracking-tight md:text-5xl lg:text-6xl">
-                dental practice websites that get found, trusted, and chosen.
-              </h1>
-              <p className="mt-6 max-w-2xl text-base text-neutral-200 md:text-lg">
-                prism builds modern dental practice websites that earn trust quickly, rank for local intent, and turn visits into booked appointments. every launch includes a stress-free transfer from your previous provider.
-              </p>
-              <div className="mt-8 flex flex-wrap justify-center gap-3">
-                <Button asChild size="lg" className="rounded-full px-8 py-3 text-base lowercase">
-                  <Link href="/get-started">
-                    {FREE_AUDIT_CTA_TEXT}
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </Link>
-                </Button>
-                <Button asChild variant="outline" size="lg" className="rounded-full px-8 py-3 text-base lowercase">
-                  <Link href="/why-dental-practices-love-prism">
-                    why dentists pick prism
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </Link>
-                </Button>
+            <div className="mx-auto grid max-w-6xl gap-8 md:grid-cols-[1.05fr_0.95fr] md:items-center">
+              <div className="flex max-w-4xl flex-col items-center text-center md:items-start md:text-left">
+                <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-4 py-1 text-xs uppercase tracking-[0.28em] text-neutral-200">
+                  dental practice website blueprint
+                </span>
+                <h1 className="text-4xl font-semibold tracking-tight md:text-5xl lg:text-6xl">
+                  dental practice websites that get found, trusted, and chosen.
+                </h1>
+                <p className="mt-6 max-w-2xl text-base text-neutral-200 md:text-lg">
+                  prism builds modern dental practice websites that earn trust quickly, rank for local intent, and turn visits into booked
+                  appointments. every launch includes a stress-free transfer from your previous provider.
+                </p>
+                <div className="mt-8 flex flex-wrap justify-center gap-3 md:justify-start">
+                  <Button asChild size="lg" className="rounded-full px-8 py-3 text-base lowercase">
+                    <Link href="/get-started">
+                      {FREE_AUDIT_CTA_TEXT}
+                      <ArrowRight className="ml-2 h-4 w-4" />
+                    </Link>
+                  </Button>
+                  <Button asChild variant="outline" size="lg" className="rounded-full px-8 py-3 text-base lowercase">
+                    <Link href="/why-dental-practices-love-prism">
+                      why dentists pick prism
+                      <ArrowRight className="ml-2 h-4 w-4" />
+                    </Link>
+                  </Button>
+                </div>
+              </div>
+              <div
+                tabIndex={0}
+                role="group"
+                className="group mx-auto flex h-64 w-full max-w-[18rem] items-center justify-center rounded-3xl border border-white/20 bg-white/10 p-4 transition-[transform,border-color] duration-300 hover:-translate-y-0.5 hover:border-orange-300/70 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-orange-300/60"
+              >
+                <ServiceIllustration
+                  variant="local"
+                  className="h-full w-full text-neutral-200 transition-colors group-hover:text-orange-200 group-focus-visible:text-orange-200 group-active:text-orange-100"
+                />
               </div>
             </div>
           </div>

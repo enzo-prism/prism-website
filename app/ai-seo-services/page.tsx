@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button"
 import SeoTextSection from "@/components/seo-text-section"
 import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
 import { ArrowRight } from "lucide-react"
+import ServiceIllustration from "@/components/animated/ServiceIllustration"
 import { buildRouteMetadata } from "@/lib/seo/metadata"
 
 export const metadata: Metadata = buildRouteMetadata({
@@ -147,7 +148,8 @@ export default function AiSeoServicesPage() {
       <Navbar />
       <main className="flex-1">
         <section className="border-b border-neutral-100 px-4 py-20 sm:py-24">
-          <div className="mx-auto max-w-4xl text-center">
+          <div className="mx-auto grid max-w-5xl gap-8 md:grid-cols-[1.05fr_0.95fr] md:items-center">
+            <div className="text-center md:text-left">
             <p className="text-sm font-medium uppercase tracking-[0.3em] text-neutral-400">ai seo services</p>
             <h1 className="mt-4 text-4xl font-semibold tracking-tight text-neutral-900 sm:text-5xl">
               ai seo services that help you get cited and chosen
@@ -185,6 +187,17 @@ export default function AiSeoServicesPage() {
               <Button asChild variant="outline" size="lg" className="rounded-full px-8">
                 <Link href={secondaryCta.href}>{secondaryCta.label}</Link>
               </Button>
+            </div>
+            </div>
+            <div
+              tabIndex={0}
+              role="group"
+              className="group mx-auto flex h-64 w-full max-w-[20rem] items-center justify-center rounded-3xl border border-neutral-200 bg-white px-4 py-3 transition-[transform,border-color] duration-300 hover:-translate-y-0.5 hover:border-orange-300 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-orange-300/60"
+            >
+              <ServiceIllustration
+                variant="seo"
+                className="h-full w-full text-neutral-500 transition-colors group-hover:text-orange-500 group-focus-visible:text-orange-500 group-active:text-orange-600"
+              />
             </div>
           </div>
         </section>

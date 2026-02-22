@@ -12,6 +12,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { ArrowRight, Check } from "lucide-react"
 import type { Metadata } from "next"
 import Link from "next/link"
+import ServiceIllustration from "@/components/animated/ServiceIllustration"
 import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
 import { getAllPosts } from "@/lib/mdx-data"
 import { ServiceSchema } from "@/components/schema-markup"
@@ -248,16 +249,30 @@ export default async function WebsitesPage() {
               We plan, design, and build sites that reflect your brand, explain what you do fast, and turn
               the right visitors into booked calls, patients, customers, and donors.
             </p>
-            <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-              <Button asChild size="lg" className="rounded-md px-8">
-                <Link href="/get-started">
-                  Get started
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
-              </Button>
-              <Button asChild variant="outline" size="lg" className="rounded-md px-8">
-                <Link href="#recent-work">See recent launches</Link>
-              </Button>
+            <div className="mt-10 grid gap-8 md:grid-cols-[1.1fr_0.9fr] md:items-end">
+              <div>
+                <div className="flex flex-wrap items-center justify-center gap-3 md:justify-start">
+                  <Button asChild size="lg" className="rounded-md px-8">
+                    <Link href="/get-started">
+                      Get started
+                      <ArrowRight className="ml-2 h-4 w-4" />
+                    </Link>
+                  </Button>
+                  <Button asChild variant="outline" size="lg" className="rounded-md px-8">
+                    <Link href="#recent-work">See recent launches</Link>
+                  </Button>
+                </div>
+              </div>
+              <div
+                tabIndex={0}
+                role="group"
+                className="group mx-auto flex h-52 w-full max-w-[20rem] items-center justify-center rounded-3xl border border-border/60 bg-card/20 px-6 py-4 shadow-sm transition-[transform,border-color] duration-300 hover:-translate-y-0.5 hover:border-orange-300 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-orange-300/60"
+              >
+                <ServiceIllustration
+                  variant="websites"
+                  className="h-full w-full text-neutral-500 transition-colors group-hover:text-orange-500 group-focus-visible:text-orange-500 group-active:text-orange-600"
+                />
+              </div>
             </div>
             <p className="mt-4 text-sm text-muted-foreground">
               limited-time build option:{" "}

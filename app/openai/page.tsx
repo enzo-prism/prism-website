@@ -3,6 +3,7 @@ import type { Metadata } from "next"
 
 import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
+import ServiceIllustration from "@/components/animated/ServiceIllustration"
 import { WebPageSchema } from "@/components/schema-markup"
 import { buildRouteMetadata } from "@/lib/seo/metadata"
 
@@ -99,8 +100,8 @@ export default function OpenAIPage() {
       <main className="bg-white">
         <section className="relative overflow-hidden border-b border-neutral-100">
           <div className="absolute inset-0 bg-gradient-to-b from-neutral-50 via-white to-white" aria-hidden="true" />
-          <div className="container relative mx-auto px-4 pb-16 pt-20 sm:pt-24 md:pb-20">
-            <div className="mx-auto max-w-3xl text-center">
+          <div className="container relative mx-auto grid gap-10 px-4 pb-16 pt-20 sm:grid-cols-[1.05fr_0.95fr] sm:items-center sm:pt-24 md:pb-20">
+            <div className="mx-auto max-w-3xl text-center sm:text-left">
               <p className="text-xs uppercase tracking-[0.35em] text-neutral-400">openai partnership</p>
               <h1 className="mt-4 text-4xl font-semibold lowercase tracking-tight text-neutral-900 sm:text-5xl">
                 ai copilots that keep your presence everywhere
@@ -136,6 +137,16 @@ export default function OpenAIPage() {
                   view codex rebuild guide
                 </Link>
               </div>
+            </div>
+            <div
+              tabIndex={0}
+              role="group"
+              className="group mx-auto flex h-64 w-full max-w-[22rem] items-center justify-center rounded-3xl border border-neutral-200 bg-white px-4 py-3 shadow-sm transition-[transform,border-color] duration-300 hover:-translate-y-0.5 hover:border-orange-300 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-orange-300/60"
+            >
+              <ServiceIllustration
+                variant="openai"
+                className="h-full w-full text-neutral-500 transition-colors group-hover:text-orange-500 group-focus-visible:text-orange-500 group-active:text-orange-600"
+              />
             </div>
           </div>
         </section>

@@ -5,6 +5,7 @@ import FAQSection from "@/components/faq-section"
 import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
 import ScrollToTop from "@/components/scroll-to-top"
+import ServiceIllustration from "@/components/animated/ServiceIllustration"
 import SeoTextSection from "@/components/seo-text-section"
 import { Button } from "@/components/ui/button"
 import { HowToSchema, ServiceSchema } from "@/components/schema-markup"
@@ -153,7 +154,8 @@ export default function LocalSeoServicesPage() {
       <Navbar />
       <main className="flex-1">
         <section className="px-4 py-20 sm:py-24">
-          <div className="mx-auto max-w-4xl text-center">
+          <div className="mx-auto grid max-w-5xl gap-8 md:grid-cols-[1.05fr_0.95fr] md:items-center">
+            <div className="text-center md:text-left">
             <p className="text-sm font-medium uppercase tracking-[0.3em] text-neutral-400">
               local seo services
             </p>
@@ -208,6 +210,17 @@ export default function LocalSeoServicesPage() {
               <Button asChild variant="outline" size="lg" className="rounded-full px-8">
                 <Link href="#process">See our process</Link>
               </Button>
+            </div>
+            </div>
+            <div
+              tabIndex={0}
+              role="group"
+              className="group mx-auto flex h-64 w-full max-w-[20rem] items-center justify-center rounded-3xl border border-neutral-200 bg-white px-4 py-3 transition-[transform,border-color] duration-300 hover:-translate-y-0.5 hover:border-orange-300 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-orange-300/60"
+            >
+              <ServiceIllustration
+                variant="local"
+                className="h-full w-full text-neutral-500 transition-colors group-hover:text-orange-500 group-focus-visible:text-orange-500 group-active:text-orange-600"
+              />
             </div>
           </div>
         </section>
