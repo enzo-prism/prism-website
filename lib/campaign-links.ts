@@ -14,7 +14,7 @@ export const CAMPAIGN_LINKS: Record<string, CampaignLink> = {
   // Social profiles
   "ig-bio": {
     slug: "ig-bio",
-    destination: "/get-started",
+    destination: "/offers",
     utmSource: "instagram",
     utmMedium: "social",
     utmCampaign: "brand_profile",
@@ -23,7 +23,7 @@ export const CAMPAIGN_LINKS: Record<string, CampaignLink> = {
   },
   "x-profile": {
     slug: "x-profile",
-    destination: "/get-started",
+    destination: "/proof",
     utmSource: "x",
     utmMedium: "social",
     utmCampaign: "brand_profile",
@@ -32,7 +32,7 @@ export const CAMPAIGN_LINKS: Record<string, CampaignLink> = {
   },
   "linkedin-profile": {
     slug: "linkedin-profile",
-    destination: "/get-started",
+    destination: "/proof",
     utmSource: "linkedin",
     utmMedium: "social",
     utmCampaign: "brand_profile",
@@ -41,7 +41,7 @@ export const CAMPAIGN_LINKS: Record<string, CampaignLink> = {
   },
   "tiktok-bio": {
     slug: "tiktok-bio",
-    destination: "/get-started",
+    destination: "/offers",
     utmSource: "tiktok",
     utmMedium: "social",
     utmCampaign: "brand_profile",

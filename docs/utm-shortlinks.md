@@ -23,17 +23,22 @@ Use clean public links via `/go/:slug` while preserving attribution.
 - Keep one intent per slug.
 
 ## Current starter slug pack
-- `/go/ig-bio`
-- `/go/x-profile`
-- `/go/linkedin-profile`
-- `/go/tiktok-bio`
-- `/go/yt-description`
-- `/go/podcast-show-notes`
-- `/go/newsletter`
-- `/go/email-signature`
-- `/go/meta-ad-01`
-- `/go/google-ad-01`
-- `/go/partner-referral`
+- `/go/ig-bio` -> `/offers`
+- `/go/x-profile` -> `/proof`
+- `/go/linkedin-profile` -> `/proof`
+- `/go/tiktok-bio` -> `/offers`
+- `/go/yt-description` -> `/blog`
+- `/go/podcast-show-notes` -> `/podcast`
+- `/go/newsletter` -> `/blog`
+- `/go/email-signature` -> `/get-started`
+- `/go/meta-ad-01` -> `/get-started`
+- `/go/google-ad-01` -> `/get-started`
+- `/go/partner-referral` -> `/get-started`
+
+## QA
+- Local/manual check: `pnpm qa:campaign-links`
+- Uses production by default (`https://prism-website-gamma.vercel.app`)
+- Override target: `BASE_URL=https://your-preview-url pnpm qa:campaign-links`
 
 ## Attribution persistence
 Client analytics stores campaign context in first-party localStorage (`prism_attribution_v1`) for 30 days, then enriches downstream events with:
