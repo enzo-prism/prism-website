@@ -20,15 +20,16 @@ function toAbsoluteUrl(input: string, req: NextRequest): URL {
   return new URL(input.startsWith("/") ? input : `/${input}`, req.nextUrl.origin)
 }
 
-export function GET(req: NextRequest, context: { params: { slug: string } }) {
-  const link = getCampaignLink(context.params.slug)
+export async function GET(req: NextRequest, context: { params: Promise<{ slug: string }> }) {
+  const { slug } = await context.params
+  const link = getCampaignLink(slug)
 
   if (!link) {
     const fallback = new URL("/get-started", req.nextUrl.origin)
     fallback.searchParams.set("utm_source", "shortlink")
     fallback.searchParams.set("utm_medium", "redirect")
     fallback.searchParams.set("utm_campaign", "unknown_slug")
-    fallback.searchParams.set("utm_content", context.params.slug)
+    fallback.searchParams.set("utm_content", slug)
     return NextResponse.redirect(fallback, { status: 302 })
   }
 
