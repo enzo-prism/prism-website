@@ -248,8 +248,10 @@ const HOMEPAGE_CASE_STUDIES = HOMEPAGE_CASE_STUDY_SLUGS.map((slug) =>
     slug: study.slug,
   }))
 
-const SECTION_SPACING =
-  "min-h-screen min-h-[100svh] py-24 sm:py-32 lg:py-40 xl:py-48"
+const SECTION_SPACING_DEFAULT =
+  "py-16 sm:py-20 lg:py-24 xl:py-28"
+const SECTION_SPACING_COMPACT =
+  "py-12 sm:py-16 lg:py-20"
 const HERO_SECTION_CLASSES =
   "relative flex min-h-screen min-h-[100svh] items-center overflow-hidden -mt-[calc(var(--prism-header-height)+env(safe-area-inset-top,0px))] pt-[calc(var(--prism-header-height)+env(safe-area-inset-top,0px))] pb-[calc(var(--prism-header-height)+env(safe-area-inset-bottom,0px))] bg-background"
 
@@ -264,7 +266,7 @@ export default function ClientPage() {
             <HeroMonthlyLeadsPill />
           </div>
         </section>
-        <section className={`${SECTION_SPACING} bg-background`}>
+        <section className={`${SECTION_SPACING_DEFAULT} bg-background`}>
           <div className="container relative mx-auto px-4 sm:px-6">
             <div className="mx-auto grid w-full max-w-6xl items-center gap-8 lg:grid-cols-[minmax(0,560px)_minmax(0,1fr)] lg:gap-10">
               <div className="mx-auto w-full max-w-[560px]">
@@ -316,7 +318,7 @@ export default function ClientPage() {
           </div>
         </section>
 
-        <section className={`${SECTION_SPACING} bg-background`}>
+        <section className={`${SECTION_SPACING_DEFAULT} bg-background`}>
           <div className="container relative mx-auto px-4 sm:px-6">
             <div className="space-y-3 text-center">
               <p className="text-xs font-semibold uppercase tracking-[0.22em] text-muted-foreground">
@@ -348,7 +350,7 @@ export default function ClientPage() {
           </div>
         </section>
 
-        <section className={`${SECTION_SPACING} bg-background`}>
+        <section className={`${SECTION_SPACING_COMPACT} bg-background`}>
           <div className="container relative mx-auto px-4 sm:px-6">
             <div className="mx-auto max-w-2xl space-y-6 text-center lg:max-w-3xl">
               <div className="space-y-4">
@@ -404,7 +406,7 @@ export default function ClientPage() {
 
         <HomeWallOfLoveCarousel enableMobileArrows />
 
-        <section className={`relative ${SECTION_SPACING} bg-background`}>
+        <section className={`relative ${SECTION_SPACING_COMPACT} bg-background`}>
           <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(60%_60%_at_10%_0%,rgba(0,0,0,0.06),transparent_60%),radial-gradient(60%_60%_at_90%_20%,rgba(0,0,0,0.04),transparent_65%)]" />
           <div className="container relative mx-auto px-4 sm:px-6">
             <div className="grid grid-cols-1 gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,520px)] lg:items-start">
@@ -433,7 +435,7 @@ export default function ClientPage() {
           </div>
         </section>
 
-        <section className={`${SECTION_SPACING} bg-background`}>
+        <section className={`${SECTION_SPACING_COMPACT} bg-background`}>
           <div className="container relative flex flex-col mx-auto gap-10 px-4 sm:px-6">
             <div className="flex flex-col items-center gap-3 text-center">
               <Badge variant="secondary" className="w-fit">
@@ -456,7 +458,7 @@ export default function ClientPage() {
           </div>
         </section>
 
-        <section className={`relative overflow-hidden ${SECTION_SPACING} bg-muted/30`}>
+        <section className={`relative overflow-hidden ${SECTION_SPACING_DEFAULT} bg-muted/30`}>
           <div className="container relative flex flex-col mx-auto gap-10 px-4 sm:px-6">
             <div className="flex flex-col items-center gap-3 text-center">
               <Badge variant="secondary" className="w-fit">
@@ -506,7 +508,7 @@ export default function ClientPage() {
           </div>
         </section>
 
-        <section className={`${SECTION_SPACING} bg-background`}>
+        <section className={`${SECTION_SPACING_DEFAULT} bg-background`}>
           <div className="container flex flex-col mx-auto gap-10 px-4 sm:px-6">
             <div className="flex flex-col items-center gap-3 text-center">
               <Badge variant="secondary" className="w-fit">
@@ -522,7 +524,7 @@ export default function ClientPage() {
           </div>
         </section>
 
-        <section className={`relative overflow-hidden ${SECTION_SPACING} bg-muted/30`}>
+        <section className={`relative overflow-hidden ${SECTION_SPACING_DEFAULT} bg-muted/30`}>
           <div className="container relative mx-auto px-4 sm:px-6">
             <Card className="overflow-hidden border-border/60 bg-card/90">
               <CardHeader className="flex flex-col gap-4 sm:flex-row sm:items-center">
@@ -560,7 +562,7 @@ export default function ClientPage() {
           </div>
         </section>
 
-        <section className={`relative overflow-hidden ${SECTION_SPACING} bg-background`}>
+        <section className={`relative overflow-hidden ${SECTION_SPACING_DEFAULT} bg-background`}>
           <div className="container mx-auto px-4 sm:px-6">
             <Card className="overflow-hidden rounded-3xl border-border/60 bg-card/95 shadow-lg">
               <div className="grid gap-10 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)]">
