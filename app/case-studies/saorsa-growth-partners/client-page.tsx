@@ -14,7 +14,7 @@ const FounderImpactGraph = dynamic(
 )
 
 const CASE_STUDY_SLUG = "saorsa-growth-partners"
-const CLIENT_SITE = "https://www.saorsagrowthpartners.com"
+const CLIENT_SITE = "https://www.saorsapartners.com"
 const CANONICAL_URL = `https://www.design-prism.com/case-studies/${CASE_STUDY_SLUG}`
 const caseStudy = CASE_STUDIES.find((study) => study.slug === CASE_STUDY_SLUG)
 const schemaTitle = caseStudy?.title ?? "Growth Systems for a Boutique Consultancy"
@@ -50,7 +50,7 @@ export default function SaorsaGrowthPartnersCaseStudy() {
             </div>
             <div className="flex flex-wrap gap-3 pt-6">
               <Button asChild variant="outline" className="rounded-full lowercase">
-                <Link href={CLIENT_SITE} target="_blank" rel="noopener noreferrer">visit saorsagrowthpartners.com</Link>
+                <Link href={CLIENT_SITE} target="_blank" rel="noopener noreferrer">visit saorsapartners.com</Link>
               </Button>
               <Button asChild className="rounded-full lowercase">
                 <Link href="/contact">start a project</Link>
