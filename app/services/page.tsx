@@ -5,11 +5,13 @@ import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
 import { ServiceSchema } from "@/components/schema-markup"
 import FAQSection from "@/components/faq-section"
+import ServiceIllustration from "@/components/animated/ServiceIllustration"
 import { buildRouteMetadata } from "@/lib/seo/metadata"
 
 type CoreService = {
   name: string
   summary: string
+  illustration: "websites" | "local" | "ads" | "content" | "analytics"
   outcomes: string[]
   caseStudies: { label: string; href: string }[]
   learnMoreLinks?: { label: string; href: string }[]
@@ -23,6 +25,7 @@ const coreServices: CoreService[] = [
       { label: "website design services", href: "/websites" },
       { label: "start a website project", href: "/get-started?service=website-design" },
     ],
+    illustration: "websites",
     outcomes: [
       "Custom design, UX, and development in one sprint team",
       "Editable component library and CMS governance",
@@ -36,6 +39,7 @@ const coreServices: CoreService[] = [
   },
   {
     name: "Local Presence & Reviews",
+    illustration: "local",
     summary: "Keep your practice or storefront discoverable with listings, reputation management, and map pack reporting.",
     learnMoreLinks: [
       { label: "local seo services", href: "/local-seo-services" },
@@ -56,6 +60,7 @@ const coreServices: CoreService[] = [
   },
   {
     name: "Paid Media & Creative",
+    illustration: "ads",
     summary: "Strategy, creative, and execution for always-on paid search and paid social campaigns.",
     outcomes: [
       "Full-funnel campaign setup across Google, Meta, and TikTok",
@@ -69,6 +74,7 @@ const coreServices: CoreService[] = [
   },
   {
     name: "Content & Communications",
+    illustration: "content",
     summary: "Operator-friendly content systems for email, video, blogs, and in-practice storytelling.",
     learnMoreLinks: [
       { label: "custom email for dental practices", href: "/custom-email-for-dental-practices" },
@@ -85,6 +91,7 @@ const coreServices: CoreService[] = [
   },
   {
     name: "Analytics, Automation & Support",
+    illustration: "analytics",
     summary: "A single source of truth with GA4, ads, CRM, and in-office tools stitched together.",
     outcomes: [
       "Dashboards and scorecards for leads, bookings, and revenue",
@@ -308,8 +315,16 @@ export default function ServicesPage() {
               {coreServices.map((service) => (
                 <div
                   key={service.name}
-                  className="flex h-full flex-col gap-4 rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
+                  tabIndex={0}
+                  role="group"
+                  className="group flex h-full flex-col gap-4 rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm transition-[transform,box-shadow,border-color] duration-300 ease-out hover:-translate-y-1 hover:shadow-lg focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-orange-300/60"
                 >
+                  <div className="h-14 w-14 rounded-xl border border-neutral-200 bg-white p-2 transition-colors duration-300 group-hover:border-orange-300 group-focus-visible:border-orange-300 group-active:border-orange-400">
+                    <ServiceIllustration
+                      variant={service.illustration}
+                      className="h-10 w-10 text-neutral-500 transition-colors group-hover:text-orange-500 group-focus-visible:text-orange-500 group-active:text-orange-600"
+                    />
+                  </div>
                   <div>
                     <h3 className="text-xl font-semibold lowercase text-neutral-900">{service.name}</h3>
                     <p className="mt-2 text-sm text-neutral-600">{service.summary}</p>

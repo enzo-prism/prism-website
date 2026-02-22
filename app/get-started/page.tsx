@@ -6,7 +6,7 @@ import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
 import BookDemoEmbed from "@/components/BookDemoEmbed"
 import VideoPlayer from "@/components/video-player"
-import PixelishIcon from "@/components/pixelish/PixelishIcon"
+import ServiceIllustration from "@/components/animated/ServiceIllustration"
 import GetStartedHeroScene from "@/components/get-started/GetStartedHeroScene"
 import { WebPageSchema } from "@/components/schema-markup"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
@@ -34,10 +34,10 @@ const VSL_SOURCE = {
 }
 
 const PROGRAM_ROLES = [
-  { title: "Website Developer", iconSrc: "/pixelish/command.svg", iconAlt: "Developer icon" },
-  { title: "Designer", iconSrc: "/pixelish/device-tablet.svg", iconAlt: "Design icon" },
-  { title: "Marketer and Storyteller", iconSrc: "/pixelish/chat-dots.svg", iconAlt: "Marketing icon" },
-  { title: "Project Manager", iconSrc: "/pixelish/calendar.svg", iconAlt: "Project management icon" },
+  { title: "Website Developer", variant: "role-developer" as const },
+  { title: "Designer", variant: "role-designer" as const },
+  { title: "Marketer and Storyteller", variant: "role-marketer" as const },
+  { title: "Project Manager", variant: "role-manager" as const },
 ]
 
 const FAQ_ITEMS: FAQItem[] = [
@@ -155,16 +155,7 @@ export default function GetStartedPage() {
             <p className="max-w-2xl text-lg leading-relaxed text-muted-foreground">
               <span className="font-medium text-foreground">Join our Online Presence Transformation program</span>
               <span className="hidden sm:inline"> - </span>
-              <span className="block sm:inline">
-                remove yourself as the bottleneck for growth{" "}
-                <PixelishIcon
-                  src="/pixelish/graph-chart-high.svg"
-                  alt=""
-                  size={16}
-                  aria-hidden
-                  className="inline-block align-[-0.12em] opacity-90"
-                />
-              </span>
+              <span className="block sm:inline">remove yourself as the bottleneck for growth</span>
             </p>
             <VideoPlayer
               src={VSL_SOURCE.src}
@@ -195,30 +186,30 @@ export default function GetStartedPage() {
               </h2>
             </div>
             <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-              {PROGRAM_ROLES.map((role, index) => {
-                return (
-                  <Card key={role.title} className="border-border/60 bg-card/90">
-                    <CardContent className="p-6">
-                      <div className="flex items-start justify-between gap-3">
-                        <p className="text-xs font-semibold uppercase tracking-[0.3em] text-muted-foreground">
-                          Role {String(index + 1).padStart(2, "0")}
-                        </p>
-                        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-muted/60 text-muted-foreground">
-                          <PixelishIcon
-                            src={role.iconSrc}
-                            alt={role.iconAlt}
-                            size={20}
-                            aria-hidden="true"
-                            className="h-5 w-5 opacity-90"
-                          />
-                        </div>
+              {PROGRAM_ROLES.map((role, index) => (
+                <Card
+                  key={role.title}
+                  tabIndex={0}
+                  role="group"
+                  className="group border-border/60 bg-card/90 transition-[border-color,transform] duration-300 ease-out focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-orange-300/60"
+                >
+                  <CardContent className="p-6">
+                    <div className="flex items-start justify-between gap-3">
+                      <p className="text-xs font-semibold uppercase tracking-[0.3em] text-muted-foreground">
+                        Role {String(index + 1).padStart(2, "0")}
+                      </p>
+                      <div className="flex h-10 w-10 items-center justify-center rounded-full bg-muted/60 text-muted-foreground">
+                        <ServiceIllustration
+                          variant={role.variant}
+                          className="h-6 w-6 text-neutral-500 group-hover:text-orange-500 group-focus-visible:text-orange-500 group-active:text-orange-600"
+                        />
                       </div>
-                      <p className="mt-3 text-lg font-semibold text-foreground">{role.title}</p>
-                    </CardContent>
-                  </Card>
-                )
-              })}
-            </div>
+                    </div>
+                    <p className="mt-3 text-lg font-semibold text-foreground">{role.title}</p>
+                  </CardContent>
+                </Card>
+              ))}
+              </div>
             <div className="mt-10 flex flex-col items-center gap-4 text-center">
               <p className="text-base text-muted-foreground">
                 Your team from Prism works 7 days a week to get you more leads, more customers, and better custom lifetime value.

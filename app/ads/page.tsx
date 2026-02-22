@@ -5,6 +5,7 @@ import ScrollToTop from "@/components/scroll-to-top"
 import SimpleBlogGrid from "@/components/simple-blog-grid"
 import SimpleBlogPostCard from "@/components/simple-blog-post-card"
 import { ServiceSchema } from "@/components/schema-markup"
+import ServiceIllustration from "@/components/animated/ServiceIllustration"
 import VideoPlayer from "@/components/video-player"
 import { Button } from "@/components/ui/button"
 import { ArrowRight, Check } from "lucide-react"
@@ -218,26 +219,37 @@ export default async function AdsPage() {
 
       <main className="flex-1">
         <section className="px-4 py-20 sm:py-24">
-          <div className="mx-auto max-w-4xl text-center">
-            <p className="text-sm font-medium uppercase tracking-[0.3em] text-neutral-400">
-              paid acquisition
-            </p>
-            <h1 className="mt-4 text-4xl font-semibold tracking-tight text-neutral-900 sm:text-5xl">
-              Ads that bring the right customers - not just clicks
-            </h1>
-            <p className="mt-6 text-base text-neutral-600 sm:text-lg">
-              We plan, create, and optimize ads across Google, Meta, TikTok, and Yelp so you reach the people most likely to buy without overspending.
-            </p>
-            <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-              <Button asChild size="lg" className="rounded-full px-8">
-                <Link href="/free-analysis">
-                  {FREE_AUDIT_CTA_TEXT}
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
-              </Button>
-              <Button asChild variant="outline" size="lg" className="rounded-full px-8">
-                <Link href="#budget-protection">See how we optimize budgets</Link>
-              </Button>
+          <div className="mx-auto grid max-w-5xl gap-8 md:grid-cols-[1.05fr_0.95fr] md:items-center">
+            <div className="text-center md:text-left">
+              <p className="text-sm font-medium uppercase tracking-[0.3em] text-neutral-400">paid acquisition</p>
+              <h1 className="mt-4 text-4xl font-semibold tracking-tight text-neutral-900 sm:text-5xl">
+                Ads that bring the right customers - not just clicks
+              </h1>
+              <p className="mt-6 text-base text-neutral-600 sm:text-lg">
+                We plan, create, and optimize ads across Google, Meta, TikTok, and Yelp so you reach the people most likely
+                to buy without overspending.
+              </p>
+              <div className="mt-8 flex flex-wrap items-center justify-center gap-3 md:justify-start">
+                <Button asChild size="lg" className="rounded-full px-8">
+                  <Link href="/free-analysis">
+                    {FREE_AUDIT_CTA_TEXT}
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Link>
+                </Button>
+                <Button asChild variant="outline" size="lg" className="rounded-full px-8">
+                  <Link href="#budget-protection">See how we optimize budgets</Link>
+                </Button>
+              </div>
+            </div>
+            <div
+              tabIndex={0}
+              role="group"
+              className="group mx-auto flex h-56 w-full max-w-[20rem] items-center justify-center rounded-3xl border border-neutral-200 bg-white/90 px-6 py-4 transition-[transform,border-color,box-shadow] duration-300 hover:-translate-y-0.5 hover:border-orange-300 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-orange-300/60"
+            >
+              <ServiceIllustration
+                variant="ads"
+                className="h-full w-full text-neutral-500 transition-colors group-hover:text-orange-500 group-focus-visible:text-orange-500 group-active:text-orange-600"
+              />
             </div>
           </div>
         </section>

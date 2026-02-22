@@ -5,6 +5,7 @@ import { ArrowRight, BarChart3, CheckCircle2, Globe2, MailCheck, Sparkles } from
 import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
 import ScrollToTop from "@/components/scroll-to-top"
+import ServiceIllustration from "@/components/animated/ServiceIllustration"
 import { WebPageSchema } from "@/components/schema-markup"
 import { Button } from "@/components/ui/button"
 import { buildRouteMetadata } from "@/lib/seo/metadata"
@@ -96,39 +97,51 @@ export default function GooglePage() {
             <div className="h-full w-full bg-[radial-gradient(ellipse_at_center,_rgba(236,72,153,0.25),_rgba(76,29,149,0))]" />
           </div>
           <div className="relative">
-            <div className="container mx-auto flex max-w-4xl flex-col items-center gap-6 px-4 py-24 text-center lowercase md:gap-8 md:px-6 md:py-32">
-              <span className="inline-flex items-center gap-2 text-xs font-semibold tracking-[0.32em] text-white/70">
-                <Sparkles className="h-4 w-4" aria-hidden />
-                prism × google
-              </span>
-              <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl md:text-6xl">
-                prism + google: growing local businesses with the world’s best tools
-              </h1>
-              <p className="text-base text-white/80 sm:text-lg">
-                we help small businesses and local practices grow faster by setting up, integrating, and optimizing google
-                products — from workspace to ads — all under one roof.
-              </p>
-              <div className="flex w-full flex-col gap-3 sm:flex-row sm:justify-center">
-                <Button
-                  asChild
-                  size="lg"
-                  variant="inverted"
-                  className="h-auto rounded-full px-8 py-4 text-base font-semibold"
-                >
-                  <Link href={PRICING_HREF} className="lowercase">
-                    get started <ArrowRight className="h-5 w-5" aria-hidden />
-                  </Link>
-                </Button>
-                <Button
-                  asChild
-                  size="lg"
-                  variant="outline-inverted"
-                  className="h-auto rounded-full px-8 py-4 text-base font-semibold"
-                >
-                  <Link href={GOOGLE_WORKSPACE_LINK} target="_blank" rel="noopener noreferrer" className="lowercase">
-                    set up google workspace (with discount) <ArrowRight className="h-5 w-5" aria-hidden />
-                  </Link>
-                </Button>
+            <div className="container mx-auto grid max-w-6xl gap-8 px-4 py-24 md:grid-cols-[1.05fr_0.95fr] md:items-center md:gap-10 md:px-6 md:py-32">
+              <div className="space-y-6 md:text-left">
+                <span className="inline-flex items-center gap-2 text-xs font-semibold tracking-[0.32em] text-white/70">
+                  <Sparkles className="h-4 w-4" aria-hidden />
+                  prism × google
+                </span>
+                <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl md:text-6xl">
+                  prism + google: growing local businesses with the world’s best tools
+                </h1>
+                <p className="text-base text-white/80 sm:text-lg">
+                  we help small businesses and local practices grow faster by setting up, integrating, and optimizing
+                  google products — from workspace to ads — all under one roof.
+                </p>
+                <div className="flex w-full flex-col gap-3 sm:flex-row sm:justify-start">
+                  <Button
+                    asChild
+                    size="lg"
+                    variant="inverted"
+                    className="h-auto rounded-full px-8 py-4 text-base font-semibold"
+                  >
+                    <Link href={PRICING_HREF} className="lowercase">
+                      get started <ArrowRight className="h-5 w-5" aria-hidden />
+                    </Link>
+                  </Button>
+                  <Button
+                    asChild
+                    size="lg"
+                    variant="outline-inverted"
+                    className="h-auto rounded-full px-8 py-4 text-base font-semibold"
+                  >
+                    <Link href={GOOGLE_WORKSPACE_LINK} target="_blank" rel="noopener noreferrer" className="lowercase">
+                      set up google workspace (with discount) <ArrowRight className="h-5 w-5" aria-hidden />
+                    </Link>
+                  </Button>
+                </div>
+              </div>
+              <div
+                tabIndex={0}
+                role="group"
+                className="group mx-auto flex h-64 w-full max-w-[18rem] items-center justify-center rounded-3xl border border-white/20 bg-white/10 p-4 backdrop-blur-sm transition-[transform,border-color] duration-300 hover:-translate-y-0.5 hover:border-orange-300/80 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-orange-300/60"
+              >
+                <ServiceIllustration
+                  variant="analytics"
+                  className="h-full w-full text-white/80 transition-colors group-hover:text-orange-200 group-focus-visible:text-orange-200 group-active:text-orange-100"
+                />
               </div>
             </div>
           </div>

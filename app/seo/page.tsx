@@ -10,6 +10,7 @@ import SimpleBlogGrid from "@/components/simple-blog-grid"
 import SimpleBlogPostCard from "@/components/simple-blog-post-card"
 import { Button } from "@/components/ui/button"
 import { getAllPosts } from "@/lib/mdx-data"
+import ServiceIllustration from "@/components/animated/ServiceIllustration"
 import VideoPlayer from "@/components/video-player"
 import { buildRouteMetadata } from "@/lib/seo/metadata"
 
@@ -64,29 +65,41 @@ export default async function SeoPage() {
         iconAlt="Search icon"
       />
       <section className="px-4 py-16 sm:py-20">
-        <div id="seo-founder-vsl" className="mx-auto max-w-3xl text-left">
-          <p className="text-center text-xs font-semibold uppercase tracking-[0.28em] text-neutral-400">hear from our founder</p>
-          <VideoPlayer
-            className="mt-4"
-            src="https://res.cloudinary.com/dhqpqfw6w/video/upload/v1763150128/seo_vsl_prism_website_oqk1xm.mp4"
-            poster="https://res.cloudinary.com/dhqpqfw6w/video/upload/so_0/seo_vsl_prism_website_oqk1xm.jpg"
-            title="Founder Enzo Sison on intentional seo that compounds"
-            caption="Enzo explains why SEO isn’t about tricks—it’s about becoming the obvious answer when buyers are ready. He covers how Prism builds the foundation (on-page clarity, technical structure, schema, AI-search readiness, and location intent), ties it to the metrics that matter (awareness, conversion, lifetime value), and shares why pairing SEO with dialed-in websites and listings plus month-to-month ownership gives you compounding traffic without hiring a full team."
-            schema={{
-              id: "https://www.design-prism.com/seo#founder-vsl",
-              name: "Founder Enzo Sison on SEO that compounds",
-              description:
-                "Enzo Sison explains why SEO is about being the obvious answer when buyers search, how Prism builds the technical and content foundation, and how that work compounds across awareness, conversion, and lifetime value.",
-              thumbnailUrl: "https://res.cloudinary.com/dhqpqfw6w/video/upload/so_0/seo_vsl_prism_website_oqk1xm.jpg",
-              uploadDate: "2025-01-24T00:00:00Z",
-              duration: "PT60S",
-              contentUrl: "https://res.cloudinary.com/dhqpqfw6w/video/upload/v1763150128/seo_vsl_prism_website_oqk1xm.mp4",
-              embedUrl: "https://www.design-prism.com/seo#founder-vsl",
-              width: 1920,
-              height: 1080,
-              creatorName: "Enzo Sison",
-            }}
-          />
+        <div className="mx-auto grid max-w-5xl gap-8 md:grid-cols-[1.05fr_0.95fr] md:items-start">
+          <div id="seo-founder-vsl" className="text-left">
+            <p className="text-center text-xs font-semibold uppercase tracking-[0.28em] text-neutral-400 md:text-left">hear from our founder</p>
+            <VideoPlayer
+              className="mt-4"
+              src="https://res.cloudinary.com/dhqpqfw6w/video/upload/v1763150128/seo_vsl_prism_website_oqk1xm.mp4"
+              poster="https://res.cloudinary.com/dhqpqfw6w/video/upload/so_0/seo_vsl_prism_website_oqk1xm.jpg"
+              title="Founder Enzo Sison on intentional seo that compounds"
+              caption="Enzo explains why SEO isn’t about tricks—it’s about becoming the obvious answer when buyers are ready. He covers how Prism builds the foundation (on-page clarity, technical structure, schema, AI-search readiness, and location intent), ties it to the metrics that matter (awareness, conversion, lifetime value), and shares why pairing SEO with dialed-in websites and listings plus month-to-month ownership gives you compounding traffic without hiring a full team."
+              schema={{
+                id: "https://www.design-prism.com/seo#founder-vsl",
+                name: "Founder Enzo Sison on SEO that compounds",
+                description:
+                  "Enzo Sison explains why SEO is about being the obvious answer when buyers search, how Prism builds the technical and content foundation, and how that work compounds across awareness, conversion, and lifetime value.",
+                thumbnailUrl: "https://res.cloudinary.com/dhqpqfw6w/video/upload/so_0/seo_vsl_prism_website_oqk1xm.jpg",
+                uploadDate: "2025-01-24T00:00:00Z",
+                duration: "PT60S",
+                contentUrl: "https://res.cloudinary.com/dhqpqfw6w/video/upload/v1763150128/seo_vsl_prism_website_oqk1xm.mp4",
+                embedUrl: "https://www.design-prism.com/seo#founder-vsl",
+                width: 1920,
+                height: 1080,
+                creatorName: "Enzo Sison",
+              }}
+            />
+          </div>
+          <div
+            tabIndex={0}
+            role="group"
+            className="group flex h-64 w-full items-center justify-center rounded-3xl border border-neutral-200 bg-white/70 px-4 py-3 transition-[transform,border-color] duration-300 hover:-translate-y-0.5 hover:border-orange-300 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-orange-300/60"
+          >
+            <ServiceIllustration
+              variant="seo"
+              className="h-full w-full text-neutral-500 transition-colors group-hover:text-orange-500 group-focus-visible:text-orange-500 group-active:text-orange-600"
+            />
+          </div>
         </div>
       </section>
 

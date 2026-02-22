@@ -10,6 +10,7 @@ import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
 import ScrollToTop from "@/components/scroll-to-top"
 import { Button } from "@/components/ui/button"
+import ServiceIllustration from "@/components/animated/ServiceIllustration"
 import { pixelishForEmoji } from "@/lib/pixelish-emoji"
 
 export default function TikTokLandingPage() {
@@ -70,6 +71,16 @@ export default function TikTokLandingPage() {
                       Refer &amp; Earn
                     </Link>
                   </Button>
+                </div>
+                <div
+                  tabIndex={0}
+                  role="group"
+                  className="group mt-2 flex h-52 w-full items-center justify-center rounded-3xl border border-white/20 bg-white/10 px-4 py-3 transition-[transform,border-color] duration-300 hover:-translate-y-0.5 hover:border-orange-300/70 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-orange-300/60"
+                >
+                  <ServiceIllustration
+                    variant="ads"
+                    className="h-full w-full text-neutral-200 transition-colors group-hover:text-orange-200 group-focus-visible:text-orange-200 group-active:text-orange-100"
+                  />
                 </div>
               </div>
             </div>
