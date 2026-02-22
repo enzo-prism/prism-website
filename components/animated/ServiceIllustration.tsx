@@ -19,7 +19,7 @@ type ServiceIllustrationProps = {
 }
 
 const shellClass = cn(
-  "transition-[transform,opacity,stroke,fill] duration-300 ease-out motion-reduce:transition-none",
+  "transition-[transform,opacity,stroke,fill,filter] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none",
   "group-hover:opacity-100 group-active:opacity-100 group-focus-visible:opacity-100",
 )
 
@@ -30,12 +30,12 @@ const baseStrokeClass = cn(
 
 const floatingClass = cn(
   shellClass,
-  "group-hover:-translate-y-1 group-focus-visible:-translate-y-1 group-active:translate-y-0",
+  "group-hover:-translate-y-2 group-focus-visible:-translate-y-2 group-active:translate-y-0",
 )
 
 const pulseClass = cn(
   shellClass,
-  "group-hover:scale-105 group-focus-visible:scale-105 group-active:scale-100",
+  "group-hover:scale-110 group-focus-visible:scale-110 group-active:scale-100",
 )
 
 function getIllustration(variant: ServiceIllustrationVariant) {
