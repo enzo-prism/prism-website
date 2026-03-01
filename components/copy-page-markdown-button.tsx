@@ -11,6 +11,7 @@ import { cn } from "@/lib/utils"
 import { trackCTAClick } from "@/utils/analytics"
 
 const BLOG_POST_PATH_PATTERN = /^\/blog\/[^/]+$/
+const MARKDOWN_BUTTON_HIDDEN_PATHS = new Set(["/get-started"])
 
 async function copyTextToClipboard(text: string) {
   if (typeof navigator !== "undefined" && navigator.clipboard?.writeText) {
@@ -51,7 +52,12 @@ export default function CopyPageMarkdownButton() {
     }
   }, [])
 
-  if (!pathname || pathname === "/" || BLOG_POST_PATH_PATTERN.test(pathname)) {
+  if (
+    !pathname ||
+    pathname === "/" ||
+    BLOG_POST_PATH_PATTERN.test(pathname) ||
+    MARKDOWN_BUTTON_HIDDEN_PATHS.has(pathname)
+  ) {
     return null
   }
 

@@ -1,0 +1,102 @@
+export type SalesChatRuntimeConfig = {
+  enabled: boolean
+  aiFallbackEnabled: boolean
+  hasGatewayBaseUrl: boolean
+  hasGatewayApiKey: boolean
+  hasGatewayModel: boolean
+  gatewayConfigured: boolean
+  hasBookingUrl: boolean
+  hasWebsiteOverhaulCheckoutUrl: boolean
+  hasGrowthPartnershipSignupUrl: boolean
+  ctaUrlsConfigured: boolean
+  hasLeadsWebhookUrl: boolean
+  hasLeadsWebhookSecret: boolean
+  leadsWebhookConfigured: boolean
+  uiAvailable: boolean
+  missingRequiredKeys: string[]
+}
+
+const REQUIRED_GATEWAY_KEYS = [
+  "AI_GATEWAY_BASE_URL",
+  "AI_GATEWAY_API_KEY",
+  "AI_GATEWAY_MODEL",
+] as const
+const REQUIRED_CTA_KEYS = [
+  "SALES_CHAT_BOOKING_URL",
+  "SALES_CHAT_WEBSITE_OVERHAUL_CHECKOUT_URL",
+  "SALES_CHAT_GROWTH_PARTNERSHIP_SIGNUP_URL",
+] as const
+const REQUIRED_LEAD_KEYS = [
+  "SALES_CHAT_LEADS_WEBHOOK_URL",
+  "SALES_CHAT_LEADS_WEBHOOK_SECRET",
+] as const
+
+export function parseBooleanEnv(value: string | undefined, fallback: boolean): boolean {
+  if (!value) return fallback
+  const normalized = value.trim().toLowerCase()
+  if (["1", "true", "yes", "on"].includes(normalized)) return true
+  if (["0", "false", "no", "off"].includes(normalized)) return false
+  return fallback
+}
+
+function isConfigured(value: string | undefined): boolean {
+  return Boolean(value?.trim())
+}
+
+export function getSalesChatRuntimeConfig(env: NodeJS.ProcessEnv): SalesChatRuntimeConfig {
+  // Keep enabled default explicit because this controls whether the chat launcher is mounted.
+  const enabled = parseBooleanEnv(env.SALES_CHAT_ENABLED, true)
+  const aiFallbackEnabled = parseBooleanEnv(env.SALES_CHAT_AI_FALLBACK_ENABLED, false)
+  const hasGatewayBaseUrl = isConfigured(env.AI_GATEWAY_BASE_URL)
+  const hasGatewayApiKey = isConfigured(env.AI_GATEWAY_API_KEY)
+  const hasGatewayModel = isConfigured(env.AI_GATEWAY_MODEL)
+  const gatewayConfigured = hasGatewayBaseUrl && hasGatewayApiKey && hasGatewayModel
+  const hasBookingUrl = isConfigured(env.SALES_CHAT_BOOKING_URL)
+  const hasWebsiteOverhaulCheckoutUrl = isConfigured(env.SALES_CHAT_WEBSITE_OVERHAUL_CHECKOUT_URL)
+  const hasGrowthPartnershipSignupUrl = isConfigured(env.SALES_CHAT_GROWTH_PARTNERSHIP_SIGNUP_URL)
+  const ctaUrlsConfigured = hasBookingUrl && hasWebsiteOverhaulCheckoutUrl && hasGrowthPartnershipSignupUrl
+  const hasLeadsWebhookUrl = isConfigured(env.SALES_CHAT_LEADS_WEBHOOK_URL)
+  const hasLeadsWebhookSecret = isConfigured(env.SALES_CHAT_LEADS_WEBHOOK_SECRET)
+  const leadsWebhookConfigured = hasLeadsWebhookUrl && hasLeadsWebhookSecret
+
+  const missingRequiredKeys: string[] = []
+  if (enabled) {
+    for (const key of REQUIRED_CTA_KEYS) {
+      if (!isConfigured(env[key])) {
+        missingRequiredKeys.push(key)
+      }
+    }
+
+    for (const key of REQUIRED_LEAD_KEYS) {
+      if (!isConfigured(env[key])) {
+        missingRequiredKeys.push(key)
+      }
+    }
+
+    if (aiFallbackEnabled) {
+      for (const key of REQUIRED_GATEWAY_KEYS) {
+        if (!isConfigured(env[key])) {
+          missingRequiredKeys.push(key)
+        }
+      }
+    }
+  }
+
+  return {
+    enabled,
+    aiFallbackEnabled,
+    hasGatewayBaseUrl,
+    hasGatewayApiKey,
+    hasGatewayModel,
+    gatewayConfigured,
+    hasBookingUrl,
+    hasWebsiteOverhaulCheckoutUrl,
+    hasGrowthPartnershipSignupUrl,
+    ctaUrlsConfigured,
+    hasLeadsWebhookUrl,
+    hasLeadsWebhookSecret,
+    leadsWebhookConfigured,
+    uiAvailable: enabled && ctaUrlsConfigured,
+    missingRequiredKeys,
+  }
+}

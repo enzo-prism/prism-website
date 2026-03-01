@@ -8,7 +8,9 @@ This guide highlights the workflows we lean on most often while iterating on the
 - Start the Next.js dev server with `pnpm dev`.
 - Run `pnpm lint` before committing so the shared Tailwind + ESLint rules stay consistent.
 - For Sales chat changes, run:
-  - `pnpm exec jest __tests__/api/chat.test.ts __tests__/api/sales-chat-events.test.ts __tests__/api/sales-chat-leads.test.ts __tests__/components/SalesChat.test.tsx __tests__/app/get-started.test.tsx __tests__/analytics-sales-chat.test.ts __tests__/sales-chat/runtime-config.test.ts __tests__/sales-chat/spec-v1-engine.test.ts __tests__/sales-chat/spec-v1-copy.test.ts __tests__/sales-chat/lead-payloads.test.ts`
+  - `pnpm test:sales-chat:core`
+  - `pnpm test:sales-chat:e2e`
+  - `pnpm test:sales-chat:stress` (defaults to 20 consecutive core runs; override with `SALES_CHAT_STRESS_RUNS=<n>`)
 - For non-chat changes touching shared infrastructure, update and run the nearest smoke tests in the relevant package (`pnpm test`, `pnpm test:visual`, etc.) before merging.
 - Run `pnpm test:visual` before merging changes that touch the UI of `/`, `/about`, or `/pricing` (screenshot-locked routes).
 - Run `pnpm exec playwright test __tests__/visual/blog-copy-markdown.spec.ts --project=desktop-chromium` when changing the blog markdown copy button or `/api/blog/[slug]/markdown`.
@@ -24,6 +26,9 @@ This guide highlights the workflows we lean on most often while iterating on the
   - Validates request payloads with `zod`.
   - Runs deterministic state transitions through `runSalesChatSpecV1Engine` (`lib/sales-chat/spec-v1-engine.ts`).
   - Builds typed conversion payloads through `buildLeadPayload` (`lib/sales-chat/lead-payloads.ts`) and dispatches with `dispatchSalesChatLead` (`lib/sales-chat/lead-dispatch.ts`) when terminal actions fire.
+  - Includes lead dispatch observability fields in success payloads:
+    - `leadDispatchStatus` (`none` | `attempted` | `succeeded` | `failed`)
+    - `leadDispatchCode` (sanitized reason code; e.g. `webhook_http_error`, `duplicate_suppressed`)
   - Returns JSON only (no streaming path in the deterministic route).
   - Returns tracing headers:
     - `x-sales-chat-route` (`success`, `disabled`, `config_missing`, `invalid_request`)
@@ -60,13 +65,15 @@ This guide highlights the workflows we lean on most often while iterating on the
     - `trackSalesChatMessageSent({ sourcePage, messageLength, sessionId })`
     - `trackSalesChatError({ sourcePage, errorType, sessionId, details })`
     - `trackSalesChatDemoCtaShown`, `trackSalesChatDemoCtaClicked`, `trackSalesChatCalendarOpened`, `trackSalesChatDemoBooked`
-    - `sales_chat_spec_node_entered`, `sales_chat_offer_recommended`, `sales_chat_lead_payload_emitted`, `sales_chat_dead_end_prevented` (server events)
+    - `sales_chat_spec_node_entered`, `sales_chat_offer_recommended`, `sales_chat_lead_payload_attempted`, `sales_chat_lead_payload_emitted`, `sales_chat_lead_payload_failed`, `sales_chat_dead_end_prevented` (server events)
 - Observability checks before merge:
   - Verify logs never include secrets (lead webhook secret, gateway keys, raw session identifiers where not required).
   - Verify deterministic responses include `x-sales-chat-route=success` in production-like traces.
   - Verify chat never returns or renders the banned copy `Sales chat is not fully configured yet...`.
+  - Verify failed lead dispatch never emits success telemetry (`sales_chat_lead_payload_emitted`).
   - Recommended fast checks after implementation:
-  - `pnpm exec jest __tests__/api/chat.test.ts __tests__/api/sales-chat-events.test.ts __tests__/api/sales-chat-leads.test.ts __tests__/components/SalesChat.test.tsx __tests__/app/get-started.test.tsx __tests__/analytics-sales-chat.test.ts __tests__/sales-chat/runtime-config.test.ts __tests__/sales-chat/spec-v1-engine.test.ts __tests__/sales-chat/spec-v1-copy.test.ts __tests__/sales-chat/lead-payloads.test.ts`
+  - `pnpm test:sales-chat:core`
+  - `pnpm test:sales-chat:e2e`
   - Optional legacy AI-module guard checks (only if touching prompt/policy helpers):
   - `pnpm exec jest __tests__/sales-chat/policy.test.ts __tests__/sales-chat/prompt.test.ts`
   - Verify responsive mode split manually:
@@ -78,6 +85,7 @@ This guide highlights the workflows we lean on most often while iterating on the
     - `curl -i -X POST http://localhost:3000/api/chat -H "content-type: application/json" -d '{"sessionId":"session-12345678","sourcePage":"/get-started","inputType":"button","inputValue":"","buttonId":"__init__"}'`
 - Debugging:
   - If deterministic responses are missing, inspect response headers (`x-sales-chat-route`) and `nodeId` in JSON payloads.
+  - If lead fan-out behavior looks inconsistent, inspect `leadDispatchStatus` + `leadDispatchCode` in `/api/chat` response payloads.
   - If chat is missing on `/get-started`, verify `uiAvailable = SALES_CHAT_ENABLED && ctaUrlsConfigured` and required CTA keys are present.
   - If chat renders but returns immediate 503 fallback, verify lead webhook keys (`SALES_CHAT_LEADS_WEBHOOK_URL`, `SALES_CHAT_LEADS_WEBHOOK_SECRET`) are configured.
   - If messages are never sent from an open chat, verify devtools `Network` shows `/api/chat` POST with `Content-Type: application/json`.

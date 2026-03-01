@@ -134,6 +134,25 @@ export type EventType =
   | "scroll_milestone"
   | "user_preference"
   | "skool_email_submission"
+  | "sales_chat_open"
+  | "sales_chat_launcher_click"
+  | "sales_chat_open_mode"
+  | "sales_chat_message_sent"
+  | "sales_chat_error"
+  | "sales_chat_welcome_seen"
+  | "sales_chat_fit_flow_started"
+  | "sales_chat_fit_flow_step_answered"
+  | "sales_chat_fit_flow_completed"
+  | "sales_chat_demo_cta_shown"
+  | "sales_chat_demo_cta_clicked"
+  | "sales_chat_calendar_opened"
+  | "sales_chat_demo_booked"
+  | "sales_chat_state_changed"
+  | "sales_chat_faq_answered"
+  | "sales_chat_csat_submitted"
+  | "sales_chat_lead_payload_attempted"
+  | "sales_chat_lead_payload_emitted"
+  | "sales_chat_lead_payload_failed"
 
 /**
  * Track a custom event in Google Analytics
@@ -414,6 +433,240 @@ export function trackSkoolEmailSubmission(email: string, source: string) {
     email_hash: hashEmail(email), // Hash the email for privacy
     source: source,
     destination: "skool.com/prism-5437",
+  })
+}
+
+type SalesChatOpenData = {
+  sourcePage: string
+}
+
+export type SalesChatOpenMode = "desktop-popup" | "fullscreen"
+
+type SalesChatLauncherClickData = {
+  sourcePage: string
+  mode: SalesChatOpenMode
+}
+
+type SalesChatOpenModeData = {
+  sourcePage: string
+  mode: SalesChatOpenMode
+}
+
+type SalesChatMessageSentData = {
+  sourcePage: string
+  messageLength: number
+  sessionId?: string
+}
+
+type SalesChatErrorData = {
+  sourcePage: string
+  errorType: string
+  sessionId?: string
+  details?: Record<string, unknown>
+}
+
+type SalesChatWelcomeSeenData = {
+  sourcePage: string
+}
+
+type SalesChatFitFlowStartedData = {
+  sourcePage: string
+  sessionId?: string
+}
+
+type SalesChatFitFlowStepAnsweredData = {
+  sourcePage: string
+  sessionId?: string
+  stepId: string
+  answer: string
+}
+
+type SalesChatFitFlowCompletedData = {
+  sourcePage: string
+  sessionId?: string
+  qualificationSnapshot: string
+}
+
+type SalesChatDemoCtaShownData = {
+  sourcePage: string
+  sessionId?: string
+}
+
+type SalesChatDemoCtaClickedData = {
+  sourcePage: string
+  sessionId?: string
+  trigger: "cta" | "preset" | "summary"
+}
+
+type SalesChatDemoBookedData = {
+  sourcePage: string
+  sessionId?: string
+}
+
+type SalesChatCalendarOpenedData = {
+  sourcePage: string
+  sessionId?: string
+  trigger: "cta" | "preset" | "summary"
+}
+
+type SalesChatStateChangedData = {
+  sourcePage: string
+  sessionId?: string
+  stateTransition: string
+  qualificationSnapshot?: string
+}
+
+type SalesChatFaqAnsweredData = {
+  sourcePage: string
+  sessionId?: string
+}
+
+type SalesChatCsatSubmittedData = {
+  sourcePage: string
+  sessionId?: string
+  value: "up" | "down"
+}
+
+export function trackSalesChatOpen({ sourcePage }: SalesChatOpenData) {
+  trackEvent("sales_chat_open", {
+    source_page: sourcePage,
+  })
+}
+
+export function trackSalesChatLauncherClick({ sourcePage, mode }: SalesChatLauncherClickData) {
+  trackEvent("sales_chat_launcher_click", {
+    source_page: sourcePage,
+    mode,
+  })
+}
+
+export function trackSalesChatOpenMode({ sourcePage, mode }: SalesChatOpenModeData) {
+  trackEvent("sales_chat_open_mode", {
+    source_page: sourcePage,
+    mode,
+  })
+}
+
+export function trackSalesChatMessageSent({ sourcePage, messageLength, sessionId }: SalesChatMessageSentData) {
+  trackEvent("sales_chat_message_sent", {
+    source_page: sourcePage,
+    message_length: messageLength,
+    session_id: sessionId,
+  })
+}
+
+export function trackSalesChatError({ sourcePage, errorType, sessionId, details }: SalesChatErrorData) {
+  trackEvent("sales_chat_error", {
+    source_page: sourcePage,
+    error_type: errorType,
+    session_id: sessionId,
+    error_details: details ? JSON.stringify(details) : undefined,
+  })
+}
+
+export function trackSalesChatWelcomeSeen({ sourcePage }: SalesChatWelcomeSeenData) {
+  trackEvent("sales_chat_welcome_seen", {
+    source_page: sourcePage,
+  })
+}
+
+export function trackSalesChatFitFlowStarted({ sourcePage, sessionId }: SalesChatFitFlowStartedData) {
+  trackEvent("sales_chat_fit_flow_started", {
+    source_page: sourcePage,
+    session_id: sessionId,
+  })
+}
+
+export function trackSalesChatFitFlowStepAnswered({
+  sourcePage,
+  sessionId,
+  stepId,
+  answer,
+}: SalesChatFitFlowStepAnsweredData) {
+  trackEvent("sales_chat_fit_flow_step_answered", {
+    source_page: sourcePage,
+    session_id: sessionId,
+    step_id: stepId,
+    answer,
+  })
+}
+
+export function trackSalesChatFitFlowCompleted({
+  sourcePage,
+  sessionId,
+  qualificationSnapshot,
+}: SalesChatFitFlowCompletedData) {
+  trackEvent("sales_chat_fit_flow_completed", {
+    source_page: sourcePage,
+    session_id: sessionId,
+    qualification_snapshot: qualificationSnapshot,
+  })
+}
+
+export function trackSalesChatDemoCtaShown({ sourcePage, sessionId }: SalesChatDemoCtaShownData) {
+  trackEvent("sales_chat_demo_cta_shown", {
+    source_page: sourcePage,
+    session_id: sessionId,
+  })
+}
+
+export function trackSalesChatDemoCtaClicked({
+  sourcePage,
+  sessionId,
+  trigger,
+}: SalesChatDemoCtaClickedData) {
+  trackEvent("sales_chat_demo_cta_clicked", {
+    source_page: sourcePage,
+    session_id: sessionId,
+    trigger,
+  })
+}
+
+export function trackSalesChatDemoBooked({ sourcePage, sessionId }: SalesChatDemoBookedData) {
+  trackEvent("sales_chat_demo_booked", {
+    source_page: sourcePage,
+    session_id: sessionId,
+  })
+}
+
+export function trackSalesChatCalendarOpened({
+  sourcePage,
+  sessionId,
+  trigger,
+}: SalesChatCalendarOpenedData) {
+  trackEvent("sales_chat_calendar_opened", {
+    source_page: sourcePage,
+    session_id: sessionId,
+    trigger,
+  })
+}
+
+export function trackSalesChatStateChanged({
+  sourcePage,
+  sessionId,
+  stateTransition,
+  qualificationSnapshot,
+}: SalesChatStateChangedData) {
+  trackEvent("sales_chat_state_changed", {
+    source_page: sourcePage,
+    session_id: sessionId,
+    state_transition: stateTransition,
+    qualification_snapshot: qualificationSnapshot,
+  })
+}
+
+export function trackSalesChatFaqAnswered({ sourcePage, sessionId }: SalesChatFaqAnsweredData) {
+  trackEvent("sales_chat_faq_answered", {
+    source_page: sourcePage,
+    session_id: sessionId,
+  })
+}
+
+export function trackSalesChatCsatSubmitted({ sourcePage, sessionId, value }: SalesChatCsatSubmittedData) {
+  trackEvent("sales_chat_csat_submitted", {
+    source_page: sourcePage,
+    session_id: sessionId,
+    value,
   })
 }
 

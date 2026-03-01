@@ -5,6 +5,7 @@ import type { Metadata } from "next"
 import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
 import BookDemoEmbed from "@/components/BookDemoEmbed"
+import SalesChat from "@/components/SalesChat"
 import VideoPlayer from "@/components/video-player"
 import PixelishIcon from "@/components/pixelish/PixelishIcon"
 import GetStartedHeroScene from "@/components/get-started/GetStartedHeroScene"
@@ -13,6 +14,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
+import { getSalesChatRuntimeConfig, parseBooleanEnv } from "@/lib/sales-chat/runtime-config"
 import { buildRouteMetadata } from "@/lib/seo/metadata"
 
 type FAQBlock =
@@ -127,6 +129,11 @@ const PAGE_TITLE = "Get started | Prism"
 const PAGE_DESCRIPTION =
   "Join Prism's Online Presence Transformation program to remove yourself as the bottleneck for growth."
 const CANONICAL_URL = "https://www.design-prism.com/get-started"
+const SALES_CHAT_INLINE_BOOKING_ENABLED = process.env.SALES_CHAT_INLINE_BOOKING_ENABLED
+
+function isInlineBookingEnabled(): boolean {
+  return parseBooleanEnv(SALES_CHAT_INLINE_BOOKING_ENABLED, true)
+}
 
 export const metadata: Metadata = buildRouteMetadata({
   titleStem: PAGE_TITLE,
@@ -136,10 +143,23 @@ export const metadata: Metadata = buildRouteMetadata({
 })
 
 export default function GetStartedPage() {
+  const salesChatRuntime = getSalesChatRuntimeConfig(process.env)
+  const salesChatUiAvailable = salesChatRuntime.uiAvailable
+
+  if (
+    process.env.NODE_ENV !== "production"
+    && salesChatRuntime.enabled
+    && salesChatRuntime.missingRequiredKeys.length > 0
+  ) {
+    console.warn("[sales-chat][get-started] deterministic runtime missing required config", {
+      missingRequiredKeys: salesChatRuntime.missingRequiredKeys,
+    })
+  }
+
   return (
     <div className="flex min-h-screen flex-col bg-background">
       <Navbar />
-      <main className="flex-1">
+      <main className="flex-1" id="main-content" tabIndex={-1}>
         <section className="relative min-h-[420px] overflow-hidden bg-black sm:min-h-[520px]">
           <GetStartedHeroScene className="absolute inset-0" />
         </section>
@@ -174,6 +194,15 @@ export default function GetStartedPage() {
             </Button>
           </div>
         </section>
+
+        {salesChatUiAvailable ? (
+          <SalesChat
+            sourcePage="/get-started"
+            bookingHref="#book-call"
+            inlineBookingEnabled={isInlineBookingEnabled()}
+            visualStyle="dark-minimal"
+          />
+        ) : null}
 
         <section className="py-16 sm:py-24">
           <div className="container mx-auto px-4 sm:px-6">

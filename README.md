@@ -34,6 +34,7 @@ The repo assumes pnpm; npm/yarn installs will fall out of sync.
 
 - `app/get-started/page.tsx` computes runtime availability via `getSalesChatRuntimeConfig(process.env)` and mounts `SalesChat` only when `uiAvailable`.
 - `app/api/chat/route.ts` is deterministic v2 (state-machine JSON contract) and returns `x-sales-chat-route` on every response plus `x-request-id` on success.
+- `/api/chat` success responses now include lead dispatch observability hints (`leadDispatchStatus`, `leadDispatchCode`) so clients can distinguish attempted/succeeded/failed lead fan-out.
 - `app/api/sales-chat/events/route.ts` ingests lifecycle and telemetry events.
 - `app/api/sales-chat/leads/route.ts` validates and forwards typed lead payloads for backfill/manual dispatch.
 - `lib/sales-chat/spec-v1-*` contains canonical copy, routing, validation, and state transitions.
@@ -45,6 +46,9 @@ The repo assumes pnpm; npm/yarn installs will fall out of sync.
 | `pnpm lint` | ESLint + Tailwind conventions. |
 | `pnpm typecheck` | TypeScript project-wide type safety. |
 | `pnpm test` | Jest + Testing Library suite. |
+| `pnpm test:sales-chat:core` | Deterministic sales-chat reliability matrix (API/component/page/runtime/copy/engine/payload analytics tests). |
+| `pnpm test:sales-chat:e2e` | Playwright checks for `/get-started` with chat enabled and disabled. |
+| `pnpm test:sales-chat:stress` | Consecutive-run stress loop (default 20 runs) for flake detection. |
 | `pnpm build` | Production Next.js build (use before Vercel deploys). |
 | `pnpm verify:deploy` | Runs `scripts/verify-deployment.ts` to ensure required env vars and image config exist. |
 | `pnpm verify:sales-chat-config` | Validates `.vercel/.env.production.local` after `vercel pull`; fails when chat is enabled without required deterministic chat keys (CTA URLs + lead webhook). `AI_GATEWAY_*` is only required if `SALES_CHAT_AI_FALLBACK_ENABLED=true`. |

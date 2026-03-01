@@ -15,9 +15,18 @@ const DialogClose = DialogPrimitive.Close
 
 const DialogOverlay = DialogPrimitive.Overlay
 
-const DialogContent = ({ className, ...props }: DialogPrimitive.DialogContentProps) => (
+type DialogContentProps = DialogPrimitive.DialogContentProps & {
+  overlayClassName?: string
+}
+
+const DialogContent = ({ className, overlayClassName, ...props }: DialogContentProps) => (
   <DialogPortal>
-    <DialogOverlay className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out data-[state=open]:fade-in" />
+    <DialogOverlay
+      className={cn(
+        "fixed inset-0 z-50 bg-black/70 backdrop-blur-sm data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out data-[state=open]:fade-in",
+        overlayClassName
+      )}
+    />
     <DialogPrimitive.Content
       className={cn(
         "fixed left-1/2 top-[12vh] z-50 flex w-[calc(100vw-2rem)] max-w-lg -translate-x-1/2 rounded-xl border border-border/60 bg-popover p-6 text-popover-foreground shadow-2xl shadow-black/70 outline-hidden transition-transform data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=open]:zoom-in-95 data-[state=closed]:zoom-out-95 sm:top-1/2 sm:max-h-[85vh] sm:-translate-y-1/2",

@@ -73,6 +73,9 @@ Use this flow when switching between local, preview, and production changes:
   3. Confirm deterministic quick replies render and follow spec flow transitions.
   4. Validate booking link anchors resolve to `#book-call`.
   5. Simulate one config/provider failure path (mock 503 in local) and verify a single handoff message appears plus clear booking path.
+  6. Validate lead dispatch telemetry contract:
+    - success path emits `sales_chat_lead_payload_attempted` + `sales_chat_lead_payload_emitted`.
+    - failed dispatch path emits `sales_chat_lead_payload_attempted` + `sales_chat_lead_payload_failed` and does **not** emit `sales_chat_lead_payload_emitted`.
 - Production verification:
   - Keep the same env names in production and preview to avoid route drift.
   - Keep model/API-key rotation in Vercel dashboard and update local docs after rotation; rotate tokens any time you suspect exposure (browser log capture, screenshot tool traces, or CI artifacts).
@@ -85,6 +88,7 @@ Use this flow when switching between local, preview, and production changes:
   - `/api/chat` deterministic response behavior,
   - lead webhook dispatch readiness (`SALES_CHAT_LEADS_WEBHOOK_*`),
   - whether fallback path was smoke-tested.
+  - reliability suite status (`pnpm test:sales-chat:core`, `pnpm test:sales-chat:e2e`, `pnpm test:sales-chat:stress`).
 
 ### Deployment checklist
 
@@ -119,5 +123,9 @@ Use this flow when switching between local, preview, and production changes:
 4. Push to `main` or open a PR; Vercel will run `pnpm install`, `pnpm run build`, and ship on success.
 5. If the Vercel build fails, pull the failing commit locally, rerun `pnpm build`, and compare logs. Most issues are deterministic when reproduced outside Vercel.
 6. For `/api/chat` rollout, validate one preview deployment by: loading `/get-started`, posting a sample message to `/api/chat`, and forcing one handled failure path to confirm booking fallback remains visible.
+7. Perfect gate before production cutover:
+   - 20 consecutive local core runs (`pnpm test:sales-chat:stress` default),
+   - clean CI pass on PR,
+   - zero flaky failures in nightly reliability runs.
 
 By following this guide, we avoid slow feedback cycles and surprise production outages caused by type errors or unapproved dependencies.

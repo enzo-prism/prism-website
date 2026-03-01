@@ -53,6 +53,9 @@ cp .env.example .env.local
   - optional `conversationState` (`nodeId`, `exchangeCount`, `memory`, `convertedAction`)
 - Response behavior:
   - `200` + deterministic JSON payload (`assistantMessage`, `quickReplies`, `nodeId`, `conversationState`, optional terminal action).
+  - Success payload observability fields:
+    - `leadDispatchStatus?: "none" | "attempted" | "succeeded" | "failed"`
+    - `leadDispatchCode?: string` (sanitized machine-readable reason, e.g. `webhook_http_error`, `duplicate_suppressed`)
   - `400` for schema violations.
   - `503` for disabled chat route or missing deterministic config.
 - Error payload format is JSON and always includes:
@@ -91,6 +94,13 @@ cp .env.example .env.local
   - `stateTransition`
   - `transcriptSnippet`
   - `metadata`
+- Reliability events used by deterministic sales chat:
+  - `sales_chat_spec_node_entered`
+  - `sales_chat_offer_recommended`
+  - `sales_chat_lead_payload_attempted`
+  - `sales_chat_lead_payload_emitted`
+  - `sales_chat_lead_payload_failed`
+  - `sales_chat_dead_end_prevented`
 - Response behavior:
   - `202` on accepted event.
   - `400` on invalid payload.

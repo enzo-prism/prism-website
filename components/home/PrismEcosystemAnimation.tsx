@@ -13,7 +13,10 @@ export default function PrismEcosystemAnimation() {
   ]
 
   return (
-    <div role="presentation" className="w-full overflow-hidden rounded-xl border border-border/40 bg-muted/20 p-2">
+    <div
+      role="presentation"
+      className="ecosystem-animation w-full overflow-hidden rounded-xl border border-border/40 bg-muted/20 p-2"
+    >
       <svg
         viewBox="0 0 800 800"
         xmlns="http://www.w3.org/2000/svg"
@@ -42,7 +45,7 @@ export default function PrismEcosystemAnimation() {
             }
             .hub-anim {
               transform-origin: center;
-              animation: pulse 3s ease-in-out infinite;
+              animation: pulse 3s ease-in-out infinite !important;
             }
 
             .flow {
@@ -51,7 +54,14 @@ export default function PrismEcosystemAnimation() {
               stroke-width: 3;
               stroke-linecap: round;
               stroke-dasharray: 4 250;
-              animation: moveFlow 3s linear infinite;
+              animation: moveFlow 3s linear infinite !important;
+            }
+
+            @media (max-width: 768px) {
+              .ecosystem-animation .flow,
+              .ecosystem-animation .hub-anim {
+                animation-duration: 3s !important;
+              }
             }
 
             .logo-node {

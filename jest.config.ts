@@ -1,14 +1,10 @@
 import type { Config } from 'jest'
-import path from "node:path"
-import { fileURLToPath, pathToFileURL } from "node:url"
-
-const configDir = path.dirname(fileURLToPath(import.meta.url))
 
 const config: Config = {
   preset: 'ts-jest',
   testEnvironment: 'jsdom',
   testEnvironmentOptions: {
-    url: pathToFileURL(path.resolve(configDir, "jest-environment.html")).href,
+    url: "https://www.design-prism.com/",
   },
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/$1',

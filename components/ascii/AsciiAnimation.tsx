@@ -211,6 +211,8 @@ export interface ASCIIAnimationProps {
   batchSize?: number
   maxConcurrentFetches?: number
   continueOnFrameError?: boolean
+  forceAutoplay?: boolean
+  respectReducedMotion?: boolean
 }
 
 type LoadedFramesStore = Array<string[] | null>
@@ -235,6 +237,8 @@ export default function ASCIIAnimation({
   batchSize = DEFAULT_BATCH_SIZE,
   maxConcurrentFetches = DEFAULT_MAX_CONCURRENT_FETCHES,
   continueOnFrameError = true,
+  forceAutoplay = false,
+  respectReducedMotion = true,
 }: ASCIIAnimationProps) {
   const [frames, setFrames] = useState<string[]>([])
   const [isLoading, setIsLoading] = useState(true)
@@ -498,6 +502,7 @@ export default function ASCIIAnimation({
   // IntersectionObserver: triggers lazy load + controls playback
   useEffect(() => {
     if (
+      forceAutoplay ||
       frames.length === 0 ||
       !containerRef.current ||
       typeof window === "undefined" ||
@@ -519,7 +524,7 @@ export default function ASCIIAnimation({
               loadRemainingFrames()
             }
 
-            if (!reducedMotionQuery?.matches) {
+            if (!respectReducedMotion || !reducedMotionQuery?.matches) {
               animationManager.start()
             }
           } else {
@@ -536,7 +541,45 @@ export default function ASCIIAnimation({
       observer.disconnect()
       animationManager.pause()
     }
-  }, [animationManager, frames.length, lazy, loadRemainingFrames])
+  }, [
+    animationManager,
+    forceAutoplay,
+    frames.length,
+    lazy,
+    loadRemainingFrames,
+    respectReducedMotion,
+  ])
+
+  // Optional autoplay path for compact embeds where intersection callbacks can be unreliable.
+  useEffect(() => {
+    if (!forceAutoplay || frames.length === 0) {
+      return
+    }
+
+    if (lazy && !fullLoadTriggered.current) {
+      void loadRemainingFrames()
+    }
+
+    const reducedMotionQuery =
+      typeof window !== "undefined" && typeof window.matchMedia === "function"
+        ? window.matchMedia("(prefers-reduced-motion: reduce)")
+        : null
+
+    if (!respectReducedMotion || !reducedMotionQuery?.matches) {
+      animationManager.start()
+    }
+
+    return () => {
+      animationManager.pause()
+    }
+  }, [
+    animationManager,
+    forceAutoplay,
+    frames.length,
+    lazy,
+    loadRemainingFrames,
+    respectReducedMotion,
+  ])
 
   // Handle resize and scaling.
   useLayoutEffect(() => {

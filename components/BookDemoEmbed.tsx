@@ -13,32 +13,38 @@ const FRAME_HEIGHTS = [
   { minWidth: 0, height: 1925 },
 ]
 
+const CHAT_FRAME_HEIGHTS = [
+  { minWidth: 1024, height: 640 },
+  { minWidth: 770, height: 700 },
+  { minWidth: 0, height: 760 },
+]
+
 const HEIGHT_BUFFER = 8
 
-const getFrameHeight = (width: number) => {
-  const match = FRAME_HEIGHTS.find((entry) => width >= entry.minWidth)
-  return (match?.height ?? FRAME_HEIGHTS[FRAME_HEIGHTS.length - 1].height) + HEIGHT_BUFFER
+const getFrameHeight = (width: number, variant: BookDemoEmbedVariant) => {
+  const map = variant === "chat-inline" ? CHAT_FRAME_HEIGHTS : FRAME_HEIGHTS
+  const match = map.find((entry) => width >= entry.minWidth)
+  return (match?.height ?? map[map.length - 1].height) + HEIGHT_BUFFER
 }
+
+type BookDemoEmbedVariant = "default" | "chat-inline"
 
 type BookDemoEmbedProps = {
   className?: string
+  variant?: BookDemoEmbedVariant
 }
 
-export default function BookDemoEmbed({ className }: BookDemoEmbedProps) {
+export default function BookDemoEmbed({ className, variant = "default" }: BookDemoEmbedProps) {
   const containerRef = useRef<HTMLDivElement | null>(null)
-  const [frameHeight, setFrameHeight] = useState(() => {
-    if (typeof window === "undefined") {
-      return getFrameHeight(0)
-    }
-    return getFrameHeight(window.innerWidth)
-  })
+  // Keep the initial render deterministic between server and client to avoid hydration mismatches.
+  const [frameHeight, setFrameHeight] = useState(() => getFrameHeight(0, variant))
 
   useEffect(() => {
     const container = containerRef.current
     if (!container) return
 
     const updateHeight = () => {
-      const nextHeight = getFrameHeight(container.clientWidth)
+      const nextHeight = getFrameHeight(container.clientWidth, variant)
       setFrameHeight((current) => (current === nextHeight ? current : nextHeight))
     }
 
@@ -53,7 +59,7 @@ export default function BookDemoEmbed({ className }: BookDemoEmbedProps) {
     observer.observe(container)
 
     return () => observer.disconnect()
-  }, [])
+  }, [variant])
 
   return (
     <div
