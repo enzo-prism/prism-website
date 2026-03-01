@@ -21,14 +21,42 @@ const initPayload = {
 
 async function ensureChatIsOpen(page: Page) {
   const heading = page.getByRole("heading", { name: /prism sales assistant/i })
+  const dialog = page.getByRole("dialog", { name: /chat with sales/i })
   const launcher = page.getByRole("button", { name: /open sales chat/i })
+  const closeButton = page.getByRole("button", { name: /close sales chat/i })
+  const overlay = page.locator(
+    "div[data-state='open'][aria-hidden='true'][data-aria-hidden='true']",
+  )
 
   await page.waitForLoadState("domcontentloaded")
 
-  const chatIsOpen = await heading.isVisible().catch(() => false)
-  if (!chatIsOpen) {
+  for (let attempt = 0; attempt < 3; attempt += 1) {
+    const chatIsOpen = await heading.isVisible().catch(() => false)
+    if (chatIsOpen) {
+      return
+    }
+
+    // Defensive reset: a stale overlay can survive between test steps and block launcher clicks.
+    const closeVisible = await closeButton.isVisible().catch(() => false)
+    if (closeVisible) {
+      await closeButton.click()
+      await expect(dialog).toBeHidden({ timeout: 5_000 }).catch(() => {})
+    } else {
+      const overlayVisible = await overlay.first().isVisible().catch(() => false)
+      if (overlayVisible) {
+        await page.keyboard.press("Escape")
+        await overlay.first().waitFor({ state: "hidden", timeout: 5_000 }).catch(() => {})
+      }
+    }
+
     await expect(launcher).toBeVisible({ timeout: 15_000 })
-    await launcher.click()
+    try {
+      await launcher.click({ timeout: 5_000 })
+    } catch {
+      await page.keyboard.press("Escape")
+      await overlay.first().waitFor({ state: "hidden", timeout: 5_000 }).catch(() => {})
+      await launcher.click({ timeout: 5_000 })
+    }
   }
 
   await expect(heading).toBeVisible({ timeout: 15_000 })
