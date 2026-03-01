@@ -1,8 +1,4 @@
-const mockDispatchSalesChatLead = jest.fn()
-
-jest.mock("@/lib/sales-chat/lead-dispatch", () => ({
-  dispatchSalesChatLead: (...args: Array<unknown>) => mockDispatchSalesChatLead(...args),
-}))
+import { createHmac } from "node:crypto"
 
 jest.mock("next/server", () => ({
   NextResponse: {
@@ -38,12 +34,14 @@ const freeAuditPayload = {
 } as const
 
 describe("/api/sales-chat/leads route", () => {
-  beforeEach(() => {
-    jest.clearAllMocks()
-    mockDispatchSalesChatLead.mockResolvedValue(undefined)
+  const originalSecret = process.env.SALES_CHAT_LEADS_WEBHOOK_SECRET
+
+  afterEach(() => {
+    process.env.SALES_CHAT_LEADS_WEBHOOK_SECRET = originalSecret
   })
 
-  it("forwards valid payload to lead dispatcher", async () => {
+  it("accepts valid payload without signature when secret is not configured", async () => {
+    delete process.env.SALES_CHAT_LEADS_WEBHOOK_SECRET
     const { POST } = await import("@/app/api/sales-chat/leads/route")
 
     const response = await POST(new Request("https://example.com/api/sales-chat/leads", {
@@ -53,11 +51,10 @@ describe("/api/sales-chat/leads route", () => {
     }))
 
     expect(response.status).toBe(202)
-    expect(mockDispatchSalesChatLead).toHaveBeenCalledTimes(1)
-    expect(mockDispatchSalesChatLead).toHaveBeenCalledWith(freeAuditPayload)
   })
 
   it("returns 400 for invalid payload", async () => {
+    delete process.env.SALES_CHAT_LEADS_WEBHOOK_SECRET
     const { POST } = await import("@/app/api/sales-chat/leads/route")
 
     const response = await POST(new Request("https://example.com/api/sales-chat/leads", {
@@ -67,19 +64,50 @@ describe("/api/sales-chat/leads route", () => {
     }))
 
     expect(response.status).toBe(400)
-    expect(mockDispatchSalesChatLead).not.toHaveBeenCalled()
   })
 
-  it("returns 503 when lead dispatcher fails", async () => {
-    mockDispatchSalesChatLead.mockRejectedValueOnce(new Error("webhook down"))
+  it("rejects payload when signature is missing or invalid and secret is configured", async () => {
+    process.env.SALES_CHAT_LEADS_WEBHOOK_SECRET = "test-secret"
     const { POST } = await import("@/app/api/sales-chat/leads/route")
+    const payload = JSON.stringify(freeAuditPayload)
+
+    const missingSignatureResponse = await POST(new Request("https://example.com/api/sales-chat/leads", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: payload,
+    }))
+
+    expect(missingSignatureResponse.status).toBe(401)
+
+    const invalidSignatureResponse = await POST(new Request("https://example.com/api/sales-chat/leads", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        "x-sales-chat-signature": "invalid-signature",
+      },
+      body: payload,
+    }))
+
+    expect(invalidSignatureResponse.status).toBe(401)
+  })
+
+  it("accepts payload with valid signature when secret is configured", async () => {
+    process.env.SALES_CHAT_LEADS_WEBHOOK_SECRET = "test-secret"
+    const { POST } = await import("@/app/api/sales-chat/leads/route")
+    const payload = JSON.stringify(freeAuditPayload)
+    const signature = createHmac("sha256", process.env.SALES_CHAT_LEADS_WEBHOOK_SECRET)
+      .update(payload)
+      .digest("hex")
 
     const response = await POST(new Request("https://example.com/api/sales-chat/leads", {
       method: "POST",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify(freeAuditPayload),
+      headers: {
+        "content-type": "application/json",
+        "x-sales-chat-signature": signature,
+      },
+      body: payload,
     }))
 
-    expect(response.status).toBe(503)
+    expect(response.status).toBe(202)
   })
 })

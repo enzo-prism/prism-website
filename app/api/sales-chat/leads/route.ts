@@ -1,7 +1,7 @@
+import { createHmac, timingSafeEqual } from "node:crypto"
+
 import { NextResponse } from "next/server"
 import { z } from "zod"
-
-import { dispatchSalesChatLead } from "@/lib/sales-chat/lead-dispatch"
 
 export const runtime = "nodejs"
 export const dynamic = "force-dynamic"
@@ -57,6 +57,25 @@ const leadPayloadSchema = z.discriminatedUnion("lead_type", [
   growthSchema,
 ])
 
+function hasValidSignature(serializedPayload: string, request: Request): boolean {
+  const secret = process.env.SALES_CHAT_LEADS_WEBHOOK_SECRET?.trim()
+  // Skip signature enforcement when no secret is configured (primarily local/dev).
+  if (!secret) return true
+
+  const providedSignature = request.headers.get("x-sales-chat-signature")
+  if (!providedSignature) return false
+
+  const expected = createHmac("sha256", secret).update(serializedPayload).digest("hex")
+  const expectedBuffer = Buffer.from(expected)
+  const providedBuffer = Buffer.from(providedSignature)
+
+  if (expectedBuffer.length !== providedBuffer.length) {
+    return false
+  }
+
+  return timingSafeEqual(expectedBuffer, providedBuffer)
+}
+
 export async function POST(request: Request) {
   let payloadRaw: unknown
   try {
@@ -65,22 +84,21 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Invalid JSON payload." }, { status: 400 })
   }
 
+  const serializedPayload = JSON.stringify(payloadRaw)
+  if (!hasValidSignature(serializedPayload, request)) {
+    return NextResponse.json({ error: "Invalid lead webhook signature." }, { status: 401 })
+  }
+
   const parsed = leadPayloadSchema.safeParse(payloadRaw)
   if (!parsed.success) {
     return NextResponse.json({ error: "Invalid lead payload." }, { status: 400 })
   }
 
-  try {
-    await dispatchSalesChatLead(parsed.data)
-  } catch (error) {
-    return NextResponse.json(
-      {
-        error: "Lead webhook dispatch failed.",
-        details: error instanceof Error ? error.message : String(error),
-      },
-      { status: 503 },
-    )
-  }
+  console.log("[sales-chat][lead-webhook] accepted", {
+    leadType: parsed.data.lead_type,
+    sourcePage: parsed.data.source_page,
+    priority: parsed.data.routing.priority,
+  })
 
   return NextResponse.json({ accepted: true }, { status: 202 })
 }
