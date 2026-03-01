@@ -19,7 +19,9 @@ interface PageProps {
   params: Promise<{ slug: string }>
 }
 
-export const dynamicParams = false
+// Render posts on-demand with ISR so deployment output does not balloon
+// with one segment bundle per slug.
+export const revalidate = 3600
 
 const WORDS_PER_MINUTE = 225
 
@@ -55,12 +57,6 @@ function deriveTakeawaysFromToc(toc: Array<{ id: string; label: string; level: n
     .map((item) => item.label.trim())
     .filter(Boolean)
     .slice(0, 4)
-}
-
-export async function generateStaticParams() {
-  const posts = await getAllPosts()
-  if (!posts) return []
-  return posts.map((post) => ({ slug: post.slug }))
 }
 
 export async function generateMetadata({
