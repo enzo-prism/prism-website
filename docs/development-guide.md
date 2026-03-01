@@ -63,14 +63,30 @@ This guide highlights the workflows we lean on most often while iterating on the
     - `trackSalesChatOpenMode({ sourcePage, mode })`
     - `trackSalesChatWelcomeSeen({ sourcePage })`
     - `trackSalesChatMessageSent({ sourcePage, messageLength, sessionId })`
+    - `trackSalesChatQuickReplyClicked({ sourcePage, sessionId, replyId, replyLabel, actionType, nodeId })`
+    - `trackSalesChatSpecNodeEntered({ sourcePage, sessionId, nodeId, exchangeCount })`
+    - `trackSalesChatOfferRecommended({ sourcePage, sessionId, nodeId, recommendedOffer })`
+    - `trackSalesChatLeadPayloadAttempted({ sourcePage, sessionId, terminalAction, leadDispatchStatus, leadDispatchCode })`
+    - `trackSalesChatLeadPayloadEmitted({ sourcePage, sessionId, terminalAction })`
+    - `trackSalesChatLeadPayloadFailed({ sourcePage, sessionId, terminalAction, leadDispatchCode })`
     - `trackSalesChatError({ sourcePage, errorType, sessionId, details })`
     - `trackSalesChatDemoCtaShown`, `trackSalesChatDemoCtaClicked`, `trackSalesChatCalendarOpened`, `trackSalesChatDemoBooked`
-    - `sales_chat_spec_node_entered`, `sales_chat_offer_recommended`, `sales_chat_lead_payload_attempted`, `sales_chat_lead_payload_emitted`, `sales_chat_lead_payload_failed`, `sales_chat_dead_end_prevented` (server events)
+    - mirror the same lifecycle to `POST /api/sales-chat/events` for webhook/Supabase fan-out and route tracing.
+    - reserve `sales_chat_dead_end_prevented` for server-side policy protection telemetry.
+  - GA4 deep funnel setup (required for useful reporting):
+    - define custom dimensions for `node_id`, `recommended_offer`, `terminal_action`, `lead_dispatch_status`, `lead_dispatch_code`, `reply_id`, `reply_label`, and `action_type`.
+    - verify in GA4 DebugView that these parameters are attached to sales-chat events before relying on reports.
 - Observability checks before merge:
   - Verify logs never include secrets (lead webhook secret, gateway keys, raw session identifiers where not required).
   - Verify deterministic responses include `x-sales-chat-route=success` in production-like traces.
   - Verify chat never returns or renders the banned copy `Sales chat is not fully configured yet...`.
   - Verify failed lead dispatch never emits success telemetry (`sales_chat_lead_payload_emitted`).
+  - Verify GA4 DebugView receives deep deterministic events in one test conversation:
+    - `sales_chat_quick_reply_clicked`
+    - `sales_chat_spec_node_entered`
+    - `sales_chat_offer_recommended`
+    - `sales_chat_lead_payload_attempted`
+    - `sales_chat_lead_payload_emitted` or `sales_chat_lead_payload_failed`
   - Recommended fast checks after implementation:
   - `pnpm test:sales-chat:core`
   - `pnpm test:sales-chat:e2e`

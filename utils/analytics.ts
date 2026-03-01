@@ -150,9 +150,13 @@ export type EventType =
   | "sales_chat_state_changed"
   | "sales_chat_faq_answered"
   | "sales_chat_csat_submitted"
+  | "sales_chat_quick_reply_clicked"
+  | "sales_chat_spec_node_entered"
+  | "sales_chat_offer_recommended"
   | "sales_chat_lead_payload_attempted"
   | "sales_chat_lead_payload_emitted"
   | "sales_chat_lead_payload_failed"
+  | "sales_chat_dead_end_prevented"
 
 /**
  * Track a custom event in Google Analytics
@@ -527,6 +531,50 @@ type SalesChatCsatSubmittedData = {
   value: "up" | "down"
 }
 
+type SalesChatQuickReplyClickedData = {
+  sourcePage: string
+  sessionId?: string
+  replyId: string
+  replyLabel: string
+  actionType: "reply" | "open_booking" | "open_url"
+  nodeId?: string
+}
+
+type SalesChatSpecNodeEnteredData = {
+  sourcePage: string
+  sessionId?: string
+  nodeId: string
+  exchangeCount: number
+}
+
+type SalesChatOfferRecommendedData = {
+  sourcePage: string
+  sessionId?: string
+  nodeId: string
+  recommendedOffer: "free_audit" | "website_overhaul" | "growth_partnership"
+}
+
+type SalesChatLeadPayloadAttemptedData = {
+  sourcePage: string
+  sessionId?: string
+  terminalAction: "emit_free_audit" | "emit_website_overhaul" | "emit_growth_partnership"
+  leadDispatchStatus: "attempted" | "succeeded" | "failed"
+  leadDispatchCode?: string
+}
+
+type SalesChatLeadPayloadEmittedData = {
+  sourcePage: string
+  sessionId?: string
+  terminalAction: "emit_free_audit" | "emit_website_overhaul" | "emit_growth_partnership"
+}
+
+type SalesChatLeadPayloadFailedData = {
+  sourcePage: string
+  sessionId?: string
+  terminalAction: "emit_free_audit" | "emit_website_overhaul" | "emit_growth_partnership"
+  leadDispatchCode?: string
+}
+
 export function trackSalesChatOpen({ sourcePage }: SalesChatOpenData) {
   trackEvent("sales_chat_open", {
     source_page: sourcePage,
@@ -667,6 +715,94 @@ export function trackSalesChatCsatSubmitted({ sourcePage, sessionId, value }: Sa
     source_page: sourcePage,
     session_id: sessionId,
     value,
+  })
+}
+
+export function trackSalesChatQuickReplyClicked({
+  sourcePage,
+  sessionId,
+  replyId,
+  replyLabel,
+  actionType,
+  nodeId,
+}: SalesChatQuickReplyClickedData) {
+  trackEvent("sales_chat_quick_reply_clicked", {
+    source_page: sourcePage,
+    session_id: sessionId,
+    reply_id: replyId,
+    reply_label: replyLabel,
+    action_type: actionType,
+    node_id: nodeId,
+  })
+}
+
+export function trackSalesChatSpecNodeEntered({
+  sourcePage,
+  sessionId,
+  nodeId,
+  exchangeCount,
+}: SalesChatSpecNodeEnteredData) {
+  trackEvent("sales_chat_spec_node_entered", {
+    source_page: sourcePage,
+    session_id: sessionId,
+    node_id: nodeId,
+    exchange_count: exchangeCount,
+  })
+}
+
+export function trackSalesChatOfferRecommended({
+  sourcePage,
+  sessionId,
+  nodeId,
+  recommendedOffer,
+}: SalesChatOfferRecommendedData) {
+  trackEvent("sales_chat_offer_recommended", {
+    source_page: sourcePage,
+    session_id: sessionId,
+    node_id: nodeId,
+    recommended_offer: recommendedOffer,
+  })
+}
+
+export function trackSalesChatLeadPayloadAttempted({
+  sourcePage,
+  sessionId,
+  terminalAction,
+  leadDispatchStatus,
+  leadDispatchCode,
+}: SalesChatLeadPayloadAttemptedData) {
+  trackEvent("sales_chat_lead_payload_attempted", {
+    source_page: sourcePage,
+    session_id: sessionId,
+    terminal_action: terminalAction,
+    lead_dispatch_status: leadDispatchStatus,
+    lead_dispatch_code: leadDispatchCode,
+  })
+}
+
+export function trackSalesChatLeadPayloadEmitted({
+  sourcePage,
+  sessionId,
+  terminalAction,
+}: SalesChatLeadPayloadEmittedData) {
+  trackEvent("sales_chat_lead_payload_emitted", {
+    source_page: sourcePage,
+    session_id: sessionId,
+    terminal_action: terminalAction,
+  })
+}
+
+export function trackSalesChatLeadPayloadFailed({
+  sourcePage,
+  sessionId,
+  terminalAction,
+  leadDispatchCode,
+}: SalesChatLeadPayloadFailedData) {
+  trackEvent("sales_chat_lead_payload_failed", {
+    source_page: sourcePage,
+    session_id: sessionId,
+    terminal_action: terminalAction,
+    lead_dispatch_code: leadDispatchCode,
   })
 }
 

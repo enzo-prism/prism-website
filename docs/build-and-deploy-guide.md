@@ -76,6 +76,12 @@ Use this flow when switching between local, preview, and production changes:
   6. Validate lead dispatch telemetry contract:
     - success path emits `sales_chat_lead_payload_attempted` + `sales_chat_lead_payload_emitted`.
     - failed dispatch path emits `sales_chat_lead_payload_attempted` + `sales_chat_lead_payload_failed` and does **not** emit `sales_chat_lead_payload_emitted`.
+  7. Validate GA4 DebugView for deep sales-chat events:
+    - `sales_chat_quick_reply_clicked`
+    - `sales_chat_spec_node_entered`
+    - `sales_chat_offer_recommended`
+    - `sales_chat_lead_payload_attempted`
+    - `sales_chat_lead_payload_emitted` or `sales_chat_lead_payload_failed`
 - Production verification:
   - Keep the same env names in production and preview to avoid route drift.
   - Keep model/API-key rotation in Vercel dashboard and update local docs after rotation; rotate tokens any time you suspect exposure (browser log capture, screenshot tool traces, or CI artifacts).
@@ -83,6 +89,7 @@ Use this flow when switching between local, preview, and production changes:
     - `vercel logs <deployment-url> --filter sales-chat --since 1h`
     - response headers (`x-sales-chat-route`, `x-request-id`) for root-cause mapping.
   - If conversions appear to drop, validate lead fan-out health by posting one known-valid payload to `/api/sales-chat/leads` in preview before production rollout.
+  - If GA funnel charts look incomplete, verify GA4 custom dimensions exist for `node_id`, `recommended_offer`, `terminal_action`, and `lead_dispatch_status`.
   - Confirm non-PII structured logs only: `grep` in logs should show redacted session hashes and no `api_key`/raw secret values.
 - Add a release note in PR description referencing:
   - `/api/chat` deterministic response behavior,

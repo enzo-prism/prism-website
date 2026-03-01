@@ -112,8 +112,11 @@ Quick reference for the pages we edit most often.
   - `sales_chat_open_mode` (`desktop-popup` or `fullscreen`)
   - `sales_chat_open`, `sales_chat_message_sent`, `sales_chat_error`
   - `sales_chat_welcome_seen`
+  - `sales_chat_quick_reply_clicked`
   - `sales_chat_demo_cta_shown`, `sales_chat_demo_cta_clicked`, `sales_chat_calendar_opened`, `sales_chat_demo_booked`
-  - `sales_chat_spec_node_entered`, `sales_chat_offer_recommended`, `sales_chat_lead_payload_emitted`, `sales_chat_dead_end_prevented`
+  - `sales_chat_spec_node_entered`, `sales_chat_offer_recommended`
+  - `sales_chat_lead_payload_attempted`, `sales_chat_lead_payload_emitted`, `sales_chat_lead_payload_failed`
+  - `sales_chat_dead_end_prevented` (reserved server-side reliability event)
 - Structured server-side event ingestion now runs through `app/api/sales-chat/events/route.ts` and can forward to webhook + optional Supabase fallback logging.
 - Booking remains the primary conversion path and is anchored at `#book-call`; keep all upstream CTA intent wired to that anchor (`GetStartedHeroSection` CTA, FAQ links, and chat fallback links).
 - `SalesChat` now uses shadcn dialog/sheet/chat primitives with a dark-minimal monochrome style; keep motion subtle and reduced-motion safe.

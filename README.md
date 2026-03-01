@@ -38,6 +38,7 @@ The repo assumes pnpm; npm/yarn installs will fall out of sync.
 - `app/api/sales-chat/events/route.ts` ingests lifecycle and telemetry events.
 - `app/api/sales-chat/leads/route.ts` validates and forwards typed lead payloads for backfill/manual dispatch.
 - `lib/sales-chat/spec-v1-*` contains canonical copy, routing, validation, and state transitions.
+- `utils/analytics.ts` emits deep GA4 sales-chat funnel events (`sales_chat_quick_reply_clicked`, `sales_chat_spec_node_entered`, `sales_chat_offer_recommended`, and lead dispatch outcome events).
 
 ## Quality & diagnosis scripts
 

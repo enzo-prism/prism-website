@@ -44,6 +44,7 @@ export type SalesChatEventName =
   | "sales_chat_state_changed"
   | "sales_chat_faq_answered"
   | "sales_chat_csat_submitted"
+  | "sales_chat_quick_reply_clicked"
   | "sales_chat_spec_node_entered"
   | "sales_chat_offer_recommended"
   | "sales_chat_lead_payload_attempted"

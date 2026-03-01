@@ -69,6 +69,29 @@ describe("/api/sales-chat/events route", () => {
     expect(webhookFetch).toHaveBeenCalledTimes(1)
   })
 
+  it("accepts quick-reply click telemetry events", async () => {
+    const { POST } = await import("@/app/api/sales-chat/events/route")
+    const response = await POST(new Request("https://example.com/api/sales-chat/events", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({
+        sessionId: "session-12345678",
+        sourcePage: "/get-started",
+        eventName: "sales_chat_quick_reply_clicked",
+        eventTs: "2026-03-01T00:00:00.000Z",
+        metadata: {
+          replyId: "starter_help_choose",
+          replyLabel: "Help me figure out what's best",
+          actionType: "reply",
+        },
+      }),
+    }))
+
+    expect(response.status).toBe(202)
+    await new Promise((resolve) => setTimeout(resolve, 0))
+    expect(webhookFetch).toHaveBeenCalledTimes(1)
+  })
+
   it("returns 400 for invalid payload", async () => {
     const { POST } = await import("@/app/api/sales-chat/events/route")
     const response = await POST(new Request("https://example.com/api/sales-chat/events", {

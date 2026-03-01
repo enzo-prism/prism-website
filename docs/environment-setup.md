@@ -95,6 +95,7 @@ cp .env.example .env.local
   - `transcriptSnippet`
   - `metadata`
 - Reliability events used by deterministic sales chat:
+  - `sales_chat_quick_reply_clicked`
   - `sales_chat_spec_node_entered`
   - `sales_chat_offer_recommended`
   - `sales_chat_lead_payload_attempted`
@@ -107,6 +108,28 @@ cp .env.example .env.local
 - Operational notes:
   - Webhook signing header is `x-sales-chat-signature` (if `SALES_CHAT_EVENTS_WEBHOOK_SECRET` is present).
   - Route logs only redacted session hash, never raw API keys.
+  - Deep events are also emitted client-side to GA4 via `utils/analytics.ts` for funnel analysis (event fan-out is not GA ingestion by itself).
+
+### GA4 sales chat deep-tracking checklist
+
+- GA4 event names to verify in DebugView:
+  - `sales_chat_open`
+  - `sales_chat_welcome_seen`
+  - `sales_chat_message_sent`
+  - `sales_chat_quick_reply_clicked`
+  - `sales_chat_spec_node_entered`
+  - `sales_chat_offer_recommended`
+  - `sales_chat_lead_payload_attempted`
+  - `sales_chat_lead_payload_emitted` or `sales_chat_lead_payload_failed`
+- Recommended GA4 custom dimensions:
+  - `node_id`
+  - `recommended_offer`
+  - `terminal_action`
+  - `lead_dispatch_status`
+  - `lead_dispatch_code`
+  - `reply_id`
+  - `reply_label`
+  - `action_type`
 
 ### Sales chat leads contract
 

@@ -13,6 +13,12 @@ const mockTrackSalesChatWelcomeSeen = jest.fn()
 const mockTrackSalesChatDemoCtaShown = jest.fn()
 const mockTrackSalesChatDemoCtaClicked = jest.fn()
 const mockTrackSalesChatCalendarOpened = jest.fn()
+const mockTrackSalesChatQuickReplyClicked = jest.fn()
+const mockTrackSalesChatSpecNodeEntered = jest.fn()
+const mockTrackSalesChatOfferRecommended = jest.fn()
+const mockTrackSalesChatLeadPayloadAttempted = jest.fn()
+const mockTrackSalesChatLeadPayloadEmitted = jest.fn()
+const mockTrackSalesChatLeadPayloadFailed = jest.fn()
 
 jest.mock("@/utils/analytics", () => ({
   trackSalesChatOpen: (...args: Array<unknown>) => mockTrackSalesChatOpen(...args),
@@ -24,6 +30,12 @@ jest.mock("@/utils/analytics", () => ({
   trackSalesChatDemoCtaShown: (...args: Array<unknown>) => mockTrackSalesChatDemoCtaShown(...args),
   trackSalesChatDemoCtaClicked: (...args: Array<unknown>) => mockTrackSalesChatDemoCtaClicked(...args),
   trackSalesChatCalendarOpened: (...args: Array<unknown>) => mockTrackSalesChatCalendarOpened(...args),
+  trackSalesChatQuickReplyClicked: (...args: Array<unknown>) => mockTrackSalesChatQuickReplyClicked(...args),
+  trackSalesChatSpecNodeEntered: (...args: Array<unknown>) => mockTrackSalesChatSpecNodeEntered(...args),
+  trackSalesChatOfferRecommended: (...args: Array<unknown>) => mockTrackSalesChatOfferRecommended(...args),
+  trackSalesChatLeadPayloadAttempted: (...args: Array<unknown>) => mockTrackSalesChatLeadPayloadAttempted(...args),
+  trackSalesChatLeadPayloadEmitted: (...args: Array<unknown>) => mockTrackSalesChatLeadPayloadEmitted(...args),
+  trackSalesChatLeadPayloadFailed: (...args: Array<unknown>) => mockTrackSalesChatLeadPayloadFailed(...args),
 }))
 
 jest.mock("next/link", () => ({
@@ -245,6 +257,13 @@ describe("SalesChat", () => {
     await waitFor(() => {
       expect(screen.getByText("Great choice. What's your website URL?")).toBeInTheDocument()
     })
+
+    expect(mockTrackSalesChatQuickReplyClicked).toHaveBeenCalled()
+    expect(mockTrackSalesChatSpecNodeEntered).toHaveBeenCalled()
+    expect(mockTrackSalesChatOfferRecommended).toHaveBeenCalledWith(expect.objectContaining({
+      recommendedOffer: "free_audit",
+      nodeId: "intent_b_pitch",
+    }))
   })
 
   it("shows a single polished handoff state for handled API fallback", async () => {
@@ -395,5 +414,8 @@ describe("SalesChat", () => {
     expect(emittedEvents.has("sales_chat_lead_payload_attempted")).toBe(true)
     expect(emittedEvents.has("sales_chat_lead_payload_failed")).toBe(true)
     expect(emittedEvents.has("sales_chat_lead_payload_emitted")).toBe(false)
+    expect(mockTrackSalesChatLeadPayloadAttempted).toHaveBeenCalled()
+    expect(mockTrackSalesChatLeadPayloadFailed).toHaveBeenCalled()
+    expect(mockTrackSalesChatLeadPayloadEmitted).not.toHaveBeenCalled()
   })
 })

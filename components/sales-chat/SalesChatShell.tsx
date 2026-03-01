@@ -36,9 +36,15 @@ import {
   trackSalesChatDemoCtaShown,
   trackSalesChatError,
   trackSalesChatLauncherClick,
+  trackSalesChatLeadPayloadAttempted,
+  trackSalesChatLeadPayloadEmitted,
+  trackSalesChatLeadPayloadFailed,
   trackSalesChatMessageSent,
+  trackSalesChatOfferRecommended,
   trackSalesChatOpen,
   trackSalesChatOpenMode,
+  trackSalesChatQuickReplyClicked,
+  trackSalesChatSpecNodeEntered,
   trackSalesChatWelcomeSeen,
   type SalesChatOpenMode,
 } from "@/utils/analytics"
@@ -532,6 +538,12 @@ export default function SalesChatShell({
       setConversationState(payload.conversationState)
       setErrorMessage(null)
 
+      trackSalesChatSpecNodeEntered({
+        sourcePage,
+        sessionId,
+        nodeId: payload.nodeId,
+        exchangeCount: payload.conversationState.exchangeCount,
+      })
       void emitServerEvent("sales_chat_spec_node_entered", {
         metadata: {
           nodeId: payload.nodeId,
@@ -540,6 +552,12 @@ export default function SalesChatShell({
       })
 
       if (payload.recommendedOffer) {
+        trackSalesChatOfferRecommended({
+          sourcePage,
+          sessionId,
+          nodeId: payload.nodeId,
+          recommendedOffer: payload.recommendedOffer,
+        })
         void emitServerEvent("sales_chat_offer_recommended", {
           metadata: {
             recommendedOffer: payload.recommendedOffer,
@@ -552,6 +570,13 @@ export default function SalesChatShell({
         const leadDispatchStatus = payload.leadDispatchStatus ?? "none"
 
         if (leadDispatchStatus !== "none") {
+          trackSalesChatLeadPayloadAttempted({
+            sourcePage,
+            sessionId,
+            terminalAction: payload.terminalAction,
+            leadDispatchStatus,
+            leadDispatchCode: payload.leadDispatchCode,
+          })
           void emitServerEvent("sales_chat_lead_payload_attempted", {
             metadata: {
               terminalAction: payload.terminalAction,
@@ -562,6 +587,11 @@ export default function SalesChatShell({
         }
 
         if (leadDispatchStatus === "succeeded") {
+          trackSalesChatLeadPayloadEmitted({
+            sourcePage,
+            sessionId,
+            terminalAction: payload.terminalAction,
+          })
           void emitServerEvent("sales_chat_lead_payload_emitted", {
             metadata: {
               terminalAction: payload.terminalAction,
@@ -571,6 +601,12 @@ export default function SalesChatShell({
         }
 
         if (leadDispatchStatus === "failed") {
+          trackSalesChatLeadPayloadFailed({
+            sourcePage,
+            sessionId,
+            terminalAction: payload.terminalAction,
+            leadDispatchCode: payload.leadDispatchCode,
+          })
           void emitServerEvent("sales_chat_lead_payload_failed", {
             metadata: {
               terminalAction: payload.terminalAction,
@@ -650,6 +686,24 @@ export default function SalesChatShell({
   }, [isOpen])
 
   const handleQuickReply = (reply: SalesChatQuickReply) => {
+    const sessionId = ensureSessionId()
+    trackSalesChatQuickReplyClicked({
+      sourcePage,
+      sessionId,
+      replyId: reply.id,
+      replyLabel: reply.label,
+      actionType: reply.actionType,
+      nodeId: conversationState?.nodeId,
+    })
+    void emitServerEvent("sales_chat_quick_reply_clicked", {
+      metadata: {
+        replyId: reply.id,
+        replyLabel: reply.label,
+        actionType: reply.actionType,
+        nodeId: conversationState?.nodeId,
+      },
+    })
+
     if (reply.actionType === "open_booking") {
       openInlineBooking("preset")
     }
