@@ -7,9 +7,81 @@ This guide highlights the workflows we lean on most often while iterating on the
 - Install deps with `pnpm install` (repo assumes pnpm).
 - Start the Next.js dev server with `pnpm dev`.
 - Run `pnpm lint` before committing so the shared Tailwind + ESLint rules stay consistent.
+- For Sales chat changes, run:
+  - `pnpm exec jest __tests__/api/chat.test.ts __tests__/api/sales-chat-events.test.ts __tests__/api/sales-chat-leads.test.ts __tests__/components/SalesChat.test.tsx __tests__/app/get-started.test.tsx __tests__/analytics-sales-chat.test.ts __tests__/sales-chat/runtime-config.test.ts __tests__/sales-chat/spec-v1-engine.test.ts __tests__/sales-chat/spec-v1-copy.test.ts __tests__/sales-chat/lead-payloads.test.ts`
+- For non-chat changes touching shared infrastructure, update and run the nearest smoke tests in the relevant package (`pnpm test`, `pnpm test:visual`, etc.) before merging.
 - Run `pnpm test:visual` before merging changes that touch the UI of `/`, `/about`, or `/pricing` (screenshot-locked routes).
 - Run `pnpm exec playwright test __tests__/visual/blog-copy-markdown.spec.ts --project=desktop-chromium` when changing the blog markdown copy button or `/api/blog/[slug]/markdown`.
 - Run `pnpm exec playwright test __tests__/visual/page-copy-markdown-global.spec.ts --project=desktop-chromium` when changing the global page markdown copy button.
+
+### Sales chat development checklist
+
+- API contract (server):
+  - `POST /api/chat`
+  - Accepts deterministic v2 payloads:
+    - required: `sessionId`, `sourcePage`, `inputType`, `inputValue`
+    - optional: `buttonId`, `conversationState`
+  - Validates request payloads with `zod`.
+  - Runs deterministic state transitions through `runSalesChatSpecV1Engine` (`lib/sales-chat/spec-v1-engine.ts`).
+  - Builds typed conversion payloads through `buildLeadPayload` (`lib/sales-chat/lead-payloads.ts`) and dispatches with `dispatchSalesChatLead` (`lib/sales-chat/lead-dispatch.ts`) when terminal actions fire.
+  - Returns JSON only (no streaming path in the deterministic route).
+  - Returns tracing headers:
+    - `x-sales-chat-route` (`success`, `disabled`, `config_missing`, `invalid_request`)
+    - `x-request-id` on success responses
+  - Runtime gating:
+    - `/get-started` mount gate: `uiAvailable = SALES_CHAT_ENABLED && ctaUrlsConfigured`
+    - route hard-stop: returns `503 config_missing` when deterministic config or lead webhook config is incomplete
+  - Supporting endpoints:
+    - `POST /api/sales-chat/events` for lifecycle/state telemetry
+    - `POST /api/sales-chat/leads` for validated manual/system lead payload forwarding
+- UI behavior (client):
+  - `components/SalesChat.tsx` now routes through `components/sales-chat/*` and should still support:
+    - launcher-first SSR-safe render,
+    - desktop popup mode (`>1024px`) and fullscreen mode (`<=1024px`),
+    - once-per-session desktop auto-open (`sales-chat-v2-opened`),
+    - default dark-minimal styling via `visualStyle="dark-minimal"`,
+    - simplified header with assistant title + online status and minimize/close action only,
+    - empty-state prompt chips that collapse after the first user message,
+    - deterministic spec-v1 state machine (intent groups A–G) with server-driven quick replies,
+    - in-chat booking panel support via `BookDemoEmbed` (when enabled) plus `#book-call` fallback,
+    - canonical opening message + five starter buttons from server copy constants,
+    - streamlined composer with send-only control (no attachment icon),
+    - monochrome UI treatment with green reserved for online status accent,
+    - message length counters and disabled send when oversize,
+    - keyboard send via `Enter` (`Shift+Enter` for newline),
+    - deterministic JSON response handling (no primary streaming dependency),
+    - markdown-to-anchor rewrite for booking links (e.g., `[#](#)` -> `#book-call`),
+    - clear fallback messaging and booking CTA.
+  - Keep analytics calls attached to user lifecycle:
+    - `trackSalesChatOpen({ sourcePage })`
+    - `trackSalesChatLauncherClick({ sourcePage, mode })`
+    - `trackSalesChatOpenMode({ sourcePage, mode })`
+    - `trackSalesChatWelcomeSeen({ sourcePage })`
+    - `trackSalesChatMessageSent({ sourcePage, messageLength, sessionId })`
+    - `trackSalesChatError({ sourcePage, errorType, sessionId, details })`
+    - `trackSalesChatDemoCtaShown`, `trackSalesChatDemoCtaClicked`, `trackSalesChatCalendarOpened`, `trackSalesChatDemoBooked`
+    - `sales_chat_spec_node_entered`, `sales_chat_offer_recommended`, `sales_chat_lead_payload_emitted`, `sales_chat_dead_end_prevented` (server events)
+- Observability checks before merge:
+  - Verify logs never include secrets (lead webhook secret, gateway keys, raw session identifiers where not required).
+  - Verify deterministic responses include `x-sales-chat-route=success` in production-like traces.
+  - Verify chat never returns or renders the banned copy `Sales chat is not fully configured yet...`.
+  - Recommended fast checks after implementation:
+  - `pnpm exec jest __tests__/api/chat.test.ts __tests__/api/sales-chat-events.test.ts __tests__/api/sales-chat-leads.test.ts __tests__/components/SalesChat.test.tsx __tests__/app/get-started.test.tsx __tests__/analytics-sales-chat.test.ts __tests__/sales-chat/runtime-config.test.ts __tests__/sales-chat/spec-v1-engine.test.ts __tests__/sales-chat/spec-v1-copy.test.ts __tests__/sales-chat/lead-payloads.test.ts`
+  - Optional legacy AI-module guard checks (only if touching prompt/policy helpers):
+  - `pnpm exec jest __tests__/sales-chat/policy.test.ts __tests__/sales-chat/prompt.test.ts`
+  - Verify responsive mode split manually:
+    - `>1024px` opens centered popup modal.
+    - `<=1024px` opens fullscreen chat.
+  - `pnpm exec jest __tests__/api/chat.test.ts -t "returns 503 when chat is disabled"` to verify feature-flag behavior.
+  - Manual smoke in browser: open `/get-started`, progress through starter buttons and A/B/C/D routes, then force a mock/handler error and confirm booking CTA remains present.
+  - Optional direct route check:
+    - `curl -i -X POST http://localhost:3000/api/chat -H "content-type: application/json" -d '{"sessionId":"session-12345678","sourcePage":"/get-started","inputType":"button","inputValue":"","buttonId":"__init__"}'`
+- Debugging:
+  - If deterministic responses are missing, inspect response headers (`x-sales-chat-route`) and `nodeId` in JSON payloads.
+  - If chat is missing on `/get-started`, verify `uiAvailable = SALES_CHAT_ENABLED && ctaUrlsConfigured` and required CTA keys are present.
+  - If chat renders but returns immediate 503 fallback, verify lead webhook keys (`SALES_CHAT_LEADS_WEBHOOK_URL`, `SALES_CHAT_LEADS_WEBHOOK_SECRET`) are configured.
+  - If messages are never sent from an open chat, verify devtools `Network` shows `/api/chat` POST with `Content-Type: application/json`.
+  - If message links render as plain markdown, confirm the content came through `createRenderMessageContent()` in `components/sales-chat/SalesChatShell.tsx` (message parser should convert `#` and `[#](#)` to a booking anchor).
 
 ## Styling Pipeline
 

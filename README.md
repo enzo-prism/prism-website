@@ -12,6 +12,7 @@ Next.js App Router project that powers the Prism marketing site, blog, and landi
 1. **Install prerequisites** – Node.js 22.x LTS (Vercel’s current runtime), [pnpm](https://pnpm.io/), and git.
 2. **Install dependencies** – `pnpm install`.
 3. **Set up environment variables** – `cp .env.example .env.local` and fill in the values listed in [`docs/environment-setup.md`](./docs/environment-setup.md).
+   - Include `SALES_CHAT_BOOKING_URL`, `SALES_CHAT_WEBSITE_OVERHAUL_CHECKOUT_URL`, `SALES_CHAT_GROWTH_PARTNERSHIP_SIGNUP_URL`, `SALES_CHAT_LEADS_WEBHOOK_URL`, and `SALES_CHAT_LEADS_WEBHOOK_SECRET` for deterministic `/get-started` sales chat.
 4. **Run the dev server** – `pnpm dev` (defaults to `http://localhost:3000`).
 5. **Optional quality gates** – `pnpm lint && pnpm typecheck && pnpm test` before opening a PR.
 
@@ -27,6 +28,15 @@ The repo assumes pnpm; npm/yarn installs will fall out of sync.
 - **Architecture** – Marketing forms post to Formspree using the shared `useFormValidation` hook (HTML5 validation + client-side `fetch` + thank-you redirect). We do **not** use React Hook Form, Zod, or server actions/mechanical Supabase inserts for these flows today. If this changes, update this section immediately.
 - **Documentation** – When you add a new flow or change behavior, edit the relevant file under `/docs` (or this README/AGENTS if the rule is global). Do *not* add new top-level docs without approval; prefer updating existing guides.
 - **Environment variables** – Required vars are limited to those listed in [docs/environment-setup.md](./docs/environment-setup.md) and `.env.example` (GA overrides, Supabase credentials, Resend key, optional site URLs). Do not list vars that aren’t implemented in code.
+- **Sales Chat (Spec v1)** – `/get-started` mounts a deterministic `SalesChat` client + server state machine for intents A–G (free audit, website overhaul, growth partnership, FAQ/objections/guardrails). Chat UI is availability-gated and only renders when `SALES_CHAT_ENABLED` and required CTA links are configured.
+
+### Sales chat architecture (at a glance)
+
+- `app/get-started/page.tsx` computes runtime availability via `getSalesChatRuntimeConfig(process.env)` and mounts `SalesChat` only when `uiAvailable`.
+- `app/api/chat/route.ts` is deterministic v2 (state-machine JSON contract) and returns `x-sales-chat-route` on every response plus `x-request-id` on success.
+- `app/api/sales-chat/events/route.ts` ingests lifecycle and telemetry events.
+- `app/api/sales-chat/leads/route.ts` validates and forwards typed lead payloads for backfill/manual dispatch.
+- `lib/sales-chat/spec-v1-*` contains canonical copy, routing, validation, and state transitions.
 
 ## Quality & diagnosis scripts
 
@@ -37,6 +47,7 @@ The repo assumes pnpm; npm/yarn installs will fall out of sync.
 | `pnpm test` | Jest + Testing Library suite. |
 | `pnpm build` | Production Next.js build (use before Vercel deploys). |
 | `pnpm verify:deploy` | Runs `scripts/verify-deployment.ts` to ensure required env vars and image config exist. |
+| `pnpm verify:sales-chat-config` | Validates `.vercel/.env.production.local` after `vercel pull`; fails when chat is enabled without required deterministic chat keys (CTA URLs + lead webhook). `AI_GATEWAY_*` is only required if `SALES_CHAT_AI_FALLBACK_ENABLED=true`. |
 | `pnpm diag:supabase` | Confirms Supabase URL + service key are available. |
 
 ## Project structure
@@ -50,14 +61,14 @@ The repo assumes pnpm; npm/yarn installs will fall out of sync.
 
 ## Documentation map
 
-- [`docs/development-guide.md`](./docs/development-guide.md) – Local workflow, forms, analytics, CTA routing.
+- [`docs/development-guide.md`](./docs/development-guide.md) – Local workflow, sales chat request/response contract, analytics, and debugging checklist.
 - [`docs/blog-content-architecture.md`](./docs/blog-content-architecture.md) – MDX taxonomy and RSS/OG behavior.
 - [`docs/blog-styling-guide.md`](./docs/blog-styling-guide.md) – Typography and casing expectations for articles.
 - [`docs/blog-performance-optimization.md`](./docs/blog-performance-optimization.md) – GPU/layout advice for heavy sections.
 - [`docs/forms.md`](./docs/forms.md) – Shared Formspree hooks and thank-you routing.
 - [`docs/pages-overview.md`](./docs/pages-overview.md) – Where to edit pricing, contact, free-analysis flows.
 - [`docs/build-and-deploy-guide.md`](./docs/build-and-deploy-guide.md) – Build tooling expectations plus the local/CI checklist.
-- [`docs/environment-setup.md`](./docs/environment-setup.md) – Environment variable reference and verification checklist.
+- [`docs/environment-setup.md`](./docs/environment-setup.md) – Environment variable reference, including deterministic sales-chat contract, lead webhook payload rules, and optional AI fallback config.
 - [`docs/codex-workflow.md`](./docs/codex-workflow.md) – Codex-specific playbook for editing the dental-photography surfaces and booking form.
 
 ## CLI workflows (GitHub + Vercel)
