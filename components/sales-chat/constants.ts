@@ -30,7 +30,7 @@ export const SALES_CHAT_VISUAL_TOKENS: Record<SalesChatVisualStyle, SalesChatVis
     welcomeBubble: "rounded-2xl border border-white/12 bg-white/[0.04] px-4 py-3 text-zinc-100",
     transcriptFrame: "min-h-0 flex-1 overflow-hidden rounded-2xl border border-white/10 bg-black/28",
     promptChip:
-      "rounded-2xl border border-white/14 bg-white/[0.03] text-xs font-medium tracking-[0.04em] text-zinc-200 transition-colors duration-150 hover:bg-white/[0.06]",
+      "rounded-2xl border border-white/14 bg-white/[0.03] text-xs font-medium !normal-case !font-sans !tracking-[0.015em] text-zinc-200 transition-colors duration-150 hover:bg-white/[0.06]",
     assistantBubble:
       "max-w-[86%] rounded-2xl border border-white/14 bg-white/[0.05] px-4 py-2.5 text-zinc-100 shadow-[0_10px_24px_-20px_rgba(0,0,0,0.95)]",
     userBubble:
@@ -64,7 +64,7 @@ export const SALES_CHAT_VISUAL_TOKENS: Record<SalesChatVisualStyle, SalesChatVis
     welcomeBubble: "rounded-2xl border border-white/18 bg-white/[0.045] px-4 py-3 text-slate-100",
     transcriptFrame: "min-h-0 flex-1 overflow-hidden rounded-2xl border border-white/14 bg-black/18",
     promptChip:
-      "rounded-2xl border border-white/20 bg-white/[0.03] text-xs font-medium tracking-[0.04em] text-slate-100 transition-colors duration-150 hover:bg-white/[0.08]",
+      "rounded-2xl border border-white/20 bg-white/[0.03] text-xs font-medium !normal-case !font-sans !tracking-[0.015em] text-slate-100 transition-colors duration-150 hover:bg-white/[0.08]",
     assistantBubble:
       "max-w-[86%] rounded-2xl border border-white/18 bg-white/[0.055] px-4 py-2.5 text-slate-100 shadow-[0_10px_26px_-20px_rgba(0,0,0,0.92)]",
     userBubble:
@@ -96,7 +96,7 @@ export const SALES_CHAT_VISUAL_TOKENS: Record<SalesChatVisualStyle, SalesChatVis
     welcomeBubble: "rounded-2xl border border-white/15 bg-white/[0.04] px-4 py-3 text-slate-100",
     transcriptFrame: "min-h-0 flex-1 overflow-hidden rounded-2xl border border-white/15 bg-black/20",
     promptChip:
-      "rounded-xl border border-white/15 bg-black/20 text-xs text-slate-100 transition-colors duration-150 hover:bg-white/10",
+      "rounded-xl border border-white/15 bg-black/20 text-xs !normal-case !font-sans !tracking-[0.015em] text-slate-100 transition-colors duration-150 hover:bg-white/10",
     assistantBubble:
       "max-w-[86%] rounded-2xl border border-white/20 bg-white/[0.06] px-3.5 py-2.5 text-slate-100 shadow-[0_14px_30px_-22px_rgba(15,23,42,0.95)]",
     userBubble:

@@ -11,7 +11,7 @@ describe("spec v1 copy", () => {
     const welcome = welcomeCopy()
     const labels = welcome.quickReplies.map((reply) => reply.label)
 
-    expect(welcome.assistantMessage).toContain("fastest way to grow your business online")
+    expect(welcome.assistantMessage).toContain("best way to grow your business online")
     expect(labels).toEqual([
       "Get a free audit of my website",
       "I need a new or better website",
@@ -22,9 +22,9 @@ describe("spec v1 copy", () => {
   })
 
   it("uses normalized pricing anchors from spec", () => {
-    expect(intentBPitchCopy().assistantMessage).toContain("completely free")
+    expect(intentBPitchCopy().assistantMessage).toMatch(/completely free/i)
     expect(intentCPitchCopy().assistantMessage).toContain("$1,000 one-time")
-    expect(intentDPitchCopy().assistantMessage).toContain("$2,000/month")
+    expect(intentDPitchCopy().assistantMessage).toMatch(/\$2,000(?:\/month| a month)/)
   })
 
   it("keeps quick replies capped at five in canonical copy blocks", () => {

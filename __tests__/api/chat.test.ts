@@ -142,7 +142,7 @@ describe("/api/chat route (deterministic v2)", () => {
     expect(payload.nodeId).toBe("welcome")
     expect(payload.quickReplies).toHaveLength(5)
     expect(payload.quickReplies[0]?.id).toBe("starter_free_audit")
-    expect(payload.assistantMessage).toContain("fastest way to grow your business online")
+    expect(payload.assistantMessage).toContain("best way to grow your business online")
     expect(payload.conversationState.exchangeCount).toBe(0)
   })
 

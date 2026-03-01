@@ -110,6 +110,7 @@ Quick reference for the pages we edit most often.
   - monochrome dark panel/backdrop with subtle borders and restrained shadow,
   - simplified header (assistant title + online status + minimize/close only),
   - prompt chips shown in empty state and collapsed after the first user message,
+  - quick-reply labels should remain sentence case for readability (do not reintroduce all-caps chip styling),
   - no standalone welcome sentence above the transcript area (empty-state guidance lives inside the transcript card),
   - streamlined composer with send-only control (attachment icon removed),
   - green accent reserved for the `Online` status indicator.

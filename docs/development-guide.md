@@ -27,6 +27,11 @@ This guide highlights the workflows we lean on most often while iterating on the
   - Growth Partnership must be phrased as `$2,000/month`.
   - Free audit must be phrased as `$0` / free audit.
   - Avoid “starting around”, “from”, or legacy tier pricing language in deterministic copy.
+- Canonical copy tone contract (spec-v1 copy module):
+  - Keep sales-chat responses conversational and human, not scripty/corporate.
+  - Keep quick-reply chip labels in sentence case (no all-caps transforms).
+  - Prefer short direct sentences with a clear next step in every response.
+  - Avoid em-dash-heavy phrasing in scripted copy constants so tone stays clean and consistent.
 
 - API contract (server):
   - `POST /api/chat`

@@ -593,7 +593,7 @@ export function runSalesChatSpecV1Engine(input: SalesChatEngineInput): SalesChat
         nodeId: "intent_b_pitch",
         reply: {
           ...intentBPitchCopy(),
-          assistantMessage: "Please share a valid website URL so I can start the free audit (for example, `example.com`).",
+          assistantMessage: "Please share a valid website URL so I can start the free audit (for example, example.com).",
         },
         incrementExchange,
       })
@@ -640,7 +640,7 @@ export function runSalesChatSpecV1Engine(input: SalesChatEngineInput): SalesChat
           nodeId: "intent_b_collect_email",
           reply: {
             ...intentBCollectEmailCopy(),
-            assistantMessage: "Please share a valid email so we can send your audit.",
+            assistantMessage: "Please share a valid email address so we can send your audit.",
           },
           incrementExchange,
         })
@@ -674,7 +674,7 @@ export function runSalesChatSpecV1Engine(input: SalesChatEngineInput): SalesChat
           nodeId: "intent_b_confirm",
           reply: {
             assistantMessage:
-              `Awesome - here's the booking link: ${input.runtimeLinks.bookingUrl}\n\nPick any time that works and we'll come prepared with your site context.`,
+              `Awesome. Here's the booking link: ${input.runtimeLinks.bookingUrl}\n\nPick any time that works and we'll come prepared with your site context.`,
             quickReplies: [
               quickReply("b_written_only", "The written audit is great for now"),
               quickReply("starter_general_question", "I have another question"),
@@ -772,9 +772,9 @@ export function runSalesChatSpecV1Engine(input: SalesChatEngineInput): SalesChat
           nodeId: "intent_c_qualification",
           reply: {
             assistantMessage:
-              "Great. Share rough page count and your primary goal in one line (example: 6 pages, more qualified leads).",
+              "Great. Share your rough page count and primary goal in one line (example: 6 pages, more qualified leads).",
             quickReplies: [
-              quickReply("c_scope_example", "5-7 pages, more leads"),
+              quickReply("c_scope_example", "5 to 7 pages, more leads"),
               quickReply("c_scope_example", "10+ pages, credibility + SEO"),
               quickReply("c_scope_done", "I'll type my scope"),
             ],
@@ -791,9 +791,9 @@ export function runSalesChatSpecV1Engine(input: SalesChatEngineInput): SalesChat
           nodeId: "intent_c_qualification",
           reply: {
             assistantMessage:
-              "Perfect. Share rough page count and your primary goal in one line so I can finalize the recommendation.",
+              "Perfect. Share your rough page count and primary goal in one line so I can finalize the recommendation.",
             quickReplies: [
-              quickReply("c_scope_example", "5-7 pages, launch fast"),
+              quickReply("c_scope_example", "5 to 7 pages, launch fast"),
               quickReply("c_scope_example", "10+ pages, long-term growth"),
               quickReply("c_scope_done", "I'll type my scope"),
             ],
@@ -841,7 +841,7 @@ export function runSalesChatSpecV1Engine(input: SalesChatEngineInput): SalesChat
           nodeId: "intent_c_close",
           reply: {
             assistantMessage:
-              `Smart move. Here's the booking link: ${input.runtimeLinks.bookingUrl}\n\nPick a time that works and we'll discuss scope, timeline, and next steps.`,
+              `Smart move. Here's the booking link: ${input.runtimeLinks.bookingUrl}\n\nPick a time that works and we'll talk through scope, timeline, and next steps.`,
             quickReplies: [
               quickReply("c_pay_now", "Actually, send pay-now option"),
               quickReply("starter_general_question", "I have another question"),
@@ -1008,7 +1008,7 @@ export function runSalesChatSpecV1Engine(input: SalesChatEngineInput): SalesChat
           nodeId: "intent_d_collect_qualification",
           reply: {
             assistantMessage:
-              "Share these so the team can prepare your kickoff: business type, website URL, and your #1 outcome in the next 3-6 months.",
+              "Share these so the team can prepare your kickoff: business type, website URL, and your number one outcome for the next 3 to 6 months.",
             quickReplies: [
               quickReply("d_example_details", "Dental practice, example.com, more implant leads"),
               quickReply("d_example_details", "Consulting firm, no site yet, launch pipeline"),
@@ -1032,7 +1032,7 @@ export function runSalesChatSpecV1Engine(input: SalesChatEngineInput): SalesChat
           nodeId: "intent_d_collect_qualification",
           reply: {
             assistantMessage:
-              "Perfect. Share your business type, website URL (if any), and your #1 outcome for the next 3-6 months.",
+              "Perfect. Share your business type, website URL if you have one, and your number one outcome for the next 3 to 6 months.",
             quickReplies: [
               quickReply("d_example_details", "Dental practice, example.com, more calls"),
               quickReply("d_example_details", "Local shop, example.com, more in-store visits"),
@@ -1122,7 +1122,7 @@ export function runSalesChatSpecV1Engine(input: SalesChatEngineInput): SalesChat
         nodeId: "intent_d_collect_qualification",
         reply: {
           assistantMessage:
-            "Perfect. I shared that with the team so they can come prepared. Ready for the next step?",
+            "Perfect. I've passed that along to the team so they can come prepared. Ready for the next step?",
           quickReplies: [
             quickReply("book_call", "Book my 30-min strategy call"),
             quickReply("d_direct_signup", "Send direct signup link"),
