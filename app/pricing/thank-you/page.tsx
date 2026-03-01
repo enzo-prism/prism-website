@@ -8,7 +8,7 @@ import { buildRouteMetadata } from "@/lib/seo/metadata"
 
 export const metadata: Metadata = buildRouteMetadata({
   titleStem: "plan sent | next steps from prism",
-  description: "thanks for sending your prism pricing plan. we'll review your selections and follow up with next steps shortly.",
+  description: "Thanks for reviewing Prism pricing. We'll follow up with next steps for your website overhaul, growth partnership, or free audit path.",
   path: "/pricing/thank-you",
   index: false,
   ogImage: "/prism-opengraph.png",
@@ -26,11 +26,10 @@ export default function PricingThankYouPage() {
           <div className="space-y-4">
             <p className="text-sm font-medium uppercase tracking-[0.3em] text-neutral-400">plan on the way</p>
             <h1 className="text-4xl font-semibold lowercase tracking-tight text-neutral-900 sm:text-5xl">
-              thank you for sending your plan
+              thanks for reviewing pricing
             </h1>
             <p className="text-base text-neutral-600 sm:text-lg">
-              We&apos;re reviewing your selections and will send next steps, timelines, and a kickoff note to your inbox
-              soon.
+              We&apos;ll follow up with clear next steps for your preferred path and help you move forward quickly.
             </p>
           </div>
           <div className="flex flex-col items-center gap-3 sm:flex-row">

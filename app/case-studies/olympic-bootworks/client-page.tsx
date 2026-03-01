@@ -219,7 +219,7 @@ export default function OlympicBootworksCaseStudy() {
               <strong>Phase 1 — From Squarespace to “first real upgrade”</strong>
               <br />
               We moved off a basic Squarespace presence and stood up an early AI‑assisted build (Vercel v0) as a fast first step ({" "}
-              <Link href="/ai-website-launch" className={linkClassName}>
+              <Link href="/pricing" className={linkClassName}>
                 AI website launch
               </Link>
               ).
@@ -262,7 +262,7 @@ export default function OlympicBootworksCaseStudy() {
                 SEO
               </Link>
               {" "}+{" "}
-              <Link href="/growth" className={linkClassName}>
+              <Link href="/pricing" className={linkClassName}>
                 growth
               </Link>
               .
@@ -433,7 +433,7 @@ export default function OlympicBootworksCaseStudy() {
                   SEO
                 </Link>{" "}
                 +{" "}
-                <Link href="/growth" className={linkClassName}>
+                <Link href="/pricing" className={linkClassName}>
                   growth
                 </Link>
               </li>

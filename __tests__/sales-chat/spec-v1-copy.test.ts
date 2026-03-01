@@ -23,7 +23,7 @@ describe("spec v1 copy", () => {
 
   it("uses normalized pricing anchors from spec", () => {
     expect(intentBPitchCopy().assistantMessage).toContain("completely free")
-    expect(intentCPitchCopy().assistantMessage).toContain("starting around $1,000")
+    expect(intentCPitchCopy().assistantMessage).toContain("$1,000 one-time")
     expect(intentDPitchCopy().assistantMessage).toContain("$2,000/month")
   })
 

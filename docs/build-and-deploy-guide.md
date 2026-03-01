@@ -10,7 +10,7 @@ Keep Prism's Next.js builds predictable by following this checklist whenever you
 ## Local build flow
 1. `pnpm install` – keeps `node_modules` in sync with the lockfile Vercel uses.
 2. `pnpm lint` – catches Tailwind/ESLint issues before the Next build step fails.
-3. `pnpm typecheck` – **required**. Next's production build runs TypeScript after compilation, so missing fields (e.g., forgetting `featured` on every tier in `pricingTiers`) will break deploys even if dev mode works.
+3. `pnpm typecheck` – **required**. Next's production build runs TypeScript after compilation, so missing fields in typed content arrays (for example `pricingCards` in `app/pricing/client-page.tsx`) will break deploys even if dev mode works.
 4. `pnpm test` – optional but strongly recommended before touching shared components or hooks.
 5. `pnpm test:visual` – required when touching `/`, `/about`, or `/pricing`; enforces UI-locked screenshots.
 6. `pnpm build` – mirrors `vercel build` locally and surfaces experimental warnings (clientTraceMetadata, etc.) so you can address them early.
@@ -37,6 +37,7 @@ Use this flow when switching between local, preview, and production changes:
 - `vercel link` (first run in this repo) so the CLI is scoped to `v0-prism-website-design`.
 - `vercel pull --yes` to sync deployment env vars locally (`--environment=production` for prod parity).
 - `pnpm verify:sales-chat-config` immediately after `vercel pull` to fail fast when chat is enabled without required deterministic config.
+- `pnpm verify:pricing-consistency` before build/deploy to block legacy pricing drift on canonical surfaces.
 - `vercel env add SALES_CHAT_ENABLED`
 - `vercel env add SALES_CHAT_BOOKING_URL`
 - `vercel env add SALES_CHAT_WEBSITE_OVERHAUL_CHECKOUT_URL`
@@ -112,10 +113,13 @@ Use this flow when switching between local, preview, and production changes:
     - `AI_GATEWAY_API_KEY`
     - `AI_GATEWAY_MODEL`
 - Add a manual sign-off after preview smoke before merging to `main`.
+- Add pricing sign-off:
+  - `/pricing` shows only `$1,000 one-time`, `$2,000/month`, and `$0` audit.
+  - legacy pricing routes (`/pricing-dental`, `/ai-website-launch`, `/one-time-fee`, `/offers/*`, `/growth`, `/checkout/{launch,grow,scale}`) resolve to `/pricing`.
 - If you need to rollback only chat changes, use `vercel rollback` after confirming the previous successful deployment URL.
 
 ## Common gotchas
-- **Const arrays feeding components** – When you export `const foo = [...] as const`, every member must include the same structural properties. TypeScript will yell during `pnpm typecheck`, but dev mode might not. Example: `pricingTiers` in `app/pricing/client-page.tsx` needs `featured` on every entry so the card styling guard is type-safe.
+- **Const arrays feeding components** – When you export `const foo = [...] as const`, every member must include the same structural properties. TypeScript will yell during `pnpm typecheck`, but dev mode might not. Example: `pricingCards` in `app/pricing/client-page.tsx` needs `featured` on every entry so the card styling guard is type-safe.
 - **Dynamic imports & "use client" boundaries** – Any new shared component in `components/` that uses hooks must include a `"use client"` pragma or be imported with `dynamic(..., { ssr: false })`. Lint passes but the Next build will fail during the React Server Components graph evaluation.
 - **Third-party build scripts** – Vercel ignores install scripts (`@sentry/cli`, `sharp`, etc.) unless you grant them via `pnpm approve-builds`. If you add dependencies with post-install hooks, run `pnpm approve-builds` once locally, then commit the generated policy file.
 - **Environment variables** – Production builds default to `.env.production`. Missing Supabase or Resend keys do not stop the build but disable API routes, so sanity-check `docs/environment-setup.md` before enabling new integrations.

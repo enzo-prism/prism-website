@@ -68,7 +68,7 @@ const tiers: Record<TierId, TierContent> = {
   entry: {
     label: "Entry",
     priceLevel: 1,
-    budget: "~$800 - $1,200",
+    budget: "~$800 - $1,200 equipment budget estimate",
     goal: "A repeatable photography workflow that produces clean, consistent before/after photos for marketing, case acceptance, and social media.",
     intro:
       "Here’s a clean, practical, entry-tier guide you can hand to any dental practice to get them taking consistent, high-quality before/after photos without overspending. This is built to be simple to implement, repeatable by the team, and aligned with what actually works inside real dental offices.",
@@ -211,7 +211,7 @@ const tiers: Record<TierId, TierContent> = {
   mid: {
     label: "Mid",
     priceLevel: 2,
-    budget: "~$2,500 - $4,000",
+    budget: "~$2,500 - $4,000 equipment budget estimate",
     goal: "Balanced DSLR + lighting setup with automated storage templates (coming soon).",
     intro:
       "We are finishing the mid-tier guide that pairs enthusiast-level DSLRs with dual-light kits, tethered capture, and automated storage templates. Check back soon or ask Prism to prioritize this tier for you.",
@@ -222,7 +222,7 @@ const tiers: Record<TierId, TierContent> = {
   premium: {
     label: "Premium",
     priceLevel: 3,
-    budget: "$6,000+",
+    budget: "$6,000+ equipment budget estimate",
     goal: "Studio-grade capture with cinematic lighting, live review monitors, and automated DAM handoff (coming soon).",
     intro:
       "The premium tier bundles pro camera bodies, twin flashes, color calibration, and rolling carts so multi-location groups can capture assets at agency quality. Reach out if you want early access or a live build.",
@@ -238,7 +238,7 @@ export default function GuideTabs() {
 
   const overviewItems = useMemo(
     () => [
-      { label: "budget", value: content.budget },
+      { label: "equipment budget estimate (not prism service pricing)", value: content.budget },
       { label: "goal", value: content.goal }
     ],
     [content]
@@ -254,6 +254,9 @@ export default function GuideTabs() {
               <h2 className="text-3xl font-semibold tracking-tight text-neutral-900">entry · mid · premium</h2>
               <p className="mt-2 text-sm text-neutral-600">
                 Switch tiers to see the exact parts list, setup steps, and workflows for the gear budget that matches your practice.
+              </p>
+              <p className="mt-1 text-xs text-neutral-500">
+                All dollar amounts on this page are photography equipment estimates, not Prism website or growth service pricing.
               </p>
             </div>
             <div className="flex flex-wrap gap-2" role="tablist" aria-label="Before and after tier selector">

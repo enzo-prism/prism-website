@@ -515,6 +515,9 @@ export default async function LocalListingsPage() {
               <Button asChild variant="outline" size="lg" className="rounded-full px-8">
                 <Link href="/contact">Talk to a strategist</Link>
               </Button>
+              <Button asChild variant="outline" size="lg" className="rounded-full px-8">
+                <Link href="/pricing">See pricing</Link>
+              </Button>
             </div>
           </div>
         </section>
@@ -529,10 +532,13 @@ export default async function LocalListingsPage() {
         serviceType="Local SEO"
         areaServed="United States"
         offerDetails={{
-          name: "Local presence plans",
-          description: "Managed listings across Google, Apple, Yelp, Bing, and industry directories with messaging and reporting.",
+          name: "Growth Partnership",
+          description: "Local presence, website, SEO, ads, and reporting managed through one partnership model.",
           businessFunction: "http://purl.org/goodrelations/v1#ProvideService",
-          priceRange: "$600/mo - $2,500/mo",
+          price: "2000",
+          priceCurrency: "USD",
+          billingPeriod: "P1M",
+          url: "https://www.design-prism.com/pricing",
         }}
         aggregateRating={aggregateRating}
       />

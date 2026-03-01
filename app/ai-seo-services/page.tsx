@@ -159,9 +159,9 @@ export default function AiSeoServicesPage() {
               proof-backed pages and a measurable shipping loop. no spam. no keyword stuffing. just a system that compounds.
             </p>
             <p className="mt-4 text-sm text-neutral-600">
-              want the offer?{" "}
-              <Link href="/offers/ai-seo-boost" className="font-semibold text-neutral-900 underline underline-offset-4">
-                ai seo boost™
+              want the offer breakdown?{" "}
+              <Link href="/pricing" className="font-semibold text-neutral-900 underline underline-offset-4">
+                prism pricing
               </Link>
               . want the fundamentals too?{" "}
               <Link href="/seo" className="font-semibold text-neutral-900 underline underline-offset-4">
@@ -283,7 +283,7 @@ export default function AiSeoServicesPage() {
                 </Link>
               </Button>
               <Button asChild variant="outline" size="lg" className="rounded-full px-8">
-                <Link href="/offers/ai-seo-boost">see ai seo boost™</Link>
+                <Link href="/pricing">see pricing options</Link>
               </Button>
             </div>
           </div>

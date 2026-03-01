@@ -24,7 +24,7 @@ export function welcomeCopy(): NodeReply {
       "Hey, I'm Prism's assistant. I can help you figure out the fastest way to grow your business online.\n\n" +
       "Here's what I can do for you right now:\n" +
       "-> Get a free expert audit of your website and marketing\n" +
-      "-> Buy a complete website overhaul (starting around $1,000)\n" +
+      "-> Buy a complete website overhaul ($1,000 one-time)\n" +
       "-> Explore Prism as your $2,000/month growth partner\n" +
       "-> Not sure yet - I'll help you choose\n\n" +
       "What sounds closest to what you need?",
@@ -89,7 +89,7 @@ export function intentAUnsureBusinessTypeCopy(): NodeReply {
 export function routeToWebsiteOverhaulCopy(): NodeReply {
   return {
     assistantMessage:
-      "Sounds like a website overhaul would be perfect. Prism can rebuild your entire site - modern design, mobile-first, SEO-ready, and built to convert - starting around $1,000.\n\n" +
+      "Sounds like a website overhaul would be perfect. Prism can rebuild your entire site - modern design, mobile-first, SEO-ready, and built to convert - for $1,000 one-time.\n\n" +
       "Want me to walk you through what's included, or are you ready to get started?",
     quickReplies: [
       reply("c_walkthrough", "Tell me what's included"),
@@ -235,7 +235,7 @@ export function intentBWrittenOnlyCopy(): NodeReply {
 export function intentCPitchCopy(): NodeReply {
   return {
     assistantMessage:
-      "Prism builds fast, modern websites designed to convert visitors into customers. Here's what's included in a complete website overhaul (starting around $1,000):\n" +
+      "Prism builds fast, modern websites designed to convert visitors into customers. Here's what's included in a complete website overhaul ($1,000 one-time):\n" +
       "- Brand-calibrated modern design\n" +
       "- Conversion-first architecture with clear CTAs\n" +
       "- Mobile-first fast Next.js build\n" +
@@ -466,7 +466,7 @@ export function faqCopy(topic: string): NodeReply {
       assistantMessage:
         "Here's the pricing breakdown:\n\n" +
         "- Free Expert Audit: $0\n" +
-        "- Complete Website Overhaul: starting around $1,000 one-time\n" +
+        "- Complete Website Overhaul: $1,000 one-time\n" +
         "- Growth Partnership: $2,000/month\n\n" +
         "Which one should I walk you through?",
       quickReplies: [
@@ -571,7 +571,7 @@ export function objectionCopy(kind: string): NodeReply {
   if (kind === "too_expensive") {
     return {
       assistantMessage:
-        "I hear you - budget matters. If $2,000/month isn't right today, you can still get serious value from a Free Expert Audit ($0) or a Website Overhaul (~$1,000 one-time).\n\n" +
+        "I hear you - budget matters. If $2,000/month isn't right today, you can still get serious value from a Free Expert Audit ($0) or a Website Overhaul ($1,000 one-time).\n\n" +
         "Many clients start there and upgrade later. Which option feels more realistic right now?",
       quickReplies: [
         reply("b_start", "Get a free audit"),

@@ -26,6 +26,7 @@ The repo assumes pnpm; npm/yarn installs will fall out of sync.
 - **Runtime** – Node 22.x LTS. Vercel now requires 22, so pin local dev here to avoid deploy failures.
 - **Package manager** – pnpm 10.x via `corepack enable`. All commands should use `pnpm`; references to `npm run …` are outdated.
 - **Architecture** – Marketing forms post to Formspree using the shared `useFormValidation` hook (HTML5 validation + client-side `fetch` + thank-you redirect). We do **not** use React Hook Form, Zod, or server actions/mechanical Supabase inserts for these flows today. If this changes, update this section immediately.
+- **Canonical pricing policy** – Core offer pricing is fixed site-wide: `Website Overhaul = $1,000 one-time`, `Growth Partnership = $2,000/month`, `Free Expert Audit = $0`. `/pricing` is the only canonical pricing URL. Legacy pricing routes permanently redirect to `/pricing`.
 - **Documentation** – When you add a new flow or change behavior, edit the relevant file under `/docs` (or this README/AGENTS if the rule is global). Do *not* add new top-level docs without approval; prefer updating existing guides.
 - **Environment variables** – Required vars are limited to those listed in [docs/environment-setup.md](./docs/environment-setup.md) and `.env.example` (GA overrides, Supabase credentials, Resend key, optional site URLs). Do not list vars that aren’t implemented in code.
 - **Sales Chat (Spec v1)** – `/get-started` mounts a deterministic `SalesChat` client + server state machine for intents A–G (free audit, website overhaul, growth partnership, FAQ/objections/guardrails). Chat UI is availability-gated and only renders when `SALES_CHAT_ENABLED` and required CTA links are configured.
@@ -53,6 +54,7 @@ The repo assumes pnpm; npm/yarn installs will fall out of sync.
 | `pnpm build` | Production Next.js build (use before Vercel deploys). |
 | `pnpm verify:deploy` | Runs `scripts/verify-deployment.ts` to ensure required env vars and image config exist. |
 | `pnpm verify:sales-chat-config` | Validates `.vercel/.env.production.local` after `vercel pull`; fails when chat is enabled without required deterministic chat keys (CTA URLs + lead webhook). `AI_GATEWAY_*` is only required if `SALES_CHAT_AI_FALLBACK_ENABLED=true`. |
+| `pnpm verify:pricing-consistency` | Blocks deploys when legacy conflicting pricing reappears on pricing-sensitive surfaces. Contextual non-core dollar values are only allowed on explicitly labeled pages (referral/equipment/ad-fee examples). |
 | `pnpm diag:supabase` | Confirms Supabase URL + service key are available. |
 
 ## Project structure

@@ -518,6 +518,9 @@ export default async function AdsPage() {
               <Button asChild variant="outline" size="lg" className="rounded-full px-8">
                 <Link href="/contact">Talk to a strategist</Link>
               </Button>
+              <Button asChild variant="outline" size="lg" className="rounded-full px-8">
+                <Link href="/pricing">See pricing</Link>
+              </Button>
             </div>
           </div>
         </section>
@@ -532,10 +535,13 @@ export default async function AdsPage() {
         serviceType="Digital marketing"
         areaServed="United States"
         offerDetails={{
-          name: "Managed ads plans",
-          description: "Tiered retainers covering Google, Meta, TikTok, and Yelp with reporting and creative iteration.",
+          name: "Growth Partnership",
+          description: "Ongoing website, design, SEO, and ads execution managed by Prism's dedicated team.",
           businessFunction: "http://purl.org/goodrelations/v1#ProvideService",
-          priceRange: "$1,500/mo - $5,000/mo",
+          price: "2000",
+          priceCurrency: "USD",
+          billingPeriod: "P1M",
+          url: "https://www.design-prism.com/pricing",
         }}
         aggregateRating={aggregateRating}
       />

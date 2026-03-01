@@ -471,12 +471,12 @@ export default async function SeoPage() {
               >
                 free aeo assessment
               </Link>
-              , or if you’re looking for a focused sprint, see{" "}
+              , or if you’re looking for the best-fit package, see{" "}
               <Link
-                href="/offers/ai-seo-boost"
+                href="/pricing"
                 className="font-semibold lowercase text-neutral-900 underline decoration-neutral-300 underline-offset-4"
               >
-                ai seo boost
+                prism pricing
               </Link>
               .
             </p>
@@ -568,10 +568,13 @@ export default async function SeoPage() {
         serviceType="SEO services"
         areaServed="United States"
         offerDetails={{
-          name: "SEO packages",
-          description: "Foundation, Growth, and Domination tiers that layer content, schema, and ongoing optimization.",
+          name: "Growth Partnership",
+          description: "Ongoing website, SEO, ads, and design execution managed as one integrated system.",
           businessFunction: "http://purl.org/goodrelations/v1#Sell",
-          priceRange: "$300/mo - $3,600/mo",
+          price: "2000",
+          priceCurrency: "USD",
+          billingPeriod: "P1M",
+          url: "https://www.design-prism.com/pricing",
         }}
       />
     </>

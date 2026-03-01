@@ -428,7 +428,7 @@ export default function ExquisiteDentistryCaseStudy() {
               </a>
               <br />
               <strong>Growth reporting</strong> →{" "}
-              <a className={linkClassName} href="https://www.design-prism.com/growth" target="_blank" rel="noreferrer">
+              <a className={linkClassName} href="https://www.design-prism.com/pricing" target="_blank" rel="noreferrer">
                 prism growth reporting
               </a>
             </p>

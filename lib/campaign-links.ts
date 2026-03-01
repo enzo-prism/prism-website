@@ -13,7 +13,7 @@ export type CampaignLink = {
 export const CAMPAIGN_LINKS: Record<string, CampaignLink> = {
   "ig-bio": {
     slug: "ig-bio",
-    destination: "/offers",
+    destination: "/pricing",
     utmSource: "instagram",
     utmMedium: "social",
     utmCampaign: "brand_profile",
@@ -40,7 +40,7 @@ export const CAMPAIGN_LINKS: Record<string, CampaignLink> = {
   },
   "tiktok-bio": {
     slug: "tiktok-bio",
-    destination: "/offers",
+    destination: "/pricing",
     utmSource: "tiktok",
     utmMedium: "social",
     utmCampaign: "brand_profile",

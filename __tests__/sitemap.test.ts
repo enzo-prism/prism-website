@@ -37,5 +37,15 @@ describe("sitemap", () => {
     expect(urls.some((url) => url.includes("/library/"))).toBe(true)
     expect(urls.some((url) => url.startsWith("https://www.design-prism.com/podcast/"))).toBe(true)
     expect(urls.some((url) => url.endsWith("/aeo-thank-you"))).toBe(false)
+    expect(urls).not.toEqual(expect.arrayContaining([
+      "https://www.design-prism.com/pricing-dental",
+      "https://www.design-prism.com/ai-website-launch",
+      "https://www.design-prism.com/one-time-fee",
+      "https://www.design-prism.com/offers",
+      "https://www.design-prism.com/growth",
+      "https://www.design-prism.com/checkout/launch",
+      "https://www.design-prism.com/checkout/grow",
+      "https://www.design-prism.com/checkout/scale",
+    ]))
   })
 })

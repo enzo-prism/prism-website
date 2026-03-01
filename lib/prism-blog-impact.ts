@@ -255,10 +255,10 @@ const AI_IMPACT: PrismImpactConfig = {
       reason: "Practical AI workflows for teams and operators.",
     },
     {
-      label: "AI website launch",
-      href: "/ai-website-launch",
+      label: "Prism pricing",
+      href: "/pricing",
       kind: "internal",
-      reason: "Launch and optimize AI-visible web experiences quickly.",
+      reason: "Review the canonical website overhaul and growth partnership options.",
     },
     {
       label: "Book a growth implementation call",
@@ -381,10 +381,10 @@ const DARK_FACTORY_OVERRIDE: PrismImpactConfig = {
   ],
   serviceLinks: [
     {
-      label: "AI website launch",
-      href: "/ai-website-launch",
+      label: "Prism pricing",
+      href: "/pricing",
       kind: "internal",
-      reason: "Production-focused AI-native growth execution.",
+      reason: "Review the canonical website overhaul and growth partnership options.",
     },
     {
       label: "AI and automation services",

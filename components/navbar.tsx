@@ -24,7 +24,7 @@ import CoreImage from "./core-image"
 
 const aliasMap: Record<string, string> = {
   "/design": "/designs",
-  "/growth": "/prism-flywheel",
+  "/growth": "/pricing",
 }
 
 type TopNavIconConfig = {

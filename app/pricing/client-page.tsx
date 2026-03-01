@@ -1,182 +1,74 @@
 import Link from "next/link"
-import type { LucideIcon } from "lucide-react"
-import {
-  Award,
-  BarChart3,
-  Beaker,
-  CalendarClock,
-  Check,
-  CheckCheck,
-  Gauge,
-  Leaf,
-  MonitorSmartphone,
-  Network,
-  PieChart,
-  Rocket,
-  Sparkles,
-  TrendingUp,
-  Users,
-} from "lucide-react"
+import { ArrowRight, CheckCircle2, TrendingUp, Wrench } from "lucide-react"
 
 import AnimatedGradient from "@/components/animations/animated-gradient"
 import RippleHighlight from "@/components/animations/ripple-highlight"
 import ClientsRail from "@/components/home/ClientsRail"
 import PricingHero from "@/components/pricing/PricingHero"
 import RevealOnScroll from "@/components/reveal-on-scroll"
-import VideoPlayer from "@/components/video-player"
-import PixelishIcon from "@/components/pixelish/PixelishIcon"
-import { Button } from "@/components/ui/button"
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion"
-import { cn } from "@/lib/utils"
 import { FAQSchema, ServiceSchema } from "@/components/schema-markup"
-import { pixelishForEmoji } from "@/lib/pixelish-emoji"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import {
+  CANONICAL_PRICING_OFFERS,
+  FREE_AUDIT_PRICE_LABEL,
+  GROWTH_PARTNERSHIP_PRICE_LABEL,
+  WEBSITE_OVERHAUL_PRICE_LABEL,
+} from "@/lib/pricing-model"
 
-type PricingBullet = {
-  icon: LucideIcon
-  text: string
-  iconScale?: number
-}
-
-type PricingTier = {
-  name: string
-  iconSrc: string
-  price: string
-  tagline: string
-  included: string[]
-  bestFor: PricingBullet[]
-  cta: string
-  href: string
-  accent: string
-  featured: boolean
-}
-
-const pricingTiers: PricingTier[] = [
+const pricingCards = [
   {
-    name: "Launch",
-    iconSrc: "/pixelish/emoji-rocket.svg",
-    price: "$400 one-time",
-    tagline: "a sharp site in 48–72 hours.",
-    included: [
-      "conversion-ready website",
-      "premium design + copy",
-      "analytics + seo basics",
-      "go-live setup (domain, ssl, forms, hosting)",
+    key: "website_overhaul",
+    icon: Wrench,
+    title: CANONICAL_PRICING_OFFERS.website_overhaul.name,
+    priceLabel: WEBSITE_OVERHAUL_PRICE_LABEL,
+    subtitle: "For teams that need a complete rebuild fast.",
+    bullets: [
+      "Modern, conversion-first website architecture",
+      "Technical SEO, schema, and analytics setup",
+      "Launch support and team handoff",
     ],
-    bestFor: [
-      { icon: CalendarClock, text: "one offer with a hard date (event, pop-up, waitlist)", iconScale: 0.92 },
-      { icon: Sparkles, text: "founders who need a legit site this week" },
-      { icon: CheckCheck, text: "validating an idea before spending on ads/dev" },
-      { icon: Rocket, text: "a polished site without a long build" },
-    ],
-    cta: "apply for launch",
-    href: "/checkout/launch",
-    accent: "from-amber-400 to-pink-500",
+    primaryCta: CANONICAL_PRICING_OFFERS.website_overhaul.primaryCta,
+    secondaryCta: CANONICAL_PRICING_OFFERS.website_overhaul.secondaryCta,
     featured: false,
   },
   {
-    name: "Grow",
-    iconSrc: "/pixelish/graph-chart-high.svg",
-    price: "$900/mo",
-    tagline: "publish consistently. rank. convert.",
-    included: [
-      "website + ongoing improvements",
-      "content system (topics, writing, publishing)",
-      "seo + conversion tweaks each month",
-      "reporting so you know what’s working",
+    key: "growth_partnership",
+    icon: TrendingUp,
+    title: CANONICAL_PRICING_OFFERS.growth_partnership.name,
+    priceLabel: GROWTH_PARTNERSHIP_PRICE_LABEL,
+    subtitle: "For teams ready for ongoing execution and growth.",
+    bullets: [
+      "Website, design, SEO, and ads managed together",
+      "Dedicated team working 7 days a week",
+      "Weekly optimization and plain-English reporting",
     ],
-    bestFor: [
-      { icon: Beaker, text: "steady lead growth from seo/content" },
-      { icon: TrendingUp, text: "teams that want a partner, not a freelancer" },
-      { icon: PieChart, text: "businesses tired of guessing what to write" },
-      { icon: Leaf, text: "brands playing the long game" },
-    ],
-    cta: "apply for grow",
-    href: "/checkout/grow",
-    accent: "from-sky-500 to-indigo-600",
+    primaryCta: CANONICAL_PRICING_OFFERS.growth_partnership.primaryCta,
+    secondaryCta: CANONICAL_PRICING_OFFERS.growth_partnership.secondaryCta,
     featured: true,
   },
-  {
-    name: "Scale",
-    iconSrc: "/pixelish/bar-chart-high.svg",
-    price: "from $1,500/mo",
-    tagline: "full-funnel growth (site + content + ads).",
-    included: [
-      "everything in grow",
-      "paid ads management",
-      "full-funnel tracking + call/lead tracking",
-      "landing pages + funnels as you scale",
-    ],
-    bestFor: [
-      { icon: Award, text: "businesses with product–market fit" },
-      { icon: Gauge, text: "founders who want more lead volume" },
-      { icon: Users, text: "multi-location or multi-offer growth" },
-      { icon: Network, text: "one owner for the whole channel" },
-    ],
-    cta: "apply for scale",
-    href: "/checkout/scale",
-    accent: "from-emerald-400 to-teal-600",
-    featured: false,
-  },
-]
-
-const features = [
-  {
-    title: "Launch smarter",
-    description: "we design pages to convert. we write clear copy. we bake in seo basics.",
-    icon: Sparkles,
-  },
-  {
-    title: "Track everything",
-    description: "we set up ga4, pixels, and lead tracking so you can see what drives revenue.",
-    icon: BarChart3,
-  },
-  {
-    title: "Go live effortlessly",
-    description: "we handle domains, ssl, forms, hosting, dns, migrations, and integrations.",
-    icon: MonitorSmartphone,
-  },
-] as const
-
-const useCaseItems = [
-  { icon: "💬", label: "Service Website" },
-  { icon: "🛍️", label: "E-commerce Store" },
-  { icon: "🦷", label: "Local Business" },
-  { icon: "📞", label: "Booking & Scheduling" },
-  { icon: "📰", label: "Blog / Resource Hub" },
-  { icon: "💼", label: "Careers & Hiring" },
-  { icon: "🗨️", label: "Smart Chat Support" },
-  { icon: "🎨", label: "Portfolio" },
-  { icon: "🎤", label: "Event / Conference" },
-  { icon: "🧠", label: "Founder Story" },
-  { icon: "📣", label: "Landing Page" },
-  { icon: "⏳", label: "Waitlist / Launch" },
 ] as const
 
 const faqs = [
   {
-    question: "How long does the build take?",
+    question: "What is the exact pricing model?",
     answer:
-      "launch is usually live in 48–72 hours. grow/scale depend on scope — we’ll confirm timing in our 24-hour reply.",
+      "Prism has two core paid paths: Website Overhaul at $1,000 one-time, and Growth Partnership at $2,000/month. If you want guidance first, you can start with a free expert audit at $0.",
   },
   {
-    question: "Who owns the website?",
+    question: "Which option should I choose?",
     answer:
-      "you do. your domain, your content, your assets. prism just runs the system.",
+      "Choose Website Overhaul if you need a high-converting rebuild. Choose Growth Partnership if you want a long-term team handling website, SEO, ads, and design together.",
   },
   {
-    question: "Can I upgrade between plans?",
+    question: "Can I start with one option and upgrade later?",
     answer:
-      "yes. start where you are, upgrade when you’re ready. we carry your work forward.",
+      "Yes. Many teams start with the website overhaul and move into the growth partnership once they want ongoing execution and optimization.",
   },
   {
-    question: "Do you offer custom builds?",
+    question: "Is there a low-commitment way to start?",
     answer:
-      "yes. if you need something custom, we’ll scope it and send a fixed plan.",
+      "Yes. The free expert audit is $0 and gives you an actionable baseline before you commit to a paid path.",
   },
 ] as const
 
@@ -184,452 +76,171 @@ export default function PricingPageClient() {
   return (
     <div className="bg-transparent text-foreground">
       <PricingHero />
-      <PricingSection />
-      <FeatureSection />
-      <WebsiteUseCasesSection />
-      <HandoffSection />
-      <PricingClientsSection />
-      <FAQSection />
-      <FinalCTA />
+      <section id="plans" className="bg-transparent py-24 sm:py-32">
+        <div className="mx-auto flex max-w-6xl flex-col gap-10 px-6">
+          <RevealOnScroll className="mx-auto max-w-3xl text-center">
+            <h2 className="text-4xl font-semibold sm:text-5xl">choose your next step</h2>
+            <p className="mt-4 text-base text-muted-foreground sm:text-lg">
+              Clear pricing, clear outcomes, and a direct path to implementation.
+            </p>
+          </RevealOnScroll>
+
+          <div className="grid gap-8 md:grid-cols-2">
+            {pricingCards.map((card) => (
+              <Card
+                key={card.key}
+                className={card.featured ? "border-primary/60 bg-card/60" : "border-border/60 bg-card/30"}
+              >
+                <CardHeader className="space-y-4">
+                  <div className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-border/60 bg-muted/40">
+                    <card.icon className="h-5 w-5" aria-hidden />
+                  </div>
+                  <div>
+                    <CardTitle className="text-2xl sm:text-3xl">{card.title}</CardTitle>
+                    <p className="mt-2 text-3xl font-semibold font-pixel tracking-[0.06em]">{card.priceLabel}</p>
+                    <p className="mt-2 text-sm text-muted-foreground">{card.subtitle}</p>
+                  </div>
+                </CardHeader>
+                <CardContent className="space-y-6">
+                  <ul className="space-y-2 text-sm text-muted-foreground">
+                    {card.bullets.map((bullet) => (
+                      <li key={bullet} className="flex items-start gap-2">
+                        <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-emerald-500" aria-hidden />
+                        <span>{bullet}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <div className="flex flex-col gap-3 sm:flex-row">
+                    <Button asChild size="lg" className="rounded-md">
+                      <Link href={card.primaryCta.href}>
+                        {card.primaryCta.label}
+                        <ArrowRight className="ml-2 h-4 w-4" />
+                      </Link>
+                    </Button>
+                    {card.secondaryCta ? (
+                      <Button asChild size="lg" variant="outline" className="rounded-md">
+                        <Link href={card.secondaryCta.href}>{card.secondaryCta.label}</Link>
+                      </Button>
+                    ) : null}
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+
+          <RevealOnScroll className="mx-auto max-w-4xl rounded-md border border-border/60 bg-card/30 p-6 text-center">
+            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-muted-foreground font-pixel">low-commitment option</p>
+            <h3 className="mt-3 text-2xl font-semibold">Free Expert Audit</h3>
+            <p className="mt-2 text-3xl font-semibold font-pixel tracking-[0.06em]">{FREE_AUDIT_PRICE_LABEL}</p>
+            <p className="mt-3 text-sm text-muted-foreground">
+              Get a focused website and visibility review with practical next steps before choosing a paid path.
+            </p>
+            <div className="mt-5">
+              <Button asChild size="lg" variant="outline" className="rounded-md">
+                <Link href={CANONICAL_PRICING_OFFERS.free_audit.primaryCta.href}>
+                  {CANONICAL_PRICING_OFFERS.free_audit.primaryCta.label}
+                </Link>
+              </Button>
+            </div>
+          </RevealOnScroll>
+        </div>
+      </section>
+
+      <section className="bg-transparent py-16 sm:py-24">
+        <div className="mx-auto flex max-w-6xl flex-col gap-8 px-6">
+          <div className="text-center">
+            <h2 className="text-3xl font-semibold sm:text-4xl">our clients</h2>
+          </div>
+          <ClientsRail />
+        </div>
+      </section>
+
+      <section className="bg-transparent py-20">
+        <div className="mx-auto max-w-5xl px-6">
+          <div className="space-y-4 text-center">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.32em] text-muted-foreground font-pixel">faq</p>
+            <h2 className="text-3xl font-semibold sm:text-4xl">pricing questions</h2>
+          </div>
+          <div className="mt-8 space-y-4">
+            {faqs.map((faq) => (
+              <div key={faq.question} className="rounded-md border border-border/60 bg-card/30 p-5">
+                <h3 className="text-lg font-semibold">{faq.question}</h3>
+                <p className="mt-2 text-sm text-muted-foreground">{faq.answer}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="relative overflow-hidden border-t border-border/60 bg-background py-16 text-white">
+        <AnimatedGradient
+          className="absolute inset-y-0 left-0 w-full"
+          colors={["#facc15", "#34d399"]}
+          opacity={0.18}
+          blur={180}
+          parallaxIntensity={5}
+        />
+        <div className="relative mx-auto flex max-w-5xl flex-col gap-6 px-6 text-center">
+          <RevealOnScroll>
+            <h2 className="text-3xl font-semibold sm:text-4xl">Ready to choose your path?</h2>
+          </RevealOnScroll>
+          <RevealOnScroll delay={0.1}>
+            <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
+              <RippleHighlight fullWidth className="sm:w-auto">
+                <Button asChild size="lg" className="h-auto w-full rounded-md px-8 py-6 sm:w-auto">
+                  <Link href="/get-started#book-call">Book a strategy call</Link>
+                </Button>
+              </RippleHighlight>
+              <Button asChild size="lg" variant="outline" className="rounded-md border-white/40 text-white hover:bg-white/10">
+                <Link href="/free-analysis">Get your free audit</Link>
+              </Button>
+            </div>
+          </RevealOnScroll>
+        </div>
+      </section>
+
       <PricingStructuredData />
     </div>
   )
 }
 
-function PricingSection() {
-  return (
-    <section id="plans" className="bg-transparent py-24 sm:py-32">
-      <div className="mx-auto flex max-w-6xl flex-col gap-10 px-6">
-        <RevealOnScroll className="text-center">
-          <h2 className="text-4xl font-semibold sm:text-5xl">pick your plan</h2>
-        </RevealOnScroll>
-        <RevealOnScroll className="mx-auto max-w-3xl rounded-md border border-border/60 bg-card/30 p-6 text-left shadow-none backdrop-blur-sm">
-          <h3 className="text-lg font-semibold text-foreground">not sure where to start?</h3>
-          <ul className="mt-4 list-disc space-y-2 pl-5 text-sm text-muted-foreground">
-            <li>need a great site fast? choose launch.</li>
-            <li>want inbound from content + seo? choose grow.</li>
-            <li>ready for full-funnel growth (site + content + ads)? choose scale.</li>
-            <li>still unsure? apply anyway — we’ll tell you the best fit.</li>
-          </ul>
-        </RevealOnScroll>
-        <div className="grid gap-8 md:grid-cols-3">
-          {pricingTiers.map((tier) => (
-            <PricingCard key={tier.name} tier={tier} />
-          ))}
-        </div>
-        <RevealOnScroll className="text-center text-sm text-muted-foreground">
-          we reply within 24 hours with timing + next steps.
-        </RevealOnScroll>
-        <RevealOnScroll className="mx-auto max-w-3xl text-left">
-          <h3 className="text-2xl font-semibold">what happens next</h3>
-          <ol className="mt-4 list-decimal space-y-2 pl-5 text-sm text-muted-foreground">
-            <li>apply (2 minutes).</li>
-            <li>we reply in 24 hours with a timeline + next steps.</li>
-            <li>we build. you approve the preview.</li>
-            <li>we launch + track results. (and keep improving on grow/scale.)</li>
-          </ol>
-        </RevealOnScroll>
-        <div className="mt-16">
-          <div id="pricing-founder-vsl" className="mx-auto max-w-3xl text-left">
-            <p className="text-center text-[10px] font-semibold uppercase tracking-[0.32em] text-muted-foreground font-pixel">
-              hear from our founder
-            </p>
-            <VideoPlayer
-              className="mt-4"
-              src="https://res.cloudinary.com/dhqpqfw6w/video/upload/v1763166554/pricing_ymfnqy.mp4"
-              poster="https://res.cloudinary.com/dhqpqfw6w/video/upload/so_0/pricing_ymfnqy.jpg"
-              title="Founder Enzo Sison on Prism pricing"
-              caption="enzo explains the 3 options"
-              schema={{
-                id: "https://www.design-prism.com/pricing#founder-vsl",
-                name: "Founder Enzo Sison on Prism pricing",
-                description:
-                  "Enzo Sison walks through Prism’s pricing, how Launch, Grow, and Scale deliver conversion-ready websites plus ongoing optimization, and why everything stays transparent from day one.",
-                thumbnailUrl: "https://res.cloudinary.com/dhqpqfw6w/video/upload/so_0/pricing_ymfnqy.jpg",
-                uploadDate: "2025-01-24T00:00:00Z",
-                duration: "PT60S",
-                contentUrl: "https://res.cloudinary.com/dhqpqfw6w/video/upload/v1763166554/pricing_ymfnqy.mp4",
-                embedUrl: "https://www.design-prism.com/pricing#founder-vsl",
-                width: 1920,
-                height: 1080,
-                creatorName: "Enzo Sison",
-              }}
-            />
-          </div>
-        </div>
-      </div>
-    </section>
-  )
-}
-
-function PricingCard({ tier }: { tier: PricingTier }) {
-  const hasArrow = tier.cta.includes("→")
-  const ctaLabel = hasArrow ? tier.cta.replace("→", "").trim() : tier.cta
-
-  const content = (
-    <article
-      className={cn(
-        "relative flex h-full flex-col rounded-md border border-border/60 bg-card/30 p-6 shadow-none backdrop-blur-sm transition-[transform,background-color,border-color] duration-200 hover:-translate-y-1 hover:bg-card/45",
-        tier.featured && "border-primary/60 bg-primary text-primary-foreground hover:bg-primary/95"
-      )}
-    >
-      <div className="space-y-3">
-        <div className="flex items-center gap-2">
-          <PixelishIcon
-            src={tier.iconSrc}
-            alt=""
-            size={22}
-            invert={!tier.featured}
-            aria-hidden
-          />
-          <p
-            className={cn(
-              "text-[10px] font-semibold uppercase tracking-[0.3em] text-muted-foreground font-pixel",
-              tier.featured && "text-primary-foreground/70"
-            )}
-          >
-            {tier.name}
-          </p>
-          {tier.featured ? (
-            <span
-              className={cn(
-                "rounded-md border border-border/60 bg-muted/40 px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-muted-foreground font-pixel",
-                tier.featured && "border-primary-foreground/15 bg-primary-foreground/10 text-primary-foreground/70"
-              )}
-            >
-              most popular
-            </span>
-          ) : null}
-        </div>
-        <p className={cn("text-4xl font-semibold font-pixel tracking-[0.08em]", tier.featured && "text-primary-foreground")}>{tier.price}</p>
-        <p className={cn("text-sm text-muted-foreground", tier.featured && "text-primary-foreground/70")}>
-          {tier.tagline}
-        </p>
-        <div className="pt-2">
-          <p className={cn("mb-3 text-[10px] font-semibold uppercase tracking-[0.28em] text-muted-foreground font-pixel", tier.featured && "text-primary-foreground/70")}>
-            What's included
-          </p>
-          <ul className={cn("space-y-2 text-sm text-muted-foreground", tier.featured && "text-primary-foreground/80")}>
-            {tier.included.map((item) => (
-              <li key={item} className="flex items-center gap-2">
-                <Check
-                  strokeWidth={2}
-                  className={cn("h-4 w-4 shrink-0 text-muted-foreground", tier.featured && "text-primary-foreground/70")}
-                  aria-hidden
-                />
-                <span>{item}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div>
-          <p className={cn("mb-3 text-[10px] font-semibold uppercase tracking-[0.28em] text-muted-foreground font-pixel", tier.featured && "text-primary-foreground/70")}>
-            Best For
-          </p>
-          <div className={cn("space-y-2.5 text-sm text-muted-foreground", tier.featured && "text-primary-foreground/80")}>
-            {tier.bestFor.map((item) => {
-              const Icon = item.icon
-              return (
-                <div key={item.text} className="flex items-start gap-3">
-                  <Icon
-                    strokeWidth={1.6}
-                    className={cn("mt-0.5 h-4 w-4 shrink-0 text-muted-foreground", tier.featured && "text-primary-foreground/70")}
-                    style={
-                      item.iconScale
-                        ? { transform: `scale(${item.iconScale})`, transformOrigin: "center" }
-                        : undefined
-                    }
-                    aria-hidden
-                  />
-                  <span>{item.text}</span>
-                </div>
-              )
-            })}
-          </div>
-        </div>
-      </div>
-      <div className="mt-8 flex flex-1 flex-col gap-5">
-        <Button
-          asChild
-          size="lg"
-          className={cn(
-            "group w-full rounded-md transition",
-            tier.featured && "bg-background text-foreground hover:bg-background/85"
-          )}
-        >
-          <Link href={tier.href}>
-            <span className="inline-flex items-center gap-2">
-              {ctaLabel}
-              {hasArrow && (
-                <span
-                  aria-hidden
-                  className="transition-transform duration-200 group-hover:translate-x-1"
-                >
-                  →
-                </span>
-              )}
-            </span>
-          </Link>
-        </Button>
-      </div>
-    </article>
-  )
-
-  if (tier.featured) {
-    return (
-      <div className="rounded-md bg-gradient-to-br from-sky-500 to-indigo-600 p-[2px] shadow-none">
-        {content}
-      </div>
-    )
-  }
-
-  return content
-}
-
-function FeatureSection() {
-  return (
-    <section className="bg-transparent py-24 sm:py-32">
-      <div className="mx-auto max-w-6xl px-6">
-        <RevealOnScroll className="max-w-2xl">
-          <h2 className="text-4xl font-semibold sm:text-5xl">
-            everything you need to go live — and grow.
-          </h2>
-          <p className="mt-4 text-lg text-muted-foreground">
-            premium design. real tracking. zero tech headaches.
-          </p>
-          <p className="mt-4 text-base text-muted-foreground">
-            we build the site, set up tracking, and launch it for you — so you can focus on customers.
-          </p>
-        </RevealOnScroll>
-        <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {features.map((feature, index) => (
-            <RevealOnScroll key={feature.title} delay={index * 0.05}>
-              <div className="h-full rounded-md border border-border/60 bg-card/30 p-6 shadow-none backdrop-blur-sm transition-[transform,background-color] duration-200 hover:-translate-y-1 hover:bg-card/45">
-                <div aria-hidden className="inline-flex h-12 w-12 items-center justify-center rounded-md bg-muted/40">
-                  <feature.icon className="h-6 w-6 text-foreground" />
-                </div>
-                <h3 className="mt-4 text-xl font-semibold">{feature.title}</h3>
-                <p className="mt-3 text-sm text-muted-foreground">{feature.description}</p>
-              </div>
-            </RevealOnScroll>
-          ))}
-        </div>
-      </div>
-    </section>
-  )
-}
-
-function WebsiteUseCasesSection() {
-  return (
-    <section className="bg-card/15 py-24">
-      <div className="mx-auto max-w-6xl px-6">
-        <RevealOnScroll className="text-center">
-          <h2 className="text-3xl font-semibold sm:text-4xl">Website Use Cases</h2>
-          <p className="mt-3 text-lg text-muted-foreground">
-            Websites built to win business — not just sit online.
-          </p>
-          <p className="mt-4 text-base text-muted-foreground">
-            Whether you're booking clients, selling products, hiring talent, or building your personal brand, Prism builds websites that convert better, nurture trust faster, and position you as the top choice in your market.
-          </p>
-        </RevealOnScroll>
-        <div className="mt-12 grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
-          {useCaseItems.map((item, itemIndex) => (
-            <RevealOnScroll key={item.label} delay={itemIndex * 0.02}>
-              <div className="group flex aspect-square flex-col items-center justify-center rounded-md border border-border/60 bg-card/30 text-center shadow-none backdrop-blur-sm transition-[transform,background-color] duration-200 hover:-translate-y-1 hover:bg-card/45">
-                <PixelishIcon
-                  src={pixelishForEmoji(item.icon).src}
-                  alt=""
-                  size={34}
-                  aria-hidden
-                />
-                <span className="mt-3 text-[10px] font-semibold uppercase tracking-[0.16em] text-muted-foreground font-pixel sm:text-xs">{item.label}</span>
-              </div>
-            </RevealOnScroll>
-          ))}
-        </div>
-      </div>
-    </section>
-  )
-}
-
-function HandoffSection() {
-  return (
-    <section className="relative overflow-hidden bg-neutral-950 py-16 text-white sm:py-24">
-      <AnimatedGradient
-        className="absolute inset-0"
-        colors={["#0ea5e9", "#8b5cf6"]}
-        opacity={0.25}
-        blur={220}
-        parallaxIntensity={6}
-      />
-      <div className="relative mx-auto flex max-w-4xl flex-col gap-6 px-6 text-center sm:gap-8">
-        <RevealOnScroll>
-          <h2 className="text-3xl font-semibold sm:text-4xl">switch without losing momentum</h2>
-        </RevealOnScroll>
-        <RevealOnScroll delay={0.1}>
-          <p className="text-base text-white/80">
-            we take over hosting, domains, analytics, dns, forms, and old logins — then rebuild
-            everything into a clean, modern system built to convert.
-          </p>
-        </RevealOnScroll>
-        <RevealOnScroll delay={0.15}>
-          <p className="text-sm text-white/70">your only job: approve the preview.</p>
-        </RevealOnScroll>
-        <RevealOnScroll delay={0.2}>
-          <div
-            className="rounded-3xl border border-white/10 bg-white/10 p-5 text-base font-semibold text-white shadow-lg"
-            style={{
-              backgroundImage:
-                "linear-gradient(120deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05), rgba(255,255,255,0.15))",
-              backgroundSize: "200% 200%",
-            }}
-          >
-            approve the final preview — then watch qualified leads ramp up.
-          </div>
-        </RevealOnScroll>
-      </div>
-    </section>
-  )
-}
-
-function PricingClientsSection() {
-  return (
-    <section className="bg-transparent py-24 sm:py-32">
-      <div className="mx-auto flex max-w-6xl flex-col gap-8 px-6">
-        <div className="text-center">
-          <h2 className="text-3xl font-semibold sm:text-4xl">our clients</h2>
-        </div>
-        <ClientsRail />
-        <p className="text-center text-xs text-muted-foreground">
-          Swipe or scroll horizontally to view more clients
-        </p>
-      </div>
-    </section>
-  )
-}
-
-function FAQSection() {
-  return (
-    <section className="bg-transparent py-24 sm:py-32">
-      <div className="mx-auto flex max-w-5xl flex-col gap-8 px-6">
-        <RevealOnScroll className="text-center">
-          <p className="text-[10px] font-semibold uppercase tracking-[0.32em] text-muted-foreground font-pixel">faq</p>
-          <h2 className="mt-4 text-4xl font-semibold sm:text-5xl">Still have questions?</h2>
-          <p className="mt-4 text-base text-muted-foreground">
-            Here are the answers we share most often when teams compare plans or timelines.
-          </p>
-        </RevealOnScroll>
-        <RevealOnScroll delay={0.1}>
-          <Accordion type="single" collapsible className="rounded-md border border-border/60 bg-card/30 backdrop-blur-sm">
-            {faqs.map((faq) => (
-              <AccordionItem key={faq.question} value={faq.question} className="border-border/60">
-                <AccordionTrigger className="px-6 text-left">
-                  {faq.question}
-                </AccordionTrigger>
-                <AccordionContent className="px-6 text-base text-muted-foreground">{faq.answer}</AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
-        </RevealOnScroll>
-      </div>
-    </section>
-  )
-}
-
-function FinalCTA() {
-  return (
-    <section className="relative overflow-hidden border-t border-border/60 bg-background py-16 text-white">
-      <AnimatedGradient
-        className="absolute inset-y-0 left-0 w-full"
-        colors={["#facc15", "#34d399"]}
-        opacity={0.18}
-        blur={180}
-        parallaxIntensity={5}
-      />
-      <div className="relative mx-auto flex max-w-5xl flex-col gap-6 px-6 text-center">
-        <RevealOnScroll>
-          <h2 className="text-3xl font-semibold sm:text-4xl">
-            <PixelishIcon
-              src="/pixelish/emoji-rocket.svg"
-              alt=""
-              size={30}
-              aria-hidden
-              className="mr-3 inline-block align-[-0.15em]"
-            />
-            launch a website that brings in customers — starting at $400.
-          </h2>
-        </RevealOnScroll>
-        <RevealOnScroll delay={0.1}>
-          <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
-            <RippleHighlight fullWidth className="sm:w-auto">
-              <Button
-                asChild
-                size="lg"
-                className="h-auto w-full rounded-md px-8 py-6 sm:w-auto"
-              >
-                <Link href="#plans">see plans + pricing</Link>
-              </Button>
-            </RippleHighlight>
-          </div>
-          <p className="mt-4 text-sm text-white/70">
-            looking for a limited-time promo?{" "}
-            <Link href="/offers" className="font-semibold text-white underline underline-offset-4">
-              see current offers
-            </Link>
-            .
-          </p>
-        </RevealOnScroll>
-      </div>
-    </section>
-  )
-}
-
 function PricingStructuredData() {
-  const faqItems = faqs.map((faq) => ({ question: faq.question, answer: faq.answer }))
-
-  // Define pricing details for each tier with proper billing context
-  const tierPricing: Record<string, { price: string; billingPeriod?: string }> = {
-    Launch: { price: "400" }, // One-time payment
-    Grow: { price: "900", billingPeriod: "P1M" }, // Monthly
-    Scale: { price: "1500", billingPeriod: "P1M" }, // Monthly (minimum)
-  }
-
   return (
     <>
-      {pricingTiers.map((tier) => {
-        const pricing = tierPricing[tier.name]
-        const bestForDescription = tier.bestFor.map((item) => item.text).join(" • ")
-        const includesDescription = tier.included.join(" • ")
-        const fullDescription = `${bestForDescription} • Includes: ${includesDescription}`
-
-        return (
-          <ServiceSchema
-            key={`pricing-service-${tier.name.toLowerCase()}`}
-            serviceId={`pricing-${tier.name.toLowerCase()}`}
-            name={`${tier.name} Website Design Plan`}
-            description={fullDescription}
-            serviceType="WebDesign"
-            areaServed="Worldwide"
-            offerDetails={{
-              name: `${tier.name} Plan`,
-              description: fullDescription,
-              businessFunction: "http://purl.org/goodrelations/v1#ProvideService",
-              price: pricing?.price,
-              priceCurrency: "USD",
-              billingPeriod: pricing?.billingPeriod,
-              availability: "https://schema.org/InStock",
-            }}
-            aggregateRating={{
-              "@type": "AggregateRating",
-              ratingValue: "4.9",
-              reviewCount: "200",
-              bestRating: "5",
-              worstRating: "1",
-            }}
-          />
-        )
-      })}
-      <FAQSchema questions={faqItems} />
+      <ServiceSchema
+        serviceId="pricing-website-overhaul"
+        name="Website Overhaul"
+        description={CANONICAL_PRICING_OFFERS.website_overhaul.description}
+        serviceType="Web design"
+        areaServed="United States"
+        offerDetails={{
+          name: "Website Overhaul",
+          description: CANONICAL_PRICING_OFFERS.website_overhaul.description,
+          businessFunction: "http://purl.org/goodrelations/v1#ProvideService",
+          price: String(CANONICAL_PRICING_OFFERS.website_overhaul.price),
+          priceCurrency: "USD",
+          availability: "https://schema.org/InStock",
+          url: "https://www.design-prism.com/pricing",
+        }}
+      />
+      <ServiceSchema
+        serviceId="pricing-growth-partnership"
+        name="Growth Partnership"
+        description={CANONICAL_PRICING_OFFERS.growth_partnership.description}
+        serviceType="Growth marketing"
+        areaServed="United States"
+        offerDetails={{
+          name: "Growth Partnership",
+          description: CANONICAL_PRICING_OFFERS.growth_partnership.description,
+          businessFunction: "http://purl.org/goodrelations/v1#ProvideService",
+          price: String(CANONICAL_PRICING_OFFERS.growth_partnership.price),
+          priceCurrency: "USD",
+          billingPeriod: "P1M",
+          availability: "https://schema.org/InStock",
+          url: "https://www.design-prism.com/pricing",
+        }}
+      />
+      <FAQSchema questions={faqs.map((faq) => ({ question: faq.question, answer: faq.answer }))} />
     </>
   )
 }

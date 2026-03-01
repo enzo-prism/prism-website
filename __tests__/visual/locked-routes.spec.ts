@@ -47,7 +47,7 @@ async function stabilizePage(page: Page) {
 const lockedRoutes = [
   { name: "home", path: "/", readyText: "founders love prism" },
   { name: "about", path: "/about", readyHeading: /our story/i },
-  { name: "pricing", path: "/pricing", readyHeading: /buy back your time/i },
+  { name: "pricing", path: "/pricing", readyHeading: /clear pricing\. two proven paths\./i },
 ] as const
 
 for (const route of lockedRoutes) {

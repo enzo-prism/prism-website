@@ -5,7 +5,7 @@ import StickyCTA from "./StickyCTA"
 
 const ALLOWED_ROUTES = new Set([
   "/get-started",
-  "/pricing-dental",
+  "/pricing",
   "/services",
   "/",
 ])

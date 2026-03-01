@@ -38,7 +38,7 @@ const processSteps = [
   {
     title: "you get rewarded",
     description:
-      "when they sign with prism, you receive up to $1,000 as a thank-you for making the connection."
+      "when they sign with prism, you receive up to $1,000 as a thank-you for making the connection (referral payout, not service pricing)."
   }
 ]
 
@@ -89,7 +89,7 @@ const referralBenefits = [
   {
     icon: Gift,
     title: "earn up to $1,000",
-    description: "collect a direct payment when your referral becomes a prism client."
+    description: "collect a direct referral payout when your referral becomes a prism client (not a Prism service price)."
   },
   {
     icon: Handshake,
@@ -105,7 +105,7 @@ const referralBenefits = [
 
 const PAGE_TITLE = "refer a business to prism & earn"
 const PAGE_DESCRIPTION =
-  "know someone who needs a better website, listings, or ad strategy? refer them to prism for a free analysis and earn up to $1,000 when they become a client."
+  "know someone who needs a better website, listings, or ad strategy? refer them to prism for a free analysis and earn up to $1,000 referral payout when they become a client."
 const CANONICAL_URL = "https://www.design-prism.com/refer"
 
 export const metadata: Metadata = buildRouteMetadata({
@@ -137,6 +137,9 @@ export default function ReferPage() {
                 Help them modernize their website, local listings, or online ads — and earn up to{" "}
                 <span className="font-semibold text-neutral-900">$1,000</span> when they become a Prism client.
                 Your intro starts with a quick Typeform and a free analysis for your friend.
+              </p>
+              <p className="mt-2 text-sm text-neutral-500">
+                Note: referral payout amounts are referral-program incentives, not Prism service pricing.
               </p>
               <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
                 <div className="flex flex-col items-center gap-2">

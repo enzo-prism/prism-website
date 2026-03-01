@@ -527,18 +527,25 @@ export default function GoogleDentalAdsPage() {
           <div className="container mx-auto px-4 py-16 md:px-6 lg:py-24">
             <div className="max-w-3xl">
               <p className="text-xs font-semibold uppercase tracking-[0.28em] text-neutral-500">
-                Pricing & plans
+                Ad fee examples
               </p>
               <h2 className="mt-3 text-3xl font-semibold text-neutral-900 md:text-4xl">
-                Transparent pricing. No hidden fees.
+                Sample ad management fee tiers.
               </h2>
+              <p className="mt-3 text-sm text-neutral-600">
+                These are Google Ads management fee examples for this specific service line, not Prism core pricing. For core offers, see{" "}
+                <Link href="/pricing" className="font-semibold text-neutral-900 underline underline-offset-4">
+                  Prism pricing
+                </Link>
+                .
+              </p>
             </div>
             <div className="mt-10 grid gap-6 md:grid-cols-3">
               {pricingPlans.map((plan) => (
                 <div key={plan.plan} className="flex h-full flex-col gap-4 rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm">
                   <div className="flex items-center justify-between">
                     <h3 className="text-xl font-semibold text-neutral-900">{plan.plan}</h3>
-                    <span className="text-lg font-semibold text-neutral-900">{plan.fee}/mo</span>
+                    <span className="text-lg font-semibold text-neutral-900">{plan.fee}/mo fee</span>
                   </div>
                   <p className="text-sm text-neutral-500">{plan.idealFor}</p>
                   <div className="space-y-2 text-sm text-neutral-600">

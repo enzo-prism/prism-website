@@ -19,7 +19,7 @@ const faqs = [
   },
   {
     question: "How much does a website cost?",
-    answer: "Our websites start at $2,500 and are customized based on your specific needs. We offer flexible pricing options including monthly plans starting at $297. The final cost depends on complexity, features, and integration requirements. We provide detailed quotes after understanding your business goals."
+    answer: "Our core website offer is a Website Overhaul at $1,000 one-time. If you want ongoing execution beyond the rebuild, our Growth Partnership is $2,000/month. You can also start with a Free Expert Audit at $0."
   },
   {
     question: "What's included in your website development service?",
@@ -39,15 +39,15 @@ const faqs = [
   },
   {
     question: "Do you offer mobile app development?",
-    answer: "Yes, we develop native iOS and Android apps as well as cross-platform applications. Our mobile app development starts at $10,000 and typically takes 8-12 weeks. We focus on creating apps that drive user engagement and support your business objectives."
+    answer: "Yes. We develop native and cross-platform apps as custom projects. App work is scoped separately from Prism's core website and growth offers, so pricing is quoted based on requirements, timeline, and integrations."
   },
   {
     question: "What is your digital marketing approach?",
-    answer: "Our digital marketing services use AI-powered campaigns to generate qualified leads and increase revenue. We offer SEO, paid advertising, social media marketing, and content marketing. Our marketing services start at $1,500/month and are customized to your industry and goals."
+    answer: "Our digital marketing approach combines SEO, paid ads, and conversion-focused creative with clear analytics. For teams that want this managed continuously, the core Growth Partnership is $2,000/month and includes website, SEO, ads, and design execution."
   },
   {
     question: "Do you provide ongoing support and maintenance?",
-    answer: "Yes, we offer comprehensive ongoing support including hosting, security updates, content updates, and technical maintenance. Our support plans start at $97/month and ensure your website stays secure, fast, and up-to-date."
+    answer: "Yes. Ongoing support, optimization, and reporting are included in the $2,000/month Growth Partnership. If you only need a one-time build, the Website Overhaul at $1,000 includes launch support and handoff."
   },
   {
     question: "What is 'The Prism Method'?",
@@ -67,7 +67,7 @@ const faqs = [
   },
   {
     question: "What's your payment structure?",
-    answer: "We typically work with 50% upfront and 50% upon completion for one-time projects. For ongoing services, we offer monthly billing. We accept all major credit cards, ACH transfers, and can work with purchase orders for larger organizations."
+    answer: "Website Overhaul is billed as a one-time $1,000 project. Growth Partnership is billed monthly at $2,000/month. We also offer a Free Expert Audit at $0 so you can evaluate fit before committing."
   },
   {
     question: "How do you measure success?",

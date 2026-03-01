@@ -11,12 +11,20 @@ This guide highlights the workflows we lean on most often while iterating on the
   - `pnpm test:sales-chat:core`
   - `pnpm test:sales-chat:e2e`
   - `pnpm test:sales-chat:stress` (defaults to 20 consecutive core runs; override with `SALES_CHAT_STRESS_RUNS=<n>`)
+- For pricing-sensitive changes, run:
+  - `pnpm verify:pricing-consistency`
 - For non-chat changes touching shared infrastructure, update and run the nearest smoke tests in the relevant package (`pnpm test`, `pnpm test:visual`, etc.) before merging.
 - Run `pnpm test:visual` before merging changes that touch the UI of `/`, `/about`, or `/pricing` (screenshot-locked routes).
 - Run `pnpm exec playwright test __tests__/visual/blog-copy-markdown.spec.ts --project=desktop-chromium` when changing the blog markdown copy button or `/api/blog/[slug]/markdown`.
 - Run `pnpm exec playwright test __tests__/visual/page-copy-markdown-global.spec.ts --project=desktop-chromium` when changing the global page markdown copy button.
 
 ### Sales chat development checklist
+
+- Canonical pricing copy contract:
+  - Website Overhaul must be phrased as `$1,000 one-time`.
+  - Growth Partnership must be phrased as `$2,000/month`.
+  - Free audit must be phrased as `$0` / free audit.
+  - Avoid “starting around”, “from”, or legacy tier pricing language in deterministic copy.
 
 - API contract (server):
   - `POST /api/chat`
@@ -118,7 +126,7 @@ This guide highlights the workflows we lean on most often while iterating on the
 
 ## Formspree Integration
 
-All marketing forms live under `components/forms/` (Contact, Free Analysis, Get Started) and share the `useFormValidation` hook. The AI Website Launch form lives in `components/ai-website-launch/AiWebsiteLaunchForm.tsx` (embedded in `app/ai-website-launch/client-page.tsx`) and follows the same submission pattern (client-side `fetch`, `Accept: application/json`, and redirect to `/thank-you`).
+All marketing forms live under `components/forms/` (Contact, Free Analysis, Get Started) and share the `useFormValidation` hook. Legacy AI Website Launch form code remains in `components/ai-website-launch/AiWebsiteLaunchForm.tsx` for archival/reference; active pricing-intent traffic is now routed to `/pricing`.
 
 Key details:
 
@@ -191,7 +199,8 @@ Custom confirmation routes live in `app/thank-you/` and `app/analysis-thank-you/
 ## Pricing Page Content
 
 - Pricing UI is in `app/pricing/client-page.tsx` with the hero modal split into `components/pricing/PricingHero.tsx`.
-- Hero copy, tier descriptions, "Website Use Cases", and the new handoff section are all co-located for easy edits.
+- Keep canonical pricing copy exact on this page: `$1,000 one-time`, `$2,000/month`, and `$0` free audit.
+- Structured data here should only emit canonical offers and point to `https://www.design-prism.com/pricing`.
 - When introducing a new section, wrap it with `RevealOnScroll` helpers for consistent motion.
 
 ## Free Analysis & Contact Pages

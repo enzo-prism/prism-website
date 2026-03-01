@@ -69,7 +69,15 @@ images: {
       { source: '/portfolio', destination: '/case-studies', permanent: true },
       // Friendly shortpaths for new nav structure
       { source: '/design', destination: '/designs', permanent: true },
-      { source: '/growth', destination: '/prism-flywheel', permanent: true },
+      { source: '/growth', destination: '/pricing', permanent: true },
+      { source: '/pricing-dental', destination: '/pricing', permanent: true },
+      { source: '/ai-website-launch', destination: '/pricing', permanent: true },
+      { source: '/one-time-fee', destination: '/pricing', permanent: true },
+      { source: '/offers', destination: '/pricing', permanent: true },
+      { source: '/offers/:path*', destination: '/pricing', permanent: true },
+      { source: '/checkout/launch', destination: '/pricing', permanent: true },
+      { source: '/checkout/grow', destination: '/pricing', permanent: true },
+      { source: '/checkout/scale', destination: '/pricing', permanent: true },
       { source: '/seo-consultant-for-dentists', destination: '/dental-practice-seo-expert', permanent: true },
       { source: '/seo-for-dentists', destination: '/dental-practice-seo-expert', permanent: true },
       { source: '/dentist-seo', destination: '/dental-practice-seo-expert', permanent: true },
@@ -106,7 +114,7 @@ images: {
 
       // 2025 legacy cleanup
       { source: '/affiliate', destination: '/refer', permanent: true },
-      { source: '/shop', destination: '/offers', permanent: true },
+      { source: '/shop', destination: '/pricing', permanent: true },
       { source: '/search', destination: '/blog', permanent: true },
       { source: '/blog/brand-strategy', destination: '/blog', permanent: true },
       { source: '/resources', destination: '/proof', permanent: true },

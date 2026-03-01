@@ -6,7 +6,7 @@ import { buildRouteMetadata } from "@/lib/seo/metadata"
 
 export const metadata: Metadata = buildRouteMetadata({
   titleStem: "Pricing | Prism",
-  description: "Clear pricing for Prism’s website builds and growth systems. Start with a plan, then launch fast with a high-performing site.",
+  description: "Prism pricing: Website Overhaul at $1,000 one-time or Growth Partnership at $2,000/month, plus a free expert audit.",
   path: "/pricing",
   ogImage: "/prism-opengraph.png",
 })

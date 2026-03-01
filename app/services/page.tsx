@@ -107,28 +107,25 @@ const coreServices: CoreService[] = [
 
 const bundleExamples = [
   {
-    name: "Local Starter",
-    price: "$300/mo",
-    description: "starter stack for new practices and solo operators.",
-    includes: ["Starter Site", "Local Listings"],
+    name: "Website Overhaul Path",
+    description: "Best for teams that need a complete rebuild before layering more channels.",
+    includes: ["Conversion-first rebuild", "Technical SEO + analytics", "Launch support + handoff"],
+    ctaLabel: "See website overhaul pricing",
+    ctaHref: "/pricing",
   },
   {
-    name: "Growth 10",
-    price: "$1,100/mo",
-    description: "balanced mix for teams layering paid acquisition.",
-    includes: ["Business Site", "Local Listings", "Starter Ads"],
+    name: "Growth Partnership Path",
+    description: "Best for teams that want ongoing website, SEO, ads, and design execution.",
+    includes: ["Dedicated sprint team", "Weekly optimization cycles", "Cross-channel reporting"],
+    ctaLabel: "See growth partnership pricing",
+    ctaHref: "/pricing",
   },
   {
-    name: "Content Pro",
-    price: "$1,400/mo",
-    description: "adds ongoing content to move visitors from interest to trust.",
-    includes: ["Pro Site", "Local Listings", "Light Content"],
-  },
-  {
-    name: "Dominate Local",
-    price: "$3,600/mo",
-    description: "full-funnel package for multi-location groups.",
-    includes: ["Pro Site", "Local Listings", "Scale Ads", "Pro Content"],
+    name: "Free Audit Path",
+    description: "Best for teams that want expert direction before choosing a paid path.",
+    includes: ["Website + visibility review", "Actionable priority list", "Clear recommended next step"],
+    ctaLabel: "Start with free audit",
+    ctaHref: "/free-analysis",
   },
 ]
 
@@ -430,9 +427,8 @@ export default function ServicesPage() {
               {bundleExamples.map((bundle) => (
                 <div key={bundle.name} className="flex h-full flex-col gap-4 rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm">
                   <div>
-                    <p className="text-xs uppercase tracking-[0.35em] text-neutral-400">bundle</p>
+                    <p className="text-xs uppercase tracking-[0.35em] text-neutral-400">path</p>
                     <h3 className="mt-2 text-xl font-semibold lowercase text-neutral-900">{bundle.name}</h3>
-                    <p className="text-sm font-semibold text-neutral-500">{bundle.price}</p>
                   </div>
                   <p className="text-sm text-neutral-600">{bundle.description}</p>
                   <ul className="space-y-1 text-sm text-neutral-600">
@@ -442,10 +438,10 @@ export default function ServicesPage() {
                   </ul>
                   <div className="mt-auto">
                     <Link
-                      href="/get-started"
+                      href={bundle.ctaHref}
                       className="text-sm font-semibold lowercase text-neutral-900 underline decoration-neutral-300 underline-offset-4 hover:decoration-neutral-900"
                     >
-                      configure this in your plan
+                      {bundle.ctaLabel}
                     </Link>
                   </div>
                 </div>

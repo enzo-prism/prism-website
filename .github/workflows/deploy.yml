@@ -72,6 +72,9 @@ jobs:
       - name: Verify sales chat production config
         run: pnpm verify:sales-chat-config
 
+      - name: Verify pricing consistency
+        run: pnpm verify:pricing-consistency
+
       - name: Build (Prebuilt)
         run: npx vercel build --prod --token "$VERCEL_TOKEN"
 

@@ -40,7 +40,8 @@
     "seo:lint": "npx ts-node scripts/seo-lint.ts",
     "canonical:check": "npx ts-node scripts/verify-canonical.ts",
     "validate:blog-links": "npx ts-node --compiler-options '{\"module\":\"commonjs\"}' scripts/validate-blog-links.ts",
-    "verify:sales-chat-config": "npx ts-node scripts/verify-sales-chat-config.ts"
+    "verify:sales-chat-config": "npx ts-node scripts/verify-sales-chat-config.ts",
+    "verify:pricing-consistency": "npx ts-node --compiler-options '{\"module\":\"commonjs\"}' scripts/verify-pricing-consistency.ts"
   },
   "dependencies": {
     "@ai-sdk/openai": "^3.0.36",

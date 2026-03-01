@@ -275,9 +275,9 @@ export default async function WebsitesPage() {
               </div>
             </div>
             <p className="mt-4 text-sm text-muted-foreground">
-              limited-time build option:{" "}
-              <Link href="/offers/summer-website-makeover" className="font-semibold text-foreground underline decoration-border/60 underline-offset-4 hover:decoration-border">
-                summer website makeover offer
+              Looking for the right pricing path?{" "}
+              <Link href="/pricing" className="font-semibold text-foreground underline decoration-border/60 underline-offset-4 hover:decoration-border">
+                See canonical pricing
               </Link>
               .
             </p>
@@ -605,6 +605,9 @@ export default async function WebsitesPage() {
               <Button asChild variant="outline" size="lg" className="rounded-md px-8">
                 <Link href="/contact">Talk to a strategist</Link>
               </Button>
+              <Button asChild variant="outline" size="lg" className="rounded-md px-8">
+                <Link href="/pricing">See pricing</Link>
+              </Button>
             </div>
           </div>
         </section>
@@ -639,10 +642,12 @@ export default async function WebsitesPage() {
         serviceType="Website design"
         areaServed="United States"
         offerDetails={{
-          name: "Website service bundles",
-          description: "Launch packages that include design, build, hosting, analytics, and CRO support.",
+          name: "Website Overhaul",
+          description: "Complete website overhaul with design, development, technical SEO, and launch support.",
           businessFunction: "http://purl.org/goodrelations/v1#ProvideService",
-          priceRange: "$4,000 - $25,000",
+          price: "1000",
+          priceCurrency: "USD",
+          url: "https://www.design-prism.com/pricing",
         }}
         aggregateRating={aggregateRating}
       />

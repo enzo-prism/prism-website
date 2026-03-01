@@ -66,7 +66,7 @@ export const HOTTEST_CONTENT: HottestContentItem[] = [
     likes: 9800,
     shares: 2410,
     summary:
-      "We shared the $97 diagnostic funnel Prism deploys to turn browsers into booked consults in 72 hours.",
+      "We shared the $97 diagnostic funnel Prism deploys to turn browsers into booked consults in 72 hours (historical funnel example, not Prism core service pricing).",
     insight:
       "Showed the funnel map first frame, zoomed into each step with captions, and added swipe-up proof to spike saves.",
     highlighted: true,

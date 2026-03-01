@@ -168,7 +168,7 @@ const engineeringServices: ListItem[] = [
           seo
         </Link>
         ,{" "}
-        <Link href="/growth" className="font-medium text-neutral-900 underline underline-offset-4">
+        <Link href="/pricing" className="font-medium text-neutral-900 underline underline-offset-4">
           growth
         </Link>
         ).
@@ -365,7 +365,7 @@ const storySteps: StoryStep[] = [
         <ul className="list-disc space-y-2 pl-5 text-neutral-700">
           <li>
             <strong>New website:</strong> Prism designed the site in Figma and built it in Webflow - the early Prism stack before{" "}
-            <Link href="/ai-website-launch" className="font-medium text-neutral-900 underline underline-offset-4">
+            <Link href="/pricing" className="font-medium text-neutral-900 underline underline-offset-4">
               AI-native builds
             </Link>
             .
@@ -397,7 +397,7 @@ const storySteps: StoryStep[] = [
               seo
             </Link>
             ,{" "}
-            <Link href="/growth" className="font-medium text-neutral-900 underline underline-offset-4">
+            <Link href="/pricing" className="font-medium text-neutral-900 underline underline-offset-4">
               growth
             </Link>
             ).

@@ -18,24 +18,31 @@ Quick reference for the pages we edit most often.
 
 ## Pricing (`app/pricing/client-page.tsx`)
 
-- Core sections (plans grid, founder VSL block, “everything included” features, “Website Use Cases”, smooth handoff section, clients rail, FAQ, and final CTA) live here; the hero + fullscreen modal live in `components/pricing/PricingHero.tsx`.
-- The primary “pricing breakdown” CTA and the final CTA link to `#plans`; keep that anchor intact when editing.
-- The video directly under the pricing cards uses `VideoPlayer` plus structured data—when swapping the asset, update the Cloudinary `src`, poster, and metadata inside `PricingSection`.
-- Clients are rendered via `components/home/ClientsRail.tsx` to keep the same scroller behavior and the “view case studies” link.
+- `/pricing` is the single canonical pricing URL.
+- Core pricing policy must stay fixed site-wide: `Website Overhaul = $1,000 one-time`, `Growth Partnership = $2,000/month`, `Free Expert Audit = $0`.
+- Main UI sections live in `app/pricing/client-page.tsx`; the hero + fullscreen modal live in `components/pricing/PricingHero.tsx`.
+- Structured data on this page should only emit the canonical pricing offers (no legacy tier ranges).
 
 ## Checkout (`app/checkout/*/page.tsx`)
 
-- Launch, Grow, and Scale checkout pages are intentionally **noindex/no-follow** and excluded from the sitemap.
-- Keep canonical URLs set, but avoid adding these routes to marketing navs or sitemap entries.
+- Legacy checkout routes (`/checkout/launch`, `/checkout/grow`, `/checkout/scale`) now permanently redirect to `/pricing`.
+- Keep these legacy files as archival only; do not link to these routes from active pages.
 
-## Dental Pricing (`app/pricing-dental/client-page.tsx`)
+## Legacy Pricing Routes (Redirected)
 
-- Plan definitions live in `dentalPlans`; keep prices and product images aligned with what's shown on the page so Merchant listing structured data stays valid.
+- These routes permanently redirect to `/pricing` and should not be linked from indexable pages:
+  - `/pricing-dental`
+  - `/ai-website-launch`
+  - `/one-time-fee`
+  - `/offers` and `/offers/:path*`
+  - `/growth`
+  - `/checkout/launch`, `/checkout/grow`, `/checkout/scale`
+- If you touch these legacy route files, preserve redirect behavior and avoid reintroducing discoverability links.
 
 ## Websites (`app/websites/page.tsx`)
 
 - Includes hero, founder VSL, benefits, showcases, vertical playbooks, FAQs, SEO copy, and service schema.
-- The VSL near the hero is the canonical marketing video (reused on `/ai-website-launch`); changes here should propagate to any page referencing the same clip.
+- The VSL near the hero is the canonical marketing video for active pricing-intent funnels.
 
 ## Apps (`app/apps/page.tsx`)
 
@@ -190,12 +197,9 @@ Each uses card-based layouts: confirmation message + kickoff-call CTA + contact 
 
 ## AI Website Launch (`app/ai-website-launch/client-page.tsx`)
 
-- High-conversion landing page for ads traffic. Sections include hero, founder VSL, pains, how-it-works, deliverables, clients carousel, comparison table, optional-upgrade CTA, and the Formspree intake.
-- The VSL (`VideoPlayer`) lives immediately after the hero; reuse the same video + schema props that `/websites` uses when marketing needs a consistent message.
-- The inline intake form lives in `components/ai-website-launch/AiWebsiteLaunchForm.tsx`; it uses `useFormValidation` with Formspree `fetch`, redirects to `/thank-you`, and tracks submissions via `trackFormSubmission`.
-- CTA links on the page use `components/tracked-anchor.tsx` so analytics fire without making the page a full client component.
-- The “Our Clients” carousel reuses `components/home/ClientsRail.tsx`, so updates to the shared rail automatically propagate here.
-- Use this page as the reference when building future paid-traffic landers that need bespoke layout but the shared analytics + form wiring.
+- This legacy route now permanently redirects to `/pricing`.
+- Keep legacy code only for historical reference; do not route active marketing traffic here.
+- If we ever relaunch this as an active offer page, update the canonical pricing policy first and document the rollout.
 
 ## Dental Photography surfaces
 
@@ -290,7 +294,6 @@ Keeping these files tidy makes copy refreshes and landing-page experiments fast.
 - Form route wiring uses `components/forms/AeoAssessmentForm.tsx` (`email` + `website`, Formspree POST, dedicated `_redirect` target `/aeo-thank-you`).
 - Thank-you route is `/aeo-thank-you` and is excluded from sitemap indexing via `app/sitemap.ts` (`NOINDEX_ROUTES`).
 - Discoverability touchpoints added:
-  - `/offers` card link to `/aeo`
   - inline link from `/ai-seo-services`
   - inline link from `/seo`
 - SEO/schema notes:
@@ -304,4 +307,4 @@ Keeping these files tidy makes copy refreshes and landing-page experiments fast.
     - `components/forms/AeoAssessmentForm.tsx` + `app/sitemap.ts` when URL/thank-you behavior changes
   - Keep canonical output stable for `/aeo` (`buildRouteMetadata`) and keep `/aeo-thank-you` noindex.
   - Keep the thank-you route out of the sitemap via `NOINDEX_ROUTES`.
-  - Preserve discoverability links (`/offers`, `/ai-seo-services`, `/seo`) so this funnel remains in the AEO/SEO path.
+  - Preserve discoverability links (`/ai-seo-services`, `/seo`) so this funnel remains in the AEO/SEO path.
