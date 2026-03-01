@@ -12,7 +12,9 @@ export default defineConfig({
     "{snapshotDir}/locked-routes.spec.ts-snapshots/{arg}-{projectName}{ext}",
   expect: {
     toHaveScreenshot: {
-      maxDiffPixelRatio: 0.01,
+      // Allow cross-platform font/rendering drift (macOS vs Linux CI) while still
+      // catching meaningful layout regressions on locked routes.
+      maxDiffPixelRatio: 0.05,
     },
   },
   use: {
