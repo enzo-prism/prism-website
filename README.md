@@ -48,6 +48,7 @@ The repo assumes pnpm; npm/yarn installs will fall out of sync.
 | `pnpm lint` | ESLint + Tailwind conventions. |
 | `pnpm typecheck` | TypeScript project-wide type safety. |
 | `pnpm test` | Jest + Testing Library suite. |
+| `pnpm test:visual:locked` | Playwright visual checks for locked routes (`/`, `/about`, `/pricing`); matches deploy workflow gate. |
 | `pnpm test:sales-chat:core` | Deterministic sales-chat reliability matrix (API/component/page/runtime/copy/engine/payload analytics tests). |
 | `pnpm test:sales-chat:e2e` | Playwright checks for `/get-started` with chat enabled and disabled. |
 | `pnpm test:sales-chat:stress` | Consecutive-run stress loop (default 20 runs) for flake detection. |
@@ -88,14 +89,15 @@ The repo assumes pnpm; npm/yarn installs will fall out of sync.
 - `pnpm add -g vercel` or `pnpm dlx vercel` for CLI access.
 - `vercel login` then `vercel link` (first time in repo) to target the project.
 - `vercel pull --yes --environment=production` to sync remote env vars for parity checks.
-- `vercel deploy --prebuilt` for a manual production-style deploy from a local build.
-- `vercel deploy` for preview deployments.
+- `vercel deploy --prod --yes` for manual production deploys (source deploy; matches CI behavior).
+- `vercel deploy --yes` for preview deployments.
 - `vercel ls` for deployment history, `vercel inspect <deployment-url>` for metadata, and `vercel logs <deployment-url> --follow` for runtime debugging.
 - `vercel rollback <deployment-url>` when rollback is needed.
 
 ## Deployment
 
 - Merges to `main` auto-deploy through Vercel (`https://vercel.com/enzo-design-prisms-projects/v0-prism-website-design`).
+- Deploy workflow gates run in order: `UI Lock Screenshots` (`pnpm test:visual:locked`) -> `Sales Chat E2E` (`pnpm test:sales-chat:e2e`) -> `Build and Deploy`.
 - v0.dev remains the design/control plane; updates published from v0 sync back into this repo.
 - For preview builds open a PR—Vercel posts a preview URL for QA.
 

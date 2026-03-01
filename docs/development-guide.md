@@ -13,8 +13,9 @@ This guide highlights the workflows we lean on most often while iterating on the
   - `pnpm test:sales-chat:stress` (defaults to 20 consecutive core runs; override with `SALES_CHAT_STRESS_RUNS=<n>`)
 - For pricing-sensitive changes, run:
   - `pnpm verify:pricing-consistency`
-- For non-chat changes touching shared infrastructure, update and run the nearest smoke tests in the relevant package (`pnpm test`, `pnpm test:visual`, etc.) before merging.
-- Run `pnpm test:visual` before merging changes that touch the UI of `/`, `/about`, or `/pricing` (screenshot-locked routes).
+- For non-chat changes touching shared infrastructure, update and run the nearest smoke tests in the relevant package (`pnpm test`, `pnpm test:visual:locked`, etc.) before merging.
+- Run `pnpm test:visual:locked` before merging changes that touch the UI of `/`, `/about`, or `/pricing` (screenshot-locked routes).
+- Run `pnpm test:visual` when you need broader visual coverage beyond the locked routes.
 - Run `pnpm exec playwright test __tests__/visual/blog-copy-markdown.spec.ts --project=desktop-chromium` when changing the blog markdown copy button or `/api/blog/[slug]/markdown`.
 - Run `pnpm exec playwright test __tests__/visual/page-copy-markdown-global.spec.ts --project=desktop-chromium` when changing the global page markdown copy button.
 

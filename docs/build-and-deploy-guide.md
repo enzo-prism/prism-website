@@ -12,8 +12,9 @@ Keep Prism's Next.js builds predictable by following this checklist whenever you
 2. `pnpm lint` – catches Tailwind/ESLint issues before the Next build step fails.
 3. `pnpm typecheck` – **required**. Next's production build runs TypeScript after compilation, so missing fields in typed content arrays (for example `pricingCards` in `app/pricing/client-page.tsx`) will break deploys even if dev mode works.
 4. `pnpm test` – optional but strongly recommended before touching shared components or hooks.
-5. `pnpm test:visual` – required when touching `/`, `/about`, or `/pricing`; enforces UI-locked screenshots.
+5. `pnpm test:visual:locked` – required when touching `/`, `/about`, or `/pricing`; enforces the locked-route screenshots used by CI.
 6. `pnpm build` – mirrors `vercel build` locally and surfaces experimental warnings (clientTraceMetadata, etc.) so you can address them early.
+7. `pnpm test:visual` – optional broad visual sweep when you touched non-locked routes and want wider screenshot coverage.
 
 If any of these steps fail locally, fix them before opening a PR. The CI build logs show only the first failure; running the full chain locally shortens feedback loops considerably.
 
@@ -49,8 +50,8 @@ Use this flow when switching between local, preview, and production changes:
   - `vercel env add AI_GATEWAY_BASE_URL`
   - `vercel env add AI_GATEWAY_API_KEY`
   - `vercel env add AI_GATEWAY_MODEL`
-- `pnpm build` then `vercel deploy --prebuilt` for deterministic production-equivalent deploys.
-- `vercel deploy` for a preview deployment while testing branch work.
+- `npx vercel deploy --prod --yes` for production deploys (source deploy; matches CI).
+- `npx vercel deploy --yes` for a preview deployment while testing branch work.
 - `vercel ls` for recent deployment inventory.
 - `vercel logs <deployment-url> --follow` for runtime-level troubleshooting.
 - `vercel inspect <deployment-url>` when you need build/runtime metadata during rollout checks.
@@ -117,6 +118,15 @@ Use this flow when switching between local, preview, and production changes:
   - `/pricing` shows only `$1,000 one-time`, `$2,000/month`, and `$0` audit.
   - legacy pricing routes (`/pricing-dental`, `/ai-website-launch`, `/one-time-fee`, `/offers/*`, `/growth`, `/checkout/{launch,grow,scale}`) resolve to `/pricing`.
 - If you need to rollback only chat changes, use `vercel rollback` after confirming the previous successful deployment URL.
+
+### CI parity notes
+
+- Production workflow order is:
+  1. `UI Lock Screenshots` (`pnpm test:visual:locked`)
+  2. `Sales Chat E2E` (`pnpm test:sales-chat:e2e`)
+  3. `Build and Deploy` (`pnpm typecheck`, `vercel pull --environment=production`, `pnpm verify:sales-chat-config`, `pnpm verify:pricing-consistency`, `npx vercel deploy --prod --yes`)
+- Keep local deploy tests aligned with this order when troubleshooting.
+- If production deploy fails with serverless output size issues, prefer source deploy path (`vercel deploy --prod --yes`) and avoid switching back to `--prebuilt` as the default project path.
 
 ## Common gotchas
 - **Const arrays feeding components** – When you export `const foo = [...] as const`, every member must include the same structural properties. TypeScript will yell during `pnpm typecheck`, but dev mode might not. Example: `pricingCards` in `app/pricing/client-page.tsx` needs `featured` on every entry so the card styling guard is type-safe.
