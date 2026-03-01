@@ -34,6 +34,18 @@ Each MDX file must define:
 
 Blog cards and post hero sections render the frontmatter `image` when available. If `image` is omitted or invalid, they fall back to the shared default featured image (`https://res.cloudinary.com/dhqpqfw6w/image/upload/v1770786137/Prism_rgeypo.png`).
 
+If you want one consistent social preview image everywhere, set all three fields to the same URL:
+
+```yaml
+image: "https://..."
+openGraph:
+  images:
+    - url: "https://..."
+twitter:
+  images:
+    - "https://..."
+```
+
 `lib/mdx.tsx` automatically derives `categorySlug` from the `category` label by lowercasing and replacing non-alphanumeric characters with hyphens. Stick to meaningful labels; the slug keeps filters URL-safe.
 
 Open Graph behavior is date-based in `app/blog/[slug]/page.tsx`: posts before 2026 always use the shared Prism OG image (`https://res.cloudinary.com/dhqpqfw6w/image/upload/v1770786137/Prism_rgeypo.png`), while posts in 2026 and later use each post’s resolved featured image (`frontmatter.image`). Twitter images still honor explicit `twitter.images` first, then `openGraph.images`, then the date-based OG fallback.
@@ -194,9 +206,10 @@ If you rebrand or change domains, update the `CANONICAL_HOST` constant to keep f
 1. Create `content/blog/my-post-slug.mdx`.
 2. Populate required frontmatter fields.
 3. Write content in Markdown/MDX. Avoid inline styling—`prose-blog` handles typography.
-4. The layout renders the post title as the single H1. Use H2 for major sections and H3 for sub-sections so the table of contents stays accurate.
-5. Run `pnpm run typecheck` to ensure the post parses correctly.
-6. Commit the MDX file. The sitemap, blog page, related posts, and RSS feed update automatically.
+4. For YouTube embeds, prefer `import YouTubeVideoEmbed from "@/components/youtube-video-embed"` and use `<YouTubeVideoEmbed videoId="..." title="..." />` instead of raw `<iframe>` blocks.
+5. The layout renders the post title as the single H1. Use H2 for major sections and H3 for sub-sections so the table of contents stays accurate.
+6. Run `pnpm run typecheck` (or at minimum `pnpm exec jest __tests__/sitemap.test.ts __tests__/blog-canonical.test.ts --runInBand`) to ensure the post parses and route metadata/sitemap remain valid.
+7. Commit the MDX file. The sitemap, blog page, related posts, and RSS feed update automatically.
 
 ---
 
