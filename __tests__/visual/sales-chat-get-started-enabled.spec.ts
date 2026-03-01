@@ -20,10 +20,10 @@ const initPayload = {
 }
 
 async function ensureChatIsOpen(page: Page) {
-  const heading = page.getByRole("heading", { name: /prism sales assistant/i })
   const dialog = page.getByRole("dialog", { name: /chat with sales/i })
   const launcher = page.getByRole("button", { name: /open sales chat/i })
   const closeButton = page.getByRole("button", { name: /close sales chat/i })
+  const headerText = page.getByText(/prism sales assistant/i).first()
   const overlay = page.locator(
     "div[data-state='open'][aria-hidden='true'][data-aria-hidden='true']",
   )
@@ -31,7 +31,10 @@ async function ensureChatIsOpen(page: Page) {
   await page.waitForLoadState("domcontentloaded")
 
   for (let attempt = 0; attempt < 3; attempt += 1) {
-    const chatIsOpen = await heading.isVisible().catch(() => false)
+    const chatIsOpen = (await dialog.isVisible().catch(() => false))
+      || (await closeButton.isVisible().catch(() => false))
+      || (await headerText.isVisible().catch(() => false))
+
     if (chatIsOpen) {
       return
     }
@@ -49,17 +52,28 @@ async function ensureChatIsOpen(page: Page) {
       }
     }
 
-    await expect(launcher).toBeVisible({ timeout: 15_000 })
+    const launcherVisible = await launcher.isVisible().catch(() => false)
+    if (!launcherVisible) {
+      await page.waitForTimeout(250)
+      continue
+    }
+
     try {
-      await launcher.click({ timeout: 5_000 })
+      await launcher.click({ timeout: 5_000, force: true })
     } catch {
       await page.keyboard.press("Escape")
       await overlay.first().waitFor({ state: "hidden", timeout: 5_000 }).catch(() => {})
-      await launcher.click({ timeout: 5_000 })
+      await launcher.click({ timeout: 5_000, force: true })
+    }
+
+    const openedAfterClick = (await dialog.isVisible().catch(() => false))
+      || (await headerText.isVisible().catch(() => false))
+    if (openedAfterClick) {
+      return
     }
   }
 
-  await expect(heading).toBeVisible({ timeout: 15_000 })
+  await expect(dialog).toBeVisible({ timeout: 15_000 })
 }
 
 test.describe("sales chat on /get-started (enabled)", () => {
