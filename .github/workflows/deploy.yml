@@ -107,8 +107,5 @@ jobs:
       - name: Verify pricing consistency
         run: pnpm verify:pricing-consistency
 
-      - name: Build (Prebuilt)
-        run: npx vercel build --prod --token "$VERCEL_TOKEN"
-
       - name: Deploy to Production
-        run: npx vercel deploy --prebuilt --prod --token "$VERCEL_TOKEN"
+        run: npx vercel deploy --prod --yes --token "$VERCEL_TOKEN"
