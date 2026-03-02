@@ -116,6 +116,48 @@ describe("/api/chat route (deterministic v2)", () => {
     expect(response.headers.get("x-sales-chat-route")).toBe("config_missing")
   })
 
+  it("returns 503 when custom lead webhook secret is missing", async () => {
+    process.env.SALES_CHAT_LEADS_WEBHOOK_URL = "https://hooks.example.com/sales"
+    delete process.env.SALES_CHAT_LEADS_WEBHOOK_SECRET
+    const { POST } = await withChatRoute()
+
+    const response = await POST(
+      makeRequest({
+        sessionId: "session-12345678",
+        sourcePage: "/get-started",
+        inputType: "button",
+        inputValue: "",
+        buttonId: "__init__",
+      }),
+    )
+
+    expect(response.status).toBe(503)
+    const payload = (await response.json()) as { errorType: string }
+    expect(payload.errorType).toBe("config_missing")
+    expect(response.headers.get("x-sales-chat-route")).toBe("config_missing")
+  })
+
+  it("allows Formspree lead webhook without secret", async () => {
+    process.env.SALES_CHAT_LEADS_WEBHOOK_URL = "https://formspree.io/f/mvzbnydz"
+    delete process.env.SALES_CHAT_LEADS_WEBHOOK_SECRET
+    const { POST } = await withChatRoute()
+
+    const response = await POST(
+      makeRequest({
+        sessionId: "session-12345678",
+        sourcePage: "/get-started",
+        inputType: "button",
+        inputValue: "",
+        buttonId: "__init__",
+      }),
+    )
+
+    expect(response.status).toBe(200)
+    expect(response.headers.get("x-sales-chat-route")).toBe("success")
+    const payload = (await response.json()) as { nodeId: string }
+    expect(payload.nodeId).toBe("welcome")
+  })
+
   it("returns welcome payload with starter buttons on init", async () => {
     const { POST } = await withChatRoute()
 

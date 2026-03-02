@@ -363,6 +363,7 @@ export default function SalesChatShell({
           id: nextMessageId("assistant"),
           role: "assistant",
           content: normalized,
+          isNew: true,
         },
       ]
     })
@@ -783,19 +784,30 @@ export default function SalesChatShell({
       />
       <div className="relative flex min-h-0 flex-1 flex-col gap-3 px-4 pb-4 pt-4 sm:px-5 sm:pb-5">
         {shouldShowBookingPrimary ? (
-          <div className="flex flex-wrap items-center gap-2">
-            <Button
-              type="button"
-              variant="secondary"
-              className="rounded-full border border-white/20 bg-white/[0.05] text-xs tracking-[0.04em] text-zinc-100 hover:bg-white/[0.10]"
-              onClick={() => openInlineBooking("cta")}
-            >
-              Book my 30-min demo
-              <ArrowRight className="ml-1.5 h-3.5 w-3.5" aria-hidden />
-            </Button>
-            <Button asChild type="button" variant="ghost" className="rounded-full text-xs text-zinc-300 hover:text-white">
-              <Link href="/case-studies">Show similar case study first</Link>
-            </Button>
+          <div className="relative pb-2">
+            <div className="flex flex-wrap items-center gap-2">
+              <Button
+                type="button"
+                variant="secondary"
+                className="rounded-full border border-white/20 bg-white/[0.05] text-xs tracking-[0.04em] text-zinc-100 hover:bg-white/[0.10]"
+                onClick={() => openInlineBooking("cta")}
+              >
+                Book my 30-min demo
+                <ArrowRight className="ml-1.5 h-3.5 w-3.5" aria-hidden />
+              </Button>
+              <Button asChild type="button" variant="ghost" className="rounded-full text-xs text-zinc-300 hover:text-white">
+                <Link href="/case-studies">Show similar case study first</Link>
+              </Button>
+            </div>
+            <div className="pointer-events-none absolute bottom-0 left-0 h-px w-full overflow-hidden">
+              <svg
+                className="h-full w-full origin-left text-white/30 motion-safe:animate-draw-line"
+                preserveAspectRatio="none"
+                aria-hidden
+              >
+                <rect width="100%" height="100%" fill="currentColor" />
+              </svg>
+            </div>
           </div>
         ) : null}
 
@@ -823,6 +835,15 @@ export default function SalesChatShell({
               >
                 Close booking
               </Button>
+            </div>
+            <div className="flex justify-center">
+              <svg
+                className="h-5 w-2 text-white/35 origin-top motion-safe:animate-draw-line"
+                preserveAspectRatio="none"
+                aria-hidden
+              >
+                <rect width="100%" height="100%" fill="currentColor" />
+              </svg>
             </div>
 
             <BookDemoEmbed className="w-full" variant="chat-inline" />

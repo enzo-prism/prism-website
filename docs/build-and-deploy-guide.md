@@ -44,7 +44,7 @@ Use this flow when switching between local, preview, and production changes:
 - `vercel env add SALES_CHAT_WEBSITE_OVERHAUL_CHECKOUT_URL`
 - `vercel env add SALES_CHAT_GROWTH_PARTNERSHIP_SIGNUP_URL`
 - `vercel env add SALES_CHAT_LEADS_WEBHOOK_URL`
-- `vercel env add SALES_CHAT_LEADS_WEBHOOK_SECRET`
+- `vercel env add SALES_CHAT_LEADS_WEBHOOK_SECRET` (required for non-Formspree endpoints, optional for Formspree)
 - Optional AI fallback vars:
   - `vercel env add SALES_CHAT_AI_FALLBACK_ENABLED`
   - `vercel env add AI_GATEWAY_BASE_URL`
@@ -63,7 +63,8 @@ Use this flow when switching between local, preview, and production changes:
 
 - Before a preview deploy:
   - Confirm `SALES_CHAT_ENABLED` is `"true"` for the environment you want chat tested.
-  - Confirm `SALES_CHAT_BOOKING_URL`, `SALES_CHAT_WEBSITE_OVERHAUL_CHECKOUT_URL`, `SALES_CHAT_GROWTH_PARTNERSHIP_SIGNUP_URL`, `SALES_CHAT_LEADS_WEBHOOK_URL`, and `SALES_CHAT_LEADS_WEBHOOK_SECRET` are present.
+  - Confirm `SALES_CHAT_BOOKING_URL`, `SALES_CHAT_WEBSITE_OVERHAUL_CHECKOUT_URL`, `SALES_CHAT_GROWTH_PARTNERSHIP_SIGNUP_URL`, and `SALES_CHAT_LEADS_WEBHOOK_URL` are present.
+  - If lead backend is not Formspree, confirm `SALES_CHAT_LEADS_WEBHOOK_SECRET` is also present.
   - If `SALES_CHAT_AI_FALLBACK_ENABLED=true`, also confirm all `AI_GATEWAY_*` vars are present.
 - Deployment blocker policy:
   - If `SALES_CHAT_ENABLED` resolves true and any required deterministic key is missing, deployment must fail.
@@ -74,11 +75,15 @@ Use this flow when switching between local, preview, and production changes:
   2. Send 3 short messages from different conversation turns.
   3. Confirm deterministic quick replies render and follow spec flow transitions.
   4. Validate booking link anchors resolve to `#book-call`.
-  5. Simulate one config/provider failure path (mock 503 in local) and verify a single handoff message appears plus clear booking path.
-  6. Validate lead dispatch telemetry contract:
+  5. Confirm chat motion polish in the live shell:
+    - launcher pulse appears when closed,
+    - header high-tech glyph glow/orbit renders when online,
+    - typing waveform appears while awaiting response.
+  6. Simulate one config/provider failure path (mock 503 in local) and verify a single handoff message appears plus clear booking path.
+  7. Validate lead dispatch telemetry contract:
     - success path emits `sales_chat_lead_payload_attempted` + `sales_chat_lead_payload_emitted`.
     - failed dispatch path emits `sales_chat_lead_payload_attempted` + `sales_chat_lead_payload_failed` and does **not** emit `sales_chat_lead_payload_emitted`.
-  7. Validate GA4 DebugView for deep sales-chat events:
+  8. Validate GA4 DebugView for deep sales-chat events:
     - `sales_chat_quick_reply_clicked`
     - `sales_chat_spec_node_entered`
     - `sales_chat_offer_recommended`
@@ -107,7 +112,7 @@ Use this flow when switching between local, preview, and production changes:
   - `SALES_CHAT_WEBSITE_OVERHAUL_CHECKOUT_URL`
   - `SALES_CHAT_GROWTH_PARTNERSHIP_SIGNUP_URL`
   - `SALES_CHAT_LEADS_WEBHOOK_URL`
-  - `SALES_CHAT_LEADS_WEBHOOK_SECRET`
+  - `SALES_CHAT_LEADS_WEBHOOK_SECRET` (required for non-Formspree endpoints)
   - Optional fallback-only vars:
     - `SALES_CHAT_AI_FALLBACK_ENABLED`
     - `AI_GATEWAY_BASE_URL`

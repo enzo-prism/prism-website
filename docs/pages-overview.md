@@ -128,6 +128,14 @@ Quick reference for the pages we edit most often.
 - Structured server-side event ingestion now runs through `app/api/sales-chat/events/route.ts` and can forward to webhook + optional Supabase fallback logging.
 - Booking remains the primary conversion path and is anchored at `#book-call`; keep all upstream CTA intent wired to that anchor (`GetStartedHeroSection` CTA, FAQ links, and chat fallback links).
 - `SalesChat` now uses shadcn dialog/sheet/chat primitives with a dark-minimal monochrome style; keep motion subtle and reduced-motion safe.
+- Current SVG motion accents (all `motion-safe`):
+  - launcher live-signal ring pulse while closed,
+  - top-left assistant glyph uses a high-tech glowing SVG with dual orbital rings,
+  - header status breathing dot while assistant is online,
+  - typing indicator waveform bars,
+  - assistant-message entry reveal + single shimmer pass for new assistant replies,
+  - actionable quick-reply icon directional nudge on hover,
+  - CTA strip and inline-booking connector line sweeps.
 - Default copy for degraded states should keep the fallback visible and explicit:
   - `fallbackToHuman: true` on response payload.
   - missing CTA config prevents chat mount on `/get-started` (`uiAvailable` gate).

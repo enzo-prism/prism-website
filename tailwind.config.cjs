@@ -124,10 +124,50 @@ module.exports = {
             height: "0",
           },
         },
+        "slow-ping": {
+          "0%": { transform: "scale(1)", opacity: "0.42" },
+          "75%, 100%": { transform: "scale(1.65)", opacity: "0" },
+        },
+        breathe: {
+          "0%, 100%": { opacity: "0.5", transform: "scale(0.94)" },
+          "50%": { opacity: "1", transform: "scale(1.04)" },
+        },
+        waveform: {
+          "0%, 100%": { transform: "scaleY(0.5)", opacity: "0.45" },
+          "50%": { transform: "scaleY(1)", opacity: "1" },
+        },
+        "message-reveal": {
+          "0%": { opacity: "0", transform: "translateY(8px)" },
+          "100%": { opacity: "1", transform: "translateY(0)" },
+        },
+        "shimmer-sweep": {
+          "0%": { transform: "translateX(-100%)" },
+          "100%": { transform: "translateX(200%)" },
+        },
+        "draw-line": {
+          "0%": { transform: "scaleX(0)" },
+          "100%": { transform: "scaleX(1)" },
+        },
+        orbit: {
+          "0%": { transform: "rotate(0deg)" },
+          "100%": { transform: "rotate(360deg)" },
+        },
+        "orbit-reverse": {
+          "0%": { transform: "rotate(360deg)" },
+          "100%": { transform: "rotate(0deg)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "slow-ping": "slow-ping 3s cubic-bezier(0, 0, 0.2, 1) infinite",
+        breathe: "breathe 4s ease-in-out infinite",
+        "waveform-1": "waveform 1.2s ease-in-out infinite",
+        "waveform-2": "waveform 1.2s ease-in-out 0.2s infinite",
+        "waveform-3": "waveform 1.2s ease-in-out 0.4s infinite",
+        "message-reveal": "message-reveal 180ms cubic-bezier(0.16, 1, 0.3, 1) forwards",
+        "shimmer-sweep": "shimmer-sweep 1.5s ease-in-out forwards",
+        "draw-line": "draw-line 400ms cubic-bezier(0.16, 1, 0.3, 1) forwards",
       },
     },
   },

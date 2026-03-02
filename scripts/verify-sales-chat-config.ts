@@ -44,6 +44,18 @@ function parseEnvFile(content: string): Record<string, string> {
   return parsed
 }
 
+function isFormspreeEndpoint(url: string | undefined): boolean {
+  if (!url?.trim()) return false
+  try {
+    const parsed = new URL(url)
+    const isFormspreeHost = /(^|\.)formspree\.io$/i.test(parsed.hostname)
+    const isFormEndpoint = /^\/f\/[a-z0-9]+/i.test(parsed.pathname)
+    return isFormspreeHost && isFormEndpoint
+  } catch {
+    return false
+  }
+}
+
 function fail(message: string): never {
   console.error(`\n❌ ${message}\n`)
   process.exit(1)
@@ -68,9 +80,17 @@ function main() {
     return
   }
 
+  const leadWebhookUrl = env.SALES_CHAT_LEADS_WEBHOOK_URL?.trim()
+  const formspreeLeadsEndpoint = isFormspreeEndpoint(leadWebhookUrl)
+
+  const requiredLeadKeys = [
+    REQUIRED_LEAD_KEYS[0],
+    ...(!formspreeLeadsEndpoint ? [REQUIRED_LEAD_KEYS[1]] : []),
+  ]
+
   const requiredKeys = [
     ...REQUIRED_CTA_KEYS,
-    ...REQUIRED_LEAD_KEYS,
+    ...requiredLeadKeys,
     ...(aiFallbackEnabled ? [...REQUIRED_GATEWAY_KEYS] : []),
   ]
   const missingKeys = requiredKeys.filter((key) => !env[key]?.trim())
@@ -86,6 +106,9 @@ function main() {
 
   if (!aiFallbackEnabled) {
     console.log("ℹ️ AI fallback disabled; gateway variables are optional for deterministic mode.")
+  }
+  if (formspreeLeadsEndpoint) {
+    console.log("ℹ️ Formspree lead endpoint detected; webhook secret is optional.")
   }
   console.log("✅ Sales chat config is production-ready.")
 }

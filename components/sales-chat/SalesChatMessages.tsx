@@ -34,10 +34,18 @@ function TypingIndicator() {
   return (
     <ChatMessage from="assistant">
       <ChatMessageContent className="max-w-[112px] rounded-2xl border border-white/18 bg-white/[0.055] text-slate-100">
-        <div className="flex items-center gap-1.5 py-1">
-          <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-white/70 [animation-delay:0ms]" />
-          <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-white/70 [animation-delay:180ms]" />
-          <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-white/70 [animation-delay:360ms]" />
+        <div className="h-5 w-12 py-0.5">
+          <svg
+            className="h-full w-full text-white/75"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden
+          >
+            <rect x="4" y="8" width="3" height="8" rx="1.5" className="origin-center motion-safe:animate-waveform-1" />
+            <rect x="10.5" y="6" width="3" height="12" rx="1.5" className="origin-center motion-safe:animate-waveform-2" />
+            <rect x="17" y="8" width="3" height="8" rx="1.5" className="origin-center motion-safe:animate-waveform-3" />
+          </svg>
         </div>
       </ChatMessageContent>
     </ChatMessage>
@@ -68,9 +76,31 @@ export default function SalesChatMessages({
             const isUser = message.role === "user"
             return (
               <ChatMessage key={message.id} from={isUser ? "user" : "assistant"}>
-                <ChatMessageContent className={cn(isUser ? tokens.userBubble : tokens.assistantBubble)}>
+                <ChatMessageContent
+                  className={cn(
+                    "relative overflow-hidden",
+                    isUser ? tokens.userBubble : tokens.assistantBubble,
+                    !isUser && message.isNew ? "motion-safe:animate-message-reveal" : undefined,
+                  )}
+                >
+                  {!isUser && message.isNew ? (
+                    <svg
+                      className="pointer-events-none absolute inset-0 z-0 h-full w-full opacity-30 mix-blend-overlay motion-safe:animate-shimmer-sweep"
+                      preserveAspectRatio="none"
+                      aria-hidden
+                    >
+                      <defs>
+                        <linearGradient id={`chat-shimmer-${message.id}`} x1="0%" y1="0%" x2="100%" y2="0%">
+                          <stop offset="0%" stopColor="transparent" />
+                          <stop offset="50%" stopColor="white" />
+                          <stop offset="100%" stopColor="transparent" />
+                        </linearGradient>
+                      </defs>
+                      <rect width="100%" height="100%" fill={`url(#chat-shimmer-${message.id})`} />
+                    </svg>
+                  ) : null}
                   <p className="sr-only">{isUser ? "You" : "Sales assistant"}</p>
-                  <p className="whitespace-pre-wrap leading-relaxed">
+                  <p className="relative z-10 whitespace-pre-wrap leading-relaxed">
                     {message.content ? renderMessageContent(message.content, message.id) : "..."}
                   </p>
                 </ChatMessageContent>
@@ -89,7 +119,7 @@ export default function SalesChatMessages({
                 variant="ghost"
                 className={cn(
                   tokens.promptChip,
-                  "h-auto min-h-10 w-full max-w-full items-start justify-between gap-2 px-3.5 py-2.5 text-left whitespace-normal leading-snug",
+                  "group h-auto min-h-10 w-full max-w-full items-start justify-between gap-2 px-3.5 py-2.5 text-left whitespace-normal leading-snug",
                 )}
                 onClick={() => onQuickReplyClick(reply)}
               >
@@ -97,7 +127,10 @@ export default function SalesChatMessages({
                   {reply.label}
                 </span>
                 {(reply.actionType === "open_url" || reply.actionType === "open_booking") ? (
-                  <ArrowUpRight className="mt-0.5 h-3.5 w-3.5 shrink-0 self-start" aria-hidden />
+                  <ArrowUpRight
+                    className="mt-0.5 h-3.5 w-3.5 shrink-0 self-start opacity-75 transition-transform duration-200 motion-safe:group-hover:translate-x-0.5 motion-safe:group-hover:-translate-y-0.5"
+                    aria-hidden
+                  />
                 ) : null}
               </Button>
             ))}

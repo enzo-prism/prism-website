@@ -11,6 +11,7 @@ This guide highlights the workflows we lean on most often while iterating on the
   - `pnpm test:sales-chat:core`
   - `pnpm test:sales-chat:e2e`
   - `pnpm test:sales-chat:stress` (defaults to 20 consecutive core runs; override with `SALES_CHAT_STRESS_RUNS=<n>`)
+  - `pnpm smoke:sales-chat:local` (while `pnpm dev` is running) to verify localhost chat mount + deterministic free-audit terminal dispatch.
 - For pricing-sensitive changes, run:
   - `pnpm verify:pricing-consistency`
 - For non-chat changes touching shared infrastructure, update and run the nearest smoke tests in the relevant package (`pnpm test`, `pnpm test:visual:locked`, etc.) before merging.
@@ -51,11 +52,14 @@ This guide highlights the workflows we lean on most often while iterating on the
   - Runtime gating:
     - `/get-started` mount gate: `uiAvailable = SALES_CHAT_ENABLED && ctaUrlsConfigured`
     - route hard-stop: returns `503 config_missing` when deterministic config or lead webhook config is incomplete
+    - webhook secret rule:
+      - Formspree endpoint (`https://formspree.io/f/...`): secret optional
+      - custom webhook endpoint: `SALES_CHAT_LEADS_WEBHOOK_SECRET` required
   - Supporting endpoints:
     - `POST /api/sales-chat/events` for lifecycle/state telemetry
     - `POST /api/sales-chat/leads` for validated manual/system lead payload forwarding
-- UI behavior (client):
-  - `components/SalesChat.tsx` now routes through `components/sales-chat/*` and should still support:
+  - UI behavior (client):
+    - `components/SalesChat.tsx` now routes through `components/sales-chat/*` and should still support:
     - launcher-first SSR-safe render,
     - desktop popup mode (`>1024px`) and fullscreen mode (`<=1024px`),
     - once-per-session desktop auto-open (`sales-chat-v2-opened`),
@@ -67,6 +71,15 @@ This guide highlights the workflows we lean on most often while iterating on the
     - canonical opening message + five starter buttons from server copy constants,
     - streamlined composer with send-only control (no attachment icon),
     - monochrome UI treatment with green reserved for online status accent,
+    - SVG micro-interactions (Tailwind keyframes, reduced-motion safe):
+      - launcher live ring pulse (`animate-slow-ping`),
+      - header high-tech assistant glyph with glow + dual orbital rings (`orbit`, `orbit-reverse` keyframes),
+      - header status breathe pulse (`animate-breathe`),
+      - typing indicator waveform bars (`animate-waveform-1/2/3`),
+      - assistant message reveal + shimmer (`animate-message-reveal`, `animate-shimmer-sweep`) for newly appended assistant messages only,
+      - quick-reply directional arrow nudge on actionable chips,
+      - CTA strip / inline booking connector line sweep (`animate-draw-line`),
+    - keep all chat motion wrapped in `motion-safe:*` utilities and avoid introducing animation libraries for these effects.
     - message length counters and disabled send when oversize,
     - keyboard send via `Enter` (`Shift+Enter` for newline),
     - deterministic JSON response handling (no primary streaming dependency),
@@ -105,6 +118,9 @@ This guide highlights the workflows we lean on most often while iterating on the
   - Recommended fast checks after implementation:
   - `pnpm test:sales-chat:core`
   - `pnpm test:sales-chat:e2e`
+  - Include API-gate assertions from `__tests__/api/chat.test.ts`:
+    - custom webhook + missing secret => `503 config_missing`
+    - Formspree webhook + missing secret => `200 success`
   - Optional legacy AI-module guard checks (only if touching prompt/policy helpers):
   - `pnpm exec jest __tests__/sales-chat/policy.test.ts __tests__/sales-chat/prompt.test.ts`
   - Verify responsive mode split manually:
@@ -118,7 +134,9 @@ This guide highlights the workflows we lean on most often while iterating on the
   - If deterministic responses are missing, inspect response headers (`x-sales-chat-route`) and `nodeId` in JSON payloads.
   - If lead fan-out behavior looks inconsistent, inspect `leadDispatchStatus` + `leadDispatchCode` in `/api/chat` response payloads.
   - If chat is missing on `/get-started`, verify `uiAvailable = SALES_CHAT_ENABLED && ctaUrlsConfigured` and required CTA keys are present.
-  - If chat renders but returns immediate 503 fallback, verify lead webhook keys (`SALES_CHAT_LEADS_WEBHOOK_URL`, `SALES_CHAT_LEADS_WEBHOOK_SECRET`) are configured.
+  - If chat renders but returns immediate 503 fallback, verify lead webhook config:
+    - Formspree backend: `SALES_CHAT_LEADS_WEBHOOK_URL` set to a valid Formspree endpoint.
+    - Custom webhook backend: both `SALES_CHAT_LEADS_WEBHOOK_URL` and `SALES_CHAT_LEADS_WEBHOOK_SECRET` set.
   - If messages are never sent from an open chat, verify devtools `Network` shows `/api/chat` POST with `Content-Type: application/json`.
   - If message links render as plain markdown, confirm the content came through `createRenderMessageContent()` in `components/sales-chat/SalesChatShell.tsx` (message parser should convert `#` and `[#](#)` to a booking anchor).
 

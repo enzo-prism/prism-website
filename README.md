@@ -12,7 +12,8 @@ Next.js App Router project that powers the Prism marketing site, blog, and landi
 1. **Install prerequisites** – Node.js 22.x LTS (Vercel’s current runtime), [pnpm](https://pnpm.io/), and git.
 2. **Install dependencies** – `pnpm install`.
 3. **Set up environment variables** – `cp .env.example .env.local` and fill in the values listed in [`docs/environment-setup.md`](./docs/environment-setup.md).
-   - Include `SALES_CHAT_BOOKING_URL`, `SALES_CHAT_WEBSITE_OVERHAUL_CHECKOUT_URL`, `SALES_CHAT_GROWTH_PARTNERSHIP_SIGNUP_URL`, `SALES_CHAT_LEADS_WEBHOOK_URL`, and `SALES_CHAT_LEADS_WEBHOOK_SECRET` for deterministic `/get-started` sales chat.
+   - Include `SALES_CHAT_BOOKING_URL`, `SALES_CHAT_WEBSITE_OVERHAUL_CHECKOUT_URL`, `SALES_CHAT_GROWTH_PARTNERSHIP_SIGNUP_URL`, and `SALES_CHAT_LEADS_WEBHOOK_URL` for deterministic `/get-started` sales chat.
+   - `SALES_CHAT_LEADS_WEBHOOK_SECRET` is required for custom webhooks and optional when the lead webhook URL is a Formspree endpoint.
 4. **Run the dev server** – `pnpm dev` (defaults to `http://localhost:3000`).
 5. **Optional quality gates** – `pnpm lint && pnpm typecheck && pnpm test` before opening a PR.
 
@@ -52,9 +53,10 @@ The repo assumes pnpm; npm/yarn installs will fall out of sync.
 | `pnpm test:sales-chat:core` | Deterministic sales-chat reliability matrix (API/component/page/runtime/copy/engine/payload analytics tests). |
 | `pnpm test:sales-chat:e2e` | Playwright checks for `/get-started` with chat enabled and disabled. |
 | `pnpm test:sales-chat:stress` | Consecutive-run stress loop (default 20 runs) for flake detection. |
+| `pnpm smoke:sales-chat:local` | Fast localhost smoke for `/api/chat` deterministic init + free-audit terminal lead dispatch (run while `pnpm dev` is active). |
 | `pnpm build` | Production Next.js build (use before Vercel deploys). |
 | `pnpm verify:deploy` | Runs `scripts/verify-deployment.ts` to ensure required env vars and image config exist. |
-| `pnpm verify:sales-chat-config` | Validates `.vercel/.env.production.local` after `vercel pull`; fails when chat is enabled without required deterministic chat keys (CTA URLs + lead webhook). `AI_GATEWAY_*` is only required if `SALES_CHAT_AI_FALLBACK_ENABLED=true`. |
+| `pnpm verify:sales-chat-config` | Validates `.vercel/.env.production.local` after `vercel pull`; fails when chat is enabled without required deterministic chat keys (CTA URLs + lead webhook URL). `SALES_CHAT_LEADS_WEBHOOK_SECRET` is required only for non-Formspree lead backends. `AI_GATEWAY_*` is only required if `SALES_CHAT_AI_FALLBACK_ENABLED=true`. |
 | `pnpm verify:pricing-consistency` | Blocks deploys when legacy conflicting pricing reappears on pricing-sensitive surfaces. Contextual non-core dollar values are only allowed on explicitly labeled pages (referral/equipment/ad-fee examples). |
 | `pnpm diag:supabase` | Confirms Supabase URL + service key are available. |
 

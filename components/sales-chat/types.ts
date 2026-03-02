@@ -13,6 +13,7 @@ export type SalesChatMessage = {
   id: string
   role: ChatRole
   content: string
+  isNew?: boolean
 }
 
 export type SalesChatQuickReply = SpecQuickReply

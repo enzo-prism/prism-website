@@ -43,6 +43,21 @@ function isConfigured(value: string | undefined): boolean {
   return Boolean(value?.trim())
 }
 
+function isFormspreeEndpoint(url: string | undefined): boolean {
+  if (!url?.trim()) {
+    return false
+  }
+
+  try {
+    const parsed = new URL(url)
+    const isFormspreeHost = /(^|\.)formspree\.io$/i.test(parsed.hostname)
+    const isFormEndpoint = /^\/f\/[a-z0-9]+/i.test(parsed.pathname)
+    return isFormspreeHost && isFormEndpoint
+  } catch {
+    return false
+  }
+}
+
 export function getSalesChatRuntimeConfig(env: NodeJS.ProcessEnv): SalesChatRuntimeConfig {
   // Keep enabled default explicit because this controls whether the chat launcher is mounted.
   const enabled = parseBooleanEnv(env.SALES_CHAT_ENABLED, true)
@@ -57,7 +72,8 @@ export function getSalesChatRuntimeConfig(env: NodeJS.ProcessEnv): SalesChatRunt
   const ctaUrlsConfigured = hasBookingUrl && hasWebsiteOverhaulCheckoutUrl && hasGrowthPartnershipSignupUrl
   const hasLeadsWebhookUrl = isConfigured(env.SALES_CHAT_LEADS_WEBHOOK_URL)
   const hasLeadsWebhookSecret = isConfigured(env.SALES_CHAT_LEADS_WEBHOOK_SECRET)
-  const leadsWebhookConfigured = hasLeadsWebhookUrl && hasLeadsWebhookSecret
+  const formspreeLeadsEndpoint = isFormspreeEndpoint(env.SALES_CHAT_LEADS_WEBHOOK_URL)
+  const leadsWebhookConfigured = hasLeadsWebhookUrl && (formspreeLeadsEndpoint || hasLeadsWebhookSecret)
 
   const missingRequiredKeys: string[] = []
   if (enabled) {
@@ -67,10 +83,11 @@ export function getSalesChatRuntimeConfig(env: NodeJS.ProcessEnv): SalesChatRunt
       }
     }
 
-    for (const key of REQUIRED_LEAD_KEYS) {
-      if (!isConfigured(env[key])) {
-        missingRequiredKeys.push(key)
-      }
+    if (!hasLeadsWebhookUrl) {
+      missingRequiredKeys.push(REQUIRED_LEAD_KEYS[0])
+    }
+    if (!formspreeLeadsEndpoint && !hasLeadsWebhookSecret) {
+      missingRequiredKeys.push(REQUIRED_LEAD_KEYS[1])
     }
 
     if (aiFallbackEnabled) {

@@ -82,6 +82,34 @@ describe("sales chat runtime config", () => {
     ])
   })
 
+  it("allows Formspree lead endpoint without webhook secret", () => {
+    const runtime = getSalesChatRuntimeConfig(createEnv({
+      SALES_CHAT_ENABLED: "true",
+      SALES_CHAT_BOOKING_URL: "https://cal.com/demo",
+      SALES_CHAT_WEBSITE_OVERHAUL_CHECKOUT_URL: "https://checkout.example.com/website",
+      SALES_CHAT_GROWTH_PARTNERSHIP_SIGNUP_URL: "https://checkout.example.com/growth",
+      SALES_CHAT_LEADS_WEBHOOK_URL: "https://formspree.io/f/mvzbnydz",
+      SALES_CHAT_LEADS_WEBHOOK_SECRET: "",
+    }))
+
+    expect(runtime.leadsWebhookConfigured).toBe(true)
+    expect(runtime.missingRequiredKeys).toEqual([])
+  })
+
+  it("still requires webhook secret for non-Formspree lead endpoints", () => {
+    const runtime = getSalesChatRuntimeConfig(createEnv({
+      SALES_CHAT_ENABLED: "true",
+      SALES_CHAT_BOOKING_URL: "https://cal.com/demo",
+      SALES_CHAT_WEBSITE_OVERHAUL_CHECKOUT_URL: "https://checkout.example.com/website",
+      SALES_CHAT_GROWTH_PARTNERSHIP_SIGNUP_URL: "https://checkout.example.com/growth",
+      SALES_CHAT_LEADS_WEBHOOK_URL: "https://hooks.example.com/sales",
+      SALES_CHAT_LEADS_WEBHOOK_SECRET: "",
+    }))
+
+    expect(runtime.leadsWebhookConfigured).toBe(false)
+    expect(runtime.missingRequiredKeys).toEqual(["SALES_CHAT_LEADS_WEBHOOK_SECRET"])
+  })
+
   it("keeps boolean parsing stable for common truthy/falsey values", () => {
     expect(parseBooleanEnv("YES", false)).toBe(true)
     expect(parseBooleanEnv("off", true)).toBe(false)

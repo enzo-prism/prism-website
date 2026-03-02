@@ -39,7 +39,19 @@ export default function SalesChatLauncher({
         aria-label="Open sales chat"
         className={tokens.launcherButton}
       >
-        <MessageCircleMore className="mr-2 h-4 w-4 text-slate-100/90" aria-hidden />
+        <span className="relative mr-2 inline-flex h-5 w-5 items-center justify-center">
+          {!isOpen ? (
+            <svg
+              className="pointer-events-none absolute inset-[-6px] h-[calc(100%+12px)] w-[calc(100%+12px)] text-emerald-300/70 motion-safe:animate-slow-ping"
+              viewBox="0 0 100 100"
+              fill="none"
+              aria-hidden
+            >
+              <circle cx="50" cy="50" r="46" stroke="currentColor" strokeWidth="4" />
+            </svg>
+          ) : null}
+          <MessageCircleMore className="relative z-10 h-4 w-4 text-slate-100/90 transition-transform duration-200 group-hover:scale-110" aria-hidden />
+        </span>
         <span className={tokens.launcherText}>Chat with Sales</span>
         <Badge variant="secondary" className={tokens.launcherStatus}>
           online

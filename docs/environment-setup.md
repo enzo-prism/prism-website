@@ -30,8 +30,8 @@ cp .env.example .env.local
 | `SALES_CHAT_BOOKING_URL` | Required when chat enabled | Primary booking CTA used by deterministic sales-chat quick replies. | None. | `lib/sales-chat/runtime-config.ts`, `app/api/chat/route.ts` |
 | `SALES_CHAT_WEBSITE_OVERHAUL_CHECKOUT_URL` | Required when chat enabled | Direct checkout CTA for website overhaul path. | None. | `lib/sales-chat/runtime-config.ts`, `app/api/chat/route.ts` |
 | `SALES_CHAT_GROWTH_PARTNERSHIP_SIGNUP_URL` | Required when chat enabled | Direct signup CTA for growth partnership path. | None. | `lib/sales-chat/runtime-config.ts`, `app/api/chat/route.ts` |
-| `SALES_CHAT_LEADS_WEBHOOK_URL` | Required when chat enabled | Webhook destination for typed conversion payloads (`free_audit`, `website_overhaul_purchase`, `growth_partnership`). | None. | `lib/sales-chat/runtime-config.ts`, `lib/sales-chat/lead-dispatch.ts`, `app/api/chat/route.ts` |
-| `SALES_CHAT_LEADS_WEBHOOK_SECRET` | Required when chat enabled | HMAC secret used to sign lead payload dispatch (`x-sales-chat-signature`). | None. | `lib/sales-chat/runtime-config.ts`, `lib/sales-chat/lead-dispatch.ts`, `app/api/chat/route.ts` |
+| `SALES_CHAT_LEADS_WEBHOOK_URL` | Required when chat enabled | Webhook destination for typed conversion payloads (`free_audit`, `website_overhaul_purchase`, `growth_partnership`). Supports Formspree endpoints (for example `https://formspree.io/f/...`). | None. | `lib/sales-chat/runtime-config.ts`, `lib/sales-chat/lead-dispatch.ts`, `app/api/chat/route.ts` |
+| `SALES_CHAT_LEADS_WEBHOOK_SECRET` | Required for non-Formspree webhooks | HMAC secret used to sign lead payload dispatch (`x-sales-chat-signature`) for custom webhooks. Optional when `SALES_CHAT_LEADS_WEBHOOK_URL` is a Formspree endpoint. | None. | `lib/sales-chat/runtime-config.ts`, `lib/sales-chat/lead-dispatch.ts`, `app/api/chat/route.ts` |
 | `SALES_CHAT_AI_FALLBACK_ENABLED` | Optional | Enables optional non-authoritative AI fallback for non-critical clarifications. | `false` | `lib/sales-chat/runtime-config.ts` |
 | `SALES_CHAT_INLINE_BOOKING_ENABLED` | Optional feature flag | Enables in-chat calendar mode (using `BookDemoEmbed`) in addition to `#book-call` fallback link. | `true` | `app/get-started/page.tsx`, `components/sales-chat/SalesChatShell.tsx` |
 | `SALES_CHAT_EVENTS_WEBHOOK_URL` | Optional | Server webhook destination for structured sales-chat lifecycle/lead events (`/api/sales-chat/events` fan-out). | None. | `app/api/sales-chat/events/route.ts` |
@@ -43,7 +43,9 @@ cp .env.example .env.local
 - Runtime availability gate:
   - `uiAvailable = SALES_CHAT_ENABLED && ctaUrlsConfigured`
   - `ctaUrlsConfigured = SALES_CHAT_BOOKING_URL && SALES_CHAT_WEBSITE_OVERHAUL_CHECKOUT_URL && SALES_CHAT_GROWTH_PARTNERSHIP_SIGNUP_URL`
-  - lead dispatch requires `SALES_CHAT_LEADS_WEBHOOK_URL && SALES_CHAT_LEADS_WEBHOOK_SECRET`
+  - lead dispatch requires:
+    - Formspree mode: `SALES_CHAT_LEADS_WEBHOOK_URL` (Formspree endpoint) only
+    - custom webhook mode: `SALES_CHAT_LEADS_WEBHOOK_URL && SALES_CHAT_LEADS_WEBHOOK_SECRET`
   - AI fallback gateway is optional and only validated when `SALES_CHAT_AI_FALLBACK_ENABLED=true`
   - When `uiAvailable` is false, `/get-started` does not render the chat launcher or window.
   - Even when UI is mounted, `/api/chat` returns `503 config_missing` if lead-webhook config is missing.
@@ -69,6 +71,25 @@ cp .env.example .env.local
   - 400 path: `curl -i -X POST http://localhost:3000/api/chat -H "content-type: application/json" -d '{"sourcePage":"/get-started"}'`
   - happy path: `curl -i -X POST http://localhost:3000/api/chat -H "content-type: application/json" -d '{"sessionId":"session-12345678","sourcePage":"/get-started","inputType":"button","inputValue":"","buttonId":"__init__"}'`
 
+### Localhost sales-chat quickstart (recommended)
+
+Use this minimal local config so `/get-started` chat always mounts and lead dispatch can be tested without external services:
+
+```bash
+SALES_CHAT_ENABLED=true
+SALES_CHAT_BOOKING_URL=http://localhost:3000/get-started#book-call
+SALES_CHAT_WEBSITE_OVERHAUL_CHECKOUT_URL=http://localhost:3000/pricing
+SALES_CHAT_GROWTH_PARTNERSHIP_SIGNUP_URL=http://localhost:3000/get-started#book-call
+SALES_CHAT_LEADS_WEBHOOK_URL=http://localhost:3000/api/sales-chat/leads
+SALES_CHAT_LEADS_WEBHOOK_SECRET=local-sales-chat-secret
+SALES_CHAT_AI_FALLBACK_ENABLED=false
+```
+
+Notes:
+- The webhook URL above is an intentional self-loop to `/api/sales-chat/leads` for local smoke testing.
+- Restart `pnpm dev` after editing `.env.local`.
+- Run `pnpm smoke:sales-chat:local` while dev server is running to validate end-to-end deterministic flow + terminal lead dispatch.
+
 ### Sales chat operations notes
 
 - Deterministic mode is always authoritative for conversion-critical intents (A–G) and pricing copy.
@@ -77,7 +98,8 @@ cp .env.example .env.local
 - Never store or log the raw API key in code, logs, or git notes. The `app/api/chat/route.ts` implementation only logs redacted metadata (`requestId`, sanitized hashes, counts).
 - For local QA of fallback UX, test with invalid payload (400) and config-missing fallback (503 + handoff message).
 - Deployment guardrail:
-  - if `SALES_CHAT_ENABLED` resolves true in production, CI requires CTA + lead webhook keys via `pnpm verify:sales-chat-config`.
+  - if `SALES_CHAT_ENABLED` resolves true in production, CI requires CTA keys + lead webhook URL via `pnpm verify:sales-chat-config`.
+  - CI requires `SALES_CHAT_LEADS_WEBHOOK_SECRET` only when the lead webhook URL is not a Formspree endpoint.
   - if `SALES_CHAT_AI_FALLBACK_ENABLED` resolves true, CI additionally requires all `AI_GATEWAY_*` keys.
 
 ### Sales chat events contract
@@ -148,7 +170,8 @@ cp .env.example .env.local
   - `400` for invalid payload shape.
   - `503` if webhook dispatch fails.
 - Webhook signing:
-  - `dispatchSalesChatLead` signs payloads with HMAC SHA-256 in `x-sales-chat-signature` using `SALES_CHAT_LEADS_WEBHOOK_SECRET`.
+  - Custom webhook mode: `dispatchSalesChatLead` signs payloads with HMAC SHA-256 in `x-sales-chat-signature` using `SALES_CHAT_LEADS_WEBHOOK_SECRET`.
+  - Formspree mode: payloads are sent as flattened fields (`Accept: application/json`) without custom signature headers.
 
 ### Notes
 
