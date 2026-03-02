@@ -330,6 +330,23 @@ export default function SalesChatShell({
     void emitServerEvent("sales_chat_demo_cta_shown")
   }, [isOpen, shouldShowBookingPrimary, sourcePage])
 
+  useEffect(() => {
+    if (!isMounted) {
+      return
+    }
+
+    const className = "sales-chat-open"
+    if (isOpen) {
+      document.body.classList.add(className)
+    } else {
+      document.body.classList.remove(className)
+    }
+
+    return () => {
+      document.body.classList.remove(className)
+    }
+  }, [isMounted, isOpen])
+
   const ensureSessionId = () => {
     if (sessionIdRef.current.length === 0) {
       sessionIdRef.current = buildSessionId()

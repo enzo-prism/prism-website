@@ -545,7 +545,7 @@ input, textarea, select {
   /* Mobile-specific animation optimizations */
   @media (max-width: 768px) {
     /* Simplify all animations on mobile */
-    *:not(.ecosystem-animation):not(.ecosystem-animation *) {
+    body:not(.sales-chat-open) *:not(.ecosystem-animation):not(.ecosystem-animation *) {
       animation-duration: 0.3s !important;
       transition-duration: 0.2s !important;
     }

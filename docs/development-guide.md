@@ -80,6 +80,10 @@ This guide highlights the workflows we lean on most often while iterating on the
       - quick-reply directional arrow nudge on actionable chips,
       - CTA strip / inline booking connector line sweep (`animate-draw-line`),
     - keep all chat motion wrapped in `motion-safe:*` utilities and avoid introducing animation libraries for these effects.
+    - mobile timing safeguard:
+      - global mobile animation compression lives in `app/globals.css` (`@media (max-width: 768px)`).
+      - `SalesChatShell` toggles `body.sales-chat-open` while chat is open so chat-specific SVG timings (for example `orbit_9s`, `orbit-reverse_6s`) are not forced down to `0.3s`.
+      - if this class toggle is removed, header icon orbit animation will appear unnaturally fast on mobile.
     - message length counters and disabled send when oversize,
     - keyboard send via `Enter` (`Shift+Enter` for newline),
     - deterministic JSON response handling (no primary streaming dependency),
@@ -137,6 +141,9 @@ This guide highlights the workflows we lean on most often while iterating on the
   - If chat renders but returns immediate 503 fallback, verify lead webhook config:
     - Formspree backend: `SALES_CHAT_LEADS_WEBHOOK_URL` set to a valid Formspree endpoint.
     - Custom webhook backend: both `SALES_CHAT_LEADS_WEBHOOK_URL` and `SALES_CHAT_LEADS_WEBHOOK_SECRET` set.
+  - If header SVG animation looks too fast on mobile, inspect:
+    - `app/globals.css` mobile animation optimization block (`animation-duration: 0.3s !important`),
+    - `components/sales-chat/SalesChatShell.tsx` body-class toggle (`sales-chat-open`) that exempts active chat sessions from global mobile animation compression.
   - If messages are never sent from an open chat, verify devtools `Network` shows `/api/chat` POST with `Content-Type: application/json`.
   - If message links render as plain markdown, confirm the content came through `createRenderMessageContent()` in `components/sales-chat/SalesChatShell.tsx` (message parser should convert `#` and `[#](#)` to a booking anchor).
 

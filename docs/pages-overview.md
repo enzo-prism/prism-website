@@ -136,6 +136,9 @@ Quick reference for the pages we edit most often.
   - assistant-message entry reveal + single shimmer pass for new assistant replies,
   - actionable quick-reply icon directional nudge on hover,
   - CTA strip and inline-booking connector line sweeps.
+- Mobile animation guardrail:
+  - Global mobile optimization in `app/globals.css` compresses animation durations to `0.3s !important`.
+  - Active chat sessions are exempted via `body.sales-chat-open` (set/removed in `components/sales-chat/SalesChatShell.tsx`) so header glyph orbits keep intended timing on mobile.
 - Default copy for degraded states should keep the fallback visible and explicit:
   - `fallbackToHuman: true` on response payload.
   - missing CTA config prevents chat mount on `/get-started` (`uiAvailable` gate).

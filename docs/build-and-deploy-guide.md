@@ -78,6 +78,7 @@ Use this flow when switching between local, preview, and production changes:
   5. Confirm chat motion polish in the live shell:
     - launcher pulse appears when closed,
     - header high-tech glyph glow/orbit renders when online,
+    - on mobile viewport, header glyph orbit remains slow/smooth (not compressed to rapid spin),
     - typing waveform appears while awaiting response.
   6. Simulate one config/provider failure path (mock 503 in local) and verify a single handoff message appears plus clear booking path.
   7. Validate lead dispatch telemetry contract:
