@@ -91,6 +91,7 @@ function runFromNode(nodeId: SalesChatSpecNodeId, step: InputStep): SalesChatRes
 }
 
 function expectResponsePolicyInvariants(response: SalesChatResponseV2) {
+  expect(response.responseMode).toBe("deterministic")
   expect(response.assistantMessage.trim().length).toBeGreaterThan(0)
   expect(response.quickReplies.length).toBeGreaterThanOrEqual(1)
   expect(response.quickReplies.length).toBeLessThanOrEqual(5)

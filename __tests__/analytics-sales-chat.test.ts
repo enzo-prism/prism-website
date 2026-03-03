@@ -90,6 +90,24 @@ describe("Sales chat analytics events", () => {
         nodeId: "intent_b_pitch",
         recommendedOffer: "free_audit",
       })
+      analytics.trackSalesChatAiResponseUsed({
+        sourcePage: "/get-started",
+        sessionId: "session-1",
+        nodeId: "intent_b_pitch",
+        responseMode: "ai_assisted",
+        aiDecisionReason: "broad_mode",
+        aiModelUsed: "openai/gpt-5-mini",
+        aiLatencyMs: 321,
+      })
+      analytics.trackSalesChatAiResponseRejected({
+        sourcePage: "/get-started",
+        sessionId: "session-1",
+        nodeId: "intent_b_pitch",
+        responseMode: "deterministic",
+        aiDecisionReason: "guardrail_reject",
+        aiModelUsed: "openai/gpt-5-mini",
+        aiLatencyMs: 412,
+      })
       analytics.trackSalesChatLeadPayloadAttempted({
         sourcePage: "/get-started",
         sessionId: "session-1",
@@ -119,6 +137,8 @@ describe("Sales chat analytics events", () => {
       expect(events).toContain("sales_chat_quick_reply_clicked")
       expect(events).toContain("sales_chat_spec_node_entered")
       expect(events).toContain("sales_chat_offer_recommended")
+      expect(events).toContain("sales_chat_ai_response_used")
+      expect(events).toContain("sales_chat_ai_response_rejected")
       expect(events).toContain("sales_chat_lead_payload_attempted")
       expect(events).toContain("sales_chat_lead_payload_failed")
       expect(events).toContain("sales_chat_error")

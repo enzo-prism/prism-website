@@ -38,16 +38,36 @@ This guide highlights the workflows we lean on most often while iterating on the
   - `POST /api/chat`
   - Accepts deterministic v2 payloads:
     - required: `sessionId`, `sourcePage`, `inputType`, `inputValue`
-    - optional: `buttonId`, `conversationState`
+    - optional: `buttonId`, `conversationState`, `conversationHistory` (recent transcript window for AI context)
   - Validates request payloads with `zod`.
   - Runs deterministic state transitions through `runSalesChatSpecV1Engine` (`lib/sales-chat/spec-v1-engine.ts`).
+  - Optionally upgrades responses through Vercel AI Gateway (`lib/sales-chat/ai-gateway-fallback.ts`) when:
+    - `SALES_CHAT_AI_FALLBACK_ENABLED=true`
+    - `SALES_CHAT_AI_RESPONSE_MODE!=off`
+    - `AI_GATEWAY_BASE_URL`, `AI_GATEWAY_API_KEY`, and `AI_GATEWAY_MODEL` are configured
+  - AI response modes:
+    - `long_tail` upgrades free-text turns plus generic fallback turns
+    - `broad` upgrades all non-terminal turns except `__init__`
+    - `off` keeps deterministic-only output even when gateway env exists
+    - when mode is unset and `SALES_CHAT_AI_FALLBACK_ENABLED=true`, runtime defaults to `broad` to maximize natural model responses
+  - AI guardrails:
+    - deterministic state transitions and terminal actions remain authoritative
+    - generated copy is dropped when pricing drifts from canonical `$0`, `$1,000`, `$2,000`
   - Builds typed conversion payloads through `buildLeadPayload` (`lib/sales-chat/lead-payloads.ts`) and dispatches with `dispatchSalesChatLead` (`lib/sales-chat/lead-dispatch.ts`) when terminal actions fire.
   - Includes lead dispatch observability fields in success payloads:
     - `leadDispatchStatus` (`none` | `attempted` | `succeeded` | `failed`)
     - `leadDispatchCode` (sanitized reason code; e.g. `webhook_http_error`, `duplicate_suppressed`)
+  - Includes AI observability fields in success payloads:
+    - `responseMode` (`deterministic` | `ai_assisted`)
+    - `aiDecisionReason` (`broad_mode`, `long_tail_trigger`, `guardrail_reject`, `gateway_error`, `disabled`)
+    - `aiGuardrailCode` (`pricing_drift`, `semantic_mismatch`)
+    - `aiModelUsed` (gateway model id)
+    - `aiLatencyMs` (gateway round-trip timing)
+    - `aiPromptVersion` (active prompt template/version marker)
+    - `aiRepairAttempted` (whether a second guardrail repair generation was attempted)
   - Returns JSON only (no streaming path in the deterministic route).
   - Returns tracing headers:
-    - `x-sales-chat-route` (`success`, `disabled`, `config_missing`, `invalid_request`)
+    - `x-sales-chat-route` (`success`, `ai_fallback`, `disabled`, `config_missing`, `invalid_request`)
     - `x-request-id` on success responses
   - Runtime gating:
     - `/get-started` mount gate: `uiAvailable = SALES_CHAT_ENABLED && ctaUrlsConfigured`
@@ -98,6 +118,8 @@ This guide highlights the workflows we lean on most often while iterating on the
     - `trackSalesChatQuickReplyClicked({ sourcePage, sessionId, replyId, replyLabel, actionType, nodeId })`
     - `trackSalesChatSpecNodeEntered({ sourcePage, sessionId, nodeId, exchangeCount })`
     - `trackSalesChatOfferRecommended({ sourcePage, sessionId, nodeId, recommendedOffer })`
+    - `trackSalesChatAiResponseUsed({ sourcePage, sessionId, nodeId, responseMode, aiDecisionReason, aiModelUsed, aiLatencyMs })`
+    - `trackSalesChatAiResponseRejected({ sourcePage, sessionId, nodeId, responseMode, aiDecisionReason, aiModelUsed, aiLatencyMs })`
     - `trackSalesChatLeadPayloadAttempted({ sourcePage, sessionId, terminalAction, leadDispatchStatus, leadDispatchCode })`
     - `trackSalesChatLeadPayloadEmitted({ sourcePage, sessionId, terminalAction })`
     - `trackSalesChatLeadPayloadFailed({ sourcePage, sessionId, terminalAction, leadDispatchCode })`
@@ -106,17 +128,19 @@ This guide highlights the workflows we lean on most often while iterating on the
     - mirror the same lifecycle to `POST /api/sales-chat/events` for webhook/Supabase fan-out and route tracing.
     - reserve `sales_chat_dead_end_prevented` for server-side policy protection telemetry.
   - GA4 deep funnel setup (required for useful reporting):
-    - define custom dimensions for `node_id`, `recommended_offer`, `terminal_action`, `lead_dispatch_status`, `lead_dispatch_code`, `reply_id`, `reply_label`, and `action_type`.
+    - define custom dimensions for `node_id`, `recommended_offer`, `response_mode`, `ai_decision_reason`, `ai_model_used`, `ai_latency_ms`, `terminal_action`, `lead_dispatch_status`, `lead_dispatch_code`, `reply_id`, `reply_label`, and `action_type`.
+    - for deep AI evals also define `ai_guardrail_code`, `ai_prompt_version`, and `ai_repair_attempted`.
     - verify in GA4 DebugView that these parameters are attached to sales-chat events before relying on reports.
 - Observability checks before merge:
   - Verify logs never include secrets (lead webhook secret, gateway keys, raw session identifiers where not required).
-  - Verify deterministic responses include `x-sales-chat-route=success` in production-like traces.
+  - Verify normal deterministic responses include `x-sales-chat-route=success` and AI-upgraded responses include `x-sales-chat-route=ai_fallback`.
   - Verify chat never returns or renders the banned copy `Sales chat is not fully configured yet...`.
   - Verify failed lead dispatch never emits success telemetry (`sales_chat_lead_payload_emitted`).
   - Verify GA4 DebugView receives deep deterministic events in one test conversation:
     - `sales_chat_quick_reply_clicked`
     - `sales_chat_spec_node_entered`
     - `sales_chat_offer_recommended`
+    - `sales_chat_ai_response_used` or `sales_chat_ai_response_rejected`
     - `sales_chat_lead_payload_attempted`
     - `sales_chat_lead_payload_emitted` or `sales_chat_lead_payload_failed`
   - Recommended fast checks after implementation:
@@ -136,6 +160,7 @@ This guide highlights the workflows we lean on most often while iterating on the
     - `curl -i -X POST http://localhost:3000/api/chat -H "content-type: application/json" -d '{"sessionId":"session-12345678","sourcePage":"/get-started","inputType":"button","inputValue":"","buttonId":"__init__"}'`
 - Debugging:
   - If deterministic responses are missing, inspect response headers (`x-sales-chat-route`) and `nodeId` in JSON payloads.
+  - If AI behavior looks off, inspect `responseMode`, `aiDecisionReason`, `aiModelUsed`, and `aiLatencyMs` in `/api/chat` success payloads.
   - If lead fan-out behavior looks inconsistent, inspect `leadDispatchStatus` + `leadDispatchCode` in `/api/chat` response payloads.
   - If chat is missing on `/get-started`, verify `uiAvailable = SALES_CHAT_ENABLED && ctaUrlsConfigured` and required CTA keys are present.
   - If chat renders but returns immediate 503 fallback, verify lead webhook config:
@@ -146,6 +171,27 @@ This guide highlights the workflows we lean on most often while iterating on the
     - `components/sales-chat/SalesChatShell.tsx` body-class toggle (`sales-chat-open`) that exempts active chat sessions from global mobile animation compression.
   - If messages are never sent from an open chat, verify devtools `Network` shows `/api/chat` POST with `Content-Type: application/json`.
   - If message links render as plain markdown, confirm the content came through `createRenderMessageContent()` in `components/sales-chat/SalesChatShell.tsx` (message parser should convert `#` and `[#](#)` to a booking anchor).
+
+### Natural response analysis playbook
+
+- Goal: maximize natural, model-led responses while preserving deterministic conversion flow and canonical pricing.
+- Daily/weekly review loop:
+  - sample `sales_chat_ai_response_used` and `sales_chat_ai_response_rejected` events from GA + server fan-out.
+  - segment by `node_id`, `ai_decision_reason`, `ai_guardrail_code`, and `ai_model_used`.
+  - prioritize nodes with highest rejection rates (`guardrail_reject`, `gateway_error`) and highest drop-off before terminal actions.
+- Prompt and model tuning order:
+  - tune `AI_GATEWAY_PROVIDER_ORDER` + `AI_GATEWAY_FALLBACK_MODELS` first (stability/latency).
+  - tune prompt strategy (`aiPromptVersion`) second (tone quality and conversion clarity).
+  - tune temperature last for cadence polish; keep guardrail rejection rate stable after each change.
+- KPI guardrails for rollout decisions:
+  - lead completion rate remains primary KPI.
+  - if lead completion drops >10% against trailing 7-day baseline, switch `SALES_CHAT_AI_RESPONSE_MODE` from `broad` to `long_tail` and redeploy.
+  - if `sales_chat_error` exceeds 3% of sessions, roll back to previous stable deployment and investigate via `x-request-id` traces.
+- Regression validation before shipping prompt/model changes:
+  - `pnpm test:sales-chat:core`
+  - `pnpm test:sales-chat:e2e`
+  - `pnpm test:sales-chat:stress`
+  - one manual `/get-started` run confirming AI-assisted copy on non-terminal turns and deterministic lead dispatch on terminal turns.
 
 ## Styling Pipeline
 

@@ -1,9 +1,15 @@
+export type SalesChatAiResponseMode = "off" | "long_tail" | "broad"
+
 export type SalesChatRuntimeConfig = {
   enabled: boolean
   aiFallbackEnabled: boolean
+  aiResponseMode: SalesChatAiResponseMode
+  aiResponseEnabled: boolean
   hasGatewayBaseUrl: boolean
   hasGatewayApiKey: boolean
   hasGatewayModel: boolean
+  gatewayFallbackModels: string[]
+  gatewayProviderOrder: string[]
   gatewayConfigured: boolean
   hasBookingUrl: boolean
   hasWebsiteOverhaulCheckoutUrl: boolean
@@ -43,6 +49,32 @@ function isConfigured(value: string | undefined): boolean {
   return Boolean(value?.trim())
 }
 
+function parseAiResponseMode(
+  value: string | undefined,
+  aiFallbackEnabled: boolean,
+): SalesChatAiResponseMode {
+  const normalized = value?.trim().toLowerCase()
+  if (normalized === "off") return "off"
+  if (normalized === "broad") return "broad"
+  if (normalized === "long_tail") return "long_tail"
+  return aiFallbackEnabled ? "broad" : "long_tail"
+}
+
+function parseCsvEnv(value: string | undefined): string[] {
+  if (!value?.trim()) {
+    return []
+  }
+
+  const unique = new Set<string>()
+  for (const item of value.split(",")) {
+    const cleaned = item.trim()
+    if (cleaned) {
+      unique.add(cleaned)
+    }
+  }
+  return Array.from(unique)
+}
+
 function isFormspreeEndpoint(url: string | undefined): boolean {
   if (!url?.trim()) {
     return false
@@ -62,9 +94,13 @@ export function getSalesChatRuntimeConfig(env: NodeJS.ProcessEnv): SalesChatRunt
   // Keep enabled default explicit because this controls whether the chat launcher is mounted.
   const enabled = parseBooleanEnv(env.SALES_CHAT_ENABLED, true)
   const aiFallbackEnabled = parseBooleanEnv(env.SALES_CHAT_AI_FALLBACK_ENABLED, false)
+  const aiResponseMode = parseAiResponseMode(env.SALES_CHAT_AI_RESPONSE_MODE, aiFallbackEnabled)
+  const aiResponseEnabled = aiFallbackEnabled && aiResponseMode !== "off"
   const hasGatewayBaseUrl = isConfigured(env.AI_GATEWAY_BASE_URL)
   const hasGatewayApiKey = isConfigured(env.AI_GATEWAY_API_KEY)
   const hasGatewayModel = isConfigured(env.AI_GATEWAY_MODEL)
+  const gatewayFallbackModels = parseCsvEnv(env.AI_GATEWAY_FALLBACK_MODELS)
+  const gatewayProviderOrder = parseCsvEnv(env.AI_GATEWAY_PROVIDER_ORDER)
   const gatewayConfigured = hasGatewayBaseUrl && hasGatewayApiKey && hasGatewayModel
   const hasBookingUrl = isConfigured(env.SALES_CHAT_BOOKING_URL)
   const hasWebsiteOverhaulCheckoutUrl = isConfigured(env.SALES_CHAT_WEBSITE_OVERHAUL_CHECKOUT_URL)
@@ -90,7 +126,7 @@ export function getSalesChatRuntimeConfig(env: NodeJS.ProcessEnv): SalesChatRunt
       missingRequiredKeys.push(REQUIRED_LEAD_KEYS[1])
     }
 
-    if (aiFallbackEnabled) {
+    if (aiResponseEnabled) {
       for (const key of REQUIRED_GATEWAY_KEYS) {
         if (!isConfigured(env[key])) {
           missingRequiredKeys.push(key)
@@ -102,9 +138,13 @@ export function getSalesChatRuntimeConfig(env: NodeJS.ProcessEnv): SalesChatRunt
   return {
     enabled,
     aiFallbackEnabled,
+    aiResponseMode,
+    aiResponseEnabled,
     hasGatewayBaseUrl,
     hasGatewayApiKey,
     hasGatewayModel,
+    gatewayFallbackModels,
+    gatewayProviderOrder,
     gatewayConfigured,
     hasBookingUrl,
     hasWebsiteOverhaulCheckoutUrl,

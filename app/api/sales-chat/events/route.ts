@@ -31,6 +31,8 @@ const SALES_CHAT_EVENT_NAMES = [
   "sales_chat_quick_reply_clicked",
   "sales_chat_spec_node_entered",
   "sales_chat_offer_recommended",
+  "sales_chat_ai_response_used",
+  "sales_chat_ai_response_rejected",
   "sales_chat_lead_payload_attempted",
   "sales_chat_lead_payload_emitted",
   "sales_chat_lead_payload_failed",

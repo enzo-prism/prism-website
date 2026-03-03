@@ -16,6 +16,8 @@ const mockTrackSalesChatCalendarOpened = jest.fn()
 const mockTrackSalesChatQuickReplyClicked = jest.fn()
 const mockTrackSalesChatSpecNodeEntered = jest.fn()
 const mockTrackSalesChatOfferRecommended = jest.fn()
+const mockTrackSalesChatAiResponseUsed = jest.fn()
+const mockTrackSalesChatAiResponseRejected = jest.fn()
 const mockTrackSalesChatLeadPayloadAttempted = jest.fn()
 const mockTrackSalesChatLeadPayloadEmitted = jest.fn()
 const mockTrackSalesChatLeadPayloadFailed = jest.fn()
@@ -33,6 +35,8 @@ jest.mock("@/utils/analytics", () => ({
   trackSalesChatQuickReplyClicked: (...args: Array<unknown>) => mockTrackSalesChatQuickReplyClicked(...args),
   trackSalesChatSpecNodeEntered: (...args: Array<unknown>) => mockTrackSalesChatSpecNodeEntered(...args),
   trackSalesChatOfferRecommended: (...args: Array<unknown>) => mockTrackSalesChatOfferRecommended(...args),
+  trackSalesChatAiResponseUsed: (...args: Array<unknown>) => mockTrackSalesChatAiResponseUsed(...args),
+  trackSalesChatAiResponseRejected: (...args: Array<unknown>) => mockTrackSalesChatAiResponseRejected(...args),
   trackSalesChatLeadPayloadAttempted: (...args: Array<unknown>) => mockTrackSalesChatLeadPayloadAttempted(...args),
   trackSalesChatLeadPayloadEmitted: (...args: Array<unknown>) => mockTrackSalesChatLeadPayloadEmitted(...args),
   trackSalesChatLeadPayloadFailed: (...args: Array<unknown>) => mockTrackSalesChatLeadPayloadFailed(...args),
@@ -149,6 +153,7 @@ function buildWelcomePayload(): SalesChatApiResponse {
       { id: "starter_general_question", label: "I just have a question about Prism", actionType: "reply" },
     ],
     memoryPatch: {},
+    responseMode: "deterministic",
     terminalAction: "none",
     conversationState: {
       nodeId: "welcome",
@@ -225,6 +230,7 @@ describe("SalesChat", () => {
               { id: "book_call", label: "Book a 30-min call instead", actionType: "open_booking" },
             ],
             memoryPatch: {},
+            responseMode: "deterministic",
             recommendedOffer: "free_audit",
             terminalAction: "none",
             conversationState: {
@@ -354,6 +360,137 @@ describe("SalesChat", () => {
     expect(screen.queryByRole("alert")).not.toBeInTheDocument()
   })
 
+  it("emits AI-used telemetry when response mode is ai_assisted", async () => {
+    fetchSpy.mockImplementation(async (input, init) => {
+      if (getFetchUrl(input).includes("/api/chat")) {
+        const body = JSON.parse(String((init as RequestInit).body ?? "{}")) as { buttonId?: string }
+        if (body.buttonId === "__init__") {
+          return chatJsonResponse(buildWelcomePayload())
+        }
+        return chatJsonResponse({
+          assistantMessage: "Great fit. Want me to start your free audit now?",
+          nodeId: "intent_b_pitch",
+          quickReplies: [
+            { id: "b_start", label: "Yes, start my free audit", actionType: "reply" },
+          ],
+          memoryPatch: {},
+          responseMode: "ai_assisted",
+          aiDecisionReason: "broad_mode",
+          aiModelUsed: "openai/gpt-5-mini",
+          aiLatencyMs: 248,
+          terminalAction: "none",
+          conversationState: {
+            nodeId: "intent_b_pitch",
+            exchangeCount: 1,
+            memory: {},
+          },
+        })
+      }
+
+      return new Response(JSON.stringify({ accepted: true }), {
+        status: 202,
+        headers: { "content-type": "application/json" },
+      })
+    })
+
+    window.sessionStorage.setItem("chat-opened", "1")
+    render(
+      <SalesChat
+        sourcePage="/get-started"
+        bookingHref="#book-call"
+        desktopAutoOpenSessionKey="chat-opened"
+      />,
+    )
+
+    fireEvent.click(screen.getByRole("button", { name: /Open sales chat/i }))
+    const textarea = await screen.findByRole("textbox", { name: /Message sales assistant/i })
+    fireEvent.change(textarea, { target: { value: "Can you tailor this to my lead goals?" } })
+    fireEvent.click(screen.getByRole("button", { name: /Send message/i }))
+
+    await waitFor(() => {
+      expect(screen.getByText("Great fit. Want me to start your free audit now?")).toBeInTheDocument()
+    })
+
+    expect(mockTrackSalesChatAiResponseUsed).toHaveBeenCalledWith(expect.objectContaining({
+      responseMode: "ai_assisted",
+      aiDecisionReason: "broad_mode",
+      aiModelUsed: "openai/gpt-5-mini",
+    }))
+    expect(mockTrackSalesChatAiResponseRejected).not.toHaveBeenCalled()
+
+    const eventCalls = fetchSpy.mock.calls
+      .filter(([input]) => getFetchUrl(input).includes("/api/sales-chat/events"))
+      .map(([, requestInit]) => JSON.parse(String((requestInit as RequestInit).body ?? "{}")) as { eventName?: string })
+
+    const emittedEvents = new Set(eventCalls.map((entry) => entry.eventName))
+    expect(emittedEvents.has("sales_chat_ai_response_used")).toBe(true)
+  })
+
+  it("emits AI-rejected telemetry when aiDecisionReason is guardrail_reject", async () => {
+    fetchSpy.mockImplementation(async (input, init) => {
+      if (getFetchUrl(input).includes("/api/chat")) {
+        const body = JSON.parse(String((init as RequestInit).body ?? "{}")) as { buttonId?: string }
+        if (body.buttonId === "__init__") {
+          return chatJsonResponse(buildWelcomePayload())
+        }
+        return chatJsonResponse({
+          assistantMessage: "Could you rephrase that so I can give a precise answer?",
+          nodeId: "intent_e_router",
+          quickReplies: [
+            { id: "starter_help_choose", label: "Help me figure out what's best", actionType: "reply" },
+          ],
+          memoryPatch: {},
+          responseMode: "deterministic",
+          aiDecisionReason: "guardrail_reject",
+          aiModelUsed: "openai/gpt-5-mini",
+          aiLatencyMs: 197,
+          terminalAction: "none",
+          conversationState: {
+            nodeId: "intent_e_router",
+            exchangeCount: 1,
+            memory: {},
+          },
+        })
+      }
+
+      return new Response(JSON.stringify({ accepted: true }), {
+        status: 202,
+        headers: { "content-type": "application/json" },
+      })
+    })
+
+    window.sessionStorage.setItem("chat-opened", "1")
+    render(
+      <SalesChat
+        sourcePage="/get-started"
+        bookingHref="#book-call"
+        desktopAutoOpenSessionKey="chat-opened"
+      />,
+    )
+
+    fireEvent.click(screen.getByRole("button", { name: /Open sales chat/i }))
+    const textarea = await screen.findByRole("textbox", { name: /Message sales assistant/i })
+    fireEvent.change(textarea, { target: { value: "Should I use lower pricing than $1,000?" } })
+    fireEvent.click(screen.getByRole("button", { name: /Send message/i }))
+
+    await waitFor(() => {
+      expect(screen.getByText("Could you rephrase that so I can give a precise answer?")).toBeInTheDocument()
+    })
+
+    expect(mockTrackSalesChatAiResponseRejected).toHaveBeenCalledWith(expect.objectContaining({
+      responseMode: "deterministic",
+      aiDecisionReason: "guardrail_reject",
+      aiModelUsed: "openai/gpt-5-mini",
+    }))
+
+    const eventCalls = fetchSpy.mock.calls
+      .filter(([input]) => getFetchUrl(input).includes("/api/sales-chat/events"))
+      .map(([, requestInit]) => JSON.parse(String((requestInit as RequestInit).body ?? "{}")) as { eventName?: string })
+
+    const emittedEvents = new Set(eventCalls.map((entry) => entry.eventName))
+    expect(emittedEvents.has("sales_chat_ai_response_rejected")).toBe(true)
+  })
+
   it("emits attempted+failed lead telemetry without success emission when dispatch fails", async () => {
     fetchSpy.mockImplementation(async (input, init) => {
       if (getFetchUrl(input).includes("/api/chat")) {
@@ -369,6 +506,7 @@ describe("SalesChat", () => {
             { id: "book_call", label: "Book a 30-min call too", actionType: "open_booking" },
           ],
           memoryPatch: {},
+          responseMode: "deterministic",
           terminalAction: "emit_free_audit",
           leadDispatchStatus: "failed",
           leadDispatchCode: "webhook_http_error",

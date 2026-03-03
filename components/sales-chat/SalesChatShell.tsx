@@ -31,6 +31,8 @@ import { Button } from "@/components/ui/button"
 import type { SalesChatConversationState } from "@/lib/sales-chat/spec-v1-types"
 import type { SalesChatEventName, SalesChatState } from "@/lib/sales-chat/types"
 import {
+  trackSalesChatAiResponseRejected,
+  trackSalesChatAiResponseUsed,
   trackSalesChatCalendarOpened,
   trackSalesChatDemoCtaClicked,
   trackSalesChatDemoCtaShown,
@@ -386,6 +388,31 @@ export default function SalesChatShell({
     })
   }
 
+  const buildConversationHistoryWindow = (args: {
+    inputValue: string
+    appendUserMessage?: boolean
+  }) => {
+    const history = messages
+      .slice(-6)
+      .map((message) => ({
+        role: message.role,
+        content: message.content.trim(),
+      }))
+      .filter((turn) => turn.content.length > 0)
+
+    if (args.appendUserMessage !== false) {
+      const trimmed = args.inputValue.trim()
+      if (trimmed.length > 0) {
+        history.push({
+          role: "user",
+          content: trimmed,
+        })
+      }
+    }
+
+    return history.slice(-6)
+  }
+
   const emitServerEvent = async (
     eventName: SalesChatEventName,
     options?: {
@@ -456,6 +483,10 @@ export default function SalesChatShell({
   }) => {
     const sessionId = ensureSessionId()
     const trimmedInput = args.inputValue.trim()
+    const conversationHistory = buildConversationHistoryWindow({
+      inputValue: args.inputValue,
+      appendUserMessage: args.appendUserMessage,
+    })
 
     if (args.appendUserMessage !== false && trimmedInput) {
       appendMessage({
@@ -495,6 +526,7 @@ export default function SalesChatShell({
           inputValue: args.inputValue,
           buttonId: args.buttonId,
           conversationState: conversationState ?? undefined,
+          conversationHistory: conversationHistory.length > 0 ? conversationHistory : undefined,
         }),
       })
 
@@ -555,6 +587,7 @@ export default function SalesChatShell({
       setQuickReplies(Array.isArray(payload.quickReplies) ? payload.quickReplies : [])
       setConversationState(payload.conversationState)
       setErrorMessage(null)
+      const responseMode = payload.responseMode ?? "deterministic"
 
       trackSalesChatSpecNodeEntered({
         sourcePage,
@@ -580,6 +613,65 @@ export default function SalesChatShell({
           metadata: {
             recommendedOffer: payload.recommendedOffer,
             nodeId: payload.nodeId,
+          },
+        })
+      }
+
+      if (responseMode === "ai_assisted") {
+        trackSalesChatAiResponseUsed({
+          sourcePage,
+          sessionId,
+          nodeId: payload.nodeId,
+          responseMode,
+          aiDecisionReason:
+            payload.aiDecisionReason === "broad_mode" || payload.aiDecisionReason === "long_tail_trigger"
+              ? payload.aiDecisionReason
+              : undefined,
+          aiGuardrailCode: payload.aiGuardrailCode,
+          aiModelUsed: payload.aiModelUsed,
+          aiLatencyMs: payload.aiLatencyMs,
+          aiPromptVersion: payload.aiPromptVersion,
+          aiRepairAttempted: payload.aiRepairAttempted,
+        })
+        void emitServerEvent("sales_chat_ai_response_used", {
+          metadata: {
+            nodeId: payload.nodeId,
+            responseMode,
+            aiDecisionReason: payload.aiDecisionReason,
+            aiGuardrailCode: payload.aiGuardrailCode,
+            aiModelUsed: payload.aiModelUsed,
+            aiLatencyMs: payload.aiLatencyMs,
+            aiPromptVersion: payload.aiPromptVersion,
+            aiRepairAttempted: payload.aiRepairAttempted,
+          },
+        })
+      } else if (
+        payload.aiDecisionReason === "guardrail_reject"
+        || payload.aiDecisionReason === "gateway_error"
+        || payload.aiDecisionReason === "disabled"
+      ) {
+        trackSalesChatAiResponseRejected({
+          sourcePage,
+          sessionId,
+          nodeId: payload.nodeId,
+          responseMode,
+          aiDecisionReason: payload.aiDecisionReason,
+          aiGuardrailCode: payload.aiGuardrailCode,
+          aiModelUsed: payload.aiModelUsed,
+          aiLatencyMs: payload.aiLatencyMs,
+          aiPromptVersion: payload.aiPromptVersion,
+          aiRepairAttempted: payload.aiRepairAttempted,
+        })
+        void emitServerEvent("sales_chat_ai_response_rejected", {
+          metadata: {
+            nodeId: payload.nodeId,
+            responseMode,
+            aiDecisionReason: payload.aiDecisionReason,
+            aiGuardrailCode: payload.aiGuardrailCode,
+            aiModelUsed: payload.aiModelUsed,
+            aiLatencyMs: payload.aiLatencyMs,
+            aiPromptVersion: payload.aiPromptVersion,
+            aiRepairAttempted: payload.aiRepairAttempted,
           },
         })
       }

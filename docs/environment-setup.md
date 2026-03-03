@@ -23,16 +23,19 @@ cp .env.example .env.local
 | `INSTAGRAM_USER_ID` | Optional | Instagram Graph API user ID for Prism Library. | Falls back to the seed dataset. | `lib/library/getLibraryPosts.ts` |
 | `TIKTOK_ACCESS_TOKEN` | Optional | TikTok Display API token for Prism Library. | Falls back to the seed dataset. | `lib/library/getLibraryPosts.ts` |
 | `NEXT_PUBLIC_SITE_URL` & `NEXT_PUBLIC_VERCEL_URL` | Optional | Provide context to deployment verification scripts. | None. | `scripts/verify-deployment.ts` |
-| `AI_GATEWAY_BASE_URL` | Optional | Base URL for optional AI fallback mode. Required only when `SALES_CHAT_AI_FALLBACK_ENABLED=true`. | None. | `lib/sales-chat/runtime-config.ts`, `app/api/chat/route.ts` |
-| `AI_GATEWAY_API_KEY` | Optional | Bearer token for optional AI fallback mode. Required only when `SALES_CHAT_AI_FALLBACK_ENABLED=true`. | None. | `lib/sales-chat/runtime-config.ts`, `app/api/chat/route.ts` |
-| `AI_GATEWAY_MODEL` | Optional | Provider model selector for optional AI fallback mode. Required only when `SALES_CHAT_AI_FALLBACK_ENABLED=true`. | None. | `lib/sales-chat/runtime-config.ts`, `app/api/chat/route.ts` |
+| `AI_GATEWAY_BASE_URL` | Optional | Base URL for optional AI response upgrades. Required only when AI response mode is enabled (`SALES_CHAT_AI_FALLBACK_ENABLED=true` and `SALES_CHAT_AI_RESPONSE_MODE!=off`). | None. | `lib/sales-chat/runtime-config.ts`, `app/api/chat/route.ts` |
+| `AI_GATEWAY_API_KEY` | Optional | Bearer token for optional AI response upgrades. Required only when AI response mode is enabled (`SALES_CHAT_AI_FALLBACK_ENABLED=true` and `SALES_CHAT_AI_RESPONSE_MODE!=off`). | None. | `lib/sales-chat/runtime-config.ts`, `app/api/chat/route.ts` |
+| `AI_GATEWAY_MODEL` | Optional | Primary provider model selector for optional AI response upgrades. Required only when AI response mode is enabled (`SALES_CHAT_AI_FALLBACK_ENABLED=true` and `SALES_CHAT_AI_RESPONSE_MODE!=off`). | None. | `lib/sales-chat/runtime-config.ts`, `app/api/chat/route.ts` |
+| `AI_GATEWAY_FALLBACK_MODELS` | Optional | Comma-separated model fallback chain (for example `openai/gpt-5,openai/gpt-4.1-mini`) passed to gateway provider options. | None. | `lib/sales-chat/runtime-config.ts`, `lib/sales-chat/ai-gateway-fallback.ts` |
+| `AI_GATEWAY_PROVIDER_ORDER` | Optional | Comma-separated provider preference order (for example `openai,anthropic`) passed to gateway provider options. | None. | `lib/sales-chat/runtime-config.ts`, `lib/sales-chat/ai-gateway-fallback.ts` |
 | `SALES_CHAT_ENABLED` | Optional feature flag | Set to `false` to hard-disable `/api/chat` and hide sales chat UI on `/get-started`. | `true` | `app/api/chat/route.ts`, `app/get-started/page.tsx` |
 | `SALES_CHAT_BOOKING_URL` | Required when chat enabled | Primary booking CTA used by deterministic sales-chat quick replies. | None. | `lib/sales-chat/runtime-config.ts`, `app/api/chat/route.ts` |
 | `SALES_CHAT_WEBSITE_OVERHAUL_CHECKOUT_URL` | Required when chat enabled | Direct checkout CTA for website overhaul path. | None. | `lib/sales-chat/runtime-config.ts`, `app/api/chat/route.ts` |
 | `SALES_CHAT_GROWTH_PARTNERSHIP_SIGNUP_URL` | Required when chat enabled | Direct signup CTA for growth partnership path. | None. | `lib/sales-chat/runtime-config.ts`, `app/api/chat/route.ts` |
 | `SALES_CHAT_LEADS_WEBHOOK_URL` | Required when chat enabled | Webhook destination for typed conversion payloads (`free_audit`, `website_overhaul_purchase`, `growth_partnership`). Supports Formspree endpoints (for example `https://formspree.io/f/...`). | None. | `lib/sales-chat/runtime-config.ts`, `lib/sales-chat/lead-dispatch.ts`, `app/api/chat/route.ts` |
 | `SALES_CHAT_LEADS_WEBHOOK_SECRET` | Required for non-Formspree webhooks | HMAC secret used to sign lead payload dispatch (`x-sales-chat-signature`) for custom webhooks. Optional when `SALES_CHAT_LEADS_WEBHOOK_URL` is a Formspree endpoint. | None. | `lib/sales-chat/runtime-config.ts`, `lib/sales-chat/lead-dispatch.ts`, `app/api/chat/route.ts` |
-| `SALES_CHAT_AI_FALLBACK_ENABLED` | Optional | Enables optional non-authoritative AI fallback for non-critical clarifications. | `false` | `lib/sales-chat/runtime-config.ts` |
+| `SALES_CHAT_AI_FALLBACK_ENABLED` | Optional | Master switch for optional non-authoritative AI response upgrades. | `false` | `lib/sales-chat/runtime-config.ts` |
+| `SALES_CHAT_AI_RESPONSE_MODE` | Optional | AI response strategy for `/api/chat`: `off`, `long_tail`, or `broad`. `long_tail` upgrades text turns and generic fallback turns, while `broad` upgrades every non-terminal turn except `__init__`. | Defaults to `broad` when `SALES_CHAT_AI_FALLBACK_ENABLED=true`, otherwise `long_tail`. | `lib/sales-chat/runtime-config.ts`, `lib/sales-chat/ai-gateway-fallback.ts` |
 | `SALES_CHAT_INLINE_BOOKING_ENABLED` | Optional feature flag | Enables in-chat calendar mode (using `BookDemoEmbed`) in addition to `#book-call` fallback link. | `true` | `app/get-started/page.tsx`, `components/sales-chat/SalesChatShell.tsx` |
 | `SALES_CHAT_EVENTS_WEBHOOK_URL` | Optional | Server webhook destination for structured sales-chat lifecycle/lead events (`/api/sales-chat/events` fan-out). | None. | `app/api/sales-chat/events/route.ts` |
 | `SALES_CHAT_EVENTS_WEBHOOK_SECRET` | Optional | Secret for webhook signing (`x-sales-chat-signature` HMAC SHA-256). | None. | `app/api/sales-chat/events/route.ts` |
@@ -46,15 +49,25 @@ cp .env.example .env.local
   - lead dispatch requires:
     - Formspree mode: `SALES_CHAT_LEADS_WEBHOOK_URL` (Formspree endpoint) only
     - custom webhook mode: `SALES_CHAT_LEADS_WEBHOOK_URL && SALES_CHAT_LEADS_WEBHOOK_SECRET`
-  - AI fallback gateway is optional and only validated when `SALES_CHAT_AI_FALLBACK_ENABLED=true`
+  - AI gateway keys are only required when AI response mode is enabled (`SALES_CHAT_AI_FALLBACK_ENABLED=true` and `SALES_CHAT_AI_RESPONSE_MODE!=off`)
   - When `uiAvailable` is false, `/get-started` does not render the chat launcher or window.
   - Even when UI is mounted, `/api/chat` returns `503 config_missing` if lead-webhook config is missing.
 - Required request body (JSON):
   - `sessionId`, `sourcePage`, `inputType`, `inputValue`
   - optional `buttonId`
   - optional `conversationState` (`nodeId`, `exchangeCount`, `memory`, `convertedAction`)
+  - optional `conversationHistory` (up to 8 recent turns, each `{ role, content }`) for AI context
 - Response behavior:
   - `200` + deterministic JSON payload (`assistantMessage`, `quickReplies`, `nodeId`, `conversationState`, optional terminal action).
+  - when AI response upgrades are used, payload shape stays the same and only `assistantMessage` / `recommendedOffer` may be upgraded.
+  - AI response observability fields:
+    - `responseMode: "deterministic" | "ai_assisted"`
+    - `aiDecisionReason?: "broad_mode" | "long_tail_trigger" | "guardrail_reject" | "gateway_error" | "disabled"`
+    - `aiGuardrailCode?: "pricing_drift" | "semantic_mismatch"`
+    - `aiModelUsed?: string`
+    - `aiLatencyMs?: number`
+    - `aiPromptVersion?: string`
+    - `aiRepairAttempted?: boolean`
   - Success payload observability fields:
     - `leadDispatchStatus?: "none" | "attempted" | "succeeded" | "failed"`
     - `leadDispatchCode?: string` (sanitized machine-readable reason, e.g. `webhook_http_error`, `duplicate_suppressed`)
@@ -65,8 +78,8 @@ cp .env.example .env.local
   - `fallbackToHuman: true`,
   - optional `errorType` (`disabled`, `config_missing`, `invalid_request`).
 - Response headers used for tracing:
-  - `x-sales-chat-route`: event code (`success`, `disabled`, `config_missing`, etc.).
-  - `x-request-id`: request correlation ID on successful deterministic responses.
+  - `x-sales-chat-route`: event code (`success`, `ai_fallback`, `disabled`, `config_missing`, etc.).
+  - `x-request-id`: request correlation ID on successful responses.
 - Local quick probes:
   - 400 path: `curl -i -X POST http://localhost:3000/api/chat -H "content-type: application/json" -d '{"sourcePage":"/get-started"}'`
   - happy path: `curl -i -X POST http://localhost:3000/api/chat -H "content-type: application/json" -d '{"sessionId":"session-12345678","sourcePage":"/get-started","inputType":"button","inputValue":"","buttonId":"__init__"}'`
@@ -83,6 +96,7 @@ SALES_CHAT_GROWTH_PARTNERSHIP_SIGNUP_URL=http://localhost:3000/get-started#book-
 SALES_CHAT_LEADS_WEBHOOK_URL=http://localhost:3000/api/sales-chat/leads
 SALES_CHAT_LEADS_WEBHOOK_SECRET=local-sales-chat-secret
 SALES_CHAT_AI_FALLBACK_ENABLED=false
+SALES_CHAT_AI_RESPONSE_MODE=broad
 ```
 
 Notes:
@@ -93,14 +107,21 @@ Notes:
 ### Sales chat operations notes
 
 - Deterministic mode is always authoritative for conversion-critical intents (A–G) and pricing copy.
-- Current `/api/chat` behavior is deterministic-only. `SALES_CHAT_AI_FALLBACK_ENABLED` currently affects config validation/guardrails, not primary response generation.
+- AI response mode supports:
+  - `long_tail`: upgrades free-text turns plus generic fallback turns (`fallbackRephrase` or unknown FAQ response)
+  - `broad`: upgrades all non-terminal turns except the `__init__` welcome bootstrap
+  - `off`: deterministic only
+- AI response mode is gated behind `SALES_CHAT_AI_FALLBACK_ENABLED=true` plus complete gateway config (`AI_GATEWAY_BASE_URL`, `AI_GATEWAY_API_KEY`, `AI_GATEWAY_MODEL`) when mode is not `off`.
+- AI upgrades are non-authoritative:
+  - deterministic state transitions, quick replies, terminal actions, and lead dispatch remain source of truth.
+  - generated responses are rejected when they introduce non-canonical pricing values.
 - If the chat route returns a JSON error, it always includes `error`, `fallbackToHuman: true`, and `errorType`.
 - Never store or log the raw API key in code, logs, or git notes. The `app/api/chat/route.ts` implementation only logs redacted metadata (`requestId`, sanitized hashes, counts).
 - For local QA of fallback UX, test with invalid payload (400) and config-missing fallback (503 + handoff message).
 - Deployment guardrail:
   - if `SALES_CHAT_ENABLED` resolves true in production, CI requires CTA keys + lead webhook URL via `pnpm verify:sales-chat-config`.
   - CI requires `SALES_CHAT_LEADS_WEBHOOK_SECRET` only when the lead webhook URL is not a Formspree endpoint.
-  - if `SALES_CHAT_AI_FALLBACK_ENABLED` resolves true, CI additionally requires all `AI_GATEWAY_*` keys.
+  - if AI response mode is enabled (`SALES_CHAT_AI_FALLBACK_ENABLED=true` and `SALES_CHAT_AI_RESPONSE_MODE!=off`), CI additionally requires `AI_GATEWAY_BASE_URL`, `AI_GATEWAY_API_KEY`, and `AI_GATEWAY_MODEL`.
 
 ### Sales chat events contract
 
@@ -120,6 +141,8 @@ Notes:
   - `sales_chat_quick_reply_clicked`
   - `sales_chat_spec_node_entered`
   - `sales_chat_offer_recommended`
+  - `sales_chat_ai_response_used`
+  - `sales_chat_ai_response_rejected`
   - `sales_chat_lead_payload_attempted`
   - `sales_chat_lead_payload_emitted`
   - `sales_chat_lead_payload_failed`
@@ -141,11 +164,19 @@ Notes:
   - `sales_chat_quick_reply_clicked`
   - `sales_chat_spec_node_entered`
   - `sales_chat_offer_recommended`
+  - `sales_chat_ai_response_used` or `sales_chat_ai_response_rejected`
   - `sales_chat_lead_payload_attempted`
   - `sales_chat_lead_payload_emitted` or `sales_chat_lead_payload_failed`
 - Recommended GA4 custom dimensions:
   - `node_id`
   - `recommended_offer`
+  - `response_mode`
+  - `ai_decision_reason`
+  - `ai_guardrail_code`
+  - `ai_model_used`
+  - `ai_latency_ms`
+  - `ai_prompt_version`
+  - `ai_repair_attempted`
   - `terminal_action`
   - `lead_dispatch_status`
   - `lead_dispatch_code`

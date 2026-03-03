@@ -21,6 +21,17 @@ function parseBooleanEnv(value: string | undefined, fallback: boolean): boolean 
   return fallback
 }
 
+function parseAiResponseMode(
+  value: string | undefined,
+  aiFallbackEnabled: boolean,
+): "off" | "long_tail" | "broad" {
+  const normalized = value?.trim().toLowerCase()
+  if (normalized === "off") return "off"
+  if (normalized === "broad") return "broad"
+  if (normalized === "long_tail") return "long_tail"
+  return aiFallbackEnabled ? "broad" : "long_tail"
+}
+
 function parseEnvFile(content: string): Record<string, string> {
   const parsed: Record<string, string> = {}
 
@@ -74,6 +85,8 @@ function main() {
   const env = parseEnvFile(envContent)
   const chatEnabled = parseBooleanEnv(env.SALES_CHAT_ENABLED, true)
   const aiFallbackEnabled = parseBooleanEnv(env.SALES_CHAT_AI_FALLBACK_ENABLED, false)
+  const aiResponseMode = parseAiResponseMode(env.SALES_CHAT_AI_RESPONSE_MODE, aiFallbackEnabled)
+  const aiResponseEnabled = aiFallbackEnabled && aiResponseMode !== "off"
 
   if (!chatEnabled) {
     console.log("✅ Sales chat is disabled for production. No gateway checks required.")
@@ -91,7 +104,7 @@ function main() {
   const requiredKeys = [
     ...REQUIRED_CTA_KEYS,
     ...requiredLeadKeys,
-    ...(aiFallbackEnabled ? [...REQUIRED_GATEWAY_KEYS] : []),
+    ...(aiResponseEnabled ? [...REQUIRED_GATEWAY_KEYS] : []),
   ]
   const missingKeys = requiredKeys.filter((key) => !env[key]?.trim())
   if (missingKeys.length > 0) {
@@ -104,8 +117,8 @@ function main() {
     )
   }
 
-  if (!aiFallbackEnabled) {
-    console.log("ℹ️ AI fallback disabled; gateway variables are optional for deterministic mode.")
+  if (!aiResponseEnabled) {
+    console.log("ℹ️ AI response mode is effectively disabled; gateway variables are optional for deterministic mode.")
   }
   if (formspreeLeadsEndpoint) {
     console.log("ℹ️ Formspree lead endpoint detected; webhook secret is optional.")

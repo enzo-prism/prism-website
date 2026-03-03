@@ -5,12 +5,16 @@ import { z } from "zod"
 
 import { dispatchSalesChatLead } from "@/lib/sales-chat/lead-dispatch"
 import { buildLeadPayload } from "@/lib/sales-chat/lead-payloads"
+import { maybeGenerateAiFallbackResponse } from "@/lib/sales-chat/ai-gateway-fallback"
 import {
   createInitialConversationState,
   runSalesChatSpecV1Engine,
 } from "@/lib/sales-chat/spec-v1-engine"
 import type {
+  SalesChatAiDecisionReason,
+  SalesChatAiGuardrailCode,
   LeadDispatchOutcome,
+  SalesChatResponseMode,
   SalesChatConversationState,
   SalesChatRequestV2,
   SalesChatSpecNodeId,
@@ -35,6 +39,7 @@ const CHAT_ROUTE_EVENTS = {
   DISABLED: "disabled",
   CONFIG_MISSING: "config_missing",
   INVALID_REQUEST: "invalid_request",
+  AI_FALLBACK: "ai_fallback",
   SUCCESS: "success",
 } as const
 
@@ -101,6 +106,11 @@ const conversationStateSchema = z.object({
   convertedAction: offerRecommendationSchema.optional(),
 })
 
+const conversationHistoryTurnSchema = z.object({
+  role: z.enum(["user", "assistant"]),
+  content: z.string().trim().min(1).max(1200),
+})
+
 const chatRequestSchema: z.ZodType<SalesChatRequestV2> = z.object({
   sessionId: z.string().trim().min(8).max(120),
   sourcePage: z.string().trim().min(1).max(200),
@@ -108,6 +118,7 @@ const chatRequestSchema: z.ZodType<SalesChatRequestV2> = z.object({
   inputValue: z.string().max(2000),
   buttonId: z.string().trim().max(120).optional(),
   conversationState: conversationStateSchema.optional(),
+  conversationHistory: z.array(conversationHistoryTurnSchema).max(8).optional(),
 })
 
 function buildFallbackError(
@@ -214,12 +225,55 @@ export async function POST(request: Request) {
   const state: SalesChatConversationState =
     validated.data.conversationState ?? createInitialConversationState()
 
-  const responsePayload = runSalesChatSpecV1Engine({
+  let responsePayload = runSalesChatSpecV1Engine({
     request: validated.data,
     state,
     runtimeLinks,
     nowIso: new Date().toISOString(),
   })
+  let routeEvent: string = CHAT_ROUTE_EVENTS.SUCCESS
+  let responseMode: SalesChatResponseMode = responsePayload.responseMode
+  let aiDecisionReason: SalesChatAiDecisionReason | undefined
+  let aiGuardrailCode: SalesChatAiGuardrailCode | undefined
+  let aiModelUsed: string | undefined
+  let aiLatencyMs: number | undefined
+  let aiPromptVersion: string | undefined
+  let aiRepairAttempted: boolean | undefined
+
+  const aiFallback = await maybeGenerateAiFallbackResponse({
+    enabled: runtimeConfig.aiResponseEnabled,
+    mode: runtimeConfig.aiResponseMode,
+    gatewayConfigured: runtimeConfig.gatewayConfigured,
+    gatewayFallbackModels: runtimeConfig.gatewayFallbackModels,
+    gatewayProviderOrder: runtimeConfig.gatewayProviderOrder,
+    env: process.env,
+    inputType: validated.data.inputType,
+    buttonId: validated.data.buttonId,
+    requestInput: validated.data.inputValue,
+    sourcePage: validated.data.sourcePage,
+    state: responsePayload.conversationState,
+    deterministicResponse: responsePayload,
+    conversationHistory: validated.data.conversationHistory,
+  })
+
+  aiDecisionReason = aiFallback.reason
+  aiGuardrailCode = aiFallback.guardrailCode
+  aiModelUsed = aiFallback.modelUsed
+  aiLatencyMs = aiFallback.latencyMs
+  aiPromptVersion = aiFallback.promptVersion
+  aiRepairAttempted = aiFallback.repairAttempted
+
+  if (aiFallback.used && aiFallback.assistantMessage) {
+    responsePayload = {
+      ...responsePayload,
+      assistantMessage: aiFallback.assistantMessage,
+      responseMode: "ai_assisted",
+      recommendedOffer: aiFallback.recommendedOffer ?? responsePayload.recommendedOffer,
+      fallbackToHuman: aiFallback.fallbackToHuman ?? responsePayload.fallbackToHuman,
+    }
+    responseMode = "ai_assisted"
+    routeEvent = CHAT_ROUTE_EVENTS.AI_FALLBACK
+  }
 
   let leadDispatchStatus: LeadDispatchOutcome = "none"
   let leadDispatchCode: string | undefined
@@ -268,12 +322,19 @@ export async function POST(request: Request) {
 
   return NextResponse.json({
     ...responsePayload,
+    responseMode,
+    aiDecisionReason,
+    aiGuardrailCode,
+    aiModelUsed,
+    aiLatencyMs,
+    aiPromptVersion,
+    aiRepairAttempted,
     leadDispatchStatus,
     leadDispatchCode,
   }, {
     status: 200,
     headers: {
-      "x-sales-chat-route": CHAT_ROUTE_EVENTS.SUCCESS,
+      "x-sales-chat-route": routeEvent,
       "x-request-id": requestId,
     },
   })

@@ -8,6 +8,17 @@ export type TerminalAction =
 
 export type LeadDispatchOutcome = "none" | "attempted" | "succeeded" | "failed"
 
+export type SalesChatResponseMode = "deterministic" | "ai_assisted"
+
+export type SalesChatAiDecisionReason =
+  | "broad_mode"
+  | "long_tail_trigger"
+  | "guardrail_reject"
+  | "gateway_error"
+  | "disabled"
+
+export type SalesChatAiGuardrailCode = "pricing_drift" | "semantic_mismatch"
+
 export type QuickReplyActionType = "reply" | "open_url" | "open_booking"
 
 export type QuickReply = {
@@ -69,6 +80,11 @@ export type SalesChatConversationState = {
   convertedAction?: OfferRecommendation
 }
 
+export type SalesChatTranscriptTurn = {
+  role: "user" | "assistant"
+  content: string
+}
+
 export type SalesChatRequestV2 = {
   sessionId: string
   sourcePage: string
@@ -76,6 +92,7 @@ export type SalesChatRequestV2 = {
   inputValue: string
   buttonId?: string
   conversationState?: SalesChatConversationState
+  conversationHistory?: SalesChatTranscriptTurn[]
 }
 
 export type SalesChatResponseV2 = {
@@ -83,6 +100,13 @@ export type SalesChatResponseV2 = {
   nodeId: SalesChatSpecNodeId
   quickReplies: QuickReply[]
   memoryPatch: Record<string, string | boolean | null>
+  responseMode: SalesChatResponseMode
+  aiDecisionReason?: SalesChatAiDecisionReason
+  aiGuardrailCode?: SalesChatAiGuardrailCode
+  aiModelUsed?: string
+  aiLatencyMs?: number
+  aiPromptVersion?: string
+  aiRepairAttempted?: boolean
   recommendedOffer?: OfferRecommendation
   terminalAction?: TerminalAction
   leadDispatchStatus?: LeadDispatchOutcome

@@ -239,6 +239,7 @@ function createResponse(args: {
     nodeId: args.nodeId,
     quickReplies: behavior.quickReplies,
     memoryPatch: args.memoryPatch ?? {},
+    responseMode: "deterministic",
     recommendedOffer: behavior.recommendedOffer,
     terminalAction,
     fallbackToHuman: args.fallbackToHuman,

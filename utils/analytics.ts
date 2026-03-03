@@ -153,6 +153,8 @@ export type EventType =
   | "sales_chat_quick_reply_clicked"
   | "sales_chat_spec_node_entered"
   | "sales_chat_offer_recommended"
+  | "sales_chat_ai_response_used"
+  | "sales_chat_ai_response_rejected"
   | "sales_chat_lead_payload_attempted"
   | "sales_chat_lead_payload_emitted"
   | "sales_chat_lead_payload_failed"
@@ -554,6 +556,32 @@ type SalesChatOfferRecommendedData = {
   recommendedOffer: "free_audit" | "website_overhaul" | "growth_partnership"
 }
 
+type SalesChatAiResponseUsedData = {
+  sourcePage: string
+  sessionId?: string
+  nodeId: string
+  responseMode: "ai_assisted"
+  aiDecisionReason?: "broad_mode" | "long_tail_trigger"
+  aiGuardrailCode?: "pricing_drift" | "semantic_mismatch"
+  aiModelUsed?: string
+  aiLatencyMs?: number
+  aiPromptVersion?: string
+  aiRepairAttempted?: boolean
+}
+
+type SalesChatAiResponseRejectedData = {
+  sourcePage: string
+  sessionId?: string
+  nodeId: string
+  responseMode: "deterministic"
+  aiDecisionReason: "guardrail_reject" | "gateway_error" | "disabled"
+  aiGuardrailCode?: "pricing_drift" | "semantic_mismatch"
+  aiModelUsed?: string
+  aiLatencyMs?: number
+  aiPromptVersion?: string
+  aiRepairAttempted?: boolean
+}
+
 type SalesChatLeadPayloadAttemptedData = {
   sourcePage: string
   sessionId?: string
@@ -761,6 +789,58 @@ export function trackSalesChatOfferRecommended({
     session_id: sessionId,
     node_id: nodeId,
     recommended_offer: recommendedOffer,
+  })
+}
+
+export function trackSalesChatAiResponseUsed({
+  sourcePage,
+  sessionId,
+  nodeId,
+  responseMode,
+  aiDecisionReason,
+  aiGuardrailCode,
+  aiModelUsed,
+  aiLatencyMs,
+  aiPromptVersion,
+  aiRepairAttempted,
+}: SalesChatAiResponseUsedData) {
+  trackEvent("sales_chat_ai_response_used", {
+    source_page: sourcePage,
+    session_id: sessionId,
+    node_id: nodeId,
+    response_mode: responseMode,
+    ai_decision_reason: aiDecisionReason,
+    ai_guardrail_code: aiGuardrailCode,
+    ai_model_used: aiModelUsed,
+    ai_latency_ms: aiLatencyMs,
+    ai_prompt_version: aiPromptVersion,
+    ai_repair_attempted: aiRepairAttempted,
+  })
+}
+
+export function trackSalesChatAiResponseRejected({
+  sourcePage,
+  sessionId,
+  nodeId,
+  responseMode,
+  aiDecisionReason,
+  aiGuardrailCode,
+  aiModelUsed,
+  aiLatencyMs,
+  aiPromptVersion,
+  aiRepairAttempted,
+}: SalesChatAiResponseRejectedData) {
+  trackEvent("sales_chat_ai_response_rejected", {
+    source_page: sourcePage,
+    session_id: sessionId,
+    node_id: nodeId,
+    response_mode: responseMode,
+    ai_decision_reason: aiDecisionReason,
+    ai_guardrail_code: aiGuardrailCode,
+    ai_model_used: aiModelUsed,
+    ai_latency_ms: aiLatencyMs,
+    ai_prompt_version: aiPromptVersion,
+    ai_repair_attempted: aiRepairAttempted,
   })
 }
 

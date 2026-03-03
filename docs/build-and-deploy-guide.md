@@ -39,17 +39,37 @@ Use this flow when switching between local, preview, and production changes:
 - `vercel pull --yes` to sync deployment env vars locally (`--environment=production` for prod parity).
 - `pnpm verify:sales-chat-config` immediately after `vercel pull` to fail fast when chat is enabled without required deterministic config.
 - `pnpm verify:pricing-consistency` before build/deploy to block legacy pricing drift on canonical surfaces.
-- `vercel env add SALES_CHAT_ENABLED`
-- `vercel env add SALES_CHAT_BOOKING_URL`
-- `vercel env add SALES_CHAT_WEBSITE_OVERHAUL_CHECKOUT_URL`
-- `vercel env add SALES_CHAT_GROWTH_PARTNERSHIP_SIGNUP_URL`
-- `vercel env add SALES_CHAT_LEADS_WEBHOOK_URL`
-- `vercel env add SALES_CHAT_LEADS_WEBHOOK_SECRET` (required for non-Formspree endpoints, optional for Formspree)
-- Optional AI fallback vars:
-  - `vercel env add SALES_CHAT_AI_FALLBACK_ENABLED`
-  - `vercel env add AI_GATEWAY_BASE_URL`
-  - `vercel env add AI_GATEWAY_API_KEY`
-  - `vercel env add AI_GATEWAY_MODEL`
+- Set/refresh sales-chat env vars in preview with explicit scope:
+  ```bash
+  vercel env add SALES_CHAT_ENABLED preview --force
+  vercel env add SALES_CHAT_BOOKING_URL preview --force
+  vercel env add SALES_CHAT_WEBSITE_OVERHAUL_CHECKOUT_URL preview --force
+  vercel env add SALES_CHAT_GROWTH_PARTNERSHIP_SIGNUP_URL preview --force
+  vercel env add SALES_CHAT_LEADS_WEBHOOK_URL preview --force
+  vercel env add SALES_CHAT_LEADS_WEBHOOK_SECRET preview --force
+
+  vercel env add SALES_CHAT_AI_FALLBACK_ENABLED preview --force
+  vercel env add SALES_CHAT_AI_RESPONSE_MODE preview --force
+  vercel env add AI_GATEWAY_BASE_URL preview --force
+  vercel env add AI_GATEWAY_API_KEY preview --sensitive --force
+  vercel env add AI_GATEWAY_MODEL preview --force
+  vercel env add AI_GATEWAY_FALLBACK_MODELS preview --force
+  vercel env add AI_GATEWAY_PROVIDER_ORDER preview --force
+  ```
+- Repeat the same commands with `production` in place of `preview` before production rollout.
+- Production rollout command sequence:
+  ```bash
+  vercel pull --yes --environment=production
+  pnpm verify:sales-chat-config
+  pnpm test:sales-chat:core
+  pnpm test:sales-chat:e2e
+  npx vercel deploy --prod --yes
+  ```
+- Post-deploy monitoring + rollback:
+  ```bash
+  vercel logs <deployment-url> --filter sales-chat --since 1h
+  vercel rollback <previous-stable-deployment-url>
+  ```
 - `npx vercel deploy --prod --yes` for production deploys (source deploy; matches CI).
 - `npx vercel deploy --yes` for a preview deployment while testing branch work.
 - `vercel ls` for recent deployment inventory.
@@ -65,29 +85,31 @@ Use this flow when switching between local, preview, and production changes:
   - Confirm `SALES_CHAT_ENABLED` is `"true"` for the environment you want chat tested.
   - Confirm `SALES_CHAT_BOOKING_URL`, `SALES_CHAT_WEBSITE_OVERHAUL_CHECKOUT_URL`, `SALES_CHAT_GROWTH_PARTNERSHIP_SIGNUP_URL`, and `SALES_CHAT_LEADS_WEBHOOK_URL` are present.
   - If lead backend is not Formspree, confirm `SALES_CHAT_LEADS_WEBHOOK_SECRET` is also present.
-  - If `SALES_CHAT_AI_FALLBACK_ENABLED=true`, also confirm all `AI_GATEWAY_*` vars are present.
+  - If AI response mode is enabled (`SALES_CHAT_AI_FALLBACK_ENABLED=true` and `SALES_CHAT_AI_RESPONSE_MODE!=off`), also confirm core `AI_GATEWAY_*` vars are present.
 - Deployment blocker policy:
   - If `SALES_CHAT_ENABLED` resolves true and any required deterministic key is missing, deployment must fail.
   - CI enforces this with `pnpm verify:sales-chat-config` after `vercel pull --environment=production`.
-- If AI fallback is enabled, verify gateway model path and secret scope in the Vercel AI Gateway dashboard before each deploy and rotate API keys when moving through staging/production.
+- If AI response mode is enabled, verify gateway model path and secret scope in the Vercel AI Gateway dashboard before each deploy and rotate API keys when moving through staging/production.
 - Preview smoke checklist:
   1. Open `/get-started`.
   2. Send 3 short messages from different conversation turns.
   3. Confirm deterministic quick replies render and follow spec flow transitions.
-  4. Validate booking link anchors resolve to `#book-call`.
-  5. Confirm chat motion polish in the live shell:
+  4. If AI response mode is enabled, send one free-text question and confirm response header is `x-sales-chat-route=ai_fallback`.
+  5. Validate booking link anchors resolve to `#book-call`.
+  6. Confirm chat motion polish in the live shell:
     - launcher pulse appears when closed,
     - header high-tech glyph glow/orbit renders when online,
     - on mobile viewport, header glyph orbit remains slow/smooth (not compressed to rapid spin),
     - typing waveform appears while awaiting response.
-  6. Simulate one config/provider failure path (mock 503 in local) and verify a single handoff message appears plus clear booking path.
-  7. Validate lead dispatch telemetry contract:
+  7. Simulate one config/provider failure path (mock 503 in local) and verify a single handoff message appears plus clear booking path.
+  8. Validate lead dispatch telemetry contract:
     - success path emits `sales_chat_lead_payload_attempted` + `sales_chat_lead_payload_emitted`.
     - failed dispatch path emits `sales_chat_lead_payload_attempted` + `sales_chat_lead_payload_failed` and does **not** emit `sales_chat_lead_payload_emitted`.
-  8. Validate GA4 DebugView for deep sales-chat events:
+  9. Validate GA4 DebugView for deep sales-chat events:
     - `sales_chat_quick_reply_clicked`
     - `sales_chat_spec_node_entered`
     - `sales_chat_offer_recommended`
+    - `sales_chat_ai_response_used` or `sales_chat_ai_response_rejected`
     - `sales_chat_lead_payload_attempted`
     - `sales_chat_lead_payload_emitted` or `sales_chat_lead_payload_failed`
 - Production verification:
@@ -97,12 +119,16 @@ Use this flow when switching between local, preview, and production changes:
     - `vercel logs <deployment-url> --filter sales-chat --since 1h`
     - response headers (`x-sales-chat-route`, `x-request-id`) for root-cause mapping.
   - If conversions appear to drop, validate lead fan-out health by posting one known-valid payload to `/api/sales-chat/leads` in preview before production rollout.
-  - If GA funnel charts look incomplete, verify GA4 custom dimensions exist for `node_id`, `recommended_offer`, `terminal_action`, and `lead_dispatch_status`.
+  - Immediate rollback guardrails for broad AI mode:
+    - roll back if lead completion rate drops >10% vs trailing 7-day baseline
+    - roll back if `sales_chat_error` exceeds 3% of chat sessions
+    - first mitigation option: set `SALES_CHAT_AI_RESPONSE_MODE=long_tail` and redeploy
+  - If GA funnel charts look incomplete, verify GA4 custom dimensions exist for `node_id`, `recommended_offer`, `response_mode`, `ai_decision_reason`, `terminal_action`, and `lead_dispatch_status`.
   - Confirm non-PII structured logs only: `grep` in logs should show redacted session hashes and no `api_key`/raw secret values.
 - Add a release note in PR description referencing:
   - `/api/chat` deterministic response behavior,
   - lead webhook dispatch readiness (`SALES_CHAT_LEADS_WEBHOOK_*`),
-  - whether fallback path was smoke-tested.
+  - whether AI response behavior (`long_tail` vs `broad`) was smoke-tested.
   - reliability suite status (`pnpm test:sales-chat:core`, `pnpm test:sales-chat:e2e`, `pnpm test:sales-chat:stress`).
 
 ### Deployment checklist
@@ -114,11 +140,14 @@ Use this flow when switching between local, preview, and production changes:
   - `SALES_CHAT_GROWTH_PARTNERSHIP_SIGNUP_URL`
   - `SALES_CHAT_LEADS_WEBHOOK_URL`
   - `SALES_CHAT_LEADS_WEBHOOK_SECRET` (required for non-Formspree endpoints)
-  - Optional fallback-only vars:
+  - Optional AI response vars:
     - `SALES_CHAT_AI_FALLBACK_ENABLED`
+    - `SALES_CHAT_AI_RESPONSE_MODE`
     - `AI_GATEWAY_BASE_URL`
     - `AI_GATEWAY_API_KEY`
     - `AI_GATEWAY_MODEL`
+    - `AI_GATEWAY_FALLBACK_MODELS`
+    - `AI_GATEWAY_PROVIDER_ORDER`
 - Add a manual sign-off after preview smoke before merging to `main`.
 - Add pricing sign-off:
   - `/pricing` shows only `$1,000 one-time`, `$2,000/month`, and `$0` audit.

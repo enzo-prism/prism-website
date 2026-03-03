@@ -1,8 +1,11 @@
 import type { ReactNode } from "react"
 import type {
+  SalesChatAiDecisionReason,
+  SalesChatAiGuardrailCode,
   LeadDispatchOutcome,
   QuickReply as SpecQuickReply,
   SalesChatConversationState,
+  SalesChatResponseMode,
 } from "@/lib/sales-chat/spec-v1-types"
 
 export type ChatRole = "user" | "assistant"
@@ -23,6 +26,13 @@ export type SalesChatApiResponse = {
   nodeId: SalesChatConversationState["nodeId"]
   quickReplies: SalesChatQuickReply[]
   memoryPatch: Record<string, string | boolean | null>
+  responseMode: SalesChatResponseMode
+  aiDecisionReason?: SalesChatAiDecisionReason
+  aiGuardrailCode?: SalesChatAiGuardrailCode
+  aiModelUsed?: string
+  aiLatencyMs?: number
+  aiPromptVersion?: string
+  aiRepairAttempted?: boolean
   recommendedOffer?: "free_audit" | "website_overhaul" | "growth_partnership"
   terminalAction?: "emit_free_audit" | "emit_website_overhaul" | "emit_growth_partnership" | "none"
   leadDispatchStatus?: LeadDispatchOutcome
