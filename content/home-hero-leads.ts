@@ -13,6 +13,5 @@ export type HomeHeroMonthlyLeadsStat = {
  * Newest first. Add a new entry at month-end to rotate the hero pill.
  */
 export const HOME_HERO_MONTHLY_LEADS_STATS: HomeHeroMonthlyLeadsStat[] = [
-  { month: "2026-01", leads: 7886 },
+  { month: "2026-02", leads: 9424 },
 ]
-
