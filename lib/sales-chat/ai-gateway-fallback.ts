@@ -14,8 +14,8 @@ import type { SalesChatAiResponseMode } from "@/lib/sales-chat/runtime-config"
 
 const aiLongTailSchema = z.object({
   assistantMessage: z.string().trim().min(40).max(1200),
-  recommendedOffer: z.enum(["free_audit", "website_overhaul", "growth_partnership"]).optional(),
-  shouldHandoff: z.boolean().optional(),
+  recommendedOffer: z.enum(["free_audit", "website_overhaul", "growth_partnership"]).nullable(),
+  shouldHandoff: z.boolean().nullable(),
 })
 
 const AI_TRIGGER_MESSAGES = new Set([
@@ -31,6 +31,8 @@ const WEBSITE_CONTEXT_PATTERN = /\b(website overhaul|site rebuild|new website|re
 const GROWTH_CONTEXT_PATTERN = /\b(growth partnership|retainer|ongoing growth)\b/i
 const MONTHLY_MARKER_PATTERN = /(?:\/\s*mo(?:nth)?\b|per\s+month\b|monthly\b)/i
 const ONE_TIME_MARKER_PATTERN = /\b(one[\s-]?time|single payment|pay once|one-off)\b/i
+const COMPLEX_QUERY_PATTERN = /\b(strategy|prioriti[sz]e|roadmap|framework|funnel|attribution|instrumentation|architecture|migration|integrat(?:e|ion)|multi[\s-]?step|kpi|experiment|positioning|sequencing)\b/i
+const DEFAULT_FAST_MODEL_MAX_CHARS = 190
 
 export type AiDecisionReason =
   | "broad_mode"
@@ -377,6 +379,65 @@ function parseCsvEnv(value: string | undefined): string[] {
     .filter(Boolean)
 }
 
+function parseBooleanEnv(value: string | undefined, fallback = false): boolean {
+  if (!value) return fallback
+  const normalized = value.trim().toLowerCase()
+  if (["1", "true", "yes", "on"].includes(normalized)) return true
+  if (["0", "false", "no", "off"].includes(normalized)) return false
+  return fallback
+}
+
+function parsePositiveIntegerEnv(value: string | undefined, fallback: number): number {
+  if (!value?.trim()) return fallback
+  const parsed = Number.parseInt(value.trim(), 10)
+  if (!Number.isFinite(parsed) || parsed <= 0) return fallback
+  return parsed
+}
+
+function shouldPreferFastModel(input: MaybeAiFallbackInput, maxChars: number): boolean {
+  if (input.inputType !== "text") {
+    return false
+  }
+
+  const message = input.requestInput.trim()
+  if (!message) {
+    return false
+  }
+
+  if (message.length > maxChars) {
+    return false
+  }
+
+  if (COMPLEX_QUERY_PATTERN.test(message.toLowerCase())) {
+    return false
+  }
+
+  const historyDepth = input.conversationHistory?.length ?? 0
+  if (historyDepth >= 4) {
+    return false
+  }
+
+  return true
+}
+
+function resolveGatewayModelId(input: MaybeAiFallbackInput, primaryModelId: string): string {
+  const fastModel = input.env.AI_GATEWAY_FAST_MODEL?.trim()
+  if (!fastModel) {
+    return primaryModelId
+  }
+
+  if (parseBooleanEnv(input.env.AI_GATEWAY_FORCE_FAST_MODEL, false)) {
+    return fastModel
+  }
+
+  const maxChars = parsePositiveIntegerEnv(
+    input.env.AI_GATEWAY_FAST_MODEL_MAX_CHARS,
+    DEFAULT_FAST_MODEL_MAX_CHARS,
+  )
+
+  return shouldPreferFastModel(input, maxChars) ? fastModel : primaryModelId
+}
+
 function buildGatewayProviderOptions(input: MaybeAiFallbackInput) {
   const fallbackModels = input.gatewayFallbackModels.length > 0
     ? input.gatewayFallbackModels
@@ -413,6 +474,31 @@ function getPrimaryGenerationTemperature(input: MaybeAiFallbackInput): number {
   return 0.52
 }
 
+function maybeLogGatewayDebug(
+  input: MaybeAiFallbackInput,
+  phase: "generate" | "repair",
+  error: unknown,
+  modelId: string,
+) {
+  if (!parseBooleanEnv(input.env.AI_GATEWAY_DEBUG, false)) {
+    return
+  }
+
+  const statusCode = (error as { statusCode?: number; cause?: { statusCode?: number } })?.statusCode
+    ?? (error as { cause?: { statusCode?: number } })?.cause?.statusCode
+  const message = (error as { message?: string })?.message ?? "unknown_error"
+
+  console.warn("[sales-chat][ai-gateway] fallback_error", {
+    phase,
+    modelId,
+    statusCode,
+    message,
+    sourcePage: input.sourcePage,
+    nodeId: input.state.nodeId,
+    inputType: input.inputType,
+  })
+}
+
 export async function maybeGenerateAiFallbackResponse(
   input: MaybeAiFallbackInput,
 ): Promise<MaybeAiFallbackResult> {
@@ -423,12 +509,13 @@ export async function maybeGenerateAiFallbackResponse(
 
   const baseURL = input.env.AI_GATEWAY_BASE_URL?.trim()
   const apiKey = input.env.AI_GATEWAY_API_KEY?.trim()
-  const modelId = input.env.AI_GATEWAY_MODEL?.trim()
+  const primaryModelId = input.env.AI_GATEWAY_MODEL?.trim()
 
-  if (!input.gatewayConfigured || !baseURL || !apiKey || !modelId) {
+  if (!input.gatewayConfigured || !baseURL || !apiKey || !primaryModelId) {
     return { used: false, reason: "disabled", promptVersion: AI_PROMPT_VERSION }
   }
 
+  const selectedModelId = resolveGatewayModelId(input, primaryModelId)
   const startedAt = Date.now()
 
   try {
@@ -438,7 +525,7 @@ export async function maybeGenerateAiFallbackResponse(
     })
 
     const result = await generateObject({
-      model: gateway(modelId),
+      model: gateway(selectedModelId),
       schema: aiLongTailSchema,
       temperature: getPrimaryGenerationTemperature(input),
       maxOutputTokens: 420,
@@ -449,7 +536,7 @@ export async function maybeGenerateAiFallbackResponse(
 
     const latencyMs = Date.now() - startedAt
     let assistantMessage = result.object.assistantMessage.trim()
-    let recommendedOffer = result.object.recommendedOffer
+    let recommendedOffer = result.object.recommendedOffer ?? undefined
     let fallbackToHuman = result.object.shouldHandoff ?? false
     let repairAttempted = false
 
@@ -459,7 +546,7 @@ export async function maybeGenerateAiFallbackResponse(
       repairAttempted = true
       try {
         const repaired = await generateObject({
-          model: gateway(modelId),
+          model: gateway(selectedModelId),
           schema: aiLongTailSchema,
           temperature: 0.15,
           maxOutputTokens: 420,
@@ -470,12 +557,13 @@ export async function maybeGenerateAiFallbackResponse(
         assistantMessage = repaired.object.assistantMessage.trim()
         recommendedOffer = repaired.object.recommendedOffer ?? recommendedOffer
         fallbackToHuman = repaired.object.shouldHandoff ?? fallbackToHuman
-      } catch {
+      } catch (error) {
+        maybeLogGatewayDebug(input, "repair", error, selectedModelId)
         return {
           used: false,
           reason: "guardrail_reject",
           guardrailCode,
-          modelUsed: modelId,
+          modelUsed: selectedModelId,
           latencyMs,
           promptVersion: AI_PROMPT_VERSION,
           repairAttempted,
@@ -490,7 +578,7 @@ export async function maybeGenerateAiFallbackResponse(
         used: false,
         reason: "guardrail_reject",
         guardrailCode,
-        modelUsed: modelId,
+        modelUsed: selectedModelId,
         latencyMs,
         promptVersion: AI_PROMPT_VERSION,
         repairAttempted,
@@ -503,16 +591,17 @@ export async function maybeGenerateAiFallbackResponse(
       recommendedOffer,
       fallbackToHuman,
       reason: decision.reason,
-      modelUsed: modelId,
+      modelUsed: selectedModelId,
       latencyMs,
       promptVersion: AI_PROMPT_VERSION,
       repairAttempted,
     }
-  } catch {
+  } catch (error) {
+    maybeLogGatewayDebug(input, "generate", error, selectedModelId)
     return {
       used: false,
       reason: "gateway_error",
-      modelUsed: modelId,
+      modelUsed: selectedModelId,
       latencyMs: Date.now() - startedAt,
       promptVersion: AI_PROMPT_VERSION,
     }

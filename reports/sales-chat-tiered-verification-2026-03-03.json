@@ -1,0 +1,240 @@
+{
+  "generatedAt": "2026-03-04T00:55:50.523Z",
+  "host": "https://prism-website-gamma.vercel.app",
+  "samples": {
+    "short": [
+      {
+        "status": 200,
+        "route": "ai_fallback",
+        "latencyMs": 4678,
+        "responseMode": "ai_assisted",
+        "aiDecisionReason": "broad_mode",
+        "aiModelUsed": "openai/gpt-5.1-instant",
+        "nodeId": "welcome",
+        "assistantPreview": "Absolutely — we work with med spas all the time to increase booked consults through better website flow, targeted messaging, and ongoing optimization. A quick free audit is usually"
+      },
+      {
+        "status": 200,
+        "route": "ai_fallback",
+        "latencyMs": 3128,
+        "responseMode": "ai_assisted",
+        "aiDecisionReason": "broad_mode",
+        "aiModelUsed": "openai/gpt-5.1-instant",
+        "nodeId": "welcome",
+        "assistantPreview": "Absolutely — med spas are one of the niches we help most, and getting you more booked consults is exactly what our process is built for. The fastest way for us to see where you're "
+      },
+      {
+        "status": 200,
+        "route": "ai_fallback",
+        "latencyMs": 2928,
+        "responseMode": "ai_assisted",
+        "aiDecisionReason": "broad_mode",
+        "aiModelUsed": "openai/gpt-5.1-instant",
+        "nodeId": "welcome",
+        "assistantPreview": "Absolutely — we help med spas boost booked consults by improving their website flow and tightening up the full marketing funnel. To point you in the right direction, could you tell"
+      },
+      {
+        "status": 200,
+        "route": "ai_fallback",
+        "latencyMs": 2930,
+        "responseMode": "ai_assisted",
+        "aiDecisionReason": "broad_mode",
+        "aiModelUsed": "openai/gpt-5.1-instant",
+        "nodeId": "welcome",
+        "assistantPreview": "Absolutely — we help med spas boost booked consults by tightening up your website flow and fixing any friction in your marketing. A quick look at your current site and funnel usual"
+      },
+      {
+        "status": 200,
+        "route": "ai_fallback",
+        "latencyMs": 2266,
+        "responseMode": "ai_assisted",
+        "aiDecisionReason": "broad_mode",
+        "aiModelUsed": "openai/gpt-5.1-instant",
+        "nodeId": "welcome",
+        "assistantPreview": "Absolutely — helping med spas book more consults is something we’re really good at. It usually starts with understanding what’s working on your site and what’s holding conversions "
+      },
+      {
+        "status": 200,
+        "route": "ai_fallback",
+        "latencyMs": 3681,
+        "responseMode": "ai_assisted",
+        "aiDecisionReason": "broad_mode",
+        "aiModelUsed": "openai/gpt-5.1-instant",
+        "nodeId": "welcome",
+        "assistantPreview": "Absolutely — we help med spas boost booked consults by tightening up their website, fixing conversion leaks, and running stronger ongoing growth systems. A quick look at your curre"
+      },
+      {
+        "status": 200,
+        "route": "ai_fallback",
+        "latencyMs": 3406,
+        "responseMode": "ai_assisted",
+        "aiDecisionReason": "broad_mode",
+        "aiModelUsed": "openai/gpt-5.1-instant",
+        "nodeId": "welcome",
+        "assistantPreview": "Absolutely — helping med spas boost booked consults is one of the things we do best, especially through our ongoing Growth Partnership. We handle the site, messaging, and conversio"
+      },
+      {
+        "status": 200,
+        "route": "ai_fallback",
+        "latencyMs": 2583,
+        "responseMode": "ai_assisted",
+        "aiDecisionReason": "broad_mode",
+        "aiModelUsed": "openai/gpt-5.1-instant",
+        "nodeId": "welcome",
+        "assistantPreview": "Absolutely — we help med spas boost booked consults by tightening up their site, improving conversions, and running smarter ongoing marketing. If you'd like, we can start with a fr"
+      },
+      {
+        "status": 200,
+        "route": "ai_fallback",
+        "latencyMs": 3101,
+        "responseMode": "ai_assisted",
+        "aiDecisionReason": "broad_mode",
+        "aiModelUsed": "openai/gpt-5.1-instant",
+        "nodeId": "welcome",
+        "assistantPreview": "Absolutely — we help med spas boost booked consults by improving your site, tightening your funnel, and fixing any friction in the booking flow. The easiest next step is a free aud"
+      },
+      {
+        "status": 200,
+        "route": "ai_fallback",
+        "latencyMs": 3662,
+        "responseMode": "ai_assisted",
+        "aiDecisionReason": "broad_mode",
+        "aiModelUsed": "openai/gpt-5.1-instant",
+        "nodeId": "welcome",
+        "assistantPreview": "Absolutely — we help med spas boost booked consults by improving their website, tightening their messaging, and running conversion-focused marketing. A quick free audit is usually "
+      }
+    ],
+    "complex": [
+      {
+        "status": 200,
+        "route": "ai_fallback",
+        "latencyMs": 3232,
+        "responseMode": "ai_assisted",
+        "aiDecisionReason": "broad_mode",
+        "aiModelUsed": "openai/gpt-5.3-chat",
+        "nodeId": "welcome",
+        "assistantPreview": "Great question. Start by instrumenting core conversion events first (forms, calls, booked appointments) and ensuring they pass clean data into your analytics and ad platforms; with"
+      },
+      {
+        "status": 200,
+        "route": "ai_fallback",
+        "latencyMs": 2919,
+        "responseMode": "ai_assisted",
+        "aiDecisionReason": "broad_mode",
+        "aiModelUsed": "openai/gpt-5.3-chat",
+        "nodeId": "welcome",
+        "assistantPreview": "Great question. A simple order that works well is: first lock in clean conversion tracking and attribution (analytics, call tracking, form events), then align your conversion messa"
+      },
+      {
+        "status": 200,
+        "route": "ai_fallback",
+        "latencyMs": 3092,
+        "responseMode": "ai_assisted",
+        "aiDecisionReason": "broad_mode",
+        "aiModelUsed": "openai/gpt-5.3-chat",
+        "nodeId": "welcome",
+        "assistantPreview": "Great question. I’d start by getting clean attribution in place first (GA4 events, call tracking, and form tracking) so every lead from paid search and local SEO is measurable, the"
+      },
+      {
+        "status": 200,
+        "route": "ai_fallback",
+        "latencyMs": 2943,
+        "responseMode": "ai_assisted",
+        "aiDecisionReason": "broad_mode",
+        "aiModelUsed": "openai/gpt-5.3-chat",
+        "nodeId": "welcome",
+        "assistantPreview": "Great question. I’d start by getting attribution instrumentation right first so every click, call, and form from paid search and local SEO flows into one tracking system—otherwise "
+      },
+      {
+        "status": 200,
+        "route": "ai_fallback",
+        "latencyMs": 2885,
+        "responseMode": "ai_assisted",
+        "aiDecisionReason": "broad_mode",
+        "aiModelUsed": "openai/gpt-5.3-chat",
+        "nodeId": "welcome",
+        "assistantPreview": "Great question. Start by getting clean attribution in place first (conversion tracking, call tracking, and form events) so every lead from paid search and local SEO is measurable; "
+      },
+      {
+        "status": 200,
+        "route": "ai_fallback",
+        "latencyMs": 3073,
+        "responseMode": "ai_assisted",
+        "aiDecisionReason": "broad_mode",
+        "aiModelUsed": "openai/gpt-5.3-chat",
+        "nodeId": "welcome",
+        "assistantPreview": "Great question. A simple rule is: instrument first, then optimize channels, then refine messaging. Start by making sure conversions and call tracking are clean across paid search a"
+      },
+      {
+        "status": 200,
+        "route": "ai_fallback",
+        "latencyMs": 4004,
+        "responseMode": "ai_assisted",
+        "aiDecisionReason": "broad_mode",
+        "aiModelUsed": "openai/gpt-5.3-chat",
+        "nodeId": "welcome",
+        "assistantPreview": "Great question. I’d start by locking in clean attribution first (GA4 events, call tracking, form tracking) so every channel feeds reliable data, then run paid search because it gen"
+      },
+      {
+        "status": 200,
+        "route": "ai_fallback",
+        "latencyMs": 3382,
+        "responseMode": "ai_assisted",
+        "aiDecisionReason": "broad_mode",
+        "aiModelUsed": "openai/gpt-5.3-chat",
+        "nodeId": "welcome",
+        "assistantPreview": "Great question. Start by instrumenting attribution first: make sure GA4, call tracking, and form events clearly capture source, campaign, and keyword so every lead is traceable. Ne"
+      },
+      {
+        "status": 200,
+        "route": "ai_fallback",
+        "latencyMs": 2734,
+        "responseMode": "ai_assisted",
+        "aiDecisionReason": "broad_mode",
+        "aiModelUsed": "openai/gpt-5.3-chat",
+        "nodeId": "welcome",
+        "assistantPreview": "Great question. A solid sequence is: first make sure core conversion events and call tracking are firing correctly, then layer in paid search attribution (since it drives immediate"
+      },
+      {
+        "status": 200,
+        "route": "ai_fallback",
+        "latencyMs": 2940,
+        "responseMode": "ai_assisted",
+        "aiDecisionReason": "broad_mode",
+        "aiModelUsed": "openai/gpt-5.3-chat",
+        "nodeId": "welcome",
+        "assistantPreview": "Great question. Start by getting attribution instrumentation solid first (conversion tracking, call tracking, and consistent UTM structure) so every lead source is measurable; then"
+      }
+    ]
+  },
+  "summary": {
+    "short": {
+      "total": 10,
+      "ai": 10,
+      "det": 0,
+      "avgLatencyMs": 3236,
+      "p50LatencyMs": 3101,
+      "p95LatencyMs": 3681,
+      "byReason": {
+        "broad_mode": 10
+      },
+      "byModel": {
+        "openai/gpt-5.1-instant": 10
+      }
+    },
+    "complex": {
+      "total": 10,
+      "ai": 10,
+      "det": 0,
+      "avgLatencyMs": 3120,
+      "p50LatencyMs": 2943,
+      "p95LatencyMs": 3382,
+      "byReason": {
+        "broad_mode": 10
+      },
+      "byModel": {
+        "openai/gpt-5.3-chat": 10
+      }
+    }
+  }
+}

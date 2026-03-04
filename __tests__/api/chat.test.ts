@@ -81,6 +81,9 @@ describe("/api/chat route (deterministic v2)", () => {
     delete process.env.AI_GATEWAY_BASE_URL
     delete process.env.AI_GATEWAY_API_KEY
     delete process.env.AI_GATEWAY_MODEL
+    delete process.env.AI_GATEWAY_FAST_MODEL
+    delete process.env.AI_GATEWAY_FAST_MODEL_MAX_CHARS
+    delete process.env.AI_GATEWAY_FORCE_FAST_MODEL
   })
 
   it("returns 400 for invalid payload", async () => {
@@ -748,6 +751,109 @@ describe("/api/chat route (deterministic v2)", () => {
       "openai/gpt-4.1-mini",
     ])
     expect(generateCall.providerOptions?.gateway?.order).toEqual(["openai", "anthropic"])
+  })
+
+  it("uses configured fast model for short text turns when fast model routing is enabled", async () => {
+    process.env.SALES_CHAT_AI_FALLBACK_ENABLED = "true"
+    process.env.SALES_CHAT_AI_RESPONSE_MODE = "broad"
+    process.env.AI_GATEWAY_BASE_URL = "https://gateway.vercel.ai/v1"
+    process.env.AI_GATEWAY_API_KEY = "gateway-secret"
+    process.env.AI_GATEWAY_MODEL = "openai/gpt-5.3-chat"
+    process.env.AI_GATEWAY_FAST_MODEL = "openai/gpt-5.1-instant"
+    process.env.AI_GATEWAY_FAST_MODEL_MAX_CHARS = "220"
+
+    mockGenerateObject.mockResolvedValueOnce({
+      object: {
+        assistantMessage:
+          "Yes, we can help. We usually start by tightening your conversion page and then align paid traffic to high-intent offers. Want me to map the first 2 steps for your business?",
+        recommendedOffer: "free_audit",
+        shouldHandoff: false,
+      },
+    })
+
+    const { POST } = await withChatRoute()
+    const initResponse = await POST(
+      makeRequest({
+        sessionId: "session-ai-fast-model",
+        sourcePage: "/get-started",
+        inputType: "button",
+        inputValue: "",
+        buttonId: "__init__",
+      }),
+    )
+    const initPayload = (await initResponse.json()) as { conversationState: unknown }
+
+    const response = await POST(
+      makeRequest({
+        sessionId: "session-ai-fast-model",
+        sourcePage: "/get-started",
+        inputType: "text",
+        inputValue: "Do you help med spas get more booked consults?",
+        conversationState: initPayload.conversationState,
+      }),
+    )
+
+    expect(response.status).toBe(200)
+    expect(response.headers.get("x-sales-chat-route")).toBe("ai_fallback")
+    const payload = (await response.json()) as {
+      responseMode: string
+      aiDecisionReason?: string
+      aiModelUsed?: string
+    }
+    expect(payload.responseMode).toBe("ai_assisted")
+    expect(payload.aiDecisionReason).toBe("broad_mode")
+    expect(payload.aiModelUsed).toBe("openai/gpt-5.1-instant")
+    expect(mockGatewayModelFactory).toHaveBeenCalledWith("openai/gpt-5.1-instant")
+  })
+
+  it("keeps primary model for complex turns even when fast model routing is enabled", async () => {
+    process.env.SALES_CHAT_AI_FALLBACK_ENABLED = "true"
+    process.env.SALES_CHAT_AI_RESPONSE_MODE = "broad"
+    process.env.AI_GATEWAY_BASE_URL = "https://gateway.vercel.ai/v1"
+    process.env.AI_GATEWAY_API_KEY = "gateway-secret"
+    process.env.AI_GATEWAY_MODEL = "openai/gpt-5.3-chat"
+    process.env.AI_GATEWAY_FAST_MODEL = "openai/gpt-5.1-instant"
+    process.env.AI_GATEWAY_FAST_MODEL_MAX_CHARS = "220"
+
+    mockGenerateObject.mockResolvedValueOnce({
+      object: {
+        assistantMessage:
+          "Great question. Start by instrumenting your funnel events, then prioritize message-market fit on your highest-intent pages before scaling spend. Want me to give you a 30-day execution sequence?",
+        recommendedOffer: "free_audit",
+        shouldHandoff: false,
+      },
+    })
+
+    const { POST } = await withChatRoute()
+    const initResponse = await POST(
+      makeRequest({
+        sessionId: "session-ai-primary-model",
+        sourcePage: "/get-started",
+        inputType: "button",
+        inputValue: "",
+        buttonId: "__init__",
+      }),
+    )
+    const initPayload = (await initResponse.json()) as { conversationState: unknown }
+
+    const response = await POST(
+      makeRequest({
+        sessionId: "session-ai-primary-model",
+        sourcePage: "/get-started",
+        inputType: "text",
+        inputValue: "How should I prioritize attribution instrumentation and sequencing across paid search, local SEO, and conversion message architecture?",
+        conversationState: initPayload.conversationState,
+      }),
+    )
+
+    expect(response.status).toBe(200)
+    const payload = (await response.json()) as {
+      responseMode: string
+      aiModelUsed?: string
+    }
+    expect(payload.responseMode).toBe("ai_assisted")
+    expect(payload.aiModelUsed).toBe("openai/gpt-5.3-chat")
+    expect(mockGatewayModelFactory).toHaveBeenCalledWith("openai/gpt-5.3-chat")
   })
 
   it("rejects semantic offer mismatch for node intent and exposes semantic guardrail code", async () => {

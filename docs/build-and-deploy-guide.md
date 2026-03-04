@@ -53,6 +53,9 @@ Use this flow when switching between local, preview, and production changes:
   vercel env add AI_GATEWAY_BASE_URL preview --force
   vercel env add AI_GATEWAY_API_KEY preview --sensitive --force
   vercel env add AI_GATEWAY_MODEL preview --force
+  vercel env add AI_GATEWAY_FAST_MODEL preview --force
+  vercel env add AI_GATEWAY_FAST_MODEL_MAX_CHARS preview --force
+  vercel env add AI_GATEWAY_FORCE_FAST_MODEL preview --force
   vercel env add AI_GATEWAY_FALLBACK_MODELS preview --force
   vercel env add AI_GATEWAY_PROVIDER_ORDER preview --force
   ```
@@ -67,7 +70,7 @@ Use this flow when switching between local, preview, and production changes:
   ```
 - Post-deploy monitoring + rollback:
   ```bash
-  vercel logs <deployment-url> --filter sales-chat --since 1h
+  vercel logs --environment production --since 1h --no-follow --no-branch --query "sales-chat" --source serverless --expand
   vercel rollback <previous-stable-deployment-url>
   ```
 - `npx vercel deploy --prod --yes` for production deploys (source deploy; matches CI).
@@ -77,7 +80,7 @@ Use this flow when switching between local, preview, and production changes:
 - `vercel inspect <deployment-url>` when you need build/runtime metadata during rollout checks.
 - `vercel rollback <deployment-url>` for fast production rollback.
 - `vercel open` to jump directly to the currently selected deployment in the browser.
-- `vercel logs <deployment-url> --filter sales-chat --since 1h` for route-specific troubleshooting.
+- `vercel logs --environment production --since 1h --no-follow --no-branch --query "sales-chat" --source serverless --expand` for route-specific troubleshooting.
 
 ### Sales chat rollout playbook
 
@@ -90,6 +93,11 @@ Use this flow when switching between local, preview, and production changes:
   - If `SALES_CHAT_ENABLED` resolves true and any required deterministic key is missing, deployment must fail.
   - CI enforces this with `pnpm verify:sales-chat-config` after `vercel pull --environment=production`.
 - If AI response mode is enabled, verify gateway model path and secret scope in the Vercel AI Gateway dashboard before each deploy and rotate API keys when moving through staging/production.
+- For AI SDK gateway compatibility, set `AI_GATEWAY_BASE_URL=https://ai-gateway.vercel.sh/v3/ai`.
+- Tiered routing recommendation for `/get-started`:
+  - `AI_GATEWAY_MODEL=openai/gpt-5.3-chat` (complex turns)
+  - `AI_GATEWAY_FAST_MODEL=openai/gpt-5.1-instant` (short/simple turns)
+  - `AI_GATEWAY_FAST_MODEL_MAX_CHARS=220`
 - Preview smoke checklist:
   1. Open `/get-started`.
   2. Send 3 short messages from different conversation turns.
@@ -116,7 +124,7 @@ Use this flow when switching between local, preview, and production changes:
   - Keep the same env names in production and preview to avoid route drift.
   - Keep model/API-key rotation in Vercel dashboard and update local docs after rotation; rotate tokens any time you suspect exposure (browser log capture, screenshot tool traces, or CI artifacts).
   - If `/api/chat` starts returning non-200 in production, inspect:
-    - `vercel logs <deployment-url> --filter sales-chat --since 1h`
+    - `vercel logs --environment production --since 1h --no-follow --no-branch --query "sales-chat" --source serverless --expand`
     - response headers (`x-sales-chat-route`, `x-request-id`) for root-cause mapping.
   - If conversions appear to drop, validate lead fan-out health by posting one known-valid payload to `/api/sales-chat/leads` in preview before production rollout.
   - Immediate rollback guardrails for broad AI mode:
@@ -146,6 +154,9 @@ Use this flow when switching between local, preview, and production changes:
     - `AI_GATEWAY_BASE_URL`
     - `AI_GATEWAY_API_KEY`
     - `AI_GATEWAY_MODEL`
+    - `AI_GATEWAY_FAST_MODEL`
+    - `AI_GATEWAY_FAST_MODEL_MAX_CHARS`
+    - `AI_GATEWAY_FORCE_FAST_MODEL`
     - `AI_GATEWAY_FALLBACK_MODELS`
     - `AI_GATEWAY_PROVIDER_ORDER`
 - Add a manual sign-off after preview smoke before merging to `main`.
