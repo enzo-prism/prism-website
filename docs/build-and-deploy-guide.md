@@ -103,7 +103,8 @@ Use this flow when switching between local, preview, and production changes:
   2. Send 3 short messages from different conversation turns.
   3. Confirm deterministic quick replies render and follow spec flow transitions.
   4. If AI response mode is enabled, send one free-text question and confirm response header is `x-sales-chat-route=ai_fallback`.
-  5. Validate booking link anchors resolve to `#book-call`.
+  5. Send one random/off-topic question (for example a general curiosity question) and confirm the assistant still returns `ai_assisted`, gives a brief useful answer, and bridges back to business help.
+  6. Validate booking link anchors resolve to `#book-call`.
   6. Confirm chat motion polish in the live shell:
     - launcher pulse appears when closed,
     - header high-tech glyph glow/orbit renders when online,

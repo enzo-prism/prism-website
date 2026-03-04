@@ -13,7 +13,7 @@ import type {
 import type { SalesChatAiResponseMode } from "@/lib/sales-chat/runtime-config"
 
 const aiLongTailSchema = z.object({
-  assistantMessage: z.string().trim().min(40).max(1200),
+  assistantMessage: z.string().trim().min(20).max(1200),
   recommendedOffer: z.enum(["free_audit", "website_overhaul", "growth_partnership"]).nullable(),
   shouldHandoff: z.boolean().nullable(),
 })
@@ -221,6 +221,20 @@ function detectMentionedOffer(message: string): OfferRecommendation | "multiple"
 }
 
 function hasSemanticMismatch(input: MaybeAiFallbackInput, assistantMessage: string, recommendedOffer?: OfferRecommendation): boolean {
+  // In broad mode, allow open QA behavior on discovery/faq/objection nodes without hard offer lock.
+  if (
+    input.mode === "broad"
+    && (
+      input.state.nodeId === "welcome"
+      || input.state.nodeId.startsWith("intent_a_")
+      || input.state.nodeId.startsWith("intent_e_")
+      || input.state.nodeId.startsWith("intent_f_")
+      || input.state.nodeId.startsWith("intent_g_")
+    )
+  ) {
+    return false
+  }
+
   const expectedOffer = expectedOfferForNode(input.state.nodeId) ?? input.deterministicResponse.recommendedOffer
   if (!expectedOffer) {
     return false
@@ -312,13 +326,15 @@ function buildSystemPrompt(): string {
     "Keep response to 2-5 concise sentences.",
     "Prefer ending with one clear next-step question when it feels natural.",
     "Do not use markdown lists or bullet characters.",
+    "Answer random/off-topic questions briefly and helpfully, then bridge back to business growth support in one sentence.",
     "Canonical pricing is fixed and must never drift:",
     "- Free Expert Audit: $0",
     "- Website Overhaul: $1,000 one-time",
     "- Growth Partnership: $2,000/month",
     "Never mention any other pricing values.",
+    "Do not mention pricing unless the user asks about pricing, budget, cost, or packages.",
     "If the user asks for something outside Prism's scope, politely offer a human handoff.",
-    "Prefer recommending one of: free_audit, website_overhaul, growth_partnership when appropriate.",
+    "Recommend one of: free_audit, website_overhaul, growth_partnership only when relevant.",
   ].join("\n")
 }
 

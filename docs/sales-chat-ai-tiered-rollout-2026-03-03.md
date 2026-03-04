@@ -14,6 +14,12 @@ Implemented tiered model routing inside `lib/sales-chat/ai-gateway-fallback.ts`:
   - complexity keyword detection
   - conversation depth guard
 
+### 1.1) Random-query handling hardening
+To better answer random/off-topic user messages:
+- AI fallback response schema minimum was relaxed (`assistantMessage` min length 20) to reduce avoidable generation failures.
+- System prompt now explicitly allows brief helpful random-query responses, then a one-line bridge back to business support.
+- Semantic-offer mismatch guardrails are relaxed in broad mode for discovery/faq/objection nodes (`welcome`, `intent_a_*`, `intent_e_*`, `intent_f_*`, `intent_g_*`) so random questions are less likely to fall back to deterministic copy.
+
 Production target values:
 - `AI_GATEWAY_MODEL=openai/gpt-5.3-chat`
 - `AI_GATEWAY_FAST_MODEL=openai/gpt-5.1-instant`
