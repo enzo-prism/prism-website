@@ -125,7 +125,7 @@ export default function SalesChatHeader({
           </div>
           <div className="min-w-0">
             <h2 className={cn(tokens.headerTitle, "leading-tight")}>
-              PRISM Sales Assistant{" "}
+              Prism Sales Assistant{" "}
               <span
                 className={cn(
                   tokens.headerStatus,

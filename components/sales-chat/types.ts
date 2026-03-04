@@ -1,5 +1,6 @@
 import type { ReactNode } from "react"
 import type {
+  SalesChatAiOrchestrationPath,
   SalesChatAiDecisionReason,
   SalesChatAiGuardrailCode,
   LeadDispatchOutcome,
@@ -31,8 +32,13 @@ export type SalesChatApiResponse = {
   aiGuardrailCode?: SalesChatAiGuardrailCode
   aiModelUsed?: string
   aiLatencyMs?: number
+  aiLatencyBucket?: string
   aiPromptVersion?: string
   aiRepairAttempted?: boolean
+  aiOrchestrationPath?: SalesChatAiOrchestrationPath
+  aiFallbackReason?: string
+  aiConfidence?: number
+  aiIntentHint?: string
   recommendedOffer?: "free_audit" | "website_overhaul" | "growth_partnership"
   terminalAction?: "emit_free_audit" | "emit_website_overhaul" | "emit_growth_partnership" | "none"
   leadDispatchStatus?: LeadDispatchOutcome

@@ -466,6 +466,20 @@ describe("spec v1 deterministic engine", () => {
     }
   })
 
+  it("does not append confident recommendations onto generic fallback turns", () => {
+    const response = runFromNode("intent_c_waiting_payment", {
+      inputType: "text",
+      inputValue: "zzz-no-intent",
+    })
+
+    expect(response.nodeId).toBe("intent_c_waiting_payment")
+    expect(response.assistantMessage).not.toContain("Based on what you've shared")
+    expect(response.assistantMessage).not.toContain("Growth Partnership")
+    expect(response.assistantMessage).not.toContain("Could you rephrase")
+    expect(response.recommendedOffer).toBeUndefined()
+    expectResponsePolicyInvariants(response)
+  })
+
   it("keeps deterministic policy invariants stable under seeded randomized traversal", () => {
     const randomSeeds = [11, 29, 97]
     const freeTextInputs = [

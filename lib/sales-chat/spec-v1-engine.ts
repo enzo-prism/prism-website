@@ -164,16 +164,6 @@ function applyBehaviorRules(
   let nextQuickReplies = [...quickReplies]
   let nextRecommendedOffer = recommendedOffer
 
-  if (state.exchangeCount >= 2 && !state.convertedAction && !nextRecommendedOffer) {
-    nextRecommendedOffer = "growth_partnership"
-    if (!nextQuickReplies.some((replyItem) => replyItem.id === "d_start")) {
-      nextQuickReplies = [quickReply("d_start", "Explore the $2K/mo partnership"), ...nextQuickReplies]
-    }
-    if (!nextMessage.includes("I'd recommend")) {
-      nextMessage = `${nextMessage}\n\nBased on what you've shared, I'd recommend starting with the Growth Partnership.`
-    }
-  }
-
   if (state.exchangeCount >= 3 && !state.convertedAction && !nextQuickReplies.some((replyItem) => replyItem.id === "b_start")) {
     nextQuickReplies.push(quickReply("b_start", "Start with a free audit"))
   }

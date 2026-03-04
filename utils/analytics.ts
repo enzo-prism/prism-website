@@ -561,12 +561,17 @@ type SalesChatAiResponseUsedData = {
   sessionId?: string
   nodeId: string
   responseMode: "ai_assisted"
-  aiDecisionReason?: "broad_mode" | "long_tail_trigger"
-  aiGuardrailCode?: "pricing_drift" | "semantic_mismatch"
+  aiDecisionReason?: "broad_mode" | "long_tail_trigger" | "repair_success"
+  aiGuardrailCode?: "pricing_drift" | "semantic_mismatch" | "banned_phrase_blocked"
   aiModelUsed?: string
   aiLatencyMs?: number
+  aiLatencyBucket?: string
   aiPromptVersion?: string
   aiRepairAttempted?: boolean
+  aiOrchestrationPath?: "orchestrated_primary" | "orchestrated_repair" | "deterministic_fallback"
+  aiFallbackReason?: string
+  aiConfidence?: number
+  aiIntentHint?: string
 }
 
 type SalesChatAiResponseRejectedData = {
@@ -574,12 +579,17 @@ type SalesChatAiResponseRejectedData = {
   sessionId?: string
   nodeId: string
   responseMode: "deterministic"
-  aiDecisionReason: "guardrail_reject" | "gateway_error" | "disabled"
-  aiGuardrailCode?: "pricing_drift" | "semantic_mismatch"
+  aiDecisionReason: "guardrail_reject" | "gateway_error" | "disabled" | "canary_skip" | "banned_phrase_blocked"
+  aiGuardrailCode?: "pricing_drift" | "semantic_mismatch" | "banned_phrase_blocked"
   aiModelUsed?: string
   aiLatencyMs?: number
+  aiLatencyBucket?: string
   aiPromptVersion?: string
   aiRepairAttempted?: boolean
+  aiOrchestrationPath?: "orchestrated_primary" | "orchestrated_repair" | "deterministic_fallback"
+  aiFallbackReason?: string
+  aiConfidence?: number
+  aiIntentHint?: string
 }
 
 type SalesChatLeadPayloadAttemptedData = {
@@ -801,8 +811,13 @@ export function trackSalesChatAiResponseUsed({
   aiGuardrailCode,
   aiModelUsed,
   aiLatencyMs,
+  aiLatencyBucket,
   aiPromptVersion,
   aiRepairAttempted,
+  aiOrchestrationPath,
+  aiFallbackReason,
+  aiConfidence,
+  aiIntentHint,
 }: SalesChatAiResponseUsedData) {
   trackEvent("sales_chat_ai_response_used", {
     source_page: sourcePage,
@@ -813,8 +828,13 @@ export function trackSalesChatAiResponseUsed({
     ai_guardrail_code: aiGuardrailCode,
     ai_model_used: aiModelUsed,
     ai_latency_ms: aiLatencyMs,
+    ai_latency_bucket: aiLatencyBucket,
     ai_prompt_version: aiPromptVersion,
     ai_repair_attempted: aiRepairAttempted,
+    ai_orchestration_path: aiOrchestrationPath,
+    ai_fallback_reason: aiFallbackReason,
+    ai_confidence: aiConfidence,
+    ai_intent_hint: aiIntentHint,
   })
 }
 
@@ -827,8 +847,13 @@ export function trackSalesChatAiResponseRejected({
   aiGuardrailCode,
   aiModelUsed,
   aiLatencyMs,
+  aiLatencyBucket,
   aiPromptVersion,
   aiRepairAttempted,
+  aiOrchestrationPath,
+  aiFallbackReason,
+  aiConfidence,
+  aiIntentHint,
 }: SalesChatAiResponseRejectedData) {
   trackEvent("sales_chat_ai_response_rejected", {
     source_page: sourcePage,
@@ -839,8 +864,13 @@ export function trackSalesChatAiResponseRejected({
     ai_guardrail_code: aiGuardrailCode,
     ai_model_used: aiModelUsed,
     ai_latency_ms: aiLatencyMs,
+    ai_latency_bucket: aiLatencyBucket,
     ai_prompt_version: aiPromptVersion,
     ai_repair_attempted: aiRepairAttempted,
+    ai_orchestration_path: aiOrchestrationPath,
+    ai_fallback_reason: aiFallbackReason,
+    ai_confidence: aiConfidence,
+    ai_intent_hint: aiIntentHint,
   })
 }
 

@@ -50,9 +50,13 @@ Use this flow when switching between local, preview, and production changes:
 
   vercel env add SALES_CHAT_AI_FALLBACK_ENABLED preview --force
   vercel env add SALES_CHAT_AI_RESPONSE_MODE preview --force
+  vercel env add SALES_CHAT_AI_ORCHESTRATION_ENABLED preview --force
+  vercel env add SALES_CHAT_AI_ORCHESTRATION_PERCENT preview --force
+  vercel env add SALES_CHAT_AI_ORCHESTRATION_COHORT preview --force
   vercel env add AI_GATEWAY_BASE_URL preview --force
   vercel env add AI_GATEWAY_API_KEY preview --sensitive --force
   vercel env add AI_GATEWAY_MODEL preview --force
+  vercel env add AI_GATEWAY_TIMEOUT_MS preview --force
   vercel env add AI_GATEWAY_FAST_MODEL preview --force
   vercel env add AI_GATEWAY_FAST_MODEL_MAX_CHARS preview --force
   vercel env add AI_GATEWAY_FORCE_FAST_MODEL preview --force
@@ -88,15 +92,17 @@ Use this flow when switching between local, preview, and production changes:
   - Confirm `SALES_CHAT_ENABLED` is `"true"` for the environment you want chat tested.
   - Confirm `SALES_CHAT_BOOKING_URL`, `SALES_CHAT_WEBSITE_OVERHAUL_CHECKOUT_URL`, `SALES_CHAT_GROWTH_PARTNERSHIP_SIGNUP_URL`, and `SALES_CHAT_LEADS_WEBHOOK_URL` are present.
   - If lead backend is not Formspree, confirm `SALES_CHAT_LEADS_WEBHOOK_SECRET` is also present.
-  - If AI response mode is enabled (`SALES_CHAT_AI_FALLBACK_ENABLED=true` and `SALES_CHAT_AI_RESPONSE_MODE!=off`), also confirm core `AI_GATEWAY_*` vars are present.
+  - If AI response mode is enabled (`SALES_CHAT_AI_FALLBACK_ENABLED=true` and `SALES_CHAT_AI_RESPONSE_MODE!=off`), also confirm core `AI_GATEWAY_*` vars are present and orchestration gates are configured for the intended rollout cohort.
 - Deployment blocker policy:
   - If `SALES_CHAT_ENABLED` resolves true and any required deterministic key is missing, deployment must fail.
   - CI enforces this with `pnpm verify:sales-chat-config` after `vercel pull --environment=production`.
 - If AI response mode is enabled, verify gateway model path and secret scope in the Vercel AI Gateway dashboard before each deploy and rotate API keys when moving through staging/production.
 - For AI SDK gateway compatibility, set `AI_GATEWAY_BASE_URL=https://ai-gateway.vercel.sh/v3/ai`.
-- Tiered routing recommendation for `/get-started`:
-  - `AI_GATEWAY_MODEL=openai/gpt-5.3-chat` (complex turns)
-  - `AI_GATEWAY_FAST_MODEL=openai/gpt-5.1-instant` (short/simple turns)
+- Recommended orchestration baseline for `/get-started`:
+  - `SALES_CHAT_AI_ORCHESTRATION_ENABLED=true`
+  - `SALES_CHAT_AI_ORCHESTRATION_PERCENT=100` for full rollout (reduce for canary)
+  - `AI_GATEWAY_MODEL` for complex turns
+  - `AI_GATEWAY_FAST_MODEL` for short/simple turns
   - `AI_GATEWAY_FAST_MODEL_MAX_CHARS=220`
 - Preview smoke checklist:
   1. Open `/get-started`.
@@ -105,16 +111,16 @@ Use this flow when switching between local, preview, and production changes:
   4. If AI response mode is enabled, send one free-text question and confirm response header is `x-sales-chat-route=ai_fallback`.
   5. Send one random/off-topic question (for example a general curiosity question) and confirm the assistant still returns `ai_assisted`, gives a brief useful answer, and bridges back to business help.
   6. Validate booking link anchors resolve to `#book-call`.
-  6. Confirm chat motion polish in the live shell:
+  7. Confirm chat motion polish in the live shell:
     - launcher pulse appears when closed,
     - header high-tech glyph glow/orbit renders when online,
     - on mobile viewport, header glyph orbit remains slow/smooth (not compressed to rapid spin),
     - typing waveform appears while awaiting response.
-  7. Simulate one config/provider failure path (mock 503 in local) and verify a single handoff message appears plus clear booking path.
-  8. Validate lead dispatch telemetry contract:
+  8. Simulate one config/provider failure path (mock 503 in local) and verify a single handoff message appears plus clear booking path.
+  9. Validate lead dispatch telemetry contract:
     - success path emits `sales_chat_lead_payload_attempted` + `sales_chat_lead_payload_emitted`.
     - failed dispatch path emits `sales_chat_lead_payload_attempted` + `sales_chat_lead_payload_failed` and does **not** emit `sales_chat_lead_payload_emitted`.
-  9. Validate GA4 DebugView for deep sales-chat events:
+  10. Validate GA4 DebugView for deep sales-chat events:
     - `sales_chat_quick_reply_clicked`
     - `sales_chat_spec_node_entered`
     - `sales_chat_offer_recommended`
@@ -152,9 +158,13 @@ Use this flow when switching between local, preview, and production changes:
   - Optional AI response vars:
     - `SALES_CHAT_AI_FALLBACK_ENABLED`
     - `SALES_CHAT_AI_RESPONSE_MODE`
+    - `SALES_CHAT_AI_ORCHESTRATION_ENABLED`
+    - `SALES_CHAT_AI_ORCHESTRATION_PERCENT`
+    - `SALES_CHAT_AI_ORCHESTRATION_COHORT`
     - `AI_GATEWAY_BASE_URL`
     - `AI_GATEWAY_API_KEY`
     - `AI_GATEWAY_MODEL`
+    - `AI_GATEWAY_TIMEOUT_MS`
     - `AI_GATEWAY_FAST_MODEL`
     - `AI_GATEWAY_FAST_MODEL_MAX_CHARS`
     - `AI_GATEWAY_FORCE_FAST_MODEL`

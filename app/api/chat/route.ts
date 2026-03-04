@@ -5,12 +5,13 @@ import { z } from "zod"
 
 import { dispatchSalesChatLead } from "@/lib/sales-chat/lead-dispatch"
 import { buildLeadPayload } from "@/lib/sales-chat/lead-payloads"
-import { maybeGenerateAiFallbackResponse } from "@/lib/sales-chat/ai-gateway-fallback"
+import { maybeOrchestrateSalesChatResponse } from "@/lib/sales-chat/ai-orchestrator"
 import {
   createInitialConversationState,
   runSalesChatSpecV1Engine,
 } from "@/lib/sales-chat/spec-v1-engine"
 import type {
+  SalesChatAiOrchestrationPath,
   SalesChatAiDecisionReason,
   SalesChatAiGuardrailCode,
   LeadDispatchOutcome,
@@ -45,6 +46,12 @@ const CHAT_ROUTE_EVENTS = {
 
 const LEAD_DISPATCH_DEDUPE_TTL_MS = 10 * 60 * 1000
 const recentLeadDispatchKeys = new Map<string, number>()
+const BANNED_FALLBACK_PATTERNS = [
+  "i'm not sure i caught that",
+  "could you rephrase it",
+  "if you'd prefer, i can connect you with the team directly",
+  "if you'd rather, i can connect you with the team directly",
+]
 
 const salesChatNodeIds: Array<SalesChatSpecNodeId> = [
   "welcome",
@@ -193,6 +200,38 @@ function classifyLeadDispatchError(error: unknown): string {
   return "webhook_dispatch_error"
 }
 
+function normalizeForPolicy(text: string): string {
+  return text
+    .toLowerCase()
+    .replace(/[^a-z0-9\s]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim()
+}
+
+function containsBannedFallbackPhrase(message: string): boolean {
+  const normalized = normalizeForPolicy(message)
+  return BANNED_FALLBACK_PATTERNS.some((pattern) => normalized.includes(normalizeForPolicy(pattern)))
+}
+
+function buildResilientFallbackMessage(args: {
+  nodeId: SalesChatSpecNodeId
+  recommendedOffer?: "free_audit" | "website_overhaul" | "growth_partnership"
+}): string {
+  if (args.recommendedOffer === "free_audit" || args.nodeId.startsWith("intent_b_")) {
+    return "Thanks for sharing that. The fastest next step is a free expert audit so we can prioritize exactly what to fix first. Want me to get that started?"
+  }
+
+  if (args.recommendedOffer === "website_overhaul" || args.nodeId.startsWith("intent_c_")) {
+    return "Thanks for the detail. If your priority is a stronger website quickly, I can map the Website Overhaul path and what happens first. Want that breakdown?"
+  }
+
+  if (args.recommendedOffer === "growth_partnership" || args.nodeId.startsWith("intent_d_")) {
+    return "Thanks, that helps. If you want end-to-end momentum, I can outline what the Growth Partnership would handle first and what results to expect in month one. Want that plan?"
+  }
+
+  return "Thanks for the context. Tell me your main outcome first, and I'll recommend the clearest next step."
+}
+
 export async function POST(request: Request) {
   const requestId = randomUUID()
   const runtimeConfig = getSalesChatRuntimeConfig(process.env)
@@ -237,16 +276,22 @@ export async function POST(request: Request) {
   let aiGuardrailCode: SalesChatAiGuardrailCode | undefined
   let aiModelUsed: string | undefined
   let aiLatencyMs: number | undefined
+  let aiLatencyBucket: string | undefined
   let aiPromptVersion: string | undefined
   let aiRepairAttempted: boolean | undefined
+  let aiOrchestrationPath: SalesChatAiOrchestrationPath | undefined
+  let aiFallbackReason: string | undefined
+  let aiConfidence: number | undefined
+  let aiIntentHint: string | undefined
 
-  const aiFallback = await maybeGenerateAiFallbackResponse({
+  const aiOrchestration = await maybeOrchestrateSalesChatResponse({
     enabled: runtimeConfig.aiResponseEnabled,
     mode: runtimeConfig.aiResponseMode,
     gatewayConfigured: runtimeConfig.gatewayConfigured,
     gatewayFallbackModels: runtimeConfig.gatewayFallbackModels,
     gatewayProviderOrder: runtimeConfig.gatewayProviderOrder,
     env: process.env,
+    sessionId: validated.data.sessionId,
     inputType: validated.data.inputType,
     buttonId: validated.data.buttonId,
     requestInput: validated.data.inputValue,
@@ -254,25 +299,49 @@ export async function POST(request: Request) {
     state: responsePayload.conversationState,
     deterministicResponse: responsePayload,
     conversationHistory: validated.data.conversationHistory,
+    orchestrationEnabled: runtimeConfig.aiOrchestrationEnabled,
+    orchestrationPercent: runtimeConfig.aiOrchestrationPercent,
+    orchestrationCohort: runtimeConfig.aiOrchestrationCohort,
   })
 
-  aiDecisionReason = aiFallback.reason
-  aiGuardrailCode = aiFallback.guardrailCode
-  aiModelUsed = aiFallback.modelUsed
-  aiLatencyMs = aiFallback.latencyMs
-  aiPromptVersion = aiFallback.promptVersion
-  aiRepairAttempted = aiFallback.repairAttempted
+  aiDecisionReason = aiOrchestration.reason
+  aiGuardrailCode = aiOrchestration.guardrailCode
+  aiModelUsed = aiOrchestration.modelUsed
+  aiLatencyMs = aiOrchestration.latencyMs
+  aiLatencyBucket = aiOrchestration.latencyBucket
+  aiPromptVersion = aiOrchestration.promptVersion
+  aiRepairAttempted = aiOrchestration.repairAttempted
+  aiOrchestrationPath = aiOrchestration.orchestrationPath
+  aiFallbackReason = aiOrchestration.fallbackReason
+  aiConfidence = aiOrchestration.confidence
+  aiIntentHint = aiOrchestration.intentHint
 
-  if (aiFallback.used && aiFallback.assistantMessage) {
+  if (aiOrchestration.used && aiOrchestration.assistantMessage) {
     responsePayload = {
       ...responsePayload,
-      assistantMessage: aiFallback.assistantMessage,
+      assistantMessage: aiOrchestration.assistantMessage,
       responseMode: "ai_assisted",
-      recommendedOffer: aiFallback.recommendedOffer ?? responsePayload.recommendedOffer,
-      fallbackToHuman: aiFallback.fallbackToHuman ?? responsePayload.fallbackToHuman,
+      recommendedOffer: aiOrchestration.recommendedOffer ?? responsePayload.recommendedOffer,
+      fallbackToHuman: aiOrchestration.fallbackToHuman ?? responsePayload.fallbackToHuman,
     }
     responseMode = "ai_assisted"
     routeEvent = CHAT_ROUTE_EVENTS.AI_FALLBACK
+  }
+
+  if (containsBannedFallbackPhrase(responsePayload.assistantMessage)) {
+    responsePayload = {
+      ...responsePayload,
+      assistantMessage: buildResilientFallbackMessage({
+        nodeId: responsePayload.conversationState.nodeId,
+        recommendedOffer: responsePayload.recommendedOffer,
+      }),
+    }
+    responseMode = "deterministic"
+    aiDecisionReason = "banned_phrase_blocked"
+    aiGuardrailCode = "banned_phrase_blocked"
+    aiOrchestrationPath = "deterministic_fallback"
+    aiFallbackReason = "banned_phrase_sanitizer"
+    routeEvent = CHAT_ROUTE_EVENTS.SUCCESS
   }
 
   let leadDispatchStatus: LeadDispatchOutcome = "none"
@@ -327,8 +396,13 @@ export async function POST(request: Request) {
     aiGuardrailCode,
     aiModelUsed,
     aiLatencyMs,
+    aiLatencyBucket,
     aiPromptVersion,
     aiRepairAttempted,
+    aiOrchestrationPath,
+    aiFallbackReason,
+    aiConfidence,
+    aiIntentHint,
     leadDispatchStatus,
     leadDispatchCode,
   }, {

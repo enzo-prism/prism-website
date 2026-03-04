@@ -28,7 +28,17 @@ export function detectRootIntent(input: string): RootIntent {
     return "free_audit"
   }
 
-  if (hasAny(normalized, ["new website", "better website", "website", "site rebuild", "website overhaul"])) {
+  if (
+    hasAny(normalized, [
+      "new website",
+      "better website",
+      "website redesign",
+      "redesign my site",
+      "site rebuild",
+      "website overhaul",
+      "rebuild my site",
+    ])
+  ) {
     return "website_overhaul"
   }
 

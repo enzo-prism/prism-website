@@ -1,17 +1,21 @@
 import { type IncomingHttpHeaders } from "http"
 
 const mockDispatchSalesChatLead = jest.fn()
-const mockGenerateObject = jest.fn()
+const mockGenerateText = jest.fn()
 const mockCreateGateway = jest.fn()
 const mockGatewayModelFactory = jest.fn()
+const mockOutputObject = jest.fn()
 
 jest.mock("@/lib/sales-chat/lead-dispatch", () => ({
   dispatchSalesChatLead: (...args: Array<unknown>) => mockDispatchSalesChatLead(...args),
 }))
 
 jest.mock("ai", () => ({
-  generateObject: (...args: Array<unknown>) => mockGenerateObject(...args),
+  generateText: (...args: Array<unknown>) => mockGenerateText(...args),
   createGateway: (...args: Array<unknown>) => mockCreateGateway(...args),
+  Output: {
+    object: (...args: Array<unknown>) => mockOutputObject(...args),
+  },
 }))
 
 jest.mock("next/server", () => ({
@@ -64,10 +68,12 @@ describe("/api/chat route (deterministic v2)", () => {
     jest.resetModules()
     jest.clearAllMocks()
     mockGatewayModelFactory.mockReset()
-    mockGenerateObject.mockReset()
+    mockGenerateText.mockReset()
     mockCreateGateway.mockReset()
+    mockOutputObject.mockReset()
     mockGatewayModelFactory.mockImplementation(() => ({ provider: "gateway-model" }))
     mockCreateGateway.mockImplementation(() => mockGatewayModelFactory)
+    mockOutputObject.mockImplementation((definition) => definition)
     process.env.SALES_CHAT_ENABLED = "true"
     process.env.SALES_CHAT_BOOKING_URL = "https://cal.com/prism/demo"
     process.env.SALES_CHAT_WEBSITE_OVERHAUL_CHECKOUT_URL = "https://checkout.example.com/website"
@@ -515,12 +521,12 @@ describe("/api/chat route (deterministic v2)", () => {
     process.env.AI_GATEWAY_API_KEY = "gateway-secret"
     process.env.AI_GATEWAY_MODEL = "openai/gpt-5-mini"
 
-    mockGenerateObject.mockResolvedValueOnce({
-      object: {
+    mockGenerateText.mockResolvedValueOnce({
+      output: {
         assistantMessage:
           "Great question. For your situation, the fastest path is a free expert audit so we can pinpoint what is limiting conversions right now. Want me to start that in under a minute?",
         recommendedOffer: "free_audit",
-        shouldHandoff: false,
+        fallbackToHuman: false,
       },
     })
 
@@ -567,7 +573,7 @@ describe("/api/chat route (deterministic v2)", () => {
       apiKey: "gateway-secret",
     })
     expect(mockGatewayModelFactory).toHaveBeenCalledWith("openai/gpt-5-mini")
-    expect(mockGenerateObject).toHaveBeenCalledTimes(1)
+    expect(mockGenerateText).toHaveBeenCalledTimes(1)
   })
 
   it("keeps deterministic fallback when AI output violates pricing guardrails", async () => {
@@ -577,14 +583,23 @@ describe("/api/chat route (deterministic v2)", () => {
     process.env.AI_GATEWAY_API_KEY = "gateway-secret"
     process.env.AI_GATEWAY_MODEL = "openai/gpt-5-mini"
 
-    mockGenerateObject.mockResolvedValueOnce({
-      object: {
-        assistantMessage:
-          "We can start at $900/mo and scale later. Want me to send you details for the lower plan?",
-        recommendedOffer: "growth_partnership",
-        shouldHandoff: false,
-      },
-    })
+    mockGenerateText
+      .mockResolvedValueOnce({
+        output: {
+          assistantMessage:
+            "We can start at $900/mo and scale later. Want me to send you details for the lower plan?",
+          recommendedOffer: "growth_partnership",
+          fallbackToHuman: false,
+        },
+      })
+      .mockResolvedValueOnce({
+        output: {
+          assistantMessage:
+            "Best option is the Growth Partnership at $900/mo while we dial in your funnel. Want me to send signup details?",
+          recommendedOffer: "growth_partnership",
+          fallbackToHuman: false,
+        },
+      })
 
     const { POST } = await withChatRoute()
 
@@ -615,11 +630,14 @@ describe("/api/chat route (deterministic v2)", () => {
       assistantMessage: string
       responseMode: string
       aiDecisionReason?: string
+      aiFallbackReason?: string
     }
-    expect(payload.assistantMessage).toContain("Could you rephrase")
+    expect(payload.assistantMessage).toContain("result you want first")
+    expect(payload.assistantMessage).not.toContain("Could you rephrase")
     expect(payload.assistantMessage).not.toContain("$900")
     expect(payload.responseMode).toBe("deterministic")
     expect(payload.aiDecisionReason).toBe("guardrail_reject")
+    expect(payload.aiFallbackReason).toBe("guardrail_rejected")
   })
 
   it("repairs pricing drift with a second gateway pass and still returns AI-assisted copy", async () => {
@@ -629,21 +647,21 @@ describe("/api/chat route (deterministic v2)", () => {
     process.env.AI_GATEWAY_API_KEY = "gateway-secret"
     process.env.AI_GATEWAY_MODEL = "openai/gpt-5-mini"
 
-    mockGenerateObject
+    mockGenerateText
       .mockResolvedValueOnce({
-        object: {
+        output: {
           assistantMessage:
             "We can start at $900/mo and move up as needed once campaigns are stable. Want me to send a quick starter plan?",
           recommendedOffer: "growth_partnership",
-          shouldHandoff: false,
+          fallbackToHuman: false,
         },
       })
       .mockResolvedValueOnce({
-        object: {
+        output: {
           assistantMessage:
             "Great direction. For ongoing growth support, the Growth Partnership is $2,000/month and includes weekly optimization. Want me to map the first 30 days for you?",
           recommendedOffer: "growth_partnership",
-          shouldHandoff: false,
+          fallbackToHuman: false,
         },
       })
 
@@ -680,8 +698,8 @@ describe("/api/chat route (deterministic v2)", () => {
     expect(payload.assistantMessage).toContain("$2,000/month")
     expect(payload.assistantMessage).not.toContain("$900")
     expect(payload.responseMode).toBe("ai_assisted")
-    expect(payload.aiDecisionReason).toBe("long_tail_trigger")
-    expect(mockGenerateObject).toHaveBeenCalledTimes(2)
+    expect(payload.aiDecisionReason).toBe("repair_success")
+    expect(mockGenerateText).toHaveBeenCalledTimes(2)
   })
 
   it("uses broad mode and forwards gateway fallback/provider-order options", async () => {
@@ -693,12 +711,12 @@ describe("/api/chat route (deterministic v2)", () => {
     process.env.AI_GATEWAY_FALLBACK_MODELS = "openai/gpt-5, openai/gpt-4.1-mini"
     process.env.AI_GATEWAY_PROVIDER_ORDER = "openai, anthropic"
 
-    mockGenerateObject.mockResolvedValueOnce({
-      object: {
+    mockGenerateText.mockResolvedValueOnce({
+      output: {
         assistantMessage:
           "Great context. The fastest personalized next step is a free expert audit so we can prioritize your conversion bottlenecks before you scale paid traffic. Want me to set that up now?",
         recommendedOffer: "free_audit",
-        shouldHandoff: false,
+        fallbackToHuman: false,
       },
     })
 
@@ -739,8 +757,8 @@ describe("/api/chat route (deterministic v2)", () => {
     expect(payload.aiDecisionReason).toBe("broad_mode")
     expect(payload.aiModelUsed).toBe("openai/gpt-5-mini")
 
-    expect(mockGenerateObject).toHaveBeenCalledTimes(1)
-    const generateCall = mockGenerateObject.mock.calls[0]?.[0] as {
+    expect(mockGenerateText).toHaveBeenCalledTimes(1)
+    const generateCall = mockGenerateText.mock.calls[0]?.[0] as {
       prompt?: string
       providerOptions?: { gateway?: { models?: string[]; order?: string[] } }
     }
@@ -762,12 +780,12 @@ describe("/api/chat route (deterministic v2)", () => {
     process.env.AI_GATEWAY_FAST_MODEL = "openai/gpt-5.1-instant"
     process.env.AI_GATEWAY_FAST_MODEL_MAX_CHARS = "220"
 
-    mockGenerateObject.mockResolvedValueOnce({
-      object: {
+    mockGenerateText.mockResolvedValueOnce({
+      output: {
         assistantMessage:
           "Yes, we can help. We usually start by tightening your conversion page and then align paid traffic to high-intent offers. Want me to map the first 2 steps for your business?",
         recommendedOffer: "free_audit",
-        shouldHandoff: false,
+        fallbackToHuman: false,
       },
     })
 
@@ -815,12 +833,12 @@ describe("/api/chat route (deterministic v2)", () => {
     process.env.AI_GATEWAY_FAST_MODEL = "openai/gpt-5.1-instant"
     process.env.AI_GATEWAY_FAST_MODEL_MAX_CHARS = "220"
 
-    mockGenerateObject.mockResolvedValueOnce({
-      object: {
+    mockGenerateText.mockResolvedValueOnce({
+      output: {
         assistantMessage:
           "Great question. Start by instrumenting your funnel events, then prioritize message-market fit on your highest-intent pages before scaling spend. Want me to give you a 30-day execution sequence?",
         recommendedOffer: "free_audit",
-        shouldHandoff: false,
+        fallbackToHuman: false,
       },
     })
 
@@ -863,21 +881,21 @@ describe("/api/chat route (deterministic v2)", () => {
     process.env.AI_GATEWAY_API_KEY = "gateway-secret"
     process.env.AI_GATEWAY_MODEL = "openai/gpt-5-mini"
 
-    mockGenerateObject
+    mockGenerateText
       .mockResolvedValueOnce({
-        object: {
+        output: {
           assistantMessage:
             "Given what you've shared, I'd skip the audit and jump straight to our Growth Partnership at $2,000/month. Want me to send that signup now?",
           recommendedOffer: "growth_partnership",
-          shouldHandoff: false,
+          fallbackToHuman: false,
         },
       })
       .mockResolvedValueOnce({
-        object: {
+        output: {
           assistantMessage:
             "Best move is still the Growth Partnership at $2,000/month so we can run everything for you. Should I send the signup link now?",
           recommendedOffer: "growth_partnership",
-          shouldHandoff: false,
+          fallbackToHuman: false,
         },
       })
 
@@ -919,9 +937,78 @@ describe("/api/chat route (deterministic v2)", () => {
     expect(payload.responseMode).toBe("deterministic")
     expect(payload.aiDecisionReason).toBe("guardrail_reject")
     expect(payload.aiGuardrailCode).toBe("semantic_mismatch")
-    expect(payload.aiPromptVersion).toBe("v3_node_context_history")
+    expect(payload.aiPromptVersion).toBe("v4_orchestrated_primary_guarded")
     expect(payload.aiRepairAttempted).toBe(true)
-    expect(mockGenerateObject).toHaveBeenCalledTimes(2)
+    expect(mockGenerateText).toHaveBeenCalledTimes(2)
+  })
+
+  it("sanitizes banned fallback phrase even when generated by AI", async () => {
+    process.env.SALES_CHAT_AI_FALLBACK_ENABLED = "true"
+    process.env.SALES_CHAT_AI_RESPONSE_MODE = "broad"
+    process.env.AI_GATEWAY_BASE_URL = "https://gateway.vercel.ai/v1"
+    process.env.AI_GATEWAY_API_KEY = "gateway-secret"
+    process.env.AI_GATEWAY_MODEL = "openai/gpt-5-mini"
+
+    mockGenerateText
+      .mockResolvedValueOnce({
+        output: {
+          assistantMessage:
+            "I'm not sure I caught that. Could you rephrase it? Or if you'd prefer, I can connect you with the team directly.",
+          recommendedOffer: null,
+          fallbackToHuman: false,
+          confidence: 0.7,
+          intentHint: "unknown",
+          nextStepQuestion: "Can you clarify your goal?",
+        },
+      })
+      .mockResolvedValueOnce({
+        output: {
+          assistantMessage:
+            "I'm not sure I caught that. Could you rephrase it? Or if you'd rather, I can connect you with the team directly.",
+          recommendedOffer: null,
+          fallbackToHuman: false,
+          confidence: 0.65,
+          intentHint: "unknown",
+          nextStepQuestion: "Can you share your top goal?",
+        },
+      })
+
+    const { POST } = await withChatRoute()
+    const initResponse = await POST(
+      makeRequest({
+        sessionId: "session-ai-banned-phrase",
+        sourcePage: "/get-started",
+        inputType: "button",
+        inputValue: "",
+        buttonId: "__init__",
+      }),
+    )
+    const initPayload = (await initResponse.json()) as { conversationState: unknown }
+
+    const response = await POST(
+      makeRequest({
+        sessionId: "session-ai-banned-phrase",
+        sourcePage: "/get-started",
+        inputType: "text",
+        inputValue: "hmm",
+        conversationState: initPayload.conversationState,
+      }),
+    )
+
+    expect(response.status).toBe(200)
+    expect(response.headers.get("x-sales-chat-route")).toBe("success")
+    const payload = (await response.json()) as {
+      assistantMessage: string
+      responseMode: string
+      aiDecisionReason?: string
+      aiGuardrailCode?: string
+      aiFallbackReason?: string
+    }
+    expect(payload.assistantMessage).not.toContain("Could you rephrase")
+    expect(payload.responseMode).toBe("deterministic")
+    expect(payload.aiDecisionReason).toBe("banned_phrase_blocked")
+    expect(payload.aiGuardrailCode).toBe("banned_phrase_blocked")
+    expect(payload.aiFallbackReason).toBe("guardrail_rejected")
   })
 
   it("keeps deterministic response when gateway call throws and exposes diagnostic reason", async () => {
@@ -931,7 +1018,7 @@ describe("/api/chat route (deterministic v2)", () => {
     process.env.AI_GATEWAY_API_KEY = "gateway-secret"
     process.env.AI_GATEWAY_MODEL = "openai/gpt-5-mini"
 
-    mockGenerateObject.mockRejectedValueOnce(new Error("gateway down"))
+    mockGenerateText.mockRejectedValueOnce(new Error("gateway down"))
 
     const { POST } = await withChatRoute()
     const initResponse = await POST(

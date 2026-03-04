@@ -183,4 +183,46 @@ describe("sales chat runtime config", () => {
     expect(parseBooleanEnv(undefined, true)).toBe(true)
     expect(parseBooleanEnv("unknown", true)).toBe(true)
   })
+
+  it("defaults orchestration rollout controls when unset", () => {
+    const runtime = getSalesChatRuntimeConfig(createEnv({
+      SALES_CHAT_ENABLED: "true",
+      SALES_CHAT_BOOKING_URL: "https://cal.com/demo",
+      SALES_CHAT_WEBSITE_OVERHAUL_CHECKOUT_URL: "https://checkout.example.com/website",
+      SALES_CHAT_GROWTH_PARTNERSHIP_SIGNUP_URL: "https://checkout.example.com/growth",
+      SALES_CHAT_LEADS_WEBHOOK_URL: "https://hooks.example.com/sales",
+      SALES_CHAT_LEADS_WEBHOOK_SECRET: "secret",
+    }))
+
+    expect(runtime.aiOrchestrationEnabled).toBe(true)
+    expect(runtime.aiOrchestrationPercent).toBe(100)
+    expect(runtime.aiOrchestrationCohort).toBe("default")
+  })
+
+  it("clamps orchestration rollout percent to valid range", () => {
+    const highPercent = getSalesChatRuntimeConfig(createEnv({
+      SALES_CHAT_ENABLED: "true",
+      SALES_CHAT_BOOKING_URL: "https://cal.com/demo",
+      SALES_CHAT_WEBSITE_OVERHAUL_CHECKOUT_URL: "https://checkout.example.com/website",
+      SALES_CHAT_GROWTH_PARTNERSHIP_SIGNUP_URL: "https://checkout.example.com/growth",
+      SALES_CHAT_LEADS_WEBHOOK_URL: "https://hooks.example.com/sales",
+      SALES_CHAT_LEADS_WEBHOOK_SECRET: "secret",
+      SALES_CHAT_AI_ORCHESTRATION_PERCENT: "999",
+    }))
+
+    const lowPercent = getSalesChatRuntimeConfig(createEnv({
+      SALES_CHAT_ENABLED: "true",
+      SALES_CHAT_BOOKING_URL: "https://cal.com/demo",
+      SALES_CHAT_WEBSITE_OVERHAUL_CHECKOUT_URL: "https://checkout.example.com/website",
+      SALES_CHAT_GROWTH_PARTNERSHIP_SIGNUP_URL: "https://checkout.example.com/growth",
+      SALES_CHAT_LEADS_WEBHOOK_URL: "https://hooks.example.com/sales",
+      SALES_CHAT_LEADS_WEBHOOK_SECRET: "secret",
+      SALES_CHAT_AI_ORCHESTRATION_PERCENT: "-10",
+      SALES_CHAT_AI_ORCHESTRATION_COHORT: "canary-a",
+    }))
+
+    expect(highPercent.aiOrchestrationPercent).toBe(100)
+    expect(lowPercent.aiOrchestrationPercent).toBe(0)
+    expect(lowPercent.aiOrchestrationCohort).toBe("canary-a")
+  })
 })

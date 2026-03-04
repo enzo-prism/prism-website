@@ -624,14 +624,21 @@ export default function SalesChatShell({
           nodeId: payload.nodeId,
           responseMode,
           aiDecisionReason:
-            payload.aiDecisionReason === "broad_mode" || payload.aiDecisionReason === "long_tail_trigger"
+            payload.aiDecisionReason === "broad_mode"
+            || payload.aiDecisionReason === "long_tail_trigger"
+            || payload.aiDecisionReason === "repair_success"
               ? payload.aiDecisionReason
               : undefined,
           aiGuardrailCode: payload.aiGuardrailCode,
           aiModelUsed: payload.aiModelUsed,
           aiLatencyMs: payload.aiLatencyMs,
+          aiLatencyBucket: payload.aiLatencyBucket,
           aiPromptVersion: payload.aiPromptVersion,
           aiRepairAttempted: payload.aiRepairAttempted,
+          aiOrchestrationPath: payload.aiOrchestrationPath,
+          aiFallbackReason: payload.aiFallbackReason,
+          aiConfidence: payload.aiConfidence,
+          aiIntentHint: payload.aiIntentHint,
         })
         void emitServerEvent("sales_chat_ai_response_used", {
           metadata: {
@@ -641,14 +648,21 @@ export default function SalesChatShell({
             aiGuardrailCode: payload.aiGuardrailCode,
             aiModelUsed: payload.aiModelUsed,
             aiLatencyMs: payload.aiLatencyMs,
+            aiLatencyBucket: payload.aiLatencyBucket,
             aiPromptVersion: payload.aiPromptVersion,
             aiRepairAttempted: payload.aiRepairAttempted,
+            aiOrchestrationPath: payload.aiOrchestrationPath,
+            aiFallbackReason: payload.aiFallbackReason,
+            aiConfidence: payload.aiConfidence,
+            aiIntentHint: payload.aiIntentHint,
           },
         })
       } else if (
         payload.aiDecisionReason === "guardrail_reject"
         || payload.aiDecisionReason === "gateway_error"
         || payload.aiDecisionReason === "disabled"
+        || payload.aiDecisionReason === "canary_skip"
+        || payload.aiDecisionReason === "banned_phrase_blocked"
       ) {
         trackSalesChatAiResponseRejected({
           sourcePage,
@@ -659,8 +673,13 @@ export default function SalesChatShell({
           aiGuardrailCode: payload.aiGuardrailCode,
           aiModelUsed: payload.aiModelUsed,
           aiLatencyMs: payload.aiLatencyMs,
+          aiLatencyBucket: payload.aiLatencyBucket,
           aiPromptVersion: payload.aiPromptVersion,
           aiRepairAttempted: payload.aiRepairAttempted,
+          aiOrchestrationPath: payload.aiOrchestrationPath,
+          aiFallbackReason: payload.aiFallbackReason,
+          aiConfidence: payload.aiConfidence,
+          aiIntentHint: payload.aiIntentHint,
         })
         void emitServerEvent("sales_chat_ai_response_rejected", {
           metadata: {
@@ -670,8 +689,13 @@ export default function SalesChatShell({
             aiGuardrailCode: payload.aiGuardrailCode,
             aiModelUsed: payload.aiModelUsed,
             aiLatencyMs: payload.aiLatencyMs,
+            aiLatencyBucket: payload.aiLatencyBucket,
             aiPromptVersion: payload.aiPromptVersion,
             aiRepairAttempted: payload.aiRepairAttempted,
+            aiOrchestrationPath: payload.aiOrchestrationPath,
+            aiFallbackReason: payload.aiFallbackReason,
+            aiConfidence: payload.aiConfidence,
+            aiIntentHint: payload.aiIntentHint,
           },
         })
       }

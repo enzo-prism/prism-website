@@ -672,7 +672,7 @@ export function edgeCaseCopy(kind: string, runtimeLinks: SalesChatSpecRuntimeLin
     return {
       assistantMessage:
         "Great question, though it's a bit outside what I can help with here. I'm best at Prism services, pricing, and growth planning.\n\n" +
-        "Want me to connect you with the team directly?",
+        "Want me to open the contact page so a specialist can jump in?",
       quickReplies: [
         openUrl("contact_team", "Contact the team", "https://www.design-prism.com/contact"),
         reply("starter_general_question", "Ask a Prism question"),
@@ -730,7 +730,7 @@ export function edgeCaseCopy(kind: string, runtimeLinks: SalesChatSpecRuntimeLin
 
   return {
     assistantMessage:
-      "I'm not sure I caught that. Could you rephrase it? Or if you'd rather, I can connect you with the team directly.",
+      "I can help with that. Share one more detail about your goal, and I'll recommend the clearest next step right away.",
     quickReplies: [
       reply("starter_general_question", "Rephrase my question"),
       openBooking("book_call", "Book a quick call"),
@@ -753,7 +753,7 @@ export function softCloseCopy(): NodeReply {
 export function fallbackRephraseCopy(): NodeReply {
   return {
     assistantMessage:
-      "I'm not sure I caught that. Could you rephrase it? Or if you'd prefer, I can connect you with the team directly.",
+      "Thanks for the context. Tell me what result you want first, and I'll recommend the fastest path.",
     quickReplies: [
       reply("starter_help_choose", "Help me choose"),
       openBooking("book_call", "Book a quick call"),

@@ -1,4 +1,5 @@
 import {
+  fallbackRephraseCopy,
   faqCopy,
   intentBPitchCopy,
   intentCPitchCopy,
@@ -40,5 +41,13 @@ describe("spec v1 copy", () => {
       expect(replySet.length).toBeLessThanOrEqual(5)
       expect(replySet.length).toBeGreaterThan(0)
     }
+  })
+
+  it("keeps fallback copy free of banned dead-end phrasing", () => {
+    const fallback = fallbackRephraseCopy().assistantMessage.toLowerCase()
+
+    expect(fallback).not.toContain("i'm not sure i caught that")
+    expect(fallback).not.toContain("could you rephrase it")
+    expect(fallback).not.toContain("connect you with the team directly")
   })
 })

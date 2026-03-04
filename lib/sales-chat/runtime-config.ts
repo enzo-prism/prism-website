@@ -5,6 +5,9 @@ export type SalesChatRuntimeConfig = {
   aiFallbackEnabled: boolean
   aiResponseMode: SalesChatAiResponseMode
   aiResponseEnabled: boolean
+  aiOrchestrationEnabled: boolean
+  aiOrchestrationPercent: number
+  aiOrchestrationCohort: string
   hasGatewayBaseUrl: boolean
   hasGatewayApiKey: boolean
   hasGatewayModel: boolean
@@ -75,6 +78,19 @@ function parseCsvEnv(value: string | undefined): string[] {
   return Array.from(unique)
 }
 
+function parsePercentageEnv(value: string | undefined, fallback: number): number {
+  if (!value?.trim()) {
+    return fallback
+  }
+
+  const parsed = Number.parseInt(value.trim(), 10)
+  if (!Number.isFinite(parsed)) {
+    return fallback
+  }
+
+  return Math.max(0, Math.min(100, parsed))
+}
+
 function isFormspreeEndpoint(url: string | undefined): boolean {
   if (!url?.trim()) {
     return false
@@ -96,6 +112,9 @@ export function getSalesChatRuntimeConfig(env: NodeJS.ProcessEnv): SalesChatRunt
   const aiFallbackEnabled = parseBooleanEnv(env.SALES_CHAT_AI_FALLBACK_ENABLED, false)
   const aiResponseMode = parseAiResponseMode(env.SALES_CHAT_AI_RESPONSE_MODE, aiFallbackEnabled)
   const aiResponseEnabled = aiFallbackEnabled && aiResponseMode !== "off"
+  const aiOrchestrationEnabled = parseBooleanEnv(env.SALES_CHAT_AI_ORCHESTRATION_ENABLED, true)
+  const aiOrchestrationPercent = parsePercentageEnv(env.SALES_CHAT_AI_ORCHESTRATION_PERCENT, 100)
+  const aiOrchestrationCohort = env.SALES_CHAT_AI_ORCHESTRATION_COHORT?.trim() || "default"
   const hasGatewayBaseUrl = isConfigured(env.AI_GATEWAY_BASE_URL)
   const hasGatewayApiKey = isConfigured(env.AI_GATEWAY_API_KEY)
   const hasGatewayModel = isConfigured(env.AI_GATEWAY_MODEL)
@@ -140,6 +159,9 @@ export function getSalesChatRuntimeConfig(env: NodeJS.ProcessEnv): SalesChatRunt
     aiFallbackEnabled,
     aiResponseMode,
     aiResponseEnabled,
+    aiOrchestrationEnabled,
+    aiOrchestrationPercent,
+    aiOrchestrationCohort,
     hasGatewayBaseUrl,
     hasGatewayApiKey,
     hasGatewayModel,

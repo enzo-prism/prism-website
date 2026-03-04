@@ -56,7 +56,7 @@ The repo assumes pnpm; npm/yarn installs will fall out of sync.
 | `pnpm smoke:sales-chat:local` | Fast localhost smoke for `/api/chat` deterministic init + free-audit terminal lead dispatch (run while `pnpm dev` is active). |
 | `pnpm build` | Production Next.js build (use before Vercel deploys). |
 | `pnpm verify:deploy` | Runs `scripts/verify-deployment.ts` to ensure required env vars and image config exist. |
-| `pnpm verify:sales-chat-config` | Validates `.vercel/.env.production.local` after `vercel pull`; fails when chat is enabled without required deterministic chat keys (CTA URLs + lead webhook URL). `SALES_CHAT_LEADS_WEBHOOK_SECRET` is required only for non-Formspree lead backends. `AI_GATEWAY_*` is only required if `SALES_CHAT_AI_FALLBACK_ENABLED=true`. |
+| `pnpm verify:sales-chat-config` | Validates `.vercel/.env.production.local` after `vercel pull`; fails when chat is enabled without required deterministic chat keys (CTA URLs + lead webhook URL). `SALES_CHAT_LEADS_WEBHOOK_SECRET` is required only for non-Formspree lead backends. `AI_GATEWAY_*` is required only when AI response mode is enabled (`SALES_CHAT_AI_FALLBACK_ENABLED=true` and `SALES_CHAT_AI_RESPONSE_MODE!=off`). |
 | `pnpm verify:pricing-consistency` | Blocks deploys when legacy conflicting pricing reappears on pricing-sensitive surfaces. Contextual non-core dollar values are only allowed on explicitly labeled pages (referral/equipment/ad-fee examples). |
 | `pnpm diag:supabase` | Confirms Supabase URL + service key are available. |
 
@@ -78,7 +78,7 @@ The repo assumes pnpm; npm/yarn installs will fall out of sync.
 - [`docs/forms.md`](./docs/forms.md) – Shared Formspree hooks and thank-you routing.
 - [`docs/pages-overview.md`](./docs/pages-overview.md) – Where to edit pricing, contact, free-analysis flows.
 - [`docs/build-and-deploy-guide.md`](./docs/build-and-deploy-guide.md) – Build tooling expectations plus the local/CI checklist.
-- [`docs/environment-setup.md`](./docs/environment-setup.md) – Environment variable reference, including deterministic sales-chat contract, lead webhook payload rules, and optional AI fallback config.
+- [`docs/environment-setup.md`](./docs/environment-setup.md) – Environment variable reference, including deterministic sales-chat contract, lead webhook payload rules, and optional AI orchestration config.
 - [`docs/codex-workflow.md`](./docs/codex-workflow.md) – Codex-specific playbook for editing the dental-photography surfaces and booking form.
 
 ## CLI workflows (GitHub + Vercel)

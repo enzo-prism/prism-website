@@ -41,7 +41,7 @@ This guide highlights the workflows we lean on most often while iterating on the
     - optional: `buttonId`, `conversationState`, `conversationHistory` (recent transcript window for AI context)
   - Validates request payloads with `zod`.
   - Runs deterministic state transitions through `runSalesChatSpecV1Engine` (`lib/sales-chat/spec-v1-engine.ts`).
-  - Optionally upgrades responses through Vercel AI Gateway (`lib/sales-chat/ai-gateway-fallback.ts`) when:
+  - Optionally upgrades responses through Vercel AI Gateway orchestration (`lib/sales-chat/ai-orchestrator.ts`) when:
     - `SALES_CHAT_AI_FALLBACK_ENABLED=true`
     - `SALES_CHAT_AI_RESPONSE_MODE!=off`
     - `AI_GATEWAY_BASE_URL`, `AI_GATEWAY_API_KEY`, and `AI_GATEWAY_MODEL` are configured
@@ -50,21 +50,29 @@ This guide highlights the workflows we lean on most often while iterating on the
     - `broad` upgrades all non-terminal turns except `__init__`
     - `off` keeps deterministic-only output even when gateway env exists
     - when mode is unset and `SALES_CHAT_AI_FALLBACK_ENABLED=true`, runtime defaults to `broad` to maximize natural model responses
+  - AI orchestration rollout controls:
+    - `SALES_CHAT_AI_ORCHESTRATION_ENABLED` toggles orchestrated generation path
+    - `SALES_CHAT_AI_ORCHESTRATION_PERCENT` applies session-hash canary rollout (0-100)
+    - `SALES_CHAT_AI_ORCHESTRATION_COHORT` tags gateway + server telemetry by rollout cohort
   - AI guardrails:
     - deterministic state transitions and terminal actions remain authoritative
-    - generated copy is dropped when pricing drifts from canonical `$0`, `$1,000`, `$2,000`
+    - generated copy is dropped when pricing drifts from canonical `$0`, `$1,000`, `$2,000`, when node intent mismatches, or when banned fallback language appears
   - Builds typed conversion payloads through `buildLeadPayload` (`lib/sales-chat/lead-payloads.ts`) and dispatches with `dispatchSalesChatLead` (`lib/sales-chat/lead-dispatch.ts`) when terminal actions fire.
   - Includes lead dispatch observability fields in success payloads:
     - `leadDispatchStatus` (`none` | `attempted` | `succeeded` | `failed`)
     - `leadDispatchCode` (sanitized reason code; e.g. `webhook_http_error`, `duplicate_suppressed`)
   - Includes AI observability fields in success payloads:
     - `responseMode` (`deterministic` | `ai_assisted`)
-    - `aiDecisionReason` (`broad_mode`, `long_tail_trigger`, `guardrail_reject`, `gateway_error`, `disabled`)
-    - `aiGuardrailCode` (`pricing_drift`, `semantic_mismatch`)
+    - `aiDecisionReason` (`broad_mode`, `long_tail_trigger`, `repair_success`, `canary_skip`, `banned_phrase_blocked`, `guardrail_reject`, `gateway_error`, `disabled`)
+    - `aiGuardrailCode` (`pricing_drift`, `semantic_mismatch`, `banned_phrase_blocked`)
     - `aiModelUsed` (gateway model id)
     - `aiLatencyMs` (gateway round-trip timing)
+    - `aiLatencyBucket` (latency band for SLO dashboards)
     - `aiPromptVersion` (active prompt template/version marker)
     - `aiRepairAttempted` (whether a second guardrail repair generation was attempted)
+    - `aiOrchestrationPath` (`orchestrated_primary`, `orchestrated_repair`, `deterministic_fallback`)
+    - `aiFallbackReason` (deterministic fallback reason code for rejected/skipped AI paths)
+    - `aiConfidence` and `aiIntentHint` (model-provided confidence + intent metadata)
   - Returns JSON only (no streaming path in the deterministic route).
   - Returns tracing headers:
     - `x-sales-chat-route` (`success`, `ai_fallback`, `disabled`, `config_missing`, `invalid_request`)

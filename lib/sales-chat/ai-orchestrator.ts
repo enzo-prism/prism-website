@@ -1,9 +1,13 @@
-import { createGateway, generateObject } from "ai"
+import { createHash } from "node:crypto"
+
+import { createGateway, generateText, Output } from "ai"
 import { z } from "zod"
 
 import { faqCopy, fallbackRephraseCopy } from "@/lib/sales-chat/spec-v1-copy"
 import type {
+  SalesChatAiDecisionReason,
   SalesChatAiGuardrailCode,
+  SalesChatAiOrchestrationPath,
   OfferRecommendation,
   SalesChatConversationState,
   SalesChatResponseV2,
@@ -12,10 +16,25 @@ import type {
 } from "@/lib/sales-chat/spec-v1-types"
 import type { SalesChatAiResponseMode } from "@/lib/sales-chat/runtime-config"
 
-const aiLongTailSchema = z.object({
+const aiResponseSchema = z.object({
   assistantMessage: z.string().trim().min(20).max(1200),
   recommendedOffer: z.enum(["free_audit", "website_overhaul", "growth_partnership"]).nullable(),
-  shouldHandoff: z.boolean().nullable(),
+  fallbackToHuman: z.boolean().nullable(),
+  intentHint: z
+    .enum([
+      "free_audit",
+      "website_overhaul",
+      "growth_partnership",
+      "help_choose",
+      "general_question",
+      "faq",
+      "objection",
+      "edge_case",
+      "unknown",
+    ])
+    .nullable(),
+  nextStepQuestion: z.string().trim().max(220).nullable(),
+  confidence: z.number().min(0).max(1).nullable(),
 })
 
 const AI_TRIGGER_MESSAGES = new Set([
@@ -23,7 +42,7 @@ const AI_TRIGGER_MESSAGES = new Set([
   faqCopy("unknown").assistantMessage,
 ])
 
-const AI_PROMPT_VERSION = "v3_node_context_history"
+const AI_PROMPT_VERSION = "v4_orchestrated_primary_guarded"
 const CANONICAL_PRICE_VALUES = new Set([0, 1000, 2000])
 const DISALLOWED_PRICE_LANGUAGE = /(starting at|from\s+\$|per\s+week|\/week|under\s+\$)/i
 const OTHER_WRITTEN_PRICE_PATTERN = /\b(?:three|four|five|six|seven|eight|nine|ten|eleven|twelve|fifteen|twenty)\s+(?:hundred|thousand|grand)\b/i
@@ -33,51 +52,83 @@ const MONTHLY_MARKER_PATTERN = /(?:\/\s*mo(?:nth)?\b|per\s+month\b|monthly\b)/i
 const ONE_TIME_MARKER_PATTERN = /\b(one[\s-]?time|single payment|pay once|one-off)\b/i
 const COMPLEX_QUERY_PATTERN = /\b(strategy|prioriti[sz]e|roadmap|framework|funnel|attribution|instrumentation|architecture|migration|integrat(?:e|ion)|multi[\s-]?step|kpi|experiment|positioning|sequencing)\b/i
 const DEFAULT_FAST_MODEL_MAX_CHARS = 190
+const DEFAULT_TIMEOUT_MS = 7000
 
-export type AiDecisionReason =
-  | "broad_mode"
-  | "long_tail_trigger"
-  | "guardrail_reject"
-  | "gateway_error"
-  | "disabled"
+const BANNED_PHRASE_PATTERNS = [
+  "i'm not sure i caught that",
+  "could you rephrase it",
+  "if you'd prefer, i can connect you with the team directly",
+  "if you'd rather, i can connect you with the team directly",
+]
 
-export type MaybeAiFallbackInput = {
+export type MaybeAiOrchestrationInput = {
   enabled: boolean
   mode: SalesChatAiResponseMode
   gatewayConfigured: boolean
   gatewayFallbackModels: string[]
   gatewayProviderOrder: string[]
   env: NodeJS.ProcessEnv
+  sessionId: string
+  sourcePage: string
   inputType: "text" | "button"
   buttonId?: string
   requestInput: string
-  sourcePage: string
   state: SalesChatConversationState
   deterministicResponse: SalesChatResponseV2
   conversationHistory?: SalesChatTranscriptTurn[]
+  orchestrationEnabled: boolean
+  orchestrationPercent: number
+  orchestrationCohort: string
 }
 
-export type MaybeAiFallbackResult = {
+export type MaybeAiOrchestrationResult = {
   used: boolean
   assistantMessage?: string
   recommendedOffer?: OfferRecommendation
   fallbackToHuman?: boolean
-  reason?: AiDecisionReason
+  reason?: SalesChatAiDecisionReason
   guardrailCode?: SalesChatAiGuardrailCode
   modelUsed?: string
   latencyMs?: number
+  latencyBucket?: string
   promptVersion?: string
   repairAttempted?: boolean
+  orchestrationPath: SalesChatAiOrchestrationPath
+  fallbackReason?: string
+  confidence?: number
+  intentHint?: string
 }
 
-function shouldUseLongTailMode(input: MaybeAiFallbackInput): boolean {
+function normalizeForPolicy(text: string): string {
+  return text
+    .toLowerCase()
+    .replace(/[^a-z0-9\s]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim()
+}
+
+function hashSessionBucket(sessionId: string): number {
+  const digest = createHash("sha256").update(sessionId).digest("hex")
+  const sample = Number.parseInt(digest.slice(0, 8), 16)
+  if (!Number.isFinite(sample)) {
+    return 99
+  }
+  return sample % 100
+}
+
+function isBannedPhraseMessage(message: string): boolean {
+  const normalized = normalizeForPolicy(message)
+  return BANNED_PHRASE_PATTERNS.some((pattern) => normalized.includes(normalizeForPolicy(pattern)))
+}
+
+function shouldUseLongTailMode(input: MaybeAiOrchestrationInput): boolean {
   const responseMessage = input.deterministicResponse.assistantMessage.trim()
   return Array.from(AI_TRIGGER_MESSAGES).some(
     (candidate) => responseMessage === candidate || responseMessage.startsWith(`${candidate}\n\n`),
   )
 }
 
-function isInitTurn(input: MaybeAiFallbackInput): boolean {
+function isInitTurn(input: MaybeAiOrchestrationInput): boolean {
   return (
     input.inputType === "button"
     && input.buttonId === "__init__"
@@ -85,24 +136,34 @@ function isInitTurn(input: MaybeAiFallbackInput): boolean {
   )
 }
 
-function shouldAttemptAiFallback(input: MaybeAiFallbackInput): {
+function shouldAttemptOrchestration(input: MaybeAiOrchestrationInput): {
   shouldRun: boolean
-  reason?: AiDecisionReason
+  reason?: SalesChatAiDecisionReason
+  fallbackReason?: string
 } {
   if (!input.enabled) {
-    return { shouldRun: false }
+    return { shouldRun: false, reason: "disabled", fallbackReason: "ai_response_disabled" }
   }
 
   if (input.mode === "off") {
-    return { shouldRun: false, reason: "disabled" }
+    return { shouldRun: false, reason: "disabled", fallbackReason: "ai_mode_off" }
+  }
+
+  if (!input.orchestrationEnabled) {
+    return { shouldRun: false, reason: "canary_skip", fallbackReason: "orchestration_flag_disabled" }
+  }
+
+  const bucket = hashSessionBucket(input.sessionId)
+  if (bucket >= input.orchestrationPercent) {
+    return { shouldRun: false, reason: "canary_skip", fallbackReason: "orchestration_percent_gate" }
   }
 
   if (input.deterministicResponse.terminalAction && input.deterministicResponse.terminalAction !== "none") {
-    return { shouldRun: false }
+    return { shouldRun: false, fallbackReason: "terminal_action_locked" }
   }
 
   if (isInitTurn(input)) {
-    return { shouldRun: false }
+    return { shouldRun: false, fallbackReason: "init_bootstrap" }
   }
 
   if (input.mode === "broad") {
@@ -117,7 +178,7 @@ function shouldAttemptAiFallback(input: MaybeAiFallbackInput): {
     return { shouldRun: true, reason: "long_tail_trigger" }
   }
 
-  return { shouldRun: false }
+  return { shouldRun: false, fallbackReason: "long_tail_no_trigger" }
 }
 
 function normalizePriceNumber(rawMatch: string): number {
@@ -220,8 +281,11 @@ function detectMentionedOffer(message: string): OfferRecommendation | "multiple"
   return unique[0]
 }
 
-function hasSemanticMismatch(input: MaybeAiFallbackInput, assistantMessage: string, recommendedOffer?: OfferRecommendation): boolean {
-  // In broad mode, allow open QA behavior on discovery/faq/objection nodes without hard offer lock.
+function hasSemanticMismatch(
+  input: MaybeAiOrchestrationInput,
+  assistantMessage: string,
+  recommendedOffer?: OfferRecommendation,
+): boolean {
   if (
     input.mode === "broad"
     && (
@@ -253,10 +317,14 @@ function hasSemanticMismatch(input: MaybeAiFallbackInput, assistantMessage: stri
 }
 
 function evaluateGuardrails(
-  input: MaybeAiFallbackInput,
+  input: MaybeAiOrchestrationInput,
   assistantMessage: string,
   recommendedOffer?: OfferRecommendation,
 ): SalesChatAiGuardrailCode | undefined {
+  if (isBannedPhraseMessage(assistantMessage)) {
+    return "banned_phrase_blocked"
+  }
+
   if (hasDisallowedPricing(assistantMessage)) {
     return "pricing_drift"
   }
@@ -274,30 +342,31 @@ function formatMemoryFacts(state: SalesChatConversationState): string {
   if (state.memory.websiteUrl) facts.push(`Website URL: ${state.memory.websiteUrl}`)
   if (state.memory.primaryGoal) facts.push(`Primary goal: ${state.memory.primaryGoal}`)
   if (state.memory.painPoint) facts.push(`Pain point: ${state.memory.painPoint}`)
+  if (state.memory.email) facts.push(`Email captured: ${state.memory.email}`)
   return facts.length > 0 ? facts.join("\n") : "No prior memory captured yet."
 }
 
 function buildNodeStrategy(nodeId: SalesChatSpecNodeId): string {
   if (nodeId.startsWith("intent_b_")) {
-    return "Node goal: free-audit qualification. Be concise and confidence-building, then guide to audit completion."
+    return "Node goal: free-audit qualification. Be specific, confidence-building, and move toward the audit action without pressure."
   }
   if (nodeId.startsWith("intent_c_")) {
-    return "Node goal: website-overhaul qualification. Clarify scope and next steps without sounding pushy."
+    return "Node goal: website-overhaul qualification. Clarify scope and outcomes, then guide to decisive next steps."
   }
   if (nodeId.startsWith("intent_d_")) {
-    return "Node goal: growth-partnership qualification. Emphasize strategic partnership outcomes and fit."
+    return "Node goal: growth-partnership qualification. Emphasize strategic leverage, fit, and practical next action."
   }
   if (nodeId.startsWith("intent_e_")) {
-    return "Node goal: FAQ support. Answer clearly, then route to the most relevant next conversion step."
+    return "Node goal: FAQ support. Answer clearly, then bridge to the highest-likelihood conversion path."
   }
   if (nodeId.startsWith("intent_f_")) {
-    return "Node goal: objection handling. Validate concerns, reduce friction, and provide one practical next step."
+    return "Node goal: objection handling. Validate concern, reduce friction, and provide one low-risk next move."
   }
   if (nodeId.startsWith("intent_g_")) {
-    return "Node goal: edge-case or human handoff. Keep tone calm, clear, and route safely."
+    return "Node goal: edge-case/handoff safety. Keep calm, direct, and useful with clear path forward."
   }
   if (nodeId.startsWith("intent_a_") || nodeId === "welcome") {
-    return "Node goal: discovery and offer-fit routing. Ask one clear, natural question to move forward."
+    return "Node goal: discovery and fit-routing. Ask one concrete follow-up tied to what user already shared."
   }
   return "Node goal: keep momentum and provide one clear next step."
 }
@@ -311,7 +380,7 @@ function formatConversationHistory(history: SalesChatTranscriptTurn[] | undefine
     .slice(-6)
     .map((turn, index) => {
       const role = turn.role === "user" ? "User" : "Assistant"
-      const content = turn.content.trim().replace(/\s+/g, " ").slice(0, 280)
+      const content = turn.content.trim().replace(/\s+/g, " ").slice(0, 320)
       return `${index + 1}. ${role}: ${content}`
     })
     .join("\n")
@@ -320,27 +389,31 @@ function formatConversationHistory(history: SalesChatTranscriptTurn[] | undefine
 function buildSystemPrompt(): string {
   return [
     "You are Prism's sales assistant for design-prism.com.",
-    "Stay conversational, helpful, and direct in plain English.",
-    "Sound like a human advisor: natural cadence, contractions, and varied sentence rhythm.",
+    "You generate concise, tailored responses that progress the conversation naturally.",
     "Output valid JSON only using the provided schema.",
-    "Keep response to 2-5 concise sentences.",
-    "Prefer ending with one clear next-step question when it feels natural.",
-    "Do not use markdown lists or bullet characters.",
-    "Answer random/off-topic questions briefly and helpfully, then bridge back to business growth support in one sentence.",
-    "Canonical pricing is fixed and must never drift:",
+    "Style contract:",
+    "- 2-5 concise sentences",
+    "- one clear next-step question when natural",
+    "- no markdown lists or bullet characters",
+    "- no repetitive apology loops",
+    "- acknowledge context, personalize advice, progress the conversation",
+    "Pricing policy:",
     "- Free Expert Audit: $0",
     "- Website Overhaul: $1,000 one-time",
     "- Growth Partnership: $2,000/month",
-    "Never mention any other pricing values.",
-    "Do not mention pricing unless the user asks about pricing, budget, cost, or packages.",
-    "If the user asks for something outside Prism's scope, politely offer a human handoff.",
-    "Recommend one of: free_audit, website_overhaul, growth_partnership only when relevant.",
+    "- mention pricing only when user asks about pricing, budget, cost, or packages",
+    "- never mention any other pricing values",
+    "Banned language:",
+    "- never say: I'm not sure I caught that. Could you rephrase it?",
+    "- never use generic dead-end rephrase prompts",
+    "If uncertain, ask a targeted clarifying question tied to user context.",
+    "For off-topic prompts, briefly answer and bridge back to Prism outcomes in one sentence.",
   ].join("\n")
 }
 
-function buildUserPrompt(input: MaybeAiFallbackInput): string {
+function buildUserPrompt(input: MaybeAiOrchestrationInput): string {
   const quickReplyContext = input.deterministicResponse.quickReplies.length > 0
-    ? input.deterministicResponse.quickReplies.map((reply) => reply.label).join(" | ")
+    ? input.deterministicResponse.quickReplies.map((reply) => `${reply.label} (${reply.id})`).join(" | ")
     : "No quick replies for this turn."
 
   return [
@@ -352,35 +425,36 @@ function buildUserPrompt(input: MaybeAiFallbackInput): string {
     formatMemoryFacts(input.state),
     "Recent transcript window:",
     formatConversationHistory(input.conversationHistory),
-    `Deterministic message currently shown: ${input.deterministicResponse.assistantMessage}`,
+    `Deterministic baseline response: ${input.deterministicResponse.assistantMessage}`,
     `Deterministic quick reply options: ${quickReplyContext}`,
     buildNodeStrategy(input.state.nodeId),
-    "Provide a better response while keeping canonical pricing and conversion focus.",
+    "Generate a stronger, context-aware response that keeps conversion momentum and policy compliance.",
   ].join("\n")
 }
 
 function buildGuardrailRepairPrompt(
-  input: MaybeAiFallbackInput,
+  input: MaybeAiOrchestrationInput,
   rejectedMessage: string,
   guardrailCode: SalesChatAiGuardrailCode,
 ): string {
   const expectedOffer = expectedOfferForNode(input.state.nodeId) ?? input.deterministicResponse.recommendedOffer
 
-  const guardrailInstruction = guardrailCode === "pricing_drift"
-    ? "Your previous candidate violated pricing policy."
-    : `Your previous candidate conflicted with this node's semantic intent.${expectedOffer ? ` Expected offer focus: ${expectedOffer}.` : ""}`
+  const reasonInstruction =
+    guardrailCode === "pricing_drift"
+      ? "The candidate violated pricing policy."
+      : guardrailCode === "banned_phrase_blocked"
+        ? "The candidate used banned dead-end fallback language."
+        : `The candidate conflicted with node intent.${expectedOffer ? ` Expected offer focus: ${expectedOffer}.` : ""}`
 
   return [
-    guardrailInstruction,
+    reasonInstruction,
     `Rejected candidate: ${rejectedMessage}`,
-    `Deterministic safe response: ${input.deterministicResponse.assistantMessage}`,
-    "Rewrite a natural response that preserves deterministic intent and quick-reply path.",
-    "Keep canonical conversion focus for this node.",
-    "If an offer is mentioned, keep it consistent with the deterministic node context.",
-    "Use a natural, human tone and end with one clear next step.",
+    `Deterministic safe baseline: ${input.deterministicResponse.assistantMessage}`,
+    "Rewrite with a natural advisor tone and one concrete next step.",
     "No markdown bullets.",
+    "Never use generic rephrase language.",
     "Allowed pricing only: $0, $1,000 one-time, $2,000/month.",
-    "Do not mention any other numbers as prices.",
+    "Never mention other pricing values.",
   ].join("\n")
 }
 
@@ -410,7 +484,7 @@ function parsePositiveIntegerEnv(value: string | undefined, fallback: number): n
   return parsed
 }
 
-function shouldPreferFastModel(input: MaybeAiFallbackInput, maxChars: number): boolean {
+function shouldPreferFastModel(input: MaybeAiOrchestrationInput, maxChars: number): boolean {
   if (input.inputType !== "text") {
     return false
   }
@@ -436,7 +510,7 @@ function shouldPreferFastModel(input: MaybeAiFallbackInput, maxChars: number): b
   return true
 }
 
-function resolveGatewayModelId(input: MaybeAiFallbackInput, primaryModelId: string): string {
+function resolveGatewayModelId(input: MaybeAiOrchestrationInput, primaryModelId: string): string {
   const fastModel = input.env.AI_GATEWAY_FAST_MODEL?.trim()
   if (!fastModel) {
     return primaryModelId
@@ -454,7 +528,17 @@ function resolveGatewayModelId(input: MaybeAiFallbackInput, primaryModelId: stri
   return shouldPreferFastModel(input, maxChars) ? fastModel : primaryModelId
 }
 
-function buildGatewayProviderOptions(input: MaybeAiFallbackInput) {
+function getLatencyBucket(latencyMs: number | undefined): string {
+  if (latencyMs === undefined || !Number.isFinite(latencyMs)) {
+    return "unknown"
+  }
+  if (latencyMs < 500) return "lt_500ms"
+  if (latencyMs < 1500) return "500ms_1500ms"
+  if (latencyMs < 3000) return "1500ms_3000ms"
+  return "gte_3000ms"
+}
+
+function buildGatewayProviderOptions(input: MaybeAiOrchestrationInput, sessionHash: string) {
   const fallbackModels = input.gatewayFallbackModels.length > 0
     ? input.gatewayFallbackModels
     : parseCsvEnv(input.env.AI_GATEWAY_FALLBACK_MODELS)
@@ -466,7 +550,19 @@ function buildGatewayProviderOptions(input: MaybeAiFallbackInput) {
   const gatewayOptions: {
     models?: string[]
     order?: string[]
-  } = {}
+    user?: string
+    tags?: string[]
+  } = {
+    user: `sales-chat:${sessionHash}`,
+    tags: [
+      "sales-chat",
+      `mode:${input.mode}`,
+      `node:${input.state.nodeId}`,
+      `source:${input.sourcePage}`,
+      `cohort:${input.orchestrationCohort}`,
+    ],
+  }
+
   if (fallbackModels.length > 0) {
     gatewayOptions.models = fallbackModels
   }
@@ -474,24 +570,20 @@ function buildGatewayProviderOptions(input: MaybeAiFallbackInput) {
     gatewayOptions.order = providerOrder
   }
 
-  if (Object.keys(gatewayOptions).length === 0) {
-    return undefined
-  }
-
   return {
     gateway: gatewayOptions,
   }
 }
 
-function getPrimaryGenerationTemperature(input: MaybeAiFallbackInput): number {
+function getPrimaryGenerationTemperature(input: MaybeAiOrchestrationInput): number {
   if (input.mode === "broad") {
-    return input.inputType === "text" ? 0.68 : 0.62
+    return input.inputType === "text" ? 0.62 : 0.58
   }
-  return 0.52
+  return 0.5
 }
 
 function maybeLogGatewayDebug(
-  input: MaybeAiFallbackInput,
+  input: MaybeAiOrchestrationInput,
   phase: "generate" | "repair",
   error: unknown,
   modelId: string,
@@ -504,7 +596,7 @@ function maybeLogGatewayDebug(
     ?? (error as { cause?: { statusCode?: number } })?.cause?.statusCode
   const message = (error as { message?: string })?.message ?? "unknown_error"
 
-  console.warn("[sales-chat][ai-gateway] fallback_error", {
+  console.warn("[sales-chat][ai-orchestrator] fallback_error", {
     phase,
     modelId,
     statusCode,
@@ -515,12 +607,26 @@ function maybeLogGatewayDebug(
   })
 }
 
-export async function maybeGenerateAiFallbackResponse(
-  input: MaybeAiFallbackInput,
-): Promise<MaybeAiFallbackResult> {
-  const decision = shouldAttemptAiFallback(input)
+function shouldKeepRecommendedOffer(confidence: number | null | undefined): boolean {
+  if (confidence === null || confidence === undefined) {
+    return true
+  }
+
+  return confidence >= 0.55
+}
+
+export async function maybeOrchestrateSalesChatResponse(
+  input: MaybeAiOrchestrationInput,
+): Promise<MaybeAiOrchestrationResult> {
+  const decision = shouldAttemptOrchestration(input)
   if (!decision.shouldRun) {
-    return { used: false, reason: decision.reason, promptVersion: AI_PROMPT_VERSION }
+    return {
+      used: false,
+      reason: decision.reason,
+      promptVersion: AI_PROMPT_VERSION,
+      orchestrationPath: "deterministic_fallback",
+      fallbackReason: decision.fallbackReason,
+    }
   }
 
   const baseURL = input.env.AI_GATEWAY_BASE_URL?.trim()
@@ -528,11 +634,19 @@ export async function maybeGenerateAiFallbackResponse(
   const primaryModelId = input.env.AI_GATEWAY_MODEL?.trim()
 
   if (!input.gatewayConfigured || !baseURL || !apiKey || !primaryModelId) {
-    return { used: false, reason: "disabled", promptVersion: AI_PROMPT_VERSION }
+    return {
+      used: false,
+      reason: "disabled",
+      promptVersion: AI_PROMPT_VERSION,
+      orchestrationPath: "deterministic_fallback",
+      fallbackReason: "gateway_not_configured",
+    }
   }
 
   const selectedModelId = resolveGatewayModelId(input, primaryModelId)
+  const timeoutMs = parsePositiveIntegerEnv(input.env.AI_GATEWAY_TIMEOUT_MS, DEFAULT_TIMEOUT_MS)
   const startedAt = Date.now()
+  const sessionHash = createHash("sha256").update(input.sessionId).digest("hex").slice(0, 16)
 
   try {
     const gateway = createGateway({
@@ -540,20 +654,31 @@ export async function maybeGenerateAiFallbackResponse(
       apiKey,
     })
 
-    const result = await generateObject({
+    const result = await generateText({
       model: gateway(selectedModelId),
-      schema: aiLongTailSchema,
+      output: Output.object({
+        schema: aiResponseSchema,
+        name: "sales_chat_response",
+        description: "Tailored sales-chat assistant response",
+      }),
       temperature: getPrimaryGenerationTemperature(input),
       maxOutputTokens: 420,
+      maxRetries: 2,
+      timeout: timeoutMs,
       system: buildSystemPrompt(),
       prompt: buildUserPrompt(input),
-      providerOptions: buildGatewayProviderOptions(input),
+      providerOptions: buildGatewayProviderOptions(input, sessionHash),
     })
 
     const latencyMs = Date.now() - startedAt
-    let assistantMessage = result.object.assistantMessage.trim()
-    let recommendedOffer = result.object.recommendedOffer ?? undefined
-    let fallbackToHuman = result.object.shouldHandoff ?? false
+    const firstPass = result.output
+    let assistantMessage = firstPass.assistantMessage.trim()
+    let recommendedOffer = shouldKeepRecommendedOffer(firstPass.confidence)
+      ? firstPass.recommendedOffer ?? undefined
+      : undefined
+    let fallbackToHuman = firstPass.fallbackToHuman ?? false
+    const confidence = firstPass.confidence ?? undefined
+    const intentHint = firstPass.intentHint ?? undefined
     let repairAttempted = false
 
     let guardrailCode = evaluateGuardrails(input, assistantMessage, recommendedOffer)
@@ -561,28 +686,40 @@ export async function maybeGenerateAiFallbackResponse(
     if (guardrailCode) {
       repairAttempted = true
       try {
-        const repaired = await generateObject({
+        const repaired = await generateText({
           model: gateway(selectedModelId),
-          schema: aiLongTailSchema,
+          output: Output.object({
+            schema: aiResponseSchema,
+            name: "sales_chat_response_repair",
+            description: "Guardrail-safe repaired sales-chat response",
+          }),
           temperature: 0.15,
           maxOutputTokens: 420,
+          maxRetries: 1,
+          timeout: timeoutMs,
           system: buildSystemPrompt(),
           prompt: buildGuardrailRepairPrompt(input, assistantMessage, guardrailCode),
-          providerOptions: buildGatewayProviderOptions(input),
+          providerOptions: buildGatewayProviderOptions(input, sessionHash),
         })
-        assistantMessage = repaired.object.assistantMessage.trim()
-        recommendedOffer = repaired.object.recommendedOffer ?? recommendedOffer
-        fallbackToHuman = repaired.object.shouldHandoff ?? fallbackToHuman
+
+        assistantMessage = repaired.output.assistantMessage.trim()
+        recommendedOffer = shouldKeepRecommendedOffer(repaired.output.confidence)
+          ? repaired.output.recommendedOffer ?? recommendedOffer
+          : recommendedOffer
+        fallbackToHuman = repaired.output.fallbackToHuman ?? fallbackToHuman
       } catch (error) {
         maybeLogGatewayDebug(input, "repair", error, selectedModelId)
         return {
           used: false,
-          reason: "guardrail_reject",
+          reason: guardrailCode === "banned_phrase_blocked" ? "banned_phrase_blocked" : "guardrail_reject",
           guardrailCode,
           modelUsed: selectedModelId,
           latencyMs,
+          latencyBucket: getLatencyBucket(latencyMs),
           promptVersion: AI_PROMPT_VERSION,
           repairAttempted,
+          orchestrationPath: "deterministic_fallback",
+          fallbackReason: "repair_call_failed",
         }
       }
     }
@@ -592,12 +729,15 @@ export async function maybeGenerateAiFallbackResponse(
     if (guardrailCode) {
       return {
         used: false,
-        reason: "guardrail_reject",
+        reason: guardrailCode === "banned_phrase_blocked" ? "banned_phrase_blocked" : "guardrail_reject",
         guardrailCode,
         modelUsed: selectedModelId,
         latencyMs,
+        latencyBucket: getLatencyBucket(latencyMs),
         promptVersion: AI_PROMPT_VERSION,
         repairAttempted,
+        orchestrationPath: "deterministic_fallback",
+        fallbackReason: "guardrail_rejected",
       }
     }
 
@@ -606,20 +746,28 @@ export async function maybeGenerateAiFallbackResponse(
       assistantMessage,
       recommendedOffer,
       fallbackToHuman,
-      reason: decision.reason,
+      reason: repairAttempted ? "repair_success" : decision.reason,
       modelUsed: selectedModelId,
       latencyMs,
+      latencyBucket: getLatencyBucket(latencyMs),
       promptVersion: AI_PROMPT_VERSION,
       repairAttempted,
+      orchestrationPath: repairAttempted ? "orchestrated_repair" : "orchestrated_primary",
+      confidence,
+      intentHint,
     }
   } catch (error) {
     maybeLogGatewayDebug(input, "generate", error, selectedModelId)
+    const latencyMs = Date.now() - startedAt
     return {
       used: false,
       reason: "gateway_error",
       modelUsed: selectedModelId,
-      latencyMs: Date.now() - startedAt,
+      latencyMs,
+      latencyBucket: getLatencyBucket(latencyMs),
       promptVersion: AI_PROMPT_VERSION,
+      orchestrationPath: "deterministic_fallback",
+      fallbackReason: "gateway_generate_failed",
     }
   }
 }

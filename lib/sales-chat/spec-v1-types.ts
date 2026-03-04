@@ -13,11 +13,19 @@ export type SalesChatResponseMode = "deterministic" | "ai_assisted"
 export type SalesChatAiDecisionReason =
   | "broad_mode"
   | "long_tail_trigger"
+  | "repair_success"
+  | "canary_skip"
+  | "banned_phrase_blocked"
   | "guardrail_reject"
   | "gateway_error"
   | "disabled"
 
-export type SalesChatAiGuardrailCode = "pricing_drift" | "semantic_mismatch"
+export type SalesChatAiGuardrailCode = "pricing_drift" | "semantic_mismatch" | "banned_phrase_blocked"
+
+export type SalesChatAiOrchestrationPath =
+  | "orchestrated_primary"
+  | "orchestrated_repair"
+  | "deterministic_fallback"
 
 export type QuickReplyActionType = "reply" | "open_url" | "open_booking"
 
@@ -107,6 +115,11 @@ export type SalesChatResponseV2 = {
   aiLatencyMs?: number
   aiPromptVersion?: string
   aiRepairAttempted?: boolean
+  aiOrchestrationPath?: SalesChatAiOrchestrationPath
+  aiFallbackReason?: string
+  aiLatencyBucket?: string
+  aiConfidence?: number
+  aiIntentHint?: string
   recommendedOffer?: OfferRecommendation
   terminalAction?: TerminalAction
   leadDispatchStatus?: LeadDispatchOutcome
