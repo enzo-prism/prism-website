@@ -21,8 +21,8 @@ describe('mdx helpers', () => {
     ).rejects.toThrow('NEXT_NOT_FOUND')
   })
 
-  test('falls back to the shared featured image when frontmatter image format is invalid', async () => {
-    const post = await getPost('vibe-coding-platform-foundation-2026')
+  test('falls back to the shared featured image when frontmatter image is missing', async () => {
+    const post = await getPost('differentiation-is-survival')
     expect(post?.frontmatter.image).toBe(DEFAULT_BLOG_FEATURED_IMAGE)
   })
 
