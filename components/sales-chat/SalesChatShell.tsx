@@ -227,6 +227,7 @@ export default function SalesChatShell({
   const [fallbackToHuman, setFallbackToHuman] = useState(false)
   const [isInlineBookingOpen, setIsInlineBookingOpen] = useState(false)
   const [conversationState, setConversationState] = useState<SalesChatConversationState | null>(null)
+  const [stateToken, setStateToken] = useState<string | null>(null)
 
   const launcherButtonRef = useRef<HTMLButtonElement | null>(null)
   const textareaRef = useRef<HTMLTextAreaElement | null>(null)
@@ -237,6 +238,8 @@ export default function SalesChatShell({
   const hasTrackedDemoCtaRef = useRef(false)
   const hasRequestedWelcomeRef = useRef(false)
   const messageIdRef = useRef(0)
+  const requestIdRef = useRef(0)
+  const isSubmittingRef = useRef(false)
 
   const resolvedBookingHref = bookingHref.trim().length > 0 ? bookingHref : BOOKING_FLOW_ANCHOR
   const tokens = SALES_CHAT_VISUAL_TOKENS[visualStyle]
@@ -481,12 +484,17 @@ export default function SalesChatShell({
     buttonId?: string
     appendUserMessage?: boolean
   }) => {
+    if (isSubmittingRef.current) {
+      return
+    }
+
     const sessionId = ensureSessionId()
     const trimmedInput = args.inputValue.trim()
     const conversationHistory = buildConversationHistoryWindow({
       inputValue: args.inputValue,
       appendUserMessage: args.appendUserMessage,
     })
+    const requestId = ++requestIdRef.current
 
     if (args.appendUserMessage !== false && trimmedInput) {
       appendMessage({
@@ -501,6 +509,7 @@ export default function SalesChatShell({
       })
     }
 
+    isSubmittingRef.current = true
     setIsSubmitting(true)
     setIsTyping(true)
     setErrorMessage(null)
@@ -525,12 +534,16 @@ export default function SalesChatShell({
           inputType: args.inputType,
           inputValue: args.inputValue,
           buttonId: args.buttonId,
+          stateToken: stateToken ?? undefined,
           conversationState: conversationState ?? undefined,
           conversationHistory: conversationHistory.length > 0 ? conversationHistory : undefined,
         }),
       })
 
       const parsedPayload = await parseJsonResponse(response)
+      if (requestId !== requestIdRef.current) {
+        return
+      }
 
       if (!response.ok) {
         const payload = isHandledErrorPayload(parsedPayload) ? parsedPayload : null
@@ -586,6 +599,7 @@ export default function SalesChatShell({
       setFallbackToHuman(Boolean(payload.fallbackToHuman))
       setQuickReplies(Array.isArray(payload.quickReplies) ? payload.quickReplies : [])
       setConversationState(payload.conversationState)
+      setStateToken(payload.stateToken ?? null)
       setErrorMessage(null)
       const responseMode = payload.responseMode ?? "deterministic"
 
@@ -795,12 +809,17 @@ export default function SalesChatShell({
         },
       })
     } finally {
+      if (requestId === requestIdRef.current) {
+        isSubmittingRef.current = false
+      }
       if (requestTimeout !== undefined) {
         clearTimeout(requestTimeout)
       }
 
-      setIsSubmitting(false)
-      setIsTyping(false)
+      if (requestId === requestIdRef.current) {
+        setIsSubmitting(false)
+        setIsTyping(false)
+      }
       textareaRef.current?.focus()
     }
   }
@@ -820,6 +839,10 @@ export default function SalesChatShell({
   }, [isOpen])
 
   const handleQuickReply = (reply: SalesChatQuickReply) => {
+    if (isSubmittingRef.current) {
+      return
+    }
+
     const sessionId = ensureSessionId()
     trackSalesChatQuickReplyClicked({
       sourcePage,
@@ -950,6 +973,7 @@ export default function SalesChatShell({
             messages={messages}
             messagesEndRef={messagesEndRef}
             onQuickReplyClick={handleQuickReply}
+            quickRepliesDisabled={isSubmitting}
             quickReplies={quickReplies}
             renderMessageContent={renderMessageContent}
             visualStyle={visualStyle}

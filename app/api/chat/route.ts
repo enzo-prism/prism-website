@@ -21,6 +21,7 @@ import type {
   SalesChatSpecNodeId,
   SalesChatSpecRuntimeLinks,
 } from "@/lib/sales-chat/spec-v1-types"
+import { createSalesChatStateToken, readSalesChatStateToken } from "@/lib/sales-chat/state-token"
 import { getSalesChatRuntimeConfig } from "@/lib/sales-chat/runtime-config"
 
 export const runtime = "nodejs"
@@ -108,6 +109,7 @@ const conversationStateSchema = z.object({
       alsoBookedCall: z.boolean().optional(),
       actionTaken: z.enum(["booked_call", "direct_signup", "pay_now"]).optional(),
       askedQuestionIds: z.array(z.string().max(80)).optional(),
+      completedLeadDispatchKeys: z.array(z.string().max(240)).max(12).optional(),
     })
     .default({}),
   convertedAction: offerRecommendationSchema.optional(),
@@ -124,6 +126,7 @@ const chatRequestSchema: z.ZodType<SalesChatRequestV2> = z.object({
   inputType: z.enum(["text", "button"]),
   inputValue: z.string().max(2000),
   buttonId: z.string().trim().max(120).optional(),
+  stateToken: z.string().trim().max(6000).optional(),
   conversationState: conversationStateSchema.optional(),
   conversationHistory: z.array(conversationHistoryTurnSchema).max(8).optional(),
 })
@@ -200,6 +203,28 @@ function classifyLeadDispatchError(error: unknown): string {
   return "webhook_dispatch_error"
 }
 
+function getCompletedLeadDispatchKeys(state: SalesChatConversationState): string[] {
+  return state.memory.completedLeadDispatchKeys ?? []
+}
+
+function appendCompletedLeadDispatchKey(
+  state: SalesChatConversationState,
+  completedLeadDispatchKey: string,
+): SalesChatConversationState {
+  const existingKeys = getCompletedLeadDispatchKeys(state)
+  if (existingKeys.includes(completedLeadDispatchKey)) {
+    return state
+  }
+
+  return {
+    ...state,
+    memory: {
+      ...state.memory,
+      completedLeadDispatchKeys: [...existingKeys, completedLeadDispatchKey].slice(-12),
+    },
+  }
+}
+
 function normalizeForPolicy(text: string): string {
   return text
     .toLowerCase()
@@ -240,7 +265,7 @@ export async function POST(request: Request) {
     return buildFallbackError(HUMAN_HANDOFF_MESSAGE, 503, CHAT_ROUTE_EVENTS.DISABLED)
   }
 
-  if (!runtimeConfig.uiAvailable || !runtimeConfig.leadsWebhookConfigured) {
+  if (!runtimeConfig.uiAvailable) {
     console.warn("[sales-chat] deterministic runtime is missing required config", {
       requestId,
       missingRequiredKeys: runtimeConfig.missingRequiredKeys,
@@ -261,8 +286,20 @@ export async function POST(request: Request) {
   }
 
   const runtimeLinks = getRuntimeLinks(process.env)
-  const state: SalesChatConversationState =
-    validated.data.conversationState ?? createInitialConversationState()
+  const tokenState = readSalesChatStateToken({
+    env: process.env,
+    sessionId: validated.data.sessionId,
+    token: validated.data.stateToken,
+  })
+  if (!tokenState.ok && validated.data.stateToken) {
+    console.warn("[sales-chat] invalid state token; resetting conversation state", {
+      requestId,
+      reason: tokenState.reason,
+    })
+  }
+  const state: SalesChatConversationState = tokenState.ok
+    ? tokenState.state
+    : createInitialConversationState()
 
   let responsePayload = runSalesChatSpecV1Engine({
     request: validated.data,
@@ -365,15 +402,20 @@ export async function POST(request: Request) {
         nodeId: responsePayload.conversationState.nodeId,
         exchangeCount: responsePayload.conversationState.exchangeCount,
       })
+      const completedLeadDispatchKeys = getCompletedLeadDispatchKeys(responsePayload.conversationState)
 
-      if (recentLeadDispatchKeys.has(dedupeKey)) {
+      if (recentLeadDispatchKeys.has(dedupeKey) || completedLeadDispatchKeys.includes(dedupeKey)) {
         leadDispatchCode = "duplicate_suppressed"
       } else {
-        recentLeadDispatchKeys.set(dedupeKey, nowMs)
         leadDispatchStatus = "attempted"
         try {
           await dispatchSalesChatLead(leadPayload)
           leadDispatchStatus = "succeeded"
+          recentLeadDispatchKeys.set(dedupeKey, nowMs)
+          responsePayload = {
+            ...responsePayload,
+            conversationState: appendCompletedLeadDispatchKey(responsePayload.conversationState, dedupeKey),
+          }
         } catch (error) {
           leadDispatchStatus = "failed"
           leadDispatchCode = classifyLeadDispatchError(error)
@@ -388,6 +430,12 @@ export async function POST(request: Request) {
       leadDispatchCode = "payload_unavailable"
     }
   }
+
+  const nextStateToken = createSalesChatStateToken({
+    env: process.env,
+    sessionId: validated.data.sessionId,
+    state: responsePayload.conversationState,
+  })
 
   return NextResponse.json({
     ...responsePayload,
@@ -405,6 +453,7 @@ export async function POST(request: Request) {
     aiIntentHint,
     leadDispatchStatus,
     leadDispatchCode,
+    stateToken: nextStateToken ?? undefined,
   }, {
     status: 200,
     headers: {

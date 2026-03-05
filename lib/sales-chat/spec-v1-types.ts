@@ -79,6 +79,7 @@ export type SalesChatSpecMemory = {
   alsoBookedCall?: boolean
   actionTaken?: "booked_call" | "direct_signup" | "pay_now"
   askedQuestionIds?: string[]
+  completedLeadDispatchKeys?: string[]
 }
 
 export type SalesChatConversationState = {
@@ -99,6 +100,7 @@ export type SalesChatRequestV2 = {
   inputType: "text" | "button"
   inputValue: string
   buttonId?: string
+  stateToken?: string
   conversationState?: SalesChatConversationState
   conversationHistory?: SalesChatTranscriptTurn[]
 }
@@ -127,6 +129,7 @@ export type SalesChatResponseV2 = {
   fallbackToHuman?: boolean
   errorType?: string
   conversationState: SalesChatConversationState
+  stateToken?: string
 }
 
 export type SalesChatSpecRuntimeLinks = {

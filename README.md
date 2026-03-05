@@ -12,8 +12,9 @@ Next.js App Router project that powers the Prism marketing site, blog, and landi
 1. **Install prerequisites** – Node.js 22.x LTS (Vercel’s current runtime), [pnpm](https://pnpm.io/), and git.
 2. **Install dependencies** – `pnpm install`.
 3. **Set up environment variables** – `cp .env.example .env.local` and fill in the values listed in [`docs/environment-setup.md`](./docs/environment-setup.md).
-   - Include `SALES_CHAT_BOOKING_URL`, `SALES_CHAT_WEBSITE_OVERHAUL_CHECKOUT_URL`, `SALES_CHAT_GROWTH_PARTNERSHIP_SIGNUP_URL`, and `SALES_CHAT_LEADS_WEBHOOK_URL` for deterministic `/get-started` sales chat.
-   - `SALES_CHAT_LEADS_WEBHOOK_SECRET` is required for custom webhooks and optional when the lead webhook URL is a Formspree endpoint.
+   - Include `SALES_CHAT_BOOKING_URL`, `SALES_CHAT_WEBSITE_OVERHAUL_CHECKOUT_URL`, and `SALES_CHAT_GROWTH_PARTNERSHIP_SIGNUP_URL` for deterministic `/get-started` sales chat availability.
+   - Configure state signing with `SALES_CHAT_STATE_SECRET` (preferred) or another server secret fallback (`SALES_CHAT_LEADS_WEBHOOK_SECRET`, `SALES_CHAT_EVENTS_WEBHOOK_SECRET`, `AI_GATEWAY_API_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, or `RESEND_API_KEY`).
+   - `SALES_CHAT_LEADS_WEBHOOK_URL` is required to dispatch terminal leads. `SALES_CHAT_LEADS_WEBHOOK_SECRET` is required for custom webhooks and optional when the lead webhook URL is a Formspree endpoint.
 4. **Run the dev server** – `pnpm dev` (defaults to `http://localhost:3000`).
 5. **Optional quality gates** – `pnpm lint && pnpm typecheck && pnpm test` before opening a PR.
 
@@ -30,12 +31,13 @@ The repo assumes pnpm; npm/yarn installs will fall out of sync.
 - **Canonical pricing policy** – Core offer pricing is fixed site-wide: `Website Overhaul = $1,000 one-time`, `Growth Partnership = $2,000/month`, `Free Expert Audit = $0`. `/pricing` is the only canonical pricing URL. Legacy pricing routes permanently redirect to `/pricing`.
 - **Documentation** – When you add a new flow or change behavior, edit the relevant file under `/docs` (or this README/AGENTS if the rule is global). Do *not* add new top-level docs without approval; prefer updating existing guides.
 - **Environment variables** – Required vars are limited to those listed in [docs/environment-setup.md](./docs/environment-setup.md) and `.env.example` (GA overrides, Supabase credentials, Resend key, optional site URLs). Do not list vars that aren’t implemented in code.
-- **Sales Chat (Spec v1)** – `/get-started` mounts a deterministic `SalesChat` client + server state machine for intents A–G (free audit, website overhaul, growth partnership, FAQ/objections/guardrails). Chat UI is availability-gated and only renders when `SALES_CHAT_ENABLED` and required CTA links are configured.
+- **Sales Chat (Spec v1)** – `/get-started` mounts a deterministic `SalesChat` client + server state machine for intents A–G (free audit, website overhaul, growth partnership, FAQ/objections/guardrails). Chat UI is availability-gated and only renders when `SALES_CHAT_ENABLED`, required CTA links are configured, and signed-state runtime is available.
 
 ### Sales chat architecture (at a glance)
 
 - `app/get-started/page.tsx` computes runtime availability via `getSalesChatRuntimeConfig(process.env)` and mounts `SalesChat` only when `uiAvailable`.
 - `app/api/chat/route.ts` is deterministic v2 (state-machine JSON contract) and returns `x-sales-chat-route` on every response plus `x-request-id` on success.
+- `/api/chat` treats `stateToken` as the authoritative signed conversation state on follow-up turns. Raw `conversationState` is accepted for compatibility/debugging, but clients should round-trip `stateToken` every turn.
 - `/api/chat` success responses now include lead dispatch observability hints (`leadDispatchStatus`, `leadDispatchCode`) so clients can distinguish attempted/succeeded/failed lead fan-out.
 - `app/api/sales-chat/events/route.ts` ingests lifecycle and telemetry events.
 - `app/api/sales-chat/leads/route.ts` validates and forwards typed lead payloads for backfill/manual dispatch.
@@ -53,10 +55,10 @@ The repo assumes pnpm; npm/yarn installs will fall out of sync.
 | `pnpm test:sales-chat:core` | Deterministic sales-chat reliability matrix (API/component/page/runtime/copy/engine/payload analytics tests). |
 | `pnpm test:sales-chat:e2e` | Playwright checks for `/get-started` with chat enabled and disabled. |
 | `pnpm test:sales-chat:stress` | Consecutive-run stress loop (default 20 runs) for flake detection. |
-| `pnpm smoke:sales-chat:local` | Fast localhost smoke for `/api/chat` deterministic init + free-audit terminal lead dispatch (run while `pnpm dev` is active). |
+| `pnpm smoke:sales-chat:local` | Fast localhost smoke for `/api/chat` deterministic init + free-audit terminal lead dispatch. It round-trips both `stateToken` and `conversationState`, so run it against a live local server after `pnpm dev` starts. |
 | `pnpm build` | Production Next.js build (use before Vercel deploys). |
 | `pnpm verify:deploy` | Runs `scripts/verify-deployment.ts` to ensure required env vars and image config exist. |
-| `pnpm verify:sales-chat-config` | Validates `.vercel/.env.production.local` after `vercel pull`; fails when chat is enabled without required deterministic chat keys (CTA URLs + lead webhook URL). `SALES_CHAT_LEADS_WEBHOOK_SECRET` is required only for non-Formspree lead backends. `AI_GATEWAY_*` is required only when AI response mode is enabled (`SALES_CHAT_AI_FALLBACK_ENABLED=true` and `SALES_CHAT_AI_RESPONSE_MODE!=off`). |
+| `pnpm verify:sales-chat-config` | Validates `.vercel/.env.production.local` after `vercel pull`; fails when chat is enabled without required deterministic chat keys (CTA URLs + state-signing secret source + lead webhook URL). `SALES_CHAT_STATE_SECRET` is preferred but can fall back to another server secret. `SALES_CHAT_LEADS_WEBHOOK_SECRET` is required only for non-Formspree lead backends. `AI_GATEWAY_*` is required only when AI response mode is enabled (`SALES_CHAT_AI_FALLBACK_ENABLED=true` and `SALES_CHAT_AI_RESPONSE_MODE!=off`). |
 | `pnpm verify:pricing-consistency` | Blocks deploys when legacy conflicting pricing reappears on pricing-sensitive surfaces. Contextual non-core dollar values are only allowed on explicitly labeled pages (referral/equipment/ad-fee examples). |
 | `pnpm diag:supabase` | Confirms Supabase URL + service key are available. |
 

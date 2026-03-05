@@ -38,8 +38,9 @@ This guide highlights the workflows we lean on most often while iterating on the
   - `POST /api/chat`
   - Accepts deterministic v2 payloads:
     - required: `sessionId`, `sourcePage`, `inputType`, `inputValue`
-    - optional: `buttonId`, `conversationState`, `conversationHistory` (recent transcript window for AI context)
+    - optional: `buttonId`, `stateToken`, `conversationState`, `conversationHistory` (recent transcript window for AI context)
   - Validates request payloads with `zod`.
+  - Uses `stateToken` as the authoritative signed conversation state on follow-up turns. Raw `conversationState` is accepted for compatibility/debugging, but should not drive routing.
   - Runs deterministic state transitions through `runSalesChatSpecV1Engine` (`lib/sales-chat/spec-v1-engine.ts`).
   - Optionally upgrades responses through Vercel AI Gateway orchestration (`lib/sales-chat/ai-orchestrator.ts`) when:
     - `SALES_CHAT_AI_FALLBACK_ENABLED=true`
@@ -78,11 +79,13 @@ This guide highlights the workflows we lean on most often while iterating on the
     - `x-sales-chat-route` (`success`, `ai_fallback`, `disabled`, `config_missing`, `invalid_request`)
     - `x-request-id` on success responses
   - Runtime gating:
-    - `/get-started` mount gate: `uiAvailable = SALES_CHAT_ENABLED && ctaUrlsConfigured`
-    - route hard-stop: returns `503 config_missing` when deterministic config or lead webhook config is incomplete
+    - `/get-started` mount gate: `uiAvailable = SALES_CHAT_ENABLED && ctaUrlsConfigured && stateSigningConfigured`
+    - `stateSigningConfigured` resolves from `SALES_CHAT_STATE_SECRET` first, then other server-only secrets as fallback
+    - route hard-stop: returns `503 config_missing` only when deterministic CTA/state-signing config is incomplete
     - webhook secret rule:
       - Formspree endpoint (`https://formspree.io/f/...`): secret optional
       - custom webhook endpoint: `SALES_CHAT_LEADS_WEBHOOK_SECRET` required
+    - lead webhook config should degrade terminal actions only; non-terminal chat flow should still initialize and respond
   - Supporting endpoints:
     - `POST /api/sales-chat/events` for lifecycle/state telemetry
     - `POST /api/sales-chat/leads` for validated manual/system lead payload forwarding
@@ -155,7 +158,8 @@ This guide highlights the workflows we lean on most often while iterating on the
   - `pnpm test:sales-chat:core`
   - `pnpm test:sales-chat:e2e`
   - Include API-gate assertions from `__tests__/api/chat.test.ts`:
-    - custom webhook + missing secret => `503 config_missing`
+    - missing state-signing secret with no fallback source => `503 config_missing`
+    - custom webhook + missing secret => init still returns `200 success`, terminal lead dispatch reports `leadDispatchStatus=failed`
     - Formspree webhook + missing secret => `200 success`
   - Optional legacy AI-module guard checks (only if touching prompt/policy helpers):
   - `pnpm exec jest __tests__/sales-chat/policy.test.ts __tests__/sales-chat/prompt.test.ts`
@@ -170,8 +174,9 @@ This guide highlights the workflows we lean on most often while iterating on the
   - If deterministic responses are missing, inspect response headers (`x-sales-chat-route`) and `nodeId` in JSON payloads.
   - If AI behavior looks off, inspect `responseMode`, `aiDecisionReason`, `aiModelUsed`, and `aiLatencyMs` in `/api/chat` success payloads.
   - If lead fan-out behavior looks inconsistent, inspect `leadDispatchStatus` + `leadDispatchCode` in `/api/chat` response payloads.
-  - If chat is missing on `/get-started`, verify `uiAvailable = SALES_CHAT_ENABLED && ctaUrlsConfigured` and required CTA keys are present.
-  - If chat renders but returns immediate 503 fallback, verify lead webhook config:
+  - If chat is missing on `/get-started`, verify `uiAvailable = SALES_CHAT_ENABLED && ctaUrlsConfigured && stateSigningConfigured` and that CTA keys plus a usable state-signing secret are present.
+  - If chat resets to the welcome flow unexpectedly between turns, verify the client is round-tripping `stateToken` from the previous `/api/chat` response.
+  - If chat reaches a terminal action but lead delivery fails, verify lead webhook config:
     - Formspree backend: `SALES_CHAT_LEADS_WEBHOOK_URL` set to a valid Formspree endpoint.
     - Custom webhook backend: both `SALES_CHAT_LEADS_WEBHOOK_URL` and `SALES_CHAT_LEADS_WEBHOOK_SECRET` set.
   - If header SVG animation looks too fast on mobile, inspect:

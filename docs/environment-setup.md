@@ -36,8 +36,9 @@ cp .env.example .env.local
 | `SALES_CHAT_BOOKING_URL` | Required when chat enabled | Primary booking CTA used by deterministic sales-chat quick replies. | None. | `lib/sales-chat/runtime-config.ts`, `app/api/chat/route.ts` |
 | `SALES_CHAT_WEBSITE_OVERHAUL_CHECKOUT_URL` | Required when chat enabled | Direct checkout CTA for website overhaul path. | None. | `lib/sales-chat/runtime-config.ts`, `app/api/chat/route.ts` |
 | `SALES_CHAT_GROWTH_PARTNERSHIP_SIGNUP_URL` | Required when chat enabled | Direct signup CTA for growth partnership path. | None. | `lib/sales-chat/runtime-config.ts`, `app/api/chat/route.ts` |
-| `SALES_CHAT_LEADS_WEBHOOK_URL` | Required when chat enabled | Webhook destination for typed conversion payloads (`free_audit`, `website_overhaul_purchase`, `growth_partnership`). Supports Formspree endpoints (for example `https://formspree.io/f/...`). | None. | `lib/sales-chat/runtime-config.ts`, `lib/sales-chat/lead-dispatch.ts`, `app/api/chat/route.ts` |
-| `SALES_CHAT_LEADS_WEBHOOK_SECRET` | Required for non-Formspree webhooks | HMAC secret used to sign lead payload dispatch (`x-sales-chat-signature`) for custom webhooks. Optional when `SALES_CHAT_LEADS_WEBHOOK_URL` is a Formspree endpoint. | None. | `lib/sales-chat/runtime-config.ts`, `lib/sales-chat/lead-dispatch.ts`, `app/api/chat/route.ts` |
+| `SALES_CHAT_STATE_SECRET` | Recommended when chat enabled | Explicit HMAC secret used to sign authoritative sales-chat state tokens between client and server. | Falls back to another non-empty server secret (`SALES_CHAT_LEADS_WEBHOOK_SECRET`, `SALES_CHAT_EVENTS_WEBHOOK_SECRET`, `AI_GATEWAY_API_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, or `RESEND_API_KEY`) when unset, but explicit configuration is preferred. | `lib/sales-chat/state-token.ts`, `lib/sales-chat/runtime-config.ts`, `app/api/chat/route.ts` |
+| `SALES_CHAT_LEADS_WEBHOOK_URL` | Required for terminal lead delivery | Webhook destination for typed conversion payloads (`free_audit`, `website_overhaul_purchase`, `growth_partnership`). Supports Formspree endpoints (for example `https://formspree.io/f/...`). Missing this should not block chat initialization, but terminal conversion dispatch will fail. | None. | `lib/sales-chat/runtime-config.ts`, `lib/sales-chat/lead-dispatch.ts`, `app/api/chat/route.ts` |
+| `SALES_CHAT_LEADS_WEBHOOK_SECRET` | Required for non-Formspree lead delivery | HMAC secret used to sign lead payload dispatch (`x-sales-chat-signature`) for custom webhooks. Optional when `SALES_CHAT_LEADS_WEBHOOK_URL` is a Formspree endpoint. Missing this should not block chat initialization, but terminal conversion dispatch will fail for custom webhooks. | None. | `lib/sales-chat/runtime-config.ts`, `lib/sales-chat/lead-dispatch.ts`, `app/api/chat/route.ts` |
 | `SALES_CHAT_AI_FALLBACK_ENABLED` | Optional | Master switch for AI orchestration on `/api/chat` (deterministic policy engine still authoritative). | `false` | `lib/sales-chat/runtime-config.ts`, `app/api/chat/route.ts` |
 | `SALES_CHAT_AI_RESPONSE_MODE` | Optional | AI response strategy for `/api/chat`: `off`, `long_tail`, or `broad`. `long_tail` upgrades text turns and generic fallback turns, while `broad` upgrades every non-terminal turn except `__init__`. | Defaults to `broad` when `SALES_CHAT_AI_FALLBACK_ENABLED=true`, otherwise `long_tail`. | `lib/sales-chat/runtime-config.ts`, `lib/sales-chat/ai-orchestrator.ts` |
 | `SALES_CHAT_AI_ORCHESTRATION_ENABLED` | Optional feature flag | Enables the orchestration module path (`generateText` + structured `Output.object`) when AI is enabled. | `true` | `lib/sales-chat/runtime-config.ts`, `app/api/chat/route.ts` |
@@ -51,21 +52,23 @@ cp .env.example .env.local
 
 - Endpoint: `POST /api/chat` in `app/api/chat/route.ts`.
 - Runtime availability gate:
-  - `uiAvailable = SALES_CHAT_ENABLED && ctaUrlsConfigured`
+  - `uiAvailable = SALES_CHAT_ENABLED && ctaUrlsConfigured && stateSigningConfigured`
   - `ctaUrlsConfigured = SALES_CHAT_BOOKING_URL && SALES_CHAT_WEBSITE_OVERHAUL_CHECKOUT_URL && SALES_CHAT_GROWTH_PARTNERSHIP_SIGNUP_URL`
+  - `stateSigningConfigured = SALES_CHAT_STATE_SECRET || SALES_CHAT_LEADS_WEBHOOK_SECRET || SALES_CHAT_EVENTS_WEBHOOK_SECRET || AI_GATEWAY_API_KEY || SUPABASE_SERVICE_ROLE_KEY || RESEND_API_KEY`
   - lead dispatch requires:
     - Formspree mode: `SALES_CHAT_LEADS_WEBHOOK_URL` (Formspree endpoint) only
     - custom webhook mode: `SALES_CHAT_LEADS_WEBHOOK_URL && SALES_CHAT_LEADS_WEBHOOK_SECRET`
   - AI gateway keys are only required when AI response mode is enabled (`SALES_CHAT_AI_FALLBACK_ENABLED=true` and `SALES_CHAT_AI_RESPONSE_MODE!=off`)
   - When `uiAvailable` is false, `/get-started` does not render the chat launcher or window.
-  - Even when UI is mounted, `/api/chat` returns `503 config_missing` if lead-webhook config is missing.
+  - Missing lead-dispatch config should not prevent `/get-started` from mounting or `/api/chat` from serving non-terminal turns. Lead-delivery failures surface only when a terminal conversion action attempts dispatch.
 - Required request body (JSON):
   - `sessionId`, `sourcePage`, `inputType`, `inputValue`
   - optional `buttonId`
-  - optional `conversationState` (`nodeId`, `exchangeCount`, `memory`, `convertedAction`)
+  - optional `stateToken` (authoritative signed conversation state returned by the previous response; required for follow-up turns in practice)
+  - optional `conversationState` (`nodeId`, `exchangeCount`, `memory`, `convertedAction`) for compatibility/debugging only; server routing should trust `stateToken`
   - optional `conversationHistory` (up to 8 recent turns, each `{ role, content }`) for AI context
 - Response behavior:
-  - `200` + deterministic JSON payload (`assistantMessage`, `quickReplies`, `nodeId`, `conversationState`, optional terminal action).
+  - `200` + deterministic JSON payload (`assistantMessage`, `quickReplies`, `nodeId`, `conversationState`, `stateToken`, optional terminal action).
   - when AI response upgrades are used, payload shape stays the same and only `assistantMessage` / `recommendedOffer` may be upgraded.
   - AI response observability fields:
     - `responseMode: "deterministic" | "ai_assisted"`
@@ -82,7 +85,7 @@ cp .env.example .env.local
     - `aiIntentHint?: string`
   - Success payload observability fields:
     - `leadDispatchStatus?: "none" | "attempted" | "succeeded" | "failed"`
-    - `leadDispatchCode?: string` (sanitized machine-readable reason, e.g. `webhook_http_error`, `duplicate_suppressed`)
+    - `leadDispatchCode?: string` (sanitized machine-readable reason, e.g. `webhook_http_error`, `duplicate_suppressed`, `configuration_missing`)
   - `400` for schema violations.
   - `503` for disabled chat route or missing deterministic config.
 - Error payload format is JSON and always includes:
@@ -105,6 +108,7 @@ SALES_CHAT_ENABLED=true
 SALES_CHAT_BOOKING_URL=http://localhost:3000/get-started#book-call
 SALES_CHAT_WEBSITE_OVERHAUL_CHECKOUT_URL=http://localhost:3000/pricing
 SALES_CHAT_GROWTH_PARTNERSHIP_SIGNUP_URL=http://localhost:3000/get-started#book-call
+SALES_CHAT_STATE_SECRET=local-sales-chat-secret
 SALES_CHAT_LEADS_WEBHOOK_URL=http://localhost:3000/api/sales-chat/leads
 SALES_CHAT_LEADS_WEBHOOK_SECRET=local-sales-chat-secret
 SALES_CHAT_AI_FALLBACK_ENABLED=false
@@ -133,9 +137,9 @@ Notes:
   - generated responses are rejected when they introduce non-canonical pricing values, semantic mismatches, or banned dead-end fallback phrasing.
 - If the chat route returns a JSON error, it always includes `error`, `fallbackToHuman: true`, and `errorType`.
 - Never store or log the raw API key in code, logs, or git notes. The `app/api/chat/route.ts` implementation only logs redacted metadata (`requestId`, sanitized hashes, counts).
-- For local QA of fallback UX, test with invalid payload (400) and config-missing fallback (503 + handoff message).
+- For local QA of fallback UX, test with invalid payload (400) and deterministic-config-missing fallback (503 + handoff message).
 - Deployment guardrail:
-  - if `SALES_CHAT_ENABLED` resolves true in production, CI requires CTA keys + lead webhook URL via `pnpm verify:sales-chat-config`.
+  - if `SALES_CHAT_ENABLED` resolves true in production, CI requires CTA keys + a usable state-signing secret source + lead webhook URL via `pnpm verify:sales-chat-config`.
   - CI requires `SALES_CHAT_LEADS_WEBHOOK_SECRET` only when the lead webhook URL is not a Formspree endpoint.
   - if AI response mode is enabled (`SALES_CHAT_AI_FALLBACK_ENABLED=true` and `SALES_CHAT_AI_RESPONSE_MODE!=off`), CI additionally requires `AI_GATEWAY_BASE_URL`, `AI_GATEWAY_API_KEY`, and `AI_GATEWAY_MODEL`.
 

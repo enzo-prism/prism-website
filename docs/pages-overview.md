@@ -91,7 +91,7 @@ Quick reference for the pages we edit most often.
   - desktop (`>1024px`): centered glass popup modal with a fixed launcher in the bottom-right,
   - tablet/mobile (`<=1024px`): fullscreen sheet opened from the same launcher.
 - Desktop auto-open behavior is once per browser session using `sessionStorage` key `sales-chat-v2-opened`; subsequent visits show launcher-only until the user reopens the chat.
-- `SalesChat` now posts deterministic v2 requests to `app/api/chat` (`inputType`, `inputValue`, `buttonId`, `conversationState`) and receives scripted quick replies + node transitions from the spec engine.
+- `SalesChat` now posts deterministic v2 requests to `app/api/chat` (`inputType`, `inputValue`, `buttonId`, `stateToken`, `conversationState`) and receives scripted quick replies + node transitions from the spec engine. `stateToken` is the authoritative signed conversation state and should be round-tripped on every follow-up turn.
 - Deterministic engine implementation lives in:
   - `lib/sales-chat/spec-v1-types.ts` (state and payload contracts),
   - `lib/sales-chat/spec-v1-copy.ts` (canonical scripted copy/buttons),
@@ -142,7 +142,8 @@ Quick reference for the pages we edit most often.
 - Default copy for degraded states should keep the fallback visible and explicit:
   - `fallbackToHuman: true` on response payload.
   - missing CTA config prevents chat mount on `/get-started` (`uiAvailable` gate).
-  - missing lead-webhook config can still allow mount but `/api/chat` will return handled `config_missing` fallback.
+  - missing state-signing config also prevents chat mount on `/get-started` (`uiAvailable` gate).
+  - missing lead-webhook config can still allow mount and normal conversation flow, but terminal conversion actions should surface a polished handoff plus `leadDispatchStatus=failed` / `leadDispatchCode=configuration_missing`.
   - provider/runtime failures in an active chat session should show one polished handoff message plus booking CTA (no duplicate error surfaces).
 - Because `SalesChat` is a client component, keep this section in this file as a server component and wire only the flag and static props there.
 

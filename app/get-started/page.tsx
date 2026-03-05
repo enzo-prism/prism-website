@@ -149,6 +149,7 @@ export default function GetStartedPage() {
   if (
     process.env.NODE_ENV !== "production"
     && salesChatRuntime.enabled
+    && !salesChatRuntime.uiAvailable
     && salesChatRuntime.missingRequiredKeys.length > 0
   ) {
     console.warn("[sales-chat][get-started] deterministic runtime missing required config", {

@@ -3,6 +3,7 @@ import { getSalesChatRuntimeConfig, parseBooleanEnv } from "@/lib/sales-chat/run
 function createEnv(overrides: Partial<NodeJS.ProcessEnv>): NodeJS.ProcessEnv {
   return {
     NODE_ENV: "test",
+    SALES_CHAT_STATE_SECRET: "state-secret",
     ...overrides,
   } as NodeJS.ProcessEnv
 }
@@ -23,6 +24,7 @@ describe("sales chat runtime config", () => {
     expect(runtime.aiResponseEnabled).toBe(false)
     expect(runtime.ctaUrlsConfigured).toBe(true)
     expect(runtime.leadsWebhookConfigured).toBe(true)
+    expect(runtime.stateSigningConfigured).toBe(true)
     expect(runtime.uiAvailable).toBe(true)
     expect(runtime.missingRequiredKeys).toEqual([])
   })
@@ -44,6 +46,26 @@ describe("sales chat runtime config", () => {
       "SALES_CHAT_WEBSITE_OVERHAUL_CHECKOUT_URL",
       "SALES_CHAT_GROWTH_PARTNERSHIP_SIGNUP_URL",
     ])
+  })
+
+  it("returns uiAvailable=false when authoritative state signing secret is unavailable", () => {
+    const runtime = getSalesChatRuntimeConfig(createEnv({
+      SALES_CHAT_STATE_SECRET: "",
+      SALES_CHAT_LEADS_WEBHOOK_SECRET: "",
+      SALES_CHAT_EVENTS_WEBHOOK_SECRET: "",
+      AI_GATEWAY_API_KEY: "",
+      SUPABASE_SERVICE_ROLE_KEY: "",
+      RESEND_API_KEY: "",
+      SALES_CHAT_ENABLED: "true",
+      SALES_CHAT_BOOKING_URL: "https://cal.com/demo",
+      SALES_CHAT_WEBSITE_OVERHAUL_CHECKOUT_URL: "https://checkout.example.com/website",
+      SALES_CHAT_GROWTH_PARTNERSHIP_SIGNUP_URL: "https://checkout.example.com/growth",
+      SALES_CHAT_LEADS_WEBHOOK_URL: "https://formspree.io/f/mvzbnydz",
+    }))
+
+    expect(runtime.stateSigningConfigured).toBe(false)
+    expect(runtime.uiAvailable).toBe(false)
+    expect(runtime.missingRequiredKeys).toEqual(["SALES_CHAT_STATE_SECRET"])
   })
 
   it("returns uiAvailable=false when chat is disabled even if CTA env exists", () => {

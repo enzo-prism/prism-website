@@ -12,6 +12,14 @@ const REQUIRED_LEAD_KEYS = [
   "SALES_CHAT_LEADS_WEBHOOK_URL",
   "SALES_CHAT_LEADS_WEBHOOK_SECRET",
 ] as const
+const STATE_SECRET_CANDIDATE_KEYS = [
+  "SALES_CHAT_STATE_SECRET",
+  "SALES_CHAT_LEADS_WEBHOOK_SECRET",
+  "SALES_CHAT_EVENTS_WEBHOOK_SECRET",
+  "AI_GATEWAY_API_KEY",
+  "SUPABASE_SERVICE_ROLE_KEY",
+  "RESEND_API_KEY",
+] as const
 
 function parseBooleanEnv(value: string | undefined, fallback: boolean): boolean {
   if (!value) return fallback
@@ -67,6 +75,10 @@ function isFormspreeEndpoint(url: string | undefined): boolean {
   }
 }
 
+function hasStateSigningSecret(env: Record<string, string>): boolean {
+  return STATE_SECRET_CANDIDATE_KEYS.some((key) => Boolean(env[key]?.trim()))
+}
+
 function fail(message: string): never {
   console.error(`\n❌ ${message}\n`)
   process.exit(1)
@@ -106,7 +118,11 @@ function main() {
     ...requiredLeadKeys,
     ...(aiResponseEnabled ? [...REQUIRED_GATEWAY_KEYS] : []),
   ]
-  const missingKeys = requiredKeys.filter((key) => !env[key]?.trim())
+  const missingKeys: string[] = requiredKeys.filter((key) => !env[key]?.trim())
+  if (!hasStateSigningSecret(env)) {
+    missingKeys.push("SALES_CHAT_STATE_SECRET")
+  }
+
   if (missingKeys.length > 0) {
     console.error("Sales chat is enabled but required keys are missing:")
     for (const key of missingKeys) {
@@ -122,6 +138,11 @@ function main() {
   }
   if (formspreeLeadsEndpoint) {
     console.log("ℹ️ Formspree lead endpoint detected; webhook secret is optional.")
+  }
+  if (!env.SALES_CHAT_STATE_SECRET?.trim()) {
+    console.log(
+      "ℹ️ SALES_CHAT_STATE_SECRET is not set explicitly; state signing will fall back to another server secret. Setting SALES_CHAT_STATE_SECRET directly is preferred.",
+    )
   }
   console.log("✅ Sales chat config is production-ready.")
 }

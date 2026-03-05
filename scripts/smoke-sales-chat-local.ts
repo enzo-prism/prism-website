@@ -13,6 +13,7 @@ type ChatResponse = {
   leadDispatchStatus?: "none" | "attempted" | "succeeded" | "failed"
   leadDispatchCode?: string
   conversationState: ConversationState
+  stateToken?: string
 }
 
 type StepResult = {
@@ -55,6 +56,7 @@ async function main() {
   console.log(`[sales-chat smoke] Session: ${sessionId}`)
 
   let state: ConversationState | undefined
+  let stateToken: string | undefined
 
   const init = await sendChatStep(baseUrl, {
     sessionId,
@@ -69,6 +71,7 @@ async function main() {
   assert(init.body.nodeId === "welcome", `Expected welcome node, got "${init.body.nodeId}"`)
   assert(Array.isArray(init.body.quickReplies) && init.body.quickReplies.length > 0, "Expected starter quick replies")
   state = init.body.conversationState
+  stateToken = init.body.stateToken
 
   const starter = await sendChatStep(baseUrl, {
     sessionId,
@@ -76,20 +79,24 @@ async function main() {
     inputType: "button",
     inputValue: "",
     buttonId: "starter_free_audit",
+    stateToken,
     conversationState: state,
   })
   assert(starter.status === 200, `Expected starter status 200, got ${starter.status}`)
   state = starter.body.conversationState
+  stateToken = starter.body.stateToken
 
   const website = await sendChatStep(baseUrl, {
     sessionId,
     sourcePage,
     inputType: "text",
     inputValue: "https://example.com",
+    stateToken,
     conversationState: state,
   })
   assert(website.status === 200, `Expected website step status 200, got ${website.status}`)
   state = website.body.conversationState
+  stateToken = website.body.stateToken
 
   const businessReplyId = website.body.quickReplies[0]?.id
   assert(businessReplyId, "Expected business-type quick reply options")
@@ -100,26 +107,31 @@ async function main() {
     inputType: "button",
     inputValue: "",
     buttonId: businessReplyId,
+    stateToken,
     conversationState: state,
   })
   assert(businessType.status === 200, `Expected business step status 200, got ${businessType.status}`)
   state = businessType.body.conversationState
+  stateToken = businessType.body.stateToken
 
   const pain = await sendChatStep(baseUrl, {
     sessionId,
     sourcePage,
     inputType: "text",
     inputValue: "Not enough qualified leads from search.",
+    stateToken,
     conversationState: state,
   })
   assert(pain.status === 200, `Expected pain-point step status 200, got ${pain.status}`)
   state = pain.body.conversationState
+  stateToken = pain.body.stateToken
 
   const email = await sendChatStep(baseUrl, {
     sessionId,
     sourcePage,
     inputType: "text",
     inputValue: "localtest@example.com",
+    stateToken,
     conversationState: state,
   })
   assert(email.status === 200, `Expected email step status 200, got ${email.status}`)

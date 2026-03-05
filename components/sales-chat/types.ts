@@ -46,6 +46,7 @@ export type SalesChatApiResponse = {
   fallbackToHuman?: boolean
   errorType?: string
   conversationState: SalesChatConversationState
+  stateToken?: string
 }
 
 export type RenderMessageContent = (content: string, keyPrefix: string) => ReactNode[]

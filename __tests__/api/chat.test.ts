@@ -78,6 +78,7 @@ describe("/api/chat route (deterministic v2)", () => {
     process.env.SALES_CHAT_BOOKING_URL = "https://cal.com/prism/demo"
     process.env.SALES_CHAT_WEBSITE_OVERHAUL_CHECKOUT_URL = "https://checkout.example.com/website"
     process.env.SALES_CHAT_GROWTH_PARTNERSHIP_SIGNUP_URL = "https://checkout.example.com/growth"
+    process.env.SALES_CHAT_STATE_SECRET = "state-secret"
     process.env.SALES_CHAT_LEADS_WEBHOOK_URL = "https://hooks.example.com/sales"
     process.env.SALES_CHAT_LEADS_WEBHOOK_SECRET = "secret"
     process.env.SALES_CHAT_AI_FALLBACK_ENABLED = "false"
@@ -90,6 +91,9 @@ describe("/api/chat route (deterministic v2)", () => {
     delete process.env.AI_GATEWAY_FAST_MODEL
     delete process.env.AI_GATEWAY_FAST_MODEL_MAX_CHARS
     delete process.env.AI_GATEWAY_FORCE_FAST_MODEL
+    delete process.env.SALES_CHAT_EVENTS_WEBHOOK_SECRET
+    delete process.env.SUPABASE_SERVICE_ROLE_KEY
+    delete process.env.RESEND_API_KEY
   })
 
   it("returns 400 for invalid payload", async () => {
@@ -145,9 +149,10 @@ describe("/api/chat route (deterministic v2)", () => {
     expect(response.headers.get("x-sales-chat-route")).toBe("config_missing")
   })
 
-  it("returns 503 when custom lead webhook secret is missing", async () => {
-    process.env.SALES_CHAT_LEADS_WEBHOOK_URL = "https://hooks.example.com/sales"
+  it("returns 503 when authoritative state signing is unavailable", async () => {
+    delete process.env.SALES_CHAT_STATE_SECRET
     delete process.env.SALES_CHAT_LEADS_WEBHOOK_SECRET
+
     const { POST } = await withChatRoute()
 
     const response = await POST(
@@ -163,7 +168,27 @@ describe("/api/chat route (deterministic v2)", () => {
     expect(response.status).toBe(503)
     const payload = (await response.json()) as { errorType: string }
     expect(payload.errorType).toBe("config_missing")
-    expect(response.headers.get("x-sales-chat-route")).toBe("config_missing")
+  })
+
+  it("keeps chat available when custom lead webhook secret is missing", async () => {
+    process.env.SALES_CHAT_LEADS_WEBHOOK_URL = "https://hooks.example.com/sales"
+    delete process.env.SALES_CHAT_LEADS_WEBHOOK_SECRET
+    const { POST } = await withChatRoute()
+
+    const response = await POST(
+      makeRequest({
+        sessionId: "session-12345678",
+        sourcePage: "/get-started",
+        inputType: "button",
+        inputValue: "",
+        buttonId: "__init__",
+      }),
+    )
+
+    expect(response.status).toBe(200)
+    expect(response.headers.get("x-sales-chat-route")).toBe("success")
+    const payload = (await response.json()) as { nodeId: string }
+    expect(payload.nodeId).toBe("welcome")
   })
 
   it("allows Formspree lead webhook without secret", async () => {
@@ -229,7 +254,7 @@ describe("/api/chat route (deterministic v2)", () => {
         buttonId: "__init__",
       }),
     )
-    const welcome = (await welcomeResponse.json()) as { conversationState: unknown }
+    const welcome = (await welcomeResponse.json()) as { conversationState: unknown; stateToken: string }
 
     const response = await POST(
       makeRequest({
@@ -238,6 +263,7 @@ describe("/api/chat route (deterministic v2)", () => {
         inputType: "button",
         inputValue: "Get a free audit of my website",
         buttonId: "starter_free_audit",
+        stateToken: welcome.stateToken,
         conversationState: welcome.conversationState,
       }),
     )
@@ -260,7 +286,7 @@ describe("/api/chat route (deterministic v2)", () => {
         buttonId: "__init__",
       }),
     )
-    const state1 = (await step1.json()) as { conversationState: unknown }
+    const state1 = (await step1.json()) as { conversationState: unknown; stateToken: string }
 
     const step2 = await POST(
       makeRequest({
@@ -269,10 +295,11 @@ describe("/api/chat route (deterministic v2)", () => {
         inputType: "button",
         inputValue: "Get a free audit of my website",
         buttonId: "starter_free_audit",
+        stateToken: state1.stateToken,
         conversationState: state1.conversationState,
       }),
     )
-    const state2 = (await step2.json()) as { conversationState: unknown }
+    const state2 = (await step2.json()) as { conversationState: unknown; stateToken: string }
 
     const step3 = await POST(
       makeRequest({
@@ -280,10 +307,11 @@ describe("/api/chat route (deterministic v2)", () => {
         sourcePage: "/get-started",
         inputType: "text",
         inputValue: "example.com",
+        stateToken: state2.stateToken,
         conversationState: state2.conversationState,
       }),
     )
-    const state3 = (await step3.json()) as { conversationState: unknown }
+    const state3 = (await step3.json()) as { conversationState: unknown; stateToken: string }
 
     const step4 = await POST(
       makeRequest({
@@ -292,10 +320,11 @@ describe("/api/chat route (deterministic v2)", () => {
         inputType: "button",
         inputValue: "Dental / medical",
         buttonId: "b_business_dental",
+        stateToken: state3.stateToken,
         conversationState: state3.conversationState,
       }),
     )
-    const state4 = (await step4.json()) as { conversationState: unknown }
+    const state4 = (await step4.json()) as { conversationState: unknown; stateToken: string }
 
     const step5 = await POST(
       makeRequest({
@@ -303,10 +332,11 @@ describe("/api/chat route (deterministic v2)", () => {
         sourcePage: "/get-started",
         inputType: "text",
         inputValue: "Not enough qualified leads.",
+        stateToken: state4.stateToken,
         conversationState: state4.conversationState,
       }),
     )
-    const state5 = (await step5.json()) as { conversationState: unknown }
+    const state5 = (await step5.json()) as { conversationState: unknown; stateToken: string }
 
     const finalResponse = await POST(
       makeRequest({
@@ -314,6 +344,7 @@ describe("/api/chat route (deterministic v2)", () => {
         sourcePage: "/get-started",
         inputType: "text",
         inputValue: "owner@example.com",
+        stateToken: state5.stateToken,
         conversationState: state5.conversationState,
       }),
     )
@@ -323,7 +354,12 @@ describe("/api/chat route (deterministic v2)", () => {
       terminalAction: string
       responseMode: string
       leadDispatchStatus?: string
-      conversationState: { convertedAction?: string }
+      conversationState: {
+        convertedAction?: string
+        memory: {
+          completedLeadDispatchKeys?: string[]
+        }
+      }
     }
 
     expect(finalPayload.nodeId).toBe("intent_b_confirm")
@@ -331,6 +367,7 @@ describe("/api/chat route (deterministic v2)", () => {
     expect(finalPayload.responseMode).toBe("deterministic")
     expect(finalPayload.leadDispatchStatus).toBe("succeeded")
     expect(finalPayload.conversationState.convertedAction).toBe("free_audit")
+    expect(finalPayload.conversationState.memory.completedLeadDispatchKeys).toHaveLength(1)
     expect(mockDispatchSalesChatLead).toHaveBeenCalledTimes(1)
   })
 
@@ -347,7 +384,7 @@ describe("/api/chat route (deterministic v2)", () => {
         buttonId: "__init__",
       }),
     )
-    const state1 = (await step1.json()) as { conversationState: unknown }
+    const state1 = (await step1.json()) as { conversationState: unknown; stateToken: string }
 
     const step2 = await POST(
       makeRequest({
@@ -356,10 +393,11 @@ describe("/api/chat route (deterministic v2)", () => {
         inputType: "button",
         inputValue: "Get a free audit of my website",
         buttonId: "starter_free_audit",
+        stateToken: state1.stateToken,
         conversationState: state1.conversationState,
       }),
     )
-    const state2 = (await step2.json()) as { conversationState: unknown }
+    const state2 = (await step2.json()) as { conversationState: unknown; stateToken: string }
 
     const step3 = await POST(
       makeRequest({
@@ -367,10 +405,11 @@ describe("/api/chat route (deterministic v2)", () => {
         sourcePage: "/get-started",
         inputType: "text",
         inputValue: "example.com",
+        stateToken: state2.stateToken,
         conversationState: state2.conversationState,
       }),
     )
-    const state3 = (await step3.json()) as { conversationState: unknown }
+    const state3 = (await step3.json()) as { conversationState: unknown; stateToken: string }
 
     const step4 = await POST(
       makeRequest({
@@ -379,10 +418,11 @@ describe("/api/chat route (deterministic v2)", () => {
         inputType: "button",
         inputValue: "Dental / medical",
         buttonId: "b_business_dental",
+        stateToken: state3.stateToken,
         conversationState: state3.conversationState,
       }),
     )
-    const state4 = (await step4.json()) as { conversationState: unknown }
+    const state4 = (await step4.json()) as { conversationState: unknown; stateToken: string }
 
     const step5 = await POST(
       makeRequest({
@@ -390,10 +430,11 @@ describe("/api/chat route (deterministic v2)", () => {
         sourcePage: "/get-started",
         inputType: "text",
         inputValue: "No consistent qualified leads",
+        stateToken: state4.stateToken,
         conversationState: state4.conversationState,
       }),
     )
-    const state5 = (await step5.json()) as { conversationState: unknown }
+    const state5 = (await step5.json()) as { conversationState: unknown; stateToken: string }
 
     const finalResponse = await POST(
       makeRequest({
@@ -401,6 +442,7 @@ describe("/api/chat route (deterministic v2)", () => {
         sourcePage: "/get-started",
         inputType: "text",
         inputValue: "owner@example.com",
+        stateToken: state5.stateToken,
         conversationState: state5.conversationState,
       }),
     )
@@ -420,6 +462,110 @@ describe("/api/chat route (deterministic v2)", () => {
     expect(mockDispatchSalesChatLead).toHaveBeenCalledTimes(1)
   })
 
+  it("allows retrying the same terminal action after a failed lead dispatch", async () => {
+    mockDispatchSalesChatLead
+      .mockRejectedValueOnce(new Error("Lead webhook failed (503): down"))
+      .mockResolvedValueOnce(undefined)
+    const { POST } = await withChatRoute()
+
+    const step1 = await POST(
+      makeRequest({
+        sessionId: "session-failed-retry",
+        sourcePage: "/get-started",
+        inputType: "button",
+        inputValue: "",
+        buttonId: "__init__",
+      }),
+    )
+    const state1 = (await step1.json()) as { conversationState: unknown; stateToken: string }
+
+    const step2 = await POST(
+      makeRequest({
+        sessionId: "session-failed-retry",
+        sourcePage: "/get-started",
+        inputType: "button",
+        inputValue: "Get a free audit of my website",
+        buttonId: "starter_free_audit",
+        stateToken: state1.stateToken,
+        conversationState: state1.conversationState,
+      }),
+    )
+    const state2 = (await step2.json()) as { conversationState: unknown; stateToken: string }
+
+    const step3 = await POST(
+      makeRequest({
+        sessionId: "session-failed-retry",
+        sourcePage: "/get-started",
+        inputType: "text",
+        inputValue: "example.com",
+        stateToken: state2.stateToken,
+        conversationState: state2.conversationState,
+      }),
+    )
+    const state3 = (await step3.json()) as { conversationState: unknown; stateToken: string }
+
+    const step4 = await POST(
+      makeRequest({
+        sessionId: "session-failed-retry",
+        sourcePage: "/get-started",
+        inputType: "button",
+        inputValue: "Dental / medical",
+        buttonId: "b_business_dental",
+        stateToken: state3.stateToken,
+        conversationState: state3.conversationState,
+      }),
+    )
+    const state4 = (await step4.json()) as { conversationState: unknown; stateToken: string }
+
+    const step5 = await POST(
+      makeRequest({
+        sessionId: "session-failed-retry",
+        sourcePage: "/get-started",
+        inputType: "text",
+        inputValue: "Need more conversions",
+        stateToken: state4.stateToken,
+        conversationState: state4.conversationState,
+      }),
+    )
+    const state5 = (await step5.json()) as { conversationState: unknown; stateToken: string }
+
+    const firstFinalResponse = await POST(
+      makeRequest({
+        sessionId: "session-failed-retry",
+        sourcePage: "/get-started",
+        inputType: "text",
+        inputValue: "owner@example.com",
+        stateToken: state5.stateToken,
+        conversationState: state5.conversationState,
+      }),
+    )
+    const firstPayload = (await firstFinalResponse.json()) as {
+      leadDispatchStatus?: string
+      leadDispatchCode?: string
+    }
+
+    const secondFinalResponse = await POST(
+      makeRequest({
+        sessionId: "session-failed-retry",
+        sourcePage: "/get-started",
+        inputType: "text",
+        inputValue: "owner@example.com",
+        stateToken: state5.stateToken,
+        conversationState: state5.conversationState,
+      }),
+    )
+    const secondPayload = (await secondFinalResponse.json()) as {
+      leadDispatchStatus?: string
+      leadDispatchCode?: string
+    }
+
+    expect(firstPayload.leadDispatchStatus).toBe("failed")
+    expect(firstPayload.leadDispatchCode).toBe("webhook_http_error")
+    expect(secondPayload.leadDispatchStatus).toBe("succeeded")
+    expect(secondPayload.leadDispatchCode).toBeUndefined()
+    expect(mockDispatchSalesChatLead).toHaveBeenCalledTimes(2)
+  })
+
   it("suppresses duplicate terminal lead dispatch attempts for same state fingerprint", async () => {
     const { POST } = await withChatRoute()
 
@@ -432,7 +578,7 @@ describe("/api/chat route (deterministic v2)", () => {
         buttonId: "__init__",
       }),
     )
-    const state1 = (await step1.json()) as { conversationState: unknown }
+    const state1 = (await step1.json()) as { conversationState: unknown; stateToken: string }
 
     const step2 = await POST(
       makeRequest({
@@ -441,10 +587,11 @@ describe("/api/chat route (deterministic v2)", () => {
         inputType: "button",
         inputValue: "Get a free audit of my website",
         buttonId: "starter_free_audit",
+        stateToken: state1.stateToken,
         conversationState: state1.conversationState,
       }),
     )
-    const state2 = (await step2.json()) as { conversationState: unknown }
+    const state2 = (await step2.json()) as { conversationState: unknown; stateToken: string }
 
     const step3 = await POST(
       makeRequest({
@@ -452,10 +599,11 @@ describe("/api/chat route (deterministic v2)", () => {
         sourcePage: "/get-started",
         inputType: "text",
         inputValue: "example.com",
+        stateToken: state2.stateToken,
         conversationState: state2.conversationState,
       }),
     )
-    const state3 = (await step3.json()) as { conversationState: unknown }
+    const state3 = (await step3.json()) as { conversationState: unknown; stateToken: string }
 
     const step4 = await POST(
       makeRequest({
@@ -464,10 +612,11 @@ describe("/api/chat route (deterministic v2)", () => {
         inputType: "button",
         inputValue: "Dental / medical",
         buttonId: "b_business_dental",
+        stateToken: state3.stateToken,
         conversationState: state3.conversationState,
       }),
     )
-    const state4 = (await step4.json()) as { conversationState: unknown }
+    const state4 = (await step4.json()) as { conversationState: unknown; stateToken: string }
 
     const step5 = await POST(
       makeRequest({
@@ -475,10 +624,11 @@ describe("/api/chat route (deterministic v2)", () => {
         sourcePage: "/get-started",
         inputType: "text",
         inputValue: "Need more conversions",
+        stateToken: state4.stateToken,
         conversationState: state4.conversationState,
       }),
     )
-    const state5 = (await step5.json()) as { conversationState: unknown }
+    const state5 = (await step5.json()) as { conversationState: unknown; stateToken: string }
 
     const firstFinalResponse = await POST(
       makeRequest({
@@ -486,6 +636,7 @@ describe("/api/chat route (deterministic v2)", () => {
         sourcePage: "/get-started",
         inputType: "text",
         inputValue: "owner@example.com",
+        stateToken: state5.stateToken,
         conversationState: state5.conversationState,
       }),
     )
@@ -500,6 +651,7 @@ describe("/api/chat route (deterministic v2)", () => {
         sourcePage: "/get-started",
         inputType: "text",
         inputValue: "owner@example.com",
+        stateToken: state5.stateToken,
         conversationState: state5.conversationState,
       }),
     )
@@ -541,7 +693,7 @@ describe("/api/chat route (deterministic v2)", () => {
         buttonId: "__init__",
       }),
     )
-    const initPayload = (await initResponse.json()) as { conversationState: unknown }
+    const initPayload = (await initResponse.json()) as { conversationState: unknown; stateToken: string }
 
     const response = await POST(
       makeRequest({
@@ -549,6 +701,7 @@ describe("/api/chat route (deterministic v2)", () => {
         sourcePage: "/get-started",
         inputType: "text",
         inputValue: "How should I prioritize conversion fixes for app speed and messaging before paid traffic?",
+        stateToken: initPayload.stateToken,
         conversationState: initPayload.conversationState,
       }),
     )
@@ -612,7 +765,7 @@ describe("/api/chat route (deterministic v2)", () => {
         buttonId: "__init__",
       }),
     )
-    const initPayload = (await initResponse.json()) as { conversationState: unknown }
+    const initPayload = (await initResponse.json()) as { conversationState: unknown; stateToken: string }
 
     const response = await POST(
       makeRequest({
@@ -620,6 +773,7 @@ describe("/api/chat route (deterministic v2)", () => {
         sourcePage: "/get-started",
         inputType: "text",
         inputValue: "How should I prioritize app instrumentation for event taxonomies?",
+        stateToken: initPayload.stateToken,
         conversationState: initPayload.conversationState,
       }),
     )
@@ -676,7 +830,7 @@ describe("/api/chat route (deterministic v2)", () => {
         buttonId: "__init__",
       }),
     )
-    const initPayload = (await initResponse.json()) as { conversationState: unknown }
+    const initPayload = (await initResponse.json()) as { conversationState: unknown; stateToken: string }
 
     const response = await POST(
       makeRequest({
@@ -684,6 +838,7 @@ describe("/api/chat route (deterministic v2)", () => {
         sourcePage: "/get-started",
         inputType: "text",
         inputValue: "How should I prioritize app instrumentation for event taxonomies?",
+        stateToken: initPayload.stateToken,
         conversationState: initPayload.conversationState,
       }),
     )
@@ -730,7 +885,7 @@ describe("/api/chat route (deterministic v2)", () => {
         buttonId: "__init__",
       }),
     )
-    const initPayload = (await initResponse.json()) as { conversationState: unknown }
+    const initPayload = (await initResponse.json()) as { conversationState: unknown; stateToken: string }
 
     const response = await POST(
       makeRequest({
@@ -742,6 +897,7 @@ describe("/api/chat route (deterministic v2)", () => {
           { role: "assistant", content: "Welcome to Prism. What are you trying to improve first?" },
           { role: "user", content: "I've been burning money on ads with weak conversion pages." },
         ],
+        stateToken: initPayload.stateToken,
         conversationState: initPayload.conversationState,
       }),
     )
@@ -799,7 +955,7 @@ describe("/api/chat route (deterministic v2)", () => {
         buttonId: "__init__",
       }),
     )
-    const initPayload = (await initResponse.json()) as { conversationState: unknown }
+    const initPayload = (await initResponse.json()) as { conversationState: unknown; stateToken: string }
 
     const response = await POST(
       makeRequest({
@@ -807,6 +963,7 @@ describe("/api/chat route (deterministic v2)", () => {
         sourcePage: "/get-started",
         inputType: "text",
         inputValue: "Do you help med spas get more booked consults?",
+        stateToken: initPayload.stateToken,
         conversationState: initPayload.conversationState,
       }),
     )
@@ -852,7 +1009,7 @@ describe("/api/chat route (deterministic v2)", () => {
         buttonId: "__init__",
       }),
     )
-    const initPayload = (await initResponse.json()) as { conversationState: unknown }
+    const initPayload = (await initResponse.json()) as { conversationState: unknown; stateToken: string }
 
     const response = await POST(
       makeRequest({
@@ -860,6 +1017,7 @@ describe("/api/chat route (deterministic v2)", () => {
         sourcePage: "/get-started",
         inputType: "text",
         inputValue: "How should I prioritize attribution instrumentation and sequencing across paid search, local SEO, and conversion message architecture?",
+        stateToken: initPayload.stateToken,
         conversationState: initPayload.conversationState,
       }),
     )
@@ -910,7 +1068,7 @@ describe("/api/chat route (deterministic v2)", () => {
         buttonId: "__init__",
       }),
     )
-    const initPayload = (await initResponse.json()) as { conversationState: unknown }
+    const initPayload = (await initResponse.json()) as { conversationState: unknown; stateToken: string }
 
     const response = await POST(
       makeRequest({
@@ -918,6 +1076,7 @@ describe("/api/chat route (deterministic v2)", () => {
         sourcePage: "/get-started",
         inputType: "text",
         inputValue: "Can you review my website and tell me what to fix first?",
+        stateToken: initPayload.stateToken,
         conversationState: {
           ...(initPayload.conversationState as Record<string, unknown>),
           nodeId: "intent_b_pitch",
@@ -983,7 +1142,7 @@ describe("/api/chat route (deterministic v2)", () => {
         buttonId: "__init__",
       }),
     )
-    const initPayload = (await initResponse.json()) as { conversationState: unknown }
+    const initPayload = (await initResponse.json()) as { conversationState: unknown; stateToken: string }
 
     const response = await POST(
       makeRequest({
@@ -991,6 +1150,7 @@ describe("/api/chat route (deterministic v2)", () => {
         sourcePage: "/get-started",
         inputType: "text",
         inputValue: "hmm",
+        stateToken: initPayload.stateToken,
         conversationState: initPayload.conversationState,
       }),
     )
@@ -1030,7 +1190,7 @@ describe("/api/chat route (deterministic v2)", () => {
         buttonId: "__init__",
       }),
     )
-    const initPayload = (await initResponse.json()) as { conversationState: unknown }
+    const initPayload = (await initResponse.json()) as { conversationState: unknown; stateToken: string }
 
     const response = await POST(
       makeRequest({
@@ -1038,6 +1198,7 @@ describe("/api/chat route (deterministic v2)", () => {
         sourcePage: "/get-started",
         inputType: "text",
         inputValue: "How would you sequence website fixes vs ad spend?",
+        stateToken: initPayload.stateToken,
         conversationState: initPayload.conversationState,
       }),
     )

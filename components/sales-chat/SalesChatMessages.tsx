@@ -26,6 +26,7 @@ type SalesChatMessagesProps = {
   messagesEndRef: RefObject<HTMLDivElement | null>
   renderMessageContent: RenderMessageContent
   quickReplies: SalesChatQuickReply[]
+  quickRepliesDisabled: boolean
   onQuickReplyClick: (reply: SalesChatQuickReply) => void
   visualStyle: SalesChatVisualStyle
 }
@@ -58,6 +59,7 @@ export default function SalesChatMessages({
   messagesEndRef,
   renderMessageContent,
   quickReplies,
+  quickRepliesDisabled,
   onQuickReplyClick,
   visualStyle,
 }: SalesChatMessagesProps) {
@@ -120,7 +122,9 @@ export default function SalesChatMessages({
                 className={cn(
                   tokens.promptChip,
                   "group h-auto min-h-10 w-full max-w-full items-start justify-between gap-2 px-3.5 py-2.5 text-left whitespace-normal leading-snug",
+                  quickRepliesDisabled ? "pointer-events-none opacity-55" : undefined,
                 )}
+                disabled={quickRepliesDisabled}
                 onClick={() => onQuickReplyClick(reply)}
               >
                 <span className="min-w-0 flex-1 break-words text-left leading-snug [overflow-wrap:anywhere]">

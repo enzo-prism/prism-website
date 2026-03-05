@@ -37,7 +37,7 @@ Use this flow when switching between local, preview, and production changes:
 - `vercel login` (single sign-on for deploy and log access).
 - `vercel link` (first run in this repo) so the CLI is scoped to `v0-prism-website-design`.
 - `vercel pull --yes` to sync deployment env vars locally (`--environment=production` for prod parity).
-- `pnpm verify:sales-chat-config` immediately after `vercel pull` to fail fast when chat is enabled without required deterministic config.
+- `pnpm verify:sales-chat-config` immediately after `vercel pull` to fail fast when chat is enabled without required deterministic config (CTA URLs, a usable state-signing secret source, and lead-dispatch config).
 - `pnpm verify:pricing-consistency` before build/deploy to block legacy pricing drift on canonical surfaces.
 - Set/refresh sales-chat env vars in preview with explicit scope:
   ```bash
@@ -91,6 +91,7 @@ Use this flow when switching between local, preview, and production changes:
 - Before a preview deploy:
   - Confirm `SALES_CHAT_ENABLED` is `"true"` for the environment you want chat tested.
   - Confirm `SALES_CHAT_BOOKING_URL`, `SALES_CHAT_WEBSITE_OVERHAUL_CHECKOUT_URL`, `SALES_CHAT_GROWTH_PARTNERSHIP_SIGNUP_URL`, and `SALES_CHAT_LEADS_WEBHOOK_URL` are present.
+  - Confirm `SALES_CHAT_STATE_SECRET` is present, or another server secret fallback is intentionally available (`SALES_CHAT_LEADS_WEBHOOK_SECRET`, `SALES_CHAT_EVENTS_WEBHOOK_SECRET`, `AI_GATEWAY_API_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, or `RESEND_API_KEY`). Setting `SALES_CHAT_STATE_SECRET` explicitly is preferred.
   - If lead backend is not Formspree, confirm `SALES_CHAT_LEADS_WEBHOOK_SECRET` is also present.
   - If AI response mode is enabled (`SALES_CHAT_AI_FALLBACK_ENABLED=true` and `SALES_CHAT_AI_RESPONSE_MODE!=off`), also confirm core `AI_GATEWAY_*` vars are present and orchestration gates are configured for the intended rollout cohort.
 - Deployment blocker policy:

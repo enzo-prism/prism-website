@@ -1,3 +1,5 @@
+import { getSalesChatStateSecret } from "@/lib/sales-chat/state-token"
+
 export type SalesChatAiResponseMode = "off" | "long_tail" | "broad"
 
 export type SalesChatRuntimeConfig = {
@@ -21,6 +23,7 @@ export type SalesChatRuntimeConfig = {
   hasLeadsWebhookUrl: boolean
   hasLeadsWebhookSecret: boolean
   leadsWebhookConfigured: boolean
+  stateSigningConfigured: boolean
   uiAvailable: boolean
   missingRequiredKeys: string[]
 }
@@ -129,6 +132,7 @@ export function getSalesChatRuntimeConfig(env: NodeJS.ProcessEnv): SalesChatRunt
   const hasLeadsWebhookSecret = isConfigured(env.SALES_CHAT_LEADS_WEBHOOK_SECRET)
   const formspreeLeadsEndpoint = isFormspreeEndpoint(env.SALES_CHAT_LEADS_WEBHOOK_URL)
   const leadsWebhookConfigured = hasLeadsWebhookUrl && (formspreeLeadsEndpoint || hasLeadsWebhookSecret)
+  const stateSigningConfigured = Boolean(getSalesChatStateSecret(env))
 
   const missingRequiredKeys: string[] = []
   if (enabled) {
@@ -151,6 +155,10 @@ export function getSalesChatRuntimeConfig(env: NodeJS.ProcessEnv): SalesChatRunt
           missingRequiredKeys.push(key)
         }
       }
+    }
+
+    if (!stateSigningConfigured) {
+      missingRequiredKeys.push("SALES_CHAT_STATE_SECRET")
     }
   }
 
@@ -175,7 +183,8 @@ export function getSalesChatRuntimeConfig(env: NodeJS.ProcessEnv): SalesChatRunt
     hasLeadsWebhookUrl,
     hasLeadsWebhookSecret,
     leadsWebhookConfigured,
-    uiAvailable: enabled && ctaUrlsConfigured,
+    stateSigningConfigured,
+    uiAvailable: enabled && ctaUrlsConfigured && stateSigningConfigured,
     missingRequiredKeys,
   }
 }
