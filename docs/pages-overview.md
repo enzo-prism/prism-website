@@ -37,7 +37,20 @@ Quick reference for the pages we edit most often.
   - `/offers` and `/offers/:path*`
   - `/growth`
   - `/checkout/launch`, `/checkout/grow`, `/checkout/scale`
-- If you touch these legacy route files, preserve redirect behavior and avoid reintroducing discoverability links.
+- These legacy routes also export `noindex, nofollow` metadata and are explicitly excluded from `app/sitemap.ts` so Google is not asked to index pages that production immediately redirects away from.
+- If you touch these legacy route files, preserve redirect behavior, preserve noindex metadata, and avoid reintroducing discoverability links or machine-readable references (`llms.txt`, structured data, sitemap entries).
+
+## Community + Utility Routes (Noindex)
+
+- The following pages are intentionally crawlable but non-indexable because they serve channel attribution, social proof, or utility-flow purposes rather than broad search intent:
+  - `/ig`
+  - `/youtube`
+  - `/tiktok`
+  - `/hottest-content`
+  - `/ai`
+  - `/models`
+- These routes should keep `robots: { index: false, follow: false }` and stay excluded from `app/sitemap.ts`.
+- Do not use these as canonical acquisition pages for SEO campaigns. Point search-facing users toward durable commercial surfaces like `/services`, `/websites`, `/ads`, `/local-listings`, `/pricing`, `/ai-seo-services`, and `/seo`.
 
 ## Websites (`app/websites/page.tsx`)
 

@@ -23,6 +23,8 @@ Canonical pricing now lives at [`/pricing`](https://www.design-prism.com/pricing
 
 - Do not add redirecting pricing routes to `app/sitemap.ts`.
 - Do not link to legacy routes from indexable pages/components.
+- Redirecting pricing routes should also export `noindex, nofollow` metadata so local tooling and crawlers see them as non-indexable even before the redirect is applied.
+- Remove these legacy URLs from machine-readable maps such as `public/llms.txt` and structured data unless the destination is restored as a real canonical page.
 - Core offer pricing policy is fixed:
   - `Website Overhaul = $1,000 one-time`
   - `Growth Partnership = $2,000/month`
@@ -33,3 +35,5 @@ Canonical pricing now lives at [`/pricing`](https://www.design-prism.com/pricing
 1. Run `pnpm verify:pricing-consistency`.
 2. Confirm all paths above resolve to `/pricing` (301/308 depending on platform handling).
 3. Confirm `/pricing` JSON-LD emits canonical offers only.
+4. Confirm legacy pricing/offer pages return `noindex, nofollow` metadata.
+5. Confirm `pnpm seo:inventory && pnpm seo:lint` classifies those routes as non-indexable.

@@ -12,6 +12,7 @@ export const metadata: Metadata = buildRouteMetadata({
   titleStem: PAGE_TITLE,
   description: PAGE_DESCRIPTION,
   path: "/ig",
+  index: false,
   ogImage: "/prism-opengraph.png",
 })
 

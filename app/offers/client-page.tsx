@@ -24,7 +24,7 @@ const offersData: Offer[] = [
     description:
       "make chatgpt, gemini & perplexity name-drop your brand first. get recommended by ai bots 24/7 with our specialized ai search optimization.",
     gradientType: "ai-seo",
-    link: "/offers/ai-seo-boost",
+    link: "/ai-seo-services",
     ctaText: "boost ai visibility",
   },
   {
@@ -33,7 +33,7 @@ const offersData: Offer[] = [
     description:
       "triple your traffic & conversions in 30 days with our all-inclusive website rebuild package. full-stack site, seo, conversion boosters, and a 30-day 3x guarantee!",
     gradientType: "website-makeover",
-    link: "/offers/summer-website-makeover",
+    link: "/pricing",
     ctaText: "view makeover details",
   },
   {

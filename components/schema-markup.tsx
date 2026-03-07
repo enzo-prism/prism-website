@@ -775,11 +775,6 @@ export function WebsiteSchema() {
     "@id": "https://www.design-prism.com/#website",
     url: "https://www.design-prism.com",
     name: "Prism",
-    potentialAction: {
-      "@type": "SearchAction",
-      target: "https://www.design-prism.com/search?q={search_term_string}",
-      "query-input": "required name=search_term_string",
-    },
   }
 
   return renderJsonLd(data)

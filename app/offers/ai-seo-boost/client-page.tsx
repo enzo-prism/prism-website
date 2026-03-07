@@ -305,8 +305,8 @@ export default function AISEOBoostPage() {
         {/* Back to Offers */}
         <section className="py-10 border-t border-border/60">
           <div className="container mx-auto px-4 text-center">
-            <Link href="/offers" className="text-xs font-pixel tracking-[0.22em] !uppercase text-muted-foreground hover:text-foreground transition-colors">
-              back to offers
+            <Link href="/pricing" className="text-xs font-pixel tracking-[0.22em] !uppercase text-muted-foreground hover:text-foreground transition-colors">
+              back to pricing
             </Link>
           </div>
         </section>

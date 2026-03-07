@@ -244,6 +244,7 @@ Custom confirmation routes live in `app/thank-you/` and `app/analysis-thank-you/
 - Titles are normalized to a single `| Prism` suffix (no duplicate suffix chains); descriptions are normalized with shared rules in `lib/seo/rules.ts`.
 - Use absolute canonicals (`https://www.design-prism.com/...`) for every indexable route.
 - Noindex routes should remain crawlable (meta `robots`), but **must be excluded** from the sitemap via `app/sitemap.ts`.
+- Keep the indexable set intentionally narrow. Community/source pages (`/ig`, `/youtube`, `/tiktok`), embed-heavy utility pages (`/hottest-content`), product-form utility routes (`/ai`, `/models`), and legacy redirected pricing/offer routes (`/offers*`, `/growth`, `/pricing-dental`, `/ai-website-launch`, `/one-time-fee`) should stay `noindex, nofollow` and out of the sitemap.
 - `/blog` filter/search views (`/blog?category=...`, `/blog?q=...`) are set to **noindex, follow** via `X-Robots-Tag` in `proxy.ts` so query-param URLs don’t pollute the index.
 - If a blog post `image` frontmatter uses an absolute Prism URL (e.g. `https://www.design-prism.com/...`), we normalize it for Next/Image. Prefer relative paths like `/api/og/...` or `/blog/...` for consistency.
 - Blog cards and post hero images now validate frontmatter `image` values at read time. If the file is missing, uses an invalid sentinel (`null`/`undefined`/empty), or points to a raster extension whose asset is actually SVG markup, posts now fall back to the shared default featured image (`https://res.cloudinary.com/dhqpqfw6w/image/upload/v1770786137/Prism_rgeypo.png`) instead of rendering a broken image.
@@ -251,11 +252,16 @@ Custom confirmation routes live in `app/thank-you/` and `app/analysis-thank-you/
 - Keep `/api/og/` **allowed** in `app/robots.ts` if we use OG endpoints in metadata or structured data.
 - Prefer the shared JSON-LD helpers in `components/schema-markup.tsx` (`WebPageSchema`, `CollectionPageSchema`, `ItemListSchema`, `ServiceSchema`, `FAQSchema`, etc.).
 - Every indexable page must render a visible `<h1>` that matches the primary search intent.
+- Success criteria for SEO-safe routing:
+  - Any route that permanently redirects or exists only for channel attribution / utility flow purposes must export `robots: { index: false, follow: false }`.
+  - `WebsiteSchema` must not declare a `SearchAction` unless we have a real, crawlable on-site search endpoint.
+  - Run `pnpm exec jest __tests__/sitemap.test.ts __tests__/seo-indexability-guards.test.tsx --runInBand` plus `pnpm seo:inventory && pnpm seo:lint` after changing indexability rules.
 - Run `pnpm seo:inventory && pnpm seo:lint` before shipping large metadata changes.
 
 ### Analytics & Conversion Tracking
 
 - Global Google Analytics + Google Ads tagging happens in `app/layout.tsx`. Both IDs come from `lib/constants.ts` (`GA_MEASUREMENT_ID` and `GOOGLE_ADS_ID`), so set `NEXT_PUBLIC_GA_MEASUREMENT_ID` if you need to override the fallback GA property.
+- Vercel Web Analytics is also mounted globally in `app/layout.tsx` via `components/vercel-analytics.tsx` using `@vercel/analytics/next`. We intentionally strip query strings and hash fragments in `lib/vercel-analytics.ts` before events are sent so ad click IDs / UTMs do not create noisy duplicate page rows in the Vercel dashboard.
 - Any route-level conversion (e.g., `/thank-you`) should load its own `<Script>` that fires the relevant `gtag('event', 'conversion', { send_to: 'AW-…' })`. See `app/thank-you/page.tsx` for the exact snippet tied to `AW-11373090310/hBMrCMijk70bEIasjq8q`.
 - When building a new landing page with a Formspree form, make sure the success handler navigates to `/thank-you` so the Ads conversion snippet runs and the GA pageview records properly.
 

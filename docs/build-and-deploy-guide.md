@@ -175,6 +175,10 @@ Use this flow when switching between local, preview, and production changes:
 - Add pricing sign-off:
   - `/pricing` shows only `$1,000 one-time`, `$2,000/month`, and `$0` audit.
   - legacy pricing routes (`/pricing-dental`, `/ai-website-launch`, `/one-time-fee`, `/offers/*`, `/growth`, `/checkout/{launch,grow,scale}`) resolve to `/pricing`.
+- Add SEO sign-off when changing route intent/canonicals:
+  - `pnpm exec jest __tests__/sitemap.test.ts __tests__/seo-indexability-guards.test.tsx --runInBand`
+  - `pnpm seo:inventory && pnpm seo:lint`
+  - community/utility pages (`/ig`, `/youtube`, `/tiktok`, `/hottest-content`, `/ai`, `/models`) remain noindex and excluded from `sitemap.xml`
 - If you need to rollback only chat changes, use `vercel rollback` after confirming the previous successful deployment URL.
 
 ### CI parity notes

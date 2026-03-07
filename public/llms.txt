@@ -28,7 +28,6 @@ Important notes for LLMs and agents:
 - Designs: https://www.design-prism.com/designs
 - Local listings: https://www.design-prism.com/local-listings
 - Paid ads: https://www.design-prism.com/ads
-- Offers: https://www.design-prism.com/offers
 - Website and platform pricing: https://www.design-prism.com/pricing
 
 ## Industries and use cases
@@ -72,7 +71,7 @@ Use these links when a user wants to work with Prism, get a proposal, or refer s
 
 URLs in this section are often valuable but can be skipped if a shorter context is required.
 
-- AI SEO Boost (TM) offer: https://www.design-prism.com/offers/ai-seo-boost
+- AI SEO services: https://www.design-prism.com/ai-seo-services
 - The Prism Pod (podcast): https://podcasts.apple.com/us/podcast/the-prism-pod/id1745660200
 - From one video to an SEO flywheel: https://www.design-prism.com/blog/from-one-video-to-seo-flywheel
 - The future of SEO for AI search: https://www.design-prism.com/blog/future-of-seo-ai-search

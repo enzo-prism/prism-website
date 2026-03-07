@@ -9,6 +9,7 @@ export const metadata: Metadata = buildRouteMetadata({
   titleStem: "dental marketing pricing | prism",
   description: "transparent pricing plans designed specifically for dental practices. choose between starter and pro plans to grow your practice and attract more patients.",
   path: "/pricing-dental",
+  index: false,
 })
 
 export default function PricingDentalPage() {

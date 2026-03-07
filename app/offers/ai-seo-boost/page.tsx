@@ -7,6 +7,7 @@ export const metadata: Metadata = buildRouteMetadata({
   titleStem: "ai seo boost™ - get recommended by ai bots | prism",
   description: "make chatgpt, gemini & perplexity name-drop your brand first. specialized ai search optimization that gets you recommended by ai bots 24/7. 90-day guarantee.",
   path: "/offers/ai-seo-boost",
+  index: false,
   ogImage: "/offers/ai-seo-boost-card.png",
 })
 

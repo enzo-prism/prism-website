@@ -16,6 +16,7 @@ export const metadata: Metadata = buildRouteMetadata({
   titleStem: PAGE_TITLE,
   description: PAGE_DESCRIPTION,
   path: "/ai-website-launch",
+  index: false,
   ogImage: "/prism-opengraph.png",
 })
 

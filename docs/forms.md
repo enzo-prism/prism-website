@@ -85,8 +85,11 @@ Success criteria from these tests:
 - `/aeo` metadata includes intended SEO intent (title + description + canonical).
 - `/aeo` content includes framework, evidence, FAQ, and CTA wiring.
 - `/aeo-thank-you` returns noindex metadata.
-- `/offers`, `/ai-seo-services`, `/seo` include discoverability links to `/aeo`.
+- `OffersClientPage` (archival component), `/ai-seo-services`, and `/seo` include discoverability links to `/aeo`.
 - Sitemap includes `/aeo` and excludes `/aeo-thank-you`.
+
+Important routing note:
+- `/offers` now redirects to `/pricing` in production and is noindex. If you need to verify the legacy AEO discoverability wiring there, test the `OffersClientPage` component directly rather than treating `/offers` as an active search surface.
 
 ## Thank-you pages
 - `/thank-you` ([`app/thank-you/page.tsx`](../app/thank-you/page.tsx)) — used by Get Started + Contact.

@@ -21,12 +21,25 @@ const baseOrigin = normalizedOrigin(process.env.NEXT_PUBLIC_BASE_URL)
 
 const NOINDEX_ROUTES = new Set([
   "/analysis-thank-you",
+  "/ai",
+  "/ai-website-launch",
+  "/growth",
   "/book-a-shoot/thank-you",
+  "/hottest-content",
+  "/ig",
+  "/models",
+  "/offers",
+  "/offers/ai-seo-boost",
+  "/offers/summer-website-makeover",
+  "/one-time-fee",
+  "/pricing-dental",
   "/pricing/thank-you",
   "/thank-you",
   "/aeo-thank-you",
+  "/tiktok",
   "/thanks",
   "/thanks-call",
+  "/youtube",
 ])
 
 const NOINDEX_PREFIXES = ["/checkout"]
