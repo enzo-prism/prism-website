@@ -5,7 +5,7 @@ test.describe("sales chat on /get-started (disabled)", () => {
     await page.goto("/get-started")
 
     await expect(page.getByRole("button", { name: /open sales chat/i })).toHaveCount(0)
-    await expect(page.getByRole("link", { name: /i'm ready to elevate/i }).first()).toBeVisible()
-    await expect(page.getByText(/book a demo/i).first()).toBeVisible()
+    await expect(page.getByRole("link", { name: /book your strategy call/i }).first()).toBeVisible()
+    await expect(page.getByText(/book a strategy call/i).first()).toBeVisible()
   })
 })
