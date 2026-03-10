@@ -22,6 +22,7 @@ const pricingCards = [
     ],
     primaryCta: CANONICAL_PRICING_OFFERS.website_overhaul.primaryCta,
     secondaryCta: CANONICAL_PRICING_OFFERS.website_overhaul.secondaryCta,
+    featured: false,
   },
   {
     key: "growth_partnership",
