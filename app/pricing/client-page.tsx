@@ -43,7 +43,7 @@ const faqs = [
   {
     question: "What are the core offers?",
     answer:
-      "Prism has two core paid offers: Website Overhaul at $1,000 one-time and Growth Partnership at $2,000 per month. The free expert audit is the no-cost starting point.",
+      "Prism has two core paid offers: Website Overhaul at $1,000 one-time and Growth Partnership at $2,000/month. The free expert audit is the no-cost starting point.",
   },
   {
     question: "Which option should I choose?",

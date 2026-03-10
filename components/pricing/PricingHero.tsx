@@ -15,7 +15,7 @@ export default function PricingHero() {
           Simple pricing for teams that want a clearer growth path.
         </h1>
         <p className="mt-6 max-w-2xl text-base leading-7 text-muted-foreground sm:text-lg">
-          Website Overhaul is $1,000 one-time. Growth Partnership is $2,000 per month. If you want guidance before
+          Website Overhaul is $1,000 one-time. Growth Partnership is $2,000/month. If you want guidance before
           choosing, start with the free expert audit.
         </p>
         <div className="mt-8 flex flex-col gap-3 sm:flex-row">
