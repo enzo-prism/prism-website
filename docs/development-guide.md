@@ -25,8 +25,9 @@ This guide highlights the workflows we lean on most often while iterating on the
 ### Homepage hero agent checklist
 
 - The homepage hero (`app/client-page.tsx`) now treats the ElevenLabs sales agent as the primary above-the-fold interaction. Keep the page itself server-rendered and isolate the live agent inside `components/home/HomeHeroAgent.tsx`.
-- The current hero is intentionally minimal: a solid white stage, the `Prism` wordmark, `impossible is temporary.`, a single subtle `founded in 2023` line, and the embedded agent. Avoid reintroducing multi-CTA marketing clutter into this first viewport without a strong reason.
+- The current hero is intentionally minimal: a solid white stage, the `Prism` wordmark, `impossible is temporary.`, a single subtle `founded 2023 in san francisco` line, and the embedded agent. Avoid reintroducing multi-CTA marketing clutter into this first viewport without a strong reason.
 - `HomeHeroAgent` uses the official ElevenLabs widget embed (`https://unpkg.com/@elevenlabs/convai-widget-embed`) and renders the inline `<elevenlabs-convai>` custom element.
+- ElevenLabs renders markdown in agent replies, but external links only become clickable when the host is allowlisted on the widget. Keep `markdown-link-allowed-hosts` in sync with whatever calendar or booking destination the agent is instructed to share.
 - Mobile spacing is intentionally biased toward the inline agent: the hero aligns from the top on small screens, the copy stack stays tight, and `HomeHeroAgent` now reserves roughly `35rem` of height on narrow viewports so the widget can use its supported compact layout without clipping the orb or crowding the textarea.
 - Avoid deep compact-mode geometry overrides inside the widget Shadow DOM. ElevenLabs treats the embed as an opinionated surface; keep homepage customization focused on wrapper sizing, placement, and fullscreen promotion, and move heavier design customization to the official SDK/UI layer if we need a bespoke chat surface later.
 - The public agent id resolves via `lib/elevenlabs.ts` and can be overridden with `NEXT_PUBLIC_ELEVENLABS_AGENT_ID`.

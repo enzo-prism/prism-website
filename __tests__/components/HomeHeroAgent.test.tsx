@@ -27,6 +27,10 @@ describe("HomeHeroAgent", () => {
     const widget = document.querySelector("elevenlabs-convai")
     expect(widget).toBeInTheDocument()
     expect(widget).toHaveAttribute("agent-id", "agent_4701kkcyc4efefkv5x4awhysjyrh")
+    expect(widget).toHaveAttribute(
+      "markdown-link-allowed-hosts",
+      "calendar.notion.so,notion.so,www.notion.so,cal.com,www.cal.com,design-prism.com,www.design-prism.com",
+    )
 
     expect(widget).not.toHaveAttribute("variant")
     expect(widget).not.toHaveAttribute("dismissible")

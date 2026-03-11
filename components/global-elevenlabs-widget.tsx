@@ -5,9 +5,14 @@ import { createElement, useEffect, useRef, useState } from "react"
 import { usePathname } from "next/navigation"
 import Script from "next/script"
 
-import { getPublicElevenLabsAgentId } from "@/lib/elevenlabs"
+import {
+  getPublicElevenLabsAgentId,
+  getPublicElevenLabsMarkdownLinkAllowedHosts,
+  registerElevenLabsClientTools,
+} from "@/lib/elevenlabs"
 
 const GLOBAL_AGENT_ID = getPublicElevenLabsAgentId()
+const GLOBAL_ALLOWED_LINK_HOSTS = getPublicElevenLabsMarkdownLinkAllowedHosts()
 const ELEVENLABS_WIDGET_SRC = "https://unpkg.com/@elevenlabs/convai-widget-embed"
 
 type GlobalWidgetVariant = "tiny" | "expanded" | "fullscreen"
@@ -31,6 +36,16 @@ export default function GlobalElevenLabsWidget() {
   const shouldHideForDedicatedLauncher = isGetStartedPage && hasDedicatedSalesChatLauncher
   const shouldRenderWidget = shouldMountWidget && !shouldHideForDedicatedLauncher
   const isFullscreen = widgetVariant === "fullscreen"
+
+  useEffect(() => {
+    const widget = widgetRef.current
+
+    if (!widget) {
+      return
+    }
+
+    return registerElevenLabsClientTools(widget, GLOBAL_ALLOWED_LINK_HOSTS)
+  }, [])
 
   useEffect(() => {
     if (!isGetStartedPage) {
@@ -208,6 +223,7 @@ export default function GlobalElevenLabsWidget() {
       {createElement("elevenlabs-convai", {
         "agent-id": GLOBAL_AGENT_ID,
         "aria-hidden": shouldHideForDedicatedLauncher ? "true" : undefined,
+        "markdown-link-allowed-hosts": GLOBAL_ALLOWED_LINK_HOSTS,
         variant: "tiny",
         placement: "bottom-right",
         dismissible: "true",

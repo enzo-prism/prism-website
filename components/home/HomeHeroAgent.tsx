@@ -4,10 +4,15 @@ import { createElement, type CSSProperties, useEffect, useRef, useState } from "
 
 import Script from "next/script"
 
-import { getPublicElevenLabsAgentId } from "@/lib/elevenlabs"
+import {
+  getPublicElevenLabsAgentId,
+  getPublicElevenLabsMarkdownLinkAllowedHosts,
+  registerElevenLabsClientTools,
+} from "@/lib/elevenlabs"
 import { cn } from "@/lib/utils"
 
 const HERO_AGENT_ID = getPublicElevenLabsAgentId()
+const HERO_ALLOWED_LINK_HOSTS = getPublicElevenLabsMarkdownLinkAllowedHosts()
 const ELEVENLABS_WIDGET_SRC = "https://unpkg.com/@elevenlabs/convai-widget-embed"
 const DESKTOP_FULLSCREEN_BREAKPOINT = 768
 
@@ -45,6 +50,16 @@ export default function HomeHeroAgent({ className }: HomeHeroAgentProps) {
   const [widgetVariant, setWidgetVariant] = useState<WidgetVariant>("compact")
 
   const isExpanded = widgetVariant !== "compact"
+
+  useEffect(() => {
+    const widget = widgetRef.current
+
+    if (!widget) {
+      return
+    }
+
+    return registerElevenLabsClientTools(widget, HERO_ALLOWED_LINK_HOSTS)
+  }, [])
 
   useEffect(() => {
     const syncResponsiveState = (shadowRoot: ShadowRoot, host: HTMLElement) => {
@@ -208,6 +223,7 @@ export default function HomeHeroAgent({ className }: HomeHeroAgentProps) {
       <div className="relative min-h-[35rem] sm:min-h-[33rem] lg:min-h-[31rem]">
         {createElement("elevenlabs-convai", {
           "agent-id": HERO_AGENT_ID,
+          "markdown-link-allowed-hosts": HERO_ALLOWED_LINK_HOSTS,
           ref: widgetRef,
           style: isExpanded ? EXPANDED_WIDGET_STYLE : COMPACT_WIDGET_STYLE,
         })}

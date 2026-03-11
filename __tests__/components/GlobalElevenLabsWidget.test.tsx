@@ -41,6 +41,10 @@ describe("GlobalElevenLabsWidget", () => {
 
     expect(widget).toBeInTheDocument()
     expect(widget).toHaveAttribute("agent-id", "agent_4701kkcyc4efefkv5x4awhysjyrh")
+    expect(widget).toHaveAttribute(
+      "markdown-link-allowed-hosts",
+      "calendar.notion.so,notion.so,www.notion.so,cal.com,www.cal.com,design-prism.com,www.design-prism.com",
+    )
     expect(widget).toHaveAttribute("variant", "tiny")
     expect(widget).toHaveAttribute("placement", "bottom-right")
     expect(widget).toHaveAttribute("dismissible", "true")
