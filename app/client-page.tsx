@@ -225,7 +225,7 @@ const HERO_SECTION_CLASSES = [
 ].join(" ")
 
 const HERO_CONTAINER_CLASSES = [
-  "container relative mx-auto flex w-full box-border items-center justify-center px-4",
+  "container relative mx-auto flex w-full box-border items-center px-4",
   "min-h-[calc(100svh-var(--prism-header-height)-env(safe-area-inset-top,0px))]",
   "pt-8 pb-[max(2.75rem,env(safe-area-inset-bottom,0px))]",
   "sm:min-h-0 sm:px-6 sm:py-14 lg:py-18",
@@ -237,13 +237,9 @@ export default function ClientPage() {
       <Navbar mobileRevealOnFirstTap />
       <main className="flex-1" id="main-content" tabIndex={-1}>
         <section id="homepage-hero" className={HERO_SECTION_CLASSES}>
-          <div className="pointer-events-none absolute inset-0 overflow-hidden">
-            <div className="absolute left-1/2 top-[58%] h-[34rem] w-[34rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(56,189,248,0.10),rgba(255,255,255,0)_68%)] blur-3xl sm:h-[42rem] sm:w-[42rem]" />
-            <div className="absolute left-1/2 top-[22%] h-48 w-48 -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(15,23,42,0.06),rgba(255,255,255,0)_72%)] blur-3xl" />
-          </div>
           <div className={HERO_CONTAINER_CLASSES}>
-            <div className="mx-auto flex w-full max-w-[34rem] flex-col items-center gap-8 text-center sm:max-w-[36rem] sm:gap-10">
-              <div className="space-y-3">
+            <div className="mx-auto flex w-full max-w-[30rem] flex-col items-center gap-6 text-center sm:max-w-[32rem] sm:gap-6">
+              <div className="space-y-2 sm:space-y-2">
                 <h1 className="!font-sans text-[clamp(1.85rem,8.2vw,3.7rem)] font-medium leading-[0.88] tracking-[-0.095em] text-[rgb(12,18,30)]">
                   Prism
                 </h1>

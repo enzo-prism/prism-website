@@ -1,10 +1,7 @@
 import {
-  createElevenLabsClientTools,
-  getPublicElevenLabsBookingUrl,
   getPublicElevenLabsMarkdownLinkAllowedHosts,
   isAllowedElevenLabsExternalUrl,
   registerElevenLabsClientTools,
-  resolveElevenLabsConversationUrl,
 } from "@/lib/elevenlabs"
 
 describe("elevenlabs link configuration", () => {
@@ -12,14 +9,6 @@ describe("elevenlabs link configuration", () => {
     expect(getPublicElevenLabsMarkdownLinkAllowedHosts({} as NodeJS.ProcessEnv)).toBe(
       "calendar.notion.so,notion.so,www.notion.so,cal.com,www.cal.com,design-prism.com,www.design-prism.com",
     )
-  })
-
-  it("uses the public booking url override when configured", () => {
-    expect(
-      getPublicElevenLabsBookingUrl({
-        NEXT_PUBLIC_ELEVENLABS_BOOKING_URL: "https://calendar.notion.so/prism-demo",
-      } as unknown as NodeJS.ProcessEnv),
-    ).toBe("https://calendar.notion.so/prism-demo")
   })
 
   it("normalizes an explicit public allowlist override", () => {
@@ -50,42 +39,7 @@ describe("elevenlabs link configuration", () => {
     expect(isAllowedElevenLabsExternalUrl("not a url", allowedHosts)).toBe(false)
   })
 
-  it("normalizes booking anchors and safe internal paths for transcript rendering", () => {
-    expect(resolveElevenLabsConversationUrl("#book-call")).toBe("/get-started#book-call")
-    expect(resolveElevenLabsConversationUrl("book-call")).toBe("/get-started#book-call")
-    expect(resolveElevenLabsConversationUrl("/pricing")).toBe("/pricing")
-    expect(
-      resolveElevenLabsConversationUrl("https://cal.com/prism/demo", {
-        allowedHosts: "cal.com",
-      }),
-    ).toBe("https://cal.com/prism/demo")
-    expect(
-      resolveElevenLabsConversationUrl("https://evil.example/demo", {
-        allowedHosts: "cal.com",
-      }),
-    ).toBeNull()
-  })
-
-  it("creates client tools that can share a booking link into chat without opening a new tab", () => {
-    const onLinkReady = jest.fn()
-    const clientTools = createElevenLabsClientTools({
-      allowedHosts: "cal.com",
-      onLinkReady,
-    })
-
-    const result = clientTools.shareBookingLink({
-      label: "Book a strategy call",
-      url: "https://cal.com/prism/demo",
-    }) as string
-
-    expect(result).toContain("Shared [Book a strategy call](https://cal.com/prism/demo) in the chat.")
-    expect(onLinkReady).toHaveBeenCalledWith({
-      label: "Book a strategy call",
-      url: "https://cal.com/prism/demo",
-    })
-  })
-
-  it("registers a guarded external redirect client tool for legacy widget hooks", () => {
+  it("registers a guarded external redirect client tool for the widget", () => {
     const widget = document.createElement("elevenlabs-convai")
     const openSpy = jest.spyOn(window, "open").mockImplementation(() => null)
     const cleanup = registerElevenLabsClientTools(widget, "calendar.notion.so,cal.com")

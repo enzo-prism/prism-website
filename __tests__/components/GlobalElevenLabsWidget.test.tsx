@@ -1,3 +1,5 @@
+import type { ComponentProps } from "react"
+
 import { render, waitFor } from "@testing-library/react"
 
 import GlobalElevenLabsWidget from "@/components/global-elevenlabs-widget"
@@ -8,40 +10,66 @@ jest.mock("next/navigation", () => ({
   usePathname: () => usePathname(),
 }))
 
+jest.mock("next/script", () => ({
+  __esModule: true,
+  default: function MockNextScript({
+    strategy: _strategy,
+    ...props
+  }: ComponentProps<"script"> & { strategy?: string }) {
+    return <script {...props} />
+  },
+}))
+
 describe("GlobalElevenLabsWidget", () => {
   beforeEach(() => {
-    document.body.innerHTML = ""
     usePathname.mockReset()
+    document.body.innerHTML = ""
   })
 
-  it("renders the stock floating ElevenLabs widget on inner pages", () => {
+  it("renders a subtle bottom-right launcher on inner marketing pages", () => {
     usePathname.mockReturnValue("/about")
 
-    const { container } = render(<GlobalElevenLabsWidget />)
-    const widget = container.querySelector("elevenlabs-convai")
+    render(<GlobalElevenLabsWidget />)
+
+    const script = document.querySelector(
+      'script[src="https://unpkg.com/@elevenlabs/convai-widget-embed"]',
+    )
+
+    expect(script).toBeInTheDocument()
+
+    const widget = document.querySelector("elevenlabs-convai")
 
     expect(widget).toBeInTheDocument()
     expect(widget).toHaveAttribute("agent-id", "agent_4701kkcyc4efefkv5x4awhysjyrh")
-    expect(widget).not.toHaveAttribute("variant")
+    expect(widget).toHaveAttribute(
+      "markdown-link-allowed-hosts",
+      "calendar.notion.so,notion.so,www.notion.so,cal.com,www.cal.com,design-prism.com,www.design-prism.com",
+    )
+    expect(widget).toHaveAttribute("variant", "tiny")
+    expect(widget).toHaveAttribute("placement", "bottom-right")
+    expect(widget).toHaveAttribute("dismissible", "true")
+    expect(widget).toHaveAttribute("default-expanded", "false")
   })
 
   it("skips the homepage so the hero remains the dedicated primary experience", () => {
     usePathname.mockReturnValue("/")
 
-    const { container } = render(<GlobalElevenLabsWidget />)
+    render(<GlobalElevenLabsWidget />)
 
-    expect(container.querySelector("elevenlabs-convai")).not.toBeInTheDocument()
+    expect(document.querySelector("elevenlabs-convai")).not.toBeInTheDocument()
   })
 
-  it("steps aside on get-started when the dedicated sales chat launcher is present", async () => {
+  it("steps aside on get-started when the dedicated sales chat launcher is present", () => {
     usePathname.mockReturnValue("/get-started")
     document.body.innerHTML = '<button aria-label="Open sales chat">Chat with Sales</button>'
 
     render(<GlobalElevenLabsWidget />)
 
-    await waitFor(() => {
-      expect(document.querySelector("elevenlabs-convai")).not.toBeInTheDocument()
-    })
+    const widget = document.querySelector("elevenlabs-convai")
+
+    expect(widget).toBeInTheDocument()
+    expect(widget).toHaveAttribute("aria-hidden", "true")
+    expect(widget).toHaveStyle({ display: "none" })
   })
 
   it("acts as the fallback launcher on get-started when the dedicated chat launcher is unavailable", async () => {
@@ -50,7 +78,11 @@ describe("GlobalElevenLabsWidget", () => {
     render(<GlobalElevenLabsWidget />)
 
     await waitFor(() => {
-      expect(document.querySelector("elevenlabs-convai")).toBeInTheDocument()
+      const widget = document.querySelector("elevenlabs-convai")
+
+      expect(widget).toBeInTheDocument()
+      expect(widget).toHaveAttribute("variant", "tiny")
+      expect(widget).not.toHaveAttribute("aria-hidden")
     })
   })
 })

@@ -1,81 +1,233 @@
 "use client"
 
-import { useEffect, useRef } from "react"
+import { createElement, type CSSProperties, useEffect, useRef, useState } from "react"
 
-import ElevenLabsWidget from "@/components/elevenlabs/ElevenLabsWidget"
+import Script from "next/script"
+
+import {
+  getPublicElevenLabsAgentId,
+  getPublicElevenLabsMarkdownLinkAllowedHosts,
+  registerElevenLabsClientTools,
+} from "@/lib/elevenlabs"
 import { cn } from "@/lib/utils"
+
+const HERO_AGENT_ID = getPublicElevenLabsAgentId()
+const HERO_ALLOWED_LINK_HOSTS = getPublicElevenLabsMarkdownLinkAllowedHosts()
+const ELEVENLABS_WIDGET_SRC = "https://unpkg.com/@elevenlabs/convai-widget-embed"
+const DESKTOP_FULLSCREEN_BREAKPOINT = 768
+
+type WidgetVariant = "compact" | "expanded" | "fullscreen"
+
+const COMPACT_WIDGET_STYLE: CSSProperties = {
+  display: "block",
+  width: "100%",
+  height: "100%",
+  maxWidth: "100%",
+  minHeight: "100%",
+  position: "absolute",
+  inset: "0",
+  textAlign: "left",
+}
+
+const EXPANDED_WIDGET_STYLE: CSSProperties = {
+  display: "block",
+  position: "fixed",
+  inset: "0",
+  width: "100vw",
+  height: "100dvh",
+  maxWidth: "100vw",
+  minHeight: "100dvh",
+  zIndex: "200",
+  textAlign: "left",
+}
 
 type HomeHeroAgentProps = {
   className?: string
 }
 
-const HOME_WIDGET_STYLE_SELECTOR = "style[data-prism-home-widget-centering]"
-
 export default function HomeHeroAgent({ className }: HomeHeroAgentProps) {
   const widgetRef = useRef<HTMLElement | null>(null)
+  const [widgetVariant, setWidgetVariant] = useState<WidgetVariant>("compact")
+
+  const isExpanded = widgetVariant !== "compact"
 
   useEffect(() => {
-    let intervalId: number | undefined
+    const widget = widgetRef.current
 
-    const injectHomepageWidgetStyles = () => {
-      const shadowRoot = widgetRef.current?.shadowRoot
+    if (!widget) {
+      return
+    }
 
-      if (!shadowRoot) {
+    return registerElevenLabsClientTools(widget, HERO_ALLOWED_LINK_HOSTS)
+  }, [])
+
+  useEffect(() => {
+    const syncResponsiveState = (shadowRoot: ShadowRoot, host: HTMLElement) => {
+      const sheet = shadowRoot.querySelector<HTMLElement>(".sheet")
+      const rawVariant = (sheet?.getAttribute("data-variant") as WidgetVariant | null) ?? "compact"
+      const shouldForceDesktopFullscreen =
+        rawVariant === "expanded" && window.innerWidth >= DESKTOP_FULLSCREEN_BREAKPOINT
+
+      if (sheet && shouldForceDesktopFullscreen) {
+        sheet.setAttribute("data-variant", "fullscreen")
+      }
+
+      const nextVariant = shouldForceDesktopFullscreen ? "fullscreen" : rawVariant
+
+      setWidgetVariant((currentVariant) => (currentVariant === nextVariant ? currentVariant : nextVariant))
+      host.toggleAttribute("data-prism-expanded", nextVariant !== "compact")
+    }
+
+    const injectWidgetStyles = () => {
+      const host = widgetRef.current
+      const shadowRoot = host?.shadowRoot
+
+      if (!host || !shadowRoot) {
         return false
       }
 
-      if (!shadowRoot.querySelector(HOME_WIDGET_STYLE_SELECTOR)) {
+      syncResponsiveState(shadowRoot, host)
+
+      if (!shadowRoot.querySelector("style[data-prism-widget-left-align]")) {
         const style = document.createElement("style")
-        style.setAttribute("data-prism-home-widget-centering", "true")
-        // Keep the stock widget untouched except for desktop centering in the homepage hero.
+        style.dataset.prismWidgetLeftAlign = "true"
         style.textContent = `
-          @media (min-width: 768px) {
-            .sheet {
-              left: 50% !important;
-              right: auto !important;
-              top: calc(50% + 4.75rem) !important;
-              bottom: auto !important;
-              transform: translate(-50%, -50%) !important;
-            }
+          :host {
+            text-align: left !important;
+          }
+
+          :host,
+          :host * {
+            text-align: left !important;
+          }
+
+          textarea,
+          p,
+          span,
+          h1,
+          h2,
+          h3,
+          h4,
+          h5,
+          h6,
+          label {
+            text-align: left !important;
           }
         `
-
         shadowRoot.append(style)
       }
 
       return true
     }
 
-    if (!injectHomepageWidgetStyles()) {
-      intervalId = window.setInterval(() => {
-        if (injectHomepageWidgetStyles() && intervalId) {
-          window.clearInterval(intervalId)
+    const setupObservers = (host: HTMLElement, shadowRoot: ShadowRoot) => {
+      const resizeObserver = new ResizeObserver(() => {
+        const currentHost = widgetRef.current
+        const currentShadowRoot = currentHost?.shadowRoot
+
+        if (currentHost && currentShadowRoot) {
+          syncResponsiveState(currentShadowRoot, currentHost)
         }
-      }, 250)
+      })
+      resizeObserver.observe(host)
+
+      const mutationObserver = new MutationObserver(() => {
+        injectWidgetStyles()
+      })
+      mutationObserver.observe(shadowRoot, {
+        childList: true,
+        subtree: true,
+        attributes: true,
+        attributeFilter: ["data-variant", "data-shown", "class", "style"],
+      })
+
+      return () => {
+        resizeObserver.disconnect()
+        mutationObserver.disconnect()
+      }
     }
 
-    return () => {
-      if (intervalId) {
-        window.clearInterval(intervalId)
+    const host = widgetRef.current
+
+    if (!host) {
+      return
+    }
+
+    if (injectWidgetStyles() && host.shadowRoot) {
+      return setupObservers(host, host.shadowRoot)
+    }
+
+    let cleanup: (() => void) | undefined
+
+    const interval = window.setInterval(() => {
+      const currentHost = widgetRef.current
+
+      if (injectWidgetStyles() && currentHost?.shadowRoot) {
+        window.clearInterval(interval)
+        cleanup = setupObservers(currentHost, currentHost.shadowRoot)
       }
+    }, 300)
+
+    return () => {
+      window.clearInterval(interval)
+      cleanup?.()
     }
   }, [])
 
+  useEffect(() => {
+    const previousHtmlOverflow = document.documentElement.style.overflow
+    const previousBodyOverflow = document.body.style.overflow
+
+    if (isExpanded) {
+      document.documentElement.style.overflow = "hidden"
+      document.body.style.overflow = "hidden"
+    }
+
+    return () => {
+      document.documentElement.style.overflow = previousHtmlOverflow
+      document.body.style.overflow = previousBodyOverflow
+    }
+  }, [isExpanded])
+
+  useEffect(() => {
+    const root = document.documentElement
+
+    if (isExpanded) {
+      root.dataset.prismWidgetExpanded = "true"
+    } else {
+      delete root.dataset.prismWidgetExpanded
+    }
+
+    window.dispatchEvent(
+      new CustomEvent("prism-widget-expanded-change", {
+        detail: { expanded: isExpanded },
+      }),
+    )
+
+    return () => {
+      if (root.dataset.prismWidgetExpanded === "true") {
+        delete root.dataset.prismWidgetExpanded
+        window.dispatchEvent(
+          new CustomEvent("prism-widget-expanded-change", {
+            detail: { expanded: false },
+          }),
+        )
+      }
+    }
+  }, [isExpanded])
+
   return (
-    <div
-      className={cn(
-        "home-hero-agent relative isolate mx-auto flex min-h-[31rem] w-full max-w-[34rem] items-center justify-center text-left sm:min-h-[33rem]",
-        className,
-      )}
-    >
-      <div className="pointer-events-none absolute inset-x-[8%] top-[14%] h-[72%] rounded-full bg-[radial-gradient(circle_at_center,rgba(59,130,246,0.10),rgba(255,255,255,0)_68%)] blur-3xl" />
-      <div className="pointer-events-none absolute inset-x-[16%] top-[22%] h-[56%] rounded-full border border-black/[0.04] bg-[linear-gradient(180deg,rgba(255,255,255,0.92),rgba(255,255,255,0.18))] blur-2xl" />
-      <ElevenLabsWidget
-        expanded
-        className="mx-auto block w-full"
-        hostRef={widgetRef}
-        testId="home-elevenlabs-widget"
-      />
+    <div className={cn("home-hero-agent relative isolate mx-auto w-full max-w-[34rem] text-left", className)}>
+      <Script src={ELEVENLABS_WIDGET_SRC} strategy="afterInteractive" type="text/javascript" />
+
+      <div className="relative min-h-[35rem] sm:min-h-[33rem] lg:min-h-[31rem]">
+        {createElement("elevenlabs-convai", {
+          "agent-id": HERO_AGENT_ID,
+          "markdown-link-allowed-hosts": HERO_ALLOWED_LINK_HOSTS,
+          ref: widgetRef,
+          style: isExpanded ? EXPANDED_WIDGET_STYLE : COMPACT_WIDGET_STYLE,
+        })}
+      </div>
     </div>
   )
 }
