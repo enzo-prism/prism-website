@@ -30,6 +30,7 @@ The project relies on ESLint, Prettier, and Tailwind CSS. Preserve the default P
 - Avoid `ssr: false` for content-bearing components—only use it for client-only utilities (e.g., toasts).
 - When converting a page to server-rendered, replace inline CTA tracking with `components/tracked-link.tsx` or `components/tracked-anchor.tsx` so analytics still fire without making the whole page a client component.
 - Formspree submissions should use `useFormValidation` plus client-side `fetch` and redirect to `/thank-you` routes; document new/changed flows in `docs/forms.md`, `docs/pages-overview.md`, or `docs/development-guide.md`.
+- For the homepage ElevenLabs hero (`components/home/HomeHeroAgent.tsx`), prefer wrapper sizing and section spacing over Shadow DOM geometry overrides. The inline widget needs about `35rem` of vertical room on mobile to avoid clipping the orb or crowding the textarea. If we need heavier visual customization later, move to ElevenLabs' official UI/SDK layer instead of styling undocumented internal widget structure.
 
 ## Testing Guidelines
 Jest with `@testing-library/react` powers the test suite; place files as `ComponentName.test.tsx` inside `__tests__/` or adjacent to the component when co-locating improves clarity. Mock external services via the helpers in `__mocks__/`. Write interaction-focused tests that assert user-visible outcomes, and ensure new code paths are covered before merging.

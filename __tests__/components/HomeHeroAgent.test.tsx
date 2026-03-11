@@ -35,5 +35,6 @@ describe("HomeHeroAgent", () => {
     expect(widget).not.toHaveAttribute("start-call-text")
     expect(widget).not.toHaveAttribute("expand-text")
     expect(widget?.closest(".home-hero-agent")).toBeInTheDocument()
+    expect(widget?.parentElement).toHaveClass("min-h-[35rem]")
   })
 })

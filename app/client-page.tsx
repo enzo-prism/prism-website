@@ -218,7 +218,7 @@ const SECTION_SPACING_DEFAULT =
 const SECTION_SPACING_COMPACT =
   "py-12 sm:py-16 lg:py-20"
 const HERO_SECTION_CLASSES =
-  "relative flex min-h-screen min-h-[100svh] items-center overflow-hidden -mt-[calc(var(--prism-header-height)+env(safe-area-inset-top,0px))] pt-[calc(var(--prism-header-height)+env(safe-area-inset-top,0px))] pb-[calc(var(--prism-header-height)+env(safe-area-inset-bottom,0px))] bg-[rgb(255,255,255)]"
+  "relative flex items-start overflow-hidden -mt-[calc(var(--prism-header-height)+env(safe-area-inset-top,0px))] bg-[rgb(255,255,255)] pt-[calc(var(--prism-header-height)+env(safe-area-inset-top,0px))] pb-[max(1.5rem,env(safe-area-inset-bottom,0px))] sm:min-h-screen sm:items-center sm:pb-[calc(var(--prism-header-height)+env(safe-area-inset-bottom,0px))]"
 
 export default function ClientPage() {
   return (
@@ -226,23 +226,21 @@ export default function ClientPage() {
       <Navbar mobileRevealOnFirstTap />
       <main className="flex-1" id="main-content" tabIndex={-1}>
         <section className={HERO_SECTION_CLASSES}>
-          <div className="container relative mx-auto flex w-full px-4 py-10 sm:px-6 sm:py-14 lg:py-18">
-            <div className="mx-auto flex w-full max-w-[32rem] flex-col items-center text-center">
-              <div className="space-y-2">
-                <h1 className="!font-sans text-[clamp(1.9rem,9vw,3.7rem)] font-medium leading-[0.88] tracking-[-0.095em] text-[rgb(12,18,30)]">
+          <div className="container relative mx-auto flex w-full px-4 pt-3 pb-8 sm:px-6 sm:py-14 lg:py-18">
+            <div className="mx-auto flex w-full max-w-[30rem] flex-col items-center gap-4 text-center sm:max-w-[32rem] sm:gap-6">
+              <div className="space-y-1 sm:space-y-2">
+                <h1 className="!font-sans text-[clamp(1.85rem,8.2vw,3.7rem)] font-medium leading-[0.88] tracking-[-0.095em] text-[rgb(12,18,30)]">
                   Prism
                 </h1>
-                <p className="mx-auto max-w-[16rem] text-balance text-[13px] leading-5 text-[rgba(15,23,42,0.56)] sm:max-w-[18rem] sm:text-[15px] sm:leading-6">
+                <p className="mx-auto max-w-[14rem] text-balance text-[11px] leading-[1.45] text-[rgba(15,23,42,0.56)] sm:max-w-[18rem] sm:text-[15px] sm:leading-6">
                   impossible is temporary.
                 </p>
-                <div className="mx-auto text-[10px] font-medium uppercase tracking-[0.24em] text-[rgba(15,23,42,0.34)] sm:text-[11px]">
+                <div className="mx-auto text-[9px] font-medium uppercase tracking-[0.22em] text-[rgba(15,23,42,0.34)] sm:text-[11px] sm:tracking-[0.24em]">
                   founded in 2023
                 </div>
               </div>
 
-              <div className="mt-6 w-full text-left sm:mt-7">
-                <HomeHeroAgent className="max-w-[25.5rem] sm:max-w-[27rem]" />
-              </div>
+              <HomeHeroAgent className="max-w-[25.5rem] sm:max-w-[27rem]" />
             </div>
           </div>
         </section>

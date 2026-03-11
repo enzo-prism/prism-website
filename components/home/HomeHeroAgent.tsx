@@ -18,7 +18,7 @@ const COMPACT_WIDGET_STYLE: CSSProperties = {
   width: "100%",
   height: "100%",
   maxWidth: "100%",
-  minHeight: "clamp(22.75rem, 58vw, 29.5rem)",
+  minHeight: "100%",
   position: "absolute",
   inset: "0",
   textAlign: "left",
@@ -58,37 +58,9 @@ export default function HomeHeroAgent({ className }: HomeHeroAgentProps) {
       }
 
       const nextVariant = shouldForceDesktopFullscreen ? "fullscreen" : rawVariant
-      const shouldUseCompactLayout = nextVariant === "compact" && host.getBoundingClientRect().width <= 420
 
       setWidgetVariant((currentVariant) => (currentVariant === nextVariant ? currentVariant : nextVariant))
-      host.toggleAttribute("data-prism-compact", shouldUseCompactLayout)
       host.toggleAttribute("data-prism-expanded", nextVariant !== "compact")
-
-      sheet?.setAttribute("data-prism-sheet", "true")
-
-      const textarea = shadowRoot.querySelector<HTMLTextAreaElement>("textarea")
-      textarea?.setAttribute("data-prism-input-area", "true")
-      textarea?.parentElement?.setAttribute("data-prism-input-shell", "true")
-
-      const avatarCanvas = shadowRoot.querySelector("canvas")
-      const avatarShell = avatarCanvas?.closest<HTMLElement>("div.relative")
-      const avatarStage = avatarShell?.parentElement as HTMLElement | null
-      avatarStage?.setAttribute("data-prism-avatar-stage", "true")
-
-      avatarShell?.setAttribute("data-prism-avatar-shell", "true")
-
-      const avatarInner = avatarCanvas?.parentElement as HTMLElement | null
-      avatarInner?.setAttribute("data-prism-avatar-inner", "true")
-
-      const avatarButton = avatarShell?.querySelector<HTMLElement>("button")
-      const avatarButtonShell = avatarButton?.parentElement?.parentElement as HTMLElement | null
-      avatarButtonShell?.setAttribute("data-prism-avatar-button-shell", "true")
-      avatarButton?.setAttribute("data-prism-avatar-button", "true")
-
-      const branding = Array.from(shadowRoot.querySelectorAll<HTMLElement>("p")).find((node) =>
-        node.textContent?.includes("Powered by ElevenLabs"),
-      )
-      branding?.setAttribute("data-prism-branding", "true")
     }
 
     const injectWidgetStyles = () => {
@@ -105,6 +77,10 @@ export default function HomeHeroAgent({ className }: HomeHeroAgentProps) {
         const style = document.createElement("style")
         style.dataset.prismWidgetLeftAlign = "true"
         style.textContent = `
+          :host {
+            text-align: left !important;
+          }
+
           :host,
           :host * {
             text-align: left !important;
@@ -121,79 +97,6 @@ export default function HomeHeroAgent({ className }: HomeHeroAgentProps) {
           h6,
           label {
             text-align: left !important;
-          }
-
-          :host([data-prism-compact]) {
-            min-height: 25.5rem !important;
-          }
-
-          :host([data-prism-compact]) [data-prism-sheet] {
-            height: 15.5rem !important;
-          }
-
-          :host([data-prism-compact]) [data-prism-avatar-stage] {
-            top: 29% !important;
-          }
-
-          :host([data-prism-compact]) [data-prism-avatar-shell] {
-            width: 8.75rem !important;
-            height: 8.75rem !important;
-          }
-
-          :host([data-prism-compact]) [data-prism-avatar-inner],
-          :host([data-prism-compact]) [data-prism-avatar-inner] canvas {
-            width: 100% !important;
-            height: 100% !important;
-          }
-
-          :host([data-prism-compact]) [data-prism-avatar-button-shell] {
-            width: 3.25rem !important;
-            height: 3.25rem !important;
-            padding: 0.25rem !important;
-          }
-
-          :host([data-prism-compact]) [data-prism-avatar-button] {
-            min-width: 0 !important;
-            width: 100% !important;
-            height: 100% !important;
-            padding: 0 !important;
-          }
-
-          :host([data-prism-compact]) [data-prism-input-area] {
-            min-height: 4.9rem !important;
-          }
-
-          :host([data-prism-compact]) [data-prism-branding] {
-            transform: translateY(calc(var(--el-overlay-padding) * 0.1)) !important;
-            font-size: 0.72rem !important;
-          }
-
-          @media (max-width: 420px) {
-            :host([data-prism-compact]) {
-              min-height: 24.5rem !important;
-            }
-
-            :host([data-prism-compact]) [data-prism-sheet] {
-              height: 14.75rem !important;
-            }
-
-            :host([data-prism-compact]) [data-prism-avatar-stage] {
-              top: 27.25% !important;
-            }
-
-            :host([data-prism-compact]) [data-prism-avatar-shell] {
-              width: 8rem !important;
-              height: 8rem !important;
-            }
-
-            :host([data-prism-compact]) [data-prism-avatar-button-shell] {
-              width: 3rem !important;
-              height: 3rem !important;
-            }
-
-            :host([data-prism-compact]) [data-prism-input-area] {
-              min-height: 4.6rem !important;
-            }
           }
         `
         shadowRoot.append(style)
@@ -302,7 +205,7 @@ export default function HomeHeroAgent({ className }: HomeHeroAgentProps) {
     <div className={cn("home-hero-agent relative isolate mx-auto w-full max-w-[34rem] text-left", className)}>
       <Script src={ELEVENLABS_WIDGET_SRC} strategy="afterInteractive" type="text/javascript" />
 
-      <div className="relative min-h-[24.5rem] sm:min-h-[clamp(22.75rem,58vw,29.5rem)]">
+      <div className="relative min-h-[35rem] sm:min-h-[33rem] lg:min-h-[31rem]">
         {createElement("elevenlabs-convai", {
           "agent-id": HERO_AGENT_ID,
           ref: widgetRef,
