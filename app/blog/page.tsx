@@ -20,8 +20,8 @@ import BlogCTAButtonLazy from "./BlogCTAButtonLazy"
 import { buildRouteMetadata } from "@/lib/seo/metadata"
 
 export const metadata: Metadata = buildRouteMetadata({
-  titleStem: "prism blog | web design, ai marketing & growth experiments",
-  description: "actionable lessons from shipping websites, ai workflows, and conversion experiments for dentists and local businesses, field-tested not theory.",
+  titleStem: "SEO, AI + website growth blog",
+  description: "Practical lessons on websites, SEO, AI workflows, paid media, and local growth from real client work and live experiments.",
   path: "/blog",
   ogImage: "/prism-opengraph.png",
 })

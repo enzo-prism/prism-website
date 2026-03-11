@@ -10,18 +10,23 @@ import "./globals.css"
 import { GlobalSchemaGraph } from "@/components/schema-markup"
 import RuntimeClientShell from "@/components/runtime-client-shell"
 import SkipToContent from "@/components/skip-to-content"
+import VercelAnalytics from "@/components/vercel-analytics"
 import { GA_MEASUREMENT_ID, GOOGLE_ADS_ID, IS_ANALYTICS_ENABLED } from "@/lib/constants"
+import { buildAbsoluteTitle, normalizeDescription } from "@/lib/seo/rules"
+
+const DEFAULT_TITLE = buildAbsoluteTitle("Website design, local SEO + paid ads")
+const DEFAULT_DESCRIPTION = normalizeDescription(
+  "Prism builds websites, local SEO, and paid ads for local brands that want more qualified leads.",
+)
 
 export const metadata: Metadata = {
-  title: "Prism",
-  description:
-    "prism builds high-converting websites, manages paid ads, and optimizes local listings so small businesses consistently attract qualified local customers.",
+  title: DEFAULT_TITLE,
+  description: DEFAULT_DESCRIPTION,
   openGraph: {
-    title: "prism | growth engine for local brands",
-    description:
-      "prism builds high-converting websites, manages paid ads, and optimizes local listings so small businesses consistently attract qualified local customers.",
+    title: DEFAULT_TITLE,
+    description: DEFAULT_DESCRIPTION,
     url: "https://www.design-prism.com",
-    siteName: "prism",
+    siteName: "Prism",
     images: [
       {
         url: "/prism-opengraph.png",
@@ -35,10 +40,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title:
-      "prism | websites, ads & local listing optimization for small businesses",
-    description:
-      "prism builds high-converting websites, manages paid ads, and optimizes local listings so small businesses consistently attract qualified local customers.",
+    title: DEFAULT_TITLE,
+    description: DEFAULT_DESCRIPTION,
     images: ["/prism-opengraph.png"],
   },
   icons: {
@@ -145,6 +148,7 @@ export default function RootLayout({
         <Suspense fallback={null}>
           {children}
         </Suspense>
+        <VercelAnalytics />
       </body>
     </html>
   )

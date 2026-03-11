@@ -258,6 +258,17 @@ Custom confirmation routes live in `app/thank-you/` and `app/analysis-thank-you/
 
 - Route-level metadata should use `buildRouteMetadata` from `lib/seo/metadata.ts` so titles, descriptions, canonical URLs, Open Graph, Twitter, and robots directives stay consistent.
 - Titles are normalized to a single `| Prism` suffix (no duplicate suffix chains); descriptions are normalized with shared rules in `lib/seo/rules.ts`.
+- Metadata should stay descriptive and concise, not artificially short: shared rules trim page titles to 60 characters max (including `| Prism`) and meta descriptions to 155 characters max across route, blog, and library pages.
+- Shared normalization preserves common search terms and product nouns (`SEO`, `AI`, `Google Maps`, `ChatGPT`, `TikTok`, etc.) and keeps useful brand descriptors like `Case Study`, `Podcast`, and `Careers` instead of stripping them out.
+- Default metadata workflow for static routes:
+  - Set a clear `titleStem` + `description` on the page and let `buildRouteMetadata` generate the final title, canonical, OG, Twitter, and robots fields.
+  - Write for search intent first, brand second. Prefer phrases like `Dental website design + local SEO` over internal labels like `Why dental practices love Prism`.
+  - If `seo/inventory.csv` shows a clipped or vague result, improve the route’s source copy first; do **not** immediately tighten or loosen the global limits.
+- Default metadata workflow for blog and library routes:
+  - Let the generator fall back to `title` / `description` by default.
+  - Add `seoTitle` / `seoDescription` only when the rendered inventory shows a weak snippet, duplicate title, or low-intent phrasing.
+  - Keep blog overrides aligned with the visible article promise; do not write clickbait search titles that diverge from the actual post.
+- Use `seo/inventory.csv` as the source of truth for final rendered snippets. Review `final_title` and `meta_description`, not just the source `titleStem` or frontmatter strings.
 - Use absolute canonicals (`https://www.design-prism.com/...`) for every indexable route.
 - Noindex routes should remain crawlable (meta `robots`), but **must be excluded** from the sitemap via `app/sitemap.ts`.
 - Keep the indexable set intentionally narrow. Community/source pages (`/ig`, `/youtube`, `/tiktok`), embed-heavy utility pages (`/hottest-content`), product-form utility routes (`/ai`, `/models`), and legacy redirected pricing/offer routes (`/offers*`, `/growth`, `/pricing-dental`, `/ai-website-launch`, `/one-time-fee`) should stay `noindex, nofollow` and out of the sitemap.

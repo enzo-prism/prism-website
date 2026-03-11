@@ -12,7 +12,7 @@ import { buildRouteMetadata } from "@/lib/seo/metadata"
 
 export const metadata: Metadata = buildRouteMetadata({
   titleStem: "mobile app development portfolio & services",
-  description: "explore custom mobile apps for restaurants, healthcare, and small businesses. interactive demos highlight native ios and android builds that boost engagement.",
+  description: "Explore custom mobile apps for restaurants, healthcare, and small businesses, with demos of native iOS and Android builds.",
   path: "/apps",
   ogImage: "/prism-opengraph.png",
 })

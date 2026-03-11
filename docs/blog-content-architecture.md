@@ -54,6 +54,13 @@ Open Graph behavior is date-based in `app/blog/[slug]/page.tsx`: posts before 20
 
 `seoTitle` and `seoDescription` are optional manual overrides used by the post metadata generator. If omitted, the generator falls back to `title` and `description`, then normalizes with the shared SEO rules (`lib/seo/rules.ts`) to enforce sentence case, canonical host, and a single `| Prism` title suffix.
 
+Use overrides sparingly. The default workflow is:
+
+- Start with a strong on-page `title` and `description`.
+- Regenerate `seo/inventory.csv` and inspect the final rendered `final_title` + `meta_description`.
+- Only add `seoTitle` or `seoDescription` when the rendered snippet is weak, duplicated, clipped, or misses the real search intent.
+- Keep overrides aligned with the visible article promise; avoid writing search snippets that oversell or materially diverge from the post itself.
+
 Headings (H2/H3) are assigned stable anchor IDs during MDX rendering (`rehype-slug`), and `lib/mdx-toc.ts` parses the MDX source to build the table of contents.
 
 ---

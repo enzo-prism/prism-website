@@ -12,8 +12,8 @@ import { CASE_STUDIES } from "@/lib/case-study-data"
 import { buildRouteMetadata } from "@/lib/seo/metadata"
 
 export const metadata: Metadata = buildRouteMetadata({
-  titleStem: "Dentist SEO | Prism",
-  description: "Dentist SEO that helps practices rank in Google Maps and organic search with listings, reviews, and treatment pages tied to calls.",
+  titleStem: "Dental SEO consultant for practices",
+  description: "Dental SEO consulting for practices that want stronger Google Maps visibility, clearer treatment pages, and reporting tied to calls.",
   path: "/dental-practice-seo-expert",
   ogImage: "/prism-opengraph.png",
 })

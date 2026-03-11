@@ -3,8 +3,8 @@ import CaseStudiesPage from "./client-page"
 import { buildRouteMetadata } from "@/lib/seo/metadata"
 
 export const metadata: Metadata = buildRouteMetadata({
-  titleStem: "case studies: dental & local business growth wins | prism",
-  description: "discover how prism lifts patient acquisition, retention, and online revenue through strategic redesigns, content systems, and analytics for real clients.",
+  titleStem: "Dental + local business case studies",
+  description: "See how Prism improves patient acquisition, local visibility, and revenue through website redesigns, SEO, content systems, and analytics.",
   path: "/case-studies",
   ogImage: "/prism-opengraph.png",
 })
