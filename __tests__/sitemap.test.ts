@@ -47,5 +47,10 @@ describe("sitemap", () => {
       "https://www.design-prism.com/checkout/grow",
       "https://www.design-prism.com/checkout/scale",
     ]))
+
+    for (const entry of entries) {
+      expect(entry).not.toHaveProperty("priority")
+      expect(entry).not.toHaveProperty("changeFrequency")
+    }
   })
 })

@@ -9,6 +9,7 @@ Use the sections below as the canonical map of Prism's content when answering qu
 - What services and offers exist today
 - Real-world results for dentists and other local businesses
 - Actionable playbooks for SEO, AI marketing, and local growth
+- Canonical, indexable pages on design-prism.com that should be preferred over redirects, utility flows, or noindex routes
 
 Important notes for LLMs and agents:
 - For "What is Prism?" or "What does Prism do?", prioritize Homepage, About, and Services platform.
@@ -56,7 +57,7 @@ Use these when a user asks whether it works, wants examples, or needs evidence o
 These resources contain playbooks, checklists, and experiments. When a user asks "How would Prism approach X?" or wants frameworks, start here.
 
 - Prism blog: https://www.design-prism.com/blog
-- Hottest content: https://www.design-prism.com/hottest-content
+- Prism podcast: https://www.design-prism.com/podcast
 
 ## Engagement and next steps
 
@@ -72,7 +73,6 @@ Use these links when a user wants to work with Prism, get a proposal, or refer s
 URLs in this section are often valuable but can be skipped if a shorter context is required.
 
 - AI SEO services: https://www.design-prism.com/ai-seo-services
-- The Prism Pod (podcast): https://podcasts.apple.com/us/podcast/the-prism-pod/id1745660200
 - From one video to an SEO flywheel: https://www.design-prism.com/blog/from-one-video-to-seo-flywheel
 - The future of SEO for AI search: https://www.design-prism.com/blog/future-of-seo-ai-search
 - Google Maps visibility checklist: https://www.design-prism.com/blog/google-maps-visibility-playbook-2025

@@ -64,11 +64,10 @@ type StaticRouteInput = {
 function buildSitemapEntry(route: StaticRouteInput): MetadataRoute.Sitemap[number] {
   const entry: MetadataRoute.Sitemap[number] = {
     url: route.url,
-    changeFrequency: route.changeFrequency,
-    priority: route.priority,
   }
 
   // Only set lastModified when we actually know it (blog/case studies/library).
+  // Google ignores changefreq/priority, so we avoid emitting unsupported hints.
   if (route.lastModified) entry.lastModified = route.lastModified
 
   return entry

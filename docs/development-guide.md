@@ -269,6 +269,9 @@ Custom confirmation routes live in `app/thank-you/` and `app/analysis-thank-you/
   - Add `seoTitle` / `seoDescription` only when the rendered inventory shows a weak snippet, duplicate title, or low-intent phrasing.
   - Keep blog overrides aligned with the visible article promise; do not write clickbait search titles that diverge from the actual post.
 - Use `seo/inventory.csv` as the source of truth for final rendered snippets. Review `final_title` and `meta_description`, not just the source `titleStem` or frontmatter strings.
+- `app/sitemap.ts` should emit only canonical, indexable URLs plus verifiable `lastModified` values. Google ignores sitemap `priority` and `changefreq`, so don't spend time tuning or adding them.
+- `app/robots.ts` should stay minimal: use it to manage crawl access (for example, keep `/api/og/` crawlable while blocking the rest of `/api/`), and rely on page-level `noindex` for URLs that should stay out of Search.
+- `public/llms.txt` is not a Google ranking input, but it should still mirror canonical search surfaces. Keep it limited to canonical, indexable Prism URLs and avoid noindex routes, redirects, or off-site detours unless there is a deliberate reason.
 - Use absolute canonicals (`https://www.design-prism.com/...`) for every indexable route.
 - Noindex routes should remain crawlable (meta `robots`), but **must be excluded** from the sitemap via `app/sitemap.ts`.
 - Keep the indexable set intentionally narrow. Community/source pages (`/ig`, `/youtube`, `/tiktok`), embed-heavy utility pages (`/hottest-content`), product-form utility routes (`/ai`, `/models`), and legacy redirected pricing/offer routes (`/offers*`, `/growth`, `/pricing-dental`, `/ai-website-launch`, `/one-time-fee`) should stay `noindex, nofollow` and out of the sitemap.

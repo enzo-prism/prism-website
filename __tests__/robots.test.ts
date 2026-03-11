@@ -1,15 +1,17 @@
 import robots from "@/app/robots"
 
 describe("robots", () => {
-  it("allows /api/og/ but disallows /api/", () => {
+  it("keeps a single crawler policy, allows /api/og/, and disallows other /api/ routes", () => {
     const result = robots()
     expect(result.rules).toBeTruthy()
 
     const rules = Array.isArray(result.rules) ? result.rules : [result.rules]
-    for (const rule of rules) {
-      expect(rule.disallow).toEqual(expect.arrayContaining(["/api/"]))
-      expect(rule.allow).toEqual(expect.arrayContaining(["/api/og/"]))
-    }
+    expect(rules).toHaveLength(1)
+    expect(rules[0]).toMatchObject({
+      userAgent: "*",
+      allow: ["/api/og/"],
+      disallow: ["/api/"],
+    })
+    expect(result.host).toBeUndefined()
   })
 })
-
