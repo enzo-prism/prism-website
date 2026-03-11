@@ -10,7 +10,6 @@ import "./globals.css"
 import { GlobalSchemaGraph } from "@/components/schema-markup"
 import RuntimeClientShell from "@/components/runtime-client-shell"
 import SkipToContent from "@/components/skip-to-content"
-import VercelAnalytics from "@/components/vercel-analytics"
 import { GA_MEASUREMENT_ID, GOOGLE_ADS_ID, IS_ANALYTICS_ENABLED } from "@/lib/constants"
 import { buildAbsoluteTitle, normalizeDescription } from "@/lib/seo/rules"
 
@@ -148,7 +147,6 @@ export default function RootLayout({
         <Suspense fallback={null}>
           {children}
         </Suspense>
-        <VercelAnalytics />
       </body>
     </html>
   )
