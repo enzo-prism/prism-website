@@ -3,7 +3,7 @@
 import { Suspense } from "react"
 
 import AnalyticsProvider from "@/components/analytics-provider"
-import CopyPageMarkdownButton from "@/components/copy-page-markdown-button"
+import GlobalElevenLabsWidget from "@/components/global-elevenlabs-widget"
 import RootClientMonitors from "@/components/root-client-monitors"
 import ToasterLazy from "@/components/toaster-lazy"
 import SentryContextProvider from "@/components/sentry-context-provider"
@@ -16,7 +16,7 @@ export default function RuntimeClientShell() {
         <ToasterLazy />
         <Suspense fallback={null}>
           <AnalyticsProvider />
-          <CopyPageMarkdownButton />
+          <GlobalElevenLabsWidget />
         </Suspense>
       </SentryContextProvider>
     </>

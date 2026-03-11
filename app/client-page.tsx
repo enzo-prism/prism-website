@@ -4,11 +4,9 @@ import Link from "next/link"
 import PixelishIcon from "@/components/pixelish/PixelishIcon"
 import CaseStudyCard from "@/components/case-study-card"
 import Footer from "@/components/footer"
-import HeroBenefits from "@/components/home/HeroBenefits"
-import HeroMonthlyLeadsPill from "@/components/home/HeroMonthlyLeadsPill"
+import HomeHeroAgent from "@/components/home/HomeHeroAgent"
 import {
   HomeFAQSection,
-  HomeHeroScene,
   HomeScalingRoadmapForm,
   HomeSearchConsoleRail,
   HomeWallOfLoveCarousel,
@@ -26,7 +24,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { PRISM_APPS } from "@/lib/software-apps"
 import { CASE_STUDIES } from "@/lib/case-study-data"
 
@@ -174,38 +171,6 @@ const ROADMAP_PHASES = [
   },
 ]
 
-type HeroClientIcon = {
-  src: string
-  alt: string
-  label: string
-}
-
-const HERO_CLIENT_ICONS: HeroClientIcon[] = [
-  { src: "/pixelish/lens.svg", alt: "Search icon", label: "Google Search" },
-  { src: "/pixelish/socials-tiktok.svg", alt: "Short video icon", label: "TikTok" },
-  {
-    src: "/pixelish/socials-instagram.svg",
-    alt: "Instagram icon",
-    label: "Instagram",
-  },
-  { src: "/pixelish/chat-dots.svg", alt: "AI chat icon", label: "ChatGPT" },
-  {
-    src: "/pixelish/chat-circle-dots.svg",
-    alt: "AI assistant icon",
-    label: "Google Gemini",
-  },
-  {
-    src: "/pixelish/socials-youtube.svg",
-    alt: "YouTube icon",
-    label: "YouTube",
-  },
-  {
-    src: "/pixelish/socials-x.svg",
-    alt: "X icon",
-    label: "X (Twitter)",
-  },
-]
-
 const HERO_SEARCH_CONSOLE_SLIDES = [
   {
     src: "https://res.cloudinary.com/dhqpqfw6w/image/upload/v1767370938/Google-search-olympic-bootworks_issxqh.webp",
@@ -253,7 +218,7 @@ const SECTION_SPACING_DEFAULT =
 const SECTION_SPACING_COMPACT =
   "py-12 sm:py-16 lg:py-20"
 const HERO_SECTION_CLASSES =
-  "relative flex min-h-screen min-h-[100svh] items-center overflow-hidden -mt-[calc(var(--prism-header-height)+env(safe-area-inset-top,0px))] pt-[calc(var(--prism-header-height)+env(safe-area-inset-top,0px))] pb-[calc(var(--prism-header-height)+env(safe-area-inset-bottom,0px))] bg-background"
+  "relative flex min-h-screen min-h-[100svh] items-center overflow-hidden -mt-[calc(var(--prism-header-height)+env(safe-area-inset-top,0px))] pt-[calc(var(--prism-header-height)+env(safe-area-inset-top,0px))] pb-[calc(var(--prism-header-height)+env(safe-area-inset-bottom,0px))] bg-[rgb(255,255,255)]"
 
 export default function ClientPage() {
   return (
@@ -261,9 +226,24 @@ export default function ClientPage() {
       <Navbar mobileRevealOnFirstTap />
       <main className="flex-1" id="main-content" tabIndex={-1}>
         <section className={HERO_SECTION_CLASSES}>
-          <HomeHeroScene className="absolute inset-0 z-0" />
-          <div className="container relative z-10 mx-auto flex justify-center px-4 sm:px-6">
-            <HeroMonthlyLeadsPill />
+          <div className="container relative mx-auto flex w-full px-4 py-10 sm:px-6 sm:py-14 lg:py-18">
+            <div className="mx-auto flex w-full max-w-[32rem] flex-col items-center text-center">
+              <div className="space-y-2">
+                <h1 className="!font-sans text-[clamp(1.9rem,9vw,3.7rem)] font-medium leading-[0.88] tracking-[-0.095em] text-[rgb(12,18,30)]">
+                  Prism
+                </h1>
+                <p className="mx-auto max-w-[16rem] text-balance text-[13px] leading-5 text-[rgba(15,23,42,0.56)] sm:max-w-[18rem] sm:text-[15px] sm:leading-6">
+                  impossible is temporary.
+                </p>
+                <div className="mx-auto text-[10px] font-medium uppercase tracking-[0.24em] text-[rgba(15,23,42,0.34)] sm:text-[11px]">
+                  founded in 2023
+                </div>
+              </div>
+
+              <div className="mt-6 w-full text-left sm:mt-7">
+                <HomeHeroAgent className="max-w-[25.5rem] sm:max-w-[27rem]" />
+              </div>
+            </div>
           </div>
         </section>
         <section className={`${SECTION_SPACING_DEFAULT} bg-background`}>
@@ -428,60 +408,6 @@ export default function ClientPage() {
               <Button asChild variant="outline" className="rounded-full">
                 <Link href="/case-studies">View all case studies</Link>
               </Button>
-            </div>
-          </div>
-        </section>
-
-        <section className={`${SECTION_SPACING_COMPACT} bg-background`}>
-          <div className="container relative mx-auto px-4 sm:px-6">
-            <div className="mx-auto max-w-2xl space-y-6 text-center lg:max-w-3xl">
-              <div className="space-y-4">
-                <h1 className="text-balance text-4xl font-semibold tracking-tight text-foreground sm:text-5xl lg:text-6xl">
-                  Looking to elevate your online presence?
-                </h1>
-                <p className="text-balance text-lg text-muted-foreground">
-                  Done-for-you growth from a team focused on the KPIs that matter most to you.
-                </p>
-                <HeroBenefits />
-              </div>
-              <div className="flex flex-col items-center gap-3 sm:flex-row sm:flex-wrap sm:justify-center">
-                <Button
-                  asChild
-                  size="lg"
-                  className="w-full rounded-full transition-transform duration-200 ease-out hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0 sm:w-auto"
-                >
-                  <Link href="/get-started">Elevate your Online Presence</Link>
-                </Button>
-              </div>
-              <div className="space-y-3">
-                <p className="text-center text-[10px] font-semibold uppercase tracking-[0.22em] font-pixel text-muted-foreground">
-                  get more clients from
-                </p>
-                <div className="flex flex-wrap items-center justify-center gap-2">
-                  {HERO_CLIENT_ICONS.map((icon) => (
-                    <Popover key={icon.src}>
-                      <PopoverTrigger asChild aria-haspopup={true}>
-                        <button
-                          type="button"
-                          className="flex h-10 w-10 items-center justify-center rounded-full border border-border/60 bg-background focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-                          aria-label={icon.label}
-                        >
-                          <PixelishIcon src={icon.src} alt={icon.alt} size={20} className="h-5 w-5 object-contain" />
-                        </button>
-                      </PopoverTrigger>
-                      <PopoverContent
-                        side="top"
-                        align="center"
-                        sideOffset={8}
-                        role="tooltip"
-                        className="inline-flex w-auto items-center gap-0 whitespace-nowrap rounded-md border border-border/60 bg-popover px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.18em] font-pixel text-popover-foreground shadow-md ring-0"
-                      >
-                        {icon.label}
-                      </PopoverContent>
-                    </Popover>
-                  ))}
-                </div>
-              </div>
             </div>
           </div>
         </section>

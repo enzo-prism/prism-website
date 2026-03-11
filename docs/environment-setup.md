@@ -16,6 +16,7 @@ cp .env.example .env.local
 | `NEXT_PUBLIC_GA_MEASUREMENT_ID` | Optional | Override the default GA4 property for analytics. | Falls back to `G-P9VY77PRC0`. | `lib/constants.ts` → `app/layout.tsx` |
 | `NEXT_PUBLIC_SCHOLARSHIP_FORM_ENDPOINT` | Optional | Swap the Formspree endpoint powering the scholarship form without code changes. | Defaults to `https://formspree.io/f/mwpwwjek`. | `app/scholarship/ScholarshipPageClient.tsx` |
 | `NEXT_PUBLIC_AEO_FORM_ENDPOINT` | Optional | Swap the Formspree endpoint powering the AEO assessment form without code changes. | Defaults to `https://formspree.io/f/xldarokj`. | `components/forms/AeoAssessmentForm.tsx` |
+| `NEXT_PUBLIC_ELEVENLABS_AGENT_ID` | Optional | Public agent id used by the homepage hero experience and the subtle global launcher on inner pages. | Falls back to Prism Sales (`agent_4701kkcyc4efefkv5x4awhysjyrh`). | `lib/elevenlabs.ts`, `components/home/HomeHeroAgent.tsx`, `components/global-elevenlabs-widget.tsx` |
 | `SUPABASE_URL` / `NEXT_PUBLIC_SUPABASE_URL` | ✅ if you store leads | Supabase project URL for the `/api/prism-leads` endpoint; use the server version when available. | None (API logs a warning and skips DB writes). | `lib/supabase.ts`, `app/api/prism-leads/route.ts` |
 | `SUPABASE_SERVICE_ROLE_KEY` | ✅ if you store leads | Service role key that allows server-side inserts into Supabase. | None (API logs a warning and skips DB writes). | `lib/supabase.ts`, `app/api/prism-leads/route.ts` |
 | `RESEND_API_KEY` | Optional | Enables transactional emails after “Get Started” submissions. | When absent, the API logs a warning and skips emailing. | `lib/email.ts` |
@@ -222,12 +223,26 @@ Notes:
   - `503` if webhook dispatch fails.
 - Webhook signing:
   - Custom webhook mode: `dispatchSalesChatLead` signs payloads with HMAC SHA-256 in `x-sales-chat-signature` using `SALES_CHAT_LEADS_WEBHOOK_SECRET`.
-  - Formspree mode: payloads are sent as flattened fields (`Accept: application/json`) without custom signature headers.
+- Formspree mode: payloads are sent as flattened fields (`Accept: application/json`) without custom signature headers.
+
+### Homepage ElevenLabs hero
+
+- The first viewport on `/` now mounts a custom ElevenLabs-powered `HomeHeroAgent` card (`components/home/HomeHeroAgent.tsx`) alongside the hero copy.
+- The hero uses the official ElevenLabs widget embed script (`https://unpkg.com/@elevenlabs/convai-widget-embed`) and mounts the inline `<elevenlabs-convai>` widget with the public Prism Sales agent id.
+- The public agent id resolves through `NEXT_PUBLIC_ELEVENLABS_AGENT_ID`, with a hardcoded fallback to Prism Sales (`agent_4701kkcyc4efefkv5x4awhysjyrh`) so the hero still works when the env var is omitted.
+- The hero should remain user-initiated. Do not add auto-open or auto-start behavior that could trigger surprise mic prompts, autoplay regressions, or visual-test instability.
+
+### Global ElevenLabs launcher
+
+- `components/global-elevenlabs-widget.tsx` mounts the same public Prism Sales agent on all non-homepage routes.
+- The global launcher uses the supported widget attributes `variant="tiny"`, `placement="bottom-right"`, `dismissible="true"`, and `default-expanded="false"` so inner pages keep a subtle launcher instead of a second full card.
+- On `/get-started`, the launcher automatically hides itself when the dedicated Prism sales-chat launcher is present, and acts as a subtle fallback when that route-specific chat is unavailable.
 
 ### Notes
 
 - If you do not provide Supabase credentials, `app/api/prism-leads` will still return success to the user but will skip persistence. Use this only for local prototypes.
 - `GOOGLE_ADS_ID` (`AW-11373090310`) and the Hotjar site ID are currently hard-coded. Update `lib/constants.ts` or `components/hotjar-script.tsx` if you need environment-specific values.
+- Vercel Web Analytics does not require a repo env var. Enable it in the Vercel project dashboard, deploy, and then visit the site to start collecting page views.
 - `NEXT_PUBLIC_BASE_URL` should always match the public domain you expect search engines and OG scrapers to use (e.g., `https://www.your-preview-domain.com` for staging).
 - The Prism Library falls back to `content/library/seed.ts` whenever Instagram/TikTok credentials are missing or unavailable.
 

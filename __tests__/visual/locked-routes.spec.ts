@@ -45,7 +45,7 @@ async function stabilizePage(page: Page) {
 }
 
 const lockedRoutes = [
-  { name: "home", path: "/", readyText: "founders love prism" },
+  { name: "home", path: "/", readyHeading: /^prism$/i },
   { name: "about", path: "/about", readyHeading: /our story/i },
   { name: "pricing", path: "/pricing", readyHeading: /simple pricing for teams that want a clearer growth path\./i },
 ] as const
@@ -57,13 +57,9 @@ for (const route of lockedRoutes) {
     await page.goto(route.path, { waitUntil: "domcontentloaded" })
     await page.waitForTimeout(250)
 
-    if ("readyHeading" in route) {
-      await expect(page.getByRole("heading", { level: 1, name: route.readyHeading })).toBeVisible({
-        timeout: 20_000,
-      })
-    } else {
-      await expect(page.getByText(route.readyText)).toBeVisible({ timeout: 20_000 })
-    }
+    await expect(page.getByRole("heading", { level: 1, name: route.readyHeading })).toBeVisible({
+      timeout: 20_000,
+    })
 
     await stabilizePage(page)
     await page.waitForTimeout(750)

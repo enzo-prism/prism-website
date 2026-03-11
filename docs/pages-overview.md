@@ -172,29 +172,20 @@ Quick reference for the pages we edit most often.
 
 ## Homepage (`app/client-page.tsx`)
 
-- `app/client-page.tsx` now renders as a server component by default; interactive sections are mounted as client islands via `next/dynamic` (`UnicornHeroScene`, `SearchConsoleSnapshotsRail`, FAQ block, roadmap form, and `WallOfLoveCarousel`) to keep above-the-fold HTML lightweight.
-- The hero proof strip uses `HeroReviewSliderCard` (`components/home/HeroReviewSliderCard.tsx`) with two curated quotes and the “250+ more” CTA kept above the fold.
-- Hero copy, service strip, and CTAs live in `app/client-page.tsx` with CTA tracking in `components/home/HeroCtas.tsx`.
-- The hero client logo circles use click/tap tooltips; keep the label text in `HERO_CLIENT_ICONS` aligned with the logos.
-- Hero benefit cards are rendered by `components/home/HeroBenefits.tsx`, including randomized Lordicon variants on each load for the “more customers”, “Higher Customer LTV”, and “spend less time on tech” tiles.
-- The hero animation section uses `HERO_SECTION_CLASSES` in `app/client-page.tsx` to reserve a full-viewport slot, accounting for the sticky header height and safe-area insets.
-- The Unicorn Studio WebGL scene is embedded via `components/home/UnicornHeroScene.tsx` using `unicornstudio-react/next`. It loads the self-hosted JSON scene at `/public/unicorn/hero-scene.json` and the shared local Unicorn SDK at `/public/unicorn/unicornStudio.umd.js`.
-- `UnicornHeroScene` uses eager loading (`lazyLoad={false}`), the same balanced render profile (desktop `fps=60`/`dpi=1.5`, mobile/coarse/reduced-data `fps=30`/`dpi=1`), and `.unicorn-hero-scene__placeholder` so users always see a hero visual while WebGL initializes.
-- The hero animation also overlays a monthly leads pill (`components/home/HeroMonthlyLeadsPill.tsx`) that links to `/get-started` and displays copy in the format `{latest.leads.toLocaleString("en-US")} leads delivered to clients last month`.
-- Update the hero pill by prepending a new newest-first entry in `content/home-hero-leads.ts`; current month entry is `2026-02` with `9424` leads (renders as `9,424`).
-- Homepage includes a dedicated hub-and-spoke ecosystem section directly below the hero in `app/client-page.tsx`, rendered by `components/home/PrismEcosystemAnimation.tsx`.
+- `app/client-page.tsx` now keeps the first viewport intentionally minimal: a solid white full-height stage, the `Prism` wordmark, `impossible is temporary.`, a subtle `founded in 2023` line, and the inline ElevenLabs `HomeHeroAgent` widget (`components/home/HomeHeroAgent.tsx`).
+- Treat the homepage hero as a product surface, not a busy marketing collage. Avoid reintroducing extra hero CTAs, proof strips, tooltip logos, or decorative widgets into the first viewport unless there is a clear conversion reason.
+- `HERO_SECTION_CLASSES` in `app/client-page.tsx` reserves the full viewport while accounting for sticky-header height and safe-area insets. If the hero starts colliding with the navbar or clipping on mobile, check this constant first.
+- `HomeHeroAgent` loads the official ElevenLabs embed script and renders an inline `elevenlabs-convai` element. The wrapper is responsible for left-aligning widget text, compact mobile sizing, and promoting desktop expand into a true fullscreen conversation surface.
+- Widget fullscreen state is published through `document.documentElement.dataset.prismWidgetExpanded`. The navbar and other fixed affordances should react to that signal instead of relying on route-specific hacks.
+- All non-homepage pages mount a subtle bottom-right ElevenLabs launcher via `components/global-elevenlabs-widget.tsx`, initialized from `components/runtime-client-shell.tsx`. This launcher stays minimized by default and only hides on `/get-started` when that route's dedicated `SalesChat` launcher is actually visible.
+- On mobile, the homepage navbar starts hidden and fades/slides in after the first tap; this is enabled via `mobileRevealOnFirstTap` on `components/navbar.tsx`.
+- The section immediately below the hero is the ecosystem explainer rendered by `components/home/PrismEcosystemAnimation.tsx`. Keep this as the first supporting section so the page transitions from conversation entry point into Prism's broader growth-system story.
 - Ecosystem section layout is responsive: animation first with supporting copy stacked below on mobile, and a two-column split on desktop (`lg:grid-cols-[minmax(0,560px)_minmax(0,1fr)]`) with text on the right.
 - Ecosystem logos are rendered from source SVG assets in `public/home-ecosystem/` (`prism.svg`, `apple.svg`, `gpt.svg`, `google.svg`, `facebook.svg`, `instagram.svg`, `linkedin.svg`) for fidelity consistency with design exports.
-- The main hero copy, CTA, benefits, and client logos live in the section immediately following the animation.
-- On mobile, the homepage navbar starts hidden and fades/slides in after the first tap; this is enabled via `mobileRevealOnFirstTap` on `components/navbar.tsx`.
-- Homepage sections use full-screen spacing (`SECTION_SPACING` in `app/client-page.tsx` plus the matching padding in `components/home/WallOfLoveCarousel.tsx`) so each section reads as its own viewport.
-- The Search Console snapshots section below the hero uses `components/home/SearchConsoleSnapshotsRail.tsx` (native scroll-snap rail with lightweight arrow controls for desktop); keep it touch-first with subtle progress bars under the rail.
-- Mobile hero spacing between the CTA stack and the Search Console slider is controlled by the grid `gap` on the hero container; keep it roomy on sub-640px screens.
-- The Apps developed by Prism section (tools cards + outbound links) lives under the hero and above the training section.
-- Testimonial copy for the proof strip lives in `content/wall-of-love-data.tsx`; adjust `HERO_PRIORITY_IDS` to control the surfaced quotes.
-- The impact graph section below the hero is `components/home/ImpactGraphSection.tsx`, which lazy-mounts `FounderImpactGraph` so Recharts only loads when near the viewport.
+- The Apps developed by Prism section (tools cards + outbound links) lives below the ecosystem section and above the training section.
+- The impact graph section below the apps area is `components/home/ImpactGraphSection.tsx`, which lazy-mounts `FounderImpactGraph` so Recharts only loads when near the viewport.
 - The Wall of Love slider uses `components/home/WallOfLoveCarousel.tsx` and a native scroll-snap rail (no Embla); adjust the quote pool via `pinned` / `heroSpotlight` in `content/wall-of-love-data.tsx`.
-- Runtime telemetry helpers (`AnalyticsProvider`, `CopyPageMarkdownButton`, Sentry/monitoring clients, toaster) are initialized in `components/runtime-client-shell.tsx`, mounted from `app/layout.tsx`.
+- Runtime helpers (`AnalyticsProvider`, `GlobalElevenLabsWidget`, Sentry/monitoring clients, toaster) are initialized in `components/runtime-client-shell.tsx`, mounted from `app/layout.tsx`.
 
 ## Wall Of Love (`app/wall-of-love/client-page.tsx`)
 

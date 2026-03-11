@@ -6,6 +6,7 @@ This guide highlights the workflows we lean on most often while iterating on the
 
 - Install deps with `pnpm install` (repo assumes pnpm).
 - Start the Next.js dev server with `pnpm dev`.
+- If you use `pnpm exec next start` for a production-parity preview, always run `pnpm build` immediately beforehand. `next start` serves the last production bundle on disk, so source edits will appear "ignored" until you rebuild.
 - Run `pnpm lint` before committing so the shared Tailwind + ESLint rules stay consistent.
 - For Sales chat changes, run:
   - `pnpm test:sales-chat:core`
@@ -18,8 +19,20 @@ This guide highlights the workflows we lean on most often while iterating on the
 - Run `pnpm test:visual:locked` before merging changes that touch the UI of `/`, `/about`, or `/pricing` (screenshot-locked routes).
 - Run `pnpm test:visual` when you need broader visual coverage beyond the locked routes.
 - Run `pnpm exec playwright test __tests__/visual/blog-copy-markdown.spec.ts --project=desktop-chromium` when changing the blog markdown copy button or `/api/blog/[slug]/markdown`.
-- Run `pnpm exec playwright test __tests__/visual/page-copy-markdown-global.spec.ts --project=desktop-chromium` when changing the global page markdown copy button.
+- Run `pnpm exec playwright test __tests__/visual/global-elevenlabs-widget.spec.ts --project=desktop-chromium` when changing the route-aware ElevenLabs launcher outside the homepage hero.
 - For blog-post content/frontmatter additions, run `pnpm exec jest __tests__/sitemap.test.ts __tests__/blog-canonical.test.ts --runInBand` as a fast regression check.
+
+### Homepage hero agent checklist
+
+- The homepage hero (`app/client-page.tsx`) now treats the ElevenLabs sales agent as the primary above-the-fold interaction. Keep the page itself server-rendered and isolate the live agent inside `components/home/HomeHeroAgent.tsx`.
+- The current hero is intentionally minimal: a solid white stage, the `Prism` wordmark, `impossible is temporary.`, a single subtle `founded in 2023` line, and the embedded agent. Avoid reintroducing multi-CTA marketing clutter into this first viewport without a strong reason.
+- `HomeHeroAgent` uses the official ElevenLabs widget embed (`https://unpkg.com/@elevenlabs/convai-widget-embed`) and renders the inline `<elevenlabs-convai>` custom element.
+- The public agent id resolves via `lib/elevenlabs.ts` and can be overridden with `NEXT_PUBLIC_ELEVENLABS_AGENT_ID`.
+- `components/global-elevenlabs-widget.tsx` mounts the same agent as a route-aware launcher on every non-homepage page. On `/get-started`, it automatically steps aside only when the dedicated `SalesChat` launcher is actually present, so the page still has a subtle fallback if the route-specific chat is unavailable.
+- The runtime shell no longer mounts the fixed page-markdown copy button; the global widget now owns that corner across inner pages.
+- The widget family publishes fullscreen state through `document.documentElement.dataset.prismWidgetExpanded`; navbar and other fixed controls should listen to that signal instead of hard-coding route exceptions.
+- If you change hero copy/layout, update the locked-route snapshot test and re-run `pnpm test:visual:locked`.
+- If you change the homepage or global widget interaction model, re-run `pnpm exec jest __tests__/components/HomeHeroAgent.test.tsx __tests__/components/GlobalElevenLabsWidget.test.tsx`.
 
 ### Sales chat development checklist
 

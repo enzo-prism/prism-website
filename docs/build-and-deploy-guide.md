@@ -16,6 +16,14 @@ Keep Prism's Next.js builds predictable by following this checklist whenever you
 6. `pnpm build` – mirrors `vercel build` locally and surfaces experimental warnings (clientTraceMetadata, etc.) so you can address them early.
 7. `pnpm test:visual` – optional broad visual sweep when you touched non-locked routes and want wider screenshot coverage.
 
+### Production-parity local preview
+
+- `pnpm exec next start` only serves the most recent production build output. If you use it to review UI changes, rebuild first with `pnpm build` or you may end up debugging a stale bundle.
+- Recommended sequence for visual QA against local production output:
+  1. `pnpm build`
+  2. `pnpm exec next start -p 3005`
+  3. run your browser checks against `http://localhost:3005`
+
 If any of these steps fail locally, fix them before opening a PR. The CI build logs show only the first failure; running the full chain locally shortens feedback loops considerably.
 
 ## GitHub CLI + Vercel CLI playbook
