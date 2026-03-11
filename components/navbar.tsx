@@ -124,6 +124,8 @@ export default function Navbar({ mobileRevealOnFirstTap = false }: NavbarProps) 
   const [isScrolled, setIsScrolled] = useState(false)
   const [hasInteracted, setHasInteracted] = useState(!mobileRevealOnFirstTap)
   const [isWidgetExpanded, setIsWidgetExpanded] = useState(false)
+  const [isHomepageHeroActive, setIsHomepageHeroActive] = useState(false)
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
   const caseStudyBreadcrumbs = useMemo(() => {
     if (!pathname?.startsWith("/case-studies")) return null
@@ -161,20 +163,53 @@ export default function Navbar({ mobileRevealOnFirstTap = false }: NavbarProps) 
       window.removeEventListener("resize", updateHeaderHeight)
       resizeObserver?.disconnect()
     }
-  }, [pathname])
+  }, [hasInteracted, pathname])
 
   useEffect(() => {
-    const handleScroll = () => {
+    let rafId: number | null = null
+
+    const updateNavbarState = () => {
+      rafId = null
       setIsScrolled(window.scrollY > 8)
+
+      if (pathname !== "/") {
+        setIsHomepageHeroActive(false)
+        return
+      }
+
+      const hero = document.getElementById("homepage-hero")
+      const header = headerRef.current
+
+      if (!hero || !header) {
+        setIsHomepageHeroActive(false)
+        return
+      }
+
+      const heroRect = hero.getBoundingClientRect()
+      const headerHeight = header.getBoundingClientRect().height
+      const heroBottomThreshold = headerHeight + 56
+      const isHeroInFocus = heroRect.top <= headerHeight && heroRect.bottom > heroBottomThreshold
+
+      setIsHomepageHeroActive(isHeroInFocus)
     }
 
-    handleScroll()
-    window.addEventListener("scroll", handleScroll, { passive: true })
+    const queueUpdate = () => {
+      if (rafId !== null) return
+      rafId = window.requestAnimationFrame(updateNavbarState)
+    }
+
+    updateNavbarState()
+    window.addEventListener("scroll", queueUpdate, { passive: true })
+    window.addEventListener("resize", queueUpdate)
 
     return () => {
-      window.removeEventListener("scroll", handleScroll)
+      if (rafId !== null) {
+        window.cancelAnimationFrame(rafId)
+      }
+      window.removeEventListener("scroll", queueUpdate)
+      window.removeEventListener("resize", queueUpdate)
     }
-  }, [])
+  }, [hasInteracted, pathname])
 
   useEffect(() => {
     if (!mobileRevealOnFirstTap || hasInteracted) return
@@ -227,6 +262,8 @@ export default function Navbar({ mobileRevealOnFirstTap = false }: NavbarProps) 
   }
 
   const shouldReveal = !mobileRevealOnFirstTap || hasInteracted
+  const shouldUseHomepageHeroChrome = pathname === "/" && isHomepageHeroActive
+  const headerBackdropClasses = shouldUseHomepageHeroChrome ? "" : "backdrop-blur nav-blur"
   const revealClasses = mobileRevealOnFirstTap
     ? shouldReveal
       ? "opacity-100 translate-y-0"
@@ -235,16 +272,29 @@ export default function Navbar({ mobileRevealOnFirstTap = false }: NavbarProps) 
   const transitionClasses = mobileRevealOnFirstTap
     ? "transition-[opacity,transform,background-color,box-shadow,border-color] duration-300 ease-out motion-reduce:transition-none"
     : "transition-colors"
+  const headerSurfaceClasses = shouldUseHomepageHeroChrome
+    ? "border-b border-transparent !bg-white text-[rgb(12,18,30)] shadow-none backdrop-blur-none supports-[backdrop-filter]:!bg-white"
+    : isScrolled
+      ? "bg-background/95 shadow-sm supports-[backdrop-filter]:bg-background/90"
+      : "bg-background/80 supports-[backdrop-filter]:bg-background/60"
+  const desktopLinkBaseClasses = shouldUseHomepageHeroChrome
+    ? "text-[rgba(15,23,42,0.62)] hover:text-[rgb(12,18,30)] focus:text-[rgb(12,18,30)]"
+    : "text-muted-foreground"
+  const desktopChildLinkBaseClasses = shouldUseHomepageHeroChrome
+    ? "text-[rgba(15,23,42,0.62)] hover:bg-black/[0.04] hover:text-[rgb(12,18,30)]"
+    : "text-muted-foreground hover:bg-muted hover:text-foreground"
+  const mobileMenuTriggerClasses = shouldUseHomepageHeroChrome
+    ? "!bg-transparent !text-[rgb(12,18,30)] shadow-none hover:!bg-black/[0.04] hover:!text-[rgb(12,18,30)] focus-visible:!bg-black/[0.04] focus-visible:!text-[rgb(12,18,30)] active:!bg-black/[0.04] active:!text-[rgb(12,18,30)] data-[state=open]:!bg-transparent data-[state=open]:!text-[rgb(12,18,30)]"
+    : undefined
+  const mobileSheetClasses = shouldUseHomepageHeroChrome
+    ? "top-16 border-t border-black/5 border-b-0 !bg-white p-0 shadow-none"
+    : "top-16 border-t border-b-0 p-0 shadow-sm"
 
   return (
     <header
       ref={headerRef}
-      className={`sticky top-0 z-50 w-full backdrop-blur nav-blur ${transitionClasses} ${revealClasses} ${
-        isScrolled
-          ? "bg-background/95 shadow-sm supports-[backdrop-filter]:bg-background/90"
-          : "bg-background/80 supports-[backdrop-filter]:bg-background/60"
-      } ${
-        caseStudyBreadcrumbs ? "" : "border-b"
+      className={`sticky top-0 z-50 w-full ${headerBackdropClasses} ${transitionClasses} ${revealClasses} ${headerSurfaceClasses} ${
+        !shouldUseHomepageHeroChrome && !caseStudyBreadcrumbs ? "border-b" : ""
       } ${isWidgetExpanded ? "pointer-events-none opacity-0 -translate-y-3" : ""}`}
       style={{ visibility: isWidgetExpanded ? "hidden" : "visible" }}
       aria-hidden={isWidgetExpanded}
@@ -278,8 +328,12 @@ export default function Navbar({ mobileRevealOnFirstTap = false }: NavbarProps) 
                 {item.href ? (
                   <NavigationMenuLink
                     asChild
-                    className={`group nav-link flex items-center gap-2 p-0 text-xs font-semibold uppercase font-pixel tracking-[0.22em] transition-colors hover:bg-transparent hover:text-primary focus:bg-transparent focus:text-primary ${
-                      isActivePath(item.href) ? "text-primary" : "text-muted-foreground"
+                    className={`group nav-link flex items-center gap-2 p-0 text-xs font-semibold uppercase font-pixel tracking-[0.22em] transition-colors hover:bg-transparent ${
+                      shouldUseHomepageHeroChrome
+                        ? "hover:text-[rgb(12,18,30)] focus:bg-transparent focus:text-[rgb(12,18,30)]"
+                        : "hover:text-primary focus:bg-transparent focus:text-primary"
+                    } ${
+                      isActivePath(item.href) ? "text-primary" : desktopLinkBaseClasses
                     }`}
                     active={isActivePath(item.href)}
                   >
@@ -294,8 +348,12 @@ export default function Navbar({ mobileRevealOnFirstTap = false }: NavbarProps) 
                 ) : (
                   <>
                     <NavigationMenuTrigger
-                      className={`h-auto bg-transparent px-0 py-0 text-xs font-semibold uppercase font-pixel tracking-[0.22em] transition-colors hover:bg-transparent hover:text-primary focus:bg-transparent focus:text-primary data-[state=open]:bg-transparent data-[state=open]:text-primary ${
-                        isParentActive(item) ? "text-primary" : "text-muted-foreground"
+                      className={`h-auto bg-transparent px-0 py-0 text-xs font-semibold uppercase font-pixel tracking-[0.22em] transition-colors hover:bg-transparent data-[state=open]:bg-transparent ${
+                        shouldUseHomepageHeroChrome
+                          ? "hover:text-[rgb(12,18,30)] focus:bg-transparent focus:text-[rgb(12,18,30)] data-[state=open]:text-[rgb(12,18,30)]"
+                          : "hover:text-primary focus:bg-transparent focus:text-primary data-[state=open]:text-primary"
+                      } ${
+                        isParentActive(item) ? "text-primary" : desktopLinkBaseClasses
                       }`}
                     >
                       {item.label}
@@ -310,7 +368,7 @@ export default function Navbar({ mobileRevealOnFirstTap = false }: NavbarProps) 
                               className={`group nav-link flex items-center gap-2 rounded-md px-3 py-2 text-xs font-semibold uppercase font-pixel tracking-[0.18em] transition-colors ${
                                 isActivePath(child.href)
                                   ? "bg-muted text-foreground"
-                                  : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                                  : desktopChildLinkBaseClasses
                               }`}
                               active={isActivePath(child.href)}
                             >
@@ -334,13 +392,13 @@ export default function Navbar({ mobileRevealOnFirstTap = false }: NavbarProps) 
         </NavigationMenu>
 
         <div className="flex items-center md:hidden">
-          <Sheet>
+          <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
             <SheetTrigger asChild>
-              <Button variant="ghost" size="icon" aria-label="Open menu">
+              <Button variant="ghost" size="icon" aria-label="Open menu" className={mobileMenuTriggerClasses}>
                 <Menu className="h-6 w-6" />
               </Button>
             </SheetTrigger>
-            <SheetContent side="top" className="top-16 border-t border-b-0 p-0 shadow-sm">
+            <SheetContent side="top" className={mobileSheetClasses}>
               <SheetTitle className="sr-only">Navigation</SheetTitle>
               <nav className="container mx-auto flex flex-col gap-2 px-4 py-4 sm:px-6">
                 {navItems.map((item) => (
@@ -400,7 +458,13 @@ export default function Navbar({ mobileRevealOnFirstTap = false }: NavbarProps) 
       </div>
 
       {caseStudyBreadcrumbs ? (
-        <div className="border-t bg-background/90 backdrop-blur supports-[backdrop-filter]:bg-background/70">
+        <div
+          className={
+            shouldUseHomepageHeroChrome
+              ? "border-t border-black/5 bg-white"
+              : "border-t bg-background/90 backdrop-blur supports-[backdrop-filter]:bg-background/70"
+          }
+        >
           <div className="container mx-auto px-4 sm:px-6">
             <Breadcrumbs items={caseStudyBreadcrumbs} className="py-2 mb-0" />
           </div>
