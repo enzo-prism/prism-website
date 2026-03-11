@@ -276,6 +276,7 @@ Custom confirmation routes live in `app/thank-you/` and `app/analysis-thank-you/
 ### Analytics & Conversion Tracking
 
 - Global Google Analytics + Google Ads tagging happens in `app/layout.tsx`. Both IDs come from `lib/constants.ts` (`GA_MEASUREMENT_ID` and `GOOGLE_ADS_ID`), so set `NEXT_PUBLIC_GA_MEASUREMENT_ID` if you need to override the fallback GA property.
+- Global mobile viewport policy also lives in `app/layout.tsx` via Next.js `export const viewport`. We currently lock mobile zoom site-wide (`initialScale = minimumScale = maximumScale = 1`, `userScalable = false`), so treat changes there as a product/accessibility decision, not a route-level tweak.
 - Vercel Web Analytics is also mounted globally in `app/layout.tsx` via `components/vercel-analytics.tsx` using `@vercel/analytics/next`. We intentionally strip query strings and hash fragments in `lib/vercel-analytics.ts` before events are sent so ad click IDs / UTMs do not create noisy duplicate page rows in the Vercel dashboard.
 - Any route-level conversion (e.g., `/thank-you`) should load its own `<Script>` that fires the relevant `gtag('event', 'conversion', { send_to: 'AW-…' })`. See `app/thank-you/page.tsx` for the exact snippet tied to `AW-11373090310/hBMrCMijk70bEIasjq8q`.
 - When building a new landing page with a Formspree form, make sure the success handler navigates to `/thank-you` so the Ads conversion snippet runs and the GA pageview records properly.
