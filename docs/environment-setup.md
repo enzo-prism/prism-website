@@ -17,7 +17,8 @@ cp .env.example .env.local
 | `NEXT_PUBLIC_SCHOLARSHIP_FORM_ENDPOINT` | Optional | Swap the Formspree endpoint powering the scholarship form without code changes. | Defaults to `https://formspree.io/f/mwpwwjek`. | `app/scholarship/ScholarshipPageClient.tsx` |
 | `NEXT_PUBLIC_AEO_FORM_ENDPOINT` | Optional | Swap the Formspree endpoint powering the AEO assessment form without code changes. | Defaults to `https://formspree.io/f/xldarokj`. | `components/forms/AeoAssessmentForm.tsx` |
 | `NEXT_PUBLIC_ELEVENLABS_AGENT_ID` | Optional | Public agent id used by the homepage hero experience and the subtle global launcher on inner pages. | Falls back to Prism Sales (`agent_4701kkcyc4efefkv5x4awhysjyrh`). | `lib/elevenlabs.ts`, `components/home/HomeHeroAgent.tsx`, `components/global-elevenlabs-widget.tsx` |
-| `NEXT_PUBLIC_ELEVENLABS_MARKDOWN_LINK_ALLOWED_HOSTS` | Optional | Comma-separated trusted hosts that ElevenLabs widget replies may render as clickable markdown links. | Falls back to `calendar.notion.so`, `notion.so`, `cal.com`, and Prism domains. | `lib/elevenlabs.ts`, `components/home/HomeHeroAgent.tsx`, `components/global-elevenlabs-widget.tsx` |
+| `NEXT_PUBLIC_ELEVENLABS_BOOKING_URL` | Optional | Legacy/custom booking destination override for non-stock ElevenLabs integrations. | Falls back to `/get-started#book-call`. | `lib/elevenlabs.ts` |
+| `NEXT_PUBLIC_ELEVENLABS_MARKDOWN_LINK_ALLOWED_HOSTS` | Optional | Comma-separated trusted hosts that the stock ElevenLabs widget may render as clickable markdown links. | Falls back to `calendar.notion.so`, `notion.so`, `cal.com`, and Prism domains. | `lib/elevenlabs.ts`, `components/elevenlabs/ElevenLabsWidget.tsx` |
 | `SUPABASE_URL` / `NEXT_PUBLIC_SUPABASE_URL` | ✅ if you store leads | Supabase project URL for the `/api/prism-leads` endpoint; use the server version when available. | None (API logs a warning and skips DB writes). | `lib/supabase.ts`, `app/api/prism-leads/route.ts` |
 | `SUPABASE_SERVICE_ROLE_KEY` | ✅ if you store leads | Service role key that allows server-side inserts into Supabase. | None (API logs a warning and skips DB writes). | `lib/supabase.ts`, `app/api/prism-leads/route.ts` |
 | `RESEND_API_KEY` | Optional | Enables transactional emails after “Get Started” submissions. | When absent, the API logs a warning and skips emailing. | `lib/email.ts` |
@@ -228,20 +229,23 @@ Notes:
 
 ### Homepage ElevenLabs hero
 
-- The first viewport on `/` now mounts a custom ElevenLabs-powered `HomeHeroAgent` card (`components/home/HomeHeroAgent.tsx`) alongside the hero copy.
-- The hero uses the official ElevenLabs widget embed script (`https://unpkg.com/@elevenlabs/convai-widget-embed`) and mounts the inline `<elevenlabs-convai>` widget with the public Prism Sales agent id.
+- The first viewport on `/` mounts the stock ElevenLabs `HomeHeroAgent` experience (`components/home/HomeHeroAgent.tsx`) alongside the hero copy.
+- The hero uses the official ElevenLabs widget embed script plus an inline `<elevenlabs-convai variant="expanded">` element, with the public Prism Sales agent id passed through `lib/elevenlabs.ts`.
 - The public agent id resolves through `NEXT_PUBLIC_ELEVENLABS_AGENT_ID`, with a hardcoded fallback to Prism Sales (`agent_4701kkcyc4efefkv5x4awhysjyrh`) so the hero still works when the env var is omitted.
-- ElevenLabs markdown links are plain text unless the widget trusts the target host. This repo now sets `markdown-link-allowed-hosts` on both widget entry points and defaults the allowlist to trusted booking hosts (`calendar.notion.so`, `cal.com`) plus Prism domains. Override with `NEXT_PUBLIC_ELEVENLABS_MARKDOWN_LINK_ALLOWED_HOSTS` if the agent should link somewhere else.
+- External markdown links only become clickable when their host passes the trusted-host allowlist. Override `NEXT_PUBLIC_ELEVENLABS_MARKDOWN_LINK_ALLOWED_HOSTS` if the agent should link somewhere else.
+- The homepage intentionally keeps the widget visually stock. The only non-default behavior is a homepage-only desktop centering override so the expanded card sits in the middle of the hero stage.
 - The hero should remain user-initiated. Do not add auto-open or auto-start behavior that could trigger surprise mic prompts, autoplay regressions, or visual-test instability.
 
 ### Global ElevenLabs launcher
 
 - `components/global-elevenlabs-widget.tsx` mounts the same public Prism Sales agent on all non-homepage routes.
-- The global launcher uses the supported widget attributes `variant="tiny"`, `placement="bottom-right"`, `dismissible="true"`, and `default-expanded="false"` so inner pages keep a subtle launcher instead of a second full card.
+- The global launcher now uses the stock floating widget, not a custom launcher shell or dialog.
 - On `/get-started`, the launcher automatically hides itself when the dedicated Prism sales-chat launcher is present, and acts as a subtle fallback when that route-specific chat is unavailable.
 
 ### Notes
 
+- `NEXT_PUBLIC_ELEVENLABS_BOOKING_URL` is only used by the legacy/custom ElevenLabs helper path. It does not make stock-widget responses clickable on its own; the agent still has to return a markdown link and the host still has to be allowlisted.
+- In local dev, the stock widget may occasionally log `[ConversationalAI] Cannot fetch config for agent ... signal is aborted without reason` during remount/cleanup. The current widget bundle aborts its own config fetch on unmount, so this is expected noise if the UI still renders and the production build is clean.
 - If you do not provide Supabase credentials, `app/api/prism-leads` will still return success to the user but will skip persistence. Use this only for local prototypes.
 - `GOOGLE_ADS_ID` (`AW-11373090310`) and the Hotjar site ID are currently hard-coded. Update `lib/constants.ts` or `components/hotjar-script.tsx` if you need environment-specific values.
 - Vercel Web Analytics does not require a repo env var. Enable it in the Vercel project dashboard, deploy, and then visit the site to start collecting page views.
