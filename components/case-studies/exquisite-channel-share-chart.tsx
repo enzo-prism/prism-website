@@ -1,33 +1,44 @@
-"use client"
+'use client'
 
-import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts"
+import { PieChart, Pie, Cell } from 'recharts'
 import {
   ChartContainer,
+  ChartResponsiveContainer,
   ChartTooltip,
   ChartTooltipContent,
   ChartLegend,
   ChartLegendContent,
   type ChartConfig,
-} from "@/components/ui/chart"
+} from '@/components/ui/chart'
 
 const data = [
-  { channel: "Organic", value: 64, fill: "var(--color-organic)" },
-  { channel: "Direct", value: 32, fill: "var(--color-direct)" },
-  { channel: "Other", value: 4, fill: "var(--color-other)" },
+  { channel: 'Organic', value: 64, fill: 'var(--color-organic)' },
+  { channel: 'Direct', value: 32, fill: 'var(--color-direct)' },
+  { channel: 'Other', value: 4, fill: 'var(--color-other)' },
 ]
 
 const chartConfig = {
-  organic: { label: "Organic", color: "var(--chart-1)" },
-  direct: { label: "Direct", color: "var(--chart-2)" },
-  other: { label: "Other", color: "var(--chart-3)" },
+  organic: { label: 'Organic', color: 'var(--chart-1)' },
+  direct: { label: 'Direct', color: 'var(--chart-2)' },
+  other: { label: 'Other', color: 'var(--chart-3)' },
 } satisfies ChartConfig
 
 export function ExquisiteChannelShareChart() {
   return (
-    <ChartContainer config={chartConfig} className="mx-auto aspect-square max-h-[300px]">
-      <ResponsiveContainer width="100%" height="100%">
+    <ChartContainer
+      config={chartConfig}
+      className="mx-auto aspect-square max-h-[300px]"
+    >
+      <ChartResponsiveContainer width="100%" height="100%">
         <PieChart>
-          <ChartTooltip content={<ChartTooltipContent hideLabel className="rounded-lg shadow-lg bg-background/95 backdrop-blur-sm" />} />
+          <ChartTooltip
+            content={
+              <ChartTooltipContent
+                hideLabel
+                className="rounded-lg shadow-lg bg-background/95 backdrop-blur-sm"
+              />
+            }
+          />
           <Pie
             data={data}
             dataKey="value"
@@ -40,9 +51,18 @@ export function ExquisiteChannelShareChart() {
               <Cell key={`cell-${index}`} fill={entry.fill} />
             ))}
           </Pie>
-          <ChartLegend content={<ChartLegendContent nameKey="channel" className="lowercase text-sm" payload={[]} />} className="-translate-y-2 flex-wrap gap-2" />
+          <ChartLegend
+            content={
+              <ChartLegendContent
+                nameKey="channel"
+                className="lowercase text-sm"
+                payload={[]}
+              />
+            }
+            className="-translate-y-2 flex-wrap gap-2"
+          />
         </PieChart>
-      </ResponsiveContainer>
+      </ChartResponsiveContainer>
     </ChartContainer>
   )
 }

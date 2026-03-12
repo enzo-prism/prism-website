@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 import {
   Area,
@@ -7,35 +7,38 @@ import {
   YAxis,
   CartesianGrid,
   ReferenceLine,
-  ResponsiveContainer,
-} from "recharts"
+} from 'recharts'
 import {
   ChartContainer,
+  ChartResponsiveContainer,
   ChartTooltip,
   ChartTooltipContent,
   type ChartConfig,
-} from "@/components/ui/chart"
+} from '@/components/ui/chart'
 
 const data = [
-  { date: "Mar 15", sessions: 40 },
-  { date: "Mar 22", sessions: 42 },
-  { date: "Mar 28", sessions: 45 }, // Relaunch
-  { date: "Apr 4", sessions: 70 },
-  { date: "Apr 11", sessions: 90 },
-  { date: "Apr 18", sessions: 110 },
-  { date: "Apr 25", sessions: 130 },
-  { date: "May 2", sessions: 150 },
+  { date: 'Mar 15', sessions: 40 },
+  { date: 'Mar 22', sessions: 42 },
+  { date: 'Mar 28', sessions: 45 }, // Relaunch
+  { date: 'Apr 4', sessions: 70 },
+  { date: 'Apr 11', sessions: 90 },
+  { date: 'Apr 18', sessions: 110 },
+  { date: 'Apr 25', sessions: 130 },
+  { date: 'May 2', sessions: 150 },
 ]
 
 const chartConfig = {
-  sessions: { label: "Sessions per Day", color: "var(--chart-1)" },
-  relaunch: { label: "Relaunch", color: "var(--chart-2)" },
+  sessions: { label: 'Sessions per Day', color: 'var(--chart-1)' },
+  relaunch: { label: 'Relaunch', color: 'var(--chart-2)' },
 } satisfies ChartConfig
 
 export function ExquisiteSessionsGrowthChart() {
   return (
-    <ChartContainer config={chartConfig} className="w-full aspect-video md:h-[360px]">
-      <ResponsiveContainer width="100%" height="100%">
+    <ChartContainer
+      config={chartConfig}
+      className="w-full aspect-video md:h-[360px]"
+    >
+      <ChartResponsiveContainer width="100%" height="100%">
         <AreaChart
           data={data}
           margin={{ top: 5, right: 10, left: 0, bottom: 0 }}
@@ -69,10 +72,10 @@ export function ExquisiteSessionsGrowthChart() {
             x="Mar 28"
             stroke="var(--color-relaunch)"
             strokeDasharray="3 3"
-            label={{ position: "top", value: "Relaunch" }}
+            label={{ position: 'top', value: 'Relaunch' }}
           />
           <ChartTooltip
-            cursor={{ strokeDasharray: "3 3" }}
+            cursor={{ strokeDasharray: '3 3' }}
             content={
               <ChartTooltipContent
                 indicator="line"
@@ -88,10 +91,13 @@ export function ExquisiteSessionsGrowthChart() {
             strokeWidth={2.5}
             fillOpacity={1}
             fill="url(#sessionsGradient)"
-            activeDot={{ r: 6, style: { filter: "drop-shadow(0 0 3px var(--chart-1))" } }}
+            activeDot={{
+              r: 6,
+              style: { filter: 'drop-shadow(0 0 3px var(--chart-1))' },
+            }}
           />
         </AreaChart>
-      </ResponsiveContainer>
+      </ChartResponsiveContainer>
     </ChartContainer>
   )
 }

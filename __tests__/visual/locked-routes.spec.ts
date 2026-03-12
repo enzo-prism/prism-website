@@ -13,6 +13,12 @@ async function seedDeterministicRandom(page: Page) {
   })
 }
 
+async function disableElevenLabsWidget(page: Page) {
+  await page.addInitScript(() => {
+    window.__PRISM_DISABLE_ELEVENLABS_WIDGET__ = true
+  })
+}
+
 async function stabilizePage(page: Page) {
   await page.addStyleTag({
     content: `
@@ -44,6 +50,12 @@ async function stabilizePage(page: Page) {
   })
 }
 
+async function expectLockedRouteSnapshotSurface(page: Page) {
+  if (process.env.NEXT_PUBLIC_ELEVENLABS_WIDGET_DISABLED === "true") {
+    await expect(page.locator("elevenlabs-convai")).toHaveCount(0)
+  }
+}
+
 const lockedRoutes = [
   { name: "home", path: "/", readyHeading: /^prism$/i },
   { name: "about", path: "/about", readyHeading: /our story/i },
@@ -54,6 +66,7 @@ for (const route of lockedRoutes) {
   test(`${route.name} UI snapshot stays stable`, async ({ page }) => {
     await page.emulateMedia({ reducedMotion: "reduce" })
     await seedDeterministicRandom(page)
+    await disableElevenLabsWidget(page)
     await page.goto(route.path, { waitUntil: "domcontentloaded" })
     await page.waitForTimeout(250)
 
@@ -62,6 +75,7 @@ for (const route of lockedRoutes) {
     })
 
     await stabilizePage(page)
+    await expectLockedRouteSnapshotSurface(page)
     await page.waitForTimeout(750)
 
     await expect(page).toHaveScreenshot(`${route.name}.png`, { timeout: 15_000 })

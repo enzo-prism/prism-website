@@ -11,6 +11,13 @@ const DEFAULT_MARKDOWN_LINK_ALLOWED_HOSTS = [
   "design-prism.com",
   "www.design-prism.com",
 ] as const
+const ENABLED_ENV_VALUES = new Set(["1", "true", "yes", "on"])
+
+declare global {
+  interface Window {
+    __PRISM_DISABLE_ELEVENLABS_WIDGET__?: boolean
+  }
+}
 
 type ElevenLabsLinkToolParams = {
   href?: string
@@ -47,6 +54,10 @@ function normalizeAllowedHosts(value: string): string[] {
     .split(",")
     .map((host) => host.trim().toLowerCase())
     .filter(Boolean)
+}
+
+function isTruthyEnvValue(value: string | undefined): boolean {
+  return value ? ENABLED_ENV_VALUES.has(value.trim().toLowerCase()) : false
 }
 
 function normalizeHostname(hostname: string): string {
@@ -107,6 +118,16 @@ export function getPublicElevenLabsBookingUrl(env: NodeJS.ProcessEnv = process.e
   }
 
   return DEFAULT_PUBLIC_BOOKING_URL
+}
+
+export function isPublicElevenLabsWidgetEnabled(
+  env: NodeJS.ProcessEnv = process.env,
+): boolean {
+  if (typeof window !== "undefined" && window.__PRISM_DISABLE_ELEVENLABS_WIDGET__ === true) {
+    return false
+  }
+
+  return !isTruthyEnvValue(env.NEXT_PUBLIC_ELEVENLABS_WIDGET_DISABLED)
 }
 
 export function isAllowedElevenLabsExternalUrl(

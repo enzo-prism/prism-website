@@ -53,7 +53,7 @@ The repo assumes pnpm; npm/yarn installs will fall out of sync.
 | `pnpm lint` | ESLint + Tailwind conventions. |
 | `pnpm typecheck` | TypeScript project-wide type safety. |
 | `pnpm test` | Jest + Testing Library suite. |
-| `pnpm test:visual:locked` | Playwright visual checks for locked routes (`/`, `/about`, `/pricing`); matches deploy workflow gate. |
+| `pnpm test:visual:locked` | Playwright visual checks for locked routes (`/`, `/about`, `/pricing`); matches deploy workflow gate and intentionally suppresses the live ElevenLabs widget so page-lock screenshots stay deterministic. |
 | `pnpm test:sales-chat:core` | Deterministic sales-chat reliability matrix (API/component/page/runtime/copy/engine/payload analytics tests). |
 | `pnpm test:sales-chat:e2e` | Legacy Playwright regression for `/get-started` under sales-chat-enabled/disabled env permutations; the live page should keep showing the stock ElevenLabs widget in both modes. |
 | `pnpm test:sales-chat:stress` | Consecutive-run stress loop (default 20 runs) for flake detection. |

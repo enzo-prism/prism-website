@@ -7,6 +7,7 @@ import Script from "next/script"
 import {
   getPublicElevenLabsAgentId,
   getPublicElevenLabsMarkdownLinkAllowedHosts,
+  isPublicElevenLabsWidgetEnabled,
 } from "@/lib/elevenlabs"
 
 const ELEVENLABS_WIDGET_EMBED_SRC = "https://unpkg.com/@elevenlabs/convai-widget-embed"
@@ -19,6 +20,10 @@ type ElevenLabsWidgetProps = {
 }
 
 export function ElevenLabsWidgetScript() {
+  if (!isPublicElevenLabsWidgetEnabled()) {
+    return null
+  }
+
   return (
     <Script
       id="elevenlabs-convai-widget-embed"
@@ -35,6 +40,10 @@ export default function ElevenLabsWidget({
   hostRef,
   testId,
 }: ElevenLabsWidgetProps) {
+  if (!isPublicElevenLabsWidgetEnabled()) {
+    return null
+  }
+
   // Keep this wrapper intentionally thin so production stays aligned with the stock ElevenLabs widget.
   const props: Record<string, string | Ref<HTMLElement> | undefined> = {
     "agent-id": getPublicElevenLabsAgentId(),
