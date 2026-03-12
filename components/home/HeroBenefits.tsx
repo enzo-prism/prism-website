@@ -1,8 +1,13 @@
 import PixelishIcon from "@/components/pixelish/PixelishIcon"
+import { cn } from "@/lib/utils"
 
 type BenefitCardProps = {
   label: string
   iconSrc: string
+}
+
+type HeroBenefitsProps = {
+  className?: string
 }
 
 const BENEFITS: BenefitCardProps[] = [
@@ -35,9 +40,9 @@ function BenefitCard({ label, iconSrc }: BenefitCardProps) {
   )
 }
 
-export default function HeroBenefits() {
+export default function HeroBenefits({ className }: HeroBenefitsProps) {
   return (
-    <div className="grid w-full max-w-sm grid-cols-2 mx-auto gap-3 sm:max-w-lg sm:grid-cols-4">
+    <div className={cn("grid w-full max-w-sm grid-cols-2 mx-auto gap-3 sm:max-w-lg sm:grid-cols-4", className)}>
       {BENEFITS.map((benefit) => (
         <BenefitCard key={benefit.label} {...benefit} />
       ))}

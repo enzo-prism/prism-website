@@ -98,68 +98,11 @@ Quick reference for the pages we edit most often.
 
 ## Get Started (`app/get-started/page.tsx`)
 
-- The hero animation uses `components/get-started/GetStartedHeroScene.tsx` with the Unicorn Studio JSON at `/public/unicorn/get-started-hero.json`.
-- `GetStartedHeroScene` now uses the shared local Unicorn SDK (`/public/unicorn/unicornStudio.umd.js`) with eager loading (`lazyLoad={false}`), a balanced render profile (desktop `fps=60`/`dpi=1.5`, mobile/coarse/reduced-data `fps=30`/`dpi=1`), and the shared `.unicorn-hero-scene__placeholder` fallback so first paint is never blank.
-- The original hero (badge, copy, VSL, CTA) now follows the animation section; keep the CTA anchored to `#book-call`.
-- `SalesChat` now mounts as a floating experience (instead of an inline boxed section), with minimal inline page chrome:
-  - desktop (`>1024px`): centered glass popup modal with a fixed launcher in the bottom-right,
-  - tablet/mobile (`<=1024px`): fullscreen sheet opened from the same launcher.
-- Desktop auto-open behavior is once per browser session using `sessionStorage` key `sales-chat-v2-opened`; subsequent visits show launcher-only until the user reopens the chat.
-- `SalesChat` now posts deterministic v2 requests to `app/api/chat` (`inputType`, `inputValue`, `buttonId`, `stateToken`, `conversationState`) and receives scripted quick replies + node transitions from the spec engine. `stateToken` is the authoritative signed conversation state and should be round-tripped on every follow-up turn.
-- Deterministic engine implementation lives in:
-  - `lib/sales-chat/spec-v1-types.ts` (state and payload contracts),
-  - `lib/sales-chat/spec-v1-copy.ts` (canonical scripted copy/buttons),
-  - `lib/sales-chat/spec-v1-router.ts` (intent detection + branch routing),
-  - `lib/sales-chat/spec-v1-engine.ts` (state transitions + response assembly),
-  - `lib/sales-chat/spec-v1-validation.ts` (input/response safety rules).
-- Conversation logic follows the March 2026 spec intent groups (A–G): help-me-choose diagnostics, free-audit capture, website-overhaul path, growth partnership path, FAQs, objections, and guardrails.
-- The opening message and starter buttons are now canonical server-driven content, not local hardcoded chips.
-- In-chat booking mode is now supported (feature-flagged):
-  - when `SALES_CHAT_INLINE_BOOKING_ENABLED=true`, chat can open `BookDemoEmbed` directly inside the chat surface.
-  - fallback `#book-call` anchor remains canonical and always accessible.
-- Terminal conversion nodes now emit typed lead payloads (`free_audit`, `website_overhaul_purchase`, `growth_partnership`) to the configured lead webhook for downstream Slack/Notion/email fan-out.
-- Lead payload shaping is centralized in `lib/sales-chat/lead-payloads.ts`; webhook dispatch/signing is handled by `lib/sales-chat/lead-dispatch.ts`.
-- For manual/backfill forwarding, `/api/sales-chat/leads` validates typed lead payloads and forwards them with the same dispatcher.
-- The chat visual system now defaults to `visualStyle="dark-minimal"` on `/get-started`:
-  - monochrome dark panel/backdrop with subtle borders and restrained shadow,
-  - simplified header (assistant title + online status + minimize/close only),
-  - prompt chips shown in empty state and collapsed after the first user message,
-  - quick-reply labels should remain sentence case for readability (do not reintroduce all-caps chip styling),
-  - no standalone welcome sentence above the transcript area (empty-state guidance lives inside the transcript card),
-  - streamlined composer with send-only control (attachment icon removed),
-  - green accent reserved for the `Online` status indicator.
-- Chat messages are sent with `sourcePage` set to `"/get-started"` and include a session-scoped id (`sessionId`) so server-side logs can correlate the same conversation.
-- Analytics now includes launcher + mode instrumentation plus deterministic-state markers:
-  - `sales_chat_launcher_click`
-  - `sales_chat_open_mode` (`desktop-popup` or `fullscreen`)
-  - `sales_chat_open`, `sales_chat_message_sent`, `sales_chat_error`
-  - `sales_chat_welcome_seen`
-  - `sales_chat_quick_reply_clicked`
-  - `sales_chat_demo_cta_shown`, `sales_chat_demo_cta_clicked`, `sales_chat_calendar_opened`, `sales_chat_demo_booked`
-  - `sales_chat_spec_node_entered`, `sales_chat_offer_recommended`
-  - `sales_chat_lead_payload_attempted`, `sales_chat_lead_payload_emitted`, `sales_chat_lead_payload_failed`
-  - `sales_chat_dead_end_prevented` (reserved server-side reliability event)
-- Structured server-side event ingestion now runs through `app/api/sales-chat/events/route.ts` and can forward to webhook + optional Supabase fallback logging.
-- Booking remains the primary conversion path and is anchored at `#book-call`; keep all upstream CTA intent wired to that anchor (`GetStartedHeroSection` CTA, FAQ links, and chat fallback links).
-- `SalesChat` now uses shadcn dialog/sheet/chat primitives with a dark-minimal monochrome style; keep motion subtle and reduced-motion safe.
-- Current SVG motion accents (all `motion-safe`):
-  - launcher live-signal ring pulse while closed,
-  - top-left assistant glyph uses a high-tech glowing SVG with dual orbital rings,
-  - header status breathing dot while assistant is online,
-  - typing indicator waveform bars,
-  - assistant-message entry reveal + single shimmer pass for new assistant replies,
-  - actionable quick-reply icon directional nudge on hover,
-  - CTA strip and inline-booking connector line sweeps.
-- Mobile animation guardrail:
-  - Global mobile optimization in `app/globals.css` compresses animation durations to `0.3s !important`.
-  - Active chat sessions are exempted via `body.sales-chat-open` (set/removed in `components/sales-chat/SalesChatShell.tsx`) so header glyph orbits keep intended timing on mobile.
-- Default copy for degraded states should keep the fallback visible and explicit:
-  - `fallbackToHuman: true` on response payload.
-  - missing CTA config prevents chat mount on `/get-started` (`uiAvailable` gate).
-  - missing state-signing config also prevents chat mount on `/get-started` (`uiAvailable` gate).
-  - missing lead-webhook config can still allow mount and normal conversation flow, but terminal conversion actions should surface a polished handoff plus `leadDispatchStatus=failed` / `leadDispatchCode=configuration_missing`.
-  - provider/runtime failures in an active chat session should show one polished handoff message plus booking CTA (no duplicate error surfaces).
-- Because `SalesChat` is a client component, keep this section in this file as a server component and wire only the flag and static props there.
+- The hero, VSL, FAQ, and booking sections live directly in `app/get-started/page.tsx`; there is no separate route-specific hero-scene mount in the live page right now.
+- `/get-started` is a booking-led server-rendered page; the live assistant surface is the stock ElevenLabs floating widget mounted globally via `components/global-elevenlabs-widget.tsx`.
+- The page no longer mounts the custom `SalesChat` client or gates itself on deterministic sales-chat runtime config.
+- Booking remains the primary conversion path and is anchored at `#book-call`; keep the hero CTA, FAQ CTA, and footer CTA wired there.
+- The legacy deterministic sales-chat backend and supporting UI files (`app/api/chat/route.ts`, `lib/sales-chat/*`, `components/sales-chat/*`) remain in the repo for backend/archival work, but they are not mounted on the live page anymore.
 
 ## Contact (`app/contact/page.tsx`)
 
@@ -176,9 +119,8 @@ Quick reference for the pages we edit most often.
 - `app/client-page.tsx` now keeps the first viewport intentionally minimal: a solid white full-height stage, the `Prism` wordmark, `impossible is temporary.`, a subtle `founded 2023 in san francisco` line, and the inline ElevenLabs `HomeHeroAgent` widget (`components/home/HomeHeroAgent.tsx`).
 - Treat the homepage hero as a product surface, not a busy marketing collage. Avoid reintroducing extra hero CTAs, proof strips, tooltip logos, or decorative widgets into the first viewport unless there is a clear conversion reason.
 - `HERO_SECTION_CLASSES` in `app/client-page.tsx` accounts for sticky-header height and safe-area insets. On mobile the hero top-aligns and uses only the padding the widget actually needs, so the first section grows naturally instead of burning vertical space on decorative empty area.
-- `HomeHeroAgent` loads the official ElevenLabs embed script and renders an inline `elevenlabs-convai` element. The wrapper is responsible for left-aligning widget text, reserving a taller mobile host (`35rem`) for the supported compact layout, promoting desktop expand into a true fullscreen conversation surface, and allowlisting trusted booking hosts so markdown calendar links can be tapped directly inside the chat.
-- Widget fullscreen state is published through `document.documentElement.dataset.prismWidgetExpanded`. The navbar and other fixed affordances should react to that signal instead of relying on route-specific hacks.
-- All non-homepage pages mount a subtle bottom-right ElevenLabs launcher via `components/global-elevenlabs-widget.tsx`, initialized from `components/runtime-client-shell.tsx`. This launcher stays minimized by default and only hides on `/get-started` when that route's dedicated `SalesChat` launcher is actually visible.
+- `HomeHeroAgent` renders the stock expanded ElevenLabs widget, keeps the official widget chrome intact, and adds only a homepage-only desktop centering override so the widget card sits in the middle of the hero stage instead of hugging the right side of the viewport.
+- All non-homepage pages mount the stock floating ElevenLabs launcher via `components/global-elevenlabs-widget.tsx`, initialized from `components/runtime-client-shell.tsx`.
 - On mobile, the homepage navbar starts hidden and fades/slides in after the first tap; this is enabled via `mobileRevealOnFirstTap` on `components/navbar.tsx`.
 - The section immediately below the hero is the ecosystem explainer rendered by `components/home/PrismEcosystemAnimation.tsx`. Keep this as the first supporting section so the page transitions from conversation entry point into Prism's broader growth-system story.
 - Ecosystem section layout is responsive: animation first with supporting copy stacked below on mobile, and a two-column split on desktop (`lg:grid-cols-[minmax(0,560px)_minmax(0,1fr)]`) with text on the right.

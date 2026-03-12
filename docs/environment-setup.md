@@ -34,7 +34,7 @@ cp .env.example .env.local
 | `AI_GATEWAY_FAST_MODEL` | Optional | Low-latency model id used for short/simple text turns when AI orchestration is enabled (for example `openai/gpt-5.1-instant`). | Falls back to `AI_GATEWAY_MODEL` when unset. | `lib/sales-chat/ai-orchestrator.ts` |
 | `AI_GATEWAY_FAST_MODEL_MAX_CHARS` | Optional | Max input length to route to `AI_GATEWAY_FAST_MODEL` for text turns. | `190` | `lib/sales-chat/ai-orchestrator.ts` |
 | `AI_GATEWAY_FORCE_FAST_MODEL` | Optional feature flag | Force every eligible AI turn to use `AI_GATEWAY_FAST_MODEL` (testing/speed mode). | `false` | `lib/sales-chat/ai-orchestrator.ts` |
-| `SALES_CHAT_ENABLED` | Optional feature flag | Set to `false` to hard-disable `/api/chat` and hide sales chat UI on `/get-started`. | `true` | `app/api/chat/route.ts`, `app/get-started/page.tsx` |
+| `SALES_CHAT_ENABLED` | Optional feature flag | Set to `false` to hard-disable the legacy deterministic `/api/chat` route. The live `/get-started` page uses the stock ElevenLabs widget and does not read this flag. | `true` | `app/api/chat/route.ts` |
 | `SALES_CHAT_BOOKING_URL` | Required when chat enabled | Primary booking CTA used by deterministic sales-chat quick replies. | None. | `lib/sales-chat/runtime-config.ts`, `app/api/chat/route.ts` |
 | `SALES_CHAT_WEBSITE_OVERHAUL_CHECKOUT_URL` | Required when chat enabled | Direct checkout CTA for website overhaul path. | None. | `lib/sales-chat/runtime-config.ts`, `app/api/chat/route.ts` |
 | `SALES_CHAT_GROWTH_PARTNERSHIP_SIGNUP_URL` | Required when chat enabled | Direct signup CTA for growth partnership path. | None. | `lib/sales-chat/runtime-config.ts`, `app/api/chat/route.ts` |
@@ -46,11 +46,11 @@ cp .env.example .env.local
 | `SALES_CHAT_AI_ORCHESTRATION_ENABLED` | Optional feature flag | Enables the orchestration module path (`generateText` + structured `Output.object`) when AI is enabled. | `true` | `lib/sales-chat/runtime-config.ts`, `app/api/chat/route.ts` |
 | `SALES_CHAT_AI_ORCHESTRATION_PERCENT` | Optional | Percent rollout gate (0-100) for canarying orchestration by session hash bucket. | `100` | `lib/sales-chat/runtime-config.ts`, `lib/sales-chat/ai-orchestrator.ts` |
 | `SALES_CHAT_AI_ORCHESTRATION_COHORT` | Optional | Cohort tag attached to AI gateway telemetry and server events (for rollout/incident tracing). | `default` | `lib/sales-chat/runtime-config.ts`, `lib/sales-chat/ai-orchestrator.ts` |
-| `SALES_CHAT_INLINE_BOOKING_ENABLED` | Optional feature flag | Enables in-chat calendar mode (using `BookDemoEmbed`) in addition to `#book-call` fallback link. | `true` | `app/get-started/page.tsx`, `components/sales-chat/SalesChatShell.tsx` |
+| `SALES_CHAT_INLINE_BOOKING_ENABLED` | Optional feature flag | Enables in-chat calendar mode (using `BookDemoEmbed`) in addition to `#book-call` fallback link for the legacy custom `SalesChat` UI. | `true` | `components/sales-chat/SalesChatShell.tsx` |
 | `SALES_CHAT_EVENTS_WEBHOOK_URL` | Optional | Server webhook destination for structured sales-chat lifecycle/lead events (`/api/sales-chat/events` fan-out). | None. | `app/api/sales-chat/events/route.ts` |
 | `SALES_CHAT_EVENTS_WEBHOOK_SECRET` | Optional | Secret for webhook signing (`x-sales-chat-signature` HMAC SHA-256). | None. | `app/api/sales-chat/events/route.ts` |
 
-### Sales chat runtime contract
+### Legacy sales chat runtime contract
 
 - Endpoint: `POST /api/chat` in `app/api/chat/route.ts`.
 - Runtime availability gate:
@@ -61,8 +61,8 @@ cp .env.example .env.local
     - Formspree mode: `SALES_CHAT_LEADS_WEBHOOK_URL` (Formspree endpoint) only
     - custom webhook mode: `SALES_CHAT_LEADS_WEBHOOK_URL && SALES_CHAT_LEADS_WEBHOOK_SECRET`
   - AI gateway keys are only required when AI response mode is enabled (`SALES_CHAT_AI_FALLBACK_ENABLED=true` and `SALES_CHAT_AI_RESPONSE_MODE!=off`)
-  - When `uiAvailable` is false, `/get-started` does not render the chat launcher or window.
-  - Missing lead-dispatch config should not prevent `/get-started` from mounting or `/api/chat` from serving non-terminal turns. Lead-delivery failures surface only when a terminal conversion action attempts dispatch.
+  - The live `/get-started` page no longer mounts this UI. `uiAvailable` only matters if you are explicitly reviving or testing the legacy custom `SalesChat` client.
+  - Missing lead-dispatch config should not prevent the legacy custom `SalesChat` UI from mounting or `/api/chat` from serving non-terminal turns. Lead-delivery failures surface only when a terminal conversion action attempts dispatch.
 - Required request body (JSON):
   - `sessionId`, `sourcePage`, `inputType`, `inputValue`
   - optional `buttonId`
@@ -101,9 +101,9 @@ cp .env.example .env.local
   - 400 path: `curl -i -X POST http://localhost:3000/api/chat -H "content-type: application/json" -d '{"sourcePage":"/get-started"}'`
   - happy path: `curl -i -X POST http://localhost:3000/api/chat -H "content-type: application/json" -d '{"sessionId":"session-12345678","sourcePage":"/get-started","inputType":"button","inputValue":"","buttonId":"__init__"}'`
 
-### Localhost sales-chat quickstart (recommended)
+### Localhost sales-chat quickstart (legacy backend)
 
-Use this minimal local config so `/get-started` chat always mounts and lead dispatch can be tested without external services:
+Use this minimal local config when you want to exercise the legacy deterministic `/api/chat` backend and lead dispatch without external services:
 
 ```bash
 SALES_CHAT_ENABLED=true
@@ -237,8 +237,8 @@ Notes:
 ### Global ElevenLabs launcher
 
 - `components/global-elevenlabs-widget.tsx` mounts the same public Prism Sales agent on all non-homepage routes.
-- The global launcher uses the supported widget attributes `variant="tiny"`, `placement="bottom-right"`, `dismissible="true"`, and `default-expanded="false"` so inner pages keep a subtle launcher instead of a second full card.
-- On `/get-started`, the launcher automatically hides itself when the dedicated Prism sales-chat launcher is present, and acts as a subtle fallback when that route-specific chat is unavailable.
+- The global launcher now uses the stock floating widget, not a custom launcher shell or dialog.
+- On `/get-started`, the launcher remains visible and is now the live assistant surface for that page.
 
 ### Notes
 

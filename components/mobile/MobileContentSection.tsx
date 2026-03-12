@@ -180,7 +180,7 @@ export function MobileHeading({
     4: "text-lg mb-2"
   }
   
-  const Component = `h${level}` as keyof React.JSX.IntrinsicElements
+  const componentTag = `h${level}` as keyof React.JSX.IntrinsicElements
   
   return (
     <motion.div
@@ -188,9 +188,13 @@ export function MobileHeading({
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <Component className={`${baseStyles} ${levelStyles[level]} ${className}`}>
-        {children}
-      </Component>
+      {React.createElement(
+        componentTag,
+        {
+          className: `${baseStyles} ${levelStyles[level]} ${className}`
+        },
+        children,
+      )}
     </motion.div>
   )
 }

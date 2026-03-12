@@ -4,7 +4,6 @@ import type { Metadata } from "next"
 import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
 import BookDemoEmbed from "@/components/BookDemoEmbed"
-import SalesChat from "@/components/SalesChat"
 import VideoPlayer from "@/components/video-player"
 import PixelishIcon from "@/components/pixelish/PixelishIcon"
 import { WebPageSchema } from "@/components/schema-markup"
@@ -12,7 +11,6 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { getSalesChatRuntimeConfig, parseBooleanEnv } from "@/lib/sales-chat/runtime-config"
 import { buildRouteMetadata } from "@/lib/seo/metadata"
 
 type FAQItem = {
@@ -83,11 +81,6 @@ const PAGE_TITLE = "Book your strategy call | Prism"
 const PAGE_DESCRIPTION =
   "Prism audits your website, messaging, ads, and local visibility, then builds and executes a custom growth plan so you can stop managing it all yourself."
 const CANONICAL_URL = "https://www.design-prism.com/get-started"
-const SALES_CHAT_INLINE_BOOKING_ENABLED = process.env.SALES_CHAT_INLINE_BOOKING_ENABLED
-
-function isInlineBookingEnabled(): boolean {
-  return parseBooleanEnv(SALES_CHAT_INLINE_BOOKING_ENABLED, true)
-}
 
 export const metadata: Metadata = buildRouteMetadata({
   titleStem: PAGE_TITLE,
@@ -97,20 +90,6 @@ export const metadata: Metadata = buildRouteMetadata({
 })
 
 export default function GetStartedPage() {
-  const salesChatRuntime = getSalesChatRuntimeConfig(process.env)
-  const salesChatUiAvailable = salesChatRuntime.uiAvailable
-
-  if (
-    process.env.NODE_ENV !== "production"
-    && salesChatRuntime.enabled
-    && !salesChatRuntime.uiAvailable
-    && salesChatRuntime.missingRequiredKeys.length > 0
-  ) {
-    console.warn("[sales-chat][get-started] deterministic runtime missing required config", {
-      missingRequiredKeys: salesChatRuntime.missingRequiredKeys,
-    })
-  }
-
   return (
     <div className="flex min-h-screen flex-col bg-background">
       <Navbar />
@@ -159,15 +138,6 @@ export default function GetStartedPage() {
             </div>
           </div>
         </section>
-
-        {salesChatUiAvailable ? (
-          <SalesChat
-            sourcePage="/get-started"
-            bookingHref="#book-call"
-            inlineBookingEnabled={isInlineBookingEnabled()}
-            visualStyle="dark-minimal"
-          />
-        ) : null}
 
         <section className="py-16 sm:py-24">
           <div className="container mx-auto px-4 sm:px-6">

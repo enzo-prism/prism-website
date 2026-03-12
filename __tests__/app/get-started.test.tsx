@@ -2,14 +2,6 @@ import { render, screen } from "@testing-library/react"
 
 import GetStartedPage from "@/app/get-started/page"
 
-const mockGetSalesChatRuntimeConfig = jest.fn()
-const mockParseBooleanEnv = jest.fn()
-
-jest.mock("@/lib/sales-chat/runtime-config", () => ({
-  getSalesChatRuntimeConfig: (...args: Array<unknown>) => mockGetSalesChatRuntimeConfig(...args),
-  parseBooleanEnv: (...args: Array<unknown>) => mockParseBooleanEnv(...args),
-}))
-
 jest.mock("next/link", () => ({
   __esModule: true,
   default: function MockNextLink({
@@ -83,81 +75,23 @@ jest.mock("@/components/schema-markup", () => ({
   },
 }))
 
-jest.mock("@/components/SalesChat", () => ({
-  __esModule: true,
-  default: function MockSalesChat() {
-    return <section>Chat with Sales</section>
-  },
-}))
-
 describe("/get-started page", () => {
   beforeEach(() => {
     jest.clearAllMocks()
-    mockParseBooleanEnv.mockImplementation((value: string | undefined, fallback: boolean) => {
-      if (!value) return fallback
-      return value === "true"
-    })
   })
 
-  it("renders chat only when uiAvailable=true", () => {
-    mockGetSalesChatRuntimeConfig.mockReturnValue({
-      enabled: true,
-      aiFallbackEnabled: false,
-      aiResponseMode: "long_tail",
-      aiResponseEnabled: false,
-      hasGatewayBaseUrl: true,
-      hasGatewayApiKey: true,
-      hasGatewayModel: true,
-      gatewayFallbackModels: [],
-      gatewayProviderOrder: [],
-      gatewayConfigured: true,
-      hasBookingUrl: true,
-      hasWebsiteOverhaulCheckoutUrl: true,
-      hasGrowthPartnershipSignupUrl: true,
-      ctaUrlsConfigured: true,
-      hasLeadsWebhookUrl: true,
-      hasLeadsWebhookSecret: true,
-      leadsWebhookConfigured: true,
-      uiAvailable: true,
-      missingRequiredKeys: [],
-    })
-
+  it("renders the booking-led get-started content without the legacy sales chat gate", () => {
     render(<GetStartedPage />)
 
-    expect(screen.getByText("Chat with Sales")).toBeInTheDocument()
     expect(screen.getByTestId("book-demo-embed")).toBeInTheDocument()
     expect(screen.getByText("Frequently asked questions")).toBeInTheDocument()
+    expect(screen.getByRole("heading", { level: 1, name: /turn your online presence into a growth engine/i })).toBeInTheDocument()
   })
 
-  it("hides chat when enabled flag is true but gateway env is missing", () => {
-    mockGetSalesChatRuntimeConfig.mockReturnValue({
-      enabled: true,
-      aiFallbackEnabled: false,
-      aiResponseMode: "long_tail",
-      aiResponseEnabled: false,
-      hasGatewayBaseUrl: false,
-      hasGatewayApiKey: false,
-      hasGatewayModel: false,
-      gatewayFallbackModels: [],
-      gatewayProviderOrder: [],
-      gatewayConfigured: false,
-      hasBookingUrl: true,
-      hasWebsiteOverhaulCheckoutUrl: false,
-      hasGrowthPartnershipSignupUrl: false,
-      ctaUrlsConfigured: false,
-      hasLeadsWebhookUrl: true,
-      hasLeadsWebhookSecret: true,
-      leadsWebhookConfigured: true,
-      uiAvailable: false,
-      missingRequiredKeys: [
-        "SALES_CHAT_WEBSITE_OVERHAUL_CHECKOUT_URL",
-        "SALES_CHAT_GROWTH_PARTNERSHIP_SIGNUP_URL",
-      ],
-    })
-
+  it("keeps the booking call CTA visible", () => {
     render(<GetStartedPage />)
 
-    expect(screen.queryByText("Chat with Sales")).not.toBeInTheDocument()
-    expect(screen.getByTestId("book-demo-embed")).toBeInTheDocument()
+    expect(screen.getAllByRole("link", { name: /book your strategy call/i }).length).toBeGreaterThan(0)
+    expect(screen.getByText(/book a strategy call/i)).toBeInTheDocument()
   })
 })

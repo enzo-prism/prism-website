@@ -8,11 +8,14 @@ This guide highlights the workflows we lean on most often while iterating on the
 - Start the Next.js dev server with `pnpm dev`.
 - If you use `pnpm exec next start` for a production-parity preview, always run `pnpm build` immediately beforehand. `next start` serves the last production bundle on disk, so source edits will appear "ignored" until you rebuild.
 - Run `pnpm lint` before committing so the shared Tailwind + ESLint rules stay consistent.
-- For Sales chat changes, run:
+- For legacy sales-chat backend changes, run:
   - `pnpm test:sales-chat:core`
   - `pnpm test:sales-chat:e2e`
   - `pnpm test:sales-chat:stress` (defaults to 20 consecutive core runs; override with `SALES_CHAT_STRESS_RUNS=<n>`)
   - `pnpm smoke:sales-chat:local` (while `pnpm dev` is running) to verify localhost chat mount + deterministic free-audit terminal dispatch.
+- For `/get-started` or floating-widget assistant-surface changes, run:
+  - `pnpm exec jest __tests__/app/get-started.test.tsx __tests__/components/GlobalElevenLabsWidget.test.tsx`
+  - `pnpm exec playwright test __tests__/visual/global-elevenlabs-widget.spec.ts --project=desktop-chromium`
 - For pricing-sensitive changes, run:
   - `pnpm verify:pricing-consistency`
 - For non-chat changes touching shared infrastructure, update and run the nearest smoke tests in the relevant package (`pnpm test`, `pnpm test:visual:locked`, etc.) before merging.
@@ -31,9 +34,10 @@ This guide highlights the workflows we lean on most often while iterating on the
 - Mobile spacing is intentionally biased toward the inline agent: the hero aligns from the top on small screens, the copy stack stays tight, and `HomeHeroAgent` now reserves roughly `35rem` of height on narrow viewports so the widget can use its supported compact layout without clipping the orb or crowding the textarea.
 - Avoid deep compact-mode geometry overrides inside the widget Shadow DOM. ElevenLabs treats the embed as an opinionated surface; keep homepage customization focused on wrapper sizing, placement, and fullscreen promotion, and move heavier design customization to the official SDK/UI layer if we need a bespoke chat surface later.
 - The public agent id resolves via `lib/elevenlabs.ts` and can be overridden with `NEXT_PUBLIC_ELEVENLABS_AGENT_ID`.
-- `components/global-elevenlabs-widget.tsx` mounts the same agent as a route-aware launcher on every non-homepage page. On `/get-started`, it automatically steps aside only when the dedicated `SalesChat` launcher is actually present, so the page still has a subtle fallback if the route-specific chat is unavailable.
-- The runtime shell no longer mounts the fixed page-markdown copy button; the global widget now owns that corner across inner pages.
-- The widget family publishes fullscreen state through `document.documentElement.dataset.prismWidgetExpanded`; navbar and other fixed controls should listen to that signal instead of hard-coding route exceptions.
+- `components/global-elevenlabs-widget.tsx` now renders the stock floating widget on every non-homepage route, including `/get-started`. Keep it out of the way on `/` so the homepage hero remains the primary experience, but do not add route-level suppression on `/get-started` unless the product direction explicitly changes again.
+- The runtime shell loads the official widget embed script once via `components/elevenlabs/ElevenLabsWidget.tsx`, then both homepage and inner-page widgets reuse that same stock embed path.
+- `components/elevenlabs/PrismElevenLabsPanel.tsx` and the richer client-tool helpers in `lib/elevenlabs.ts` remain in the repo as exploratory/legacy paths, but they are not mounted in production right now. Do not swap them back in casually when the product goal is "look and behave like the official widget."
+- In dev, the stock widget may log `[ConversationalAI] Cannot fetch config for agent ... signal is aborted without reason` during Fast Refresh or unmount cleanup. The current ElevenLabs bundle aborts its own config fetch on cleanup, so treat that message as harmless if the widget still renders and `pnpm build` + `pnpm start` are clean.
 - If you change hero copy/layout, update the locked-route snapshot test and re-run `pnpm test:visual:locked`.
 - If you change the homepage or global widget interaction model, re-run `pnpm exec jest __tests__/components/HomeHeroAgent.test.tsx __tests__/components/GlobalElevenLabsWidget.test.tsx`.
 
