@@ -1,10 +1,11 @@
-"use client"
-import { Pie, PieChart, Cell, ResponsiveContainer, Tooltip } from "recharts"
-import { useState } from "react"
+'use client'
+import { Pie, PieChart, Cell, Tooltip } from 'recharts'
+import { useState } from 'react'
+import { ChartResponsiveContainer } from '@/components/ui/chart'
 
 const data = [
-  { name: "new users", value: 80.9, color: "#6366F1" }, // indigo-500
-  { name: "returning users", value: 19.1, color: "#EF4444" }, // red-500
+  { name: 'new users', value: 80.9, color: '#6366F1' }, // indigo-500
+  { name: 'returning users', value: 19.1, color: '#EF4444' }, // red-500
 ]
 
 export function DrWongUserDemographicsChart() {
@@ -18,7 +19,7 @@ export function DrWongUserDemographicsChart() {
   return (
     <div className="relative flex flex-col items-center">
       <div className="w-full aspect-square max-h-[320px] sm:max-h-[360px] md:max-h-[400px] mx-auto">
-        <ResponsiveContainer width="100%" height="100%">
+        <ChartResponsiveContainer width="100%" height="100%">
           <PieChart>
             <Pie
               data={data}
@@ -40,25 +41,32 @@ export function DrWongUserDemographicsChart() {
                   key={`cell-${index}`}
                   fill={entry.color}
                   cursor="pointer"
-                  opacity={activeIndex === null || activeIndex === index ? 1 : 0.4}
+                  opacity={
+                    activeIndex === null || activeIndex === index ? 1 : 0.4
+                  }
                 />
               ))}
             </Pie>
             <Tooltip
               formatter={(value, name) => {
                 const safeValue = value ?? 0
-                const safeName = name ?? "Value"
+                const safeName = name ?? 'Value'
                 return [`${safeValue}%`, safeName]
               }}
-              contentStyle={{ borderRadius: "0.5rem", backgroundColor: "hsla(var(--background)/0.95)" }}
+              contentStyle={{
+                borderRadius: '0.5rem',
+                backgroundColor: 'hsla(var(--background)/0.95)',
+              }}
             />
           </PieChart>
-        </ResponsiveContainer>
+        </ChartResponsiveContainer>
         <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
           <p className="text-3xl xs:text-4xl sm:text-5xl font-bold text-neutral-800">
             {activeData.value}%
           </p>
-          <p className="text-sm sm:text-base text-neutral-500 lowercase">{activeData.name}</p>
+          <p className="text-sm sm:text-base text-neutral-500 lowercase">
+            {activeData.name}
+          </p>
         </div>
       </div>
 
@@ -73,7 +81,11 @@ export function DrWongUserDemographicsChart() {
           >
             <span
               className="w-3 h-3 rounded-full mr-2"
-              style={{ backgroundColor: entry.color, opacity: activeIndex === null || activeIndex === index ? 1 : 0.4 }}
+              style={{
+                backgroundColor: entry.color,
+                opacity:
+                  activeIndex === null || activeIndex === index ? 1 : 0.4,
+              }}
             />
             {entry.name}
           </button>

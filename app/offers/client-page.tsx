@@ -1,10 +1,17 @@
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import CoreImage from "@/components/core-image"
-import PixelishIcon from "@/components/pixelish/PixelishIcon"
-import GradientCard from "@/components/gradient-card"
-import { ArrowRight } from "lucide-react"
+import Link from 'next/link'
+import { Button } from '@/components/ui/button'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card'
+import CoreImage from '@/components/core-image'
+import PixelishIcon from '@/components/pixelish/PixelishIcon'
+import GradientCard from '@/components/gradient-card'
+import { ArrowRight } from 'lucide-react'
 
 interface Offer {
   id: string
@@ -12,38 +19,38 @@ interface Offer {
   description: string
   imageUrl?: string
   imageAlt?: string
-  gradientType?: "ai-seo" | "website-makeover"
+  gradientType?: 'ai-seo' | 'website-makeover'
   link: string
   ctaText: string
 }
 
 const offersData: Offer[] = [
   {
-    id: "ai-seo-boost",
-    title: "ai seo boost™",
+    id: 'ai-seo-boost',
+    title: 'ai seo boost™',
     description:
-      "make chatgpt, gemini & perplexity name-drop your brand first. get recommended by ai bots 24/7 with our specialized ai search optimization.",
-    gradientType: "ai-seo",
-    link: "/ai-seo-services",
-    ctaText: "boost ai visibility",
+      'make chatgpt, gemini & perplexity name-drop your brand first. get recommended by ai bots 24/7 with our specialized ai search optimization.',
+    gradientType: 'ai-seo',
+    link: '/ai-seo-services',
+    ctaText: 'boost ai visibility',
   },
   {
-    id: "summer-website-makeover",
-    title: "summer website makeover",
+    id: 'summer-website-makeover',
+    title: 'summer website makeover',
     description:
-      "triple your traffic & conversions in 30 days with our all-inclusive website rebuild package. full-stack site, seo, conversion boosters, and a 30-day 3x guarantee!",
-    gradientType: "website-makeover",
-    link: "/pricing",
-    ctaText: "view makeover details",
+      'triple your traffic & conversions in 30 days with our all-inclusive website rebuild package. full-stack site, seo, conversion boosters, and a 30-day 3x guarantee!',
+    gradientType: 'website-makeover',
+    link: '/pricing',
+    ctaText: 'view makeover details',
   },
   {
-    id: "aeo-assessment",
-    title: "free aeo assessment",
+    id: 'aeo-assessment',
+    title: 'free aeo assessment',
     description:
-      "get a free assessment of your website’s AI answer-engine readiness with focused recommendations for pages, technical setup, and trust signals.",
-    gradientType: "ai-seo",
-    link: "/aeo",
-    ctaText: "get your aeo assessment",
+      'get a free assessment of your website’s AI answer-engine readiness with focused recommendations for pages, technical setup, and trust signals.',
+    gradientType: 'ai-seo',
+    link: '/aeo',
+    ctaText: 'get your aeo assessment',
   },
 ]
 
@@ -53,11 +60,20 @@ export default function OffersClientPage() {
       {/* Updated Hero Section */}
       <section className="container mx-auto px-4 pt-12 pb-8 md:pt-20 md:pb-12 text-center">
         <div className="mb-5 flex items-center justify-center">
-          <PixelishIcon src="/pixelish/award-plus.svg" alt="" size={96} aria-hidden className="opacity-95" />
+          <PixelishIcon
+            src="/pixelish/award-plus.svg"
+            alt=""
+            size={96}
+            aria-hidden
+            className="opacity-95"
+          />
         </div>
-        <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight">current offers</h1>
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight">
+          current offers
+        </h1>
         <p className="mt-3 sm:mt-4 text-md sm:text-lg text-muted-foreground max-w-xl md:max-w-2xl mx-auto">
-          take advantage of these special promotions to elevate your digital presence with prism.
+          take advantage of these special promotions to elevate your digital
+          presence with prism.
         </p>
       </section>
 
@@ -97,42 +113,58 @@ export default function OffersClientPage() {
                   </div>
                 </CardHeader>
                 <CardContent className="p-4 md:p-6 flex-grow">
-                  <CardTitle className="text-lg md:text-xl font-semibold mb-2">{offer.title}</CardTitle>
+                  <CardTitle className="text-lg md:text-xl font-semibold mb-2">
+                    {offer.title}
+                  </CardTitle>
                   <CardDescription className="text-sm text-muted-foreground line-clamp-3 md:line-clamp-none">
                     {/* line-clamp-3 for mobile to prevent overly tall cards, remove for md+ */}
                     {offer.description}
                   </CardDescription>
                 </CardContent>
                 <CardFooter className="p-4 md:p-6 bg-muted/50">
-                  <Link href={offer.link} passHref legacyBehavior>
-                    <Button variant="default" className="w-full text-base py-2.5 md:py-3">
+                  <Button
+                    asChild
+                    variant="default"
+                    className="w-full text-base py-2.5 md:py-3"
+                  >
+                    <Link href={offer.link}>
                       {offer.ctaText}
                       <ArrowRight className="ml-2 h-4 w-4 md:h-5 md:w-5" />
-                    </Button>
-                  </Link>
+                    </Link>
+                  </Button>
                 </CardFooter>
               </Card>
             ))}
           </div>
         ) : (
           <div className="text-center py-12">
-            <h2 className="text-xl md:text-2xl font-semibold mb-4">no current offers</h2>
-            <p className="text-muted-foreground">please check back soon for exciting new promotions!</p>
+            <h2 className="text-xl md:text-2xl font-semibold mb-4">
+              no current offers
+            </h2>
+            <p className="text-muted-foreground">
+              please check back soon for exciting new promotions!
+            </p>
           </div>
         )}
       </section>
 
       <section className="py-12 md:py-16 bg-muted">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-2xl md:text-3xl font-bold mb-4 md:mb-6">ready to get started?</h2>
+          <h2 className="text-2xl md:text-3xl font-bold mb-4 md:mb-6">
+            ready to get started?
+          </h2>
           <p className="text-base md:text-lg text-muted-foreground mb-6 md:mb-8 max-w-xl mx-auto">
-            have questions about our offers or want to discuss a custom project? we're here to help.
+            have questions about our offers or want to discuss a custom project?
+            we're here to help.
           </p>
-          <Link href="/contact" passHref legacyBehavior>
-            <Button size="lg" variant="default" className="text-base md:text-lg">
-              contact us today
-            </Button>
-          </Link>
+          <Button
+            asChild
+            size="lg"
+            variant="default"
+            className="text-base md:text-lg"
+          >
+            <Link href="/contact">contact us today</Link>
+          </Button>
         </div>
       </section>
     </div>

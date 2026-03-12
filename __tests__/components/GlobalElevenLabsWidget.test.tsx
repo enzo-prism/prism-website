@@ -9,9 +9,21 @@ jest.mock("next/navigation", () => ({
 }))
 
 describe("GlobalElevenLabsWidget", () => {
+  const originalWidgetDisabled = process.env.NEXT_PUBLIC_ELEVENLABS_WIDGET_DISABLED
+
   beforeEach(() => {
     document.body.innerHTML = ""
     usePathname.mockReset()
+    delete process.env.NEXT_PUBLIC_ELEVENLABS_WIDGET_DISABLED
+  })
+
+  afterAll(() => {
+    if (originalWidgetDisabled === undefined) {
+      delete process.env.NEXT_PUBLIC_ELEVENLABS_WIDGET_DISABLED
+      return
+    }
+
+    process.env.NEXT_PUBLIC_ELEVENLABS_WIDGET_DISABLED = originalWidgetDisabled
   })
 
   it("renders the stock floating ElevenLabs widget on inner pages", () => {
@@ -43,5 +55,14 @@ describe("GlobalElevenLabsWidget", () => {
     const { container } = render(<GlobalElevenLabsWidget />)
 
     expect(container.querySelector("elevenlabs-convai")).toBeInTheDocument()
+  })
+
+  it("honors the explicit public widget kill switch", () => {
+    process.env.NEXT_PUBLIC_ELEVENLABS_WIDGET_DISABLED = "true"
+    usePathname.mockReturnValue("/about")
+
+    const { container } = render(<GlobalElevenLabsWidget />)
+
+    expect(container.querySelector("elevenlabs-convai")).not.toBeInTheDocument()
   })
 })

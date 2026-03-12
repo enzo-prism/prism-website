@@ -20,6 +20,7 @@ This guide highlights the workflows we lean on most often while iterating on the
   - `pnpm verify:pricing-consistency`
 - For non-chat changes touching shared infrastructure, update and run the nearest smoke tests in the relevant package (`pnpm test`, `pnpm test:visual:locked`, etc.) before merging.
 - Run `pnpm test:visual:locked` before merging changes that touch the UI of `/`, `/about`, or `/pricing` (screenshot-locked routes).
+- `pnpm test:visual:locked` now builds with `NEXT_PUBLIC_ELEVENLABS_WIDGET_DISABLED=true` so the locked route snapshots stay focused on first-party page chrome instead of the live third-party ElevenLabs overlay. Validate real widget behavior separately with the widget-specific Jest + Playwright checks above.
 - Run `pnpm test:visual` when you need broader visual coverage beyond the locked routes.
 - Run `pnpm exec playwright test __tests__/visual/blog-copy-markdown.spec.ts --project=desktop-chromium` when changing the blog markdown copy button or `/api/blog/[slug]/markdown`.
 - Run `pnpm exec playwright test __tests__/visual/global-elevenlabs-widget.spec.ts --project=desktop-chromium` when changing the route-aware ElevenLabs launcher outside the homepage hero.
@@ -36,6 +37,7 @@ This guide highlights the workflows we lean on most often while iterating on the
 - The public agent id resolves via `lib/elevenlabs.ts` and can be overridden with `NEXT_PUBLIC_ELEVENLABS_AGENT_ID`.
 - `components/global-elevenlabs-widget.tsx` now renders the stock floating widget on every non-homepage route, including `/get-started`. Keep it out of the way on `/` so the homepage hero remains the primary experience, but do not add route-level suppression on `/get-started` unless the product direction explicitly changes again.
 - The runtime shell loads the official widget embed script once via `components/elevenlabs/ElevenLabsWidget.tsx`, then both homepage and inner-page widgets reuse that same stock embed path.
+- `NEXT_PUBLIC_ELEVENLABS_WIDGET_DISABLED` exists as a deliberate debug/test seam. When set to a truthy value, the stock embed script, homepage hero widget, and floating widget all stay unmounted so deterministic visual builds do not bake live vendor UI into locked snapshots.
 - `components/elevenlabs/PrismElevenLabsPanel.tsx` and the richer client-tool helpers in `lib/elevenlabs.ts` remain in the repo as exploratory/legacy paths, but they are not mounted in production right now. Do not swap them back in casually when the product goal is "look and behave like the official widget."
 - In dev, the stock widget may log `[ConversationalAI] Cannot fetch config for agent ... signal is aborted without reason` during Fast Refresh or unmount cleanup. The current ElevenLabs bundle aborts its own config fetch on cleanup, so treat that message as harmless if the widget still renders and `pnpm build` + `pnpm start` are clean.
 - If you change hero copy/layout, update the locked-route snapshot test and re-run `pnpm test:visual:locked`.

@@ -1,5 +1,6 @@
 import {
   getPublicElevenLabsMarkdownLinkAllowedHosts,
+  isPublicElevenLabsWidgetEnabled,
   isAllowedElevenLabsExternalUrl,
   registerElevenLabsClientTools,
 } from "@/lib/elevenlabs"
@@ -18,6 +19,28 @@ describe("elevenlabs link configuration", () => {
           " calendar.notion.so , cal.com , www.design-prism.com ",
       } as unknown as NodeJS.ProcessEnv),
     ).toBe("calendar.notion.so,cal.com,www.design-prism.com")
+  })
+
+  it("keeps the widget enabled unless the explicit public kill switch is set", () => {
+    expect(isPublicElevenLabsWidgetEnabled({} as NodeJS.ProcessEnv)).toBe(true)
+    expect(
+      isPublicElevenLabsWidgetEnabled({
+        NEXT_PUBLIC_ELEVENLABS_WIDGET_DISABLED: "true",
+      } as unknown as NodeJS.ProcessEnv),
+    ).toBe(false)
+    expect(
+      isPublicElevenLabsWidgetEnabled({
+        NEXT_PUBLIC_ELEVENLABS_WIDGET_DISABLED: "no",
+      } as unknown as NodeJS.ProcessEnv),
+    ).toBe(true)
+  })
+
+  it("lets the browser runtime disable the widget before hydration for deterministic visual tests", () => {
+    window.__PRISM_DISABLE_ELEVENLABS_WIDGET__ = true
+
+    expect(isPublicElevenLabsWidgetEnabled({} as NodeJS.ProcessEnv)).toBe(false)
+
+    delete window.__PRISM_DISABLE_ELEVENLABS_WIDGET__
   })
 
   it("only allows trusted https destinations", () => {

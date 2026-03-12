@@ -1,43 +1,44 @@
-"use client"
+'use client'
 
-import * as React from "react"
-import { Pie, PieChart, Cell, ResponsiveContainer, Sector } from "recharts"
+import * as React from 'react'
+import { Pie, PieChart, Cell, Sector } from 'recharts'
 
 import {
   ChartContainer,
+  ChartResponsiveContainer,
   ChartTooltip,
   ChartTooltipContent,
   ChartLegend,
   ChartLegendContent,
   type ChartConfig,
-} from "@/components/ui/chart"
+} from '@/components/ui/chart'
 
 const trafficData = [
-  { source: "Organic Search", sessions: 1400, fill: "var(--color-organic)" },
-  { source: "Direct", sessions: 1300, fill: "var(--color-direct)" },
-  { source: "Referrals", sessions: 733, fill: "var(--color-referrals)" },
-  { source: "Paid Search", sessions: 694, fill: "var(--color-paid)" },
+  { source: 'Organic Search', sessions: 1400, fill: 'var(--color-organic)' },
+  { source: 'Direct', sessions: 1300, fill: 'var(--color-direct)' },
+  { source: 'Referrals', sessions: 733, fill: 'var(--color-referrals)' },
+  { source: 'Paid Search', sessions: 694, fill: 'var(--color-paid)' },
 ]
 
 const chartConfig = {
   sessions: {
-    label: "Sessions",
+    label: 'Sessions',
   },
   organic: {
-    label: "Organic Search",
-    color: "var(--chart-1)",
+    label: 'Organic Search',
+    color: 'var(--chart-1)',
   },
   direct: {
-    label: "Direct",
-    color: "var(--chart-2)",
+    label: 'Direct',
+    color: 'var(--chart-2)',
   },
   referrals: {
-    label: "Referrals",
-    color: "var(--chart-3)",
+    label: 'Referrals',
+    color: 'var(--chart-3)',
   },
   paid: {
-    label: "Paid Search",
-    color: "var(--chart-4)",
+    label: 'Paid Search',
+    color: 'var(--chart-4)',
   },
 } satisfies ChartConfig
 
@@ -47,8 +48,11 @@ export function DrWongTrafficSourcesChart() {
   }, [])
 
   return (
-    <ChartContainer config={chartConfig} className="mx-auto aspect-square max-h-[300px]">
-      <ResponsiveContainer width="100%" height="100%">
+    <ChartContainer
+      config={chartConfig}
+      className="mx-auto aspect-square max-h-[300px]"
+    >
+      <ChartResponsiveContainer width="100%" height="100%">
         <PieChart>
           <ChartTooltip
             cursor={true}
@@ -69,14 +73,22 @@ export function DrWongTrafficSourcesChart() {
             stroke="var(--background)"
             activeShape={(props: {
               cx?: number
-              cy?: number  
+              cy?: number
               innerRadius?: number
               outerRadius?: number
               startAngle?: number
               endAngle?: number
               fill?: string
             }) => {
-              const { cx, cy, innerRadius, outerRadius, startAngle, endAngle, fill } = props
+              const {
+                cx,
+                cy,
+                innerRadius,
+                outerRadius,
+                startAngle,
+                endAngle,
+                fill,
+              } = props
               return (
                 <g>
                   <Sector
@@ -98,11 +110,17 @@ export function DrWongTrafficSourcesChart() {
             ))}
           </Pie>
           <ChartLegend
-            content={<ChartLegendContent nameKey="source" className="lowercase text-sm" payload={[]} />}
+            content={
+              <ChartLegendContent
+                nameKey="source"
+                className="lowercase text-sm"
+                payload={[]}
+              />
+            }
             className="-translate-y-2 flex-wrap gap-2 [&>*]:basis-1/4 [&>*]:justify-center"
           />
         </PieChart>
-      </ResponsiveContainer>
+      </ChartResponsiveContainer>
     </ChartContainer>
   )
 }

@@ -1,11 +1,11 @@
-"use client"
+'use client'
 
-import { useEffect, useMemo, useRef } from "react"
-import { useTexture } from "@react-three/drei"
-import { Canvas, useFrame, useThree } from "@react-three/fiber"
-import * as THREE from "three"
+import { useEffect, useId, useMemo, useRef } from 'react'
+import { useTexture } from '@react-three/drei'
+import { Canvas, useFrame, useThree } from '@react-three/fiber'
+import * as THREE from 'three'
 
-export type AgentState = null | "thinking" | "listening" | "talking"
+export type AgentState = null | 'thinking' | 'listening' | 'talking'
 
 type OrbProps = {
   colors?: [string, string]
@@ -13,7 +13,7 @@ type OrbProps = {
   resizeDebounce?: number
   seed?: number
   agentState?: AgentState
-  volumeMode?: "auto" | "manual"
+  volumeMode?: 'auto' | 'manual'
   manualInput?: number
   manualOutput?: number
   inputVolumeRef?: React.RefObject<number>
@@ -24,12 +24,12 @@ type OrbProps = {
 }
 
 export function Orb({
-  colors = ["#CADCFC", "#A0B9D1"],
+  colors = ['#CADCFC', '#A0B9D1'],
   colorsRef,
   resizeDebounce = 100,
   seed,
   agentState = null,
-  volumeMode = "auto",
+  volumeMode = 'auto',
   manualInput,
   manualOutput,
   inputVolumeRef,
@@ -39,7 +39,7 @@ export function Orb({
   className,
 }: OrbProps) {
   return (
-    <div className={className ?? "relative h-full w-full"}>
+    <div className={className ?? 'relative h-full w-full'}>
       <Canvas
         resize={{ debounce: resizeDebounce }}
         gl={{
@@ -66,6 +66,17 @@ export function Orb({
   )
 }
 
+function hashStringToUint32(value: string) {
+  let hash = 2166136261
+
+  for (let index = 0; index < value.length; index += 1) {
+    hash ^= value.charCodeAt(index)
+    hash = Math.imul(hash, 16777619)
+  }
+
+  return hash >>> 0
+}
+
 function Scene({
   colors,
   colorsRef,
@@ -83,7 +94,7 @@ function Scene({
   colorsRef?: React.RefObject<[string, string]>
   seed?: number
   agentState: AgentState
-  volumeMode: "auto" | "manual"
+  volumeMode: 'auto' | 'manual'
   manualInput?: number
   manualOutput?: number
   inputVolumeRef?: React.RefObject<number>
@@ -99,15 +110,16 @@ function Scene({
   const targetColor2Ref = useRef(new THREE.Color(colors[1]))
   const animSpeedRef = useRef(0.1)
   const perlinNoiseTexture = useTexture(
-    "https://storage.googleapis.com/eleven-public-cdn/images/perlin-noise.png"
+    'https://storage.googleapis.com/eleven-public-cdn/images/perlin-noise.png',
   )
 
   const agentRef = useRef<AgentState>(agentState)
-  const modeRef = useRef<"auto" | "manual">(volumeMode)
+  const modeRef = useRef<'auto' | 'manual'>(volumeMode)
   const manualInRef = useRef<number>(manualInput ?? 0)
   const manualOutRef = useRef<number>(manualOutput ?? 0)
   const curInRef = useRef(0)
   const curOutRef = useRef(0)
+  const fallbackSeedId = useId()
 
   useEffect(() => {
     agentRef.current = agentState
@@ -119,24 +131,25 @@ function Scene({
 
   useEffect(() => {
     manualInRef.current = clamp01(
-      manualInput ?? inputVolumeRef?.current ?? getInputVolume?.() ?? 0
+      manualInput ?? inputVolumeRef?.current ?? getInputVolume?.() ?? 0,
     )
   }, [manualInput, inputVolumeRef, getInputVolume])
 
   useEffect(() => {
     manualOutRef.current = clamp01(
-      manualOutput ?? outputVolumeRef?.current ?? getOutputVolume?.() ?? 0
+      manualOutput ?? outputVolumeRef?.current ?? getOutputVolume?.() ?? 0,
     )
   }, [manualOutput, outputVolumeRef, getOutputVolume])
 
-  const random = useMemo(
-    () => splitmix32(seed ?? Math.floor(Math.random() * 2 ** 32)),
-    [seed]
+  const resolvedSeed = useMemo(
+    () => seed ?? hashStringToUint32(fallbackSeedId),
+    [fallbackSeedId, seed],
   )
+  const random = useMemo(() => splitmix32(resolvedSeed), [resolvedSeed])
   const offsets = useMemo(
     () =>
       new Float32Array(Array.from({ length: 7 }, () => random() * Math.PI * 2)),
-    [random]
+    [random],
   )
 
   useEffect(() => {
@@ -147,7 +160,7 @@ function Scene({
   useEffect(() => {
     const apply = () => {
       if (!circleRef.current) return
-      const isDark = document.documentElement.classList.contains("dark")
+      const isDark = document.documentElement.classList.contains('dark')
       circleRef.current.material.uniforms.uInverted.value = isDark ? 1 : 0
     }
 
@@ -156,7 +169,7 @@ function Scene({
     const observer = new MutationObserver(apply)
     observer.observe(document.documentElement, {
       attributes: true,
-      attributeFilter: ["class"],
+      attributeFilter: ['class'],
     })
     return () => observer.disconnect()
   }, [])
@@ -178,22 +191,22 @@ function Scene({
 
     let targetIn = 0
     let targetOut = 0.3
-    if (modeRef.current === "manual") {
+    if (modeRef.current === 'manual') {
       targetIn = clamp01(
-        manualInput ?? inputVolumeRef?.current ?? getInputVolume?.() ?? 0
+        manualInput ?? inputVolumeRef?.current ?? getInputVolume?.() ?? 0,
       )
       targetOut = clamp01(
-        manualOutput ?? outputVolumeRef?.current ?? getOutputVolume?.() ?? 0
+        manualOutput ?? outputVolumeRef?.current ?? getOutputVolume?.() ?? 0,
       )
     } else {
       const t = u.uTime.value * 2
       if (agentRef.current === null) {
         targetIn = 0
         targetOut = 0.3
-      } else if (agentRef.current === "listening") {
+      } else if (agentRef.current === 'listening') {
         targetIn = clamp01(0.55 + Math.sin(t * 3.2) * 0.35)
         targetOut = 0.45
-      } else if (agentRef.current === "talking") {
+      } else if (agentRef.current === 'talking') {
         targetIn = clamp01(0.65 + Math.sin(t * 4.8) * 0.22)
         targetOut = clamp01(0.75 + Math.sin(t * 3.6) * 0.22)
       } else {
@@ -225,17 +238,17 @@ function Scene({
         gl.forceContextRestore()
       }, 1)
     }
-    canvas.addEventListener("webglcontextlost", onContextLost, false)
+    canvas.addEventListener('webglcontextlost', onContextLost, false)
     return () =>
-      canvas.removeEventListener("webglcontextlost", onContextLost, false)
+      canvas.removeEventListener('webglcontextlost', onContextLost, false)
   }, [gl])
 
   const uniforms = useMemo(() => {
     perlinNoiseTexture.wrapS = THREE.RepeatWrapping
     perlinNoiseTexture.wrapT = THREE.RepeatWrapping
     const isDark =
-      typeof document !== "undefined" &&
-      document.documentElement.classList.contains("dark")
+      typeof document !== 'undefined' &&
+      document.documentElement.classList.contains('dark')
     return {
       uColor1: new THREE.Uniform(new THREE.Color(initialColorsRef.current[0])),
       uColor2: new THREE.Uniform(new THREE.Color(initialColorsRef.current[1])),

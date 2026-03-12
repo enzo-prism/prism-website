@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react"
 
 import ElevenLabsWidget from "@/components/elevenlabs/ElevenLabsWidget"
+import { isPublicElevenLabsWidgetEnabled } from "@/lib/elevenlabs"
 import { cn } from "@/lib/utils"
 
 type HomeHeroAgentProps = {
@@ -13,8 +14,13 @@ const HOME_WIDGET_STYLE_SELECTOR = "style[data-prism-home-widget-centering]"
 
 export default function HomeHeroAgent({ className }: HomeHeroAgentProps) {
   const widgetRef = useRef<HTMLElement | null>(null)
+  const widgetEnabled = isPublicElevenLabsWidgetEnabled()
 
   useEffect(() => {
+    if (!widgetEnabled) {
+      return
+    }
+
     let intervalId: number | undefined
 
     const injectHomepageWidgetStyles = () => {
@@ -59,7 +65,11 @@ export default function HomeHeroAgent({ className }: HomeHeroAgentProps) {
         window.clearInterval(intervalId)
       }
     }
-  }, [])
+  }, [widgetEnabled])
+
+  if (!widgetEnabled) {
+    return null
+  }
 
   return (
     <div

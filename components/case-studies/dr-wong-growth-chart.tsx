@@ -1,7 +1,13 @@
-"use client"
+'use client'
 
-import { Area, AreaChart, XAxis, YAxis, CartesianGrid, ResponsiveContainer } from "recharts"
-import { ChartContainer, ChartTooltip, ChartTooltipContent, type ChartConfig } from "@/components/ui/chart"
+import { Area, AreaChart, XAxis, YAxis, CartesianGrid } from 'recharts'
+import {
+  ChartContainer,
+  ChartResponsiveContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+  type ChartConfig,
+} from '@/components/ui/chart'
 
 const chartData = [
   { month: "Jan '24", sessions: 800 },
@@ -20,15 +26,18 @@ const chartData = [
 
 const chartConfig = {
   sessions: {
-    label: "Website Sessions",
-    color: "var(--chart-1)",
+    label: 'Website Sessions',
+    color: 'var(--chart-1)',
   },
 } satisfies ChartConfig
 
 export function DrWongGrowthChart() {
   return (
-    <ChartContainer config={chartConfig} className="w-full aspect-video md:h-[360px]">
-      <ResponsiveContainer width="100%" height="100%">
+    <ChartContainer
+      config={chartConfig}
+      className="w-full aspect-video md:h-[360px]"
+    >
+      <ChartResponsiveContainer width="100%" height="100%">
         <AreaChart
           data={chartData}
           margin={{ top: 5, right: 10, left: 0, bottom: 0 }}
@@ -57,14 +66,16 @@ export function DrWongGrowthChart() {
             axisLine={false}
             stroke="var(--muted-foreground)"
             fontSize={12}
-            tickFormatter={(value: number) => (value >= 1000 ? `${value / 1000}k` : value.toString())}
-            domain={["dataMin - 200", "dataMax + 200"]}
+            tickFormatter={(value: number) =>
+              value >= 1000 ? `${value / 1000}k` : value.toString()
+            }
+            domain={['dataMin - 200', 'dataMax + 200']}
           />
           <ChartTooltip
-            cursor={{ strokeDasharray: "3 3" }}
+            cursor={{ strokeDasharray: '3 3' }}
             content={
               <ChartTooltipContent
-indicator="line"
+                indicator="line"
                 labelClassName="font-semibold"
                 className="rounded-lg shadow-lg bg-background/95 backdrop-blur-sm"
               />
@@ -77,10 +88,13 @@ indicator="line"
             strokeWidth={2.5}
             fillOpacity={1}
             fill="url(#colorSessions)"
-            activeDot={{ r: 6, style: { filter: "drop-shadow(0 0 3px var(--chart-1))" } }}
+            activeDot={{
+              r: 6,
+              style: { filter: 'drop-shadow(0 0 3px var(--chart-1))' },
+            }}
           />
         </AreaChart>
-      </ResponsiveContainer>
+      </ChartResponsiveContainer>
     </ChartContainer>
   )
 }
