@@ -3,7 +3,7 @@
 [![Deployed on Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?style=for-the-badge&logo=vercel)](https://vercel.com/enzo-design-prisms-projects/v0-prism-website-design)
 [![Built with v0](https://img.shields.io/badge/Built%20with-v0.dev-black?style=for-the-badge)](https://v0.dev/chat/projects/8xmj81uf3fc)
 
-Next.js App Router project that powers the Prism marketing site, blog, and landing page experiments. The codebase stays in sync with [v0.dev](https://v0.dev) chats and ships automatically via Vercel.
+Next.js App Router project that powers the Prism marketing site, blog, and landing page experiments. The codebase stays in sync with [v0.dev](https://v0.dev) chats and ships to production through GitHub Actions + Vercel source deploys.
 
 ---
 
@@ -28,6 +28,7 @@ The repo assumes pnpm; npm/yarn installs will fall out of sync.
 - **Package manager** – pnpm 10.x via `corepack enable`. All commands should use `pnpm`; references to `npm run …` are outdated.
 - **Architecture** – Marketing forms post to Formspree using the shared `useFormValidation` hook (HTML5 validation + client-side `fetch` + thank-you redirect). We do **not** use React Hook Form, Zod, or server actions/mechanical Supabase inserts for these flows today. If this changes, update this section immediately.
 - **Canonical pricing policy** – Core offer pricing is fixed site-wide: `Website Overhaul = $1,000 one-time`, `Growth Partnership = $2,000/month`, `Free Expert Audit = $0`. `/pricing` is the only canonical pricing URL. Legacy pricing routes permanently redirect to `/pricing`.
+- **Deploy mode policy** – GitHub Actions is the only production publisher. `main` source deploys through `.github/workflows/deploy.yml`, while Vercel Git auto-deploy for `main` is disabled in `vercel.json` to avoid duplicate production releases.
 - **Documentation** – When you add a new flow or change behavior, edit the relevant file under `/docs` (or this README/AGENTS if the rule is global). Do *not* add new top-level docs without approval; prefer updating existing guides.
 - **Environment variables** – Required vars are limited to those listed in [docs/environment-setup.md](./docs/environment-setup.md) and `.env.example` (GA overrides, Supabase credentials, Resend key, optional site URLs). Do not list vars that aren’t implemented in code.
 - **Get-started assistant surface** – `/get-started` now relies on the stock ElevenLabs floating widget that mounts through `components/global-elevenlabs-widget.tsx`; the old custom `SalesChat` client is no longer mounted on the live page.
@@ -95,17 +96,17 @@ The repo assumes pnpm; npm/yarn installs will fall out of sync.
 - `pnpm add -g vercel` or `pnpm dlx vercel` for CLI access.
 - `vercel login` then `vercel link` (first time in repo) to target the project.
 - `vercel pull --yes --environment=production` to sync remote env vars for parity checks.
-- `vercel deploy --prod --yes` for manual production deploys (source deploy; matches CI behavior).
+- `vercel deploy --prod --yes` for manual production deploys (source deploy; matches CI behavior and should be used only for intentional overrides or rollback recovery).
 - `vercel deploy --yes` for preview deployments.
 - `vercel ls` for deployment history, `vercel inspect <deployment-url>` for metadata, and `vercel logs <deployment-url> --follow` for runtime debugging.
 - `vercel rollback <deployment-url>` when rollback is needed.
 
 ## Deployment
 
-- Merges to `main` auto-deploy through Vercel (`https://vercel.com/enzo-design-prisms-projects/v0-prism-website-design`).
+- Merges to `main` trigger the GitHub `Deploy to Vercel` workflow, which runs the release gates and then publishes with `vercel deploy --prod --yes`.
 - Deploy workflow gates run in order: `UI Lock Screenshots` (`pnpm test:visual:locked`) -> `Sales Chat E2E` (`pnpm test:sales-chat:e2e`) -> `Build and Deploy`.
 - v0.dev remains the design/control plane; updates published from v0 sync back into this repo.
-- For preview builds open a PR—Vercel posts a preview URL for QA.
+- Vercel Git auto-deploy is disabled only for `main`; preview deployments from PR branches remain available for QA.
 
 ## Canonicalization rules
 

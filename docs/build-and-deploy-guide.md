@@ -2,6 +2,8 @@
 
 Keep Prism's Next.js builds predictable by following this checklist whenever you touch UI code or ship to Vercel.
 
+Production is intentionally single-path: GitHub Actions runs the release gates and publishes with `vercel deploy --prod --yes`. `vercel.json` disables Vercel Git auto-deploy on `main` so production does not get duplicate deploys from both GitHub Actions and the Vercel Git integration.
+
 ## Required toolchain
 - **Node.js** 22.x LTS (Vercel discontinued Node 18 builds, so match 22 locally).
 - **pnpm 10.x** – Vercel auto-detects `pnpm-lock.yaml` v9 format and pins to pnpm 10 during deploys, so match that locally via `corepack enable`.
@@ -85,7 +87,7 @@ Use this flow when switching between local, preview, and production changes:
   vercel logs --environment production --since 1h --no-follow --no-branch --query "sales-chat" --source serverless --expand
   vercel rollback <previous-stable-deployment-url>
   ```
-- `npx vercel deploy --prod --yes` for production deploys (source deploy; matches CI).
+- `npx vercel deploy --prod --yes` for production deploys (source deploy; matches CI and should be reserved for manual overrides/recovery).
 - `npx vercel deploy --yes` for a preview deployment while testing branch work.
 - `vercel ls` for recent deployment inventory.
 - `vercel logs <deployment-url> --follow` for runtime-level troubleshooting.
@@ -211,7 +213,7 @@ Use this flow when switching between local, preview, and production changes:
 1. Rebase on `main` and resolve conflicts.
 2. Run the local build flow above.
 3. Skim the diff for accidental lowercase overrides (global styles force lowercase typography by default).
-4. Push to `main` or open a PR; Vercel will run `pnpm install`, `pnpm run build`, and ship on success.
+4. Push to `main` or merge a PR; GitHub Actions will run the release gates, then publish to Vercel on success. PR branches can still use Vercel preview deployments.
 5. If the Vercel build fails, pull the failing commit locally, rerun `pnpm build`, and compare logs. Most issues are deterministic when reproduced outside Vercel.
 6. For `/api/chat` rollout, validate one preview deployment by: loading `/get-started`, posting a sample message to `/api/chat`, and forcing one handled failure path to confirm booking fallback remains visible.
 7. Perfect gate before production cutover:

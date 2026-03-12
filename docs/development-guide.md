@@ -375,4 +375,4 @@ The navbar dynamically sets a CSS variable (`--prism-header-height`) so other st
 
 ## Deployment
 
-Merges to `main` deploy automatically via Vercel. If you need a preview, open a PR – the CI pipeline will comment with the URL.
+Merges to `main` publish through the GitHub `Deploy to Vercel` workflow. Vercel Git auto-deploy is disabled for `main` in `vercel.json` so production has a single source of truth. If you need a preview, open a PR and use the Vercel preview deployment URL.
