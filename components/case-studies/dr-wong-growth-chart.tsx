@@ -3,7 +3,6 @@
 import { Area, AreaChart, XAxis, YAxis, CartesianGrid } from 'recharts'
 import {
   ChartContainer,
-  ChartResponsiveContainer,
   ChartTooltip,
   ChartTooltipContent,
   type ChartConfig,
@@ -37,64 +36,62 @@ export function DrWongGrowthChart() {
       config={chartConfig}
       className="w-full aspect-video md:h-[360px]"
     >
-      <ChartResponsiveContainer width="100%" height="100%">
-        <AreaChart
-          data={chartData}
-          margin={{ top: 5, right: 10, left: 0, bottom: 0 }}
-        >
-          <defs>
-            <linearGradient id="colorSessions" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor="var(--chart-1)" stopOpacity={0.8} />
-              <stop offset="95%" stopColor="var(--chart-1)" stopOpacity={0} />
-            </linearGradient>
-          </defs>
-          <CartesianGrid
-            vertical={false}
-            strokeDasharray="3 3"
-            stroke="color-mix(in oklch, var(--muted-foreground) 20%, transparent)"
-          />
-          <XAxis
-            dataKey="month"
-            tickLine={false}
-            axisLine={false}
-            stroke="var(--muted-foreground)"
-            fontSize={12}
-            padding={{ left: 20, right: 20 }}
-          />
-          <YAxis
-            tickLine={false}
-            axisLine={false}
-            stroke="var(--muted-foreground)"
-            fontSize={12}
-            tickFormatter={(value: number) =>
-              value >= 1000 ? `${value / 1000}k` : value.toString()
-            }
-            domain={['dataMin - 200', 'dataMax + 200']}
-          />
-          <ChartTooltip
-            cursor={{ strokeDasharray: '3 3' }}
-            content={
-              <ChartTooltipContent
-                indicator="line"
-                labelClassName="font-semibold"
-                className="rounded-lg shadow-lg bg-background/95 backdrop-blur-sm"
-              />
-            }
-          />
-          <Area
-            type="monotone"
-            dataKey="sessions"
-            stroke="var(--color-sessions)"
-            strokeWidth={2.5}
-            fillOpacity={1}
-            fill="url(#colorSessions)"
-            activeDot={{
-              r: 6,
-              style: { filter: 'drop-shadow(0 0 3px var(--chart-1))' },
-            }}
-          />
-        </AreaChart>
-      </ChartResponsiveContainer>
+      <AreaChart
+        data={chartData}
+        margin={{ top: 5, right: 10, left: 0, bottom: 0 }}
+      >
+        <defs>
+          <linearGradient id="colorSessions" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="5%" stopColor="var(--chart-1)" stopOpacity={0.8} />
+            <stop offset="95%" stopColor="var(--chart-1)" stopOpacity={0} />
+          </linearGradient>
+        </defs>
+        <CartesianGrid
+          vertical={false}
+          strokeDasharray="3 3"
+          stroke="color-mix(in oklch, var(--muted-foreground) 20%, transparent)"
+        />
+        <XAxis
+          dataKey="month"
+          tickLine={false}
+          axisLine={false}
+          stroke="var(--muted-foreground)"
+          fontSize={12}
+          padding={{ left: 20, right: 20 }}
+        />
+        <YAxis
+          tickLine={false}
+          axisLine={false}
+          stroke="var(--muted-foreground)"
+          fontSize={12}
+          tickFormatter={(value: number) =>
+            value >= 1000 ? `${value / 1000}k` : value.toString()
+          }
+          domain={['dataMin - 200', 'dataMax + 200']}
+        />
+        <ChartTooltip
+          cursor={{ strokeDasharray: '3 3' }}
+          content={
+            <ChartTooltipContent
+              indicator="line"
+              labelClassName="font-semibold"
+              className="rounded-lg shadow-lg bg-background/95 backdrop-blur-sm"
+            />
+          }
+        />
+        <Area
+          type="monotone"
+          dataKey="sessions"
+          stroke="var(--color-sessions)"
+          strokeWidth={2.5}
+          fillOpacity={1}
+          fill="url(#colorSessions)"
+          activeDot={{
+            r: 6,
+            style: { filter: 'drop-shadow(0 0 3px var(--chart-1))' },
+          }}
+        />
+      </AreaChart>
     </ChartContainer>
   )
 }

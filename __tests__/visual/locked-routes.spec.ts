@@ -14,6 +14,10 @@ async function seedDeterministicRandom(page: Page) {
 }
 
 async function disableElevenLabsWidget(page: Page) {
+  if (process.env.NEXT_PUBLIC_ELEVENLABS_WIDGET_DISABLED === "true") {
+    return
+  }
+
   await page.addInitScript(() => {
     window.__PRISM_DISABLE_ELEVENLABS_WIDGET__ = true
   })

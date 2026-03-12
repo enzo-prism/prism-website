@@ -20,7 +20,7 @@ This guide highlights the workflows we lean on most often while iterating on the
   - `pnpm verify:pricing-consistency`
 - For non-chat changes touching shared infrastructure, update and run the nearest smoke tests in the relevant package (`pnpm test`, `pnpm test:visual:locked`, etc.) before merging.
 - Run `pnpm test:visual:locked` before merging changes that touch the UI of `/`, `/about`, or `/pricing` (screenshot-locked routes).
-- `pnpm test:visual:locked` now builds with `NEXT_PUBLIC_ELEVENLABS_WIDGET_DISABLED=true` so the locked route snapshots stay focused on first-party page chrome instead of the live third-party ElevenLabs overlay. Validate real widget behavior separately with the widget-specific Jest + Playwright checks above.
+- `pnpm test:visual:locked` now builds with `NEXT_PUBLIC_ELEVENLABS_WIDGET_DISABLED=true` and boots an isolated `next start` server on port `3300`, so the locked route snapshots stay focused on first-party page chrome instead of the live third-party ElevenLabs overlay or whichever localhost server happens to already be running. Validate real widget behavior separately with the widget-specific Jest + Playwright checks above.
 - Run `pnpm test:visual` when you need broader visual coverage beyond the locked routes.
 - Run `pnpm exec playwright test __tests__/visual/blog-copy-markdown.spec.ts --project=desktop-chromium` when changing the blog markdown copy button or `/api/blog/[slug]/markdown`.
 - Run `pnpm exec playwright test __tests__/visual/global-elevenlabs-widget.spec.ts --project=desktop-chromium` when changing the route-aware ElevenLabs launcher outside the homepage hero.

@@ -127,7 +127,11 @@ export function isPublicElevenLabsWidgetEnabled(
     return false
   }
 
-  return !isTruthyEnvValue(env.NEXT_PUBLIC_ELEVENLABS_WIDGET_DISABLED)
+  const disabledValue =
+    env.NEXT_PUBLIC_ELEVENLABS_WIDGET_DISABLED ??
+    process.env.NEXT_PUBLIC_ELEVENLABS_WIDGET_DISABLED
+
+  return !isTruthyEnvValue(disabledValue)
 }
 
 export function isAllowedElevenLabsExternalUrl(
