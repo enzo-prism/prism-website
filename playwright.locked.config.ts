@@ -1,7 +1,9 @@
 import { defineConfig, devices } from "@playwright/test"
 
-const port = process.env.PLAYWRIGHT_PORT ? Number(process.env.PLAYWRIGHT_PORT) : 3000
+const port = process.env.PLAYWRIGHT_PORT ? Number(process.env.PLAYWRIGHT_PORT) : 3300
 const baseURL = process.env.PLAYWRIGHT_BASE_URL ?? `http://localhost:${port}`
+const elevenLabsWidgetDisabled =
+  process.env.NEXT_PUBLIC_ELEVENLABS_WIDGET_DISABLED ?? "true"
 
 export default defineConfig({
   testDir: "__tests__/visual",
@@ -40,8 +42,12 @@ export default defineConfig({
   ],
   webServer: {
     command: `pnpm start -p ${port}`,
+    env: {
+      ...process.env,
+      NEXT_PUBLIC_ELEVENLABS_WIDGET_DISABLED: elevenLabsWidgetDisabled,
+    },
     url: baseURL,
-    reuseExistingServer: !process.env.CI,
+    reuseExistingServer: false,
     timeout: 120_000,
   },
 })

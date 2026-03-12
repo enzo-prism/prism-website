@@ -3,7 +3,6 @@
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid } from 'recharts'
 import {
   ChartContainer,
-  ChartResponsiveContainer,
   ChartTooltip,
   ChartTooltipContent,
   type ChartConfig,
@@ -28,53 +27,51 @@ export function ExquisiteRankLiftChart() {
       config={chartConfig}
       className="w-full aspect-video md:h-[360px]"
     >
-      <ChartResponsiveContainer width="100%" height="100%">
-        <BarChart
-          data={data}
-          margin={{ top: 5, right: 10, left: 0, bottom: 0 }}
-        >
-          <CartesianGrid
-            vertical={false}
-            strokeDasharray="3 3"
-            stroke="color-mix(in oklch, var(--muted-foreground) 20%, transparent)"
-          />
-          <XAxis
-            dataKey="keyword"
-            tickLine={false}
-            axisLine={false}
-            stroke="var(--muted-foreground)"
-            fontSize={12}
-            interval={0}
-            angle={-15}
-            textAnchor="end"
-            height={60}
-          />
-          <YAxis
-            reversed
-            tickLine={false}
-            axisLine={false}
-            stroke="var(--muted-foreground)"
-            fontSize={12}
-          />
-          <ChartTooltip
-            content={
-              <ChartTooltipContent className="rounded-lg shadow-lg bg-background/95 backdrop-blur-sm" />
-            }
-          />
-          <Bar
-            dataKey="pre"
-            fill="var(--color-pre)"
-            radius={[4, 4, 0, 0]}
-            barSize={20}
-          />
-          <Bar
-            dataKey="post"
-            fill="var(--color-post)"
-            radius={[4, 4, 0, 0]}
-            barSize={20}
-          />
-        </BarChart>
-      </ChartResponsiveContainer>
+      <BarChart
+        data={data}
+        margin={{ top: 5, right: 10, left: 0, bottom: 0 }}
+      >
+        <CartesianGrid
+          vertical={false}
+          strokeDasharray="3 3"
+          stroke="color-mix(in oklch, var(--muted-foreground) 20%, transparent)"
+        />
+        <XAxis
+          dataKey="keyword"
+          tickLine={false}
+          axisLine={false}
+          stroke="var(--muted-foreground)"
+          fontSize={12}
+          interval={0}
+          angle={-15}
+          textAnchor="end"
+          height={60}
+        />
+        <YAxis
+          reversed
+          tickLine={false}
+          axisLine={false}
+          stroke="var(--muted-foreground)"
+          fontSize={12}
+        />
+        <ChartTooltip
+          content={
+            <ChartTooltipContent className="rounded-lg shadow-lg bg-background/95 backdrop-blur-sm" />
+          }
+        />
+        <Bar
+          dataKey="pre"
+          fill="var(--color-pre)"
+          radius={[4, 4, 0, 0]}
+          barSize={20}
+        />
+        <Bar
+          dataKey="post"
+          fill="var(--color-post)"
+          radius={[4, 4, 0, 0]}
+          barSize={20}
+        />
+      </BarChart>
     </ChartContainer>
   )
 }

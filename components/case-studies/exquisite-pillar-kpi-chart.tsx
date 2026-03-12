@@ -3,7 +3,6 @@
 import { Sankey } from 'recharts'
 import {
   ChartContainer,
-  ChartResponsiveContainer,
   ChartTooltip,
   ChartTooltipContent,
   type ChartConfig,
@@ -55,20 +54,18 @@ export function ExquisitePillarKPIChart() {
       config={chartConfig}
       className="w-full aspect-video md:h-[360px]"
     >
-      <ChartResponsiveContainer width="100%" height="100%">
-        <Sankey
-          data={data}
-          nodePadding={30}
-          node={{ stroke: 'var(--muted-foreground)', strokeWidth: 1 }}
-          link={{ stroke: 'var(--chart-1)', strokeOpacity: 0.5 }}
-        >
-          <ChartTooltip
-            content={
-              <ChartTooltipContent className="rounded-lg shadow-lg bg-background/95 backdrop-blur-sm" />
-            }
-          />
-        </Sankey>
-      </ChartResponsiveContainer>
+      <Sankey
+        data={data}
+        nodePadding={30}
+        node={{ stroke: 'var(--muted-foreground)', strokeWidth: 1 }}
+        link={{ stroke: 'var(--chart-1)', strokeOpacity: 0.5 }}
+      >
+        <ChartTooltip
+          content={
+            <ChartTooltipContent className="rounded-lg shadow-lg bg-background/95 backdrop-blur-sm" />
+          }
+        />
+      </Sankey>
     </ChartContainer>
   )
 }

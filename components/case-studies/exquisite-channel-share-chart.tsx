@@ -3,7 +3,6 @@
 import { PieChart, Pie, Cell } from 'recharts'
 import {
   ChartContainer,
-  ChartResponsiveContainer,
   ChartTooltip,
   ChartTooltipContent,
   ChartLegend,
@@ -29,40 +28,38 @@ export function ExquisiteChannelShareChart() {
       config={chartConfig}
       className="mx-auto aspect-square max-h-[300px]"
     >
-      <ChartResponsiveContainer width="100%" height="100%">
-        <PieChart>
-          <ChartTooltip
-            content={
-              <ChartTooltipContent
-                hideLabel
-                className="rounded-lg shadow-lg bg-background/95 backdrop-blur-sm"
-              />
-            }
-          />
-          <Pie
-            data={data}
-            dataKey="value"
-            nameKey="channel"
-            innerRadius="60%"
-            strokeWidth={3}
-            stroke="var(--background)"
-          >
-            {data.map((entry, index) => (
-              <Cell key={`cell-${index}`} fill={entry.fill} />
-            ))}
-          </Pie>
-          <ChartLegend
-            content={
-              <ChartLegendContent
-                nameKey="channel"
-                className="lowercase text-sm"
-                payload={[]}
-              />
-            }
-            className="-translate-y-2 flex-wrap gap-2"
-          />
-        </PieChart>
-      </ChartResponsiveContainer>
+      <PieChart>
+        <ChartTooltip
+          content={
+            <ChartTooltipContent
+              hideLabel
+              className="rounded-lg shadow-lg bg-background/95 backdrop-blur-sm"
+            />
+          }
+        />
+        <Pie
+          data={data}
+          dataKey="value"
+          nameKey="channel"
+          innerRadius="60%"
+          strokeWidth={3}
+          stroke="var(--background)"
+        >
+          {data.map((entry, index) => (
+            <Cell key={`cell-${index}`} fill={entry.fill} />
+          ))}
+        </Pie>
+        <ChartLegend
+          content={
+            <ChartLegendContent
+              nameKey="channel"
+              className="lowercase text-sm"
+              payload={[]}
+            />
+          }
+          className="-translate-y-2 flex-wrap gap-2"
+        />
+      </PieChart>
     </ChartContainer>
   )
 }

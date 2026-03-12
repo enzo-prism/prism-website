@@ -5,7 +5,6 @@ import { Pie, PieChart, Cell, Sector } from 'recharts'
 
 import {
   ChartContainer,
-  ChartResponsiveContainer,
   ChartTooltip,
   ChartTooltipContent,
   ChartLegend,
@@ -52,75 +51,73 @@ export function DrWongTrafficSourcesChart() {
       config={chartConfig}
       className="mx-auto aspect-square max-h-[300px]"
     >
-      <ChartResponsiveContainer width="100%" height="100%">
-        <PieChart>
-          <ChartTooltip
-            cursor={true}
-            content={
-              <ChartTooltipContent
-                hideLabel
-                nameKey="source"
-                className="rounded-lg shadow-lg bg-background/95 backdrop-blur-sm"
-              />
-            }
-          />
-          <Pie
-            data={trafficData}
-            dataKey="sessions"
-            nameKey="source"
-            innerRadius="60%"
-            strokeWidth={3}
-            stroke="var(--background)"
-            activeShape={(props: {
-              cx?: number
-              cy?: number
-              innerRadius?: number
-              outerRadius?: number
-              startAngle?: number
-              endAngle?: number
-              fill?: string
-            }) => {
-              const {
-                cx,
-                cy,
-                innerRadius,
-                outerRadius,
-                startAngle,
-                endAngle,
-                fill,
-              } = props
-              return (
-                <g>
-                  <Sector
-                    cx={cx}
-                    cy={cy}
-                    innerRadius={innerRadius}
-                    outerRadius={outerRadius ? outerRadius + 4 : 4}
-                    startAngle={startAngle}
-                    endAngle={endAngle}
-                    fill={fill}
-                    stroke={fill}
-                  />
-                </g>
-              )
-            }}
-          >
-            {trafficData.map((entry, index) => (
-              <Cell key={`cell-${index}`} fill={entry.fill} />
-            ))}
-          </Pie>
-          <ChartLegend
-            content={
-              <ChartLegendContent
-                nameKey="source"
-                className="lowercase text-sm"
-                payload={[]}
-              />
-            }
-            className="-translate-y-2 flex-wrap gap-2 [&>*]:basis-1/4 [&>*]:justify-center"
-          />
-        </PieChart>
-      </ChartResponsiveContainer>
+      <PieChart>
+        <ChartTooltip
+          cursor={true}
+          content={
+            <ChartTooltipContent
+              hideLabel
+              nameKey="source"
+              className="rounded-lg shadow-lg bg-background/95 backdrop-blur-sm"
+            />
+          }
+        />
+        <Pie
+          data={trafficData}
+          dataKey="sessions"
+          nameKey="source"
+          innerRadius="60%"
+          strokeWidth={3}
+          stroke="var(--background)"
+          activeShape={(props: {
+            cx?: number
+            cy?: number
+            innerRadius?: number
+            outerRadius?: number
+            startAngle?: number
+            endAngle?: number
+            fill?: string
+          }) => {
+            const {
+              cx,
+              cy,
+              innerRadius,
+              outerRadius,
+              startAngle,
+              endAngle,
+              fill,
+            } = props
+            return (
+              <g>
+                <Sector
+                  cx={cx}
+                  cy={cy}
+                  innerRadius={innerRadius}
+                  outerRadius={outerRadius ? outerRadius + 4 : 4}
+                  startAngle={startAngle}
+                  endAngle={endAngle}
+                  fill={fill}
+                  stroke={fill}
+                />
+              </g>
+            )
+          }}
+        >
+          {trafficData.map((entry, index) => (
+            <Cell key={`cell-${index}`} fill={entry.fill} />
+          ))}
+        </Pie>
+        <ChartLegend
+          content={
+            <ChartLegendContent
+              nameKey="source"
+              className="lowercase text-sm"
+              payload={[]}
+            />
+          }
+          className="-translate-y-2 flex-wrap gap-2 [&>*]:basis-1/4 [&>*]:justify-center"
+        />
+      </PieChart>
     </ChartContainer>
   )
 }
