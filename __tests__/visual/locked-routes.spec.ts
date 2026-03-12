@@ -51,9 +51,7 @@ async function stabilizePage(page: Page) {
 }
 
 async function expectLockedRouteSnapshotSurface(page: Page) {
-  if (process.env.NEXT_PUBLIC_ELEVENLABS_WIDGET_DISABLED === "true") {
-    await expect(page.locator("elevenlabs-convai")).toHaveCount(0)
-  }
+  await expect(page.locator("elevenlabs-convai")).toHaveCount(0)
 }
 
 const lockedRoutes = [
