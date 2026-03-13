@@ -34,39 +34,11 @@ jobs:
       - name: Visual regression (locked routes)
         run: pnpm test:visual:locked
 
-  sales-chat-e2e:
-    name: Sales Chat E2E
-    runs-on: ubuntu-latest
-    container:
-      image: mcr.microsoft.com/playwright:v1.57.0-jammy
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Enable Corepack
-        run: |
-          corepack enable
-          corepack prepare pnpm@10.0.0 --activate
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: 'pnpm'
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-
-      - name: Sales chat deterministic e2e
-        run: pnpm test:sales-chat:e2e
-
   deploy:
     name: Build and Deploy
     runs-on: ubuntu-latest
     needs:
       - ui-lock
-      - sales-chat-e2e
     permissions:
       contents: read
       deployments: write
@@ -100,9 +72,6 @@ jobs:
 
       - name: Vercel Pull (Production)
         run: npx vercel pull --yes --environment=production --token "$VERCEL_TOKEN"
-
-      - name: Verify sales chat production config
-        run: pnpm verify:sales-chat-config
 
       - name: Verify pricing consistency
         run: pnpm verify:pricing-consistency

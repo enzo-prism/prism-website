@@ -17,18 +17,6 @@
     "figma": {
       "url": "http://127.0.0.1:3845/sse"
     },
-    "supabase": {
-      "command": "npx",
-      "args": [
-        "-y",
-        "@supabase/mcp-server-supabase@latest",
-        "--read-only",
-        "--project-ref=ibjqwvkcjdgdifujfnpb"
-      ],
-      "env": {
-        "SUPABASE_ACCESS_TOKEN": "${SUPABASE_ACCESS_TOKEN}"
-      }
-    },
     "sentry": {
       "command": "npx",
       "args": ["-y", "mcp-remote@latest", "https://mcp.sentry.dev/mcp"]

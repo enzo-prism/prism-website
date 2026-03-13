@@ -95,10 +95,6 @@ export async function checkAllMCPServersHealth(): Promise<MCPHealthStatus> {
       endpoint: "https://api.github.com", // Using GitHub API as proxy for MCP server health
     },
     {
-      name: "Supabase", 
-      endpoint: "https://ibjqwvkcjdgdifujfnpb.supabase.co/rest/v1/", // Project-specific endpoint
-    },
-    {
       name: "Figma",
       endpoint: "http://localhost:3845", // Local Figma MCP server
     },

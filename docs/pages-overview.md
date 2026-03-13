@@ -100,9 +100,9 @@ Quick reference for the pages we edit most often.
 
 - The hero, VSL, FAQ, and booking sections live directly in `app/get-started/page.tsx`; there is no separate route-specific hero-scene mount in the live page right now.
 - `/get-started` is a booking-led server-rendered page; the live assistant surface is the stock ElevenLabs floating widget mounted globally via `components/global-elevenlabs-widget.tsx`.
-- The page no longer mounts the custom `SalesChat` client or gates itself on deterministic sales-chat runtime config.
+- The page no longer mounts the custom `SalesChat` client or depends on any legacy route-level assistant gating.
 - Booking remains the primary conversion path and is anchored at `#book-call`; keep the hero CTA, FAQ CTA, and footer CTA wired there.
-- The legacy deterministic sales-chat backend and supporting UI files (`app/api/chat/route.ts`, `lib/sales-chat/*`, `components/sales-chat/*`) remain in the repo for backend/archival work, but they are not mounted on the live page anymore.
+- The old custom sales-chat backend and supporting UI files have been removed from the supported stack. If Prism ever needs a bespoke assistant again, treat that as a fresh implementation rather than an existing route to toggle back on.
 
 ## Contact (`app/contact/page.tsx`)
 

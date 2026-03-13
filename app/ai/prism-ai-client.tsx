@@ -4,6 +4,9 @@ import { useState, useRef, useEffect } from "react"
 import Link from "next/link"
 import styles from "./prism-ai.module.css"
 
+const FORM_ACTION = "https://formspree.io/f/xzdpoyer"
+const FORM_SUBJECT = "New Prism AI website request"
+
 interface FormData {
   websiteName: string
   websiteGoal: string
@@ -120,12 +123,24 @@ export default function PrismAIClient() {
     setIsSubmitting(true)
 
     try {
-      const response = await fetch("/api/prism-leads", {
+      const payload = new FormData()
+      payload.append("_subject", FORM_SUBJECT)
+      payload.append("form_name", "prism_ai_website_request")
+      payload.append("source", "prism_ai_website_request")
+      payload.append("website_name", formData.websiteName)
+      payload.append("website_goal", formData.websiteGoal)
+      payload.append("style_references", formData.styleReferences)
+      payload.append("number_of_pages", String(formData.numberOfPages))
+      payload.append("company_name", formData.companyName)
+      payload.append("email", formData.email)
+      payload.append("phone_number", formData.phoneNumber)
+
+      const response = await fetch(FORM_ACTION, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          Accept: "application/json",
         },
-        body: JSON.stringify(formData)
+        body: payload,
       })
 
       if (response.ok) {

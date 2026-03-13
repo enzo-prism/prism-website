@@ -16,7 +16,6 @@ export const PRICING_STRICT_FILES = [
   "app/faq/page.tsx",
   "app/services/page.tsx",
   "app/get-started/page.tsx",
-  "lib/sales-chat/spec-v1-copy.ts",
   "app/websites/page.tsx",
   "app/ads/page.tsx",
   "app/seo/page.tsx",
@@ -53,7 +52,6 @@ export const LEGACY_PRICING_TOKEN_RULES: PricingTokenRule[] = [
 export const REQUIRED_CANONICAL_SNIPPETS: Record<string, string[]> = {
   "app/pricing/client-page.tsx": ["$1,000 one-time", "$2,000/month"],
   "components/pricing/PricingHero.tsx": ["$1,000", "$2,000/month"],
-  "lib/sales-chat/spec-v1-copy.ts": ["$1,000 one-time", "$2,000/month"],
 }
 
 export function collectPricingConsistencyViolations(

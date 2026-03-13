@@ -7,7 +7,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Next.js 15 marketing website for Prism design agency, synced with v0.dev and deployed on Vercel.
+Next.js App Router marketing website for Prism, synced with v0.dev and deployed on Vercel.
 
 ## Essential Commands
 
@@ -26,7 +26,6 @@ pnpm test -- --testNamePattern="pattern"
 # Diagnostics
 pnpm diagnose:images  # Image system check
 pnpm verify:deploy    # Pre-deployment validation
-pnpm diag:supabase    # Supabase connectivity check
 
 # Git sync (v0.dev/Cursor/Claude coordination)
 pnpm git:status       # Check sync health
@@ -78,9 +77,8 @@ pnpm git:cleanup      # Clean stale branches
 Required variables (see `.env.example`):
 ```bash
 NEXT_PUBLIC_BASE_URL=              # Canonical host
-SUPABASE_URL=                      # Supabase project URL
-SUPABASE_SERVICE_ROLE_KEY=         # Supabase service role key
-RESEND_API_KEY=                    # Email notifications (optional)
+NEXT_PUBLIC_GA_MEASUREMENT_ID=     # Optional GA override
+NEXT_PUBLIC_ELEVENLABS_AGENT_ID=   # Optional ElevenLabs public agent override
 ```
 
 ## Quick Debugging
@@ -91,5 +89,4 @@ RESEND_API_KEY=                    # Email notifications (optional)
 | Type errors | `pnpm typecheck` |
 | Image failures | `pnpm diagnose:images` |
 | Test failures | Check `__mocks__/mdxremote.js` |
-| Supabase issues | `pnpm diag:supabase` |
 | Git sync issues | `pnpm git:status` |

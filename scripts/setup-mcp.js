@@ -55,8 +55,7 @@ async function setupEnvironmentFile() {
   if (!fs.existsSync(envExamplePath)) {
     log('❌ .env.example not found. Creating basic template...', 'red');
     const basicTemplate = `# MCP Server Environment Variables
-GITHUB_PERSONAL_ACCESS_TOKEN=your_github_token_here
-SUPABASE_ACCESS_TOKEN=your_supabase_token_here`;
+GITHUB_PERSONAL_ACCESS_TOKEN=your_github_token_here`;
     
     fs.writeFileSync(envExamplePath, basicTemplate);
     log('✅ Created .env.example', 'green');
@@ -94,37 +93,6 @@ async function setupGitHubToken() {
     }
   } else {
     log('💡 Please create a GitHub token and run this script again.', 'yellow');
-    return false;
-  }
-}
-
-async function setupSupabaseToken() {
-  log('\n🗄️  Supabase Token Setup', 'blue');
-  log('=======================', 'blue');
-  
-  log('To use the Supabase MCP server, you need the service role key.', 'cyan');
-  log('');
-  log('Steps to get your Supabase token:', 'bold');
-  log('1. Go to: https://supabase.com/dashboard');
-  log('2. Select project: ibjqwvkcjdgdifujfnpb');
-  log('3. Navigate to Settings > API');
-  log('4. Copy the "service_role" key (NOT the anon key)');
-  log('');
-  
-  const hasToken = await question('Do you have your Supabase service role key? (y/N): ');
-  
-  if (hasToken.toLowerCase() === 'y') {
-    const token = await question('Enter your Supabase service role key (sbp_...): ');
-    if (token && token.startsWith('sbp_')) {
-      updateEnvFile('SUPABASE_ACCESS_TOKEN', token);
-      log('✅ Supabase token saved', 'green');
-      return true;
-    } else {
-      log('❌ Invalid token format. Supabase service role keys start with "sbp_"', 'red');
-      return false;
-    }
-  } else {
-    log('💡 Please get your Supabase token and run this script again.', 'yellow');
     return false;
   }
 }
@@ -206,9 +174,6 @@ async function main() {
     // Setup GitHub token
     const githubOk = await setupGitHubToken();
     
-    // Setup Supabase token
-    const supabaseOk = await setupSupabaseToken();
-    
     // Figma info
     log('\n🎨 Figma MCP Server', 'blue');
     log('==================', 'blue');
@@ -223,7 +188,7 @@ async function main() {
     log('It will work automatically with your existing Sentry project.', 'cyan');
     
     // Run health check if tokens were configured
-    if (githubOk && supabaseOk) {
+    if (githubOk) {
       const healthOk = await runHealthCheck();
       
       if (healthOk) {
@@ -233,7 +198,7 @@ async function main() {
         log('');
         log('Next steps:', 'bold');
         log('1. Open Claude Code in this project directory', 'cyan');
-        log('2. Ask Claude to list GitHub issues or check Supabase schema', 'cyan');
+        log('2. Ask Claude to list GitHub issues or inspect a Sentry issue', 'cyan');
         log('3. Enjoy enhanced development workflow!', 'cyan');
       } else {
         log('\n⚠️  Setup completed with issues', 'yellow');

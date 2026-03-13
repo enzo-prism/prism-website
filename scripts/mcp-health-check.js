@@ -48,7 +48,7 @@ function checkEnvFile() {
   }
   
   const envContent = fs.readFileSync(activeEnvFile, 'utf8');
-  const requiredVars = ['GITHUB_PERSONAL_ACCESS_TOKEN', 'SUPABASE_ACCESS_TOKEN'];
+  const requiredVars = ['GITHUB_PERSONAL_ACCESS_TOKEN'];
   
   let allVarsPresent = true;
   requiredVars.forEach(varName => {
@@ -75,7 +75,7 @@ function checkMcpConfig() {
   
   try {
     const mcpConfig = JSON.parse(fs.readFileSync(mcpPath, 'utf8'));
-    const expectedServers = ['github', 'supabase', 'sentry', 'figma'];
+    const expectedServers = ['github', 'sentry', 'figma'];
     
     if (!mcpConfig.mcpServers) {
       log('❌ No mcpServers configuration found', 'red');
@@ -123,36 +123,6 @@ function testGitHubConnection() {
     }
   } catch (error) {
     log(`❌ GitHub API connection failed: ${error.message}`, 'red');
-    return false;
-  }
-}
-
-function testSupabaseConnection() {
-  log('\n🔍 Testing Supabase API connection...', 'blue');
-  
-  const token = process.env.SUPABASE_ACCESS_TOKEN;
-  if (!token || token.startsWith('your_')) {
-    log('❌ Supabase token not configured', 'red');
-    return false;
-  }
-  
-  try {
-    const result = execSync(`curl -s -H "Authorization: Bearer ${token}" -H "apikey: ${token}" https://ibjqwvkcjdgdifujfnpb.supabase.co/rest/v1/`, 
-      { encoding: 'utf8', timeout: 10000 });
-    
-    // Check if the response indicates successful authentication
-    if (result.includes('Invalid API key')) {
-      log('❌ Supabase API error: Invalid API key', 'red');
-      return false;
-    } else if (result.includes('swagger') || result.includes('supabase') || result.length > 0) {
-      log('✅ Supabase API connected', 'green');
-      return true;
-    } else {
-      log(`❌ Supabase API error: ${result}`, 'red');
-      return false;
-    }
-  } catch (error) {
-    log(`❌ Supabase API connection failed: ${error.message}`, 'red');
     return false;
   }
 }
@@ -212,7 +182,6 @@ function main() {
     envConfig: checkEnvFile(),
     mcpConfig: checkMcpConfig(),
     github: testGitHubConnection(),
-    supabase: testSupabaseConnection(),
     figma: testFigmaConnection(),
     sentry: testSentryConnection()
   };
@@ -230,7 +199,7 @@ function main() {
     log(`❌ Failed: ${failedChecks}/${totalChecks}`, 'red');
   }
   
-  if (results.envConfig && results.mcpConfig && results.github && results.supabase) {
+  if (results.envConfig && results.mcpConfig && results.github) {
     log('\n🎉 Core MCP servers are ready for Claude Code!', 'green');
   } else {
     log('\n⚠️  Some MCP servers need attention. Check the errors above.', 'yellow');
@@ -247,4 +216,4 @@ if (require.main === module) {
   main();
 }
 
-module.exports = { checkEnvFile, checkMcpConfig, testGitHubConnection, testSupabaseConnection };
+module.exports = { checkEnvFile, checkMcpConfig, testGitHubConnection };
