@@ -1,23 +1,15 @@
-// Production currently uses the stock ElevenLabs widget. The public agent/link helpers below are active,
-// while the richer client-tool utilities remain in the repo for legacy tests and future SDK experiments.
-const DEFAULT_PRISM_SALES_AGENT_ID = "agent_4701kkcyc4efefkv5x4awhysjyrh"
-const DEFAULT_PUBLIC_BOOKING_URL = "/get-started#book-call"
-const DEFAULT_MARKDOWN_LINK_ALLOWED_HOSTS = [
-  "calendar.notion.so",
-  "notion.so",
-  "www.notion.so",
-  "cal.com",
-  "www.cal.com",
-  "design-prism.com",
-  "www.design-prism.com",
-] as const
-const ENABLED_ENV_VALUES = new Set(["1", "true", "yes", "on"])
+// Production currently uses the stock ElevenLabs widget. The richer client-tool helpers below remain
+// for legacy tests and future SDK experiments, but they are intentionally kept separate from the live
+// widget embed path so the public integration can stay aligned with the official stock widget docs.
+import { getPublicElevenLabsMarkdownLinkAllowedHosts } from '@/lib/elevenlabs-widget'
 
-declare global {
-  interface Window {
-    __PRISM_DISABLE_ELEVENLABS_WIDGET__?: boolean
-  }
-}
+const DEFAULT_PUBLIC_BOOKING_URL = '/get-started#book-call'
+
+export {
+  getPublicElevenLabsAgentId,
+  getPublicElevenLabsMarkdownLinkAllowedHosts,
+  isPublicElevenLabsWidgetEnabled,
+} from '@/lib/elevenlabs-widget'
 
 type ElevenLabsLinkToolParams = {
   href?: string
@@ -28,8 +20,14 @@ type ElevenLabsLinkToolParams = {
   url?: string
 }
 
-type ElevenLabsClientToolResult = string | number | void | Promise<string | number | void>
-type ElevenLabsClientTool = (params?: ElevenLabsLinkToolParams) => ElevenLabsClientToolResult
+type ElevenLabsClientToolResult =
+  | string
+  | number
+  | void
+  | Promise<string | number | void>
+type ElevenLabsClientTool = (
+  params?: ElevenLabsLinkToolParams,
+) => ElevenLabsClientToolResult
 type ElevenLabsClientTools = Record<string, ElevenLabsClientTool>
 
 type ElevenLabsSharedLinkPayload = {
@@ -51,24 +49,26 @@ type CreateElevenLabsClientToolsOptions = {
 
 function normalizeAllowedHosts(value: string): string[] {
   return value
-    .split(",")
+    .split(',')
     .map((host) => host.trim().toLowerCase())
     .filter(Boolean)
 }
 
-function isTruthyEnvValue(value: string | undefined): boolean {
-  return value ? ENABLED_ENV_VALUES.has(value.trim().toLowerCase()) : false
-}
-
 function normalizeHostname(hostname: string): string {
-  return hostname.replace(/^www\./i, "").toLowerCase()
+  return hostname.replace(/^www\./i, '').toLowerCase()
 }
 
-function buildSharedLinkMarkdown({ label, url }: ElevenLabsSharedLinkPayload): string {
+function buildSharedLinkMarkdown({
+  label,
+  url,
+}: ElevenLabsSharedLinkPayload): string {
   return `[${label}](${url})`
 }
 
-function normalizeSharedLinkLabel(params: ElevenLabsLinkToolParams, bookingUrl: string): string {
+function normalizeSharedLinkLabel(
+  params: ElevenLabsLinkToolParams,
+  bookingUrl: string,
+): string {
   const explicitLabel = params.label?.trim() || params.text?.trim()
 
   if (explicitLabel) {
@@ -78,39 +78,15 @@ function normalizeSharedLinkLabel(params: ElevenLabsLinkToolParams, bookingUrl: 
   const nextUrl = params.url?.trim() || params.href?.trim()
 
   if (!nextUrl || nextUrl === bookingUrl) {
-    return "Book a 30-min demo"
+    return 'Book a 30-min demo'
   }
 
-  return "Open link"
+  return 'Open link'
 }
 
-export function getPublicElevenLabsAgentId(env: NodeJS.ProcessEnv = process.env): string {
-  const configuredAgentId = env.NEXT_PUBLIC_ELEVENLABS_AGENT_ID?.trim()
-
-  if (configuredAgentId && configuredAgentId.length > 0) {
-    return configuredAgentId
-  }
-
-  return DEFAULT_PRISM_SALES_AGENT_ID
-}
-
-export function getPublicElevenLabsMarkdownLinkAllowedHosts(
+export function getPublicElevenLabsBookingUrl(
   env: NodeJS.ProcessEnv = process.env,
 ): string {
-  const configuredAllowedHosts = env.NEXT_PUBLIC_ELEVENLABS_MARKDOWN_LINK_ALLOWED_HOSTS?.trim()
-
-  if (configuredAllowedHosts) {
-    const normalizedConfiguredHosts = normalizeAllowedHosts(configuredAllowedHosts)
-
-    if (normalizedConfiguredHosts.length > 0) {
-      return normalizedConfiguredHosts.join(",")
-    }
-  }
-
-  return DEFAULT_MARKDOWN_LINK_ALLOWED_HOSTS.join(",")
-}
-
-export function getPublicElevenLabsBookingUrl(env: NodeJS.ProcessEnv = process.env): string {
   const configuredBookingUrl = env.NEXT_PUBLIC_ELEVENLABS_BOOKING_URL?.trim()
 
   if (configuredBookingUrl && configuredBookingUrl.length > 0) {
@@ -118,20 +94,6 @@ export function getPublicElevenLabsBookingUrl(env: NodeJS.ProcessEnv = process.e
   }
 
   return DEFAULT_PUBLIC_BOOKING_URL
-}
-
-export function isPublicElevenLabsWidgetEnabled(
-  env: NodeJS.ProcessEnv = process.env,
-): boolean {
-  if (typeof window !== "undefined" && window.__PRISM_DISABLE_ELEVENLABS_WIDGET__ === true) {
-    return false
-  }
-
-  const disabledValue =
-    env.NEXT_PUBLIC_ELEVENLABS_WIDGET_DISABLED ??
-    process.env.NEXT_PUBLIC_ELEVENLABS_WIDGET_DISABLED
-
-  return !isTruthyEnvValue(disabledValue)
 }
 
 export function isAllowedElevenLabsExternalUrl(
@@ -146,13 +108,13 @@ export function isAllowedElevenLabsExternalUrl(
     return false
   }
 
-  if (parsedUrl.protocol !== "https:") {
+  if (parsedUrl.protocol !== 'https:') {
     return false
   }
 
   const normalizedAllowedHosts = normalizeAllowedHosts(allowedHosts)
 
-  if (normalizedAllowedHosts.includes("*")) {
+  if (normalizedAllowedHosts.includes('*')) {
     return true
   }
 
@@ -165,43 +127,55 @@ export function isAllowedElevenLabsExternalUrl(
 
 export function resolveElevenLabsConversationUrl(
   urlString: string | undefined,
-  options: Pick<CreateElevenLabsClientToolsOptions, "allowedHosts" | "bookingUrl"> = {},
+  options: Pick<
+    CreateElevenLabsClientToolsOptions,
+    'allowedHosts' | 'bookingUrl'
+  > = {},
 ): string | null {
   const bookingUrl = options.bookingUrl ?? getPublicElevenLabsBookingUrl()
-  const allowedHosts = options.allowedHosts ?? getPublicElevenLabsMarkdownLinkAllowedHosts()
+  const allowedHosts =
+    options.allowedHosts ?? getPublicElevenLabsMarkdownLinkAllowedHosts()
   const trimmedUrl = urlString?.trim()
 
-  if (!trimmedUrl || trimmedUrl === "#" || trimmedUrl === "#book-call") {
+  if (!trimmedUrl || trimmedUrl === '#' || trimmedUrl === '#book-call') {
     return bookingUrl
   }
 
   if (
-    trimmedUrl.toLowerCase() === "book-call"
-    || trimmedUrl.toLowerCase() === "/book-call"
-    || trimmedUrl.startsWith("#")
+    trimmedUrl.toLowerCase() === 'book-call' ||
+    trimmedUrl.toLowerCase() === '/book-call' ||
+    trimmedUrl.startsWith('#')
   ) {
     return bookingUrl
   }
 
-  if (trimmedUrl.startsWith("/")) {
+  if (trimmedUrl.startsWith('/')) {
     return trimmedUrl
   }
 
-  return isAllowedElevenLabsExternalUrl(trimmedUrl, allowedHosts) ? trimmedUrl : null
+  return isAllowedElevenLabsExternalUrl(trimmedUrl, allowedHosts)
+    ? trimmedUrl
+    : null
 }
 
 export function createElevenLabsClientTools(
   options: CreateElevenLabsClientToolsOptions = {},
 ): ElevenLabsClientTools {
-  const allowedHosts = options.allowedHosts ?? getPublicElevenLabsMarkdownLinkAllowedHosts()
+  const allowedHosts =
+    options.allowedHosts ?? getPublicElevenLabsMarkdownLinkAllowedHosts()
   const bookingUrl = options.bookingUrl ?? getPublicElevenLabsBookingUrl()
   const onLinkReady = options.onLinkReady
 
-  const shareLink = (params: ElevenLabsLinkToolParams = {}): ElevenLabsSharedLinkPayload | null => {
-    const resolvedUrl = resolveElevenLabsConversationUrl(params.url ?? params.href, {
-      allowedHosts,
-      bookingUrl,
-    })
+  const shareLink = (
+    params: ElevenLabsLinkToolParams = {},
+  ): ElevenLabsSharedLinkPayload | null => {
+    const resolvedUrl = resolveElevenLabsConversationUrl(
+      params.url ?? params.href,
+      {
+        allowedHosts,
+        bookingUrl,
+      },
+    )
 
     if (!resolvedUrl) {
       return null
@@ -215,10 +189,12 @@ export function createElevenLabsClientTools(
     onLinkReady?.(payload)
 
     if (
-      typeof window !== "undefined"
-      && (params.shouldOpen === true || params.openInNewTab === true || !onLinkReady)
+      typeof window !== 'undefined' &&
+      (params.shouldOpen === true ||
+        params.openInNewTab === true ||
+        !onLinkReady)
     ) {
-      window.open(payload.url, "_blank", "noopener,noreferrer")
+      window.open(payload.url, '_blank', 'noopener,noreferrer')
     }
 
     return payload
@@ -229,7 +205,7 @@ export function createElevenLabsClientTools(
       const payload = shareLink(params)
 
       if (!payload) {
-        return "Unable to share that link."
+        return 'Unable to share that link.'
       }
 
       return onLinkReady
@@ -239,12 +215,12 @@ export function createElevenLabsClientTools(
     shareBookingLink: (params: ElevenLabsLinkToolParams = {}) => {
       const payload = shareLink({
         ...params,
-        label: params.label ?? "Book a 30-min demo",
+        label: params.label ?? 'Book a 30-min demo',
         url: params.url ?? params.href ?? bookingUrl,
       })
 
       if (!payload) {
-        return "Unable to share the booking link."
+        return 'Unable to share the booking link.'
       }
 
       return `Shared ${buildSharedLinkMarkdown(payload)} in the chat.`
@@ -252,14 +228,16 @@ export function createElevenLabsClientTools(
     share_booking_link: (params: ElevenLabsLinkToolParams = {}) => {
       return shareLink({
         ...params,
-        label: params.label ?? "Book a 30-min demo",
+        label: params.label ?? 'Book a 30-min demo',
         url: params.url ?? params.href ?? bookingUrl,
       })
-        ? "Booking link shared."
-        : "Unable to share the booking link."
+        ? 'Booking link shared.'
+        : 'Unable to share the booking link.'
     },
     postLinkToChat: (params: ElevenLabsLinkToolParams = {}) => {
-      return shareLink(params) ? "Link shared in chat." : "Unable to share that link."
+      return shareLink(params)
+        ? 'Link shared in chat.'
+        : 'Unable to share that link.'
     },
   }
 }
@@ -292,28 +270,31 @@ export function registerElevenLabsClientTools(
     }
   }
 
-  widget.addEventListener("elevenlabs-convai:call", handleCall as EventListener)
+  widget.addEventListener('elevenlabs-convai:call', handleCall as EventListener)
 
   return () => {
-    widget.removeEventListener("elevenlabs-convai:call", handleCall as EventListener)
+    widget.removeEventListener(
+      'elevenlabs-convai:call',
+      handleCall as EventListener,
+    )
   }
 }
 
 export function publishPrismWidgetExpandedState(expanded: boolean): void {
-  if (typeof window === "undefined" || typeof document === "undefined") {
+  if (typeof window === 'undefined' || typeof document === 'undefined') {
     return
   }
 
   const root = document.documentElement
 
   if (expanded) {
-    root.dataset.prismWidgetExpanded = "true"
+    root.dataset.prismWidgetExpanded = 'true'
   } else {
     delete root.dataset.prismWidgetExpanded
   }
 
   window.dispatchEvent(
-    new CustomEvent("prism-widget-expanded-change", {
+    new CustomEvent('prism-widget-expanded-change', {
       detail: { expanded },
     }),
   )

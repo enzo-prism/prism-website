@@ -11,6 +11,39 @@ Guidance for future Codex sessions so we can ship faster without rediscovering c
 - **UI kit** – `components/ui/*` (Button, Carousel, etc.). Import from there instead of re‑implementing.
 - **Forms** – Marketing forms post to [Formspree](https://formspree.io/) using the shared `useFormValidation` hook (HTML5 validation + client-side fetch + redirect). Keep actions and field names explicit so PMs can read submissions quickly.
 
+## 1.1 ElevenLabs widget workflow
+
+When a task touches the live assistant surface, start with the current ownership map instead of searching blindly:
+
+- `lib/elevenlabs-widget.ts` – canonical live public widget config (public agent id, markdown-link host allowlist, public kill switch)
+- `components/elevenlabs/ElevenLabsWidget.tsx` – stock custom-element wrapper + host-style enforcement after the widget upgrades
+- `components/home/HomeHeroAgent.tsx` – homepage inline expanded hero embed
+- `components/global-elevenlabs-widget.tsx` – floating stock widget on all non-homepage routes
+- `types/elevenlabs-widget.d.ts` – JSX typing for `<elevenlabs-convai>`
+- `lib/elevenlabs.ts` – legacy deterministic/backend-era helpers; not the primary place for live stock-widget config anymore
+
+Rules that will save you time:
+
+- Treat the stock widget as an opinionated vendor surface. Prefer documented attributes and host-level wrapper styles only.
+- Do not style the widget Shadow DOM unless there is no other path and the product decision is explicit.
+- Homepage invariant: the widget host must stay scoped to `.home-hero-agent` so it scrolls away with the hero.
+- Inner-page invariant: the floating widget host must stay above the site chrome in the visible widget region.
+- The stock widget is not a documented full-screen page-blocking modal scrim. If product wants that, push toward ElevenLabs' official SDK/UI layer instead of stretching the stock embed.
+
+Verification path for widget bugs:
+
+1. Run `pnpm build`.
+2. Run `pnpm start -p <port>`.
+3. Run `pnpm exec jest __tests__/components/HomeHeroAgent.test.tsx __tests__/components/GlobalElevenLabsWidget.test.tsx --runInBand`.
+4. Run `pnpm exec jest __tests__/lib/elevenlabs.test.ts --runInBand`.
+5. Run `CI=1 PLAYWRIGHT_PORT=3315 pnpm exec playwright test __tests__/visual/global-elevenlabs-widget.spec.ts --project=desktop-chromium --workers=1`.
+
+Why this matters:
+
+- `next start` serves the last production build on disk, so rebuild first or changes will look ignored.
+- The ElevenLabs custom element can behave differently under the production bundle than under `pnpm dev` / Fast Refresh.
+- The current visual spec already checks the two key regressions: homepage section scoping and inner-page top-layer ownership.
+
 ## 2. Dental photography surfaces
 
 We now have four tightly coupled routes – keep their navigation in sync.
