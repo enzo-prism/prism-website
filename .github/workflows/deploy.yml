@@ -72,19 +72,35 @@ jobs:
 
       - name: Vercel Pull (Production)
         run: |
+          success=false
           for i in 1 2 3; do
-            npx vercel pull --yes --environment=production --token "$VERCEL_TOKEN" && break
+            if npx vercel pull --yes --environment=production --token "$VERCEL_TOKEN"; then
+              success=true
+              break
+            fi
             echo "Attempt $i failed, retrying in 10s..."
             sleep 10
           done
+          if [ "$success" = false ]; then
+            echo "All Vercel Pull attempts failed"
+            exit 1
+          fi
 
       - name: Verify pricing consistency
         run: pnpm verify:pricing-consistency
 
       - name: Deploy to Production
         run: |
+          success=false
           for i in 1 2 3; do
-            npx vercel deploy --prod --yes --token "$VERCEL_TOKEN" && break
+            if npx vercel deploy --prod --yes --token "$VERCEL_TOKEN"; then
+              success=true
+              break
+            fi
             echo "Deploy attempt $i failed, retrying in 15s..."
             sleep 15
           done
+          if [ "$success" = false ]; then
+            echo "All deploy attempts failed"
+            exit 1
+          fi
