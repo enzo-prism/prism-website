@@ -36,7 +36,7 @@ The repo assumes pnpm; npm/yarn installs will fall out of sync.
 
 - `app/get-started/page.tsx` is now a booking-led server-rendered page and does not depend on any legacy route-level assistant gating.
 - `components/runtime-client-shell.tsx` injects the stock ElevenLabs embed script once and mounts `components/global-elevenlabs-widget.tsx` across inner pages, including `/get-started`.
-- `components/global-elevenlabs-widget.tsx` intentionally skips only the homepage so `/` can own the expanded hero experience while other routes keep the bottom-right floating widget.
+- `components/global-elevenlabs-widget.tsx` intentionally skips only the homepage so `/` can own the expanded hero experience while other routes keep the bottom-right floating widget. It now records the first route of the tab session, opens the floating widget by default when a visit begins on `/`, keeps direct inner-page landings closed by default, and persists later manual expand/collapse choices in browser storage.
 - `lib/elevenlabs-widget.ts` is the canonical source for live public widget config (agent id, allowed markdown-link hosts, public kill switch).
 - `components/elevenlabs/ElevenLabsWidget.tsx` stays intentionally thin and uses only documented stock-widget attributes. It also re-applies approved host-level styles after the custom element upgrades, because the vendor runtime overwrites host positioning. Use that path only for safe host concerns like homepage section scoping or inner-page z-index elevation; do not patch the widget Shadow DOM.
 - `types/elevenlabs-widget.d.ts` provides JSX typing for the `<elevenlabs-convai>` custom element. Keep it in sync if ElevenLabs introduces new documented attributes we adopt.
@@ -58,9 +58,9 @@ The repo assumes pnpm; npm/yarn installs will fall out of sync.
 ### ElevenLabs widget verification
 
 - For route-awareness, attribute changes, or layering fixes, run:
-  - `pnpm exec jest __tests__/components/HomeHeroAgent.test.tsx __tests__/components/GlobalElevenLabsWidget.test.tsx --runInBand`
+  - `pnpm exec jest __tests__/components/HomeHeroAgent.test.tsx __tests__/components/GlobalElevenLabsWidget.test.tsx __tests__/components/ElevenLabsWidget.test.tsx --runInBand`
   - `pnpm exec jest __tests__/lib/elevenlabs.test.ts --runInBand`
-  - `CI=1 PLAYWRIGHT_PORT=3315 pnpm exec playwright test __tests__/visual/global-elevenlabs-widget.spec.ts --project=desktop-chromium --workers=1`
+  - `pnpm test:visual:widget`
 - For visual/runtime bugs, prefer `pnpm build` followed by `pnpm start -p <port>` over `pnpm dev`. The stock ElevenLabs custom element can behave differently after the production bundle and its host styles may look "ignored" if you forget to rebuild before `next start`.
 - Expected runtime invariants:
   - On `/`, the widget host should resolve to `position: absolute`, `inset: 0`, and move with `.home-hero-agent` when the page scrolls.

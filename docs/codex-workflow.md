@@ -34,9 +34,9 @@ Verification path for widget bugs:
 
 1. Run `pnpm build`.
 2. Run `pnpm start -p <port>`.
-3. Run `pnpm exec jest __tests__/components/HomeHeroAgent.test.tsx __tests__/components/GlobalElevenLabsWidget.test.tsx --runInBand`.
+3. Run `pnpm exec jest __tests__/components/HomeHeroAgent.test.tsx __tests__/components/GlobalElevenLabsWidget.test.tsx __tests__/components/ElevenLabsWidget.test.tsx --runInBand`.
 4. Run `pnpm exec jest __tests__/lib/elevenlabs.test.ts --runInBand`.
-5. Run `CI=1 PLAYWRIGHT_PORT=3315 pnpm exec playwright test __tests__/visual/global-elevenlabs-widget.spec.ts --project=desktop-chromium --workers=1`.
+5. Run `pnpm test:visual:widget`.
 
 Why this matters:
 

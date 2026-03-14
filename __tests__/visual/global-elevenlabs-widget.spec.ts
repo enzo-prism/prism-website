@@ -32,6 +32,12 @@ async function getWidgetState(page: import('@playwright/test').Page) {
     const floatingWidget = document.querySelector<HTMLElement>(
       '[data-testid="global-elevenlabs-widget"]',
     )
+    const floatingShadowButtons =
+      floatingWidget?.shadowRoot
+        ? Array.from(floatingWidget.shadowRoot.querySelectorAll('button')).map(
+            (button) => button.getAttribute('aria-label') ?? '',
+          )
+        : []
     const homeHero = document.querySelector('.home-hero-agent')
     const heroWidgetStyle = heroWidget
       ? window.getComputedStyle(heroWidget)
@@ -77,17 +83,58 @@ async function getWidgetState(page: import('@playwright/test').Page) {
       scriptCount: widgetScripts.length,
       scrollY: window.scrollY,
       widgetCount: widgets.length,
+      defaultExpandedCount: widgets.filter(
+        (widget) => widget.getAttribute('default-expanded') === 'true',
+      ).length,
       expandedCount: widgets.filter(
         (widget) => widget.getAttribute('variant') === 'expanded',
       ).length,
       defaultFloatingCount: widgets.filter(
         (widget) => !widget.hasAttribute('variant'),
       ).length,
+      floatingButtonLabels: floatingShadowButtons,
+      collapseButtonCount: floatingShadowButtons.filter(
+        (label) => label === 'Collapse',
+      ).length,
     }
   })
 }
 
-test('ElevenLabs widget stays route-aware while the homepage keeps the inline hero experience', async ({
+test('ElevenLabs widget stays closed for first-touch inner-page landings', async ({
+  page,
+}) => {
+  await page.goto('/about', { waitUntil: 'domcontentloaded' })
+  await expect(
+    page.getByRole('heading', { level: 1, name: /our story/i }),
+  ).toBeVisible({ timeout: 20_000 })
+  await expect
+    .poll(async () => getWidgetState(page), { timeout: 20_000 })
+    .toMatchObject({
+      customElementDefined: true,
+      floatingHostPosition: 'fixed',
+      floatingHostZIndex: '2147483000',
+      floatingTopElementTag: 'ELEVENLABS-CONVAI',
+      floatingTopElementTestId: 'global-elevenlabs-widget',
+      widgetCount: 1,
+      scriptCount: 1,
+      defaultExpandedCount: 0,
+      expandedCount: 0,
+      defaultFloatingCount: 1,
+      heroWidgetCount: 0,
+      floatingWidgetCount: 1,
+      collapseButtonCount: 0,
+    })
+  await expect
+    .poll(async () => getWidgetState(page), { timeout: 20_000 })
+    .toEqual(
+      expect.objectContaining({
+        markdownLinkAllowHttpValues: ['false'],
+        markdownLinkIncludeWwwValues: ['true'],
+      }),
+    )
+})
+
+test('ElevenLabs widget keeps the homepage entry experience open across later routes in the same tab', async ({
   page,
 }) => {
   await page.goto('/', { waitUntil: 'domcontentloaded' })
@@ -144,10 +191,12 @@ test('ElevenLabs widget stays route-aware while the homepage keeps the inline he
       floatingTopElementTestId: 'global-elevenlabs-widget',
       widgetCount: 1,
       scriptCount: 1,
+      defaultExpandedCount: 1,
       expandedCount: 0,
       defaultFloatingCount: 1,
       heroWidgetCount: 0,
       floatingWidgetCount: 1,
+      collapseButtonCount: 1,
     })
   await expect
     .poll(async () => getWidgetState(page), { timeout: 20_000 })
@@ -185,10 +234,12 @@ test('ElevenLabs widget stays route-aware while the homepage keeps the inline he
       launcherCount: 0,
       widgetCount: 1,
       scriptCount: 1,
+      defaultExpandedCount: 1,
       expandedCount: 0,
       defaultFloatingCount: 1,
       heroWidgetCount: 0,
       floatingWidgetCount: 1,
+      collapseButtonCount: 1,
     })
   await expect
     .poll(async () => getWidgetState(page), { timeout: 20_000 })
@@ -208,10 +259,12 @@ test('ElevenLabs widget stays route-aware while the homepage keeps the inline he
       customElementDefined: true,
       widgetCount: 1,
       scriptCount: 1,
+      defaultExpandedCount: 1,
       expandedCount: 0,
       defaultFloatingCount: 1,
       heroWidgetCount: 0,
       floatingWidgetCount: 1,
+      collapseButtonCount: 1,
     })
   await expect
     .poll(async () => getWidgetState(page), { timeout: 20_000 })

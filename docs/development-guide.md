@@ -9,16 +9,16 @@ This guide highlights the workflows we lean on most often while iterating on the
 - If you use `pnpm exec next start` for a production-parity preview, always run `pnpm build` immediately beforehand. `next start` serves the last production bundle on disk, so source edits will appear "ignored" until you rebuild.
 - Run `pnpm lint` before committing so the shared Tailwind + ESLint rules stay consistent.
 - For `/get-started` or floating-widget assistant-surface changes, run:
-  - `pnpm exec jest __tests__/app/get-started.test.tsx __tests__/components/GlobalElevenLabsWidget.test.tsx`
-  - `pnpm exec playwright test __tests__/visual/global-elevenlabs-widget.spec.ts --project=desktop-chromium`
+  - `pnpm exec jest __tests__/app/get-started.test.tsx __tests__/components/GlobalElevenLabsWidget.test.tsx __tests__/components/ElevenLabsWidget.test.tsx --runInBand`
+  - `pnpm test:visual:widget`
 - For pricing-sensitive changes, run:
   - `pnpm verify:pricing-consistency`
 - For non-chat changes touching shared infrastructure, update and run the nearest smoke tests in the relevant package (`pnpm test`, `pnpm test:visual:locked`, etc.) before merging.
 - Run `pnpm test:visual:locked` before merging changes that touch the UI of `/`, `/about`, or `/pricing` (screenshot-locked routes).
-- `pnpm test:visual:locked` now builds with `NEXT_PUBLIC_ELEVENLABS_WIDGET_DISABLED=true` and boots an isolated `next start` server on port `3300`, so the locked route snapshots stay focused on first-party page chrome instead of the live third-party ElevenLabs overlay or whichever localhost server happens to already be running. Validate real widget behavior separately with the widget-specific Jest + Playwright checks above.
+- `pnpm test:visual:locked` now builds with `NEXT_PUBLIC_ELEVENLABS_WIDGET_DISABLED=true` and boots an isolated `next start` server on port `3300`, so the locked route snapshots stay focused on first-party page chrome instead of the live third-party ElevenLabs overlay or whichever localhost server happens to already be running. `pnpm test:visual:widget` does the inverse: it forces a fresh production build without the kill switch so the real widget behavior check never reuses a stale disabled bundle.
 - Run `pnpm test:visual` when you need broader visual coverage beyond the locked routes.
 - Run `pnpm exec playwright test __tests__/visual/blog-copy-markdown.spec.ts --project=desktop-chromium` when changing the blog markdown copy button or `/api/blog/[slug]/markdown`.
-- Run `pnpm exec playwright test __tests__/visual/global-elevenlabs-widget.spec.ts --project=desktop-chromium` when changing the route-aware ElevenLabs launcher outside the homepage hero.
+- Run `pnpm test:visual:widget` when changing the route-aware ElevenLabs launcher outside the homepage hero.
 - For blog-post content/frontmatter additions, run `pnpm exec jest __tests__/sitemap.test.ts __tests__/blog-canonical.test.ts --runInBand` as a fast regression check.
 
 ### Homepage hero agent checklist
@@ -32,14 +32,14 @@ This guide highlights the workflows we lean on most often while iterating on the
 - Avoid deep compact-mode geometry overrides inside the widget Shadow DOM. ElevenLabs treats the embed as an opinionated surface; keep homepage customization focused on wrapper sizing and supported attributes, and move heavier design customization to the official SDK/UI layer if we need a bespoke chat surface later.
 - The stock embed runtime forces its own host positioning, so `components/elevenlabs/ElevenLabsWidget.tsx` now re-applies only the host-level styles we actually need after the custom element mounts. Use that path for safe layer fixes like homepage section scoping or inner-page z-index elevation; do not reach into vendor shadow children for layout control.
 - The public agent id resolves via `lib/elevenlabs.ts` and can be overridden with `NEXT_PUBLIC_ELEVENLABS_AGENT_ID`.
-- `components/global-elevenlabs-widget.tsx` now renders the stock floating widget on every non-homepage route, including `/get-started`. Keep it out of the way on `/` so the homepage hero remains the primary experience, but do not add route-level suppression on `/get-started` unless the product direction explicitly changes again.
+- `components/global-elevenlabs-widget.tsx` now renders the stock floating widget on every non-homepage route, including `/get-started`. Keep it out of the way on `/` so the homepage hero remains the primary experience, but do not add route-level suppression on `/get-started` unless the product direction explicitly changes again. The floating widget now treats the first route in the current tab as its default-open signal: homepage-first visits open the inner-page widget by default, direct inner-page landings stay closed, and later user expand/collapse choices persist across future mounts.
 - The homepage widget host should stay absolutely scoped to the `.home-hero-agent` container so it scrolls with the hero instead of floating above later sections, while the global floating host should stay at a top-most z-index so nav, skip links, charts, and other fixed site chrome never render above the expanded widget.
 - The runtime shell loads the official widget embed script once via `components/elevenlabs/ElevenLabsWidget.tsx`, then both homepage and inner-page widgets reuse that same stock embed path.
 - `NEXT_PUBLIC_ELEVENLABS_WIDGET_DISABLED` exists as a deliberate debug/test seam. When set to a truthy value, the stock embed script, homepage hero widget, and floating widget all stay unmounted so deterministic visual builds do not bake live vendor UI into locked snapshots.
 - `components/elevenlabs/PrismElevenLabsPanel.tsx` and the richer client-tool helpers in `lib/elevenlabs.ts` remain in the repo as exploratory/legacy paths, but they are not mounted in production right now. Do not swap them back in casually when the product goal is "look and behave like the official widget."
 - In dev, the stock widget may log `[ConversationalAI] Cannot fetch config for agent ... signal is aborted without reason` during Fast Refresh or unmount cleanup. The current ElevenLabs bundle aborts its own config fetch on cleanup, so treat that message as harmless if the widget still renders and `pnpm build` + `pnpm start` are clean.
 - If you change hero copy/layout, update the locked-route snapshot test and re-run `pnpm test:visual:locked`.
-- If you change the homepage or global widget interaction model, re-run `pnpm exec jest __tests__/components/HomeHeroAgent.test.tsx __tests__/components/GlobalElevenLabsWidget.test.tsx`.
+- If you change the homepage or global widget interaction model, re-run `pnpm exec jest __tests__/components/HomeHeroAgent.test.tsx __tests__/components/GlobalElevenLabsWidget.test.tsx __tests__/components/ElevenLabsWidget.test.tsx`.
 - For z-index, scrolling, or layout bugs involving the stock widget, validate against a fresh production bundle: `pnpm build && pnpm start -p <port>`. `next start` serves the last production build on disk, and the ElevenLabs custom element can behave differently from `pnpm dev` / Fast Refresh.
 - The fastest runtime sanity checks are:
   - homepage: widget host should compute to `position: absolute`, `inset: 0`, and share the same rect as `.home-hero-agent`

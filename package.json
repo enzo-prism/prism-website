@@ -16,6 +16,7 @@
     "test": "jest",
     "test:visual": "pnpm build && playwright test",
     "test:visual:update": "pnpm build && playwright test --update-snapshots",
+    "test:visual:widget": "pnpm build && CI=1 PLAYWRIGHT_PORT=3315 pnpm exec playwright test __tests__/visual/global-elevenlabs-widget.spec.ts --project=desktop-chromium --workers=1",
     "test:visual:locked": "NEXT_PUBLIC_ELEVENLABS_WIDGET_DISABLED=true pnpm build && PLAYWRIGHT_PORT=3300 NEXT_PUBLIC_ELEVENLABS_WIDGET_DISABLED=true pnpm exec playwright test -c playwright.locked.config.ts",
     "test:visual:locked:update": "NEXT_PUBLIC_ELEVENLABS_WIDGET_DISABLED=true pnpm build && PLAYWRIGHT_PORT=3300 NEXT_PUBLIC_ELEVENLABS_WIDGET_DISABLED=true pnpm exec playwright test -c playwright.locked.config.ts --update-snapshots",
     "mcp:setup": "node scripts/setup-mcp.js",

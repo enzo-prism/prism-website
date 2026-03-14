@@ -8,6 +8,7 @@ declare module 'react/jsx-runtime' {
         HTMLElement
       > & {
         'agent-id'?: string
+        'default-expanded'?: string
         dismissible?: string
         'data-testid'?: string
         'markdown-link-allow-http'?: string
