@@ -1,0 +1,433 @@
+.root {
+  display: block;
+  height: 100%;
+  width: 100%;
+  pointer-events: none;
+}
+
+.wrapper {
+  height: 100%;
+  width: 100%;
+  transform: translateZ(0);
+  transition:
+    transform 640ms cubic-bezier(0.22, 1, 0.36, 1),
+    filter 520ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform, filter;
+}
+
+.svg {
+  display: block;
+  height: 100%;
+  width: 100%;
+  overflow: visible;
+  shape-rendering: geometricPrecision;
+  text-rendering: geometricPrecision;
+}
+
+.motion {
+  transform-box: fill-box;
+  transform-origin: center;
+  transition:
+    transform 640ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 520ms cubic-bezier(0.22, 1, 0.36, 1),
+    filter 520ms cubic-bezier(0.22, 1, 0.36, 1),
+    stroke-dashoffset 640ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform, opacity, filter;
+}
+
+.originLeft {
+  transform-box: fill-box;
+  transform-origin: left center;
+}
+
+.originBottom {
+  transform-box: fill-box;
+  transform-origin: center bottom;
+}
+
+.outline,
+.subtle,
+.accent,
+.accentSoft {
+  vector-effect: non-scaling-stroke;
+  transition:
+    color 320ms ease,
+    opacity 520ms cubic-bezier(0.22, 1, 0.36, 1),
+    filter 520ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.outline {
+  color: rgba(113, 113, 122, 0.82);
+}
+
+.subtle {
+  color: rgb(161, 161, 170);
+}
+
+.accent {
+  color: rgb(251, 146, 60);
+}
+
+.accentSoft {
+  color: rgba(253, 186, 116, 0.9);
+}
+
+.accent {
+  transition:
+    color 320ms ease,
+    opacity 520ms cubic-bezier(0.22, 1, 0.36, 1),
+    filter 520ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 640ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.delay1 {
+  transition-delay: 50ms;
+}
+
+.delay2 {
+  transition-delay: 90ms;
+}
+
+.delay3 {
+  transition-delay: 130ms;
+}
+
+.webPulse {
+  transform: scale(0.72);
+}
+
+.visibilityHalo {
+  transform: scale(0.8);
+}
+
+.adsPulse {
+  transform: scale(0.55);
+}
+
+.analyticsPanel {
+  transform: scaleY(0.58);
+}
+
+.aiRing {
+  transform: scale(0.72);
+}
+
+.aiConfirm {
+  opacity: 0.32;
+  transform: scaleX(0.72);
+}
+
+:global(.group:hover) .wrapper,
+:global(.group:active) .wrapper {
+  transform: translateY(-1px) scale(1.012);
+  filter: saturate(1.035);
+}
+
+:global(.group:hover) .outline,
+:global(.group:active) .outline {
+  color: rgba(212, 212, 216, 0.96);
+}
+
+:global(.group:hover) .subtle,
+:global(.group:active) .subtle {
+  color: rgb(228, 228, 231);
+}
+
+:global(.group:hover) .accentSoft,
+:global(.group:active) .accentSoft {
+  color: rgba(253, 186, 116, 1);
+}
+
+:global(.group:hover) .accent,
+:global(.group:active) .accent {
+  color: rgb(255, 158, 74);
+}
+
+:global(.group:hover) .webShell,
+:global(.group:active) .webShell {
+  transform: rotate(-3deg) translateY(-0.5px);
+}
+
+:global(.group:hover) .webCore,
+:global(.group:active) .webCore {
+  transform: scale(1.24);
+  filter: drop-shadow(0 0 8px rgba(251, 146, 60, 0.88));
+}
+
+:global(.group:hover) .webPulse,
+:global(.group:active) .webPulse {
+  opacity: 0.58;
+  transform: scale(1.12);
+}
+
+:global(.group:hover) .webNodeTop,
+:global(.group:active) .webNodeTop {
+  transform: translateY(-2px);
+}
+
+:global(.group:hover) .webNodeLeft,
+:global(.group:active) .webNodeLeft {
+  transform: translate(-1.5px, 0.75px);
+}
+
+:global(.group:hover) .webNodeRight,
+:global(.group:active) .webNodeRight {
+  transform: translate(1.5px, 1px);
+}
+
+:global(.group:hover) .visibilityChipTop,
+:global(.group:active) .visibilityChipTop {
+  transform: translateX(5px);
+}
+
+:global(.group:hover) .visibilityChipMid,
+:global(.group:active) .visibilityChipMid {
+  transform: translateX(-3px) scale(1.06);
+}
+
+:global(.group:hover) .visibilityChipBottom,
+:global(.group:active) .visibilityChipBottom {
+  transform: translateX(7px);
+}
+
+:global(.group:hover) .visibilityHalo,
+:global(.group:active) .visibilityHalo {
+  opacity: 0.72;
+  transform: scale(1.08);
+}
+
+:global(.group:hover) .adsTrend,
+:global(.group:active) .adsTrend {
+  transform: translate(-0.25px, -1px) scale(1.015);
+}
+
+:global(.group:hover) .adsDotWrap,
+:global(.group:active) .adsDotWrap {
+  transform: translate(16px, -9px) scale(1.05);
+  filter: drop-shadow(0 0 10px rgba(251, 146, 60, 0.7));
+}
+
+:global(.group:hover) .adsPulse,
+:global(.group:active) .adsPulse {
+  opacity: 0.68;
+  transform: scale(1.48);
+}
+
+:global(.group:hover) .analyticsFrame,
+:global(.group:active) .analyticsFrame {
+  transform: translateY(-1px);
+}
+
+:global(.group:hover) .analyticsTileSmall,
+:global(.group:active) .analyticsTileSmall {
+  transform: translate(-1px, -0.75px) scale(1.025);
+}
+
+:global(.group:hover) .analyticsTileTall,
+:global(.group:active) .analyticsTileTall {
+  transform: translate(1px, -1.5px) scale(1.04);
+}
+
+:global(.group:hover) .analyticsPanel,
+:global(.group:active) .analyticsPanel {
+  opacity: 1;
+  transform: scaleY(1);
+}
+
+:global(.group:hover) .analyticsSpark,
+:global(.group:active) .analyticsSpark {
+  opacity: 0.9;
+  transform: translateX(0.75px);
+}
+
+:global(.group:hover) .aiWaveOuter,
+:global(.group:active) .aiWaveOuter {
+  transform: translateX(-1.5px) scale(1.08);
+  opacity: 0.88;
+}
+
+:global(.group:hover) .aiWaveInner,
+:global(.group:active) .aiWaveInner {
+  transform: translateX(-0.75px) scale(1.05);
+  opacity: 0.96;
+}
+
+:global(.group:hover) .aiOrbWrap,
+:global(.group:active) .aiOrbWrap {
+  transform: scale(1.05);
+}
+
+:global(.group:hover) .aiCore,
+:global(.group:active) .aiCore {
+  transform: scale(1.2);
+}
+
+:global(.group:hover) .aiRing,
+:global(.group:active) .aiRing {
+  opacity: 0.76;
+  transform: scale(1.08);
+}
+
+:global(.group:hover) .aiBeam,
+:global(.group:active) .aiBeam {
+  transform: scaleX(1.06);
+}
+
+:global(.group:hover) .aiBooking,
+:global(.group:active) .aiBooking {
+  transform: translate(11px, -2px) scale(1.04);
+  filter: drop-shadow(0 0 8px rgba(251, 146, 60, 0.72));
+}
+
+:global(.group:hover) .aiCalendar,
+:global(.group:active) .aiCalendar {
+  transform: translateY(0.5px);
+}
+
+:global(.group:hover) .aiConfirm,
+:global(.group:active) .aiConfirm {
+  opacity: 1;
+  transform: scaleX(1);
+}
+
+:global(.group:hover) .aiSlotPrimary,
+:global(.group:active) .aiSlotPrimary {
+  opacity: 0.15;
+}
+
+:global(.group:active) .wrapper {
+  transform: translateY(0.5px) scale(0.995);
+  filter: saturate(1.015);
+}
+
+:global(.group:active) .webShell {
+  transform: rotate(-1.5deg);
+}
+
+:global(.group:active) .webCore {
+  transform: scale(1.14);
+  filter: drop-shadow(0 0 6px rgba(251, 146, 60, 0.7));
+}
+
+:global(.group:active) .webPulse {
+  opacity: 0.42;
+  transform: scale(1.02);
+}
+
+:global(.group:active) .webNodeTop,
+:global(.group:active) .webNodeLeft,
+:global(.group:active) .webNodeRight {
+  transform: none;
+}
+
+:global(.group:active) .visibilityChipTop {
+  transform: translateX(3px);
+}
+
+:global(.group:active) .visibilityChipMid {
+  transform: translateX(-2px) scale(1.03);
+}
+
+:global(.group:active) .visibilityChipBottom {
+  transform: translateX(4px);
+}
+
+:global(.group:active) .visibilityHalo {
+  opacity: 0.54;
+  transform: scale(0.98);
+}
+
+:global(.group:active) .adsTrend {
+  transform: translateY(-0.5px) scale(1.01);
+}
+
+:global(.group:active) .adsDotWrap {
+  transform: translate(12px, -6px) scale(1.03);
+  filter: drop-shadow(0 0 6px rgba(251, 146, 60, 0.52));
+}
+
+:global(.group:active) .adsPulse {
+  opacity: 0.5;
+  transform: scale(1.2);
+}
+
+:global(.group:active) .analyticsTileSmall {
+  transform: translate(-0.5px, -0.5px) scale(1.015);
+}
+
+:global(.group:active) .analyticsTileTall {
+  transform: translate(0.5px, -1px) scale(1.025);
+}
+
+:global(.group:active) .analyticsPanel {
+  opacity: 0.92;
+  transform: scaleY(0.9);
+}
+
+:global(.group:active) .analyticsSpark {
+  opacity: 0.76;
+  transform: none;
+}
+
+:global(.group:active) .aiWaveOuter {
+  transform: translateX(-0.75px) scale(1.04);
+  opacity: 0.74;
+}
+
+:global(.group:active) .aiWaveInner {
+  transform: translateX(-0.4px) scale(1.02);
+  opacity: 0.86;
+}
+
+:global(.group:active) .aiOrbWrap {
+  transform: scale(1.03);
+}
+
+:global(.group:active) .aiCore {
+  transform: scale(1.12);
+}
+
+:global(.group:active) .aiRing {
+  opacity: 0.62;
+  transform: scale(1.02);
+}
+
+:global(.group:active) .aiBeam {
+  transform: scaleX(1.03);
+}
+
+:global(.group:active) .aiBooking {
+  transform: translate(8px, -1px) scale(1.02);
+  filter: drop-shadow(0 0 6px rgba(251, 146, 60, 0.56));
+}
+
+:global(.group:active) .aiCalendar {
+  transform: none;
+}
+
+:global(.group:active) .aiConfirm {
+  opacity: 0.86;
+}
+
+:global(.group:active) .aiSlotPrimary {
+  opacity: 0.26;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wrapper,
+  .motion,
+  .outline,
+  .subtle,
+  .accent,
+  .accentSoft {
+    transition: none !important;
+  }
+
+  :global(.group:hover) .wrapper,
+  :global(.group:active) .wrapper,
+  :global(.group:hover) .motion,
+  :global(.group:active) .motion {
+    transform: none !important;
+    filter: none !important;
+  }
+}
