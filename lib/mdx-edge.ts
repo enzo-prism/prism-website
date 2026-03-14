@@ -9,6 +9,11 @@ const blogPosts = {
     category: "AI & Dentistry",
     gradientClass: "bg-gradient-to-br from-rose-300/30 via-amber-300/30 to-emerald-300/30",
   },
+  'how-to-grow-an-audience-in-2026': {
+    title: "How to Grow an Audience in 2026: A Founder's Guide to Relevance, Trust, and Revenue",
+    category: "Content Strategy",
+    gradientClass: "bg-gradient-to-br from-amber-300/30 via-lime-300/30 to-sky-300/30",
+  },
   '2026-belongs-to-the-founders-who-can-delegate': {
     title: "2026 belongs to the founders who can delegate",
     category: "Entrepreneurship",
