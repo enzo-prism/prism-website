@@ -20,7 +20,7 @@ const agentCapabilities = [
   {
     title: "smart actions",
     description:
-      "agents don't just talk \u2014 they book appointments, check availability, route calls, collect information, and trigger workflows in your existing systems.",
+      "agents don\u2019t just talk \u2014 they book appointments, check availability, route calls, collect information, and trigger workflows in your existing systems.",
     highlights: [
       "Real-time calendar and CRM integrations",
       "Automated follow-ups and confirmations",
@@ -103,12 +103,12 @@ const whyPrism = [
   {
     title: "elevenlabs certified partner",
     description:
-      "we work directly with elevenlabs' commercial partner program, giving you access to priority support, advanced features, and best practices.",
+      "we work directly with elevenlabs\u2019 commercial partner program, giving you access to priority support, advanced features, and best practices.",
   },
   {
     title: "full-stack implementation",
     description:
-      "we don't just configure a chatbot \u2014 we build complete voice agent systems with crm integrations, custom workflows, analytics dashboards, and ongoing optimization.",
+      "we don\u2019t just configure a chatbot \u2014 we build complete voice agent systems with crm integrations, custom workflows, analytics dashboards, and ongoing optimization.",
   },
   {
     title: "small business focused",
@@ -141,7 +141,7 @@ export default function AIAgentsPage() {
             <div className="mx-auto max-w-3xl text-center">
               <p className="text-xs uppercase tracking-[0.35em] text-neutral-400">elevenlabs certified partner</p>
               <h1 className="mt-4 text-4xl font-semibold lowercase tracking-tight text-neutral-900 sm:text-5xl">
-                ai voice agents that answer, book, and convert \u2014 24/7
+                ai voice agents that answer, book, and convert{" "}\u2014 24/7
               </h1>
               <p className="mt-4 text-base text-neutral-600 sm:text-lg">
                 prism builds custom elevenlabs ai agents for small and medium businesses. your customers get instant,
