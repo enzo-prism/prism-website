@@ -3,8 +3,9 @@ import RebelliousAgingCaseStudy from "./client-page"
 import { buildRouteMetadata } from "@/lib/seo/metadata"
 
 export const metadata: Metadata = buildRouteMetadata({
-  titleStem: "rebellious aging case study — community platform foundations",
-  description: "how prism is building a welcoming digital home for rebellious aging with a refreshed website, clear journeys, and local discovery groundwork.",
+  titleStem: "Rebellious Aging Case Study",
+  description:
+    "How Prism built an audience platform for Rebellious Aging — a contrarian wellness brand challenging how people think about getting older. Brand design, custom website, SEO/AEO, and enterprise analytics.",
   path: "/case-studies/rebellious-aging",
 })
 
