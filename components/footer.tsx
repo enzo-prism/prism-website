@@ -142,7 +142,7 @@ export default function Footer() {
 
         <div className="mt-12 flex flex-col gap-5 border-t border-border/60 pt-6 text-sm md:flex-row md:items-center md:justify-between">
           <div className="space-y-2 text-muted-foreground">
-            <p>Prism \u00a9 2023-{currentYear}. All rights reserved.</p>
+            <p>Prism © 2023-{currentYear}. All rights reserved.</p>
             <p className="text-xs">Built in Silicon Valley. Serving teams worldwide.</p>
             <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs">
               <Link href="/privacy-policy" className="hover:text-foreground">
