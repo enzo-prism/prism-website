@@ -1,11 +1,15 @@
 "use client"
 
+import { track as trackVercel } from "@vercel/analytics"
+
 import { GA_MEASUREMENT_ID, IS_ANALYTICS_ENABLED } from "@/lib/constants"
+import { getAttributionContext } from "@/lib/marketing-attribution"
+import { buildVercelCustomEvent } from "@/lib/vercel-analytics"
 import { addBreadcrumb, captureErrorWithContext, isSentryInitialized } from "./sentry-helpers"
 
 declare global {
   interface Window {
-    dataLayer?: Record<string, any>[]
+    dataLayer?: any[]
     gtag?: (...args: any[]) => void
     rewardful?: (...args: any[]) => void
     __PRISM_LAST_PAGEVIEW?: {
@@ -15,102 +19,17 @@ declare global {
   }
 }
 
-type AttributionPayload = {
-  utm_source?: string
-  utm_medium?: string
-  utm_campaign?: string
-  utm_content?: string
-  utm_term?: string
-  gclid?: string
-  fbclid?: string
-  msclkid?: string
-  landing_path?: string
-  first_touch_source?: string
-  first_touch_medium?: string
-  first_touch_campaign?: string
-  first_touch_at?: string
-}
-
-const ATTRIBUTION_STORAGE_KEY = "prism_attribution_v1"
-const ATTRIBUTION_TTL_MS = 30 * 24 * 60 * 60 * 1000
-
-function parseAttributionFromUrl(): AttributionPayload {
-  if (typeof window === "undefined") return {}
-
-  const params = new URLSearchParams(window.location.search)
-  return {
-    utm_source: params.get("utm_source") ?? undefined,
-    utm_medium: params.get("utm_medium") ?? undefined,
-    utm_campaign: params.get("utm_campaign") ?? undefined,
-    utm_content: params.get("utm_content") ?? undefined,
-    utm_term: params.get("utm_term") ?? undefined,
-    gclid: params.get("gclid") ?? undefined,
-    fbclid: params.get("fbclid") ?? undefined,
-    msclkid: params.get("msclkid") ?? undefined,
-  }
-}
-
-function readStoredAttribution(): (AttributionPayload & { savedAt?: number }) | null {
+function getGtag() {
   if (typeof window === "undefined") return null
-  try {
-    const raw = window.localStorage.getItem(ATTRIBUTION_STORAGE_KEY)
-    if (!raw) return null
-    const parsed = JSON.parse(raw) as AttributionPayload & { savedAt?: number }
-    if (!parsed.savedAt || Date.now() - parsed.savedAt > ATTRIBUTION_TTL_MS) {
-      window.localStorage.removeItem(ATTRIBUTION_STORAGE_KEY)
-      return null
+
+  window.dataLayer = window.dataLayer || []
+  if (typeof window.gtag !== "function") {
+    window.gtag = (...args: any[]) => {
+      window.dataLayer?.push(args)
     }
-    return parsed
-  } catch {
-    return null
   }
-}
 
-function writeStoredAttribution(payload: AttributionPayload) {
-  if (typeof window === "undefined") return
-  try {
-    const existing = readStoredAttribution() ?? {}
-    const merged: AttributionPayload & { savedAt: number } = {
-      ...existing,
-      ...payload,
-      landing_path: existing.landing_path ?? window.location.pathname,
-      first_touch_source: existing.first_touch_source ?? payload.utm_source,
-      first_touch_medium: existing.first_touch_medium ?? payload.utm_medium,
-      first_touch_campaign: existing.first_touch_campaign ?? payload.utm_campaign,
-      first_touch_at: existing.first_touch_at ?? new Date().toISOString(),
-      savedAt: Date.now(),
-    }
-    window.localStorage.setItem(ATTRIBUTION_STORAGE_KEY, JSON.stringify(merged))
-  } catch {
-    // no-op
-  }
-}
-
-function getAttributionContext(): AttributionPayload {
-  if (typeof window === "undefined") return {}
-
-  const fromUrl = parseAttributionFromUrl()
-  const hasCampaignParams = Boolean(
-    fromUrl.utm_source || fromUrl.utm_medium || fromUrl.utm_campaign || fromUrl.gclid || fromUrl.fbclid || fromUrl.msclkid,
-  )
-  if (hasCampaignParams) writeStoredAttribution(fromUrl)
-
-  const stored = readStoredAttribution() ?? {}
-  return {
-    utm_source: fromUrl.utm_source ?? stored.utm_source,
-    utm_medium: fromUrl.utm_medium ?? stored.utm_medium,
-    utm_campaign: fromUrl.utm_campaign ?? stored.utm_campaign,
-    utm_content: fromUrl.utm_content ?? stored.utm_content,
-    utm_term: fromUrl.utm_term ?? stored.utm_term,
-    gclid: fromUrl.gclid ?? stored.gclid,
-    fbclid: fromUrl.fbclid ?? stored.fbclid,
-    msclkid: fromUrl.msclkid ?? stored.msclkid,
-    landing_path: stored.landing_path,
-    first_touch_source: stored.first_touch_source,
-    first_touch_medium: stored.first_touch_medium,
-    first_touch_campaign: stored.first_touch_campaign,
-    first_touch_at: stored.first_touch_at,
-  }
+  return window.gtag
 }
 
 // Custom event types
@@ -162,6 +81,15 @@ export function trackEvent(eventName: EventType, params?: Record<string, any>) {
     console.log(`[Analytics] Tracked event: ${eventName}`, enhancedParams)
   }
 
+  const vercelEvent = buildVercelCustomEvent(eventName, enhancedParams)
+  if (vercelEvent) {
+    try {
+      trackVercel(vercelEvent.name, vercelEvent.properties)
+    } catch (error) {
+      console.error("[Analytics] Error tracking Vercel event:", error)
+    }
+  }
+
   if (!IS_ANALYTICS_ENABLED) {
     return
   }
@@ -169,9 +97,7 @@ export function trackEvent(eventName: EventType, params?: Record<string, any>) {
   try {
     window.dataLayer = window.dataLayer || []
     window.dataLayer.push({ event: eventName, ...enhancedParams })
-    if (typeof window.gtag === "function") {
-      window.gtag("event", eventName, enhancedParams)
-    }
+    getGtag()?.("event", eventName, enhancedParams)
   } catch (error) {
     console.error("[Analytics] Error tracking event:", error)
   }
@@ -210,8 +136,8 @@ export function trackPageView(path: string, title: string) {
     page_location: pageLocation,
   })
 
-  if (IS_ANALYTICS_ENABLED && typeof window.gtag === "function") {
-    window.gtag("config", GA_MEASUREMENT_ID, {
+  if (IS_ANALYTICS_ENABLED) {
+    getGtag()?.("config", GA_MEASUREMENT_ID, {
       page_path: normalizedPath,
       page_title: pageTitle,
       page_location: pageLocation,

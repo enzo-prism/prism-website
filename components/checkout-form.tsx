@@ -9,6 +9,8 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
+import { getSubmissionAttribution } from "@/lib/marketing-attribution"
+import { trackFormSubmission } from "@/utils/analytics"
 import PixelishImg from "@/components/pixelish/PixelishImg"
 import { cn } from "@/lib/utils"
 
@@ -49,6 +51,7 @@ export default function CheckoutForm({ plan }: CheckoutFormProps) {
         body: JSON.stringify({
           plan: plan,
           ...formData,
+          ...getSubmissionAttribution(),
         }),
       })
 
@@ -60,6 +63,7 @@ export default function CheckoutForm({ plan }: CheckoutFormProps) {
       }
 
       setStatus("success")
+      trackFormSubmission(`checkout_${plan}`, "checkout_form")
       router.push(`/checkout/${plan}/thank-you`)
     } catch (error) {
       console.error("Submission error:", error)

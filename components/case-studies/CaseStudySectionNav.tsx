@@ -211,7 +211,7 @@ export function CaseStudySectionNav({
 
           <div
             ref={listRef}
-            className="-mx-4 overflow-x-auto px-4 scrollbar-hide scroll-smooth motion-reduce:scroll-auto lg:mx-0 lg:px-0"
+            className="hidden lg:block lg:overflow-x-auto lg:scroll-smooth lg:motion-reduce:scroll-auto"
           >
             <ToggleGroup
               type="single"
@@ -223,7 +223,7 @@ export function CaseStudySectionNav({
               variant="outline"
               size="sm"
               wrap={false}
-              className="w-max justify-start gap-2"
+              className="w-max justify-start gap-2 pr-px"
               aria-label={ariaLabel}
             >
               {sections.map((section) => (

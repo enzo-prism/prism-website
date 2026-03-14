@@ -10,6 +10,7 @@ import "./globals.css"
 import { GlobalSchemaGraph } from "@/components/schema-markup"
 import RuntimeClientShell from "@/components/runtime-client-shell"
 import SkipToContent from "@/components/skip-to-content"
+import VercelAnalytics from "@/components/vercel-analytics"
 import { GA_MEASUREMENT_ID, GOOGLE_ADS_ID, IS_ANALYTICS_ENABLED } from "@/lib/constants"
 import { buildAbsoluteTitle, normalizeDescription } from "@/lib/seo/rules"
 
@@ -103,7 +104,7 @@ export default function RootLayout({
                   window.dataLayer = window.dataLayer || [];
                   function gtag(){dataLayer.push(arguments);}
                   gtag('js', new Date());
-                  gtag('config', '${GA_MEASUREMENT_ID}');
+                  gtag('config', '${GA_MEASUREMENT_ID}', { send_page_view: false });
                   gtag('config', '${GOOGLE_ADS_ID}');
                 `,
               }}
@@ -144,6 +145,7 @@ export default function RootLayout({
         <SkipToContent />
         <GlobalSchemaGraph />
         <RuntimeClientShell />
+        <VercelAnalytics />
         <Suspense fallback={null}>
           {children}
         </Suspense>

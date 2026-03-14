@@ -8,6 +8,7 @@ import { Label } from "@/components/ui/label"
 import { useEffect, useState } from "react"
 
 import { useFormValidation } from "@/hooks/use-form-validation"
+import { trackFormSubmission } from "@/utils/analytics"
 
 const challengeOptions = [
   { label: "Traffic", value: "traffic" },
@@ -38,6 +39,7 @@ export default function FreeAnalysisForm() {
         setSubmitError("We couldn't submit right now. Try again?")
         return
       }
+      trackFormSubmission("free_analysis", "free_analysis_form")
       router.push("/analysis-thank-you")
     },
   })

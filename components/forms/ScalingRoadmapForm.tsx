@@ -7,6 +7,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { useFormValidation } from "@/hooks/use-form-validation"
+import { trackFormSubmission } from "@/utils/analytics"
 
 const FORM_ACTION = "https://formspree.io/f/xojarwbg"
 const DEFAULT_REDIRECT = "https://www.design-prism.com/thank-you"
@@ -36,6 +37,7 @@ export default function ScalingRoadmapForm() {
           setSubmitError("We couldn't submit right now. Try again?")
           return
         }
+        trackFormSubmission("scaling_roadmap_homepage", "homepage_form")
         router.push("/thank-you")
       },
     })

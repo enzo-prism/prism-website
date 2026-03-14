@@ -9,6 +9,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { useEffect, useState } from "react"
 
 import { useFormValidation } from "@/hooks/use-form-validation"
+import { trackFormSubmission } from "@/utils/analytics"
 
 export default function ContactForm() {
   const router = useRouter()
@@ -32,6 +33,7 @@ export default function ContactForm() {
         setSubmitError("We couldn't submit right now. Try again?")
         return
       }
+      trackFormSubmission("contact", "contact_form")
       router.push("/thank-you")
     },
   })

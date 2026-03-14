@@ -27,11 +27,11 @@ export default function Breadcrumbs({ items, className }: { items: Breadcrumb[],
       <nav 
         aria-label="Breadcrumb" 
         className={cn(
-          "flex items-center overflow-x-auto scrollbar-hide py-3 mb-4 text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground font-pixel", 
+          "mb-4 flex w-full max-w-full min-w-0 items-center overflow-x-auto py-3 text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground scrollbar-hide font-pixel", 
           className
         )}
       >
-        <div className="flex items-center min-w-max">
+        <div className="inline-flex min-w-max items-center pr-1">
           {/* Home icon */}
           <Link 
             href="/" 
@@ -51,7 +51,7 @@ export default function Breadcrumbs({ items, className }: { items: Breadcrumb[],
                 
                 {isLastItem ? (
                   <span 
-                    className="truncate max-w-[200px] sm:max-w-md md:max-w-xl text-foreground" 
+                    className="max-w-[calc(100vw-13rem)] truncate text-foreground sm:max-w-md md:max-w-xl" 
                     aria-current="page"
                     title={item.name}
                   >

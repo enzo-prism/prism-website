@@ -65,20 +65,20 @@ export default function LagunaBeachDentalArtsCaseStudy() {
             <div className="col-span-1 lg:col-span-4">
               {/* Key Stats */}
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 my-8 text-center border-t pt-8">
-                <div className="border p-4 rounded-md">
-                  <div className="text-2xl font-bold mb-1 lowercase">100%</div>
+                <div className="min-w-0 rounded-md border p-4">
+                  <div className="mb-1 break-words text-2xl font-bold lowercase">100%</div>
                   <div className="text-sm text-neutral-600 lowercase">retained patient continuity post‑m&a</div>
                 </div>
-                <div className="border p-4 rounded-md">
-                  <div className="text-2xl font-bold mb-1 lowercase">first‑page</div>
+                <div className="min-w-0 rounded-md border p-4">
+                  <div className="mb-1 break-words text-2xl font-bold lowercase">first‑page</div>
                   <div className="text-sm text-neutral-600 lowercase">ranking for core local terms</div>
                 </div>
-                <div className="border p-4 rounded-md">
-                  <div className="text-2xl font-bold mb-1 lowercase">full‑funnel</div>
+                <div className="min-w-0 rounded-md border p-4">
+                  <div className="mb-1 break-words text-2xl font-bold lowercase">full‑funnel</div>
                   <div className="text-sm text-neutral-600 lowercase">analytics & attribution</div>
                 </div>
-                <div className="border p-4 rounded-md">
-                  <div className="text-2xl font-bold mb-1 lowercase">multi‑channel</div>
+                <div className="min-w-0 rounded-md border p-4">
+                  <div className="mb-1 break-words text-2xl font-bold lowercase">multi‑channel</div>
                   <div className="text-sm text-neutral-600 lowercase">organic + paid acquisition</div>
                 </div>
               </div>

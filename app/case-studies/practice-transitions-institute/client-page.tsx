@@ -170,13 +170,23 @@ export default function PracticeTransitionsInstituteCaseStudy() {
                 <div className="prose prose-neutral dark:prose-invert max-w-none space-y-4 lowercase">
                   <ul className="list-disc pl-5 space-y-2">
                     <li>
-                      <Link href="https://www.practicetransitionsinstitute.com" className="font-semibold text-neutral-900 underline underline-offset-4" target="_blank" rel="noreferrer">
+                      <Link
+                        href="https://www.practicetransitionsinstitute.com"
+                        className="break-words font-semibold text-neutral-900 underline underline-offset-4"
+                        target="_blank"
+                        rel="noreferrer"
+                      >
                         practicetransitionsinstitute.com
                       </Link>{" "}
                       — full site, process pages, and testimonials
                     </li>
                     <li>
-                      <Link href="https://www.practicetransitionsinstitute.com" className="font-semibold text-neutral-900 underline underline-offset-4" target="_blank" rel="noreferrer">
+                      <Link
+                        href="https://www.practicetransitionsinstitute.com"
+                        className="break-all font-semibold text-neutral-900 underline underline-offset-4 sm:break-words"
+                        target="_blank"
+                        rel="noreferrer"
+                      >
                         practicetransitionsinstitute.com/services
                       </Link>{" "}
                       — service-specific landing pages

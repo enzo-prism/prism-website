@@ -10,6 +10,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { cn } from "@/lib/utils"
 import { useFormValidation } from "@/hooks/use-form-validation"
+import { trackFormSubmission } from "@/utils/analytics"
 
 const FORM_ACTION = "https://formspree.io/f/xzdpoyer"
 const DEFAULT_REDIRECT = "https://www.design-prism.com/thank-you"
@@ -47,6 +48,7 @@ export default function GetStartedForm() {
         setSubmitError("We couldn't submit right now. Try again?")
         return
       }
+      trackFormSubmission("online_presence_transformation", "get_started_form")
       router.push("/thank-you")
     },
   })

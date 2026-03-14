@@ -2,6 +2,8 @@
 
 import { useState, useRef, useEffect } from "react"
 import Link from "next/link"
+import { appendAttributionToFormData } from "@/lib/marketing-attribution"
+import { trackFormSubmission } from "@/utils/analytics"
 import styles from "./prism-ai.module.css"
 
 const FORM_ACTION = "https://formspree.io/f/xzdpoyer"
@@ -134,6 +136,7 @@ export default function PrismAIClient() {
       payload.append("company_name", formData.companyName)
       payload.append("email", formData.email)
       payload.append("phone_number", formData.phoneNumber)
+      appendAttributionToFormData(payload)
 
       const response = await fetch(FORM_ACTION, {
         method: "POST",
@@ -144,6 +147,7 @@ export default function PrismAIClient() {
       })
 
       if (response.ok) {
+        trackFormSubmission("prism_ai_website_request", "prism_ai_flow")
         setIsSuccess(true)
       } else {
         throw new Error("Failed to submit form")

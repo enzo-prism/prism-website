@@ -1,8 +1,10 @@
 "use client"
 
 import type React from "react"
+import { useEffect } from "react"
 
 import { usePathname } from "next/navigation"
+import { syncFormAttributionFields } from "@/lib/marketing-attribution"
 import EnhancedAnalytics from "./enhanced-analytics"
 import ErrorTracker from "./error-tracker"
 import ScrollTracker from "./scroll-tracker"
@@ -13,6 +15,18 @@ interface AnalyticsProviderProps {
 
 export default function AnalyticsProvider({ children }: AnalyticsProviderProps) {
   const pathname = usePathname()
+
+  useEffect(() => {
+    const handleSubmit = (event: SubmitEvent) => {
+      if (!(event.target instanceof HTMLFormElement)) return
+      syncFormAttributionFields(event.target)
+    }
+
+    document.addEventListener("submit", handleSubmit, true)
+    return () => {
+      document.removeEventListener("submit", handleSubmit, true)
+    }
+  }, [])
 
   // Get page title from document or pathname
   const getPageTitle = () => {
