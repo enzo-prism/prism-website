@@ -3,8 +3,9 @@ import WeAreSaplingsCaseStudy from "./client-page"
 import { buildRouteMetadata } from "@/lib/seo/metadata"
 
 export const metadata: Metadata = buildRouteMetadata({
-  titleStem: "we are saplings case study — education platform foundations",
-  description: "see how prism is helping we are saplings launch a modern educational platform with clear storytelling and parent-friendly journeys.",
+  titleStem: "We Are Saplings Case Study",
+  description:
+    "How Prism built a joyful, mission-driven digital presence for We Are Saplings — a nature-based early childhood education program. Brand design, custom website, SEO/AEO, and enterprise analytics.",
   path: "/case-studies/we-are-saplings",
 })
 

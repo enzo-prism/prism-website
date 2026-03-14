@@ -1,13 +1,14 @@
 import type { Metadata } from "next"
-import CanaryCoveCaseStudy from "./client-page"
+import CanarycoveCaseStudy from "./client-page"
 import { buildRouteMetadata } from "@/lib/seo/metadata"
 
 export const metadata: Metadata = buildRouteMetadata({
-  titleStem: "canary cove case study — private retreat storytelling",
-  description: "see how prism is crafting a refined digital experience for canary cove with immersive visuals, booking clarity, and brand cohesion.",
+  titleStem: "Canary Cove Case Study",
+  description:
+    "How Prism built a property brand and digital presence for Canary Cove — a boutique residential development in coastal California. Brand design, custom website, SEO/AEO, and enterprise analytics.",
   path: "/case-studies/canary-cove",
 })
 
-export default function CanaryCoveCaseStudyPage() {
-  return <CanaryCoveCaseStudy />
+export default function CanarycoveCaseStudyPage() {
+  return <CanarycoveCaseStudy />
 }

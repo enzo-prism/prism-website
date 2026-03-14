@@ -1,14 +1,14 @@
 import type { Metadata } from "next"
-import MichaelNjoCaseStudy from "./client-page"
+import MichaelNjoDDSCaseStudy from "./client-page"
 import { buildRouteMetadata } from "@/lib/seo/metadata"
 
 export const metadata: Metadata = buildRouteMetadata({
-  titleStem: "michael njo, dds case study — modern dental presence",
-  description: "how we launched a credibility-first website with clear services, patient flows, and tracking.",
+  titleStem: "Michael Njo DDS Case Study",
+  description:
+    "How Prism built a complete digital presence for Michael Njo DDS — a San Mateo general dental practice. Brand design, custom website, Google Ads, SEO/AEO, local listing optimization, and enterprise analytics.",
   path: "/case-studies/michael-njo-dds",
 })
 
-export default function MichaelNjoCaseStudyPage() {
-  return <MichaelNjoCaseStudy />
+export default function MichaelNjoDDSCaseStudyPage() {
+  return <MichaelNjoDDSCaseStudy />
 }
-

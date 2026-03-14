@@ -1,13 +1,14 @@
 import type { Metadata } from "next"
-import InfobellItCaseStudy from "./client-page"
+import InfobellITCaseStudy from "./client-page"
 import { buildRouteMetadata } from "@/lib/seo/metadata"
 
 export const metadata: Metadata = buildRouteMetadata({
-  titleStem: "infobell it case study — saas enablement foundations",
-  description: "explore how prism is partnering with infobell it to craft a modern website, clarify offerings, and set up performance tracking.",
+  titleStem: "Infobell IT Case Study",
+  description:
+    "How Prism built a credible digital presence for Infobell IT — a managed services provider and cybersecurity firm. Brand design, custom website, SEO/AEO, and enterprise analytics.",
   path: "/case-studies/infobell-it",
 })
 
-export default function InfobellItCaseStudyPage() {
-  return <InfobellItCaseStudy />
+export default function InfobellITCaseStudyPage() {
+  return <InfobellITCaseStudy />
 }
