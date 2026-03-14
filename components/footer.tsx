@@ -20,6 +20,7 @@ const footerSections: FooterSection[] = [
       { label: "Design", href: "/designs" },
       { label: "Ads", href: "/ads" },
       { label: "Local SEO", href: "/local-seo-services" },
+      { label: "AI Agents", href: "/ai-agents" },
     ],
   },
   {
