@@ -3,8 +3,9 @@ import CanaryFoundationCaseStudy from "./client-page"
 import { buildRouteMetadata } from "@/lib/seo/metadata"
 
 export const metadata: Metadata = buildRouteMetadata({
-  titleStem: "canary foundation case study — mission-driven web refresh",
-  description: "learn how prism is partnering with canary foundation to modernize their website, share impact, and support donor journeys.",
+  titleStem: "Canary Foundation Case Study",
+  description:
+    "How Prism built a mission-driven digital presence for Canary Foundation — a nonprofit pioneering early cancer detection. Brand design, custom website, SEO/AEO, and enterprise analytics.",
   path: "/case-studies/canary-foundation",
 })
 
