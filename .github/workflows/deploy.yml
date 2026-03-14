@@ -71,7 +71,12 @@ jobs:
         run: pnpm run typecheck
 
       - name: Vercel Pull (Production)
-        run: npx vercel pull --yes --environment=production --token "$VERCEL_TOKEN"
+        run: |
+          for i in 1 2 3; do
+            npx vercel pull --yes --environment=production --token "$VERCEL_TOKEN" && break
+            echo "Attempt $i failed, retrying in 10s..."
+            sleep 10
+          done
 
       - name: Verify pricing consistency
         run: pnpm verify:pricing-consistency
