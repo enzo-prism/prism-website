@@ -10,7 +10,7 @@ const agentCapabilities = [
   {
     title: "natural conversations",
     description:
-      "powered by elevenlabs' industry-leading voice technology, your agent sounds human, not robotic. it understands accents, handles interruptions, and responds naturally.",
+      "powered by elevenlabs’ industry-leading voice technology, your agent sounds human, not robotic. it understands accents, handles interruptions, and responds naturally.",
     highlights: [
       "Lifelike voices that match your brand personality",
       "Context-aware responses that feel like real conversations",
@@ -20,7 +20,7 @@ const agentCapabilities = [
   {
     title: "smart actions",
     description:
-      "agents don\u2019t just talk \u2014 they book appointments, check availability, route calls, collect information, and trigger workflows in your existing systems.",
+      "agents don’t just talk — they book appointments, check availability, route calls, collect information, and trigger workflows in your existing systems.",
     highlights: [
       "Real-time calendar and CRM integrations",
       "Automated follow-ups and confirmations",
@@ -43,13 +43,13 @@ const useCases = [
   {
     title: "dental practices",
     description:
-      "answer patient calls, schedule appointments, handle insurance questions, and send reminders \u2014 even after hours.",
+      "answer patient calls, schedule appointments, handle insurance questions, and send reminders — even after hours.",
     href: "/ai-agents/dental",
   },
   {
     title: "local services",
     description:
-      "plumbers, hvac, electricians \u2014 capture emergency calls 24/7, dispatch the right team, and never lose a lead to voicemail.",
+      "plumbers, hvac, electricians — capture emergency calls 24/7, dispatch the right team, and never lose a lead to voicemail.",
     href: null,
   },
   {
@@ -61,7 +61,7 @@ const useCases = [
   {
     title: "professional services",
     description:
-      "law firms, accounting, consulting \u2014 qualify leads, schedule consultations, and route calls by expertise.",
+      "law firms, accounting, consulting — qualify leads, schedule consultations, and route calls by expertise.",
     href: null,
   },
   {
@@ -103,12 +103,12 @@ const whyPrism = [
   {
     title: "elevenlabs certified partner",
     description:
-      "we work directly with elevenlabs\u2019 commercial partner program, giving you access to priority support, advanced features, and best practices.",
+      "we work directly with elevenlabs’ commercial partner program, giving you access to priority support, advanced features, and best practices.",
   },
   {
     title: "full-stack implementation",
     description:
-      "we don\u2019t just configure a chatbot \u2014 we build complete voice agent systems with crm integrations, custom workflows, analytics dashboards, and ongoing optimization.",
+      "we don’t just configure a chatbot — we build complete voice agent systems with crm integrations, custom workflows, analytics dashboards, and ongoing optimization.",
   },
   {
     title: "small business focused",
@@ -119,7 +119,7 @@ const whyPrism = [
 
 const PAGE_TITLE = "ElevenLabs AI Agents for Small Business | Design Prism"
 const PAGE_DESCRIPTION =
-  "Prism builds and implements custom ElevenLabs AI voice agents for small and medium businesses. 24/7 phone answering, appointment scheduling, and customer support \u2014 deployed in days."
+  "Prism builds and implements custom ElevenLabs AI voice agents for small and medium businesses. 24/7 phone answering, appointment scheduling, and customer support — deployed in days."
 const CANONICAL_URL = "https://www.design-prism.com/ai-agents"
 
 export const metadata: Metadata = buildRouteMetadata({
@@ -141,7 +141,7 @@ export default function AIAgentsPage() {
             <div className="mx-auto max-w-3xl text-center">
               <p className="text-xs uppercase tracking-[0.35em] text-neutral-400">elevenlabs certified partner</p>
               <h1 className="mt-4 text-4xl font-semibold lowercase tracking-tight text-neutral-900 sm:text-5xl">
-                ai voice agents that answer, book, and convert{" "}\u2014 24/7
+                ai voice agents that answer, book, and convert — 24/7
               </h1>
               <p className="mt-4 text-base text-neutral-600 sm:text-lg">
                 prism builds custom elevenlabs ai agents for small and medium businesses. your customers get instant,
@@ -182,7 +182,7 @@ export default function AIAgentsPage() {
               </h2>
               <p className="mt-3 text-sm text-neutral-600 sm:text-base">
                 ai agents are intelligent voice assistants that handle real phone conversations. they understand context,
-                answer questions, schedule appointments, transfer calls, and integrate with your existing tools \u2014 all
+                answer questions, schedule appointments, transfer calls, and integrate with your existing tools — all
                 with natural-sounding voices that represent your brand.
               </p>
             </div>
