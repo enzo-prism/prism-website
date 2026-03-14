@@ -59,7 +59,7 @@ function FeatureCard({ feature }: FeatureCardProps) {
   return (
     <article
       className={cn('group', styles.card, isFeatured && styles.featuredCard)}
-      data-home-feature-card=""
+      data-home-feature-card={feature.variant}
       data-feature-variant={feature.variant}
     >
       <div

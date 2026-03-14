@@ -125,15 +125,9 @@ test('home features section snapshot stays stable', async ({
     return
   }
 
-  const aiAgentsCard = page
-    .locator('div')
-    .filter({
-      has: page.getByRole('heading', {
-        level: 3,
-        name: /ai agents that answer \+ book/i,
-      }),
-    })
-    .first()
+  const aiAgentsCard = featuresSection.locator(
+    '[data-home-feature-card="ai-agents"]',
+  )
 
   await aiAgentsCard.hover()
   await page.waitForTimeout(150)
