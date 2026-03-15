@@ -123,7 +123,6 @@ export default function Navbar({ mobileRevealOnFirstTap = false }: NavbarProps) 
   const headerRef = useRef<HTMLElement | null>(null)
   const [isScrolled, setIsScrolled] = useState(false)
   const [hasInteracted, setHasInteracted] = useState(!mobileRevealOnFirstTap)
-  const [isWidgetExpanded, setIsWidgetExpanded] = useState(false)
   const [isHomepageHeroActive, setIsHomepageHeroActive] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
@@ -225,32 +224,6 @@ export default function Navbar({ mobileRevealOnFirstTap = false }: NavbarProps) 
     }
   }, [hasInteracted, mobileRevealOnFirstTap])
 
-  useEffect(() => {
-    const syncWidgetState = () => {
-      setIsWidgetExpanded(document.documentElement.dataset.prismWidgetExpanded === "true")
-    }
-
-    const handleWidgetExpandedChange = (event: Event) => {
-      const detail = (event as CustomEvent<{ expanded?: boolean }>).detail
-      setIsWidgetExpanded(Boolean(detail?.expanded))
-    }
-
-    syncWidgetState()
-
-    const observer = new MutationObserver(syncWidgetState)
-    observer.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ["data-prism-widget-expanded"],
-    })
-
-    window.addEventListener("prism-widget-expanded-change", handleWidgetExpandedChange)
-
-    return () => {
-      observer.disconnect()
-      window.removeEventListener("prism-widget-expanded-change", handleWidgetExpandedChange)
-    }
-  }, [])
-
   const normalizeHref = (href: string) => aliasMap[href] ?? href
   const isActivePath = (href?: string) => (href ? pathname === normalizeHref(href) : false)
   const isParentActive = (item: NavItem) => {
@@ -295,9 +268,7 @@ export default function Navbar({ mobileRevealOnFirstTap = false }: NavbarProps) 
       ref={headerRef}
       className={`sticky top-0 z-50 w-full ${headerBackdropClasses} ${transitionClasses} ${revealClasses} ${headerSurfaceClasses} ${
         !shouldUseHomepageHeroChrome && !caseStudyBreadcrumbs ? "border-b" : ""
-      } ${isWidgetExpanded ? "pointer-events-none opacity-0 -translate-y-3" : ""}`}
-      style={{ visibility: isWidgetExpanded ? "hidden" : "visible" }}
-      aria-hidden={isWidgetExpanded}
+      }`}
     >
       <div className="container mx-auto flex h-16 items-center justify-between px-4 sm:px-6">
         <Link

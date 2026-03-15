@@ -241,10 +241,10 @@ export default function ClientPage() {
                 <h1 className="!font-sans text-[clamp(1.85rem,8.2vw,3.7rem)] font-medium leading-[0.88] tracking-[-0.095em] text-[rgb(12,18,30)]">
                   Prism
                 </h1>
-                <p className="mx-auto max-w-[14rem] text-balance text-[11px] leading-[1.45] text-[rgba(15,23,42,0.56)] sm:max-w-[18rem] sm:text-[15px] sm:leading-6">
+                <p className="mx-auto max-w-[14rem] text-balance text-[12px] leading-[1.45] text-[rgba(15,23,42,0.56)] sm:max-w-[18rem] sm:text-[16px] sm:leading-6">
                   impossible is temporary.
                 </p>
-                <div className="mx-auto font-sans text-[7px] font-normal tracking-[0.16em] text-[rgba(15,23,42,0.26)] sm:text-[8.5px] sm:tracking-[0.18em]">
+                <div className="mx-auto font-sans text-[8px] font-normal tracking-[0.13em] text-[rgba(15,23,42,0.45)] sm:text-[9.5px] sm:tracking-[0.15em]">
                   founded 2023 in san francisco
                 </div>
               </div>
