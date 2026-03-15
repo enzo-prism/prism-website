@@ -244,8 +244,18 @@ export default function ClientPage() {
                 <p className="mx-auto max-w-[14rem] text-balance text-[12px] leading-[1.45] text-[rgba(15,23,42,0.56)] sm:max-w-[18rem] sm:text-[16px] sm:leading-6">
                   impossible is temporary.
                 </p>
-                <div className="mx-auto font-sans text-[8px] font-normal tracking-[0.13em] text-[rgba(15,23,42,0.45)] sm:text-[9.5px] sm:tracking-[0.15em]">
-                  founded 2023 in san francisco
+                <div className="mx-auto inline-flex items-center justify-center gap-3 pt-1 font-sans sm:pt-0">
+                  <span
+                    aria-hidden="true"
+                    className="h-px w-5 bg-[rgba(15,23,42,0.12)] sm:hidden"
+                  />
+                  <span className="whitespace-nowrap text-[10.5px] leading-none font-normal tracking-[0.12em] text-[rgba(15,23,42,0.62)] sm:text-[9.5px] sm:tracking-[0.15em] sm:text-[rgba(15,23,42,0.45)]">
+                    founded 2023 in san francisco
+                  </span>
+                  <span
+                    aria-hidden="true"
+                    className="h-px w-5 bg-[rgba(15,23,42,0.12)] sm:hidden"
+                  />
                 </div>
               </div>
 
