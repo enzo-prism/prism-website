@@ -4,12 +4,11 @@ Quick reference for the pages we edit most often.
 
 ## Case Studies (`app/case-studies/*`)
 
-- Individual case study pages live under `app/case-studies/<slug>/` and render server components with client-only subcomponents for the interactive sections.
-- Sticky section navigation is `components/case-studies/CaseStudySectionNav.tsx` (shadcn `ToggleGroup` + `Sheet` + `ScrollArea`); sections must use `data-section="<id>"` or `id="<id>"` so scrolling and active state work.
-- Reusable “data note / in progress” callouts are `components/case-studies/CaseStudyCallout.tsx` (shadcn `Alert`).
-- The “buy back time / grow customers” interactive graph is `components/case-studies/FounderImpactGraph.tsx` (shadcn `Tabs` + recharts; “with prism” vs “without prism” scenarios).
-- The shared curve/data generator lives in `lib/case-study-impact-graph.ts` (bounded 0–100 index with exponential “customers compound” growth + “effort decays to zero”; tune via `curves.*K` if we ever switch to case-specific numbers).
-- Minimal case studies use `components/case-study-minimal.tsx`, which automatically includes the graph and now surfaces a top-of-page "visit <client-site>" button whenever a `website` quick fact includes an external `href`.
+- Individual case study pages live under `app/case-studies/<slug>/` and now render through the shared minimal template in `components/case-study-minimal.tsx`.
+- Live case study pages are intentionally lightweight while detailed copy is being refreshed: client name, a single website CTA, and `components/case-studies/CaseStudyWorkHighlights.tsx`.
+- External client site URLs now live alongside the case study metadata in `lib/case-study-data.ts` so every detail page can consistently render the same website button.
+- `components/case-studies/CaseStudySectionNav.tsx`, `components/case-studies/CaseStudyCallout.tsx`, and `components/case-studies/FounderImpactGraph.tsx` are retained as longer-form building blocks, but they are not mounted on the current live case study detail pages.
+- The shared curve/data generator remains in `lib/case-study-impact-graph.ts` for any future return of the interactive founder-impact graph.
 - The `/case-studies` card grid reads optional `clientLogo` URLs from `lib/case-study-data.ts`; cards render logos when provided and fall back to text-only cards when absent.
 - The `/case-studies` list hero uses a looping Cloudinary background in `app/case-studies/client-page.tsx` (`CASE_STUDIES_HERO_VIDEO` + `CASE_STUDIES_HERO_POSTER`) with a readability gradient and current video opacity `40%`.
 - Mobile safety: the `/case-studies` hero keeps a poster fallback on touch devices and now uses `components/HeroBackgroundLoop.tsx` with `lib/hero-media-policy.ts` so autoplay `<video>` is never mounted when policy denies inline autoplay.

@@ -193,7 +193,7 @@ Form note: our marketing forms rely on native HTML5 validation via `useFormValid
 
 ## Sticky Navigation Offsets
 
-The navbar dynamically sets a CSS variable (`--prism-header-height`) so other sticky UI can position itself below the full header stack (including case study breadcrumbs). Case study chapter menus also set `--prism-case-study-nav-height` via `useCaseStudyStickyNavHeight` (see `hooks/use-case-study-sticky-nav.ts`), and jump targets rely on `scroll-margin-top` for correct offsets when scrolling into view. The case study section nav now uses a scrollable pill row plus a mobile "jump to" sheet so all items stay reachable on small screens.
+The navbar dynamically sets a CSS variable (`--prism-header-height`) so other sticky UI can position itself below the full header stack (including case study breadcrumbs). If a route mounts `CaseStudySectionNav`, it also sets `--prism-case-study-nav-height` via `useCaseStudyStickyNavHeight` (see `hooks/use-case-study-sticky-nav.ts`), and jump targets rely on `scroll-margin-top` for correct offsets when scrolling into view. Current live case study detail pages are simplified and do not render chapter menus, but the offset plumbing stays available for any future long-form routes.
 
 ## Navbar Icon Hover Motion
 
