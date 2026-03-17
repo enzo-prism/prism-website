@@ -91,9 +91,9 @@ The repo assumes pnpm; npm/yarn installs will fall out of sync.
 ## CLI workflows (GitHub + Vercel)
 
 - `gh auth login` then `gh auth setup-git` to authenticate GitHub CLI and map credentials into git.
-- `gh repo clone enzo/prism-website` for first-time checkout, or `git pull --ff-only origin main` for an existing local checkout.
+- `gh repo clone enzo-prism/prism-website` for first-time checkout, or `git pull --ff-only origin main` for an existing local checkout.
 - `gh pr status` to check PR/state before deciding between local work and merge-then-preview flow.
-- `gh run list -R enzo/prism-website --limit 10` to inspect latest CI jobs; use `gh run view <run_id> --log` for failing logs.
+- `gh run list -R enzo-prism/prism-website --limit 10` to inspect latest CI jobs; use `gh run view <run_id> --log` for failing logs.
 
 - `pnpm add -g vercel` or `pnpm dlx vercel` for CLI access.
 - `vercel login` then `vercel link` (first time in repo) to target the project.

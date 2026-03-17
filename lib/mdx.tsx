@@ -1,6 +1,7 @@
 // This module is server-side only, responsible for fetching and parsing blog content.
 import { FAQSchema, VideoObjectSchema } from "@/components/schema-markup"
 import MDXComponents from "@/components/mdx-components"
+import VideoPlayer from "@/components/video-player"
 import { getPost } from "@/lib/mdx-data"
 import { MDXRemote } from "next-mdx-remote/rsc"
 import Image from "next/image"
@@ -71,6 +72,7 @@ const mdxComponents = {
   // Structured data components
   VideoObjectSchema,
   FAQSchema,
+  VideoPlayer,
   // Override potentially dangerous HTML elements
   script: () => null, // Block script tags
   iframe: ({ src, title, ...props }: React.IframeHTMLAttributes<HTMLIFrameElement>) => {

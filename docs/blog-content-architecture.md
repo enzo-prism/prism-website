@@ -213,7 +213,7 @@ If you rebrand or change domains, update the `CANONICAL_HOST` constant to keep f
 1. Create `content/blog/my-post-slug.mdx`.
 2. Populate required frontmatter fields.
 3. Write content in Markdown/MDX. Avoid inline styling—`prose-blog` handles typography.
-4. For YouTube embeds, prefer `import YouTubeVideoEmbed from "@/components/youtube-video-embed"` and use `<YouTubeVideoEmbed videoId="..." title="..." />` instead of raw `<iframe>` blocks.
+4. For embeds and interactive widgets, only use MDX components that are registered in `lib/mdx.tsx` / `components/mdx-components.tsx`. Use globally available names like `<YouTubeVideoEmbed />`, `<VideoObjectSchema />`, and `<VideoPlayer />` instead of assuming a post-local import alone will work at runtime.
 5. The layout renders the post title as the single H1. Use H2 for major sections and H3 for sub-sections so the table of contents stays accurate.
 6. Run `pnpm run typecheck` (or at minimum `pnpm exec jest __tests__/sitemap.test.ts __tests__/blog-canonical.test.ts --runInBand`) to ensure the post parses and route metadata/sitemap remain valid.
 7. Commit the MDX file. The sitemap, blog page, related posts, and RSS feed update automatically.

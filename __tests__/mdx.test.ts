@@ -1,5 +1,11 @@
 jest.mock('server-only', () => ({}), { virtual: true })
+jest.mock('rehype-slug', () => ({
+  __esModule: true,
+  default: () => (tree: unknown) => tree,
+}), { virtual: true })
+
 import BlogPostPage, { generateMetadata } from '../app/blog/[slug]/page'
+import { renderPost } from '../lib/mdx'
 import { getPost } from '../lib/mdx-data'
 import { DEFAULT_BLOG_FEATURED_IMAGE, getBlogOpenGraphImage } from '../lib/blog-images'
 
@@ -72,5 +78,18 @@ describe('mdx helpers', () => {
         alt: 'openclaw, manus, and codex are scaling my business',
       },
     ])
+  })
+
+  test('renderPost supports the custom VideoPlayer component used in blog MDX', async () => {
+    const content = await renderPost('ai-growth-stack-manus-elevenlabs-codex')
+    const contentElement = content as unknown as {
+      props?: {
+        source?: string
+        components?: Record<string, unknown>
+      }
+    }
+
+    expect(contentElement.props?.source).toContain('<VideoPlayer')
+    expect(contentElement.props?.components?.VideoPlayer).toBeDefined()
   })
 })

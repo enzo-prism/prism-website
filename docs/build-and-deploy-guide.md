@@ -34,8 +34,8 @@ Production is intentionally single-path: GitHub Actions runs the release gates a
 
 - `gh auth login`
 - `gh auth status`
-- `gh pr status -R enzo/prism-website`
-- `gh run list -R enzo/prism-website --limit 20`
+- `gh pr status -R enzo-prism/prism-website`
+- `gh run list -R enzo-prism/prism-website --limit 20`
 - `gh run view <run_id> --log`
 
 ### Vercel CLI
