@@ -26,8 +26,8 @@ const FOOTER_PRIMARY_CTA_TEXT = "Book a 30 minute call"
 const FOOTER_SECONDARY_CTA_TEXT = "Get a free audit"
 
 const VSL_SOURCE = {
-  src: "https://res.cloudinary.com/dhqpqfw6w/video/upload/v1763160814/prism_websites_vsl_2_ojqiku.mp4",
-  poster: "https://res.cloudinary.com/dhqpqfw6w/video/upload/so_0/prism_websites_vsl_2_ojqiku.jpg",
+  src: "https://res.cloudinary.com/dhqpqfw6w/video/upload/v1773678916/prism_llowge.mp4",
+  poster: "https://res.cloudinary.com/dhqpqfw6w/video/upload/so_0/prism_llowge.jpg",
   caption:
     "See how Prism audits your current setup, identifies the biggest growth gaps, and turns the plan into focused execution.",
 }
