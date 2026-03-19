@@ -209,6 +209,11 @@ const blogPosts = {
     category: 'ai powered web development',
     gradientClass: 'bg-gradient-to-br from-indigo-200/40 via-sky-200/40 to-emerald-200/40',
   },
+  'google-stitch-for-smb-founders': {
+    title: 'Google Stitch for Founders: How Small and Mid-Sized Businesses Can Move Faster',
+    category: 'AI & Product',
+    gradientClass: 'bg-gradient-to-br from-sky-300/30 via-violet-300/30 to-emerald-300/30',
+  },
 } as const
 
 export function getPostMetadataForOG(slug: string) {
