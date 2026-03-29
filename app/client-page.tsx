@@ -206,7 +206,8 @@ const HOMEPAGE_CASE_STUDIES = HOMEPAGE_CASE_STUDY_SLUGS.map((slug) =>
   .filter((study): study is (typeof CASE_STUDIES)[number] => Boolean(study))
   .map((study) => ({
     id: study.id,
-    client: study.client,
+    client:
+      study.slug === 'practice-transitions-institute' ? 'PTI' : study.client,
     category: study.category,
     location: study.location,
     slug: study.slug,
