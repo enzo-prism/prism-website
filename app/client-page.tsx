@@ -195,10 +195,9 @@ const HERO_SEARCH_CONSOLE_SLIDES = [
 const HERO_SEARCH_ICON = '/pixelish/lens.svg'
 const HOMEPAGE_CASE_STUDY_SLUGS = [
   'exquisite-dentistry',
-  'saorsa-growth-partners',
-  'olympic-bootworks',
-  'rebellious-aging',
-  'canary-foundation',
+  'infobell-it',
+  'sr4-partners',
+  'practice-transitions-institute',
 ]
 
 const HOMEPAGE_CASE_STUDIES = HOMEPAGE_CASE_STUDY_SLUGS.map((slug) =>
@@ -211,6 +210,7 @@ const HOMEPAGE_CASE_STUDIES = HOMEPAGE_CASE_STUDY_SLUGS.map((slug) =>
     category: study.category,
     location: study.location,
     slug: study.slug,
+    hasExplainerVideo: Boolean(study.explainerVideo),
   }))
 
 const SECTION_SPACING_DEFAULT = 'py-16 sm:py-20 lg:py-24 xl:py-28'
@@ -332,7 +332,7 @@ export default function ClientPage() {
                 here are recent examples.
               </p>
             </div>
-            <div className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-6 [&>*]:lg:col-span-2 [&>*:nth-child(4)]:lg:col-start-2 [&>*:nth-child(5)]:lg:col-start-4">
+            <div className="mx-auto mt-10 grid max-w-6xl gap-4 md:grid-cols-2 xl:grid-cols-4">
               {HOMEPAGE_CASE_STUDIES.map((study) => (
                 <CaseStudyCard
                   key={study.id}
@@ -340,6 +340,7 @@ export default function ClientPage() {
                   category={study.category}
                   location={study.location}
                   slug={study.slug}
+                  hasExplainerVideo={study.hasExplainerVideo}
                 />
               ))}
             </div>

@@ -279,7 +279,7 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
     category: 'consulting',
     founder: 'Harshad Shinde',
     industry: 'IT Services',
-    location: 'Global',
+    location: 'San Jose, CA',
     description:
       'Approachable messaging, modular design, and analytics guardrails for managed it solutions.',
     slug: 'infobell-it',
