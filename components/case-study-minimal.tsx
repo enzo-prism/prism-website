@@ -1,4 +1,5 @@
 import Footer from '@/components/footer'
+import CaseStudyExplainerVideo from '@/components/case-studies/CaseStudyExplainerVideo'
 import Navbar from '@/components/navbar'
 import { CaseStudyWorkHighlights } from '@/components/case-studies/CaseStudyWorkHighlights'
 import { CaseStudySchema } from '@/components/schema-markup'
@@ -90,6 +91,14 @@ export default function MinimalCaseStudyPage({
             </div>
           </div>
         </section>
+
+        {caseStudy.explainerVideo ? (
+          <CaseStudyExplainerVideo
+            slug={caseStudy.slug}
+            clientName={caseStudy.client}
+            video={caseStudy.explainerVideo}
+          />
+        ) : null}
 
         <CaseStudyWorkHighlights caseStudySlug={caseStudy.slug} />
       </main>

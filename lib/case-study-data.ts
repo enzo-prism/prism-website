@@ -18,6 +18,27 @@ type CaseStudyCategory =
   | 'private resort'
   | 'online community'
 
+export type CaseStudyExplainerVideo = {
+  src: string
+  poster?: string
+  title: string
+  summary: string
+  keyMoments: string[]
+  uploadDate: string
+  duration?: string
+  creatorName?: string
+}
+
+export function buildCloudinaryVideoPoster(videoUrl: string) {
+  if (!videoUrl.includes('/video/upload/')) {
+    return videoUrl
+  }
+
+  return videoUrl
+    .replace('/video/upload/', '/video/upload/so_0/')
+    .replace(/\.mp4($|\?)/, '.jpg$1')
+}
+
 export type CaseStudyMeta = {
   id: string
   title: string
@@ -31,6 +52,7 @@ export type CaseStudyMeta = {
   description: string
   slug: string
   segments: SegmentKey[]
+  explainerVideo?: CaseStudyExplainerVideo
   structured?: {
     heroImage?: string
     heroVideoId?: string
@@ -91,6 +113,19 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
       'Creating a sophisticated online experience that matches their premium in-person patient care.',
     slug: 'exquisite-dentistry',
     segments: ['dental', 'local'],
+    explainerVideo: {
+      src: 'https://res.cloudinary.com/dhqpqfw6w/video/upload/v1774726440/exquisite-case-study-notebook-lm_l5ruuq.mp4',
+      title: 'See the rebuild that turned legacy prestige into a modern growth engine',
+      summary:
+        'A quick breakdown of how Prism rebuilt the site, cleaned up the funnel, and protected discovery while bringing the digital experience up to the level of the practice.',
+      keyMoments: [
+        'Why the existing site was creating a premium-to-digital mismatch.',
+        'How Prism rebuilt the website and booking flow without treating SEO like collateral damage.',
+        'What changed in attribution, trust signals, and the long-term growth system.',
+      ],
+      uploadDate: '2026-03-28T00:00:00.000Z',
+      creatorName: 'Enzo Sison',
+    },
   },
   {
     id: '3',
@@ -222,6 +257,19 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
       'Messaging clarity and modular web design that support enterprise transformation engagements.',
     slug: 'sr4-partners',
     segments: ['consulting'],
+    explainerVideo: {
+      src: 'https://res.cloudinary.com/dhqpqfw6w/video/upload/v1774726565/sr4-case-study-notebook-lm_ayuxeg.mp4',
+      title: 'Watch how Prism translated SR4’s methodology into a sharper digital presence',
+      summary:
+        'This explainer walks through the brand refresh, the narrative structure of the new site, and the search foundation Prism built so the right organizations can find SR4.',
+      keyMoments: [
+        'Where the old site undersold SR4’s consulting depth and point of view.',
+        'How Prism modernized the brand without losing the firm’s existing equity.',
+        'What changed in service clarity, organic discovery, and inbound-fit quality.',
+      ],
+      uploadDate: '2026-03-28T00:00:00.000Z',
+      creatorName: 'Enzo Sison',
+    },
   },
   {
     id: '11',
@@ -236,6 +284,19 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
       'Approachable messaging, modular design, and analytics guardrails for managed it solutions.',
     slug: 'infobell-it',
     segments: ['it'],
+    explainerVideo: {
+      src: 'https://res.cloudinary.com/dhqpqfw6w/video/upload/v1774726921/infobell-case-study-notebook-lm_rzpjwc.mp4',
+      title: 'Understand the trust architecture Prism built for Infobell IT',
+      summary:
+        'A concise walkthrough of how Prism made a technical service business feel more credible, easier to understand, and more discoverable for high-intent MSP buyers.',
+      keyMoments: [
+        'Why generic MSP positioning was costing Infobell trust before conversations even started.',
+        'How the brand, website, and service structure were redesigned for decision-maker clarity.',
+        'How Prism set up search and analytics so growth could be measured instead of guessed.',
+      ],
+      uploadDate: '2026-03-28T00:00:00.000Z',
+      creatorName: 'Enzo Sison',
+    },
   },
   {
     id: '12',
@@ -319,6 +380,19 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
       'Narrative clarity, modern website, and local visibility for a dental transition advisory firm.',
     slug: 'practice-transitions-institute',
     segments: ['consulting'],
+    explainerVideo: {
+      src: 'https://res.cloudinary.com/dhqpqfw6w/video/upload/v1774726719/pti-case-study-notebook-lm_j9ggam.mp4',
+      title: 'Watch how Prism turned PTI’s reputation into visible authority online',
+      summary:
+        'This walkthrough shows how Prism built the site, search presence, and trust infrastructure for a firm guiding dentists through one of the biggest decisions of their careers.',
+      keyMoments: [
+        'Why PTI needed a site built for long-consideration, trust-heavy decision-making.',
+        'How Prism translated the six-stage process into a warmer, more authoritative web experience.',
+        'What changed in local visibility, conversion paths, and analytics clarity.',
+      ],
+      uploadDate: '2026-03-28T00:00:00.000Z',
+      creatorName: 'Enzo Sison',
+    },
   },
   {
     id: '18',

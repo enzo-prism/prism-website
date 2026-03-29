@@ -6,6 +6,7 @@ Quick reference for the pages we edit most often.
 
 - Individual case study pages live under `app/case-studies/<slug>/` and now render through the shared minimal template in `components/case-study-minimal.tsx`.
 - Live case study pages are intentionally lightweight while detailed copy is being refreshed: client name, a single website CTA, and `components/case-studies/CaseStudyWorkHighlights.tsx`.
+- Selected live case studies can now render a dedicated explainer-video section before the work highlights when `explainerVideo` metadata is present in `lib/case-study-data.ts`; the section UI lives in `components/case-studies/CaseStudyExplainerVideo.tsx`.
 - External client site URLs now live alongside the case study metadata in `lib/case-study-data.ts` so every detail page can consistently render the same website button.
 - `components/case-studies/CaseStudySectionNav.tsx`, `components/case-studies/CaseStudyCallout.tsx`, and `components/case-studies/FounderImpactGraph.tsx` are retained as longer-form building blocks, but they are not mounted on the current live case study detail pages.
 - The shared curve/data generator remains in `lib/case-study-impact-graph.ts` for any future return of the interactive founder-impact graph.
