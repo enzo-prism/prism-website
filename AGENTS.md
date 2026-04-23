@@ -23,7 +23,7 @@ Use this guide to stay aligned with the Prism website codebase. Keep updates inc
 
 ## Build, Test, and Development Commands
 
-Install dependencies with `pnpm install`. Run `pnpm dev` to start the local Next.js server, `pnpm build` for a production bundle, and `pnpm start` to smoke-test the build. Quality gates include `pnpm lint`, `pnpm typecheck`, and `pnpm test`; combine them before pushing with `pnpm lint && pnpm typecheck && pnpm test`. For pricing-sensitive changes, run `pnpm verify:pricing-consistency`. For locked UI routes (`/`, `/about`, `/pricing`, `/get-started`), run `pnpm test:visual:locked`. For public assistant-surface changes, run `pnpm exec jest __tests__/app/get-started.test.tsx __tests__/components/GlobalElevenLabsWidget.test.tsx` and `pnpm exec playwright test __tests__/visual/global-elevenlabs-widget.spec.ts --project=desktop-chromium`.
+Install dependencies with `pnpm install`. Run `pnpm dev` to start the local Next.js server, `pnpm build` for a production bundle, and `pnpm start` to smoke-test the build. Quality gates include `pnpm lint`, `pnpm typecheck`, and `pnpm test`; combine them before pushing with `pnpm lint && pnpm typecheck && pnpm test`. For pricing-sensitive changes, run `pnpm verify:pricing-consistency`. For locked UI routes (`/`, `/about`, `/pricing`, `/get-started`), run `pnpm test:visual:locked`. For hero-loop motion changes on `/`, `/case-studies`, or `/wall-of-love`, run `pnpm test:visual:animations`. For public assistant-surface changes, run `pnpm exec jest __tests__/app/get-started.test.tsx __tests__/components/GlobalElevenLabsWidget.test.tsx` and `pnpm exec playwright test __tests__/visual/global-elevenlabs-widget.spec.ts --project=desktop-chromium`.
 
 ## Coding Style & Naming Conventions
 

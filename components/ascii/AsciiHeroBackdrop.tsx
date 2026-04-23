@@ -14,6 +14,7 @@ type AsciiHeroBackdropProps = {
   batchSize?: number
   maxConcurrentFetches?: number
   continueOnFrameError?: boolean
+  forceAutoplay?: boolean
 }
 
 export default function AsciiHeroBackdrop({
@@ -28,6 +29,7 @@ export default function AsciiHeroBackdrop({
   batchSize = 24,
   maxConcurrentFetches = 6,
   continueOnFrameError = true,
+  forceAutoplay = false,
 }: AsciiHeroBackdropProps) {
   return (
     <>
@@ -47,6 +49,7 @@ export default function AsciiHeroBackdrop({
         batchSize={batchSize}
         maxConcurrentFetches={maxConcurrentFetches}
         continueOnFrameError={continueOnFrameError}
+        forceAutoplay={forceAutoplay}
       />
       <div
         aria-hidden="true"

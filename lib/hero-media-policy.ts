@@ -8,10 +8,8 @@ export type HeroPlaybackPolicyOverride = "auto" | "forcePoster"
 export type HeroPlaybackReason =
   | "policy-force-poster"
   | "reduced-motion"
-  | "touch-coarse"
-  | "mobile-viewport"
+  | "network-constrained"
   | "autoplay-rejected"
-  | "platform-limited"
   | "unsupported"
   | "autoplay-allowed"
 
@@ -24,10 +22,12 @@ export type HeroPlaybackIntent = {
     modeRequested: HeroPlaybackPolicyOverride
     isTouchCoarse: boolean
     reducedMotion: boolean
-    viewportClass: HeroViewportClass
-    viewportWidth: number
-    hasAutoplayError: boolean
-    platform: HeroPlaybackPlatform
+      viewportClass: HeroViewportClass
+      viewportWidth: number
+      hasAutoplayError: boolean
+      platform: HeroPlaybackPlatform
+      saveData: boolean
+      effectiveType: string
   }
 }
 
@@ -38,6 +38,8 @@ export type HeroPlaybackPolicyInput = {
   viewportWidth?: number
   hasAutoplayError?: boolean
   platform?: HeroPlaybackPlatform
+  saveData?: boolean
+  effectiveType?: string
 }
 
 export type HeroPlaybackPlatform = "ios" | "android" | "other" | "unknown"
@@ -58,10 +60,17 @@ export function resolveHeroPlaybackPolicy({
   viewportWidth = Number.NaN,
   hasAutoplayError = false,
   platform = "unknown",
+  saveData = false,
+  effectiveType = "",
 }: HeroPlaybackPolicyInput): HeroPlaybackIntent {
   const viewportClass = resolveViewportClass(
     Number.isFinite(viewportWidth) ? viewportWidth : null,
   )
+  const normalizedEffectiveType = effectiveType.toLowerCase()
+  const isConstrainedNetwork =
+    saveData ||
+    normalizedEffectiveType === "slow-2g" ||
+    normalizedEffectiveType === "2g"
 
   if (playbackPolicy === "forcePoster") {
     return {
@@ -75,6 +84,8 @@ export function resolveHeroPlaybackPolicy({
         viewportWidth: Number.isFinite(viewportWidth) ? viewportWidth : -1,
         hasAutoplayError,
         platform,
+        saveData,
+        effectiveType: normalizedEffectiveType,
       },
     }
   }
@@ -91,6 +102,8 @@ export function resolveHeroPlaybackPolicy({
         viewportWidth: Number.isFinite(viewportWidth) ? viewportWidth : -1,
         hasAutoplayError,
         platform,
+        saveData,
+        effectiveType: normalizedEffectiveType,
       },
     }
   }
@@ -107,14 +120,16 @@ export function resolveHeroPlaybackPolicy({
         viewportWidth: Number.isFinite(viewportWidth) ? viewportWidth : -1,
         hasAutoplayError,
         platform,
+        saveData,
+        effectiveType: normalizedEffectiveType,
       },
     }
   }
 
-  if (isTouchCoarse || viewportClass === "mobile") {
+  if (isConstrainedNetwork) {
     return {
       mode: "video-fallback-poster",
-      reason: "touch-coarse",
+      reason: "network-constrained",
       state: {
         modeRequested: playbackPolicy,
         isTouchCoarse,
@@ -123,22 +138,8 @@ export function resolveHeroPlaybackPolicy({
         viewportWidth: Number.isFinite(viewportWidth) ? viewportWidth : -1,
         hasAutoplayError,
         platform,
-      },
-    }
-  }
-
-  if (platform === "ios") {
-    return {
-      mode: "video-fallback-poster",
-      reason: "platform-limited",
-      state: {
-        modeRequested: playbackPolicy,
-        isTouchCoarse,
-        reducedMotion,
-        viewportClass,
-        viewportWidth: Number.isFinite(viewportWidth) ? viewportWidth : -1,
-        hasAutoplayError,
-        platform,
+        saveData,
+        effectiveType: normalizedEffectiveType,
       },
     }
   }
@@ -154,6 +155,8 @@ export function resolveHeroPlaybackPolicy({
       viewportWidth: Number.isFinite(viewportWidth) ? viewportWidth : -1,
       hasAutoplayError,
       platform,
+      saveData,
+      effectiveType: normalizedEffectiveType,
     },
   }
 }

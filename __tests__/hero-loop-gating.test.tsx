@@ -31,7 +31,39 @@ function setMatchMedia({ pointerCoarse }: MatchMediaConfig) {
   })
 }
 
+function setViewportWidth(width: number) {
+  Object.defineProperty(window, 'innerWidth', {
+    configurable: true,
+    writable: true,
+    value: width,
+  })
+}
+
+function setNavigatorConnection(
+  connection: { saveData?: boolean; effectiveType?: string } | undefined,
+) {
+  Object.defineProperty(window.navigator, 'connection', {
+    configurable: true,
+    value: connection,
+  })
+}
+
 describe('Hero background loops are device-gated on touch', () => {
+  beforeEach(() => {
+    Object.defineProperty(HTMLMediaElement.prototype, 'play', {
+      configurable: true,
+      writable: true,
+      value: jest.fn().mockResolvedValue(undefined),
+    })
+    Object.defineProperty(HTMLMediaElement.prototype, 'pause', {
+      configurable: true,
+      writable: true,
+      value: jest.fn(),
+    })
+    setViewportWidth(1280)
+    setNavigatorConnection(undefined)
+  })
+
   it('honors explicit forcePoster policy for background loops', () => {
     setMatchMedia({ pointerCoarse: false })
 
@@ -71,8 +103,9 @@ describe('Hero background loops are device-gated on touch', () => {
     ).not.toBeInTheDocument()
   })
 
-  it('does not render background autoplay video for coarse/touch pointers', () => {
+  it('renders background autoplay video for coarse/touch pointers when autoplay is allowed', () => {
     setMatchMedia({ pointerCoarse: true })
+    setViewportWidth(390)
 
     render(
       <HeroBackgroundLoop
@@ -84,9 +117,7 @@ describe('Hero background loops are device-gated on touch', () => {
     )
 
     expect(screen.getByRole('img', { name: 'Hero poster' })).toBeInTheDocument()
-    expect(
-      document.querySelector('video[data-hero-loop="true"]'),
-    ).not.toBeInTheDocument()
+    expect(document.querySelector('video[data-hero-loop="true"]')).toBeInTheDocument()
   })
 
   it('renders background autoplay video for non-touch pointers', () => {
@@ -107,8 +138,9 @@ describe('Hero background loops are device-gated on touch', () => {
     ).toBeInTheDocument()
   })
 
-  it('does not render HeroLoopingVideo on touch pointers', () => {
+  it('renders HeroLoopingVideo on touch pointers when autoplay is allowed', () => {
     setMatchMedia({ pointerCoarse: true })
+    setViewportWidth(390)
 
     render(
       <HeroLoopingVideo
@@ -121,6 +153,24 @@ describe('Hero background loops are device-gated on touch', () => {
     expect(
       screen.getByRole('img', { name: 'Hero looping preview' }),
     ).toBeInTheDocument()
+    expect(document.querySelector('video[data-hero-loop="true"]')).toBeInTheDocument()
+  })
+
+  it('falls back to posters when the network is constrained', () => {
+    setMatchMedia({ pointerCoarse: true })
+    setViewportWidth(390)
+    setNavigatorConnection({ saveData: true, effectiveType: '4g' })
+
+    render(
+      <HeroBackgroundLoop
+        videoSrc="https://example.com/video.mp4"
+        posterSrc="https://example.com/poster.jpg"
+        posterAlt="Hero poster"
+        videoClassName="hero-video"
+      />,
+    )
+
+    expect(screen.getByRole('img', { name: 'Hero poster' })).toBeInTheDocument()
     expect(
       document.querySelector('video[data-hero-loop="true"]'),
     ).not.toBeInTheDocument()

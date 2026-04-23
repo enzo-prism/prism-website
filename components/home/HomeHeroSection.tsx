@@ -24,6 +24,7 @@ export default function HomeHeroSection() {
             quality="medium"
             textSize="text-[2.3px] sm:text-[2.8px] md:text-[3.2px]"
             ariaLabel="Wave ASCII animation behind the homepage hero"
+            forceAutoplay
             className="opacity-[0.2] sm:opacity-[0.34] md:opacity-[0.48] md:[-webkit-mask-image:linear-gradient(90deg,transparent_0%,black_28%,black_100%)] md:[mask-image:linear-gradient(90deg,transparent_0%,black_28%,black_100%)]"
           />
           <div

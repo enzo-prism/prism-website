@@ -254,6 +254,7 @@ export default function ASCIIAnimation({
   const loadedFrameLines = useRef<LoadedFramesStore>([])
   const fullLoadTriggered = useRef(false)
   const resolvedSource = useRef<{ baseUrl: string; isFlat: boolean } | null>(null)
+  const isInViewRef = useRef(false)
 
   // Keep framesRef synced with React state.
   useEffect(() => {
@@ -519,6 +520,7 @@ export default function ASCIIAnimation({
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
+          isInViewRef.current = entry.isIntersecting
           if (entry.isIntersecting) {
             if (lazy && !fullLoadTriggered.current) {
               loadRemainingFrames()
@@ -566,6 +568,7 @@ export default function ASCIIAnimation({
         : null
 
     if (!respectReducedMotion || !reducedMotionQuery?.matches) {
+      isInViewRef.current = true
       animationManager.start()
     }
 
@@ -580,6 +583,58 @@ export default function ASCIIAnimation({
     loadRemainingFrames,
     respectReducedMotion,
   ])
+
+  useEffect(() => {
+    if (typeof document === "undefined" || frames.length === 0) {
+      return
+    }
+
+    const reducedMotionQuery =
+      typeof window !== "undefined" && typeof window.matchMedia === "function"
+        ? window.matchMedia("(prefers-reduced-motion: reduce)")
+        : null
+
+    const syncPlayback = () => {
+      if (document.hidden) {
+        animationManager.pause()
+        return
+      }
+
+      const shouldAnimate =
+        forceAutoplay || isInViewRef.current
+
+      if (!shouldAnimate) {
+        animationManager.pause()
+        return
+      }
+
+      if (respectReducedMotion && reducedMotionQuery?.matches) {
+        animationManager.pause()
+        return
+      }
+
+      animationManager.start()
+    }
+
+    const handleMotionPreferenceChange = () => syncPlayback()
+    document.addEventListener("visibilitychange", syncPlayback)
+
+    if (reducedMotionQuery?.addEventListener) {
+      reducedMotionQuery.addEventListener("change", handleMotionPreferenceChange)
+    } else {
+      reducedMotionQuery?.addListener(handleMotionPreferenceChange)
+    }
+
+    return () => {
+      document.removeEventListener("visibilitychange", syncPlayback)
+
+      if (reducedMotionQuery?.removeEventListener) {
+        reducedMotionQuery.removeEventListener("change", handleMotionPreferenceChange)
+      } else {
+        reducedMotionQuery?.removeListener(handleMotionPreferenceChange)
+      }
+    }
+  }, [animationManager, forceAutoplay, frames.length, respectReducedMotion])
 
   // Handle resize and scaling.
   useLayoutEffect(() => {

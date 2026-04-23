@@ -18,6 +18,7 @@ This guide highlights the workflows we lean on most often while iterating on the
 - `pnpm test:visual:locked` now builds with `NEXT_PUBLIC_ELEVENLABS_WIDGET_DISABLED=true` and boots an isolated `next start` server on port `3300`, so the locked route snapshots stay focused on first-party page chrome instead of the live third-party ElevenLabs overlay or whichever localhost server happens to already be running. `pnpm test:visual:widget` does the inverse: it forces a fresh production build without the kill switch so the real widget behavior check never reuses a stale disabled bundle.
 - For cross-browser route-load smoke checks, run `pnpm build`, start `pnpm start -p 3301` in a second terminal, then run `pnpm test:performance:smoke`. The smoke script covers `/`, `/about`, `/pricing`, and `/get-started` on Chromium, Firefox, and WebKit using both desktop and mobile profiles.
 - Run `pnpm test:visual` when you need broader visual coverage beyond the locked routes.
+- Run `pnpm test:visual:animations` when you change the looping hero motion on `/`, `/case-studies`, or `/wall-of-love`. It verifies the real loops advance on Chromium, Firefox, and WebKit across desktop plus mobile emulation.
 - Run `pnpm exec playwright test __tests__/visual/blog-copy-markdown.spec.ts --project=desktop-chromium` when changing the blog markdown copy button or `/api/blog/[slug]/markdown`.
 - Run `pnpm test:visual:widget` when changing the route-aware ElevenLabs launcher behavior.
 - For blog-post content/frontmatter additions, run `pnpm exec jest __tests__/sitemap.test.ts __tests__/blog-canonical.test.ts --runInBand` as a fast regression check.
@@ -151,23 +152,25 @@ Custom confirmation routes live in `app/thank-you/` and `app/analysis-thank-you/
   - `HeroPlaybackMode` (`video-autoplay` / `video-fallback-poster` / `poster-only`)
   - optional route override (`playbackPolicy="forcePoster"`)
 - Prefer `components/HeroBackgroundLoop.tsx` (for static hero posters + loop background) or `components/HeroLoopingVideo.tsx` (general looping hero card component). Both components now consume policy state and keep `<video>` unmounted unless autoplay is explicitly allowed.
-- This prevents the iOS Safari fullscreen/autoplay takeover edge case we observed on routes like `/wall-of-love` and similar hero-heavy pages.
-- Keep a poster-first UX for reduced-motion, touch, or media load failure states.
+- The current policy intentionally allows muted inline autoplay on mobile when motion preferences and network conditions are healthy. We only fall back to posters for reduced motion, constrained connections (`saveData`, `2g`, `slow-2g`), explicit `forcePoster`, or real autoplay failure.
+- Both loop wrappers now retry playback when the page becomes visible again and pause when the hero scrolls out of view, which keeps Safari/WebKit and mobile battery behavior saner without losing the motion on phones.
+- Keep a poster-first UX for reduced-motion, constrained-network, or media load failure states.
 - If a page needs a forced fallback, pass `playbackPolicy="forcePoster"` and let the shared policy pick poster-only behavior.
 - Add regression guardrails with:
-  - `pnpm exec jest __tests__/hero-loop-gating.test.tsx`
-  - `pnpm exec jest __tests__/hero-autoplay-safety.test.ts`
+  - `pnpm exec jest __tests__/hero-loop-gating.test.tsx __tests__/hero-media-policy.test.ts __tests__/hero-autoplay-safety.test.ts`
+  - `pnpm test:visual:animations`
 - If you introduce any new decorative autoplay video, update this section and run the above tests before merge.
 
 ## Mobile Hero ASCII Resilience
 
 - ASCII animations use preview-first loading plus optional partial-frame batching in `components/ascii/AsciiAnimation.tsx`.
-- `components/home/DeferredAsciiHeroBackdrop.tsx` now treats the homepage/about ASCII hero motion as progressive enhancement. It waits for idle time and skips the animated backdrop on small screens, reduced-motion contexts, slow connections, or lower-power devices so the copy paints first.
+- `components/home/DeferredAsciiHeroBackdrop.tsx` now treats the homepage/about ASCII hero motion as progressive enhancement with adaptive profiles instead of a blanket mobile kill switch. It still waits for idle time, but it can now render on healthy phones/tablets with a lighter FPS + batching profile so the homepage loop actually appears on mobile.
 - New props for fault-tolerant loading:
   - `loadStrategy?: "batch" | "all"` (default: `"batch"`)
   - `batchSize?: number` (default: `24`)
   - `maxConcurrentFetches?: number` (default: `6`)
   - `continueOnFrameError?: boolean` (default: `true`)
+- The homepage hero now uses `forceAutoplay` for the visible-above-the-fold ASCII layer, while `AsciiAnimation` still pauses itself when the page is hidden or motion should stop.
 - Keep the placeholder/preview frame visible while additional chunks stream in so mobile motion starts quickly even when the full set is large.
 - Never fail the entire animation because of a single frame request; keep partial sequence playback when at least 2 frames are available.
 - If zero frames load, render the deterministic fallback `"No frames loaded"`.
