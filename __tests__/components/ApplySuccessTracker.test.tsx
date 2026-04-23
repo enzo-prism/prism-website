@@ -5,11 +5,13 @@ import ApplySuccessTracker from "@/components/thank-you/ApplySuccessTracker"
 const consumePendingApplyLeadContext = jest.fn()
 const getDefaultLeadSource = jest.fn()
 const trackEvent = jest.fn()
+const trackLeadConversion = jest.fn()
 
 jest.mock("@/utils/analytics", () => ({
   consumePendingApplyLeadContext: () => consumePendingApplyLeadContext(),
   getDefaultLeadSource: () => getDefaultLeadSource(),
   trackEvent: (...args: Array<unknown>) => trackEvent(...args),
+  trackLeadConversion: (...args: Array<unknown>) => trackLeadConversion(...args),
 }))
 
 describe("ApplySuccessTracker", () => {
@@ -34,7 +36,8 @@ describe("ApplySuccessTracker", () => {
     render(<ApplySuccessTracker />)
 
     await waitFor(() => {
-      expect(trackEvent).toHaveBeenCalledTimes(2)
+      expect(trackEvent).toHaveBeenCalledTimes(1)
+      expect(trackLeadConversion).toHaveBeenCalledTimes(1)
     })
 
     expect(trackEvent).toHaveBeenNthCalledWith(
@@ -46,9 +49,7 @@ describe("ApplySuccessTracker", () => {
         service_count: 2,
       }),
     )
-    expect(trackEvent).toHaveBeenNthCalledWith(
-      2,
-      "generate_lead",
+    expect(trackLeadConversion).toHaveBeenCalledWith(
       expect.objectContaining({
         form_name: "growth_application",
         form_location: "apply_page",
@@ -77,5 +78,6 @@ describe("ApplySuccessTracker", () => {
         source: "apply",
       }),
     )
+    expect(trackLeadConversion).not.toHaveBeenCalled()
   })
 })

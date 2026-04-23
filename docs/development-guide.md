@@ -138,15 +138,16 @@ Custom confirmation routes live in `app/thank-you/` and `app/analysis-thank-you/
 - SPA pageviews are manually sent through `trackPageView(...)` in `utils/analytics.ts`. Do not reintroduce route-change `gtag('config', ...)` calls for pageview updates; GA4's own docs warn that mixing manual pageviews with extra config-driven pageviews can create duplicates.
 - High-intent marketing actions also flow into Vercel custom events through `utils/analytics.ts` (`cta_click`, `form_submit_success`, downloads, outbound links, video interactions, and `generate_lead`). Keep those event payloads compact and non-PII so they stay useful in the Vercel dashboard across plan tiers.
 - Marketing attribution is persisted client-side in `lib/marketing-attribution.ts` and injected into form submissions at submit time, so Formspree lead records retain first-touch source context alongside the thank-you page conversion flow.
+- Lead conversion tracking is centralized in `utils/analytics.ts`: `trackFormSubmission(...)` stores a pending lead by default, and `components/thank-you/LeadSuccessTracker.tsx` consumes it once on the relevant thank-you route before emitting GA4 `generate_lead` plus the Google Ads lead conversion. Use `conversionMode: "immediate"` only for confirmed success states that do not navigate to a thank-you page.
 - GA4 enhanced measurement form reporting depends on the real DOM `<form id="...">` / `name="..."` attributes, not just hidden `form_name` inputs. Every marketing form should expose both so GA can populate `form_id` and `form_name` consistently in automatic `form_start` / `form_submit` events.
 - The `/apply` funnel now uses a layered event model:
   - automatic GA4 enhanced measurement: `form_start`, `form_submit`
   - custom funnel detail: `apply_form_view`, `apply_form_start`, `apply_step_1_complete`, `apply_step_2_complete`, `apply_submit`, `apply_error`, `apply_success`
   - canonical lead conversion: `generate_lead` on the `/thank-you?source=apply` success state
-- Any route-level conversion (e.g., `/thank-you`) should load its own `<Script>` that fires the relevant `gtag('event', 'conversion', { send_to: 'AW-…' })`. See `app/thank-you/page.tsx` for the exact snippet tied to `AW-11373090310/hBMrCMijk70bEIasjq8q`.
-- When building a new landing page with a Formspree form, make sure the success handler navigates to `/thank-you` so the Ads conversion snippet runs and the GA pageview records properly.
+- Do not add route-level inline Google Ads conversion `<Script>` snippets for form thank-you pages. Use `LeadSuccessTracker` so direct visits do not falsely count as conversions.
+- When building a new landing page with a Formspree form, call `trackFormSubmission(...)` only after the Formspree response succeeds, then navigate to a thank-you route that mounts `LeadSuccessTracker`.
 - GA4 property follow-up after code changes:
-  - Mark `generate_lead` as the key event for the apply flow.
+  - Mark `generate_lead` as the key event for lead flows.
   - Register custom dimensions for whichever non-PII lead parameters you want in standard reports, such as `form_location`, `lead_type`, `budget`, `timeline`, `primary_goal`, `has_website`, and `service_count`.
   - Keep GA4 enhanced measurement form interactions enabled so the automatic `form_start` / `form_submit` events continue to complement the custom funnel events.
 

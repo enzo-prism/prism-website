@@ -147,7 +147,10 @@ export default function PrismAIClient() {
       })
 
       if (response.ok) {
-        trackFormSubmission("prism_ai_website_request", "prism_ai_flow")
+        trackFormSubmission("prism_ai_website_request", "prism_ai_flow", {
+          conversionMode: "immediate",
+          lead_type: "prism_ai_website_request",
+        })
         setIsSuccess(true)
       } else {
         throw new Error("Failed to submit form")

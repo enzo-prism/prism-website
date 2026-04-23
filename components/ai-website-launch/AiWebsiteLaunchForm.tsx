@@ -21,7 +21,6 @@ export default function AiWebsiteLaunchForm({ submitLabel }: AiWebsiteLaunchForm
   const { getError, handleBlur, handleInput, handleSubmit, isSubmitting } = useFormValidation({
     onValidSubmit: async (form) => {
       setSubmitError(null)
-      trackFormSubmission("ai_website_launch", "final_cta_form")
 
       try {
         const formData = new FormData(form)
@@ -40,6 +39,7 @@ export default function AiWebsiteLaunchForm({ submitLabel }: AiWebsiteLaunchForm
         return
       }
 
+      trackFormSubmission("ai_website_launch", "final_cta_form")
       form.reset()
       router.push("/thank-you?utm_source=google_ads")
     },

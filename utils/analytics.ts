@@ -2,7 +2,7 @@
 
 import { track as trackVercel } from "@vercel/analytics"
 
-import { IS_ANALYTICS_ENABLED } from "@/lib/constants"
+import { GOOGLE_ADS_LEAD_CONVERSION_SEND_TO, IS_ANALYTICS_ENABLED } from "@/lib/constants"
 import { getAttributionContext } from "@/lib/marketing-attribution"
 import { buildVercelCustomEvent } from "@/lib/vercel-analytics"
 import { addBreadcrumb, captureErrorWithContext, isSentryInitialized } from "./sentry-helpers"
@@ -19,11 +19,13 @@ declare global {
   }
 }
 
-type ApplyLeadContext = {
+export type LeadConversionContext = {
   form_name?: string
   form_location?: string
   lead_type?: string
   lead_source?: string
+  value?: number
+  currency?: string
   service_count?: number
   primary_goal?: string
   has_website?: string
@@ -32,8 +34,22 @@ type ApplyLeadContext = {
   elapsed_seconds?: number
 }
 
-const APPLY_LEAD_CONTEXT_STORAGE_KEY = "prism_pending_apply_lead_context_v1"
-const APPLY_LEAD_CONTEXT_TTL_MS = 30 * 60 * 1000
+type FormSubmissionOptions = Omit<LeadConversionContext, "form_name" | "form_location"> & {
+  conversionMode?: "pending" | "immediate" | "none"
+  sendGoogleAdsConversion?: boolean
+}
+
+type LeadTrackingOptions = {
+  sendGoogleAdsConversion?: boolean
+}
+
+type PageViewOptions = {
+  previousPath?: string | null
+  previousUrl?: string | null
+}
+
+const PENDING_LEAD_CONTEXT_STORAGE_KEY = "prism_pending_lead_context_v1"
+const PENDING_LEAD_CONTEXT_TTL_MS = 30 * 60 * 1000
 
 function getGtag() {
   if (typeof window === "undefined") return null
@@ -46,6 +62,12 @@ function getGtag() {
   }
 
   return window.gtag
+}
+
+function compactAnalyticsParams(params: Record<string, any>) {
+  return Object.fromEntries(
+    Object.entries(params).filter(([, value]) => value !== undefined && value !== null && value !== ""),
+  )
 }
 
 // Custom event types
@@ -86,20 +108,20 @@ function canUseSessionStorage() {
   return typeof window !== "undefined" && "sessionStorage" in window
 }
 
-function readStoredApplyLeadContext():
-  | (ApplyLeadContext & {
+function readStoredLeadContext():
+  | (LeadConversionContext & {
       savedAt: number
     })
   | null {
   if (!canUseSessionStorage()) return null
 
   try {
-    const raw = window.sessionStorage.getItem(APPLY_LEAD_CONTEXT_STORAGE_KEY)
+    const raw = window.sessionStorage.getItem(PENDING_LEAD_CONTEXT_STORAGE_KEY)
     if (!raw) return null
 
-    const parsed = JSON.parse(raw) as ApplyLeadContext & { savedAt?: number }
-    if (!parsed.savedAt || Date.now() - parsed.savedAt > APPLY_LEAD_CONTEXT_TTL_MS) {
-      window.sessionStorage.removeItem(APPLY_LEAD_CONTEXT_STORAGE_KEY)
+    const parsed = JSON.parse(raw) as LeadConversionContext & { savedAt?: number }
+    if (!parsed.savedAt || Date.now() - parsed.savedAt > PENDING_LEAD_CONTEXT_TTL_MS) {
+      window.sessionStorage.removeItem(PENDING_LEAD_CONTEXT_STORAGE_KEY)
       return null
     }
 
@@ -112,12 +134,12 @@ function readStoredApplyLeadContext():
   }
 }
 
-export function storePendingApplyLeadContext(context: ApplyLeadContext) {
+export function storePendingLeadConversion(context: LeadConversionContext) {
   if (!canUseSessionStorage()) return
 
   try {
     window.sessionStorage.setItem(
-      APPLY_LEAD_CONTEXT_STORAGE_KEY,
+      PENDING_LEAD_CONTEXT_STORAGE_KEY,
       JSON.stringify({
         ...context,
         savedAt: Date.now(),
@@ -128,16 +150,19 @@ export function storePendingApplyLeadContext(context: ApplyLeadContext) {
   }
 }
 
-export function consumePendingApplyLeadContext(): ApplyLeadContext | null {
-  const stored = readStoredApplyLeadContext()
+export function consumePendingLeadConversion(): LeadConversionContext | null {
+  const stored = readStoredLeadContext()
   if (!stored || !canUseSessionStorage()) {
     return stored
   }
 
-  window.sessionStorage.removeItem(APPLY_LEAD_CONTEXT_STORAGE_KEY)
+  window.sessionStorage.removeItem(PENDING_LEAD_CONTEXT_STORAGE_KEY)
   const { savedAt: _savedAt, ...context } = stored
   return context
 }
+
+export const storePendingApplyLeadContext = storePendingLeadConversion
+export const consumePendingApplyLeadContext = consumePendingLeadConversion
 
 export function getDefaultLeadSource() {
   const attribution = getAttributionContext()
@@ -147,6 +172,46 @@ export function getDefaultLeadSource() {
     attribution.first_touch_source ||
     undefined
   )
+}
+
+function getLeadConversionParams(context: LeadConversionContext) {
+  const leadSource = context.lead_source || getDefaultLeadSource()
+
+  return compactAnalyticsParams({
+    currency: context.currency || "USD",
+    value: context.value ?? 1,
+    ...context,
+    lead_type: context.lead_type || context.form_name,
+    lead_source: leadSource,
+  })
+}
+
+export function trackGoogleAdsLeadConversion(context: LeadConversionContext = {}) {
+  if (typeof window === "undefined" || !IS_ANALYTICS_ENABLED) {
+    return
+  }
+
+  const params = getLeadConversionParams(context)
+
+  try {
+    getGtag()?.("event", "conversion", {
+      send_to: GOOGLE_ADS_LEAD_CONVERSION_SEND_TO,
+      value: params.value,
+      currency: params.currency,
+    })
+  } catch (error) {
+    console.error("[Analytics] Error tracking Google Ads lead conversion:", error)
+  }
+}
+
+export function trackLeadConversion(context: LeadConversionContext, options: LeadTrackingOptions = {}) {
+  const params = getLeadConversionParams(context)
+
+  trackEvent("generate_lead", params)
+
+  if (options.sendGoogleAdsConversion !== false) {
+    trackGoogleAdsLeadConversion(params)
+  }
 }
 
 /**
@@ -163,14 +228,14 @@ export function trackEvent(eventName: EventType, params?: Record<string, any>) {
   const pageTitle = typeof document !== "undefined" ? document.title : ""
 
   // Add timestamp and attribution context to all events
-  const enhancedParams = {
+  const enhancedParams = compactAnalyticsParams({
     ...getAttributionContext(),
     ...params,
     event_time: new Date().toISOString(),
     page_location: pageLocation,
     page_title: pageTitle,
     page_path: window.location.pathname,
-  }
+  })
 
   if (process.env.NODE_ENV === "development") {
     console.log(`[Analytics] Tracked event: ${eventName}`, enhancedParams)
@@ -190,8 +255,6 @@ export function trackEvent(eventName: EventType, params?: Record<string, any>) {
   }
 
   try {
-    window.dataLayer = window.dataLayer || []
-    window.dataLayer.push({ event: eventName, ...enhancedParams })
     getGtag()?.("event", eventName, enhancedParams)
   } catch (error) {
     console.error("[Analytics] Error tracking event:", error)
@@ -203,7 +266,7 @@ export function trackEvent(eventName: EventType, params?: Record<string, any>) {
  * @param path The path of the page
  * @param title The title of the page
  */
-export function trackPageView(path: string, title: string) {
+export function trackPageView(path: string, title: string, options: PageViewOptions = {}) {
   if (typeof window === "undefined") {
     return
   }
@@ -222,13 +285,15 @@ export function trackPageView(path: string, title: string) {
 
   const pageTitle = title || (typeof document !== "undefined" ? document.title : normalizedPath)
   const pageLocation = window.location.href
-  const pageReferrer = typeof document !== "undefined" ? document.referrer : ""
+  const pageReferrer =
+    options.previousUrl ?? (typeof document !== "undefined" ? document.referrer : "")
 
   trackEvent("page_view", {
     page_path: normalizedPath,
     page_title: pageTitle,
     page_referrer: pageReferrer,
     page_location: pageLocation,
+    previous_path: options.previousPath,
   })
 
 }
@@ -289,11 +354,37 @@ export function trackServiceCardClick(serviceName: string, destination: string) 
  * @param formName The name of the form
  * @param formLocation The location of the form on the site
  */
-export function trackFormSubmission(formName: string, formLocation: string) {
+export function trackFormSubmission(
+  formName: string,
+  formLocation: string,
+  options: FormSubmissionOptions = {},
+) {
+  const {
+    conversionMode = "pending",
+    sendGoogleAdsConversion,
+    ...leadContext
+  } = options
+  const conversionContext: LeadConversionContext = {
+    ...leadContext,
+    form_name: formName,
+    form_location: formLocation,
+    lead_type: leadContext.lead_type || formName,
+  }
+
   trackEvent("form_submit_success", {
     form_name: formName,
     form_location: formLocation,
+    lead_type: conversionContext.lead_type,
   })
+
+  if (conversionMode === "immediate") {
+    trackLeadConversion(conversionContext, { sendGoogleAdsConversion })
+    return
+  }
+
+  if (conversionMode === "pending") {
+    storePendingLeadConversion(conversionContext)
+  }
 }
 
 /**

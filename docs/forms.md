@@ -77,8 +77,7 @@ const { handleSubmit, getError, isSubmitting } = useFormValidation({
   - `trackEvent("apply_submit", ...)`
   - `trackEvent("apply_error", ...)`
   - `trackEvent("apply_success", ...)` on the apply thank-you view
-  - `trackEvent("generate_lead", ...)` on the apply thank-you view
-  - `trackFormSubmission("growth_application", "apply_form")` now emits the custom `form_submit_success` event so it does not collide with GA4 enhanced measurement's automatic `form_submit`
+  - `trackLeadConversion(...)` on the apply thank-you view after the pending application context is consumed
 
 ## New flow: `/aeo` + free AEO assessment
 
@@ -102,6 +101,7 @@ const { handleSubmit, getError, isSubmitting } = useFormValidation({
   - On failure, inline error state remains visible and user stays on the form
 - Analytics:
   - `trackFormSubmission("aeo_assessment", "hero_form")` on successful submit
+  - `LeadSuccessTracker` on `/aeo-thank-you` consumes the pending submission and emits `generate_lead` once
   - `trackCTAClick("get free aeo assessment", "aeo hero form")` on the submit button click
 
 ### Codex handoff: AEO form contracts + validation tests

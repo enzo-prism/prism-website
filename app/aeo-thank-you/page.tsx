@@ -1,11 +1,11 @@
 import type { Metadata } from "next"
 import Link from "next/link"
-import Script from "next/script"
 
 import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
 import PixelishIcon from "@/components/pixelish/PixelishIcon"
 import RevealOnScroll from "@/components/reveal-on-scroll"
+import LeadSuccessTracker from "@/components/thank-you/LeadSuccessTracker"
 import { Button } from "@/components/ui/button"
 import { buildRouteMetadata } from "@/lib/seo/metadata"
 
@@ -19,19 +19,7 @@ export const metadata: Metadata = buildRouteMetadata({
 export default function AeoThankYouPage() {
   return (
     <>
-      <Script
-        id="google-ads-conversion-thank-you"
-        strategy="afterInteractive"
-        dangerouslySetInnerHTML={{
-          __html: `
-            gtag('event', 'conversion', {
-              'send_to': 'AW-11373090310/hBMrCMijk70bEIasjq8q',
-              'value': 1.0,
-              'currency': 'USD'
-            });
-          `,
-        }}
-      />
+      <LeadSuccessTracker />
       <div className="flex min-h-screen flex-col bg-white">
         <Navbar />
         <main className="flex-1">

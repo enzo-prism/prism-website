@@ -12,29 +12,46 @@ export default function EnhancedAnalytics({ title }: EnhancedAnalyticsProps) {
   const pathname = usePathname()
   const searchParams = useSearchParams()
   const previousPathname = useRef<string | null>(null)
+  const previousUrl = useRef<string | null>(null)
+  const previousSearchParams = useRef<string | null>(null)
 
   useEffect(() => {
     const previous = previousPathname.current
     if (previous !== pathname) {
-      trackPageView(pathname, title)
-      trackEvent("navigation", {
-        from_path: previous || "(initial)",
-        to_path: pathname,
-        navigation_type: previous ? "client_side" : "initial_load",
-        page_title: title,
+      const currentUrl = typeof window !== "undefined" ? window.location.href : null
+
+      trackPageView(pathname, title, {
+        previousPath: previous,
+        previousUrl: previousUrl.current,
       })
+
+      if (previous) {
+        trackEvent("navigation", {
+          from_path: previous,
+          to_path: pathname,
+          navigation_type: "client_side",
+          page_title: title,
+        })
+      }
+
       previousPathname.current = pathname
+      previousUrl.current = currentUrl
     }
   }, [pathname, title])
 
   // Track when search params change
   useEffect(() => {
-    if (previousPathname.current === pathname) {
+    const currentSearchParams = searchParams.toString()
+    const previous = previousSearchParams.current
+
+    if (previous !== null && previous !== currentSearchParams) {
       trackEvent("search_params_change", {
         path: pathname,
-        search_params: searchParams.toString(),
+        search_params: currentSearchParams,
       })
     }
+
+    previousSearchParams.current = currentSearchParams
   }, [searchParams, pathname])
 
   // Track page engagement metrics
@@ -44,6 +61,7 @@ export default function EnhancedAnalytics({ title }: EnhancedAnalyticsProps) {
     const startTime = Date.now()
     let scrollDepth = 0
     let engaged = false
+    let reported = false
 
     const trackEngagement = () => {
       engaged = true
@@ -73,12 +91,19 @@ export default function EnhancedAnalytics({ title }: EnhancedAnalyticsProps) {
       if (currentScrollDepth > scrollDepth) {
         scrollDepth = currentScrollDepth
       }
+
+      if (scrollDepth >= 25) {
+        engaged = true
+      }
     }
 
     const reportEngagement = () => {
-      if (!engaged) return
+      if (reported || !engaged) return
 
       const timeOnPage = Math.floor((Date.now() - startTime) / 1000)
+      if (timeOnPage < 10 && scrollDepth < 25) return
+
+      reported = true
 
       trackEvent("page_engagement", {
         path: pathname,
@@ -91,7 +116,6 @@ export default function EnhancedAnalytics({ title }: EnhancedAnalyticsProps) {
     window.addEventListener("scroll", trackScroll, { passive: true })
     window.addEventListener("click", handleTrackedClick)
     window.addEventListener("keydown", trackEngagement)
-    window.addEventListener("mousemove", trackEngagement)
     window.addEventListener("touchstart", trackEngagement)
 
     // Report engagement when user leaves page
@@ -102,7 +126,6 @@ export default function EnhancedAnalytics({ title }: EnhancedAnalyticsProps) {
       window.removeEventListener("scroll", trackScroll)
       window.removeEventListener("click", handleTrackedClick)
       window.removeEventListener("keydown", trackEngagement)
-      window.removeEventListener("mousemove", trackEngagement)
       window.removeEventListener("touchstart", trackEngagement)
       window.removeEventListener("beforeunload", reportEngagement)
     }

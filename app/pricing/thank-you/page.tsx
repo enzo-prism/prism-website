@@ -5,6 +5,7 @@ import type { Metadata } from "next"
 import Link from "next/link"
 import { CheckCircle2 } from "lucide-react"
 import { buildRouteMetadata } from "@/lib/seo/metadata"
+import LeadSuccessTracker from "@/components/thank-you/LeadSuccessTracker"
 
 export const metadata: Metadata = buildRouteMetadata({
   titleStem: "plan sent | next steps from prism",
@@ -17,6 +18,7 @@ export const metadata: Metadata = buildRouteMetadata({
 export default function PricingThankYouPage() {
   return (
     <div className="flex min-h-screen flex-col bg-white">
+      <LeadSuccessTracker />
       <Navbar />
       <main className="flex flex-1 items-center justify-center px-4 py-24 sm:py-32">
         <div className="flex w-full max-w-xl flex-col items-center gap-8 rounded-3xl border border-neutral-200 bg-white/60 p-10 text-center shadow-sm backdrop-blur">

@@ -271,7 +271,7 @@ Keeping these files tidy makes copy refreshes and landing-page experiments fast.
   - Files to touch when changing the funnel:
     - `app/aeo/page.tsx` (hero + framework + evidence + FAQ + schema)
     - `components/forms/AeoAssessmentForm.tsx` (form fields, hidden metadata, endpoint, tracking)
-    - `app/aeo-thank-you/page.tsx` (conversion messaging + optional Ads conversion snippet)
+    - `app/aeo-thank-you/page.tsx` (conversion messaging + `LeadSuccessTracker`)
     - `components/forms/AeoAssessmentForm.tsx` + `app/sitemap.ts` when URL/thank-you behavior changes
   - Keep canonical output stable for `/aeo` (`buildRouteMetadata`) and keep `/aeo-thank-you` noindex.
   - Keep the thank-you route out of the sitemap via `NOINDEX_ROUTES`.

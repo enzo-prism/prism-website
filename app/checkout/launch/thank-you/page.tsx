@@ -5,6 +5,7 @@ import Footer from "@/components/footer"
 import { Button } from "@/components/ui/button"
 import { CheckCircle2, Calendar } from "lucide-react"
 import PixelishIcon from "@/components/pixelish/PixelishIcon"
+import LeadSuccessTracker from "@/components/thank-you/LeadSuccessTracker"
 import { buildRouteMetadata } from "@/lib/seo/metadata"
 
 export const metadata: Metadata = buildRouteMetadata({
@@ -17,6 +18,7 @@ export const metadata: Metadata = buildRouteMetadata({
 export default function LaunchThankYouPage() {
   return (
     <div className="flex min-h-screen flex-col bg-transparent">
+      <LeadSuccessTracker />
       <Navbar />
       <main className="flex-1 flex items-center justify-center py-24 px-6">
         <div className="max-w-lg text-center space-y-6">

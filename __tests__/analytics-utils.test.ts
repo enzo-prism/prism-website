@@ -5,6 +5,7 @@ jest.mock("@vercel/analytics", () => ({
 }))
 
 jest.mock("@/lib/constants", () => ({
+  GOOGLE_ADS_LEAD_CONVERSION_SEND_TO: "AW-TEST/lead",
   IS_ANALYTICS_ENABLED: true,
 }))
 
@@ -23,7 +24,10 @@ jest.mock("@/utils/sentry-helpers", () => ({
 
 import {
   consumePendingApplyLeadContext,
+  consumePendingLeadConversion,
   storePendingApplyLeadContext,
+  trackFormSubmission,
+  trackLeadConversion,
   trackPageView,
 } from "@/utils/analytics"
 
@@ -67,5 +71,59 @@ describe("analytics utilities", () => {
       timeline: "Within 30 days",
     })
     expect(consumePendingApplyLeadContext()).toBeNull()
+  })
+
+  it("stores successful form submissions as pending lead conversions", () => {
+    trackFormSubmission("free_analysis", "free_analysis_form")
+
+    expect(window.gtag).toHaveBeenCalledWith(
+      "event",
+      "form_submit_success",
+      expect.objectContaining({
+        form_name: "free_analysis",
+        form_location: "free_analysis_form",
+        lead_type: "free_analysis",
+      }),
+    )
+    expect(
+      (window.gtag as jest.Mock).mock.calls.some(([, eventName]) => eventName === "generate_lead"),
+    ).toBe(false)
+    expect(consumePendingLeadConversion()).toEqual({
+      form_name: "free_analysis",
+      form_location: "free_analysis_form",
+      lead_type: "free_analysis",
+    })
+  })
+
+  it("tracks immediate lead conversions with GA4 and Google Ads conversion data", () => {
+    trackLeadConversion({
+      form_name: "blog_updates",
+      form_location: "blog_email_signup",
+      lead_type: "newsletter_signup",
+      value: 1,
+      currency: "USD",
+    })
+
+    expect(window.gtag).toHaveBeenCalledWith(
+      "event",
+      "generate_lead",
+      expect.objectContaining({
+        form_name: "blog_updates",
+        form_location: "blog_email_signup",
+        lead_type: "newsletter_signup",
+        lead_source: "google",
+        value: 1,
+        currency: "USD",
+      }),
+    )
+    expect(window.gtag).toHaveBeenCalledWith(
+      "event",
+      "conversion",
+      expect.objectContaining({
+        send_to: "AW-TEST/lead",
+        value: 1,
+        currency: "USD",
+      }),
+    )
   })
 })

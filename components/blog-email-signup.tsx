@@ -36,7 +36,11 @@ export default function BlogEmailSignup() {
       form.reset()
       setStatus("success")
       setMessage("thanks! we’ll keep you in the loop.")
-      trackFormSubmission("blog_updates", "blog_email_signup")
+      trackFormSubmission("blog_updates", "blog_email_signup", {
+        conversionMode: "immediate",
+        lead_type: "newsletter_signup",
+        sendGoogleAdsConversion: false,
+      })
     } catch (error) {
       console.error("[BlogEmailSignup] submission failed", error)
       setStatus("error")

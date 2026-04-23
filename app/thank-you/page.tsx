@@ -1,11 +1,11 @@
 import type { Metadata } from "next"
 
 import Link from "next/link"
-import Script from "next/script"
 
 import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
 import ApplySuccessTracker from "@/components/thank-you/ApplySuccessTracker"
+import LeadSuccessTracker from "@/components/thank-you/LeadSuccessTracker"
 import { buildRouteMetadata } from "@/lib/seo/metadata"
 
 export const metadata: Metadata = buildRouteMetadata({
@@ -63,22 +63,8 @@ export default async function ThankYouPage({
 
   return (
     <>
-      <Script
-        id="google-ads-conversion-thank-you"
-        strategy="afterInteractive"
-        dangerouslySetInnerHTML={{
-          __html: `
-            gtag('event', 'conversion', {
-              'send_to': 'AW-11373090310/hBMrCMijk70bEIasjq8q',
-              'value': 1.0,
-              'currency': 'USD'
-            });
-          `,
-        }}
-      />
-
       <div className="flex min-h-screen flex-col bg-[#040404] font-sans text-[#F5F5F2]">
-        {isApplyFlow ? <ApplySuccessTracker /> : null}
+        {isApplyFlow ? <ApplySuccessTracker /> : <LeadSuccessTracker />}
         <Navbar />
         <main className="flex-1 px-4 py-16 sm:px-6 sm:py-20">
           <section className="mx-auto max-w-[1180px] space-y-8">

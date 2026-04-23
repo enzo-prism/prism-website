@@ -6,6 +6,7 @@ const envMeasurementId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID?.trim()
 export const GA_MEASUREMENT_ID = envMeasurementId && envMeasurementId.length > 0 ? envMeasurementId : FALLBACK_GA_MEASUREMENT_ID
 export const IS_ANALYTICS_ENABLED = process.env.NODE_ENV === "production" && Boolean(GA_MEASUREMENT_ID)
 export const GOOGLE_ADS_ID = "AW-11373090310"
+export const GOOGLE_ADS_LEAD_CONVERSION_SEND_TO = `${GOOGLE_ADS_ID}/hBMrCMijk70bEIasjq8q`
 
 // Logo configuration
 export const LOGO_CONFIG = {

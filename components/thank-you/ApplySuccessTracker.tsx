@@ -6,6 +6,7 @@ import {
   consumePendingApplyLeadContext,
   getDefaultLeadSource,
   trackEvent,
+  trackLeadConversion,
 } from "@/utils/analytics"
 
 export default function ApplySuccessTracker() {
@@ -22,7 +23,7 @@ export default function ApplySuccessTracker() {
       return
     }
 
-    trackEvent("generate_lead", {
+    trackLeadConversion({
       form_name: pendingLeadContext.form_name || "growth_application",
       form_location: pendingLeadContext.form_location || "apply_page",
       lead_type: pendingLeadContext.lead_type || "growth_application",

@@ -5,6 +5,7 @@ import Link from "next/link"
 import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
 import RevealOnScroll from "@/components/reveal-on-scroll"
+import LeadSuccessTracker from "@/components/thank-you/LeadSuccessTracker"
 import { Button } from "@/components/ui/button"
 import PixelishIcon from "@/components/pixelish/PixelishIcon"
 import { buildRouteMetadata } from "@/lib/seo/metadata"
@@ -19,6 +20,7 @@ export const metadata: Metadata = buildRouteMetadata({
 export default function AnalysisThankYouPage() {
   return (
     <div className="flex min-h-screen flex-col bg-white">
+      <LeadSuccessTracker />
       <Navbar />
       <main className="flex-1">
         <section className="px-6 py-16 sm:py-24">
