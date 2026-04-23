@@ -40,7 +40,7 @@ export const HOMEPAGE_CASE_STUDY_SLUGS = [
 ] as const
 
 export const HOMEPAGE_HERO = {
-  eyebrow: 'small business growth',
+  eyebrow: '',
   title: 'Growth, handled for you.',
   description: 'We handle the tech. You run the business.',
   supportPoints: [
@@ -65,8 +65,6 @@ export const HOMEPAGE_HERO = {
       iconSrc: '/pixelish/award-checkmark.svg',
     },
   ] satisfies readonly HomepageHeroSupportPoint[],
-  trustLine:
-    'Built for small business owners who want a long term partner, not more headaches.',
   primaryCtaLabel: 'Get a Free Growth Plan',
   secondaryCtaLabel: 'See How It Works',
 } as const

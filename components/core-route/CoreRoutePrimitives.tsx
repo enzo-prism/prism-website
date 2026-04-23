@@ -24,10 +24,16 @@ export const corePrimaryActionClassName =
 export const coreSecondaryActionClassName =
   'inline-flex min-h-12 items-center justify-center rounded-full border border-white/16 px-5 text-sm font-semibold uppercase tracking-[0.16em] text-[#c9c1b6] transition-colors hover:border-white/30 hover:bg-white/[0.04] hover:text-[#f5f0e8] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-white/25 focus-visible:ring-offset-4 focus-visible:ring-offset-black'
 
+export const coreHeroPrimaryActionClassName =
+  'inline-flex min-h-14 w-full items-center justify-center rounded-xl border border-[#f5f0e8]/70 bg-[#f5f0e8] px-6 font-sans text-[0.97rem] font-medium tracking-[-0.01em] text-[#050505] shadow-[inset_0_1px_0_rgba(255,255,255,0.45),0_20px_40px_-26px_rgba(245,240,232,0.72)] transition-[transform,background-color,border-color,box-shadow] hover:border-white hover:bg-white hover:text-[#050505] hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.55),0_24px_42px_-24px_rgba(245,240,232,0.82)] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[#f5f0e8]/35 focus-visible:ring-offset-4 focus-visible:ring-offset-black active:translate-y-px sm:min-w-[12.5rem] sm:w-auto'
+
+export const coreHeroSecondaryActionClassName =
+  'inline-flex min-h-14 w-full items-center justify-center rounded-xl border border-white/14 bg-white/[0.03] px-6 font-sans text-[0.97rem] font-medium tracking-[-0.01em] text-[#f5f0e8] transition-[transform,background-color,border-color] hover:border-white/28 hover:bg-white/[0.07] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-white/25 focus-visible:ring-offset-4 focus-visible:ring-offset-black active:translate-y-px sm:min-w-[12.5rem] sm:w-auto'
+
 type CoreActionLinkProps = {
   href: string
   children: ReactNode
-  variant?: 'primary' | 'secondary'
+  variant?: 'primary' | 'secondary' | 'heroPrimary' | 'heroSecondary'
   className?: string
   label?: string
   location?: string
@@ -48,7 +54,11 @@ export function CoreActionLink({
   const actionClassName = cn(
     variant === 'primary'
       ? corePrimaryActionClassName
-      : coreSecondaryActionClassName,
+      : variant === 'secondary'
+        ? coreSecondaryActionClassName
+        : variant === 'heroPrimary'
+          ? coreHeroPrimaryActionClassName
+          : coreHeroSecondaryActionClassName,
     className,
   )
 
@@ -75,7 +85,7 @@ export function CoreActionLink({
 }
 
 type CoreSectionHeadingProps = {
-  eyebrow: string
+  eyebrow?: string
   title: ReactNode
   description?: ReactNode
   as?: 'h1' | 'h2' | 'h3'
@@ -107,14 +117,16 @@ export function CoreSectionHeading({
         className,
       )}
     >
-      <p
-        className={cn(
-          'font-mono text-[11px] font-semibold uppercase tracking-[0.34em] text-[#8f877b]',
-          eyebrowClassName,
-        )}
-      >
-        {eyebrow}
-      </p>
+      {eyebrow ? (
+        <p
+          className={cn(
+            'font-mono text-[11px] font-semibold uppercase tracking-[0.34em] text-[#8f877b]',
+            eyebrowClassName,
+          )}
+        >
+          {eyebrow}
+        </p>
+      ) : null}
       <HeadingTag
         className={cn(
           variant === 'hero'

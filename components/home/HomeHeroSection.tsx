@@ -63,11 +63,12 @@ export default function HomeHeroSection() {
                 />
               </div>
 
-              <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:gap-8">
+              <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:gap-4">
                 <CoreActionLink
                   href="/get-started"
                   label="get a free growth plan"
                   location="homepage hero"
+                  variant="heroPrimary"
                 >
                   {HOMEPAGE_HERO.primaryCtaLabel}
                 </CoreActionLink>
@@ -75,15 +76,11 @@ export default function HomeHeroSection() {
                   href="/#how-it-works"
                   label="see how it works"
                   location="homepage hero"
-                  variant="secondary"
+                  variant="heroSecondary"
                 >
                   {HOMEPAGE_HERO.secondaryCtaLabel}
                 </CoreActionLink>
               </div>
-
-              <p className="mt-6 max-w-[34rem] font-mono text-[11px] font-semibold uppercase tracking-[0.24em] text-[#8f877b]">
-                {HOMEPAGE_HERO.trustLine}
-              </p>
             </div>
           </div>
         </div>

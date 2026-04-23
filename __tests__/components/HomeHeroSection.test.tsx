@@ -32,7 +32,7 @@ jest.mock('@/components/home/DeferredAsciiHeroBackdrop', () => ({
 }))
 
 describe('HomeHeroSection', () => {
-  it('renders the small-business homepage hero copy and tracked CTA destinations', () => {
+  it('renders the homepage hero copy and tracked CTA destinations', () => {
     render(<HomeHeroSection />)
 
     expect(screen.getByTestId('home-hero-ascii-backdrop')).toBeInTheDocument()
@@ -49,11 +49,6 @@ describe('HomeHeroSection', () => {
     ).toBeInTheDocument()
     expect(
       screen.getByText(/we handle the tech\. you run the business\./i),
-    ).toBeInTheDocument()
-    expect(
-      screen.getByText(
-        /built for small business owners who want a long term partner, not more headaches\./i,
-      ),
     ).toBeInTheDocument()
 
     const supportPoints = screen.getAllByTestId('home-hero-support-point')
