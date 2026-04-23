@@ -184,7 +184,7 @@ test('home services section snapshot stays stable', async ({ page }) => {
   const servicesSection = servicesHeading.locator('xpath=ancestor::section[1]')
   await expect(servicesSection).toBeVisible()
   await servicesSection.scrollIntoViewIfNeeded()
-  await stabilizeDesktopSectionHeight(page, servicesSection, 921)
+  await stabilizeDesktopSectionHeight(page, servicesSection, 996)
 
   await stabilizePage(page)
   await expectLockedRouteSnapshotSurface(page)
