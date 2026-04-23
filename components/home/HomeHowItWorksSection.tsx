@@ -25,6 +25,7 @@ export default function HomeHowItWorksSection() {
               href="/get-started"
               label="get my free growth plan"
               location="homepage how it works"
+              className="text-[0.72rem] tracking-[0.12em] sm:text-sm sm:tracking-[0.18em]"
             >
               {HOMEPAGE_HOW_IT_WORKS.ctaLabel}
             </CoreActionLink>

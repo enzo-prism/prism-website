@@ -41,9 +41,7 @@ export const HOMEPAGE_CASE_STUDY_SLUGS = [
 
 const HOMEPAGE_HERO_REVIEW_COUNT = getHeroReviewCount()
 const HOMEPAGE_HERO_REVIEW_COUNT_LABEL =
-  HOMEPAGE_HERO_REVIEW_COUNT >= 20
-    ? '20+'
-    : `${HOMEPAGE_HERO_REVIEW_COUNT}`
+  HOMEPAGE_HERO_REVIEW_COUNT >= 20 ? '20+' : `${HOMEPAGE_HERO_REVIEW_COUNT}`
 
 export const HOMEPAGE_HERO = {
   eyebrow: '',
@@ -78,6 +76,31 @@ export const HOMEPAGE_HERO = {
   primaryCtaLabel: 'Get a Free Growth Plan',
   secondaryCtaLabel: 'See How It Works',
 } as const
+
+export const HOMEPAGE_PROOF_METRICS = [
+  {
+    value: '20+',
+    label: 'brands launched',
+    detail:
+      'Prism systems shipped across service, consulting, nonprofit, and hospitality brands.',
+  },
+  {
+    value: '5-star',
+    label: 'owner trust',
+    detail: 'Business owners point to clarity, speed, and steady execution.',
+  },
+  {
+    value: '4',
+    label: 'video walkthroughs',
+    detail: 'The featured case studies include deeper explainer videos.',
+  },
+  {
+    value: '1',
+    label: 'growth partner',
+    detail:
+      'Website, search, ads, content, analytics, and AI under one operating rhythm.',
+  },
+] as const
 
 export const HOMEPAGE_PROBLEM = {
   title: 'You have a business to run',
@@ -264,6 +287,32 @@ export const HOMEPAGE_CASE_STUDY_SUMMARIES: Record<string, string> = {
     'Sharper consulting positioning that helps the right clients understand the offer quickly.',
   'practice-transitions-institute':
     'Local visibility work that makes PTI easier to find and easier to trust.',
+}
+
+export const HOMEPAGE_CASE_STUDY_SIGNALS: Record<
+  string,
+  { artifact: string; outcome: string; proof: string }
+> = {
+  'exquisite-dentistry': {
+    artifact: 'Premium rebuild',
+    outcome: 'Trust + booking clarity',
+    proof: 'Digital presence matched the level of care.',
+  },
+  'infobell-it': {
+    artifact: 'Trust architecture',
+    outcome: 'Clearer MSP positioning',
+    proof: 'Technical services became easier to understand.',
+  },
+  'sr4-partners': {
+    artifact: 'Positioning refresh',
+    outcome: 'Sharper consulting story',
+    proof: 'Enterprise buyers can grasp the offer faster.',
+  },
+  'practice-transitions-institute': {
+    artifact: 'Authority system',
+    outcome: 'Local visibility + trust',
+    proof: 'PTI became easier to find and easier to evaluate.',
+  },
 }
 
 export const HOMEPAGE_FIT = {

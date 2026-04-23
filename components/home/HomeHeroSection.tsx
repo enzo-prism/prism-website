@@ -34,12 +34,12 @@ export default function HomeHeroSection() {
 
           <div className="relative z-10 px-6 py-10 sm:px-10 sm:py-14 md:px-12 md:py-16">
             <div className="max-w-[46rem]">
-              <div className="flex flex-wrap gap-3">
-                {HOMEPAGE_HERO.supportPoints.map((point) => (
+              <div className="flex flex-wrap gap-2.5 sm:gap-3">
+                {HOMEPAGE_HERO.supportPoints.map((point, index) => (
                   <div
                     key={point.label}
                     data-testid="home-hero-support-point"
-                    className="inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/[0.03] px-3 py-2 font-mono text-[10px] font-semibold uppercase tracking-[0.22em] text-[#b8afa2]"
+                    className={`${index > 1 ? 'hidden sm:inline-flex' : 'inline-flex'} items-center gap-2 rounded-full border border-white/12 bg-white/[0.03] px-3 py-2 font-mono text-[10px] font-semibold uppercase tracking-[0.22em] text-[#b8afa2]`}
                   >
                     <PixelishIcon
                       src={point.iconSrc}
@@ -53,7 +53,7 @@ export default function HomeHeroSection() {
                 ))}
               </div>
 
-              <div className="mt-8">
+              <div className="mt-7 sm:mt-8">
                 <CoreSectionHeading
                   eyebrow={HOMEPAGE_HERO.eyebrow}
                   title={HOMEPAGE_HERO.title}
@@ -86,23 +86,25 @@ export default function HomeHeroSection() {
 
               <div
                 data-testid="home-hero-social-proof"
-                className="mt-6 flex flex-wrap items-center gap-x-3 gap-y-2 border-t border-white/10 pt-4"
+                className="mt-6 grid gap-2 border-t border-white/10 pt-4 sm:flex sm:flex-wrap sm:items-center sm:gap-x-3 sm:gap-y-2"
               >
-                <div
-                  aria-label="5 star rating"
-                  role="img"
-                  className="inline-flex items-center gap-1 text-[0.74rem] leading-none text-[#d8bc79]/85"
-                >
-                  {Array.from({ length: 5 }).map((_, index) => (
-                    <span key={`hero-star-${index}`} aria-hidden="true">
-                      ★
-                    </span>
-                  ))}
+                <div className="flex items-center gap-3">
+                  <div
+                    aria-label="5 star rating"
+                    role="img"
+                    className="inline-flex items-center gap-1 text-[0.74rem] leading-none text-[#d8bc79]/85"
+                  >
+                    {Array.from({ length: 5 }).map((_, index) => (
+                      <span key={`hero-star-${index}`} aria-hidden="true">
+                        ★
+                      </span>
+                    ))}
+                  </div>
+                  <span
+                    aria-hidden="true"
+                    className="hidden h-1 w-1 rounded-full bg-white/14 sm:inline-flex"
+                  />
                 </div>
-                <span
-                  aria-hidden="true"
-                  className="hidden h-1 w-1 rounded-full bg-white/14 sm:inline-flex"
-                />
                 <p className="text-balance font-sans text-[0.94rem] leading-6 text-[#a8a092] sm:text-[0.98rem]">
                   {HOMEPAGE_HERO.socialProof.headline}
                 </p>

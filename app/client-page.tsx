@@ -2,10 +2,10 @@ import Footer from '@/components/footer'
 import Navbar from '@/components/navbar'
 import HomeFAQSurface from '@/components/home/HomeFAQSurface'
 import HomeFinalCtaSection from '@/components/home/HomeFinalCtaSection'
-import HomeFitSection from '@/components/home/HomeFitSection'
 import HomeHeroSection from '@/components/home/HomeHeroSection'
 import HomeHowItWorksSection from '@/components/home/HomeHowItWorksSection'
 import HomeProblemSection from '@/components/home/HomeProblemSection'
+import HomeProofBandSection from '@/components/home/HomeProofBandSection'
 import HomeProofSection from '@/components/home/HomeProofSection'
 import HomePromiseSection from '@/components/home/HomePromiseSection'
 import HomeServicesSection from '@/components/home/HomeServicesSection'
@@ -17,13 +17,13 @@ export default function ClientPage() {
       <Navbar />
       <main className="flex-1" id="main-content" tabIndex={-1}>
         <HomeHeroSection />
+        <HomeProofBandSection />
         <HomeProblemSection />
         <HomePromiseSection />
         <HomeServicesSection />
         <HomeWhyPrismSection />
         <HomeHowItWorksSection />
         <HomeProofSection />
-        <HomeFitSection />
         <HomeFAQSurface />
         <HomeFinalCtaSection />
       </main>
