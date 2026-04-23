@@ -1,11 +1,18 @@
-"use client"
+'use client'
 
-import { track as trackVercel } from "@vercel/analytics"
+import { track as trackVercel } from '@vercel/analytics'
 
-import { GOOGLE_ADS_LEAD_CONVERSION_SEND_TO, IS_ANALYTICS_ENABLED } from "@/lib/constants"
-import { getAttributionContext } from "@/lib/marketing-attribution"
-import { buildVercelCustomEvent } from "@/lib/vercel-analytics"
-import { addBreadcrumb, captureErrorWithContext, isSentryInitialized } from "./sentry-helpers"
+import {
+  GOOGLE_ADS_LEAD_CONVERSION_SEND_TO,
+  IS_ANALYTICS_ENABLED,
+} from '@/lib/constants'
+import { getAttributionContext } from '@/lib/marketing-attribution'
+import { buildVercelCustomEvent } from '@/lib/vercel-analytics'
+import {
+  addBreadcrumb,
+  captureErrorWithContext,
+  isSentryInitialized,
+} from './sentry-helpers'
 
 declare global {
   interface Window {
@@ -34,8 +41,11 @@ export type LeadConversionContext = {
   elapsed_seconds?: number
 }
 
-type FormSubmissionOptions = Omit<LeadConversionContext, "form_name" | "form_location"> & {
-  conversionMode?: "pending" | "immediate" | "none"
+type FormSubmissionOptions = Omit<
+  LeadConversionContext,
+  'form_name' | 'form_location'
+> & {
+  conversionMode?: 'pending' | 'immediate' | 'none'
   sendGoogleAdsConversion?: boolean
 }
 
@@ -48,14 +58,14 @@ type PageViewOptions = {
   previousUrl?: string | null
 }
 
-const PENDING_LEAD_CONTEXT_STORAGE_KEY = "prism_pending_lead_context_v1"
+const PENDING_LEAD_CONTEXT_STORAGE_KEY = 'prism_pending_lead_context_v1'
 const PENDING_LEAD_CONTEXT_TTL_MS = 30 * 60 * 1000
 
 function getGtag() {
-  if (typeof window === "undefined") return null
+  if (typeof window === 'undefined') return null
 
   window.dataLayer = window.dataLayer || []
-  if (typeof window.gtag !== "function") {
+  if (typeof window.gtag !== 'function') {
     window.gtag = (...args: any[]) => {
       window.dataLayer?.push(args)
     }
@@ -66,46 +76,54 @@ function getGtag() {
 
 function compactAnalyticsParams(params: Record<string, any>) {
   return Object.fromEntries(
-    Object.entries(params).filter(([, value]) => value !== undefined && value !== null && value !== ""),
+    Object.entries(params).filter(
+      ([, value]) => value !== undefined && value !== null && value !== '',
+    ),
   )
 }
 
 // Custom event types
 export type EventType =
-  | "page_view"
-  | "click"
-  | "form_submit_success"
-  | "apply_form_view"
-  | "apply_form_start"
-  | "apply_step_1_complete"
-  | "apply_step_2_complete"
-  | "apply_submit"
-  | "apply_success"
-  | "apply_error"
-  | "apply_abandon_step_1"
-  | "apply_abandon_step_2"
-  | "apply_budget_selected"
-  | "apply_service_selected"
-  | "contact_request"
-  | "service_view"
-  | "cta_click"
-  | "navigation"
-  | "client_showcase_interaction"
-  | "benefits_slideshow_interaction"
-  | "service_card_click"
-  | "search_params_change"
-  | "page_engagement"
-  | "file_download"
-  | "external_link_click"
-  | "video_interaction"
-  | "error"
-  | "scroll_milestone"
-  | "user_preference"
-  | "skool_email_submission"
-  | "generate_lead"
+  | 'page_view'
+  | 'click'
+  | 'form_submit_success'
+  | 'apply_form_view'
+  | 'apply_form_start'
+  | 'apply_question_view'
+  | 'apply_question_complete'
+  | 'apply_review_view'
+  | 'apply_validation_error'
+  | 'apply_step_1_complete'
+  | 'apply_step_2_complete'
+  | 'apply_submit_attempt'
+  | 'apply_submit'
+  | 'apply_submit_success'
+  | 'apply_success'
+  | 'apply_error'
+  | 'apply_abandon_step_1'
+  | 'apply_abandon_step_2'
+  | 'apply_budget_selected'
+  | 'apply_service_selected'
+  | 'contact_request'
+  | 'service_view'
+  | 'cta_click'
+  | 'navigation'
+  | 'client_showcase_interaction'
+  | 'benefits_slideshow_interaction'
+  | 'service_card_click'
+  | 'search_params_change'
+  | 'page_engagement'
+  | 'file_download'
+  | 'external_link_click'
+  | 'video_interaction'
+  | 'error'
+  | 'scroll_milestone'
+  | 'user_preference'
+  | 'skool_email_submission'
+  | 'generate_lead'
 
 function canUseSessionStorage() {
-  return typeof window !== "undefined" && "sessionStorage" in window
+  return typeof window !== 'undefined' && 'sessionStorage' in window
 }
 
 function readStoredLeadContext():
@@ -119,8 +137,13 @@ function readStoredLeadContext():
     const raw = window.sessionStorage.getItem(PENDING_LEAD_CONTEXT_STORAGE_KEY)
     if (!raw) return null
 
-    const parsed = JSON.parse(raw) as LeadConversionContext & { savedAt?: number }
-    if (!parsed.savedAt || Date.now() - parsed.savedAt > PENDING_LEAD_CONTEXT_TTL_MS) {
+    const parsed = JSON.parse(raw) as LeadConversionContext & {
+      savedAt?: number
+    }
+    if (
+      !parsed.savedAt ||
+      Date.now() - parsed.savedAt > PENDING_LEAD_CONTEXT_TTL_MS
+    ) {
       window.sessionStorage.removeItem(PENDING_LEAD_CONTEXT_STORAGE_KEY)
       return null
     }
@@ -167,18 +190,14 @@ export const consumePendingApplyLeadContext = consumePendingLeadConversion
 export function getDefaultLeadSource() {
   const attribution = getAttributionContext()
 
-  return (
-    attribution.utm_source ||
-    attribution.first_touch_source ||
-    undefined
-  )
+  return attribution.utm_source || attribution.first_touch_source || undefined
 }
 
 function getLeadConversionParams(context: LeadConversionContext) {
   const leadSource = context.lead_source || getDefaultLeadSource()
 
   return compactAnalyticsParams({
-    currency: context.currency || "USD",
+    currency: context.currency || 'USD',
     value: context.value ?? 1,
     ...context,
     lead_type: context.lead_type || context.form_name,
@@ -186,28 +205,36 @@ function getLeadConversionParams(context: LeadConversionContext) {
   })
 }
 
-export function trackGoogleAdsLeadConversion(context: LeadConversionContext = {}) {
-  if (typeof window === "undefined" || !IS_ANALYTICS_ENABLED) {
+export function trackGoogleAdsLeadConversion(
+  context: LeadConversionContext = {},
+) {
+  if (typeof window === 'undefined' || !IS_ANALYTICS_ENABLED) {
     return
   }
 
   const params = getLeadConversionParams(context)
 
   try {
-    getGtag()?.("event", "conversion", {
+    getGtag()?.('event', 'conversion', {
       send_to: GOOGLE_ADS_LEAD_CONVERSION_SEND_TO,
       value: params.value,
       currency: params.currency,
     })
   } catch (error) {
-    console.error("[Analytics] Error tracking Google Ads lead conversion:", error)
+    console.error(
+      '[Analytics] Error tracking Google Ads lead conversion:',
+      error,
+    )
   }
 }
 
-export function trackLeadConversion(context: LeadConversionContext, options: LeadTrackingOptions = {}) {
+export function trackLeadConversion(
+  context: LeadConversionContext,
+  options: LeadTrackingOptions = {},
+) {
   const params = getLeadConversionParams(context)
 
-  trackEvent("generate_lead", params)
+  trackEvent('generate_lead', params)
 
   if (options.sendGoogleAdsConversion !== false) {
     trackGoogleAdsLeadConversion(params)
@@ -220,25 +247,28 @@ export function trackLeadConversion(context: LeadConversionContext, options: Lea
  * @param params Additional parameters to send with the event
  */
 export function trackEvent(eventName: EventType, params?: Record<string, any>) {
-  if (typeof window === "undefined") {
+  if (typeof window === 'undefined') {
     return
   }
 
   const pageLocation = window.location.href
-  const pageTitle = typeof document !== "undefined" ? document.title : ""
+  const pageTitle = typeof document !== 'undefined' ? document.title : ''
 
-  // Add timestamp and attribution context to all events
+  // Add attribution and page context to all events without adding unique,
+  // high-cardinality values that make GA reports harder to use.
   const enhancedParams = compactAnalyticsParams({
     ...getAttributionContext(),
     ...params,
-    event_time: new Date().toISOString(),
     page_location: pageLocation,
     page_title: pageTitle,
     page_path: window.location.pathname,
   })
 
-  if (process.env.NODE_ENV === "development") {
-    console.log(`[Analytics] Tracked event: ${eventName}`, enhancedParams)
+  if (process.env.NODE_ENV === 'development') {
+    console.log(`[Analytics] Tracked event: ${eventName}`, {
+      ...enhancedParams,
+      event_time: new Date().toISOString(),
+    })
   }
 
   const vercelEvent = buildVercelCustomEvent(eventName, enhancedParams)
@@ -246,7 +276,7 @@ export function trackEvent(eventName: EventType, params?: Record<string, any>) {
     try {
       trackVercel(vercelEvent.name, vercelEvent.properties)
     } catch (error) {
-      console.error("[Analytics] Error tracking Vercel event:", error)
+      console.error('[Analytics] Error tracking Vercel event:', error)
     }
   }
 
@@ -255,9 +285,9 @@ export function trackEvent(eventName: EventType, params?: Record<string, any>) {
   }
 
   try {
-    getGtag()?.("event", eventName, enhancedParams)
+    getGtag()?.('event', eventName, enhancedParams)
   } catch (error) {
-    console.error("[Analytics] Error tracking event:", error)
+    console.error('[Analytics] Error tracking event:', error)
   }
 }
 
@@ -266,15 +296,23 @@ export function trackEvent(eventName: EventType, params?: Record<string, any>) {
  * @param path The path of the page
  * @param title The title of the page
  */
-export function trackPageView(path: string, title: string, options: PageViewOptions = {}) {
-  if (typeof window === "undefined") {
+export function trackPageView(
+  path: string,
+  title: string,
+  options: PageViewOptions = {},
+) {
+  if (typeof window === 'undefined') {
     return
   }
 
-  const normalizedPath = path || window.location.pathname || "/"
+  const normalizedPath = path || window.location.pathname || '/'
   const now = Date.now()
   const lastPageView = window.__PRISM_LAST_PAGEVIEW
-  if (lastPageView && lastPageView.path === normalizedPath && now - lastPageView.timestamp < 1000) {
+  if (
+    lastPageView &&
+    lastPageView.path === normalizedPath &&
+    now - lastPageView.timestamp < 1000
+  ) {
     return
   }
 
@@ -283,19 +321,20 @@ export function trackPageView(path: string, title: string, options: PageViewOpti
     timestamp: now,
   }
 
-  const pageTitle = title || (typeof document !== "undefined" ? document.title : normalizedPath)
+  const pageTitle =
+    title || (typeof document !== 'undefined' ? document.title : normalizedPath)
   const pageLocation = window.location.href
   const pageReferrer =
-    options.previousUrl ?? (typeof document !== "undefined" ? document.referrer : "")
+    options.previousUrl ??
+    (typeof document !== 'undefined' ? document.referrer : '')
 
-  trackEvent("page_view", {
+  trackEvent('page_view', {
     page_path: normalizedPath,
     page_title: pageTitle,
     page_referrer: pageReferrer,
     page_location: pageLocation,
     previous_path: options.previousPath,
   })
-
 }
 
 /**
@@ -304,23 +343,18 @@ export function trackPageView(path: string, title: string, options: PageViewOpti
  * @param location The location of the CTA on the page
  */
 export function trackCTAClick(ctaText: string, location: string) {
-  trackEvent("cta_click", {
+  trackEvent('cta_click', {
     cta_text: ctaText,
     cta_location: location,
   })
 
   // Add breadcrumb for user journey tracking
   if (isSentryInitialized()) {
-    addBreadcrumb(
-      `CTA clicked: ${ctaText}`,
-      "user",
-      "info",
-      {
-        ctaText,
-        location,
-        url: typeof window !== "undefined" ? window.location.href : undefined,
-      }
-    )
+    addBreadcrumb(`CTA clicked: ${ctaText}`, 'user', 'info', {
+      ctaText,
+      location,
+      url: typeof window !== 'undefined' ? window.location.href : undefined,
+    })
   }
 }
 
@@ -330,10 +364,10 @@ export function trackCTAClick(ctaText: string, location: string) {
  * @param destination The destination path
  */
 export function trackNavigation(linkText: string, destination: string) {
-  trackEvent("navigation", {
+  trackEvent('navigation', {
     link_text: linkText,
     destination: destination,
-    navigation_type: "user_click",
+    navigation_type: 'user_click',
   })
 }
 
@@ -342,8 +376,11 @@ export function trackNavigation(linkText: string, destination: string) {
  * @param serviceName The name of the service
  * @param destination The destination path
  */
-export function trackServiceCardClick(serviceName: string, destination: string) {
-  trackEvent("service_card_click", {
+export function trackServiceCardClick(
+  serviceName: string,
+  destination: string,
+) {
+  trackEvent('service_card_click', {
     service_name: serviceName,
     destination: destination,
   })
@@ -360,7 +397,7 @@ export function trackFormSubmission(
   options: FormSubmissionOptions = {},
 ) {
   const {
-    conversionMode = "pending",
+    conversionMode = 'pending',
     sendGoogleAdsConversion,
     ...leadContext
   } = options
@@ -371,18 +408,18 @@ export function trackFormSubmission(
     lead_type: leadContext.lead_type || formName,
   }
 
-  trackEvent("form_submit_success", {
+  trackEvent('form_submit_success', {
     form_name: formName,
     form_location: formLocation,
     lead_type: conversionContext.lead_type,
   })
 
-  if (conversionMode === "immediate") {
+  if (conversionMode === 'immediate') {
     trackLeadConversion(conversionContext, { sendGoogleAdsConversion })
     return
   }
 
-  if (conversionMode === "pending") {
+  if (conversionMode === 'pending') {
     storePendingLeadConversion(conversionContext)
   }
 }
@@ -392,10 +429,13 @@ export function trackFormSubmission(
  * @param interactionType The type of interaction (scroll, click, etc.)
  * @param clientName The name of the client if applicable
  */
-export function trackClientShowcaseInteraction(interactionType: string, clientName?: string) {
-  trackEvent("client_showcase_interaction", {
+export function trackClientShowcaseInteraction(
+  interactionType: string,
+  clientName?: string,
+) {
+  trackEvent('client_showcase_interaction', {
     interaction_type: interactionType,
-    client_name: clientName || "not specified",
+    client_name: clientName || 'not specified',
   })
 }
 
@@ -404,8 +444,11 @@ export function trackClientShowcaseInteraction(interactionType: string, clientNa
  * @param interactionType The type of interaction (next, prev, indicator click)
  * @param slideName The name or number of the slide
  */
-export function trackBenefitsInteraction(interactionType: string, slideName: string) {
-  trackEvent("benefits_slideshow_interaction", {
+export function trackBenefitsInteraction(
+  interactionType: string,
+  slideName: string,
+) {
+  trackEvent('benefits_slideshow_interaction', {
     interaction_type: interactionType,
     slide_name: slideName,
   })
@@ -417,11 +460,15 @@ export function trackBenefitsInteraction(interactionType: string, slideName: str
  * @param action The action performed (play, pause, complete, etc.)
  * @param videoTitle The title of the video if available
  */
-export function trackVideoInteraction(videoId: string, action: string, videoTitle?: string) {
-  trackEvent("video_interaction", {
+export function trackVideoInteraction(
+  videoId: string,
+  action: string,
+  videoTitle?: string,
+) {
+  trackEvent('video_interaction', {
     video_id: videoId,
     action: action,
-    video_title: videoTitle || "not specified",
+    video_title: videoTitle || 'not specified',
   })
 }
 
@@ -431,9 +478,9 @@ export function trackVideoInteraction(videoId: string, action: string, videoTitl
  * @param linkText The text of the link if available
  */
 export function trackExternalLinkClick(url: string, linkText?: string) {
-  trackEvent("external_link_click", {
+  trackEvent('external_link_click', {
     destination_url: url,
-    link_text: linkText || "not specified",
+    link_text: linkText || 'not specified',
   })
 }
 
@@ -443,7 +490,7 @@ export function trackExternalLinkClick(url: string, linkText?: string) {
  * @param fileType The type/extension of the file
  */
 export function trackFileDownload(fileName: string, fileType: string) {
-  trackEvent("file_download", {
+  trackEvent('file_download', {
     file_name: fileName,
     file_type: fileType,
   })
@@ -455,7 +502,7 @@ export function trackFileDownload(fileName: string, fileType: string) {
  * @param pageTitle The title of the page
  */
 export function trackScrollMilestone(percentage: number, pageTitle: string) {
-  trackEvent("scroll_milestone", {
+  trackEvent('scroll_milestone', {
     scroll_percentage: percentage,
     page_title: pageTitle,
   })
@@ -469,13 +516,13 @@ export function trackScrollMilestone(percentage: number, pageTitle: string) {
  * @param additionalContext Optional additional context for debugging
  */
 export function trackError(
-  errorType: string, 
-  errorMessage: string, 
+  errorType: string,
+  errorMessage: string,
   errorLocation: string,
-  additionalContext?: Record<string, any>
+  additionalContext?: Record<string, any>,
 ) {
   // Track in Google Analytics for business metrics
-  trackEvent("error", {
+  trackEvent('error', {
     error_type: errorType,
     error_message: errorMessage,
     error_location: errorLocation,
@@ -486,7 +533,7 @@ export function trackError(
     captureErrorWithContext(errorMessage, {
       errorType,
       component: errorLocation,
-      url: typeof window !== "undefined" ? window.location.href : undefined,
+      url: typeof window !== 'undefined' ? window.location.href : undefined,
       additionalData: {
         errorLocation,
         ...additionalContext,
@@ -500,8 +547,11 @@ export function trackError(
  * @param preferenceType The type of preference (theme, language, etc.)
  * @param preferenceValue The value selected
  */
-export function trackUserPreference(preferenceType: string, preferenceValue: string) {
-  trackEvent("user_preference", {
+export function trackUserPreference(
+  preferenceType: string,
+  preferenceValue: string,
+) {
+  trackEvent('user_preference', {
     preference_type: preferenceType,
     preference_value: preferenceValue,
   })
@@ -514,10 +564,10 @@ export function trackUserPreference(preferenceType: string, preferenceValue: str
  * @param source The source of the submission (top form or bottom form)
  */
 export function trackSkoolEmailSubmission(email: string, source: string) {
-  trackEvent("skool_email_submission", {
+  trackEvent('skool_email_submission', {
     email_hash: hashEmail(email), // Hash the email for privacy
     source: source,
-    destination: "skool.com/prism-5437",
+    destination: 'skool.com/prism-5437',
   })
 }
 

@@ -1,15 +1,17 @@
-import React from "react"
-import { render, screen } from "@testing-library/react"
+import React from 'react'
+import { render, screen } from '@testing-library/react'
 
-import AeoLandingPage, { metadata as aeoMetadata } from "@/app/aeo/page"
-import AeoThankYouPage, { metadata as aeoThankYouMetadata } from "@/app/aeo-thank-you/page"
+import AeoLandingPage, { metadata as aeoMetadata } from '@/app/aeo/page'
+import AeoThankYouPage, {
+  metadata as aeoThankYouMetadata,
+} from '@/app/aeo-thank-you/page'
 
 const pagePushMock = jest.fn()
-jest.mock("next/navigation", () => ({
+jest.mock('next/navigation', () => ({
   useRouter: () => ({ push: pagePushMock }),
 }))
 
-jest.mock("next/link", () => ({
+jest.mock('next/link', () => ({
   __esModule: true,
   default: function MockNextLink({
     href,
@@ -21,45 +23,58 @@ jest.mock("next/link", () => ({
     [key: string]: unknown
   }) {
     return (
-      <a href={typeof href === "string" ? href : href?.pathname ?? ""} {...props}>
+      <a
+        href={typeof href === 'string' ? href : (href?.pathname ?? '')}
+        {...props}
+      >
         {children}
       </a>
     )
   },
 }))
 
-jest.mock("next/script", () => ({
+jest.mock('next/script', () => ({
   __esModule: true,
-  default: function MockNextScript({ id, children }: { id?: string; children?: React.ReactNode }) {
+  default: function MockNextScript({
+    id,
+    children,
+  }: {
+    id?: string
+    children?: React.ReactNode
+  }) {
     return <script id={id}>{children}</script>
   },
 }))
 
-jest.mock("@/components/navbar", () => ({
+jest.mock('@/components/navbar', () => ({
   __esModule: true,
   default: function MockNavbar() {
     return <header data-testid="navbar-mock" />
   },
 }))
-jest.mock("@/components/footer", () => ({
+jest.mock('@/components/footer', () => ({
   __esModule: true,
   default: function MockFooter() {
     return <footer data-testid="footer-mock" />
   },
 }))
-jest.mock("@/components/scroll-to-top", () => ({
+jest.mock('@/components/scroll-to-top', () => ({
   __esModule: true,
   default: function MockScrollToTop() {
     return <div data-testid="scroll-to-top-mock" />
   },
 }))
-jest.mock("@/components/reveal-on-scroll", () => ({
+jest.mock('@/components/reveal-on-scroll', () => ({
   __esModule: true,
-  default: function MockRevealOnScroll({ children }: { children: React.ReactNode }) {
+  default: function MockRevealOnScroll({
+    children,
+  }: {
+    children: React.ReactNode
+  }) {
     return <>{children}</>
   },
 }))
-jest.mock("@/components/faq-section", () => ({
+jest.mock('@/components/faq-section', () => ({
   __esModule: true,
   default: function MockFaqSection({
     title,
@@ -84,7 +99,7 @@ jest.mock("@/components/faq-section", () => ({
     )
   },
 }))
-jest.mock("@/components/schema-markup", () => ({
+jest.mock('@/components/schema-markup', () => ({
   FAQSchema: function MockFAQSchema() {
     return null
   },
@@ -95,33 +110,70 @@ jest.mock("@/components/schema-markup", () => ({
     return null
   },
 }))
+jest.mock('@/components/thank-you/LeadSuccessTracker', () => ({
+  __esModule: true,
+  default: function MockLeadSuccessTracker() {
+    return <div data-testid="lead-success-tracker" />
+  },
+}))
 
-describe("AEO landing and thank-you routes", () => {
-  it("exports SEO metadata for /aeo", () => {
-    expect(aeoMetadata.title).toEqual({ absolute: "AEO Assessment | Prism" })
-    expect(aeoMetadata.alternates?.canonical).toBe("https://www.design-prism.com/aeo")
-    expect(aeoMetadata.description).toContain("AEO")
+describe('AEO landing and thank-you routes', () => {
+  it('exports SEO metadata for /aeo', () => {
+    expect(aeoMetadata.title).toEqual({ absolute: 'AEO Assessment | Prism' })
+    expect(aeoMetadata.alternates?.canonical).toBe(
+      'https://www.design-prism.com/aeo',
+    )
+    expect(aeoMetadata.description).toContain('AEO')
   })
 
-  it("renders lead capture and core conversion sections on /aeo", () => {
+  it('renders lead capture and core conversion sections on /aeo', () => {
     render(<AeoLandingPage />)
 
-    expect(screen.getByRole("heading", { name: /be cited, not ignored, in ai-powered discovery/i })).toBeInTheDocument()
-    expect(screen.getByRole("heading", { name: /AEO framework: content, technical, authority, measurement/i })).toBeInTheDocument()
-    expect(screen.getByRole("heading", { name: /what the assessment report includes/i })).toBeInTheDocument()
-    expect(screen.getByRole("heading", { name: /AEO assessment FAQ/i })).toBeInTheDocument()
-    expect(screen.getByRole("button", { name: /get free aeo assessment/i })).toBeInTheDocument()
+    expect(
+      screen.getByRole('heading', {
+        name: /be cited, not ignored, in ai-powered discovery/i,
+      }),
+    ).toBeInTheDocument()
+    expect(
+      screen.getByRole('heading', {
+        name: /AEO framework: content, technical, authority, measurement/i,
+      }),
+    ).toBeInTheDocument()
+    expect(
+      screen.getByRole('heading', {
+        name: /what the assessment report includes/i,
+      }),
+    ).toBeInTheDocument()
+    expect(
+      screen.getByRole('heading', { name: /AEO assessment FAQ/i }),
+    ).toBeInTheDocument()
+    expect(
+      screen.getByRole('button', { name: /get free aeo assessment/i }),
+    ).toBeInTheDocument()
   })
 
-  it("exports noindex metadata and renders conversion copy on /aeo-thank-you", () => {
-    expect(aeoThankYouMetadata.title).toEqual({ absolute: "AEO assessment received | Prism" })
-    expect(aeoThankYouMetadata.alternates?.canonical).toBe("https://www.design-prism.com/aeo-thank-you")
+  it('exports noindex metadata and renders conversion copy on /aeo-thank-you', () => {
+    expect(aeoThankYouMetadata.title).toEqual({
+      absolute: 'AEO assessment received | Prism',
+    })
+    expect(aeoThankYouMetadata.alternates?.canonical).toBe(
+      'https://www.design-prism.com/aeo-thank-you',
+    )
     expect(aeoThankYouMetadata.robots).toEqual({ index: false, follow: false })
 
     render(<AeoThankYouPage />)
 
-    expect(screen.getByRole("heading", { name: /your free aeo assessment is on its way/i })).toBeInTheDocument()
-    expect(screen.getByRole("link", { name: /back to home/i })).toBeInTheDocument()
-    expect(document.getElementById("google-ads-conversion-thank-you")).toBeInTheDocument()
+    expect(
+      screen.getByRole('heading', {
+        name: /your free aeo assessment is on its way/i,
+      }),
+    ).toBeInTheDocument()
+    expect(
+      screen.getByRole('link', { name: /back to home/i }),
+    ).toBeInTheDocument()
+    expect(screen.getByTestId('lead-success-tracker')).toBeInTheDocument()
+    expect(
+      document.getElementById('google-ads-conversion-thank-you'),
+    ).not.toBeInTheDocument()
   })
 })

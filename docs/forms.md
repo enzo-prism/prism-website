@@ -41,6 +41,8 @@ const { handleSubmit, getError, isSubmitting } = useFormValidation({
 
 `app/get-started/page.tsx` is now the overview/qualification entry page. The actual application form lives on `app/apply/page.tsx` and is powered by `components/forms/GetStartedForm.tsx`.
 
+The `/apply` route should feel like a focused application mode, not another marketing page. Keep the form broken into single-question screens, keep global chrome minimal, and keep the ElevenLabs floating widget suppressed while the user is inside the active form.
+
 - Required payload fields:
   - `service_focus`
   - `has_website`
@@ -68,16 +70,23 @@ const { handleSubmit, getError, isSubmitting } = useFormValidation({
 - Success flow:
   - POST via `fetch(form.action, { method: 'POST', headers: { Accept: 'application/json' }, body: new FormData(form) })`
   - On success, `router.push("/thank-you?source=apply")`
-  - On failure, inline error state remains visible and user stays on step 2
+  - On failure, inline error state remains visible and user stays on the review/submit screen
 - Analytics:
   - `trackEvent("apply_form_view", ...)`
   - `trackEvent("apply_form_start", ...)`
+  - `trackEvent("apply_question_view", ...)`
+  - `trackEvent("apply_question_complete", ...)`
+  - `trackEvent("apply_validation_error", ...)`
+  - `trackEvent("apply_review_view", ...)`
+  - `trackEvent("apply_submit_attempt", ...)`
   - `trackEvent("apply_step_1_complete", ...)`
   - `trackEvent("apply_step_2_complete", ...)`
-  - `trackEvent("apply_submit", ...)`
+  - `trackEvent("apply_submit", ...)` only after Formspree confirms success
+  - `trackEvent("apply_submit_success", ...)` only after Formspree confirms success
   - `trackEvent("apply_error", ...)`
-  - `trackEvent("apply_success", ...)` on the apply thank-you view
+  - `trackEvent("apply_success", ...)` on the apply thank-you view only when pending application context exists
   - `trackLeadConversion(...)` on the apply thank-you view after the pending application context is consumed
+  - Do not include user-entered names, emails, URLs, free-text notes, or unique per-event timestamps in GA params.
 
 ## New flow: `/aeo` + free AEO assessment
 

@@ -1,5 +1,6 @@
 import Footer from '@/components/footer'
 import Navbar from '@/components/navbar'
+import HomeAiToolsSection from '@/components/home/HomeAiToolsSection'
 import HomeFAQSurface from '@/components/home/HomeFAQSurface'
 import HomeFinalCtaSection from '@/components/home/HomeFinalCtaSection'
 import HomeHeroSection from '@/components/home/HomeHeroSection'
@@ -19,6 +20,7 @@ export default function ClientPage() {
         <HomeHeroSection />
         <HomeProofBandSection />
         <HomeProblemSection />
+        <HomeAiToolsSection />
         <HomePromiseSection />
         <HomeServicesSection />
         <HomeWhyPrismSection />

@@ -64,6 +64,12 @@ describe('ClientPage homepage flow', () => {
     expect(
       screen.getByRole('heading', {
         level: 2,
+        name: /the best ai tools, handled for you\./i,
+      }),
+    ).toBeInTheDocument()
+    expect(
+      screen.getByRole('heading', {
+        level: 2,
         name: /you run the business\. we handle the growth\./i,
       }),
     ).toBeInTheDocument()
@@ -94,12 +100,6 @@ describe('ClientPage homepage flow', () => {
     expect(
       screen.getByRole('heading', {
         level: 2,
-        name: /who prism is built for/i,
-      }),
-    ).toBeInTheDocument()
-    expect(
-      screen.getByRole('heading', {
-        level: 2,
         name: /questions business owners usually ask/i,
       }),
     ).toBeInTheDocument()
@@ -122,13 +122,45 @@ describe('ClientPage homepage flow', () => {
     expect(
       problemPoints.every((point) => point.querySelector('img')),
     ).toBeTruthy()
-    expect(
-      stackItems.every((item) => item.querySelector('img')),
-    ).toBeTruthy()
+    expect(stackItems.every((item) => item.querySelector('img'))).toBeTruthy()
     expect(
       new Set(
-        stackItems.map((item) => item.querySelector('img')?.getAttribute('src')),
+        stackItems.map((item) =>
+          item.querySelector('img')?.getAttribute('src'),
+        ),
       ).size,
     ).toBe(6)
+  })
+
+  it('renders the AI tool logo matrix with high-quality SVG assets', () => {
+    render(<ClientPage />)
+
+    const toolCards = screen.getAllByTestId('home-ai-tool-card')
+
+    expect(toolCards).toHaveLength(6)
+    expect(screen.getByAltText(/codex logo/i)).toHaveAttribute(
+      'src',
+      '/logos/ai-tools/codex.svg',
+    )
+    expect(screen.getByAltText(/claude code logo/i)).toHaveAttribute(
+      'src',
+      '/logos/ai-tools/claude.svg',
+    )
+    expect(screen.getByAltText(/gemini logo/i)).toHaveAttribute(
+      'src',
+      '/logos/ai-tools/gemini.svg',
+    )
+    expect(screen.getByAltText(/openclaw logo/i)).toHaveAttribute(
+      'src',
+      '/logos/ai-tools/openclaw.svg',
+    )
+    expect(screen.getByAltText(/grok logo/i)).toHaveAttribute(
+      'src',
+      '/logos/ai-tools/grok.svg',
+    )
+    expect(screen.getByAltText(/cursor logo/i)).toHaveAttribute(
+      'src',
+      '/logos/ai-tools/cursor.svg',
+    )
   })
 })

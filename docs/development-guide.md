@@ -33,6 +33,9 @@ This guide highlights the workflows we lean on most often while iterating on the
 
 - The homepage first viewport is one integrated dark composition: shared site navbar, copy-led hero card, and a subtle ASCII motion layer behind the text instead of a route-only overlay header treatment.
 - The homepage structure is intentionally curated: hero, ecosystem, proof, founder, and final CTA. Avoid reintroducing older apps/training/wall-of-love-carousel sections unless product direction changes.
+- The homepage AI tool proof block lives in `components/home/HomeAiToolsSection.tsx`, uses copy/data from `components/home/homepage-content.ts`, and should stay compact. It should read as one composed logo matrix for Prism's managed AI operating layer, not a vendor-logo wall or a stack of explanatory cards.
+- AI tool logos are vendored from SVGL into `public/logos/ai-tools/` so the homepage keeps high-quality SVG assets without depending on the SVGL API at runtime.
+- OpenClaw, Grok, and Cursor use supplied custom SVGs in the same folder and should be treated as local brand assets.
 - `components/home/HomeHeroSection.tsx` is the canonical homepage hero surface. Keep the shared `AsciiHeroBackdrop` treatment restrained so motion supports the copy instead of overpowering it.
 - Keep the reduced-motion fallback pinned to the static ASCII frame so visual tests remain deterministic, and keep the shared navbar/footer consistent across the homepage and inner routes.
 - The section below the hero is now intentionally quieter. `components/home/HomeEcosystemSection.tsx` should explain how Prism compounds results without reusing the same animated logo-orbit language already established in the hero.
@@ -41,7 +44,7 @@ This guide highlights the workflows we lean on most often while iterating on the
 - Avoid deep geometry overrides inside the widget Shadow DOM. ElevenLabs treats the embed as an opinionated surface; keep customization focused on supported attributes and host-level layering, and move heavier design customization to the official SDK/UI layer if we need a bespoke chat surface later.
 - The stock embed runtime forces its own host positioning, so `components/elevenlabs/ElevenLabsWidget.tsx` now re-applies only the host-level styles we actually need after the custom element mounts. Use that path for safe layer fixes like homepage section scoping or inner-page z-index elevation; do not reach into vendor shadow children for layout control.
 - The public agent id resolves via `lib/elevenlabs.ts` and can be overridden with `NEXT_PUBLIC_ELEVENLABS_AGENT_ID`.
-- `components/global-elevenlabs-widget.tsx` now renders the stock floating widget on public inner pages like `/get-started` and `/apply`, while `/` intentionally stays widget-free. With no saved preference, it should stay closed by default; explicit user expand/collapse choices persist across future mounts.
+- `components/global-elevenlabs-widget.tsx` now renders the stock floating widget on public inner pages like `/get-started`, while `/` and the active `/apply` form intentionally stay widget-free. With no saved preference, it should stay closed by default; explicit user expand/collapse choices persist across future mounts.
 - The floating host should stay at a top-most z-index so nav, skip links, charts, and other fixed site chrome never render above the expanded widget.
 - `components/runtime-client-shell.tsx` now keeps route-surface setup plus the core GA page/form listener layer on the critical path, while `components/runtime-deferred-features.tsx` still defers heavier client-only work like monitors, Vercel Analytics, and the public widget bundle during browser idle time.
 - `NEXT_PUBLIC_ELEVENLABS_WIDGET_DISABLED` exists as a deliberate debug/test seam. When set to a truthy value, the stock embed script and floating widget stay unmounted so deterministic visual builds do not bake live vendor UI into locked snapshots.
@@ -80,7 +83,7 @@ Key details:
 - Forms post to Formspree via `fetch` with `Accept: application/json`. On success we push the user to `/thank-you` or `/analysis-thank-you` so our custom screens always render.
 - Use the `_subject` hidden field for inbox filtering and `_gotcha` as the honeypot.
 - When adding a new Formspree endpoint, import `useFormValidation({ onValidSubmit })` and only navigate after the request returns `response.ok`.
-- `/get-started` is now the overview/entry page for the application flow, while `/apply` is the dedicated 2-step application form. Keep the copy and thank-you flow explicit that review is guaranteed after a real submission, while the later strategy meeting is optional and selective.
+- `/get-started` is now the overview/entry page for the application flow, while `/apply` is the focused question-by-question application form. Keep the copy and thank-you flow explicit that review is guaranteed after a real submission, while the later strategy meeting is optional and selective.
 
 ### AEO assessment landing regression tests
 
@@ -142,13 +145,16 @@ Custom confirmation routes live in `app/thank-you/` and `app/analysis-thank-you/
 - GA4 enhanced measurement form reporting depends on the real DOM `<form id="...">` / `name="..."` attributes, not just hidden `form_name` inputs. Every marketing form should expose both so GA can populate `form_id` and `form_name` consistently in automatic `form_start` / `form_submit` events.
 - The `/apply` funnel now uses a layered event model:
   - automatic GA4 enhanced measurement: `form_start`, `form_submit`
-  - custom funnel detail: `apply_form_view`, `apply_form_start`, `apply_step_1_complete`, `apply_step_2_complete`, `apply_submit`, `apply_error`, `apply_success`
+  - custom funnel detail: `apply_form_view`, `apply_form_start`, `apply_question_view`, `apply_question_complete`, `apply_validation_error`, `apply_review_view`, `apply_submit_attempt`, `apply_step_1_complete`, `apply_step_2_complete`, `apply_submit`, `apply_submit_success`, `apply_error`, `apply_success`
   - canonical lead conversion: `generate_lead` on the `/thank-you?source=apply` success state
+- Keep `apply_submit` and `apply_submit_success` success-only. Use `apply_submit_attempt` for clicks that reach the network request, and `apply_error` for failed Formspree responses. This keeps GA funnels from counting failed posts as applications.
+- Apply-funnel custom params should stay low-cardinality and non-PII: `form_name`, `form_location`, `step`, `step_id`, `question_count`, `service_count`, `budget`, `timeline`, `primary_goal`, `has_website`, `elapsed_seconds`, `field_name`, and `error_type`. Do not send user-entered names, emails, URLs, free-text notes, or per-event timestamps into GA.
 - Do not add route-level inline Google Ads conversion `<Script>` snippets for form thank-you pages. Use `LeadSuccessTracker` so direct visits do not falsely count as conversions.
+- Apply thank-you tracking should only emit `apply_success` / `generate_lead` when a pending application context is consumed. A direct or refreshed thank-you page view should remain a normal `page_view`.
 - When building a new landing page with a Formspree form, call `trackFormSubmission(...)` only after the Formspree response succeeds, then navigate to a thank-you route that mounts `LeadSuccessTracker`.
 - GA4 property follow-up after code changes:
   - Mark `generate_lead` as the key event for lead flows.
-  - Register custom dimensions for whichever non-PII lead parameters you want in standard reports, such as `form_location`, `lead_type`, `budget`, `timeline`, `primary_goal`, `has_website`, and `service_count`.
+  - Register custom dimensions for whichever non-PII lead parameters you want in standard reports, such as `form_location`, `lead_type`, `step_id`, `budget`, `timeline`, `primary_goal`, `has_website`, `service_count`, `field_name`, and `error_type`.
   - Keep GA4 enhanced measurement form interactions enabled so the automatic `form_start` / `form_submit` events continue to complement the custom funnel events.
 
 ## Mobile Hero Video Safety

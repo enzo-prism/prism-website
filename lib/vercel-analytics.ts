@@ -1,5 +1,5 @@
 export type VercelAnalyticsEvent = {
-  type: "pageview" | "event"
+  type: 'pageview' | 'event'
   url: string
 }
 
@@ -9,18 +9,26 @@ type VercelCustomEvent = {
   properties?: Record<string, AllowedVercelPropertyValue>
 }
 
-const FALLBACK_ANALYTICS_ORIGIN = "https://www.design-prism.com"
-const ALLOWED_MARKETING_PARAMS = ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term"] as const
+const FALLBACK_ANALYTICS_ORIGIN = 'https://www.design-prism.com'
+const ALLOWED_MARKETING_PARAMS = [
+  'utm_source',
+  'utm_medium',
+  'utm_campaign',
+  'utm_content',
+  'utm_term',
+] as const
 
 function compactProperties(
   properties: Record<string, AllowedVercelPropertyValue>,
 ): Record<string, AllowedVercelPropertyValue> | undefined {
-  const entries = Object.entries(properties).filter(([, value]) => value !== undefined && value !== "")
+  const entries = Object.entries(properties).filter(
+    ([, value]) => value !== undefined && value !== '',
+  )
   return entries.length > 0 ? Object.fromEntries(entries) : undefined
 }
 
 function getHostname(url: unknown) {
-  if (typeof url !== "string" || url.length === 0) return undefined
+  if (typeof url !== 'string' || url.length === 0) return undefined
 
   try {
     return new URL(url).hostname
@@ -32,7 +40,10 @@ function getHostname(url: unknown) {
 /**
  * Preserve UTM params for campaign filtering while removing everything else.
  */
-export function normalizeVercelAnalyticsUrl(url: string, baseUrl = FALLBACK_ANALYTICS_ORIGIN) {
+export function normalizeVercelAnalyticsUrl(
+  url: string,
+  baseUrl = FALLBACK_ANALYTICS_ORIGIN,
+) {
   try {
     const parsed = new URL(url, baseUrl)
     const safeParams = new URLSearchParams()
@@ -43,11 +54,11 @@ export function normalizeVercelAnalyticsUrl(url: string, baseUrl = FALLBACK_ANAL
     }
 
     parsed.search = safeParams.toString()
-    parsed.hash = ""
+    parsed.hash = ''
     return parsed.toString()
   } catch {
-    const [pathWithoutHash] = url.split("#")
-    const [basePath, rawSearch = ""] = pathWithoutHash.split("?")
+    const [pathWithoutHash] = url.split('#')
+    const [basePath, rawSearch = ''] = pathWithoutHash.split('?')
     const parsedSearch = new URLSearchParams(rawSearch)
     const safeParams = new URLSearchParams()
 
@@ -61,7 +72,9 @@ export function normalizeVercelAnalyticsUrl(url: string, baseUrl = FALLBACK_ANAL
   }
 }
 
-export function sanitizeVercelAnalyticsEvent(event: VercelAnalyticsEvent): VercelAnalyticsEvent {
+export function sanitizeVercelAnalyticsEvent(
+  event: VercelAnalyticsEvent,
+): VercelAnalyticsEvent {
   const normalizedUrl = normalizeVercelAnalyticsUrl(event.url)
 
   if (normalizedUrl === event.url) {
@@ -81,157 +94,382 @@ export function buildVercelCustomEvent(
   const eventParams = params ?? {}
 
   switch (eventName) {
-    case "cta_click":
+    case 'cta_click':
       return {
-        name: "CTA Clicked",
+        name: 'CTA Clicked',
         properties: compactProperties({
-          cta_text: typeof eventParams.cta_text === "string" ? eventParams.cta_text : undefined,
-          cta_location: typeof eventParams.cta_location === "string" ? eventParams.cta_location : undefined,
+          cta_text:
+            typeof eventParams.cta_text === 'string'
+              ? eventParams.cta_text
+              : undefined,
+          cta_location:
+            typeof eventParams.cta_location === 'string'
+              ? eventParams.cta_location
+              : undefined,
         }),
       }
-    case "form_submit":
-    case "form_submit_success":
+    case 'form_submit':
+    case 'form_submit_success':
       return {
-        name: "Form Submitted",
+        name: 'Form Submitted',
         properties: compactProperties({
-          form_name: typeof eventParams.form_name === "string" ? eventParams.form_name : undefined,
-          form_location: typeof eventParams.form_location === "string" ? eventParams.form_location : undefined,
-        }),
-      }
-    case "apply_form_view":
-      return {
-        name: "Apply Form Viewed",
-        properties: compactProperties({
-          form_location: typeof eventParams.form_location === "string" ? eventParams.form_location : undefined,
-        }),
-      }
-    case "apply_form_start":
-      return {
-        name: "Apply Form Started",
-        properties: compactProperties({
-          form_name: typeof eventParams.form_name === "string" ? eventParams.form_name : undefined,
-          form_location: typeof eventParams.form_location === "string" ? eventParams.form_location : undefined,
-          step: typeof eventParams.step === "number" ? eventParams.step : undefined,
-        }),
-      }
-    case "apply_step_1_complete":
-    case "apply_step_2_complete":
-      return {
-        name: "Apply Step Completed",
-        properties: compactProperties({
-          step: typeof eventParams.step === "number" ? eventParams.step : undefined,
-          budget: typeof eventParams.budget === "string" ? eventParams.budget : undefined,
-          service_count:
-            typeof eventParams.service_count === "number" ? eventParams.service_count : undefined,
-        }),
-      }
-    case "apply_submit":
-      return {
-        name: "Apply Submitted",
-        properties: compactProperties({
-          budget: typeof eventParams.budget === "string" ? eventParams.budget : undefined,
-          timeline: typeof eventParams.timeline === "string" ? eventParams.timeline : undefined,
-          service_count:
-            typeof eventParams.service_count === "number" ? eventParams.service_count : undefined,
-        }),
-      }
-    case "apply_success":
-      return {
-        name: "Apply Success",
-        properties: compactProperties({
-          source: typeof eventParams.source === "string" ? eventParams.source : undefined,
-          budget: typeof eventParams.budget === "string" ? eventParams.budget : undefined,
-          timeline: typeof eventParams.timeline === "string" ? eventParams.timeline : undefined,
-          has_website:
-            typeof eventParams.has_website === "string" ? eventParams.has_website : undefined,
-          primary_goal:
-            typeof eventParams.primary_goal === "string" ? eventParams.primary_goal : undefined,
-          service_count:
-            typeof eventParams.service_count === "number" ? eventParams.service_count : undefined,
-        }),
-      }
-    case "generate_lead":
-      return {
-        name: "Lead Generated",
-        properties: compactProperties({
-          form_name: typeof eventParams.form_name === "string" ? eventParams.form_name : undefined,
+          form_name:
+            typeof eventParams.form_name === 'string'
+              ? eventParams.form_name
+              : undefined,
           form_location:
-            typeof eventParams.form_location === "string" ? eventParams.form_location : undefined,
-          lead_type: typeof eventParams.lead_type === "string" ? eventParams.lead_type : undefined,
-          lead_source:
-            typeof eventParams.lead_source === "string" ? eventParams.lead_source : undefined,
-          budget: typeof eventParams.budget === "string" ? eventParams.budget : undefined,
-          timeline: typeof eventParams.timeline === "string" ? eventParams.timeline : undefined,
-          has_website:
-            typeof eventParams.has_website === "string" ? eventParams.has_website : undefined,
-          primary_goal:
-            typeof eventParams.primary_goal === "string" ? eventParams.primary_goal : undefined,
+            typeof eventParams.form_location === 'string'
+              ? eventParams.form_location
+              : undefined,
+        }),
+      }
+    case 'apply_form_view':
+      return {
+        name: 'Apply Form Viewed',
+        properties: compactProperties({
+          form_location:
+            typeof eventParams.form_location === 'string'
+              ? eventParams.form_location
+              : undefined,
+        }),
+      }
+    case 'apply_form_start':
+      return {
+        name: 'Apply Form Started',
+        properties: compactProperties({
+          form_name:
+            typeof eventParams.form_name === 'string'
+              ? eventParams.form_name
+              : undefined,
+          form_location:
+            typeof eventParams.form_location === 'string'
+              ? eventParams.form_location
+              : undefined,
+          step:
+            typeof eventParams.step === 'number' ? eventParams.step : undefined,
+          step_id:
+            typeof eventParams.step_id === 'string'
+              ? eventParams.step_id
+              : undefined,
+        }),
+      }
+    case 'apply_question_view':
+      return {
+        name: 'Apply Question Viewed',
+        properties: compactProperties({
+          step:
+            typeof eventParams.step === 'number' ? eventParams.step : undefined,
+          step_id:
+            typeof eventParams.step_id === 'string'
+              ? eventParams.step_id
+              : undefined,
           service_count:
-            typeof eventParams.service_count === "number" ? eventParams.service_count : undefined,
+            typeof eventParams.service_count === 'number'
+              ? eventParams.service_count
+              : undefined,
         }),
       }
-    case "apply_error":
+    case 'apply_question_complete':
       return {
-        name: "Apply Error",
+        name: 'Apply Question Completed',
         properties: compactProperties({
-          reason: typeof eventParams.reason === "string" ? eventParams.reason : undefined,
-          status: typeof eventParams.status === "number" ? eventParams.status : undefined,
+          step:
+            typeof eventParams.step === 'number' ? eventParams.step : undefined,
+          step_id:
+            typeof eventParams.step_id === 'string'
+              ? eventParams.step_id
+              : undefined,
+          service_count:
+            typeof eventParams.service_count === 'number'
+              ? eventParams.service_count
+              : undefined,
         }),
       }
-    case "apply_abandon_step_1":
-    case "apply_abandon_step_2":
+    case 'apply_review_view':
       return {
-        name: "Apply Abandoned",
+        name: 'Apply Review Viewed',
         properties: compactProperties({
-          step: typeof eventParams.step === "number" ? eventParams.step : undefined,
+          step:
+            typeof eventParams.step === 'number' ? eventParams.step : undefined,
+          step_id:
+            typeof eventParams.step_id === 'string'
+              ? eventParams.step_id
+              : undefined,
+          service_count:
+            typeof eventParams.service_count === 'number'
+              ? eventParams.service_count
+              : undefined,
         }),
       }
-    case "apply_budget_selected":
+    case 'apply_validation_error':
       return {
-        name: "Apply Budget Selected",
+        name: 'Apply Validation Error',
         properties: compactProperties({
-          budget: typeof eventParams.budget === "string" ? eventParams.budget : undefined,
+          step:
+            typeof eventParams.step === 'number' ? eventParams.step : undefined,
+          step_id:
+            typeof eventParams.step_id === 'string'
+              ? eventParams.step_id
+              : undefined,
+          field_name:
+            typeof eventParams.field_name === 'string'
+              ? eventParams.field_name
+              : undefined,
+          error_type:
+            typeof eventParams.error_type === 'string'
+              ? eventParams.error_type
+              : undefined,
         }),
       }
-    case "apply_service_selected":
+    case 'apply_step_1_complete':
+    case 'apply_step_2_complete':
       return {
-        name: "Apply Service Selected",
+        name: 'Apply Step Completed',
         properties: compactProperties({
-          service: typeof eventParams.service === "string" ? eventParams.service : undefined,
+          step:
+            typeof eventParams.step === 'number' ? eventParams.step : undefined,
+          budget:
+            typeof eventParams.budget === 'string'
+              ? eventParams.budget
+              : undefined,
+          service_count:
+            typeof eventParams.service_count === 'number'
+              ? eventParams.service_count
+              : undefined,
+        }),
+      }
+    case 'apply_submit_attempt':
+      return {
+        name: 'Apply Submit Attempted',
+        properties: compactProperties({
+          budget:
+            typeof eventParams.budget === 'string'
+              ? eventParams.budget
+              : undefined,
+          timeline:
+            typeof eventParams.timeline === 'string'
+              ? eventParams.timeline
+              : undefined,
+          service_count:
+            typeof eventParams.service_count === 'number'
+              ? eventParams.service_count
+              : undefined,
+        }),
+      }
+    case 'apply_submit':
+      return {
+        name: 'Apply Submitted',
+        properties: compactProperties({
+          budget:
+            typeof eventParams.budget === 'string'
+              ? eventParams.budget
+              : undefined,
+          timeline:
+            typeof eventParams.timeline === 'string'
+              ? eventParams.timeline
+              : undefined,
+          service_count:
+            typeof eventParams.service_count === 'number'
+              ? eventParams.service_count
+              : undefined,
+        }),
+      }
+    case 'apply_submit_success':
+      return {
+        name: 'Apply Submit Succeeded',
+        properties: compactProperties({
+          budget:
+            typeof eventParams.budget === 'string'
+              ? eventParams.budget
+              : undefined,
+          timeline:
+            typeof eventParams.timeline === 'string'
+              ? eventParams.timeline
+              : undefined,
+          service_count:
+            typeof eventParams.service_count === 'number'
+              ? eventParams.service_count
+              : undefined,
+        }),
+      }
+    case 'apply_success':
+      return {
+        name: 'Apply Success',
+        properties: compactProperties({
+          source:
+            typeof eventParams.source === 'string'
+              ? eventParams.source
+              : undefined,
+          budget:
+            typeof eventParams.budget === 'string'
+              ? eventParams.budget
+              : undefined,
+          timeline:
+            typeof eventParams.timeline === 'string'
+              ? eventParams.timeline
+              : undefined,
+          has_website:
+            typeof eventParams.has_website === 'string'
+              ? eventParams.has_website
+              : undefined,
+          primary_goal:
+            typeof eventParams.primary_goal === 'string'
+              ? eventParams.primary_goal
+              : undefined,
+          service_count:
+            typeof eventParams.service_count === 'number'
+              ? eventParams.service_count
+              : undefined,
+        }),
+      }
+    case 'generate_lead':
+      return {
+        name: 'Lead Generated',
+        properties: compactProperties({
+          form_name:
+            typeof eventParams.form_name === 'string'
+              ? eventParams.form_name
+              : undefined,
+          form_location:
+            typeof eventParams.form_location === 'string'
+              ? eventParams.form_location
+              : undefined,
+          lead_type:
+            typeof eventParams.lead_type === 'string'
+              ? eventParams.lead_type
+              : undefined,
+          lead_source:
+            typeof eventParams.lead_source === 'string'
+              ? eventParams.lead_source
+              : undefined,
+          budget:
+            typeof eventParams.budget === 'string'
+              ? eventParams.budget
+              : undefined,
+          timeline:
+            typeof eventParams.timeline === 'string'
+              ? eventParams.timeline
+              : undefined,
+          has_website:
+            typeof eventParams.has_website === 'string'
+              ? eventParams.has_website
+              : undefined,
+          primary_goal:
+            typeof eventParams.primary_goal === 'string'
+              ? eventParams.primary_goal
+              : undefined,
+          service_count:
+            typeof eventParams.service_count === 'number'
+              ? eventParams.service_count
+              : undefined,
+        }),
+      }
+    case 'apply_error':
+      return {
+        name: 'Apply Error',
+        properties: compactProperties({
+          reason:
+            typeof eventParams.reason === 'string'
+              ? eventParams.reason
+              : undefined,
+          status:
+            typeof eventParams.status === 'number'
+              ? eventParams.status
+              : undefined,
+          step_id:
+            typeof eventParams.step_id === 'string'
+              ? eventParams.step_id
+              : undefined,
+        }),
+      }
+    case 'apply_abandon_step_1':
+    case 'apply_abandon_step_2':
+      return {
+        name: 'Apply Abandoned',
+        properties: compactProperties({
+          step:
+            typeof eventParams.step === 'number' ? eventParams.step : undefined,
+          funnel_step_id:
+            typeof eventParams.funnel_step_id === 'string'
+              ? eventParams.funnel_step_id
+              : undefined,
+        }),
+      }
+    case 'apply_budget_selected':
+      return {
+        name: 'Apply Budget Selected',
+        properties: compactProperties({
+          budget:
+            typeof eventParams.budget === 'string'
+              ? eventParams.budget
+              : undefined,
+        }),
+      }
+    case 'apply_service_selected':
+      return {
+        name: 'Apply Service Selected',
+        properties: compactProperties({
+          service:
+            typeof eventParams.service === 'string'
+              ? eventParams.service
+              : undefined,
           selected:
-            typeof eventParams.selected === "boolean" ? eventParams.selected : undefined,
+            typeof eventParams.selected === 'boolean'
+              ? eventParams.selected
+              : undefined,
         }),
       }
-    case "service_card_click":
+    case 'service_card_click':
       return {
-        name: "Service Card Clicked",
+        name: 'Service Card Clicked',
         properties: compactProperties({
-          service_name: typeof eventParams.service_name === "string" ? eventParams.service_name : undefined,
-          destination: typeof eventParams.destination === "string" ? eventParams.destination : undefined,
+          service_name:
+            typeof eventParams.service_name === 'string'
+              ? eventParams.service_name
+              : undefined,
+          destination:
+            typeof eventParams.destination === 'string'
+              ? eventParams.destination
+              : undefined,
         }),
       }
-    case "external_link_click":
+    case 'external_link_click':
       return {
-        name: "External Link Clicked",
+        name: 'External Link Clicked',
         properties: compactProperties({
           destination_host: getHostname(eventParams.destination_url),
-          link_text: typeof eventParams.link_text === "string" ? eventParams.link_text : undefined,
+          link_text:
+            typeof eventParams.link_text === 'string'
+              ? eventParams.link_text
+              : undefined,
         }),
       }
-    case "file_download":
+    case 'file_download':
       return {
-        name: "File Downloaded",
+        name: 'File Downloaded',
         properties: compactProperties({
-          file_name: typeof eventParams.file_name === "string" ? eventParams.file_name : undefined,
-          file_type: typeof eventParams.file_type === "string" ? eventParams.file_type : undefined,
+          file_name:
+            typeof eventParams.file_name === 'string'
+              ? eventParams.file_name
+              : undefined,
+          file_type:
+            typeof eventParams.file_type === 'string'
+              ? eventParams.file_type
+              : undefined,
         }),
       }
-    case "video_interaction":
+    case 'video_interaction':
       return {
-        name: "Video Interaction",
+        name: 'Video Interaction',
         properties: compactProperties({
-          action: typeof eventParams.action === "string" ? eventParams.action : undefined,
-          video_id: typeof eventParams.video_id === "string" ? eventParams.video_id : undefined,
+          action:
+            typeof eventParams.action === 'string'
+              ? eventParams.action
+              : undefined,
+          video_id:
+            typeof eventParams.video_id === 'string'
+              ? eventParams.video_id
+              : undefined,
         }),
       }
     default:

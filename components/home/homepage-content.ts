@@ -32,6 +32,15 @@ type HomepageProblemStackItem = {
   iconSrc: string
 }
 
+type HomepageAiTool = {
+  name: string
+  role: string
+  description: string
+  logoSrc: string
+  logoAlt: string
+  logoClassName?: string
+}
+
 export const HOMEPAGE_CASE_STUDY_SLUGS = [
   'exquisite-dentistry',
   'infobell-it',
@@ -132,6 +141,68 @@ export const HOMEPAGE_PROBLEM = {
     { label: 'Analytics', iconSrc: '/pixelish/bar-chart-average.svg' },
     { label: 'AI', iconSrc: '/pixelish/robot.svg' },
   ] satisfies readonly HomepageProblemStackItem[],
+} as const
+
+export const HOMEPAGE_AI_TOOLS = {
+  eyebrow: 'AI operating layer',
+  title: 'The best AI tools, handled for you.',
+  description:
+    'We use leading AI tools inside the Prism workflow to research faster, build sharper, and find better moves for your business. You get the benefit without managing the tools.',
+  tools: [
+    {
+      name: 'Codex',
+      role: 'Build',
+      description:
+        'Rapid implementation, refactors, QA loops, and technical execution.',
+      logoSrc: '/logos/ai-tools/codex.svg',
+      logoAlt: 'Codex logo',
+      logoClassName: 'h-12 w-12 object-contain',
+    },
+    {
+      name: 'Claude Code',
+      role: 'Audit',
+      description:
+        'Deep code review, product reasoning, copy clarity, and system critique.',
+      logoSrc: '/logos/ai-tools/claude.svg',
+      logoAlt: 'Claude Code logo',
+      logoClassName: 'h-12 w-12 object-contain',
+    },
+    {
+      name: 'Gemini',
+      role: 'Research',
+      description:
+        'Search, synthesis, multimodal analysis, and market context checks.',
+      logoSrc: '/logos/ai-tools/gemini.svg',
+      logoAlt: 'Gemini logo',
+      logoClassName: 'h-12 w-12 object-contain',
+    },
+    {
+      name: 'OpenClaw',
+      role: 'Operate',
+      description:
+        'Browser execution, workflow automation, and hands-on agent tasks.',
+      logoSrc: '/logos/ai-tools/openclaw.svg',
+      logoAlt: 'OpenClaw logo',
+      logoClassName: 'h-12 w-12 object-contain',
+    },
+    {
+      name: 'Grok',
+      role: 'Reason',
+      description:
+        'Fast reasoning, source checks, and alternate-path analysis.',
+      logoSrc: '/logos/ai-tools/grok.svg',
+      logoAlt: 'Grok logo',
+      logoClassName: 'h-12 w-12 object-contain',
+    },
+    {
+      name: 'Cursor',
+      role: 'Edit',
+      description: 'AI code editing, pair programming, and repo navigation.',
+      logoSrc: '/logos/ai-tools/cursor.svg',
+      logoAlt: 'Cursor logo',
+      logoClassName: 'h-12 w-12 object-contain',
+    },
+  ] satisfies readonly HomepageAiTool[],
 } as const
 
 export const HOMEPAGE_PROMISE = {

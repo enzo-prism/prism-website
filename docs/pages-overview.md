@@ -110,8 +110,9 @@ Quick reference for the pages we edit most often.
 
 ## Apply (`app/apply/page.tsx`)
 
-- `/apply` is the dedicated 2-step application route and is the real form surface for Prism.
-- The page pairs a short qualification primer with `components/forms/GetStartedForm.tsx`.
+- `/apply` is the focused question-by-question application route and is the real form surface for Prism.
+- The page intentionally removes the full navbar, footer, marketing sidebar, and floating ElevenLabs widget so the user sees one decision at a time after they start.
+- `components/forms/GetStartedForm.tsx` renders the micro-step flow: service focus, website status, review link, primary goal, budget, timeline, company, contact, optional note, and review/submit.
 - `GetStartedForm` posts to Formspree with the growth-application payload (`service_focus`, `service_interest[]`, `has_website`, `review_link`, `primary_goal`, `budget`, `timeline`, `company`, `full_name`, `email`, `additional_context`, `_subject`, `_redirect`, `form_name`, `_gotcha`) and redirects to `/thank-you?source=apply` on success.
 - The flow intentionally does not embed a calendar. Review is guaranteed after a real submission; the strategy session is selective.
 
@@ -129,8 +130,9 @@ Quick reference for the pages we edit most often.
 
 - `app/client-page.tsx` is now a section composer for the refreshed CTA-led homepage: integrated dark hero, ecosystem, proof, founder, and final CTA.
 - The homepage hero is built from `components/home/HomeHeroSection.tsx` and now uses the shared ASCII `wave` backdrop in a subtler treatment than `/software`, keeping the copy-led layout while preserving motion.
+- The homepage now includes a compact managed-AI proof block in `components/home/HomeAiToolsSection.tsx` with Codex, Claude Code, Gemini, OpenClaw, Grok, and Cursor assets. Keep this block as a clean logo matrix close to the growth/complexity narrative instead of moving it into a generic logo strip.
 - The homepage, `/about`, `/pricing`, and `/get-started` now share the same minimal black navbar/footer plus the same core-route section heading and CTA language (`components/navbar.tsx`, `components/footer.tsx`, `components/core-route/CoreRoutePrimitives.tsx`) so the primary marketing routes read as one brand system.
-- The shared floating ElevenLabs launcher now mounts on public inner pages via `components/global-elevenlabs-widget.tsx` in `components/runtime-client-shell.tsx`; the homepage intentionally stays widget-free.
+- The shared floating ElevenLabs launcher now mounts on public inner pages via `components/global-elevenlabs-widget.tsx` in `components/runtime-client-shell.tsx`; the homepage and the active `/apply` form intentionally stay widget-free.
 - Without a saved user preference, the public widget should stay collapsed by default on inner pages.
 - The global floating widget should always win the layer stack in its visible region. If site chrome starts painting over it, debug the host z-index in `components/global-elevenlabs-widget.tsx` / `components/elevenlabs/ElevenLabsWidget.tsx` before changing page-level layout.
 - The section immediately below the hero is now a quieter bridge in `components/home/HomeEcosystemSection.tsx`, not a second animated logo network. Keep it explanatory and outcome-oriented so it supports the hero instead of competing with it.

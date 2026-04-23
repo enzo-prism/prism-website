@@ -39,12 +39,46 @@ function createMockResponse(overrides: MockResponseOverrides = {}): Response {
 
 function completeStepOne() {
   fireEvent.click(screen.getByRole('checkbox', { name: /new website/i }))
-  fireEvent.click(screen.getByLabelText(/yes/i))
-  fireEvent.change(screen.getByLabelText(/current website/i), {
+  fireEvent.click(screen.getByRole('button', { name: /continue/i }))
+
+  fireEvent.click(screen.getByLabelText(/^yes$/i))
+  fireEvent.click(screen.getByRole('button', { name: /continue/i }))
+
+  fireEvent.change(screen.getByLabelText(/what should we review/i), {
     target: { value: 'design-prism.com' },
   })
-  fireEvent.click(screen.getByLabelText(/i need more leads\/customers online/i))
-  fireEvent.click(screen.getAllByRole('button', { name: /continue/i })[0])
+  fireEvent.click(screen.getByRole('button', { name: /continue/i }))
+
+  fireEvent.click(screen.getByLabelText(/more leads/i))
+  fireEvent.click(screen.getByRole('button', { name: /continue/i }))
+}
+
+function completeContextQuestions() {
+  fireEvent.click(screen.getByLabelText(/\$1\.5k to \$3k/i))
+  fireEvent.click(screen.getByRole('button', { name: /continue/i }))
+
+  fireEvent.click(screen.getByLabelText(/within 30 days/i))
+  fireEvent.click(screen.getByRole('button', { name: /continue/i }))
+
+  fireEvent.change(screen.getByLabelText(/company name/i), {
+    target: { value: 'Prism' },
+  })
+  fireEvent.click(screen.getByRole('button', { name: /continue/i }))
+
+  fireEvent.change(screen.getByLabelText(/full name/i), {
+    target: { value: 'Jordan Ramirez' },
+  })
+  fireEvent.change(screen.getByLabelText(/^email$/i), {
+    target: { value: 'jordan@example.com' },
+  })
+  fireEvent.click(screen.getByRole('button', { name: /continue/i }))
+
+  fireEvent.change(screen.getByLabelText(/anything important/i), {
+    target: {
+      value: 'We want a cleaner site and better lead flow before summer.',
+    },
+  })
+  fireEvent.click(screen.getByRole('button', { name: /review/i }))
 }
 
 describe('GetStartedForm', () => {
@@ -68,7 +102,7 @@ describe('GetStartedForm', () => {
     )
     expect(
       screen.getByRole('heading', {
-        level: 2,
+        level: 1,
         name: /what do you need help with/i,
       }),
     ).toBeInTheDocument()
@@ -81,29 +115,57 @@ describe('GetStartedForm', () => {
       'form_name',
     )
     expect(
-      screen.getAllByRole('button', { name: /continue/i }).length,
-    ).toBeGreaterThan(0)
+      screen.getByRole('button', { name: /continue/i }),
+    ).toBeInTheDocument()
+    expect(trackEvent).toHaveBeenCalledWith(
+      'apply_question_view',
+      expect.objectContaining({
+        form_name: 'growth_application',
+        form_location: 'apply_page',
+        step: 1,
+        step_id: 'services',
+      }),
+    )
   })
 
-  it('blocks step 1 progress and shows inline errors when required answers are missing', async () => {
+  it('blocks progress and shows inline errors when the current answer is missing', async () => {
     render(<GetStartedForm />)
 
-    fireEvent.click(screen.getAllByRole('button', { name: /continue/i })[0])
+    fireEvent.click(screen.getByRole('button', { name: /continue/i }))
 
     await waitFor(() => {
       expect(document.getElementById('service_focus-error')).toHaveTextContent(
-        /choose at least one area/i,
-      )
-      expect(document.getElementById('has_website-error')).toHaveTextContent(
-        /let us know if you already have a website/i,
-      )
-      expect(document.getElementById('review_link-error')).toHaveTextContent(
-        /add a website or another link we can review/i,
-      )
-      expect(document.getElementById('primary_goal-error')).toHaveTextContent(
-        /choose what matters most right now/i,
+        /choose at least one area|constraints not satisfied/i,
       )
     })
+    expect(trackEvent).toHaveBeenCalledWith(
+      'apply_validation_error',
+      expect.objectContaining({
+        step: 1,
+        step_id: 'services',
+        field_name: 'service_focus',
+        error_type: 'required',
+      }),
+    )
+
+    fireEvent.click(screen.getByRole('checkbox', { name: /new website/i }))
+    fireEvent.click(screen.getByRole('button', { name: /continue/i }))
+    fireEvent.click(screen.getByRole('button', { name: /continue/i }))
+
+    await waitFor(() => {
+      expect(document.getElementById('has_website-error')).toHaveTextContent(
+        /let us know if you have a website/i,
+      )
+    })
+    expect(trackEvent).toHaveBeenCalledWith(
+      'apply_validation_error',
+      expect.objectContaining({
+        step: 2,
+        step_id: 'website',
+        field_name: 'has_website',
+        error_type: 'required',
+      }),
+    )
 
     expect(fetchSpy).not.toHaveBeenCalled()
   })
@@ -112,7 +174,8 @@ describe('GetStartedForm', () => {
     render(<GetStartedForm />)
 
     fireEvent.click(screen.getByRole('checkbox', { name: /new website/i }))
-    fireEvent.click(screen.getByLabelText(/yes/i))
+    fireEvent.click(screen.getByRole('button', { name: /continue/i }))
+    fireEvent.click(screen.getByLabelText(/^yes$/i))
 
     const applyFormStartCalls = trackEvent.mock.calls.filter(
       ([eventName]) => eventName === 'apply_form_start',
@@ -129,7 +192,7 @@ describe('GetStartedForm', () => {
     ])
   })
 
-  it('advances to step 2 after a valid fit check', async () => {
+  it('advances to budget after the focused fit questions', async () => {
     render(<GetStartedForm />)
 
     completeStepOne()
@@ -137,8 +200,8 @@ describe('GetStartedForm', () => {
     await waitFor(() => {
       expect(
         screen.getByRole('heading', {
-          level: 2,
-          name: /tell us about the business/i,
+          level: 1,
+          name: /monthly budget/i,
         }),
       ).toBeInTheDocument()
     })
@@ -161,23 +224,17 @@ describe('GetStartedForm', () => {
     render(<GetStartedForm />)
 
     completeStepOne()
+    completeContextQuestions()
 
-    fireEvent.click(screen.getByLabelText(/\$1\.5k to \$3k/i))
-    fireEvent.click(screen.getByLabelText(/within 30 days/i))
-    fireEvent.change(screen.getByLabelText(/company name/i), {
-      target: { value: 'Prism' },
-    })
-    fireEvent.change(screen.getByLabelText(/full name/i), {
-      target: { value: 'Jordan Ramirez' },
-    })
-    fireEvent.change(screen.getByLabelText(/^email$/i), {
-      target: { value: 'jordan@example.com' },
-    })
-    fireEvent.change(screen.getByLabelText(/anything else we should know/i), {
-      target: {
-        value: 'We want a cleaner site and better lead flow before summer.',
-      },
-    })
+    expect(fetchSpy).not.toHaveBeenCalled()
+    expect(trackEvent).toHaveBeenCalledWith(
+      'apply_review_view',
+      expect.objectContaining({
+        form_name: 'growth_application',
+        form_location: 'apply_page',
+        step_id: 'review',
+      }),
+    )
 
     fireEvent.click(screen.getByRole('button', { name: /submit application/i }))
 
@@ -199,7 +256,23 @@ describe('GetStartedForm', () => {
     })
 
     expect(trackEvent).toHaveBeenCalledWith(
+      'apply_submit_attempt',
+      expect.objectContaining({
+        budget: '$1.5k to $3k',
+        timeline: 'Within 30 days',
+        service_count: 1,
+      }),
+    )
+    expect(trackEvent).toHaveBeenCalledWith(
       'apply_submit',
+      expect.objectContaining({
+        budget: '$1.5k to $3k',
+        timeline: 'Within 30 days',
+        service_count: 1,
+      }),
+    )
+    expect(trackEvent).toHaveBeenCalledWith(
+      'apply_submit_success',
       expect.objectContaining({
         budget: '$1.5k to $3k',
         timeline: 'Within 30 days',
@@ -242,16 +315,24 @@ describe('GetStartedForm', () => {
     completeStepOne()
 
     fireEvent.click(screen.getByLabelText(/\$1k to \$1\.5k/i))
+    fireEvent.click(screen.getByRole('button', { name: /continue/i }))
+
     fireEvent.click(screen.getByLabelText(/asap/i))
+    fireEvent.click(screen.getByRole('button', { name: /continue/i }))
+
     fireEvent.change(screen.getByLabelText(/company name/i), {
       target: { value: 'Prism' },
     })
+    fireEvent.click(screen.getByRole('button', { name: /continue/i }))
+
     fireEvent.change(screen.getByLabelText(/full name/i), {
       target: { value: 'Jordan Ramirez' },
     })
     fireEvent.change(screen.getByLabelText(/^email$/i), {
       target: { value: 'jordan@example.com' },
     })
+    fireEvent.click(screen.getByRole('button', { name: /continue/i }))
+    fireEvent.click(screen.getByRole('button', { name: /review/i }))
 
     fireEvent.click(screen.getByRole('button', { name: /submit application/i }))
 
@@ -265,6 +346,22 @@ describe('GetStartedForm', () => {
       ).toBeGreaterThan(0)
     })
 
+    expect(trackEvent).toHaveBeenCalledWith(
+      'apply_submit_attempt',
+      expect.objectContaining({
+        budget: '$1k to $1.5k',
+        timeline: 'ASAP',
+        service_count: 1,
+      }),
+    )
+    expect(trackEvent).not.toHaveBeenCalledWith(
+      'apply_submit_success',
+      expect.anything(),
+    )
+    expect(trackEvent).not.toHaveBeenCalledWith(
+      'apply_submit',
+      expect.anything(),
+    )
     expect(trackEvent).toHaveBeenCalledWith(
       'apply_error',
       expect.objectContaining({

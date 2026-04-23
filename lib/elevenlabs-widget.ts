@@ -79,5 +79,5 @@ export function shouldRenderPublicElevenLabsWidget(
     return false
   }
 
-  return pathname !== '/'
+  return pathname !== '/' && pathname !== '/apply'
 }

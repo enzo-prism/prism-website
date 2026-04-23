@@ -24,15 +24,17 @@ const FORM_ACTION =
   process.env.NEXT_PUBLIC_GET_STARTED_FORM_ENDPOINT ||
   'https://formspree.io/f/mreroojo'
 const DEFAULT_REDIRECT = 'https://www.design-prism.com/thank-you?source=apply'
+const APPLY_FORM_NAME = 'growth_application'
+const APPLY_FORM_LOCATION = 'apply_page'
 
 const SERVICE_OPTIONS = [
-  'New website',
-  'Website redesign',
-  'Better analytics / tracking',
-  'More customers from search',
-  'Help with paid ads',
-  'AI workflows / automation',
-  'Not sure yet',
+  { label: 'New website', value: 'New website' },
+  { label: 'Redesign', value: 'Website redesign' },
+  { label: 'Analytics', value: 'Better analytics / tracking' },
+  { label: 'Search', value: 'More customers from search' },
+  { label: 'Ads', value: 'Help with paid ads' },
+  { label: 'AI workflows', value: 'AI workflows / automation' },
+  { label: 'Not sure', value: 'Not sure yet' },
 ] as const
 
 const WEBSITE_OPTIONS = [
@@ -41,11 +43,14 @@ const WEBSITE_OPTIONS = [
 ] as const
 
 const PRIORITY_OPTIONS = [
-  'I need a site that converts better',
-  'I need clearer analytics',
-  'I need more leads/customers online',
-  'I need help making ads work',
-  'I want to use AI to move faster',
+  { label: 'Better website', value: 'I need a site that converts better' },
+  { label: 'Clearer analytics', value: 'I need clearer analytics' },
+  {
+    label: 'More leads',
+    value: 'I need more leads/customers online',
+  },
+  { label: 'Better ads', value: 'I need help making ads work' },
+  { label: 'AI workflows', value: 'I want to use AI to move faster' },
 ] as const
 
 const BUDGET_OPTIONS = [
@@ -63,21 +68,23 @@ const TIMELINE_OPTIONS = [
   'Just exploring',
 ] as const
 
-const STEP_ONE_FIELDS = [
-  'service_focus',
-  'has_website',
-  'review_link',
-  'primary_goal',
-] as const
-const STEP_TWO_FIELDS = [
+const FORM_STEPS = [
+  'services',
+  'website',
+  'link',
+  'priority',
   'budget',
   'timeline',
   'company',
-  'full_name',
-  'email',
+  'contact',
+  'notes',
+  'review',
 ] as const
 
-type FormStep = 1 | 2
+const QUESTION_STEP_COUNT = FORM_STEPS.length - 1
+
+type FormStepId = (typeof FORM_STEPS)[number]
+type ErrorMap = Record<string, string>
 type ValidFieldElement =
   | HTMLInputElement
   | HTMLTextAreaElement
@@ -123,28 +130,85 @@ function FieldError({ error, id }: { error: string; id: string }) {
   )
 }
 
+function getOptionLabel(
+  options: readonly { label: string; value: string }[],
+  value: string,
+) {
+  return options.find((option) => option.value === value)?.label || value
+}
+
+function getStepFields(stepId: FormStepId): readonly string[] {
+  switch (stepId) {
+    case 'services':
+      return ['service_focus']
+    case 'website':
+      return ['has_website']
+    case 'link':
+      return ['review_link']
+    case 'priority':
+      return ['primary_goal']
+    case 'budget':
+      return ['budget']
+    case 'timeline':
+      return ['timeline']
+    case 'company':
+      return ['company']
+    case 'contact':
+      return ['full_name', 'email']
+    default:
+      return []
+  }
+}
+
+function getLegacyAnalyticsStep(stepIndex: number) {
+  return stepIndex <= FORM_STEPS.indexOf('priority') ? 1 : 2
+}
+
+function getValidationErrorType(field?: ValidFieldElement) {
+  if (!field) return 'required'
+  if (field.validity.valueMissing) return 'required'
+  if (field.validity.tooLong) return 'too_long'
+  if (field.validity.typeMismatch || field.validity.patternMismatch) {
+    return 'invalid_format'
+  }
+  if (field.validity.customError) return 'custom'
+  return 'invalid'
+}
+
 export default function GetStartedForm() {
   const router = useRouter()
   const formRef = useRef<HTMLFormElement>(null)
   const servicesValidationRef = useRef<HTMLInputElement>(null)
+  const viewedStepsRef = useRef<Set<FormStepId>>(new Set())
   const startedAtRef = useRef<number>(Date.now())
-  const currentStepRef = useRef<FormStep>(1)
+  const currentStepIndexRef = useRef(0)
   const selectedServicesCountRef = useRef(0)
   const hasInteractedRef = useRef(false)
   const hasTrackedFormStartRef = useRef(false)
   const hasTrackedAbandonRef = useRef(false)
   const hasSubmittedSuccessfullyRef = useRef(false)
 
-  const [step, setStep] = useState<FormStep>(1)
+  const [stepIndex, setStepIndex] = useState(0)
   const [selectedServices, setSelectedServices] = useState<string[]>([])
   const [hasWebsite, setHasWebsite] = useState('')
+  const [reviewLink, setReviewLink] = useState('')
   const [primaryGoal, setPrimaryGoal] = useState('')
   const [budget, setBudget] = useState('')
   const [timeline, setTimeline] = useState('')
-  const [reviewLinkSnapshot, setReviewLinkSnapshot] = useState('')
+  const [company, setCompany] = useState('')
+  const [fullName, setFullName] = useState('')
+  const [email, setEmail] = useState('')
+  const [additionalContext, setAdditionalContext] = useState('')
   const [submitError, setSubmitError] = useState<string | null>(null)
   const [redirectUrl, setRedirectUrl] = useState(DEFAULT_REDIRECT)
-  const [hasAttemptedStepOne, setHasAttemptedStepOne] = useState(false)
+  const [manualErrors, setManualErrors] = useState<ErrorMap>({})
+
+  const currentStep = FORM_STEPS[stepIndex]
+  const isReviewStep = currentStep === 'review'
+  const progressStep = Math.min(stepIndex + 1, QUESTION_STEP_COUNT)
+  const progressWidth = isReviewStep
+    ? 100
+    : Math.round((progressStep / QUESTION_STEP_COUNT) * 100)
 
   const { getError, handleBlur, handleSubmit, isSubmitting, validateFields } =
     useFormValidation({
@@ -155,20 +219,20 @@ export default function GetStartedForm() {
           1,
           Math.round((Date.now() - startedAtRef.current) / 1000),
         )
-
-        trackEvent('apply_step_2_complete', {
+        const submitAnalyticsParams = {
+          form_name: APPLY_FORM_NAME,
+          form_location: APPLY_FORM_LOCATION,
+          budget,
+          timeline,
+          service_count: selectedServices.length,
+          elapsed_seconds: elapsedSeconds,
           step: 2,
-          budget,
-          timeline,
-          service_count: selectedServices.length,
-          elapsed_seconds: elapsedSeconds,
-        })
-        trackEvent('apply_submit', {
-          budget,
-          timeline,
-          service_count: selectedServices.length,
-          elapsed_seconds: elapsedSeconds,
-        })
+          step_id: 'review',
+          funnel_step: FORM_STEPS.indexOf('review') + 1,
+          question_count: QUESTION_STEP_COUNT,
+        }
+
+        trackEvent('apply_submit_attempt', submitAnalyticsParams)
 
         try {
           const formData = new FormData(form)
@@ -180,9 +244,12 @@ export default function GetStartedForm() {
 
           if (!response.ok) {
             trackEvent('apply_error', {
+              form_name: APPLY_FORM_NAME,
+              form_location: APPLY_FORM_LOCATION,
               reason: 'non_ok_response',
               status: response.status,
               step: 2,
+              step_id: 'review',
             })
             setSubmitError("We couldn't submit right now. Try again?")
             return
@@ -190,18 +257,24 @@ export default function GetStartedForm() {
         } catch (error) {
           console.error('apply form submission failed:', error)
           trackEvent('apply_error', {
+            form_name: APPLY_FORM_NAME,
+            form_location: APPLY_FORM_LOCATION,
             reason: 'network_failure',
             step: 2,
+            step_id: 'review',
           })
           setSubmitError("We couldn't submit right now. Try again?")
           return
         }
 
         hasSubmittedSuccessfullyRef.current = true
+        trackEvent('apply_step_2_complete', submitAnalyticsParams)
+        trackEvent('apply_submit', submitAnalyticsParams)
+        trackEvent('apply_submit_success', submitAnalyticsParams)
         storePendingApplyLeadContext({
-          form_name: 'growth_application',
-          form_location: 'apply_page',
-          lead_type: 'growth_application',
+          form_name: APPLY_FORM_NAME,
+          form_location: APPLY_FORM_LOCATION,
+          lead_type: APPLY_FORM_NAME,
           service_count: selectedServices.length,
           primary_goal: primaryGoal,
           has_website: hasWebsite || undefined,
@@ -214,8 +287,8 @@ export default function GetStartedForm() {
     })
 
   useEffect(() => {
-    currentStepRef.current = step
-  }, [step])
+    currentStepIndexRef.current = stepIndex
+  }, [stepIndex])
 
   useEffect(() => {
     selectedServicesCountRef.current = selectedServices.length
@@ -229,10 +302,27 @@ export default function GetStartedForm() {
 
   useEffect(() => {
     trackEvent('apply_form_view', {
-      form_name: 'growth_application',
-      form_location: 'apply_page',
+      form_name: APPLY_FORM_NAME,
+      form_location: APPLY_FORM_LOCATION,
     })
   }, [])
+
+  useEffect(() => {
+    if (viewedStepsRef.current.has(currentStep)) return
+
+    viewedStepsRef.current.add(currentStep)
+    const step = Math.min(stepIndex + 1, QUESTION_STEP_COUNT)
+    const eventName = isReviewStep ? 'apply_review_view' : 'apply_question_view'
+
+    trackEvent(eventName, {
+      form_name: APPLY_FORM_NAME,
+      form_location: APPLY_FORM_LOCATION,
+      step,
+      step_id: currentStep,
+      question_count: QUESTION_STEP_COUNT,
+      service_count: selectedServices.length,
+    })
+  }, [currentStep, isReviewStep, selectedServices.length, stepIndex])
 
   const markInteracted = useCallback(() => {
     hasInteractedRef.current = true
@@ -241,9 +331,21 @@ export default function GetStartedForm() {
 
     hasTrackedFormStartRef.current = true
     trackEvent('apply_form_start', {
-      form_name: 'growth_application',
-      form_location: 'apply_page',
-      step: currentStepRef.current,
+      form_name: APPLY_FORM_NAME,
+      form_location: APPLY_FORM_LOCATION,
+      step: currentStepIndexRef.current + 1,
+      step_id: FORM_STEPS[currentStepIndexRef.current],
+      question_count: QUESTION_STEP_COUNT,
+    })
+  }, [])
+
+  const clearManualErrors = useCallback((names: readonly string[]) => {
+    setManualErrors((current) => {
+      const next = { ...current }
+      names.forEach((name) => {
+        delete next[name]
+      })
+      return next
     })
   }, [])
 
@@ -269,12 +371,12 @@ export default function GetStartedForm() {
       if (!input) return
 
       if (selected.length === 0) {
-        input.setCustomValidity('Choose at least one area you want help with')
+        input.setCustomValidity('Choose at least one area')
         return
       }
 
       if (selected.length > 3) {
-        input.setCustomValidity('Choose up to three areas')
+        input.setCustomValidity('Choose up to three')
         return
       }
 
@@ -283,43 +385,54 @@ export default function GetStartedForm() {
     [selectedServices],
   )
 
-  const syncTextFieldValidity = useCallback((field: ValidFieldElement) => {
-    const value = field.value.trim()
-    let message = ''
-
-    if (field.name === 'review_link') {
-      if (!value) {
-        message = 'Add a website or another link we can review'
-      } else {
-        const normalized = normalizeReviewLink(value)
-        if (normalized !== field.value) {
-          field.value = normalized
-        }
-
-        if (!isValidReviewLink(field.value)) {
-          message = 'Add a website or another link we can review'
-        }
-      }
-    }
-
-    if (field.name === 'company') {
-      if (!value) message = 'Enter your company name'
-    }
-
-    if (field.name === 'full_name') {
-      if (!value) message = 'Enter your full name'
-    }
-
-    if (field.name === 'email') {
-      if (!value) {
-        message = 'Enter your email'
-      } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
-        message = 'Enter a valid email'
-      }
-    }
-
-    field.setCustomValidity(message)
+  const commitTextField = useCallback((field: ValidFieldElement) => {
+    if (field.name === 'review_link') setReviewLink(field.value)
+    if (field.name === 'company') setCompany(field.value)
+    if (field.name === 'full_name') setFullName(field.value)
+    if (field.name === 'email') setEmail(field.value)
   }, [])
+
+  const syncTextFieldValidity = useCallback(
+    (field: ValidFieldElement) => {
+      const value = field.value.trim()
+      let message = ''
+
+      if (field.name === 'review_link') {
+        if (!value) {
+          message = 'Add a link we can review'
+        } else {
+          const normalized = normalizeReviewLink(value)
+          if (normalized !== field.value) {
+            field.value = normalized
+          }
+
+          if (!isValidReviewLink(field.value)) {
+            message = 'Add a valid link'
+          }
+        }
+      }
+
+      if (field.name === 'company') {
+        if (!value) message = 'Enter your company name'
+      }
+
+      if (field.name === 'full_name') {
+        if (!value) message = 'Enter your full name'
+      }
+
+      if (field.name === 'email') {
+        if (!value) {
+          message = 'Enter your email'
+        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+          message = 'Enter a valid email'
+        }
+      }
+
+      field.setCustomValidity(message)
+      commitTextField(field)
+    },
+    [commitTextField],
+  )
 
   const getNamedFields = useCallback((names: readonly string[]) => {
     const form = formRef.current
@@ -333,53 +446,61 @@ export default function GetStartedForm() {
     )
   }, [])
 
-  const syncAllValidationRules = useCallback(() => {
-    syncServiceValidity()
-    syncRadioGroupValidity(
-      'has_website',
-      'Let us know if you already have a website',
-    )
-    syncRadioGroupValidity('primary_goal', 'Choose what matters most right now')
-    syncRadioGroupValidity('budget', 'Choose a budget range')
-    syncRadioGroupValidity('timeline', 'Choose a start timeline')
+  const syncValidationForStep = useCallback(
+    (stepId: FormStepId) => {
+      if (stepId === 'services') {
+        syncServiceValidity()
+      }
 
-    const textFields = getNamedFields([
-      'review_link',
-      'company',
-      'full_name',
-      'email',
-    ])
-    textFields.forEach((field) => {
-      syncTextFieldValidity(field)
-    })
-  }, [
-    getNamedFields,
-    syncRadioGroupValidity,
-    syncServiceValidity,
-    syncTextFieldValidity,
-  ])
+      if (stepId === 'website') {
+        syncRadioGroupValidity(
+          'has_website',
+          'Let us know if you have a website',
+        )
+      }
+
+      if (stepId === 'priority') {
+        syncRadioGroupValidity('primary_goal', 'Choose what matters most')
+      }
+
+      if (stepId === 'budget') {
+        syncRadioGroupValidity('budget', 'Choose a budget')
+      }
+
+      if (stepId === 'timeline') {
+        syncRadioGroupValidity('timeline', 'Choose a start time')
+      }
+
+      getNamedFields(getStepFields(stepId)).forEach((field) => {
+        syncTextFieldValidity(field)
+      })
+    },
+    [
+      getNamedFields,
+      syncRadioGroupValidity,
+      syncServiceValidity,
+      syncTextFieldValidity,
+    ],
+  )
 
   useEffect(() => {
     syncServiceValidity()
   }, [selectedServices, syncServiceValidity])
 
   useEffect(() => {
-    syncRadioGroupValidity(
-      'has_website',
-      'Let us know if you already have a website',
-    )
+    syncRadioGroupValidity('has_website', 'Let us know if you have a website')
   }, [hasWebsite, syncRadioGroupValidity])
 
   useEffect(() => {
-    syncRadioGroupValidity('primary_goal', 'Choose what matters most right now')
+    syncRadioGroupValidity('primary_goal', 'Choose what matters most')
   }, [primaryGoal, syncRadioGroupValidity])
 
   useEffect(() => {
-    syncRadioGroupValidity('budget', 'Choose a budget range')
+    syncRadioGroupValidity('budget', 'Choose a budget')
   }, [budget, syncRadioGroupValidity])
 
   useEffect(() => {
-    syncRadioGroupValidity('timeline', 'Choose a start timeline')
+    syncRadioGroupValidity('timeline', 'Choose a start time')
   }, [timeline, syncRadioGroupValidity])
 
   useEffect(() => {
@@ -390,11 +511,16 @@ export default function GetStartedForm() {
 
       hasTrackedAbandonRef.current = true
 
-      const abandonStep = currentStepRef.current
+      const stepIndexAtExit = currentStepIndexRef.current
+      const abandonStep = getLegacyAnalyticsStep(stepIndexAtExit)
       trackEvent(
         abandonStep === 1 ? 'apply_abandon_step_1' : 'apply_abandon_step_2',
         {
+          form_name: APPLY_FORM_NAME,
+          form_location: APPLY_FORM_LOCATION,
           step: abandonStep,
+          funnel_step: stepIndexAtExit + 1,
+          funnel_step_id: FORM_STEPS[stepIndexAtExit],
           service_count: selectedServicesCountRef.current,
         },
       )
@@ -407,18 +533,26 @@ export default function GetStartedForm() {
     }
   }, [])
 
+  const getFieldError = (name: string) => manualErrors[name] || getError(name)
+
   const renderError = (name: string) => (
-    <FieldError error={getError(name)} id={`${name}-error`} />
+    <FieldError error={getFieldError(name)} id={`${name}-error`} />
   )
 
   const getDescribedBy = (name: string) =>
-    getError(name) ? `${name}-error` : undefined
+    getFieldError(name) ? `${name}-error` : undefined
 
   const fieldClassName =
-    'min-h-14 border-white/12 bg-black/40 px-4 text-[0.98rem] text-[#F5F5F2] placeholder:text-[#6E6E68] focus-visible:border-[#9EFF2E]/65 focus-visible:ring-[#9EFF2E]/35 focus-visible:ring-offset-0'
+    'min-h-14 border-white/12 bg-black/40 px-4 text-[1rem] text-[#F5F5F2] placeholder:text-[#6E6E68] focus-visible:border-[#9EFF2E]/65 focus-visible:ring-[#9EFF2E]/35 focus-visible:ring-offset-0'
 
   const choiceCardClassName =
-    'flex min-h-[76px] w-full items-start gap-3 border border-white/10 bg-black/30 px-4 py-4 text-left transition-[border-color,background-color,color,box-shadow] duration-200 hover:border-white/20 hover:text-[#F5F5F2] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[#9EFF2E]/35 focus-visible:ring-offset-0'
+    'flex min-h-[64px] w-full items-center gap-3 border border-white/10 bg-black/30 px-4 py-4 text-left transition-[border-color,background-color,color,box-shadow] duration-200 hover:border-white/20 hover:text-[#F5F5F2] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[#9EFF2E]/35 focus-visible:ring-offset-0'
+
+  const goToStep = (nextIndex: number) => {
+    currentStepIndexRef.current = nextIndex
+    setStepIndex(nextIndex)
+    formRef.current?.scrollIntoView?.({ block: 'start', behavior: 'smooth' })
+  }
 
   const handleValidatedBlur = (event: FocusEvent<ValidFieldElement>) => {
     markInteracted()
@@ -429,97 +563,535 @@ export default function GetStartedForm() {
   const handleServiceToggle = (service: string) => {
     markInteracted()
 
-    setSelectedServices((current) => {
-      const isSelected = current.includes(service)
-      const nextSelection = isSelected
-        ? current.filter((item) => item !== service)
-        : current.length < 3
-          ? [...current, service]
-          : current
+    const isSelected = selectedServices.includes(service)
+    const nextSelection = isSelected
+      ? selectedServices.filter((item) => item !== service)
+      : selectedServices.length < 3
+        ? [...selectedServices, service]
+        : selectedServices
 
-      if (!isSelected && current.length >= 3) {
-        const input = servicesValidationRef.current
-        input?.setCustomValidity('Choose up to three areas')
-        if (hasAttemptedStepOne && input) {
-          validateFields([input])
-        }
-        return current
+    if (!isSelected && selectedServices.length >= 3) {
+      const input = servicesValidationRef.current
+      input?.setCustomValidity('Choose up to three')
+      if (input) {
+        validateFields([input])
       }
-
-      trackEvent('apply_service_selected', {
-        service,
-        selected: !isSelected,
+      trackEvent('apply_validation_error', {
+        form_name: APPLY_FORM_NAME,
+        form_location: APPLY_FORM_LOCATION,
+        step: 1,
+        step_id: 'services',
+        field_name: 'service_focus',
+        error_type: 'limit',
+        service_count: selectedServices.length,
+        question_count: QUESTION_STEP_COUNT,
       })
+      return
+    }
 
-      queueMicrotask(() => {
-        syncServiceValidity(nextSelection)
-        if (hasAttemptedStepOne && servicesValidationRef.current) {
-          validateFields([servicesValidationRef.current])
-        }
-      })
+    setSelectedServices(nextSelection)
+    trackEvent('apply_service_selected', {
+      service,
+      selected: !isSelected,
+      form_name: APPLY_FORM_NAME,
+      form_location: APPLY_FORM_LOCATION,
+    })
 
-      return nextSelection
+    if (nextSelection.length > 0) {
+      clearManualErrors(['service_focus'])
+    }
+
+    queueMicrotask(() => {
+      syncServiceValidity(nextSelection)
+      if (getError('service_focus') && servicesValidationRef.current) {
+        validateFields([servicesValidationRef.current])
+      }
     })
   }
 
-  const handleContinue = () => {
-    markInteracted()
-    setHasAttemptedStepOne(true)
-    setSubmitError(null)
-    syncAllValidationRules()
-
-    const isValid = validateFields(getNamedFields(STEP_ONE_FIELDS))
-    if (!isValid) return
-
-    trackCTAClick('continue application', 'apply form step 1')
-    trackEvent('apply_step_1_complete', {
-      step: 1,
-      service_count: selectedServices.length,
-    })
-
-    const committedReviewLink = getNamedFields(['review_link'])[0]
-    if (committedReviewLink instanceof HTMLInputElement) {
-      setReviewLinkSnapshot(committedReviewLink.value)
+  const getManualStepError = () => {
+    if (currentStep === 'services' && selectedServices.length === 0) {
+      return {
+        name: 'service_focus',
+        message: 'Choose at least one area',
+      }
     }
 
-    currentStepRef.current = 2
-    setStep(2)
-    formRef.current?.scrollIntoView?.({ block: 'start', behavior: 'smooth' })
+    if (currentStep === 'website' && !hasWebsite) {
+      return {
+        name: 'has_website',
+        message: 'Let us know if you have a website',
+      }
+    }
+
+    if (currentStep === 'priority' && !primaryGoal) {
+      return {
+        name: 'primary_goal',
+        message: 'Choose what matters most',
+      }
+    }
+
+    if (currentStep === 'budget' && !budget) {
+      return {
+        name: 'budget',
+        message: 'Choose a budget',
+      }
+    }
+
+    if (currentStep === 'timeline' && !timeline) {
+      return {
+        name: 'timeline',
+        message: 'Choose a start time',
+      }
+    }
+
+    return null
+  }
+
+  const handleNext = () => {
+    markInteracted()
+    setSubmitError(null)
+    const manualError = getManualStepError()
+
+    if (manualError) {
+      setManualErrors((current) => ({
+        ...current,
+        [manualError.name]: manualError.message,
+      }))
+      trackEvent('apply_validation_error', {
+        form_name: APPLY_FORM_NAME,
+        form_location: APPLY_FORM_LOCATION,
+        step: stepIndex + 1,
+        step_id: currentStep,
+        field_name: manualError.name,
+        error_type: 'required',
+        service_count: selectedServices.length,
+        question_count: QUESTION_STEP_COUNT,
+      })
+      return
+    }
+
+    clearManualErrors(getStepFields(currentStep))
+    syncValidationForStep(currentStep)
+
+    const fields = getNamedFields(getStepFields(currentStep))
+    if (!validateFields(fields)) {
+      const invalidField = fields.find((field) => !field.validity.valid)
+      trackEvent('apply_validation_error', {
+        form_name: APPLY_FORM_NAME,
+        form_location: APPLY_FORM_LOCATION,
+        step: stepIndex + 1,
+        step_id: currentStep,
+        field_name:
+          invalidField?.name || getStepFields(currentStep)[0] || 'unknown',
+        error_type: getValidationErrorType(invalidField),
+        service_count: selectedServices.length,
+        question_count: QUESTION_STEP_COUNT,
+      })
+      return
+    }
+
+    trackEvent('apply_question_complete', {
+      form_name: APPLY_FORM_NAME,
+      form_location: APPLY_FORM_LOCATION,
+      step: stepIndex + 1,
+      step_id: currentStep,
+      service_count: selectedServices.length,
+      question_count: QUESTION_STEP_COUNT,
+    })
+
+    if (currentStep === 'priority') {
+      trackCTAClick('continue application', 'apply form step 1')
+      trackEvent('apply_step_1_complete', {
+        form_name: APPLY_FORM_NAME,
+        form_location: APPLY_FORM_LOCATION,
+        step: 1,
+        step_id: currentStep,
+        service_count: selectedServices.length,
+        question_count: QUESTION_STEP_COUNT,
+      })
+    }
+
+    goToStep(Math.min(stepIndex + 1, FORM_STEPS.length - 1))
   }
 
   const handleBack = () => {
     setSubmitError(null)
-    currentStepRef.current = 1
-    setStep(1)
-    formRef.current?.scrollIntoView?.({ block: 'start', behavior: 'smooth' })
+    goToStep(Math.max(stepIndex - 1, 0))
   }
 
   const handleBudgetSelect = (value: string) => {
     markInteracted()
     setBudget(value)
-    trackEvent('apply_budget_selected', { budget: value })
+    trackEvent('apply_budget_selected', {
+      form_name: APPLY_FORM_NAME,
+      form_location: APPLY_FORM_LOCATION,
+      budget: value,
+    })
   }
 
   const handleFinalSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    if (step === 1) {
+    if (!isReviewStep) {
       event.preventDefault()
-      handleContinue()
+      handleNext()
       return
     }
 
-    syncAllValidationRules()
     await handleSubmit(event)
   }
 
-  const reviewLinkLabel =
-    hasWebsite === 'yes'
-      ? 'Current website'
-      : 'Current website or best link to review'
+  const renderChoiceOption = ({
+    name,
+    value,
+    checked,
+    label,
+    onSelect,
+  }: {
+    name: string
+    value: string
+    checked: boolean
+    label: string
+    onSelect: (value: string) => void
+  }) => (
+    <label key={value} className="block">
+      <input
+        type="radio"
+        name={name}
+        value={value}
+        checked={checked}
+        onChange={(event) => {
+          markInteracted()
+          onSelect(event.currentTarget.value)
+          clearManualErrors([name])
+        }}
+        onBlur={(event) => {
+          handleBlur(event)
+        }}
+        className="peer sr-only"
+      />
+      <span
+        className={cn(
+          choiceCardClassName,
+          'peer-checked:border-[#9EFF2E]/60 peer-checked:bg-[#9EFF2E]/10 peer-checked:text-[#F5F5F2] peer-focus-visible:ring-2 peer-focus-visible:ring-[#9EFF2E]/35 peer-focus-visible:ring-offset-0',
+        )}
+      >
+        <span className="font-mono text-[0.9rem] uppercase tracking-[0.12em]">
+          {label}
+        </span>
+      </span>
+    </label>
+  )
 
-  const reviewLinkHelper =
-    hasWebsite === 'yes'
-      ? 'Share the main site we should review.'
-      : 'If you do not have a site yet, send a social profile, booking page, LinkedIn, or anything useful.'
+  const renderStepBody = () => {
+    switch (currentStep) {
+      case 'services':
+        return (
+          <div className="grid gap-3 sm:grid-cols-2">
+            {SERVICE_OPTIONS.map((service) => {
+              const isSelected = selectedServices.includes(service.value)
+
+              return (
+                <button
+                  key={service.value}
+                  type="button"
+                  role="checkbox"
+                  aria-checked={isSelected}
+                  onClick={() => handleServiceToggle(service.value)}
+                  className={cn(
+                    choiceCardClassName,
+                    isSelected
+                      ? 'border-[#9EFF2E]/60 bg-[#9EFF2E]/10 text-[#F5F5F2] shadow-[0_0_0_1px_rgba(158,255,46,0.14)]'
+                      : 'text-[#D6D6CF]',
+                  )}
+                >
+                  <span
+                    className={cn(
+                      'inline-flex h-5 w-5 shrink-0 items-center justify-center border text-[0.72rem] font-medium transition-colors',
+                      isSelected
+                        ? 'border-[#9EFF2E]/70 bg-[#9EFF2E]/18 text-[#9EFF2E]'
+                        : 'border-white/16 text-transparent',
+                    )}
+                    aria-hidden="true"
+                  >
+                    +
+                  </span>
+                  <span className="font-mono text-[0.9rem] uppercase tracking-[0.12em]">
+                    {service.label}
+                  </span>
+                </button>
+              )
+            })}
+          </div>
+        )
+
+      case 'website':
+        return (
+          <fieldset className="space-y-3">
+            <legend className="sr-only">Do you have a website?</legend>
+            <div className="grid gap-3 sm:grid-cols-2">
+              {WEBSITE_OPTIONS.map((option) =>
+                renderChoiceOption({
+                  name: 'has_website',
+                  value: option.value,
+                  checked: hasWebsite === option.value,
+                  label: option.label,
+                  onSelect: setHasWebsite,
+                }),
+              )}
+            </div>
+            {renderError('has_website')}
+          </fieldset>
+        )
+
+      case 'link':
+        return (
+          <div className="space-y-3">
+            <Label htmlFor="apply-review-link" className="sr-only">
+              What should we review?
+            </Label>
+            <Input
+              id="apply-review-link"
+              name="review_link"
+              type="url"
+              required
+              autoComplete="url"
+              inputMode="url"
+              value={reviewLink}
+              placeholder={
+                hasWebsite === 'yes'
+                  ? 'yourwebsite.com'
+                  : 'linkedin.com/in/your-company'
+              }
+              className={fieldClassName}
+              aria-invalid={Boolean(getError('review_link'))}
+              aria-describedby={getDescribedBy('review_link')}
+              onChange={(event) => {
+                markInteracted()
+                setReviewLink(event.currentTarget.value)
+              }}
+              onBlur={handleValidatedBlur}
+            />
+            {renderError('review_link')}
+          </div>
+        )
+
+      case 'priority':
+        return (
+          <fieldset className="space-y-3">
+            <legend className="sr-only">What matters most?</legend>
+            <div className="grid gap-3">
+              {PRIORITY_OPTIONS.map((option) =>
+                renderChoiceOption({
+                  name: 'primary_goal',
+                  value: option.value,
+                  checked: primaryGoal === option.value,
+                  label: option.label,
+                  onSelect: setPrimaryGoal,
+                }),
+              )}
+            </div>
+            {renderError('primary_goal')}
+          </fieldset>
+        )
+
+      case 'budget':
+        return (
+          <fieldset className="space-y-3">
+            <legend className="sr-only">Monthly budget?</legend>
+            <div className="grid gap-3">
+              {BUDGET_OPTIONS.map((option) =>
+                renderChoiceOption({
+                  name: 'budget',
+                  value: option,
+                  checked: budget === option,
+                  label: option,
+                  onSelect: handleBudgetSelect,
+                }),
+              )}
+            </div>
+            {renderError('budget')}
+          </fieldset>
+        )
+
+      case 'timeline':
+        return (
+          <fieldset className="space-y-3">
+            <legend className="sr-only">When do you want to start?</legend>
+            <div className="grid gap-3">
+              {TIMELINE_OPTIONS.map((option) =>
+                renderChoiceOption({
+                  name: 'timeline',
+                  value: option,
+                  checked: timeline === option,
+                  label: option,
+                  onSelect: setTimeline,
+                }),
+              )}
+            </div>
+            {renderError('timeline')}
+          </fieldset>
+        )
+
+      case 'company':
+        return (
+          <div className="space-y-3">
+            <Label htmlFor="apply-company" className="sr-only">
+              Company name
+            </Label>
+            <Input
+              id="apply-company"
+              name="company"
+              required
+              autoComplete="organization"
+              value={company}
+              placeholder="Company"
+              className={fieldClassName}
+              aria-invalid={Boolean(getError('company'))}
+              aria-describedby={getDescribedBy('company')}
+              onChange={(event) => {
+                markInteracted()
+                setCompany(event.currentTarget.value)
+              }}
+              onBlur={handleValidatedBlur}
+            />
+            {renderError('company')}
+          </div>
+        )
+
+      case 'contact':
+        return (
+          <div className="grid gap-4">
+            <div className="space-y-3">
+              <Label htmlFor="apply-full-name" className="sr-only">
+                Full name
+              </Label>
+              <Input
+                id="apply-full-name"
+                name="full_name"
+                required
+                autoComplete="name"
+                value={fullName}
+                placeholder="Full name"
+                className={fieldClassName}
+                aria-invalid={Boolean(getError('full_name'))}
+                aria-describedby={getDescribedBy('full_name')}
+                onChange={(event) => {
+                  markInteracted()
+                  setFullName(event.currentTarget.value)
+                }}
+                onBlur={handleValidatedBlur}
+              />
+              {renderError('full_name')}
+            </div>
+
+            <div className="space-y-3">
+              <Label htmlFor="apply-email" className="sr-only">
+                Email
+              </Label>
+              <Input
+                id="apply-email"
+                name="email"
+                type="email"
+                required
+                autoComplete="email"
+                value={email}
+                placeholder="you@company.com"
+                className={fieldClassName}
+                aria-invalid={Boolean(getError('email'))}
+                aria-describedby={getDescribedBy('email')}
+                onChange={(event) => {
+                  markInteracted()
+                  setEmail(event.currentTarget.value)
+                }}
+                onBlur={handleValidatedBlur}
+              />
+              {renderError('email')}
+            </div>
+          </div>
+        )
+
+      case 'notes':
+        return (
+          <div className="space-y-3">
+            <Label htmlFor="apply-notes" className="sr-only">
+              Anything important?
+            </Label>
+            <Textarea
+              id="apply-notes"
+              name="additional_context"
+              maxLength={600}
+              value={additionalContext}
+              placeholder="Optional"
+              className="min-h-[150px] border-white/12 bg-black/40 px-4 py-3 text-[1rem] leading-7 text-[#F5F5F2] placeholder:text-[#6E6E68] focus-visible:border-[#9EFF2E]/65 focus-visible:ring-[#9EFF2E]/35 focus-visible:ring-offset-0"
+              onChange={(event) => {
+                markInteracted()
+                setAdditionalContext(event.currentTarget.value)
+              }}
+            />
+          </div>
+        )
+
+      case 'review':
+        return (
+          <div className="space-y-3">
+            <div className="grid gap-3 rounded-none border border-white/10 bg-black/30 p-4">
+              <ReviewRow
+                label="Need"
+                value={selectedServices
+                  .map((service) => getOptionLabel(SERVICE_OPTIONS, service))
+                  .join(', ')}
+              />
+              <ReviewRow
+                label="Website"
+                value={hasWebsite === 'yes' ? 'Yes' : 'No'}
+              />
+              <ReviewRow label="Review" value={reviewLink} />
+              <ReviewRow
+                label="Goal"
+                value={getOptionLabel(PRIORITY_OPTIONS, primaryGoal)}
+              />
+              <ReviewRow label="Budget" value={budget} />
+              <ReviewRow label="Timing" value={timeline} />
+              <ReviewRow label="Company" value={company} />
+              <ReviewRow label="Contact" value={`${fullName} / ${email}`} />
+              {additionalContext ? (
+                <ReviewRow label="Note" value={additionalContext} />
+              ) : null}
+            </div>
+          </div>
+        )
+    }
+  }
+
+  const heading =
+    currentStep === 'services'
+      ? 'What do you need help with?'
+      : currentStep === 'website'
+        ? 'Do you have a website?'
+        : currentStep === 'link'
+          ? 'What should we review?'
+          : currentStep === 'priority'
+            ? 'What matters most?'
+            : currentStep === 'budget'
+              ? 'Monthly budget?'
+              : currentStep === 'timeline'
+                ? 'When do you want to start?'
+                : currentStep === 'company'
+                  ? 'Company name'
+                  : currentStep === 'contact'
+                    ? 'Where should we reply?'
+                    : currentStep === 'notes'
+                      ? 'Anything important?'
+                      : 'Review and submit.'
+
+  const helper =
+    currentStep === 'services'
+      ? 'Pick up to 3.'
+      : currentStep === 'link'
+        ? 'Website, LinkedIn, booking page, or social profile.'
+        : currentStep === 'notes'
+          ? 'Optional.'
+          : ''
 
   return (
     <form
@@ -529,7 +1101,7 @@ export default function GetStartedForm() {
       className={cn(
         styles.formFrame,
         styles.scanlines,
-        'border border-white/10 bg-[#080808] p-6 pb-28 sm:p-8 sm:pb-8',
+        'mx-auto min-h-[min(720px,calc(100vh-8rem))] max-w-[760px] border border-white/10 bg-[#080808] p-5 sm:p-8',
       )}
       action={FORM_ACTION}
       method="POST"
@@ -563,14 +1135,6 @@ export default function GetStartedForm() {
         />
       ))}
 
-      {step === 2 ? (
-        <>
-          <input type="hidden" name="has_website" value={hasWebsite} />
-          <input type="hidden" name="review_link" value={reviewLinkSnapshot} />
-          <input type="hidden" name="primary_goal" value={primaryGoal} />
-        </>
-      ) : null}
-
       <input
         ref={servicesValidationRef}
         name="service_focus"
@@ -582,448 +1146,100 @@ export default function GetStartedForm() {
         aria-hidden="true"
       />
 
-      <div className="relative z-10">
-        <div className="-mx-6 -mt-6 mb-8 border-b border-white/10 bg-[#080808]/95 px-6 py-4 backdrop-blur sm:static sm:mx-0 sm:mt-0 sm:mb-10 sm:border sm:border-white/10 sm:bg-black/30 sm:px-5 sm:py-5 md:sticky md:top-[calc(var(--prism-header-height,4rem)+0.75rem)] md:z-20">
+      {isReviewStep ? (
+        <>
+          <input type="hidden" name="has_website" value={hasWebsite} />
+          <input type="hidden" name="review_link" value={reviewLink} />
+          <input type="hidden" name="primary_goal" value={primaryGoal} />
+          <input type="hidden" name="budget" value={budget} />
+          <input type="hidden" name="timeline" value={timeline} />
+          <input type="hidden" name="company" value={company} />
+          <input type="hidden" name="full_name" value={fullName} />
+          <input type="hidden" name="email" value={email} />
+          <input
+            type="hidden"
+            name="additional_context"
+            value={additionalContext}
+          />
+        </>
+      ) : null}
+
+      <div className="relative z-10 flex min-h-[inherit] flex-col">
+        <div className="space-y-4 border-b border-white/10 pb-5">
           <div className="flex items-center justify-between gap-4">
-            <div>
-              <p className="font-mono text-[0.76rem] uppercase tracking-[0.36em] text-[#9EFF2E]">
-                Step {step} of 2
-              </p>
-              <p className="mt-2 font-mono text-[0.82rem] uppercase tracking-[0.2em] text-[#7C7C75]">
-                Takes about 60 to 90 seconds
-              </p>
-            </div>
-            <p className="font-mono text-[0.76rem] uppercase tracking-[0.28em] text-[#C6C6C0]">
-              {step === 1 ? 'Fit' : 'Context'}
+            <p className="font-mono text-[0.72rem] uppercase tracking-[0.3em] text-[#9EFF2E]">
+              {isReviewStep
+                ? 'Review'
+                : `${progressStep} of ${QUESTION_STEP_COUNT}`}
+            </p>
+            <p className="font-mono text-[0.72rem] uppercase tracking-[0.24em] text-[#767670]">
+              Application
             </p>
           </div>
-
-          <div className="mt-4 h-px w-full overflow-hidden bg-white/10">
+          <div className="h-px w-full overflow-hidden bg-white/10">
             <div
               className="h-full bg-[#9EFF2E] transition-[width] duration-300"
-              style={{ width: `${step * 50}%` }}
+              style={{ width: `${progressWidth}%` }}
             />
           </div>
         </div>
 
-        {step === 1 ? (
-          <div className="space-y-8">
+        <div className="flex flex-1 flex-col justify-center py-12 sm:py-16">
+          <div className="space-y-7">
             <div className="space-y-3">
-              <p className="font-mono text-[0.74rem] uppercase tracking-[0.32em] text-[#767670]">
-                Step 1
-              </p>
-              <h2 className="max-w-[12ch] font-sans text-[2rem] font-medium leading-[0.95] tracking-[-0.05em] text-[#F5F5F2] sm:text-[2.5rem]">
-                What do you need help with?
-              </h2>
-              <p className="max-w-[40rem] font-mono text-[0.95rem] leading-7 text-[#A0A09A]">
-                Choose the problem first. Keep it short.
-              </p>
-            </div>
-
-            <div className="space-y-3">
-              <div className="space-y-2">
-                <Label className="text-[#D7D7D2]">
-                  What do you need help with?
-                </Label>
-                <p className="font-mono text-[0.8rem] leading-6 text-[#8C8C85]">
-                  Choose at least 1, up to 3.
+              <h1 className="max-w-[12ch] text-balance font-sans text-[clamp(2.25rem,8vw,4.8rem)] font-medium leading-[0.95] tracking-[-0.06em] text-[#F5F5F2]">
+                {heading}
+              </h1>
+              {helper ? (
+                <p className="font-mono text-[0.88rem] leading-6 text-[#8C8C85]">
+                  {helper}
                 </p>
-              </div>
-
-              <div className="grid gap-3 sm:grid-cols-2">
-                {SERVICE_OPTIONS.map((service) => {
-                  const isSelected = selectedServices.includes(service)
-
-                  return (
-                    <button
-                      key={service}
-                      type="button"
-                      role="checkbox"
-                      aria-checked={isSelected}
-                      onClick={() => handleServiceToggle(service)}
-                      className={cn(
-                        choiceCardClassName,
-                        isSelected
-                          ? 'border-[#9EFF2E]/60 bg-[#9EFF2E]/10 text-[#F5F5F2] shadow-[0_0_0_1px_rgba(158,255,46,0.14)]'
-                          : 'text-[#D6D6CF]',
-                      )}
-                    >
-                      <span
-                        className={cn(
-                          'mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center border text-[0.72rem] font-medium transition-colors',
-                          isSelected
-                            ? 'border-[#9EFF2E]/70 bg-[#9EFF2E]/18 text-[#9EFF2E]'
-                            : 'border-white/16 text-transparent',
-                        )}
-                        aria-hidden="true"
-                      >
-                        +
-                      </span>
-                      <span className="font-mono text-[0.9rem] leading-6">
-                        {service}
-                      </span>
-                    </button>
-                  )
-                })}
-              </div>
-
-              {renderError('service_focus')}
-            </div>
-
-            <fieldset className="space-y-3">
-              <legend className="text-sm font-medium text-[#D7D7D2]">
-                Do you already have a website?
-              </legend>
-              <div className="grid gap-3 sm:grid-cols-2">
-                {WEBSITE_OPTIONS.map((option) => (
-                  <label key={option.value} className="block">
-                    <input
-                      type="radio"
-                      name="has_website"
-                      value={option.value}
-                      checked={hasWebsite === option.value}
-                      onChange={(event) => {
-                        markInteracted()
-                        setHasWebsite(event.currentTarget.value)
-                        syncRadioGroupValidity(
-                          'has_website',
-                          'Let us know if you already have a website',
-                          event.currentTarget.form,
-                        )
-                        validateFields(getNamedFields(['has_website']))
-                      }}
-                      onBlur={(event) => {
-                        syncRadioGroupValidity(
-                          'has_website',
-                          'Let us know if you already have a website',
-                          event.currentTarget.form,
-                        )
-                        handleBlur(event)
-                      }}
-                      className="peer sr-only"
-                    />
-                    <span
-                      className={cn(
-                        choiceCardClassName,
-                        'items-center justify-between',
-                        'peer-checked:border-[#9EFF2E]/60 peer-checked:bg-[#9EFF2E]/10 peer-checked:text-[#F5F5F2] peer-focus-visible:ring-2 peer-focus-visible:ring-[#9EFF2E]/35 peer-focus-visible:ring-offset-0',
-                      )}
-                    >
-                      <span className="font-mono text-[0.9rem] uppercase tracking-[0.14em]">
-                        {option.label}
-                      </span>
-                      <span className="font-mono text-[0.76rem] uppercase tracking-[0.2em] text-[#767670] peer-checked:text-[#C7F98A]">
-                        {option.value === 'yes' ? 'site_live' : 'site_not_live'}
-                      </span>
-                    </span>
-                  </label>
-                ))}
-              </div>
-              {renderError('has_website')}
-            </fieldset>
-
-            <div className="space-y-2.5">
-              <Label htmlFor="apply-review-link" className="text-[#D7D7D2]">
-                {reviewLinkLabel}
-              </Label>
-              <p className="font-mono text-[0.8rem] leading-6 text-[#8C8C85]">
-                {reviewLinkHelper}
-              </p>
-              <Input
-                id="apply-review-link"
-                name="review_link"
-                type="url"
-                required
-                autoComplete="url"
-                inputMode="url"
-                placeholder={
-                  hasWebsite === 'yes'
-                    ? 'design-prism.com'
-                    : 'linkedin.com/in/your-company'
-                }
-                className={fieldClassName}
-                aria-invalid={Boolean(getError('review_link'))}
-                aria-describedby={getDescribedBy('review_link')}
-                onBlur={handleValidatedBlur}
-              />
-              {renderError('review_link')}
-            </div>
-
-            <fieldset className="space-y-3">
-              <legend className="text-sm font-medium text-[#D7D7D2]">
-                What matters most right now?
-              </legend>
-              <div className="grid gap-3">
-                {PRIORITY_OPTIONS.map((option) => (
-                  <label key={option} className="block">
-                    <input
-                      type="radio"
-                      name="primary_goal"
-                      value={option}
-                      checked={primaryGoal === option}
-                      onChange={(event) => {
-                        markInteracted()
-                        setPrimaryGoal(event.currentTarget.value)
-                        syncRadioGroupValidity(
-                          'primary_goal',
-                          'Choose what matters most right now',
-                          event.currentTarget.form,
-                        )
-                        validateFields(getNamedFields(['primary_goal']))
-                      }}
-                      onBlur={(event) => {
-                        syncRadioGroupValidity(
-                          'primary_goal',
-                          'Choose what matters most right now',
-                          event.currentTarget.form,
-                        )
-                        handleBlur(event)
-                      }}
-                      className="peer sr-only"
-                    />
-                    <span
-                      className={cn(
-                        choiceCardClassName,
-                        'peer-checked:border-[#9EFF2E]/60 peer-checked:bg-[#9EFF2E]/10 peer-checked:text-[#F5F5F2] peer-focus-visible:ring-2 peer-focus-visible:ring-[#9EFF2E]/35 peer-focus-visible:ring-offset-0',
-                      )}
-                    >
-                      <span className="font-mono text-[0.9rem] leading-6">
-                        {option}
-                      </span>
-                    </span>
-                  </label>
-                ))}
-              </div>
-              {renderError('primary_goal')}
-            </fieldset>
-          </div>
-        ) : (
-          <div className="space-y-8">
-            <div className="space-y-3">
-              <p className="font-mono text-[0.74rem] uppercase tracking-[0.32em] text-[#767670]">
-                Step 2
-              </p>
-              <h2 className="max-w-[12ch] font-sans text-[2rem] font-medium leading-[0.95] tracking-[-0.05em] text-[#F5F5F2] sm:text-[2.5rem]">
-                Tell us about the business.
-              </h2>
-              <p className="max-w-[42rem] font-mono text-[0.95rem] leading-7 text-[#A0A09A]">
-                Enough context to review. No phone. No calendar. No long brief.
-              </p>
-            </div>
-
-            <fieldset className="space-y-3">
-              <legend className="text-sm font-medium text-[#D7D7D2]">
-                What is a realistic monthly budget for this?
-              </legend>
-              <p className="font-mono text-[0.8rem] leading-6 text-[#8C8C85]">
-                Most Prism partnerships start between $1k and $3k per month.
-              </p>
-              <div className="grid gap-3">
-                {BUDGET_OPTIONS.map((option) => (
-                  <label key={option} className="block">
-                    <input
-                      type="radio"
-                      name="budget"
-                      value={option}
-                      checked={budget === option}
-                      onChange={(event) => {
-                        handleBudgetSelect(event.currentTarget.value)
-                        syncRadioGroupValidity(
-                          'budget',
-                          'Choose a budget range',
-                          event.currentTarget.form,
-                        )
-                        validateFields(getNamedFields(['budget']))
-                      }}
-                      onBlur={(event) => {
-                        syncRadioGroupValidity(
-                          'budget',
-                          'Choose a budget range',
-                          event.currentTarget.form,
-                        )
-                        handleBlur(event)
-                      }}
-                      className="peer sr-only"
-                    />
-                    <span
-                      className={cn(
-                        choiceCardClassName,
-                        'peer-checked:border-[#9EFF2E]/60 peer-checked:bg-[#9EFF2E]/10 peer-checked:text-[#F5F5F2] peer-focus-visible:ring-2 peer-focus-visible:ring-[#9EFF2E]/35 peer-focus-visible:ring-offset-0',
-                      )}
-                    >
-                      <span className="font-mono text-[0.9rem] uppercase tracking-[0.12em]">
-                        {option}
-                      </span>
-                    </span>
-                  </label>
-                ))}
-              </div>
-              {renderError('budget')}
-            </fieldset>
-
-            <fieldset className="space-y-3">
-              <legend className="text-sm font-medium text-[#D7D7D2]">
-                How soon are you looking to start?
-              </legend>
-              <div className="grid gap-3">
-                {TIMELINE_OPTIONS.map((option) => (
-                  <label key={option} className="block">
-                    <input
-                      type="radio"
-                      name="timeline"
-                      value={option}
-                      checked={timeline === option}
-                      onChange={(event) => {
-                        markInteracted()
-                        setTimeline(event.currentTarget.value)
-                        syncRadioGroupValidity(
-                          'timeline',
-                          'Choose a start timeline',
-                          event.currentTarget.form,
-                        )
-                        validateFields(getNamedFields(['timeline']))
-                      }}
-                      onBlur={(event) => {
-                        syncRadioGroupValidity(
-                          'timeline',
-                          'Choose a start timeline',
-                          event.currentTarget.form,
-                        )
-                        handleBlur(event)
-                      }}
-                      className="peer sr-only"
-                    />
-                    <span
-                      className={cn(
-                        choiceCardClassName,
-                        'peer-checked:border-[#9EFF2E]/60 peer-checked:bg-[#9EFF2E]/10 peer-checked:text-[#F5F5F2] peer-focus-visible:ring-2 peer-focus-visible:ring-[#9EFF2E]/35 peer-focus-visible:ring-offset-0',
-                      )}
-                    >
-                      <span className="font-mono text-[0.9rem] uppercase tracking-[0.12em]">
-                        {option}
-                      </span>
-                    </span>
-                  </label>
-                ))}
-              </div>
-              {renderError('timeline')}
-            </fieldset>
-
-            <div className="grid gap-5">
-              <div className="space-y-2.5">
-                <Label htmlFor="apply-company" className="text-[#D7D7D2]">
-                  Company name
-                </Label>
-                <Input
-                  id="apply-company"
-                  name="company"
-                  required
-                  autoComplete="organization"
-                  placeholder="Prism"
-                  className={fieldClassName}
-                  aria-invalid={Boolean(getError('company'))}
-                  aria-describedby={getDescribedBy('company')}
-                  onBlur={handleValidatedBlur}
-                />
-                {renderError('company')}
-              </div>
-
-              <div className="space-y-2.5">
-                <Label htmlFor="apply-full-name" className="text-[#D7D7D2]">
-                  Full name
-                </Label>
-                <Input
-                  id="apply-full-name"
-                  name="full_name"
-                  required
-                  autoComplete="name"
-                  placeholder="Jordan Ramirez"
-                  className={fieldClassName}
-                  aria-invalid={Boolean(getError('full_name'))}
-                  aria-describedby={getDescribedBy('full_name')}
-                  onBlur={handleValidatedBlur}
-                />
-                {renderError('full_name')}
-              </div>
-
-              <div className="space-y-2.5">
-                <Label htmlFor="apply-email" className="text-[#D7D7D2]">
-                  Email
-                </Label>
-                <Input
-                  id="apply-email"
-                  name="email"
-                  type="email"
-                  required
-                  autoComplete="email"
-                  placeholder="you@company.com"
-                  className={fieldClassName}
-                  aria-invalid={Boolean(getError('email'))}
-                  aria-describedby={getDescribedBy('email')}
-                  onBlur={handleValidatedBlur}
-                />
-                {renderError('email')}
-              </div>
-
-              <div className="space-y-2.5">
-                <Label htmlFor="apply-notes" className="text-[#D7D7D2]">
-                  Anything else we should know?
-                </Label>
-                <p className="font-mono text-[0.8rem] leading-6 text-[#8C8C85]">
-                  Optional. Keep it short.
-                </p>
-                <Textarea
-                  id="apply-notes"
-                  name="additional_context"
-                  maxLength={600}
-                  placeholder="Any context that will help us review this faster."
-                  className="min-h-[140px] border-white/12 bg-black/40 px-4 py-3 text-[0.98rem] leading-7 text-[#F5F5F2] placeholder:text-[#6E6E68] focus-visible:border-[#9EFF2E]/65 focus-visible:ring-[#9EFF2E]/35 focus-visible:ring-offset-0"
-                />
-              </div>
-            </div>
-          </div>
-        )}
-
-        <div className="mt-8 hidden border-t border-white/10 pt-6 sm:block">
-          <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-            <p className="max-w-[34rem] font-mono text-[0.9rem] leading-7 text-[#A0A09A]">
-              Every real submission gets reviewed. If there&apos;s a fit,
-              we&apos;ll reach out with the right next step.
-            </p>
-
-            <div className="flex gap-3">
-              {step === 2 ? (
-                <Button
-                  type="button"
-                  variant="outline"
-                  className="min-h-12 border-white/14 bg-transparent px-5 font-mono text-[0.8rem] uppercase tracking-[0.2em] text-[#D0D0C8] hover:border-white/28 hover:bg-white/5 hover:text-[#F5F5F2]"
-                  onClick={handleBack}
-                >
-                  Back
-                </Button>
               ) : null}
-
-              {step === 1 ? (
-                <Button
-                  type="button"
-                  className="min-h-12 border-[#9EFF2E]/55 bg-[#9EFF2E]/8 px-6 font-mono text-[0.82rem] uppercase tracking-[0.2em] text-[#9EFF2E] shadow-[0_0_0_1px_rgba(158,255,46,0.14)] hover:bg-[#9EFF2E]/16 hover:text-[#D4FF94] focus-visible:ring-[#9EFF2E]/45"
-                  onClick={handleContinue}
-                >
-                  Continue
-                </Button>
-              ) : (
-                <Button
-                  type="submit"
-                  className="min-h-12 border-[#9EFF2E]/55 bg-[#9EFF2E]/8 px-6 font-mono text-[0.82rem] uppercase tracking-[0.2em] text-[#9EFF2E] shadow-[0_0_0_1px_rgba(158,255,46,0.14)] hover:bg-[#9EFF2E]/16 hover:text-[#D4FF94] focus-visible:ring-[#9EFF2E]/45"
-                  disabled={isSubmitting}
-                  onClick={() =>
-                    trackCTAClick('submit application', 'apply form step 2')
-                  }
-                >
-                  {isSubmitting ? 'Submitting...' : 'Submit application'}
-                </Button>
-              )}
             </div>
+
+            <div className="space-y-4">
+              {renderStepBody()}
+              {currentStep === 'services' ? renderError('service_focus') : null}
+            </div>
+          </div>
+        </div>
+
+        <div className="border-t border-white/10 pt-5">
+          <div className="flex items-center gap-3">
+            {stepIndex > 0 ? (
+              <Button
+                type="button"
+                variant="outline"
+                className="min-h-12 border-white/14 bg-transparent px-5 font-mono text-[0.78rem] uppercase tracking-[0.18em] text-[#D0D0C8] hover:border-white/28 hover:bg-white/5 hover:text-[#F5F5F2]"
+                onClick={handleBack}
+              >
+                Back
+              </Button>
+            ) : null}
+
+            {isReviewStep ? (
+              <Button
+                type="submit"
+                className="min-h-12 flex-1 border-[#9EFF2E]/55 bg-[#9EFF2E]/8 px-6 font-mono text-[0.78rem] uppercase tracking-[0.18em] text-[#9EFF2E] shadow-[0_0_0_1px_rgba(158,255,46,0.14)] hover:bg-[#9EFF2E]/16 hover:text-[#D4FF94] focus-visible:ring-[#9EFF2E]/45"
+                disabled={isSubmitting}
+                onClick={() =>
+                  trackCTAClick('submit application', 'apply form review')
+                }
+              >
+                {isSubmitting ? 'Submitting...' : 'Submit application'}
+              </Button>
+            ) : (
+              <Button
+                type="button"
+                className="min-h-12 flex-1 border-[#9EFF2E]/55 bg-[#9EFF2E]/8 px-6 font-mono text-[0.78rem] uppercase tracking-[0.18em] text-[#9EFF2E] shadow-[0_0_0_1px_rgba(158,255,46,0.14)] hover:bg-[#9EFF2E]/16 hover:text-[#D4FF94] focus-visible:ring-[#9EFF2E]/45"
+                onClick={(event) => {
+                  event.preventDefault()
+                  handleNext()
+                }}
+              >
+                {currentStep === 'notes' ? 'Review' : 'Continue'}
+              </Button>
+            )}
           </div>
 
           {submitError ? (
@@ -1032,52 +1248,20 @@ export default function GetStartedForm() {
             </Alert>
           ) : null}
         </div>
-
-        <div className="sticky bottom-0 left-0 right-0 mt-8 -mx-6 -mb-28 border-t border-white/10 bg-[#080808]/95 px-6 py-4 backdrop-blur sm:hidden">
-          <div className="flex items-center gap-3">
-            {step === 2 ? (
-              <Button
-                type="button"
-                variant="outline"
-                className="min-h-12 flex-1 border-white/14 bg-transparent px-4 font-mono text-[0.78rem] uppercase tracking-[0.18em] text-[#D0D0C8] hover:border-white/28 hover:bg-white/5 hover:text-[#F5F5F2]"
-                onClick={handleBack}
-              >
-                Back
-              </Button>
-            ) : null}
-
-            {step === 1 ? (
-              <Button
-                type="button"
-                className="min-h-12 flex-1 border-[#9EFF2E]/55 bg-[#9EFF2E]/8 px-4 font-mono text-[0.78rem] uppercase tracking-[0.18em] text-[#9EFF2E] shadow-[0_0_0_1px_rgba(158,255,46,0.14)] hover:bg-[#9EFF2E]/16 hover:text-[#D4FF94] focus-visible:ring-[#9EFF2E]/45"
-                onClick={handleContinue}
-              >
-                Continue
-              </Button>
-            ) : (
-              <Button
-                type="submit"
-                className="min-h-12 flex-1 border-[#9EFF2E]/55 bg-[#9EFF2E]/8 px-4 font-mono text-[0.78rem] uppercase tracking-[0.18em] text-[#9EFF2E] shadow-[0_0_0_1px_rgba(158,255,46,0.14)] hover:bg-[#9EFF2E]/16 hover:text-[#D4FF94] focus-visible:ring-[#9EFF2E]/45"
-                disabled={isSubmitting}
-                onClick={() =>
-                  trackCTAClick(
-                    'submit application',
-                    'apply form step 2 mobile',
-                  )
-                }
-              >
-                {isSubmitting ? 'Submitting...' : 'Submit'}
-              </Button>
-            )}
-          </div>
-
-          {submitError ? (
-            <Alert className="mt-3 border-[#FF2BEA]/26 bg-[#FF2BEA]/10 text-[#F5F5F2]">
-              <AlertDescription>{submitError}</AlertDescription>
-            </Alert>
-          ) : null}
-        </div>
       </div>
     </form>
+  )
+}
+
+function ReviewRow({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="grid gap-1 border-b border-white/10 pb-3 last:border-b-0 last:pb-0 sm:grid-cols-[8rem_minmax(0,1fr)] sm:gap-4">
+      <span className="font-mono text-[0.7rem] uppercase tracking-[0.22em] text-[#767670]">
+        {label}
+      </span>
+      <span className="break-words font-mono text-[0.86rem] leading-6 text-[#D6D6CF]">
+        {value}
+      </span>
+    </div>
   )
 }
