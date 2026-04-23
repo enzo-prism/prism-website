@@ -51,18 +51,16 @@ export default function GetStartedPage() {
           >
             <div className="space-y-8">
               <CoreSectionHeading
-                eyebrow="application"
                 title="One short form."
                 description="About a minute. Just the essentials."
                 titleClassName="max-w-[10ch]"
-                eyebrowClassName="text-[#9EFF2E]"
               />
 
               <div className="space-y-4 border-t border-white/10 pt-6">
                 {APPLICATION_NOTES.map((note) => (
                   <p
                     key={note}
-                    className="font-mono text-[0.92rem] leading-7 text-[#C6C6C0]"
+                    className="font-sans text-[0.98rem] leading-7 text-[#C6C6C0]"
                   >
                     {note}
                   </p>
@@ -101,9 +99,6 @@ export default function GetStartedPage() {
 
               <div className="relative z-10 space-y-8">
                 <div className="space-y-3">
-                  <p className="font-mono text-[0.72rem] uppercase tracking-[0.32em] text-[#767670]">
-                    Inside
-                  </p>
                   <p className="max-w-[34rem] font-mono text-[0.98rem] leading-8 text-[#D0D0C8]">
                     No calls. No scheduling. No long brief.
                   </p>

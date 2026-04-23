@@ -18,7 +18,6 @@ export default function PricingHero() {
 
           <div className="relative z-10 grid gap-10 px-6 py-10 sm:px-10 sm:py-14 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] lg:items-end lg:px-12 lg:py-16">
             <CoreSectionHeading
-              eyebrow="pricing"
               title="Simple pricing for teams that want a clearer growth path."
               description="Website Overhaul is $1,000 one-time. Growth Partnership is $2,000/month. If you want guidance before choosing, start with the free expert audit."
               as="h1"
@@ -28,9 +27,6 @@ export default function PricingHero() {
 
             <div className="space-y-5 border-t border-white/12 pt-5 lg:border-t-0 lg:border-l lg:pl-10">
               <div className="space-y-2">
-                <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.3em] text-[#8f877b]">
-                  Core offers
-                </p>
                 <p className="font-sans text-[1rem] leading-7 text-[#f5f0e8]">
                   Website Overhaul / $1,000 one-time
                 </p>
@@ -40,9 +36,6 @@ export default function PricingHero() {
               </div>
 
               <div className="space-y-2 border-t border-white/12 pt-5">
-                <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.3em] text-[#8f877b]">
-                  Starting point
-                </p>
                 <p className="font-sans text-[1rem] leading-7 text-[#b8afa2]">
                   Start with the free audit if you want the clearest next move
                   before committing.

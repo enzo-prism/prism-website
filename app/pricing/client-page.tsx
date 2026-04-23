@@ -3,6 +3,7 @@ import {
   CoreActionLink,
   CoreSectionHeading,
   coreRouteContainerClassName,
+  coreRouteIntroBandClassName,
   coreRoutePanelClassName,
   coreRouteSectionClassName,
 } from '@/components/core-route/CoreRoutePrimitives'
@@ -78,14 +79,15 @@ export default function PricingPageClient() {
 
       <section id="plans" className={coreRouteSectionClassName}>
         <div className={coreRouteContainerClassName}>
-          <CoreSectionHeading
-            eyebrow="core offers"
-            title="Two ways to work with Prism."
-            description="Keep the path simple: a one-time rebuild if the site is the bottleneck, or an ongoing execution partner if you want the whole system moving together."
-            titleClassName="max-w-[10ch]"
-          />
+          <div className={coreRouteIntroBandClassName}>
+            <CoreSectionHeading
+              title="Two ways to work with Prism."
+              description="Keep the path simple: a one-time rebuild if the site is the bottleneck, or an ongoing execution partner if you want the whole system moving together."
+              titleClassName="max-w-[10ch]"
+            />
+          </div>
 
-          <div className="mt-14 grid gap-6 lg:grid-cols-2">
+          <div className="mt-10 grid gap-6 lg:grid-cols-2">
             {pricingCards.map((card) => (
               <article
                 key={card.key}
@@ -97,9 +99,6 @@ export default function PricingPageClient() {
                     : 'bg-black/28',
                 )}
               >
-                <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.3em] text-[#8f877b]">
-                  Core offer
-                </p>
                 <h2 className="mt-4 text-[1.9rem] font-sans font-medium leading-[0.98] tracking-[-0.05em] text-[#f5f0e8] sm:text-[2.3rem]">
                   {card.title}
                 </h2>
@@ -138,9 +137,6 @@ export default function PricingPageClient() {
           </div>
 
           <div className={cn(coreRoutePanelClassName, 'mt-6 bg-black/30 p-8')}>
-            <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.3em] text-[#8f877b]">
-              Free starting point
-            </p>
             <div className="mt-4 flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
               <div className="max-w-2xl">
                 <h2 className="text-[1.9rem] font-sans font-medium leading-[0.98] tracking-[-0.05em] text-[#f5f0e8] sm:text-[2.3rem]">
@@ -181,7 +177,6 @@ export default function PricingPageClient() {
           )}
         >
           <CoreSectionHeading
-            eyebrow="faq"
             title="Common pricing questions."
             description="Clear answers on the path, the pricing, and when each offer makes sense."
           />
@@ -212,7 +207,6 @@ export default function PricingPageClient() {
           )}
         >
           <CoreSectionHeading
-            eyebrow="next step"
             title="We can point you to the right path quickly."
             description="If you are not sure whether you need the rebuild, the ongoing partnership, or just the audit first, a short strategy call will make the next step obvious."
             titleClassName="max-w-[11ch]"

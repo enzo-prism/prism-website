@@ -2,6 +2,7 @@ import {
   CoreSectionHeading,
   coreRouteContainerClassName,
   coreRouteSectionClassName,
+  coreRouteSplitLayoutClassName,
 } from '@/components/core-route/CoreRoutePrimitives'
 import { HOMEPAGE_PROBLEM } from '@/components/home/homepage-content'
 import PixelishIcon from '@/components/pixelish/PixelishIcon'
@@ -10,9 +11,8 @@ export default function HomeProblemSection() {
   return (
     <section className={coreRouteSectionClassName}>
       <div className={coreRouteContainerClassName}>
-        <div className="grid gap-12 xl:grid-cols-[minmax(0,0.82fr)_minmax(0,1.18fr)] xl:gap-16">
+        <div className={coreRouteSplitLayoutClassName}>
           <CoreSectionHeading
-            eyebrow={HOMEPAGE_PROBLEM.eyebrow}
             title={HOMEPAGE_PROBLEM.title}
             description={HOMEPAGE_PROBLEM.description}
             className="gap-4"
@@ -38,7 +38,7 @@ export default function HomeProblemSection() {
                         className="h-4.5 w-4.5 opacity-80"
                       />
                     </span>
-                    <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.28em] text-[#8f877b]">
+                    <p className="font-sans text-[0.92rem] font-medium tracking-[-0.015em] text-[#f1ebe2]">
                       {point.label}
                     </p>
                   </div>
@@ -50,7 +50,7 @@ export default function HomeProblemSection() {
             </div>
 
             <div className="space-y-4">
-              <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.3em] text-[#8f877b]">
+              <p className="font-sans text-[0.92rem] font-medium tracking-[-0.015em] text-[#d7d0c5]">
                 {HOMEPAGE_PROBLEM.stackLabel}
               </p>
               <div className="flex flex-wrap gap-2.5">
@@ -58,7 +58,7 @@ export default function HomeProblemSection() {
                   <p
                     key={item.label}
                     data-testid="home-problem-stack-item"
-                    className="inline-flex min-h-11 items-center gap-2 rounded-full border border-white/12 bg-white/[0.03] px-4 font-mono text-[10px] font-semibold uppercase tracking-[0.24em] text-[#c9c1b6]"
+                    className="inline-flex min-h-11 items-center gap-2 rounded-full border border-white/12 bg-white/[0.03] px-4 font-sans text-[0.82rem] font-medium tracking-[0.01em] text-[#d3ccc1]"
                   >
                     <PixelishIcon
                       src={item.iconSrc}

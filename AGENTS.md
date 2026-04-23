@@ -5,6 +5,16 @@ Use this guide to stay aligned with the Prism website codebase. Keep updates inc
 > **Canonical guidance**  
 > AGENTS.md and README.md are the master authority for technical rules (tooling, architecture, docs, and env vars). Any conflicting rule elsewhere—including CLAUDE.md, git-sync docs, or older playbooks—is deprecated until it matches these files.
 
+## Design contract
+
+- For any task that changes UI, styling, layout, motion, marketing sections, or design tokens, read `/DESIGN.md` before editing.
+- Treat `/DESIGN.md` as the visual source of truth for the shipped Prism system. Keep visual rationale there, not in this file.
+- Use `.agents/skills/ui-design-system/SKILL.md` for repeatable frontend and design-system work.
+- Prefer exported tokens in `/generated/tailwind.theme.json` and `/generated/tokens.json` over ad hoc values when wiring UI into code.
+- Do not introduce new raw hex colors, spacing values, radii, or typography levels unless the task genuinely requires it and `/DESIGN.md` is updated in the same change.
+- When `/DESIGN.md` changes, run `pnpm design:check`.
+- If the repo later gains `.stitch/`, keep `.stitch/DESIGN.md` as concept memory and keep the root `/DESIGN.md` as the code-facing implementation contract.
+
 ## Canonical guardrails
 
 - **Runtime** – Node.js 22.x (Vercel requires 22; keep local dev pinned here to avoid deploy failures).
@@ -24,6 +34,12 @@ Use this guide to stay aligned with the Prism website codebase. Keep updates inc
 ## Build, Test, and Development Commands
 
 Install dependencies with `pnpm install`. Run `pnpm dev` to start the local Next.js server, `pnpm build` for a production bundle, and `pnpm start` to smoke-test the build. Quality gates include `pnpm lint`, `pnpm typecheck`, and `pnpm test`; combine them before pushing with `pnpm lint && pnpm typecheck && pnpm test`. For pricing-sensitive changes, run `pnpm verify:pricing-consistency`. For locked UI routes (`/`, `/about`, `/pricing`, `/get-started`), run `pnpm test:visual:locked`. For hero-loop motion changes on `/`, `/case-studies`, or `/wall-of-love`, run `pnpm test:visual:animations`. For public assistant-surface changes, run `pnpm exec jest __tests__/app/get-started.test.tsx __tests__/components/GlobalElevenLabsWidget.test.tsx` and `pnpm exec playwright test __tests__/visual/global-elevenlabs-widget.spec.ts --project=desktop-chromium`.
+
+Design-system commands:
+
+- `pnpm design:lint` validates the root `DESIGN.md` contract.
+- `pnpm design:sync` refreshes the generated token exports in `/generated`.
+- `pnpm design:check` runs both and should be the default verification step when the design contract changes.
 
 ## Coding Style & Naming Conventions
 

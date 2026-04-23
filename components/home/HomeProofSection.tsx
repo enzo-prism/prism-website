@@ -4,6 +4,7 @@ import {
   CoreActionLink,
   CoreSectionHeading,
   coreRouteContainerClassName,
+  coreRouteIntroBandClassName,
   coreRouteSectionClassName,
 } from '@/components/core-route/CoreRoutePrimitives'
 import {
@@ -40,26 +41,27 @@ export default function HomeProofSection() {
   return (
     <section className={coreRouteSectionClassName}>
       <div className={coreRouteContainerClassName}>
-        <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
-          <CoreSectionHeading
-            eyebrow={HOMEPAGE_PROOF.eyebrow}
-            title={HOMEPAGE_PROOF.title}
-            description={HOMEPAGE_PROOF.description}
-            titleClassName="max-w-[17ch] lg:max-w-[19ch]"
-            descriptionClassName="max-w-[40rem]"
-          />
+        <div className={coreRouteIntroBandClassName}>
+          <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+            <CoreSectionHeading
+              title={HOMEPAGE_PROOF.title}
+              description={HOMEPAGE_PROOF.description}
+              titleClassName="max-w-[17ch] lg:max-w-[19ch]"
+              descriptionClassName="max-w-[40rem]"
+            />
 
-          <CoreActionLink
-            href="/case-studies"
-            label="see client results"
-            location="homepage proof"
-            variant="secondary"
-          >
-            {HOMEPAGE_PROOF.ctaLabel}
-          </CoreActionLink>
+            <CoreActionLink
+              href="/case-studies"
+              label="see client results"
+              location="homepage proof"
+              variant="secondary"
+            >
+              {HOMEPAGE_PROOF.ctaLabel}
+            </CoreActionLink>
+          </div>
         </div>
 
-        <div className="mt-12 grid gap-8 lg:grid-cols-2">
+        <div className="mt-10 grid gap-8 lg:grid-cols-2">
           {HOMEPAGE_CASE_STUDIES.map((study) => (
             <Link
               key={study.slug}
@@ -74,7 +76,7 @@ export default function HomeProofSection() {
                 aria-hidden="true"
                 className="h-[17px] w-[17px] opacity-80"
               />
-              <p className="mt-3 font-mono text-[10px] font-semibold uppercase tracking-[0.3em] text-[#8f877b]">
+              <p className="mt-3 font-sans text-[0.78rem] font-medium uppercase tracking-[0.12em] text-[#8f877b]">
                 {study.category}
               </p>
               <h3 className="mt-4 font-sans text-[1.55rem] font-medium leading-[1.02] tracking-[-0.05em] text-[#f5f0e8]">
@@ -83,7 +85,7 @@ export default function HomeProofSection() {
               <p className="mt-3 max-w-[32rem] font-sans text-[1rem] leading-7 text-[#b8afa2]">
                 {study.description}
               </p>
-              <p className="mt-4 font-mono text-[10px] font-semibold uppercase tracking-[0.28em] text-[#8f877b]">
+              <p className="mt-4 font-sans text-[0.78rem] font-medium uppercase tracking-[0.12em] text-[#8f877b]">
                 {study.location}
                 {study.hasExplainerVideo ? ' / video' : ''}
               </p>

@@ -21,6 +21,12 @@ Next.js App Router project that powers the Prism marketing site, blog, and landi
 
 The repo assumes pnpm; npm/yarn installs will fall out of sync.
 
+### Design contract
+
+- `DESIGN.md` is the code-facing visual contract for Prism. Read it before changing UI, layout, motion, or design tokens.
+- `.agents/skills/ui-design-system/SKILL.md` is the repo-local frontend workflow for repeated UI work.
+- `/generated/tailwind.theme.json` and `/generated/tokens.json` are exported from `DESIGN.md` and should be preferred over ad hoc values when implementing new UI.
+
 ### Stack guardrails
 
 - **Runtime** – Node 22.x LTS. Vercel now requires 22, so pin local dev here to avoid deploy failures.
@@ -53,6 +59,9 @@ The repo assumes pnpm; npm/yarn installs will fall out of sync.
 | `pnpm test:visual:locked`         | Playwright visual checks for locked routes (`/`, `/about`, `/pricing`, `/get-started`); matches deploy workflow gate, intentionally suppresses the live ElevenLabs widget, and runs against an isolated `next start` server on port `3300` so page-lock screenshots stay deterministic. |
 | `pnpm test:visual:animations`     | Focused cross-browser loop verification for the homepage hero, `/case-studies`, and `/wall-of-love`, covering Chromium, Firefox, WebKit, and mobile emulation.                                                                                                                        |
 | `pnpm test:performance:smoke`     | Cross-browser performance smoke for `/`, `/about`, `/pricing`, and `/get-started` against a running production preview (`PERF_BASE_URL`, defaults to `http://127.0.0.1:3301`).                                                                                                        |
+| `pnpm design:lint`                | Validates the root `DESIGN.md` contract with the pinned `@google/design.md` toolchain.                                                                                                                                                                                                 |
+| `pnpm design:sync`                | Exports `DESIGN.md` into `/generated/tailwind.theme.json` and `/generated/tokens.json`.                                                                                                                                                                                                 |
+| `pnpm design:check`               | Runs the full design-contract verification flow (`design:lint` + `design:sync`).                                                                                                                                                                                                       |
 | `pnpm build`                      | Production Next.js build (use before Vercel deploys).                                                                                                                                                                                                                                   |
 | `pnpm verify:deploy`              | Runs `scripts/verify-deployment.ts` to ensure required env vars and image config exist.                                                                                                                                                                                                 |
 | `pnpm verify:pricing-consistency` | Blocks deploys when legacy conflicting pricing reappears on pricing-sensitive surfaces. Contextual non-core dollar values are only allowed on explicitly labeled pages (referral/equipment/ad-fee examples).                                                                            |

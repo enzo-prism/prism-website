@@ -2,6 +2,7 @@ import {
   CoreSectionHeading,
   coreRouteContainerClassName,
   coreRouteSectionClassName,
+  coreRouteSplitLayoutClassName,
 } from '@/components/core-route/CoreRoutePrimitives'
 import {
   HOMEPAGE_DIFFERENTIATORS,
@@ -13,9 +14,8 @@ export default function HomeWhyPrismSection() {
   return (
     <section className={coreRouteSectionClassName}>
       <div className={coreRouteContainerClassName}>
-        <div className="grid gap-10 lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)]">
+        <div className={coreRouteSplitLayoutClassName}>
           <CoreSectionHeading
-            eyebrow={HOMEPAGE_WHY_PRISM.eyebrow}
             title={HOMEPAGE_WHY_PRISM.title}
             titleClassName="max-w-[20ch] lg:max-w-[22ch]"
           />
@@ -33,7 +33,7 @@ export default function HomeWhyPrismSection() {
                   aria-hidden="true"
                   className="h-[15px] w-[15px] opacity-80"
                 />
-                <h3 className="mt-4 font-sans text-[1.22rem] font-medium tracking-[-0.04em] text-[#f5f0e8]">
+                <h3 className="mt-4 max-w-[18ch] font-sans text-[1.22rem] font-medium tracking-[-0.04em] text-[#f5f0e8]">
                   {item.title}
                 </h3>
                 <p className="mt-3 font-sans text-[0.98rem] leading-7 text-[#b8afa2]">

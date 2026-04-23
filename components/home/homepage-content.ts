@@ -80,7 +80,6 @@ export const HOMEPAGE_HERO = {
 } as const
 
 export const HOMEPAGE_PROBLEM = {
-  eyebrow: 'you are not alone',
   title: 'You do not have to figure it all out',
   description:
     'More online growth should bring momentum, not stress. We handle the moving parts behind the scenes.',
@@ -113,7 +112,6 @@ export const HOMEPAGE_PROBLEM = {
 } as const
 
 export const HOMEPAGE_PROMISE = {
-  eyebrow: 'the promise',
   title: 'You run the business. We handle the growth.',
 } as const
 
@@ -139,7 +137,6 @@ export const HOMEPAGE_PROMISE_CARDS: readonly HomepageIconCard[] = [
 ] as const
 
 export const HOMEPAGE_SERVICES = {
-  eyebrow: 'what we handle',
   title: 'What we take care of for you',
   description:
     'Prism handles the parts of growth that usually feel technical, time consuming, or unclear.',
@@ -187,7 +184,6 @@ export const HOMEPAGE_SERVICE_ITEMS: readonly HomepageIconCard[] = [
 ] as const
 
 export const HOMEPAGE_WHY_PRISM = {
-  eyebrow: 'why prism',
   title: 'Why business owners choose Prism',
 } as const
 
@@ -225,7 +221,6 @@ export const HOMEPAGE_DIFFERENTIATORS: readonly HomepageIconCard[] = [
 ] as const
 
 export const HOMEPAGE_HOW_IT_WORKS = {
-  eyebrow: 'how it works',
   title: 'How it works',
   ctaLabel: 'Get My Free Growth Plan',
 } as const
@@ -254,7 +249,6 @@ export const HOMEPAGE_HOW_IT_WORKS_STEPS = [
 ] as const
 
 export const HOMEPAGE_PROOF = {
-  eyebrow: 'proof / results',
   title: 'Real businesses need real results',
   description:
     'Prism helps small businesses improve how they show up online and how well they convert attention into customers.',
@@ -273,7 +267,6 @@ export const HOMEPAGE_CASE_STUDY_SUMMARIES: Record<string, string> = {
 }
 
 export const HOMEPAGE_FIT = {
-  eyebrow: 'fit',
   title: 'Who Prism is built for',
   fitHeading: 'Prism is a good fit if...',
   fitItems: [
@@ -297,7 +290,6 @@ export const HOMEPAGE_FIT = {
 } as const
 
 export const HOMEPAGE_FINAL_CTA = {
-  eyebrow: 'next step',
   title: 'Stop worrying about tech. Start growing with Prism.',
   description:
     'Prism helps small businesses grow online with clear strategy, strong execution, and smart use of AI behind the scenes. You focus on your business. We handle the rest.',

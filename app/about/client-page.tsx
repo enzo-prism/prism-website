@@ -3,6 +3,7 @@ import Image from 'next/image'
 import {
   CoreActionLink,
   CoreSectionHeading,
+  coreRouteContainedSectionClassName,
   coreRouteContainerClassName,
   coreRouteHeroFrameClassName,
   coreRouteSectionClassName,
@@ -42,7 +43,6 @@ export default function AboutClientPage() {
               <div className="relative z-10 grid gap-10 px-6 py-10 sm:px-10 sm:py-14 lg:grid-cols-[minmax(0,1fr)_minmax(320px,0.72fr)] lg:items-center lg:px-12 lg:py-16">
                 <div className="space-y-8">
                   <CoreSectionHeading
-                    eyebrow="about prism"
                     title="Built by Enzo Sison."
                     description="Enzo built Prism to empower small businesses with frontier tech and design."
                     as="h1"
@@ -87,11 +87,11 @@ export default function AboutClientPage() {
           <div
             className={cn(
               coreRouteContainerClassName,
+              coreRouteContainedSectionClassName,
               'grid gap-10 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:items-center',
             )}
           >
             <CoreSectionHeading
-              eyebrow="la 2028"
               title="Olympic journey."
               description="Pole vaulting for the Philippines on the path to LA 2028."
               titleClassName="max-w-[8.5ch]"
@@ -109,7 +109,6 @@ export default function AboutClientPage() {
         >
           <div className={coreRouteContainerClassName}>
             <CoreSectionHeading
-              eyebrow="timeline"
               title="Our journey."
               description="A few milestones behind the work."
               align="center"
@@ -131,7 +130,6 @@ export default function AboutClientPage() {
             )}
           >
             <CoreSectionHeading
-              eyebrow="next step"
               title="If the fit is right, let's build what's next."
               description="If there is a fit, we will make the next step clear."
               titleClassName="max-w-[10ch]"

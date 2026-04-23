@@ -160,11 +160,11 @@ export default function GrowthProcessSection() {
 
         <div className="relative z-10">
           <div className="flex flex-col gap-4 border-b border-white/10 pb-6 sm:flex-row sm:items-center sm:justify-between">
-            <p className="font-mono text-[0.78rem] uppercase tracking-[0.42em] text-[#C8C8C0]">
-              GET STARTED
+            <p className="font-sans text-[0.92rem] font-medium tracking-[0.01em] text-[#C8C8C0]">
+              Simple three-step path
             </p>
             <div className="flex items-center justify-between gap-5 sm:justify-end">
-              <p className="font-mono text-[0.72rem] uppercase tracking-[0.36em] text-[#767670]">
+              <p className="font-sans text-[0.82rem] font-medium uppercase tracking-[0.12em] text-[#767670]">
                 3 STEPS
               </p>
               <div className={styles.microCluster} aria-hidden="true">
@@ -218,13 +218,13 @@ export default function GrowthProcessSection() {
               <p className="font-sans text-[1.9rem] font-medium tracking-[-0.04em] text-[#F5F5F2]">
                 Ready?
               </p>
-              <p className="font-mono text-[0.95rem] text-[#A0A09A]">
+              <p className="font-sans text-[0.98rem] leading-7 text-[#A0A09A]">
                 Open the form.
               </p>
             </div>
 
             <div className="relative z-10 flex flex-col gap-3 lg:items-end">
-              <p className="font-mono text-[0.72rem] uppercase tracking-[0.3em] text-[#767670]">
+              <p className="font-sans text-[0.82rem] font-medium uppercase tracking-[0.12em] text-[#767670]">
                 Review first. Strategy if it fits.
               </p>
               <CoreActionLink

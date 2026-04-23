@@ -7,7 +7,13 @@ This guide highlights the workflows we lean on most often while iterating on the
 - Install deps with `pnpm install` (repo assumes pnpm).
 - Start the Next.js dev server with `pnpm dev`.
 - If you use `pnpm exec next start` for a production-parity preview, always run `pnpm build` immediately beforehand. `next start` serves the last production bundle on disk, so source edits will appear "ignored" until you rebuild.
+- Read `/DESIGN.md` before changing UI, layout, motion, or visual tokens. It is the code-facing design contract for this repo.
+- For repeated frontend work, use `.agents/skills/ui-design-system/SKILL.md` alongside `/DESIGN.md`.
 - Run `pnpm lint` before committing so the shared Tailwind + ESLint rules stay consistent.
+- When you update the design contract itself, run:
+  - `pnpm design:lint`
+  - `pnpm design:sync`
+  - or the combined `pnpm design:check`
 - For `/get-started`, `/apply`, or floating-widget assistant-surface changes, run:
   - `pnpm exec jest __tests__/app/get-started.test.tsx __tests__/app/apply.test.tsx __tests__/components/GetStartedForm.test.tsx __tests__/components/GlobalElevenLabsWidget.test.tsx __tests__/components/ElevenLabsWidget.test.tsx --runInBand`
   - `pnpm test:visual:widget`

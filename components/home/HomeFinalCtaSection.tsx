@@ -12,7 +12,6 @@ export default function HomeFinalCtaSection() {
         className={`${coreRouteContainerClassName} border-t border-white/12 pt-8 sm:pt-10`}
       >
         <CoreSectionHeading
-          eyebrow={HOMEPAGE_FINAL_CTA.eyebrow}
           title={
             <span className="block text-[1.18rem] leading-[1.12] sm:text-[clamp(1.4rem,4vw,2.35rem)] sm:leading-[1.08]">
               {HOMEPAGE_FINAL_CTA.title}
@@ -33,7 +32,7 @@ export default function HomeFinalCtaSection() {
           </CoreActionLink>
         </div>
 
-        <p className="mt-8 border-t border-white/12 pt-6 font-mono text-[10px] font-semibold uppercase tracking-[0.28em] text-[#8f877b]">
+        <p className="mt-8 border-t border-white/12 pt-6 font-sans text-[0.94rem] leading-7 text-[#948b80]">
           {HOMEPAGE_FINAL_CTA.supportLine}
         </p>
       </div>

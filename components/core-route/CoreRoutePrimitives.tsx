@@ -12,6 +12,15 @@ export const coreRouteSectionCompactClassName =
 
 export const coreRouteContainerClassName = 'mx-auto max-w-6xl'
 
+export const coreRouteSplitLayoutClassName =
+  'grid gap-10 lg:gap-14 xl:grid-cols-[minmax(0,0.82fr)_minmax(0,1.18fr)] xl:items-start'
+
+export const coreRouteContainedSectionClassName =
+  'rounded-[2rem] border border-white/12 bg-white/[0.03] p-6 sm:p-8 lg:p-10'
+
+export const coreRouteIntroBandClassName =
+  'border-y border-white/12 py-6 sm:py-8'
+
 export const coreRouteHeroFrameClassName =
   'relative isolate overflow-hidden rounded-[2rem] border border-white/12 bg-black/45 shadow-[0_30px_90px_-55px_rgba(0,0,0,0.8)]'
 
@@ -120,7 +129,7 @@ export function CoreSectionHeading({
       {eyebrow ? (
         <p
           className={cn(
-            'font-mono text-[11px] font-semibold uppercase tracking-[0.34em] text-[#8f877b]',
+            'font-mono text-[10px] font-medium uppercase tracking-[0.26em] text-[#797165]',
             eyebrowClassName,
           )}
         >

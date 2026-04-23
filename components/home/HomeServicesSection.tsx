@@ -1,6 +1,7 @@
 import {
   CoreSectionHeading,
   coreRouteContainerClassName,
+  coreRouteIntroBandClassName,
   coreRouteSectionClassName,
 } from '@/components/core-route/CoreRoutePrimitives'
 import {
@@ -13,14 +14,21 @@ export default function HomeServicesSection() {
   return (
     <section className={coreRouteSectionClassName}>
       <div className={coreRouteContainerClassName}>
-        <CoreSectionHeading
-          eyebrow={HOMEPAGE_SERVICES.eyebrow}
-          title={HOMEPAGE_SERVICES.title}
-          description={HOMEPAGE_SERVICES.description}
-          titleClassName="max-w-[17ch] lg:max-w-[19ch]"
-        />
+        <div className={coreRouteIntroBandClassName}>
+          <div className="grid gap-8 lg:grid-cols-[minmax(0,0.78fr)_minmax(0,1.22fr)] lg:items-end">
+            <CoreSectionHeading
+              title={HOMEPAGE_SERVICES.title}
+              description={HOMEPAGE_SERVICES.description}
+              titleClassName="max-w-[17ch] lg:max-w-[19ch]"
+            />
 
-        <div className="mt-12 grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
+            <p className="max-w-[31rem] font-sans text-[1rem] leading-7 text-[#d0c8bc] sm:justify-self-end">
+              {HOMEPAGE_SERVICES.closingLine}
+            </p>
+          </div>
+        </div>
+
+        <div className="mt-10 grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
           {HOMEPAGE_SERVICE_ITEMS.map((item) => (
             <article
               key={item.title}
@@ -43,10 +51,6 @@ export default function HomeServicesSection() {
             </article>
           ))}
         </div>
-
-        <p className="mt-12 border-t border-white/12 pt-6 font-sans text-[1rem] leading-7 text-[#d0c8bc]">
-          {HOMEPAGE_SERVICES.closingLine}
-        </p>
       </div>
     </section>
   )

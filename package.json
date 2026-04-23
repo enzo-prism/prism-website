@@ -10,6 +10,9 @@
     "dev": "next dev",
     "build": "next build",
     "analyze": "ANALYZE=true next build",
+    "design:lint": "design.md lint DESIGN.md",
+    "design:sync": "node scripts/sync-design-tokens.mjs",
+    "design:check": "pnpm design:lint && pnpm design:sync",
     "start": "next start",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "typecheck": "tsc --noEmit --skipLibCheck",
@@ -119,6 +122,7 @@
     "zod": "^4.3.2"
   },
   "devDependencies": {
+    "@google/design.md": "0.1.1",
     "@next/bundle-analyzer": "^16.1.1",
     "@next/eslint-plugin-next": "^16.1.1",
     "@playwright/test": "^1.57.0",
