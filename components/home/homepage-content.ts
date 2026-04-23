@@ -134,7 +134,7 @@ export const HOMEPAGE_SERVICES = {
   eyebrow: 'what we handle',
   title: 'What we take care of for you',
   description:
-    'Prism helps with the parts of growth that usually feel confusing, time consuming, or technical.',
+    'Prism handles the parts of growth that usually feel technical, time consuming, or unclear.',
   closingLine:
     'You do not need to learn all these tools yourself. That is our job.',
 } as const
@@ -147,7 +147,7 @@ export const HOMEPAGE_SERVICE_ITEMS: readonly HomepageIconCard[] = [
     iconSrc: '/pixelish/browser.svg',
   },
   {
-    title: 'SEO and local visibility',
+    title: 'SEO and local search',
     description:
       'We help more people find your business on Google, maps, and search.',
     iconSrc: '/pixelish/lens.svg',
@@ -171,9 +171,9 @@ export const HOMEPAGE_SERVICE_ITEMS: readonly HomepageIconCard[] = [
     iconSrc: '/pixelish/bar-chart-average.svg',
   },
   {
-    title: 'AI tools and automation',
+    title: 'AI and automation',
     description:
-      'We use the right AI tools behind the scenes to save time, improve follow up, and help your business grow without adding more work to your plate.',
+      'We use AI and automation to save time, improve follow up, and help your business grow with less manual work.',
     iconSrc: '/pixelish/robot.svg',
   },
 ] as const

@@ -34,7 +34,7 @@ export default function HomeServicesSection() {
                 aria-hidden="true"
                 className="h-[17px] w-[17px] opacity-80"
               />
-              <h3 className="mt-4 max-w-[16ch] font-sans text-[1.25rem] font-medium tracking-[-0.04em] text-[#f5f0e8]">
+              <h3 className="mt-4 max-w-none text-balance font-sans text-[1.25rem] font-medium leading-[1.08] tracking-[-0.04em] text-[#f5f0e8]">
                 {item.title}
               </h3>
               <p className="mt-3 font-sans text-[0.98rem] leading-7 text-[#b8afa2]">
