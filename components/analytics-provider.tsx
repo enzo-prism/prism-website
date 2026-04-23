@@ -1,13 +1,11 @@
 "use client"
 
 import type React from "react"
-import { useEffect } from "react"
+import { Suspense, useEffect } from "react"
 
 import { usePathname } from "next/navigation"
 import { syncFormAttributionFields } from "@/lib/marketing-attribution"
 import EnhancedAnalytics from "./enhanced-analytics"
-import ErrorTracker from "./error-tracker"
-import ScrollTracker from "./scroll-tracker"
 
 interface AnalyticsProviderProps {
   children?: React.ReactNode
@@ -53,9 +51,9 @@ export default function AnalyticsProvider({ children }: AnalyticsProviderProps) 
 
   return (
     <>
-      <EnhancedAnalytics title={getPageTitle()} />
-      <ErrorTracker />
-      <ScrollTracker />
+      <Suspense fallback={null}>
+        <EnhancedAnalytics title={getPageTitle()} />
+      </Suspense>
       {children}
     </>
   )

@@ -96,11 +96,11 @@ module.exports = {
       },
       fontSize: {
         // Make headings feel more “display” (Pixel-first).
-        "3xl": ["2.25rem", { lineHeight: "1.1" }],
-        "4xl": ["3rem", { lineHeight: "1.05" }],
-        "5xl": ["4rem", { lineHeight: "1.02" }],
-        "6xl": ["5rem", { lineHeight: "1.02" }],
-        "7xl": ["6rem", { lineHeight: "1.02" }],
+        "3xl": ["1.8rem", { lineHeight: "1.14" }],
+        "4xl": ["2.2rem", { lineHeight: "1.1" }],
+        "5xl": ["2.75rem", { lineHeight: "1.06" }],
+        "6xl": ["3.3rem", { lineHeight: "1.03" }],
+        "7xl": ["4rem", { lineHeight: "1.02" }],
       },
       borderRadius: {
         lg: "var(--radius)",

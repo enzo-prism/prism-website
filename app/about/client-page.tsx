@@ -1,129 +1,161 @@
-import Footer from "@/components/footer"
-import Navbar from "@/components/navbar"
-import ScrollToTimelineButton from "@/components/about/ScrollToTimelineButton"
-import AsciiHeroCard from "@/components/ascii/AsciiHeroCard"
-import { BreadcrumbSchema, PersonSchema } from "@/components/schema-markup"
-import ScrollingTimeline from "@/components/scrolling-timeline"
-import PoleVaultCarousel from "@/components/pole-vault-carousel"
-import Image from "next/image"
-import Link from "next/link"
-import { ArrowUpRight } from "lucide-react"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
+import Image from 'next/image'
+
+import {
+  CoreActionLink,
+  CoreSectionHeading,
+  coreRouteContainerClassName,
+  coreRouteHeroFrameClassName,
+  coreRouteSectionClassName,
+} from '@/components/core-route/CoreRoutePrimitives'
+import ScrollToTimelineButton from '@/components/about/ScrollToTimelineButton'
+import Footer from '@/components/footer'
+import DeferredAsciiHeroBackdrop from '@/components/home/DeferredAsciiHeroBackdrop'
+import Navbar from '@/components/navbar'
+import PoleVaultCarousel from '@/components/pole-vault-carousel'
+import { BreadcrumbSchema, PersonSchema } from '@/components/schema-markup'
+import ScrollingTimeline from '@/components/scrolling-timeline'
+import { cn } from '@/lib/utils'
 
 export default function AboutClientPage() {
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className="flex min-h-screen flex-col bg-transparent font-sans text-[#f5f0e8]">
       <Navbar />
-      <main className="flex-1">
-        {/* Hero Section */}
-        <section className="px-4 py-10 md:py-14">
-          <div className="container mx-auto px-4 md:px-6">
-            <AsciiHeroCard
-              animationName="fire-2"
-              frameCount={94}
-              fps={18}
-              eyebrow="enzo sison · founder, prism"
-              title="our story"
-              description="enzo sison built prism to pursue his passions for tech, business, and athletics at the highest level — and to connect with others chasing excellence in their own fields."
-              preEyebrow={
-                <div className="flex flex-col items-center gap-4">
-                  <div className="relative h-24 w-24 overflow-hidden rounded-md border border-border/60 bg-card/20 shadow-none sm:h-28 sm:w-28">
-                    <Image
-                      src="https://res.cloudinary.com/dhqpqfw6w/image/upload/v1765426902/Enzo_s_Headshot_xg546f.webp"
-                      alt="Enzo Sison headshot"
-                      width={160}
-                      height={160}
-                      className="h-full w-full object-cover"
-                      priority
-                    />
+
+      <main className="flex-1" id="main-content" tabIndex={-1}>
+        <section className={coreRouteSectionClassName}>
+          <div className={coreRouteContainerClassName}>
+            <div className={coreRouteHeroFrameClassName}>
+              <DeferredAsciiHeroBackdrop
+                animationName="fire-2"
+                frameCount={94}
+                fps={18}
+                quality="high"
+                textSize="text-[2.3px] sm:text-[2.8px] md:text-[3.2px]"
+                ariaLabel="Fire ASCII animation behind the About page hero"
+                className="opacity-[0.18] sm:opacity-[0.28] md:opacity-[0.42] md:[-webkit-mask-image:linear-gradient(90deg,black_0%,black_62%,transparent_100%)] md:[mask-image:linear-gradient(90deg,black_0%,black_62%,transparent_100%)]"
+              />
+              <div
+                aria-hidden="true"
+                className="absolute inset-0 bg-[radial-gradient(circle_at_18%_20%,rgba(255,255,255,0.06),transparent_32%),linear-gradient(135deg,rgba(0,0,0,0.14),rgba(0,0,0,0.5))]"
+              />
+
+              <div className="relative z-10 grid gap-10 px-6 py-10 sm:px-10 sm:py-14 lg:grid-cols-[minmax(0,1fr)_minmax(320px,0.72fr)] lg:items-center lg:px-12 lg:py-16">
+                <div className="space-y-8">
+                  <CoreSectionHeading
+                    eyebrow="about prism"
+                    title="Built by Enzo Sison."
+                    description="Enzo built Prism to empower small businesses with frontier tech and design."
+                    as="h1"
+                    variant="hero"
+                    titleClassName="max-w-[9ch]"
+                    descriptionClassName="max-w-[32rem]"
+                  />
+
+                  <div className="flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:gap-8">
+                    <ScrollToTimelineButton />
+                    <CoreActionLink
+                      href="https://enzosison.com"
+                      variant="secondary"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      EnzoSison.com
+                    </CoreActionLink>
                   </div>
-                  <Badge variant="secondary" className="w-fit">
-                    founded in 2023
-                  </Badge>
                 </div>
-              }
-              ariaLabel="Fire ASCII animation behind the About page hero"
-            >
-              <div className="flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-4">
-                <ScrollToTimelineButton />
-                <Button asChild variant="outline" size="lg" className="rounded-md px-6">
-                  <Link href="https://enzosison.com" target="_blank" rel="noopener noreferrer">
-                    enzosison.com <ArrowUpRight className="ml-2 h-4 w-4" aria-hidden />
-                  </Link>
-                </Button>
+
+                <div className="lg:justify-self-end">
+                  <div className="rounded-[1.75rem] border border-white/12 bg-black/35 p-3 sm:p-4">
+                    <div className="overflow-hidden rounded-[1.3rem] border border-white/12 bg-white/5">
+                      <Image
+                        src="https://res.cloudinary.com/dhqpqfw6w/image/upload/v1765426902/Enzo_s_Headshot_xg546f.webp"
+                        alt="Enzo Sison headshot"
+                        width={640}
+                        height={800}
+                        className="h-auto w-full object-cover"
+                        priority
+                      />
+                    </div>
+                  </div>
+                </div>
               </div>
-            </AsciiHeroCard>
+            </div>
           </div>
         </section>
 
-        {/* LA 2028 Olympic Journey (moved below the single video section) */}
-        <section className="border-t border-border/60 bg-card/15 px-4 py-12 md:py-16">
-          <div className="container mx-auto px-4 md:px-6 max-w-4xl">
-            <div className="text-center mb-8 md:mb-10 space-y-3">
-              <div className="flex justify-center" aria-hidden>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 120 60"
-                  className="h-10 w-20"
-                  role="presentation"
-                >
-                  <circle cx="20" cy="30" r="12" stroke="#0072CE" strokeWidth="4" fill="none" />
-                  <circle cx="50" cy="30" r="12" stroke="#FFFFFF" strokeWidth="4" fill="none" />
-                  <circle cx="80" cy="30" r="12" stroke="#FECB00" strokeWidth="4" fill="none" />
-                  <circle cx="35" cy="42" r="12" stroke="#00A651" strokeWidth="4" fill="none" />
-                  <circle cx="65" cy="42" r="12" stroke="#E4262C" strokeWidth="4" fill="none" />
-                </svg>
-              </div>
-              <p className="text-[10px] font-semibold uppercase tracking-[0.32em] text-muted-foreground font-pixel">LA 2028</p>
-              <h2 className="text-3xl font-semibold sm:text-4xl">olympic journey</h2>
-              <p className="mx-auto mt-3 max-w-[720px] text-muted-foreground md:text-lg">
-                enzo is pursuing competing in the la 2028 olympics for the philippines in pole vaulting—a journey that
-                started in high school, continued through ncaa d1 at cal poly, and now continues on the international stage.
-              </p>
-            </div>
+        <section className={coreRouteSectionClassName}>
+          <div
+            className={cn(
+              coreRouteContainerClassName,
+              'grid gap-10 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:items-center',
+            )}
+          >
+            <CoreSectionHeading
+              eyebrow="la 2028"
+              title="Olympic journey."
+              description="Pole vaulting for the Philippines on the path to LA 2028."
+              titleClassName="max-w-[8.5ch]"
+            />
 
-            {/* Minimal carousel of training/competition clips */}
-            <div className="flex justify-center">
+            <div className="border-t border-white/12 pt-6 lg:border-t-0 lg:border-l lg:pl-10">
               <PoleVaultCarousel />
             </div>
           </div>
         </section>
 
-        {/* Timeline Section */}
-        <section id="timeline" className="px-4 py-16 md:py-24">
-          <div className="container mx-auto px-4 md:px-6">
-            <div className="mb-12 text-center">
-              <p className="text-[10px] font-semibold uppercase tracking-[0.32em] text-muted-foreground font-pixel">timeline</p>
-              <h2 className="mt-4 text-4xl font-semibold sm:text-5xl">our journey</h2>
-              <p className="mx-auto mt-4 max-w-[700px] text-muted-foreground">
-                scroll down to explore the key milestones in our story
-              </p>
-            </div>
+        <section
+          id="timeline"
+          className={coreRouteSectionClassName}
+        >
+          <div className={coreRouteContainerClassName}>
+            <CoreSectionHeading
+              eyebrow="timeline"
+              title="Our journey."
+              description="A few milestones behind the work."
+              align="center"
+              titleClassName="max-w-[8ch]"
+              descriptionClassName="max-w-[24rem]"
+            />
 
-            <ScrollingTimeline />
-
-            {/* Add a "View more" button */}
-            <div className="mt-12 text-center">
-              <Button asChild size="lg" className="rounded-md px-6">
-                <Link href="/get-started">
-                  get started <span className="ml-2">→</span>
-                </Link>
-              </Button>
+            <div className="mt-14">
+              <ScrollingTimeline />
             </div>
           </div>
         </section>
 
+        <section className="px-4 py-20 pb-28 sm:px-6 sm:py-24">
+          <div
+            className={cn(
+              coreRouteContainerClassName,
+              'border-t border-white/12 pt-8 sm:pt-10',
+            )}
+          >
+            <CoreSectionHeading
+              eyebrow="next step"
+              title="If the fit is right, let's build what's next."
+              description="If there is a fit, we will make the next step clear."
+              titleClassName="max-w-[10ch]"
+              descriptionClassName="max-w-[24rem]"
+            />
+
+            <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:gap-8">
+              <CoreActionLink href="/get-started">Get started</CoreActionLink>
+              <CoreActionLink href="/case-studies" variant="secondary">
+                Case studies
+              </CoreActionLink>
+            </div>
+          </div>
+        </section>
       </main>
+
       <Footer />
-      
+
       <BreadcrumbSchema
         items={[
-          { name: "Home", url: "https://www.design-prism.com" },
-          { name: "About", url: "https://www.design-prism.com/about" },
+          { name: 'Home', url: 'https://www.design-prism.com' },
+          { name: 'About', url: 'https://www.design-prism.com/about' },
         ]}
       />
-      {/* Person Schema for Enzo */}
       <PersonSchema
         personId="enzo-sison"
         name="Enzo Sison"
@@ -132,9 +164,9 @@ export default function AboutClientPage() {
         image="https://www.design-prism.com/enzo-avatar.png"
         url="https://www.design-prism.com/about"
         sameAs={[
-          "https://x.com/NosisTheGod",
-          "https://www.linkedin.com/in/enzo-sison",
-          "https://www.instagram.com/the_design_prism/"
+          'https://x.com/NosisTheGod',
+          'https://www.linkedin.com/in/enzo-sison',
+          'https://www.instagram.com/the_design_prism/',
         ]}
       />
     </div>

@@ -15,6 +15,9 @@ export type AttributionPayload = {
   first_touch_campaign?: string
   first_touch_at?: string
   submission_path?: string
+  referrer?: string
+  timestamp?: string
+  device_type?: string
 }
 
 const ATTRIBUTION_STORAGE_KEY = "prism_attribution_v1"
@@ -34,7 +37,18 @@ const ATTRIBUTION_FIELDS: Array<keyof AttributionPayload> = [
   "first_touch_campaign",
   "first_touch_at",
   "submission_path",
+  "referrer",
+  "timestamp",
+  "device_type",
 ]
+
+function getDeviceType() {
+  if (typeof window === "undefined") return undefined
+
+  if (window.innerWidth < 768) return "mobile"
+  if (window.innerWidth < 1024) return "tablet"
+  return "desktop"
+}
 
 function parseAttributionFromUrl(): AttributionPayload {
   if (typeof window === "undefined") return {}
@@ -134,6 +148,9 @@ export function getSubmissionAttribution(): AttributionPayload {
   return {
     ...getAttributionContext(),
     submission_path: window.location.pathname,
+    referrer: document.referrer || undefined,
+    timestamp: new Date().toISOString(),
+    device_type: getDeviceType(),
   }
 }
 

@@ -2,7 +2,7 @@
 
 import { track as trackVercel } from "@vercel/analytics"
 
-import { GA_MEASUREMENT_ID, IS_ANALYTICS_ENABLED } from "@/lib/constants"
+import { IS_ANALYTICS_ENABLED } from "@/lib/constants"
 import { getAttributionContext } from "@/lib/marketing-attribution"
 import { buildVercelCustomEvent } from "@/lib/vercel-analytics"
 import { addBreadcrumb, captureErrorWithContext, isSentryInitialized } from "./sentry-helpers"
@@ -18,6 +18,22 @@ declare global {
     }
   }
 }
+
+type ApplyLeadContext = {
+  form_name?: string
+  form_location?: string
+  lead_type?: string
+  lead_source?: string
+  service_count?: number
+  primary_goal?: string
+  has_website?: string
+  budget?: string
+  timeline?: string
+  elapsed_seconds?: number
+}
+
+const APPLY_LEAD_CONTEXT_STORAGE_KEY = "prism_pending_apply_lead_context_v1"
+const APPLY_LEAD_CONTEXT_TTL_MS = 30 * 60 * 1000
 
 function getGtag() {
   if (typeof window === "undefined") return null
@@ -36,7 +52,18 @@ function getGtag() {
 export type EventType =
   | "page_view"
   | "click"
-  | "form_submit"
+  | "form_submit_success"
+  | "apply_form_view"
+  | "apply_form_start"
+  | "apply_step_1_complete"
+  | "apply_step_2_complete"
+  | "apply_submit"
+  | "apply_success"
+  | "apply_error"
+  | "apply_abandon_step_1"
+  | "apply_abandon_step_2"
+  | "apply_budget_selected"
+  | "apply_service_selected"
   | "contact_request"
   | "service_view"
   | "cta_click"
@@ -53,6 +80,74 @@ export type EventType =
   | "scroll_milestone"
   | "user_preference"
   | "skool_email_submission"
+  | "generate_lead"
+
+function canUseSessionStorage() {
+  return typeof window !== "undefined" && "sessionStorage" in window
+}
+
+function readStoredApplyLeadContext():
+  | (ApplyLeadContext & {
+      savedAt: number
+    })
+  | null {
+  if (!canUseSessionStorage()) return null
+
+  try {
+    const raw = window.sessionStorage.getItem(APPLY_LEAD_CONTEXT_STORAGE_KEY)
+    if (!raw) return null
+
+    const parsed = JSON.parse(raw) as ApplyLeadContext & { savedAt?: number }
+    if (!parsed.savedAt || Date.now() - parsed.savedAt > APPLY_LEAD_CONTEXT_TTL_MS) {
+      window.sessionStorage.removeItem(APPLY_LEAD_CONTEXT_STORAGE_KEY)
+      return null
+    }
+
+    return {
+      ...parsed,
+      savedAt: parsed.savedAt,
+    }
+  } catch {
+    return null
+  }
+}
+
+export function storePendingApplyLeadContext(context: ApplyLeadContext) {
+  if (!canUseSessionStorage()) return
+
+  try {
+    window.sessionStorage.setItem(
+      APPLY_LEAD_CONTEXT_STORAGE_KEY,
+      JSON.stringify({
+        ...context,
+        savedAt: Date.now(),
+      }),
+    )
+  } catch {
+    // no-op
+  }
+}
+
+export function consumePendingApplyLeadContext(): ApplyLeadContext | null {
+  const stored = readStoredApplyLeadContext()
+  if (!stored || !canUseSessionStorage()) {
+    return stored
+  }
+
+  window.sessionStorage.removeItem(APPLY_LEAD_CONTEXT_STORAGE_KEY)
+  const { savedAt: _savedAt, ...context } = stored
+  return context
+}
+
+export function getDefaultLeadSource() {
+  const attribution = getAttributionContext()
+
+  return (
+    attribution.utm_source ||
+    attribution.first_touch_source ||
+    undefined
+  )
+}
 
 /**
  * Track a custom event in Google Analytics
@@ -136,14 +231,6 @@ export function trackPageView(path: string, title: string) {
     page_location: pageLocation,
   })
 
-  if (IS_ANALYTICS_ENABLED) {
-    getGtag()?.("config", GA_MEASUREMENT_ID, {
-      page_path: normalizedPath,
-      page_title: pageTitle,
-      page_location: pageLocation,
-      page_referrer: pageReferrer,
-    })
-  }
 }
 
 /**
@@ -203,7 +290,7 @@ export function trackServiceCardClick(serviceName: string, destination: string) 
  * @param formLocation The location of the form on the site
  */
 export function trackFormSubmission(formName: string, formLocation: string) {
-  trackEvent("form_submit", {
+  trackEvent("form_submit_success", {
     form_name: formName,
     form_location: formLocation,
   })

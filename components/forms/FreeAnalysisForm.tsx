@@ -65,6 +65,8 @@ export default function FreeAnalysisForm() {
 
   return (
     <form
+      id="free_analysis"
+      name="free_analysis"
       className="space-y-5 rounded-2xl border border-border/60 bg-card/90 p-6 text-foreground shadow-xl shadow-black/30"
       action="https://formspree.io/f/xldarokj"
       method="POST"
@@ -73,6 +75,7 @@ export default function FreeAnalysisForm() {
     >
       <input type="hidden" name="_subject" value="New submission from Prism" />
       <input type="hidden" name="_redirect" value={redirectUrl} />
+      <input type="hidden" name="form_name" value="free_analysis" />
       <input type="text" name="_gotcha" tabIndex={-1} autoComplete="off" style={{ display: "none" }} aria-hidden="true" />
 
       <p className="text-sm text-muted-foreground">We'll send your analysis within 24 hours.</p>

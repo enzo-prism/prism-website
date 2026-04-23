@@ -92,20 +92,22 @@ export default function SearchConsoleSnapshotsRail({
 
   return (
     <div className="relative">
-      <div className="rounded-3xl border border-border/60 shadow-sm p-4 sm:p-5 bg-card/90">
+      <div className="rounded-3xl border border-black/8 bg-[#fcfcfb] p-4 shadow-[0_18px_48px_rgba(15,23,42,0.06)] sm:p-5">
         <div className="flex flex-wrap items-center justify-between gap-3">
-          <span className="inline-flex items-center rounded-full border border-border/60 px-3 py-1 bg-background text-xs font-semibold text-foreground">
+          <span className="inline-flex items-center rounded-full border border-black/10 bg-[#ffffff] px-3 py-1 text-xs font-semibold text-[rgba(15,23,42,0.7)]">
             search console growth snapshots
           </span>
-          <span className="text-xs font-medium text-muted-foreground">scroll to explore</span>
+          <span className="text-xs font-medium text-[rgba(15,23,42,0.48)]">
+            scroll to explore
+          </span>
         </div>
         <div className="relative mt-4">
           <div
             ref={railRef}
-            className="flex snap-x snap-mandatory overflow-x-auto scroll-smooth overscroll-x-contain scrollbar-hide gap-3 px-1 pb-2 scroll-px-4 sm:gap-4"
+            className="flex snap-x snap-mandatory gap-3 overflow-x-auto overscroll-x-contain scroll-smooth scrollbar-hide px-1 pb-2 scroll-px-4 sm:gap-4"
             role="list"
             aria-label="Search Console growth snapshots"
-            style={{ WebkitOverflowScrolling: "touch" }}
+            style={{ WebkitOverflowScrolling: "touch", touchAction: "pan-x" }}
           >
             {slides.map((slide, index) => (
               <div
@@ -115,7 +117,7 @@ export default function SearchConsoleSnapshotsRail({
               >
                 <div className="space-y-3">
                   <div
-                    className="relative w-full overflow-hidden rounded-2xl border border-border/60 shadow-sm bg-white"
+                    className="relative w-full overflow-hidden rounded-2xl border border-black/8 bg-[#ffffff] shadow-[0_10px_32px_rgba(15,23,42,0.06)]"
                     style={{ aspectRatio: `${slide.width} / ${slide.height}` }}
                   >
                     <Image
@@ -129,7 +131,7 @@ export default function SearchConsoleSnapshotsRail({
                   </div>
                   <div className="flex items-center gap-2">
                     <PixelishIcon src={iconSrc} alt="Search icon" size={18} className="h-4 w-4" />
-                    <span className="text-xs text-muted-foreground sm:text-sm">
+                    <span className="text-xs text-[rgba(15,23,42,0.66)] sm:text-sm">
                       we make Google love your business with SEO (Search Engine Optimization)
                     </span>
                   </div>
@@ -140,13 +142,13 @@ export default function SearchConsoleSnapshotsRail({
           </div>
           {canScrollLeft ? (
             <div
-              className="pointer-events-none absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-card/95 to-transparent"
+              className="pointer-events-none absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-[#fcfcfb] to-transparent"
               aria-hidden="true"
             />
           ) : null}
           {canScrollRight ? (
             <div
-              className="pointer-events-none absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-card/95 to-transparent"
+              className="pointer-events-none absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-[#fcfcfb] to-transparent"
               aria-hidden="true"
             />
           ) : null}
@@ -155,7 +157,7 @@ export default function SearchConsoleSnapshotsRail({
             aria-label="Scroll left"
             onClick={() => scrollByAmount("left")}
             disabled={!canScrollLeft}
-            className="hidden sm:flex absolute left-2 top-1/2 -translate-y-1/2 h-9 w-9 items-center justify-center rounded-full border border-border/60 bg-background shadow-sm transition hover:bg-card/80 disabled:pointer-events-none disabled:opacity-40"
+            className="absolute left-2 top-1/2 hidden h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-black/10 bg-[#ffffff] shadow-sm transition hover:bg-[#f6f4ee] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black/10 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-40 sm:flex"
           >
             <ChevronLeft className="h-4 w-4" />
           </button>
@@ -164,7 +166,7 @@ export default function SearchConsoleSnapshotsRail({
             aria-label="Scroll right"
             onClick={() => scrollByAmount("right")}
             disabled={!canScrollRight}
-            className="hidden sm:flex absolute right-2 top-1/2 -translate-y-1/2 h-9 w-9 items-center justify-center rounded-full border border-border/60 bg-background shadow-sm transition hover:bg-card/80 disabled:pointer-events-none disabled:opacity-40"
+            className="absolute right-2 top-1/2 hidden h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-black/10 bg-[#ffffff] shadow-sm transition hover:bg-[#f6f4ee] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black/10 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-40 sm:flex"
           >
             <ChevronRight className="h-4 w-4" />
           </button>
@@ -176,13 +178,13 @@ export default function SearchConsoleSnapshotsRail({
                 key={slide.src}
                 className={
                   activeIndex === index
-                    ? "h-1.5 w-8 rounded-full bg-foreground/30"
-                    : "h-1.5 w-6 rounded-full bg-muted-foreground/20"
+                    ? "h-1.5 w-8 rounded-full bg-[rgba(15,23,42,0.34)]"
+                    : "h-1.5 w-6 rounded-full bg-[rgba(15,23,42,0.14)]"
                 }
               />
             ))}
           </div>
-          <span className="text-xs font-medium text-muted-foreground">
+          <span className="text-xs font-medium text-[rgba(15,23,42,0.48)]">
             Search Console growth snapshots
           </span>
         </div>

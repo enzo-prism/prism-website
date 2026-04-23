@@ -55,7 +55,12 @@ export default function BlogEmailSignup() {
               When we publish new experiments or playbooks, we’ll send you the highlights so you can apply them faster.
             </p>
           </div>
-          <form onSubmit={handleSubmit} className="flex w-full flex-col gap-3 md:max-w-sm">
+          <form
+            id="blog_updates"
+            name="blog_updates"
+            onSubmit={handleSubmit}
+            className="flex w-full flex-col gap-3 md:max-w-sm"
+          >
             <label htmlFor="blog-email" className="sr-only">
               email address
             </label>

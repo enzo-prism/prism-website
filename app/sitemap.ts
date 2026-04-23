@@ -101,6 +101,7 @@ function segmentRoutes(base: string): StaticRouteInput[] {
     "ai",
     "aeo",
     "apps",
+    "apply",
     "book-a-shoot",
     "careers",
     "careers/front-end-developer",

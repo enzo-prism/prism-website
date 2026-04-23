@@ -10,20 +10,22 @@ cp .env.example .env.local
 
 ## Variable reference
 
-| Variable | Required | Purpose | Default / Fallback | Used in |
-| --- | --- | --- | --- | --- |
-| `NEXT_PUBLIC_BASE_URL` | ✅ for accurate SEO | Canonical host for metadata, OG images, RSS feeds, and sitemap generation. | Falls back to `https://www.design-prism.com`. | `app/blog/[slug]/page.tsx`, `app/blog/feed.xml/route.ts`, `app/sitemap.ts` |
-| `NEXT_PUBLIC_GA_MEASUREMENT_ID` | Optional | Override the default GA4 property for analytics. | Falls back to `G-P9VY77PRC0`. | `lib/constants.ts`, `app/layout.tsx` |
-| `NEXT_PUBLIC_SCHOLARSHIP_FORM_ENDPOINT` | Optional | Override the scholarship Formspree endpoint without code changes. | Defaults to `https://formspree.io/f/mwpwwjek`. | `app/scholarship/ScholarshipPageClient.tsx` |
-| `NEXT_PUBLIC_AEO_FORM_ENDPOINT` | Optional | Override the AEO assessment Formspree endpoint without code changes. | Defaults to `https://formspree.io/f/xldarokj`. | `components/forms/AeoAssessmentForm.tsx` |
-| `NEXT_PUBLIC_ELEVENLABS_AGENT_ID` | Optional | Public agent id used by the homepage hero and the floating widget on inner pages. | Falls back to Prism Sales (`agent_4701kkcyc4efefkv5x4awhysjyrh`). | `lib/elevenlabs.ts`, `components/home/HomeHeroAgent.tsx`, `components/global-elevenlabs-widget.tsx` |
-| `NEXT_PUBLIC_ELEVENLABS_MARKDOWN_LINK_ALLOWED_HOSTS` | Optional | Comma-separated host allowlist for clickable markdown links inside ElevenLabs responses. | Falls back to trusted booking hosts plus Prism domains. | `lib/elevenlabs.ts`, `components/home/HomeHeroAgent.tsx`, `components/global-elevenlabs-widget.tsx` |
-| `NEXT_PUBLIC_ELEVENLABS_WIDGET_DISABLED` | Optional | Public kill switch for deterministic visual builds or widget debugging. | Disabled only when explicitly set truthy. Leave unset for normal development and production. | `lib/elevenlabs.ts`, `components/elevenlabs/ElevenLabsWidget.tsx`, `components/home/HomeHeroAgent.tsx`, `components/global-elevenlabs-widget.tsx` |
-| `INSTAGRAM_ACCESS_TOKEN` | Optional | Instagram Graph API token for Prism Library. | Falls back to the seed dataset. | `lib/library/getLibraryPosts.ts` |
-| `INSTAGRAM_USER_ID` | Optional | Instagram Graph API user ID for Prism Library. | Falls back to the seed dataset. | `lib/library/getLibraryPosts.ts` |
-| `TIKTOK_ACCESS_TOKEN` | Optional | TikTok Display API token for Prism Library. | Falls back to the seed dataset. | `lib/library/getLibraryPosts.ts` |
-| `NEXT_PUBLIC_SITE_URL` | Optional | Used by deployment verification scripts for local preview/prod URL comparisons. | None. | `scripts/verify-deployment.ts` |
-| `NEXT_PUBLIC_VERCEL_URL` | Optional | Vercel-provided deployment hostname exposed to the client when present. | None. | `scripts/verify-deployment.ts` |
+| Variable                                             | Required            | Purpose                                                                                  | Default / Fallback                                                                           | Used in                                                                                                      |
+| ---------------------------------------------------- | ------------------- | ---------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
+| `NEXT_PUBLIC_BASE_URL`                               | ✅ for accurate SEO | Canonical host for metadata, OG images, RSS feeds, and sitemap generation.               | Falls back to `https://www.design-prism.com`.                                                | `app/blog/[slug]/page.tsx`, `app/blog/feed.xml/route.ts`, `app/sitemap.ts`                                   |
+| `NEXT_PUBLIC_GA_MEASUREMENT_ID`                      | Optional            | Override the default GA4 property for analytics.                                         | Falls back to `G-P9VY77PRC0`.                                                                | `lib/constants.ts`, `app/layout.tsx`                                                                         |
+| `NEXT_PUBLIC_SCHOLARSHIP_FORM_ENDPOINT`              | Optional            | Override the scholarship Formspree endpoint without code changes.                        | Defaults to `https://formspree.io/f/mwpwwjek`.                                               | `app/scholarship/ScholarshipPageClient.tsx`                                                                  |
+| `NEXT_PUBLIC_AEO_FORM_ENDPOINT`                      | Optional            | Override the AEO assessment Formspree endpoint without code changes.                     | Defaults to `https://formspree.io/f/xldarokj`.                                               | `components/forms/AeoAssessmentForm.tsx`                                                                     |
+| `NEXT_PUBLIC_APPLY_FORM_ENDPOINT`                    | Optional            | Override the main Prism application Formspree endpoint without code changes.             | Defaults to `https://formspree.io/f/mreroojo`.                                               | `components/forms/GetStartedForm.tsx`                                                                        |
+| `NEXT_PUBLIC_GET_STARTED_FORM_ENDPOINT`              | Optional            | Backward-compatible fallback for older local configs that still use the legacy env name. | Used only when `NEXT_PUBLIC_APPLY_FORM_ENDPOINT` is unset.                                   | `components/forms/GetStartedForm.tsx`                                                                        |
+| `NEXT_PUBLIC_ELEVENLABS_AGENT_ID`                    | Optional            | Public agent id used by the shared floating widget on public pages.                      | Falls back to Prism Sales (`agent_4701kkcyc4efefkv5x4awhysjyrh`).                            | `lib/elevenlabs.ts`, `components/global-elevenlabs-widget.tsx`                                               |
+| `NEXT_PUBLIC_ELEVENLABS_MARKDOWN_LINK_ALLOWED_HOSTS` | Optional            | Comma-separated host allowlist for clickable markdown links inside ElevenLabs responses. | Falls back to trusted booking hosts plus Prism domains.                                      | `lib/elevenlabs.ts`, `components/global-elevenlabs-widget.tsx`                                               |
+| `NEXT_PUBLIC_ELEVENLABS_WIDGET_DISABLED`             | Optional            | Public kill switch for deterministic visual builds or widget debugging.                  | Disabled only when explicitly set truthy. Leave unset for normal development and production. | `lib/elevenlabs.ts`, `components/elevenlabs/ElevenLabsWidget.tsx`, `components/global-elevenlabs-widget.tsx` |
+| `INSTAGRAM_ACCESS_TOKEN`                             | Optional            | Instagram Graph API token for Prism Library.                                             | Falls back to the seed dataset.                                                              | `lib/library/getLibraryPosts.ts`                                                                             |
+| `INSTAGRAM_USER_ID`                                  | Optional            | Instagram Graph API user ID for Prism Library.                                           | Falls back to the seed dataset.                                                              | `lib/library/getLibraryPosts.ts`                                                                             |
+| `TIKTOK_ACCESS_TOKEN`                                | Optional            | TikTok Display API token for Prism Library.                                              | Falls back to the seed dataset.                                                              | `lib/library/getLibraryPosts.ts`                                                                             |
+| `NEXT_PUBLIC_SITE_URL`                               | Optional            | Used by deployment verification scripts for local preview/prod URL comparisons.          | None.                                                                                        | `scripts/verify-deployment.ts`                                                                               |
+| `NEXT_PUBLIC_VERCEL_URL`                             | Optional            | Vercel-provided deployment hostname exposed to the client when present.                  | None.                                                                                        | `scripts/verify-deployment.ts`                                                                               |
 
 ## Intentionally not part of the supported setup anymore
 
@@ -34,18 +36,11 @@ cp .env.example .env.local
 
 ## ElevenLabs widget notes
 
-### Homepage hero
-
-- `/` mounts the custom `HomeHeroAgent` card in `components/home/HomeHeroAgent.tsx`.
-- The hero uses the official ElevenLabs widget embed script and the inline `<elevenlabs-convai>` element.
-- The public agent id resolves through `NEXT_PUBLIC_ELEVENLABS_AGENT_ID`, with a hardcoded fallback to Prism Sales.
-- Keep markdown-link hosts limited to trusted booking destinations plus Prism domains.
-- The homepage widget host should stay scoped to the hero container so it scrolls away with the section instead of floating above later content.
-
 ### Global launcher
 
-- `components/global-elevenlabs-widget.tsx` mounts the stock floating widget on all non-homepage routes.
-- On `/get-started`, this launcher is the live assistant surface today.
+- `components/global-elevenlabs-widget.tsx` mounts the stock floating widget on public pages, including `/`.
+- On `/get-started` and `/apply`, this launcher stays available as a floating assistive surface while the primary conversion path is the built-in application flow.
+- Without a saved preference, the widget should start collapsed by default.
 - Keep its z-index high enough that sticky nav and other fixed chrome never render above the visible widget.
 
 ## Notes

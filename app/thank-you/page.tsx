@@ -5,19 +5,62 @@ import Script from "next/script"
 
 import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
-import RevealOnScroll from "@/components/reveal-on-scroll"
-import PixelishIcon from "@/components/pixelish/PixelishIcon"
-import { Button } from "@/components/ui/button"
+import ApplySuccessTracker from "@/components/thank-you/ApplySuccessTracker"
 import { buildRouteMetadata } from "@/lib/seo/metadata"
 
 export const metadata: Metadata = buildRouteMetadata({
-  titleStem: "Thank you | prism",
-  description: "We received your AI site brief—book a kickoff call to see your plan faster.",
+  titleStem: "Thank you | Prism",
+  description:
+    "We received your submission. Every real inquiry is reviewed, and Prism reaches out when the next step is a fit.",
   path: "/thank-you",
   index: false,
 })
 
-export default function ThankYouPage() {
+const DEFAULT_NEXT_STEPS = [
+  {
+    label: "01",
+    title: "Submission received",
+    body: "Your form is in. The team has what it needs to begin the review.",
+  },
+  {
+    label: "02",
+    title: "Review is guaranteed",
+    body: "Every real submission gets reviewed. That review is part of the standard flow.",
+  },
+  {
+    label: "03",
+    title: "Next step is selective",
+    body: "If there is a fit, Prism will reach out with the right next step, including a strategy conversation when it makes sense.",
+  },
+] as const
+
+const APPLY_NEXT_STEPS = [
+  {
+    label: "01",
+    title: "Application received",
+    body: "Thanks, we've got it. Your application is in the queue.",
+  },
+  {
+    label: "02",
+    title: "Review is guaranteed",
+    body: "Every real submission gets reviewed. That review is the default path.",
+  },
+  {
+    label: "03",
+    title: "Strategy is selective",
+    body: "If there's a fit, Prism will reach out about next steps and, in some cases, a custom strategy session.",
+  },
+] as const
+
+export default async function ThankYouPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ source?: string }>
+}) {
+  const resolvedSearchParams = await searchParams
+  const isApplyFlow = resolvedSearchParams?.source === "apply"
+  const nextSteps = isApplyFlow ? APPLY_NEXT_STEPS : DEFAULT_NEXT_STEPS
+
   return (
     <>
       <Script
@@ -33,85 +76,71 @@ export default function ThankYouPage() {
           `,
         }}
       />
-      <div className="flex min-h-screen flex-col bg-white">
+
+      <div className="flex min-h-screen flex-col bg-[#040404] font-sans text-[#F5F5F2]">
+        {isApplyFlow ? <ApplySuccessTracker /> : null}
         <Navbar />
-        <main className="flex-1">
-          <section className="px-6 py-16 sm:py-24">
-            <div className="mx-auto flex max-w-4xl flex-col gap-10">
-              <RevealOnScroll>
-                <div className="rounded-3xl border border-black/10 bg-white p-8 shadow-sm">
-                  <div className="flex flex-col items-center gap-4 text-center">
-                    <PixelishIcon
-                      src="/pixelish/circle-checkmark.svg"
-                      alt=""
-                      size={48}
-                      invert={false}
-                      aria-hidden
-                    />
-                    <div className="space-y-3">
-                      <p className="text-sm font-semibold uppercase tracking-[0.3em] text-slate-500">Received</p>
-                      <h1 className="text-3xl font-semibold text-slate-900 sm:text-4xl">
-                        Review in progress.
-                      </h1>
-                      <p className="text-base text-slate-600">
-                        The team will get back to you within 24 hours.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </RevealOnScroll>
+        <main className="flex-1 px-4 py-16 sm:px-6 sm:py-20">
+          <section className="mx-auto max-w-[1180px] space-y-8">
+            <div className="border border-white/10 bg-[#070707] px-6 py-8 sm:px-10 sm:py-12">
+              <p className="font-mono text-[0.76rem] uppercase tracking-[0.4em] text-[#9EFF2E]">
+                {isApplyFlow ? "APPLICATION" : "RECEIVED"}
+              </p>
+              <h1 className="mt-6 max-w-[9ch] text-balance font-sans text-[clamp(2.45rem,5.4vw,4.6rem)] font-medium leading-[0.98] tracking-[-0.06em] text-[#F5F5F2]">
+                {isApplyFlow ? "Application received." : "Review in progress."}
+              </h1>
+              <p className="mt-6 max-w-[42rem] font-mono text-[1rem] leading-8 text-[#A0A09A]">
+                {isApplyFlow
+                  ? "Thanks, we've got it. We review every real submission. If there's a fit, we'll reach out about next steps and, in some cases, a custom strategy session."
+                  : "We received your submission. Every real inquiry gets reviewed. If there&apos;s a fit, we&apos;ll reach out with the right next step."}
+              </p>
+            </div>
 
-              <RevealOnScroll delay={0.1}>
-                <div className="rounded-3xl border border-black bg-black p-6 text-white shadow-sm sm:flex sm:items-center sm:justify-between">
-                  <div className="space-y-2">
-                    <p className="text-xs font-semibold uppercase tracking-[0.3em] text-white/70">next step</p>
-                    <p className="text-lg font-semibold">Book a 15-minute kickoff call</p>
-                    <p className="text-sm text-white/70">
-                      Align goals, confirm deliverables, and pick your launch start date.
-                    </p>
-                  </div>
-                  <Button
-                    asChild
-                    className="mt-4 w-full rounded-full border border-white bg-white px-6 py-3 text-base font-semibold text-black transition hover:bg-white/90 sm:mt-0 sm:w-auto"
-                  >
-                    <a
-                      href="https://calendar.notion.so/meet/enzosison/sfux4ogo"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label="Book a 15-minute Prism kickoff call"
-                    >
-                      Book now →
-                    </a>
-                  </Button>
-                </div>
-              </RevealOnScroll>
+            <div className="grid gap-5 lg:grid-cols-3">
+              {nextSteps.map((step) => (
+                <article
+                  key={step.label}
+                  className="border border-white/10 bg-[#070707] px-5 py-5"
+                >
+                  <p className="font-mono text-[0.8rem] uppercase tracking-[0.32em] text-[#767670]">
+                    {step.label}
+                  </p>
+                  <h2 className="mt-4 font-sans text-[1.45rem] font-medium tracking-[-0.04em] text-[#F5F5F2]">
+                    {step.title}
+                  </h2>
+                  <p className="mt-4 font-mono text-[0.92rem] leading-7 text-[#C6C6C0]">
+                    {step.body}
+                  </p>
+                </article>
+              ))}
+            </div>
 
-              <RevealOnScroll delay={0.2}>
-                <div className="grid gap-4 rounded-3xl border border-slate-200 bg-white p-6 text-sm text-slate-600 shadow-sm sm:grid-cols-2">
-                  <div className="space-y-1">
-                    <p className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-500">Email</p>
-                    <a
-                      href="mailto:support@design-prism.com"
-                      className="text-base font-semibold text-slate-900 underline-offset-4 hover:underline"
-                    >
-                      support@design-prism.com
-                    </a>
-                  </div>
-                  <div className="space-y-1">
-                    <p className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-500">Location</p>
-                    <p className="text-base text-slate-900">Based in Silicon Valley, CA</p>
-                  </div>
-                </div>
-              </RevealOnScroll>
+            <div className="flex flex-col gap-4 border border-white/10 bg-[#070707] px-5 py-5 sm:flex-row sm:items-center sm:justify-between">
+              <div>
+                <p className="font-sans text-[1.5rem] font-medium tracking-[-0.04em] text-[#F5F5F2]">
+                  {isApplyFlow ? "While we review" : "In the meantime"}
+                </p>
+                <p className="mt-2 font-mono text-[0.92rem] leading-7 text-[#A0A09A]">
+                  {isApplyFlow
+                    ? "You can review case studies or head back to the homepage."
+                    : "You can review case studies or head back home."}
+                </p>
+              </div>
 
-              <RevealOnScroll delay={0.25}>
+              <div className="flex flex-col gap-3 sm:flex-row">
+                <Link
+                  href="/case-studies"
+                  className="inline-flex min-h-12 items-center justify-center border border-white/12 px-5 py-3 font-mono text-[0.82rem] uppercase tracking-[0.2em] text-[#F5F5F2] transition-colors hover:border-[#9EFF2E]/45 hover:text-[#9EFF2E] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[#9EFF2E]/35"
+                >
+                  View case studies
+                </Link>
                 <Link
                   href="/"
-                  className="text-center text-sm font-semibold text-slate-900 underline-offset-4 hover:underline"
+                  className="inline-flex min-h-12 items-center justify-center border border-white/12 px-5 py-3 font-mono text-[0.82rem] uppercase tracking-[0.2em] text-[#A0A09A] transition-colors hover:border-white/30 hover:text-[#F5F5F2] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-white/25"
                 >
-                  ← Back to Home
+                  Back to home
                 </Link>
-              </RevealOnScroll>
+              </div>
             </div>
           </section>
         </main>

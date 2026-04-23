@@ -59,6 +59,8 @@ export default function AiWebsiteLaunchForm({ submitLabel }: AiWebsiteLaunchForm
 
   return (
     <form
+      id="ai_website_launch"
+      name="ai_website_launch"
       action={FORM_ENDPOINT}
       method="POST"
       noValidate
@@ -70,6 +72,7 @@ export default function AiWebsiteLaunchForm({ submitLabel }: AiWebsiteLaunchForm
         name="_redirect"
         value={REDIRECT_URL}
       />
+      <input type="hidden" name="form_name" value="ai_website_launch" />
       <input type="hidden" name="_subject" value="New AI Website Request" />
       <input
         type="text"

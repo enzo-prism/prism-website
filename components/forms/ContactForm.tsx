@@ -59,6 +59,8 @@ export default function ContactForm() {
 
   return (
     <form
+      id="contact"
+      name="contact"
       className="space-y-5 rounded-2xl border border-border/60 bg-card/90 p-6 shadow-xl shadow-black/30"
       action="https://formspree.io/f/xjkjbpdb"
       method="POST"
@@ -67,6 +69,7 @@ export default function ContactForm() {
     >
       <input type="hidden" name="_subject" value="New submission from Prism" />
       <input type="hidden" name="_redirect" value={redirectUrl} />
+      <input type="hidden" name="form_name" value="contact" />
       <input type="text" name="_gotcha" tabIndex={-1} autoComplete="off" style={{ display: "none" }} aria-hidden="true" />
 
       <div className="grid gap-2">

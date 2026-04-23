@@ -32,22 +32,15 @@ jest.mock("@/components/runtime-client-shell", () => ({
     return <div data-testid="runtime-client-shell" />
   },
 }))
-jest.mock("@/components/vercel-analytics", () => ({
-  __esModule: true,
-  default: function MockVercelAnalytics() {
-    return <div data-testid="vercel-analytics" />
-  },
-}))
 
 describe("RootLayout analytics wiring", () => {
-  it("mounts the shared Vercel analytics component", () => {
+  it("mounts the runtime client shell that owns analytics wiring", () => {
     const markup = renderToStaticMarkup(
       <RootLayout>
         <div>content</div>
       </RootLayout>,
     )
 
-    expect(markup).toContain('data-testid="vercel-analytics"')
     expect(markup).toContain('data-testid="runtime-client-shell"')
   })
 })

@@ -20,7 +20,8 @@ Quick reference for the pages we edit most often.
 
 - `/pricing` is the single canonical pricing URL.
 - Core pricing policy must stay fixed site-wide: `Website Overhaul = $1,000 one-time`, `Growth Partnership = $2,000/month`, `Free Expert Audit = $0`.
-- Main UI sections live in `app/pricing/client-page.tsx`; the hero + fullscreen modal live in `components/pricing/PricingHero.tsx`.
+- Main UI sections live in `app/pricing/client-page.tsx`; the hero lives in `components/pricing/PricingHero.tsx`.
+- `/pricing` now uses the shared dark core-route system from `components/core-route/CoreRoutePrimitives.tsx`, so section headings and primary/secondary CTAs should stay aligned with the homepage, `/about`, and `/get-started`.
 - Structured data on this page should only emit the canonical pricing offers (no legacy tier ranges).
 
 ## Checkout (`app/checkout/*/page.tsx`)
@@ -98,11 +99,21 @@ Quick reference for the pages we edit most often.
 
 ## Get Started (`app/get-started/page.tsx`)
 
-- The hero, VSL, FAQ, and booking sections live directly in `app/get-started/page.tsx`; there is no separate route-specific hero-scene mount in the live page right now.
-- `/get-started` is a booking-led server-rendered page; the live assistant surface is the stock ElevenLabs floating widget mounted globally via `components/global-elevenlabs-widget.tsx`.
+- `/get-started` is now the overview/entry page for the Prism application flow, built from `components/get-started/GrowthProcessSection.tsx` plus the in-page handoff panel that points into `/apply`.
+- The page leads with the three-step process (`Apply`, `Team reviews`, `Meet & strategize`) and then anchors into the dedicated application route instead of embedding the form inline.
+- It remains the one intentional accent surface within the core route family: same dark shell, shared CTA grammar, and shared section-heading logic, but with terminal framing and neon status accents.
+- `/get-started` still relies on the stock ElevenLabs floating widget mounted globally via `components/global-elevenlabs-widget.tsx`; the widget is supportive, not the primary conversion surface.
 - The page no longer mounts the custom `SalesChat` client or depends on any legacy route-level assistant gating.
-- Booking remains the primary conversion path and is anchored at `#book-call`; keep the hero CTA, FAQ CTA, and footer CTA wired there.
+- The CTA handoff remains anchored at `#book-call` for compatibility with existing CTA destinations elsewhere in the site, even though the live copy now frames that section as an application rather than a scheduled call.
+- Keep the page copy explicit that step 2 happens for every real submission, while step 3 is selective and not guaranteed.
 - The old custom sales-chat backend and supporting UI files have been removed from the supported stack. If Prism ever needs a bespoke assistant again, treat that as a fresh implementation rather than an existing route to toggle back on.
+
+## Apply (`app/apply/page.tsx`)
+
+- `/apply` is the dedicated 2-step application route and is the real form surface for Prism.
+- The page pairs a short qualification primer with `components/forms/GetStartedForm.tsx`.
+- `GetStartedForm` posts to Formspree with the growth-application payload (`service_focus`, `service_interest[]`, `has_website`, `review_link`, `primary_goal`, `budget`, `timeline`, `company`, `full_name`, `email`, `additional_context`, `_subject`, `_redirect`, `form_name`, `_gotcha`) and redirects to `/thank-you?source=apply` on success.
+- The flow intentionally does not embed a calendar. Review is guaranteed after a real submission; the strategy session is selective.
 
 ## Contact (`app/contact/page.tsx`)
 
@@ -116,22 +127,13 @@ Quick reference for the pages we edit most often.
 
 ## Homepage (`app/client-page.tsx`)
 
-- `app/client-page.tsx` now keeps the first viewport intentionally minimal: a solid white full-height stage, the `Prism` wordmark, `impossible is temporary.`, a subtle `founded 2023 in san francisco` line, and the inline ElevenLabs `HomeHeroAgent` widget (`components/home/HomeHeroAgent.tsx`).
-- Treat the homepage hero as a product surface, not a busy marketing collage. Avoid reintroducing extra hero CTAs, proof strips, tooltip logos, or decorative widgets into the first viewport unless there is a clear conversion reason.
-- `HERO_SECTION_CLASSES` in `app/client-page.tsx` accounts for sticky-header height and safe-area insets. On mobile the hero top-aligns and uses only the padding the widget actually needs, so the first section grows naturally instead of burning vertical space on decorative empty area.
-- `HomeHeroAgent` renders the stock expanded ElevenLabs widget, keeps the official widget chrome intact, disables collapsing with the documented `dismissible="false"` attribute, and relies on wrapper sizing plus host-level section scoping instead of homepage-only Shadow DOM overrides.
-- The homepage widget should scroll away with the hero. If it starts hovering above later sections again, debug the host positioning first rather than the widget’s shadow internals.
-- All non-homepage pages mount the stock floating ElevenLabs launcher via `components/global-elevenlabs-widget.tsx`, initialized from `components/runtime-client-shell.tsx`.
+- `app/client-page.tsx` is now a section composer for the refreshed CTA-led homepage: integrated dark hero, ecosystem, proof, founder, and final CTA.
+- The homepage hero is built from `components/home/HomeHeroSection.tsx` and now uses the shared ASCII `wave` backdrop in a subtler treatment than `/software`, keeping the copy-led layout while preserving motion.
+- The homepage, `/about`, `/pricing`, and `/get-started` now share the same minimal black navbar/footer plus the same core-route section heading and CTA language (`components/navbar.tsx`, `components/footer.tsx`, `components/core-route/CoreRoutePrimitives.tsx`) so the primary marketing routes read as one brand system.
+- The shared floating ElevenLabs launcher now mounts on the homepage too, via `components/global-elevenlabs-widget.tsx` in `components/runtime-client-shell.tsx`.
+- Without a saved user preference, the public widget should stay collapsed by default on `/` and inner pages.
 - The global floating widget should always win the layer stack in its visible region. If site chrome starts painting over it, debug the host z-index in `components/global-elevenlabs-widget.tsx` / `components/elevenlabs/ElevenLabsWidget.tsx` before changing page-level layout.
-- On mobile, the homepage navbar starts hidden and fades/slides in after the first tap; this is enabled via `mobileRevealOnFirstTap` on `components/navbar.tsx`.
-- The section immediately below the hero is the ecosystem explainer rendered by `components/home/PrismEcosystemAnimation.tsx`. Keep this as the first supporting section so the page transitions from conversation entry point into Prism's broader growth-system story.
-- Ecosystem section layout is responsive: animation first with supporting copy stacked below on mobile, and a two-column split on desktop (`lg:grid-cols-[minmax(0,560px)_minmax(0,1fr)]`) with text on the right.
-- Ecosystem logos are rendered from source SVG assets in `public/home-ecosystem/` (`prism.svg`, `apple.svg`, `gpt.svg`, `google.svg`, `facebook.svg`, `instagram.svg`, `linkedin.svg`) for fidelity consistency with design exports.
-- The dark homepage services grid now lives in `components/home/HomeFeaturesSection.tsx` and uses `components/home/HomeFeatureIllustration.tsx` for the line-art hover icons. Keep the visual language minimal and pixel-adjacent: zinc outlines, restrained orange accents, and transform/opacity-only hover motion.
-- The services grid is intentionally a 5-card layout with explicit illustration/content bands per card so copy always stays contained. On larger desktops it resolves to a tall website card on the left with a 2x2 supporting grid on the right; on tablet widths the website card spans the full row above the 2x2 grid. If new services are added later, preserve that asymmetrical rhythm instead of collapsing back to a generic equal-card grid.
-- The Apps developed by Prism section (tools cards + outbound links) lives below the ecosystem section and above the training section.
-- The impact graph section below the apps area is `components/home/ImpactGraphSection.tsx`, which lazy-mounts `FounderImpactGraph` so Recharts only loads when near the viewport.
-- The Wall of Love slider uses `components/home/WallOfLoveCarousel.tsx` and a native scroll-snap rail (no Embla); adjust the quote pool via `pinned` / `heroSpotlight` in `content/wall-of-love-data.tsx`.
+- The section immediately below the hero is now a quieter bridge in `components/home/HomeEcosystemSection.tsx`, not a second animated logo network. Keep it explanatory and outcome-oriented so it supports the hero instead of competing with it.
 - Runtime helpers (`AnalyticsProvider`, `GlobalElevenLabsWidget`, Sentry/monitoring clients, toaster) are initialized in `components/runtime-client-shell.tsx`, mounted from `app/layout.tsx`.
 
 ## Wall Of Love (`app/wall-of-love/client-page.tsx`)
@@ -156,7 +158,7 @@ Quick reference for the pages we edit most often.
 - `app/thank-you/page.tsx`
 - `app/analysis-thank-you/page.tsx`
 
-Each uses card-based layouts: confirmation message + kickoff-call CTA + contact details. When adding new forms, reuse one of these routes for consistency.
+Each uses card-based layouts: confirmation message + CTA + follow-up details. The shared `/thank-you` route now supports an apply-specific state via `?source=apply`, so keep any future branching explicit and truthful to the originating form.
 
 - These routes are noindex/no-follow and should remain crawlable (don’t block them in `robots.txt`) so search engines can read the meta noindex directive.
 
@@ -216,6 +218,7 @@ Each uses card-based layouts: confirmation message + kickoff-call CTA + contact 
 ## Ads (`app/ads/page.tsx`)
 
 - Same layout pattern as Local Listings: hero, benefits, platforms, audience grid, then the ads-focused founder VSL.
+- The hero uses the page-specific `components/animated/AdsHeroIllustration.tsx` instead of the shared `ServiceIllustration` set so the hover motion and geometry can stay tailored to `/ads` without affecting other routes that still use the generic ads icon.
 - `VideoPlayer` is imported directly in `app/ads/page.tsx`; keep schema metadata up to date (id, upload date, duration) when swapping clips so Google’s video rich results stay accurate.
 
 ## Facebook Ads for Dentists (`app/facebook-ads-for-dentists/page.tsx`)

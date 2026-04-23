@@ -11,7 +11,9 @@ jest.mock('@/components/elevenlabs/ElevenLabsWidget', () => ({
   default: (props: Record<string, unknown>) => {
     elevenLabsWidgetMock(props)
 
-    return <div data-testid={String(props.testId ?? 'mock-elevenlabs-widget')} />
+    return (
+      <div data-testid={String(props.testId ?? 'mock-elevenlabs-widget')} />
+    )
   },
 }))
 
@@ -51,7 +53,6 @@ describe('GlobalElevenLabsWidget', () => {
     elevenLabsWidgetMock.mockReset()
     publishPrismWidgetExpandedState.mockReset()
     window.localStorage.clear()
-    window.sessionStorage.clear()
     usePathname.mockReset()
     delete process.env.NEXT_PUBLIC_ELEVENLABS_WIDGET_DISABLED
   })
@@ -65,7 +66,7 @@ describe('GlobalElevenLabsWidget', () => {
     process.env.NEXT_PUBLIC_ELEVENLABS_WIDGET_DISABLED = originalWidgetDisabled
   })
 
-  it('renders the floating widget closed by default for first-touch inner-page sessions', async () => {
+  it('renders the floating widget closed by default on inner pages', async () => {
     usePathname.mockReturnValue('/about')
 
     render(<GlobalElevenLabsWidget />)
@@ -75,60 +76,34 @@ describe('GlobalElevenLabsWidget', () => {
     })
 
     expect(getLastWidgetProps().defaultExpanded).toBe(false)
-    expect(window.sessionStorage.getItem('prism-elevenlabs-entry-route')).toBe(
-      'inner',
-    )
   })
 
-  it('skips the homepage while still capturing the home entry route for later pages', async () => {
+  it('mounts the floating widget on the homepage and keeps it collapsed by default', async () => {
     usePathname.mockReturnValue('/')
 
     render(<GlobalElevenLabsWidget />)
 
     await waitFor(() => {
-      expect(window.sessionStorage.getItem('prism-elevenlabs-entry-route')).toBe(
-        'home',
-      )
+      expect(elevenLabsWidgetMock).toHaveBeenCalled()
     })
 
-    expect(elevenLabsWidgetMock).not.toHaveBeenCalled()
-    expect(publishPrismWidgetExpandedState).toHaveBeenCalledWith(false)
+    expect(getLastWidgetProps().defaultExpanded).toBe(false)
   })
 
-  it('opens the floating widget by default after a homepage entry when the user has no saved preference', async () => {
-    let currentPathname = '/'
-    usePathname.mockImplementation(() => currentPathname)
+  it('lets an explicit user preference override the closed-by-default baseline', async () => {
+    window.localStorage.setItem(
+      'prism-elevenlabs-widget-preference',
+      'expanded',
+    )
+    usePathname.mockReturnValue('/about')
 
-    const { rerender } = render(<GlobalElevenLabsWidget />)
-
-    await waitFor(() => {
-      expect(window.sessionStorage.getItem('prism-elevenlabs-entry-route')).toBe(
-        'home',
-      )
-    })
-
-    currentPathname = '/blog/how-to-choose-local-seo-agency'
-    rerender(<GlobalElevenLabsWidget />)
+    render(<GlobalElevenLabsWidget />)
 
     await waitFor(() => {
       expect(elevenLabsWidgetMock).toHaveBeenCalled()
     })
 
     expect(getLastWidgetProps().defaultExpanded).toBe(true)
-  })
-
-  it('lets an explicit user preference override the session entry route default', async () => {
-    window.sessionStorage.setItem('prism-elevenlabs-entry-route', 'home')
-    window.localStorage.setItem('prism-elevenlabs-widget-preference', 'collapsed')
-    usePathname.mockReturnValue('/about')
-
-    render(<GlobalElevenLabsWidget />)
-
-    await waitFor(() => {
-      expect(elevenLabsWidgetMock).toHaveBeenCalled()
-    })
-
-    expect(getLastWidgetProps().defaultExpanded).toBe(false)
   })
 
   it('persists explicit expand and collapse choices while syncing Prism chrome state', async () => {
@@ -145,9 +120,9 @@ describe('GlobalElevenLabsWidget', () => {
       getLastWidgetProps().onExpandedChange?.(true)
     })
 
-    expect(window.localStorage.getItem('prism-elevenlabs-widget-preference')).toBe(
-      'expanded',
-    )
+    expect(
+      window.localStorage.getItem('prism-elevenlabs-widget-preference'),
+    ).toBe('expanded')
     expect(publishPrismWidgetExpandedState).toHaveBeenLastCalledWith(true)
 
     await act(async () => {
@@ -155,14 +130,13 @@ describe('GlobalElevenLabsWidget', () => {
       getLastWidgetProps().onExpandedChange?.(false)
     })
 
-    expect(window.localStorage.getItem('prism-elevenlabs-widget-preference')).toBe(
-      'collapsed',
-    )
+    expect(
+      window.localStorage.getItem('prism-elevenlabs-widget-preference'),
+    ).toBe('collapsed')
     expect(publishPrismWidgetExpandedState).toHaveBeenLastCalledWith(false)
   })
 
   it('does not turn automatic defaults into sticky preferences without user interaction', async () => {
-    window.sessionStorage.setItem('prism-elevenlabs-entry-route', 'home')
     usePathname.mockReturnValue('/about')
 
     render(<GlobalElevenLabsWidget />)
@@ -175,7 +149,9 @@ describe('GlobalElevenLabsWidget', () => {
       getLastWidgetProps().onExpandedChange?.(true)
     })
 
-    expect(window.localStorage.getItem('prism-elevenlabs-widget-preference')).toBeNull()
+    expect(
+      window.localStorage.getItem('prism-elevenlabs-widget-preference'),
+    ).toBeNull()
     expect(publishPrismWidgetExpandedState).toHaveBeenLastCalledWith(true)
   })
 

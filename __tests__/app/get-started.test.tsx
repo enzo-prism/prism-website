@@ -1,8 +1,8 @@
-import { render, screen } from "@testing-library/react"
+import { render, screen } from '@testing-library/react'
 
-import GetStartedPage from "@/app/get-started/page"
+import GetStartedPage from '@/app/get-started/page'
 
-jest.mock("next/link", () => ({
+jest.mock('next/link', () => ({
   __esModule: true,
   default: function MockNextLink({
     href,
@@ -11,6 +11,7 @@ jest.mock("next/link", () => ({
   }: {
     href: string
     children: React.ReactNode
+    [key: string]: unknown
   }) {
     return (
       <a href={href} {...props}>
@@ -20,78 +21,60 @@ jest.mock("next/link", () => ({
   },
 }))
 
-jest.mock("@/components/navbar", () => ({
+jest.mock('@/components/navbar', () => ({
   __esModule: true,
   default: function MockNavbar() {
     return <header data-testid="navbar-mock" />
   },
 }))
 
-jest.mock("@/components/footer", () => ({
+jest.mock('@/components/footer', () => ({
   __esModule: true,
   default: function MockFooter() {
     return <footer data-testid="footer-mock" />
   },
 }))
 
-jest.mock("@/components/BookDemoEmbed", () => ({
+jest.mock('@/components/get-started/GrowthProcessSection', () => ({
   __esModule: true,
-  default: function MockBookDemoEmbed() {
-    return <section data-testid="book-demo-embed" />
+  default: function MockGrowthProcessSection() {
+    return <section data-testid="growth-process-section" />
   },
 }))
 
-jest.mock("@/components/get-started/GetStartedHeroScene", () => ({
-  __esModule: true,
-  default: function MockHeroScene() {
-    return <section data-testid="hero-scene-mock" />
-  },
-}))
-
-jest.mock("@/components/video-player", () => ({
-  __esModule: true,
-  default: function MockVideoPlayer() {
-    return <div data-testid="video-player-mock" />
-  },
-}))
-
-jest.mock("@/components/pixelish/PixelishIcon", () => ({
-  __esModule: true,
-  default: function MockPixelishIcon() {
-    return <span data-testid="pixelish-icon-mock" />
-  },
-}))
-
-jest.mock("@/components/faq-section", () => ({
-  __esModule: true,
-  default: function MockFaqSection() {
-    return <section data-testid="faq-mock">Frequently asked questions</section>
-  },
-}))
-
-jest.mock("@/components/schema-markup", () => ({
+jest.mock('@/components/schema-markup', () => ({
   WebPageSchema: function MockWebPageSchema() {
     return null
   },
 }))
 
-describe("/get-started page", () => {
+describe('/get-started page', () => {
   beforeEach(() => {
     jest.clearAllMocks()
   })
 
-  it("renders the booking-led get-started content without the legacy sales chat gate", () => {
+  it('renders the overview-led get-started page with the process section', () => {
     render(<GetStartedPage />)
 
-    expect(screen.getByTestId("book-demo-embed")).toBeInTheDocument()
-    expect(screen.getByText("Frequently asked questions")).toBeInTheDocument()
-    expect(screen.getByRole("heading", { level: 1, name: /turn your online presence into a growth engine/i })).toBeInTheDocument()
+    expect(screen.getByTestId('growth-process-section')).toBeInTheDocument()
+    expect(
+      screen.getByRole('heading', {
+        level: 2,
+        name: /one short form\./i,
+      }),
+    ).toBeInTheDocument()
   })
 
-  it("keeps the booking call CTA visible", () => {
+  it('funnels people from get-started into the dedicated apply page', () => {
     render(<GetStartedPage />)
 
-    expect(screen.getAllByRole("link", { name: /book your strategy call/i }).length).toBeGreaterThan(0)
-    expect(screen.getByText(/book a strategy call/i)).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: /open form/i })).toHaveAttribute(
+      'href',
+      '/apply',
+    )
+    expect(screen.getByText(/typical fit: \$1k-\$3k\+/i)).toBeInTheDocument()
+    expect(
+      screen.getAllByText(/every real submission is reviewed/i).length,
+    ).toBeGreaterThan(0)
   })
 })

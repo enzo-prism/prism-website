@@ -5,7 +5,7 @@ import {
   BRAND_NAME,
   DEFAULT_OG_IMAGE,
   buildAbsoluteTitle,
-  normalizeDescription,
+  buildMinimalDescription,
   normalizeTitleStem,
 } from "@/lib/seo/rules"
 
@@ -28,7 +28,7 @@ function altFromTitle(titleStem: string) {
 
 export function buildRouteMetadata(input: RouteSeoInput): Metadata {
   const title = buildAbsoluteTitle(input.titleStem)
-  const description = normalizeDescription(input.description)
+  const description = buildMinimalDescription(input.titleStem, input.description)
   const canonical = canonicalUrl(input.path)
   const ogImage = imageFromInput(input.ogImage)
   const index = input.index !== false

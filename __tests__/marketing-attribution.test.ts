@@ -56,5 +56,7 @@ describe("marketing attribution helpers", () => {
     expect(formData.get("utm_medium")).toBe("cpc")
     expect(formData.get("gclid")).toBe("test-click-id")
     expect(formData.get("submission_path")).toBe("/get-started")
+    expect(formData.get("device_type")).toBe("desktop")
+    expect(formData.get("timestamp")).toEqual(expect.any(String))
   })
 })

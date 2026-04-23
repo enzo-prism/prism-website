@@ -1,9 +1,8 @@
 import HomeFeatureIllustration, {
   type HomeFeatureIllustrationVariant,
 } from '@/components/home/HomeFeatureIllustration'
+import HomeSectionHeading from '@/components/home/HomeSectionHeading'
 import { cn } from '@/lib/utils'
-
-import styles from '@/components/home/HomeFeaturesSection.module.css'
 
 type HomeFeature = {
   title: string
@@ -48,6 +47,13 @@ const HOME_FEATURES: HomeFeature[] = [
 
 const FEATURED_CARD = HOME_FEATURES.find((feature) => feature.featured)
 const SUPPORTING_CARDS = HOME_FEATURES.filter((feature) => !feature.featured)
+const LIGHT_CARD_LAYOUT: Record<HomeFeatureIllustrationVariant, string> = {
+  websites: 'lg:col-span-5 lg:row-span-2',
+  visibility: 'lg:col-span-4',
+  ads: 'lg:col-span-3',
+  analytics: 'lg:col-span-3',
+  'ai-agents': 'lg:col-span-4',
+}
 
 type FeatureCardProps = {
   feature: HomeFeature
@@ -58,40 +64,65 @@ function FeatureCard({ feature }: FeatureCardProps) {
 
   return (
     <article
-      className={cn('group', styles.card, isFeatured && styles.featuredCard)}
+      className={cn(
+        'group relative overflow-hidden rounded-[1.75rem] border border-black/8 bg-[#ffffff] shadow-[0_18px_48px_rgba(15,23,42,0.04)] transition-[transform,border-color,box-shadow] duration-300 hover:-translate-y-1 hover:border-black/12 hover:shadow-[0_24px_70px_rgba(15,23,42,0.08)]',
+        'min-h-[19rem]',
+        isFeatured && 'min-h-[28rem] lg:min-h-[36rem]',
+        LIGHT_CARD_LAYOUT[feature.variant],
+      )}
       data-home-feature-card={feature.variant}
       data-feature-variant={feature.variant}
     >
       <div
         className={cn(
-          styles.illustrationStage,
-          isFeatured && styles.featuredIllustrationStage,
+          'relative overflow-hidden border-b border-black/6 bg-[radial-gradient(circle_at_top,rgba(15,23,42,0.08),transparent_45%),linear-gradient(180deg,#f8f8f5,rgba(248,248,245,0.7))]',
+          isFeatured ? 'px-6 pb-4 pt-8 sm:px-8 sm:pt-10' : 'px-6 pb-3 pt-7',
         )}
       >
-        <HomeFeatureIllustration
-          variant={feature.variant}
-          className={cn(
-            styles.illustration,
-            isFeatured ? styles.featuredIllustration : styles.standardIllustration,
-          )}
+        <div
+          className="pointer-events-none absolute inset-0 opacity-60"
+          aria-hidden="true"
+          style={{
+            backgroundImage:
+              'radial-gradient(circle, rgba(15,23,42,0.08) 1px, transparent 1px)',
+            backgroundSize: '26px 26px',
+            maskImage:
+              'radial-gradient(ellipse 75% 60% at 50% 30%, black 0%, transparent 100%)',
+          }}
         />
+        <div
+          className={cn(
+            'relative',
+            isFeatured
+              ? 'mx-auto h-48 w-full max-w-[18rem] sm:h-60 sm:max-w-[20rem]'
+              : 'h-36 w-full max-w-[13rem]',
+          )}
+        >
+          <HomeFeatureIllustration
+            variant={feature.variant}
+            className="h-full w-full text-[#111827]"
+          />
+        </div>
       </div>
 
-      <div className={cn(styles.content, isFeatured && styles.featuredContent)}>
+      <div className={cn('flex flex-col gap-4 p-6', isFeatured && 'sm:p-8')}>
+        <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[rgba(15,23,42,0.34)] font-mono">
+          {isFeatured ? 'flagship capability' : 'growth system'}
+        </p>
         <h3
           className={cn(
-            'font-pixel font-semibold leading-[1.02] tracking-[0.08em] text-zinc-50',
-            styles.title,
-            isFeatured ? 'text-[1.5rem] sm:text-[1.75rem]' : 'text-lg sm:text-xl',
+            'max-w-[18ch] text-balance font-semibold tracking-[-0.04em] text-[#0a0a0b]',
+            isFeatured
+              ? 'text-[1.9rem] leading-[1.02]'
+              : 'text-[1.35rem] leading-8',
           )}
         >
           {feature.title}
         </h3>
         <p
           className={cn(
-            styles.description,
-            'text-sm leading-6 text-zinc-300 sm:text-[15px]',
-            isFeatured && 'max-w-[34ch]',
+            'max-w-[34ch] text-pretty text-sm leading-7 text-[rgba(15,23,42,0.62)]',
+            isFeatured && 'text-[1rem] leading-8',
           )}
         >
           {feature.description}
@@ -109,33 +140,21 @@ export default function HomeFeaturesSection() {
   return (
     <section
       aria-labelledby="home-features-heading"
-      className="bg-background py-16 sm:py-20 lg:py-24 xl:py-28"
+      className="bg-[#f7f7f4] px-4 py-20 sm:px-6 sm:py-24"
     >
-      <div className="container relative mx-auto px-4 sm:px-6">
-        <div className={styles.shell}>
-          <div className={styles.header}>
-            <p className="text-xs font-semibold uppercase tracking-[0.24em] text-orange-300/90">
-              Features
-            </p>
-            <h2
-              id="home-features-heading"
-              className={cn(
-                'font-pixel mt-3 max-w-[14ch] text-balance text-[2.15rem] font-semibold leading-[0.95] tracking-[0.08em] text-zinc-50 sm:text-[2.8rem] lg:max-w-[18ch] lg:text-[2.95rem] xl:text-[3.15rem]',
-              )}
-            >
-              Everything your brand needs to grow, in one system
-            </h2>
-          </div>
+      <div className="mx-auto max-w-6xl">
+        <HomeSectionHeading
+          id="home-features-heading"
+          eyebrow="capabilities"
+          title="Everything your brand needs to grow, in one system"
+          description="A lighter, clearer view of Prism’s five core growth pillars. Same operating model, tighter hierarchy."
+        />
 
-          <div className={styles.layout}>
-            <FeatureCard feature={FEATURED_CARD} />
-
-            <div className={styles.supportingGrid}>
-              {SUPPORTING_CARDS.map((feature) => (
-                <FeatureCard key={feature.title} feature={feature} />
-              ))}
-            </div>
-          </div>
+        <div className="mt-10 grid gap-4 lg:grid-cols-12 lg:auto-rows-fr">
+          <FeatureCard feature={FEATURED_CARD} />
+          {SUPPORTING_CARDS.map((feature) => (
+            <FeatureCard key={feature.title} feature={feature} />
+          ))}
         </div>
       </div>
     </section>

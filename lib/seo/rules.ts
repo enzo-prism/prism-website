@@ -2,9 +2,9 @@ export const BRAND_NAME = "Prism"
 export const BRAND_SUFFIX = " | Prism"
 
 export const TITLE_MIN_LENGTH = 10
-export const TITLE_MAX_LENGTH = 60
+export const TITLE_MAX_LENGTH = 40
 export const DESCRIPTION_MIN_LENGTH = 24
-export const DESCRIPTION_MAX_LENGTH = 155
+export const DESCRIPTION_MAX_LENGTH = 80
 
 export const DEFAULT_OG_IMAGE = "/prism-opengraph.png"
 
@@ -15,6 +15,7 @@ const LEADING_BRAND_PATTERN = /^\s*(?:design\s+)?prism(?:\s+((?:ai|blog|careers|
 const REPEATED_PIPE_PATTERN = /\|{2,}/g
 const TRAILING_TITLE_JOINER_PATTERN = /\s+(?:and|or|for|to|with|in|on|at|by|of|the|a|an)$/i
 const TRAILING_TITLE_PUNCTUATION_PATTERN = /[\s,:;+&/-]+$/g
+const TRAILING_TITLE_PARTIAL_GROUP_PATTERN = /\s*[\(\[\{][^)\]\}]*$/g
 const TRAILING_DESCRIPTION_JOINER_PATTERN = /\s+(?:and|or|for|to|with|in|on|at|by|of|the|a|an|but)$/i
 const TRAILING_DESCRIPTION_PUNCTUATION_PATTERN = /[\s,:;+–—-]+$/g
 const SENTENCE_END_PATTERN = /[.!?](?=\s|$)/g
@@ -54,6 +55,32 @@ const COMMON_TERM_REPLACEMENTS: Array<[RegExp, string]> = [
   [/\bprism\b/gi, "Prism"],
 ]
 
+const MINIMAL_TITLE_REPLACEMENTS: Array<[RegExp, string]> = [
+  [/\banswer engine optimization\b/gi, "AEO"],
+  [/\bwebsite design\b/gi, "Websites"],
+  [/\bweb design\b/gi, "Websites"],
+  [/\bgoogle maps seo\b/gi, "SEO"],
+  [/\blocal seo\b/gi, "SEO"],
+  [/\bseo services?\b/gi, "SEO"],
+  [/\bpaid ads management\b/gi, "Ads"],
+  [/\bpaid ads\b/gi, "Ads"],
+  [/\bpaid media\b/gi, "Ads"],
+  [/\bcontent systems?\b/gi, "Content"],
+  [/\bmobile app development\b/gi, "Apps"],
+  [/\bai website builder\b/gi, "AI websites"],
+  [/\bai website launch\b/gi, "AI websites"],
+  [/\bportfolio\s*&\s*services\b/gi, ""],
+  [/\bfor small businesses?\b/gi, ""],
+  [/\bfor dental practices?\b/gi, ""],
+  [/\bfor dentists\b/gi, ""],
+  [/\bfor local (?:brands|teams|businesses)\b/gi, ""],
+  [/\bmanagement\b/gi, ""],
+  [/\bservices?\b/gi, ""],
+  [/\bagency\b/gi, ""],
+  [/\bconsultant\b/gi, ""],
+  [/\bexpert\b/gi, ""],
+]
+
 export function collapseWhitespace(value: string): string {
   return value.replace(/\s+/g, " ").trim()
 }
@@ -77,6 +104,22 @@ function normalizeCommonSeoTerms(value: string): string {
     (output, [pattern, replacement]) => output.replace(pattern, replacement),
     value,
   )
+}
+
+function simplifyMinimalTitle(value: string): string {
+  const simplified = MINIMAL_TITLE_REPLACEMENTS.reduce(
+    (output, [pattern, replacement]) => output.replace(pattern, replacement),
+    value,
+  )
+
+  return collapseWhitespace(
+    simplified
+      .replace(/\ba\s+(SEO|AEO|AI)\b/g, "an $1")
+      .replace(/\b(SEO|Ads|Apps|Content|AEO)\s+\1\b/gi, "$1")
+      .replace(/\s+([|/&,+-])/g, " $1")
+      .replace(/([|/&,+-])\s+/g, "$1 ")
+      .replace(/\s{2,}/g, " "),
+  ).trim()
 }
 
 function capitalizeLeadingLetter(value: string): string {
@@ -105,6 +148,14 @@ export function cleanTrimmedTitle(value: string): string {
   let output = collapseWhitespace(value)
 
   while (output.length > 0) {
+    const withoutPartialGroup = output
+      .replace(TRAILING_TITLE_PARTIAL_GROUP_PATTERN, "")
+      .trim()
+    if (withoutPartialGroup !== output) {
+      output = withoutPartialGroup
+      continue
+    }
+
     const withoutPunctuation = output.replace(TRAILING_TITLE_PUNCTUATION_PATTERN, "").trim()
     if (withoutPunctuation !== output) {
       output = withoutPunctuation
@@ -200,7 +251,9 @@ export function stripLeadingBrand(input: string): string {
 export function normalizeTitleStem(input: string): string {
   const withoutBrand = stripTerminalBrand(stripLeadingBrand(input))
   const cased = capitalizeLeadingLetter(
-    normalizeCommonSeoTerms(sentenceCaseIfNeeded(withoutBrand)),
+    simplifyMinimalTitle(
+      normalizeCommonSeoTerms(sentenceCaseIfNeeded(withoutBrand)),
+    ),
   )
   return cased || BRAND_NAME
 }
@@ -231,6 +284,32 @@ export function normalizeDescription(input: string): string {
   }
 
   return cleanTrimmedDescription(trimToWordBoundary(collapsed, DESCRIPTION_MAX_LENGTH))
+}
+
+export function buildMinimalDescription(
+  primary: string,
+  fallback?: string,
+): string {
+  const source = primary.trim().length > 0 ? primary : fallback ?? BRAND_NAME
+  const normalizedSource = normalizeTitleStem(source)
+  let output = cleanTrimmedDescription(
+    trimToWordBoundary(normalizedSource, DESCRIPTION_MAX_LENGTH - 1),
+  )
+
+  if (!output) {
+    output = cleanTrimmedDescription(
+      trimToWordBoundary(
+        normalizeDescription(fallback ?? BRAND_NAME),
+        DESCRIPTION_MAX_LENGTH - 1,
+      ),
+    )
+  }
+
+  if (!output) {
+    return `${BRAND_NAME}.`
+  }
+
+  return /[.!?]$/.test(output) ? output : `${output}.`
 }
 
 export function requiresManualBlogSeo(slug: string, title: string): boolean {

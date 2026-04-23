@@ -6,7 +6,7 @@ import { canonicalUrl } from '@/lib/canonical'
 import { renderPost } from '@/lib/mdx'
 import { getMdxToc } from '@/lib/mdx-toc'
 import { getPrismImpactForPost } from '@/lib/prism-blog-impact'
-import { buildAbsoluteTitle, normalizeDescription } from '@/lib/seo/rules'
+import { buildAbsoluteTitle, buildMinimalDescription } from '@/lib/seo/rules'
 import {
   getOutboundLinkRulesForPost,
   type BlogOutboundLinkProfile,
@@ -106,7 +106,8 @@ export async function generateMetadata({
 
   const canonical = canonicalUrl(frontmatter.canonical || `/blog/${slug}`)
   const seoTitle = buildAbsoluteTitle(frontmatter.seoTitle || frontmatter.title || 'Blog post')
-  const seoDescription = normalizeDescription(
+  const seoDescription = buildMinimalDescription(
+    frontmatter.seoTitle || frontmatter.title || 'Blog post',
     frontmatter.seoDescription || frontmatter.description,
   )
 

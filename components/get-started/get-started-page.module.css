@@ -1,0 +1,289 @@
+.sectionFrame {
+  position: relative;
+  isolation: isolate;
+}
+
+.sectionFrame::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at top left, rgba(255, 255, 255, 0.05), transparent 28%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent 26%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.scanlines::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.045) 0,
+    rgba(255, 255, 255, 0.045) 1px,
+    transparent 1px,
+    transparent 8px
+  );
+  mix-blend-mode: screen;
+  opacity: 0.06;
+  pointer-events: none;
+  z-index: 1;
+  animation: scanDrift 18s linear infinite;
+}
+
+.noiseField {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.18) 0.75px, transparent 0.75px);
+  background-size: 18px 18px;
+  opacity: 0.07;
+  filter: blur(0.15px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.corner {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-color: rgba(255, 255, 255, 0.24);
+  pointer-events: none;
+  z-index: 3;
+}
+
+.corner[data-corner="tl"] {
+  top: 18px;
+  left: 18px;
+  border-top-width: 1px;
+  border-left-width: 1px;
+}
+
+.corner[data-corner="tr"] {
+  top: 18px;
+  right: 18px;
+  border-top-width: 1px;
+  border-right-width: 1px;
+}
+
+.corner[data-corner="bl"] {
+  bottom: 18px;
+  left: 18px;
+  border-bottom-width: 1px;
+  border-left-width: 1px;
+}
+
+.corner[data-corner="br"] {
+  right: 18px;
+  bottom: 18px;
+  border-right-width: 1px;
+  border-bottom-width: 1px;
+}
+
+.processCard {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.processCard::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at 50% 100%,
+    rgb(var(--card-accent-rgb, 255 255 255) / 0.16),
+    transparent 52%
+  );
+  opacity: 0.85;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.processCard::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  box-shadow:
+    inset 0 0 0 1px rgb(var(--card-accent-rgb, 255 255 255) / 0.14),
+    0 0 36px rgb(var(--card-accent-rgb, 255 255 255) / 0.08);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.processCard:hover,
+.processCard:focus-within {
+  box-shadow: 0 0 0 1px rgb(var(--card-accent-rgb, 255 255 255) / 0.28);
+}
+
+.processCard .corner {
+  border-color: rgb(var(--card-accent-rgb, 255 255 255) / 0.9);
+}
+
+.asciiWrap {
+  position: relative;
+}
+
+.asciiWrap::before {
+  content: "";
+  position: absolute;
+  inset: -12% -8%;
+  background-image: radial-gradient(
+    rgb(var(--card-accent-rgb, 255 255 255) / 0.45) 0.8px,
+    transparent 0.8px
+  );
+  background-size: 14px 14px;
+  opacity: 0.14;
+  filter: blur(0.2px);
+  pointer-events: none;
+  z-index: 0;
+  animation: dustDrift 20s linear infinite;
+}
+
+.asciiArt {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  white-space: pre;
+  color: rgb(var(--card-accent-rgb, 255 255 255));
+  text-shadow: 0 0 14px rgb(var(--card-accent-rgb, 255 255 255) / 0.26);
+}
+
+.connector {
+  position: relative;
+}
+
+.connector::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  right: 10px;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.08),
+    rgba(255, 255, 255, 0.42),
+    rgba(255, 255, 255, 0.08)
+  );
+  transform: translateY(-50%);
+  animation: connectorPulse 2.8s ease-in-out infinite;
+}
+
+.connector::after {
+  content: "->";
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  transform: translateY(-50%);
+  color: rgba(255, 255, 255, 0.68);
+  letter-spacing: 0.18em;
+}
+
+.statusDot {
+  box-shadow: 0 0 18px currentColor;
+  animation: statusPulse 2.4s ease-in-out infinite;
+}
+
+.ctaFrame {
+  position: relative;
+  isolation: isolate;
+}
+
+.ctaFrame::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.02),
+    rgba(255, 255, 255, 0.06),
+    rgba(255, 255, 255, 0.02)
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+.formFrame {
+  position: relative;
+  isolation: isolate;
+  overflow: visible;
+}
+
+.formFrame::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at top right, rgba(158, 255, 46, 0.11), transparent 24%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.025), transparent 24%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.formFrame::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.06),
+    0 0 0 1px rgba(158, 255, 46, 0.08);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.microCluster {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.microCluster span {
+  display: inline-block;
+  width: 1.75rem;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.46);
+}
+
+@keyframes scanDrift {
+  from {
+    transform: translateY(0);
+  }
+
+  to {
+    transform: translateY(36px);
+  }
+}
+
+@keyframes dustDrift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  50% {
+    transform: translate3d(8px, -10px, 0);
+  }
+}
+
+@keyframes connectorPulse {
+  0%,
+  100% {
+    opacity: 0.45;
+  }
+
+  50% {
+    opacity: 0.9;
+  }
+}
+
+@keyframes statusPulse {
+  0%,
+  100% {
+    opacity: 0.68;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}

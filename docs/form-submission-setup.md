@@ -19,7 +19,7 @@ If you are working on the normal site experience, use these docs instead:
 
 ## What changed
 
-- `/get-started` no longer depends on a custom form-storage backend to render its live assistant surface.
+- `/get-started` is now the overview page for the application flow, and `/apply` is the dedicated Formspree-backed application route.
 - Supabase is no longer part of the supported website setup.
 - The legacy `/api/prism-leads` route has been removed. Current marketing capture is client-side Formspree only.
 

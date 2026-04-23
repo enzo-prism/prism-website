@@ -4,6 +4,7 @@ import {
   DESCRIPTION_MAX_LENGTH,
   TITLE_MAX_LENGTH,
   buildAbsoluteTitle,
+  buildMinimalDescription,
   cleanTrimmedTitle,
   normalizeDescription,
   normalizeTitleStem,
@@ -11,7 +12,7 @@ import {
 
 describe("SEO metadata rules", () => {
   it("normalizes title stems by removing trailing brand suffix variants", () => {
-    expect(normalizeTitleStem("seo audit service | prism | prism")).toBe("SEO audit service")
+    expect(normalizeTitleStem("seo audit service | prism | prism")).toBe("SEO audit")
     expect(normalizeTitleStem("local listings - Design Prism")).toBe("Local listings")
   })
 
@@ -21,10 +22,15 @@ describe("SEO metadata rules", () => {
   })
 
   it("preserves useful brand descriptors and common SEO acronyms", () => {
-    expect(normalizeTitleStem("ai seo services | prism")).toBe("AI SEO services")
+    expect(normalizeTitleStem("ai seo services | prism")).toBe("AI SEO")
     expect(normalizeTitleStem("wine country root canal | prism case study")).toBe(
       "Wine country root canal | Case Study",
     )
+  })
+
+  it("simplifies common title filler before truncation", () => {
+    expect(normalizeTitleStem("paid ads management for small businesses | prism")).toBe("Ads")
+    expect(normalizeTitleStem("local seo agency | prism")).toBe("SEO")
   })
 
   it("builds absolute titles with exactly one Prism suffix", () => {
@@ -38,6 +44,7 @@ describe("SEO metadata rules", () => {
   it("cleans awkward trailing punctuation and joiners from shortened titles", () => {
     expect(cleanTrimmedTitle("Websites, google maps seo +")).toBe("Websites, google maps seo")
     expect(cleanTrimmedTitle("Paid ads management for")).toBe("Paid ads management")
+    expect(cleanTrimmedTitle("How to choose an SEO (checklist +")).toBe("How to choose an SEO")
   })
 
   it("normalizes descriptions to sentence case and trims to configured max length", () => {
@@ -57,6 +64,15 @@ describe("SEO metadata rules", () => {
       normalizeDescription("prism builds google maps seo with ai and ga4 reporting."),
     ).toBe("Prism builds Google Maps SEO with AI and GA4 reporting.")
   })
+
+  it("builds minimal descriptions from the route title when requested", () => {
+    expect(
+      buildMinimalDescription(
+        "website design, content, seo + ads",
+        "Done-for-you website design, content systems, SEO, and paid ads for local brands.",
+      ),
+    ).toBe("Websites, content, SEO + ads.")
+  })
 })
 
 describe("buildRouteMetadata", () => {
@@ -75,7 +91,7 @@ describe("buildRouteMetadata", () => {
       : []
 
     expect(metadata.title).toEqual({ absolute: "Pricing | Prism" })
-    expect(metadata.description).toBe("Simple pricing for local growth teams")
+    expect(metadata.description).toBe("Pricing.")
     expect(metadata.alternates?.canonical).toBe("https://www.design-prism.com/pricing")
     expect(ogImages[0]).toMatchObject({ url: "/pricing-og.png" })
     expect(metadata.twitter?.images).toEqual(["/pricing-og.png"])

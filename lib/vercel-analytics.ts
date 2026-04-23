@@ -90,11 +90,116 @@ export function buildVercelCustomEvent(
         }),
       }
     case "form_submit":
+    case "form_submit_success":
       return {
         name: "Form Submitted",
         properties: compactProperties({
           form_name: typeof eventParams.form_name === "string" ? eventParams.form_name : undefined,
           form_location: typeof eventParams.form_location === "string" ? eventParams.form_location : undefined,
+        }),
+      }
+    case "apply_form_view":
+      return {
+        name: "Apply Form Viewed",
+        properties: compactProperties({
+          form_location: typeof eventParams.form_location === "string" ? eventParams.form_location : undefined,
+        }),
+      }
+    case "apply_form_start":
+      return {
+        name: "Apply Form Started",
+        properties: compactProperties({
+          form_name: typeof eventParams.form_name === "string" ? eventParams.form_name : undefined,
+          form_location: typeof eventParams.form_location === "string" ? eventParams.form_location : undefined,
+          step: typeof eventParams.step === "number" ? eventParams.step : undefined,
+        }),
+      }
+    case "apply_step_1_complete":
+    case "apply_step_2_complete":
+      return {
+        name: "Apply Step Completed",
+        properties: compactProperties({
+          step: typeof eventParams.step === "number" ? eventParams.step : undefined,
+          budget: typeof eventParams.budget === "string" ? eventParams.budget : undefined,
+          service_count:
+            typeof eventParams.service_count === "number" ? eventParams.service_count : undefined,
+        }),
+      }
+    case "apply_submit":
+      return {
+        name: "Apply Submitted",
+        properties: compactProperties({
+          budget: typeof eventParams.budget === "string" ? eventParams.budget : undefined,
+          timeline: typeof eventParams.timeline === "string" ? eventParams.timeline : undefined,
+          service_count:
+            typeof eventParams.service_count === "number" ? eventParams.service_count : undefined,
+        }),
+      }
+    case "apply_success":
+      return {
+        name: "Apply Success",
+        properties: compactProperties({
+          source: typeof eventParams.source === "string" ? eventParams.source : undefined,
+          budget: typeof eventParams.budget === "string" ? eventParams.budget : undefined,
+          timeline: typeof eventParams.timeline === "string" ? eventParams.timeline : undefined,
+          has_website:
+            typeof eventParams.has_website === "string" ? eventParams.has_website : undefined,
+          primary_goal:
+            typeof eventParams.primary_goal === "string" ? eventParams.primary_goal : undefined,
+          service_count:
+            typeof eventParams.service_count === "number" ? eventParams.service_count : undefined,
+        }),
+      }
+    case "generate_lead":
+      return {
+        name: "Lead Generated",
+        properties: compactProperties({
+          form_name: typeof eventParams.form_name === "string" ? eventParams.form_name : undefined,
+          form_location:
+            typeof eventParams.form_location === "string" ? eventParams.form_location : undefined,
+          lead_type: typeof eventParams.lead_type === "string" ? eventParams.lead_type : undefined,
+          lead_source:
+            typeof eventParams.lead_source === "string" ? eventParams.lead_source : undefined,
+          budget: typeof eventParams.budget === "string" ? eventParams.budget : undefined,
+          timeline: typeof eventParams.timeline === "string" ? eventParams.timeline : undefined,
+          has_website:
+            typeof eventParams.has_website === "string" ? eventParams.has_website : undefined,
+          primary_goal:
+            typeof eventParams.primary_goal === "string" ? eventParams.primary_goal : undefined,
+          service_count:
+            typeof eventParams.service_count === "number" ? eventParams.service_count : undefined,
+        }),
+      }
+    case "apply_error":
+      return {
+        name: "Apply Error",
+        properties: compactProperties({
+          reason: typeof eventParams.reason === "string" ? eventParams.reason : undefined,
+          status: typeof eventParams.status === "number" ? eventParams.status : undefined,
+        }),
+      }
+    case "apply_abandon_step_1":
+    case "apply_abandon_step_2":
+      return {
+        name: "Apply Abandoned",
+        properties: compactProperties({
+          step: typeof eventParams.step === "number" ? eventParams.step : undefined,
+        }),
+      }
+    case "apply_budget_selected":
+      return {
+        name: "Apply Budget Selected",
+        properties: compactProperties({
+          budget: typeof eventParams.budget === "string" ? eventParams.budget : undefined,
+        }),
+      }
+    case "apply_service_selected":
+      return {
+        name: "Apply Service Selected",
+        properties: compactProperties({
+          service: typeof eventParams.service === "string" ? eventParams.service : undefined,
+          selected:
+            typeof eventParams.selected === "boolean" ? eventParams.selected : undefined,
         }),
       }
     case "service_card_click":

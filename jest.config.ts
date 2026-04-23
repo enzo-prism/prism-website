@@ -18,7 +18,8 @@ const config: Config = {
     '^.+\\.(ts|tsx)$': ['ts-jest', { tsconfig: 'tsconfig.jest.json' }],
   },
   transformIgnorePatterns: ['/node_modules/(?!(next-mdx-remote)/)'],
-  testPathIgnorePatterns: ['<rootDir>/__tests__/visual/'],
+  modulePathIgnorePatterns: ['<rootDir>/.claude/'],
+  testPathIgnorePatterns: ['<rootDir>/__tests__/visual/', '<rootDir>/.claude/'],
   setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
 }
 

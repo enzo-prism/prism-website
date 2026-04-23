@@ -48,19 +48,29 @@ export function useFormValidation(options?: UseFormValidationOptions) {
     [hasSubmitted, updateFieldError]
   )
 
+  const validateFields = useCallback((fields: ValidFieldElement[]) => {
+    setHasSubmitted(true)
+    const newErrors: ErrorMap = {}
+    let isValid = true
+
+    fields.forEach((field) => {
+      if (!field.name) return
+      const fieldError = field.validity.valid ? "" : field.validationMessage
+      newErrors[field.name] = fieldError
+      if (fieldError) {
+        isValid = false
+      }
+    })
+
+    setErrors((prev) => ({ ...prev, ...newErrors }))
+    return isValid
+  }, [])
+
   const handleSubmit = useCallback(
     async (event: FormEvent<HTMLFormElement>) => {
       event.preventDefault()
       const form = event.currentTarget
-      setHasSubmitted(true)
-      if (!form.checkValidity()) {
-        const newErrors: ErrorMap = {}
-        Array.from(form.elements).forEach((element) => {
-          if (isFieldElement(element) && element.name) {
-            newErrors[element.name] = element.validity.valid ? "" : element.validationMessage
-          }
-        })
-        setErrors((prev) => ({ ...prev, ...newErrors }))
+      if (!validateFields(Array.from(form.elements).filter(isFieldElement))) {
         setIsSubmitting(false)
         return
       }
@@ -77,7 +87,7 @@ export function useFormValidation(options?: UseFormValidationOptions) {
         setIsSubmitting(false)
       }
     },
-    [onValidSubmit]
+    [onValidSubmit, validateFields]
   )
 
   const getError = useCallback(
@@ -94,5 +104,6 @@ export function useFormValidation(options?: UseFormValidationOptions) {
     handleInput,
     handleSubmit,
     isSubmitting,
+    validateFields,
   }
 }

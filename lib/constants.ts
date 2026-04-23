@@ -27,15 +27,9 @@ export const LOGO_SIZES = {
 
 export const FREE_AUDIT_CTA_TEXT = "Get started"
 
-// New primary navigation structure
-export type NavChild = { label: string; href: string }
-export type NavItem = { label: string; href?: string; children?: NavChild[]; emoji?: string }
+export type NavItem = { label: string; href: string }
 
-// Updated primary navigation to required structure
 export const NAV_ITEMS: NavItem[] = [
-  { label: "our story", href: "/about" },
-  { label: "software", href: "/software" },
-  { label: "blog", href: "/blog" },
   { label: "case studies", href: "/case-studies" },
   { label: "wall of love", href: "/wall-of-love" },
   { label: "start", href: "/get-started" },

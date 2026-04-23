@@ -79,7 +79,12 @@ export default function CheckoutForm({ plan }: CheckoutFormProps) {
 
   return (
     <div className="w-full max-w-md mx-auto space-y-8">
-      <form onSubmit={handleSubmit} className="space-y-6">
+      <form
+        id={`checkout_${plan}`}
+        name={`checkout_${plan}`}
+        onSubmit={handleSubmit}
+        className="space-y-6"
+      >
         <div className="space-y-2">
           <Label htmlFor="name">Full Name</Label>
           <Input

@@ -10,14 +10,11 @@ import "./globals.css"
 import { GlobalSchemaGraph } from "@/components/schema-markup"
 import RuntimeClientShell from "@/components/runtime-client-shell"
 import SkipToContent from "@/components/skip-to-content"
-import VercelAnalytics from "@/components/vercel-analytics"
 import { GA_MEASUREMENT_ID, GOOGLE_ADS_ID, IS_ANALYTICS_ENABLED } from "@/lib/constants"
-import { buildAbsoluteTitle, normalizeDescription } from "@/lib/seo/rules"
+import { buildAbsoluteTitle, buildMinimalDescription } from "@/lib/seo/rules"
 
-const DEFAULT_TITLE = buildAbsoluteTitle("Website design, local SEO + paid ads")
-const DEFAULT_DESCRIPTION = normalizeDescription(
-  "Prism builds websites, local SEO, and paid ads for local brands that want more qualified leads.",
-)
+const DEFAULT_TITLE = buildAbsoluteTitle("Websites, SEO + ads")
+const DEFAULT_DESCRIPTION = buildMinimalDescription("Websites, SEO + ads")
 
 export const metadata: Metadata = {
   title: DEFAULT_TITLE,
@@ -93,12 +90,12 @@ export default function RootLayout({
             {/* Google tag (gtag.js) */}
             <Script
               id="ga-loader"
-              strategy="lazyOnload"
+              strategy="afterInteractive"
               src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
             />
             <Script
               id="ga-config"
-              strategy="lazyOnload"
+              strategy="afterInteractive"
               dangerouslySetInnerHTML={{
                 __html: `
                   window.dataLayer = window.dataLayer || [];
@@ -141,11 +138,10 @@ export default function RootLayout({
       {/* Fonts are wired via Geist CSS variables on <html>; Tailwind's `font-sans` / `font-mono`
         resolve via `--font-sans` / `--font-mono` in `app/globals.css`.
       */}
-      <body className="m-0 p-0 w-full min-h-screen font-mono antialiased">
+      <body className="m-0 p-0 w-full min-h-screen font-sans antialiased">
         <SkipToContent />
         <GlobalSchemaGraph />
         <RuntimeClientShell />
-        <VercelAnalytics />
         <Suspense fallback={null}>
           {children}
         </Suspense>

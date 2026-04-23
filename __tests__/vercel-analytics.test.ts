@@ -62,6 +62,63 @@ describe("Vercel analytics URL normalization", () => {
     })
   })
 
+  it("builds compact apply-submit events for the Vercel dashboard", () => {
+    expect(
+      buildVercelCustomEvent("apply_submit", {
+        budget: "$1.5k to $3k",
+        timeline: "Within 30 days",
+        service_count: 2,
+        noisy: "ignore",
+      }),
+    ).toEqual({
+      name: "Apply Submitted",
+      properties: {
+        budget: "$1.5k to $3k",
+        timeline: "Within 30 days",
+        service_count: 2,
+      },
+    })
+  })
+
+  it("maps the renamed form submit success event into the same compact Vercel payload", () => {
+    expect(
+      buildVercelCustomEvent("form_submit_success", {
+        form_name: "contact",
+        form_location: "contact_form",
+      }),
+    ).toEqual({
+      name: "Form Submitted",
+      properties: {
+        form_name: "contact",
+        form_location: "contact_form",
+      },
+    })
+  })
+
+  it("builds a compact lead-generated event for the confirmed apply success", () => {
+    expect(
+      buildVercelCustomEvent("generate_lead", {
+        form_name: "growth_application",
+        form_location: "apply_page",
+        lead_type: "growth_application",
+        lead_source: "google",
+        budget: "$3k to $5k",
+        service_count: 2,
+        noisy: "ignore",
+      }),
+    ).toEqual({
+      name: "Lead Generated",
+      properties: {
+        form_name: "growth_application",
+        form_location: "apply_page",
+        lead_type: "growth_application",
+        lead_source: "google",
+        budget: "$3k to $5k",
+        service_count: 2,
+      },
+    })
+  })
+
   it("ignores non-marketing custom events for Vercel event tracking", () => {
     expect(buildVercelCustomEvent("navigation", { destination: "/pricing" })).toBeNull()
   })

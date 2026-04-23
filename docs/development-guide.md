@@ -8,50 +8,50 @@ This guide highlights the workflows we lean on most often while iterating on the
 - Start the Next.js dev server with `pnpm dev`.
 - If you use `pnpm exec next start` for a production-parity preview, always run `pnpm build` immediately beforehand. `next start` serves the last production bundle on disk, so source edits will appear "ignored" until you rebuild.
 - Run `pnpm lint` before committing so the shared Tailwind + ESLint rules stay consistent.
-- For `/get-started` or floating-widget assistant-surface changes, run:
-  - `pnpm exec jest __tests__/app/get-started.test.tsx __tests__/components/GlobalElevenLabsWidget.test.tsx __tests__/components/ElevenLabsWidget.test.tsx --runInBand`
+- For `/get-started`, `/apply`, or floating-widget assistant-surface changes, run:
+  - `pnpm exec jest __tests__/app/get-started.test.tsx __tests__/app/apply.test.tsx __tests__/components/GetStartedForm.test.tsx __tests__/components/GlobalElevenLabsWidget.test.tsx __tests__/components/ElevenLabsWidget.test.tsx --runInBand`
   - `pnpm test:visual:widget`
 - For pricing-sensitive changes, run:
   - `pnpm verify:pricing-consistency`
 - For non-chat changes touching shared infrastructure, update and run the nearest smoke tests in the relevant package (`pnpm test`, `pnpm test:visual:locked`, etc.) before merging.
-- Run `pnpm test:visual:locked` before merging changes that touch the UI of `/`, `/about`, or `/pricing` (screenshot-locked routes).
+- Run `pnpm test:visual:locked` before merging changes that touch the UI of `/`, `/about`, `/pricing`, or `/get-started` (screenshot-locked routes).
 - `pnpm test:visual:locked` now builds with `NEXT_PUBLIC_ELEVENLABS_WIDGET_DISABLED=true` and boots an isolated `next start` server on port `3300`, so the locked route snapshots stay focused on first-party page chrome instead of the live third-party ElevenLabs overlay or whichever localhost server happens to already be running. `pnpm test:visual:widget` does the inverse: it forces a fresh production build without the kill switch so the real widget behavior check never reuses a stale disabled bundle.
+- For cross-browser route-load smoke checks, run `pnpm build`, start `pnpm start -p 3301` in a second terminal, then run `pnpm test:performance:smoke`. The smoke script covers `/`, `/about`, `/pricing`, and `/get-started` on Chromium, Firefox, and WebKit using both desktop and mobile profiles.
 - Run `pnpm test:visual` when you need broader visual coverage beyond the locked routes.
 - Run `pnpm exec playwright test __tests__/visual/blog-copy-markdown.spec.ts --project=desktop-chromium` when changing the blog markdown copy button or `/api/blog/[slug]/markdown`.
-- Run `pnpm test:visual:widget` when changing the route-aware ElevenLabs launcher outside the homepage hero.
+- Run `pnpm test:visual:widget` when changing the route-aware ElevenLabs launcher behavior.
 - For blog-post content/frontmatter additions, run `pnpm exec jest __tests__/sitemap.test.ts __tests__/blog-canonical.test.ts --runInBand` as a fast regression check.
 
-### Homepage hero agent checklist
+### Homepage refresh checklist
 
-- The homepage hero (`app/client-page.tsx`) now treats the ElevenLabs sales agent as the primary above-the-fold interaction. Keep the page itself server-rendered and isolate the live agent inside `components/home/HomeHeroAgent.tsx`.
-- The current hero is intentionally minimal: a solid white stage, the `Prism` wordmark, `impossible is temporary.`, a single subtle `founded 2023 in san francisco` line, and the embedded agent. Avoid reintroducing multi-CTA marketing clutter into this first viewport without a strong reason.
-- `HomeHeroAgent` uses the official ElevenLabs widget embed (`https://unpkg.com/@elevenlabs/convai-widget-embed`) and renders the inline `<elevenlabs-convai>` custom element.
+- The homepage first viewport is one integrated dark composition: shared site navbar, copy-led hero card, and a subtle ASCII motion layer behind the text instead of a route-only overlay header treatment.
+- The homepage structure is intentionally curated: hero, ecosystem, proof, founder, and final CTA. Avoid reintroducing older apps/training/wall-of-love-carousel sections unless product direction changes.
+- `components/home/HomeHeroSection.tsx` is the canonical homepage hero surface. Keep the shared `AsciiHeroBackdrop` treatment restrained so motion supports the copy instead of overpowering it.
+- Keep the reduced-motion fallback pinned to the static ASCII frame so visual tests remain deterministic, and keep the shared navbar/footer consistent across the homepage and inner routes.
+- The section below the hero is now intentionally quieter. `components/home/HomeEcosystemSection.tsx` should explain how Prism compounds results without reusing the same animated logo-orbit language already established in the hero.
 - ElevenLabs renders markdown in agent replies, but external links only become clickable when the host is allowlisted on the widget. Keep `markdown-link-allowed-hosts` in sync with whatever calendar or booking destination the agent is instructed to share, rely on the documented `markdown-link-include-www="true"` behavior instead of duplicating `www` hosts in code, and keep `markdown-link-allow-http="false"` so the public widget never emits insecure links.
-- Mobile spacing is intentionally biased toward the inline agent: the hero aligns from the top on small screens, the copy stack stays tight, and `HomeHeroAgent` now reserves roughly `35rem` of height on narrow viewports so the widget can use its supported compact layout without clipping the orb or crowding the textarea.
-- Keep the stock widget aligned with the official docs: wrapper-only layout, documented attributes, and dashboard-level styling. The homepage hero uses `variant="expanded"` with `dismissible="false"` so the inline product surface stays stable without unsupported Shadow DOM patches.
-- Avoid deep compact-mode geometry overrides inside the widget Shadow DOM. ElevenLabs treats the embed as an opinionated surface; keep homepage customization focused on wrapper sizing and supported attributes, and move heavier design customization to the official SDK/UI layer if we need a bespoke chat surface later.
+- Keep the stock widget aligned with the official docs: wrapper-only layout, documented attributes, and dashboard-level styling.
+- Avoid deep geometry overrides inside the widget Shadow DOM. ElevenLabs treats the embed as an opinionated surface; keep customization focused on supported attributes and host-level layering, and move heavier design customization to the official SDK/UI layer if we need a bespoke chat surface later.
 - The stock embed runtime forces its own host positioning, so `components/elevenlabs/ElevenLabsWidget.tsx` now re-applies only the host-level styles we actually need after the custom element mounts. Use that path for safe layer fixes like homepage section scoping or inner-page z-index elevation; do not reach into vendor shadow children for layout control.
 - The public agent id resolves via `lib/elevenlabs.ts` and can be overridden with `NEXT_PUBLIC_ELEVENLABS_AGENT_ID`.
-- `components/global-elevenlabs-widget.tsx` now renders the stock floating widget on every non-homepage route, including `/get-started`. Keep it out of the way on `/` so the homepage hero remains the primary experience, but do not add route-level suppression on `/get-started` unless the product direction explicitly changes again. The floating widget now treats the first route in the current tab as its default-open signal: homepage-first visits open the inner-page widget by default, direct inner-page landings stay closed, and later user expand/collapse choices persist across future mounts.
-- The homepage widget host should stay absolutely scoped to the `.home-hero-agent` container so it scrolls with the hero instead of floating above later sections, while the global floating host should stay at a top-most z-index so nav, skip links, charts, and other fixed site chrome never render above the expanded widget.
-- The runtime shell loads the official widget embed script once via `components/elevenlabs/ElevenLabsWidget.tsx`, then both homepage and inner-page widgets reuse that same stock embed path.
-- `NEXT_PUBLIC_ELEVENLABS_WIDGET_DISABLED` exists as a deliberate debug/test seam. When set to a truthy value, the stock embed script, homepage hero widget, and floating widget all stay unmounted so deterministic visual builds do not bake live vendor UI into locked snapshots.
+- `components/global-elevenlabs-widget.tsx` now renders the stock floating widget on public pages, including `/`, `/get-started`, and `/apply`. With no saved preference, it should stay closed by default; explicit user expand/collapse choices persist across future mounts.
+- The floating host should stay at a top-most z-index so nav, skip links, charts, and other fixed site chrome never render above the expanded widget.
+- `components/runtime-client-shell.tsx` now keeps route-surface setup plus the core GA page/form listener layer on the critical path, while `components/runtime-deferred-features.tsx` still defers heavier client-only work like monitors, Vercel Analytics, and the public widget bundle during browser idle time.
+- `NEXT_PUBLIC_ELEVENLABS_WIDGET_DISABLED` exists as a deliberate debug/test seam. When set to a truthy value, the stock embed script and floating widget stay unmounted so deterministic visual builds do not bake live vendor UI into locked snapshots.
 - `components/elevenlabs/PrismElevenLabsPanel.tsx` and the richer client-tool helpers in `lib/elevenlabs.ts` remain in the repo as exploratory/legacy paths, but they are not mounted in production right now. Do not swap them back in casually when the product goal is "look and behave like the official widget."
 - In dev, the stock widget may log `[ConversationalAI] Cannot fetch config for agent ... signal is aborted without reason` during Fast Refresh or unmount cleanup. The current ElevenLabs bundle aborts its own config fetch on cleanup, so treat that message as harmless if the widget still renders and `pnpm build` + `pnpm start` are clean.
-- If you change hero copy/layout, update the locked-route snapshot test and re-run `pnpm test:visual:locked`.
-- If you change the homepage or global widget interaction model, re-run `pnpm exec jest __tests__/components/HomeHeroAgent.test.tsx __tests__/components/GlobalElevenLabsWidget.test.tsx __tests__/components/ElevenLabsWidget.test.tsx`.
+- If you change hero copy/layout or the Signal Convergence SVG timing/geometry, update the locked-route snapshot test and re-run `pnpm test:visual:locked`.
+- If you change the homepage or global widget interaction model, re-run `pnpm exec jest __tests__/components/GlobalElevenLabsWidget.test.tsx __tests__/components/ElevenLabsWidget.test.tsx`.
 - For z-index, scrolling, or layout bugs involving the stock widget, validate against a fresh production bundle: `pnpm build && pnpm start -p <port>`. `next start` serves the last production build on disk, and the ElevenLabs custom element can behave differently from `pnpm dev` / Fast Refresh.
 - The fastest runtime sanity checks are:
-  - homepage: widget host should compute to `position: absolute`, `inset: 0`, and share the same rect as `.home-hero-agent`
-  - inner pages: widget host should compute to `position: fixed` with the elevated global z-index and remain topmost in the visible widget region after scrolling
+  - homepage and inner pages: widget host should compute to `position: fixed` with the elevated global z-index and remain topmost in the visible widget region after scrolling
+  - default first-load behavior: widget should mount collapsed unless the user has already saved an explicit preference
 - The stock widget does not expose a documented "full-screen page-blocking modal" mode. Treat the visible widget surface as the layering boundary we control today; if product wants a true viewport scrim that blocks all underlying content, that is a migration conversation to ElevenLabs' official SDK/UI layer rather than a Shadow DOM styling patch.
 
 ### Retired custom sales-chat note
 
 - The old custom `SalesChat` client, `/api/chat`, `/api/sales-chat/*`, and related orchestration helpers are no longer part of the supported Prism website stack.
-- The live assistant experience is the stock ElevenLabs widget only:
-  - homepage hero via `components/home/HomeHeroAgent.tsx`
-  - floating launcher on inner pages via `components/global-elevenlabs-widget.tsx`
+- The live assistant experience is the stock ElevenLabs floating widget via `components/global-elevenlabs-widget.tsx`.
 - If product ever needs a custom assistant again, treat it as a fresh implementation with new docs, tests, and contracts instead of assuming the pre-2026 deterministic chat backend still exists.
 
 ## Styling Pipeline
@@ -72,6 +72,7 @@ Key details:
 - Forms post to Formspree via `fetch` with `Accept: application/json`. On success we push the user to `/thank-you` or `/analysis-thank-you` so our custom screens always render.
 - Use the `_subject` hidden field for inbox filtering and `_gotcha` as the honeypot.
 - When adding a new Formspree endpoint, import `useFormValidation({ onValidSubmit })` and only navigate after the request returns `response.ok`.
+- `/get-started` is now the overview/entry page for the application flow, while `/apply` is the dedicated 2-step application form. Keep the copy and thank-you flow explicit that review is guaranteed after a real submission, while the later strategy meeting is optional and selective.
 
 ### AEO assessment landing regression tests
 
@@ -84,7 +85,7 @@ Key details:
 
 ## Thank-You Screens
 
-Custom confirmation routes live in `app/thank-you/` and `app/analysis-thank-you/`. Each page is a simple card layout (hero card, CTA card, contact info). If you add new flows, point them to one of these routes for consistency.
+Custom confirmation routes live in `app/thank-you/` and `app/analysis-thank-you/`. Keep them minimal and truthful to the originating flow. The shared `/thank-you` page now emphasizes receipt + review rather than automatically promising a meeting, and the `/apply` flow uses `?source=apply` so the thank-you screen can render the stricter application-specific expectation setting.
 
 ## SEO Hygiene
 
@@ -123,12 +124,23 @@ Custom confirmation routes live in `app/thank-you/` and `app/analysis-thank-you/
 ### Analytics & Conversion Tracking
 
 - Global Google Analytics + Google Ads tagging happens in `app/layout.tsx`. Both IDs come from `lib/constants.ts` (`GA_MEASUREMENT_ID` and `GOOGLE_ADS_ID`), so set `NEXT_PUBLIC_GA_MEASUREMENT_ID` if you need to override the fallback GA property.
+- GA now loads with `afterInteractive` so the critical pageview + lead funnel listeners attach earlier. Keep heavier client-only systems deferred, but do not push the core GA page/form listeners behind browser-idle loading again unless we intentionally accept lower analytics fidelity.
 - Global mobile viewport policy also lives in `app/layout.tsx` via Next.js `export const viewport`. We currently lock mobile zoom site-wide (`initialScale = minimumScale = maximumScale = 1`, `userScalable = false`), so treat changes there as a product/accessibility decision, not a route-level tweak.
 - Vercel Web Analytics is mounted globally in `app/layout.tsx` via `components/vercel-analytics.tsx` using `@vercel/analytics/next`. We preserve `utm_*` parameters for campaign filtering while stripping non-marketing query params and hash fragments in `lib/vercel-analytics.ts`.
-- High-intent marketing actions also flow into Vercel custom events through `utils/analytics.ts` (`cta_click`, `form_submit`, downloads, outbound links, and video interactions). Keep those event payloads compact and non-PII so they stay useful in the Vercel dashboard across plan tiers.
+- SPA pageviews are manually sent through `trackPageView(...)` in `utils/analytics.ts`. Do not reintroduce route-change `gtag('config', ...)` calls for pageview updates; GA4's own docs warn that mixing manual pageviews with extra config-driven pageviews can create duplicates.
+- High-intent marketing actions also flow into Vercel custom events through `utils/analytics.ts` (`cta_click`, `form_submit_success`, downloads, outbound links, video interactions, and `generate_lead`). Keep those event payloads compact and non-PII so they stay useful in the Vercel dashboard across plan tiers.
 - Marketing attribution is persisted client-side in `lib/marketing-attribution.ts` and injected into form submissions at submit time, so Formspree lead records retain first-touch source context alongside the thank-you page conversion flow.
+- GA4 enhanced measurement form reporting depends on the real DOM `<form id="...">` / `name="..."` attributes, not just hidden `form_name` inputs. Every marketing form should expose both so GA can populate `form_id` and `form_name` consistently in automatic `form_start` / `form_submit` events.
+- The `/apply` funnel now uses a layered event model:
+  - automatic GA4 enhanced measurement: `form_start`, `form_submit`
+  - custom funnel detail: `apply_form_view`, `apply_form_start`, `apply_step_1_complete`, `apply_step_2_complete`, `apply_submit`, `apply_error`, `apply_success`
+  - canonical lead conversion: `generate_lead` on the `/thank-you?source=apply` success state
 - Any route-level conversion (e.g., `/thank-you`) should load its own `<Script>` that fires the relevant `gtag('event', 'conversion', { send_to: 'AW-…' })`. See `app/thank-you/page.tsx` for the exact snippet tied to `AW-11373090310/hBMrCMijk70bEIasjq8q`.
 - When building a new landing page with a Formspree form, make sure the success handler navigates to `/thank-you` so the Ads conversion snippet runs and the GA pageview records properly.
+- GA4 property follow-up after code changes:
+  - Mark `generate_lead` as the key event for the apply flow.
+  - Register custom dimensions for whichever non-PII lead parameters you want in standard reports, such as `form_location`, `lead_type`, `budget`, `timeline`, `primary_goal`, `has_website`, and `service_count`.
+  - Keep GA4 enhanced measurement form interactions enabled so the automatic `form_start` / `form_submit` events continue to complement the custom funnel events.
 
 ## Mobile Hero Video Safety
 
@@ -149,6 +161,7 @@ Custom confirmation routes live in `app/thank-you/` and `app/analysis-thank-you/
 ## Mobile Hero ASCII Resilience
 
 - ASCII animations use preview-first loading plus optional partial-frame batching in `components/ascii/AsciiAnimation.tsx`.
+- `components/home/DeferredAsciiHeroBackdrop.tsx` now treats the homepage/about ASCII hero motion as progressive enhancement. It waits for idle time and skips the animated backdrop on small screens, reduced-motion contexts, slow connections, or lower-power devices so the copy paints first.
 - New props for fault-tolerant loading:
   - `loadStrategy?: "batch" | "all"` (default: `"batch"`)
   - `batchSize?: number` (default: `24`)
@@ -160,10 +173,10 @@ Custom confirmation routes live in `app/thank-you/` and `app/analysis-thank-you/
 
 ## Pricing Page Content
 
-- Pricing UI is in `app/pricing/client-page.tsx` with the hero modal split into `components/pricing/PricingHero.tsx`.
+- Pricing UI is in `app/pricing/client-page.tsx` with the shared dark-system hero in `components/pricing/PricingHero.tsx`.
 - Keep canonical pricing copy exact on this page: `$1,000 one-time`, `$2,000/month`, and `$0` free audit.
 - Structured data here should only emit canonical offers and point to `https://www.design-prism.com/pricing`.
-- When introducing a new section, wrap it with `RevealOnScroll` helpers for consistent motion.
+- Pricing, about, homepage, and `/get-started` now share the core-route typography and CTA system from `components/core-route/CoreRoutePrimitives.tsx`. Reuse those primitives before hand-rolling new route-level actions or section headers.
 
 ## Free Analysis & Contact Pages
 
@@ -195,11 +208,11 @@ Form note: our marketing forms rely on native HTML5 validation via `useFormValid
 
 The navbar dynamically sets a CSS variable (`--prism-header-height`) so other sticky UI can position itself below the full header stack (including case study breadcrumbs). If a route mounts `CaseStudySectionNav`, it also sets `--prism-case-study-nav-height` via `useCaseStudyStickyNavHeight` (see `hooks/use-case-study-sticky-nav.ts`), and jump targets rely on `scroll-margin-top` for correct offsets when scrolling into view. Current live case study detail pages are simplified and do not render chapter menus, but the offset plumbing stays available for any future long-form routes.
 
-## Navbar Icon Hover Motion
+## Navbar And Footer
 
-- Navbar icons animate and tint on hover via the `.nav-link` + `.nav-icon` classes in `components/navbar.tsx` and the motion rules in `app/globals.css`.
-- Primary nav labels (including `blog`) are defined in `lib/constants.ts` (`NAV_ITEMS`); when you add/remove an item, update `topIconMap` in `components/navbar.tsx` and add/remove the matching `.nav-icon-*` hover rule in `app/globals.css`.
-- Keep hover effects transform-only (plus icon color) and subtle so text layout stays stable and reduced-motion preferences remain respected.
+- `components/navbar.tsx` and `components/footer.tsx` are the canonical site chrome for both the homepage and inner routes. Prefer changing them once instead of introducing route-specific variants unless product direction explicitly splits the chrome again.
+- The current chrome language is minimal black surfaces, white/off-white type, and text-first hover states. Keep hover changes color-only so text remains readable and layout stays stable.
+- Primary nav labels live in `lib/constants.ts` (`NAV_ITEMS`). When you add or remove an item, verify the shared desktop nav, mobile sheet, locked route snapshots, and a representative case study detail page.
 
 ## Deployment
 

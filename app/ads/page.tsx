@@ -5,7 +5,7 @@ import ScrollToTop from "@/components/scroll-to-top"
 import SimpleBlogGrid from "@/components/simple-blog-grid"
 import SimpleBlogPostCard from "@/components/simple-blog-post-card"
 import { ServiceSchema } from "@/components/schema-markup"
-import ServiceIllustration from "@/components/animated/ServiceIllustration"
+import AdsHeroIllustration from "@/components/animated/AdsHeroIllustration"
 import VideoPlayer from "@/components/video-player"
 import { Button } from "@/components/ui/button"
 import { ArrowRight, Check } from "lucide-react"
@@ -244,10 +244,9 @@ export default async function AdsPage() {
             <div
               tabIndex={0}
               role="group"
-              className="group mx-auto flex h-56 w-full max-w-[20rem] items-center justify-center rounded-3xl border border-neutral-200 bg-white/90 px-6 py-4 transition-[transform,border-color,box-shadow] duration-300 hover:-translate-y-0.5 hover:border-orange-300 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-orange-300/60"
+              className="group mx-auto flex h-60 w-full max-w-[21rem] items-center justify-center overflow-hidden rounded-[28px] border border-neutral-200 bg-white/90 px-5 py-4 transition-[transform,border-color,box-shadow] duration-300 hover:-translate-y-0.5 hover:border-orange-300 hover:shadow-[0_20px_60px_-38px_rgba(249,115,22,0.55)] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-orange-300/60"
             >
-              <ServiceIllustration
-                variant="ads"
+              <AdsHeroIllustration
                 className="h-full w-full text-neutral-500 transition-colors group-hover:text-orange-500 group-focus-visible:text-orange-500 group-active:text-orange-600"
               />
             </div>

@@ -11,7 +11,7 @@ import { canonicalUrl } from "@/lib/canonical"
 import { getTikTokEmbedHtml } from "@/lib/library/embeds"
 import { getLibraryPosts } from "@/lib/library/getLibraryPosts"
 import type { LibraryPost } from "@/lib/library/types"
-import { buildAbsoluteTitle, normalizeDescription } from "@/lib/seo/rules"
+import { buildAbsoluteTitle, buildMinimalDescription } from "@/lib/seo/rules"
 
 interface PageProps {
   params: Promise<{ slug: string }>
@@ -22,7 +22,8 @@ const buildMetadata = (post: LibraryPost): Metadata => {
   const speakerName = post.editorial?.speaker?.name
   const rawTitle = speakerName ? `${speakerName}: ${post.title}` : post.title
   const title = buildAbsoluteTitle(rawTitle)
-  const description = normalizeDescription(
+  const description = buildMinimalDescription(
+    rawTitle,
     post.editorial?.takeaways?.[0] ??
       post.caption ??
       `Short lesson from Prism Library: ${post.title}.`,

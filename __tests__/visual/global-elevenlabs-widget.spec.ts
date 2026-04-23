@@ -2,21 +2,6 @@ import { expect, test } from '@playwright/test'
 
 async function getWidgetState(page: import('@playwright/test').Page) {
   return page.evaluate(() => {
-    const getRect = (element: Element | null) => {
-      if (!(element instanceof HTMLElement)) {
-        return null
-      }
-
-      const rect = element.getBoundingClientRect()
-
-      return {
-        x: rect.x,
-        y: rect.y,
-        width: rect.width,
-        height: rect.height,
-      }
-    }
-
     const widgets = Array.from(
       document.querySelectorAll<HTMLElement>('elevenlabs-convai'),
     )
@@ -26,22 +11,14 @@ async function getWidgetState(page: import('@playwright/test').Page) {
       ),
     )
 
-    const heroWidget = document.querySelector<HTMLElement>(
-      '[data-testid="home-elevenlabs-widget"]',
-    )
     const floatingWidget = document.querySelector<HTMLElement>(
       '[data-testid="global-elevenlabs-widget"]',
     )
-    const floatingShadowButtons =
-      floatingWidget?.shadowRoot
-        ? Array.from(floatingWidget.shadowRoot.querySelectorAll('button')).map(
-            (button) => button.getAttribute('aria-label') ?? '',
-          )
-        : []
-    const homeHero = document.querySelector('.home-hero-agent')
-    const heroWidgetStyle = heroWidget
-      ? window.getComputedStyle(heroWidget)
-      : null
+    const floatingShadowButtons = floatingWidget?.shadowRoot
+      ? Array.from(floatingWidget.shadowRoot.querySelectorAll('button')).map(
+          (button) => button.getAttribute('aria-label') ?? '',
+        )
+      : []
     const floatingWidgetStyle = floatingWidget
       ? window.getComputedStyle(floatingWidget)
       : null
@@ -61,9 +38,6 @@ async function getWidgetState(page: import('@playwright/test').Page) {
       ).length,
       launcherCount: document.querySelectorAll('[aria-label="Open sales chat"]')
         .length,
-      homeDismissible: document
-        .querySelector<HTMLElement>('[data-testid="home-elevenlabs-widget"]')
-        ?.getAttribute('dismissible'),
       markdownLinkAllowHttpValues: widgets.map((widget) =>
         widget.getAttribute('markdown-link-allow-http'),
       ),
@@ -75,11 +49,6 @@ async function getWidgetState(page: import('@playwright/test').Page) {
       floatingTopElementTag: topNodeNearWidget?.tagName ?? null,
       floatingTopElementTestId:
         topNodeNearWidget?.getAttribute('data-testid') ?? null,
-      heroHostPosition: heroWidgetStyle?.position ?? null,
-      heroHostInset: heroWidgetStyle?.inset ?? null,
-      heroHostZIndex: heroWidgetStyle?.zIndex ?? null,
-      heroRect: getRect(homeHero),
-      heroWidgetRect: getRect(heroWidget),
       scriptCount: widgetScripts.length,
       scrollY: window.scrollY,
       widgetCount: widgets.length,
@@ -134,24 +103,32 @@ test('ElevenLabs widget stays closed for first-touch inner-page landings', async
     )
 })
 
-test('ElevenLabs widget keeps the homepage entry experience open across later routes in the same tab', async ({
+test('ElevenLabs widget mounts on the homepage as the same floating launcher and stays closed by default across public routes', async ({
   page,
 }) => {
   await page.goto('/', { waitUntil: 'domcontentloaded' })
+  await expect(
+    page.getByRole('heading', {
+      level: 1,
+      name: /one team\. all of growth\./i,
+    }),
+  ).toBeVisible({ timeout: 20_000 })
   await expect
     .poll(async () => getWidgetState(page), { timeout: 20_000 })
     .toMatchObject({
       customElementDefined: true,
-      homeDismissible: 'false',
-      heroHostInset: '0px',
-      heroHostPosition: 'absolute',
-      heroHostZIndex: '20',
+      floatingHostPosition: 'fixed',
+      floatingHostZIndex: '2147483000',
+      floatingTopElementTag: 'ELEVENLABS-CONVAI',
+      floatingTopElementTestId: 'global-elevenlabs-widget',
       widgetCount: 1,
       scriptCount: 1,
-      expandedCount: 1,
-      defaultFloatingCount: 0,
-      heroWidgetCount: 1,
-      floatingWidgetCount: 0,
+      defaultExpandedCount: 0,
+      expandedCount: 0,
+      defaultFloatingCount: 1,
+      heroWidgetCount: 0,
+      floatingWidgetCount: 1,
+      collapseButtonCount: 0,
     })
   await expect
     .poll(async () => getWidgetState(page), { timeout: 20_000 })
@@ -161,21 +138,6 @@ test('ElevenLabs widget keeps the homepage entry experience open across later ro
         markdownLinkIncludeWwwValues: ['true'],
       }),
     )
-  const initialHomeState = await getWidgetState(page)
-  expect(initialHomeState.heroRect).toEqual(initialHomeState.heroWidgetRect)
-
-  await page.evaluate(() => window.scrollTo(0, 900))
-  await expect
-    .poll(async () => getWidgetState(page), { timeout: 20_000 })
-    .toEqual(
-      expect.objectContaining({
-        heroHostPosition: 'absolute',
-        scrollY: 900,
-      }),
-    )
-  const scrolledHomeState = await getWidgetState(page)
-  expect(scrolledHomeState.heroRect).toEqual(scrolledHomeState.heroWidgetRect)
-  expect(scrolledHomeState.heroWidgetRect?.y ?? 0).toBeLessThan(0)
 
   await page.goto('/about', { waitUntil: 'domcontentloaded' })
   await expect(
@@ -191,12 +153,12 @@ test('ElevenLabs widget keeps the homepage entry experience open across later ro
       floatingTopElementTestId: 'global-elevenlabs-widget',
       widgetCount: 1,
       scriptCount: 1,
-      defaultExpandedCount: 1,
+      defaultExpandedCount: 0,
       expandedCount: 0,
       defaultFloatingCount: 1,
       heroWidgetCount: 0,
       floatingWidgetCount: 1,
-      collapseButtonCount: 1,
+      collapseButtonCount: 0,
     })
   await expect
     .poll(async () => getWidgetState(page), { timeout: 20_000 })
@@ -222,7 +184,7 @@ test('ElevenLabs widget keeps the homepage entry experience open across later ro
   await expect(
     page.getByRole('heading', {
       level: 1,
-      name: /turn your online presence into a growth engine/i,
+      name: /let's build what's next\./i,
     }),
   ).toBeVisible({
     timeout: 20_000,
@@ -234,12 +196,12 @@ test('ElevenLabs widget keeps the homepage entry experience open across later ro
       launcherCount: 0,
       widgetCount: 1,
       scriptCount: 1,
-      defaultExpandedCount: 1,
+      defaultExpandedCount: 0,
       expandedCount: 0,
       defaultFloatingCount: 1,
       heroWidgetCount: 0,
       floatingWidgetCount: 1,
-      collapseButtonCount: 1,
+      collapseButtonCount: 0,
     })
   await expect
     .poll(async () => getWidgetState(page), { timeout: 20_000 })
@@ -257,14 +219,16 @@ test('ElevenLabs widget keeps the homepage entry experience open across later ro
     .poll(async () => getWidgetState(page), { timeout: 20_000 })
     .toMatchObject({
       customElementDefined: true,
+      floatingHostPosition: 'fixed',
+      floatingHostZIndex: '2147483000',
       widgetCount: 1,
       scriptCount: 1,
-      defaultExpandedCount: 1,
+      defaultExpandedCount: 0,
       expandedCount: 0,
       defaultFloatingCount: 1,
       heroWidgetCount: 0,
       floatingWidgetCount: 1,
-      collapseButtonCount: 1,
+      collapseButtonCount: 0,
     })
   await expect
     .poll(async () => getWidgetState(page), { timeout: 20_000 })
@@ -279,4 +243,37 @@ test('ElevenLabs widget keeps the homepage entry experience open across later ro
       name: /copy full blog post in markdown format/i,
     }),
   ).toBeVisible()
+})
+
+test('ElevenLabs widget respects an explicit saved expanded preference on public pages', async ({
+  page,
+}) => {
+  await page.addInitScript(() => {
+    window.localStorage.setItem(
+      'prism-elevenlabs-widget-preference',
+      'expanded',
+    )
+  })
+
+  await page.goto('/about', { waitUntil: 'domcontentloaded' })
+  await expect(
+    page.getByRole('heading', { level: 1, name: /our story/i }),
+  ).toBeVisible({ timeout: 20_000 })
+  await expect
+    .poll(async () => getWidgetState(page), { timeout: 20_000 })
+    .toMatchObject({
+      customElementDefined: true,
+      floatingHostPosition: 'fixed',
+      floatingHostZIndex: '2147483000',
+      floatingTopElementTag: 'ELEVENLABS-CONVAI',
+      floatingTopElementTestId: 'global-elevenlabs-widget',
+      widgetCount: 1,
+      scriptCount: 1,
+      defaultExpandedCount: 1,
+      expandedCount: 0,
+      defaultFloatingCount: 1,
+      heroWidgetCount: 0,
+      floatingWidgetCount: 1,
+      collapseButtonCount: 1,
+    })
 })

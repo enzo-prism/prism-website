@@ -1,38 +1,46 @@
-import Link from "next/link"
-
-import PricingHero from "@/components/pricing/PricingHero"
-import { FAQSchema, ServiceSchema } from "@/components/schema-markup"
+import PricingHero from '@/components/pricing/PricingHero'
+import {
+  CoreActionLink,
+  CoreSectionHeading,
+  coreRouteContainerClassName,
+  coreRoutePanelClassName,
+  coreRouteSectionClassName,
+} from '@/components/core-route/CoreRoutePrimitives'
+import { FAQSchema, ServiceSchema } from '@/components/schema-markup'
 import {
   CANONICAL_PRICING_OFFERS,
   FREE_AUDIT_PRICE_LABEL,
   GROWTH_PARTNERSHIP_PRICE_LABEL,
   WEBSITE_OVERHAUL_PRICE_LABEL,
-} from "@/lib/pricing-model"
+} from '@/lib/pricing-model'
+import { cn } from '@/lib/utils'
 
 const pricingCards = [
   {
-    key: "website_overhaul",
+    key: 'website_overhaul',
     title: CANONICAL_PRICING_OFFERS.website_overhaul.name,
     priceLabel: WEBSITE_OVERHAUL_PRICE_LABEL,
-    summary: "A one-time rebuild for teams that need a sharper website and a stronger baseline fast.",
+    summary:
+      'A one-time rebuild for teams that need a sharper website and a stronger baseline fast.',
     bullets: [
-      "Conversion-focused redesign and page structure",
-      "Technical SEO, schema, and analytics setup",
-      "Launch support and team handoff",
+      'Conversion-focused redesign and page structure',
+      'Technical SEO, schema, and analytics setup',
+      'Launch support and team handoff',
     ],
     primaryCta: CANONICAL_PRICING_OFFERS.website_overhaul.primaryCta,
     secondaryCta: CANONICAL_PRICING_OFFERS.website_overhaul.secondaryCta,
     featured: false,
   },
   {
-    key: "growth_partnership",
+    key: 'growth_partnership',
     title: CANONICAL_PRICING_OFFERS.growth_partnership.name,
     priceLabel: GROWTH_PARTNERSHIP_PRICE_LABEL,
-    summary: "An ongoing execution layer for teams that want one partner running the whole growth system.",
+    summary:
+      'An ongoing execution layer for teams that want one partner running the whole growth system.',
     bullets: [
-      "Website, SEO, design, and ads managed together",
-      "Dedicated team moving every week",
-      "Reporting that stays clear and actionable",
+      'Website, SEO, design, and ads managed together',
+      'Dedicated team moving every week',
+      'Reporting that stays clear and actionable',
     ],
     primaryCta: CANONICAL_PRICING_OFFERS.growth_partnership.primaryCta,
     secondaryCta: CANONICAL_PRICING_OFFERS.growth_partnership.secondaryCta,
@@ -42,103 +50,122 @@ const pricingCards = [
 
 const faqs = [
   {
-    question: "What are the core offers?",
+    question: 'What are the core offers?',
     answer:
-      "Prism has two core paid offers: Website Overhaul at $1,000 one-time and Growth Partnership at $2,000/month. The free expert audit is the no-cost starting point.",
+      'Prism has two core paid offers: Website Overhaul at $1,000 one-time and Growth Partnership at $2,000/month. The free expert audit is the no-cost starting point.',
   },
   {
-    question: "Which option should I choose?",
+    question: 'Which option should I choose?',
     answer:
-      "Choose Website Overhaul if the main problem is the site itself. Choose Growth Partnership if you want a team to keep executing across website, SEO, ads, and design after the rebuild.",
+      'Choose Website Overhaul if the main problem is the site itself. Choose Growth Partnership if you want a team to keep executing across website, SEO, ads, and design after the rebuild.',
   },
   {
-    question: "Can I start smaller and upgrade later?",
+    question: 'Can I start smaller and upgrade later?',
     answer:
-      "Yes. Many teams begin with the audit or the one-time overhaul, then move into the monthly partnership once they want ongoing execution.",
+      'Yes. Many teams begin with the audit or the one-time overhaul, then move into the monthly partnership once they want ongoing execution.',
   },
   {
-    question: "Do you offer custom pricing on this page?",
+    question: 'Do you offer custom pricing on this page?',
     answer:
       "No. This page stays intentionally simple and only shows Prism's canonical pricing. Anything outside these core offers would be scoped separately.",
   },
 ] as const
 
-const primaryLinkClassName =
-  "inline-flex items-center justify-center rounded-full border border-foreground bg-foreground px-5 py-3 text-sm font-medium text-background transition hover:bg-foreground/90 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-
-const secondaryLinkClassName =
-  "inline-flex items-center justify-center rounded-full border border-border/70 px-5 py-3 text-sm font-medium text-foreground transition hover:bg-white/[0.04] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-
 export default function PricingPageClient() {
   return (
-    <div className="bg-transparent font-sans text-foreground">
+    <div className="bg-transparent font-sans text-[#f5f0e8]">
       <PricingHero />
 
-      <section id="plans" className="py-16 sm:py-20">
-        <div className="mx-auto max-w-5xl px-6">
-          <div className="grid gap-6 lg:grid-cols-2">
+      <section id="plans" className={coreRouteSectionClassName}>
+        <div className={coreRouteContainerClassName}>
+          <CoreSectionHeading
+            eyebrow="core offers"
+            title="Two ways to work with Prism."
+            description="Keep the path simple: a one-time rebuild if the site is the bottleneck, or an ongoing execution partner if you want the whole system moving together."
+            titleClassName="max-w-[10ch]"
+          />
+
+          <div className="mt-14 grid gap-6 lg:grid-cols-2">
             {pricingCards.map((card) => (
               <article
                 key={card.key}
-                className={`rounded-[2rem] border p-8 ${
-                  card.featured ? "border-border bg-muted/10" : "border-border/70 bg-background/40"
-                }`}
+                className={cn(
+                  coreRoutePanelClassName,
+                  'p-8',
+                  card.featured
+                    ? 'bg-black/45 shadow-[0_20px_60px_-40px_rgba(0,0,0,0.85)]'
+                    : 'bg-black/28',
+                )}
               >
-                <p className="text-sm font-medium text-muted-foreground">Core offer</p>
-                <h2 className="mt-4 text-3xl font-sans font-medium !tracking-tight text-foreground sm:text-4xl">
+                <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.3em] text-[#8f877b]">
+                  Core offer
+                </p>
+                <h2 className="mt-4 text-[1.9rem] font-sans font-medium leading-[0.98] tracking-[-0.05em] text-[#f5f0e8] sm:text-[2.3rem]">
                   {card.title}
                 </h2>
-                <p className="mt-3 text-2xl font-sans font-medium !tracking-tight text-foreground">{card.priceLabel}</p>
-                <p className="mt-5 max-w-md text-sm leading-6 text-muted-foreground">{card.summary}</p>
+                <p className="mt-3 font-sans text-[1.65rem] font-medium tracking-[-0.04em] text-[#f5f0e8]">
+                  {card.priceLabel}
+                </p>
+                <p className="mt-5 max-w-md text-[1rem] leading-7 text-[#b8afa2]">
+                  {card.summary}
+                </p>
 
-                <ul className="mt-8 space-y-3 text-sm leading-6 text-muted-foreground">
+                <ul className="mt-8 divide-y divide-white/10 border-y border-white/10">
                   {card.bullets.map((bullet) => (
-                    <li key={bullet} className="flex items-start gap-3">
-                      <span className="mt-2 h-1.5 w-1.5 rounded-full bg-foreground/70" aria-hidden />
-                      <span>{bullet}</span>
+                    <li key={bullet} className="py-4">
+                      <span className="font-sans text-[1rem] leading-7 text-[#d4cdc3]">
+                        {bullet}
+                      </span>
                     </li>
                   ))}
                 </ul>
 
-                <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                  <Link href={card.primaryCta.href} className={primaryLinkClassName}>
+                <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:gap-6">
+                  <CoreActionLink href={card.primaryCta.href}>
                     {card.primaryCta.label}
-                  </Link>
+                  </CoreActionLink>
                   {card.secondaryCta ? (
-                    <Link href={card.secondaryCta.href} className={secondaryLinkClassName}>
+                    <CoreActionLink
+                      href={card.secondaryCta.href}
+                      variant="secondary"
+                    >
                       {card.secondaryCta.label}
-                    </Link>
+                    </CoreActionLink>
                   ) : null}
                 </div>
               </article>
             ))}
           </div>
 
-          <div className="mt-6 rounded-[2rem] border border-border/70 bg-background/40 p-8">
-            <p className="text-sm font-medium text-muted-foreground">Free starting point</p>
+          <div className={cn(coreRoutePanelClassName, 'mt-6 bg-black/30 p-8')}>
+            <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.3em] text-[#8f877b]">
+              Free starting point
+            </p>
             <div className="mt-4 flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
               <div className="max-w-2xl">
-                <h2 className="text-3xl font-sans font-medium !tracking-tight text-foreground sm:text-4xl">
+                <h2 className="text-[1.9rem] font-sans font-medium leading-[0.98] tracking-[-0.05em] text-[#f5f0e8] sm:text-[2.3rem]">
                   Free Expert Audit
                 </h2>
-                <p className="mt-3 text-2xl font-sans font-medium !tracking-tight text-foreground">
+                <p className="mt-3 font-sans text-[1.65rem] font-medium tracking-[-0.04em] text-[#f5f0e8]">
                   {FREE_AUDIT_PRICE_LABEL}
                 </p>
-                <p className="mt-4 text-sm leading-6 text-muted-foreground">
+                <p className="mt-4 text-[1rem] leading-7 text-[#b8afa2]">
                   {CANONICAL_PRICING_OFFERS.free_audit.description}
                 </p>
               </div>
-              <div className="flex flex-col gap-3 sm:flex-row">
-                <Link href={CANONICAL_PRICING_OFFERS.free_audit.primaryCta.href} className={primaryLinkClassName}>
+              <div className="flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:gap-6">
+                <CoreActionLink
+                  href={CANONICAL_PRICING_OFFERS.free_audit.primaryCta.href}
+                >
                   {CANONICAL_PRICING_OFFERS.free_audit.primaryCta.label}
-                </Link>
+                </CoreActionLink>
                 {CANONICAL_PRICING_OFFERS.free_audit.secondaryCta ? (
-                  <Link
+                  <CoreActionLink
                     href={CANONICAL_PRICING_OFFERS.free_audit.secondaryCta.href}
-                    className={secondaryLinkClassName}
+                    variant="secondary"
                   >
                     {CANONICAL_PRICING_OFFERS.free_audit.secondaryCta.label}
-                  </Link>
+                  </CoreActionLink>
                 ) : null}
               </div>
             </div>
@@ -146,45 +173,57 @@ export default function PricingPageClient() {
         </div>
       </section>
 
-      <section className="py-16 sm:py-20">
-        <div className="mx-auto max-w-5xl px-6">
-          <div className="max-w-2xl">
-            <p className="text-sm font-medium text-muted-foreground">FAQ</p>
-            <h2 className="mt-3 text-3xl font-sans font-medium !tracking-tight text-foreground sm:text-4xl">
-              Common pricing questions
-            </h2>
-          </div>
+      <section className={coreRouteSectionClassName}>
+        <div
+          className={cn(
+            coreRouteContainerClassName,
+            'grid gap-12 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)]',
+          )}
+        >
+          <CoreSectionHeading
+            eyebrow="faq"
+            title="Common pricing questions."
+            description="Clear answers on the path, the pricing, and when each offer makes sense."
+          />
 
-          <div className="mt-10 divide-y divide-border/70 rounded-[2rem] border border-border/70">
+          <div className="border-t border-white/12 lg:border-t-0">
             {faqs.map((faq) => (
-              <div key={faq.question} className="px-6 py-6 sm:px-8">
-                <h3 className="text-lg font-sans font-medium !tracking-tight text-foreground">{faq.question}</h3>
-                <p className="mt-3 max-w-3xl text-sm leading-6 text-muted-foreground">{faq.answer}</p>
-              </div>
+              <article
+                key={faq.question}
+                className="border-b border-white/12 py-6 first:pt-0"
+              >
+                <h3 className="font-sans text-[1.35rem] font-medium tracking-[-0.04em] text-[#f5f0e8]">
+                  {faq.question}
+                </h3>
+                <p className="mt-3 max-w-3xl text-[1rem] leading-7 text-[#b8afa2]">
+                  {faq.answer}
+                </p>
+              </article>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="border-y border-border/60 py-16 sm:py-20">
-        <div className="mx-auto flex max-w-5xl flex-col gap-6 px-6 lg:flex-row lg:items-end lg:justify-between">
-          <div className="max-w-2xl">
-            <p className="text-sm font-medium text-muted-foreground">Need help deciding?</p>
-            <h2 className="mt-3 text-3xl font-sans font-medium !tracking-tight text-foreground sm:text-4xl">
-              We can point you to the right path quickly.
-            </h2>
-            <p className="mt-4 text-sm leading-6 text-muted-foreground">
-              If you are not sure whether you need the rebuild, the ongoing partnership, or just the audit first, a
-              short strategy call will make the next step obvious.
-            </p>
-          </div>
-          <div className="flex flex-col gap-3 sm:flex-row">
-            <Link href="/get-started#book-call" className={primaryLinkClassName}>
+      <section className="px-4 py-20 pb-28 sm:px-6 sm:py-24">
+        <div
+          className={cn(
+            coreRouteContainerClassName,
+            'border-t border-white/12 pt-8 sm:pt-10',
+          )}
+        >
+          <CoreSectionHeading
+            eyebrow="next step"
+            title="We can point you to the right path quickly."
+            description="If you are not sure whether you need the rebuild, the ongoing partnership, or just the audit first, a short strategy call will make the next step obvious."
+            titleClassName="max-w-[11ch]"
+          />
+          <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:gap-8">
+            <CoreActionLink href="/get-started#book-call">
               Book a strategy call
-            </Link>
-            <Link href="/free-analysis" className={secondaryLinkClassName}>
+            </CoreActionLink>
+            <CoreActionLink href="/free-analysis" variant="secondary">
               Start with the audit
-            </Link>
+            </CoreActionLink>
           </div>
         </div>
       </section>
@@ -204,13 +243,13 @@ function PricingStructuredData() {
         serviceType="Web design"
         areaServed="United States"
         offerDetails={{
-          name: "Website Overhaul",
+          name: 'Website Overhaul',
           description: CANONICAL_PRICING_OFFERS.website_overhaul.description,
-          businessFunction: "http://purl.org/goodrelations/v1#ProvideService",
+          businessFunction: 'http://purl.org/goodrelations/v1#ProvideService',
           price: String(CANONICAL_PRICING_OFFERS.website_overhaul.price),
-          priceCurrency: "USD",
-          availability: "https://schema.org/InStock",
-          url: "https://www.design-prism.com/pricing",
+          priceCurrency: 'USD',
+          availability: 'https://schema.org/InStock',
+          url: 'https://www.design-prism.com/pricing',
         }}
       />
       <ServiceSchema
@@ -220,17 +259,22 @@ function PricingStructuredData() {
         serviceType="Growth marketing"
         areaServed="United States"
         offerDetails={{
-          name: "Growth Partnership",
+          name: 'Growth Partnership',
           description: CANONICAL_PRICING_OFFERS.growth_partnership.description,
-          businessFunction: "http://purl.org/goodrelations/v1#ProvideService",
+          businessFunction: 'http://purl.org/goodrelations/v1#ProvideService',
           price: String(CANONICAL_PRICING_OFFERS.growth_partnership.price),
-          priceCurrency: "USD",
-          billingPeriod: "P1M",
-          availability: "https://schema.org/InStock",
-          url: "https://www.design-prism.com/pricing",
+          priceCurrency: 'USD',
+          billingPeriod: 'P1M',
+          availability: 'https://schema.org/InStock',
+          url: 'https://www.design-prism.com/pricing',
         }}
       />
-      <FAQSchema questions={faqs.map((faq) => ({ question: faq.question, answer: faq.answer }))} />
+      <FAQSchema
+        questions={faqs.map((faq) => ({
+          question: faq.question,
+          answer: faq.answer,
+        }))}
+      />
     </>
   )
 }
