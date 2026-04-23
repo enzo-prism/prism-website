@@ -272,6 +272,7 @@ export default function ASCIIAnimation({
 
         if (preRef.current) {
           preRef.current.textContent = allFrames[nextFrame]
+          preRef.current.dataset.currentFrame = String(nextFrame)
         }
         if (frameCounterRef.current) {
           frameCounterRef.current.textContent = `Frame: ${nextFrame + 1}/${allFrames.length}`
@@ -483,8 +484,36 @@ export default function ASCIIAnimation({
         const firstFrame = await response.text()
         const parsedFirst = splitFrameLines(firstFrame)
         loadedFrameLines.current[0] = parsedFirst
-        const normalized = normalizeSingleFrame(firstFrame)
-        setFrames([normalized])
+
+        if (forceAutoplay && frameCount > 1) {
+          const warmupIndices = Array.from(
+            { length: Math.min(frameCount - 1, 3) },
+            (_, index) => index + 1,
+          )
+
+          const warmupResults = await Promise.allSettled(
+            warmupIndices.map((frameIndex) =>
+              fetchFrameLines(source.baseUrl, frameFiles[frameIndex]).then((lines) => ({
+                index: frameIndex,
+                lines,
+              })),
+            ),
+          )
+
+          warmupResults.forEach((result) => {
+            if (result.status !== "fulfilled") {
+              return
+            }
+
+            loadedFrameLines.current[result.value.index] = result.value.lines
+          })
+
+          rebuildRenderableFrames()
+        } else {
+          const normalized = normalizeSingleFrame(firstFrame)
+          setFrames([normalized])
+        }
+
         currentFrameRef.current = 0
       } catch (error) {
         console.error("Failed to load preview frame:", error)
@@ -498,7 +527,18 @@ export default function ASCIIAnimation({
     }
 
     loadPreview()
-  }, [frameCount, frameFiles, frameFolder, lazy, loadRemainingFrames, providedFrames, quality])
+  }, [
+    fetchFrameLines,
+    forceAutoplay,
+    frameCount,
+    frameFiles,
+    frameFolder,
+    lazy,
+    loadRemainingFrames,
+    providedFrames,
+    quality,
+    rebuildRenderableFrames,
+  ])
 
   // IntersectionObserver: triggers lazy load + controls playback
   useEffect(() => {
@@ -734,6 +774,7 @@ export default function ASCIIAnimation({
       <pre
         ref={preRef}
         className={`leading-none origin-center ${textSize}`}
+        data-current-frame={currentFrameRef.current}
         style={{
           transform: `translateY(${offsetY}%) scale(${scale})`,
           willChange: "transform, opacity",

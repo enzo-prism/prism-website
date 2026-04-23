@@ -28,9 +28,25 @@ describe('ascii hero backdrop policy', () => {
     })
 
     expect(profile.shouldRender).toBe(true)
-    expect(profile.fps).toBeLessThanOrEqual(10)
-    expect(profile.batchSize).toBeLessThanOrEqual(12)
-    expect(profile.maxConcurrentFetches).toBeLessThanOrEqual(2)
+    expect(profile.fps).toBeLessThanOrEqual(12)
+    expect(profile.batchSize).toBeLessThanOrEqual(16)
+    expect(profile.maxConcurrentFetches).toBeLessThanOrEqual(3)
+    expect(profile.fit).toBe('contain')
+    expect(profile.zoom).toBeLessThan(1)
+  })
+
+  it('preserves higher source detail on capable mobile devices when requested', () => {
+    const profile = resolveAsciiBackdropProfile({
+      ...baseInput,
+      quality: 'high',
+      viewportWidth: 390,
+      deviceMemory: 6,
+      hardwareConcurrency: 8,
+    })
+
+    expect(profile.shouldRender).toBe(true)
+    expect(profile.quality).toBe('high')
+    expect(profile.fit).toBe('contain')
   })
 
   it('disables the backdrop for reduced motion', () => {

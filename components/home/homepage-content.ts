@@ -80,27 +80,27 @@ export const HOMEPAGE_HERO = {
 } as const
 
 export const HOMEPAGE_PROBLEM = {
-  title: 'You do not have to figure it all out',
+  title: 'You have a business to run',
   description:
-    'More online growth should bring momentum, not stress. We handle the moving parts behind the scenes.',
+    'You should not have to juggle websites, SEO, ads, content, analytics, and AI on your own. We take the moving parts off your plate and make growth work.',
   points: [
     {
-      label: 'Too much noise',
-      text: 'Every channel comes with a different opinion, tool, and vendor.',
+      label: 'Too much to juggle',
+      text: 'Every channel asks for time, tools, and attention.',
       iconSrc: '/pixelish/chat-dots.svg',
     },
     {
-      label: 'Too many letdowns',
+      label: 'Too many dead ends',
       text: 'A lot of owners have paid for marketing before and still felt stuck.',
       iconSrc: '/pixelish/circle-exclamation.svg',
     },
     {
-      label: 'One steady partner',
-      text: 'Prism brings the work together so growth feels clear again.',
+      label: 'One team you can trust',
+      text: 'We simplify the chaos, make it work, and keep growth moving.',
       iconSrc: '/pixelish/users.svg',
     },
   ] satisfies readonly HomepageProblemPoint[],
-  stackLabel: 'Prism handles',
+  stackLabel: 'Off your plate',
   stack: [
     { label: 'Websites', iconSrc: '/pixelish/browser.svg' },
     { label: 'SEO', iconSrc: '/pixelish/lens.svg' },

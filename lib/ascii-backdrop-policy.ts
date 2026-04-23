@@ -1,5 +1,6 @@
 type AsciiBackdropQuality = "low" | "medium" | "high"
 type AsciiBackdropLoadStrategy = "batch" | "all"
+type AsciiBackdropFit = "contain" | "cover"
 
 export type AsciiBackdropProfileInput = {
   fps: number
@@ -22,6 +23,9 @@ export type AsciiBackdropProfile = {
   loadStrategy: AsciiBackdropLoadStrategy
   batchSize: number
   maxConcurrentFetches: number
+  fit: AsciiBackdropFit
+  zoom: number
+  offsetY: number
 }
 
 const MOBILE_VIEWPORT_MAX_WIDTH = 768
@@ -63,6 +67,9 @@ export function resolveAsciiBackdropProfile({
       loadStrategy,
       batchSize,
       maxConcurrentFetches,
+      fit: "cover",
+      zoom: 1,
+      offsetY: 0,
     }
   }
 
@@ -77,17 +84,31 @@ export function resolveAsciiBackdropProfile({
       loadStrategy,
       batchSize,
       maxConcurrentFetches,
+      fit: "cover",
+      zoom: 1,
+      offsetY: 0,
     }
   }
 
   if (viewportWidth < MOBILE_VIEWPORT_MAX_WIDTH) {
+    const canHoldHigherQuality =
+      (constrainedMemory === null || constrainedMemory >= 4) &&
+      (constrainedCores === null || constrainedCores >= 4)
+
     return {
       shouldRender: true,
-      fps: Math.min(fps, 10),
-      quality: "medium",
+      fps: Math.min(fps, 12),
+      quality: canHoldHigherQuality
+        ? quality === "low"
+          ? "medium"
+          : quality
+        : "medium",
       loadStrategy: "batch",
-      batchSize: Math.min(batchSize, 12),
-      maxConcurrentFetches: Math.min(maxConcurrentFetches, 2),
+      batchSize: Math.min(batchSize, 16),
+      maxConcurrentFetches: Math.min(maxConcurrentFetches, 3),
+      fit: "contain",
+      zoom: 0.9,
+      offsetY: 0,
     }
   }
 
@@ -103,6 +124,9 @@ export function resolveAsciiBackdropProfile({
       loadStrategy: "batch",
       batchSize: Math.min(batchSize, 16),
       maxConcurrentFetches: Math.min(maxConcurrentFetches, 3),
+      fit: "cover",
+      zoom: 0.96,
+      offsetY: 0,
     }
   }
 
@@ -113,5 +137,8 @@ export function resolveAsciiBackdropProfile({
     loadStrategy,
     batchSize,
     maxConcurrentFetches,
+    fit: "cover",
+    zoom: 1,
+    offsetY: 0,
   }
 }

@@ -195,6 +195,9 @@ export default function DeferredAsciiHeroBackdrop(
       loadStrategy={profile.loadStrategy}
       batchSize={profile.batchSize}
       maxConcurrentFetches={profile.maxConcurrentFetches}
+      fit={profile.fit}
+      zoom={profile.zoom}
+      offsetY={profile.offsetY}
     />
   )
 }

@@ -8,12 +8,28 @@ async function waitForAsciiLoop(
   await expect.poll(async () => await pre.count()).toBe(1)
   await expect(pre).toBeVisible()
 
-  const initialFrame = await pre.textContent()
-  expect(initialFrame?.trim().length ?? 0).toBeGreaterThan(0)
+  await expect
+    .poll(
+      async () =>
+        await pre.evaluate((node) => node.getAttribute('data-current-frame')),
+      {
+        timeout: 2500,
+      },
+    )
+    .not.toBeNull()
 
-  await page.waitForTimeout(900)
-  const nextFrame = await pre.textContent()
-  expect(nextFrame).not.toBe(initialFrame)
+  const initialFrame = await pre.evaluate((node) =>
+    node.getAttribute('data-current-frame'),
+  )
+  await expect
+    .poll(
+      async () =>
+        await pre.evaluate((node) => node.getAttribute('data-current-frame')),
+      {
+        timeout: 2500,
+      },
+    )
+    .not.toBe(initialFrame)
 }
 
 async function waitForVideoLoop(
@@ -48,7 +64,24 @@ async function waitForVideoLoop(
   expect(initialState.width).toBeGreaterThan(0)
   expect(initialState.height).toBeGreaterThan(0)
 
-  await page.waitForTimeout(1800)
+  await expect
+    .poll(
+      async () =>
+        await video.evaluate((node: HTMLVideoElement) => {
+          const element = node as HTMLVideoElement
+          return {
+            currentTime: element.currentTime,
+            paused: element.paused,
+          }
+        }),
+      {
+        timeout: 4000,
+      },
+    )
+    .toMatchObject({
+      paused: false,
+      currentTime: expect.any(Number),
+    })
 
   const nextState = await video.evaluate((node: HTMLVideoElement) => {
     const element = node as HTMLVideoElement

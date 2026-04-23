@@ -151,7 +151,7 @@ test('home problem section snapshot stays stable', async ({ page }) => {
 
   const problemHeading = page.getByRole('heading', {
     level: 2,
-    name: /you do not have to figure it all out/i,
+    name: /you have a business to run/i,
   })
   await expect(problemHeading).toBeVisible({ timeout: 20_000 })
 

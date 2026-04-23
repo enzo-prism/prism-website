@@ -71,8 +71,8 @@ export default function WallOfLoveClientPage() {
               videoSrc={PLANET_VIDEO_SRC}
               posterSrc={PLANET_POSTER_SRC}
               posterAlt="ASCII planet animation preview"
-              posterClassName="absolute inset-0 h-full w-full object-cover object-[center_80%] opacity-100 [image-rendering:pixelated]"
-              videoClassName="pointer-events-none absolute inset-0 h-full w-full object-cover object-[center_80%] opacity-100 [image-rendering:pixelated]"
+              posterClassName="absolute inset-0 h-full w-full object-contain object-center opacity-88 sm:object-cover sm:object-[center_80%] sm:opacity-100 sm:[image-rendering:pixelated]"
+              videoClassName="pointer-events-none absolute inset-0 h-full w-full object-contain object-center opacity-82 sm:object-cover sm:object-[center_80%] sm:opacity-100 sm:[image-rendering:pixelated]"
               posterUnoptimized
               playbackPolicy={prefersReducedMotion ? "forcePoster" : "auto"}
             />

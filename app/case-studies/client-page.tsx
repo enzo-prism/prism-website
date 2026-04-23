@@ -31,11 +31,11 @@ export default function CaseStudiesPage() {
           <div className="container mx-auto px-4 md:px-6">
             <div className="relative isolate overflow-hidden rounded-3xl border border-border/60 bg-card/50 shadow-[0_30px_90px_-50px_rgba(0,0,0,0.7)]">
               <HeroBackgroundLoop
-              videoSrc={CASE_STUDIES_HERO_VIDEO}
-              posterSrc={CASE_STUDIES_HERO_POSTER}
+                videoSrc={CASE_STUDIES_HERO_VIDEO}
+                posterSrc={CASE_STUDIES_HERO_POSTER}
               posterAlt="ASCII ocean animation preview"
-                posterClassName="absolute inset-0 h-full w-full object-cover opacity-45"
-                videoClassName="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-40"
+                posterClassName="absolute inset-0 h-full w-full object-contain object-center opacity-52 sm:object-cover sm:opacity-45"
+                videoClassName="pointer-events-none absolute inset-0 h-full w-full object-contain object-center opacity-46 sm:object-cover sm:opacity-40"
                 posterUnoptimized
               />
               <div

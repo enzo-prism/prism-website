@@ -7,6 +7,9 @@ type AsciiHeroBackdropProps = {
   frameCount: number
   fps?: number
   quality?: 'low' | 'medium' | 'high'
+  fit?: 'contain' | 'cover'
+  zoom?: number
+  offsetY?: number
   textSize?: string
   ariaLabel?: string
   className?: string
@@ -22,6 +25,9 @@ export default function AsciiHeroBackdrop({
   frameCount,
   fps,
   quality = 'high',
+  fit = 'cover',
+  zoom = 1,
+  offsetY = 0,
   textSize = 'text-[2.4px] sm:text-[2.9px] md:text-[3.5px]',
   ariaLabel,
   className,
@@ -38,9 +44,9 @@ export default function AsciiHeroBackdrop({
         frameCount={frameCount}
         fps={fps}
         quality={quality}
-        fit="cover"
-        zoom={1}
-        offsetY={0}
+        fit={fit}
+        zoom={zoom}
+        offsetY={offsetY}
         ariaLabel={ariaLabel}
         textSize={textSize}
         className={`absolute inset-0 h-full w-full opacity-[0.39] sm:opacity-[0.64] md:opacity-68 lg:opacity-88 [image-rendering:pixelated] md:[-webkit-mask-image:radial-gradient(ellipse_at_center,transparent_0%,transparent_42%,black_88%)] md:[mask-image:radial-gradient(ellipse_at_center,transparent_0%,transparent_42%,black_88%)] ${className ?? ''}`}
