@@ -7,6 +7,7 @@ import {
 import DeferredAsciiHeroBackdrop from '@/components/home/DeferredAsciiHeroBackdrop'
 import { HOMEPAGE_HERO } from '@/components/home/homepage-content'
 import PixelishIcon from '@/components/pixelish/PixelishIcon'
+import TrackedLink from '@/components/tracked-link'
 
 export default function HomeHeroSection() {
   return (
@@ -81,6 +82,66 @@ export default function HomeHeroSection() {
                   {HOMEPAGE_HERO.secondaryCtaLabel}
                 </CoreActionLink>
               </div>
+
+              <TrackedLink
+                href="/wall-of-love"
+                label="visit wall of love"
+                location="homepage hero social proof"
+                className="group mt-6 block max-w-[36rem]"
+              >
+                <div
+                  data-testid="home-hero-social-proof"
+                  className="relative overflow-hidden rounded-[1.35rem] border border-white/12 bg-white/[0.04] p-3.5 shadow-[0_20px_50px_-38px_rgba(0,0,0,0.85)] transition-[border-color,background-color,transform] hover:border-white/24 hover:bg-white/[0.06] sm:p-4"
+                >
+                  <div
+                    aria-hidden="true"
+                    className="pointer-events-none absolute inset-y-0 left-0 w-28 bg-[radial-gradient(circle_at_left,rgba(245,240,232,0.16),transparent_72%)]"
+                  />
+                  <div className="relative flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                    <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+                      <div className="inline-flex w-fit items-center gap-3 rounded-full border border-[#f5f0e8]/12 bg-black/35 px-3.5 py-2.5">
+                        <div
+                          aria-label="5 star rating"
+                          role="img"
+                          className="flex items-center gap-1 text-[0.9rem] leading-none text-[#f3cf75]"
+                        >
+                          {Array.from({ length: 5 }).map((_, index) => (
+                            <span key={`hero-star-${index}`} aria-hidden="true">
+                              ★
+                            </span>
+                          ))}
+                        </div>
+                        <div className="h-4 w-px bg-white/12" />
+                        <div className="inline-flex items-center gap-2 font-mono text-[10px] font-semibold uppercase tracking-[0.24em] text-[#c9c1b6]">
+                          <PixelishIcon
+                            src="/pixelish/users.svg"
+                            alt=""
+                            size={14}
+                            aria-hidden="true"
+                            className="h-3.5 w-3.5 opacity-80"
+                          />
+                          <span>{HOMEPAGE_HERO.socialProof.reviewCountLabel}</span>
+                        </div>
+                      </div>
+
+                      <p className="max-w-[20rem] text-balance font-sans text-[0.98rem] font-medium leading-6 text-[#f5f0e8] sm:max-w-none sm:text-[1.02rem]">
+                        {HOMEPAGE_HERO.socialProof.headline}
+                      </p>
+                    </div>
+
+                    <div className="inline-flex items-center gap-2 self-start font-mono text-[10px] font-semibold uppercase tracking-[0.24em] text-[#8f877b] transition-colors group-hover:text-[#c9c1b6] sm:self-center">
+                      <span>{HOMEPAGE_HERO.socialProof.linkLabel}</span>
+                      <PixelishIcon
+                        src="/pixelish/arrow-right.svg"
+                        alt=""
+                        size={14}
+                        aria-hidden="true"
+                        className="h-3.5 w-3.5 opacity-75 transition-transform group-hover:translate-x-0.5"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </TrackedLink>
             </div>
           </div>
         </div>

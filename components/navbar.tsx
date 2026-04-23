@@ -191,10 +191,32 @@ export default function Navbar() {
             aria-controls={MOBILE_NAV_ID}
             aria-expanded={isMobileMenuOpen}
             aria-label={isMobileMenuOpen ? 'Close menu' : 'Open menu'}
-            className="inline-flex min-h-10 items-center border-b border-white/20 pb-1 text-[11px] font-semibold uppercase tracking-[0.3em] text-[#f5f0e8] transition-colors hover:border-white/50 hover:text-white"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/14 bg-white/[0.03] text-[#f5f0e8] transition-[border-color,background-color,color] hover:border-white/28 hover:bg-white/[0.06] hover:text-white focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-white/25 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
             onClick={() => setIsMobileMenuOpen((open) => !open)}
           >
-            {isMobileMenuOpen ? 'Close' : 'Menu'}
+            <span className="sr-only">
+              {isMobileMenuOpen ? 'Close menu' : 'Open menu'}
+            </span>
+            <span aria-hidden="true" className="relative block h-3.5 w-4">
+              <span
+                className={cn(
+                  'absolute left-0 top-0 h-[1.5px] w-4 rounded-full bg-current transition-transform duration-200',
+                  isMobileMenuOpen ? 'top-[6px] rotate-45' : '',
+                )}
+              />
+              <span
+                className={cn(
+                  'absolute left-0 top-[6px] h-[1.5px] w-4 rounded-full bg-current transition-opacity duration-200',
+                  isMobileMenuOpen ? 'opacity-0' : 'opacity-100',
+                )}
+              />
+              <span
+                className={cn(
+                  'absolute left-0 top-3 h-[1.5px] w-4 rounded-full bg-current transition-transform duration-200',
+                  isMobileMenuOpen ? 'top-[6px] -rotate-45' : '',
+                )}
+              />
+            </span>
           </button>
         </div>
       </div>

@@ -1,4 +1,4 @@
-import { quotesData } from '@/content/wall-of-love-data'
+import { getHeroReviewCount, quotesData } from '@/content/wall-of-love-data'
 import { HOTTEST_CONTENT } from '@/lib/hottest-content'
 
 export type HomepageFAQBlock =
@@ -39,6 +39,12 @@ export const HOMEPAGE_CASE_STUDY_SLUGS = [
   'practice-transitions-institute',
 ] as const
 
+const HOMEPAGE_HERO_REVIEW_COUNT = getHeroReviewCount()
+const HOMEPAGE_HERO_REVIEW_COUNT_LABEL =
+  HOMEPAGE_HERO_REVIEW_COUNT >= 20
+    ? '20+'
+    : `${HOMEPAGE_HERO_REVIEW_COUNT}`
+
 export const HOMEPAGE_HERO = {
   eyebrow: '',
   title: 'Growth, handled for you.',
@@ -65,6 +71,11 @@ export const HOMEPAGE_HERO = {
       iconSrc: '/pixelish/award-checkmark.svg',
     },
   ] satisfies readonly HomepageHeroSupportPoint[],
+  socialProof: {
+    headline: `5 stars from ${HOMEPAGE_HERO_REVIEW_COUNT_LABEL} business owners`,
+    reviewCountLabel: HOMEPAGE_HERO_REVIEW_COUNT_LABEL,
+    linkLabel: 'See the wall of love',
+  },
   primaryCtaLabel: 'Get a Free Growth Plan',
   secondaryCtaLabel: 'See How It Works',
 } as const

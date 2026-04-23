@@ -50,6 +50,10 @@ describe('HomeHeroSection', () => {
     expect(
       screen.getByText(/we handle the tech\. you run the business\./i),
     ).toBeInTheDocument()
+    expect(screen.getByTestId('home-hero-social-proof')).toHaveTextContent(
+      /5 stars from 20\+ business owners/i,
+    )
+    expect(screen.getByLabelText(/5 star rating/i)).toBeInTheDocument()
 
     const supportPoints = screen.getAllByTestId('home-hero-support-point')
     const iconSrcs = supportPoints.map((point) =>
@@ -70,6 +74,11 @@ describe('HomeHeroSection', () => {
     ).toHaveAttribute(
       'href',
       '/#how-it-works',
+    )
+
+    expect(screen.getByText(/see the wall of love/i).closest('a')).toHaveAttribute(
+      'href',
+      '/wall-of-love',
     )
   })
 

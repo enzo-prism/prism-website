@@ -72,8 +72,8 @@ describe('Navbar', () => {
     const banner = screen.getByRole('banner')
     expect(banner.className).toContain('bg-black')
     expect(banner.className).toContain('fixed')
-    expect(screen.getByRole('button', { name: /menu/i })).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: /menu/i })).toHaveAttribute(
+    expect(screen.getByRole('button', { name: /open menu/i })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: /open menu/i })).toHaveAttribute(
       'aria-expanded',
       'false',
     )
@@ -93,7 +93,7 @@ describe('Navbar', () => {
     const banner = screen.getByRole('banner')
     expect(banner.className).toContain('bg-black')
     expect(banner.className).toContain('sticky')
-    expect(screen.getByRole('button', { name: /menu/i })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: /open menu/i })).toBeInTheDocument()
     expect(screen.getAllByRole('link', { name: /start/i })[0].className).toContain(
       'border-b',
     )
@@ -109,7 +109,10 @@ describe('Navbar', () => {
     const toggle = screen.getByRole('button', { name: /open menu/i })
     fireEvent.click(toggle)
 
-    expect(toggle).toHaveAttribute('aria-expanded', 'true')
+    expect(screen.getByRole('button', { name: /close menu/i })).toHaveAttribute(
+      'aria-expanded',
+      'true',
+    )
     expect(document.querySelector('#mobile-site-nav')).toBeInTheDocument()
     expect(screen.queryByRole('link', { name: /our story/i })).not.toBeInTheDocument()
     expect(screen.getAllByRole('link', { name: /case studies/i })).toHaveLength(2)
