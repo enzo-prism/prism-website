@@ -45,7 +45,7 @@ export default function HomeProofSection() {
             eyebrow={HOMEPAGE_PROOF.eyebrow}
             title={HOMEPAGE_PROOF.title}
             description={HOMEPAGE_PROOF.description}
-            titleClassName="max-w-[11ch]"
+            titleClassName="max-w-[17ch] lg:max-w-[19ch]"
             descriptionClassName="max-w-[40rem]"
           />
 

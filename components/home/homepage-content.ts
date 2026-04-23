@@ -73,8 +73,7 @@ export const HOMEPAGE_HERO = {
   ] satisfies readonly HomepageHeroSupportPoint[],
   socialProof: {
     headline: `5 stars from ${HOMEPAGE_HERO_REVIEW_COUNT_LABEL} business owners`,
-    reviewCountLabel: HOMEPAGE_HERO_REVIEW_COUNT_LABEL,
-    linkLabel: 'See the wall of love',
+    linkLabel: 'Wall of love',
   },
   primaryCtaLabel: 'Get a Free Growth Plan',
   secondaryCtaLabel: 'See How It Works',
@@ -82,9 +81,9 @@ export const HOMEPAGE_HERO = {
 
 export const HOMEPAGE_PROBLEM = {
   eyebrow: 'you are not alone',
-  title: 'You know your business needs more online.',
+  title: 'You do not have to figure it all out',
   description:
-    'You do not need to manage websites, SEO, ads, content, analytics, and AI on your own.',
+    'More online growth should bring momentum, not stress. We handle the moving parts behind the scenes.',
   points: [
     {
       label: 'Too much noise',
@@ -299,8 +298,7 @@ export const HOMEPAGE_FIT = {
 
 export const HOMEPAGE_FINAL_CTA = {
   eyebrow: 'next step',
-  title:
-    'Stop worrying about the tech. Start growing your business with the right partner.',
+  title: 'Stop worrying about tech. Start growing with Prism.',
   description:
     'Prism helps small businesses grow online with clear strategy, strong execution, and smart use of AI behind the scenes. You focus on your business. We handle the rest.',
   primaryCtaLabel: 'Get a Free Growth Plan',

@@ -74,7 +74,7 @@ test('ElevenLabs widget stays closed for first-touch inner-page landings', async
 }) => {
   await page.goto('/about', { waitUntil: 'domcontentloaded' })
   await expect(
-    page.getByRole('heading', { level: 1, name: /our story/i }),
+    page.getByRole('heading', { level: 1, name: /built by enzo sison\./i }),
   ).toBeVisible({ timeout: 20_000 })
   await expect
     .poll(async () => getWidgetState(page), { timeout: 20_000 })
@@ -103,45 +103,44 @@ test('ElevenLabs widget stays closed for first-touch inner-page landings', async
     )
 })
 
-test('ElevenLabs widget mounts on the homepage as the same floating launcher and stays closed by default across public routes', async ({
+test('ElevenLabs widget stays off the homepage and remains the same floating launcher across inner public routes', async ({
   page,
 }) => {
   await page.goto('/', { waitUntil: 'domcontentloaded' })
   await expect(
     page.getByRole('heading', {
       level: 1,
-      name: /one team\. all of growth\./i,
+      name: /growth, handled for you\./i,
     }),
   ).toBeVisible({ timeout: 20_000 })
   await expect
     .poll(async () => getWidgetState(page), { timeout: 20_000 })
     .toMatchObject({
-      customElementDefined: true,
-      floatingHostPosition: 'fixed',
-      floatingHostZIndex: '2147483000',
-      floatingTopElementTag: 'ELEVENLABS-CONVAI',
-      floatingTopElementTestId: 'global-elevenlabs-widget',
-      widgetCount: 1,
-      scriptCount: 1,
+      customElementDefined: false,
+      floatingHostPosition: null,
+      floatingHostZIndex: null,
+      floatingTopElementTestId: null,
+      widgetCount: 0,
+      scriptCount: 0,
       defaultExpandedCount: 0,
       expandedCount: 0,
-      defaultFloatingCount: 1,
+      defaultFloatingCount: 0,
       heroWidgetCount: 0,
-      floatingWidgetCount: 1,
+      floatingWidgetCount: 0,
       collapseButtonCount: 0,
     })
   await expect
     .poll(async () => getWidgetState(page), { timeout: 20_000 })
     .toEqual(
       expect.objectContaining({
-        markdownLinkAllowHttpValues: ['false'],
-        markdownLinkIncludeWwwValues: ['true'],
+        markdownLinkAllowHttpValues: [],
+        markdownLinkIncludeWwwValues: [],
       }),
     )
 
   await page.goto('/about', { waitUntil: 'domcontentloaded' })
   await expect(
-    page.getByRole('heading', { level: 1, name: /our story/i }),
+    page.getByRole('heading', { level: 1, name: /built by enzo sison\./i }),
   ).toBeVisible({ timeout: 20_000 })
   await expect
     .poll(async () => getWidgetState(page), { timeout: 20_000 })
@@ -184,7 +183,7 @@ test('ElevenLabs widget mounts on the homepage as the same floating launcher and
   await expect(
     page.getByRole('heading', {
       level: 1,
-      name: /let's build what's next\./i,
+      name: /start here\./i,
     }),
   ).toBeVisible({
     timeout: 20_000,
@@ -257,7 +256,7 @@ test('ElevenLabs widget respects an explicit saved expanded preference on public
 
   await page.goto('/about', { waitUntil: 'domcontentloaded' })
   await expect(
-    page.getByRole('heading', { level: 1, name: /our story/i }),
+    page.getByRole('heading', { level: 1, name: /built by enzo sison\./i }),
   ).toBeVisible({ timeout: 20_000 })
   await expect
     .poll(async () => getWidgetState(page), { timeout: 20_000 })

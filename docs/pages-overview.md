@@ -130,8 +130,8 @@ Quick reference for the pages we edit most often.
 - `app/client-page.tsx` is now a section composer for the refreshed CTA-led homepage: integrated dark hero, ecosystem, proof, founder, and final CTA.
 - The homepage hero is built from `components/home/HomeHeroSection.tsx` and now uses the shared ASCII `wave` backdrop in a subtler treatment than `/software`, keeping the copy-led layout while preserving motion.
 - The homepage, `/about`, `/pricing`, and `/get-started` now share the same minimal black navbar/footer plus the same core-route section heading and CTA language (`components/navbar.tsx`, `components/footer.tsx`, `components/core-route/CoreRoutePrimitives.tsx`) so the primary marketing routes read as one brand system.
-- The shared floating ElevenLabs launcher now mounts on the homepage too, via `components/global-elevenlabs-widget.tsx` in `components/runtime-client-shell.tsx`.
-- Without a saved user preference, the public widget should stay collapsed by default on `/` and inner pages.
+- The shared floating ElevenLabs launcher now mounts on public inner pages via `components/global-elevenlabs-widget.tsx` in `components/runtime-client-shell.tsx`; the homepage intentionally stays widget-free.
+- Without a saved user preference, the public widget should stay collapsed by default on inner pages.
 - The global floating widget should always win the layer stack in its visible region. If site chrome starts painting over it, debug the host z-index in `components/global-elevenlabs-widget.tsx` / `components/elevenlabs/ElevenLabsWidget.tsx` before changing page-level layout.
 - The section immediately below the hero is now a quieter bridge in `components/home/HomeEcosystemSection.tsx`, not a second animated logo network. Keep it explanatory and outcome-oriented so it supports the hero instead of competing with it.
 - Runtime helpers (`AnalyticsProvider`, `GlobalElevenLabsWidget`, Sentry/monitoring clients, toaster) are initialized in `components/runtime-client-shell.tsx`, mounted from `app/layout.tsx`.

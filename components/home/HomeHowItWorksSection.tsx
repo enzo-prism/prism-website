@@ -16,7 +16,7 @@ export default function HomeHowItWorksSection() {
         <CoreSectionHeading
           eyebrow={HOMEPAGE_HOW_IT_WORKS.eyebrow}
           title={HOMEPAGE_HOW_IT_WORKS.title}
-          titleClassName="max-w-[10ch]"
+          titleClassName="max-w-[16ch] lg:max-w-[18ch]"
         />
 
         <div className="mt-12 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
@@ -28,7 +28,7 @@ export default function HomeHowItWorksSection() {
               <p className="font-mono text-[11px] font-semibold uppercase tracking-[0.28em] text-[#8f877b]">
                 {String(index + 1).padStart(2, '0')}
               </p>
-              <h3 className="mt-5 max-w-[15ch] font-sans text-[1.45rem] font-medium leading-[1.04] tracking-[-0.05em] text-[#f5f0e8]">
+              <h3 className="mt-5 max-w-[19ch] font-sans text-[1.45rem] font-medium leading-[1.04] tracking-[-0.05em] text-[#f5f0e8]">
                 {step.title}
               </h3>
               <p className="mt-4 font-sans text-[0.98rem] leading-7 text-[#b8afa2]">

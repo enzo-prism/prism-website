@@ -35,7 +35,7 @@ The project relies on ESLint, Prettier, and Tailwind CSS. Preserve the default P
 - Avoid `ssr: false` for content-bearing components—only use it for client-only utilities (e.g., toasts).
 - When converting a page to server-rendered, replace inline CTA tracking with `components/tracked-link.tsx` or `components/tracked-anchor.tsx` so analytics still fire without making the whole page a client component.
 - Formspree submissions should use `useFormValidation` plus client-side `fetch` and redirect to `/thank-you` routes; document new/changed flows in `docs/forms.md`, `docs/pages-overview.md`, or `docs/development-guide.md`.
-- For the public ElevenLabs launcher (`components/global-elevenlabs-widget.tsx`), prefer the stock floating widget with documented attributes and host-level styling only. It now mounts on the homepage and inner pages alike, defaults to collapsed when no explicit user preference exists, and should keep a top-level z-index so site chrome never renders above it. If we need heavier visual customization later, move to ElevenLabs' official UI/SDK layer instead of styling undocumented internal widget structure.
+- For the public ElevenLabs launcher (`components/global-elevenlabs-widget.tsx`), prefer the stock floating widget with documented attributes and host-level styling only. It now mounts on public inner pages but intentionally stays off the homepage, defaults to collapsed when no explicit user preference exists, and should keep a top-level z-index so site chrome never renders above it. If we need heavier visual customization later, move to ElevenLabs' official UI/SDK layer instead of styling undocumented internal widget structure.
 
 ## Testing Guidelines
 

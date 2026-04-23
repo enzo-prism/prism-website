@@ -15,7 +15,6 @@ type GrowthProcessStep = {
   body: string
   note?: string
   stage: string
-  status: string
   title: string
   art: string
 }
@@ -25,7 +24,6 @@ export const GROWTH_PROCESS_STEPS: GrowthProcessStep[] = [
     stage: '01',
     title: 'Apply',
     body: 'Short form.',
-    status: 'STEP ONE',
     accent: '#9EFF2E',
     accentRgb: '158 255 46',
     art: [
@@ -43,7 +41,6 @@ export const GROWTH_PROCESS_STEPS: GrowthProcessStep[] = [
     stage: '02',
     title: 'Review',
     body: 'Every real submission is reviewed.',
-    status: 'ALWAYS',
     accent: '#FF2BEA',
     accentRgb: '255 43 234',
     art: [
@@ -63,7 +60,6 @@ export const GROWTH_PROCESS_STEPS: GrowthProcessStep[] = [
     stage: '03',
     title: 'Strategy',
     body: "If there's a fit, we map next steps.",
-    status: 'SELECTIVE',
     accent: '#19D7FF',
     accentRgb: '25 215 255',
     art: [
@@ -141,18 +137,6 @@ function ProcessCard({ step }: { step: GrowthProcessStep }) {
               {step.art}
             </pre>
           </div>
-        </div>
-
-        <div className="mt-8 flex items-center gap-3 border-t border-white/10 pt-5 font-mono text-[0.88rem] uppercase tracking-[0.14em] text-[#D6D6CF]">
-          <span
-            className={cn(
-              styles.statusDot,
-              'inline-flex h-2.5 w-2.5 rounded-full',
-            )}
-            style={{ backgroundColor: step.accent, color: step.accent }}
-            aria-hidden="true"
-          />
-          <span>{step.status}</span>
         </div>
       </div>
     </article>

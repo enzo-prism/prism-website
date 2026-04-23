@@ -71,3 +71,13 @@ export function isPublicElevenLabsWidgetEnabled(
 
   return !isTruthyEnvValue(disabledValue)
 }
+
+export function shouldRenderPublicElevenLabsWidget(
+  pathname: string | null | undefined,
+): boolean {
+  if (!pathname) {
+    return false
+  }
+
+  return pathname !== '/'
+}

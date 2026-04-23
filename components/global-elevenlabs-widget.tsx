@@ -1,10 +1,14 @@
 'use client'
 
 import { useEffect, useMemo, useRef, useState } from 'react'
+import { usePathname } from 'next/navigation'
 
 import ElevenLabsWidget from '@/components/elevenlabs/ElevenLabsWidget'
 import { publishPrismWidgetExpandedState } from '@/lib/elevenlabs'
-import { isPublicElevenLabsWidgetEnabled } from '@/lib/elevenlabs-widget'
+import {
+  isPublicElevenLabsWidgetEnabled,
+  shouldRenderPublicElevenLabsWidget,
+} from '@/lib/elevenlabs-widget'
 
 const GLOBAL_ELEVENLABS_WIDGET_Z_INDEX = 2147483000
 const PRISM_WIDGET_PREFERENCE_KEY = 'prism-elevenlabs-widget-preference'
@@ -68,8 +72,11 @@ function resolveDefaultExpandedState(): boolean {
 }
 
 export default function GlobalElevenLabsWidget() {
+  const pathname = usePathname()
   const [defaultExpanded, setDefaultExpanded] = useState<boolean | null>(null)
   const lastInteractionTimestampRef = useRef<number | null>(null)
+  const shouldRenderWidgetOnRoute =
+    shouldRenderPublicElevenLabsWidget(pathname)
   const widgetStyle = useMemo(
     () => ({
       zIndex: String(GLOBAL_ELEVENLABS_WIDGET_Z_INDEX),
@@ -78,14 +85,17 @@ export default function GlobalElevenLabsWidget() {
   )
 
   useEffect(() => {
-    if (!isPublicElevenLabsWidgetEnabled()) {
+    if (
+      !isPublicElevenLabsWidgetEnabled() ||
+      !shouldRenderWidgetOnRoute
+    ) {
       setDefaultExpanded(null)
       publishPrismWidgetExpandedState(false)
       return
     }
 
     setDefaultExpanded(resolveDefaultExpandedState())
-  }, [])
+  }, [shouldRenderWidgetOnRoute])
 
   const handleWidgetInteraction = () => {
     lastInteractionTimestampRef.current = Date.now()
@@ -106,7 +116,11 @@ export default function GlobalElevenLabsWidget() {
     }
   }
 
-  if (!isPublicElevenLabsWidgetEnabled() || defaultExpanded === null) {
+  if (
+    !isPublicElevenLabsWidgetEnabled() ||
+    !shouldRenderWidgetOnRoute ||
+    defaultExpanded === null
+  ) {
     return null
   }
 

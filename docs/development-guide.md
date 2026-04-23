@@ -34,7 +34,7 @@ This guide highlights the workflows we lean on most often while iterating on the
 - Avoid deep geometry overrides inside the widget Shadow DOM. ElevenLabs treats the embed as an opinionated surface; keep customization focused on supported attributes and host-level layering, and move heavier design customization to the official SDK/UI layer if we need a bespoke chat surface later.
 - The stock embed runtime forces its own host positioning, so `components/elevenlabs/ElevenLabsWidget.tsx` now re-applies only the host-level styles we actually need after the custom element mounts. Use that path for safe layer fixes like homepage section scoping or inner-page z-index elevation; do not reach into vendor shadow children for layout control.
 - The public agent id resolves via `lib/elevenlabs.ts` and can be overridden with `NEXT_PUBLIC_ELEVENLABS_AGENT_ID`.
-- `components/global-elevenlabs-widget.tsx` now renders the stock floating widget on public pages, including `/`, `/get-started`, and `/apply`. With no saved preference, it should stay closed by default; explicit user expand/collapse choices persist across future mounts.
+- `components/global-elevenlabs-widget.tsx` now renders the stock floating widget on public inner pages like `/get-started` and `/apply`, while `/` intentionally stays widget-free. With no saved preference, it should stay closed by default; explicit user expand/collapse choices persist across future mounts.
 - The floating host should stay at a top-most z-index so nav, skip links, charts, and other fixed site chrome never render above the expanded widget.
 - `components/runtime-client-shell.tsx` now keeps route-surface setup plus the core GA page/form listener layer on the critical path, while `components/runtime-deferred-features.tsx` still defers heavier client-only work like monitors, Vercel Analytics, and the public widget bundle during browser idle time.
 - `NEXT_PUBLIC_ELEVENLABS_WIDGET_DISABLED` exists as a deliberate debug/test seam. When set to a truthy value, the stock embed script and floating widget stay unmounted so deterministic visual builds do not bake live vendor UI into locked snapshots.
@@ -44,7 +44,8 @@ This guide highlights the workflows we lean on most often while iterating on the
 - If you change the homepage or global widget interaction model, re-run `pnpm exec jest __tests__/components/GlobalElevenLabsWidget.test.tsx __tests__/components/ElevenLabsWidget.test.tsx`.
 - For z-index, scrolling, or layout bugs involving the stock widget, validate against a fresh production bundle: `pnpm build && pnpm start -p <port>`. `next start` serves the last production build on disk, and the ElevenLabs custom element can behave differently from `pnpm dev` / Fast Refresh.
 - The fastest runtime sanity checks are:
-  - homepage and inner pages: widget host should compute to `position: fixed` with the elevated global z-index and remain topmost in the visible widget region after scrolling
+  - homepage: no public ElevenLabs script or floating widget should mount
+  - inner pages: widget host should compute to `position: fixed` with the elevated global z-index and remain topmost in the visible widget region after scrolling
   - default first-load behavior: widget should mount collapsed unless the user has already saved an explicit preference
 - The stock widget does not expose a documented "full-screen page-blocking modal" mode. Treat the visible widget surface as the layering boundary we control today; if product wants a true viewport scrim that blocks all underlying content, that is a migration conversation to ElevenLabs' official SDK/UI layer rather than a Shadow DOM styling patch.
 

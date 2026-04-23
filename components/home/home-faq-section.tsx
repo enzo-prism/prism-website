@@ -40,13 +40,13 @@ export default function HomeFAQSection({
   }
 
   return (
-    <div
-      className={cn(
-        'rounded-[2rem] px-6 sm:px-8',
-        isDark
-          ? 'border border-white/12 bg-black/30 shadow-[0_18px_48px_rgba(0,0,0,0.16)]'
-          : 'border border-black/8 bg-[#ffffff] shadow-[0_18px_48px_rgba(15,23,42,0.04)]',
-      )}
+      <div
+        className={cn(
+          'rounded-[2rem] px-4 sm:px-8',
+          isDark
+            ? 'border border-white/12 bg-black/30 shadow-[0_18px_48px_rgba(0,0,0,0.16)]'
+            : 'border border-black/8 bg-[#ffffff] shadow-[0_18px_48px_rgba(15,23,42,0.04)]',
+        )}
     >
       <Accordion type="single" collapsible>
         {faqItems.map((item) => (
@@ -60,7 +60,7 @@ export default function HomeFAQSection({
           >
             <AccordionTrigger
               className={cn(
-                'text-left text-base font-semibold hover:no-underline sm:text-[1.05rem]',
+                'text-left text-[0.98rem] font-semibold leading-6 hover:no-underline sm:text-[1.05rem] sm:leading-7',
                 isDark ? 'text-[#f5f0e8]' : 'text-[#0a0a0b]',
               )}
             >

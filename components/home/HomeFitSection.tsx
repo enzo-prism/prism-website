@@ -13,7 +13,7 @@ export default function HomeFitSection() {
         <CoreSectionHeading
           eyebrow={HOMEPAGE_FIT.eyebrow}
           title={HOMEPAGE_FIT.title}
-          titleClassName="max-w-[10ch]"
+          titleClassName="max-w-[15ch] lg:max-w-[17ch]"
         />
 
         <div className="mt-12 grid gap-6 lg:grid-cols-2">

@@ -58,7 +58,7 @@ describe('ClientPage homepage flow', () => {
     expect(
       screen.getByRole('heading', {
         level: 2,
-        name: /you know your business needs more online\./i,
+        name: /you do not have to figure it all out/i,
       }),
     ).toBeInTheDocument()
     expect(
@@ -106,7 +106,7 @@ describe('ClientPage homepage flow', () => {
     expect(
       screen.getByRole('heading', {
         level: 2,
-        name: /stop worrying about the tech\. start growing your business with the right partner\./i,
+        name: /stop worrying about tech\. start growing with prism\./i,
       }),
     ).toBeInTheDocument()
   })

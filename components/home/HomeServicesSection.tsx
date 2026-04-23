@@ -17,7 +17,7 @@ export default function HomeServicesSection() {
           eyebrow={HOMEPAGE_SERVICES.eyebrow}
           title={HOMEPAGE_SERVICES.title}
           description={HOMEPAGE_SERVICES.description}
-          titleClassName="max-w-[12ch]"
+          titleClassName="max-w-[17ch] lg:max-w-[19ch]"
         />
 
         <div className="mt-12 grid gap-6 sm:grid-cols-2 xl:grid-cols-3">

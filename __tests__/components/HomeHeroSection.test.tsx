@@ -76,7 +76,7 @@ describe('HomeHeroSection', () => {
       '/#how-it-works',
     )
 
-    expect(screen.getByText(/see the wall of love/i).closest('a')).toHaveAttribute(
+    expect(screen.getByRole('link', { name: /wall of love/i })).toHaveAttribute(
       'href',
       '/wall-of-love',
     )

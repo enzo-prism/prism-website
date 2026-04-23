@@ -13,9 +13,13 @@ export default function HomeFinalCtaSection() {
       >
         <CoreSectionHeading
           eyebrow={HOMEPAGE_FINAL_CTA.eyebrow}
-          title={HOMEPAGE_FINAL_CTA.title}
+          title={
+            <span className="block text-[1.18rem] leading-[1.12] sm:text-[clamp(1.4rem,4vw,2.35rem)] sm:leading-[1.08]">
+              {HOMEPAGE_FINAL_CTA.title}
+            </span>
+          }
           description={HOMEPAGE_FINAL_CTA.description}
-          titleClassName="max-w-[13ch]"
+          titleClassName="max-w-[30ch] lg:max-w-[32ch]"
           descriptionClassName="max-w-[42rem]"
         />
 

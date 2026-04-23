@@ -78,16 +78,16 @@ describe('GlobalElevenLabsWidget', () => {
     expect(getLastWidgetProps().defaultExpanded).toBe(false)
   })
 
-  it('mounts the floating widget on the homepage and keeps it collapsed by default', async () => {
+  it('does not mount the floating widget on the homepage', async () => {
     usePathname.mockReturnValue('/')
 
     render(<GlobalElevenLabsWidget />)
 
     await waitFor(() => {
-      expect(elevenLabsWidgetMock).toHaveBeenCalled()
+      expect(publishPrismWidgetExpandedState).toHaveBeenCalledWith(false)
     })
 
-    expect(getLastWidgetProps().defaultExpanded).toBe(false)
+    expect(elevenLabsWidgetMock).not.toHaveBeenCalled()
   })
 
   it('lets an explicit user preference override the closed-by-default baseline', async () => {

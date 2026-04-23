@@ -13,11 +13,11 @@ export default function HomeWhyPrismSection() {
   return (
     <section className={coreRouteSectionClassName}>
       <div className={coreRouteContainerClassName}>
-        <div className="grid gap-10 lg:grid-cols-[minmax(0,0.78fr)_minmax(0,1.22fr)]">
+        <div className="grid gap-10 lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)]">
           <CoreSectionHeading
             eyebrow={HOMEPAGE_WHY_PRISM.eyebrow}
             title={HOMEPAGE_WHY_PRISM.title}
-            titleClassName="max-w-[11ch]"
+            titleClassName="max-w-[20ch] lg:max-w-[22ch]"
           />
 
           <div className="grid gap-5 sm:grid-cols-2">

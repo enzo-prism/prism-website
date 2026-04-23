@@ -16,7 +16,7 @@ export default function HomePromiseSection() {
         <CoreSectionHeading
           eyebrow={HOMEPAGE_PROMISE.eyebrow}
           title={HOMEPAGE_PROMISE.title}
-          titleClassName="max-w-[11ch]"
+          titleClassName="max-w-[20ch] lg:max-w-[21ch]"
         />
 
         <div className="mt-12 grid gap-6 lg:grid-cols-3">
@@ -33,7 +33,7 @@ export default function HomePromiseSection() {
                 aria-hidden="true"
                 className="h-[17px] w-[17px] opacity-80"
               />
-              <h3 className="mt-5 max-w-[14ch] font-sans text-[1.55rem] font-medium leading-[1.03] tracking-[-0.05em] text-[#f5f0e8]">
+              <h3 className="mt-5 max-w-[18ch] font-sans text-[1.55rem] font-medium leading-[1.03] tracking-[-0.05em] text-[#f5f0e8]">
                 {card.title}
               </h3>
               <p className="mt-4 font-sans text-[1rem] leading-7 text-[#b8afa2]">

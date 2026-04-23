@@ -16,7 +16,7 @@ export default function HomeProblemSection() {
             title={HOMEPAGE_PROBLEM.title}
             description={HOMEPAGE_PROBLEM.description}
             className="gap-4"
-            titleClassName="max-w-[10ch]"
+            titleClassName="max-w-[17ch] lg:max-w-[19ch]"
             descriptionClassName="max-w-[30rem] text-[1rem] leading-7 sm:text-[1.08rem] sm:leading-8"
           />
 

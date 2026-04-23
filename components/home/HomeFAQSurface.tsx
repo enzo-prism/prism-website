@@ -15,7 +15,7 @@ export default function HomeFAQSurface() {
           title="Questions business owners usually ask"
           align="center"
           className="items-center"
-          titleClassName="max-w-[12ch]"
+          titleClassName="max-w-[18ch] lg:max-w-[20ch]"
         />
         <div className="mt-12">
           <HomeFAQSection faqItems={HOMEPAGE_FAQ_ITEMS} tone="dark" />

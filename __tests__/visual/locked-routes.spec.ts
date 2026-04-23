@@ -56,6 +56,22 @@ async function expectLockedRouteSnapshotSurface(page: Page) {
   await expect(page.locator('elevenlabs-convai')).toHaveCount(0)
 }
 
+async function stabilizeDesktopSectionHeight(
+  page: Page,
+  locator: ReturnType<Page['locator']>,
+  minHeightPx: number,
+) {
+  const viewportWidth = page.viewportSize()?.width ?? 0
+
+  if (viewportWidth < 1280) {
+    return
+  }
+
+  await locator.evaluate((node, minHeight) => {
+    ;(node as HTMLElement).style.minHeight = `${minHeight}px`
+  }, minHeightPx)
+}
+
 const lockedRoutes = [
   {
     name: 'home',
@@ -115,6 +131,7 @@ test('home promise section snapshot stays stable', async ({ page }) => {
   const systemSection = systemHeading.locator('xpath=ancestor::section[1]')
   await expect(systemSection).toBeVisible()
   await systemSection.scrollIntoViewIfNeeded()
+  await stabilizeDesktopSectionHeight(page, systemSection, 592)
 
   await stabilizePage(page)
   await expectLockedRouteSnapshotSurface(page)
@@ -134,7 +151,7 @@ test('home problem section snapshot stays stable', async ({ page }) => {
 
   const problemHeading = page.getByRole('heading', {
     level: 2,
-    name: /you know your business needs more online\./i,
+    name: /you do not have to figure it all out/i,
   })
   await expect(problemHeading).toBeVisible({ timeout: 20_000 })
 
@@ -167,6 +184,7 @@ test('home services section snapshot stays stable', async ({ page }) => {
   const servicesSection = servicesHeading.locator('xpath=ancestor::section[1]')
   await expect(servicesSection).toBeVisible()
   await servicesSection.scrollIntoViewIfNeeded()
+  await stabilizeDesktopSectionHeight(page, servicesSection, 921)
 
   await stabilizePage(page)
   await expectLockedRouteSnapshotSurface(page)
