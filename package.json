@@ -19,6 +19,7 @@
     "test": "jest",
     "test:visual": "pnpm build && playwright test",
     "test:visual:update": "pnpm build && playwright test --update-snapshots",
+    "test:home-scroll:mobile": "NEXT_PUBLIC_ELEVENLABS_WIDGET_DISABLED=true pnpm build && PLAYWRIGHT_PORT=3310 NEXT_PUBLIC_ELEVENLABS_WIDGET_DISABLED=true pnpm exec playwright test -c playwright.home-scroll.config.ts",
     "test:visual:animations": "pnpm build && PLAYWRIGHT_PORT=3320 pnpm exec playwright test -c playwright.animations.config.ts",
     "test:visual:widget": "pnpm build && CI=1 PLAYWRIGHT_PORT=3315 pnpm exec playwright test __tests__/visual/global-elevenlabs-widget.spec.ts --project=desktop-chromium --workers=1",
     "test:visual:locked": "NEXT_PUBLIC_ELEVENLABS_WIDGET_DISABLED=true pnpm build && PLAYWRIGHT_PORT=3300 NEXT_PUBLIC_ELEVENLABS_WIDGET_DISABLED=true pnpm exec playwright test -c playwright.locked.config.ts",

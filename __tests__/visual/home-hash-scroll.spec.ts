@@ -1,5 +1,23 @@
 import { expect, test, type Page } from '@playwright/test'
 
+const PERFECT_SCROLL_GAP_PX = 24
+const PERFECT_SCROLL_TOLERANCE_PX = 4
+
+const mobileScrollScenarios = [
+  {
+    name: 'compact phone',
+    viewport: { width: 360, height: 640 },
+  },
+  {
+    name: 'baseline phone',
+    viewport: { width: 390, height: 844 },
+  },
+  {
+    name: 'large phone',
+    viewport: { width: 430, height: 932 },
+  },
+] as const
+
 async function waitForHomepage(page: Page) {
   await expect(
     page.getByRole('heading', {
@@ -30,48 +48,118 @@ async function readHowItWorksScrollState(page: Page) {
       headingTop: heading?.getBoundingClientRect().top ?? null,
       headerHeight: header?.getBoundingClientRect().height ?? 0,
       viewportHeight: window.innerHeight,
+      ctaHref:
+        document
+          .querySelector<HTMLAnchorElement>(
+            '#homepage-hero a[href="#how-it-works"]',
+          )
+          ?.getAttribute('href') ?? null,
     }
   })
 }
 
-async function expectHowItWorksAnchorPosition(page: Page) {
+async function waitForPerfectHowItWorksPosition(page: Page, label: string) {
+  await expect
+    .poll(
+      async () => {
+        const state = await readHowItWorksScrollState(page)
+        if (state.targetTop === null || state.headingTop === null) {
+          return false
+        }
+
+        const idealTargetTop = state.headerHeight + PERFECT_SCROLL_GAP_PX
+
+        return (
+          state.hash === '#how-it-works' &&
+          state.scrollY > 1000 &&
+          state.ctaHref === '#how-it-works' &&
+          Math.abs(state.targetTop - idealTargetTop) <=
+            PERFECT_SCROLL_TOLERANCE_PX &&
+          state.headingTop > state.targetTop &&
+          state.headingTop < state.viewportHeight * 0.65
+        )
+      },
+      {
+        message: `${label} should land the how-it-works section exactly below the fixed mobile header`,
+        timeout: 5_000,
+      },
+    )
+    .toBe(true)
+
   const state = await readHowItWorksScrollState(page)
+  const idealTargetTop = state.headerHeight + PERFECT_SCROLL_GAP_PX
 
   expect(state.hash).toBe('#how-it-works')
   expect(state.scrollY).toBeGreaterThan(1000)
+  expect(state.ctaHref).toBe('#how-it-works')
   expect(state.targetTop).not.toBeNull()
   expect(state.headingTop).not.toBeNull()
-  expect(state.targetTop ?? 0).toBeGreaterThanOrEqual(
-    state.headerHeight + 16,
+  expect(
+    Math.abs((state.targetTop ?? 0) - idealTargetTop),
+    `${label} target top should be ${idealTargetTop}px, received ${state.targetTop}px`,
+  ).toBeLessThanOrEqual(PERFECT_SCROLL_TOLERANCE_PX)
+  expect(
+    state.targetTop ?? 0,
+    `${label} target should not be hidden below the fixed header`,
+  ).toBeGreaterThanOrEqual(
+    state.headerHeight + PERFECT_SCROLL_GAP_PX - PERFECT_SCROLL_TOLERANCE_PX,
   )
   expect(state.headingTop ?? 0).toBeGreaterThan(state.targetTop ?? 0)
   expect(state.headingTop ?? 0).toBeLessThan(state.viewportHeight * 0.65)
 }
 
-test('homepage how-it-works hash opens below the fixed header', async ({
-  page,
-}) => {
-  await page.goto('/#how-it-works', { waitUntil: 'domcontentloaded' })
-  await waitForHomepage(page)
-  await page.waitForTimeout(300)
+test.describe('mobile homepage how-it-works scroll position', () => {
+  for (const scenario of mobileScrollScenarios) {
+    test(`${scenario.name}: direct hash opens at the perfect position`, async ({
+      page,
+    }) => {
+      await page.setViewportSize(scenario.viewport)
+      await page.goto('/#how-it-works', { waitUntil: 'domcontentloaded' })
+      await waitForHomepage(page)
 
-  await expectHowItWorksAnchorPosition(page)
-})
+      await waitForPerfectHowItWorksPosition(
+        page,
+        `${scenario.name} direct hash`,
+      )
+    })
 
-test('homepage how-it-works CTA still scrolls when the hash is already present', async ({
-  page,
-}) => {
-  await page.goto('/#how-it-works', { waitUntil: 'domcontentloaded' })
-  await waitForHomepage(page)
-  await page.waitForTimeout(300)
+    test(`${scenario.name}: hero CTA scrolls from a clean page load`, async ({
+      page,
+    }) => {
+      await page.setViewportSize(scenario.viewport)
+      await page.goto('/', { waitUntil: 'domcontentloaded' })
+      await waitForHomepage(page)
 
-  await page.evaluate(() => window.scrollTo(0, 0))
-  await expect
-    .poll(() => page.evaluate(() => window.scrollY))
-    .toBeLessThan(20)
+      await page.getByRole('link', { name: /see how it works/i }).click()
 
-  await page.getByRole('link', { name: /see how it works/i }).click()
-  await page.waitForTimeout(300)
+      await waitForPerfectHowItWorksPosition(
+        page,
+        `${scenario.name} fresh CTA click`,
+      )
+    })
 
-  await expectHowItWorksAnchorPosition(page)
+    test(`${scenario.name}: hero CTA still scrolls when hash is already present`, async ({
+      page,
+    }) => {
+      await page.setViewportSize(scenario.viewport)
+      await page.goto('/#how-it-works', { waitUntil: 'domcontentloaded' })
+      await waitForHomepage(page)
+      await waitForPerfectHowItWorksPosition(
+        page,
+        `${scenario.name} initial hash position`,
+      )
+
+      await page.evaluate(() => window.scrollTo(0, 0))
+      await expect
+        .poll(() => page.evaluate(() => window.scrollY))
+        .toBeLessThan(20)
+
+      await page.getByRole('link', { name: /see how it works/i }).click()
+
+      await waitForPerfectHowItWorksPosition(
+        page,
+        `${scenario.name} same-hash CTA click`,
+      )
+    })
+  }
 })
