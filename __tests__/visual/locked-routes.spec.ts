@@ -355,7 +355,7 @@ test('home hero layout stays readable across responsive breakpoints', async ({
         'a[href="/get-started"]',
       )
       const secondaryCta = hero.querySelector<HTMLAnchorElement>(
-        'a[href="/#how-it-works"]',
+        'a[href="#how-it-works"], a[href="/#how-it-works"]',
       )
       const primaryCtaRect = primaryCta?.getBoundingClientRect()
       const secondaryCtaRect = secondaryCta?.getBoundingClientRect()
