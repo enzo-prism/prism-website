@@ -9,10 +9,10 @@ export default function HomeAiToolsSection() {
   return (
     <section id="ai-tools" className={coreRouteSectionCompactClassName}>
       <div className={coreRouteContainerClassName}>
-        <div className="grid gap-8 border-y border-white/10 py-10 lg:grid-cols-[minmax(0,0.58fr)_minmax(0,1.42fr)] lg:items-center lg:py-12">
+        <div className="grid gap-8 border-y border-white/10 py-10 lg:grid-cols-[minmax(0,0.72fr)_minmax(0,1.28fr)] lg:items-center lg:py-12">
           <CoreSectionHeading
             title={HOMEPAGE_AI_TOOLS.title}
-            titleClassName="max-w-[12ch] lg:max-w-[13ch]"
+            titleClassName="max-w-[17ch]"
             className="gap-0"
           />
 
