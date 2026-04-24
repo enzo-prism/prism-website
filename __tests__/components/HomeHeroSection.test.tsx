@@ -73,7 +73,7 @@ describe('HomeHeroSection', () => {
       screen.getByRole('link', { name: /see how it works/i }),
     ).toHaveAttribute(
       'href',
-      '/#how-it-works',
+      '#how-it-works',
     )
 
     expect(screen.getByRole('link', { name: /wall of love/i })).toHaveAttribute(

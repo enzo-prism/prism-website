@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react'
 import Link from 'next/link'
 
+import TrackedAnchor from '@/components/tracked-anchor'
 import TrackedLink from '@/components/tracked-link'
 import { cn } from '@/lib/utils'
 
@@ -70,6 +71,30 @@ export function CoreActionLink({
           : coreHeroSecondaryActionClassName,
     className,
   )
+  const isHashOnlyLink = href.startsWith('#')
+
+  if (isHashOnlyLink) {
+    if (label && location) {
+      return (
+        <TrackedAnchor
+          href={href}
+          label={label}
+          location={location}
+          className={actionClassName}
+          target={target}
+          rel={rel}
+        >
+          {children}
+        </TrackedAnchor>
+      )
+    }
+
+    return (
+      <a href={href} className={actionClassName} target={target} rel={rel}>
+        {children}
+      </a>
+    )
+  }
 
   if (label && location) {
     return (

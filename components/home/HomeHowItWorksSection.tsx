@@ -12,7 +12,11 @@ import {
 
 export default function HomeHowItWorksSection() {
   return (
-    <section id="how-it-works" className={coreRouteSectionClassName}>
+    <section
+      id="how-it-works"
+      data-section="how-it-works"
+      className={coreRouteSectionClassName}
+    >
       <div className={coreRouteContainerClassName}>
         <div className={coreRouteContainedSectionClassName}>
           <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">

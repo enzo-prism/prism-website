@@ -75,7 +75,7 @@ export default function HomeHeroSection() {
                   {HOMEPAGE_HERO.primaryCtaLabel}
                 </CoreActionLink>
                 <CoreActionLink
-                  href="/#how-it-works"
+                  href="#how-it-works"
                   label="see how it works"
                   location="homepage hero"
                   variant="heroSecondary"
