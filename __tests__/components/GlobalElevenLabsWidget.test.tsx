@@ -26,11 +26,29 @@ jest.mock('next/navigation', () => ({
   usePathname: () => usePathname(),
 }))
 
+const originalMatchMedia = window.matchMedia
+
 type MockWidgetProps = {
   defaultExpanded?: boolean
   onExpandedChange?: (expanded: boolean) => void
   onInteraction?: () => void
   testId?: string
+}
+
+function mockWidgetViewport(isMobileViewport: boolean) {
+  Object.defineProperty(window, 'matchMedia', {
+    configurable: true,
+    value: jest.fn().mockImplementation((query: string) => ({
+      matches: isMobileViewport,
+      media: query,
+      onchange: null,
+      addEventListener: jest.fn(),
+      removeEventListener: jest.fn(),
+      addListener: jest.fn(),
+      removeListener: jest.fn(),
+      dispatchEvent: jest.fn(),
+    })),
+  })
 }
 
 describe('GlobalElevenLabsWidget', () => {
@@ -55,9 +73,15 @@ describe('GlobalElevenLabsWidget', () => {
     window.localStorage.clear()
     usePathname.mockReset()
     delete process.env.NEXT_PUBLIC_ELEVENLABS_WIDGET_DISABLED
+    mockWidgetViewport(false)
   })
 
   afterAll(() => {
+    Object.defineProperty(window, 'matchMedia', {
+      configurable: true,
+      value: originalMatchMedia,
+    })
+
     if (originalWidgetDisabled === undefined) {
       delete process.env.NEXT_PUBLIC_ELEVENLABS_WIDGET_DISABLED
       return
@@ -76,6 +100,19 @@ describe('GlobalElevenLabsWidget', () => {
     })
 
     expect(getLastWidgetProps().defaultExpanded).toBe(false)
+  })
+
+  it('does not mount the floating widget on mobile viewports', async () => {
+    mockWidgetViewport(true)
+    usePathname.mockReturnValue('/about')
+
+    render(<GlobalElevenLabsWidget />)
+
+    await waitFor(() => {
+      expect(publishPrismWidgetExpandedState).toHaveBeenCalledWith(false)
+    })
+
+    expect(elevenLabsWidgetMock).not.toHaveBeenCalled()
   })
 
   it('does not mount the floating widget on the homepage', async () => {

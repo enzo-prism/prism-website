@@ -103,6 +103,56 @@ test('ElevenLabs widget stays closed for first-touch inner-page landings', async
     )
 })
 
+test('ElevenLabs widget stays unmounted on mobile inner-page landings', async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 390, height: 844 })
+  await page.goto('/about', { waitUntil: 'domcontentloaded' })
+  await expect(
+    page.getByRole('heading', { level: 1, name: /built by enzo sison\./i }),
+  ).toBeVisible({ timeout: 20_000 })
+  await expect
+    .poll(async () => getWidgetState(page), { timeout: 20_000 })
+    .toMatchObject({
+      customElementDefined: false,
+      floatingHostPosition: null,
+      floatingHostZIndex: null,
+      floatingTopElementTestId: null,
+      widgetCount: 0,
+      scriptCount: 0,
+      defaultExpandedCount: 0,
+      expandedCount: 0,
+      defaultFloatingCount: 0,
+      heroWidgetCount: 0,
+      floatingWidgetCount: 0,
+      collapseButtonCount: 0,
+    })
+
+  await page.goto('/get-started', { waitUntil: 'domcontentloaded' })
+  await expect(
+    page.getByRole('heading', {
+      level: 1,
+      name: /start here\./i,
+    }),
+  ).toBeVisible({
+    timeout: 20_000,
+  })
+  await expect
+    .poll(async () => getWidgetState(page), { timeout: 20_000 })
+    .toMatchObject({
+      customElementDefined: false,
+      launcherCount: 0,
+      widgetCount: 0,
+      scriptCount: 0,
+      defaultExpandedCount: 0,
+      expandedCount: 0,
+      defaultFloatingCount: 0,
+      heroWidgetCount: 0,
+      floatingWidgetCount: 0,
+      collapseButtonCount: 0,
+    })
+})
+
 test('ElevenLabs widget stays off the homepage and remains the same floating launcher across inner public routes', async ({
   page,
 }) => {

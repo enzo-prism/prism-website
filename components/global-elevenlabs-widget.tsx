@@ -4,6 +4,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { usePathname } from 'next/navigation'
 
 import ElevenLabsWidget from '@/components/elevenlabs/ElevenLabsWidget'
+import { usePublicElevenLabsWidgetViewportEligibility } from '@/hooks/use-public-elevenlabs-widget-viewport'
 import { publishPrismWidgetExpandedState } from '@/lib/elevenlabs'
 import {
   isPublicElevenLabsWidgetEnabled,
@@ -75,8 +76,8 @@ export default function GlobalElevenLabsWidget() {
   const pathname = usePathname()
   const [defaultExpanded, setDefaultExpanded] = useState<boolean | null>(null)
   const lastInteractionTimestampRef = useRef<number | null>(null)
-  const shouldRenderWidgetOnRoute =
-    shouldRenderPublicElevenLabsWidget(pathname)
+  const shouldRenderWidgetOnRoute = shouldRenderPublicElevenLabsWidget(pathname)
+  const isViewportEligible = usePublicElevenLabsWidgetViewportEligibility()
   const widgetStyle = useMemo(
     () => ({
       zIndex: String(GLOBAL_ELEVENLABS_WIDGET_Z_INDEX),
@@ -87,15 +88,21 @@ export default function GlobalElevenLabsWidget() {
   useEffect(() => {
     if (
       !isPublicElevenLabsWidgetEnabled() ||
-      !shouldRenderWidgetOnRoute
+      !shouldRenderWidgetOnRoute ||
+      isViewportEligible === false
     ) {
       setDefaultExpanded(null)
       publishPrismWidgetExpandedState(false)
       return
     }
 
+    if (isViewportEligible === null) {
+      setDefaultExpanded(null)
+      return
+    }
+
     setDefaultExpanded(resolveDefaultExpandedState())
-  }, [shouldRenderWidgetOnRoute])
+  }, [isViewportEligible, shouldRenderWidgetOnRoute])
 
   const handleWidgetInteraction = () => {
     lastInteractionTimestampRef.current = Date.now()
@@ -119,6 +126,7 @@ export default function GlobalElevenLabsWidget() {
   if (
     !isPublicElevenLabsWidgetEnabled() ||
     !shouldRenderWidgetOnRoute ||
+    isViewportEligible !== true ||
     defaultExpanded === null
   ) {
     return null

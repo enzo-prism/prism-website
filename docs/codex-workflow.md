@@ -17,7 +17,7 @@ When a task touches the live assistant surface, start with the current ownership
 
 - `lib/elevenlabs-widget.ts` – canonical live public widget config (public agent id, markdown-link host allowlist, public kill switch)
 - `components/elevenlabs/ElevenLabsWidget.tsx` – stock custom-element wrapper + host-style enforcement after the widget upgrades
-- `components/global-elevenlabs-widget.tsx` – floating stock widget on public inner pages; homepage excluded
+- `components/global-elevenlabs-widget.tsx` – floating stock widget on non-mobile public inner pages; homepage and mobile viewports excluded
 - `types/elevenlabs-widget.d.ts` – JSX typing for `<elevenlabs-convai>`
 - `lib/elevenlabs.ts` – legacy deterministic/backend-era helpers; not the primary place for live stock-widget config anymore
 
@@ -25,7 +25,8 @@ Rules that will save you time:
 
 - Treat the stock widget as an opinionated vendor surface. Prefer documented attributes and host-level wrapper styles only.
 - Do not style the widget Shadow DOM unless there is no other path and the product decision is explicit.
-- Public-page invariant: the floating widget host must stay above the site chrome in the visible widget region.
+- Public-page invariant: when mounted, the floating widget host must stay above the site chrome in the visible widget region.
+- Mobile invariant: mobile viewports must not mount the floating widget or load the ElevenLabs embed script.
 - Default-state invariant: without a saved preference, the launcher should mount collapsed.
 - The stock widget is not a documented full-screen page-blocking modal scrim. If product wants that, push toward ElevenLabs' official SDK/UI layer instead of stretching the stock embed.
 
@@ -41,7 +42,7 @@ Why this matters:
 
 - `next start` serves the last production build on disk, so rebuild first or changes will look ignored.
 - The ElevenLabs custom element can behave differently under the production bundle than under `pnpm dev` / Fast Refresh.
-- The current visual spec already checks the two key regressions: public-page closed-by-default behavior and top-layer ownership.
+- The current visual spec already checks the key regressions: public-page closed-by-default behavior, top-layer ownership, and mobile suppression.
 
 ## 2. Dental photography surfaces
 

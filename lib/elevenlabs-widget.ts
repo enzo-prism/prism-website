@@ -6,6 +6,8 @@ const DEFAULT_MARKDOWN_LINK_ALLOWED_HOSTS = [
   'design-prism.com',
 ] as const
 const ENABLED_ENV_VALUES = new Set(['1', 'true', 'yes', 'on'])
+export const PUBLIC_ELEVENLABS_WIDGET_MOBILE_MAX_WIDTH_PX = 767
+export const PUBLIC_ELEVENLABS_WIDGET_MOBILE_MEDIA_QUERY = `(max-width: ${PUBLIC_ELEVENLABS_WIDGET_MOBILE_MAX_WIDTH_PX}px)`
 
 declare global {
   interface Window {

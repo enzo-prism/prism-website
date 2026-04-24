@@ -38,10 +38,10 @@ cp .env.example .env.local
 
 ### Global launcher
 
-- `components/global-elevenlabs-widget.tsx` mounts the stock floating widget on public inner pages; `/` intentionally stays widget-free.
-- On `/get-started`, this launcher stays available as a floating assistive surface while the primary conversion path points into the built-in application flow. On `/apply`, the launcher is suppressed so the active application remains focused.
+- `components/global-elevenlabs-widget.tsx` mounts the stock floating widget on non-mobile public inner pages; `/`, mobile viewports, and `/apply` intentionally stay widget-free.
+- On `/get-started`, this launcher stays available as a floating assistive surface on non-mobile viewports while the primary conversion path points into the built-in application flow. On mobile and `/apply`, the launcher is suppressed so the active application remains focused.
 - Without a saved preference, the widget should start collapsed by default.
-- Keep its z-index high enough that sticky nav and other fixed chrome never render above the visible widget.
+- Keep its z-index high enough that sticky nav and other fixed chrome never render above the visible widget when it is mounted.
 
 ## Notes
 
