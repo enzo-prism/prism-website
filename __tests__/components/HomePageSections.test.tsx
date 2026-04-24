@@ -64,7 +64,7 @@ describe('ClientPage homepage flow', () => {
     expect(
       screen.getByRole('heading', {
         level: 2,
-        name: /the best ai tools, handled for you\./i,
+        name: /ai tools, handled for you\./i,
       }),
     ).toBeInTheDocument()
     expect(

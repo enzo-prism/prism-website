@@ -9,7 +9,7 @@ export default function HomeProofBandSection() {
     <section className={coreRouteSectionCompactClassName}>
       <div className={coreRouteContainerClassName}>
         <div className="overflow-hidden rounded-[2rem] border border-white/12 bg-white/[0.03]">
-          <div className="grid divide-y divide-white/10 sm:grid-cols-2 sm:divide-x sm:divide-y-0 lg:grid-cols-4">
+          <div className="grid divide-y divide-white/10 sm:grid-cols-2 sm:divide-x sm:divide-y-0 lg:grid-cols-3">
             {HOMEPAGE_PROOF_METRICS.map((metric) => (
               <article
                 key={metric.label}

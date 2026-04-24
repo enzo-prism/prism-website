@@ -86,35 +86,39 @@ export default function HomeHeroSection() {
 
               <div
                 data-testid="home-hero-social-proof"
-                className="mt-6 grid gap-2 border-t border-white/10 pt-4 sm:flex sm:flex-wrap sm:items-center sm:gap-x-3 sm:gap-y-2"
+                className="mt-6"
               >
-                <div className="flex items-center gap-3">
-                  <div
-                    aria-label="5 star rating"
-                    role="img"
-                    className="inline-flex items-center gap-1 text-[0.74rem] leading-none text-[#d8bc79]/85"
-                  >
-                    {Array.from({ length: 5 }).map((_, index) => (
-                      <span key={`hero-star-${index}`} aria-hidden="true">
-                        ★
-                      </span>
-                    ))}
-                  </div>
-                  <span
-                    aria-hidden="true"
-                    className="hidden h-1 w-1 rounded-full bg-white/14 sm:inline-flex"
-                  />
-                </div>
-                <p className="text-balance font-sans text-[0.94rem] leading-6 text-[#a8a092] sm:text-[0.98rem]">
-                  {HOMEPAGE_HERO.socialProof.headline}
-                </p>
                 <TrackedLink
-                  href="/wall-of-love"
-                  label="visit wall of love"
+                  href="/case-studies"
+                  label="view case studies"
                   location="homepage hero social proof"
-                  className="font-mono text-[10px] font-semibold uppercase tracking-[0.24em] text-[#7d766a] transition-colors hover:text-[#c1b9ac]"
+                  className="group grid gap-2 border-t border-white/10 pt-4 transition-colors hover:border-white/18 focus-visible:rounded-sm focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-white/25 focus-visible:ring-offset-4 focus-visible:ring-offset-black sm:flex sm:flex-wrap sm:items-center sm:gap-x-3 sm:gap-y-2"
                 >
-                  {HOMEPAGE_HERO.socialProof.linkLabel}
+                  <div className="flex items-center gap-3">
+                    <div
+                      aria-label="5 star rating"
+                      role="img"
+                      className="inline-flex items-center gap-1 text-[0.74rem] leading-none text-[#d8bc79]/85"
+                    >
+                      {Array.from({ length: 5 }).map((_, index) => (
+                        <span key={`hero-star-${index}`} aria-hidden="true">
+                          ★
+                        </span>
+                      ))}
+                    </div>
+                    <span
+                      aria-hidden="true"
+                      className="hidden h-1 w-1 rounded-full bg-white/14 sm:inline-flex"
+                    />
+                  </div>
+                  <p className="text-balance font-sans text-[0.94rem] leading-6 text-[#a8a092] sm:text-[0.98rem]">
+                    {HOMEPAGE_HERO.socialProof.headline}
+                  </p>
+                  <span
+                    className="font-mono text-[10px] font-semibold uppercase tracking-[0.24em] text-[#7d766a] transition-colors group-hover:text-[#c1b9ac]"
+                  >
+                    {HOMEPAGE_HERO.socialProof.linkLabel}
+                  </span>
                 </TrackedLink>
               </div>
             </div>

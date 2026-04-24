@@ -76,10 +76,14 @@ describe('HomeHeroSection', () => {
       '#how-it-works',
     )
 
-    expect(screen.getByRole('link', { name: /wall of love/i })).toHaveAttribute(
-      'href',
-      '/wall-of-love',
-    )
+    expect(
+      screen.getByRole('link', {
+        name: /5 star rating 5 stars from 20\+ business owners case studies/i,
+      }),
+    ).toHaveAttribute('href', '/case-studies')
+    expect(
+      screen.queryByRole('link', { name: /wall of love/i }),
+    ).not.toBeInTheDocument()
   })
 
   it('does not render the retired image-led hero treatment', () => {
