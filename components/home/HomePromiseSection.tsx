@@ -39,9 +39,11 @@ export default function HomePromiseSection() {
                   <h3 className="mt-5 max-w-[18ch] font-sans text-[1.55rem] font-medium leading-[1.03] tracking-[-0.05em] text-[#f5f0e8]">
                     {card.title}
                   </h3>
-                  <p className="mt-4 font-sans text-[1rem] leading-7 text-[#b8afa2]">
-                    {card.description}
-                  </p>
+                  {card.description ? (
+                    <p className="mt-4 font-mono text-[10px] font-semibold uppercase tracking-[0.22em] text-[#8f877b]">
+                      {card.description}
+                    </p>
+                  ) : null}
                 </article>
               ))}
             </div>

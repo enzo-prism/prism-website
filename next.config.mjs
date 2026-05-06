@@ -26,6 +26,7 @@ outputFileTracingIncludes: {
 // Enhanced image optimization configuration
 images: {
   formats: ['image/webp', 'image/avif'], // Enable modern image formats
+  qualities: [75, 90],
   deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840], // Responsive breakpoints
   imageSizes: [16, 32, 48, 64, 96, 128, 256, 384], // Icon sizes
   minimumCacheTTL: 31536000, // 1 year cache for optimized images

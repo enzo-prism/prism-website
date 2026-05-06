@@ -21,7 +21,7 @@ export default function HomeProblemSection() {
           />
 
           <div className="space-y-8">
-            <div className="grid gap-6 border-y border-white/12 py-6 sm:grid-cols-2 xl:grid-cols-3">
+            <div className="grid gap-6 border-y border-white/12 py-6 sm:grid-cols-2 xl:grid-cols-4">
               {HOMEPAGE_PROBLEM.points.map((point) => (
                 <div
                   key={point.label}
@@ -42,9 +42,11 @@ export default function HomeProblemSection() {
                       {point.label}
                     </p>
                   </div>
-                  <p className="max-w-[22rem] font-sans text-[0.98rem] leading-7 text-[#c9c1b6] sm:text-[1.02rem]">
-                    {point.text}
-                  </p>
+                  {point.text ? (
+                    <p className="max-w-[22rem] font-sans text-[0.98rem] leading-7 text-[#c9c1b6] sm:text-[1.02rem]">
+                      {point.text}
+                    </p>
+                  ) : null}
                 </div>
               ))}
             </div>

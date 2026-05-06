@@ -26,6 +26,16 @@ declare global {
   }
 }
 
+type AttributionEventContext = {
+  utm_source?: string
+  utm_medium?: string
+  utm_campaign?: string
+  landing_path?: string
+  first_touch_source?: string
+  first_touch_medium?: string
+  first_touch_campaign?: string
+}
+
 export type LeadConversionContext = {
   form_name?: string
   form_location?: string
@@ -80,6 +90,45 @@ function compactAnalyticsParams(params: Record<string, any>) {
       ([, value]) => value !== undefined && value !== null && value !== '',
     ),
   )
+}
+
+function getAnalyticsAttributionContext(): AttributionEventContext {
+  const attribution = getAttributionContext()
+
+  return compactAnalyticsParams({
+    utm_source: attribution.utm_source,
+    utm_medium: attribution.utm_medium,
+    utm_campaign: attribution.utm_campaign,
+    landing_path: attribution.landing_path,
+    first_touch_source: attribution.first_touch_source,
+    first_touch_medium: attribution.first_touch_medium,
+    first_touch_campaign: attribution.first_touch_campaign,
+  })
+}
+
+function getSafeSearchParams(searchParams: URLSearchParams) {
+  return compactAnalyticsParams({
+    utm_source: searchParams.get('utm_source') ?? undefined,
+    utm_medium: searchParams.get('utm_medium') ?? undefined,
+    utm_campaign: searchParams.get('utm_campaign') ?? undefined,
+    utm_content: searchParams.get('utm_content') ?? undefined,
+    utm_term: searchParams.get('utm_term') ?? undefined,
+  })
+}
+
+function getExternalDestinationContext(url: string) {
+  try {
+    const parsed = new URL(url)
+    return compactAnalyticsParams({
+      destination_host: parsed.hostname,
+      destination_path: parsed.pathname === '/' ? undefined : parsed.pathname,
+    })
+  } catch {
+    return compactAnalyticsParams({
+      destination_host: undefined,
+      destination_path: undefined,
+    })
+  }
 }
 
 // Custom event types
@@ -257,7 +306,7 @@ export function trackEvent(eventName: EventType, params?: Record<string, any>) {
   // Add attribution and page context to all events without adding unique,
   // high-cardinality values that make GA reports harder to use.
   const enhancedParams = compactAnalyticsParams({
-    ...getAttributionContext(),
+    ...getAnalyticsAttributionContext(),
     ...params,
     page_location: pageLocation,
     page_title: pageTitle,
@@ -479,7 +528,7 @@ export function trackVideoInteraction(
  */
 export function trackExternalLinkClick(url: string, linkText?: string) {
   trackEvent('external_link_click', {
-    destination_url: url,
+    ...getExternalDestinationContext(url),
     link_text: linkText || 'not specified',
   })
 }

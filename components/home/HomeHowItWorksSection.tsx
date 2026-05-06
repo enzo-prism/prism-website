@@ -27,7 +27,7 @@ export default function HomeHowItWorksSection() {
 
             <CoreActionLink
               href="/get-started"
-              label="get my free growth plan"
+              label="get a free practice audit"
               location="homepage how it works"
               className="text-[0.72rem] tracking-[0.12em] sm:text-sm sm:tracking-[0.18em]"
             >
@@ -35,11 +35,11 @@ export default function HomeHowItWorksSection() {
             </CoreActionLink>
           </div>
 
-          <div className="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+          <div className="mt-10 grid gap-4 md:grid-cols-3">
             {HOMEPAGE_HOW_IT_WORKS_STEPS.map((step, index) => (
               <article
                 key={step.title}
-                className="rounded-[1.6rem] border border-white/10 bg-black/20 p-6"
+                className="rounded-[1.35rem] border border-white/10 bg-black/20 p-5"
               >
                 <p className="font-mono text-[10px] font-medium tracking-[0.18em] text-[#7d7569]">
                   {String(index + 1).padStart(2, '0')}
@@ -47,9 +47,11 @@ export default function HomeHowItWorksSection() {
                 <h3 className="mt-5 max-w-[19ch] font-sans text-[1.45rem] font-medium leading-[1.04] tracking-[-0.05em] text-[#f5f0e8]">
                   {step.title}
                 </h3>
-                <p className="mt-4 font-sans text-[0.98rem] leading-7 text-[#b8afa2]">
-                  {step.description}
-                </p>
+                {step.description ? (
+                  <p className="mt-4 font-sans text-[0.98rem] leading-7 text-[#b8afa2]">
+                    {step.description}
+                  </p>
+                ) : null}
               </article>
             ))}
           </div>

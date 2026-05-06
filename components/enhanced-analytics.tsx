@@ -45,9 +45,17 @@ export default function EnhancedAnalytics({ title }: EnhancedAnalyticsProps) {
     const previous = previousSearchParams.current
 
     if (previous !== null && previous !== currentSearchParams) {
+      const safeSearchParams = {
+        utm_source: searchParams.get('utm_source') ?? undefined,
+        utm_medium: searchParams.get('utm_medium') ?? undefined,
+        utm_campaign: searchParams.get('utm_campaign') ?? undefined,
+        utm_content: searchParams.get('utm_content') ?? undefined,
+        utm_term: searchParams.get('utm_term') ?? undefined,
+      }
+
       trackEvent("search_params_change", {
         path: pathname,
-        search_params: currentSearchParams,
+        ...safeSearchParams,
       })
     }
 

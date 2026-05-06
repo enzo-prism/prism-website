@@ -139,6 +139,30 @@ describe('GlobalElevenLabsWidget', () => {
     expect(elevenLabsWidgetMock).not.toHaveBeenCalled()
   })
 
+  it('does not mount the floating widget on the Instagram shortcut page', async () => {
+    usePathname.mockReturnValue('/ig')
+
+    render(<GlobalElevenLabsWidget />)
+
+    await waitFor(() => {
+      expect(publishPrismWidgetExpandedState).toHaveBeenCalledWith(false)
+    })
+
+    expect(elevenLabsWidgetMock).not.toHaveBeenCalled()
+  })
+
+  it('does not mount the floating widget on the TikTok shortcut page', async () => {
+    usePathname.mockReturnValue('/tiktok')
+
+    render(<GlobalElevenLabsWidget />)
+
+    await waitFor(() => {
+      expect(publishPrismWidgetExpandedState).toHaveBeenCalledWith(false)
+    })
+
+    expect(elevenLabsWidgetMock).not.toHaveBeenCalled()
+  })
+
   it('lets an explicit user preference override the closed-by-default baseline', async () => {
     window.localStorage.setItem(
       'prism-elevenlabs-widget-preference',

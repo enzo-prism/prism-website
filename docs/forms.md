@@ -37,11 +37,11 @@ const { handleSubmit, getError, isSubmitting } = useFormValidation({
 4. Add your form component to the relevant route page.
 5. Give the real `<form>` element a stable `id` and `name`. GA4 enhanced measurement uses those DOM attributes for `form_id` and `form_name`; hidden inputs alone are not enough.
 
-## Prism application flow: `/get-started` + `/apply`
+## Prism practice audit flow: `/get-started` + `/apply`
 
-`app/get-started/page.tsx` is now the overview/qualification entry page. The actual application form lives on `app/apply/page.tsx` and is powered by `components/forms/GetStartedForm.tsx`.
+`app/get-started/page.tsx` is now the Free Practice Audit entry page for dental practices. The actual audit request form lives on `app/apply/page.tsx` and is powered by `components/forms/GetStartedForm.tsx`.
 
-The `/apply` route should feel like a focused application mode, not another marketing page. Keep the form broken into single-question screens, keep global chrome minimal, and keep the ElevenLabs floating widget suppressed while the user is inside the active form.
+The `/apply` route should feel like a focused practice audit mode, not another marketing page. Keep the form broken into single-question screens, keep global chrome minimal, and keep the ElevenLabs floating widget suppressed while the user is inside the active form. Keep the DOM/form contracts below unchanged even when visible copy says audit instead of application.
 
 - Required payload fields:
   - `service_focus`
@@ -57,7 +57,7 @@ The `/apply` route should feel like a focused application mode, not another mark
   - `service_interest[]`
   - `additional_context`
 - Hidden metadata contract:
-  - `_subject` = `New Prism application`
+  - `_subject` = `New Prism practice audit request`
   - `_redirect` = `/thank-you?source=apply`
   - `form_name` = `growth_application`
   - `_gotcha` (honeypot)
@@ -154,7 +154,7 @@ Important routing note:
 
 ## Thank-you pages
 
-- `/thank-you` ([`app/thank-you/page.tsx`](../app/thank-you/page.tsx)) — used by Apply + Contact. The Prism application flow sends `?source=apply` so the screen can render application-specific expectation copy and analytics.
+- `/thank-you` ([`app/thank-you/page.tsx`](../app/thank-you/page.tsx)) — used by Apply + Contact. The Prism practice audit flow sends `?source=apply` so the screen can render audit-specific expectation copy and analytics.
 - `/analysis-thank-you` ([`app/analysis-thank-you/page.tsx`](../app/analysis-thank-you/page.tsx)) — used by the Free Analysis form.
 - `/aeo-thank-you` ([`app/aeo-thank-you/page.tsx`](../app/aeo-thank-you/page.tsx)) — used by the AEO assessment form.
 

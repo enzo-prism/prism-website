@@ -13,6 +13,14 @@ jest.mock('@/lib/marketing-attribution', () => ({
   getAttributionContext: () => ({
     utm_source: 'google',
     utm_medium: 'cpc',
+    utm_campaign: 'spring-launch',
+    landing_path: '/ig',
+    first_touch_source: 'instagram',
+    first_touch_medium: 'social',
+    first_touch_campaign: 'founder-clips',
+    gclid: 'GCLID-123',
+    fbclid: 'FBCLID-123',
+    msclkid: 'MSCLKID-123',
   }),
 }))
 
@@ -27,6 +35,7 @@ import {
   consumePendingLeadConversion,
   storePendingApplyLeadContext,
   trackEvent,
+  trackExternalLinkClick,
   trackFormSubmission,
   trackLeadConversion,
   trackPageView,
@@ -90,6 +99,20 @@ describe('analytics utilities', () => {
     expect(applyQuestionCall?.[2]).toEqual(
       expect.not.objectContaining({
         event_time: expect.any(String),
+        gclid: expect.any(String),
+        fbclid: expect.any(String),
+        msclkid: expect.any(String),
+      }),
+    )
+    expect(applyQuestionCall?.[2]).toEqual(
+      expect.objectContaining({
+        utm_source: 'google',
+        utm_medium: 'cpc',
+        utm_campaign: 'spring-launch',
+        landing_path: '/ig',
+        first_touch_source: 'instagram',
+        first_touch_medium: 'social',
+        first_touch_campaign: 'founder-clips',
       }),
     )
   })
@@ -146,6 +169,33 @@ describe('analytics utilities', () => {
         send_to: 'AW-TEST/lead',
         value: 1,
         currency: 'USD',
+      }),
+    )
+  })
+
+  it('tracks external link clicks without sending the full destination URL', () => {
+    trackExternalLinkClick(
+      'https://www.tiktok.com/@the_design_prism?utm_source=ig',
+      'tiktok',
+    )
+
+    expect(window.gtag).toHaveBeenCalledWith(
+      'event',
+      'external_link_click',
+      expect.objectContaining({
+        destination_host: 'www.tiktok.com',
+        destination_path: '/@the_design_prism',
+        link_text: 'tiktok',
+      }),
+    )
+
+    const externalLinkCall = (window.gtag as jest.Mock).mock.calls.find(
+      ([, eventName]) => eventName === 'external_link_click',
+    )
+
+    expect(externalLinkCall?.[2]).toEqual(
+      expect.not.objectContaining({
+        destination_url: expect.any(String),
       }),
     )
   })

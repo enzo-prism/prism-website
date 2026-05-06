@@ -5,9 +5,9 @@ import { WebPageSchema } from '@/components/schema-markup'
 import TrackedLink from '@/components/tracked-link'
 import { buildRouteMetadata } from '@/lib/seo/metadata'
 
-const PAGE_TITLE = 'Apply to work with Prism | Prism'
+const PAGE_TITLE = 'Start your free practice audit | Prism'
 const PAGE_DESCRIPTION =
-  'Apply to work with Prism. A short, focused application for websites, analytics, acquisition, and AI workflow support.'
+  'Start a focused Prism audit of your dental website, Google presence, reviews, booking path, tracking, and patient growth opportunities.'
 const CANONICAL_URL = 'https://www.design-prism.com/apply'
 
 export const metadata: Metadata = buildRouteMetadata({
@@ -31,7 +31,7 @@ export default function ApplyPage() {
         </TrackedLink>
         <TrackedLink
           href="/get-started"
-          label="exit application"
+          label="exit practice audit"
           location="apply page minimal header"
           className="font-mono text-[0.72rem] uppercase tracking-[0.24em] text-[#7C7C75] transition-colors hover:text-[#F5F5F2] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-white/25"
         >

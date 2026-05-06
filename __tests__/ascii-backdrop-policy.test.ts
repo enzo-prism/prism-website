@@ -49,6 +49,20 @@ describe('ascii hero backdrop policy', () => {
     expect(profile.fit).toBe('contain')
   })
 
+  it('preserves requested high-detail frames on tablet-sized viewports', () => {
+    const profile = resolveAsciiBackdropProfile({
+      ...baseInput,
+      quality: 'high',
+      viewportWidth: 1024,
+      deviceMemory: 8,
+      hardwareConcurrency: 8,
+    })
+
+    expect(profile.shouldRender).toBe(true)
+    expect(profile.quality).toBe('high')
+    expect(profile.fit).toBe('cover')
+  })
+
   it('disables the backdrop for reduced motion', () => {
     const profile = resolveAsciiBackdropProfile({
       ...baseInput,

@@ -11,7 +11,7 @@ export default function HomeFAQSurface() {
     <section className={coreRouteSectionClassName}>
       <div className={`${coreRouteContainerClassName} max-w-4xl`}>
         <CoreSectionHeading
-          title="Questions business owners usually ask"
+          title="Questions owner-dentists usually ask"
           align="center"
           className="items-center"
           titleClassName="max-w-[18ch] lg:max-w-[20ch]"

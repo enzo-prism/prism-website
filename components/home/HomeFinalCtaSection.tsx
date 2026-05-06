@@ -21,8 +21,7 @@ export default function HomeFinalCtaSection() {
             <CoreSectionHeading
               title={
                 <span className="block text-[clamp(2rem,5vw,4.1rem)] leading-[0.98] tracking-[-0.055em]">
-                  Stop worrying about tech.
-                  <span className="block">Start growing with Prism.</span>
+                  {HOMEPAGE_FINAL_CTA.title}
                 </span>
               }
               description={HOMEPAGE_FINAL_CTA.description}
@@ -33,15 +32,17 @@ export default function HomeFinalCtaSection() {
             <div className="mt-10 flex flex-col gap-5 sm:flex-row sm:items-center">
               <CoreActionLink
                 href="/get-started"
-                label="get a free growth plan"
+                label="start free audit"
                 location="homepage final cta"
                 variant="heroPrimary"
               >
                 {HOMEPAGE_FINAL_CTA.primaryCtaLabel}
               </CoreActionLink>
-              <p className="font-sans text-[0.94rem] leading-7 text-[#948b80]">
-                {HOMEPAGE_FINAL_CTA.supportLine}
-              </p>
+              {HOMEPAGE_FINAL_CTA.supportLine ? (
+                <p className="font-sans text-[0.94rem] leading-7 text-[#948b80]">
+                  {HOMEPAGE_FINAL_CTA.supportLine}
+                </p>
+              ) : null}
             </div>
 
             <div className="mt-9 flex flex-wrap gap-2.5 border-t border-white/10 pt-5">

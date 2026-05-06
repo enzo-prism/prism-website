@@ -37,13 +37,13 @@ const DEFAULT_NEXT_STEPS = [
 const APPLY_NEXT_STEPS = [
   {
     label: "01",
-    title: "Application received",
-    body: "Thanks, we've got it. Your application is in the queue.",
+    title: "Audit request received",
+    body: "Thanks, we've got it. Your practice audit request is in the queue.",
   },
   {
     label: "02",
     title: "Review is guaranteed",
-    body: "Every real submission gets reviewed. That review is the default path.",
+    body: "Every real practice submission gets reviewed. That review is the default path.",
   },
   {
     label: "03",
@@ -70,14 +70,14 @@ export default async function ThankYouPage({
           <section className="mx-auto max-w-[1180px] space-y-8">
             <div className="border border-white/10 bg-[#070707] px-6 py-8 sm:px-10 sm:py-12">
               <p className="font-mono text-[0.76rem] uppercase tracking-[0.4em] text-[#9EFF2E]">
-                {isApplyFlow ? "APPLICATION" : "RECEIVED"}
+                {isApplyFlow ? "PRACTICE AUDIT" : "RECEIVED"}
               </p>
               <h1 className="mt-6 max-w-[9ch] text-balance font-sans text-[clamp(2.45rem,5.4vw,4.6rem)] font-medium leading-[0.98] tracking-[-0.06em] text-[#F5F5F2]">
-                {isApplyFlow ? "Application received." : "Review in progress."}
+                {isApplyFlow ? "Audit request received." : "Review in progress."}
               </h1>
               <p className="mt-6 max-w-[42rem] font-mono text-[1rem] leading-8 text-[#A0A09A]">
                 {isApplyFlow
-                  ? "Thanks, we've got it. We review every real submission. If there's a fit, we'll reach out about next steps and, in some cases, a custom strategy session."
+                  ? "Thanks, we've got it. We review every real practice submission. If there's a fit, we'll reach out about next steps and, in some cases, a custom strategy session."
                   : "We received your submission. Every real inquiry gets reviewed. If there&apos;s a fit, we&apos;ll reach out with the right next step."}
               </p>
             </div>

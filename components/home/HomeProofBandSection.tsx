@@ -2,30 +2,89 @@ import {
   coreRouteContainerClassName,
   coreRouteSectionCompactClassName,
 } from '@/components/core-route/CoreRoutePrimitives'
-import { HOMEPAGE_PROOF_METRICS } from '@/components/home/homepage-content'
+import { HOMEPAGE_GROWTH_RAMP } from '@/components/home/homepage-content'
 
 export default function HomeProofBandSection() {
   return (
     <section className={coreRouteSectionCompactClassName}>
       <div className={coreRouteContainerClassName}>
-        <div className="overflow-hidden rounded-[2rem] border border-white/12 bg-white/[0.03]">
-          <div className="grid divide-y divide-white/10 sm:grid-cols-2 sm:divide-x sm:divide-y-0 lg:grid-cols-3">
-            {HOMEPAGE_PROOF_METRICS.map((metric) => (
-              <article
-                key={metric.label}
-                className="min-h-36 p-5 sm:p-6 lg:p-7"
-              >
-                <p className="font-sans text-[clamp(1.9rem,4vw,3rem)] font-medium leading-none tracking-[-0.055em] text-[#f5f0e8]">
-                  {metric.value}
+        <div className="relative isolate overflow-hidden rounded-[2rem] border border-white/12 bg-black/35 p-5 shadow-[0_30px_90px_-72px_rgba(216,188,121,0.82)] sm:p-6 lg:p-8">
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_18%_18%,rgba(216,188,121,0.16),transparent_31%),radial-gradient(circle_at_86%_12%,rgba(245,240,232,0.08),transparent_28%),linear-gradient(135deg,rgba(255,255,255,0.05),transparent_42%)]"
+          />
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-[#d8bc79]/55 to-transparent"
+          />
+
+          <div className="grid gap-8 lg:grid-cols-[0.78fr_1.22fr] lg:items-stretch">
+            <div className="flex min-h-full flex-col justify-between gap-8 border-b border-white/10 pb-7 lg:border-b-0 lg:border-r lg:pb-0 lg:pr-8">
+              <div>
+                <p className="font-mono text-[10px] font-medium uppercase tracking-[0.26em] text-[#d8bc79]/80">
+                  {HOMEPAGE_GROWTH_RAMP.eyebrow}
                 </p>
-                <p className="mt-4 font-mono text-[10px] font-semibold uppercase tracking-[0.24em] text-[#d8bc79]/80">
-                  {metric.label}
+                <div
+                  role="heading"
+                  aria-level={2}
+                  className="mt-5 max-w-[9ch] text-balance font-sans text-[34px] font-medium leading-none tracking-[-0.06em] text-[#f5f0e8] sm:text-[52px] lg:text-[72px]"
+                >
+                  {HOMEPAGE_GROWTH_RAMP.title}
+                </div>
+              </div>
+
+              <div>
+                <p className="max-w-[18rem] font-sans text-[1.05rem] leading-6 tracking-[-0.02em] text-[#d8d0c5] sm:text-[1.16rem] sm:leading-7">
+                  {HOMEPAGE_GROWTH_RAMP.microcopy}
                 </p>
-                <p className="mt-3 max-w-[15rem] font-sans text-[0.92rem] leading-6 text-[#9f9689]">
-                  {metric.detail}
+                <p className="mt-5 max-w-[21rem] font-sans text-[0.82rem] leading-5 text-[#8f877b]">
+                  {HOMEPAGE_GROWTH_RAMP.finePrint}
                 </p>
-              </article>
-            ))}
+              </div>
+            </div>
+
+            <div className="relative">
+              <div
+                aria-hidden="true"
+                className="absolute left-[1.35rem] top-6 bottom-6 w-px bg-linear-to-b from-[#d8bc79]/0 via-[#d8bc79]/35 to-[#d8bc79]/0 md:left-0 md:right-0 md:top-[2.15rem] md:bottom-auto md:h-px md:w-auto md:bg-linear-to-r"
+              />
+
+              <div className="grid gap-3 md:grid-cols-3">
+                {HOMEPAGE_GROWTH_RAMP.metrics.map((metric) => (
+                  <article
+                    key={metric.day}
+                    className="relative rounded-[1.35rem] border border-white/12 bg-black/45 p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.07)] transition-colors hover:border-[#d8bc79]/35 hover:bg-white/[0.045] sm:p-6"
+                  >
+                    <div className="mb-7 flex items-center gap-3 md:mb-8 md:block">
+                      <span className="relative z-10 inline-flex h-11 min-w-11 items-center justify-center rounded-full border border-[#d8bc79]/45 bg-black px-3 font-mono text-[10px] font-semibold uppercase tracking-[0.18em] text-[#d8bc79] shadow-[0_0_34px_-16px_rgba(216,188,121,0.9)] md:h-12">
+                        {metric.day}
+                      </span>
+                      <span
+                        aria-hidden="true"
+                        className="h-px flex-1 bg-white/10 md:hidden"
+                      />
+                    </div>
+
+                    <p className="font-sans text-[44px] font-medium leading-none tracking-[-0.065em] text-[#f5f0e8] sm:text-[52px] lg:text-[60px]">
+                      {metric.value}
+                    </p>
+                    <p className="mt-4 max-w-[12rem] font-mono text-[10px] font-semibold uppercase tracking-[0.22em] text-[#d8bc79]/85">
+                      {metric.label}
+                    </p>
+                    <p className="mt-4 max-w-[16rem] font-sans text-[0.88rem] leading-6 text-[#a8a092]">
+                      {metric.detail}
+                    </p>
+                  </article>
+                ))}
+              </div>
+
+              <p className="sr-only">
+                Prism targets a first 90 day growth ramp for dentists: day 30,
+                plus 25 percent patient actions; day 60, plus 50 percent
+                qualified demand; day 90, 10 to 30 new patient opportunities per
+                month.
+              </p>
+            </div>
           </div>
         </div>
       </div>

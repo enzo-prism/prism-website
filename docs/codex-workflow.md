@@ -17,7 +17,7 @@ When a task touches the live assistant surface, start with the current ownership
 
 - `lib/elevenlabs-widget.ts` – canonical live public widget config (public agent id, markdown-link host allowlist, public kill switch)
 - `components/elevenlabs/ElevenLabsWidget.tsx` – stock custom-element wrapper + host-style enforcement after the widget upgrades
-- `components/global-elevenlabs-widget.tsx` – floating stock widget on non-mobile public inner pages; homepage and mobile viewports excluded
+- `components/global-elevenlabs-widget.tsx` – floating stock widget on non-mobile public inner pages; homepage, `/ig`, `/tiktok`, and mobile viewports excluded
 - `types/elevenlabs-widget.d.ts` – JSX typing for `<elevenlabs-convai>`
 - `lib/elevenlabs.ts` – legacy deterministic/backend-era helpers; not the primary place for live stock-widget config anymore
 

@@ -1,6 +1,6 @@
-type AsciiBackdropQuality = "low" | "medium" | "high"
-type AsciiBackdropLoadStrategy = "batch" | "all"
-type AsciiBackdropFit = "contain" | "cover"
+type AsciiBackdropQuality = 'low' | 'medium' | 'high'
+type AsciiBackdropLoadStrategy = 'batch' | 'all'
+type AsciiBackdropFit = 'contain' | 'cover'
 
 export type AsciiBackdropProfileInput = {
   fps: number
@@ -40,22 +40,23 @@ export function resolveAsciiBackdropProfile({
   reducedMotion,
   viewportWidth,
   saveData = false,
-  effectiveType = "",
+  effectiveType = '',
   deviceMemory,
   hardwareConcurrency,
 }: AsciiBackdropProfileInput): AsciiBackdropProfile {
   const normalizedEffectiveType = effectiveType.toLowerCase()
   const isConstrainedNetwork =
     saveData ||
-    normalizedEffectiveType === "slow-2g" ||
-    normalizedEffectiveType === "2g"
+    normalizedEffectiveType === 'slow-2g' ||
+    normalizedEffectiveType === '2g'
 
   const constrainedMemory =
-    typeof deviceMemory === "number" && Number.isFinite(deviceMemory)
+    typeof deviceMemory === 'number' && Number.isFinite(deviceMemory)
       ? deviceMemory
       : null
   const constrainedCores =
-    typeof hardwareConcurrency === "number" && Number.isFinite(hardwareConcurrency)
+    typeof hardwareConcurrency === 'number' &&
+    Number.isFinite(hardwareConcurrency)
       ? hardwareConcurrency
       : null
 
@@ -67,7 +68,7 @@ export function resolveAsciiBackdropProfile({
       loadStrategy,
       batchSize,
       maxConcurrentFetches,
-      fit: "cover",
+      fit: 'cover',
       zoom: 1,
       offsetY: 0,
     }
@@ -84,7 +85,7 @@ export function resolveAsciiBackdropProfile({
       loadStrategy,
       batchSize,
       maxConcurrentFetches,
-      fit: "cover",
+      fit: 'cover',
       zoom: 1,
       offsetY: 0,
     }
@@ -99,14 +100,14 @@ export function resolveAsciiBackdropProfile({
       shouldRender: true,
       fps: Math.min(fps, 12),
       quality: canHoldHigherQuality
-        ? quality === "low"
-          ? "medium"
+        ? quality === 'low'
+          ? 'medium'
           : quality
-        : "medium",
-      loadStrategy: "batch",
+        : 'medium',
+      loadStrategy: 'batch',
       batchSize: Math.min(batchSize, 16),
       maxConcurrentFetches: Math.min(maxConcurrentFetches, 3),
-      fit: "contain",
+      fit: 'contain',
       zoom: 0.9,
       offsetY: 0,
     }
@@ -120,11 +121,11 @@ export function resolveAsciiBackdropProfile({
     return {
       shouldRender: true,
       fps: Math.min(fps, 14),
-      quality: quality === "high" ? "medium" : quality,
-      loadStrategy: "batch",
+      quality,
+      loadStrategy: 'batch',
       batchSize: Math.min(batchSize, 16),
       maxConcurrentFetches: Math.min(maxConcurrentFetches, 3),
-      fit: "cover",
+      fit: 'cover',
       zoom: 0.96,
       offsetY: 0,
     }
@@ -137,7 +138,7 @@ export function resolveAsciiBackdropProfile({
     loadStrategy,
     batchSize,
     maxConcurrentFetches,
-    fit: "cover",
+    fit: 'cover',
     zoom: 1,
     offsetY: 0,
   }

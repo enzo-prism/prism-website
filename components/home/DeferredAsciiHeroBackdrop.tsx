@@ -35,6 +35,11 @@ type DeferredAsciiHeroBackdropProps = {
   textSize?: string
   ariaLabel?: string
   className?: string
+  scrimClassName?: string
+  focusScrimClassName?: string
+  fit?: 'contain' | 'cover'
+  zoom?: number
+  offsetY?: number
   loadStrategy?: 'batch' | 'all'
   batchSize?: number
   maxConcurrentFetches?: number
@@ -105,6 +110,9 @@ export default function DeferredAsciiHeroBackdrop(
     loadStrategy = 'batch',
     batchSize = 24,
     maxConcurrentFetches = 6,
+    fit,
+    offsetY,
+    zoom,
   } = props
   const [shouldRender, setShouldRender] = useState(false)
   const [profile, setProfile] = useState(() =>
@@ -134,7 +142,8 @@ export default function DeferredAsciiHeroBackdrop(
         loadStrategy,
         batchSize,
         maxConcurrentFetches,
-        reducedMotion: window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+        reducedMotion: window.matchMedia('(prefers-reduced-motion: reduce)')
+          .matches,
         viewportWidth: window.innerWidth,
         saveData: Boolean(connection?.saveData),
         effectiveType: connection?.effectiveType ?? '',
@@ -149,7 +158,9 @@ export default function DeferredAsciiHeroBackdrop(
       return
     }
 
-    const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
+    const reducedMotionQuery = window.matchMedia(
+      '(prefers-reduced-motion: reduce)',
+    )
     const handleChange = () => evaluateProfile()
 
     evaluateProfile()
@@ -195,9 +206,9 @@ export default function DeferredAsciiHeroBackdrop(
       loadStrategy={profile.loadStrategy}
       batchSize={profile.batchSize}
       maxConcurrentFetches={profile.maxConcurrentFetches}
-      fit={profile.fit}
-      zoom={profile.zoom}
-      offsetY={profile.offsetY}
+      fit={fit ?? profile.fit}
+      zoom={zoom ?? profile.zoom}
+      offsetY={offsetY ?? profile.offsetY}
     />
   )
 }

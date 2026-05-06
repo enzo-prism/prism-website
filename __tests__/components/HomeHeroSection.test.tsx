@@ -26,8 +26,29 @@ jest.mock('next/link', () => ({
 
 jest.mock('@/components/home/DeferredAsciiHeroBackdrop', () => ({
   __esModule: true,
-  default: function MockDeferredAsciiHeroBackdrop() {
-    return <div data-testid="home-hero-ascii-backdrop" />
+  default: function MockDeferredAsciiHeroBackdrop({
+    className,
+    focusScrimClassName,
+    quality,
+    scrimClassName,
+    zoom,
+  }: {
+    className?: string
+    focusScrimClassName?: string
+    quality?: string
+    scrimClassName?: string
+    zoom?: number
+  }) {
+    return (
+      <div
+        data-testid="home-hero-ascii-backdrop"
+        data-class-name={className}
+        data-focus-scrim-class-name={focusScrimClassName}
+        data-quality={quality}
+        data-scrim-class-name={scrimClassName}
+        data-zoom={zoom}
+      />
+    )
   },
 }))
 
@@ -35,23 +56,36 @@ describe('HomeHeroSection', () => {
   it('renders the homepage hero copy and tracked CTA destinations', () => {
     render(<HomeHeroSection />)
 
-    expect(screen.getByTestId('home-hero-ascii-backdrop')).toBeInTheDocument()
-    expect(screen.getByText(/more visibility/i)).toBeInTheDocument()
-    expect(screen.getByText(/more leads/i)).toBeInTheDocument()
-    expect(screen.getByText(/more customers/i)).toBeInTheDocument()
-    expect(screen.getByText(/less stress/i)).toBeInTheDocument()
-    expect(screen.getByText(/one trusted partner/i)).toBeInTheDocument()
+    const heroBackdrop = screen.getByTestId('home-hero-ascii-backdrop')
+
+    expect(heroBackdrop).toBeInTheDocument()
+    expect(heroBackdrop).toHaveAttribute('data-quality', 'high')
+    expect(heroBackdrop).toHaveAttribute('data-zoom', '0.84')
+    expect(heroBackdrop.getAttribute('data-class-name')).toContain(
+      '!opacity-[0.72]',
+    )
+    expect(heroBackdrop.getAttribute('data-class-name')).toContain(
+      'md:!opacity-100',
+    )
+    expect(heroBackdrop.getAttribute('data-scrim-class-name')).toContain(
+      'from-background/28',
+    )
+    expect(heroBackdrop.getAttribute('data-focus-scrim-class-name')).toContain(
+      'ellipse_at_24%_48%',
+    )
+
+    expect(screen.getByText(/dental growth/i)).toBeInTheDocument()
     expect(
       screen.getByRole('heading', {
         level: 1,
-        name: /growth, handled for you\./i,
+        name: /get found\. get trusted\. get booked\./i,
       }),
     ).toBeInTheDocument()
     expect(
-      screen.getByText(/we handle the tech\. you run the business\./i),
+      screen.getByText(/premium growth systems for modern dental practices\./i),
     ).toBeInTheDocument()
     expect(screen.getByTestId('home-hero-social-proof')).toHaveTextContent(
-      /5 stars from 20\+ business owners/i,
+      /20\+ reviews from dental and local leaders/i,
     )
     expect(screen.getByLabelText(/5 star rating/i)).toBeInTheDocument()
 
@@ -60,25 +94,22 @@ describe('HomeHeroSection', () => {
       point.querySelector('img')?.getAttribute('src'),
     )
 
-    expect(supportPoints).toHaveLength(5)
-    expect(new Set(iconSrcs).size).toBe(5)
+    expect(supportPoints).toHaveLength(3)
+    expect(new Set(iconSrcs).size).toBe(3)
+    expect(screen.getByText(/can chatgpt recommend you\?/i)).toBeInTheDocument()
+    expect(screen.queryByText(/^google maps$/i)).not.toBeInTheDocument()
+    expect(iconSrcs).toContain('/home-hero/logos/openai.svg')
 
     expect(
-      screen.getByRole('link', { name: /get a free growth plan/i }),
-    ).toHaveAttribute(
-      'href',
-      '/get-started',
-    )
+      screen.getByRole('link', { name: /free practice audit/i }),
+    ).toHaveAttribute('href', '/get-started')
     expect(
-      screen.getByRole('link', { name: /see how it works/i }),
-    ).toHaveAttribute(
-      'href',
-      '#how-it-works',
-    )
+      screen.getByRole('link', { name: /see the system/i }),
+    ).toHaveAttribute('href', '#how-it-works')
 
     expect(
       screen.getByRole('link', {
-        name: /5 star rating 5 stars from 20\+ business owners case studies/i,
+        name: /5 star rating 20\+ reviews from dental and local leaders results/i,
       }),
     ).toHaveAttribute('href', '/case-studies')
     expect(

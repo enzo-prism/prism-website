@@ -1,7 +1,6 @@
 import Footer from '@/components/footer'
 import Navbar from '@/components/navbar'
-import HomeAiToolsSection from '@/components/home/HomeAiToolsSection'
-import HomeFAQSurface from '@/components/home/HomeFAQSurface'
+import HomeDentistWinsSection from '@/components/home/HomeDentistWinsSection'
 import HomeFinalCtaSection from '@/components/home/HomeFinalCtaSection'
 import HomeHashScrollStabilizer from '@/components/home/HomeHashScrollStabilizer'
 import HomeHeroSection from '@/components/home/HomeHeroSection'
@@ -11,7 +10,6 @@ import HomeProofBandSection from '@/components/home/HomeProofBandSection'
 import HomeProofSection from '@/components/home/HomeProofSection'
 import HomePromiseSection from '@/components/home/HomePromiseSection'
 import HomeServicesSection from '@/components/home/HomeServicesSection'
-import HomeWhyPrismSection from '@/components/home/HomeWhyPrismSection'
 
 export default function ClientPage() {
   return (
@@ -20,15 +18,13 @@ export default function ClientPage() {
       <HomeHashScrollStabilizer />
       <main className="flex-1" id="main-content" tabIndex={-1}>
         <HomeHeroSection />
+        <HomeDentistWinsSection />
         <HomeProofBandSection />
         <HomeProblemSection />
-        <HomeAiToolsSection />
         <HomePromiseSection />
         <HomeServicesSection />
-        <HomeWhyPrismSection />
         <HomeHowItWorksSection />
         <HomeProofSection />
-        <HomeFAQSurface />
         <HomeFinalCtaSection />
       </main>
       <Footer />

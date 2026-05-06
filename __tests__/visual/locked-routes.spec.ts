@@ -76,7 +76,7 @@ const lockedRoutes = [
   {
     name: 'home',
     path: '/',
-    readyHeading: /growth, handled for you\./i,
+    readyHeading: /get found\. get trusted\. get booked\./i,
   },
   { name: 'about', path: '/about', readyHeading: /built by enzo sison\./i },
   {
@@ -87,7 +87,7 @@ const lockedRoutes = [
   {
     name: 'get-started',
     path: '/get-started',
-    readyHeading: /start here\./i,
+    readyHeading: /see what is holding your practice back\./i,
   },
 ] as const
 
@@ -124,14 +124,14 @@ test('home promise section snapshot stays stable', async ({ page }) => {
 
   const systemHeading = page.getByRole('heading', {
     level: 2,
-    name: /you run the business\. we handle the growth\./i,
+    name: /found\. trusted\. booked\./i,
   })
   await expect(systemHeading).toBeVisible({ timeout: 20_000 })
 
   const systemSection = systemHeading.locator('xpath=ancestor::section[1]')
   await expect(systemSection).toBeVisible()
   await systemSection.scrollIntoViewIfNeeded()
-  await stabilizeDesktopSectionHeight(page, systemSection, 592)
+  await stabilizeDesktopSectionHeight(page, systemSection, 460)
 
   await stabilizePage(page)
   await expectLockedRouteSnapshotSurface(page)
@@ -151,7 +151,7 @@ test('home problem section snapshot stays stable', async ({ page }) => {
 
   const problemHeading = page.getByRole('heading', {
     level: 2,
-    name: /you have a business to run/i,
+    name: /patients decide fast/i,
   })
   await expect(problemHeading).toBeVisible({ timeout: 20_000 })
 
@@ -177,14 +177,14 @@ test('home services section snapshot stays stable', async ({ page }) => {
 
   const servicesHeading = page.getByRole('heading', {
     level: 2,
-    name: /what we take care of for you/i,
+    name: /one system\. seven parts\./i,
   })
   await expect(servicesHeading).toBeVisible({ timeout: 20_000 })
 
   const servicesSection = servicesHeading.locator('xpath=ancestor::section[1]')
   await expect(servicesSection).toBeVisible()
   await servicesSection.scrollIntoViewIfNeeded()
-  await stabilizeDesktopSectionHeight(page, servicesSection, 996)
+  await stabilizeDesktopSectionHeight(page, servicesSection, 520)
 
   await stabilizePage(page)
   await expectLockedRouteSnapshotSurface(page)
@@ -204,7 +204,7 @@ test('home proof section snapshot stays stable', async ({ page }) => {
 
   const proofHeading = page.getByRole('heading', {
     level: 2,
-    name: /real businesses need real results/i,
+    name: /dental proof/i,
   })
   await expect(proofHeading).toBeVisible({ timeout: 20_000 })
 
@@ -239,14 +239,14 @@ test('home promise and service cards stay contained across responsive breakpoint
 
     const sections = [
       {
-        heading: /you run the business\. we handle the growth\./i,
+        heading: /found\. trusted\. booked\./i,
         cardSelector: '[data-home-promise-card]',
         expectedCount: 3,
       },
       {
-        heading: /what we take care of for you/i,
+        heading: /one system\. seven parts\./i,
         cardSelector: '[data-home-service-card]',
-        expectedCount: 6,
+        expectedCount: 7,
       },
     ]
 
@@ -286,11 +286,11 @@ test('home promise and service cards stay contained across responsive breakpoint
               titleRect.right <= cardRect.right &&
               titleRect.bottom <= cardRect.bottom,
             descriptionWithin:
-              !!descriptionRect &&
-              descriptionRect.top >= cardRect.top &&
-              descriptionRect.left >= cardRect.left &&
-              descriptionRect.right <= cardRect.right &&
-              descriptionRect.bottom <= cardRect.bottom,
+              !descriptionRect ||
+              (descriptionRect.top >= cardRect.top &&
+                descriptionRect.left >= cardRect.left &&
+                descriptionRect.right <= cardRect.right &&
+                descriptionRect.bottom <= cardRect.bottom),
           }
         })
       }, sectionConfig.cardSelector)
@@ -329,19 +329,19 @@ test('home hero layout stays readable across responsive breakpoints', async ({
     await expect(
       page.getByRole('heading', {
         level: 1,
-        name: /growth, handled for you\./i,
+        name: /get found\. get trusted\. get booked\./i,
       }),
     ).toBeVisible({ timeout: 20_000 })
 
     const hero = page.locator('#homepage-hero')
     await expect(hero).toBeVisible({ timeout: 20_000 })
     await expect(
-      hero.getByRole('link', { name: /get a free growth plan/i }),
+      hero.getByRole('link', { name: /free practice audit/i }),
     ).toBeVisible({
       timeout: 20_000,
     })
     await expect(
-      hero.getByRole('link', { name: /see how it works/i }),
+      hero.getByRole('link', { name: /see the system/i }),
     ).toBeVisible({ timeout: 20_000 })
 
     const result = await page.evaluate(() => {

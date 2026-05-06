@@ -36,14 +36,14 @@ The repo assumes pnpm; npm/yarn installs will fall out of sync.
 - **Deploy mode policy** – GitHub Actions is the only production publisher. `main` source deploys through `.github/workflows/deploy.yml`, while Vercel Git auto-deploy for `main` is disabled in `vercel.json` to avoid duplicate production releases.
 - **Documentation** – When you add a new flow or change behavior, edit the relevant file under `/docs` (or this README/AGENTS if the rule is global). Do _not_ add new top-level docs without approval; prefer updating existing guides.
 - **Environment variables** – Required vars are limited to those listed in [docs/environment-setup.md](./docs/environment-setup.md) and `.env.example` (GA overrides, Formspree-compatible endpoints, ElevenLabs public config, optional site URLs). Do not list vars that aren’t part of the supported setup.
-- **Get-started assistant surface** – `/get-started` relies on the stock ElevenLabs floating widget on non-mobile viewports through `components/global-elevenlabs-widget.tsx`; mobile viewports and `/apply` intentionally suppress it so the active application stays focused. The old custom `SalesChat` client is no longer mounted on the live site.
+- **Get-started assistant surface** – `/get-started` relies on the stock ElevenLabs floating widget on non-mobile viewports through `components/global-elevenlabs-widget.tsx`; mobile viewports, `/apply`, `/ig`, and `/tiktok` intentionally suppress it so active and social credit flows stay focused. The old custom `SalesChat` client is no longer mounted on the live site.
 
 ### Assistant architecture (at a glance)
 
 - `app/get-started/page.tsx` is now the overview/qualification entry page for the Prism application flow, and `app/apply/page.tsx` is the focused question-by-question application route.
 - `components/forms/GetStartedForm.tsx` powers the `/apply` form and redirects successful submissions to `/thank-you?source=apply` so the thank-you screen can stay honest about review vs. selective strategy follow-up.
 - `components/runtime-client-shell.tsx` now keeps route-surface setup on the critical path and defers analytics, monitors, Vercel Analytics, toaster wiring, and the stock ElevenLabs embed/widget into `components/runtime-deferred-features.tsx` during browser idle time. The deferred widget script only loads when the current route and viewport are eligible.
-- `components/global-elevenlabs-widget.tsx` is now the single public widget surface. It mounts on non-mobile public inner pages but stays off the homepage, mobile viewports, and `/apply`; it defaults to collapsed when there is no saved user preference and persists later manual expand/collapse choices in browser storage.
+- `components/global-elevenlabs-widget.tsx` is now the single public widget surface. It mounts on non-mobile public inner pages but stays off the homepage, mobile viewports, `/apply`, `/ig`, and `/tiktok`; it defaults to collapsed when there is no saved user preference and persists later manual expand/collapse choices in browser storage.
 - `lib/elevenlabs-widget.ts` is the canonical source for live public widget config (agent id, allowed markdown-link hosts, public kill switch).
 - `components/elevenlabs/ElevenLabsWidget.tsx` stays intentionally thin and uses only documented stock-widget attributes. It also re-applies approved host-level styles after the custom element upgrades, because the vendor runtime overwrites host positioning. Use that path only for safe host concerns like homepage section scoping or inner-page z-index elevation; do not patch the widget Shadow DOM.
 - `types/elevenlabs-widget.d.ts` provides JSX typing for the `<elevenlabs-convai>` custom element. Keep it in sync if ElevenLabs introduces new documented attributes we adopt.
@@ -77,6 +77,7 @@ The repo assumes pnpm; npm/yarn installs will fall out of sync.
 - Expected runtime invariants:
   - On non-mobile inner pages, the widget host should resolve to `position: fixed` with the elevated global z-index and remain the topmost element in the widget’s visible region after scrolling.
   - On mobile inner pages, the widget and ElevenLabs embed script should stay unmounted.
+  - On `/ig` and `/tiktok`, the widget and ElevenLabs embed script should stay unmounted so the social credit rolls remain minimal.
   - Without a saved preference, the stock launcher should mount collapsed by default on first load.
 - The stock widget is not a documented full-screen modal scrim. Do not fake that by reaching into shadow internals; if product wants a true bespoke modal layer, migrate to ElevenLabs’ official SDK/UI path instead of stretching the stock embed past its intended surface.
 

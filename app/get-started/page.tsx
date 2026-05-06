@@ -13,17 +13,23 @@ import styles from '@/components/get-started/get-started-page.module.css'
 import { cn } from '@/lib/utils'
 import { buildRouteMetadata } from '@/lib/seo/metadata'
 
-const PAGE_TITLE = 'Get started with Prism | Prism'
+const PAGE_TITLE = 'Free dental practice audit | Prism'
 const PAGE_DESCRIPTION =
-  'A short path to see if there is a fit: apply, get reviewed, then map next steps.'
+  'Submit your dental practice for a focused review of the website, Google presence, reviews, booking path, tracking, and clearest growth opportunities.'
 const CANONICAL_URL = 'https://www.design-prism.com/get-started'
 
 const APPLICATION_NOTES = [
-  'Typical fit: $1k-$3k+.',
-  'Every real submission is reviewed.',
+  'Free. Reviewed by a real person.',
+  'Built for dental practices that want clearer patient growth.',
 ] as const
 
-const APPLICATION_PREVIEW = ['Need', 'Link', 'Budget', 'Contact'] as const
+const APPLICATION_PREVIEW = [
+  'Website',
+  'Google Maps',
+  'Reviews',
+  'Booking path',
+  'Tracking',
+] as const
 
 export const metadata: Metadata = buildRouteMetadata({
   titleStem: PAGE_TITLE,
@@ -51,9 +57,9 @@ export default function GetStartedPage() {
           >
             <div className="space-y-8">
               <CoreSectionHeading
-                title="One short form."
-                description="About a minute. Just the essentials."
-                titleClassName="max-w-[10ch]"
+                title="One short audit request."
+                description="About a minute. Just the essentials we need to review your practice."
+                titleClassName="max-w-[13ch]"
               />
 
               <div className="space-y-4 border-t border-white/10 pt-6">
@@ -100,7 +106,7 @@ export default function GetStartedPage() {
               <div className="relative z-10 space-y-8">
                 <div className="space-y-3">
                   <p className="max-w-[34rem] font-mono text-[0.98rem] leading-8 text-[#D0D0C8]">
-                    No calls. No scheduling. No long brief.
+                    No sales maze. No calendar wall. No long brief.
                   </p>
                 </div>
 
@@ -123,13 +129,13 @@ export default function GetStartedPage() {
                 <div className="space-y-3 border-t border-white/10 pt-6">
                   <CoreActionLink
                     href="/apply"
-                    label="start application"
+                    label="start free audit"
                     location="get started entry cta"
                   >
-                    Open form
+                    Start free audit
                   </CoreActionLink>
                   <p className="font-mono text-[0.78rem] leading-6 text-[#8C8C85]">
-                    We review every real submission.
+                    We review every real practice submission.
                   </p>
                 </div>
               </div>

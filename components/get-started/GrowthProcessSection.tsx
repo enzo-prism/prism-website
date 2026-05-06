@@ -22,16 +22,16 @@ type GrowthProcessStep = {
 export const GROWTH_PROCESS_STEPS: GrowthProcessStep[] = [
   {
     stage: '01',
-    title: 'Apply',
-    body: 'Short form.',
+    title: 'Submit your practice',
+    body: 'Short audit request.',
     accent: '#9EFF2E',
     accentRgb: '158 255 46',
     art: [
       '+----------------------+',
-      '| NEW APPLICATION      |',
-      '| name   ............  |',
-      '| email  ............  |',
-      '| link   ............  |',
+      '| PRACTICE AUDIT       |',
+      '| practice ...........  |',
+      '| website  ...........  |',
+      '| goal     ...........  |',
       '|                      |',
       '|    [ submit ]        |',
       '+----------------------+',
@@ -39,8 +39,8 @@ export const GROWTH_PROCESS_STEPS: GrowthProcessStep[] = [
   },
   {
     stage: '02',
-    title: 'Review',
-    body: 'Every real submission is reviewed.',
+    title: 'Review the patient journey',
+    body: 'We inspect the signals patients see first.',
     accent: '#FF2BEA',
     accentRgb: '255 43 234',
     art: [
@@ -58,8 +58,8 @@ export const GROWTH_PROCESS_STEPS: GrowthProcessStep[] = [
   },
   {
     stage: '03',
-    title: 'Strategy',
-    body: "If there's a fit, we map next steps.",
+    title: 'Get a clear growth plan',
+    body: 'If there is a fit, we map the highest-impact next steps.',
     accent: '#19D7FF',
     accentRgb: '25 215 255',
     art: [
@@ -161,7 +161,7 @@ export default function GrowthProcessSection() {
         <div className="relative z-10">
           <div className="flex flex-col gap-4 border-b border-white/10 pb-6 sm:flex-row sm:items-center sm:justify-between">
             <p className="font-sans text-[0.92rem] font-medium tracking-[0.01em] text-[#C8C8C0]">
-              Simple three-step path
+              Free practice audit
             </p>
             <div className="flex items-center justify-between gap-5 sm:justify-end">
               <p className="font-sans text-[0.82rem] font-medium uppercase tracking-[0.12em] text-[#767670]">
@@ -177,15 +177,16 @@ export default function GrowthProcessSection() {
 
           <div className="grid gap-12 py-10 lg:grid-cols-[minmax(0,1.2fr)_minmax(300px,0.72fr)] lg:items-end">
             <div>
-              <h1 className="max-w-[8ch] text-balance font-sans text-[clamp(2.55rem,6vw,4.85rem)] font-medium leading-[0.98] tracking-[-0.06em] text-[#F5F5F2]">
-                Start here.
+              <h1 className="max-w-[12ch] text-balance font-sans text-[clamp(2.55rem,6vw,4.85rem)] font-medium leading-[0.98] tracking-[-0.06em] text-[#F5F5F2]">
+                See what is holding your practice back.
               </h1>
             </div>
 
             <div className="max-w-[26rem] space-y-5 lg:justify-self-end">
               <p className="font-sans text-[1rem] leading-8 text-[#B6B6B0] sm:text-[1.08rem]">
-                Apply. We review every real submission. Strategy comes next if
-                it fits.
+                Submit your practice. We review your website, Google presence,
+                reviews, booking path, and tracking. Then we show the clearest
+                next steps.
               </p>
             </div>
           </div>
@@ -216,23 +217,23 @@ export default function GrowthProcessSection() {
           >
             <div className="relative z-10 space-y-2">
               <p className="font-sans text-[1.9rem] font-medium tracking-[-0.04em] text-[#F5F5F2]">
-                Ready?
+                Ready for the audit?
               </p>
               <p className="font-sans text-[0.98rem] leading-7 text-[#A0A09A]">
-                Open the form.
+                Start with one short request.
               </p>
             </div>
 
             <div className="relative z-10 flex flex-col gap-3 lg:items-end">
               <p className="font-sans text-[0.82rem] font-medium uppercase tracking-[0.12em] text-[#767670]">
-                Review first. Strategy if it fits.
+                Practice reviewed first. Strategy if it fits.
               </p>
               <CoreActionLink
                 href="/apply"
-                label="apply now"
+                label="start free audit"
                 location="get started process cta"
               >
-                Apply
+                Start free audit
               </CoreActionLink>
             </div>
           </div>

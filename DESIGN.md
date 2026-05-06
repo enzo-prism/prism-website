@@ -156,6 +156,14 @@ Prism should feel:
 
 The safest mental model is **black shell + warm ivory type + selective mono metadata + pixel accents + paced section rhythm**.
 
+### Dental-first Black Apple
+
+For the homepage and `/get-started`, Prism should feel like a premium operating system for modern dental practices: calm, precise, spacious, and trust-led. The copy should favor short outcome language such as **found, trusted, booked** and concrete dental terms such as owner-dentists, patients, Google Maps, reviews, treatment pages, booking path, and front desk.
+
+Keep the design dark and restrained. Do not pivot these pages into clinical white healthcare styling, loud agency gradients, or luxury editorial excess. The Apple-like pattern here is clarity: fewer words, clearer hierarchy, premium spacing, patient-decision logic, and confident CTAs around the free practice audit.
+
+Homepage copy should stay ultra-minimal. Prefer short labels over explanations, compact proof over long cards, and one clear idea per section. Deeper pages can carry the detail; the homepage should make the offer obvious in seconds.
+
 ## Scope
 
 This contract is repo-wide, but it is most important for the public marketing system:

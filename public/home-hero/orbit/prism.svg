@@ -1,0 +1,19 @@
+<svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="orbit-prism-gradient" x1="28" y1="94" x2="90" y2="24" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#00CED1" />
+      <stop offset="0.35" stop-color="#00B4D8" />
+      <stop offset="0.7" stop-color="#E11CE6" />
+      <stop offset="1" stop-color="#9B59B6" />
+    </linearGradient>
+    <linearGradient id="orbit-prism-shine" x1="58" y1="28" x2="76" y2="58" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.28" />
+      <stop offset="1" stop-color="#FFFFFF" stop-opacity="0" />
+    </linearGradient>
+  </defs>
+  <rect x="8" y="8" width="104" height="104" rx="22" fill="#050810" />
+  <path d="M60 26L88 94H77L60 52V26Z" fill="url(#orbit-prism-gradient)" />
+  <path d="M60 26V52L43 94H32L60 26Z" fill="url(#orbit-prism-gradient)" opacity="0.9" />
+  <path d="M47 66H73L69 79H51L47 66Z" fill="url(#orbit-prism-gradient)" opacity="0.74" />
+  <path d="M60 26L74 58H67L60 39V26Z" fill="url(#orbit-prism-shine)" />
+</svg>

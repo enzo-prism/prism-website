@@ -26,12 +26,12 @@ export const LOGO_SIZES = {
   small: { width: 40, height: 40 },
 } as const 
 
-export const FREE_AUDIT_CTA_TEXT = "Get started"
+export const FREE_AUDIT_CTA_TEXT = "Get a free practice audit"
 
 export type NavItem = { label: string; href: string }
 
 export const NAV_ITEMS: NavItem[] = [
-  { label: "case studies", href: "/case-studies" },
-  { label: "wall of love", href: "/wall-of-love" },
-  { label: "start", href: "/get-started" },
+  { label: "results", href: "/case-studies" },
+  { label: "reviews", href: "/wall-of-love" },
+  { label: "free audit", href: "/get-started" },
 ]

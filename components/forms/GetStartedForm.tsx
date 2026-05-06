@@ -28,12 +28,12 @@ const APPLY_FORM_NAME = 'growth_application'
 const APPLY_FORM_LOCATION = 'apply_page'
 
 const SERVICE_OPTIONS = [
-  { label: 'New website', value: 'New website' },
-  { label: 'Redesign', value: 'Website redesign' },
-  { label: 'Analytics', value: 'Better analytics / tracking' },
-  { label: 'Search', value: 'More customers from search' },
-  { label: 'Ads', value: 'Help with paid ads' },
-  { label: 'AI workflows', value: 'AI workflows / automation' },
+  { label: 'Dental website', value: 'Dental website' },
+  { label: 'Google Maps / SEO', value: 'Google Maps / SEO' },
+  { label: 'Reviews', value: 'Reviews' },
+  { label: 'Ads', value: 'Ads' },
+  { label: 'Tracking', value: 'Tracking' },
+  { label: 'AI search', value: 'AI search' },
   { label: 'Not sure', value: 'Not sure yet' },
 ] as const
 
@@ -43,14 +43,17 @@ const WEBSITE_OPTIONS = [
 ] as const
 
 const PRIORITY_OPTIONS = [
-  { label: 'Better website', value: 'I need a site that converts better' },
-  { label: 'Clearer analytics', value: 'I need clearer analytics' },
+  { label: 'More patient calls', value: 'I need more patient calls' },
   {
-    label: 'More leads',
-    value: 'I need more leads/customers online',
+    label: 'Better Google visibility',
+    value: 'I need better Google visibility',
   },
-  { label: 'Better ads', value: 'I need help making ads work' },
-  { label: 'AI workflows', value: 'I want to use AI to move faster' },
+  { label: 'Modern website', value: 'I need a modern dental website' },
+  {
+    label: 'More trust',
+    value: 'I need stronger reviews and patient trust',
+  },
+  { label: 'Clearer tracking', value: 'I need to know what is working' },
 ] as const
 
 const BUDGET_OPTIONS = [
@@ -413,7 +416,7 @@ export default function GetStartedForm() {
       }
 
       if (field.name === 'company') {
-        if (!value) message = 'Enter your company name'
+        if (!value) message = 'Enter your practice name'
       }
 
       if (field.name === 'full_name') {
@@ -859,8 +862,8 @@ export default function GetStartedForm() {
               value={reviewLink}
               placeholder={
                 hasWebsite === 'yes'
-                  ? 'yourwebsite.com'
-                  : 'linkedin.com/in/your-company'
+                  ? 'yourpractice.com'
+                  : 'maps.google.com/your-practice'
               }
               className={fieldClassName}
               aria-invalid={Boolean(getError('review_link'))}
@@ -936,7 +939,7 @@ export default function GetStartedForm() {
         return (
           <div className="space-y-3">
             <Label htmlFor="apply-company" className="sr-only">
-              Company name
+              Practice name
             </Label>
             <Input
               id="apply-company"
@@ -944,7 +947,7 @@ export default function GetStartedForm() {
               required
               autoComplete="organization"
               value={company}
-              placeholder="Company"
+              placeholder="Practice name"
               className={fieldClassName}
               aria-invalid={Boolean(getError('company'))}
               aria-describedby={getDescribedBy('company')}
@@ -995,7 +998,7 @@ export default function GetStartedForm() {
                 required
                 autoComplete="email"
                 value={email}
-                placeholder="you@company.com"
+                placeholder="you@practice.com"
                 className={fieldClassName}
                 aria-invalid={Boolean(getError('email'))}
                 aria-describedby={getDescribedBy('email')}
@@ -1036,7 +1039,7 @@ export default function GetStartedForm() {
           <div className="space-y-3">
             <div className="grid gap-3 rounded-none border border-white/10 bg-black/30 p-4">
               <ReviewRow
-                label="Need"
+                label="Audit"
                 value={selectedServices
                   .map((service) => getOptionLabel(SERVICE_OPTIONS, service))
                   .join(', ')}
@@ -1045,14 +1048,14 @@ export default function GetStartedForm() {
                 label="Website"
                 value={hasWebsite === 'yes' ? 'Yes' : 'No'}
               />
-              <ReviewRow label="Review" value={reviewLink} />
+              <ReviewRow label="Link" value={reviewLink} />
               <ReviewRow
                 label="Goal"
                 value={getOptionLabel(PRIORITY_OPTIONS, primaryGoal)}
               />
               <ReviewRow label="Budget" value={budget} />
               <ReviewRow label="Timing" value={timeline} />
-              <ReviewRow label="Company" value={company} />
+              <ReviewRow label="Practice" value={company} />
               <ReviewRow label="Contact" value={`${fullName} / ${email}`} />
               {additionalContext ? (
                 <ReviewRow label="Note" value={additionalContext} />
@@ -1065,11 +1068,11 @@ export default function GetStartedForm() {
 
   const heading =
     currentStep === 'services'
-      ? 'What do you need help with?'
+      ? 'What should we review?'
       : currentStep === 'website'
-        ? 'Do you have a website?'
+        ? 'Does the practice have a website?'
         : currentStep === 'link'
-          ? 'What should we review?'
+          ? 'Where should we look first?'
           : currentStep === 'priority'
             ? 'What matters most?'
             : currentStep === 'budget'
@@ -1077,18 +1080,18 @@ export default function GetStartedForm() {
               : currentStep === 'timeline'
                 ? 'When do you want to start?'
                 : currentStep === 'company'
-                  ? 'Company name'
+                  ? 'Practice name'
                   : currentStep === 'contact'
-                    ? 'Where should we reply?'
+                    ? 'Where should we send the audit?'
                     : currentStep === 'notes'
-                      ? 'Anything important?'
+                      ? 'Anything we should know?'
                       : 'Review and submit.'
 
   const helper =
     currentStep === 'services'
       ? 'Pick up to 3.'
       : currentStep === 'link'
-        ? 'Website, LinkedIn, booking page, or social profile.'
+        ? 'Website, Google Business Profile, booking page, or social profile.'
         : currentStep === 'notes'
           ? 'Optional.'
           : ''
@@ -1114,7 +1117,11 @@ export default function GetStartedForm() {
       <span className={styles.corner} data-corner="bl" aria-hidden="true" />
       <span className={styles.corner} data-corner="br" aria-hidden="true" />
 
-      <input type="hidden" name="_subject" value="New Prism application" />
+      <input
+        type="hidden"
+        name="_subject"
+        value="New Prism practice audit request"
+      />
       <input type="hidden" name="_redirect" value={redirectUrl} />
       <input type="hidden" name="form_name" value="growth_application" />
       <input
@@ -1173,7 +1180,7 @@ export default function GetStartedForm() {
                 : `${progressStep} of ${QUESTION_STEP_COUNT}`}
             </p>
             <p className="font-mono text-[0.72rem] uppercase tracking-[0.24em] text-[#767670]">
-              Application
+              Practice audit
             </p>
           </div>
           <div className="h-px w-full overflow-hidden bg-white/10">
@@ -1223,10 +1230,10 @@ export default function GetStartedForm() {
                 className="min-h-12 flex-1 border-[#9EFF2E]/55 bg-[#9EFF2E]/8 px-6 font-mono text-[0.78rem] uppercase tracking-[0.18em] text-[#9EFF2E] shadow-[0_0_0_1px_rgba(158,255,46,0.14)] hover:bg-[#9EFF2E]/16 hover:text-[#D4FF94] focus-visible:ring-[#9EFF2E]/45"
                 disabled={isSubmitting}
                 onClick={() =>
-                  trackCTAClick('submit application', 'apply form review')
+                  trackCTAClick('submit practice audit', 'apply form review')
                 }
               >
-                {isSubmitting ? 'Submitting...' : 'Submit application'}
+                {isSubmitting ? 'Submitting...' : 'Submit audit request'}
               </Button>
             ) : (
               <Button
