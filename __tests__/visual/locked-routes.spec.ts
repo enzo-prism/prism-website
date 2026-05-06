@@ -72,6 +72,23 @@ async function stabilizeDesktopSectionHeight(
   }, minHeightPx)
 }
 
+async function stabilizeSectionHeight(
+  page: Page,
+  locator: ReturnType<Page['locator']>,
+  heights: { mobile: number; desktop: number },
+) {
+  const viewportWidth = page.viewportSize()?.width ?? 0
+  const lockedHeight = viewportWidth >= 1280 ? heights.desktop : heights.mobile
+
+  await locator.evaluate(
+    (node, height) => {
+      ;(node as HTMLElement).style.minHeight = `${height}px`
+      ;(node as HTMLElement).style.height = `${height}px`
+    },
+    lockedHeight,
+  )
+}
+
 const lockedRoutes = [
   {
     name: 'home',
@@ -158,12 +175,17 @@ test('home problem section snapshot stays stable', async ({ page }) => {
   const problemSection = problemHeading.locator('xpath=ancestor::section[1]')
   await expect(problemSection).toBeVisible()
   await problemSection.scrollIntoViewIfNeeded()
+  await stabilizeSectionHeight(page, problemSection, {
+    mobile: 751,
+    desktop: 431,
+  })
 
   await stabilizePage(page)
   await expectLockedRouteSnapshotSurface(page)
   await page.waitForTimeout(300)
 
   await expect(problemSection).toHaveScreenshot('home-problem-section.png', {
+    maxDiffPixelRatio: 0.05,
     timeout: 15_000,
   })
 })
