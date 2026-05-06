@@ -11,22 +11,24 @@ export default function HomeProblemSection() {
   return (
     <section className={coreRouteSectionClassName}>
       <div className={coreRouteContainerClassName}>
-        <div className={coreRouteSplitLayoutClassName}>
+        <div
+          className={`${coreRouteSplitLayoutClassName} xl:grid-cols-[minmax(0,0.76fr)_minmax(0,1.24fr)]`}
+        >
           <CoreSectionHeading
             title={HOMEPAGE_PROBLEM.title}
             description={HOMEPAGE_PROBLEM.description}
             className="gap-4"
-            titleClassName="max-w-[17ch] lg:max-w-[19ch]"
-            descriptionClassName="max-w-[30rem] text-[1rem] leading-7 sm:text-[1.08rem] sm:leading-8"
+            titleClassName="max-w-[17ch] lg:max-w-[19ch] xl:max-w-[18ch]"
+            descriptionClassName="max-w-[30rem] text-pretty text-[1rem] leading-7 sm:text-[1.08rem] sm:leading-8"
           />
 
           <div className="space-y-8">
-            <div className="grid gap-6 border-y border-white/12 py-6 sm:grid-cols-2 xl:grid-cols-4">
+            <div className="grid gap-x-5 gap-y-6 border-y border-white/12 py-6 sm:grid-cols-2 xl:grid-cols-[minmax(0,0.95fr)_minmax(0,0.98fr)_minmax(0,1.28fr)_minmax(0,0.84fr)]">
               {HOMEPAGE_PROBLEM.points.map((point) => (
                 <div
                   key={point.label}
                   data-testid="home-problem-point"
-                  className="space-y-4"
+                  className="space-y-4 xl:min-w-0"
                 >
                   <div className="flex items-center gap-3">
                     <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/12 bg-white/[0.03]">
@@ -38,7 +40,7 @@ export default function HomeProblemSection() {
                         className="h-4.5 w-4.5 opacity-80"
                       />
                     </span>
-                    <p className="font-sans text-[0.92rem] font-medium tracking-[-0.015em] text-[#f1ebe2]">
+                    <p className="text-ui-pretty text-ui-tight max-w-[18ch] font-sans text-[0.9rem] font-medium text-[#f1ebe2] sm:text-[0.92rem]">
                       {point.label}
                     </p>
                   </div>
@@ -52,7 +54,7 @@ export default function HomeProblemSection() {
             </div>
 
             <div className="space-y-4">
-              <p className="font-sans text-[0.92rem] font-medium tracking-[-0.015em] text-[#d7d0c5]">
+              <p className="text-ui-pretty text-ui-tight font-sans text-[0.92rem] font-medium text-[#d7d0c5]">
                 {HOMEPAGE_PROBLEM.stackLabel}
               </p>
               <div className="flex flex-wrap gap-2.5">
@@ -60,7 +62,7 @@ export default function HomeProblemSection() {
                   <p
                     key={item.label}
                     data-testid="home-problem-stack-item"
-                    className="inline-flex min-h-11 items-center gap-2 rounded-full border border-white/12 bg-white/[0.03] px-4 font-sans text-[0.82rem] font-medium tracking-[0.01em] text-[#d3ccc1]"
+                    className="inline-flex min-h-11 items-center gap-2 rounded-full border border-white/12 bg-white/[0.03] px-4 font-sans text-[0.82rem] font-medium tracking-[0.01em] text-[#d3ccc1] sm:whitespace-nowrap"
                   >
                     <PixelishIcon
                       src={item.iconSrc}

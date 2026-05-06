@@ -165,7 +165,7 @@ export function CoreSectionHeading({
         className={cn(
           variant === 'hero'
             ? 'max-w-[11ch] text-balance font-sans text-[clamp(2.05rem,4.8vw,3.65rem)] font-medium leading-[1] tracking-[-0.05em] text-[#f5f0e8]'
-            : 'max-w-[12ch] text-balance font-sans text-[clamp(1.7rem,3.2vw,2.55rem)] font-medium leading-[1.04] tracking-[-0.045em] text-[#f5f0e8]',
+            : 'max-w-[12ch] text-balance font-sans text-[clamp(1.7rem,3.2vw,2.55rem)] font-medium leading-[1.04] tracking-[-0.045em] text-[#f5f0e8] xl:max-w-[13ch]',
           titleClassName,
         )}
       >
@@ -174,7 +174,7 @@ export function CoreSectionHeading({
       {description ? (
         <p
           className={cn(
-            'max-w-[40rem] text-pretty font-sans text-[1.02rem] leading-7 text-[#b8afa2] sm:text-[1.12rem] sm:leading-8',
+            'max-w-[40rem] text-pretty font-sans text-[1.02rem] leading-7 text-[#b8afa2] sm:text-[1.12rem] sm:leading-8 lg:max-w-[36rem]',
             descriptionClassName,
           )}
         >

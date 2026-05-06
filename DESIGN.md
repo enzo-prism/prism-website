@@ -245,6 +245,7 @@ The site should not become a stack of interchangeable cards. Each section should
 - Use sans display headings with tight tracking and strong line-height control.
 - Headings should usually be one or two lines on desktop and at most two or three lines on mobile.
 - Prefer medium weight with tight letter spacing over extra-bold generic marketing headings.
+- Use balanced wrapping for large headlines, but do not apply headline balancing logic to compact UI labels where it can create unnecessary extra lines.
 
 ### Body
 
@@ -258,6 +259,14 @@ The site should not become a stack of interchangeable cards. Each section should
 - Mono should feel like a precision layer, not the main narrative voice.
 - Use it selectively. If a section heading and body already explain the point clearly, skip the eyebrow instead of adding more UI noise.
 - Default to mono for navigation, proof metadata, support chips, and process markers before using it for section introductions.
+
+### Compact text and wrapping
+
+- Short UI labels, question prompts, chip text, and stat labels should wrap to as few lines as possible while staying readable.
+- Avoid letting 2-6 word interface labels break into three lines when the layout can instead allocate a slightly wider track.
+- Prefer content-aware grid tracks such as `minmax(...)` or weighted fractions for repeated card rows when one item is materially longer than its siblings.
+- Use `text-wrap: pretty` for compact UI copy and supporting sentences; reserve `text-wrap: balance` for display headlines and other large title treatments.
+- On desktop, chips and pills should stay single-line unless the mobile layout genuinely needs wrapping.
 
 ### Pixel usage
 

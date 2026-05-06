@@ -428,6 +428,18 @@ select {
     text-wrap: balance;
   }
 
+  .text-ui-pretty {
+    text-wrap: pretty;
+    overflow-wrap: normal;
+    word-break: normal;
+    hyphens: manual;
+  }
+
+  .text-ui-tight {
+    line-height: 1.35;
+    letter-spacing: -0.015em;
+  }
+
   /* Enhanced GPU acceleration utilities */
   .gpu-accelerated {
     transform: translateZ(0);
