@@ -4,7 +4,7 @@ import { useState } from "react"
 import Link from "next/link"
 import { ArrowRight, Calendar, CheckCircle, Home } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { trackCTAClick, trackPageView } from "@/utils/analytics"
+import { trackBookCallClick, trackContactActionClick, trackCTAClick } from "@/utils/analytics"
 import { useEffect } from "react"
 import CoreImage from "@/components/core-image"
 import confetti from "@/utils/confetti"
@@ -14,8 +14,6 @@ export default function ThanksPageClient() {
   const [isLoaded, setIsLoaded] = useState(false)
 
   useEffect(() => {
-    // Track page view
-    trackPageView("/thanks", "Thank You Page")
     setIsLoaded(true)
 
     // If Rewardful is available, mark conversion
@@ -30,6 +28,11 @@ export default function ThanksPageClient() {
   }, [])
 
   const handleScheduleClick = () => {
+    trackBookCallClick(
+      "Book Your 15-Minute Prism Site Kickoff Call",
+      "thanks_page",
+      "https://calendar.notion.so/meet/enzosison/sfux4ogo",
+    )
     confetti()
     setTimeout(() => {
       window.open("https://calendar.notion.so/meet/enzosison/sfux4ogo", "_blank")
@@ -96,7 +99,11 @@ export default function ThanksPageClient() {
           <p className="mt-2">
             If you have any questions, you can reply to the email I just sent you
             or email me directly at{" "}
-            <a href="mailto:support@design-prism.com" className="underline hover:text-gray-700">
+            <a
+              href="mailto:support@design-prism.com"
+              className="underline hover:text-gray-700"
+              onClick={() => trackContactActionClick("email", "thanks_page")}
+            >
               support@design-prism.com
             </a>
             .

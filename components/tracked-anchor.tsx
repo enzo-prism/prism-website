@@ -1,8 +1,8 @@
 "use client"
 
-import type { AnchorHTMLAttributes, ReactNode } from "react"
+import { forwardRef, type AnchorHTMLAttributes, type ReactNode } from "react"
 
-import { trackCTAClick } from "@/utils/analytics"
+import { trackLinkInteraction } from "@/utils/analytics"
 
 interface TrackedAnchorProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
   href: string
@@ -11,24 +11,25 @@ interface TrackedAnchorProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
   children: ReactNode
 }
 
-export default function TrackedAnchor({
-  href,
-  label,
-  location,
-  children,
-  onClick,
-  ...props
-}: TrackedAnchorProps) {
-  return (
-    <a
-      href={href}
-      onClick={(event) => {
-        trackCTAClick(label, location)
-        onClick?.(event)
-      }}
-      {...props}
-    >
-      {children}
-    </a>
-  )
-}
+const TrackedAnchor = forwardRef<HTMLAnchorElement, TrackedAnchorProps>(
+  function TrackedAnchor(
+    { href, label, location, children, onClick, ...props },
+    ref,
+  ) {
+    return (
+      <a
+        ref={ref}
+        href={href}
+        onClick={(event) => {
+          trackLinkInteraction(href, label, location)
+          onClick?.(event)
+        }}
+        {...props}
+      >
+        {children}
+      </a>
+    )
+  },
+)
+
+export default TrackedAnchor

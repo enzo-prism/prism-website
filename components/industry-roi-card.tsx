@@ -52,8 +52,7 @@ export default function IndustryROICard({
   }
 
   const handleCaseStudyClick = (caseStudyName: string) => {
-    trackEvent("click", {
-      element_type: "case_study_link",
+    trackEvent("case_study_link_click", {
       industry: name,
       case_study: caseStudyName
     })

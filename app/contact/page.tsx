@@ -4,6 +4,7 @@ import ContactForm from "@/components/forms/ContactForm"
 import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
 import PixelishIcon from "@/components/pixelish/PixelishIcon"
+import TrackedAnchor from "@/components/tracked-anchor"
 import { Button } from "@/components/ui/button"
 import { ContactPageSchema } from "@/components/schema-markup"
 import { buildRouteMetadata } from "@/lib/seo/metadata"
@@ -98,26 +99,30 @@ export default function ContactPage() {
                 Book a demo to walk through your goals, see how Prism works, and decide on next steps.
               </p>
               <Button asChild size="lg" variant="inverted" className="mt-4 w-full rounded-full sm:w-auto">
-                <a
+                <TrackedAnchor
                   href="https://calendar.notion.so/meet/enzosison/oj1fm4o2p"
+                  label="Book a demo"
+                  location="contact_page"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Book a Prism demo"
                 >
                   Book a demo →
-                </a>
+                </TrackedAnchor>
               </Button>
             </div>
 
             {/* Contact info */}
             <div className="space-y-2 text-center text-sm text-muted-foreground">
               <p className="font-medium text-foreground">Direct Contact</p>
-              <a
+              <TrackedAnchor
                 href="mailto:support@design-prism.com"
+                label="Email Prism support"
+                location="contact_page"
                 className="font-semibold text-foreground underline decoration-border/60 underline-offset-4 hover:decoration-border block"
               >
                 support@design-prism.com
-              </a>
+              </TrackedAnchor>
               <p>Based in Silicon Valley, California — serving businesses nationwide</p>
             </div>
           </div>

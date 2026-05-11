@@ -5,12 +5,9 @@ import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
 import ScrollToTop from "@/components/scroll-to-top"
 import { WebPageSchema } from "@/components/schema-markup"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
 import PixelishIcon from "@/components/pixelish/PixelishIcon"
 import { buildRouteMetadata } from "@/lib/seo/metadata"
+import BookAShootForm from "./BookAShootForm"
 
 const PAGE_TITLE = "book a shoot | prism"
 const PAGE_DESCRIPTION =
@@ -85,98 +82,7 @@ export default function BookAShootPage() {
           <div className="container mx-auto max-w-3xl">
             <div className="rounded-3xl border border-neutral-200 bg-white p-8 shadow-sm">
               <h2 className="text-xl font-semibold text-neutral-900 mb-6 text-center">Schedule Your Photography Session</h2>
-              <form action="https://formspree.io/f/xjkjkggn" method="POST" className="space-y-6">
-                <input
-                  type="hidden"
-                  name="_redirect"
-                  value="https://www.design-prism.com/book-a-shoot/thank-you"
-                />
-                <div className="space-y-2">
-                  <Label htmlFor="email" className="text-neutral-800">
-                    your email
-                  </Label>
-                  <Input
-                    id="email"
-                    name="email"
-                    type="email"
-                    required
-                    className="w-full rounded-2xl border-neutral-200 bg-neutral-50 px-4 py-3 text-sm text-neutral-900 focus-visible:border-ring focus-visible:ring-ring focus-visible:ring-offset-0"
-                    placeholder="name@practice.com"
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <p className="text-sm font-medium text-neutral-800">preferred day #1</p>
-                  <div className="grid gap-4 md:grid-cols-2">
-                    <Input
-                      type="date"
-                      name="day_one_date"
-                      required
-                      className="rounded-2xl border-neutral-200 bg-neutral-50 px-4 py-3 text-base text-neutral-900 focus-visible:border-ring focus-visible:ring-ring focus-visible:ring-offset-0 sm:text-sm"
-                    />
-                    <select
-                      name="day_one_time"
-                      required
-                      className="rounded-2xl border border-neutral-200 bg-neutral-50 px-4 py-3 text-base text-neutral-900 focus:border-ring focus:outline-hidden focus:ring-1 focus:ring-ring focus:ring-offset-0 sm:text-sm"
-                    >
-                      <option value="">best one-hour window</option>
-                      <option value="08:00">8:00 – 9:00 AM</option>
-                      <option value="09:00">9:00 – 10:00 AM</option>
-                      <option value="10:00">10:00 – 11:00 AM</option>
-                      <option value="11:00">11:00 AM – 12:00 PM</option>
-                      <option value="12:00">12:00 – 1:00 PM</option>
-                      <option value="13:00">1:00 – 2:00 PM</option>
-                      <option value="14:00">2:00 – 3:00 PM</option>
-                      <option value="15:00">3:00 – 4:00 PM</option>
-                    </select>
-                  </div>
-                </div>
-
-                <div className="space-y-2">
-                  <p className="text-sm font-medium text-neutral-800">preferred day #2</p>
-                  <div className="grid gap-4 md:grid-cols-2">
-                    <Input
-                      type="date"
-                      name="day_two_date"
-                      required
-                      className="rounded-2xl border-neutral-200 bg-neutral-50 px-4 py-3 text-base text-neutral-900 focus-visible:border-ring focus-visible:ring-ring focus-visible:ring-offset-0 sm:text-sm"
-                    />
-                    <select
-                      name="day_two_time"
-                      required
-                      className="rounded-2xl border border-neutral-200 bg-neutral-50 px-4 py-3 text-base text-neutral-900 focus:border-ring focus:outline-hidden focus:ring-1 focus:ring-ring focus:ring-offset-0 sm:text-sm"
-                    >
-                      <option value="">best one-hour window</option>
-                      <option value="08:00">8:00 – 9:00 AM</option>
-                      <option value="09:00">9:00 – 10:00 AM</option>
-                      <option value="10:00">10:00 – 11:00 AM</option>
-                      <option value="11:00">11:00 AM – 12:00 PM</option>
-                      <option value="12:00">12:00 – 1:00 PM</option>
-                      <option value="13:00">1:00 – 2:00 PM</option>
-                      <option value="14:00">2:00 – 3:00 PM</option>
-                      <option value="15:00">3:00 – 4:00 PM</option>
-                    </select>
-                  </div>
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="notes" className="text-neutral-800">
-                    anything we should know?
-                  </Label>
-                  <Textarea
-                    id="notes"
-                    name="notes"
-                    rows={4}
-                    className="w-full rounded-2xl border-neutral-200 bg-neutral-50 px-4 py-3 text-sm text-neutral-900 shadow-none focus-visible:border-ring focus-visible:ring-ring focus-visible:ring-offset-0"
-                    placeholder="number of operatories, parking instructions, etc."
-                  />
-                </div>
-
-                <Button type="submit" className="w-full rounded-2xl bg-neutral-900 py-3 text-base lowercase text-white">
-                  send request
-                </Button>
-                <p className="text-center text-xs text-neutral-500">we usually reply within one business day.</p>
-              </form>
+              <BookAShootForm />
             </div>
           </div>
         </section>

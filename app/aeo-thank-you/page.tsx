@@ -6,6 +6,7 @@ import Navbar from "@/components/navbar"
 import PixelishIcon from "@/components/pixelish/PixelishIcon"
 import RevealOnScroll from "@/components/reveal-on-scroll"
 import LeadSuccessTracker from "@/components/thank-you/LeadSuccessTracker"
+import TrackedAnchor from "@/components/tracked-anchor"
 import { Button } from "@/components/ui/button"
 import { buildRouteMetadata } from "@/lib/seo/metadata"
 
@@ -60,14 +61,16 @@ export default function AeoThankYouPage() {
                       asChild
                       className="mt-5 w-full rounded-full border border-black bg-black px-6 py-3 text-base font-semibold text-white hover:bg-black/90"
                     >
-                      <a
+                      <TrackedAnchor
                         href="https://calendar.notion.so/meet/enzosison/sfux4ogo"
+                        label="Book a call"
+                        location="aeo_thank_you"
                         target="_blank"
                         rel="noopener noreferrer"
                         aria-label="Book a 15-minute Prism kickoff call"
                       >
                         Book a call →
-                      </a>
+                      </TrackedAnchor>
                     </Button>
                   </div>
                   <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">

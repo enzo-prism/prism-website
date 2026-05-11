@@ -4,7 +4,7 @@ import { useState, useEffect } from "react"
 import Link from "next/link"
 import { ArrowRight, Calendar, CheckCircle, Home, Instagram } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { trackCTAClick, trackPageView } from "@/utils/analytics"
+import { trackContactActionClick, trackCTAClick } from "@/utils/analytics"
 import CoreImage from "@/components/core-image"
 import { LOGO_CONFIG, LOGO_SIZES } from "@/lib/constants"
 import PixelishImg from "@/components/pixelish/PixelishImg"
@@ -14,8 +14,6 @@ export default function ThanksCallPageClient() {
   const [isLoaded, setIsLoaded] = useState(false)
 
   useEffect(() => {
-    // Track page view
-    trackPageView("/thanks-call", "Thank You Call Scheduled Page")
     setIsLoaded(true)
   }, [])
 
@@ -109,14 +107,22 @@ export default function ThanksCallPageClient() {
           </div>
           <p className="mb-2">
             if you need to reschedule or have any questions, please contact us at{" "}
-            <a href="mailto:support@design-prism.com" className="underline hover:text-gray-700">
+            <a
+              href="mailto:support@design-prism.com"
+              className="underline hover:text-gray-700"
+              onClick={() => trackContactActionClick("email", "thanks_call_page")}
+            >
               support@design-prism.com
             </a>
           </p>
           <p className="text-xs">we'll reach out 15 minutes before your scheduled call time</p>
           <p className="mt-4 text-center text-gray-600">
             In the meantime, feel free to email us at{" "}
-            <a href="mailto:support@design-prism.com" className="underline hover:text-gray-700">
+            <a
+              href="mailto:support@design-prism.com"
+              className="underline hover:text-gray-700"
+              onClick={() => trackContactActionClick("email", "thanks_call_page")}
+            >
               support@design-prism.com
             </a>
             .

@@ -10,7 +10,8 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import PixelishImg from '@/components/pixelish/PixelishImg'
 import { pixelishForEmoji } from '@/lib/pixelish-emoji'
-import { trackCTAClick } from '@/utils/analytics'
+import { appendAttributionToFormData } from '@/lib/marketing-attribution'
+import { trackCTAClick, trackFormSubmission } from '@/utils/analytics'
 
 const offerHighlights = [
   {
@@ -157,6 +158,9 @@ export default function ModelsPageClient() {
     }
 
     formData.set('preferred_contact_method', selectedContactMethod)
+    formData.set('_subject', 'New Prism models application')
+    formData.set('form_name', 'model_application')
+    appendAttributionToFormData(formData)
 
     try {
       setIsSubmitting(true)
@@ -171,6 +175,11 @@ export default function ModelsPageClient() {
         setContactMethod('')
         setError(null)
         setIsSuccess(true)
+        trackFormSubmission('model_application', 'models_form', {
+          conversionMode: 'immediate',
+          lead_type: 'model_application',
+          sendGoogleAdsConversion: false,
+        })
         return
       }
 
@@ -366,11 +375,28 @@ export default function ModelsPageClient() {
                 </p>
               </div>
               <form
+                id="model_application"
+                name="model_application"
                 className="mt-9 flex flex-col gap-6 sm:mt-12 sm:gap-8"
                 action="https://formspree.io/f/mrbyvoqo"
                 method="POST"
+                noValidate
                 onSubmit={handleSubmit}
               >
+                <input
+                  type="hidden"
+                  name="_subject"
+                  value="New Prism models application"
+                />
+                <input type="hidden" name="form_name" value="model_application" />
+                <input
+                  type="text"
+                  name="_gotcha"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  style={{ display: 'none' }}
+                  aria-hidden="true"
+                />
                 <div className="grid gap-6 sm:grid-cols-2 sm:gap-7 lg:gap-8">
                   <FormField label="name" name="name">
                     <Input

@@ -53,12 +53,19 @@ describe('analytics utilities', () => {
   })
 
   it('sends a single manual page_view event without issuing a config call', () => {
+    window.history.replaceState(
+      {},
+      '',
+      '/apply?utm_source=google&gclid=GCLID-123#review',
+    )
+
     trackPageView('/apply', 'Apply')
 
     expect(window.gtag).toHaveBeenCalledWith(
       'event',
       'page_view',
       expect.objectContaining({
+        page_location: 'https://www.design-prism.com/apply?utm_source=google',
         page_path: '/apply',
         page_title: 'Apply',
       }),
@@ -90,6 +97,9 @@ describe('analytics utilities', () => {
       form_name: 'growth_application',
       step: 1,
       step_id: 'services',
+      email: 'patient@example.com',
+      review_link: 'https://example.com/private?email=patient@example.com',
+      message: 'This is user-entered form copy that should not go to GA.',
     })
 
     const applyQuestionCall = (window.gtag as jest.Mock).mock.calls.find(
@@ -102,6 +112,9 @@ describe('analytics utilities', () => {
         gclid: expect.any(String),
         fbclid: expect.any(String),
         msclkid: expect.any(String),
+        email: expect.any(String),
+        review_link: expect.any(String),
+        message: expect.any(String),
       }),
     )
     expect(applyQuestionCall?.[2]).toEqual(
@@ -173,6 +186,29 @@ describe('analytics utilities', () => {
     )
   })
 
+  it('can measure non-sales form leads without sending Google Ads conversion data', () => {
+    trackFormSubmission('scholarship_application', 'scholarship_form', {
+      conversionMode: 'immediate',
+      lead_type: 'scholarship_application',
+      sendGoogleAdsConversion: false,
+    })
+
+    expect(window.gtag).toHaveBeenCalledWith(
+      'event',
+      'generate_lead',
+      expect.objectContaining({
+        form_name: 'scholarship_application',
+        form_location: 'scholarship_form',
+        lead_type: 'scholarship_application',
+      }),
+    )
+    expect(
+      (window.gtag as jest.Mock).mock.calls.some(
+        ([, eventName]) => eventName === 'conversion',
+      ),
+    ).toBe(false)
+  })
+
   it('tracks external link clicks without sending the full destination URL', () => {
     trackExternalLinkClick(
       'https://www.tiktok.com/@the_design_prism?utm_source=ig',
@@ -184,7 +220,6 @@ describe('analytics utilities', () => {
       'external_link_click',
       expect.objectContaining({
         destination_host: 'www.tiktok.com',
-        destination_path: '/@the_design_prism',
         link_text: 'tiktok',
       }),
     )

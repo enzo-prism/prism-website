@@ -12,12 +12,18 @@ describe("marketing attribution helpers", () => {
   })
 
   it("stores first-touch attribution from the current URL", () => {
-    window.history.replaceState({}, "", "/pricing?utm_source=google&utm_medium=cpc&utm_campaign=spring")
+    window.history.replaceState(
+      {},
+      "",
+      "/pricing?utm_source=google&utm_medium=cpc&utm_campaign=spring&utm_content=hero&utm_term=dental",
+    )
 
     expect(getAttributionContext()).toMatchObject({
       utm_source: "google",
       utm_medium: "cpc",
       utm_campaign: "spring",
+      utm_content: "hero",
+      utm_term: "dental",
       landing_path: "/pricing",
       first_touch_source: "google",
       first_touch_medium: "cpc",

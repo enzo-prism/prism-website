@@ -1,9 +1,9 @@
 "use client"
 
-import type { MouseEventHandler, ReactNode } from "react"
+import { forwardRef, type MouseEventHandler, type ReactNode } from "react"
 import Link from "next/link"
 
-import { trackCTAClick } from "@/utils/analytics"
+import { trackLinkInteraction } from "@/utils/analytics"
 
 interface TrackedLinkProps {
   href: string
@@ -16,28 +16,27 @@ interface TrackedLinkProps {
   children: ReactNode
 }
 
-export default function TrackedLink({
-  href,
-  label,
-  location,
-  className,
-  target,
-  rel,
-  onClick,
-  children,
-}: TrackedLinkProps) {
-  return (
-    <Link
-      href={href}
-      className={className}
-      target={target}
-      rel={rel}
-      onClick={(event) => {
-        trackCTAClick(label, location)
-        onClick?.(event)
-      }}
-    >
-      {children}
-    </Link>
-  )
-}
+const TrackedLink = forwardRef<HTMLAnchorElement, TrackedLinkProps>(
+  function TrackedLink(
+    { href, label, location, className, target, rel, onClick, children },
+    ref,
+  ) {
+    return (
+      <Link
+        ref={ref}
+        href={href}
+        className={className}
+        target={target}
+        rel={rel}
+        onClick={(event) => {
+          trackLinkInteraction(href, label, location)
+          onClick?.(event)
+        }}
+      >
+        {children}
+      </Link>
+    )
+  },
+)
+
+export default TrackedLink

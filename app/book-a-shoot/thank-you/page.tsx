@@ -4,6 +4,8 @@ import Link from "next/link"
 import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
 import ScrollToTop from "@/components/scroll-to-top"
+import LeadSuccessTracker from "@/components/thank-you/LeadSuccessTracker"
+import TrackedAnchor from "@/components/tracked-anchor"
 import { Button } from "@/components/ui/button"
 import { buildRouteMetadata } from "@/lib/seo/metadata"
 
@@ -17,6 +19,7 @@ export const metadata: Metadata = buildRouteMetadata({
 export default function BookAShootThankYouPage() {
   return (
     <>
+      <LeadSuccessTracker />
       <Navbar />
       <main className="bg-white text-neutral-900">
         <section className="border-b border-neutral-200 bg-neutral-50 px-4 py-12 sm:py-20">
@@ -87,23 +90,30 @@ export default function BookAShootThankYouPage() {
                   asChild
                   className="w-full rounded-2xl border border-neutral-900 bg-neutral-900 px-6 py-3 text-base font-semibold text-white hover:bg-neutral-900/90"
                 >
-                  <a href="mailto:support@design-prism.com" aria-label="Email Prism support">
+                  <TrackedAnchor
+                    href="mailto:support@design-prism.com"
+                    label="email support"
+                    location="book_a_shoot_thank_you"
+                    aria-label="Email Prism support"
+                  >
                     email support
-                  </a>
+                  </TrackedAnchor>
                 </Button>
                 <Button
                   asChild
                   variant="outline"
                   className="w-full rounded-2xl border border-neutral-200 bg-white px-6 py-3 text-base font-semibold text-neutral-900 hover:border-neutral-300 hover:bg-neutral-50"
                 >
-                  <a
+                  <TrackedAnchor
                     href="https://calendar.notion.so/meet/enzosison/sfux4ogo"
+                    label="book a call"
+                    location="book_a_shoot_thank_you"
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label="Book a 15-minute kickoff call"
                   >
                     book a call
-                  </a>
+                  </TrackedAnchor>
                 </Button>
               </div>
             </div>

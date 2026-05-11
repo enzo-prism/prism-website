@@ -28,6 +28,9 @@ const { handleSubmit, getError, isSubmitting } = useFormValidation({
 - `components/forms/ScalingRoadmapForm.tsx`
 - `components/ai-website-launch/AiWebsiteLaunchForm.tsx` (inline card form for the AI launch offer; embedded in `app/ai-website-launch/client-page.tsx` and wired with `useFormValidation`)
 - `components/forms/AeoAssessmentForm.tsx`
+- `app/book-a-shoot/BookAShootForm.tsx`
+- `app/scholarship/ScholarshipPageClient.tsx`
+- `app/models/client-page.tsx`
 
 ## Adding a new form
 
@@ -36,6 +39,10 @@ const { handleSubmit, getError, isSubmitting } = useFormValidation({
 3. On success, push to one of the thank-you routes.
 4. Add your form component to the relevant route page.
 5. Give the real `<form>` element a stable `id` and `name`. GA4 enhanced measurement uses those DOM attributes for `form_id` and `form_name`; hidden inputs alone are not enough.
+6. Use the right conversion mode:
+   - Default pending mode for sales/business forms that redirect to a thank-you page with `LeadSuccessTracker`.
+   - `conversionMode: "immediate"` for confirmed success states that stay on-page.
+   - `sendGoogleAdsConversion: false` for scholarship, model, newsletter, community, or other non-sales submissions.
 
 ## Prism practice audit flow: `/get-started` + `/apply`
 
@@ -157,9 +164,33 @@ Important routing note:
 - `/thank-you` ([`app/thank-you/page.tsx`](../app/thank-you/page.tsx)) — used by Apply + Contact. The Prism practice audit flow sends `?source=apply` so the screen can render audit-specific expectation copy and analytics.
 - `/analysis-thank-you` ([`app/analysis-thank-you/page.tsx`](../app/analysis-thank-you/page.tsx)) — used by the Free Analysis form.
 - `/aeo-thank-you` ([`app/aeo-thank-you/page.tsx`](../app/aeo-thank-you/page.tsx)) — used by the AEO assessment form.
+- `/book-a-shoot/thank-you` ([`app/book-a-shoot/thank-you/page.tsx`](../app/book-a-shoot/thank-you/page.tsx)) — used by the photography booking request form.
 
 Each page is intentionally minimal. `/thank-you` stays review-led by default and can switch into the stricter apply-specific state when the URL includes `?source=apply`.
 These routes are noindex/no-follow and **not** blocked in `robots.txt` so search engines can read the meta noindex directive.
+
+## Other tracked submission surfaces
+
+### `/book-a-shoot`
+
+- Endpoint: `https://formspree.io/f/xjkjkggn`
+- DOM analytics contract: `<form id="book_a_shoot" name="book_a_shoot">`
+- Success flow: client-side `fetch` with `Accept: application/json`, then `router.push("/book-a-shoot/thank-you")`
+- Analytics: `trackFormSubmission("book_a_shoot", "book_a_shoot_form", { lead_type: "shoot_request" })`; the thank-you page mounts `LeadSuccessTracker` and emits `generate_lead` once.
+
+### `/scholarship`
+
+- Endpoint: `NEXT_PUBLIC_SCHOLARSHIP_FORM_ENDPOINT` or `https://formspree.io/f/mwpwwjek`
+- DOM analytics contract: `<form id="scholarship_application" name="scholarship_application">`
+- Success flow: client-side `fetch` with inline success copy.
+- Analytics: `trackFormSubmission("scholarship_application", "scholarship_form", { conversionMode: "immediate", sendGoogleAdsConversion: false })`.
+
+### `/models`
+
+- Endpoint: `https://formspree.io/f/mrbyvoqo`
+- DOM analytics contract: `<form id="model_application" name="model_application">`
+- Success flow: client-side `fetch` with inline success copy.
+- Analytics: `trackFormSubmission("model_application", "models_form", { conversionMode: "immediate", sendGoogleAdsConversion: false })`.
 
 ## FAQ / Troubleshooting
 

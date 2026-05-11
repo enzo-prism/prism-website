@@ -6,6 +6,7 @@ import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
 import RevealOnScroll from "@/components/reveal-on-scroll"
 import LeadSuccessTracker from "@/components/thank-you/LeadSuccessTracker"
+import TrackedAnchor from "@/components/tracked-anchor"
 import { Button } from "@/components/ui/button"
 import PixelishIcon from "@/components/pixelish/PixelishIcon"
 import { buildRouteMetadata } from "@/lib/seo/metadata"
@@ -56,14 +57,16 @@ export default function AnalysisThankYouPage() {
                     asChild
                     className="mt-5 w-full rounded-full border border-black bg-black px-6 py-3 text-base font-semibold text-white hover:bg-black/90"
                   >
-                    <a
+                    <TrackedAnchor
                       href="https://calendar.notion.so/meet/enzosison/sfux4ogo"
+                      label="Book my call"
+                      location="analysis_thank_you"
                       target="_blank"
                       rel="noopener noreferrer"
                       aria-label="Book a 15-minute Prism kickoff call"
                     >
                       Book my call →
-                    </a>
+                    </TrackedAnchor>
                   </Button>
                 </div>
               </RevealOnScroll>
@@ -79,12 +82,14 @@ export default function AnalysisThankYouPage() {
                     </div>
                     <div>
                       <p className="font-semibold text-slate-900">Email us</p>
-                      <a
+                      <TrackedAnchor
                         href="mailto:support@design-prism.com"
+                        label="Email Prism support"
+                        location="analysis_thank_you"
                         className="text-slate-900 underline-offset-4 hover:underline"
                       >
                         support@design-prism.com
-                      </a>
+                      </TrackedAnchor>
                     </div>
                     <p>Based in Silicon Valley, CA</p>
                   </div>

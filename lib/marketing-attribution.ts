@@ -115,6 +115,8 @@ export function getAttributionContext(): AttributionPayload {
     fromUrl.utm_source ||
       fromUrl.utm_medium ||
       fromUrl.utm_campaign ||
+      fromUrl.utm_content ||
+      fromUrl.utm_term ||
       fromUrl.gclid ||
       fromUrl.fbclid ||
       fromUrl.msclkid,

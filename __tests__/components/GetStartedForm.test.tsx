@@ -38,7 +38,7 @@ function createMockResponse(overrides: MockResponseOverrides = {}): Response {
 }
 
 function completeStepOne() {
-  fireEvent.click(screen.getByRole('checkbox', { name: /new website/i }))
+  fireEvent.click(screen.getByRole('checkbox', { name: /dental website/i }))
   fireEvent.click(screen.getByRole('button', { name: /continue/i }))
 
   fireEvent.click(screen.getByLabelText(/^yes$/i))
@@ -49,7 +49,7 @@ function completeStepOne() {
   })
   fireEvent.click(screen.getByRole('button', { name: /continue/i }))
 
-  fireEvent.click(screen.getByLabelText(/more leads/i))
+  fireEvent.click(screen.getByLabelText(/more patient calls/i))
   fireEvent.click(screen.getByRole('button', { name: /continue/i }))
 }
 
@@ -60,7 +60,7 @@ function completeContextQuestions() {
   fireEvent.click(screen.getByLabelText(/within 30 days/i))
   fireEvent.click(screen.getByRole('button', { name: /continue/i }))
 
-  fireEvent.change(screen.getByLabelText(/company name/i), {
+  fireEvent.change(screen.getByLabelText(/practice name/i), {
     target: { value: 'Prism' },
   })
   fireEvent.click(screen.getByRole('button', { name: /continue/i }))
@@ -103,13 +103,12 @@ describe('GetStartedForm', () => {
     expect(
       screen.getByRole('heading', {
         level: 1,
-        name: /what do you need help with/i,
+        name: /what should we review/i,
       }),
     ).toBeInTheDocument()
-    expect(screen.getByDisplayValue('New Prism application')).toHaveAttribute(
-      'name',
-      '_subject',
-    )
+    expect(
+      screen.getByDisplayValue('New Prism practice audit request'),
+    ).toHaveAttribute('name', '_subject')
     expect(screen.getByDisplayValue('growth_application')).toHaveAttribute(
       'name',
       'form_name',
@@ -148,7 +147,7 @@ describe('GetStartedForm', () => {
       }),
     )
 
-    fireEvent.click(screen.getByRole('checkbox', { name: /new website/i }))
+    fireEvent.click(screen.getByRole('checkbox', { name: /dental website/i }))
     fireEvent.click(screen.getByRole('button', { name: /continue/i }))
     fireEvent.click(screen.getByRole('button', { name: /continue/i }))
 
@@ -173,7 +172,7 @@ describe('GetStartedForm', () => {
   it('tracks the first meaningful interaction as an apply form start only once', () => {
     render(<GetStartedForm />)
 
-    fireEvent.click(screen.getByRole('checkbox', { name: /new website/i }))
+    fireEvent.click(screen.getByRole('checkbox', { name: /dental website/i }))
     fireEvent.click(screen.getByRole('button', { name: /continue/i }))
     fireEvent.click(screen.getByLabelText(/^yes$/i))
 
@@ -236,7 +235,7 @@ describe('GetStartedForm', () => {
       }),
     )
 
-    fireEvent.click(screen.getByRole('button', { name: /submit application/i }))
+    fireEvent.click(screen.getByRole('button', { name: /submit audit request/i }))
 
     await waitFor(() => {
       expect(fetchSpy).toHaveBeenCalledTimes(1)
@@ -249,7 +248,7 @@ describe('GetStartedForm', () => {
           budget: '$1.5k to $3k',
           timeline: 'Within 30 days',
           service_count: 1,
-          primary_goal: 'I need more leads/customers online',
+          primary_goal: 'I need more patient calls',
           has_website: 'yes',
         }),
       )
@@ -292,17 +291,17 @@ describe('GetStartedForm', () => {
     expect(formData.get('has_website')).toBe('yes')
     expect(formData.get('review_link')).toBe('https://design-prism.com')
     expect(formData.get('primary_goal')).toBe(
-      'I need more leads/customers online',
+      'I need more patient calls',
     )
-    expect(formData.get('service_focus')).toBe('New website')
-    expect(formData.getAll('service_interest[]')).toEqual(['New website'])
+    expect(formData.get('service_focus')).toBe('Dental website')
+    expect(formData.getAll('service_interest[]')).toEqual(['Dental website'])
     expect(formData.get('budget')).toBe('$1.5k to $3k')
     expect(formData.get('timeline')).toBe('Within 30 days')
     expect(formData.get('company')).toBe('Prism')
     expect(formData.get('full_name')).toBe('Jordan Ramirez')
     expect(formData.get('email')).toBe('jordan@example.com')
     expect(formData.get('additional_context')).toContain('cleaner site')
-    expect(formData.get('_subject')).toBe('New Prism application')
+    expect(formData.get('_subject')).toBe('New Prism practice audit request')
     expect(formData.get('form_name')).toBe('growth_application')
   })
 
@@ -320,7 +319,7 @@ describe('GetStartedForm', () => {
     fireEvent.click(screen.getByLabelText(/asap/i))
     fireEvent.click(screen.getByRole('button', { name: /continue/i }))
 
-    fireEvent.change(screen.getByLabelText(/company name/i), {
+    fireEvent.change(screen.getByLabelText(/practice name/i), {
       target: { value: 'Prism' },
     })
     fireEvent.click(screen.getByRole('button', { name: /continue/i }))
@@ -334,7 +333,7 @@ describe('GetStartedForm', () => {
     fireEvent.click(screen.getByRole('button', { name: /continue/i }))
     fireEvent.click(screen.getByRole('button', { name: /review/i }))
 
-    fireEvent.click(screen.getByRole('button', { name: /submit application/i }))
+    fireEvent.click(screen.getByRole('button', { name: /submit audit request/i }))
 
     await waitFor(() => {
       expect(fetchSpy).toHaveBeenCalledTimes(1)

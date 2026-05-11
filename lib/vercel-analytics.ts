@@ -37,6 +37,14 @@ function getHostname(url: unknown) {
   }
 }
 
+function getDestinationHost(eventParams: Record<string, unknown>) {
+  if (typeof eventParams.destination_host === 'string') {
+    return eventParams.destination_host
+  }
+
+  return getHostname(eventParams.destination_url)
+}
+
 /**
  * Preserve UTM params for campaign filtering while removing everything else.
  */
@@ -437,10 +445,39 @@ export function buildVercelCustomEvent(
       return {
         name: 'External Link Clicked',
         properties: compactProperties({
-          destination_host: getHostname(eventParams.destination_url),
+          destination_host: getDestinationHost(eventParams),
           link_text:
             typeof eventParams.link_text === 'string'
               ? eventParams.link_text
+              : undefined,
+        }),
+      }
+    case 'book_call_click':
+      return {
+        name: 'Book Call Clicked',
+        properties: compactProperties({
+          destination_host: getDestinationHost(eventParams),
+          booking_location:
+            typeof eventParams.booking_location === 'string'
+              ? eventParams.booking_location
+              : undefined,
+          link_text:
+            typeof eventParams.link_text === 'string'
+              ? eventParams.link_text
+              : undefined,
+        }),
+      }
+    case 'contact_action_click':
+      return {
+        name: 'Contact Action Clicked',
+        properties: compactProperties({
+          contact_method:
+            typeof eventParams.contact_method === 'string'
+              ? eventParams.contact_method
+              : undefined,
+          contact_location:
+            typeof eventParams.contact_location === 'string'
+              ? eventParams.contact_location
               : undefined,
         }),
       }

@@ -63,7 +63,9 @@ export default function CheckoutForm({ plan }: CheckoutFormProps) {
       }
 
       setStatus("success")
-      trackFormSubmission(`checkout_${plan}`, "checkout_form")
+      trackFormSubmission(`checkout_${plan}`, "checkout_form", {
+        lead_type: "checkout_inquiry",
+      })
       router.push(`/checkout/${plan}/thank-you`)
     } catch (error) {
       console.error("Submission error:", error)

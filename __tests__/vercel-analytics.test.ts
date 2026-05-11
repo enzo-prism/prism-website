@@ -50,6 +50,21 @@ describe('Vercel analytics URL normalization', () => {
   it('builds compact external link events without leaking the full destination URL', () => {
     expect(
       buildVercelCustomEvent('external_link_click', {
+        destination_host: 'calendar.notion.so',
+        link_text: 'Book now',
+      }),
+    ).toEqual({
+      name: 'External Link Clicked',
+      properties: {
+        destination_host: 'calendar.notion.so',
+        link_text: 'Book now',
+      },
+    })
+  })
+
+  it('keeps legacy external destination URL support while preferring sanitized host input', () => {
+    expect(
+      buildVercelCustomEvent('external_link_click', {
         destination_url:
           'https://calendar.notion.so/meet/enzosison/sfux4ogo?foo=bar',
         link_text: 'Book now',
@@ -59,6 +74,36 @@ describe('Vercel analytics URL normalization', () => {
       properties: {
         destination_host: 'calendar.notion.so',
         link_text: 'Book now',
+      },
+    })
+  })
+
+  it('builds compact booking and contact intent events', () => {
+    expect(
+      buildVercelCustomEvent('book_call_click', {
+        destination_host: 'calendar.notion.so',
+        booking_location: 'analysis_thank_you',
+        link_text: 'Book my call',
+      }),
+    ).toEqual({
+      name: 'Book Call Clicked',
+      properties: {
+        destination_host: 'calendar.notion.so',
+        booking_location: 'analysis_thank_you',
+        link_text: 'Book my call',
+      },
+    })
+
+    expect(
+      buildVercelCustomEvent('contact_action_click', {
+        contact_method: 'email',
+        contact_location: 'contact_page',
+      }),
+    ).toEqual({
+      name: 'Contact Action Clicked',
+      properties: {
+        contact_method: 'email',
+        contact_location: 'contact_page',
       },
     })
   })

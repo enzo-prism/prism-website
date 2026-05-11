@@ -145,7 +145,7 @@ The checker prints each URL’s redirect chain, final URL, and canonical tag val
 ## Need-to-knows
 
 - Analytics defaults to GA4 property `G-P9VY77PRC0` unless `NEXT_PUBLIC_GA_MEASUREMENT_ID` is set.
-- Vercel Web Analytics is mounted globally via `components/vercel-analytics.tsx` in `app/layout.tsx`; it auto-tracks page views on Vercel, keeps `utm_*` parameters for campaign filtering, and strips non-marketing query params / hash fragments before events are sent.
+- Vercel Web Analytics is mounted globally through the runtime client shell via `components/vercel-analytics.tsx`; it auto-tracks page views on Vercel, keeps `utm_*` parameters for campaign filtering, and strips non-marketing query params / hash fragments before events are sent.
 - Marketing capture runs directly through Formspree-backed client submissions; there is no custom Prism lead intake route in the supported website stack anymore.
 - Blog OG images are generated dynamically via `/api/og/blog/[slug]`; add new slugs to `lib/mdx-edge.ts` when introducing MDX posts.
 

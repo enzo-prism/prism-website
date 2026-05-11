@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button"
 import { CheckCircle2, Calendar } from "lucide-react"
 import PixelishIcon from "@/components/pixelish/PixelishIcon"
 import LeadSuccessTracker from "@/components/thank-you/LeadSuccessTracker"
+import TrackedLink from "@/components/tracked-link"
 import { buildRouteMetadata } from "@/lib/seo/metadata"
 
 export const metadata: Metadata = buildRouteMetadata({
@@ -47,10 +48,16 @@ export default function LaunchThankYouPage() {
             </p>
             <div className="flex flex-col items-center gap-3">
               <Button asChild size="lg" className="w-full rounded-md">
-                <Link href="https://calendar.notion.so/meet/enzosison/sfux4ogo" target="_blank">
+                <TrackedLink
+                  href="https://calendar.notion.so/meet/enzosison/sfux4ogo"
+                  label="Book Meeting Now"
+                  location="checkout_launch_thank_you"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   <Calendar className="mr-2 h-4 w-4" />
                   Book Meeting Now
-                </Link>
+                </TrackedLink>
               </Button>
               <Button asChild variant="link" className="text-muted-foreground hover:text-foreground">
                 <Link href="/">Return to Home</Link>

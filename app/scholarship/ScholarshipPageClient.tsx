@@ -5,6 +5,8 @@ import Navbar from "@/components/navbar"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
+import { appendAttributionToFormData } from "@/lib/marketing-attribution"
+import { trackFormSubmission } from "@/utils/analytics"
 import Link from "next/link"
 import { useEffect, useMemo, useRef, useState } from "react"
 
@@ -110,9 +112,12 @@ export default function ScholarshipPageClient() {
     payload.append("heard_about", String(formData.get("referral") || ""))
     payload.append("project_description", String(formData.get("project") || ""))
     payload.append("page", "scholarship")
+    payload.append("_subject", "New Prism scholarship application")
+    payload.append("form_name", "scholarship_application")
+    appendAttributionToFormData(payload)
 
     try {
-      const response = await fetch(FORM_ENDPOINT, {
+      const response = await fetch(form.action, {
         method: "POST",
         headers: { Accept: "application/json" },
         body: payload,
@@ -124,6 +129,11 @@ export default function ScholarshipPageClient() {
 
       setStatus("success")
       setApplicationsCount((previous) => previous + 1)
+      trackFormSubmission("scholarship_application", "scholarship_form", {
+        conversionMode: "immediate",
+        lead_type: "scholarship_application",
+        sendGoogleAdsConversion: false,
+      })
       form.reset()
       const textArea = form.querySelector<HTMLTextAreaElement>("textarea")
       textArea?.blur()
@@ -187,7 +197,26 @@ export default function ScholarshipPageClient() {
                 </div>
               </div>
               <div className="rounded-3xl border border-neutral-200 bg-white/80 p-6 shadow-[0_24px_80px_-48px_rgba(15,23,42,0.35)] backdrop-blur">
-                <form ref={formRef} onSubmit={handleSubmit} className="space-y-5">
+                <form
+                  ref={formRef}
+                  id="scholarship_application"
+                  name="scholarship_application"
+                  action={FORM_ENDPOINT}
+                  method="POST"
+                  noValidate
+                  onSubmit={handleSubmit}
+                  className="space-y-5"
+                >
+                  <input type="hidden" name="_subject" value="New Prism scholarship application" />
+                  <input type="hidden" name="form_name" value="scholarship_application" />
+                  <input
+                    type="text"
+                    name="_gotcha"
+                    tabIndex={-1}
+                    autoComplete="off"
+                    style={{ display: "none" }}
+                    aria-hidden="true"
+                  />
                   <div className="grid gap-4 sm:grid-cols-2">
                     <div className="space-y-2">
                       <label htmlFor="firstName" className="text-sm font-medium lowercase text-neutral-600">

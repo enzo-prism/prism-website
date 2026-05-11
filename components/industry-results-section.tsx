@@ -86,8 +86,7 @@ export default function IndustryResultsSection() {
 
   const handleIndustryChange = (index: number) => {
     setActiveIndustry(index)
-    trackEvent("click", {
-      element_type: "industry_tab",
+    trackEvent("industry_tab_select", {
       industry: industries[index].name,
       previous_industry: industries[activeIndustry].name
     })

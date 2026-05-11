@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import TrackedLink from '@/components/tracked-link'
 
 type FooterItem = {
   href: string
@@ -62,18 +63,22 @@ export default function Footer({ variant: _variant = 'default' }: FooterProps) {
             </p>
 
             <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:gap-8">
-              <Link
+              <TrackedLink
                 href="/get-started#book-call"
+                label="Book call"
+                location="footer"
                 className="inline-flex min-h-12 items-center border-b border-[#f5f0e8] pb-1 text-sm font-semibold uppercase tracking-[0.18em] text-[#f5f0e8] transition-colors hover:text-white"
               >
                 Book call
-              </Link>
-              <Link
+              </TrackedLink>
+              <TrackedLink
                 href="/free-analysis"
+                label="Free audit"
+                location="footer"
                 className="inline-flex min-h-12 items-center border-b border-white/20 pb-1 text-sm font-semibold uppercase tracking-[0.18em] text-[#b8afa2] transition-colors hover:border-[#f5f0e8] hover:text-[#f5f0e8]"
               >
                 Free audit
-              </Link>
+              </TrackedLink>
             </div>
           </div>
 

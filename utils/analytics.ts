@@ -30,6 +30,8 @@ type AttributionEventContext = {
   utm_source?: string
   utm_medium?: string
   utm_campaign?: string
+  utm_content?: string
+  utm_term?: string
   landing_path?: string
   first_touch_source?: string
   first_touch_medium?: string
@@ -70,6 +72,49 @@ type PageViewOptions = {
 
 const PENDING_LEAD_CONTEXT_STORAGE_KEY = 'prism_pending_lead_context_v1'
 const PENDING_LEAD_CONTEXT_TTL_MS = 30 * 60 * 1000
+const SAFE_MARKETING_PARAM_KEYS = [
+  'utm_source',
+  'utm_medium',
+  'utm_campaign',
+  'utm_content',
+  'utm_term',
+] as const
+const FORBIDDEN_ANALYTICS_PARAM_KEYS = new Set([
+  'additional_context',
+  'email',
+  'email_address',
+  'email_hash',
+  'error_message',
+  'event_time',
+  'fbclid',
+  'first_name',
+  'first_touch_at',
+  'full_name',
+  'gclid',
+  'href',
+  'last_name',
+  'message',
+  'mobile',
+  'msclkid',
+  'name',
+  'notes',
+  'phone',
+  'project',
+  'project_description',
+  'referrer',
+  'review_link',
+  'tel',
+  'timestamp',
+  'url',
+  'website',
+])
+const RAW_URL_PARAM_KEYS = new Set([
+  'destination_url',
+  'link_url',
+  'previous_url',
+  'source_url',
+])
+const SAFE_URL_PARAM_KEYS = new Set(['page_location', 'page_referrer'])
 
 function getGtag() {
   if (typeof window === 'undefined') return null
@@ -92,6 +137,116 @@ function compactAnalyticsParams(params: Record<string, any>) {
   )
 }
 
+function getSafeSearchParams(searchParams: URLSearchParams) {
+  const safeParams = new URLSearchParams()
+
+  for (const key of SAFE_MARKETING_PARAM_KEYS) {
+    const value = searchParams.get(key)
+    if (value) safeParams.set(key, value)
+  }
+
+  return safeParams
+}
+
+function getSafeAnalyticsUrl(url: string, base?: string) {
+  try {
+    const parsed = new URL(url, base)
+    parsed.search = getSafeSearchParams(parsed.searchParams).toString()
+    parsed.hash = ''
+    return parsed.toString()
+  } catch {
+    const [pathWithoutHash] = url.split('#')
+    const [basePath, rawSearch = ''] = pathWithoutHash.split('?')
+    const safeParams = getSafeSearchParams(new URLSearchParams(rawSearch))
+    const safeSearch = safeParams.toString()
+    return safeSearch ? `${basePath}?${safeSearch}` : basePath
+  }
+}
+
+function getSafePageLocation() {
+  if (typeof window === 'undefined') return undefined
+  return getSafeAnalyticsUrl(window.location.href)
+}
+
+function sanitizePathValue(value: string) {
+  try {
+    const parsed = new URL(value, window.location.origin)
+    const safeSearch = getSafeSearchParams(parsed.searchParams).toString()
+    return `${parsed.pathname}${safeSearch ? `?${safeSearch}` : ''}`
+  } catch {
+    const [pathWithoutHash] = value.split('#')
+    const [basePath, rawSearch = ''] = pathWithoutHash.split('?')
+    const safeSearch = getSafeSearchParams(
+      new URLSearchParams(rawSearch),
+    ).toString()
+    return safeSearch ? `${basePath}?${safeSearch}` : basePath
+  }
+}
+
+function looksLikeEmail(value: string) {
+  return /[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/i.test(value)
+}
+
+function looksLikePhone(value: string) {
+  const digits = value.replace(/\D/g, '')
+  return digits.length >= 10 && /(?:\+?\d[\d\s().-]{8,}\d)/.test(value)
+}
+
+function sanitizeDestinationValue(value: string) {
+  if (value.startsWith('/')) return sanitizePathValue(value)
+
+  try {
+    const parsed = new URL(value)
+    return parsed.hostname
+  } catch {
+    return value
+  }
+}
+
+function sanitizeAnalyticsParamValue(key: string, value: unknown) {
+  const lowerKey = key.toLowerCase()
+
+  if (
+    FORBIDDEN_ANALYTICS_PARAM_KEYS.has(lowerKey) ||
+    RAW_URL_PARAM_KEYS.has(lowerKey)
+  ) {
+    return undefined
+  }
+
+  if (value === undefined || value === null || value === '') return undefined
+
+  if (typeof value === 'number') return Number.isFinite(value) ? value : undefined
+  if (typeof value === 'boolean') return value
+
+  if (typeof value !== 'string') return undefined
+
+  const trimmed = value.trim()
+  if (!trimmed) return undefined
+  if (looksLikeEmail(trimmed) || looksLikePhone(trimmed)) return undefined
+
+  if (SAFE_URL_PARAM_KEYS.has(lowerKey)) {
+    return getSafeAnalyticsUrl(trimmed)
+  }
+
+  if (lowerKey === 'page_path' || lowerKey === 'destination') {
+    return sanitizeDestinationValue(trimmed)
+  }
+
+  if (/^https?:\/\//i.test(trimmed)) return undefined
+
+  if (trimmed.length > 160) return undefined
+
+  return trimmed
+}
+
+function sanitizeAnalyticsParams(params: Record<string, any>) {
+  return Object.fromEntries(
+    Object.entries(params)
+      .map(([key, value]) => [key, sanitizeAnalyticsParamValue(key, value)])
+      .filter(([, value]) => value !== undefined && value !== null && value !== ''),
+  )
+}
+
 function getAnalyticsAttributionContext(): AttributionEventContext {
   const attribution = getAttributionContext()
 
@@ -99,20 +254,12 @@ function getAnalyticsAttributionContext(): AttributionEventContext {
     utm_source: attribution.utm_source,
     utm_medium: attribution.utm_medium,
     utm_campaign: attribution.utm_campaign,
+    utm_content: attribution.utm_content,
+    utm_term: attribution.utm_term,
     landing_path: attribution.landing_path,
     first_touch_source: attribution.first_touch_source,
     first_touch_medium: attribution.first_touch_medium,
     first_touch_campaign: attribution.first_touch_campaign,
-  })
-}
-
-function getSafeSearchParams(searchParams: URLSearchParams) {
-  return compactAnalyticsParams({
-    utm_source: searchParams.get('utm_source') ?? undefined,
-    utm_medium: searchParams.get('utm_medium') ?? undefined,
-    utm_campaign: searchParams.get('utm_campaign') ?? undefined,
-    utm_content: searchParams.get('utm_content') ?? undefined,
-    utm_term: searchParams.get('utm_term') ?? undefined,
   })
 }
 
@@ -121,20 +268,46 @@ function getExternalDestinationContext(url: string) {
     const parsed = new URL(url)
     return compactAnalyticsParams({
       destination_host: parsed.hostname,
-      destination_path: parsed.pathname === '/' ? undefined : parsed.pathname,
     })
   } catch {
     return compactAnalyticsParams({
       destination_host: undefined,
-      destination_path: undefined,
     })
   }
+}
+
+function isExternalHttpUrl(url: string) {
+  if (typeof window === 'undefined') return /^https?:\/\//i.test(url)
+
+  try {
+    const parsed = new URL(url, window.location.origin)
+    return parsed.protocol.startsWith('http') && parsed.origin !== window.location.origin
+  } catch {
+    return false
+  }
+}
+
+function isBookingUrl(url: string) {
+  try {
+    const parsed = new URL(
+      url,
+      typeof window !== 'undefined' ? window.location.origin : undefined,
+    )
+    return /(^|\.)calendar\.notion\.so$|(^|\.)calendly\.com$/.test(
+      parsed.hostname,
+    )
+  } catch {
+    return false
+  }
+}
+
+function hasBookingIntent(value: string) {
+  return /\b(book|booking|call|demo|kickoff|meeting|schedule)\b/i.test(value)
 }
 
 // Custom event types
 export type EventType =
   | 'page_view'
-  | 'click'
   | 'form_submit_success'
   | 'apply_form_view'
   | 'apply_form_start'
@@ -157,6 +330,8 @@ export type EventType =
   | 'service_view'
   | 'cta_click'
   | 'navigation'
+  | 'industry_tab_select'
+  | 'case_study_link_click'
   | 'client_showcase_interaction'
   | 'benefits_slideshow_interaction'
   | 'service_card_click'
@@ -164,6 +339,8 @@ export type EventType =
   | 'page_engagement'
   | 'file_download'
   | 'external_link_click'
+  | 'book_call_click'
+  | 'contact_action_click'
   | 'video_interaction'
   | 'error'
   | 'scroll_milestone'
@@ -300,17 +477,17 @@ export function trackEvent(eventName: EventType, params?: Record<string, any>) {
     return
   }
 
-  const pageLocation = window.location.href
   const pageTitle = typeof document !== 'undefined' ? document.title : ''
+  const pageLocation = getSafePageLocation()
 
   // Add attribution and page context to all events without adding unique,
   // high-cardinality values that make GA reports harder to use.
-  const enhancedParams = compactAnalyticsParams({
+  const enhancedParams = sanitizeAnalyticsParams({
     ...getAnalyticsAttributionContext(),
-    ...params,
     page_location: pageLocation,
     page_title: pageTitle,
     page_path: window.location.pathname,
+    ...params,
   })
 
   if (process.env.NODE_ENV === 'development') {
@@ -372,7 +549,7 @@ export function trackPageView(
 
   const pageTitle =
     title || (typeof document !== 'undefined' ? document.title : normalizedPath)
-  const pageLocation = window.location.href
+  const pageLocation = getSafePageLocation()
   const pageReferrer =
     options.previousUrl ??
     (typeof document !== 'undefined' ? document.referrer : '')
@@ -533,6 +710,54 @@ export function trackExternalLinkClick(url: string, linkText?: string) {
   })
 }
 
+export function trackBookCallClick(
+  linkText: string,
+  location: string,
+  url?: string,
+) {
+  trackEvent('book_call_click', {
+    ...getExternalDestinationContext(url || ''),
+    link_text: linkText,
+    booking_location: location,
+  })
+}
+
+export function trackContactActionClick(
+  contactMethod: 'email' | 'phone',
+  location: string,
+) {
+  trackEvent('contact_action_click', {
+    contact_method: contactMethod,
+    contact_location: location,
+  })
+}
+
+export function trackLinkInteraction(
+  href: string,
+  label: string,
+  location: string,
+) {
+  trackCTAClick(label, location)
+
+  if (href.startsWith('mailto:')) {
+    trackContactActionClick('email', location)
+    return
+  }
+
+  if (href.startsWith('tel:')) {
+    trackContactActionClick('phone', location)
+    return
+  }
+
+  if (isBookingUrl(href) || hasBookingIntent(label) || hasBookingIntent(location)) {
+    trackBookCallClick(label, location, href)
+  }
+
+  if (isExternalHttpUrl(href)) {
+    trackExternalLinkClick(href, label)
+  }
+}
+
 /**
  * Track file downloads
  * @param fileName The name of the file being downloaded
@@ -612,27 +837,9 @@ export function trackUserPreference(
  * @param email The email address submitted
  * @param source The source of the submission (top form or bottom form)
  */
-export function trackSkoolEmailSubmission(email: string, source: string) {
+export function trackSkoolEmailSubmission(_email: string, source: string) {
   trackEvent('skool_email_submission', {
-    email_hash: hashEmail(email), // Hash the email for privacy
     source: source,
-    destination: 'skool.com/prism-5437',
+    destination_host: 'skool.com',
   })
-}
-
-/**
- * Create a simple hash of an email for tracking without storing PII
- * @param email The email to hash
- * @returns A simple hash representation
- */
-function hashEmail(email: string): string {
-  // This is a simple hash function for demonstration
-  // In production, use a proper hashing algorithm
-  let hash = 0
-  for (let i = 0; i < email.length; i++) {
-    const char = email.charCodeAt(i)
-    hash = (hash << 5) - hash + char
-    hash = hash & hash // Convert to 32bit integer
-  }
-  return hash.toString(16)
 }

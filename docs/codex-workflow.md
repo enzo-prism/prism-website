@@ -139,7 +139,7 @@ Keep captions optional; if omitted, remove the text block so cards stay compact.
 
 ## 6. Booking form conventions
 
-- **Endpoint** – `https://formspree.io/f/xjkjkggn`. Formspree requires POST + `Accept: application/json` (handled automatically by browsers when using plain HTML forms).
+- **Endpoint** – `https://formspree.io/f/xjkjkggn`. Submit through `app/book-a-shoot/BookAShootForm.tsx` with client-side `fetch`, `Accept: application/json`, attribution fields, and the `/book-a-shoot/thank-you` conversion screen.
 - **Fields** – Always collect email, at least two date fields, and the preferred one‑hour window (`<select>`). Optional notes field lives at the bottom.
 - **Copy** – Reinforce when someone should use the office-team booking form vs. the DIY guide.
 
