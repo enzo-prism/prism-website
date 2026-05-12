@@ -34,21 +34,19 @@ export default function Breadcrumbs({
       <nav
         aria-label="Breadcrumb"
         className={cn(
-          'mb-4 flex w-full max-w-full min-w-0 items-center overflow-x-auto py-3 text-xs font-semibold uppercase tracking-[0.14em] text-[rgba(15,23,42,0.56)] scrollbar-hide font-pixel',
+          'mb-4 flex w-full max-w-full min-w-0 items-center overflow-x-auto py-3 text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground scrollbar-hide font-pixel',
           className,
         )}
       >
         <div className="inline-flex min-w-max items-center pr-1">
-          {/* Home icon */}
           <Link
             href="/"
-            className="flex shrink-0 items-center text-current opacity-80 transition-opacity hover:opacity-100"
+            className="flex shrink-0 items-center text-current opacity-85 transition-[color,opacity] hover:text-foreground hover:opacity-100"
             aria-label="home"
           >
             <Home size={16} strokeWidth={2} />
           </Link>
 
-          {/* Iterate through breadcrumb items */}
           {cleanItems.map((item, index) => {
             const isLastItem = index === cleanItems.length - 1
 
@@ -56,7 +54,7 @@ export default function Breadcrumbs({
               <div key={item.url + index} className="flex items-center">
                 <ChevronRight
                   size={14}
-                  className="mx-2 shrink-0 opacity-40"
+                  className="mx-2 shrink-0 text-current opacity-45"
                   strokeWidth={2}
                 />
 
@@ -71,7 +69,7 @@ export default function Breadcrumbs({
                 ) : (
                   <Link
                     href={item.url}
-                    className="whitespace-nowrap text-current opacity-80 transition-opacity hover:opacity-100"
+                    className="whitespace-nowrap text-current opacity-85 transition-[color,opacity] hover:text-foreground hover:opacity-100"
                   >
                     {item.name}
                   </Link>

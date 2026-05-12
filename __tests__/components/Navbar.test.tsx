@@ -77,9 +77,9 @@ describe('Navbar', () => {
       'aria-expanded',
       'false',
     )
-    expect(screen.getAllByRole('link', { name: /start/i })[0].className).toContain(
-      'border-b',
-    )
+    expect(
+      screen.getAllByRole('link', { name: /free audit/i })[0].className,
+    ).toContain('border-b')
     expect(screen.getByTestId('navbar-core-image')).toBeInTheDocument()
     expect(screen.getByText(/prism/i)).toBeInTheDocument()
     expect(screen.getByText(/impossible is temporary/i)).toBeInTheDocument()
@@ -94,9 +94,9 @@ describe('Navbar', () => {
     expect(banner.className).toContain('bg-black')
     expect(banner.className).toContain('sticky')
     expect(screen.getByRole('button', { name: /open menu/i })).toBeInTheDocument()
-    expect(screen.getAllByRole('link', { name: /start/i })[0].className).toContain(
-      'border-b',
-    )
+    expect(
+      screen.getAllByRole('link', { name: /free audit/i })[0].className,
+    ).toContain('border-b')
     expect(screen.getByTestId('navbar-core-image')).toBeInTheDocument()
     expect(screen.getByText(/impossible is temporary/i)).toBeInTheDocument()
   })
@@ -115,7 +115,7 @@ describe('Navbar', () => {
     )
     expect(document.querySelector('#mobile-site-nav')).toBeInTheDocument()
     expect(screen.queryByRole('link', { name: /our story/i })).not.toBeInTheDocument()
-    expect(screen.getAllByRole('link', { name: /case studies/i })).toHaveLength(2)
+    expect(screen.getAllByRole('link', { name: /results/i })).toHaveLength(2)
   })
 
   it('highlights section links on nested routes and shows case study breadcrumbs', () => {
@@ -124,7 +124,7 @@ describe('Navbar', () => {
     render(<Navbar />)
 
     expect(
-      screen.getAllByRole('link', { name: /case studies/i })[0].className,
+      screen.getAllByRole('link', { name: /results/i })[0].className,
     ).toContain('text-[#f5f0e8]')
     expect(screen.getByTestId('breadcrumbs-mock')).toBeInTheDocument()
   })
