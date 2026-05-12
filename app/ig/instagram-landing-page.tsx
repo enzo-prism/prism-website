@@ -9,12 +9,6 @@ export default function InstagramLandingPage() {
         href: 'https://www.instagram.com/the_design_prism/',
         iconSrc: '/pixelish/socials-instagram.svg',
       }}
-      otherChannel={{
-        label: 'TikTok',
-        handle: '@the_design_prism',
-        href: '/tiktok',
-        iconSrc: '/pixelish/socials-tiktok.svg',
-      }}
       hiddenSectionDetailIds={['business']}
     />
   )

@@ -1,19 +1,15 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 
 import PixelishIcon from '@/components/pixelish/PixelishIcon'
+import { LOGO_CONFIG } from '@/lib/constants'
 import { trackCTAClick, trackExternalLinkClick } from '@/utils/analytics'
 
 type Channel = {
   label: string
   handle: string
-  href: string
-  iconSrc: string
-}
-
-type LandingAction = {
-  label: string
   href: string
   iconSrc: string
 }
@@ -33,13 +29,11 @@ type CreditSection = {
 
 type SocialClipLandingPageProps = {
   channel: Channel
-  otherChannel: Channel
   hiddenSectionDetailIds?: string[]
   headerLabel?: string
   title?: string
   description?: string
   metaLine?: string
-  actionLinks?: readonly LandingAction[]
 }
 
 const businessCredits: Credit[] = [
@@ -214,6 +208,21 @@ function PixelIconFrame({
   )
 }
 
+function PrismLogoFrame() {
+  return (
+    <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden border border-border bg-white">
+      <Image
+        src={LOGO_CONFIG.src}
+        alt=""
+        width={40}
+        height={40}
+        className={`h-full w-full object-contain ${LOGO_CONFIG.className}`}
+        priority
+      />
+    </span>
+  )
+}
+
 function CreditRow({ credit }: { credit: Credit }) {
   return (
     <li className="grid min-h-11 grid-cols-[3rem_minmax(0,1fr)] items-center border-t border-border/70 py-2.5">
@@ -266,14 +275,36 @@ function CreditSection({ section }: { section: CreditSection }) {
   )
 }
 
-function ChannelLink({
+function BlogCta({ location }: { location: string }) {
+  const label = 'start with the blog'
+
+  return (
+    <Link
+      href="/blog"
+      onClick={() => trackCTAClick(label, location)}
+      data-cta-text={label}
+      data-cta-location={location}
+      className="group inline-flex min-h-14 items-center gap-4 border border-foreground bg-foreground px-5 font-mono text-[11px] uppercase tracking-normal text-background transition-colors hover:bg-transparent hover:text-foreground focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-4 focus-visible:ring-offset-background"
+    >
+      <PixelishIcon
+        src="/pixelish/document-letter.svg"
+        alt=""
+        size={16}
+        aria-hidden="true"
+        invert={false}
+        className="transition-[filter,transform] group-hover:translate-x-1 group-hover:invert"
+      />
+      <span>{label}</span>
+    </Link>
+  )
+}
+
+function SourceLink({
   href,
-  iconSrc,
   label,
   location,
 }: {
   href: string
-  iconSrc: string
   label: string
   location: string
 }) {
@@ -292,52 +323,27 @@ function ChannelLink({
       }}
       data-cta-text={label}
       data-cta-location={location}
-      className="group inline-flex min-h-10 items-center gap-3 border border-border px-3 font-mono text-[10px] uppercase tracking-normal text-muted-foreground transition-colors hover:border-foreground hover:text-foreground focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-4 focus-visible:ring-offset-background"
+      className="text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-4 focus-visible:ring-offset-background"
     >
-      <PixelishIcon
-        src={iconSrc}
-        alt=""
-        size={14}
-        aria-hidden="true"
-        className="opacity-70 transition-opacity group-hover:opacity-100"
-      />
-      <span>{label}</span>
+      {label}
     </Link>
   )
 }
 
 export default function SocialClipLandingPage({
   channel,
-  otherChannel,
   hiddenSectionDetailIds = [],
-  headerLabel = 'Prism credits',
-  title = 'credit roll.',
-  description = 'A minimal public list for the business builders and athletes whose clips help Prism teach founders how to grow successful companies.',
-  metaLine = '120 names. public clips. credit, not endorsement.',
-  actionLinks,
+  headerLabel = 'Prism',
+  title = 'Why Not You',
+  description =
+    'The frameworks, tools, and tactics used by top founders are out there. AI can help you put them to work. Decide to go for it.',
+  metaLine = 'start with the prism blog. learn the tools. build before you scale.',
 }: SocialClipLandingPageProps) {
   const visibleCreditSections = creditSections.map((section) =>
     hiddenSectionDetailIds.includes(section.id)
       ? { ...section, detail: undefined }
       : section,
   )
-  const visibleActions = actionLinks ?? [
-    {
-      label: channel.label,
-      href: channel.href,
-      iconSrc: channel.iconSrc,
-    },
-    {
-      label: otherChannel.label,
-      href: otherChannel.href,
-      iconSrc: otherChannel.iconSrc,
-    },
-    {
-      label: 'home',
-      href: '/',
-      iconSrc: '/pixelish/house.svg',
-    },
-  ]
 
   return (
     <div className="min-h-screen bg-black text-foreground">
@@ -346,38 +352,32 @@ export default function SocialClipLandingPage({
           <Link
             href="/"
             aria-label="Prism home"
-            onClick={() => trackCTAClick('prism home', `${channel.label.toLowerCase()} landing header`)}
+            onClick={() =>
+              trackCTAClick(
+                'prism home',
+                `${channel.label.toLowerCase()} landing header`,
+              )
+            }
             data-cta-text="prism home"
             data-cta-location={`${channel.label.toLowerCase()} landing header`}
             className="inline-flex min-w-0 items-center gap-3 text-foreground transition-colors hover:text-white focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-4 focus-visible:ring-offset-background"
           >
-            <PixelIconFrame iconSrc={channel.iconSrc} size={16} />
+            <PrismLogoFrame />
             <span className="truncate font-mono text-[10px] uppercase tracking-normal">
               {headerLabel}
             </span>
           </Link>
 
-          <Link
-            href={channel.href}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={() => {
-              trackCTAClick(channel.handle, `${channel.label.toLowerCase()} landing header`)
-              trackExternalLinkClick(channel.href, channel.handle)
-            }}
-            data-cta-text={channel.handle}
-            data-cta-location={`${channel.label.toLowerCase()} landing header`}
-            className="max-w-[46vw] truncate font-mono text-[10px] uppercase tracking-normal text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-4 focus-visible:ring-offset-background sm:max-w-none"
-          >
+          <span className="max-w-[46vw] truncate font-mono text-[10px] uppercase tracking-normal text-muted-foreground sm:max-w-none">
             {channel.handle}
-          </Link>
+          </span>
         </header>
 
         <main id="main-content" tabIndex={-1} className="flex-1 py-14 sm:py-20">
-          <section aria-labelledby="social-clips-title" className="max-w-4xl">
+          <section aria-labelledby="social-clips-title" className="max-w-5xl">
             <h1
               id="social-clips-title"
-              className="max-w-[9ch] text-6xl font-medium leading-[0.9] tracking-normal sm:text-7xl"
+              className="max-w-none text-5xl font-medium leading-[0.92] tracking-normal sm:text-7xl"
             >
               {title}
             </h1>
@@ -389,21 +389,37 @@ export default function SocialClipLandingPage({
             </p>
             <nav
               aria-label={`${channel.label} page actions`}
-              className="mt-8 flex flex-wrap gap-2"
+              className="mt-8"
             >
-              {visibleActions.map((action) => (
-                <ChannelLink
-                  key={`${action.label}-${action.href}`}
-                  href={action.href}
-                  iconSrc={action.iconSrc}
-                  label={action.label}
-                  location={`${channel.label.toLowerCase()} landing actions`}
-                />
-              ))}
+              <BlogCta
+                location={`${channel.label.toLowerCase()} landing actions`}
+              />
             </nav>
           </section>
 
           <div className="mt-16 space-y-16 sm:mt-20">
+            <section
+              aria-labelledby="studied-people-heading"
+              className="border-y border-border py-8"
+            >
+              <div className="grid gap-6 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.3fr)] lg:items-end">
+                <div>
+                  <p className="font-mono text-[10px] uppercase leading-5 tracking-normal text-muted-foreground">
+                    source material behind the clips
+                  </p>
+                  <h2
+                    id="studied-people-heading"
+                    className="mt-3 text-3xl font-medium leading-tight tracking-normal sm:text-4xl"
+                  >
+                    study the greats.
+                  </h2>
+                </div>
+                <p className="max-w-2xl text-sm leading-6 text-muted-foreground sm:text-base">
+                  These lists are source material, not a scoreboard. Learn the
+                  patterns, then use modern tools to build your own momentum.
+                </p>
+              </div>
+            </section>
             {visibleCreditSections.map((section) => (
               <CreditSection key={section.title} section={section} />
             ))}
@@ -414,39 +430,15 @@ export default function SocialClipLandingPage({
           <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
             <span>sources</span>
             {sourceLinks.map((source) => (
-              <Link
+              <SourceLink
                 key={source.href}
                 href={source.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => {
-                  trackCTAClick(source.label, `${channel.label.toLowerCase()} landing sources`)
-                  trackExternalLinkClick(source.href, source.label)
-                }}
-                data-cta-text={source.label}
-                data-cta-location={`${channel.label.toLowerCase()} landing sources`}
-                className="text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-4 focus-visible:ring-offset-background"
-              >
-                {source.label}
-              </Link>
+                label={source.label}
+                location={`${channel.label.toLowerCase()} landing sources`}
+              />
             ))}
           </div>
-          <Link
-            href="/contact"
-            onClick={() => trackCTAClick('contact', `${channel.label.toLowerCase()} landing footer`)}
-            data-cta-text="contact"
-            data-cta-location={`${channel.label.toLowerCase()} landing footer`}
-            className="inline-flex items-center gap-2 transition-colors hover:text-foreground focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-4 focus-visible:ring-offset-background"
-          >
-            contact
-            <PixelishIcon
-              src="/pixelish/arrow-right.svg"
-              alt=""
-              size={12}
-              aria-hidden="true"
-              className="opacity-70"
-            />
-          </Link>
+          <span>credit, not endorsement.</span>
         </footer>
       </div>
     </div>

@@ -1,5 +1,5 @@
 import type React from 'react'
-import { fireEvent, render, screen } from '@testing-library/react'
+import { fireEvent, render, screen, within } from '@testing-library/react'
 
 import SocialClipLandingPage from '@/components/social-clip-landing-page'
 
@@ -25,10 +25,44 @@ jest.mock('next/link', () => ({
   },
 }))
 
+jest.mock('next/image', () => ({
+  __esModule: true,
+  default: function MockNextImage({
+    alt,
+    className,
+    src,
+  }: {
+    alt: string
+    className?: string
+    src: string
+  }) {
+    return (
+      <img
+        alt={alt}
+        className={className}
+        data-src={src}
+        data-testid="next-image"
+      />
+    )
+  },
+}))
+
 jest.mock('@/components/pixelish/PixelishIcon', () => ({
   __esModule: true,
-  default: function MockPixelishIcon() {
-    return <span data-testid="pixelish-icon" />
+  default: function MockPixelishIcon({
+    className,
+    invert,
+  }: {
+    className?: string
+    invert?: boolean
+  }) {
+    return (
+      <span
+        className={className}
+        data-invert={String(invert)}
+        data-testid="pixelish-icon"
+      />
+    )
   },
 }))
 
@@ -43,7 +77,7 @@ describe('SocialClipLandingPage analytics', () => {
     jest.clearAllMocks()
   })
 
-  it('tracks social landing action clicks and external destinations', () => {
+  it('renders one prominent blog action and tracks it by channel', () => {
     render(
       <SocialClipLandingPage
         channel={{
@@ -52,41 +86,74 @@ describe('SocialClipLandingPage analytics', () => {
           href: 'https://www.tiktok.com/@the_design_prism',
           iconSrc: '/pixelish/socials-tiktok.svg',
         }}
-        otherChannel={{
-          label: 'Instagram',
-          handle: '@the_design_prism',
-          href: '/ig',
-          iconSrc: '/pixelish/socials-instagram.svg',
-        }}
         hiddenSectionDetailIds={['business']}
-        actionLinks={[
-          {
-            label: 'free audit',
-            href: '/get-started',
-            iconSrc: '/pixelish/graph-chart-high.svg',
-          },
-          {
-            label: 'tiktok',
-            href: 'https://www.tiktok.com/@the_design_prism',
-            iconSrc: '/pixelish/socials-tiktok.svg',
-          },
-        ]}
       />,
     )
 
-    fireEvent.click(screen.getByRole('link', { name: /free audit/i }))
-    fireEvent.click(screen.getByRole('link', { name: /^tiktok$/i }))
+    expect(
+      screen.getByRole('heading', { name: 'Why Not You' }),
+    ).toBeInTheDocument()
+    expect(
+      screen.getByText(
+        /The frameworks, tools, and tactics used by top founders are out there/i,
+      ),
+    ).toBeInTheDocument()
+    expect(
+      screen.getByText(/start with the prism blog/i),
+    ).toBeInTheDocument()
+    expect(
+      screen.queryByText(/steal the AI playbooks/i),
+    ).not.toBeInTheDocument()
+    expect(
+      within(screen.getByRole('link', { name: /prism home/i }))
+        .getByTestId('next-image'),
+    ).toHaveAttribute('data-src', '/prism-logo.jpeg')
+
+    const blogActions = screen.getAllByRole('link', {
+      name: /start with the blog/i,
+    })
+    const blogIcon = within(blogActions[0]).getByTestId('pixelish-icon')
+
+    expect(blogActions).toHaveLength(1)
+    expect(blogActions[0]).toHaveAttribute('href', '/blog')
+    expect(blogIcon).toHaveAttribute('data-invert', 'false')
+    expect(blogIcon).toHaveClass('group-hover:invert')
+    expect(
+      screen.queryByRole('link', { name: /free audit/i }),
+    ).not.toBeInTheDocument()
+    expect(
+      screen.queryByRole('link', { name: /pricing/i }),
+    ).not.toBeInTheDocument()
+    expect(
+      screen.queryByRole('link', { name: /^tiktok$/i }),
+    ).not.toBeInTheDocument()
+
+    fireEvent.click(blogActions[0])
+
+    expect(trackCTAClick).toHaveBeenCalledWith(
+      'start with the blog',
+      'tiktok landing actions',
+    )
+    expect(trackExternalLinkClick).not.toHaveBeenCalled()
+  })
+
+  it('keeps source links as citation links with external tracking', () => {
+    render(
+      <SocialClipLandingPage
+        channel={{
+          label: 'TikTok',
+          handle: '@the_design_prism',
+          href: 'https://www.tiktok.com/@the_design_prism',
+          iconSrc: '/pixelish/socials-tiktok.svg',
+        }}
+      />,
+    )
+
     fireEvent.click(screen.getByRole('link', { name: /^forbes$/i }))
 
     expect(trackCTAClick).toHaveBeenCalledWith(
-      'free audit',
-      'tiktok landing actions',
-    )
-    expect(trackCTAClick).toHaveBeenCalledWith('tiktok', 'tiktok landing actions')
-    expect(trackCTAClick).toHaveBeenCalledWith('Forbes', 'tiktok landing sources')
-    expect(trackExternalLinkClick).toHaveBeenCalledWith(
-      'https://www.tiktok.com/@the_design_prism',
-      'tiktok',
+      'Forbes',
+      'tiktok landing sources',
     )
     expect(trackExternalLinkClick).toHaveBeenCalledWith(
       'https://forbes.co/editors-picks/los-mas-ricos-del-mundo-2026',
@@ -103,12 +170,6 @@ describe('SocialClipLandingPage analytics', () => {
           href: 'https://www.instagram.com/the_design_prism/',
           iconSrc: '/pixelish/socials-instagram.svg',
         }}
-        otherChannel={{
-          label: 'TikTok',
-          handle: '@the_design_prism',
-          href: '/tiktok',
-          iconSrc: '/pixelish/socials-tiktok.svg',
-        }}
         hiddenSectionDetailIds={['business']}
       />,
     )
@@ -117,5 +178,31 @@ describe('SocialClipLandingPage analytics', () => {
       screen.queryByText(/forbes 2026 richest people/i),
     ).not.toBeInTheDocument()
     expect(screen.getByText(/espn athletes since 2000/i)).toBeInTheDocument()
+  })
+
+  it('keeps the founder and athlete credit lists visible', () => {
+    render(
+      <SocialClipLandingPage
+        channel={{
+          label: 'Instagram',
+          handle: '@the_design_prism',
+          href: 'https://www.instagram.com/the_design_prism/',
+          iconSrc: '/pixelish/socials-instagram.svg',
+        }}
+      />,
+    )
+
+    expect(
+      screen.getByRole('heading', { name: /founders \+ builders/i }),
+    ).toBeInTheDocument()
+    expect(
+      screen.getByRole('heading', { name: /^athletes$/i }),
+    ).toBeInTheDocument()
+    expect(
+      screen.getByRole('heading', { name: /study the greats/i }),
+    ).toBeInTheDocument()
+    expect(
+      screen.getByText(/source material, not a scoreboard/i),
+    ).toBeInTheDocument()
   })
 })
