@@ -71,11 +71,13 @@ The `/apply` route should feel like a focused practice audit mode, not another m
 - DOM analytics contract:
   - `<form id="growth_application" name="growth_application">`
 - Endpoint strategy:
+  - `NEXT_PUBLIC_DASHBOARD_INTAKE_ENDPOINT` (preferred; posts to the Prism dashboard app and creates/updates a private dashboard)
   - `NEXT_PUBLIC_APPLY_FORM_ENDPOINT`
   - fallback: `NEXT_PUBLIC_GET_STARTED_FORM_ENDPOINT`
   - fallback default: `https://formspree.io/f/mreroojo`
 - Success flow:
   - POST via `fetch(form.action, { method: 'POST', headers: { Accept: 'application/json' }, body: new FormData(form) })`
+  - When the dashboard intake API returns `dashboard.claimUrl`, store it in session storage for the apply thank-you CTA; do not include it in analytics payloads.
   - On success, `router.push("/thank-you?source=apply")`
   - On failure, inline error state remains visible and user stays on the review/submit screen
 - Analytics:

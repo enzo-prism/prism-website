@@ -11,6 +11,7 @@ const trackCTAClick = jest.fn()
 const trackEvent = jest.fn()
 const trackFormSubmission = jest.fn()
 const storePendingApplyLeadContext = jest.fn()
+const storeApplyDashboardClaimUrl = jest.fn()
 
 jest.mock('@/utils/analytics', () => ({
   trackCTAClick: (...args: Array<unknown>) => trackCTAClick(...args),
@@ -21,9 +22,23 @@ jest.mock('@/utils/analytics', () => ({
     storePendingApplyLeadContext(...args),
 }))
 
+jest.mock('@/lib/dashboard-claim', () => ({
+  extractDashboardClaimUrl: (payload: unknown) => {
+    const dashboard =
+      typeof payload === 'object' && payload !== null
+        ? (payload as { dashboard?: { claimUrl?: unknown } }).dashboard
+        : null
+
+    return typeof dashboard?.claimUrl === 'string' ? dashboard.claimUrl : null
+  },
+  storeApplyDashboardClaimUrl: (...args: Array<unknown>) =>
+    storeApplyDashboardClaimUrl(...args),
+}))
+
 type MockResponseOverrides = {
   ok?: boolean
   status?: number
+  body?: unknown
 }
 
 function createMockResponse(overrides: MockResponseOverrides = {}): Response {
@@ -33,6 +48,8 @@ function createMockResponse(overrides: MockResponseOverrides = {}): Response {
   return {
     ok,
     status,
+    headers: new Headers({ 'content-type': 'application/json' }),
+    json: jest.fn().mockResolvedValue(overrides.body ?? {}),
     text: jest.fn().mockResolvedValue(''),
   } as unknown as Response
 }
@@ -218,8 +235,20 @@ describe('GetStartedForm', () => {
     )
   })
 
-  it('posts the application payload and redirects to the apply thank-you state', async () => {
-    fetchSpy.mockImplementation(() => Promise.resolve(createMockResponse()))
+  it('posts the application payload, stores the claim link, and redirects to the apply thank-you state', async () => {
+    fetchSpy.mockImplementation(() =>
+      Promise.resolve(
+        createMockResponse({
+          body: {
+            ok: true,
+            dashboard: {
+              slug: 'prism',
+              claimUrl: 'https://dashboard.design-prism.com/claim/token_123',
+            },
+          },
+        }),
+      ),
+    )
     render(<GetStartedForm />)
 
     completeStepOne()
@@ -251,6 +280,9 @@ describe('GetStartedForm', () => {
           primary_goal: 'I need more patient calls',
           has_website: 'yes',
         }),
+      )
+      expect(storeApplyDashboardClaimUrl).toHaveBeenCalledWith(
+        'https://dashboard.design-prism.com/claim/token_123',
       )
     })
 
@@ -340,6 +372,7 @@ describe('GetStartedForm', () => {
       expect(pushMock).not.toHaveBeenCalled()
       expect(trackFormSubmission).not.toHaveBeenCalled()
       expect(storePendingApplyLeadContext).not.toHaveBeenCalled()
+      expect(storeApplyDashboardClaimUrl).not.toHaveBeenCalled()
       expect(
         screen.getAllByText("We couldn't submit right now. Try again?").length,
       ).toBeGreaterThan(0)

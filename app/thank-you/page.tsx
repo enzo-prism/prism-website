@@ -4,6 +4,7 @@ import Link from "next/link"
 
 import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
+import ApplyDashboardClaimCta from "@/components/thank-you/ApplyDashboardClaimCta"
 import ApplySuccessTracker from "@/components/thank-you/ApplySuccessTracker"
 import LeadSuccessTracker from "@/components/thank-you/LeadSuccessTracker"
 import { buildRouteMetadata } from "@/lib/seo/metadata"
@@ -42,13 +43,13 @@ const APPLY_NEXT_STEPS = [
   },
   {
     label: "02",
-    title: "Review is guaranteed",
-    body: "Every real practice submission gets reviewed. That review is the default path.",
+    title: "Dashboard link sent",
+    body: "We sent a private dashboard link to the email you entered. Claim it to follow the audit from one place.",
   },
   {
     label: "03",
-    title: "Strategy is selective",
-    body: "If there's a fit, Prism will reach out about next steps and, in some cases, a custom strategy session.",
+    title: "Findings live there",
+    body: "Your audit findings will appear in the dashboard. If you become a Prism client, growth data and progress updates will live there too.",
   },
 ] as const
 
@@ -77,7 +78,7 @@ export default async function ThankYouPage({
               </h1>
               <p className="mt-6 max-w-[42rem] font-mono text-[1rem] leading-8 text-[#A0A09A]">
                 {isApplyFlow
-                  ? "Thanks, we've got it. We review every real practice submission. If there's a fit, we'll reach out about next steps and, in some cases, a custom strategy session."
+                  ? "Thanks, we've got it. We review every real practice submission, and we sent a private dashboard link to the email you entered. Claim it to follow the audit findings and future growth updates from one place."
                   : "We received your submission. Every real inquiry gets reviewed. If there&apos;s a fit, we&apos;ll reach out with the right next step."}
               </p>
             </div>
@@ -108,7 +109,7 @@ export default async function ThankYouPage({
                 </p>
                 <p className="mt-2 font-mono text-[0.92rem] leading-7 text-[#A0A09A]">
                   {isApplyFlow
-                    ? "You can review case studies or head back to the homepage."
+                    ? "Check your inbox for the dashboard link, or claim it from this page if you submitted from this browser."
                     : "You can review case studies or head back home."}
                 </p>
               </div>
@@ -128,6 +129,7 @@ export default async function ThankYouPage({
                 </Link>
               </div>
             </div>
+            {isApplyFlow ? <ApplyDashboardClaimCta /> : null}
           </section>
         </main>
         <Footer />

@@ -10,6 +10,10 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { useFormValidation } from '@/hooks/use-form-validation'
+import {
+  extractDashboardClaimUrl,
+  storeApplyDashboardClaimUrl,
+} from '@/lib/dashboard-claim'
 import { cn } from '@/lib/utils'
 import {
   trackCTAClick,
@@ -20,6 +24,7 @@ import {
 import styles from '@/components/get-started/get-started-page.module.css'
 
 const FORM_ACTION =
+  process.env.NEXT_PUBLIC_DASHBOARD_INTAKE_ENDPOINT ||
   process.env.NEXT_PUBLIC_APPLY_FORM_ENDPOINT ||
   process.env.NEXT_PUBLIC_GET_STARTED_FORM_ENDPOINT ||
   'https://formspree.io/f/mreroojo'
@@ -237,6 +242,8 @@ export default function GetStartedForm() {
 
         trackEvent('apply_submit_attempt', submitAnalyticsParams)
 
+        let dashboardClaimUrl: string | null = null
+
         try {
           const formData = new FormData(form)
           const response = await fetch(form.action, {
@@ -257,6 +264,10 @@ export default function GetStartedForm() {
             setSubmitError("We couldn't submit right now. Try again?")
             return
           }
+
+          dashboardClaimUrl = extractDashboardClaimUrl(
+            await readJsonResponse(response),
+          )
         } catch (error) {
           console.error('apply form submission failed:', error)
           trackEvent('apply_error', {
@@ -270,6 +281,7 @@ export default function GetStartedForm() {
           return
         }
 
+        storeApplyDashboardClaimUrl(dashboardClaimUrl)
         hasSubmittedSuccessfullyRef.current = true
         trackEvent('apply_step_2_complete', submitAnalyticsParams)
         trackEvent('apply_submit', submitAnalyticsParams)
@@ -1258,6 +1270,18 @@ export default function GetStartedForm() {
       </div>
     </form>
   )
+}
+
+async function readJsonResponse(response: Response) {
+  if (!response.headers.get('content-type')?.includes('application/json')) {
+    return null
+  }
+
+  try {
+    return await response.json()
+  } catch {
+    return null
+  }
 }
 
 function ReviewRow({ label, value }: { label: string; value: string }) {
