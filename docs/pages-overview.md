@@ -103,6 +103,7 @@ Quick reference for the pages we edit most often.
 
 - `/get-started` is now the Free Practice Audit entry page for dental practices, built from `components/get-started/GrowthProcessSection.tsx` plus the in-page handoff panel that points into `/apply`.
 - The page leads with the three-step process (`Submit your practice`, `Review the patient journey`, `Get a clear growth plan`) and then routes into the dedicated audit form instead of embedding the form inline.
+- The green `Submit your practice` process card is a tracked shortcut to `/apply`, so clicking the first step opens the first question of the audit form. Keep the later process cards informational unless they become real actions.
 - It remains the one intentional accent surface within the core route family: same dark shell, shared CTA grammar, and shared section-heading logic, but with terminal framing and neon status accents.
 - `/get-started` still relies on the stock ElevenLabs floating widget mounted globally via `components/global-elevenlabs-widget.tsx`; the widget is supportive, not the primary conversion surface.
 - The page no longer mounts the custom `SalesChat` client or depends on any legacy route-level assistant gating.

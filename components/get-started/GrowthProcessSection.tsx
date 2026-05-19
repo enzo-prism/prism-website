@@ -5,6 +5,7 @@ import {
   CoreActionLink,
   coreRouteContainerClassName,
 } from '@/components/core-route/CoreRoutePrimitives'
+import TrackedLink from '@/components/tracked-link'
 import { cn } from '@/lib/utils'
 
 import styles from './get-started-page.module.css'
@@ -87,20 +88,26 @@ function ProcessConnector() {
   )
 }
 
-function ProcessCard({ step }: { step: GrowthProcessStep }) {
+function ProcessCard({
+  step,
+  href,
+}: {
+  step: GrowthProcessStep
+  href?: string
+}) {
   const cardStyle = {
     '--card-accent-rgb': step.accentRgb,
   } as CSSProperties
-
-  return (
-    <article
-      style={cardStyle}
-      className={cn(
-        styles.processCard,
-        styles.scanlines,
-        'group flex min-h-[480px] flex-col border border-[color:rgb(var(--card-accent-rgb)/0.48)] bg-[#080808] px-6 py-6 transition-[border-color,box-shadow,transform] duration-300 ease-out hover:-translate-y-1 focus-within:-translate-y-1 sm:min-h-[540px] sm:px-8 sm:py-8',
-      )}
-    >
+  const cardClassName = cn(
+    styles.processCard,
+    styles.scanlines,
+    'group flex min-h-[480px] flex-col border border-[color:rgb(var(--card-accent-rgb)/0.48)] bg-[#080808] px-6 py-6 transition-[border-color,box-shadow,transform] duration-300 ease-out hover:-translate-y-1 focus-within:-translate-y-1 sm:min-h-[540px] sm:px-8 sm:py-8',
+    href
+      ? 'cursor-pointer text-left no-underline focus-visible:-translate-y-1 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[color:rgb(var(--card-accent-rgb)/0.42)] focus-visible:ring-offset-4 focus-visible:ring-offset-black'
+      : '',
+  )
+  const cardContent = (
+    <>
       <span className={styles.corner} data-corner="tl" aria-hidden="true" />
       <span className={styles.corner} data-corner="tr" aria-hidden="true" />
       <span className={styles.corner} data-corner="bl" aria-hidden="true" />
@@ -139,6 +146,27 @@ function ProcessCard({ step }: { step: GrowthProcessStep }) {
           </div>
         </div>
       </div>
+    </>
+  )
+
+  if (href) {
+    return (
+      <TrackedLink
+        href={href}
+        label="start free audit from submit practice card"
+        location="get started process card"
+        aria-label="Start the free practice audit form"
+        style={cardStyle}
+        className={cardClassName}
+      >
+        {cardContent}
+      </TrackedLink>
+    )
+  }
+
+  return (
+    <article style={cardStyle} className={cardClassName}>
+      {cardContent}
     </article>
   )
 }
@@ -194,7 +222,10 @@ export default function GrowthProcessSection() {
           <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_72px_minmax(0,1fr)_72px_minmax(0,1fr)] lg:items-stretch">
             {GROWTH_PROCESS_STEPS.map((step, index) => (
               <Fragment key={step.stage}>
-                <ProcessCard step={step} />
+                <ProcessCard
+                  step={step}
+                  href={index === 0 ? '/apply' : undefined}
+                />
                 {index < GROWTH_PROCESS_STEPS.length - 1 ? (
                   <>
                     <div className="flex items-center justify-center lg:hidden">

@@ -1,33 +1,36 @@
-"use client"
+'use client'
 
-import { forwardRef, type MouseEventHandler, type ReactNode } from "react"
-import Link from "next/link"
+import {
+  forwardRef,
+  type AnchorHTMLAttributes,
+  type MouseEventHandler,
+  type ReactNode,
+} from 'react'
+import Link from 'next/link'
 
-import { trackLinkInteraction } from "@/utils/analytics"
+import { trackLinkInteraction } from '@/utils/analytics'
 
-interface TrackedLinkProps {
+interface TrackedLinkProps extends Omit<
+  AnchorHTMLAttributes<HTMLAnchorElement>,
+  'href' | 'onClick'
+> {
   href: string
   label: string
   location: string
-  className?: string
-  target?: string
-  rel?: string
   onClick?: MouseEventHandler<HTMLAnchorElement>
   children: ReactNode
 }
 
 const TrackedLink = forwardRef<HTMLAnchorElement, TrackedLinkProps>(
   function TrackedLink(
-    { href, label, location, className, target, rel, onClick, children },
+    { href, label, location, onClick, children, ...anchorProps },
     ref,
   ) {
     return (
       <Link
         ref={ref}
         href={href}
-        className={className}
-        target={target}
-        rel={rel}
+        {...anchorProps}
         onClick={(event) => {
           trackLinkInteraction(href, label, location)
           onClick?.(event)
