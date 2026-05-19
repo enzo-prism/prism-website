@@ -235,6 +235,125 @@ describe('GetStartedForm', () => {
     )
   })
 
+  it('advances answered steps with Enter and forward arrow shortcuts', async () => {
+    render(<GetStartedForm />)
+
+    const service = screen.getByRole('checkbox', { name: /dental website/i })
+    fireEvent.click(service)
+    fireEvent.keyDown(service, { key: 'ArrowRight', code: 'ArrowRight' })
+
+    await waitFor(() => {
+      expect(
+        screen.getByRole('heading', {
+          level: 1,
+          name: /does the practice have a website/i,
+        }),
+      ).toBeInTheDocument()
+    })
+
+    const yesOption = screen.getByLabelText(/^yes$/i)
+    fireEvent.click(yesOption)
+    fireEvent.keyDown(yesOption, { key: 'Enter', code: 'Enter' })
+
+    await waitFor(() => {
+      expect(
+        screen.getByRole('heading', {
+          level: 1,
+          name: /where should we look first/i,
+        }),
+      ).toBeInTheDocument()
+    })
+
+    const reviewLinkInput = screen.getByLabelText(/what should we review/i)
+    fireEvent.change(reviewLinkInput, {
+      target: { value: 'design-prism.com' },
+    })
+    fireEvent.keyDown(reviewLinkInput, { key: 'Enter', code: 'Enter' })
+
+    await waitFor(() => {
+      expect(
+        screen.getByRole('heading', {
+          level: 1,
+          name: /what matters most/i,
+        }),
+      ).toBeInTheDocument()
+    })
+  })
+
+  it('keeps native arrow behavior for text inputs and radio groups', async () => {
+    render(<GetStartedForm />)
+
+    fireEvent.click(screen.getByRole('checkbox', { name: /dental website/i }))
+    fireEvent.click(screen.getByRole('button', { name: /continue/i }))
+
+    const yesOption = screen.getByLabelText(/^yes$/i)
+    fireEvent.click(yesOption)
+    fireEvent.click(screen.getByRole('button', { name: /continue/i }))
+
+    const reviewLinkInput = screen.getByLabelText(/what should we review/i)
+    fireEvent.change(reviewLinkInput, {
+      target: { value: 'design-prism.com' },
+    })
+    fireEvent.keyDown(reviewLinkInput, { key: 'ArrowRight', code: 'ArrowRight' })
+
+    expect(
+      screen.getByRole('heading', {
+        level: 1,
+        name: /where should we look first/i,
+      }),
+    ).toBeInTheDocument()
+
+    fireEvent.keyDown(reviewLinkInput, { key: 'Enter', code: 'Enter' })
+
+    await waitFor(() => {
+      expect(
+        screen.getByRole('heading', {
+          level: 1,
+          name: /what matters most/i,
+        }),
+      ).toBeInTheDocument()
+    })
+
+    const goalOption = screen.getByLabelText(/more patient calls/i)
+    fireEvent.keyDown(goalOption, { key: 'ArrowDown', code: 'ArrowDown' })
+
+    expect(
+      screen.getByRole('heading', {
+        level: 1,
+        name: /what matters most/i,
+      }),
+    ).toBeInTheDocument()
+  })
+
+  it('moves back with reverse arrow shortcuts from non-editing controls', async () => {
+    render(<GetStartedForm />)
+
+    completeStepOne()
+
+    await waitFor(() => {
+      expect(
+        screen.getByRole('heading', {
+          level: 1,
+          name: /monthly budget/i,
+        }),
+      ).toBeInTheDocument()
+    })
+
+    fireEvent.keyDown(screen.getByRole('button', { name: /continue/i }), {
+      key: 'ArrowLeft',
+      code: 'ArrowLeft',
+    })
+
+    await waitFor(() => {
+      expect(
+        screen.getByRole('heading', {
+          level: 1,
+          name: /what matters most/i,
+        }),
+      ).toBeInTheDocument()
+    })
+  })
+
   it('posts the application payload, stores the claim link, and redirects to the apply thank-you state', async () => {
     fetchSpy.mockImplementation(() =>
       Promise.resolve(

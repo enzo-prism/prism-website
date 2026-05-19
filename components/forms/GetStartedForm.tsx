@@ -1,6 +1,6 @@
 'use client'
 
-import type { FocusEvent, FormEvent } from 'react'
+import type { FocusEvent, FormEvent, KeyboardEvent } from 'react'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useRouter } from 'next/navigation'
 
@@ -90,6 +90,20 @@ const FORM_STEPS = [
 ] as const
 
 const QUESTION_STEP_COUNT = FORM_STEPS.length - 1
+const STEP_FORWARD_KEYS = new Set(['ArrowRight', 'ArrowDown'])
+const STEP_BACK_KEYS = new Set(['ArrowLeft', 'ArrowUp'])
+const NON_TEXT_INPUT_TYPES = new Set([
+  'button',
+  'checkbox',
+  'color',
+  'file',
+  'hidden',
+  'image',
+  'radio',
+  'range',
+  'reset',
+  'submit',
+])
 
 type FormStepId = (typeof FORM_STEPS)[number]
 type ErrorMap = Record<string, string>
@@ -104,6 +118,24 @@ function isFieldElement(element: Element): element is ValidFieldElement {
     element instanceof HTMLTextAreaElement ||
     element instanceof HTMLSelectElement
   )
+}
+
+function isTextEditingTarget(target: EventTarget | null) {
+  if (!(target instanceof HTMLElement)) return false
+  if (target.isContentEditable) return true
+  if (target instanceof HTMLTextAreaElement) return true
+  if (target instanceof HTMLSelectElement) return true
+
+  return (
+    target instanceof HTMLInputElement &&
+    !NON_TEXT_INPUT_TYPES.has(target.type)
+  )
+}
+
+function shouldKeepNativeArrowBehavior(target: EventTarget | null) {
+  if (isTextEditingTarget(target)) return true
+
+  return target instanceof HTMLInputElement && target.type === 'radio'
 }
 
 function normalizeReviewLink(value: string) {
@@ -195,6 +227,7 @@ export default function GetStartedForm() {
   const hasTrackedFormStartRef = useRef(false)
   const hasTrackedAbandonRef = useRef(false)
   const hasSubmittedSuccessfullyRef = useRef(false)
+  const shouldFocusStepRef = useRef(false)
 
   const [stepIndex, setStepIndex] = useState(0)
   const [selectedServices, setSelectedServices] = useState<string[]>([])
@@ -461,6 +494,32 @@ export default function GetStartedForm() {
     )
   }, [])
 
+  const focusFirstStepControl = useCallback(() => {
+    const focusTarget = formRef.current?.querySelector<HTMLElement>(
+      '[data-step-autofocus="true"]',
+    )
+
+    focusTarget?.focus({ preventScroll: true })
+  }, [])
+
+  const focusNamedField = useCallback(
+    (name: string) => {
+      if (name === 'service_focus') {
+        formRef.current
+          ?.querySelector<HTMLElement>('[data-service-option="true"]')
+          ?.focus({ preventScroll: true })
+        return
+      }
+
+      const field = getNamedFields([name]).find(
+        (candidate) => candidate.type !== 'hidden' && candidate.tabIndex !== -1,
+      )
+
+      field?.focus({ preventScroll: true })
+    },
+    [getNamedFields],
+  )
+
   const syncValidationForStep = useCallback(
     (stepId: FormStepId) => {
       if (stepId === 'services') {
@@ -519,6 +578,20 @@ export default function GetStartedForm() {
   }, [timeline, syncRadioGroupValidity])
 
   useEffect(() => {
+    if (!shouldFocusStepRef.current) return
+
+    shouldFocusStepRef.current = false
+
+    if (typeof window.requestAnimationFrame === 'function') {
+      const frame = window.requestAnimationFrame(focusFirstStepControl)
+      return () => window.cancelAnimationFrame(frame)
+    }
+
+    const timeout = window.setTimeout(focusFirstStepControl, 0)
+    return () => window.clearTimeout(timeout)
+  }, [focusFirstStepControl, stepIndex])
+
+  useEffect(() => {
     const trackAbandon = () => {
       if (hasTrackedAbandonRef.current) return
       if (hasSubmittedSuccessfullyRef.current) return
@@ -565,6 +638,7 @@ export default function GetStartedForm() {
 
   const goToStep = (nextIndex: number) => {
     currentStepIndexRef.current = nextIndex
+    shouldFocusStepRef.current = true
     setStepIndex(nextIndex)
     formRef.current?.scrollIntoView?.({ block: 'start', behavior: 'smooth' })
   }
@@ -601,6 +675,7 @@ export default function GetStartedForm() {
         service_count: selectedServices.length,
         question_count: QUESTION_STEP_COUNT,
       })
+      queueMicrotask(() => focusNamedField('service_focus'))
       return
     }
 
@@ -683,6 +758,7 @@ export default function GetStartedForm() {
         service_count: selectedServices.length,
         question_count: QUESTION_STEP_COUNT,
       })
+      queueMicrotask(() => focusNamedField(manualError.name))
       return
     }
 
@@ -703,6 +779,11 @@ export default function GetStartedForm() {
         service_count: selectedServices.length,
         question_count: QUESTION_STEP_COUNT,
       })
+      queueMicrotask(() =>
+        focusNamedField(
+          invalidField?.name || getStepFields(currentStep)[0] || 'unknown',
+        ),
+      )
       return
     }
 
@@ -735,6 +816,41 @@ export default function GetStartedForm() {
     goToStep(Math.max(stepIndex - 1, 0))
   }
 
+  const handleStepKeyboardNavigation = (
+    event: KeyboardEvent<HTMLFormElement>,
+  ) => {
+    if (event.defaultPrevented || isSubmitting) return
+    if (event.nativeEvent.isComposing) return
+    if (event.altKey || event.ctrlKey || event.metaKey) return
+
+    if (event.key === 'Enter' && !isReviewStep) {
+      if (event.shiftKey && event.target instanceof HTMLTextAreaElement) {
+        return
+      }
+
+      event.preventDefault()
+      handleNext()
+      return
+    }
+
+    if (STEP_FORWARD_KEYS.has(event.key)) {
+      if (isReviewStep || shouldKeepNativeArrowBehavior(event.target)) return
+
+      event.preventDefault()
+      handleNext()
+      return
+    }
+
+    if (STEP_BACK_KEYS.has(event.key)) {
+      if (stepIndex === 0 || shouldKeepNativeArrowBehavior(event.target)) {
+        return
+      }
+
+      event.preventDefault()
+      handleBack()
+    }
+  }
+
   const handleBudgetSelect = (value: string) => {
     markInteracted()
     setBudget(value)
@@ -761,12 +877,14 @@ export default function GetStartedForm() {
     checked,
     label,
     onSelect,
+    shouldFocusOnStepEntry,
   }: {
     name: string
     value: string
     checked: boolean
     label: string
     onSelect: (value: string) => void
+    shouldFocusOnStepEntry: boolean
   }) => (
     <label key={value} className="block">
       <input
@@ -774,6 +892,7 @@ export default function GetStartedForm() {
         name={name}
         value={value}
         checked={checked}
+        data-step-autofocus={shouldFocusOnStepEntry ? 'true' : undefined}
         onChange={(event) => {
           markInteracted()
           onSelect(event.currentTarget.value)
@@ -811,6 +930,12 @@ export default function GetStartedForm() {
                   type="button"
                   role="checkbox"
                   aria-checked={isSelected}
+                  data-service-option="true"
+                  data-step-autofocus={
+                    service.value === SERVICE_OPTIONS[0].value
+                      ? 'true'
+                      : undefined
+                  }
                   onClick={() => handleServiceToggle(service.value)}
                   className={cn(
                     choiceCardClassName,
@@ -851,6 +976,8 @@ export default function GetStartedForm() {
                   checked: hasWebsite === option.value,
                   label: option.label,
                   onSelect: setHasWebsite,
+                  shouldFocusOnStepEntry:
+                    option.value === (hasWebsite || WEBSITE_OPTIONS[0].value),
                 }),
               )}
             </div>
@@ -878,6 +1005,7 @@ export default function GetStartedForm() {
                   : 'maps.google.com/your-practice'
               }
               className={fieldClassName}
+              data-step-autofocus="true"
               aria-invalid={Boolean(getError('review_link'))}
               aria-describedby={getDescribedBy('review_link')}
               onChange={(event) => {
@@ -902,6 +1030,9 @@ export default function GetStartedForm() {
                   checked: primaryGoal === option.value,
                   label: option.label,
                   onSelect: setPrimaryGoal,
+                  shouldFocusOnStepEntry:
+                    option.value ===
+                    (primaryGoal || PRIORITY_OPTIONS[0].value),
                 }),
               )}
             </div>
@@ -921,6 +1052,8 @@ export default function GetStartedForm() {
                   checked: budget === option,
                   label: option,
                   onSelect: handleBudgetSelect,
+                  shouldFocusOnStepEntry:
+                    option === (budget || BUDGET_OPTIONS[0]),
                 }),
               )}
             </div>
@@ -940,6 +1073,8 @@ export default function GetStartedForm() {
                   checked: timeline === option,
                   label: option,
                   onSelect: setTimeline,
+                  shouldFocusOnStepEntry:
+                    option === (timeline || TIMELINE_OPTIONS[0]),
                 }),
               )}
             </div>
@@ -961,6 +1096,7 @@ export default function GetStartedForm() {
               value={company}
               placeholder="Practice name"
               className={fieldClassName}
+              data-step-autofocus="true"
               aria-invalid={Boolean(getError('company'))}
               aria-describedby={getDescribedBy('company')}
               onChange={(event) => {
@@ -988,6 +1124,7 @@ export default function GetStartedForm() {
                 value={fullName}
                 placeholder="Full name"
                 className={fieldClassName}
+                data-step-autofocus="true"
                 aria-invalid={Boolean(getError('full_name'))}
                 aria-describedby={getDescribedBy('full_name')}
                 onChange={(event) => {
@@ -1038,6 +1175,7 @@ export default function GetStartedForm() {
               value={additionalContext}
               placeholder="Optional"
               className="min-h-[150px] border-white/12 bg-black/40 px-4 py-3 text-[1rem] leading-7 text-[#F5F5F2] placeholder:text-[#6E6E68] focus-visible:border-[#9EFF2E]/65 focus-visible:ring-[#9EFF2E]/35 focus-visible:ring-offset-0"
+              data-step-autofocus="true"
               onChange={(event) => {
                 markInteracted()
                 setAdditionalContext(event.currentTarget.value)
@@ -1122,6 +1260,7 @@ export default function GetStartedForm() {
       method="POST"
       noValidate
       onSubmit={handleFinalSubmit}
+      onKeyDown={handleStepKeyboardNavigation}
     >
       <div className={styles.noiseField} aria-hidden="true" />
       <span className={styles.corner} data-corner="tl" aria-hidden="true" />
@@ -1241,6 +1380,7 @@ export default function GetStartedForm() {
                 type="submit"
                 className="min-h-12 flex-1 border-[#9EFF2E]/55 bg-[#9EFF2E]/8 px-6 font-mono text-[0.78rem] uppercase tracking-[0.18em] text-[#9EFF2E] shadow-[0_0_0_1px_rgba(158,255,46,0.14)] hover:bg-[#9EFF2E]/16 hover:text-[#D4FF94] focus-visible:ring-[#9EFF2E]/45"
                 disabled={isSubmitting}
+                data-step-autofocus="true"
                 onClick={() =>
                   trackCTAClick('submit practice audit', 'apply form review')
                 }

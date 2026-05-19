@@ -80,6 +80,11 @@ The `/apply` route should feel like a focused practice audit mode, not another m
   - When the dashboard intake API returns `dashboard.claimUrl`, store it in session storage for the apply thank-you CTA; do not include it in analytics payloads.
   - On success, `router.push("/thank-you?source=apply")`
   - On failure, inline error state remains visible and user stays on the review/submit screen
+- Keyboard flow:
+  - Enter advances the current non-review step after the same per-step validation as the Continue button.
+  - Shift+Enter preserves a line break in the optional notes textarea.
+  - ArrowRight/ArrowDown advance and ArrowLeft/ArrowUp go back only when focus is not inside text-editing controls or native radio groups.
+  - After a keyboard or button step transition, focus moves to the first field/control for the new step; validation failures return focus to the first invalid field or choice group.
 - Analytics:
   - `trackEvent("apply_form_view", ...)`
   - `trackEvent("apply_form_start", ...)`
