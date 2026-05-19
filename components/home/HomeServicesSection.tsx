@@ -8,6 +8,7 @@ import {
   HOMEPAGE_SERVICE_ITEMS,
   HOMEPAGE_SERVICES,
 } from '@/components/home/homepage-content'
+import BrandLogo from '@/components/brand-logo'
 import PixelishIcon from '@/components/pixelish/PixelishIcon'
 
 export default function HomeServicesSection() {
@@ -40,13 +41,22 @@ export default function HomeServicesSection() {
               >
                 <div className="flex items-center gap-3">
                   <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/12 bg-white/[0.03]">
-                    <PixelishIcon
-                      src={item.iconSrc}
-                      alt=""
-                      size={18}
-                      aria-hidden="true"
-                      className="h-4 w-4 opacity-80"
-                    />
+                    {item.brandLogo ? (
+                      <BrandLogo
+                        brand={item.brandLogo}
+                        theme={item.brandLogoTheme}
+                        decorative
+                        className="h-4 w-4 opacity-90"
+                      />
+                    ) : item.iconSrc ? (
+                      <PixelishIcon
+                        src={item.iconSrc}
+                        alt=""
+                        size={18}
+                        aria-hidden="true"
+                        className="h-4 w-4 opacity-80"
+                      />
+                    ) : null}
                   </span>
                   <div className="min-w-0">
                     <h3 className="max-w-none text-balance font-sans text-[1.05rem] font-medium leading-[1.08] tracking-[-0.035em] text-[#f5f0e8]">

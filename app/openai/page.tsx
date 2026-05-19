@@ -1,96 +1,97 @@
-import Link from "next/link"
-import type { Metadata } from "next"
+import Link from 'next/link'
+import type { Metadata } from 'next'
 
-import Navbar from "@/components/navbar"
-import Footer from "@/components/footer"
-import ServiceIllustration from "@/components/animated/ServiceIllustration"
-import { WebPageSchema } from "@/components/schema-markup"
-import { buildRouteMetadata } from "@/lib/seo/metadata"
+import BrandLogo from '@/components/brand-logo'
+import Navbar from '@/components/navbar'
+import Footer from '@/components/footer'
+import ServiceIllustration from '@/components/animated/ServiceIllustration'
+import { WebPageSchema } from '@/components/schema-markup'
+import { buildRouteMetadata } from '@/lib/seo/metadata'
 
 const openAiStack = [
   {
-    title: "strategic copilots",
+    title: 'strategic copilots',
     description:
-      "We build proprietary GPT-4.1 and o1 workspaces that mirror your voice, offers, and service areas so every campaign draft starts with context.",
+      'We build proprietary GPT-4.1 and o1 workspaces that mirror your voice, offers, and service areas so every campaign draft starts with context.',
     highlights: [
-      "Persona and journey modeling to pinpoint local demand",
-      "Offer testing scripts that recommend angles before we launch",
-      "Automated briefs that feed creative, SEO, and listings updates",
+      'Persona and journey modeling to pinpoint local demand',
+      'Offer testing scripts that recommend angles before we launch',
+      'Automated briefs that feed creative, SEO, and listings updates',
     ],
   },
   {
-    title: "content engines",
+    title: 'content engines',
     description:
-      "OpenAI powered workflows turn transcripts, reviews, and practice intel into production-ready articles, videos, and nurture sequences.",
+      'OpenAI powered workflows turn transcripts, reviews, and practice intel into production-ready articles, videos, and nurture sequences.',
     highlights: [
-      "Topic clustering with embeddings to map authority gaps",
-      "Voice-adapted outlines that hand off cleanly to our writers",
-      "Compliance and tone checks before anything goes live",
+      'Topic clustering with embeddings to map authority gaps',
+      'Voice-adapted outlines that hand off cleanly to our writers',
+      'Compliance and tone checks before anything goes live',
     ],
   },
   {
-    title: "operations automation",
+    title: 'operations automation',
     description:
-      "We connect OpenAI with your CRM, scheduling, and intake tools so front-office teams stay focused on high-value conversations.",
+      'We connect OpenAI with your CRM, scheduling, and intake tools so front-office teams stay focused on high-value conversations.',
     highlights: [
-      "Inbox triage and call summaries that sync with your systems",
-      "Follow-up reminders triggered by lead quality and intent",
-      "Practice intelligence dashboards that surface weekly wins",
+      'Inbox triage and call summaries that sync with your systems',
+      'Follow-up reminders triggered by lead quality and intent',
+      'Practice intelligence dashboards that surface weekly wins',
     ],
   },
 ]
 
 const distributionPartners = [
   {
-    name: "ChatGPT",
+    name: 'ChatGPT',
     summary:
-      "We monitor prompts and suggested follow-ups to learn how prospects evaluate providers, then tailor your answers and site structure accordingly.",
+      'We monitor prompts and suggested follow-ups to learn how prospects evaluate providers, then tailor your answers and site structure accordingly.',
   },
   {
-    name: "OpenAI Search & Assistants",
+    name: 'OpenAI Search & Assistants',
     summary:
-      "As OpenAI ships new search flows, we study how results are sourced so your offers, FAQs, and locality data stay present in answer cards.",
+      'As OpenAI ships new search flows, we study how results are sourced so your offers, FAQs, and locality data stay present in answer cards.',
   },
   {
-    name: "Third-party GPT Plug-ins",
+    name: 'Third-party GPT Plug-ins',
     summary:
-      "For GPTs that recommend local businesses, we supply structured data, reviews, and proof points so you surface when prospects explore options.",
+      'For GPTs that recommend local businesses, we supply structured data, reviews, and proof points so you surface when prospects explore options.',
   },
 ]
 
 const workflow = [
   {
-    title: "map your growth signals",
+    title: 'map your growth signals',
     description:
-      "We audit existing content, reviews, and CRM notes, then tune OpenAI copilots with the language that wins bookings for your team.",
+      'We audit existing content, reviews, and CRM notes, then tune OpenAI copilots with the language that wins bookings for your team.',
   },
   {
-    title: "ship high leverage assets",
+    title: 'ship high leverage assets',
     description:
-      "Campaigns, landing pages, and listings refreshes move through AI-accelerated pipelines so you launch updates in days, not months.",
+      'Campaigns, landing pages, and listings refreshes move through AI-accelerated pipelines so you launch updates in days, not months.',
   },
   {
-    title: "amplify through distribution",
+    title: 'amplify through distribution',
     description:
-      "We sync structured data and fresh offers to OpenAI surfaces, measure exposure, and iterate so you appear where prospects research.",
+      'We sync structured data and fresh offers to OpenAI surfaces, measure exposure, and iterate so you appear where prospects research.',
   },
   {
-    title: "keep humans in the loop",
+    title: 'keep humans in the loop',
     description:
-      "Every deliverable runs through expert review, performance tracking, and compliance checks to ensure quality, accuracy, and accountability.",
+      'Every deliverable runs through expert review, performance tracking, and compliance checks to ensure quality, accuracy, and accountability.',
   },
 ]
 
-const PAGE_TITLE = "openai growth systems | design prism"
+const PAGE_TITLE = 'openai growth systems | design prism'
 const PAGE_DESCRIPTION =
-  "See how Prism uses OpenAI tools, copilots, and distribution intelligence to expand your practice across chat, search, and assistant surfaces."
-const CANONICAL_URL = "https://www.design-prism.com/openai"
+  'See how Prism uses OpenAI tools, copilots, and distribution intelligence to expand your practice across chat, search, and assistant surfaces.'
+const CANONICAL_URL = 'https://www.design-prism.com/openai'
 
 export const metadata: Metadata = buildRouteMetadata({
   titleStem: PAGE_TITLE,
   description: PAGE_DESCRIPTION,
-  path: "/openai",
-  ogImage: "/prism-opengraph.png",
+  path: '/openai',
+  ogImage: '/prism-opengraph.png',
 })
 
 export default function OpenAIPage() {
@@ -99,20 +100,36 @@ export default function OpenAIPage() {
       <Navbar />
       <main className="bg-white">
         <section className="relative overflow-hidden border-b border-neutral-100">
-          <div className="absolute inset-0 bg-gradient-to-b from-neutral-50 via-white to-white" aria-hidden="true" />
+          <div
+            className="absolute inset-0 bg-gradient-to-b from-neutral-50 via-white to-white"
+            aria-hidden="true"
+          />
           <div className="container relative mx-auto grid gap-10 px-4 pb-16 pt-20 sm:grid-cols-[1.05fr_0.95fr] sm:items-center sm:pt-24 md:pb-20">
             <div className="mx-auto max-w-3xl text-center sm:text-left">
-              <p className="text-xs uppercase tracking-[0.35em] text-neutral-400">openai partnership</p>
+              <p className="mx-auto inline-flex items-center gap-2 text-xs uppercase tracking-[0.35em] text-neutral-400 sm:mx-0">
+                <BrandLogo
+                  brand="openai"
+                  theme="dark"
+                  decorative
+                  className="h-4 w-4"
+                />
+                <span>openai partnership</span>
+              </p>
               <h1 className="mt-4 text-4xl font-semibold lowercase tracking-tight text-neutral-900 sm:text-5xl">
                 ai copilots that keep your presence everywhere
               </h1>
               <p className="mt-4 text-base text-neutral-600 sm:text-lg">
-                Prism works directly with OpenAI&apos;s tools and distribution network so your practice shows up in the conversations,
-                searches, and recommendations happening inside ChatGPT and beyond.
+                Prism works directly with OpenAI&apos;s tools and distribution
+                network so your practice shows up in the conversations,
+                searches, and recommendations happening inside ChatGPT and
+                beyond.
               </p>
               <p className="mt-3 text-sm text-neutral-500 sm:text-base">
-                building broader small business ai systems? explore{" "}
-                <Link href="/smb" className="font-semibold text-neutral-900 underline underline-offset-4">
+                building broader small business ai systems? explore{' '}
+                <Link
+                  href="/smb"
+                  className="font-semibold text-neutral-900 underline underline-offset-4"
+                >
                   small business ai services
                 </Link>
                 .
@@ -158,7 +175,9 @@ export default function OpenAIPage() {
                 how we use openai for clients
               </h2>
               <p className="mt-3 text-sm text-neutral-600 sm:text-base">
-                Our team trains custom copilots, automates production, and embeds governance so every deliverable is accurate, on-brand, and measurable.
+                Our team trains custom copilots, automates production, and
+                embeds governance so every deliverable is accurate, on-brand,
+                and measurable.
               </p>
             </div>
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -168,13 +187,20 @@ export default function OpenAIPage() {
                   className="flex h-full flex-col gap-4 rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
                 >
                   <div>
-                    <h3 className="text-xl font-semibold lowercase text-neutral-900">{item.title}</h3>
-                    <p className="mt-2 text-sm text-neutral-600">{item.description}</p>
+                    <h3 className="text-xl font-semibold lowercase text-neutral-900">
+                      {item.title}
+                    </h3>
+                    <p className="mt-2 text-sm text-neutral-600">
+                      {item.description}
+                    </p>
                   </div>
                   <ul className="space-y-2 text-sm text-neutral-600">
                     {item.highlights.map((highlight) => (
                       <li key={highlight} className="flex gap-2">
-                        <span className="mt-[6px] h-1.5 w-1.5 shrink-0 rounded-full bg-neutral-900" aria-hidden="true" />
+                        <span
+                          className="mt-[6px] h-1.5 w-1.5 shrink-0 rounded-full bg-neutral-900"
+                          aria-hidden="true"
+                        />
                         <span>{highlight}</span>
                       </li>
                     ))}
@@ -192,13 +218,30 @@ export default function OpenAIPage() {
                 showing up on openai distribution
               </h2>
               <p className="mt-3 text-sm text-neutral-600 sm:text-base">
-                We study how OpenAI showcases local businesses so your expertise, proof, and offers stay visible when prospects ask for help.
+                We study how OpenAI showcases local businesses so your
+                expertise, proof, and offers stay visible when prospects ask for
+                help.
               </p>
             </div>
             <div className="grid gap-6 md:grid-cols-3">
               {distributionPartners.map((partner) => (
-                <div key={partner.name} className="flex h-full flex-col gap-3 rounded-3xl border border-neutral-200 bg-white p-6">
-                  <h3 className="text-lg font-semibold lowercase text-neutral-900">{partner.name}</h3>
+                <div
+                  key={partner.name}
+                  className="flex h-full flex-col gap-3 rounded-3xl border border-neutral-200 bg-white p-6"
+                >
+                  <div className="flex items-center gap-3">
+                    <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-neutral-200 bg-neutral-50">
+                      <BrandLogo
+                        brand="openai"
+                        theme="dark"
+                        decorative
+                        className="h-4.5 w-4.5"
+                      />
+                    </span>
+                    <h3 className="text-lg font-semibold lowercase text-neutral-900">
+                      {partner.name}
+                    </h3>
+                  </div>
                   <p className="text-sm text-neutral-600">{partner.summary}</p>
                 </div>
               ))}
@@ -209,12 +252,16 @@ export default function OpenAIPage() {
         <section className="bg-white py-16 sm:py-20">
           <div className="container mx-auto px-4 md:px-6">
             <div className="mx-auto max-w-4xl rounded-3xl border border-neutral-200 bg-neutral-50 p-8 shadow-sm sm:p-10">
-              <p className="text-xs font-semibold uppercase tracking-[0.28em] text-neutral-500">hands-on guide</p>
+              <p className="text-xs font-semibold uppercase tracking-[0.28em] text-neutral-500">
+                hands-on guide
+              </p>
               <h2 className="mt-3 text-3xl font-semibold lowercase text-neutral-900 sm:text-4xl">
                 rebuild your site locally with codex
               </h2>
               <p className="mt-4 text-sm text-neutral-600 sm:text-base">
-                Need the exact workflow for mirroring a live site, feeding Codex accurate context, and launching the new build on localhost? Follow our step-by-step Codex CLI playbook built for macOS.
+                Need the exact workflow for mirroring a live site, feeding Codex
+                accurate context, and launching the new build on localhost?
+                Follow our step-by-step Codex CLI playbook built for macOS.
               </p>
               <div className="mt-6">
                 <Link
@@ -235,7 +282,9 @@ export default function OpenAIPage() {
                 our human + ai workflow
               </h2>
               <p className="mt-3 text-sm text-neutral-600 sm:text-base">
-                Every engagement blends OpenAI systems with Prism strategists so you get the velocity of automation and the judgment of a seasoned team.
+                Every engagement blends OpenAI systems with Prism strategists so
+                you get the velocity of automation and the judgment of a
+                seasoned team.
               </p>
             </div>
             <div className="grid gap-6 md:grid-cols-2">
@@ -244,8 +293,12 @@ export default function OpenAIPage() {
                   key={stage.title}
                   className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
                 >
-                  <h3 className="text-xl font-semibold lowercase text-neutral-900">{stage.title}</h3>
-                  <p className="mt-3 text-sm text-neutral-600">{stage.description}</p>
+                  <h3 className="text-xl font-semibold lowercase text-neutral-900">
+                    {stage.title}
+                  </h3>
+                  <p className="mt-3 text-sm text-neutral-600">
+                    {stage.description}
+                  </p>
                 </div>
               ))}
             </div>

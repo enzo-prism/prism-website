@@ -1,4 +1,5 @@
 import { getHeroReviewCount, quotesData } from '@/content/wall-of-love-data'
+import type { BrandLogoKey, BrandLogoTheme } from '@/components/brand-logo'
 import { HOTTEST_CONTENT } from '@/lib/hottest-content'
 
 export type HomepageFAQBlock =
@@ -14,6 +15,8 @@ type HomepageIconCard = {
   title: string
   description: string
   iconSrc: string
+  brandLogo?: BrandLogoKey
+  brandLogoTheme?: BrandLogoTheme
 }
 
 type HomepageHeroSupportPoint = {
@@ -26,12 +29,16 @@ type HomepageHeroSupportPoint = {
 type HomepageProblemPoint = {
   label: string
   text: string
-  iconSrc: string
+  iconSrc?: string
+  brandLogo?: BrandLogoKey
+  brandLogoTheme?: BrandLogoTheme
 }
 
 type HomepageProblemStackItem = {
   label: string
-  iconSrc: string
+  iconSrc?: string
+  brandLogo?: BrandLogoKey
+  brandLogoTheme?: BrandLogoTheme
 }
 
 type HomepageAiTool = {
@@ -277,6 +284,8 @@ export const HOMEPAGE_PROBLEM = {
       label: 'Can ChatGPT recommend you?',
       text: '',
       iconSrc: '/pixelish/chatgpt.svg',
+      brandLogo: 'openai',
+      brandLogoTheme: 'dark',
     },
     {
       label: 'Can they book?',
@@ -287,9 +296,18 @@ export const HOMEPAGE_PROBLEM = {
   stackLabel: 'What patients scan',
   stack: [
     { label: 'Website', iconSrc: '/pixelish/browser.svg' },
-    { label: 'Google Maps', iconSrc: '/pixelish/lens.svg' },
+    {
+      label: 'Google Maps',
+      iconSrc: '/pixelish/lens.svg',
+      brandLogo: 'googleMaps',
+    },
     { label: 'Reviews', iconSrc: '/pixelish/emoji-heart.svg' },
-    { label: 'ChatGPT', iconSrc: '/pixelish/chatgpt.svg' },
+    {
+      label: 'ChatGPT',
+      iconSrc: '/pixelish/chatgpt.svg',
+      brandLogo: 'openai',
+      brandLogoTheme: 'dark',
+    },
   ] satisfies readonly HomepageProblemStackItem[],
 } as const
 
@@ -338,6 +356,7 @@ export const HOMEPAGE_PROMISE_CARDS: readonly HomepageIconCard[] = [
     title: 'Found',
     description: 'Google Maps',
     iconSrc: '/pixelish/lens.svg',
+    brandLogo: 'googleMaps',
   },
   {
     title: 'Trusted',
@@ -367,6 +386,7 @@ export const HOMEPAGE_SERVICE_ITEMS: readonly HomepageIconCard[] = [
     title: 'Google Maps',
     description: '',
     iconSrc: '/pixelish/lens.svg',
+    brandLogo: 'googleMaps',
   },
   {
     title: 'Reviews',
@@ -392,6 +412,8 @@ export const HOMEPAGE_SERVICE_ITEMS: readonly HomepageIconCard[] = [
     title: 'ChatGPT',
     description: '',
     iconSrc: '/pixelish/chatgpt.svg',
+    brandLogo: 'openai',
+    brandLogoTheme: 'dark',
   },
 ] as const
 

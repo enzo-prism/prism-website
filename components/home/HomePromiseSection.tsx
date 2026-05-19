@@ -8,6 +8,7 @@ import {
   HOMEPAGE_PROMISE,
   HOMEPAGE_PROMISE_CARDS,
 } from '@/components/home/homepage-content'
+import BrandLogo from '@/components/brand-logo'
 import PixelishIcon from '@/components/pixelish/PixelishIcon'
 
 export default function HomePromiseSection() {
@@ -29,13 +30,22 @@ export default function HomePromiseSection() {
                   data-home-promise-card={card.title}
                   className="rounded-[1.6rem] border border-white/10 bg-black/20 p-5 sm:p-6"
                 >
-                  <PixelishIcon
-                    src={card.iconSrc}
-                    alt=""
-                    size={20}
-                    aria-hidden="true"
-                    className="h-[17px] w-[17px] opacity-80"
-                  />
+                  {card.brandLogo ? (
+                    <BrandLogo
+                      brand={card.brandLogo}
+                      theme={card.brandLogoTheme}
+                      decorative
+                      className="h-[17px] w-[17px] opacity-90"
+                    />
+                  ) : (
+                    <PixelishIcon
+                      src={card.iconSrc}
+                      alt=""
+                      size={20}
+                      aria-hidden="true"
+                      className="h-[17px] w-[17px] opacity-80"
+                    />
+                  )}
                   <h3 className="mt-5 max-w-[18ch] font-sans text-[1.55rem] font-medium leading-[1.03] tracking-[-0.05em] text-[#f5f0e8]">
                     {card.title}
                   </h3>
