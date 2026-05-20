@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 export type AttributionPayload = {
   utm_source?: string
@@ -20,54 +20,56 @@ export type AttributionPayload = {
   device_type?: string
 }
 
-const ATTRIBUTION_STORAGE_KEY = "prism_attribution_v1"
+const ATTRIBUTION_STORAGE_KEY = 'prism_attribution_v1'
 const ATTRIBUTION_TTL_MS = 30 * 24 * 60 * 60 * 1000
 const ATTRIBUTION_FIELDS: Array<keyof AttributionPayload> = [
-  "utm_source",
-  "utm_medium",
-  "utm_campaign",
-  "utm_content",
-  "utm_term",
-  "gclid",
-  "fbclid",
-  "msclkid",
-  "landing_path",
-  "first_touch_source",
-  "first_touch_medium",
-  "first_touch_campaign",
-  "first_touch_at",
-  "submission_path",
-  "referrer",
-  "timestamp",
-  "device_type",
+  'utm_source',
+  'utm_medium',
+  'utm_campaign',
+  'utm_content',
+  'utm_term',
+  'gclid',
+  'fbclid',
+  'msclkid',
+  'landing_path',
+  'first_touch_source',
+  'first_touch_medium',
+  'first_touch_campaign',
+  'first_touch_at',
+  'submission_path',
+  'referrer',
+  'timestamp',
+  'device_type',
 ]
 
 function getDeviceType() {
-  if (typeof window === "undefined") return undefined
+  if (typeof window === 'undefined') return undefined
 
-  if (window.innerWidth < 768) return "mobile"
-  if (window.innerWidth < 1024) return "tablet"
-  return "desktop"
+  if (window.innerWidth < 768) return 'mobile'
+  if (window.innerWidth < 1024) return 'tablet'
+  return 'desktop'
 }
 
 function parseAttributionFromUrl(): AttributionPayload {
-  if (typeof window === "undefined") return {}
+  if (typeof window === 'undefined') return {}
 
   const params = new URLSearchParams(window.location.search)
   return {
-    utm_source: params.get("utm_source") ?? undefined,
-    utm_medium: params.get("utm_medium") ?? undefined,
-    utm_campaign: params.get("utm_campaign") ?? undefined,
-    utm_content: params.get("utm_content") ?? undefined,
-    utm_term: params.get("utm_term") ?? undefined,
-    gclid: params.get("gclid") ?? undefined,
-    fbclid: params.get("fbclid") ?? undefined,
-    msclkid: params.get("msclkid") ?? undefined,
+    utm_source: params.get('utm_source') ?? undefined,
+    utm_medium: params.get('utm_medium') ?? undefined,
+    utm_campaign: params.get('utm_campaign') ?? undefined,
+    utm_content: params.get('utm_content') ?? undefined,
+    utm_term: params.get('utm_term') ?? undefined,
+    gclid: params.get('gclid') ?? undefined,
+    fbclid: params.get('fbclid') ?? undefined,
+    msclkid: params.get('msclkid') ?? undefined,
   }
 }
 
-function readStoredAttribution(): (AttributionPayload & { savedAt?: number }) | null {
-  if (typeof window === "undefined") return null
+function readStoredAttribution():
+  | (AttributionPayload & { savedAt?: number })
+  | null {
+  if (typeof window === 'undefined') return null
 
   try {
     const raw = window.localStorage.getItem(ATTRIBUTION_STORAGE_KEY)
@@ -86,7 +88,7 @@ function readStoredAttribution(): (AttributionPayload & { savedAt?: number }) | 
 }
 
 function writeStoredAttribution(payload: AttributionPayload) {
-  if (typeof window === "undefined") return
+  if (typeof window === 'undefined') return
 
   try {
     const existing = readStoredAttribution() ?? {}
@@ -96,7 +98,8 @@ function writeStoredAttribution(payload: AttributionPayload) {
       landing_path: existing.landing_path ?? window.location.pathname,
       first_touch_source: existing.first_touch_source ?? payload.utm_source,
       first_touch_medium: existing.first_touch_medium ?? payload.utm_medium,
-      first_touch_campaign: existing.first_touch_campaign ?? payload.utm_campaign,
+      first_touch_campaign:
+        existing.first_touch_campaign ?? payload.utm_campaign,
       first_touch_at: existing.first_touch_at ?? new Date().toISOString(),
       savedAt: Date.now(),
     }
@@ -108,22 +111,25 @@ function writeStoredAttribution(payload: AttributionPayload) {
 }
 
 export function getAttributionContext(): AttributionPayload {
-  if (typeof window === "undefined") return {}
+  if (typeof window === 'undefined') return {}
 
   const fromUrl = parseAttributionFromUrl()
+  const existingAttribution = readStoredAttribution()
   const hasCampaignParams = Boolean(
     fromUrl.utm_source ||
-      fromUrl.utm_medium ||
-      fromUrl.utm_campaign ||
-      fromUrl.utm_content ||
-      fromUrl.utm_term ||
-      fromUrl.gclid ||
-      fromUrl.fbclid ||
-      fromUrl.msclkid,
+    fromUrl.utm_medium ||
+    fromUrl.utm_campaign ||
+    fromUrl.utm_content ||
+    fromUrl.utm_term ||
+    fromUrl.gclid ||
+    fromUrl.fbclid ||
+    fromUrl.msclkid,
   )
 
   if (hasCampaignParams) {
     writeStoredAttribution(fromUrl)
+  } else if (!existingAttribution?.landing_path) {
+    writeStoredAttribution({})
   }
 
   const stored = readStoredAttribution() ?? {}
@@ -145,7 +151,7 @@ export function getAttributionContext(): AttributionPayload {
 }
 
 export function getSubmissionAttribution(): AttributionPayload {
-  if (typeof window === "undefined") return {}
+  if (typeof window === 'undefined') return {}
 
   return {
     ...getAttributionContext(),
@@ -173,7 +179,9 @@ export function syncFormAttributionFields(form: HTMLFormElement) {
 
   for (const field of ATTRIBUTION_FIELDS) {
     const value = attribution[field]
-    const existing = form.querySelector<HTMLInputElement>(`input[type="hidden"][name="${field}"]`)
+    const existing = form.querySelector<HTMLInputElement>(
+      `input[type="hidden"][name="${field}"]`,
+    )
 
     if (!value) {
       existing?.remove()
@@ -185,8 +193,8 @@ export function syncFormAttributionFields(form: HTMLFormElement) {
       continue
     }
 
-    const input = document.createElement("input")
-    input.type = "hidden"
+    const input = document.createElement('input')
+    input.type = 'hidden'
     input.name = field
     input.value = value
     form.appendChild(input)
