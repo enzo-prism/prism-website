@@ -98,15 +98,14 @@ describe('SocialClipLandingPage analytics', () => {
         /The frameworks, tools, and tactics used by top founders are out there/i,
       ),
     ).toBeInTheDocument()
-    expect(
-      screen.getByText(/start with the prism blog/i),
-    ).toBeInTheDocument()
+    expect(screen.getByText(/start with the prism blog/i)).toBeInTheDocument()
     expect(
       screen.queryByText(/steal the AI playbooks/i),
     ).not.toBeInTheDocument()
     expect(
-      within(screen.getByRole('link', { name: /prism home/i }))
-        .getByTestId('next-image'),
+      within(screen.getByRole('link', { name: /prism home/i })).getByTestId(
+        'next-image',
+      ),
     ).toHaveAttribute('data-src', '/prism-logo.jpeg')
 
     const blogActions = screen.getAllByRole('link', {
@@ -116,6 +115,14 @@ describe('SocialClipLandingPage analytics', () => {
 
     expect(blogActions).toHaveLength(1)
     expect(blogActions[0]).toHaveAttribute('href', '/blog')
+    expect(blogActions[0]).toHaveAttribute(
+      'data-cta-text',
+      'start with the blog',
+    )
+    expect(blogActions[0]).toHaveAttribute(
+      'data-cta-location',
+      'tiktok landing actions',
+    )
     expect(blogIcon).toHaveAttribute('data-invert', 'false')
     expect(blogIcon).toHaveClass('group-hover:invert')
     expect(
@@ -130,11 +137,45 @@ describe('SocialClipLandingPage analytics', () => {
 
     fireEvent.click(blogActions[0])
 
-    expect(trackCTAClick).toHaveBeenCalledWith(
-      'start with the blog',
-      'tiktok landing actions',
-    )
+    expect(trackCTAClick).not.toHaveBeenCalled()
     expect(trackExternalLinkClick).not.toHaveBeenCalled()
+  })
+
+  it('keeps the channel handle as a tracked outbound profile link', () => {
+    render(
+      <SocialClipLandingPage
+        channel={{
+          label: 'Instagram',
+          handle: '@the_design_prism',
+          href: 'https://www.instagram.com/the_design_prism/',
+          iconSrc: '/pixelish/socials-instagram.svg',
+        }}
+        hiddenSectionDetailIds={['business']}
+      />,
+    )
+
+    const profileLink = screen.getByRole('link', {
+      name: /@the_design_prism/i,
+    })
+
+    expect(profileLink).toHaveAttribute(
+      'href',
+      'https://www.instagram.com/the_design_prism/',
+    )
+    expect(profileLink).toHaveAttribute('target', '_blank')
+    expect(profileLink).toHaveAttribute('data-cta-text', 'instagram profile')
+    expect(profileLink).toHaveAttribute(
+      'data-cta-location',
+      'instagram landing header',
+    )
+
+    fireEvent.click(profileLink)
+
+    expect(trackCTAClick).not.toHaveBeenCalled()
+    expect(trackExternalLinkClick).toHaveBeenCalledWith(
+      'https://www.instagram.com/the_design_prism/',
+      'instagram profile',
+    )
   })
 
   it('keeps source links as citation links with external tracking', () => {
@@ -151,10 +192,7 @@ describe('SocialClipLandingPage analytics', () => {
 
     fireEvent.click(screen.getByRole('link', { name: /^forbes$/i }))
 
-    expect(trackCTAClick).toHaveBeenCalledWith(
-      'Forbes',
-      'tiktok landing sources',
-    )
+    expect(trackCTAClick).not.toHaveBeenCalled()
     expect(trackExternalLinkClick).toHaveBeenCalledWith(
       'https://forbes.co/editors-picks/los-mas-ricos-del-mundo-2026',
       'Forbes',

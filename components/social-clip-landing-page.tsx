@@ -5,7 +5,7 @@ import Image from 'next/image'
 
 import PixelishIcon from '@/components/pixelish/PixelishIcon'
 import { LOGO_CONFIG } from '@/lib/constants'
-import { trackCTAClick, trackExternalLinkClick } from '@/utils/analytics'
+import { trackExternalLinkClick } from '@/utils/analytics'
 
 type Channel = {
   label: string
@@ -281,7 +281,6 @@ function BlogCta({ location }: { location: string }) {
   return (
     <Link
       href="/blog"
-      onClick={() => trackCTAClick(label, location)}
       data-cta-text={label}
       data-cta-location={location}
       className="group inline-flex min-h-14 items-center gap-4 border border-foreground bg-foreground px-5 font-mono text-[11px] uppercase tracking-normal text-background transition-colors hover:bg-transparent hover:text-foreground focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-4 focus-visible:ring-offset-background"
@@ -316,7 +315,6 @@ function SourceLink({
       target={external ? '_blank' : undefined}
       rel={external ? 'noopener noreferrer' : undefined}
       onClick={() => {
-        trackCTAClick(label, location)
         if (external) {
           trackExternalLinkClick(href, label)
         }
@@ -335,8 +333,7 @@ export default function SocialClipLandingPage({
   hiddenSectionDetailIds = [],
   headerLabel = 'Prism',
   title = 'Why Not You',
-  description =
-    'The frameworks, tools, and tactics used by top founders are out there. AI can help you put them to work. Decide to go for it.',
+  description = 'The frameworks, tools, and tactics used by top founders are out there. AI can help you put them to work. Decide to go for it.',
   metaLine = 'start with the prism blog. learn the tools. build before you scale.',
 }: SocialClipLandingPageProps) {
   const visibleCreditSections = creditSections.map((section) =>
@@ -352,12 +349,6 @@ export default function SocialClipLandingPage({
           <Link
             href="/"
             aria-label="Prism home"
-            onClick={() =>
-              trackCTAClick(
-                'prism home',
-                `${channel.label.toLowerCase()} landing header`,
-              )
-            }
             data-cta-text="prism home"
             data-cta-location={`${channel.label.toLowerCase()} landing header`}
             className="inline-flex min-w-0 items-center gap-3 text-foreground transition-colors hover:text-white focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-4 focus-visible:ring-offset-background"
@@ -368,9 +359,22 @@ export default function SocialClipLandingPage({
             </span>
           </Link>
 
-          <span className="max-w-[46vw] truncate font-mono text-[10px] uppercase tracking-normal text-muted-foreground sm:max-w-none">
+          <Link
+            href={channel.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            data-cta-text={`${channel.label.toLowerCase()} profile`}
+            data-cta-location={`${channel.label.toLowerCase()} landing header`}
+            onClick={() =>
+              trackExternalLinkClick(
+                channel.href,
+                `${channel.label.toLowerCase()} profile`,
+              )
+            }
+            className="max-w-[46vw] truncate font-mono text-[10px] uppercase tracking-normal text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-4 focus-visible:ring-offset-background sm:max-w-none"
+          >
             {channel.handle}
-          </span>
+          </Link>
         </header>
 
         <main id="main-content" tabIndex={-1} className="flex-1 py-14 sm:py-20">
@@ -387,10 +391,7 @@ export default function SocialClipLandingPage({
             <p className="mt-5 max-w-2xl font-mono text-[10px] uppercase leading-5 tracking-normal text-muted-foreground">
               {metaLine}
             </p>
-            <nav
-              aria-label={`${channel.label} page actions`}
-              className="mt-8"
-            >
+            <nav aria-label={`${channel.label} page actions`} className="mt-8">
               <BlogCta
                 location={`${channel.label.toLowerCase()} landing actions`}
               />
