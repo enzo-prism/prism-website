@@ -1,28 +1,33 @@
-"use client"
+'use client'
 
-import Footer from "@/components/footer"
-import Navbar from "@/components/navbar"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
-import { appendAttributionToFormData } from "@/lib/marketing-attribution"
-import { trackFormSubmission } from "@/utils/analytics"
-import Link from "next/link"
-import { useEffect, useMemo, useRef, useState } from "react"
+import Footer from '@/components/footer'
+import Navbar from '@/components/navbar'
+import { Button } from '@/components/ui/button'
+import {
+  appendFormspreeOpsMetadata,
+  FormspreeOpsFields,
+} from '@/components/forms/FormspreeOpsFields'
+import { Input } from '@/components/ui/input'
+import { Textarea } from '@/components/ui/textarea'
+import { appendAttributionToFormData } from '@/lib/marketing-attribution'
+import { trackFormSubmission } from '@/utils/analytics'
+import Link from 'next/link'
+import { useEffect, useMemo, useRef, useState } from 'react'
 
-const DEFAULT_FORM_ENDPOINT = "https://formspree.io/f/mwpwwjek"
-const FORM_ENDPOINT = process.env.NEXT_PUBLIC_SCHOLARSHIP_FORM_ENDPOINT || DEFAULT_FORM_ENDPOINT
+const DEFAULT_FORM_ENDPOINT = 'https://formspree.io/f/mwpwwjek'
+const FORM_ENDPOINT =
+  process.env.NEXT_PUBLIC_SCHOLARSHIP_FORM_ENDPOINT || DEFAULT_FORM_ENDPOINT
 const BASE_APPLICATIONS = 1
 
 const REFERRAL_OPTIONS = [
-  "instagram",
-  "tiktok",
-  "youtube",
-  "linkedin",
-  "friend or client",
-  "search",
-  "event or meetup",
-  "other",
+  'instagram',
+  'tiktok',
+  'youtube',
+  'linkedin',
+  'friend or client',
+  'search',
+  'event or meetup',
+  'other',
 ]
 
 type CountdownState = {
@@ -42,7 +47,7 @@ function formatCountdown(target: Date): CountdownState {
   const now = new Date()
   const diff = target.getTime() - now.getTime()
   if (diff <= 0) {
-    return { days: "00", hours: "00", minutes: "00", seconds: "00" }
+    return { days: '00', hours: '00', minutes: '00', seconds: '00' }
   }
   const totalSeconds = Math.floor(diff / 1000)
   const days = Math.floor(totalSeconds / 86400)
@@ -50,10 +55,10 @@ function formatCountdown(target: Date): CountdownState {
   const minutes = Math.floor((totalSeconds % 3600) / 60)
   const seconds = totalSeconds % 60
   return {
-    days: String(days).padStart(2, "0"),
-    hours: String(hours).padStart(2, "0"),
-    minutes: String(minutes).padStart(2, "0"),
-    seconds: String(seconds).padStart(2, "0"),
+    days: String(days).padStart(2, '0'),
+    hours: String(hours).padStart(2, '0'),
+    minutes: String(minutes).padStart(2, '0'),
+    seconds: String(seconds).padStart(2, '0'),
   }
 }
 
@@ -61,95 +66,110 @@ export default function ScholarshipPageClient() {
   const formRef = useRef<HTMLFormElement | null>(null)
   const [countdownTarget] = useState(() => getNextSelectionDate())
   const [countdown, setCountdown] = useState<CountdownState>({
-    days: "00",
-    hours: "00",
-    minutes: "00",
-    seconds: "00",
+    days: '00',
+    hours: '00',
+    minutes: '00',
+    seconds: '00',
   })
   const [applicationsCount, setApplicationsCount] = useState(BASE_APPLICATIONS)
-  const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle")
+  const [status, setStatus] = useState<
+    'idle' | 'submitting' | 'success' | 'error'
+  >('idle')
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
   useEffect(() => {
     setCountdown(formatCountdown(countdownTarget))
-    const timer = setInterval(() => setCountdown(formatCountdown(countdownTarget)), 1000)
+    const timer = setInterval(
+      () => setCountdown(formatCountdown(countdownTarget)),
+      1000,
+    )
     return () => clearInterval(timer)
   }, [countdownTarget])
 
   useEffect(() => {
-    if (typeof window === "undefined") return
-    const stored = window.localStorage.getItem("prism-scholarship-applications")
+    if (typeof window === 'undefined') return
+    const stored = window.localStorage.getItem('prism-scholarship-applications')
     if (stored) {
       setApplicationsCount(Number(stored))
     }
   }, [])
 
   useEffect(() => {
-    if (typeof window === "undefined") return
-    window.localStorage.setItem("prism-scholarship-applications", String(applicationsCount))
+    if (typeof window === 'undefined') return
+    window.localStorage.setItem(
+      'prism-scholarship-applications',
+      String(applicationsCount),
+    )
   }, [applicationsCount])
 
   useEffect(() => {
-    const hero = document.getElementById("static-scholarship-hero")
+    const hero = document.getElementById('static-scholarship-hero')
     if (hero) {
-      hero.setAttribute("data-hydrated-hidden", "true")
-      hero.setAttribute("aria-hidden", "true")
-      hero.style.display = "none"
+      hero.setAttribute('data-hydrated-hidden', 'true')
+      hero.setAttribute('aria-hidden', 'true')
+      hero.style.display = 'none'
     }
   }, [])
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    setStatus("submitting")
+    setStatus('submitting')
     setErrorMessage(null)
 
     const form = event.currentTarget
     const formData = new FormData(form)
     const payload = new FormData()
-    payload.append("first_name", String(formData.get("firstName") || ""))
-    payload.append("last_name", String(formData.get("lastName") || ""))
-    payload.append("email", String(formData.get("email") || ""))
-    payload.append("heard_about", String(formData.get("referral") || ""))
-    payload.append("project_description", String(formData.get("project") || ""))
-    payload.append("page", "scholarship")
-    payload.append("_subject", "New Prism scholarship application")
-    payload.append("form_name", "scholarship_application")
+    payload.append('first_name', String(formData.get('firstName') || ''))
+    payload.append('last_name', String(formData.get('lastName') || ''))
+    payload.append('email', String(formData.get('email') || ''))
+    payload.append('heard_about', String(formData.get('referral') || ''))
+    payload.append('project_description', String(formData.get('project') || ''))
+    payload.append('page', 'scholarship')
+    payload.append('_subject', 'New Prism scholarship application')
+    payload.append('form_name', 'scholarship_application')
+    appendFormspreeOpsMetadata(payload, 'scholarship')
     appendAttributionToFormData(payload)
 
     try {
       const response = await fetch(form.action, {
-        method: "POST",
-        headers: { Accept: "application/json" },
+        method: 'POST',
+        headers: { Accept: 'application/json' },
         body: payload,
       })
 
       if (!response.ok) {
-        throw new Error("could not submit your application. please try again in a moment.")
+        throw new Error(
+          'could not submit your application. please try again in a moment.',
+        )
       }
 
-      setStatus("success")
+      setStatus('success')
       setApplicationsCount((previous) => previous + 1)
-      trackFormSubmission("scholarship_application", "scholarship_form", {
-        conversionMode: "immediate",
-        lead_type: "scholarship_application",
+      trackFormSubmission('scholarship_application', 'scholarship_form', {
+        conversionMode: 'immediate',
+        lead_type: 'scholarship_application',
         sendGoogleAdsConversion: false,
       })
       form.reset()
-      const textArea = form.querySelector<HTMLTextAreaElement>("textarea")
+      const textArea = form.querySelector<HTMLTextAreaElement>('textarea')
       textArea?.blur()
     } catch (error) {
-      console.error("scholarship form submission failed", error)
-      setErrorMessage(error instanceof Error ? error.message : "something went wrong. please try again.")
-      setStatus("error")
+      console.error('scholarship form submission failed', error)
+      setErrorMessage(
+        error instanceof Error
+          ? error.message
+          : 'something went wrong. please try again.',
+      )
+      setStatus('error')
     }
   }
 
   const countdownBlocks = useMemo(
     () => [
-      { label: "days", value: countdown.days },
-      { label: "hours", value: countdown.hours },
-      { label: "minutes", value: countdown.minutes },
-      { label: "seconds", value: countdown.seconds },
+      { label: 'days', value: countdown.days },
+      { label: 'hours', value: countdown.hours },
+      { label: 'minutes', value: countdown.minutes },
+      { label: 'seconds', value: countdown.seconds },
     ],
     [countdown],
   )
@@ -162,9 +182,15 @@ export default function ScholarshipPageClient() {
           <div className="mx-auto max-w-5xl px-6 py-16">
             <div className="grid gap-10 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
               <div className="space-y-6">
-                <p className="text-sm uppercase tracking-[0.28em] text-neutral-500">monthly pick</p>
-                <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">one founder, one free website each month.</h2>
-                <p className="text-base leading-relaxed text-neutral-600">tell us your idea.</p>
+                <p className="text-sm uppercase tracking-[0.28em] text-neutral-500">
+                  monthly pick
+                </p>
+                <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">
+                  one founder, one free website each month.
+                </h2>
+                <p className="text-base leading-relaxed text-neutral-600">
+                  tell us your idea.
+                </p>
                 <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
                   {countdownBlocks.map((item) => (
                     <div
@@ -182,11 +208,17 @@ export default function ScholarshipPageClient() {
                 </div>
                 <div className="grid gap-3 rounded-3xl border border-neutral-200 bg-neutral-50 px-5 py-6 sm:grid-cols-2">
                   <div>
-                    <p className="text-xs uppercase tracking-[0.32em] text-neutral-500">applications submitted</p>
-                    <p className="mt-2 text-2xl font-semibold text-neutral-900">{applicationsCount}</p>
+                    <p className="text-xs uppercase tracking-[0.32em] text-neutral-500">
+                      applications submitted
+                    </p>
+                    <p className="mt-2 text-2xl font-semibold text-neutral-900">
+                      {applicationsCount}
+                    </p>
                   </div>
                   <div>
-                    <p className="text-xs uppercase tracking-[0.32em] text-neutral-500">portfolio examples</p>
+                    <p className="text-xs uppercase tracking-[0.32em] text-neutral-500">
+                      portfolio examples
+                    </p>
                     <Link
                       href="/websites"
                       className="mt-2 inline-flex items-center text-sm font-semibold lowercase text-neutral-900 underline decoration-neutral-300 underline-offset-4 hover:decoration-neutral-500"
@@ -207,38 +239,78 @@ export default function ScholarshipPageClient() {
                   onSubmit={handleSubmit}
                   className="space-y-5"
                 >
-                  <input type="hidden" name="_subject" value="New Prism scholarship application" />
-                  <input type="hidden" name="form_name" value="scholarship_application" />
+                  <input
+                    type="hidden"
+                    name="_subject"
+                    value="New Prism scholarship application"
+                  />
+                  <input
+                    type="hidden"
+                    name="form_name"
+                    value="scholarship_application"
+                  />
+                  <FormspreeOpsFields formKey="scholarship" />
                   <input
                     type="text"
                     name="_gotcha"
                     tabIndex={-1}
                     autoComplete="off"
-                    style={{ display: "none" }}
+                    style={{ display: 'none' }}
                     aria-hidden="true"
                   />
                   <div className="grid gap-4 sm:grid-cols-2">
                     <div className="space-y-2">
-                      <label htmlFor="firstName" className="text-sm font-medium lowercase text-neutral-600">
+                      <label
+                        htmlFor="firstName"
+                        className="text-sm font-medium lowercase text-neutral-600"
+                      >
                         first name
                       </label>
-                      <Input id="firstName" name="firstName" required autoComplete="given-name" placeholder="alex" />
+                      <Input
+                        id="firstName"
+                        name="firstName"
+                        required
+                        autoComplete="given-name"
+                        placeholder="alex"
+                      />
                     </div>
                     <div className="space-y-2">
-                      <label htmlFor="lastName" className="text-sm font-medium lowercase text-neutral-600">
+                      <label
+                        htmlFor="lastName"
+                        className="text-sm font-medium lowercase text-neutral-600"
+                      >
                         last name
                       </label>
-                      <Input id="lastName" name="lastName" required autoComplete="family-name" placeholder="rivera" />
+                      <Input
+                        id="lastName"
+                        name="lastName"
+                        required
+                        autoComplete="family-name"
+                        placeholder="rivera"
+                      />
                     </div>
                   </div>
                   <div className="space-y-2">
-                    <label htmlFor="email" className="text-sm font-medium lowercase text-neutral-600">
+                    <label
+                      htmlFor="email"
+                      className="text-sm font-medium lowercase text-neutral-600"
+                    >
                       email
                     </label>
-                    <Input id="email" name="email" type="email" required autoComplete="email" placeholder="you@example.com" />
+                    <Input
+                      id="email"
+                      name="email"
+                      type="email"
+                      required
+                      autoComplete="email"
+                      placeholder="you@example.com"
+                    />
                   </div>
                   <div className="space-y-2">
-                    <label htmlFor="referral" className="text-sm font-medium lowercase text-neutral-600">
+                    <label
+                      htmlFor="referral"
+                      className="text-sm font-medium lowercase text-neutral-600"
+                    >
                       how did you first hear about prism?
                     </label>
                     <select
@@ -259,7 +331,10 @@ export default function ScholarshipPageClient() {
                     </select>
                   </div>
                   <div className="space-y-2">
-                    <label htmlFor="project" className="text-sm font-medium lowercase text-neutral-600">
+                    <label
+                      htmlFor="project"
+                      className="text-sm font-medium lowercase text-neutral-600"
+                    >
                       tell us about the website you would like us to build
                     </label>
                     <Textarea
@@ -271,12 +346,13 @@ export default function ScholarshipPageClient() {
                       placeholder="share what you are building, who it serves, and what the site should help you achieve."
                     />
                   </div>
-                  {status === "success" ? (
+                  {status === 'success' ? (
                     <p className="rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700">
-                      thanks for applying. we will review your submission before the next pick and follow up via email.
+                      thanks for applying. we will review your submission before
+                      the next pick and follow up via email.
                     </p>
                   ) : null}
-                  {status === "error" && errorMessage ? (
+                  {status === 'error' && errorMessage ? (
                     <p className="rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700">
                       {errorMessage}
                     </p>
@@ -284,12 +360,16 @@ export default function ScholarshipPageClient() {
                   <Button
                     type="submit"
                     className="w-full rounded-full bg-neutral-900 py-3 text-base lowercase text-white hover:bg-neutral-800"
-                    disabled={status === "submitting"}
+                    disabled={status === 'submitting'}
                   >
-                    {status === "submitting" ? "submitting…" : "submit application"}
+                    {status === 'submitting'
+                      ? 'submitting…'
+                      : 'submit application'}
                   </Button>
                   <p className="text-xs text-neutral-400">
-                    we review every entry manually and reach out via email if you are selected. submitting an application does not guarantee selection.
+                    we review every entry manually and reach out via email if
+                    you are selected. submitting an application does not
+                    guarantee selection.
                   </p>
                 </form>
               </div>

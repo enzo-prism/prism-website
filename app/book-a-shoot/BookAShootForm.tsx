@@ -1,29 +1,30 @@
-"use client"
+'use client'
 
-import { useEffect, useState } from "react"
-import { useRouter } from "next/navigation"
+import { useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation'
 
-import { Alert, AlertDescription } from "@/components/ui/alert"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
-import { useFormValidation } from "@/hooks/use-form-validation"
-import { appendAttributionToFormData } from "@/lib/marketing-attribution"
-import { trackFormSubmission } from "@/utils/analytics"
+import { Alert, AlertDescription } from '@/components/ui/alert'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { Textarea } from '@/components/ui/textarea'
+import { FormspreeOpsFields } from '@/components/forms/FormspreeOpsFields'
+import { useFormValidation } from '@/hooks/use-form-validation'
+import { appendAttributionToFormData } from '@/lib/marketing-attribution'
+import { trackFormSubmission } from '@/utils/analytics'
 
-const FORM_ACTION = "https://formspree.io/f/xjkjkggn"
-const DEFAULT_REDIRECT = "https://www.design-prism.com/book-a-shoot/thank-you"
+const FORM_ACTION = 'https://formspree.io/f/xjkjkggn'
+const DEFAULT_REDIRECT = 'https://www.design-prism.com/book-a-shoot/thank-you'
 
 const timeWindowOptions = [
-  { value: "08:00", label: "8:00 - 9:00 AM" },
-  { value: "09:00", label: "9:00 - 10:00 AM" },
-  { value: "10:00", label: "10:00 - 11:00 AM" },
-  { value: "11:00", label: "11:00 AM - 12:00 PM" },
-  { value: "12:00", label: "12:00 - 1:00 PM" },
-  { value: "13:00", label: "1:00 - 2:00 PM" },
-  { value: "14:00", label: "2:00 - 3:00 PM" },
-  { value: "15:00", label: "3:00 - 4:00 PM" },
+  { value: '08:00', label: '8:00 - 9:00 AM' },
+  { value: '09:00', label: '9:00 - 10:00 AM' },
+  { value: '10:00', label: '10:00 - 11:00 AM' },
+  { value: '11:00', label: '11:00 AM - 12:00 PM' },
+  { value: '12:00', label: '12:00 - 1:00 PM' },
+  { value: '13:00', label: '1:00 - 2:00 PM' },
+  { value: '14:00', label: '2:00 - 3:00 PM' },
+  { value: '15:00', label: '3:00 - 4:00 PM' },
 ]
 
 export default function BookAShootForm() {
@@ -39,8 +40,8 @@ export default function BookAShootForm() {
 
         try {
           const response = await fetch(form.action, {
-            method: "POST",
-            headers: { Accept: "application/json" },
+            method: 'POST',
+            headers: { Accept: 'application/json' },
             body: formData,
           })
 
@@ -49,20 +50,20 @@ export default function BookAShootForm() {
             return
           }
         } catch (error) {
-          console.error("book-a-shoot form submission failed:", error)
+          console.error('book-a-shoot form submission failed:', error)
           setSubmitError("We couldn't submit right now. Try again?")
           return
         }
 
-        trackFormSubmission("book_a_shoot", "book_a_shoot_form", {
-          lead_type: "shoot_request",
+        trackFormSubmission('book_a_shoot', 'book_a_shoot_form', {
+          lead_type: 'shoot_request',
         })
-        router.push("/book-a-shoot/thank-you")
+        router.push('/book-a-shoot/thank-you')
       },
     })
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
+    if (typeof window !== 'undefined') {
       setRedirectUrl(`${window.location.origin}/book-a-shoot/thank-you`)
     }
   }, [])
@@ -72,13 +73,18 @@ export default function BookAShootForm() {
     if (!error) return null
 
     return (
-      <p id={`${name}-error`} className="text-sm text-rose-600" aria-live="polite">
+      <p
+        id={`${name}-error`}
+        className="text-sm text-rose-600"
+        aria-live="polite"
+      >
         {error}
       </p>
     )
   }
 
-  const describedBy = (name: string) => (getError(name) ? `${name}-error` : undefined)
+  const describedBy = (name: string) =>
+    getError(name) ? `${name}-error` : undefined
 
   return (
     <form
@@ -90,15 +96,20 @@ export default function BookAShootForm() {
       onSubmit={handleSubmit}
       className="space-y-6"
     >
-      <input type="hidden" name="_subject" value="New Prism photography shoot request" />
+      <input
+        type="hidden"
+        name="_subject"
+        value="New Prism photography shoot request"
+      />
       <input type="hidden" name="_redirect" value={redirectUrl} />
       <input type="hidden" name="form_name" value="book_a_shoot" />
+      <FormspreeOpsFields formKey="book_a_shoot" />
       <input
         type="text"
         name="_gotcha"
         tabIndex={-1}
         autoComplete="off"
-        style={{ display: "none" }}
+        style={{ display: 'none' }}
         aria-hidden="true"
       />
 
@@ -114,12 +125,12 @@ export default function BookAShootForm() {
           className="w-full rounded-2xl border-neutral-200 bg-neutral-50 px-4 py-3 text-sm text-neutral-900 focus-visible:border-ring focus-visible:ring-ring focus-visible:ring-offset-0"
           placeholder="name@practice.com"
           autoComplete="email"
-          aria-invalid={Boolean(getError("email"))}
-          aria-describedby={describedBy("email")}
+          aria-invalid={Boolean(getError('email'))}
+          aria-describedby={describedBy('email')}
           onBlur={handleBlur}
           onInput={handleInput}
         />
-        {renderError("email")}
+        {renderError('email')}
       </div>
 
       <div className="space-y-2">
@@ -130,8 +141,8 @@ export default function BookAShootForm() {
             name="day_one_date"
             required
             className="rounded-2xl border-neutral-200 bg-neutral-50 px-4 py-3 text-base text-neutral-900 focus-visible:border-ring focus-visible:ring-ring focus-visible:ring-offset-0 sm:text-sm"
-            aria-invalid={Boolean(getError("day_one_date"))}
-            aria-describedby={describedBy("day_one_date")}
+            aria-invalid={Boolean(getError('day_one_date'))}
+            aria-describedby={describedBy('day_one_date')}
             onBlur={handleBlur}
             onInput={handleInput}
           />
@@ -140,8 +151,8 @@ export default function BookAShootForm() {
             required
             className="rounded-2xl border border-neutral-200 bg-neutral-50 px-4 py-3 text-base text-neutral-900 focus:border-ring focus:outline-hidden focus:ring-1 focus:ring-ring focus:ring-offset-0 sm:text-sm"
             defaultValue=""
-            aria-invalid={Boolean(getError("day_one_time"))}
-            aria-describedby={describedBy("day_one_time")}
+            aria-invalid={Boolean(getError('day_one_time'))}
+            aria-describedby={describedBy('day_one_time')}
             onBlur={handleBlur}
             onInput={handleInput}
           >
@@ -153,8 +164,8 @@ export default function BookAShootForm() {
             ))}
           </select>
         </div>
-        {renderError("day_one_date")}
-        {renderError("day_one_time")}
+        {renderError('day_one_date')}
+        {renderError('day_one_time')}
       </div>
 
       <div className="space-y-2">
@@ -165,8 +176,8 @@ export default function BookAShootForm() {
             name="day_two_date"
             required
             className="rounded-2xl border-neutral-200 bg-neutral-50 px-4 py-3 text-base text-neutral-900 focus-visible:border-ring focus-visible:ring-ring focus-visible:ring-offset-0 sm:text-sm"
-            aria-invalid={Boolean(getError("day_two_date"))}
-            aria-describedby={describedBy("day_two_date")}
+            aria-invalid={Boolean(getError('day_two_date'))}
+            aria-describedby={describedBy('day_two_date')}
             onBlur={handleBlur}
             onInput={handleInput}
           />
@@ -175,8 +186,8 @@ export default function BookAShootForm() {
             required
             className="rounded-2xl border border-neutral-200 bg-neutral-50 px-4 py-3 text-base text-neutral-900 focus:border-ring focus:outline-hidden focus:ring-1 focus:ring-ring focus:ring-offset-0 sm:text-sm"
             defaultValue=""
-            aria-invalid={Boolean(getError("day_two_time"))}
-            aria-describedby={describedBy("day_two_time")}
+            aria-invalid={Boolean(getError('day_two_time'))}
+            aria-describedby={describedBy('day_two_time')}
             onBlur={handleBlur}
             onInput={handleInput}
           >
@@ -188,8 +199,8 @@ export default function BookAShootForm() {
             ))}
           </select>
         </div>
-        {renderError("day_two_date")}
-        {renderError("day_two_time")}
+        {renderError('day_two_date')}
+        {renderError('day_two_time')}
       </div>
 
       <div className="space-y-2">
@@ -213,14 +224,16 @@ export default function BookAShootForm() {
           className="w-full rounded-2xl bg-neutral-900 py-3 text-base lowercase text-white"
           disabled={isSubmitting}
         >
-          {isSubmitting ? "sending..." : "send request"}
+          {isSubmitting ? 'sending...' : 'send request'}
         </Button>
         {submitError ? (
           <Alert variant="destructive" className="rounded-2xl">
             <AlertDescription>{submitError}</AlertDescription>
           </Alert>
         ) : null}
-        <p className="text-center text-xs text-neutral-500">we usually reply within one business day.</p>
+        <p className="text-center text-xs text-neutral-500">
+          we usually reply within one business day.
+        </p>
       </div>
     </form>
   )

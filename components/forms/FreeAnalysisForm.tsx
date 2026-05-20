@@ -1,52 +1,56 @@
-"use client"
+'use client'
 
-import { useRouter } from "next/navigation"
-import { Alert, AlertDescription } from "@/components/ui/alert"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { useEffect, useState } from "react"
+import { useRouter } from 'next/navigation'
+import { Alert, AlertDescription } from '@/components/ui/alert'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { useEffect, useState } from 'react'
 
-import { useFormValidation } from "@/hooks/use-form-validation"
-import { trackFormSubmission } from "@/utils/analytics"
+import { useFormValidation } from '@/hooks/use-form-validation'
+import { trackFormSubmission } from '@/utils/analytics'
+import { FormspreeOpsFields } from './FormspreeOpsFields'
 
 const challengeOptions = [
-  { label: "Traffic", value: "traffic" },
-  { label: "Design", value: "design" },
-  { label: "SEO", value: "seo" },
-  { label: "Conversion", value: "conversion" },
+  { label: 'Traffic', value: 'traffic' },
+  { label: 'Design', value: 'design' },
+  { label: 'SEO', value: 'seo' },
+  { label: 'Conversion', value: 'conversion' },
 ]
 
 export default function FreeAnalysisForm() {
   const router = useRouter()
   const [submitError, setSubmitError] = useState<string | null>(null)
-  const { getError, handleBlur, handleInput, handleSubmit, isSubmitting } = useFormValidation({
-    onValidSubmit: async (form) => {
-      setSubmitError(null)
-      const formData = new FormData(form)
-      try {
-        const response = await fetch(form.action, {
-          method: "POST",
-          headers: { Accept: "application/json" },
-          body: formData,
-        })
-        if (!response.ok) {
+  const { getError, handleBlur, handleInput, handleSubmit, isSubmitting } =
+    useFormValidation({
+      onValidSubmit: async (form) => {
+        setSubmitError(null)
+        const formData = new FormData(form)
+        try {
+          const response = await fetch(form.action, {
+            method: 'POST',
+            headers: { Accept: 'application/json' },
+            body: formData,
+          })
+          if (!response.ok) {
+            setSubmitError("We couldn't submit right now. Try again?")
+            return
+          }
+        } catch (error) {
+          console.error('free analysis form submission failed:', error)
           setSubmitError("We couldn't submit right now. Try again?")
           return
         }
-      } catch (error) {
-        console.error("free analysis form submission failed:", error)
-        setSubmitError("We couldn't submit right now. Try again?")
-        return
-      }
-      trackFormSubmission("free_analysis", "free_analysis_form")
-      router.push("/analysis-thank-you")
-    },
-  })
-  const [redirectUrl, setRedirectUrl] = useState("https://www.design-prism.com/analysis-thank-you")
+        trackFormSubmission('free_analysis', 'free_analysis_form')
+        router.push('/analysis-thank-you')
+      },
+    })
+  const [redirectUrl, setRedirectUrl] = useState(
+    'https://www.design-prism.com/analysis-thank-you',
+  )
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
+    if (typeof window !== 'undefined') {
       setRedirectUrl(`${window.location.origin}/analysis-thank-you`)
     }
   }, [])
@@ -55,13 +59,18 @@ export default function FreeAnalysisForm() {
     const error = getError(name)
     if (!error) return null
     return (
-      <p id={`${name}-error`} className="text-sm text-rose-600" aria-live="polite">
+      <p
+        id={`${name}-error`}
+        className="text-sm text-rose-600"
+        aria-live="polite"
+      >
         {error}
       </p>
     )
   }
 
-  const getDescribedBy = (name: string) => (getError(name) ? `${name}-error` : undefined)
+  const getDescribedBy = (name: string) =>
+    getError(name) ? `${name}-error` : undefined
 
   return (
     <form
@@ -76,9 +85,19 @@ export default function FreeAnalysisForm() {
       <input type="hidden" name="_subject" value="New submission from Prism" />
       <input type="hidden" name="_redirect" value={redirectUrl} />
       <input type="hidden" name="form_name" value="free_analysis" />
-      <input type="text" name="_gotcha" tabIndex={-1} autoComplete="off" style={{ display: "none" }} aria-hidden="true" />
+      <FormspreeOpsFields formKey="aeo_assessment" />
+      <input
+        type="text"
+        name="_gotcha"
+        tabIndex={-1}
+        autoComplete="off"
+        style={{ display: 'none' }}
+        aria-hidden="true"
+      />
 
-      <p className="text-sm text-muted-foreground">We'll send your analysis within 24 hours.</p>
+      <p className="text-sm text-muted-foreground">
+        We'll send your analysis within 24 hours.
+      </p>
 
       <div className="grid gap-2">
         <Label htmlFor="analysis-name">Name</Label>
@@ -88,12 +107,12 @@ export default function FreeAnalysisForm() {
           required
           placeholder="Jordan Ramirez"
           autoComplete="name"
-          aria-invalid={Boolean(getError("name"))}
-          aria-describedby={getDescribedBy("name")}
+          aria-invalid={Boolean(getError('name'))}
+          aria-describedby={getDescribedBy('name')}
           onBlur={handleBlur}
           onInput={handleInput}
         />
-        {renderError("name")}
+        {renderError('name')}
       </div>
 
       <div className="grid gap-2">
@@ -105,12 +124,12 @@ export default function FreeAnalysisForm() {
           required
           placeholder="you@company.com"
           autoComplete="email"
-          aria-invalid={Boolean(getError("email"))}
-          aria-describedby={getDescribedBy("email")}
+          aria-invalid={Boolean(getError('email'))}
+          aria-describedby={getDescribedBy('email')}
           onBlur={handleBlur}
           onInput={handleInput}
         />
-        {renderError("email")}
+        {renderError('email')}
       </div>
 
       <div className="grid gap-2">
@@ -122,13 +141,13 @@ export default function FreeAnalysisForm() {
           required
           placeholder="https://yourdomain.com"
           autoComplete="url"
-          aria-invalid={Boolean(getError("website"))}
-          aria-describedby={getDescribedBy("website")}
+          aria-invalid={Boolean(getError('website'))}
+          aria-describedby={getDescribedBy('website')}
           onBlur={handleBlur}
           onInput={handleInput}
           inputMode="url"
         />
-        {renderError("website")}
+        {renderError('website')}
       </div>
 
       <div className="grid gap-2">
@@ -139,8 +158,8 @@ export default function FreeAnalysisForm() {
           required
           defaultValue=""
           className="h-12 rounded-md border border-border/60 bg-card px-3 text-sm text-foreground outline-hidden transition focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-          aria-invalid={Boolean(getError("challenge"))}
-          aria-describedby={getDescribedBy("challenge")}
+          aria-invalid={Boolean(getError('challenge'))}
+          aria-describedby={getDescribedBy('challenge')}
           onBlur={handleBlur}
           onChange={handleInput}
         >
@@ -153,7 +172,7 @@ export default function FreeAnalysisForm() {
             </option>
           ))}
         </select>
-        {renderError("challenge")}
+        {renderError('challenge')}
       </div>
 
       <div className="space-y-3 pt-2">
@@ -163,14 +182,16 @@ export default function FreeAnalysisForm() {
           className="w-full rounded-md py-6 text-base font-semibold"
           disabled={isSubmitting}
         >
-          {isSubmitting ? "Submitting…" : "Get My Free Analysis →"}
+          {isSubmitting ? 'Submitting…' : 'Get My Free Analysis →'}
         </Button>
         {submitError ? (
           <Alert variant="destructive" className="rounded-2xl">
             <AlertDescription>{submitError}</AlertDescription>
           </Alert>
         ) : null}
-        <p className="text-xs text-muted-foreground">We only use your info to share the analysis and next steps.</p>
+        <p className="text-xs text-muted-foreground">
+          We only use your info to share the analysis and next steps.
+        </p>
       </div>
     </form>
   )

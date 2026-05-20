@@ -1,52 +1,54 @@
-"use client"
+'use client'
 
-import { useEffect, useState } from "react"
-import { useRouter } from "next/navigation"
+import { useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation'
 
-import { Alert, AlertDescription } from "@/components/ui/alert"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { useFormValidation } from "@/hooks/use-form-validation"
-import { trackCTAClick, trackFormSubmission } from "@/utils/analytics"
+import { Alert, AlertDescription } from '@/components/ui/alert'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { useFormValidation } from '@/hooks/use-form-validation'
+import { trackCTAClick, trackFormSubmission } from '@/utils/analytics'
+import { FormspreeOpsFields } from './FormspreeOpsFields'
 
 const FORM_ACTION =
-  process.env.NEXT_PUBLIC_AEO_FORM_ENDPOINT || "https://formspree.io/f/xldarokj"
-const DEFAULT_REDIRECT = "https://www.design-prism.com/aeo-thank-you"
+  process.env.NEXT_PUBLIC_AEO_FORM_ENDPOINT || 'https://formspree.io/f/xldarokj'
+const DEFAULT_REDIRECT = 'https://www.design-prism.com/aeo-thank-you'
 
 export default function AeoAssessmentForm() {
   const router = useRouter()
   const [submitError, setSubmitError] = useState<string | null>(null)
   const [redirectUrl, setRedirectUrl] = useState(DEFAULT_REDIRECT)
 
-  const { getError, handleBlur, handleInput, handleSubmit, isSubmitting } = useFormValidation({
-    onValidSubmit: async (form) => {
-      setSubmitError(null)
+  const { getError, handleBlur, handleInput, handleSubmit, isSubmitting } =
+    useFormValidation({
+      onValidSubmit: async (form) => {
+        setSubmitError(null)
 
-      try {
-        const formData = new FormData(form)
-        const response = await fetch(form.action, {
-          method: "POST",
-          headers: { Accept: "application/json" },
-          body: formData,
-        })
-        if (!response.ok) {
+        try {
+          const formData = new FormData(form)
+          const response = await fetch(form.action, {
+            method: 'POST',
+            headers: { Accept: 'application/json' },
+            body: formData,
+          })
+          if (!response.ok) {
+            setSubmitError("We couldn't submit right now. Try again?")
+            return
+          }
+        } catch (error) {
+          console.error('AEO assessment form submission failed:', error)
           setSubmitError("We couldn't submit right now. Try again?")
           return
         }
-      } catch (error) {
-        console.error("AEO assessment form submission failed:", error)
-        setSubmitError("We couldn't submit right now. Try again?")
-        return
-      }
 
-      trackFormSubmission("aeo_assessment", "hero_form")
-      router.push("/aeo-thank-you")
-    },
-  })
+        trackFormSubmission('aeo_assessment', 'hero_form')
+        router.push('/aeo-thank-you')
+      },
+    })
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
+    if (typeof window !== 'undefined') {
       setRedirectUrl(`${window.location.origin}/aeo-thank-you`)
     }
   }, [])
@@ -56,13 +58,18 @@ export default function AeoAssessmentForm() {
     if (!error) return null
 
     return (
-      <p id={`${name}-error`} className="text-sm text-rose-600" aria-live="polite">
+      <p
+        id={`${name}-error`}
+        className="text-sm text-rose-600"
+        aria-live="polite"
+      >
         {error}
       </p>
     )
   }
 
-  const getDescribedBy = (name: string) => (getError(name) ? `${name}-error` : undefined)
+  const getDescribedBy = (name: string) =>
+    getError(name) ? `${name}-error` : undefined
 
   return (
     <form
@@ -77,16 +84,19 @@ export default function AeoAssessmentForm() {
       <input type="hidden" name="_subject" value="New AEO assessment request" />
       <input type="hidden" name="_redirect" value={redirectUrl} />
       <input type="hidden" name="form_name" value="aeo_assessment" />
+      <FormspreeOpsFields formKey="aeo_assessment" />
       <input
         type="text"
         name="_gotcha"
         tabIndex={-1}
         autoComplete="off"
-        style={{ display: "none" }}
+        style={{ display: 'none' }}
         aria-hidden="true"
       />
 
-      <p className="text-sm text-muted-foreground">Get a free AEO assessment with next-step recommendations.</p>
+      <p className="text-sm text-muted-foreground">
+        Get a free AEO assessment with next-step recommendations.
+      </p>
 
       <div className="space-y-2">
         <Label htmlFor="aeo-email">Email</Label>
@@ -97,12 +107,12 @@ export default function AeoAssessmentForm() {
           required
           placeholder="you@company.com"
           autoComplete="email"
-          aria-invalid={Boolean(getError("email"))}
-          aria-describedby={getDescribedBy("email")}
+          aria-invalid={Boolean(getError('email'))}
+          aria-describedby={getDescribedBy('email')}
           onBlur={handleBlur}
           onInput={handleInput}
         />
-        {renderError("email")}
+        {renderError('email')}
       </div>
 
       <div className="space-y-2">
@@ -115,12 +125,12 @@ export default function AeoAssessmentForm() {
           placeholder="https://www.yourbusiness.com"
           autoComplete="url"
           inputMode="url"
-          aria-invalid={Boolean(getError("website"))}
-          aria-describedby={getDescribedBy("website")}
+          aria-invalid={Boolean(getError('website'))}
+          aria-describedby={getDescribedBy('website')}
           onBlur={handleBlur}
           onInput={handleInput}
         />
-        {renderError("website")}
+        {renderError('website')}
       </div>
 
       <div className="space-y-3 pt-2">
@@ -129,9 +139,11 @@ export default function AeoAssessmentForm() {
           variant="inverted"
           className="w-full rounded-md py-6 text-base font-semibold"
           disabled={isSubmitting}
-          onClick={() => trackCTAClick("get free aeo assessment", "aeo hero form")}
+          onClick={() =>
+            trackCTAClick('get free aeo assessment', 'aeo hero form')
+          }
         >
-          {isSubmitting ? "Submitting…" : "Get free AEO assessment →"}
+          {isSubmitting ? 'Submitting…' : 'Get free AEO assessment →'}
         </Button>
 
         {submitError ? (
@@ -140,7 +152,10 @@ export default function AeoAssessmentForm() {
           </Alert>
         ) : null}
 
-        <p className="text-xs text-muted-foreground">We only use this information to send your AEO assessment and next-step recommendations.</p>
+        <p className="text-xs text-muted-foreground">
+          We only use this information to send your AEO assessment and next-step
+          recommendations.
+        </p>
       </div>
     </form>
   )

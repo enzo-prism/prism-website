@@ -20,6 +20,7 @@ import {
   storePendingApplyLeadContext,
   trackEvent,
 } from '@/utils/analytics'
+import { FormspreeOpsFields } from './FormspreeOpsFields'
 
 import styles from '@/components/get-started/get-started-page.module.css'
 
@@ -127,8 +128,7 @@ function isTextEditingTarget(target: EventTarget | null) {
   if (target instanceof HTMLSelectElement) return true
 
   return (
-    target instanceof HTMLInputElement &&
-    !NON_TEXT_INPUT_TYPES.has(target.type)
+    target instanceof HTMLInputElement && !NON_TEXT_INPUT_TYPES.has(target.type)
   )
 }
 
@@ -1031,8 +1031,7 @@ export default function GetStartedForm() {
                   label: option.label,
                   onSelect: setPrimaryGoal,
                   shouldFocusOnStepEntry:
-                    option.value ===
-                    (primaryGoal || PRIORITY_OPTIONS[0].value),
+                    option.value === (primaryGoal || PRIORITY_OPTIONS[0].value),
                 }),
               )}
             </div>
@@ -1275,6 +1274,7 @@ export default function GetStartedForm() {
       />
       <input type="hidden" name="_redirect" value={redirectUrl} />
       <input type="hidden" name="form_name" value="growth_application" />
+      <FormspreeOpsFields formKey="apply" />
       <input
         type="text"
         name="_gotcha"

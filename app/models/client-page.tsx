@@ -8,6 +8,10 @@ import HeroBackgroundLoop from '@/components/HeroBackgroundLoop'
 import Navbar from '@/components/navbar'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import {
+  appendFormspreeOpsMetadata,
+  FormspreeOpsFields,
+} from '@/components/forms/FormspreeOpsFields'
 import PixelishImg from '@/components/pixelish/PixelishImg'
 import { pixelishForEmoji } from '@/lib/pixelish-emoji'
 import { appendAttributionToFormData } from '@/lib/marketing-attribution'
@@ -160,6 +164,7 @@ export default function ModelsPageClient() {
     formData.set('preferred_contact_method', selectedContactMethod)
     formData.set('_subject', 'New Prism models application')
     formData.set('form_name', 'model_application')
+    appendFormspreeOpsMetadata(formData, 'models')
     appendAttributionToFormData(formData)
 
     try {
@@ -388,7 +393,12 @@ export default function ModelsPageClient() {
                   name="_subject"
                   value="New Prism models application"
                 />
-                <input type="hidden" name="form_name" value="model_application" />
+                <input
+                  type="hidden"
+                  name="form_name"
+                  value="model_application"
+                />
+                <FormspreeOpsFields formKey="models" />
                 <input
                   type="text"
                   name="_gotcha"

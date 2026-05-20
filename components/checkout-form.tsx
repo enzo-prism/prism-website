@@ -1,56 +1,65 @@
-"use client"
+'use client'
 
-import { useState } from "react"
-import { motion, AnimatePresence } from "framer-motion"
-import { Loader2, AlertCircle } from "lucide-react"
-import { useRouter } from "next/navigation"
-import { Alert, AlertDescription } from "@/components/ui/alert"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
-import { Label } from "@/components/ui/label"
-import { getSubmissionAttribution } from "@/lib/marketing-attribution"
-import { trackFormSubmission } from "@/utils/analytics"
-import PixelishImg from "@/components/pixelish/PixelishImg"
-import { cn } from "@/lib/utils"
+import { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { Loader2, AlertCircle } from 'lucide-react'
+import { useRouter } from 'next/navigation'
+import { Alert, AlertDescription } from '@/components/ui/alert'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Textarea } from '@/components/ui/textarea'
+import { Label } from '@/components/ui/label'
+import { getSubmissionAttribution } from '@/lib/marketing-attribution'
+import { trackFormSubmission } from '@/utils/analytics'
+import PixelishImg from '@/components/pixelish/PixelishImg'
+import { cn } from '@/lib/utils'
+import { getFormspreeOpsMetadata } from '@/components/forms/FormspreeOpsFields'
 
 interface CheckoutFormProps {
-  plan: "launch" | "grow" | "scale"
+  plan: 'launch' | 'grow' | 'scale'
 }
 
 export default function CheckoutForm({ plan }: CheckoutFormProps) {
   const router = useRouter()
   const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    message: "",
-    preferredContact: "email" as "email" | "phone",
+    name: '',
+    email: '',
+    phone: '',
+    message: '',
+    preferredContact: 'email' as 'email' | 'phone',
   })
-  const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle")
-  const [errorMessage, setErrorMessage] = useState("")
+  const [status, setStatus] = useState<
+    'idle' | 'submitting' | 'success' | 'error'
+  >('idle')
+  const [errorMessage, setErrorMessage] = useState('')
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    setStatus("submitting")
-    setErrorMessage("")
+    setStatus('submitting')
+    setErrorMessage('')
 
     const formEndpoints = {
-      launch: "https://formspree.io/f/xdkjweov",
-      grow: "https://formspree.io/f/mqajypqo",
-      scale: "https://formspree.io/f/mzzwjeap",
+      launch: 'https://formspree.io/f/xdkjweov',
+      grow: 'https://formspree.io/f/mqajypqo',
+      scale: 'https://formspree.io/f/mzzwjeap',
+    }
+    const formKeys = {
+      launch: 'checkout_launch',
+      grow: 'checkout_grow',
+      scale: 'checkout_scale',
     }
 
     try {
       const response = await fetch(formEndpoints[plan], {
-        method: "POST",
-        headers: { 
-          "Content-Type": "application/json",
-          "Accept": "application/json"
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
         },
         body: JSON.stringify({
           plan: plan,
           ...formData,
+          ...getFormspreeOpsMetadata(formKeys[plan]),
           ...getSubmissionAttribution(),
         }),
       })
@@ -58,23 +67,31 @@ export default function CheckoutForm({ plan }: CheckoutFormProps) {
       const data = await response.json()
 
       if (!response.ok) {
-        const error = data.errors?.map((e: any) => e.message).join(", ") || "Something went wrong"
+        const error =
+          data.errors?.map((e: any) => e.message).join(', ') ||
+          'Something went wrong'
         throw new Error(error)
       }
 
-      setStatus("success")
-      trackFormSubmission(`checkout_${plan}`, "checkout_form", {
-        lead_type: "checkout_inquiry",
+      setStatus('success')
+      trackFormSubmission(`checkout_${plan}`, 'checkout_form', {
+        lead_type: 'checkout_inquiry',
       })
       router.push(`/checkout/${plan}/thank-you`)
     } catch (error) {
-      console.error("Submission error:", error)
-      setStatus("error")
-      setErrorMessage(error instanceof Error ? error.message : "Failed to submit. Please try again.")
+      console.error('Submission error:', error)
+      setStatus('error')
+      setErrorMessage(
+        error instanceof Error
+          ? error.message
+          : 'Failed to submit. Please try again.',
+      )
     }
   }
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
     const { name, value } = e.target
     setFormData((prev) => ({ ...prev, [name]: value }))
   }
@@ -128,51 +145,65 @@ export default function CheckoutForm({ plan }: CheckoutFormProps) {
         <div className="space-y-3">
           <Label>Ideal Contact Method</Label>
           <div className="flex gap-4">
-            <label className={cn(
-              "flex-1 cursor-pointer rounded-md border p-4 text-center text-xs font-semibold uppercase font-pixel tracking-[0.14em] transition-[background-color,border-color,color,box-shadow] duration-200",
-              formData.preferredContact === "email" 
-                ? "border-primary bg-primary text-primary-foreground ring-2 ring-ring/50 ring-offset-2 ring-offset-background" 
-                : "border-border/60 bg-card/30 text-muted-foreground hover:bg-card/45 hover:text-foreground"
-            )}>
+            <label
+              className={cn(
+                'flex-1 cursor-pointer rounded-md border p-4 text-center text-xs font-semibold uppercase font-pixel tracking-[0.14em] transition-[background-color,border-color,color,box-shadow] duration-200',
+                formData.preferredContact === 'email'
+                  ? 'border-primary bg-primary text-primary-foreground ring-2 ring-ring/50 ring-offset-2 ring-offset-background'
+                  : 'border-border/60 bg-card/30 text-muted-foreground hover:bg-card/45 hover:text-foreground',
+              )}
+            >
               <input
                 type="radio"
                 name="preferredContact"
                 value="email"
                 className="sr-only"
-                checked={formData.preferredContact === "email"}
-                onChange={() => setFormData(prev => ({ ...prev, preferredContact: "email" }))}
+                checked={formData.preferredContact === 'email'}
+                onChange={() =>
+                  setFormData((prev) => ({
+                    ...prev,
+                    preferredContact: 'email',
+                  }))
+                }
               />
               <span className="inline-flex items-center justify-center gap-2">
                 <PixelishImg
                   src="/pixelish/mail.svg"
                   alt=""
                   size={16}
-                  invert={formData.preferredContact !== "email"}
+                  invert={formData.preferredContact !== 'email'}
                   aria-hidden="true"
                 />
                 <span>Email</span>
               </span>
             </label>
-            <label className={cn(
-              "flex-1 cursor-pointer rounded-md border p-4 text-center text-xs font-semibold uppercase font-pixel tracking-[0.14em] transition-[background-color,border-color,color,box-shadow] duration-200",
-              formData.preferredContact === "phone" 
-                ? "border-primary bg-primary text-primary-foreground ring-2 ring-ring/50 ring-offset-2 ring-offset-background" 
-                : "border-border/60 bg-card/30 text-muted-foreground hover:bg-card/45 hover:text-foreground"
-            )}>
+            <label
+              className={cn(
+                'flex-1 cursor-pointer rounded-md border p-4 text-center text-xs font-semibold uppercase font-pixel tracking-[0.14em] transition-[background-color,border-color,color,box-shadow] duration-200',
+                formData.preferredContact === 'phone'
+                  ? 'border-primary bg-primary text-primary-foreground ring-2 ring-ring/50 ring-offset-2 ring-offset-background'
+                  : 'border-border/60 bg-card/30 text-muted-foreground hover:bg-card/45 hover:text-foreground',
+              )}
+            >
               <input
                 type="radio"
                 name="preferredContact"
                 value="phone"
                 className="sr-only"
-                checked={formData.preferredContact === "phone"}
-                onChange={() => setFormData(prev => ({ ...prev, preferredContact: "phone" }))}
+                checked={formData.preferredContact === 'phone'}
+                onChange={() =>
+                  setFormData((prev) => ({
+                    ...prev,
+                    preferredContact: 'phone',
+                  }))
+                }
               />
               <span className="inline-flex items-center justify-center gap-2">
                 <PixelishImg
                   src="/pixelish/device-phone.svg"
                   alt=""
                   size={16}
-                  invert={formData.preferredContact !== "phone"}
+                  invert={formData.preferredContact !== 'phone'}
                   aria-hidden="true"
                 />
                 <span>iMessage</span>
@@ -182,7 +213,9 @@ export default function CheckoutForm({ plan }: CheckoutFormProps) {
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="message">Anything else we should know? (Optional)</Label>
+          <Label htmlFor="message">
+            Anything else we should know? (Optional)
+          </Label>
           <Textarea
             id="message"
             name="message"
@@ -194,10 +227,10 @@ export default function CheckoutForm({ plan }: CheckoutFormProps) {
         </div>
 
         <AnimatePresence>
-          {status === "error" && (
+          {status === 'error' && (
             <motion.div
               initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
+              animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
               className="overflow-hidden"
             >
@@ -211,17 +244,17 @@ export default function CheckoutForm({ plan }: CheckoutFormProps) {
 
         <Button
           type="submit"
-          disabled={status === "submitting"}
+          disabled={status === 'submitting'}
           size="lg"
           className="w-full rounded-md"
         >
-          {status === "submitting" ? (
+          {status === 'submitting' ? (
             <>
               <Loader2 className="mr-2 h-4 w-4 animate-spin" />
               Securing Spot...
             </>
           ) : (
-            "Submit"
+            'Submit'
           )}
         </Button>
       </form>

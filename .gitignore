@@ -29,6 +29,12 @@ test-results/
 # local dev helper files
 .next-dev.*
 
+# Local agent/browser scratch artifacts
+/.claude/
+/.codex-artifacts/
+/.playwright-mcp/
+tmp-*.png
+
 # SEO audit artifacts
 /seo/lighthouse-*.json
 

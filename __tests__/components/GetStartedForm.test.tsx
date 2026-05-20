@@ -130,6 +130,15 @@ describe('GetStartedForm', () => {
       'name',
       'form_name',
     )
+    expect(container.querySelector('input[name="site"]')).toHaveValue(
+      'prism-site',
+    )
+    expect(container.querySelector('input[name="form_key"]')).toHaveValue(
+      'apply',
+    )
+    expect(container.querySelector('input[name="_codex_test"]')).toHaveValue(
+      'false',
+    )
     expect(
       screen.getByRole('button', { name: /continue/i }),
     ).toBeInTheDocument()
@@ -294,7 +303,10 @@ describe('GetStartedForm', () => {
     fireEvent.change(reviewLinkInput, {
       target: { value: 'design-prism.com' },
     })
-    fireEvent.keyDown(reviewLinkInput, { key: 'ArrowRight', code: 'ArrowRight' })
+    fireEvent.keyDown(reviewLinkInput, {
+      key: 'ArrowRight',
+      code: 'ArrowRight',
+    })
 
     expect(
       screen.getByRole('heading', {
@@ -383,7 +395,9 @@ describe('GetStartedForm', () => {
       }),
     )
 
-    fireEvent.click(screen.getByRole('button', { name: /submit audit request/i }))
+    fireEvent.click(
+      screen.getByRole('button', { name: /submit audit request/i }),
+    )
 
     await waitFor(() => {
       expect(fetchSpy).toHaveBeenCalledTimes(1)
@@ -441,9 +455,7 @@ describe('GetStartedForm', () => {
     const formData = options.body as FormData
     expect(formData.get('has_website')).toBe('yes')
     expect(formData.get('review_link')).toBe('https://design-prism.com')
-    expect(formData.get('primary_goal')).toBe(
-      'I need more patient calls',
-    )
+    expect(formData.get('primary_goal')).toBe('I need more patient calls')
     expect(formData.get('service_focus')).toBe('Dental website')
     expect(formData.getAll('service_interest[]')).toEqual(['Dental website'])
     expect(formData.get('budget')).toBe('$1.5k to $3k')
@@ -454,6 +466,9 @@ describe('GetStartedForm', () => {
     expect(formData.get('additional_context')).toContain('cleaner site')
     expect(formData.get('_subject')).toBe('New Prism practice audit request')
     expect(formData.get('form_name')).toBe('growth_application')
+    expect(formData.get('site')).toBe('prism-site')
+    expect(formData.get('form_key')).toBe('apply')
+    expect(formData.get('_codex_test')).toBe('false')
   })
 
   it('keeps the user on step 2 with inline error state when submission fails', async () => {
@@ -484,7 +499,9 @@ describe('GetStartedForm', () => {
     fireEvent.click(screen.getByRole('button', { name: /continue/i }))
     fireEvent.click(screen.getByRole('button', { name: /review/i }))
 
-    fireEvent.click(screen.getByRole('button', { name: /submit audit request/i }))
+    fireEvent.click(
+      screen.getByRole('button', { name: /submit audit request/i }),
+    )
 
     await waitFor(() => {
       expect(fetchSpy).toHaveBeenCalledTimes(1)
