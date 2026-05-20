@@ -39,12 +39,13 @@ const { handleSubmit, getError, isSubmitting } = useFormValidation({
 3. On success, push to one of the thank-you routes.
 4. Add your form component to the relevant route page.
 5. Give the real `<form>` element a stable `id` and `name`. GA4 enhanced measurement uses those DOM attributes for `form_id` and `form_name`; hidden inputs alone are not enough.
-6. Include the standard Formspree ops metadata from `components/forms/FormspreeOpsFields.tsx`:
+6. Do not put `utm_*` parameters on internal thank-you redirects. If the thank-you page needs a mode marker, use `source=...` so real acquisition UTMs stay trustworthy.
+7. Include the standard Formspree ops metadata from `components/forms/FormspreeOpsFields.tsx`:
    - Use `<FormspreeOpsFields formKey="...">` for regular `<form>` submissions.
    - Use `appendFormspreeOpsMetadata(formData, "...")` before imperative `FormData` posts.
    - Use `getFormspreeOpsMetadata("...")` when the endpoint expects JSON.
    - The helper adds `site`, `form_key`, `environment`, `_codex_test`, `page_path`, `referrer`, and `utm_*` fields. The `form_key` should match the Formspree ops registry and may differ from the user-facing `form_name`.
-7. Use the right conversion mode:
+8. Use the right conversion mode:
    - Default pending mode for sales/business forms that redirect to a thank-you page with `LeadSuccessTracker`.
    - `conversionMode: "immediate"` for confirmed success states that stay on-page.
    - `sendGoogleAdsConversion: false` for scholarship, model, newsletter, community, or other non-sales submissions.

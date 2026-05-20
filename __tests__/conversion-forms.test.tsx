@@ -5,10 +5,12 @@ import {
   waitFor,
   within,
 } from '@testing-library/react'
+import type { ReactNode } from 'react'
 
 import BookAShootForm from '@/app/book-a-shoot/BookAShootForm'
 import ModelsPageClient from '@/app/models/client-page'
 import ScholarshipPageClient from '@/app/scholarship/ScholarshipPageClient'
+import AiWebsiteLaunchForm from '@/components/ai-website-launch/AiWebsiteLaunchForm'
 
 const pushMock = jest.fn()
 jest.mock('next/navigation', () => ({
@@ -38,6 +40,11 @@ jest.mock('@/utils/analytics', () => ({
 jest.mock('@/components/HeroBackgroundLoop', () => ({
   __esModule: true,
   default: () => <div data-testid="hero-background-loop" />,
+}))
+
+jest.mock('@/components/animations/ripple-highlight', () => ({
+  __esModule: true,
+  default: ({ children }: { children: ReactNode }) => <>{children}</>,
 }))
 
 function createMockResponse(ok = true): Response {
@@ -199,5 +206,44 @@ describe('secondary conversion forms', () => {
     expect(formData.get('form_key')).toBe('models')
     expect(formData.get('_codex_test')).toBe('false')
     expect(formData.get('gclid')).toBe('GCLID-123')
+  })
+
+  it('keeps the AI launch thank-you redirect from polluting GA attribution', async () => {
+    fetchSpy.mockResolvedValue(createMockResponse(true))
+    render(<AiWebsiteLaunchForm submitLabel="Start my AI launch" />)
+
+    fireEvent.change(screen.getByLabelText(/^name$/i), {
+      target: { value: 'Jordan Lee' },
+    })
+    fireEvent.change(screen.getByLabelText(/^email$/i), {
+      target: { value: 'jordan@example.com' },
+    })
+    fireEvent.change(screen.getByLabelText(/business name/i), {
+      target: { value: 'Prism Demo Co' },
+    })
+
+    fireEvent.click(screen.getByRole('button', { name: /start my ai launch/i }))
+
+    await waitFor(() => {
+      expect(fetchSpy).toHaveBeenCalledTimes(1)
+      expect(trackFormSubmission).toHaveBeenCalledWith(
+        'ai_website_launch',
+        'final_cta_form',
+      )
+      expect(pushMock).toHaveBeenCalledWith(
+        '/thank-you?source=ai-website-launch',
+      )
+    })
+
+    const [, options] = fetchSpy.mock.calls[0] as [
+      RequestInfo | URL,
+      RequestInit,
+    ]
+    const formData = options.body as FormData
+    expect(formData.get('form_name')).toBe('ai_website_launch')
+    expect(formData.get('_redirect')).toBe(
+      'https://www.design-prism.com/thank-you?source=ai-website-launch',
+    )
+    expect(String(formData.get('_redirect'))).not.toContain('utm_')
   })
 })

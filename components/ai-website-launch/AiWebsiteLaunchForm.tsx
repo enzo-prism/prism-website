@@ -10,8 +10,8 @@ import { useFormValidation } from '@/hooks/use-form-validation'
 import { trackCTAClick, trackFormSubmission } from '@/utils/analytics'
 
 const FORM_ENDPOINT = 'https://formspree.io/f/manawlzn'
-const REDIRECT_URL =
-  'https://www.design-prism.com/thank-you?utm_source=google_ads'
+const THANK_YOU_PATH = '/thank-you?source=ai-website-launch'
+const REDIRECT_URL = `https://www.design-prism.com${THANK_YOU_PATH}`
 
 interface AiWebsiteLaunchFormProps {
   submitLabel: string
@@ -50,7 +50,7 @@ export default function AiWebsiteLaunchForm({
 
         trackFormSubmission('ai_website_launch', 'final_cta_form')
         form.reset()
-        router.push('/thank-you?utm_source=google_ads')
+        router.push(THANK_YOU_PATH)
       },
     })
 
