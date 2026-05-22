@@ -14,6 +14,12 @@ const CASE_STUDIES_HERO_VIDEO =
 const CASE_STUDIES_HERO_POSTER =
   'https://res.cloudinary.com/dhqpqfw6w/image/upload/v1771353245/Screenshot_2026-02-17_at_10.33.32_AM_lsxdpz.webp'
 
+const dentalFirstCaseStudies = [...CASE_STUDIES].sort((a, b) => {
+  if (a.category === 'dentistry' && b.category !== 'dentistry') return -1
+  if (a.category !== 'dentistry' && b.category === 'dentistry') return 1
+  return 0
+})
+
 export default function CaseStudiesPage() {
   return (
     <div className="flex min-h-screen flex-col">
@@ -50,15 +56,15 @@ export default function CaseStudiesPage() {
                   recent client work
                 </h1>
                 <p className="mt-5 max-w-2xl text-sm text-muted-foreground sm:text-base">
-                  Real redesigns, growth experiments, and execution playbooks
-                  built with clients across dental, local, nonprofit, and
-                  consulting brands.
+                  Dental growth systems first: websites, SEO, reviews, ads,
+                  photography, and tracking that turn patient searches into
+                  booked appointments.
                 </p>
               </div>
             </div>
 
             <div className="mt-10 md:mt-12">
-              <CaseStudiesList studies={CASE_STUDIES} />
+              <CaseStudiesList studies={dentalFirstCaseStudies} />
             </div>
           </div>
         </section>
@@ -66,14 +72,14 @@ export default function CaseStudiesPage() {
       <Footer />
       <CollectionPageSchema
         name="Prism case studies"
-        description="Growth wins from Prism clients across dental, local, nonprofit, and consulting businesses."
+        description="Dental growth wins from Prism clients, with selected cross-industry proof from local, nonprofit, and consulting businesses."
         url="https://www.design-prism.com/case-studies"
         isPartOfId="https://www.design-prism.com/#website"
       />
       <ItemListSchema
         name="Prism case study highlights"
         url="https://www.design-prism.com/case-studies"
-        items={CASE_STUDIES.map((study) => ({
+        items={dentalFirstCaseStudies.map((study) => ({
           name: study.title,
           description: study.description,
           url: `https://www.design-prism.com/case-studies/${study.slug}`,

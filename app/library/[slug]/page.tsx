@@ -51,6 +51,7 @@ const buildMetadata = (post: LibraryPost): Metadata => {
       images: ogImage ? [ogImage] : undefined,
     },
     alternates: { canonical },
+    robots: { index: false, follow: false },
   }
 }
 

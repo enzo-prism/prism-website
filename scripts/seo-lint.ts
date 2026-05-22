@@ -1,5 +1,6 @@
 import fs from "fs"
 import path from "path"
+import { isRouteIndexable } from "../lib/seo/search-visibility.ts"
 
 type InventoryRow = Record<string, string>
 
@@ -10,7 +11,6 @@ type Finding = {
 
 const ROOT = process.cwd()
 const INVENTORY_CSV = path.join(ROOT, "seo", "inventory.csv")
-const SITEMAP_FILE = path.join(ROOT, "app", "sitemap.ts")
 const ROBOTS_FILE = path.join(ROOT, "app", "robots.ts")
 
 function parseCsv(content: string): string[][] {
@@ -90,17 +90,6 @@ function countBrandSuffixes(title: string) {
   return (title.match(/\|\s*Prism/gi) || []).length
 }
 
-function extractStringArray(sourceText: string, variableName: string): string[] {
-  const escaped = variableName.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
-  const arrayRegex = new RegExp(`const\\s+${escaped}\\s*=\\s*\\[([\\s\\S]*?)\\]`, "m")
-  const setRegex = new RegExp(`const\\s+${escaped}\\s*=\\s*new\\s+Set\\s*\\(\\s*\\[([\\s\\S]*?)\\]\\s*\\)`, "m")
-  const match = sourceText.match(arrayRegex) ?? sourceText.match(setRegex)
-  if (!match) return []
-
-  const items = Array.from(match[1].matchAll(/"([^"]+)"/g)).map((hit) => hit[1])
-  return items
-}
-
 function extractDisallowRules(sourceText: string): string[] {
   const disallows: string[] = []
   const regex = /disallow:\s*\[([\s\S]*?)\]/g
@@ -113,9 +102,8 @@ function extractDisallowRules(sourceText: string): string[] {
   return Array.from(new Set(disallows))
 }
 
-function isExcludedBySitemap(route: string, exact: Set<string>, prefixes: string[]) {
-  if (exact.has(route)) return true
-  return prefixes.some((prefix) => route === prefix || route.startsWith(`${prefix}/`))
+function isExcludedBySitemap(row: InventoryRow) {
+  return row.robots === "noindex" && !isRouteIndexable(row.route)
 }
 
 function lint() {
@@ -188,16 +176,12 @@ function lint() {
     }
   })
 
-  const sitemapText = fs.readFileSync(SITEMAP_FILE, "utf8")
-  const noindexRouteSet = new Set(extractStringArray(sitemapText, "NOINDEX_ROUTES"))
-  const noindexPrefixes = extractStringArray(sitemapText, "NOINDEX_PREFIXES")
-
   const robotsText = fs.readFileSync(ROBOTS_FILE, "utf8")
   const disallowRules = extractDisallowRules(robotsText)
 
   const utilityNoindex = rows.filter((row) => row.indexability_class === "utility_noindex")
   utilityNoindex.forEach((row) => {
-    if (!isExcludedBySitemap(row.route, noindexRouteSet, noindexPrefixes)) {
+    if (!isExcludedBySitemap(row)) {
       findings.push({
         code: "noindex_missing_from_sitemap_exclusions",
         detail: row.route,

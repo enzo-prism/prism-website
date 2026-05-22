@@ -78,6 +78,10 @@ import { metadata as pricingDentalMetadata } from "@/app/pricing-dental/page"
 import { WebsiteSchema } from "@/components/schema-markup"
 import { metadata as tiktokMetadata } from "@/app/tiktok/page"
 import { metadata as youtubeMetadata } from "@/app/youtube/page"
+import {
+  isBlogPostIndexable,
+  isRouteIndexable,
+} from "@/lib/seo/search-visibility"
 
 const NOINDEX_ROBOTS = { index: false, follow: false }
 
@@ -118,19 +122,46 @@ describe("SEO indexability guards", () => {
 
     expect(urls).not.toEqual(expect.arrayContaining([
       "https://www.design-prism.com/ai",
+      "https://www.design-prism.com/ai-agents",
       "https://www.design-prism.com/ai-website-launch",
+      "https://www.design-prism.com/apps",
+      "https://www.design-prism.com/careers",
+      "https://www.design-prism.com/designs",
       "https://www.design-prism.com/growth",
       "https://www.design-prism.com/hottest-content",
       "https://www.design-prism.com/ig",
+      "https://www.design-prism.com/library",
+      "https://www.design-prism.com/local-seo-agency",
+      "https://www.design-prism.com/local-seo-services",
       "https://www.design-prism.com/models",
       "https://www.design-prism.com/offers",
       "https://www.design-prism.com/offers/ai-seo-boost",
       "https://www.design-prism.com/offers/summer-website-makeover",
       "https://www.design-prism.com/one-time-fee",
+      "https://www.design-prism.com/openai",
+      "https://www.design-prism.com/podcast",
       "https://www.design-prism.com/pricing-dental",
+      "https://www.design-prism.com/refer",
+      "https://www.design-prism.com/software",
       "https://www.design-prism.com/tiktok",
       "https://www.design-prism.com/youtube",
     ]))
+  })
+
+  it("keeps the shared search policy dental-first", () => {
+    expect(isRouteIndexable("/dental-website")).toBe(true)
+    expect(isRouteIndexable("/dental-practice-seo-expert")).toBe(true)
+    expect(isRouteIndexable("/ai-agents/dental")).toBe(true)
+    expect(isRouteIndexable("/apps")).toBe(false)
+    expect(isRouteIndexable("/openai/site-rebuild")).toBe(false)
+    expect(isRouteIndexable("/why-nonprofits-love-prism")).toBe(false)
+  })
+
+  it("curates blog posts for dental and local-growth search intent", () => {
+    expect(isBlogPostIndexable("dental-seo-guide")).toBe(true)
+    expect(isBlogPostIndexable("ai-search-for-dental-practice")).toBe(true)
+    expect(isBlogPostIndexable("openclaw-manus-codex-scaling-business")).toBe(false)
+    expect(isBlogPostIndexable("breaking-free-education-psyop")).toBe(false)
   })
 
   it("does not advertise a broken site search action in website schema", () => {

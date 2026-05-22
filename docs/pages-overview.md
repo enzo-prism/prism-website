@@ -2,6 +2,13 @@
 
 Quick reference for the pages we edit most often.
 
+## Dental-First Search Visibility
+
+- `lib/seo/search-visibility.ts` is the source of truth for which routes and blog posts are indexable.
+- Prism's public search/LLM footprint should read as dental growth systems: websites, SEO/AI search, reviews, ads, tracking, photography, proof, pricing, and Free Practice Audit.
+- Broad pages can stay live for direct users, but they should remain noindex and out of `app/sitemap.ts` / `public/llms.txt` unless they become part of that dental-first story.
+- All case study detail pages remain indexable because they are unique proof, while dental case studies should stay visually and machine-readably prioritized.
+
 ## Case Studies (`app/case-studies/*`)
 
 - Individual case study pages live under `app/case-studies/<slug>/` and now render through the shared minimal template in `components/case-study-minimal.tsx`.
@@ -272,7 +279,7 @@ Keeping these files tidy makes copy refreshes and landing-page experiments fast.
 
 - Added page route `/aeo` with dedicated lead capture and an outlined AEO framework (`content`, `technical`, `authority`, `measurement`) plus FAQs.
 - Form route wiring uses `components/forms/AeoAssessmentForm.tsx` (`email` + `website`, Formspree POST, dedicated `_redirect` target `/aeo-thank-you`).
-- Thank-you route is `/aeo-thank-you` and is excluded from sitemap indexing via `app/sitemap.ts` (`NOINDEX_ROUTES`).
+- Thank-you route is `/aeo-thank-you` and is excluded from search via the shared policy in `lib/seo/search-visibility.ts`.
 - Discoverability touchpoints added:
   - inline link from `/ai-seo-services`
   - inline link from `/seo`
@@ -286,5 +293,5 @@ Keeping these files tidy makes copy refreshes and landing-page experiments fast.
     - `app/aeo-thank-you/page.tsx` (conversion messaging + `LeadSuccessTracker`)
     - `components/forms/AeoAssessmentForm.tsx` + `app/sitemap.ts` when URL/thank-you behavior changes
   - Keep canonical output stable for `/aeo` (`buildRouteMetadata`) and keep `/aeo-thank-you` noindex.
-  - Keep the thank-you route out of the sitemap via `NOINDEX_ROUTES`.
+  - Keep the thank-you route out of the sitemap via `lib/seo/search-visibility.ts`.
   - Preserve discoverability links (`/ai-seo-services`, `/seo`) so this funnel remains in the AEO/SEO path.

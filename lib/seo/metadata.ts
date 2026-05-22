@@ -8,6 +8,7 @@ import {
   buildMinimalDescription,
   normalizeTitleStem,
 } from "@/lib/seo/rules"
+import { isRouteIndexable } from "@/lib/seo/search-visibility"
 
 export type RouteSeoInput = {
   titleStem: string
@@ -31,7 +32,7 @@ export function buildRouteMetadata(input: RouteSeoInput): Metadata {
   const description = buildMinimalDescription(input.titleStem, input.description)
   const canonical = canonicalUrl(input.path)
   const ogImage = imageFromInput(input.ogImage)
-  const index = input.index !== false
+  const index = input.index !== false && isRouteIndexable(input.path)
 
   return {
     title: {

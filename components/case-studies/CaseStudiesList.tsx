@@ -31,12 +31,24 @@ export default function CaseStudiesList({ studies }: { studies: CaseStudyListIte
   const [activeCategory, setActiveCategory] = useState<string>("all")
 
   const categories = useMemo(() => {
-    const unique = Array.from(new Set(studies.map((study) => study.category))).sort()
+    const unique = Array.from(new Set(studies.map((study) => study.category))).sort(
+      (a, b) => {
+        if (a === "dentistry") return -1
+        if (b === "dentistry") return 1
+        return a.localeCompare(b)
+      },
+    )
     return ["all", ...unique]
   }, [studies])
 
   const filteredStudies = useMemo(() => {
-    if (activeCategory === "all") return studies
+    if (activeCategory === "all") {
+      return [...studies].sort((a, b) => {
+        if (a.category === "dentistry" && b.category !== "dentistry") return -1
+        if (a.category !== "dentistry" && b.category === "dentistry") return 1
+        return 0
+      })
+    }
     return studies.filter((study) => study.category === activeCategory)
   }, [activeCategory, studies])
 

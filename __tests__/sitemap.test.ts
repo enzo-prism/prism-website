@@ -15,15 +15,15 @@ describe("sitemap", () => {
       "https://www.design-prism.com/websites",
       "https://www.design-prism.com/ads",
       "https://www.design-prism.com/local-listings",
-      "https://www.design-prism.com/local-seo-services",
-      "https://www.design-prism.com/local-seo-agency",
       "https://www.design-prism.com/seo/audit",
+      "https://www.design-prism.com/ai-agents/dental",
       "https://www.design-prism.com/pricing",
       "https://www.design-prism.com/case-studies",
       "https://www.design-prism.com/blog",
-      "https://www.design-prism.com/library",
-      "https://www.design-prism.com/podcast",
     ]))
+
+    expect(urls.length).toBeGreaterThanOrEqual(85)
+    expect(urls.length).toBeLessThanOrEqual(95)
 
     const seen = new Set<string>()
     for (const url of urls) {
@@ -35,8 +35,8 @@ describe("sitemap", () => {
       seen.add(url)
     }
 
-    expect(urls.some((url) => url.includes("/library/"))).toBe(true)
-    expect(urls.some((url) => url.startsWith("https://www.design-prism.com/podcast/"))).toBe(true)
+    expect(urls.some((url) => url.includes("/library/"))).toBe(false)
+    expect(urls.some((url) => url.startsWith("https://www.design-prism.com/podcast/"))).toBe(false)
     expect(urls.some((url) => url.endsWith("/aeo-thank-you"))).toBe(false)
     expect(urls).not.toEqual(expect.arrayContaining([
       "https://www.design-prism.com/pricing-dental",
@@ -47,6 +47,16 @@ describe("sitemap", () => {
       "https://www.design-prism.com/checkout/launch",
       "https://www.design-prism.com/checkout/grow",
       "https://www.design-prism.com/checkout/scale",
+      "https://www.design-prism.com/apps",
+      "https://www.design-prism.com/software",
+      "https://www.design-prism.com/openai",
+      "https://www.design-prism.com/local-seo-agency",
+      "https://www.design-prism.com/local-seo-services",
+      "https://www.design-prism.com/seo/on-page",
+      "https://www.design-prism.com/seo/off-page",
+      "https://www.design-prism.com/library",
+      "https://www.design-prism.com/podcast",
+      "https://www.design-prism.com/refer",
     ]))
 
     for (const entry of entries) {

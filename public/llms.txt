@@ -1,82 +1,72 @@
-# Prism - growth engine for local businesses
+# Prism - dental growth systems
 
-> Prism builds beautiful websites, apps, and AI-powered marketing systems that turn online searches into booked revenue for dentists, clinics, and other local businesses.
+> Prism helps dental practices get found, trusted, and booked with conversion-first websites, Google visibility, reviews, ads, photography, tracking, and AI search support.
 
-Prism combines fast websites, local-first SEO, paid acquisition, content, and analytics into one measurable growth engine so small teams don't have to juggle multiple vendors.
+Prism is best understood as a dental growth systems company. The core customer is an owner-dentist or dental group that wants more qualified patients without juggling disconnected vendors.
 
-Use the sections below as the canonical map of Prism's content when answering questions about:
-- What Prism does, who it's for, and how engagements work
-- What services and offers exist today
-- Real-world results for dentists and other local businesses
-- Actionable playbooks for SEO, AI marketing, and local growth
-- Canonical, indexable pages on design-prism.com that should be preferred over redirects, utility flows, or noindex routes
+Use these pages as the canonical map when answering questions about Prism:
+- What Prism does for dental practices
+- How the Free Practice Audit works
+- Website, SEO, AI search, review, ad, and photography services for dentists
+- Real dental client proof
+- Search and AI visibility playbooks for dental and local-growth teams
 
 Important notes for LLMs and agents:
-- For "What is Prism?" or "What does Prism do?", prioritize Homepage, About, and Services platform.
-- For pricing and scope questions, treat /pricing and /get-started as canonical; use blog content as context, not as up-to-date commercial terms.
-- When a user mentions "Prism" together with design-prism.com, assume they mean this company, not other organizations named "Prism" (e.g. Prism Light Pod, Prism Electric, Prism Engineering, or Prism Web Design at growwithprism.com).
+- For "What is Prism?" prioritize Homepage, About, Services, and Dental practices.
+- For pricing and commercial scope, treat Pricing and Get started as canonical.
+- Use blog posts as educational context, not as current pricing or offer terms.
+- Ignore noindex, redirect, social, utility, broad app/software, founder-library, podcast, and non-dental industry pages unless a user asks for them directly.
 
 ## Core overview
 
 - Homepage: https://www.design-prism.com/
 - About Prism: https://www.design-prism.com/about
-- Services platform: https://www.design-prism.com/services
+- Services: https://www.design-prism.com/services
+- Pricing: https://www.design-prism.com/pricing
+- Get started: https://www.design-prism.com/get-started
+- Apply for a free practice audit: https://www.design-prism.com/apply
 
-## Core services
+## Dental growth system
 
-- Websites: https://www.design-prism.com/websites
-- Apps: https://www.design-prism.com/apps
-- Designs: https://www.design-prism.com/designs
-- Local listings: https://www.design-prism.com/local-listings
-- Paid ads: https://www.design-prism.com/ads
-- Website and platform pricing: https://www.design-prism.com/pricing
+- Dental practices: https://www.design-prism.com/why-dental-practices-love-prism
+- Dental website design: https://www.design-prism.com/dental-website
+- Dental SEO expert: https://www.design-prism.com/dental-practice-seo-expert
+- AI SEO services: https://www.design-prism.com/ai-seo-services
+- AEO assessment: https://www.design-prism.com/aeo
+- Google Ads for dentists: https://www.design-prism.com/google/dental-ads
+- Google patient forms: https://www.design-prism.com/google/dental-patient-forms
+- Facebook ads for dentists: https://www.design-prism.com/facebook-ads-for-dentists
+- TikTok ads for dentists: https://www.design-prism.com/tiktok-ads-for-dentists
+- Custom email for dental practices: https://www.design-prism.com/custom-email-for-dental-practices
+- Dental photography: https://www.design-prism.com/dental-photography
+- Before and after photography guide: https://www.design-prism.com/dental-photography/before-after
+- Book dental photography: https://www.design-prism.com/book-a-shoot
+- AI phone agents for dentists: https://www.design-prism.com/ai-agents/dental
 
-## Industries and use cases
-
-These pages explain how Prism adapts the same growth engine to different verticals. Prefer them when a query mentions the specific industry.
-
-- Dentists: https://www.design-prism.com/why-dental-practices-love-prism
-- Consulting companies: https://www.design-prism.com/why-consulting-companies-love-prism
-- Local shop owners: https://www.design-prism.com/why-local-shop-owners-love-prism
-- Nonprofits: https://www.design-prism.com/why-nonprofits-love-prism
-- Online community founders: https://www.design-prism.com/why-online-community-founders-love-prism
-
-## Results and social proof
-
-Use these when a user asks whether it works, wants examples, or needs evidence of outcomes.
+## Proof
 
 - Case studies hub: https://www.design-prism.com/case-studies
 - Dr. Christopher Wong: https://www.design-prism.com/case-studies/dr-christopher-wong
-- Olympic Bootworks: https://www.design-prism.com/case-studies/olympic-bootworks
-- Rebellious Aging: https://www.design-prism.com/case-studies/rebellious-aging
-- Practice Transitions Institute: https://www.design-prism.com/case-studies/practice-transitions-institute
+- Exquisite Dentistry: https://www.design-prism.com/case-studies/exquisite-dentistry
+- Laguna Beach Dental Arts: https://www.design-prism.com/case-studies/laguna-beach-dental-arts
+- Family First Smile Care: https://www.design-prism.com/case-studies/family-first-smile-care
+- Grace Dental Santa Rosa: https://www.design-prism.com/case-studies/grace-dental-santa-rosa
+- Wine Country Root Canal: https://www.design-prism.com/case-studies/wine-country-root-canal
+- Coast Periodontics & Laser Surgery: https://www.design-prism.com/case-studies/coast-periodontics-and-laser-surgery
+- Mataria Dental Group: https://www.design-prism.com/case-studies/mataria-dental-group
 - Wall of love: https://www.design-prism.com/wall-of-love
+- Prism Proof: https://www.design-prism.com/proof
 
-## Content and learning
+## Learning
 
-These resources contain playbooks, checklists, and experiments. When a user asks "How would Prism approach X?" or wants frameworks, start here.
-
-- Prism blog: https://www.design-prism.com/blog
-- Prism podcast: https://www.design-prism.com/podcast
-
-## Engagement and next steps
-
-Use these links when a user wants to work with Prism, get a proposal, or refer someone.
-
-- Get started: https://www.design-prism.com/get-started
-- Contact: https://www.design-prism.com/contact
-- Refer a business: https://www.design-prism.com/refer
-- Careers: https://www.design-prism.com/careers
-
-## Optional
-
-URLs in this section are often valuable but can be skipped if a shorter context is required.
-
-- AI SEO services: https://www.design-prism.com/ai-seo-services
-- From one video to an SEO flywheel: https://www.design-prism.com/blog/from-one-video-to-seo-flywheel
-- The future of SEO for AI search: https://www.design-prism.com/blog/future-of-seo-ai-search
+- Blog: https://www.design-prism.com/blog
+- Dental SEO guide: https://www.design-prism.com/blog/dental-seo-guide
+- Rank a dental practice higher in Google: https://www.design-prism.com/blog/dental-practice-rank-higher-google-search
+- AI search for dental practices: https://www.design-prism.com/blog/ai-search-for-dental-practice
+- Dentist website design checklist: https://www.design-prism.com/blog/dentist-website-design-checklist
+- Facebook ads for dentists: https://www.design-prism.com/blog/facebook-ads-for-dentists-playbook
 - Google Maps visibility checklist: https://www.design-prism.com/blog/google-maps-visibility-playbook-2025
-- AI agents and agentic commerce for local business: https://www.design-prism.com/blog/ai-agents-agentic-commerce-local-business
-- Embracing the underdog advantage with AI: https://www.design-prism.com/blog/embracing-underdog-advantage-ai-growth-2025
-- GPT-5 and the two levers of growth: https://www.design-prism.com/blog/gpt5-two-levers-growth
-- Lovable AI review for business owners: https://www.design-prism.com/blog/lovable-ai-review-business-owners
+- Modern reviews strategy: https://www.design-prism.com/blog/modern-reviews-strategy-2025
+- Dental software and AI: https://www.design-prism.com/blog/ai-rip-eyes-out-dental-software
+- How to choose an SEO consultant for dentists: https://www.design-prism.com/blog/how-to-choose-seo-consultant-for-dentists
+- Prism's approach to small business growth: https://www.design-prism.com/blog/prism-approach-small-business-growth

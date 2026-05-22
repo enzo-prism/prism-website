@@ -7,6 +7,7 @@ function normalizedOrigin(envUrl?: string): string {
     const url = new URL(envUrl || `https://${CANONICAL_HOST}`)
     url.hostname = CANONICAL_HOST
     url.protocol = "https:"
+    url.port = ""
     return url.origin
   } catch {
     return `https://${CANONICAL_HOST}`

@@ -11,6 +11,10 @@ import fs from "fs"
 import path from "path"
 import matter from "gray-matter"
 import ts from "typescript"
+import {
+  getBlogSearchVisibility,
+  getRouteSearchVisibility,
+} from "../lib/seo/search-visibility.ts"
 
 type MetadataInfo = {
   titleStem?: string
@@ -464,7 +468,10 @@ function extractMetadataFromHelperCall(
   const routePath = getStringFromExpression(getProp(arg, "path"), constStrings) ?? fallbackRoute
 
   const indexExpr = getProp(arg, "index")
-  const robots = indexExpr && indexExpr.kind === ts.SyntaxKind.FalseKeyword ? "noindex" : "index"
+  const robots =
+    indexExpr && indexExpr.kind === ts.SyntaxKind.FalseKeyword
+      ? "noindex"
+      : getRouteSearchVisibility(routePath)
 
   return {
     titleStem,
@@ -642,6 +649,7 @@ function computeBlogSeo(slug: string): {
   canonical: string
   h1: string
   structured: boolean
+  robots: string
 } {
   const filePath = path.join(BLOG_DIR, `${slug}.mdx`)
   const raw = fs.readFileSync(filePath, "utf8")
@@ -652,6 +660,7 @@ function computeBlogSeo(slug: string): {
   const description = normalizeDescription(String(fm.seoDescription || fm.description || ""))
   const canonical = canonicalUrl(String(fm.canonical || `/blog/${slug}`))
   const h1 = String(fm.h1Title || fm.title || "")
+  const robots = getBlogSearchVisibility(slug, fm.searchVisibility)
 
   return {
     titleStem,
@@ -660,6 +669,7 @@ function computeBlogSeo(slug: string): {
     canonical,
     h1,
     structured: true,
+    robots,
   }
 }
 
@@ -723,7 +733,7 @@ function buildInventory() {
   const rows = routes.map((entry) => {
     if (entry.type === "blog" && entry.blogSlug) {
       const blogSeo = computeBlogSeo(entry.blogSlug)
-      const robots = "index"
+      const robots = blogSeo.robots
       return {
         route: entry.route,
         title: blogSeo.titleStem,
@@ -741,7 +751,7 @@ function buildInventory() {
 
     if (entry.type === "library" && entry.librarySlug) {
       const libraryEntry = libraryEntries.find((item) => item.slug === entry.librarySlug)
-      const robots = "index"
+      const robots = getRouteSearchVisibility(`/library/${entry.librarySlug}`)
       const titleStem = libraryEntry?.titleStem ?? ""
       const finalTitle = libraryEntry?.finalTitle ?? ""
       const description = libraryEntry?.description ?? ""
@@ -764,7 +774,7 @@ function buildInventory() {
     const dir = path.dirname(entry.filePath)
     const h1 = findFirstH1(dir) ?? ""
     const structured = hasStructuredData(dir)
-    const robots = metadata.robots ?? "index"
+    const robots = metadata.robots ?? getRouteSearchVisibility(entry.route)
     const titleStem = metadata.titleStem ?? ""
     const finalTitle = metadata.finalTitle ?? ""
     const description = metadata.description ?? ""

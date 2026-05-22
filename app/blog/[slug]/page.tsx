@@ -128,6 +128,10 @@ export async function generateMetadata({
       images: twitterImages,
     },
     alternates: { canonical },
+    robots:
+      frontmatter.searchVisibility === "noindex"
+        ? { index: false, follow: true }
+        : { index: true, follow: true },
   }
 }
 

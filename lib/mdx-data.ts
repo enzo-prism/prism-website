@@ -4,6 +4,10 @@ import path from 'path'
 import 'server-only'
 
 import { DEFAULT_BLOG_FEATURED_IMAGE } from '@/lib/blog-images'
+import {
+  getBlogSearchVisibility,
+  type SearchVisibility,
+} from '@/lib/seo/search-visibility'
 
 export type BlogFrontmatter = {
   title: string
@@ -21,6 +25,7 @@ export type BlogFrontmatter = {
   openGraph?: Record<string, any>
   twitter?: Record<string, any>
   canonical?: string
+  searchVisibility?: SearchVisibility
   howTo?: {
     title: string
     description: string
@@ -323,6 +328,10 @@ export async function getPost(
       openGraph: normalizedData.openGraph,
       twitter: normalizedData.twitter,
       canonical: normalizedData.canonical,
+      searchVisibility: getBlogSearchVisibility(
+        slug,
+        normalizedData.searchVisibility,
+      ),
       howTo: normalizedData.howTo,
     }
 
@@ -354,9 +363,13 @@ export async function getPostMarkdownSource(slug: string): Promise<string | null
   }
 }
 
-export async function getAllPosts(): Promise<Array<
-  { slug: string } & BlogFrontmatter
-> | null> {
+export type GetAllPostsOptions = {
+  includeNoindex?: boolean
+}
+
+export async function getAllPosts(
+  options: GetAllPostsOptions = {},
+): Promise<Array<{ slug: string } & BlogFrontmatter> | null> {
   try {
     const files = await fs.readdir(BLOG_PATH)
     const mdxFiles = files.filter((fileName) => fileName.endsWith('.mdx'))
@@ -382,7 +395,11 @@ export async function getAllPosts(): Promise<Array<
       )
     }
 
-    return validPosts.sort(
+    const visiblePosts = options.includeNoindex
+      ? validPosts
+      : validPosts.filter((post) => post.searchVisibility !== 'noindex')
+
+    return visiblePosts.sort(
       (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
     )
   } catch (error: unknown) {

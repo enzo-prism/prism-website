@@ -6,7 +6,7 @@ jest.mock('rehype-slug', () => ({
 
 import BlogPostPage, { generateMetadata } from '../app/blog/[slug]/page'
 import { renderPost } from '../lib/mdx'
-import { getPost } from '../lib/mdx-data'
+import { getAllPosts, getPost } from '../lib/mdx-data'
 import { DEFAULT_BLOG_FEATURED_IMAGE, getBlogOpenGraphImage } from '../lib/blog-images'
 
 jest.mock('next/navigation', () => ({
@@ -78,6 +78,28 @@ describe('mdx helpers', () => {
         alt: 'openclaw, manus, and codex are scaling my business',
       },
     ])
+  })
+
+  test('getAllPosts defaults to the curated indexable blog set', async () => {
+    const posts = await getAllPosts()
+    const slugs = posts?.map((post) => post.slug) ?? []
+
+    expect(slugs).toContain('dental-seo-guide')
+    expect(slugs).toContain('ai-search-for-dental-practice')
+    expect(slugs).not.toContain('openclaw-manus-codex-scaling-business')
+    expect(slugs).not.toContain('breaking-free-education-psyop')
+  })
+
+  test('generateMetadata noindexes off-theme blog posts but keeps dental posts indexable', async () => {
+    const dentalPostMetadata = await generateMetadata({
+      params: Promise.resolve({ slug: 'dental-seo-guide' }),
+    })
+    const offThemePostMetadata = await generateMetadata({
+      params: Promise.resolve({ slug: 'openclaw-manus-codex-scaling-business' }),
+    })
+
+    expect(dentalPostMetadata.robots).toEqual({ index: true, follow: true })
+    expect(offThemePostMetadata.robots).toEqual({ index: false, follow: true })
   })
 
   test('renderPost supports the custom VideoPlayer component used in blog MDX', async () => {

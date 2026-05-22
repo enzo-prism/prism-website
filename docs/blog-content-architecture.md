@@ -30,6 +30,7 @@ Each MDX file must define:
 | `gradientClass`                                | ✅       | Tailwind gradient utilities for OG art                    |
 | `image`                                        | optional | Relative path for hero image + cards                      |
 | `seoTitle`, `seoDescription`                   | optional | Manual SEO overrides for search snippets                   |
+| `searchVisibility`                             | optional | `"index"` or `"noindex"` override; most posts should rely on the curated allowlist |
 | `h1Title`, `openGraph`, `twitter`, `canonical` | optional | Overrides for layout + social metadata                     |
 
 Blog cards and post hero sections render the frontmatter `image` when available. If `image` is omitted or invalid, they fall back to the shared default featured image (`https://res.cloudinary.com/dhqpqfw6w/image/upload/v1770786137/Prism_rgeypo.png`).
@@ -57,6 +58,7 @@ Open Graph behavior is date-based in `app/blog/[slug]/page.tsx`: posts before 20
 Use overrides sparingly. The default workflow is:
 
 - Start with a strong on-page `title` and `description`.
+- Keep the post noindex unless it clearly supports Prism's dental growth system authority. Search-visible posts are controlled by `INDEXABLE_BLOG_SLUGS` in `lib/seo/search-visibility.ts`; use `searchVisibility: "noindex"` when a post should remain available but never enter search.
 - Regenerate `seo/inventory.csv` and inspect the final rendered `final_title` + `meta_description`.
 - Only add `seoTitle` or `seoDescription` when the rendered snippet is weak, duplicated, clipped, or misses the real search intent.
 - Keep overrides aligned with the visible article promise; avoid writing search snippets that oversell or materially diverge from the post itself.
