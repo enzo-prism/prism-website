@@ -2,6 +2,8 @@
 
 This guide highlights the workflows we lean on most often while iterating on the marketing site. Use it as the quick reference when shipping copy tweaks, adding new landing sections, or wiring forms.
 
+For a current whole-project map, start with `docs/project-overview.md`. This guide is the day-to-day workflow companion.
+
 ## Local Development
 
 - Install deps with `pnpm install` (repo assumes pnpm).

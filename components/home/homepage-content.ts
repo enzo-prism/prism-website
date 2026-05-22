@@ -158,7 +158,7 @@ export const HOMEPAGE_DENTIST_WINS = {
       dentist: 'Dr. Michael Narodovich',
       practice: 'Roseville Dental Academy',
       location: 'Roseville, CA',
-      href: '/case-studies',
+      href: '/case-studies/roseville-dental-academy',
       contextLabel: 'Dental education',
       imageSrc: '/dr-narodovich-headshot.png',
       imageAlt: 'Dr. Michael Narodovich of Roseville Dental Academy',

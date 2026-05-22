@@ -11,7 +11,8 @@ Quick reference for the pages we edit most often.
 
 ## Case Studies (`app/case-studies/*`)
 
-- Individual case study pages live under `app/case-studies/<slug>/` and now render through the shared minimal template in `components/case-study-minimal.tsx`.
+- Individual case study pages live under `app/case-studies/<slug>/`. Most render through the shared minimal template in `components/case-study-minimal.tsx`; selected high-priority proof pages can ship a custom long-form route when the story materially supports the dental-first search surface.
+- `app/case-studies/roseville-dental-academy/page.tsx` is a custom dental-education proof page for the GoDaddy-to-Vercel admissions-system rebuild, covering analytics, Search Console, Hotjar, Formspree, ElevenLabs AI, Meta attribution, Figma, and the Codex-assisted implementation loop.
 - Live case study pages are intentionally lightweight while detailed copy is being refreshed: client name, a single website CTA, and `components/case-studies/CaseStudyWorkHighlights.tsx`.
 - Selected live case studies can now render a dedicated explainer-video section before the work highlights when `explainerVideo` metadata is present in `lib/case-study-data.ts`; the section UI lives in `components/case-studies/CaseStudyExplainerVideo.tsx`.
 - External client site URLs now live alongside the case study metadata in `lib/case-study-data.ts` so every detail page can consistently render the same website button.
@@ -70,6 +71,7 @@ Quick reference for the pages we edit most often.
 ## Apps (`app/apps/page.tsx`)
 
 - Mobile app portfolio + process overview.
+- Direct-visitor/reference surface only after the dental-first search cleanup. It is noindex and excluded from sitemap/LLM maps unless product direction changes.
 - Uses `ItemList` JSON-LD for the showcased projects; avoid `SoftwareApplication` rich-result schema unless we can supply accurate pricing + reviews/ratings.
 - Route metadata now comes from `buildRouteMetadata` (`lib/seo/metadata.ts`) and always normalizes to a single `| Prism` suffix.
 - For static pages, set `titleStem` + `description` in the page metadata call and let the helper generate canonical/Open Graph/Twitter/robots fields consistently.
@@ -78,6 +80,7 @@ Quick reference for the pages we edit most often.
 ## Software (`app/software/page.tsx`)
 
 - Growth tools hub listing Prism-built software (currently Density, Hot Content, and Engineering Tracker).
+- Direct-visitor/reference surface only after the dental-first search cleanup. Keep it live for people who know the URL, but do not link to it as a canonical search target.
 - App card data is shared via `lib/software-apps.ts`; update this list to keep the homepage section and `/software` in sync.
 - The homepage + `/software` cards are rendered by `components/software/SoftwareAppCards.tsx`, including the framed icon treatment sized for small pixel icons.
 - The hero now uses `components/ascii/AsciiHeroCard.tsx` with the high-quality `wave` ASCII frames in `public/animations/wave/high`.
@@ -86,12 +89,15 @@ Quick reference for the pages we edit most often.
 ## Blog (`app/blog/page.tsx`)
 
 - Blog index layout includes breadcrumbs, the animated hero card, filters, post grid, signup, and the final CTA section.
+- `getAllPosts()` returns the curated/indexable post set by default, so the visible blog index, RSS, latest-post API, related posts, and sitemap stay dental/local-growth focused.
+- Off-theme posts remain live by direct URL with `noindex, follow`; do not assume every file in `content/blog` should appear on the public blog index.
 - The hero now uses `components/ascii/AsciiHeroCard.tsx` with the high-quality `hands` ASCII frames in `public/animations/hands/high`.
 - For performance reliability, keep the default batch strategy in place and confirm partial-frame fallback behavior in tests when changing sequence size or source reliability assumptions.
 
 ## Podcast (`app/podcast/page.tsx`)
 
 - Podcast hub + recent episode preview cards.
+- Direct-visitor/reference surface only after the dental-first search cleanup. It is noindex and excluded from sitemap/LLM maps.
 - Uses `PodcastSeriesSchema` plus `PodcastEpisodeSchema` (with nested `VideoObject` metadata). Keep episode publish dates, YouTube URLs, and thumbnails up to date so Video structured data stays valid.
 - Individual episode spotlights (for example `app/podcast/michael-njo/page.tsx`) should keep CTA buttons mobile-safe by allowing full-width wrapping on small screens so no horizontal scrolling is introduced in quote/CTA cards.
 
@@ -166,6 +172,7 @@ Quick reference for the pages we edit most often.
 ## Prism Library (`app/library/page.tsx`)
 
 - Library layout (hero, featured post, and grid) lives in `components/library/LibraryClient.tsx`; the list page intentionally avoids embeds and extra UI chrome.
+- Direct-visitor/reference surface only after the dental-first search cleanup. Library list/detail routes are noindex and excluded from sitemap/LLM maps.
 - Data comes from `lib/library/getLibraryPosts.ts` and merges the `content/library/seed.ts` fallback with `content/library/editorial.ts` curation metadata.
 - Detail pages live at `app/library/[slug]/page.tsx` and are intentionally simple: text plus a single Instagram/TikTok embed.
 - To curate a post, add an entry in `content/library/editorial.ts` keyed as `${platform}:${id}` with a speaker name and at least one takeaway (that's what marks a post as curated).
@@ -224,13 +231,13 @@ Each uses card-based layouts: confirmation message + CTA + follow-up details. Th
 
 ## Local SEO Services (`app/local-seo-services/page.tsx`)
 
-- Primary landing page targeting “local seo services” and related local SEO service intent.
+- Legacy/general local SEO service page. It remains live for direct visitors, but is noindex and excluded from sitemap/LLM maps after the dental-first search cleanup.
 - Cross-links into `/seo` (methodology) and `/local-listings` (listings subsystem) so internal linking reinforces the topical cluster without duplicating content.
 - Includes structured data (`ServiceSchema`, `HowToSchema`, and `FAQSection`) and should be kept human-first (avoid doorway patterns or keyword stuffing).
 
 ## Local SEO Agency (`app/local-seo-agency/page.tsx`)
 
-- Primary landing page targeting “local seo agency” (agency intent: selection, proof, process, and reporting).
+- Legacy/general local SEO agency page. It remains live for direct visitors, but is noindex and excluded from sitemap/LLM maps after the dental-first search cleanup.
 - Links to `/local-seo-services` for the deliverables breakdown, and to `/seo` + `/local-listings` for supporting context.
 - Includes structured data (`ServiceSchema`, `HowToSchema`, and `FAQSection`) and a “what we won’t do” section to keep messaging aligned with Google spam policies.
 

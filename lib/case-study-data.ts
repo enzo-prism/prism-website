@@ -218,6 +218,36 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
     segments: ['dental', 'local'],
   },
   {
+    id: '22',
+    title: 'From GoDaddy Stock Site to Measurable Admissions Engine',
+    client: 'Roseville Dental Academy',
+    websiteUrl: 'https://www.rosevilledentalacademy.com',
+    category: 'dentistry',
+    founder: 'Dr. Michael Narodovich',
+    industry: 'Dental Education',
+    location: 'Roseville, CA',
+    description:
+      'A stock GoDaddy web presence became a Vercel-hosted admissions platform with analytics, forms, Search Console, Hotjar, and an ElevenLabs AI assistant.',
+    slug: 'roseville-dental-academy',
+    segments: ['dental', 'local', 'education'],
+    structured: {
+      heroImage:
+        'https://www.design-prism.com/case-studies/roseville-dental-academy-og.jpg',
+      datePublished: '2026-05-22T00:00:00.000Z',
+      dateModified: '2026-05-22T00:00:00.000Z',
+      outcomes: [
+        'Roseville Dental Academy moved from a limited stock-site setup to a Vercel-hosted production site that can be iterated like real software.',
+        'The new admissions surface connects GA4, custom conversion events, Search Console, Hotjar, Formspree, and AI assistant support into one measurement-ready system.',
+        'Students now see clearer program paths for dental assisting, CPR/BLS, radiation safety, infection control, coronal polish, sealants, and N95 fit testing.',
+        'The school gained cleaner lead capture, stronger visibility instrumentation, and a practical foundation for ongoing enrollment optimization.',
+      ],
+      focus: 'Dental education admissions system',
+      scope: 'Website migration, analytics, forms, AI assistant, search setup',
+      canonicalUrl:
+        'https://www.design-prism.com/case-studies/roseville-dental-academy',
+    },
+  },
+  {
     id: '8',
     title: 'Designing a Digital Home for Bold Aging',
     client: 'Rebellious Aging',

@@ -3,7 +3,7 @@
 [![Deployed on Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?style=for-the-badge&logo=vercel)](https://vercel.com/enzo-design-prisms-projects/v0-prism-website-design)
 [![Built with v0](https://img.shields.io/badge/Built%20with-v0.dev-black?style=for-the-badge)](https://v0.dev/chat/projects/8xmj81uf3fc)
 
-Next.js App Router project that powers the Prism marketing site, blog, and landing page experiments. The codebase stays in sync with [v0.dev](https://v0.dev) chats and ships to production through GitHub Actions + Vercel source deploys.
+Next.js App Router project that powers Prism's dental growth systems website: marketing pages, proof, dental service funnels, blog, forms, and legacy direct-visitor surfaces. The codebase stays in sync with [v0.dev](https://v0.dev) chats and ships to production through GitHub Actions + Vercel source deploys.
 
 ---
 
@@ -33,6 +33,7 @@ The repo assumes pnpm; npm/yarn installs will fall out of sync.
 - **Package manager** – pnpm 10.x via `corepack enable`. All commands should use `pnpm`; references to `npm run …` are outdated.
 - **Architecture** – Marketing forms post to Formspree using the shared `useFormValidation` hook (HTML5 validation + client-side `fetch` + thank-you redirect). We do **not** use React Hook Form, Zod, or server actions for these flows today. If this changes, update this section immediately.
 - **Canonical pricing policy** – Core offer pricing is fixed site-wide: `Website Overhaul = $1,000 one-time`, `Growth Partnership = $2,000/month`, `Free Expert Audit = $0`. `/pricing` is the only canonical pricing URL. Legacy pricing routes permanently redirect to `/pricing`.
+- **Search visibility policy** – Prism's public search/LLM footprint is dental-first. `lib/seo/search-visibility.ts` controls static route indexability and the curated blog allowlist used by sitemap, RSS/latest-post APIs, SEO inventory, and tests. New routes/posts should remain noindex unless they support dental growth systems, pricing, proof, legal, or the Free Practice Audit funnel.
 - **Deploy mode policy** – GitHub Actions is the only production publisher. `main` source deploys through `.github/workflows/deploy.yml`, while Vercel Git auto-deploy for `main` is disabled in `vercel.json` to avoid duplicate production releases.
 - **Documentation** – When you add a new flow or change behavior, edit the relevant file under `/docs` (or this README/AGENTS if the rule is global). Do _not_ add new top-level docs without approval; prefer updating existing guides.
 - **Environment variables** – Required vars are limited to those listed in [docs/environment-setup.md](./docs/environment-setup.md) and `.env.example` (GA overrides, Formspree-compatible endpoints, ElevenLabs public config, optional site URLs). Do not list vars that aren’t part of the supported setup.
@@ -89,9 +90,11 @@ The repo assumes pnpm; npm/yarn installs will fall out of sync.
 - `lib/` – Business logic (constants, analytics helpers, MDX helpers, SEO utilities).
 - `scripts/` – Diagnostics (deployment verifier, MCP helpers, SEO/site checks).
 - `docs/` – Workflow guides (blog architecture, development, forms, etc.).
+- `public/llms.txt` – Curated machine-readable map of canonical dental-growth pages for LLMs and agents.
 
 ## Documentation map
 
+- [`docs/project-overview.md`](./docs/project-overview.md) – Current architecture, source-of-truth map, search policy, and change playbooks.
 - [`docs/development-guide.md`](./docs/development-guide.md) – Local workflow, assistant/widget testing, analytics, and debugging checklist.
 - [`docs/blog-content-architecture.md`](./docs/blog-content-architecture.md) – MDX taxonomy and RSS/OG behavior.
 - [`docs/blog-styling-guide.md`](./docs/blog-styling-guide.md) – Typography and casing expectations for articles.
@@ -100,7 +103,7 @@ The repo assumes pnpm; npm/yarn installs will fall out of sync.
 - [`docs/pages-overview.md`](./docs/pages-overview.md) – Where to edit pricing, contact, free-analysis flows.
 - [`docs/build-and-deploy-guide.md`](./docs/build-and-deploy-guide.md) – Build tooling expectations plus the local/CI checklist.
 - [`docs/environment-setup.md`](./docs/environment-setup.md) – Environment variable reference for the supported site config.
-- [`docs/codex-workflow.md`](./docs/codex-workflow.md) – Codex-specific playbook for editing the dental-photography surfaces and booking form.
+- [`docs/codex-workflow.md`](./docs/codex-workflow.md) – Codex operator playbook for safe project changes, widget work, dental photography, and mobile-safe media.
 
 ## CLI workflows (GitHub + Vercel)
 

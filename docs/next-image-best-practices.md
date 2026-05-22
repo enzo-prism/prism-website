@@ -54,7 +54,7 @@ For local images stored in the `public` directory:
 
 For remote images, you must:
 
-1. Configure the domain in `next.config.js`
+1. Configure the domain in `next.config.mjs`
 2. Provide width and height manually
 
 \`\`\`tsx
@@ -66,7 +66,7 @@ For remote images, you must:
 />
 \`\`\`
 
-Configuration in `next.config.js`:
+Configuration in `next.config.mjs`:
 
 \`\`\`js
 module.exports = {
@@ -146,7 +146,7 @@ Always implement error handling for images:
 
 ### Images Not Loading
 
-1. Check if the domain is configured in `next.config.js`
+1. Check if the domain is configured in `next.config.mjs`
 2. Verify the image path is correct
 3. Ensure width and height are provided
 4. Check for CORS issues with remote images
@@ -188,7 +188,7 @@ import CoreImage from "@/components/core-image"
 Before deploying, ensure:
 
 1. All images have width and height attributes
-2. Remote domains are configured in `next.config.js`
+2. Remote domains are configured in `next.config.mjs`
 3. Critical images use the `priority` attribute
 4. All images have meaningful alt text
 5. Error handling is implemented for all images
@@ -206,7 +206,7 @@ Let's create a script to verify all images in the project:
 # Example script commands
 # find . -name "*.tsx" -exec grep -Hn "<Image" {} \;
 # find . -name "*.tsx" -exec grep -Hn "next/image" {} \;
-# grep -r "remotePatterns" next.config.js
+# grep -r "remotePatterns" next.config.mjs
 # find . -name "*.tsx" -exec grep -Hn "priority" {} \;
 # find . -name "*.tsx" -exec grep -Hn "alt=" {} \;
 # find . -name "*.tsx" -exec grep -Hn "onError" {} \;

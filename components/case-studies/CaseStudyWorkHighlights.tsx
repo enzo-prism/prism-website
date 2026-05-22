@@ -92,6 +92,8 @@ const SERVICE_ICON_MAP: Record<string, LucideIcon> = {
   'Meta ads': Share2,
   'LinkedIn ads': SendHorizontal,
   'CRM integration': Database,
+  'Formspree form system': Database,
+  'AI assistant setup': BotMessageSquare,
   'Enterprise analytics setup and optimization': ChartLine,
   'Video editing': Video,
 }
@@ -102,16 +104,21 @@ const TECH_ICON_MAP: Record<string, LucideIcon> = {
   Vercel: Rocket,
   Figma: Figma,
   'GPT-5.3 Codex': Brain,
+  'GPT-5.5 xhigh': Brain,
   'Opus 4.6': Music2,
   'Gemini 3.1': Radar,
   'Google Analytics': ChartLine,
+  'Next.js': Globe,
   Replit: Rocket,
   Git: GitBranch,
   Cursor: Sparkles,
   Webflow: Globe,
   'Meta Business Suite': Share2,
+  'Meta Pixel': Share2,
   'Hotjar analytics': Activity,
   'Google Search Console': SearchCheck,
+  Formspree: Database,
+  ElevenLabs: BotMessageSquare,
   Semrush: Globe,
   'Google Business Profile': Building2,
   'Apple Business Connect': Apple,
@@ -128,6 +135,11 @@ const TECH_LOGO_MAP: Partial<Record<string, BrandLogoSpec>> = {
     theme: 'dark',
     dialogTheme: 'light',
   },
+  'GPT-5.5 xhigh': {
+    brand: 'openai',
+    theme: 'dark',
+    dialogTheme: 'light',
+  },
   'Opus 4.6': { brand: 'anthropic', theme: 'dark', dialogTheme: 'light' },
   'Gemini 3.1': { brand: 'gemini' },
   'Google Analytics': { brand: 'googleAnalytics' },
@@ -136,6 +148,7 @@ const TECH_LOGO_MAP: Partial<Record<string, BrandLogoSpec>> = {
   Cursor: { brand: 'cursor', theme: 'dark', dialogTheme: 'light' },
   Webflow: { brand: 'webflow' },
   'Meta Business Suite': { brand: 'meta' },
+  'Meta Pixel': { brand: 'meta' },
 }
 
 const SERVICE_LOGO_MAP: Partial<Record<string, BrandLogoSpec>> = {
@@ -154,11 +167,16 @@ const TECH_ICON_COLOR_MAP: Record<string, string> = {
   Vercel: '#ffffff',
   Figma: '#f24e1e',
   'GPT-5.3 Codex': '#a78bfa',
+  'GPT-5.5 xhigh': '#c084fc',
   'Opus 4.6': '#f97316',
   'Gemini 3.1': '#3b82f6',
   'Google Analytics': '#f59e0b',
+  'Next.js': '#ffffff',
   'Hotjar analytics': '#ff6b4d',
   'Google Search Console': '#34a853',
+  Formspree: '#22c55e',
+  ElevenLabs: '#f8fafc',
+  'Meta Pixel': '#60a5fa',
   Semrush: '#f97316',
   'Google Business Profile': '#4285f4',
   'Apple Business Connect': '#6e7681',
@@ -236,6 +254,20 @@ const WORK_HIGHLIGHT_COPY: Record<
     whyPrism:
       'Prism minimizes lead leakage by building workflows where every inquiry is routed, tracked, and followed up with disciplined consistency.',
   },
+  'Formspree form system': {
+    type: 'service',
+    whatItIs:
+      'A lightweight form backend for routing inquiries securely without forcing a client into a heavy custom application.',
+    whyPrism:
+      'Prism uses it when speed, reliability, and clean lead handoff matter more than adding unnecessary platform complexity.',
+  },
+  'AI assistant setup': {
+    type: 'service',
+    whatItIs:
+      'A conversational assistant layer that helps answer common questions and qualify interest before a human follow-up.',
+    whyPrism:
+      'Prism fits AI into the conversion path where it reduces friction, preserves context, and keeps the primary business goal clear.',
+  },
   'Enterprise analytics setup and optimization': {
     type: 'service',
     whatItIs:
@@ -285,6 +317,13 @@ const WORK_HIGHLIGHT_COPY: Record<
     whyPrism:
       'Prism uses it to maintain output velocity while preserving editorial quality and specific client voice across campaigns.',
   },
+  'GPT-5.5 xhigh': {
+    type: 'tech',
+    whatItIs:
+      'A high-reasoning AI configuration used inside Codex for planning, implementation, QA analysis, and long-context build decisions.',
+    whyPrism:
+      'Prism uses it to compress complex production work into tighter loops while still checking claims against the shipped source.',
+  },
   'Opus 4.6': {
     type: 'tech',
     whatItIs:
@@ -305,6 +344,13 @@ const WORK_HIGHLIGHT_COPY: Record<
       'A central data layer for behavior, conversion funnels, campaign impact, and website performance insights.',
     whyPrism:
       'Prism turns this into a practical decision system with dashboards and alerts focused on business outcomes.',
+  },
+  'Next.js': {
+    type: 'tech',
+    whatItIs:
+      'A React framework for production websites that need routing, metadata, performance controls, and reliable deployment behavior.',
+    whyPrism:
+      'Prism uses it to make marketing sites maintainable as software instead of leaving them trapped in one-off page builders.',
   },
   Replit: {
     type: 'tech',
@@ -341,6 +387,13 @@ const WORK_HIGHLIGHT_COPY: Record<
     whyPrism:
       'Prism uses it to keep campaign creative, social proof, and landing-page performance tied into one practical growth loop.',
   },
+  'Meta Pixel': {
+    type: 'tech',
+    whatItIs:
+      'A Meta attribution signal used to connect website behavior with Facebook and Instagram campaign measurement.',
+    whyPrism:
+      'Prism treats pixel data as one part of a broader attribution system, so paid social decisions are not made in isolation.',
+  },
   'Hotjar analytics': {
     type: 'tech',
     whatItIs:
@@ -354,6 +407,20 @@ const WORK_HIGHLIGHT_COPY: Record<
       'Search indexing and query performance tooling that surfaces visibility issues and optimization opportunities.',
     whyPrism:
       'Prism connects this data to SEO priorities so teams fix what matters before those issues become ranking drag.',
+  },
+  Formspree: {
+    type: 'tech',
+    whatItIs:
+      'A managed form backend for handling website submissions, notifications, and spam-resistant lead capture.',
+    whyPrism:
+      'Prism uses it to ship dependable lead forms quickly while keeping the front-end experience custom and conversion-focused.',
+  },
+  ElevenLabs: {
+    type: 'tech',
+    whatItIs:
+      'A conversational AI platform used to create voice and assistant experiences for website visitors.',
+    whyPrism:
+      'Prism connects it to the business journey only where it can answer real questions, qualify intent, and support faster follow-up.',
   },
   Semrush: {
     type: 'tech',

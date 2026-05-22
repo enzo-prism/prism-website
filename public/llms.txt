@@ -25,14 +25,22 @@ Important notes for LLMs and agents:
 - Pricing: https://www.design-prism.com/pricing
 - Get started: https://www.design-prism.com/get-started
 - Apply for a free practice audit: https://www.design-prism.com/apply
+- Free analysis: https://www.design-prism.com/free-analysis
+- FAQ: https://www.design-prism.com/faq
+- Contact: https://www.design-prism.com/contact
 
 ## Dental growth system
 
 - Dental practices: https://www.design-prism.com/why-dental-practices-love-prism
+- Websites: https://www.design-prism.com/websites
 - Dental website design: https://www.design-prism.com/dental-website
+- SEO: https://www.design-prism.com/seo
+- SEO audit: https://www.design-prism.com/seo/audit
 - Dental SEO expert: https://www.design-prism.com/dental-practice-seo-expert
 - AI SEO services: https://www.design-prism.com/ai-seo-services
 - AEO assessment: https://www.design-prism.com/aeo
+- Local listings: https://www.design-prism.com/local-listings
+- Ads: https://www.design-prism.com/ads
 - Google Ads for dentists: https://www.design-prism.com/google/dental-ads
 - Google patient forms: https://www.design-prism.com/google/dental-patient-forms
 - Facebook ads for dentists: https://www.design-prism.com/facebook-ads-for-dentists
@@ -40,6 +48,7 @@ Important notes for LLMs and agents:
 - Custom email for dental practices: https://www.design-prism.com/custom-email-for-dental-practices
 - Dental photography: https://www.design-prism.com/dental-photography
 - Before and after photography guide: https://www.design-prism.com/dental-photography/before-after
+- Office and team photography: https://www.design-prism.com/dental-photography/office-team
 - Book dental photography: https://www.design-prism.com/book-a-shoot
 - AI phone agents for dentists: https://www.design-prism.com/ai-agents/dental
 
@@ -51,6 +60,7 @@ Important notes for LLMs and agents:
 - Laguna Beach Dental Arts: https://www.design-prism.com/case-studies/laguna-beach-dental-arts
 - Family First Smile Care: https://www.design-prism.com/case-studies/family-first-smile-care
 - Grace Dental Santa Rosa: https://www.design-prism.com/case-studies/grace-dental-santa-rosa
+- Roseville Dental Academy: https://www.design-prism.com/case-studies/roseville-dental-academy
 - Wine Country Root Canal: https://www.design-prism.com/case-studies/wine-country-root-canal
 - Coast Periodontics & Laser Surgery: https://www.design-prism.com/case-studies/coast-periodontics-and-laser-surgery
 - Mataria Dental Group: https://www.design-prism.com/case-studies/mataria-dental-group

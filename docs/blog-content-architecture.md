@@ -11,6 +11,7 @@ Recent updates introduced:
 - **An RSS feed** served from `/blog/feed.xml`
 - **Automatic table of contents generation** from H2/H3 headings
 - **A header-level "Copy markdown" action** that copies the full post MDX source for AI workflows
+- **Dental-first search curation** so only approved posts appear in `/blog`, sitemap, RSS, latest-post APIs, and related-post blocks by default
 
 Use this document when adding posts or customizing the discovery experience.
 
@@ -59,6 +60,7 @@ Use overrides sparingly. The default workflow is:
 
 - Start with a strong on-page `title` and `description`.
 - Keep the post noindex unless it clearly supports Prism's dental growth system authority. Search-visible posts are controlled by `INDEXABLE_BLOG_SLUGS` in `lib/seo/search-visibility.ts`; use `searchVisibility: "noindex"` when a post should remain available but never enter search.
+- `getAllPosts()` returns only indexable/curated posts by default. Use `getAllPosts({ includeNoindex: true })` only for internal audits, migrations, or explicit admin-style tooling.
 - Regenerate `seo/inventory.csv` and inspect the final rendered `final_title` + `meta_description`.
 - Only add `seoTitle` or `seoDescription` when the rendered snippet is weak, duplicated, clipped, or misses the real search intent.
 - Keep overrides aligned with the visible article promise; avoid writing search snippets that oversell or materially diverge from the post itself.
@@ -124,7 +126,7 @@ To add or change links:
 
 Outbound link behavior is enforced in `components/mdx-components.tsx` so all Markdown HTTP/HTTPS links open in a new tab with `rel="noopener noreferrer"` automatically. This also applies to links added later in Markdown content.
 
-## Outbound link enrichment for all 71 posts
+## Outbound link enrichment for blog posts
 
 To add outbound references without editing each `.mdx` file, outbound-link injection now runs in the blog rendering pipeline:
 
@@ -196,6 +198,7 @@ Both components are intentionally lightweight and intentionally scoped to preser
 Located at `app/blog/feed.xml/route.ts`:
 
 - Serves the latest 25 posts in RSS 2.0 format.
+- Uses the default curated `getAllPosts()` behavior, so noindex/off-theme posts stay live by direct URL but do not enter RSS.
 - Cached for one hour (`revalidate = 3600`); Vercel’s edge caches respect `Cache-Control: s-maxage=3600`.
 - Uses the canonical host (`www.design-prism.com` by default) even if `NEXT_PUBLIC_BASE_URL` differs.
 
@@ -217,13 +220,18 @@ If you rebrand or change domains, update the `CANONICAL_HOST` constant to keep f
 3. Write content in Markdown/MDX. Avoid inline styling—`prose-blog` handles typography.
 4. For embeds and interactive widgets, only use MDX components that are registered in `lib/mdx.tsx` / `components/mdx-components.tsx`. Use globally available names like `<YouTubeVideoEmbed />`, `<VideoObjectSchema />`, and `<VideoPlayer />` instead of assuming a post-local import alone will work at runtime.
 5. The layout renders the post title as the single H1. Use H2 for major sections and H3 for sub-sections so the table of contents stays accurate.
-6. Run `pnpm run typecheck` (or at minimum `pnpm exec jest __tests__/sitemap.test.ts __tests__/blog-canonical.test.ts --runInBand`) to ensure the post parses and route metadata/sitemap remain valid.
-7. Commit the MDX file. The sitemap, blog page, related posts, and RSS feed update automatically.
+6. Decide search visibility:
+   - Default/no action: the post remains live by direct URL but noindex and excluded from blog index/RSS/latest-post/sitemap surfaces.
+   - Search-visible: add the slug to `INDEXABLE_BLOG_SLUGS` in `lib/seo/search-visibility.ts` only when it supports dental or local-growth authority.
+   - Forced noindex: add `searchVisibility: "noindex"` to frontmatter when a post should never enter search even if the allowlist changes later.
+7. Run `pnpm typecheck` (or at minimum `pnpm exec jest __tests__/sitemap.test.ts __tests__/blog-canonical.test.ts --runInBand`) to ensure the post parses and route metadata/sitemap remain valid.
+8. If search visibility changed, also run `pnpm exec jest __tests__/seo-indexability-guards.test.tsx __tests__/llms.test.ts --runInBand` and `pnpm seo:inventory && pnpm seo:lint`.
+9. Commit the MDX file and any search-policy/docs updates.
 
 ---
 
 ## Debugging Tips
 
 - **Broken filters**: ensure the new post’s `category` isn’t blank—empty strings collapse the slug to `general`.
-- **Missing in feed**: confirm the `date` is valid; invalid dates are sorted to the bottom and may fall outside the top 25.
+- **Missing in feed or blog index**: confirm the post is intentionally search-visible. By default, non-allowlisted posts stay live at `/blog/<slug>` but are noindex and excluded from RSS/latest-post/discovery surfaces.
 - **OG gradients**: verify `gradientClass` uses Tailwind utilities recognized by `utils/tailwind-to-css.ts`.

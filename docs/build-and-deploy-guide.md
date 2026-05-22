@@ -16,16 +16,18 @@ Production is intentionally single-path: GitHub Actions runs the release gates a
 2. `pnpm lint` – catch ESLint/Tailwind issues early.
 3. `pnpm typecheck` – required before shipping.
 4. `pnpm test` – recommended before touching shared components or hooks.
-5. `pnpm test:visual:locked` – required when touching `/`, `/about`, or `/pricing`.
-6. `pnpm build` – mirrors the production bundle.
-7. `pnpm test:visual` – optional wider visual sweep when you touched other routes.
+5. `pnpm test:visual:locked` – required when touching `/`, `/about`, `/pricing`, or `/get-started`.
+6. `pnpm exec jest __tests__/sitemap.test.ts __tests__/seo-indexability-guards.test.tsx __tests__/llms.test.ts __tests__/blog-canonical.test.ts --runInBand` – required when changing indexability, sitemap, blog visibility, RSS/latest-post behavior, or `llms.txt`.
+7. `pnpm seo:inventory && pnpm seo:lint` – required when changing metadata, route search visibility, or blog curation.
+8. `pnpm build` – mirrors the production bundle.
+9. `pnpm test:visual` – optional wider visual sweep when you touched other routes.
 
 ### Production-parity preview
 
-- `pnpm exec next start` serves the last production build on disk. Rebuild first with `pnpm build` if you want a real preview of current changes.
+- `pnpm start` serves the last production build on disk. Rebuild first with `pnpm build` if you want a real preview of current changes.
 - Recommended sequence:
   1. `pnpm build`
-  2. `pnpm exec next start -p 3005`
+  2. `pnpm start -p 3005`
   3. test `http://localhost:3005`
 
 ## GitHub CLI + Vercel CLI playbook
@@ -61,6 +63,11 @@ Production is intentionally single-path: GitHub Actions runs the release gates a
 - SEO sign-off when route intent/canonicals changed:
   - `pnpm exec jest __tests__/sitemap.test.ts __tests__/seo-indexability-guards.test.tsx --runInBand`
   - `pnpm seo:inventory && pnpm seo:lint`
+- Search-surface sign-off when dental-first visibility changed:
+  - sitemap stays in the expected narrow range and excludes noindex routes
+  - `public/llms.txt` includes only canonical dental growth, proof, and curated learning URLs
+  - representative broad pages such as `/apps`, `/software`, `/openai`, and `/local-seo-agency` are noindex
+  - representative dental pages such as `/dental-website`, `/dental-practice-seo-expert`, `/google/dental-ads`, and `/ai-agents/dental` remain indexable
 
 ## CI parity notes
 
@@ -69,6 +76,24 @@ Production is intentionally single-path: GitHub Actions runs the release gates a
   2. `Build and Deploy` (`pnpm typecheck`, `vercel pull --environment=production`, `pnpm verify:pricing-consistency`, `vercel deploy --prod --yes`)
 - Keep local troubleshooting aligned with that order.
 - If production deploy fails, reproduce locally with `pnpm build` first. Most failures are deterministic once you mirror the production bundle.
+- After pushing `main`, watch the run with `gh run list --branch main --limit 10` and `gh run watch <run_id> --interval 15`.
+
+## Live production verification
+
+After the workflow succeeds, verify the public domain instead of assuming the release is done:
+
+```bash
+curl -sS -L https://www.design-prism.com/sitemap.xml
+curl -sS -L https://www.design-prism.com/robots.txt
+curl -sS -L https://www.design-prism.com/llms.txt
+```
+
+Spot-check robots tags on both sides of the search policy:
+
+- Indexable: `/dental-website`, `/dental-practice-seo-expert`, `/google/dental-ads`, `/blog/dental-seo-guide`
+- Noindex: `/apps`, `/software`, `/openai`, `/local-seo-agency`, off-theme blog posts
+
+`robots.txt` should not block public noindex pages. It should only keep API routes closed while allowing `/api/og/`.
 
 ## Common gotchas
 
@@ -83,5 +108,6 @@ Production is intentionally single-path: GitHub Actions runs the release gates a
 1. Rebase on `main` and resolve conflicts.
 2. Run the local build flow above.
 3. Skim the diff for accidental typography/casing regressions.
-4. Push to a branch or merge a PR; GitHub Actions remains the production publisher.
-5. If Vercel fails, rerun the failing build locally and compare logs before changing deploy setup.
+4. Push to a branch or push/merge `main` when the user explicitly asks for production.
+5. Watch GitHub Actions and verify the live domain after the production run succeeds.
+6. If Vercel fails, rerun the failing build locally and compare logs before changing deploy setup.

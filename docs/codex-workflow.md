@@ -4,14 +4,42 @@
 
 Guidance for future Codex sessions so we can ship faster without rediscovering context every time.
 
+## 0. Start here
+
+Before changing broad behavior, read `docs/project-overview.md`. It is the current map for the dental-first project shape, source-of-truth files, search visibility policy, common change playbooks, and release truth.
+
+Default operating loop:
+
+1. Sync and inspect the current worktree before editing.
+2. Trace the real runtime/data path in code, not just nearby docs.
+3. Make the smallest durable change that matches the existing system.
+4. Update the relevant existing doc under `/docs` when behavior changes.
+5. Run the narrowest meaningful checks with Node 22.
+6. For production requests, push `main`, watch GitHub Actions, and verify the live public domain.
+
 ## 1. Stack refresher
 
-- **Framework** – Next.js App Router + TypeScript, deployed via Vercel.
-- **Styling** – Tailwind classes inline; no styled-components.
+- **Framework** – Next.js 16 App Router + React 19 + TypeScript, deployed via Vercel.
+- **Runtime** – Node 22.x and pnpm 10.x.
+- **Styling** – Tailwind v4 classes inline; no styled-components.
 - **UI kit** – `components/ui/*` (Button, Carousel, etc.). Import from there instead of re‑implementing.
 - **Forms** – Marketing forms post to [Formspree](https://formspree.io/) using the shared `useFormValidation` hook (HTML5 validation + client-side fetch + redirect). Keep actions and field names explicit so PMs can read submissions quickly.
+- **Search** – `lib/seo/search-visibility.ts` is the shared policy for indexable routes and blog posts. New routes/posts should default to noindex unless they support dental growth systems.
+- **Metadata** – Static routes should use `buildRouteMetadata` from `lib/seo/metadata.ts` so canonical URLs, titles, Open Graph, Twitter, and robots stay aligned.
 
-## 1.1 ElevenLabs widget workflow
+## 1.1 Project change map
+
+| Task | First files to inspect | Docs to update |
+| --- | --- | --- |
+| Homepage copy/layout | `app/client-page.tsx`, `components/home/*`, `components/home/homepage-content.ts` | `docs/pages-overview.md`, `docs/development-guide.md` if workflow changes |
+| Search visibility | `lib/seo/search-visibility.ts`, `app/sitemap.ts`, `public/llms.txt`, `scripts/seo-*` | `docs/project-overview.md`, `docs/development-guide.md`, `docs/blog-content-architecture.md` |
+| Blog post or blog behavior | `content/blog`, `lib/mdx-data.ts`, `app/blog/*`, `components/blog-*` | `docs/blog-content-architecture.md` |
+| Forms and thank-you flows | `components/forms/*`, `hooks/use-form-validation.ts`, `components/thank-you/*`, route pages | `docs/forms.md`, `docs/environment-setup.md` if env vars change |
+| Pricing | `lib/pricing-model.ts`, `app/pricing/*`, pricing tests | README/AGENTS only if the canonical policy changes |
+| Case studies | `lib/case-study-data.ts`, `app/case-studies/*`, `components/case-studies/*` | `docs/pages-overview.md` |
+| Deploy/release | `.github/workflows/deploy.yml`, `vercel.json`, `docs/build-and-deploy-guide.md` | `docs/build-and-deploy-guide.md` |
+
+## 1.2 ElevenLabs widget workflow
 
 When a task touches the live assistant surface, start with the current ownership map instead of searching blindly:
 

@@ -2,12 +2,12 @@
 
 ## Overview
 
-This system solves the recurring git synchronization issues between v0.dev, Cursor IDE, and Claude Code by providing automated monitoring, conflict detection, and intelligent branch management.
+This system solves the recurring git synchronization issues between v0.dev, Cursor IDE, and Codex by providing automated monitoring, conflict detection, and intelligent branch management.
 
 ## Root Cause Analysis
 
 ### The Problem
-- **Three-way development conflict**: v0.dev, Cursor, and Claude Code all make changes independently
+- **Three-way development conflict**: v0.dev, Cursor, and Codex all make changes independently
 - **Branch pollution**: 200+ stale feature branches from different tools
 - **No coordination**: Tools don't know when others have made changes
 - **Manual intervention required**: Constant need to resolve sync conflicts
@@ -75,12 +75,12 @@ pnpm git:cleanup        # Interactive cleanup
 
 ### 3. Intelligent Git Hooks (`scripts/setup-git-hooks.js`)
 
-**Purpose**: Coordinates between v0.dev, Cursor, and Claude Code workflows
+**Purpose**: Coordinates between v0.dev, Cursor, and Codex workflows
 
 **Hooks Installed**:
 
 #### Pre-commit Hook
-- Detects which tool is committing (Cursor/Claude Code/v0.dev)
+- Detects which tool is committing (Cursor/Codex/v0.dev)
 - Runs sync health checks
 - Validates TypeScript for development tools
 - Prevents commits when sync issues exist
@@ -120,7 +120,7 @@ pnpm git:hooks-remove     # Remove hooks
 - Automatic attribution in commit messages
 - Branch cleanup handles old cursor branches
 
-### Claude Code Integration
+### Codex Integration
 - Creates `codex/` prefixed branches  
 - Comprehensive sync checking before commits
 - Detailed error reporting for resolution
@@ -149,9 +149,12 @@ pnpm git:cleanup        # Clean up stale branches
 ### Emergency Sync Fix
 ```bash
 git fetch origin
-git reset --hard origin/main    # WARNING: Loses local changes
-pnpm git:status              # Verify clean state
+git status --short --branch
+git pull --ff-only origin main
+pnpm git:status
 ```
+
+Use a destructive reset only when the operator explicitly asks to discard local work. Prefer backing up or committing useful local changes first.
 
 ## Automation and Monitoring
 
@@ -199,12 +202,12 @@ pnpm git:cleanup-dry    # Preview cleanup
 pnpm git:cleanup        # Execute cleanup
 ```
 
-#### "Commits ahead of remote" 
+#### "Commits ahead of remote"
 ```bash
 git push origin main       # Push local changes
-# OR
-git reset --hard origin/main    # Discard local changes
 ```
+
+Do not discard local changes with `git reset --hard` unless the operator explicitly asks for that destructive action and the intended changes are safely backed up.
 
 #### "Commits behind remote"
 ```bash
@@ -236,7 +239,7 @@ pnpm git:hooks-install  # Reinstall hooks
 
 2. **Use appropriate branches**
    - Cursor: `cursor/feature-name`
-   - Claude Code: `codex/feature-name`  
+   - Codex: `codex/feature-name`
    - v0.dev: Automatic branch naming
 
 3. **Regular cleanup**
@@ -253,7 +256,7 @@ pnpm git:hooks-install  # Reinstall hooks
    - Enable git integration
    - Use branch prefixes: `cursor/`
 
-2. **Claude Code Usage**
+2. **Codex Usage**
    - Run sync checks before major changes
    - Use the installed hooks for guidance
 
@@ -265,7 +268,7 @@ pnpm git:hooks-install  # Reinstall hooks
 
 ```
 ┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
-│     v0.dev      │    │   Cursor IDE    │    │  Claude Code    │
+│     v0.dev      │    │   Cursor IDE    │    │     Codex       │
 │   (automated)   │    │   (manual dev)  │    │   (ai assist)   │
 └─────────┬───────┘    └─────────┬───────┘    └─────────┬───────┘
           │                      │                      │
@@ -308,7 +311,7 @@ With this system in place, you should see:
 - ✅ **Automatic branch cleanup** (sub-50 remote branches)
 - ✅ **Clear attribution** of commits by tool
 - ✅ **Proactive issue detection** before problems escalate
-- ✅ **Seamless switching** between Cursor and Claude Code
+- ✅ **Seamless switching** between Cursor and Codex
 - ✅ **Reliable v0.dev integration** without manual intervention
 
 The system provides both immediate fixes and long-term prevention of git synchronization issues in multi-tool development environments.

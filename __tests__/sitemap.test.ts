@@ -19,6 +19,7 @@ describe("sitemap", () => {
       "https://www.design-prism.com/ai-agents/dental",
       "https://www.design-prism.com/pricing",
       "https://www.design-prism.com/case-studies",
+      "https://www.design-prism.com/case-studies/roseville-dental-academy",
       "https://www.design-prism.com/blog",
     ]))
 
