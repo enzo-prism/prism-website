@@ -61,6 +61,14 @@ Remote hosts must be listed in `next.config.mjs`. The current supported hosts ar
 
 Do not add a new remote host just to avoid moving a durable asset into the repo or Cloudinary. Prefer stable, inspectable media sources for important proof, screenshots, and hero content.
 
+## Case study screenshots
+
+- Each case study renders through `components/case-study-minimal.tsx`, which expects a desktop browser screenshot at `public/case-studies/<slug>-home-desktop.jpg` and an overlapping mobile screenshot at `public/case-studies/<slug>-home-mobile.jpg`.
+- The template checks for these files with `fs.existsSync` at render time. If a slug is missing one or both, the page degrades cleanly to a text-only hero — do not commit broken placeholder JPEGs to satisfy the check.
+- Generate (or refresh) these assets with `node scripts/capture-case-study-screenshots.mjs [slug ...]`. The script uses Playwright + headless Chromium to capture 1440×900 desktop and 390×844 mobile JPEGs from the `websiteUrl` field of each entry in `lib/case-study-data.ts`. It is idempotent — existing files are skipped unless deleted first.
+- The frames themselves (`components/case-studies/CaseStudyVisualHero.tsx`) lock aspect ratios with `aspect-[16/10]` for desktop and `aspect-[9/19]` for mobile, so screenshots cropped to those proportions render without layout shift.
+- If a client's domain changes, update `websiteUrl` in `lib/case-study-data.ts`, delete the stale JPEGs from `public/case-studies/`, and re-run the script for just that slug.
+
 ## Layout safety
 
 - Keep cards, hero media, sliders, and screenshot frames stable with `aspect-ratio`, explicit dimensions, or fixed grid tracks.

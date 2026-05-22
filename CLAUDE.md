@@ -30,6 +30,9 @@ pnpm seo:inventory     # Render route metadata inventory
 pnpm seo:lint          # Validate SEO/search-surface rules
 pnpm verify:pricing-consistency
 
+# Case study assets
+node scripts/capture-case-study-screenshots.mjs [slug ...]  # Playwright capture of <slug>-home-{desktop,mobile}.jpg
+
 # Git sync (v0.dev/Cursor/Claude coordination)
 pnpm git:status       # Check sync health
 pnpm git:cleanup      # Clean stale branches
@@ -57,6 +60,7 @@ pnpm git:cleanup      # Clean stale branches
 | Canonical pricing | `lib/pricing-model.ts` |
 | Public ElevenLabs widget | `lib/elevenlabs-widget.ts`, `components/global-elevenlabs-widget.tsx` |
 | Image guidance | `docs/image-best-practices.md`, `docs/image-configuration.md` |
+| Case study template | `components/case-study-minimal.tsx`, `components/case-studies/CaseStudyVisualHero.tsx`, `lib/case-study-data.ts` |
 | MDX processing | `/lib/mdx.tsx` |
 | Image utilities | `/utils/image-utils.ts` |
 | Form validation hook | `/hooks/use-form-validation.ts` |

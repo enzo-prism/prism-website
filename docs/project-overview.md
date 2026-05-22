@@ -11,7 +11,7 @@ Prism is now a dental growth systems website: websites, SEO and AI search, Googl
 - Production: GitHub Actions publishes to Vercel with source deploys. Vercel Git auto-deploy is disabled for `main`.
 - Design system: root `DESIGN.md`, generated tokens in `generated/`, shared primitives in `components/core-route/` and `components/ui/`.
 - Active positioning: dental-first, not dental-only. Non-dental proof can stay live, but dental proof should be visually and machine-readably dominant.
-- Current scale from this audit: 113 page routes, 6 route handlers, 86 blog MDX files, 22 case studies, and 25 docs files.
+- Current scale from this audit: 113 page routes, 5 route handlers, 86 blog MDX files, 22 case studies (21 of which render through the shared visual minimal template with browser + mobile screenshot heroes), and 25 docs files.
 
 ## Source Of Truth Files
 
@@ -30,6 +30,7 @@ Prism is now a dental growth systems website: websites, SEO and AI search, Googl
 | Shared chrome | `components/navbar.tsx`, `components/footer.tsx`, `lib/constants.ts` | Header nav, logo interaction, footer links, and the single footer funnel CTA. |
 | Public assistant | `lib/elevenlabs-widget.ts`, `components/global-elevenlabs-widget.tsx` | Stock ElevenLabs widget route allowlist, mobile suppression, default collapsed state, and public kill switch. |
 | Images | `next.config.mjs`, `components/core-image.tsx`, `components/image.tsx`, `docs/image-best-practices.md` | Next/Image remote hosts plus the current legacy/new component split. |
+| Case studies | `lib/case-study-data.ts`, `components/case-study-minimal.tsx`, `components/case-studies/CaseStudyVisualHero.tsx`, `scripts/capture-case-study-screenshots.mjs`, `docs/pages-overview.md` | Canonical case study metadata, shared visual template, browser + mobile screenshot frames, and the Playwright capture script that populates `public/case-studies/<slug>-home-{desktop,mobile}.jpg`. |
 
 ## Runtime Architecture
 
@@ -94,6 +95,7 @@ fnm exec --using 22 pnpm seo:lint
 | Pricing copy | `lib/pricing-model.ts`, pricing route/components | README/AGENTS only if policy changes | `pnpm verify:pricing-consistency` |
 | Assistant widget route | `lib/elevenlabs-widget.ts`, `components/global-elevenlabs-widget.tsx`, deferred runtime | README/AGENTS/docs only if public policy changes | widget Jest, `pnpm test:visual:widget` |
 | Visual or layout work | Route/component files, `DESIGN.md` if contract changes | relevant page/design docs | `pnpm lint`, targeted Jest, visual tests for affected routes |
+| New or refreshed case study | `lib/case-study-data.ts` (entry + `websiteUrl`), then `node scripts/capture-case-study-screenshots.mjs <slug>` to populate `public/case-studies/<slug>-home-{desktop,mobile}.jpg` | `docs/pages-overview.md` only if the layout contract or screenshot convention changes | `pnpm typecheck`, sitemap/SEO Jest if the route is new, visit `/case-studies/<slug>` locally to confirm the hero renders |
 | Production release | Commit and push `main` | no doc update unless process changed | CI green, live sitemap/robots/critical route smoke |
 
 ## Release Truth
