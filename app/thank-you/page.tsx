@@ -38,8 +38,8 @@ const DEFAULT_NEXT_STEPS = [
 const APPLY_NEXT_STEPS = [
   {
     label: "01",
-    title: "Audit request received",
-    body: "Thanks, we've got it. Your practice audit request is in the queue.",
+    title: "Dashboard intake received",
+    body: "Thanks, we've got it. Your Growth Dashboard intake is in the queue.",
   },
   {
     label: "02",
@@ -48,8 +48,8 @@ const APPLY_NEXT_STEPS = [
   },
   {
     label: "03",
-    title: "Findings live there",
-    body: "Your audit findings will appear in the dashboard. If you become a Prism client, growth data and progress updates will live there too.",
+    title: "Light Audit findings live there",
+    body: "Your Light Audit findings will appear in the dashboard. If you become a Prism client, growth data and progress updates will live there too.",
   },
 ] as const
 
@@ -71,14 +71,14 @@ export default async function ThankYouPage({
           <section className="mx-auto max-w-[1180px] space-y-8">
             <div className="border border-white/10 bg-[#070707] px-6 py-8 sm:px-10 sm:py-12">
               <p className="font-mono text-[0.76rem] uppercase tracking-[0.4em] text-[#9EFF2E]">
-                {isApplyFlow ? "PRACTICE AUDIT" : "RECEIVED"}
+                {isApplyFlow ? "GROWTH DASHBOARD" : "RECEIVED"}
               </p>
               <h1 className="mt-6 max-w-[9ch] text-balance font-sans text-[clamp(2.45rem,5.4vw,4.6rem)] font-medium leading-[0.98] tracking-[-0.06em] text-[#F5F5F2]">
-                {isApplyFlow ? "Audit request received." : "Review in progress."}
+                {isApplyFlow ? "Dashboard intake received." : "Review in progress."}
               </h1>
               <p className="mt-6 max-w-[42rem] font-mono text-[1rem] leading-8 text-[#A0A09A]">
                 {isApplyFlow
-                  ? "Thanks, we've got it. We review every real practice submission, and we sent a private dashboard link to the email you entered. Claim it to follow the audit findings and future growth updates from one place."
+                  ? "Thanks, we've got it. Every real practice submission receives a Light Audit, and we sent a private dashboard link to the email you entered. Claim it to follow findings and future growth updates from one place."
                   : "We received your submission. Every real inquiry gets reviewed. If there&apos;s a fit, we&apos;ll reach out with the right next step."}
               </p>
             </div>

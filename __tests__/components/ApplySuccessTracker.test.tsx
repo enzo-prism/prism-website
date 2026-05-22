@@ -28,7 +28,7 @@ describe('ApplySuccessTracker', () => {
       service_count: 2,
       primary_goal: 'I need clearer analytics',
       has_website: 'yes',
-      budget: '$3k to $5k',
+      budget: '$5k to $7.5k',
       timeline: 'ASAP',
       elapsed_seconds: 84,
     })
@@ -56,7 +56,7 @@ describe('ApplySuccessTracker', () => {
         form_location: 'apply_page',
         lead_type: 'growth_application',
         lead_source: 'google',
-        budget: '$3k to $5k',
+        budget: '$5k to $7.5k',
         timeline: 'ASAP',
         has_website: 'yes',
       }),

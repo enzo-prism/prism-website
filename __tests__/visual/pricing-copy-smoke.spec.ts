@@ -25,6 +25,11 @@ const legacyPricingPatterns = [
   /\$300\/mo\b/i,
   /starting around \$1,000/i,
   /from \$1,500\/mo/i,
+  /\$1,000 one-time/i,
+  /Website Overhaul/i,
+  /Growth Partnership/i,
+  /Free Expert Audit/i,
+  /\$2,000\/month\b/i,
 ] as const
 
 test.describe("pricing copy consistency", () => {

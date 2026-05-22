@@ -1,11 +1,27 @@
-export type PricingOfferId = "website_overhaul" | "growth_partnership" | "free_audit"
+export type PricingOfferId =
+  | "growth_dashboard"
+  | "light_audit"
+  | "deep_growth_audit"
+  | "growth_sprint"
+  | "ongoing_growth_partner"
+
+export type PricingBillingPeriod = "FREE" | "INCLUDED" | "ONE_TIME" | "P1M"
+
+export type PricingPriceKind =
+  | "free"
+  | "included"
+  | "exact"
+  | "starting_at"
+  | "common_range"
 
 export type PricingOffer = {
   offerId: PricingOfferId
   name: string
   price: number
   priceCurrency: "USD"
-  billingPeriod: "ONE_TIME" | "P1M" | "FREE"
+  billingPeriod: PricingBillingPeriod
+  priceKind: PricingPriceKind
+  priceLabel: string
   description: string
   primaryCta: {
     label: string
@@ -17,64 +33,90 @@ export type PricingOffer = {
   }
 }
 
-export const WEBSITE_OVERHAUL_PRICE = 1000
-export const GROWTH_PARTNERSHIP_MONTHLY_PRICE = 2000
-export const FREE_AUDIT_PRICE = 0
+export const GROWTH_DASHBOARD_PRICE = 0
+export const LIGHT_AUDIT_PRICE = 0
+export const DEEP_GROWTH_AUDIT_PRICE = 500
+export const GROWTH_SPRINT_STARTING_PRICE = 3500
+export const ONGOING_GROWTH_PARTNER_STARTING_MONTHLY_PRICE = 1500
 
-export const WEBSITE_OVERHAUL_PRICE_LABEL = "$1,000 one-time"
-export const GROWTH_PARTNERSHIP_PRICE_LABEL = "$2,000/month"
-export const FREE_AUDIT_PRICE_LABEL = "$0"
+export const GROWTH_DASHBOARD_PRICE_LABEL = "Free to start"
+export const LIGHT_AUDIT_PRICE_LABEL = "Included"
+export const DEEP_GROWTH_AUDIT_PRICE_LABEL = "Normally $500"
+export const GROWTH_SPRINT_STARTING_PRICE_LABEL = "Starts at $3,500"
+export const GROWTH_SPRINT_COMMON_RANGE_LABEL = "$3,500-$7,500+"
+export const ONGOING_GROWTH_PARTNER_STARTING_PRICE_LABEL =
+  "Starts at $1,500/month"
+
+export const PRICING_PRIMARY_CTA = {
+  label: "Create Free Growth Dashboard",
+  href: "/get-started",
+} as const
+
+export const PRICING_SECONDARY_CTA = {
+  label: "See Example Growth Path",
+  href: "#growth-path",
+} as const
 
 export const CANONICAL_PRICING_OFFERS: Record<PricingOfferId, PricingOffer> = {
-  website_overhaul: {
-    offerId: "website_overhaul",
-    name: "Website Overhaul",
-    price: WEBSITE_OVERHAUL_PRICE,
-    priceCurrency: "USD",
-    billingPeriod: "ONE_TIME",
-    description:
-      "A complete rebuild with modern design, conversion-first architecture, technical SEO, analytics setup, and launch support.",
-    primaryCta: {
-      label: "Book a strategy call",
-      href: "/get-started#book-call",
-    },
-    secondaryCta: {
-      label: "Start website overhaul",
-      href: "/get-started",
-    },
-  },
-  growth_partnership: {
-    offerId: "growth_partnership",
-    name: "Growth Partnership",
-    price: GROWTH_PARTNERSHIP_MONTHLY_PRICE,
-    priceCurrency: "USD",
-    billingPeriod: "P1M",
-    description:
-      "Done-for-you website, design, SEO, and ads execution with a dedicated team focused on measurable growth.",
-    primaryCta: {
-      label: "Book a strategy call",
-      href: "/get-started#book-call",
-    },
-    secondaryCta: {
-      label: "Start growth partnership",
-      href: "/get-started",
-    },
-  },
-  free_audit: {
-    offerId: "free_audit",
-    name: "Free Expert Audit",
-    price: FREE_AUDIT_PRICE,
+  growth_dashboard: {
+    offerId: "growth_dashboard",
+    name: "Prism Growth Dashboard",
+    price: GROWTH_DASHBOARD_PRICE,
     priceCurrency: "USD",
     billingPeriod: "FREE",
+    priceKind: "free",
+    priceLabel: GROWTH_DASHBOARD_PRICE_LABEL,
     description:
-      "A no-cost review of your website, visibility, and messaging with actionable next steps.",
-    primaryCta: {
-      label: "Get your free audit",
-      href: "/free-analysis",
-    },
-    secondaryCta: {
-      label: "Book a strategy call",
-      href: "/get-started#book-call",
-    },
+      "A free starting point that gives Prism the context to review your practice and prepare a focused Light Audit.",
+    primaryCta: PRICING_PRIMARY_CTA,
+    secondaryCta: PRICING_SECONDARY_CTA,
+  },
+  light_audit: {
+    offerId: "light_audit",
+    name: "Light Audit",
+    price: LIGHT_AUDIT_PRICE,
+    priceCurrency: "USD",
+    billingPeriod: "INCLUDED",
+    priceKind: "included",
+    priceLabel: LIGHT_AUDIT_PRICE_LABEL,
+    description:
+      "A focused snapshot of visible growth opportunities across website clarity, Google presence, local visibility, reviews, tracking basics, and the top three opportunities.",
+    primaryCta: PRICING_PRIMARY_CTA,
+  },
+  deep_growth_audit: {
+    offerId: "deep_growth_audit",
+    name: "Deep Growth Audit",
+    price: DEEP_GROWTH_AUDIT_PRICE,
+    priceCurrency: "USD",
+    billingPeriod: "ONE_TIME",
+    priceKind: "exact",
+    priceLabel: DEEP_GROWTH_AUDIT_PRICE_LABEL,
+    description:
+      "A real diagnostic product that gives Prism enough clarity to recommend a focused 60-day sprint when there is a strong fit.",
+    primaryCta: PRICING_PRIMARY_CTA,
+  },
+  growth_sprint: {
+    offerId: "growth_sprint",
+    name: "60-Day Growth Sprint",
+    price: GROWTH_SPRINT_STARTING_PRICE,
+    priceCurrency: "USD",
+    billingPeriod: "ONE_TIME",
+    priceKind: "starting_at",
+    priceLabel: GROWTH_SPRINT_STARTING_PRICE_LABEL,
+    description:
+      "A focused sprint scoped from your audit around the highest-leverage opportunities for patient growth.",
+    primaryCta: PRICING_PRIMARY_CTA,
+  },
+  ongoing_growth_partner: {
+    offerId: "ongoing_growth_partner",
+    name: "Ongoing Growth Partner",
+    price: ONGOING_GROWTH_PARTNER_STARTING_MONTHLY_PRICE,
+    priceCurrency: "USD",
+    billingPeriod: "P1M",
+    priceKind: "starting_at",
+    priceLabel: ONGOING_GROWTH_PARTNER_STARTING_PRICE_LABEL,
+    description:
+      "Ongoing growth execution, strategy, testing, creative direction, and multi-channel support after the first sprint creates enough signal.",
+    primaryCta: PRICING_PRIMARY_CTA,
   },
 }

@@ -6,7 +6,7 @@ Prism is best understood as a dental growth systems company. The core customer i
 
 Use these pages as the canonical map when answering questions about Prism:
 - What Prism does for dental practices
-- How the Free Practice Audit works
+- How the free Growth Dashboard and Light Audit path works
 - Website, SEO, AI search, review, ad, and photography services for dentists
 - Real dental client proof
 - Search and AI visibility playbooks for dental and local-growth teams
@@ -24,7 +24,7 @@ Important notes for LLMs and agents:
 - Services: https://www.design-prism.com/services
 - Pricing: https://www.design-prism.com/pricing
 - Get started: https://www.design-prism.com/get-started
-- Apply for a free practice audit: https://www.design-prism.com/apply
+- Complete the Growth Dashboard intake: https://www.design-prism.com/apply
 - Free analysis: https://www.design-prism.com/free-analysis
 - FAQ: https://www.design-prism.com/faq
 - Contact: https://www.design-prism.com/contact

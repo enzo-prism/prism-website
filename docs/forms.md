@@ -26,7 +26,7 @@ const { handleSubmit, getError, isSubmitting } = useFormValidation({
 - `components/forms/ContactForm.tsx`
 - `components/forms/GetStartedForm.tsx` (`/apply`)
 - `components/forms/ScalingRoadmapForm.tsx`
-- `components/ai-website-launch/AiWebsiteLaunchForm.tsx` (inline card form for the AI launch offer; embedded in `app/ai-website-launch/client-page.tsx` and wired with `useFormValidation`)
+- `components/ai-website-launch/AiWebsiteLaunchForm.tsx` (legacy archival form code; the `/ai-website-launch` route redirects to `/pricing` in production and should not receive active traffic)
 - `components/forms/AeoAssessmentForm.tsx`
 - `app/book-a-shoot/BookAShootForm.tsx`
 - `app/scholarship/ScholarshipPageClient.tsx`
@@ -50,11 +50,11 @@ const { handleSubmit, getError, isSubmitting } = useFormValidation({
    - `conversionMode: "immediate"` for confirmed success states that stay on-page.
    - `sendGoogleAdsConversion: false` for scholarship, model, newsletter, community, or other non-sales submissions.
 
-## Prism practice audit flow: `/get-started` + `/apply`
+## Prism Growth Dashboard flow: `/get-started` + `/apply`
 
-`app/get-started/page.tsx` is now the Free Practice Audit entry page for dental practices. The actual audit request form lives on `app/apply/page.tsx` and is powered by `components/forms/GetStartedForm.tsx`.
+`app/get-started/page.tsx` is now the free Growth Dashboard entry page for dental practices. The actual dashboard intake form lives on `app/apply/page.tsx` and is powered by `components/forms/GetStartedForm.tsx`.
 
-The `/apply` route should feel like a focused practice audit mode, not another marketing page. Keep the form broken into single-question screens, keep global chrome minimal, and keep the ElevenLabs floating widget suppressed while the user is inside the active form. Keep the DOM/form contracts below unchanged even when visible copy says audit instead of application.
+The `/apply` route should feel like a focused Growth Dashboard mode, not another marketing page. Keep the form broken into single-question screens, keep global chrome minimal, and keep the ElevenLabs floating widget suppressed while the user is inside the active form. Keep the DOM/form contracts below unchanged even when visible copy says Growth Dashboard, Light Audit, or dashboard intake instead of application.
 
 - Required payload fields:
   - `service_focus`
@@ -70,17 +70,17 @@ The `/apply` route should feel like a focused practice audit mode, not another m
   - `service_interest[]`
   - `additional_context`
 - Hidden metadata contract:
-  - `_subject` = `New Prism practice audit request`
+  - `_subject` = `New Prism Growth Dashboard request`
   - `_redirect` = `/thank-you?source=apply`
   - `form_name` = `growth_application`
   - `_gotcha` (honeypot)
 - DOM analytics contract:
   - `<form id="growth_application" name="growth_application">`
 - Endpoint strategy:
-  - `NEXT_PUBLIC_DASHBOARD_INTAKE_ENDPOINT` (preferred; posts to the Prism dashboard app and creates/updates a private dashboard)
-  - `NEXT_PUBLIC_APPLY_FORM_ENDPOINT`
-  - fallback: `NEXT_PUBLIC_GET_STARTED_FORM_ENDPOINT`
-  - fallback default: `https://formspree.io/f/mreroojo`
+  1. `NEXT_PUBLIC_DASHBOARD_INTAKE_ENDPOINT` (preferred; posts to the Prism dashboard app and may return `dashboard.claimUrl`)
+  2. `NEXT_PUBLIC_APPLY_FORM_ENDPOINT`
+  3. `NEXT_PUBLIC_GET_STARTED_FORM_ENDPOINT` (backward-compatible legacy name)
+  4. `https://formspree.io/f/mreroojo`
 - Success flow:
   - POST via `fetch(form.action, { method: 'POST', headers: { Accept: 'application/json' }, body: new FormData(form) })`
   - When the dashboard intake API returns `dashboard.claimUrl`, store it in session storage for the apply thank-you CTA; do not include it in analytics payloads.
@@ -174,7 +174,7 @@ Important routing note:
 
 ## Thank-you pages
 
-- `/thank-you` ([`app/thank-you/page.tsx`](../app/thank-you/page.tsx)) — used by Apply + Contact. The Prism practice audit flow sends `?source=apply` so the screen can render audit-specific expectation copy and analytics.
+- `/thank-you` ([`app/thank-you/page.tsx`](../app/thank-you/page.tsx)) — used by Apply + Contact. The Prism Growth Dashboard flow sends `?source=apply` so the screen can render Light Audit expectation copy and analytics.
 - `/analysis-thank-you` ([`app/analysis-thank-you/page.tsx`](../app/analysis-thank-you/page.tsx)) — used by the Free Analysis form.
 - `/aeo-thank-you` ([`app/aeo-thank-you/page.tsx`](../app/aeo-thank-you/page.tsx)) — used by the AEO assessment form.
 - `/book-a-shoot/thank-you` ([`app/book-a-shoot/thank-you/page.tsx`](../app/book-a-shoot/thank-you/page.tsx)) — used by the photography booking request form.

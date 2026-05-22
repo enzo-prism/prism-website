@@ -10,65 +10,158 @@ import {
 import { FAQSchema, ServiceSchema } from '@/components/schema-markup'
 import {
   CANONICAL_PRICING_OFFERS,
-  FREE_AUDIT_PRICE_LABEL,
-  GROWTH_PARTNERSHIP_PRICE_LABEL,
-  WEBSITE_OVERHAUL_PRICE_LABEL,
+  GROWTH_SPRINT_COMMON_RANGE_LABEL,
+  PRICING_PRIMARY_CTA,
+  PRICING_SECONDARY_CTA,
 } from '@/lib/pricing-model'
 import { cn } from '@/lib/utils'
 
-const pricingCards = [
+const growthPathSteps = [
   {
-    key: 'website_overhaul',
-    title: CANONICAL_PRICING_OFFERS.website_overhaul.name,
-    priceLabel: WEBSITE_OVERHAUL_PRICE_LABEL,
-    summary:
-      'A one-time rebuild for teams that need a sharper website and a stronger baseline fast.',
-    bullets: [
-      'Conversion-focused redesign and page structure',
-      'Technical SEO, schema, and analytics setup',
-      'Launch support and team handoff',
-    ],
-    primaryCta: CANONICAL_PRICING_OFFERS.website_overhaul.primaryCta,
-    secondaryCta: CANONICAL_PRICING_OFFERS.website_overhaul.secondaryCta,
-    featured: false,
+    stage: '01',
+    title: 'Create your Growth Dashboard',
+    price: CANONICAL_PRICING_OFFERS.growth_dashboard.priceLabel,
+    description:
+      'Share the basic context Prism needs to understand the practice, market, website, Google presence, reviews, tracking, and goals.',
   },
   {
-    key: 'growth_partnership',
-    title: CANONICAL_PRICING_OFFERS.growth_partnership.name,
-    priceLabel: GROWTH_PARTNERSHIP_PRICE_LABEL,
-    summary:
-      'An ongoing execution layer for teams that want one partner running the whole growth system.',
-    bullets: [
-      'Website, SEO, design, and ads managed together',
-      'Dedicated team moving every week',
-      'Reporting that stays clear and actionable',
-    ],
-    primaryCta: CANONICAL_PRICING_OFFERS.growth_partnership.primaryCta,
-    secondaryCta: CANONICAL_PRICING_OFFERS.growth_partnership.secondaryCta,
-    featured: true,
+    stage: '02',
+    title: 'Complete the intake',
+    price: 'About a minute',
+    description:
+      'The intake keeps the first step focused. No calendar wall, no pressure loop, and no long brief before Prism can see the business clearly.',
+  },
+  {
+    stage: '03',
+    title: 'Receive the Light Audit',
+    price: CANONICAL_PRICING_OFFERS.light_audit.priceLabel,
+    description:
+      'A focused snapshot of visible growth opportunities, including website clarity, Google presence, local visibility, reviews, tracking basics, and the top three opportunities.',
+  },
+  {
+    stage: '04',
+    title: 'Decide on the Deep Growth Audit',
+    price: CANONICAL_PRICING_OFFERS.deep_growth_audit.priceLabel,
+    description:
+      'A deeper diagnostic product when there is enough signal to study the growth system, find leverage, and shape a clear next step.',
+  },
+  {
+    stage: '05',
+    title: 'Scope the focused sprint',
+    price: CANONICAL_PRICING_OFFERS.growth_sprint.priceLabel,
+    description:
+      'If the fit is strong, Prism recommends a 60-day sprint scoped from your audit around the highest-leverage opportunities.',
+  },
+] as const
+
+const pricingSnapshot = [
+  {
+    item: CANONICAL_PRICING_OFFERS.growth_dashboard.name,
+    price: CANONICAL_PRICING_OFFERS.growth_dashboard.priceLabel,
+    role: 'Free to start. Creates the context Prism needs before making a recommendation.',
+  },
+  {
+    item: CANONICAL_PRICING_OFFERS.light_audit.name,
+    price: CANONICAL_PRICING_OFFERS.light_audit.priceLabel,
+    role: 'A first-pass diagnosis of visible opportunities and the clearest next moves.',
+  },
+  {
+    item: CANONICAL_PRICING_OFFERS.deep_growth_audit.name,
+    price: CANONICAL_PRICING_OFFERS.deep_growth_audit.priceLabel,
+    role: 'A real diagnostic product for practices ready to understand the growth system in more depth.',
+  },
+  {
+    item: CANONICAL_PRICING_OFFERS.growth_sprint.name,
+    price: `${CANONICAL_PRICING_OFFERS.growth_sprint.priceLabel}; most ${GROWTH_SPRINT_COMMON_RANGE_LABEL}`,
+    role: 'A focused 60-day execution sprint scoped from your audit.',
+  },
+  {
+    item: CANONICAL_PRICING_OFFERS.ongoing_growth_partner.name,
+    price: CANONICAL_PRICING_OFFERS.ongoing_growth_partner.priceLabel,
+    role: 'Optional ongoing growth execution after a sprint creates enough signal.',
+  },
+] as const
+
+const sprintExamples = [
+  {
+    title: 'Website clarity sprint',
+    price: 'From $3,500',
+    description:
+      'Sharpen the website, treatment pages, conversion path, tracking, and launch foundation when the site is blocking patient trust.',
+    includes: ['Message hierarchy', 'Conversion path', 'Tracking basics'],
+  },
+  {
+    title: 'Local visibility sprint',
+    price: 'Commonly $3,500-$7,500+',
+    description:
+      'Improve the practice signals patients see before they choose: Google presence, reviews, local pages, listings, and proof.',
+    includes: ['Google presence', 'Review system', 'Local trust signals'],
+  },
+  {
+    title: 'Acquisition system sprint',
+    price: 'Scoped from your audit',
+    description:
+      'Connect ads, landing pages, creative direction, analytics, and follow-up so the highest-leverage opportunities are tested quickly.',
+    includes: ['Landing path', 'Creative testing', 'Lead tracking'],
+  },
+] as const
+
+const partnerLevels = [
+  {
+    title: 'Growth Support Partner',
+    price: 'From $1,500+/month',
+    description:
+      'Light ongoing support, measurement, prioritization, and iterative improvement once the core system is in place.',
+  },
+  {
+    title: 'Growth Execution Partner',
+    price: 'Commonly $2,000-$3,500+/month',
+    description:
+      'Ongoing execution across website, SEO, reviews, local visibility, ads support, reporting, and growth testing.',
+  },
+  {
+    title: 'Premium Growth Partner',
+    price: 'From $3,500+/month',
+    description:
+      'Higher-touch growth execution, strategy, testing, creative direction, and multi-channel support.',
   },
 ] as const
 
 const faqs = [
   {
-    question: 'What are the core offers?',
+    question: 'Is the Growth Dashboard really free?',
     answer:
-      'Prism has two core paid offers: Website Overhaul at $1,000 one-time and Growth Partnership at $2,000/month. The free expert audit is the no-cost starting point.',
+      'Yes. It gives Prism the context to review your business and prepare your Light Audit.',
   },
   {
-    question: 'Which option should I choose?',
+    question: 'What is included in the free Light Audit?',
     answer:
-      'Choose Website Overhaul if the main problem is the site itself. Choose Growth Partnership if you want a team to keep executing across website, SEO, ads, and design after the rebuild.',
+      'A focused snapshot of visible growth opportunities, usually covering website clarity, Google presence, local visibility, reviews, tracking basics, and the top three opportunities.',
   },
   {
-    question: 'Can I start smaller and upgrade later?',
+    question: 'Why is the Deep Growth Audit $500?',
     answer:
-      'Yes. Many teams begin with the audit or the one-time overhaul, then move into the monthly partnership once they want ongoing execution.',
+      'Because it is a real diagnostic product. It goes deeper than a surface review and gives Prism enough clarity to recommend a focused sprint.',
   },
   {
-    question: 'Do you offer custom pricing on this page?',
+    question: 'Do I have to buy a sprint after the audit?',
     answer:
-      "No. This page stays intentionally simple and only shows Prism's canonical pricing. Anything outside these core offers would be scoped separately.",
+      'No. The audit is valuable on its own. If there is a strong fit, Prism will recommend a custom 60-day sprint.',
+  },
+  {
+    question: 'How much does a sprint cost?',
+    answer:
+      'Sprints start at $3,500. Most range from $3,500-$7,500+ depending on scope.',
+  },
+  {
+    question: 'Do you offer monthly retainers?',
+    answer:
+      'Yes, usually after a sprint. Ongoing partnerships start at $1,500/month and commonly range from $2,000-$3,500+/month.',
+  },
+  {
+    question: 'Can referral partners waive the audit fee?',
+    answer:
+      'Some trusted referral partners can unlock a complimentary Deep Growth Audit. The standard value remains $500.',
   },
 ] as const
 
@@ -77,93 +170,215 @@ export default function PricingPageClient() {
     <div className="bg-transparent font-sans text-[#f5f0e8]">
       <PricingHero />
 
-      <section id="plans" className={coreRouteSectionClassName}>
+      <section id="growth-path" className={coreRouteSectionClassName}>
         <div className={coreRouteContainerClassName}>
           <div className={coreRouteIntroBandClassName}>
             <CoreSectionHeading
-              title="Two ways to work with Prism."
-              description="Keep the path simple: a one-time rebuild if the site is the bottleneck, or an ongoing execution partner if you want the whole system moving together."
+              eyebrow="Growth path"
+              title="Start with diagnosis. Move only when the next step is clear."
+              description="Pricing follows the growth system. Prism learns the context first, shows the clearest opportunities, then scopes the work around leverage."
+              titleClassName="max-w-[13ch]"
+            />
+          </div>
+
+          <div className="mt-10 grid gap-4 lg:grid-cols-5">
+            {growthPathSteps.map((step) => (
+              <article
+                key={step.stage}
+                className={cn(
+                  coreRoutePanelClassName,
+                  'flex min-h-[22rem] flex-col p-6',
+                )}
+              >
+                <p className="font-mono text-[0.72rem] uppercase tracking-[0.24em] text-[#797165]">
+                  {step.stage}
+                </p>
+                <h2 className="mt-5 text-[1.35rem] font-medium leading-[1.05] tracking-[-0.04em] text-[#f5f0e8]">
+                  {step.title}
+                </h2>
+                <p className="mt-4 font-mono text-[0.72rem] uppercase tracking-[0.18em] text-[#d8bc79]">
+                  {step.price}
+                </p>
+                <p className="mt-auto pt-8 text-[0.95rem] leading-7 text-[#b8afa2]">
+                  {step.description}
+                </p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="pricing-snapshot" className={coreRouteSectionClassName}>
+        <div
+          className={cn(
+            coreRouteContainerClassName,
+            'grid gap-12 lg:grid-cols-[minmax(0,0.78fr)_minmax(0,1.22fr)]',
+          )}
+        >
+          <CoreSectionHeading
+            eyebrow="Snapshot"
+            title="The numbers are simple. The scope comes from the audit."
+            description="Prism does not force a practice into preset plans before diagnosis. This is the common path from free to start through focused execution."
+          />
+
+          <div className="overflow-hidden border-y border-white/12">
+            {pricingSnapshot.map((row) => (
+              <div
+                key={row.item}
+                className="grid gap-4 border-b border-white/12 py-5 last:border-b-0 md:grid-cols-[minmax(0,0.86fr)_minmax(12rem,0.62fr)_minmax(0,1.12fr)] md:items-start"
+              >
+                <p className="text-[1.05rem] font-medium tracking-[-0.02em] text-[#f5f0e8]">
+                  {row.item}
+                </p>
+                <p className="font-mono text-[0.78rem] uppercase tracking-[0.18em] text-[#d8bc79]">
+                  {row.price}
+                </p>
+                <p className="text-[0.95rem] leading-7 text-[#b8afa2]">
+                  {row.role}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className={coreRouteSectionClassName}>
+        <div
+          className={cn(
+            coreRouteContainerClassName,
+            'grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]',
+          )}
+        >
+          <div className={cn(coreRoutePanelClassName, 'p-8 sm:p-10')}>
+            <CoreSectionHeading
+              eyebrow="Why this path"
+              title="Fixed plans create false confidence before diagnosis."
+              description="Two practices can need the same outcome and completely different work. Prism starts with the Growth Dashboard and Light Audit so the highest-leverage opportunities shape the investment."
+              titleClassName="max-w-[12ch]"
+            />
+          </div>
+
+          <div className={cn(coreRoutePanelClassName, 'p-8 sm:p-10')}>
+            <CoreSectionHeading
+              eyebrow="Deep Growth Audit"
+              title="A real diagnostic product, not a surface review."
+              description="The Deep Growth Audit is normally $500 because it studies the growth system deeply enough to make a focused sprint useful. It is the bridge between a free snapshot and paid execution."
+              titleClassName="max-w-[12ch]"
+            />
+            <div className="mt-8 grid gap-3 border-t border-white/12 pt-6">
+              {[
+                'Website clarity and booking path',
+                'Google presence, reviews, and local visibility',
+                'Tracking basics and highest-leverage opportunities',
+              ].map((item) => (
+                <p
+                  key={item}
+                  className="border-b border-white/10 pb-3 text-[0.98rem] leading-7 text-[#d4cdc3] last:border-b-0 last:pb-0"
+                >
+                  {item}
+                </p>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="sprint-examples" className={coreRouteSectionClassName}>
+        <div className={coreRouteContainerClassName}>
+          <div className={coreRouteIntroBandClassName}>
+            <CoreSectionHeading
+              eyebrow="60-day sprints"
+              title="Examples of focused sprint work."
+              description="Sprints start at $3,500. Most range from $3,500-$7,500+ depending on the leverage, urgency, creative needs, and channel mix found in the audit."
               titleClassName="max-w-[10ch]"
             />
           </div>
 
-          <div className="mt-10 grid gap-6 lg:grid-cols-2">
-            {pricingCards.map((card) => (
+          <div className="mt-10 grid gap-5 lg:grid-cols-3">
+            {sprintExamples.map((sprint) => (
               <article
-                key={card.key}
-                className={cn(
-                  coreRoutePanelClassName,
-                  'p-8',
-                  card.featured
-                    ? 'bg-black/45 shadow-[0_20px_60px_-40px_rgba(0,0,0,0.85)]'
-                    : 'bg-black/28',
-                )}
+                key={sprint.title}
+                className={cn(coreRoutePanelClassName, 'p-7 sm:p-8')}
               >
-                <h2 className="mt-4 text-[1.9rem] font-sans font-medium leading-[0.98] tracking-[-0.05em] text-[#f5f0e8] sm:text-[2.3rem]">
-                  {card.title}
+                <p className="font-mono text-[0.72rem] uppercase tracking-[0.2em] text-[#d8bc79]">
+                  {sprint.price}
+                </p>
+                <h2 className="mt-4 text-[1.55rem] font-medium leading-[1.05] tracking-[-0.04em] text-[#f5f0e8]">
+                  {sprint.title}
                 </h2>
-                <p className="mt-3 font-sans text-[1.65rem] font-medium tracking-[-0.04em] text-[#f5f0e8]">
-                  {card.priceLabel}
+                <p className="mt-4 text-[0.98rem] leading-7 text-[#b8afa2]">
+                  {sprint.description}
                 </p>
-                <p className="mt-5 max-w-md text-[1rem] leading-7 text-[#b8afa2]">
-                  {card.summary}
-                </p>
-
-                <ul className="mt-8 divide-y divide-white/10 border-y border-white/10">
-                  {card.bullets.map((bullet) => (
-                    <li key={bullet} className="py-4">
-                      <span className="font-sans text-[1rem] leading-7 text-[#d4cdc3]">
-                        {bullet}
-                      </span>
+                <ul className="mt-7 space-y-3 border-t border-white/12 pt-5">
+                  {sprint.includes.map((item) => (
+                    <li
+                      key={item}
+                      className="font-mono text-[0.72rem] uppercase tracking-[0.18em] text-[#8f877b]"
+                    >
+                      {item}
                     </li>
                   ))}
                 </ul>
-
-                <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:gap-6">
-                  <CoreActionLink href={card.primaryCta.href}>
-                    {card.primaryCta.label}
-                  </CoreActionLink>
-                  {card.secondaryCta ? (
-                    <CoreActionLink
-                      href={card.secondaryCta.href}
-                      variant="secondary"
-                    >
-                      {card.secondaryCta.label}
-                    </CoreActionLink>
-                  ) : null}
-                </div>
               </article>
             ))}
           </div>
+        </div>
+      </section>
 
-          <div className={cn(coreRoutePanelClassName, 'mt-6 bg-black/30 p-8')}>
-            <div className="mt-4 flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
-              <div className="max-w-2xl">
-                <h2 className="text-[1.9rem] font-sans font-medium leading-[0.98] tracking-[-0.05em] text-[#f5f0e8] sm:text-[2.3rem]">
-                  Free Expert Audit
-                </h2>
-                <p className="mt-3 font-sans text-[1.65rem] font-medium tracking-[-0.04em] text-[#f5f0e8]">
-                  {FREE_AUDIT_PRICE_LABEL}
+      <section className={coreRouteSectionClassName}>
+        <div
+          className={cn(
+            coreRouteContainerClassName,
+            'grid gap-12 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)]',
+          )}
+        >
+          <CoreSectionHeading
+            eyebrow="Ongoing partner"
+            title="Common partnership levels after a sprint."
+            description="Prism usually moves into ongoing support after a sprint creates signal. These are common levels, not hard plans."
+          />
+
+          <div className="grid gap-4">
+            {partnerLevels.map((level) => (
+              <article
+                key={level.title}
+                className="grid gap-4 border-b border-white/12 pb-5 last:border-b-0 md:grid-cols-[minmax(0,0.72fr)_minmax(0,1fr)]"
+              >
+                <div>
+                  <h2 className="text-[1.35rem] font-medium tracking-[-0.04em] text-[#f5f0e8]">
+                    {level.title}
+                  </h2>
+                  <p className="mt-2 font-mono text-[0.72rem] uppercase tracking-[0.18em] text-[#d8bc79]">
+                    {level.price}
+                  </p>
+                </div>
+                <p className="text-[0.98rem] leading-7 text-[#b8afa2]">
+                  {level.description}
                 </p>
-                <p className="mt-4 text-[1rem] leading-7 text-[#b8afa2]">
-                  {CANONICAL_PRICING_OFFERS.free_audit.description}
-                </p>
-              </div>
-              <div className="flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:gap-6">
-                <CoreActionLink
-                  href={CANONICAL_PRICING_OFFERS.free_audit.primaryCta.href}
-                >
-                  {CANONICAL_PRICING_OFFERS.free_audit.primaryCta.label}
-                </CoreActionLink>
-                {CANONICAL_PRICING_OFFERS.free_audit.secondaryCta ? (
-                  <CoreActionLink
-                    href={CANONICAL_PRICING_OFFERS.free_audit.secondaryCta.href}
-                    variant="secondary"
-                  >
-                    {CANONICAL_PRICING_OFFERS.free_audit.secondaryCta.label}
-                  </CoreActionLink>
-                ) : null}
-              </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className={coreRouteSectionClassName}>
+        <div className={coreRouteContainerClassName}>
+          <div
+            className={cn(
+              coreRoutePanelClassName,
+              'grid gap-8 bg-black/30 p-8 sm:p-10 lg:grid-cols-[minmax(0,0.82fr)_minmax(0,1.18fr)] lg:items-center',
+            )}
+          >
+            <CoreSectionHeading
+              eyebrow="Preferred referrals"
+              title="Preferred referrals may receive a complimentary Deep Growth Audit."
+              description="For select referrals from trusted Prism partners, the $500 Deep Growth Audit may be waived. The process is the same: create your Growth Dashboard, complete the intake, receive your Light Audit, then claim the complimentary Deep Growth Audit if eligible."
+              titleClassName="max-w-[13ch]"
+            />
+            <div className="lg:justify-self-end">
+              <CoreActionLink href={PRICING_PRIMARY_CTA.href} variant="heroPrimary">
+                {PRICING_PRIMARY_CTA.label}
+              </CoreActionLink>
             </div>
           </div>
         </div>
@@ -177,8 +392,9 @@ export default function PricingPageClient() {
           )}
         >
           <CoreSectionHeading
+            eyebrow="FAQ"
             title="Common pricing questions."
-            description="Clear answers on the path, the pricing, and when each offer makes sense."
+            description="Clear answers on the dashboard, audits, sprint pricing, ongoing partner levels, and referral eligibility."
           />
 
           <div className="border-t border-white/12 lg:border-t-0">
@@ -187,9 +403,9 @@ export default function PricingPageClient() {
                 key={faq.question}
                 className="border-b border-white/12 py-6 first:pt-0"
               >
-                <h3 className="font-sans text-[1.35rem] font-medium tracking-[-0.04em] text-[#f5f0e8]">
+                <h2 className="font-sans text-[1.35rem] font-medium tracking-[-0.04em] text-[#f5f0e8]">
                   {faq.question}
-                </h3>
+                </h2>
                 <p className="mt-3 max-w-3xl text-[1rem] leading-7 text-[#b8afa2]">
                   {faq.answer}
                 </p>
@@ -207,16 +423,19 @@ export default function PricingPageClient() {
           )}
         >
           <CoreSectionHeading
-            title="We can point you to the right path quickly."
-            description="If you are not sure whether you need the rebuild, the ongoing partnership, or just the audit first, a short strategy call will make the next step obvious."
-            titleClassName="max-w-[11ch]"
+            title="Start with clarity. Then invest where growth is most likely to move."
+            description="Create your free Prism Growth Dashboard and get a focused view of your biggest visible opportunities."
+            titleClassName="max-w-[13ch]"
           />
-          <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:gap-8">
-            <CoreActionLink href="/get-started#book-call">
-              Book a strategy call
+          <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:gap-5">
+            <CoreActionLink href={PRICING_PRIMARY_CTA.href} variant="heroPrimary">
+              {PRICING_PRIMARY_CTA.label}
             </CoreActionLink>
-            <CoreActionLink href="/free-analysis" variant="secondary">
-              Start with the audit
+            <CoreActionLink
+              href={PRICING_SECONDARY_CTA.href}
+              variant="heroSecondary"
+            >
+              {PRICING_SECONDARY_CTA.label}
             </CoreActionLink>
           </div>
         </div>
@@ -228,37 +447,39 @@ export default function PricingPageClient() {
 }
 
 function PricingStructuredData() {
+  const deepAudit = CANONICAL_PRICING_OFFERS.deep_growth_audit
+  const growthSprint = CANONICAL_PRICING_OFFERS.growth_sprint
+
   return (
     <>
       <ServiceSchema
-        serviceId="pricing-website-overhaul"
-        name="Website Overhaul"
-        description={CANONICAL_PRICING_OFFERS.website_overhaul.description}
-        serviceType="Web design"
+        serviceId="pricing-deep-growth-audit"
+        name={deepAudit.name}
+        description={deepAudit.description}
+        serviceType="Growth diagnostic"
         areaServed="United States"
         offerDetails={{
-          name: 'Website Overhaul',
-          description: CANONICAL_PRICING_OFFERS.website_overhaul.description,
+          name: deepAudit.name,
+          description: deepAudit.description,
           businessFunction: 'http://purl.org/goodrelations/v1#ProvideService',
-          price: String(CANONICAL_PRICING_OFFERS.website_overhaul.price),
+          price: String(deepAudit.price),
           priceCurrency: 'USD',
           availability: 'https://schema.org/InStock',
           url: 'https://www.design-prism.com/pricing',
         }}
       />
       <ServiceSchema
-        serviceId="pricing-growth-partnership"
-        name="Growth Partnership"
-        description={CANONICAL_PRICING_OFFERS.growth_partnership.description}
+        serviceId="pricing-growth-sprint"
+        name={growthSprint.name}
+        description={growthSprint.description}
         serviceType="Growth marketing"
         areaServed="United States"
         offerDetails={{
-          name: 'Growth Partnership',
-          description: CANONICAL_PRICING_OFFERS.growth_partnership.description,
+          name: growthSprint.name,
+          description: growthSprint.description,
           businessFunction: 'http://purl.org/goodrelations/v1#ProvideService',
-          price: String(CANONICAL_PRICING_OFFERS.growth_partnership.price),
+          price: String(growthSprint.price),
           priceCurrency: 'USD',
-          billingPeriod: 'P1M',
           availability: 'https://schema.org/InStock',
           url: 'https://www.design-prism.com/pricing',
         }}

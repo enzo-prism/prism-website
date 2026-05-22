@@ -5,7 +5,7 @@ Quick reference for the pages we edit most often.
 ## Dental-First Search Visibility
 
 - `lib/seo/search-visibility.ts` is the source of truth for which routes and blog posts are indexable.
-- Prism's public search/LLM footprint should read as dental growth systems: websites, SEO/AI search, reviews, ads, tracking, photography, proof, pricing, and Free Practice Audit.
+- Prism's public search/LLM footprint should read as dental growth systems: websites, SEO/AI search, reviews, ads, tracking, photography, proof, pricing, and the Growth Dashboard to Light Audit funnel.
 - Broad pages can stay live for direct users, but they should remain noindex and out of `app/sitemap.ts` / `public/llms.txt` unless they become part of that dental-first story.
 - All case study detail pages remain indexable because they are unique proof, while dental case studies should stay visually and machine-readably prioritized.
 
@@ -27,10 +27,12 @@ Quick reference for the pages we edit most often.
 ## Pricing (`app/pricing/client-page.tsx`)
 
 - `/pricing` is the single canonical pricing URL.
-- Core pricing policy must stay fixed site-wide: `Website Overhaul = $1,000 one-time`, `Growth Partnership = $2,000/month`, `Free Expert Audit = $0`.
+- Core pricing policy follows the Growth Dashboard path: free Growth Dashboard, included Light Audit, normally `$500` Deep Growth Audit, 60-day Growth Sprints starting at `$3,500`, and optional ongoing Growth Partner support starting at `$1,500/month`.
 - Main UI sections live in `app/pricing/client-page.tsx`; the hero lives in `components/pricing/PricingHero.tsx`.
 - `/pricing` now uses the shared dark core-route system from `components/core-route/CoreRoutePrimitives.tsx`, so section headings and primary/secondary CTAs should stay aligned with the homepage, `/about`, and `/get-started`.
-- Structured data on this page should only emit the canonical pricing offers (no legacy tier ranges).
+- Section order is intentional: hero, growth path, pricing snapshot, why no preset plans, Deep Growth Audit, 60-day sprint examples, ongoing partner levels, preferred referral note, FAQ, final CTA.
+- Every primary CTA should say `Create Free Growth Dashboard` and route to `/get-started`; the secondary pricing CTA should be `See Example Growth Path` and route to `#growth-path`.
+- Structured data on this page should emit the Deep Growth Audit and 60-day Growth Sprint offers only; do not publish hard-plan schema for ongoing partner levels.
 
 ## Checkout (`app/checkout/*/page.tsx`)
 
@@ -114,30 +116,44 @@ Quick reference for the pages we edit most often.
 
 ## Get Started (`app/get-started/page.tsx`)
 
-- `/get-started` is now the Free Practice Audit entry page for dental practices, built from `components/get-started/GrowthProcessSection.tsx` plus the in-page handoff panel that points into `/apply`.
-- The page leads with the three-step process (`Submit your practice`, `Review the patient journey`, `Get a clear growth plan`) and then routes into the dedicated audit form instead of embedding the form inline.
-- The green `Submit your practice` process card is a tracked shortcut to `/apply`, so clicking the first step opens the first question of the audit form. Keep the later process cards informational unless they become real actions.
+- `/get-started` is now the free Growth Dashboard entry page for dental practices, built from `components/get-started/GrowthProcessSection.tsx` plus the in-page handoff panel that points into `/apply`.
+- The page leads with the three-step process (`Create Growth Dashboard`, `Receive Light Audit`, `Choose the clear next step`) and then routes into the dedicated intake form instead of embedding the form inline.
+- The green `Create Growth Dashboard` process card is a tracked shortcut to `/apply`, so clicking the first step opens the first question of the intake form. Keep the later process cards informational unless they become real actions.
 - It remains the one intentional accent surface within the core route family: same dark shell, shared CTA grammar, and shared section-heading logic, but with terminal framing and neon status accents.
-- `/get-started` still relies on the stock ElevenLabs floating widget mounted globally via `components/global-elevenlabs-widget.tsx`; the widget is supportive, not the primary conversion surface.
+- `/get-started` intentionally does not mount the stock ElevenLabs floating widget; the Growth Dashboard handoff should stay focused and route into `/apply`.
 - The page no longer mounts the custom `SalesChat` client or depends on any legacy route-level assistant gating.
-- The CTA handoff remains anchored at `#book-call` for compatibility with existing CTA destinations elsewhere in the site, even though the live copy now frames that section as audit handoff rather than a scheduled call.
-- Keep the page copy explicit that every real practice submission is reviewed, while the later strategy path is selective and not guaranteed.
+- The CTA handoff remains anchored at `#book-call` for compatibility with existing CTA destinations elsewhere in the site, even though the live copy now frames that section as Growth Dashboard handoff rather than a scheduled call.
+- Keep the page copy explicit that every real practice submission receives a Light Audit, while the later Deep Growth Audit or sprint path is selective and not guaranteed.
 - The old custom sales-chat backend and supporting UI files have been removed from the supported stack. If Prism ever needs a bespoke assistant again, treat that as a fresh implementation rather than an existing route to toggle back on.
 
 ## Apply (`app/apply/page.tsx`)
 
-- `/apply` is the focused question-by-question practice audit route and is the real form surface for the Free Practice Audit funnel.
+- `/apply` is the focused question-by-question Growth Dashboard intake and is the real form surface for the Growth Dashboard to Light Audit funnel.
 - The page intentionally removes the full navbar, footer, marketing sidebar, and floating ElevenLabs widget so the user sees one decision at a time after they start.
-- `components/forms/GetStartedForm.tsx` renders the micro-step flow: dental audit focus, website status, review link, primary goal, budget, timeline, practice name, contact, optional note, and review/submit.
+- `components/forms/GetStartedForm.tsx` renders the micro-step flow: dental growth focus, website status, review link, primary goal, growth investment range, timeline, practice name, contact, optional note, and review/submit.
 - `GetStartedForm` posts to Formspree with the growth-application payload (`service_focus`, `service_interest[]`, `has_website`, `review_link`, `primary_goal`, `budget`, `timeline`, `company`, `full_name`, `email`, `additional_context`, `_subject`, `_redirect`, `form_name`, `_gotcha`) and redirects to `/thank-you?source=apply` on success.
 - The form supports keyboard-first progression: Enter advances validated non-review steps, arrow shortcuts move forward/back when they do not override text editing or native radio behavior, and focus is restored to the next step's primary control.
-- Keep the field names, Formspree endpoint behavior, analytics event names, and redirect behavior unchanged even though the visible copy now says practice audit.
+- Keep the field names, Formspree endpoint behavior, analytics event names, and redirect behavior unchanged even though the visible copy now says Growth Dashboard and Light Audit.
 - The flow intentionally does not embed a calendar. Review is guaranteed after a real practice submission; the strategy session is selective.
 
 ## Contact (`app/contact/page.tsx`)
 
-- Simple hero, form card, kickoff-call button, and contact info.
+- Simple hero, form card, `What to Expect` panel, and direct contact info.
+- Do not add demo-booking or calendar CTAs here; the footer and primary free-audit path should route to `/get-started`.
 - Uses `ContactForm` for all validation/submission logic.
+
+## Shared Chrome (`components/navbar.tsx`, `components/footer.tsx`)
+
+- Header nav labels live in `lib/constants.ts`; the current public nav is `results`, `reviews`, and `free audit`.
+- The top-left logo links to `/`, tracks `trackNavigation('logo', '/')`, and has a small hover/focus treatment on the logo mark and wordmark. Keep it tactile but stable: no text reflow, no new route-specific header variants, and respect reduced-motion utilities for transforms.
+- The footer has one funnel CTA: `Free audit` links to `/get-started` through `TrackedLink` with `label="Free audit"` and `location="footer"`.
+- Do not reintroduce a footer "Book call" button or contact-page demo calendar without changing the funnel docs first.
+
+## AI Agents for Dentists (`app/ai-agents/dental/page.tsx`)
+
+- Indexable dental-cluster page for AI phone/lead qualification support.
+- Keep it linked as part of the dental growth system and included in `public/llms.txt`.
+- The parent `/ai-agents` route is broad and noindex; do not let it compete with the dental child page unless product direction changes.
 
 ## Structured data (global)
 
@@ -149,14 +165,14 @@ Quick reference for the pages we edit most often.
 - `app/client-page.tsx` is now a section composer for the ultra-minimal dental homepage: hero, dental client carousel, compact proof band, patient decision problem, Found/Trusted/Booked system, minimal service grid, short process, compact dental proof grid, and final audit CTA.
 - The homepage hero is built from `components/home/HomeHeroSection.tsx` and now uses the shared ASCII `wave` backdrop in a subtler treatment than `/software`, keeping the copy-led layout while preserving motion.
 - The homepage is dental-first, not dental-only. Default language should speak to owner-dentists, dental practices, patients, Google Maps, reviews, treatment pages, booking path, tracking, and booked appointments.
-- The main CTA is the Free Practice Audit (`/get-started`). The secondary homepage CTA should continue to hash-scroll to `#how-it-works`.
+- The main CTA points to the Growth Dashboard entry (`/get-started`). The secondary homepage CTA should continue to hash-scroll to `#how-it-works`.
 - Keep homepage copy extremely short: use labels, one-line headings, and compact cards. Move longer explanations to deeper pages.
 - The dental client carousel under the hero should keep portrait slides black-and-white by default, smoothly reveal color on hover, and let click/tap toggle a persistent color state while keeping case-study navigation as a separate explicit chip.
 - Dental case studies should appear as compact proof cards with only the practice name and a tiny outcome label before any non-dental proof appears elsewhere.
 - The homepage intentionally omits the long FAQ, fit/not-fit block, and managed-AI logo matrix so the primary offer stays easy to scan.
 - The homepage, `/about`, `/pricing`, and `/get-started` now share the same minimal black navbar/footer plus the same core-route section heading and CTA language (`components/navbar.tsx`, `components/footer.tsx`, `components/core-route/CoreRoutePrimitives.tsx`) so the primary marketing routes read as one brand system.
-- The shared floating ElevenLabs launcher now mounts on non-mobile public inner pages via `components/global-elevenlabs-widget.tsx` in `components/runtime-client-shell.tsx`; the homepage, mobile viewports, the active `/apply` form, `/ig`, and `/tiktok` intentionally stay widget-free.
-- Without a saved user preference, the public widget should stay collapsed by default on inner pages.
+- The shared floating ElevenLabs launcher now mounts only on non-mobile `/pricing` and `/contact` via `components/global-elevenlabs-widget.tsx` in `components/runtime-client-shell.tsx`; the homepage, mobile viewports, `/get-started`, the active `/apply` form, `/ig`, `/tiktok`, blog posts, and other public routes intentionally stay widget-free.
+- Without a saved user preference, the public widget should stay collapsed by default on eligible pages.
 - The global floating widget should always win the layer stack in its visible region when it is mounted. If site chrome starts painting over it, debug the host z-index in `components/global-elevenlabs-widget.tsx` / `components/elevenlabs/ElevenLabsWidget.tsx` before changing page-level layout.
 - The compact proof band should follow the dental client carousel, not expand into a second explanatory ecosystem section. Keep it to short metrics that support the hero without slowing the page down.
 - Runtime helpers (`AnalyticsProvider`, `GlobalElevenLabsWidget`, Sentry/monitoring clients, toaster) are initialized in `components/runtime-client-shell.tsx`, mounted from `app/layout.tsx`.

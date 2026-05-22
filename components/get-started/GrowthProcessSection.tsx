@@ -23,13 +23,13 @@ type GrowthProcessStep = {
 export const GROWTH_PROCESS_STEPS: GrowthProcessStep[] = [
   {
     stage: '01',
-    title: 'Submit your practice',
-    body: 'Short audit request.',
+    title: 'Create Growth Dashboard',
+    body: 'Short intake for the practice context.',
     accent: '#9EFF2E',
     accentRgb: '158 255 46',
     art: [
       '+----------------------+',
-      '| PRACTICE AUDIT       |',
+      '| GROWTH DASHBOARD     |',
       '| practice ...........  |',
       '| website  ...........  |',
       '| goal     ...........  |',
@@ -40,7 +40,7 @@ export const GROWTH_PROCESS_STEPS: GrowthProcessStep[] = [
   },
   {
     stage: '02',
-    title: 'Review the patient journey',
+    title: 'Receive Light Audit',
     body: 'We inspect the signals patients see first.',
     accent: '#FF2BEA',
     accentRgb: '255 43 234',
@@ -59,8 +59,8 @@ export const GROWTH_PROCESS_STEPS: GrowthProcessStep[] = [
   },
   {
     stage: '03',
-    title: 'Get a clear growth plan',
-    body: 'If there is a fit, we map the highest-impact next steps.',
+    title: 'Choose the clear next step',
+    body: 'If there is a fit, we map the highest-impact next move.',
     accent: '#19D7FF',
     accentRgb: '25 215 255',
     art: [
@@ -153,9 +153,9 @@ function ProcessCard({
     return (
       <TrackedLink
         href={href}
-        label="start free audit from submit practice card"
+        label="create free growth dashboard from process card"
         location="get started process card"
-        aria-label="Start the free practice audit form"
+        aria-label="Create the free Growth Dashboard"
         style={cardStyle}
         className={cardClassName}
       >
@@ -189,7 +189,7 @@ export default function GrowthProcessSection() {
         <div className="relative z-10">
           <div className="flex flex-col gap-4 border-b border-white/10 pb-6 sm:flex-row sm:items-center sm:justify-between">
             <p className="font-sans text-[0.92rem] font-medium tracking-[0.01em] text-[#C8C8C0]">
-              Free practice audit
+              Free Growth Dashboard
             </p>
             <div className="flex items-center justify-between gap-5 sm:justify-end">
               <p className="font-sans text-[0.82rem] font-medium uppercase tracking-[0.12em] text-[#767670]">
@@ -206,15 +206,15 @@ export default function GrowthProcessSection() {
           <div className="grid gap-12 py-10 lg:grid-cols-[minmax(0,1.2fr)_minmax(300px,0.72fr)] lg:items-end">
             <div>
               <h1 className="max-w-[12ch] text-balance font-sans text-[clamp(2.55rem,6vw,4.85rem)] font-medium leading-[0.98] tracking-[-0.06em] text-[#F5F5F2]">
-                See what is holding your practice back.
+                Create your Growth Dashboard.
               </h1>
             </div>
 
             <div className="max-w-[26rem] space-y-5 lg:justify-self-end">
               <p className="font-sans text-[1rem] leading-8 text-[#B6B6B0] sm:text-[1.08rem]">
-                Submit your practice. We review your website, Google presence,
-                reviews, booking path, and tracking. Then we show the clearest
-                next steps.
+                Complete the intake. Prism reviews your website, Google
+                presence, reviews, booking path, and tracking. Then we prepare
+                your free Light Audit.
               </p>
             </div>
           </div>
@@ -243,28 +243,36 @@ export default function GrowthProcessSection() {
           <div
             className={cn(
               styles.ctaFrame,
-              'relative mt-8 flex flex-col gap-5 border border-white/10 bg-[#060606] px-5 py-5 sm:px-6 sm:py-6 lg:flex-row lg:items-center lg:justify-between',
+              'relative mt-8 grid gap-5 overflow-hidden border border-white/10 bg-[#060606] px-5 py-5 sm:px-6 sm:py-6 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center lg:gap-8',
             )}
           >
-            <div className="relative z-10 space-y-2">
-              <p className="font-sans text-[1.9rem] font-medium tracking-[-0.04em] text-[#F5F5F2]">
-                Ready for the audit?
-              </p>
-              <p className="font-sans text-[0.98rem] leading-7 text-[#A0A09A]">
-                Start with one short request.
+            <div className="relative z-10 flex flex-col gap-4 sm:flex-row sm:items-center">
+              <div
+                className={styles.quickIntakeBadge}
+                role="group"
+                aria-label="Takes about one minute to complete. Quick and easy."
+              >
+                <div className={styles.quickIntakeDial} aria-hidden="true">
+                  <span>1</span>
+                </div>
+                <div className={styles.quickIntakeText}>
+                  <span>min to complete</span>
+                  <span>quick + easy</span>
+                </div>
+              </div>
+
+              <p className="font-sans text-[1.85rem] font-medium leading-tight tracking-[-0.04em] text-[#F5F5F2] sm:text-[1.95rem]">
+                Ready for the Light Audit?
               </p>
             </div>
 
-            <div className="relative z-10 flex flex-col gap-3 lg:items-end">
-              <p className="font-sans text-[0.82rem] font-medium uppercase tracking-[0.12em] text-[#767670]">
-                Practice reviewed first. Strategy if it fits.
-              </p>
+            <div className="relative z-10 flex flex-col gap-3 sm:flex-row sm:items-center lg:justify-end">
               <CoreActionLink
                 href="/apply"
-                label="start free audit"
+                label="create free growth dashboard"
                 location="get started process cta"
               >
-                Start free audit
+                Create Free Growth Dashboard
               </CoreActionLink>
             </div>
           </div>

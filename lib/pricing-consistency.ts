@@ -13,6 +13,7 @@ export type PricingConsistencyViolation = {
 export const PRICING_STRICT_FILES = [
   "app/pricing/client-page.tsx",
   "components/pricing/PricingHero.tsx",
+  "lib/pricing-model.ts",
   "app/faq/page.tsx",
   "app/services/page.tsx",
   "app/get-started/page.tsx",
@@ -32,6 +33,11 @@ export const PRICING_CONTEXT_RULES: Record<string, RegExp[]> = {
 }
 
 export const LEGACY_PRICING_TOKEN_RULES: PricingTokenRule[] = [
+  { label: "$1,000 one-time retired website overhaul price", pattern: /\$1,000 one-time/i },
+  { label: "Website Overhaul retired offer name", pattern: /Website Overhaul/i },
+  { label: "Growth Partnership retired offer name", pattern: /Growth Partnership/i },
+  { label: "Free Expert Audit retired offer name", pattern: /Free Expert Audit/i },
+  { label: "$2,000/month retired growth partnership price", pattern: /\$2,000\/month\b/i },
   { label: "$400 legacy website price", pattern: /\$400\b/ },
   { label: "$900/mo legacy plan price", pattern: /\$900\/mo\b/i },
   { label: "$1,500/mo legacy plan price", pattern: /\$1,500\/mo\b/i },
@@ -50,8 +56,22 @@ export const LEGACY_PRICING_TOKEN_RULES: PricingTokenRule[] = [
 ]
 
 export const REQUIRED_CANONICAL_SNIPPETS: Record<string, string[]> = {
-  "app/pricing/client-page.tsx": ["$1,000 one-time", "$2,000/month"],
-  "components/pricing/PricingHero.tsx": ["$1,000", "$2,000/month"],
+  "app/pricing/client-page.tsx": [
+    "growthPathSteps",
+    "pricingSnapshot",
+    "partnerLevels",
+    "PricingStructuredData",
+  ],
+  "components/pricing/PricingHero.tsx": [
+    "A clearer way to invest in growth.",
+    "PRICING_PRIMARY_CTA",
+  ],
+  "lib/pricing-model.ts": [
+    "Create Free Growth Dashboard",
+    "Normally $500",
+    "Starts at $3,500",
+    "Starts at $1,500/month",
+  ],
 }
 
 export function collectPricingConsistencyViolations(

@@ -71,7 +71,7 @@ function completeStepOne() {
 }
 
 function completeContextQuestions() {
-  fireEvent.click(screen.getByLabelText(/\$1\.5k to \$3k/i))
+  fireEvent.click(screen.getByLabelText(/\$3\.5k to \$5k/i))
   fireEvent.click(screen.getByRole('button', { name: /continue/i }))
 
   fireEvent.click(screen.getByLabelText(/within 30 days/i))
@@ -124,7 +124,7 @@ describe('GetStartedForm', () => {
       }),
     ).toBeInTheDocument()
     expect(
-      screen.getByDisplayValue('New Prism practice audit request'),
+      screen.getByDisplayValue('New Prism Growth Dashboard request'),
     ).toHaveAttribute('name', '_subject')
     expect(screen.getByDisplayValue('growth_application')).toHaveAttribute(
       'name',
@@ -226,7 +226,7 @@ describe('GetStartedForm', () => {
       expect(
         screen.getByRole('heading', {
           level: 1,
-          name: /monthly budget/i,
+          name: /growth investment range/i,
         }),
       ).toBeInTheDocument()
     })
@@ -346,7 +346,7 @@ describe('GetStartedForm', () => {
       expect(
         screen.getByRole('heading', {
           level: 1,
-          name: /monthly budget/i,
+          name: /growth investment range/i,
         }),
       ).toBeInTheDocument()
     })
@@ -396,7 +396,7 @@ describe('GetStartedForm', () => {
     )
 
     fireEvent.click(
-      screen.getByRole('button', { name: /submit audit request/i }),
+      screen.getByRole('button', { name: /create growth dashboard/i }),
     )
 
     await waitFor(() => {
@@ -407,7 +407,7 @@ describe('GetStartedForm', () => {
           form_name: 'growth_application',
           form_location: 'apply_page',
           lead_type: 'growth_application',
-          budget: '$1.5k to $3k',
+          budget: '$3.5k to $5k',
           timeline: 'Within 30 days',
           service_count: 1,
           primary_goal: 'I need more patient calls',
@@ -422,7 +422,7 @@ describe('GetStartedForm', () => {
     expect(trackEvent).toHaveBeenCalledWith(
       'apply_submit_attempt',
       expect.objectContaining({
-        budget: '$1.5k to $3k',
+        budget: '$3.5k to $5k',
         timeline: 'Within 30 days',
         service_count: 1,
       }),
@@ -430,7 +430,7 @@ describe('GetStartedForm', () => {
     expect(trackEvent).toHaveBeenCalledWith(
       'apply_submit',
       expect.objectContaining({
-        budget: '$1.5k to $3k',
+        budget: '$3.5k to $5k',
         timeline: 'Within 30 days',
         service_count: 1,
       }),
@@ -438,7 +438,7 @@ describe('GetStartedForm', () => {
     expect(trackEvent).toHaveBeenCalledWith(
       'apply_submit_success',
       expect.objectContaining({
-        budget: '$1.5k to $3k',
+        budget: '$3.5k to $5k',
         timeline: 'Within 30 days',
         service_count: 1,
       }),
@@ -458,13 +458,13 @@ describe('GetStartedForm', () => {
     expect(formData.get('primary_goal')).toBe('I need more patient calls')
     expect(formData.get('service_focus')).toBe('Dental website')
     expect(formData.getAll('service_interest[]')).toEqual(['Dental website'])
-    expect(formData.get('budget')).toBe('$1.5k to $3k')
+    expect(formData.get('budget')).toBe('$3.5k to $5k')
     expect(formData.get('timeline')).toBe('Within 30 days')
     expect(formData.get('company')).toBe('Prism')
     expect(formData.get('full_name')).toBe('Jordan Ramirez')
     expect(formData.get('email')).toBe('jordan@example.com')
     expect(formData.get('additional_context')).toContain('cleaner site')
-    expect(formData.get('_subject')).toBe('New Prism practice audit request')
+    expect(formData.get('_subject')).toBe('New Prism Growth Dashboard request')
     expect(formData.get('form_name')).toBe('growth_application')
     expect(formData.get('site')).toBe('prism-site')
     expect(formData.get('form_key')).toBe('apply')
@@ -479,7 +479,7 @@ describe('GetStartedForm', () => {
 
     completeStepOne()
 
-    fireEvent.click(screen.getByLabelText(/\$1k to \$1\.5k/i))
+    fireEvent.click(screen.getByLabelText(/deep growth audit only/i))
     fireEvent.click(screen.getByRole('button', { name: /continue/i }))
 
     fireEvent.click(screen.getByLabelText(/asap/i))
@@ -500,7 +500,7 @@ describe('GetStartedForm', () => {
     fireEvent.click(screen.getByRole('button', { name: /review/i }))
 
     fireEvent.click(
-      screen.getByRole('button', { name: /submit audit request/i }),
+      screen.getByRole('button', { name: /create growth dashboard/i }),
     )
 
     await waitFor(() => {
@@ -517,7 +517,7 @@ describe('GetStartedForm', () => {
     expect(trackEvent).toHaveBeenCalledWith(
       'apply_submit_attempt',
       expect.objectContaining({
-        budget: '$1k to $1.5k',
+        budget: 'Deep Growth Audit only',
         timeline: 'ASAP',
         service_count: 1,
       }),

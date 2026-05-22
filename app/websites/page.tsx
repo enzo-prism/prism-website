@@ -642,10 +642,11 @@ export default async function WebsitesPage() {
         serviceType="Website design"
         areaServed="United States"
         offerDetails={{
-          name: "Website Overhaul",
-          description: "Complete website overhaul with design, development, technical SEO, and launch support.",
+          name: "60-Day Growth Sprint",
+          description:
+            "Focused website, tracking, and conversion sprint scoped from the Prism Growth Dashboard and audit path.",
           businessFunction: "http://purl.org/goodrelations/v1#ProvideService",
-          price: "1000",
+          price: "3500",
           priceCurrency: "USD",
           url: "https://www.design-prism.com/pricing",
         }}

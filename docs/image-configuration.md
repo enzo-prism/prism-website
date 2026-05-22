@@ -1,96 +1,45 @@
 # Image Configuration Guide
 
-This document outlines the proper configuration for images in the Prism Agency website to prevent display issues.
+This document tracks the image hosts and configuration that are actually supported by the current Prism site.
 
-## Next.js Image Configuration
+## Next.js image configuration
 
-The `next.config.mjs` file must include all domains where images are hosted:
+Image optimization is configured in `next.config.mjs`.
 
-\`\`\`javascript
-images: {
-  remotePatterns: [
-    {
-      protocol: 'https',
-      hostname: 'blob.v0.dev',
-      pathname: '/**',
-    },
-    {
-      protocol: 'https',
-      hostname: 'hebbkx1anhila5yf.public.blob.vercel-storage.com',
-      pathname: '/**',
-    },
-    {
-      protocol: 'https',
-      hostname: 'new-image-source.com',
-      pathname: '/**',
-    }
-  ],
-  unoptimized: false,
-},
-\`\`\`
+Current remote hosts:
 
-## Image Error Handling Best Practices
+- `res.cloudinary.com` - Prism media, hero loops, case-study media, and shared marketing assets.
+- `wholesale.azdentall.com` - dental equipment/reference images.
+- `dentiphoto.com` - dental photography/equipment reference images.
+- `dentalaccessories.org` - dental photography/equipment reference images.
 
-1. **Always include error handling** for all image components:
+Current image settings:
 
-\`\`\`jsx
-<Image
-  src={imageUrl || "/placeholder.svg"}
-  alt={altText}
-  onError={() => handleImageError()}
-  // other props...
-/>
-\`\`\`
+- Formats: WebP and AVIF.
+- Qualities: `75` and `90`.
+- Long cache TTL for optimized assets.
+- SVG is allowed because some legacy/source assets depend on it.
 
-2. **Provide fallback images** when the primary image fails to load:
+When adding a new remote image source, add a `remotePatterns` entry in `next.config.mjs` and run a local page check where the image renders.
 
-\`\`\`jsx
-const [imageError, setImageError] = useState(false);
+## Component choices
 
-// In your component:
-<Image
-  src={imageError ? fallbackImageUrl : primaryImageUrl}
-  alt={altText}
-  onError={() => setImageError(true)}
-  // other props...
-/>
-\`\`\`
+- Use `next/image` directly for simple, route-local media.
+- Use `CoreImage` when the surface needs fallback behavior, loading placeholders, or image-failure analytics.
+- Avoid introducing another wrapper unless it replaces real duplicated complexity.
 
-3. **Use dynamic placeholder images** with descriptive queries:
+See `docs/image-best-practices.md` and `docs/migration-guide.md` before starting image cleanup work.
 
-\`\`\`jsx
-const fallbackUrl = `/placeholder.svg?height=${height}&width=${width}&query=${encodeURIComponent(description)}`;
-\`\`\`
+## Verification
 
-4. **Implement lazy loading** for off-screen images to improve performance:
+For a normal image/content change:
 
-\`\`\`jsx
-<Image
-  src={imageUrl || "/placeholder.svg"}
-  alt={altText}
-  loading="lazy"
-  // other props...
-/>
-\`\`\`
+1. Run `pnpm typecheck`.
+2. Run the nearest route/component test if one exists.
+3. Open the affected route locally and check desktop + mobile widths.
 
-## Common Issues and Solutions
+For config changes:
 
-1. **Images not displaying**: Check that the domain is properly configured in `next.config.mjs`
-2. **Blurry images**: Ensure proper `sizes` attribute is set based on responsive design
-3. **Layout shifts**: Always specify width and height or use the `fill` property with a parent container that has position relative
-4. **Performance issues**: Use the `priority` prop only for above-the-fold images
-5. **Lazy loading not working**: Ensure the `loading` prop is set to `"lazy"` and the image is not above the fold
-
-## Testing Image Display
-
-Before deploying, test image display in the following scenarios:
-
-1. With a slow network connection
-2. With images that fail to load
-3. On mobile devices
-4. With various screen sizes
-5. With lazy loading enabled
-
-## Maintenance
-
-When adding new image sources or CDNs, always update the `next.config.mjs` file to include the new domains.
+1. Run `pnpm build`.
+2. Verify the affected remote image loads in a production preview (`pnpm start -p <port>`).
+3. If the route is screenshot-locked, run the matching visual test.

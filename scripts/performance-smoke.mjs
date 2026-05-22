@@ -7,9 +7,9 @@ const routes = [
   { path: '/about', heading: /built by enzo sison\./i },
   {
     path: '/pricing',
-    heading: /simple pricing for teams that want a clearer growth path\./i,
+    heading: /a clearer way to invest in growth\./i,
   },
-  { path: '/get-started', heading: /start here\./i },
+  { path: '/get-started', heading: /create your growth dashboard\./i },
 ]
 
 const targetProfiles = [

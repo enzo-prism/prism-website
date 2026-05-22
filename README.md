@@ -12,7 +12,7 @@ Next.js App Router project that powers Prism's dental growth systems website: ma
 1. **Install prerequisites** – Node.js 22.x LTS (Vercel’s current runtime), [pnpm](https://pnpm.io/), and git.
 2. **Install dependencies** – `pnpm install`.
 3. **Set up environment variables** – `cp .env.example .env.local` and fill in the values listed in [`docs/environment-setup.md`](./docs/environment-setup.md).
-   - `NEXT_PUBLIC_ELEVENLABS_AGENT_ID` is optional for the shared floating widget across public pages; otherwise the stock Prism Sales agent id is used.
+   - `NEXT_PUBLIC_ELEVENLABS_AGENT_ID` is optional for the shared floating widget on `/pricing` and `/contact`; otherwise the stock Prism Sales agent id is used.
 4. **Run the dev server** – `pnpm dev` (defaults to `http://localhost:3000`).
 5. **Optional quality gates** – `pnpm lint && pnpm typecheck && pnpm test` before opening a PR.
 
@@ -32,23 +32,30 @@ The repo assumes pnpm; npm/yarn installs will fall out of sync.
 - **Runtime** – Node 22.x LTS. Vercel now requires 22, so pin local dev here to avoid deploy failures.
 - **Package manager** – pnpm 10.x via `corepack enable`. All commands should use `pnpm`; references to `npm run …` are outdated.
 - **Architecture** – Marketing forms post to Formspree using the shared `useFormValidation` hook (HTML5 validation + client-side `fetch` + thank-you redirect). We do **not** use React Hook Form, Zod, or server actions for these flows today. If this changes, update this section immediately.
-- **Canonical pricing policy** – Core offer pricing is fixed site-wide: `Website Overhaul = $1,000 one-time`, `Growth Partnership = $2,000/month`, `Free Expert Audit = $0`. `/pricing` is the only canonical pricing URL. Legacy pricing routes permanently redirect to `/pricing`.
-- **Search visibility policy** – Prism's public search/LLM footprint is dental-first. `lib/seo/search-visibility.ts` controls static route indexability and the curated blog allowlist used by sitemap, RSS/latest-post APIs, SEO inventory, and tests. New routes/posts should remain noindex unless they support dental growth systems, pricing, proof, legal, or the Free Practice Audit funnel.
+- **Canonical pricing policy** – `/pricing` is the only canonical pricing URL and follows the Growth Dashboard path: free Growth Dashboard, included Light Audit, normally `$500` Deep Growth Audit, 60-day Growth Sprints starting at `$3,500`, and optional ongoing Growth Partner support starting at `$1,500/month`. Legacy pricing routes permanently redirect to `/pricing`.
+- **Search visibility policy** – Prism's public search/LLM footprint is dental-first. `lib/seo/search-visibility.ts` controls static route indexability and the curated blog allowlist used by sitemap, RSS/latest-post APIs, SEO inventory, and tests. New routes/posts should remain noindex unless they support dental growth systems, pricing, proof, legal, or the Growth Dashboard funnel.
 - **Deploy mode policy** – GitHub Actions is the only production publisher. `main` source deploys through `.github/workflows/deploy.yml`, while Vercel Git auto-deploy for `main` is disabled in `vercel.json` to avoid duplicate production releases.
 - **Documentation** – When you add a new flow or change behavior, edit the relevant file under `/docs` (or this README/AGENTS if the rule is global). Do _not_ add new top-level docs without approval; prefer updating existing guides.
 - **Environment variables** – Required vars are limited to those listed in [docs/environment-setup.md](./docs/environment-setup.md) and `.env.example` (GA overrides, Formspree-compatible endpoints, ElevenLabs public config, optional site URLs). Do not list vars that aren’t part of the supported setup.
-- **Get-started assistant surface** – `/get-started` relies on the stock ElevenLabs floating widget on non-mobile viewports through `components/global-elevenlabs-widget.tsx`; mobile viewports, `/apply`, `/ig`, and `/tiktok` intentionally suppress it so active and social credit flows stay focused. The old custom `SalesChat` client is no longer mounted on the live site.
+- **Assistant surface** – `/get-started` no longer mounts the custom `SalesChat` UI or the stock ElevenLabs launcher. The public ElevenLabs floating widget from `components/global-elevenlabs-widget.tsx` is limited to non-mobile `/pricing` and `/contact`; mobile viewports and every other public route stay widget-free so focused flows stay clean.
 
-### Assistant architecture (at a glance)
+### Assistant and funnel architecture
 
-- `app/get-started/page.tsx` is now the overview/qualification entry page for the Prism application flow, and `app/apply/page.tsx` is the focused question-by-question application route.
+- `app/get-started/page.tsx` is the free Growth Dashboard entry page, and `app/apply/page.tsx` is the focused question-by-question intake route that starts the Light Audit path.
 - `components/forms/GetStartedForm.tsx` powers the `/apply` form and redirects successful submissions to `/thank-you?source=apply` so the thank-you screen can stay honest about review vs. selective strategy follow-up.
+- `NEXT_PUBLIC_DASHBOARD_INTAKE_ENDPOINT` is the preferred `/apply` endpoint when the private dashboard app should receive the intake directly; otherwise `/apply` falls back to `NEXT_PUBLIC_APPLY_FORM_ENDPOINT`, then the legacy get-started endpoint name, then Formspree.
 - `components/runtime-client-shell.tsx` now keeps route-surface setup on the critical path and defers analytics, monitors, Vercel Analytics, toaster wiring, and the stock ElevenLabs embed/widget into `components/runtime-deferred-features.tsx` during browser idle time. The deferred widget script only loads when the current route and viewport are eligible.
-- `components/global-elevenlabs-widget.tsx` is now the single public widget surface. It mounts on non-mobile public inner pages but stays off the homepage, mobile viewports, `/apply`, `/ig`, and `/tiktok`; it defaults to collapsed when there is no saved user preference and persists later manual expand/collapse choices in browser storage.
-- `lib/elevenlabs-widget.ts` is the canonical source for live public widget config (agent id, allowed markdown-link hosts, public kill switch).
+- `components/global-elevenlabs-widget.tsx` is now the single public widget surface. It mounts only on non-mobile `/pricing` and `/contact`; it defaults to collapsed when there is no saved user preference and persists later manual expand/collapse choices in browser storage.
+- `lib/elevenlabs-widget.ts` is the canonical source for live public widget config (route allowlist, agent id, allowed markdown-link hosts, public kill switch).
 - `components/elevenlabs/ElevenLabsWidget.tsx` stays intentionally thin and uses only documented stock-widget attributes. It also re-applies approved host-level styles after the custom element upgrades, because the vendor runtime overwrites host positioning. Use that path only for safe host concerns like homepage section scoping or inner-page z-index elevation; do not patch the widget Shadow DOM.
 - `types/elevenlabs-widget.d.ts` provides JSX typing for the `<elevenlabs-convai>` custom element. Keep it in sync if ElevenLabs introduces new documented attributes we adopt.
-- Public widget invariant: when eligible, the host should stay fixed with a top-most z-index so nav, skip links, charts, and other sticky/fixed page chrome never render above the visible widget surface. Mobile viewports should not mount the widget or its third-party embed script.
+- Public widget invariant: when eligible on non-mobile `/pricing` or `/contact`, the host should stay fixed with a top-most z-index so nav, skip links, charts, and other sticky/fixed page chrome never render above the visible widget surface. Mobile viewports and non-eligible routes should not mount the widget or its third-party embed script on first load.
+
+### Image architecture
+
+- Prefer `next/image` for simple route-local imagery and `CoreImage` (`components/core-image.tsx`) when the surface needs Prism's fallback, loading, and analytics behavior.
+- `components/image.tsx`, `components/optimized-image.tsx`, and `components/enhanced-image.tsx` are still present for existing/legacy call sites. Do not start a blanket migration unless the image docs and tests are updated in the same pass.
+- Remote image domains must be added to `next.config.mjs` before use; see `docs/image-configuration.md` and `docs/image-best-practices.md`.
 
 ## Quality & diagnosis scripts
 
@@ -66,7 +73,7 @@ The repo assumes pnpm; npm/yarn installs will fall out of sync.
 | `pnpm design:check`               | Runs the full design-contract verification flow (`design:lint` + `design:sync`).                                                                                                                                                                                                                                               |
 | `pnpm build`                      | Production Next.js build (use before Vercel deploys).                                                                                                                                                                                                                                                                          |
 | `pnpm verify:deploy`              | Runs `scripts/verify-deployment.ts` to ensure required env vars and image config exist.                                                                                                                                                                                                                                        |
-| `pnpm verify:pricing-consistency` | Blocks deploys when legacy conflicting pricing reappears on pricing-sensitive surfaces. Contextual non-core dollar values are only allowed on explicitly labeled pages (referral/equipment/ad-fee examples).                                                                                                                   |
+| `pnpm verify:pricing-consistency` | Blocks deploys when retired pricing policy language reappears on pricing-sensitive surfaces. Contextual non-core dollar values are only allowed on explicitly labeled pages (referral/equipment/ad-fee examples).                                                                                                           |
 
 ### ElevenLabs widget verification
 
@@ -76,9 +83,9 @@ The repo assumes pnpm; npm/yarn installs will fall out of sync.
   - `pnpm test:visual:widget`
 - For visual/runtime bugs, prefer `pnpm build` followed by `pnpm start -p <port>` over `pnpm dev`. The stock ElevenLabs custom element can behave differently after the production bundle and its host styles may look "ignored" if you forget to rebuild before `next start`.
 - Expected runtime invariants:
-  - On non-mobile inner pages, the widget host should resolve to `position: fixed` with the elevated global z-index and remain the topmost element in the widget’s visible region after scrolling.
-  - On mobile inner pages, the widget and ElevenLabs embed script should stay unmounted.
-  - On `/ig` and `/tiktok`, the widget and ElevenLabs embed script should stay unmounted so the social credit rolls remain minimal.
+  - On non-mobile `/pricing` and `/contact`, the widget host should resolve to `position: fixed` with the elevated global z-index and remain the topmost element in the widget’s visible region after scrolling.
+  - On mobile `/pricing` and `/contact`, the widget and ElevenLabs embed script should stay unmounted.
+  - On all other public routes, including `/`, `/about`, `/get-started`, `/apply`, `/ig`, `/tiktok`, and blog posts, the widget and ElevenLabs embed script should stay unmounted on first load.
   - Without a saved preference, the stock launcher should mount collapsed by default on first load.
 - The stock widget is not a documented full-screen modal scrim. Do not fake that by reaching into shadow internals; if product wants a true bespoke modal layer, migrate to ElevenLabs’ official SDK/UI path instead of stretching the stock embed past its intended surface.
 
@@ -104,6 +111,8 @@ The repo assumes pnpm; npm/yarn installs will fall out of sync.
 - [`docs/build-and-deploy-guide.md`](./docs/build-and-deploy-guide.md) – Build tooling expectations plus the local/CI checklist.
 - [`docs/environment-setup.md`](./docs/environment-setup.md) – Environment variable reference for the supported site config.
 - [`docs/codex-workflow.md`](./docs/codex-workflow.md) – Codex operator playbook for safe project changes, widget work, dental photography, and mobile-safe media.
+- [`docs/image-best-practices.md`](./docs/image-best-practices.md) – Current image component choices and performance rules.
+- [`docs/image-configuration.md`](./docs/image-configuration.md) – Current remote image host allowlist and verification notes.
 
 ## CLI workflows (GitHub + Vercel)
 

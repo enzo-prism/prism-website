@@ -19,7 +19,7 @@ const faqs = [
   },
   {
     question: "How much does a website cost?",
-    answer: "Our core website offer is a Website Overhaul at $1,000 one-time. If you want ongoing execution beyond the rebuild, our Growth Partnership is $2,000/month. You can also start with a Free Expert Audit at $0."
+    answer: "Start by creating a free Prism Growth Dashboard. Prism then prepares a Light Audit, may recommend a normally $500 Deep Growth Audit, and scopes any 60-day sprint from the diagnosis. Sprints start at $3,500."
   },
   {
     question: "What's included in your website development service?",
@@ -43,11 +43,11 @@ const faqs = [
   },
   {
     question: "What is your digital marketing approach?",
-    answer: "Our digital marketing approach combines SEO, paid ads, and conversion-focused creative with clear analytics. For teams that want this managed continuously, the core Growth Partnership is $2,000/month and includes website, SEO, ads, and design execution."
+    answer: "Our digital marketing approach combines SEO, paid ads, conversion-focused creative, reviews, local visibility, and clear analytics. Prism starts with diagnosis, then recommends the focused sprint or ongoing growth partner level that matches the highest-leverage opportunities."
   },
   {
     question: "Do you provide ongoing support and maintenance?",
-    answer: "Yes. Ongoing support, optimization, and reporting are included in the $2,000/month Growth Partnership. If you only need a one-time build, the Website Overhaul at $1,000 includes launch support and handoff."
+    answer: "Yes. Ongoing growth partner support is usually recommended after a sprint creates signal. Partnerships start at $1,500/month and commonly range from $2,000-$3,500+/month depending on scope."
   },
   {
     question: "What is 'The Prism Method'?",
@@ -67,7 +67,7 @@ const faqs = [
   },
   {
     question: "What's your payment structure?",
-    answer: "Website Overhaul is billed as a one-time $1,000 project. Growth Partnership is billed monthly at $2,000/month. We also offer a Free Expert Audit at $0 so you can evaluate fit before committing."
+    answer: "The Growth Dashboard is free to start, the Light Audit is included after intake, the Deep Growth Audit is normally $500, and focused 60-day sprints start at $3,500. Ongoing growth partner work starts at $1,500/month after fit is clear."
   },
   {
     question: "How do you measure success?",

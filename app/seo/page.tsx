@@ -568,12 +568,12 @@ export default async function SeoPage() {
         serviceType="SEO services"
         areaServed="United States"
         offerDetails={{
-          name: "Growth Partnership",
-          description: "Ongoing website, SEO, ads, and design execution managed as one integrated system.",
+          name: "60-Day Growth Sprint",
+          description:
+            "Focused SEO, local visibility, content, and tracking sprint scoped from the Prism Growth Dashboard and audit path.",
           businessFunction: "http://purl.org/goodrelations/v1#Sell",
-          price: "2000",
+          price: "3500",
           priceCurrency: "USD",
-          billingPeriod: "P1M",
           url: "https://www.design-prism.com/pricing",
         }}
       />

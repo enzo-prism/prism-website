@@ -1,196 +1,80 @@
-# Next.js Image Best Practices
+# Image Best Practices
 
-This document outlines the best practices for using images in Next.js applications to ensure optimal performance, reliability, and user experience.
+Use this guide when adding, replacing, or debugging images on the Prism site.
 
-## Core Principles
+## Default policy
 
-1. **Always use the Next.js Image component**: Never use the standard HTML `<img>` tag
-2. **Always provide width and height**: Prevents layout shifts
-3. **Always handle errors**: Use fallback images when primary images fail to load
-4. **Optimize for performance**: Use appropriate sizes, formats, and loading strategies
-5. **Follow consistent patterns**: Use our standardized CoreImage component
+- Prefer `next/image` for straightforward route-local imagery.
+- Use `CoreImage` (`components/core-image.tsx`) when a shared marketing surface needs fallback handling, placeholder behavior, or analytics on image failures.
+- Do not use raw `<img>` unless the use case genuinely cannot work with `next/image` or an existing wrapper.
+- Do not start broad wrapper migrations from old docs. See `docs/migration-guide.md` first.
 
-## Using the Next.js Image Component
+## Required basics
 
-The Next.js Image component (`next/image`) is designed to automatically optimize images and prevent layout shifts:
+Every meaningful image needs:
 
-\`\`\`tsx
-import Image from 'next/image'
+- descriptive `alt` text, or an empty alt only when the image is purely decorative
+- stable `width`/`height`, `fill` with a constrained parent, or an explicit aspect ratio
+- a `sizes` prop for responsive images that are not fixed-size icons
+- `priority` only for true above-the-fold/LCP imagery
+- a fallback or graceful empty state when the image is remote and important to the page
+
+## Current component choices
+
+### `next/image`
+
+Use this for page-specific screenshots, client site visuals, route-local photos, icons, and decorative media when the source is stable.
+
+```tsx
+import Image from "next/image"
 
 <Image
   src="/example.jpg"
-  alt="Descriptive alt text"
-  width={800}
-  height={600}
-  priority={false}
-/>
-\`\`\`
-
-### Key Props
-
-- `src`: Path to the image (local or remote)
-- `alt`: Descriptive alt text (required for accessibility)
-- `width` and `height`: Dimensions of the image (required to prevent layout shifts)
-- `priority`: Set to `true` for critical above-the-fold images
-- `sizes`: Responsive size information (e.g., `"(max-width: 768px) 100vw, 50vw"`)
-- `quality`: Image quality (1-100, default is 75)
-
-## Local vs. Remote Images
-
-### Local Images
-
-For local images stored in the `public` directory:
-
-\`\`\`tsx
-<Image
-  src="/images/example.jpg"
-  alt="Example"
-  width={800}
-  height={600}
-/>
-\`\`\`
-
-### Remote Images
-
-For remote images, you must:
-
-1. Configure the domain in `next.config.mjs`
-2. Provide width and height manually
-
-\`\`\`tsx
-<Image
-  src="https://example.com/image.jpg"
-  alt="Remote example"
-  width={800}
-  height={600}
-/>
-\`\`\`
-
-Configuration in `next.config.mjs`:
-
-\`\`\`js
-module.exports = {
-  images: {
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'example.com',
-      },
-    ],
-  },
-}
-\`\`\`
-
-## Performance Optimization
-
-### Priority Images
-
-For LCP (Largest Contentful Paint) images:
-
-\`\`\`tsx
-<Image
-  src="/hero.jpg"
-  alt="Hero"
+  alt="Dental practice website screenshot"
   width={1200}
-  height={600}
-  priority
+  height={800}
+  sizes="(max-width: 768px) 100vw, 50vw"
 />
-\`\`\`
+```
 
-### Responsive Images
+### `CoreImage`
 
-Use the `sizes` prop to optimize for different viewport sizes:
+Use this for reusable marketing components that benefit from built-in fallback and analytics behavior.
 
-\`\`\`tsx
-<Image
-  src="/responsive.jpg"
-  alt="Responsive"
-  width={800}
-  height={600}
-  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-/>
-\`\`\`
-
-### Placeholder Images
-
-Use placeholders to improve perceived performance:
-
-\`\`\`tsx
-<Image
-  src="/example.jpg"
-  alt="Example"
-  width={800}
-  height={600}
-  placeholder="blur"
-  blurDataURL="data:image/svg+xml;base64,..."
-/>
-\`\`\`
-
-## Error Handling
-
-Always implement error handling for images:
-
-\`\`\`tsx
-<Image
-  src="/may-fail.jpg"
-  alt="Image"
-  width={800}
-  height={600}
-  onError={(e) => {
-    e.target.src = "/fallback.jpg"
-  }}
-/>
-\`\`\`
-
-## Using Our CoreImage Component
-
-Our application uses a standardized `CoreImage` component that implements all these best practices:
-
-\`\`\`tsx
+```tsx
 import CoreImage from "@/components/core-image"
 
 <CoreImage
-  src="/example.jpg"
-  alt="Example"
-  width={800}
-  height={600}
-  priority={false}
-  sizes="(max-width: 768px) 100vw, 50vw"
-  quality={90}
-  trackingId="unique_id"
-  fallbackSrc="/fallback.jpg"
+  src="/prism-logo.jpeg"
+  alt="Prism logo"
+  width={40}
+  height={40}
+  fallbackSrc="/prism-logo.jpeg"
+  trackingId="navbar_logo"
+  priority
 />
-\`\`\`
+```
 
-## Common Issues and Solutions
+## Remote images
 
-### Images Not Loading
+Remote hosts must be listed in `next.config.mjs`. The current supported hosts are documented in `docs/image-configuration.md`.
 
-1. **Domain not configured**: Ensure the domain is in `next.config.mjs`
-2. **Incorrect path**: Verify the image path is correct
-3. **Missing dimensions**: Always provide width and height
-4. **CORS issues**: Check for cross-origin restrictions
+Do not add a new remote host just to avoid moving a durable asset into the repo or Cloudinary. Prefer stable, inspectable media sources for important proof, screenshots, and hero content.
 
-### Layout Shifts
+## Layout safety
 
-1. **Missing dimensions**: Always provide accurate width and height
-2. **Inconsistent aspect ratios**: Maintain consistent aspect ratios
-3. **No placeholders**: Use placeholder images during loading
+- Keep cards, hero media, sliders, and screenshot frames stable with `aspect-ratio`, explicit dimensions, or fixed grid tracks.
+- Avoid image-driven layout shifts on mobile. If an image loads after text, the surrounding section should not jump.
+- For carousels, keep item dimensions consistent so slide controls and progress indicators do not move.
+- For dark Prism pages, confirm the image still reads against black backgrounds and does not become a muddy low-contrast block.
 
-### Performance Issues
+## Verification
 
-1. **Oversized images**: Use appropriate image sizes
-2. **Wrong format**: Enable WebP/AVIF formats
-3. **Missing responsive sizes**: Use the sizes prop
-4. **No priority for LCP**: Prioritize critical images
+For image-heavy changes, run the narrowest useful checks:
 
-## Pre-Deployment Checklist
+- `pnpm typecheck`
+- the nearest route/component test
+- local browser check at desktop and mobile widths
+- `pnpm build` when `next.config.mjs`, remote hosts, or production image behavior changed
 
-Before deploying, ensure:
-
-1. All images have width and height attributes
-2. Remote domains are configured in `next.config.mjs`
-3. Critical images use the `priority` attribute
-4. All images have meaningful alt text
-5. Error handling is implemented for all images
-6. Run the image verification script: `npx ts-node scripts/check-images.ts`
+Use `pnpm diagnose:images` only when debugging systemic image issues; many ordinary content changes do not need a full image audit.

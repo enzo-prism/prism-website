@@ -2,7 +2,7 @@
 
 This is the current operator map for the Prism website. Use it before making broad changes, adding routes, changing search visibility, touching forms, or shipping to production.
 
-Prism is now a dental growth systems website: websites, SEO and AI search, Google Maps, reviews, ads, tracking, photography, proof, pricing, and the Free Practice Audit. Older app, software, founder, library, podcast, and general AI pages can remain usable for direct visitors, but they should not compete with the dental growth signal in search.
+Prism is now a dental growth systems website: websites, SEO and AI search, Google Maps, reviews, ads, tracking, photography, proof, pricing, and the Growth Dashboard to Light Audit funnel. Older app, software, founder, library, podcast, and general AI pages can remain usable for direct visitors, but they should not compete with the dental growth signal in search.
 
 ## Current Shape
 
@@ -11,7 +11,7 @@ Prism is now a dental growth systems website: websites, SEO and AI search, Googl
 - Production: GitHub Actions publishes to Vercel with source deploys. Vercel Git auto-deploy is disabled for `main`.
 - Design system: root `DESIGN.md`, generated tokens in `generated/`, shared primitives in `components/core-route/` and `components/ui/`.
 - Active positioning: dental-first, not dental-only. Non-dental proof can stay live, but dental proof should be visually and machine-readably dominant.
-- Current scale from this audit: 112 page routes, 5 route handlers, 86 blog MDX files, 21 case studies, and 25 docs files.
+- Current scale from this audit: 113 page routes, 6 route handlers, 86 blog MDX files, 22 case studies, and 25 docs files.
 
 ## Source Of Truth Files
 
@@ -26,15 +26,20 @@ Prism is now a dental growth systems website: websites, SEO and AI search, Googl
 | Forms | `docs/forms.md` | Formspree contracts, field names, thank-you routing, analytics. |
 | Environment | `.env.example`, `docs/environment-setup.md` | Keep supported variables limited and current. |
 | Search visibility | `lib/seo/search-visibility.ts` | Shared index/noindex and blog allowlist policy. |
-| Pricing truth | `lib/pricing-model.ts` | Canonical pricing must stay `$1,000`, `$2,000/month`, and `$0` audit. |
+| Pricing truth | `lib/pricing-model.ts` | Canonical pricing follows the free Growth Dashboard, included Light Audit, normally `$500` Deep Growth Audit, `$3,500+` sprint, and `$1,500/month+` ongoing partner path. |
+| Shared chrome | `components/navbar.tsx`, `components/footer.tsx`, `lib/constants.ts` | Header nav, logo interaction, footer links, and the single footer funnel CTA. |
+| Public assistant | `lib/elevenlabs-widget.ts`, `components/global-elevenlabs-widget.tsx` | Stock ElevenLabs widget route allowlist, mobile suppression, default collapsed state, and public kill switch. |
+| Images | `next.config.mjs`, `components/core-image.tsx`, `components/image.tsx`, `docs/image-best-practices.md` | Next/Image remote hosts plus the current legacy/new component split. |
 
 ## Runtime Architecture
 
 - `app/layout.tsx` mounts global metadata, schema, analytics scripts, runtime shell, Sentry context, and shared page chrome.
 - `components/runtime-client-shell.tsx` keeps route-surface setup and core analytics on the critical path.
 - `components/runtime-deferred-features.tsx` defers heavier browser-only features such as monitors, Vercel Analytics, toaster wiring, and the stock ElevenLabs widget.
-- `components/global-elevenlabs-widget.tsx` is the live public floating widget surface on eligible non-mobile inner pages.
+- `components/global-elevenlabs-widget.tsx` is the live public floating widget surface on eligible non-mobile `/pricing` and `/contact` only.
 - `components/elevenlabs/ElevenLabsWidget.tsx` wraps the documented ElevenLabs custom element and applies host-level positioning only.
+- `components/navbar.tsx` and `components/footer.tsx` are the single shared chrome layer. The header logo has a subtle hover/focus treatment; the footer has one primary "Free audit" CTA that routes to `/get-started`.
+- `components/forms/GetStartedForm.tsx` is the active Growth Dashboard intake. It prefers `NEXT_PUBLIC_DASHBOARD_INTAKE_ENDPOINT`, then falls back through Formspree-compatible endpoints.
 - `app/robots.ts` manages crawl access only. Use page-level robots metadata for noindex decisions.
 - `app/sitemap.ts` emits only canonical, indexable static routes, case study detail pages, and curated blog posts.
 - `public/llms.txt` is a curated machine-readable map of the dental growth system. Keep it narrower than the full route tree.
@@ -53,7 +58,7 @@ Prism is now a dental growth systems website: websites, SEO and AI search, Googl
 
 `lib/seo/search-visibility.ts` is the canonical search policy.
 
-- Add a static route to `INDEXABLE_STATIC_ROUTES` only when it supports dental growth systems, pricing, proof, legal, or the Free Practice Audit funnel.
+- Add a static route to `INDEXABLE_STATIC_ROUTES` only when it supports dental growth systems, pricing, proof, legal, or the Growth Dashboard funnel.
 - Add broad, utility, social, legacy, or off-theme routes to `NOINDEX_ROUTES` or `NOINDEX_PREFIXES`.
 - Keep every case study detail page indexable unless there is a specific quality or legal reason to hide one.
 - Add blog posts to `INDEXABLE_BLOG_SLUGS` only when they strengthen dental or local-growth authority.
@@ -87,6 +92,7 @@ fnm exec --using 22 pnpm seo:lint
 | Search-visible blog post | `INDEXABLE_BLOG_SLUGS` | `docs/blog-content-architecture.md` if policy changes | blog/sitemap/llms Jest, SEO inventory/lint |
 | New form | `components/forms/*`, route page, thank-you route if needed | `docs/forms.md`, `.env.example`, `docs/environment-setup.md` if env changes | form Jest, analytics tests if conversion changed |
 | Pricing copy | `lib/pricing-model.ts`, pricing route/components | README/AGENTS only if policy changes | `pnpm verify:pricing-consistency` |
+| Assistant widget route | `lib/elevenlabs-widget.ts`, `components/global-elevenlabs-widget.tsx`, deferred runtime | README/AGENTS/docs only if public policy changes | widget Jest, `pnpm test:visual:widget` |
 | Visual or layout work | Route/component files, `DESIGN.md` if contract changes | relevant page/design docs | `pnpm lint`, targeted Jest, visual tests for affected routes |
 | Production release | Commit and push `main` | no doc update unless process changed | CI green, live sitemap/robots/critical route smoke |
 

@@ -60,7 +60,7 @@ describe('/get-started page', () => {
     expect(
       screen.getByRole('heading', {
         level: 2,
-        name: /one short form\./i,
+        name: /one short dashboard intake\./i,
       }),
     ).toBeInTheDocument()
   })
@@ -68,13 +68,13 @@ describe('/get-started page', () => {
   it('funnels people from get-started into the dedicated apply page', () => {
     render(<GetStartedPage />)
 
-    expect(screen.getByRole('link', { name: /open form/i })).toHaveAttribute(
-      'href',
-      '/apply',
-    )
-    expect(screen.getByText(/typical fit: \$1k-\$3k\+/i)).toBeInTheDocument()
     expect(
-      screen.getAllByText(/every real submission is reviewed/i).length,
+      screen.getByRole('link', { name: /create free growth dashboard/i }),
+    ).toHaveAttribute('href', '/apply')
+    expect(screen.getByText(/practice context/i)).toBeInTheDocument()
+    expect(
+      screen.getAllByText(/every real practice submission receives a light audit/i)
+        .length,
     ).toBeGreaterThan(0)
   })
 })

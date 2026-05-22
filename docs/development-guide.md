@@ -17,7 +17,7 @@ For a current whole-project map, start with `docs/project-overview.md`. This gui
   - `pnpm design:sync`
   - or the combined `pnpm design:check`
 - For `/get-started`, `/apply`, or floating-widget assistant-surface changes, run:
-  - `pnpm exec jest __tests__/app/get-started.test.tsx __tests__/app/apply.test.tsx __tests__/components/GetStartedForm.test.tsx __tests__/components/GlobalElevenLabsWidget.test.tsx __tests__/components/ElevenLabsWidget.test.tsx --runInBand`
+  - `pnpm exec jest __tests__/app/get-started.test.tsx __tests__/app/apply.test.tsx __tests__/components/GetStartedForm.test.tsx __tests__/components/GlobalElevenLabsWidget.test.tsx __tests__/components/ElevenLabsWidget.test.tsx __tests__/lib/elevenlabs.test.ts --runInBand`
   - `pnpm test:visual:widget`
 - For pricing-sensitive changes, run:
   - `pnpm verify:pricing-consistency`
@@ -47,7 +47,7 @@ For a current whole-project map, start with `docs/project-overview.md`. This gui
 - Avoid deep geometry overrides inside the widget Shadow DOM. ElevenLabs treats the embed as an opinionated surface; keep customization focused on supported attributes and host-level layering, and move heavier design customization to the official SDK/UI layer if we need a bespoke chat surface later.
 - The stock embed runtime forces its own host positioning, so `components/elevenlabs/ElevenLabsWidget.tsx` now re-applies only the host-level styles we actually need after the custom element mounts. Use that path for safe layer fixes like homepage section scoping or inner-page z-index elevation; do not reach into vendor shadow children for layout control.
 - The public agent id resolves via `lib/elevenlabs.ts` and can be overridden with `NEXT_PUBLIC_ELEVENLABS_AGENT_ID`.
-- `components/global-elevenlabs-widget.tsx` now renders the stock floating widget on non-mobile public inner pages like `/get-started`, while `/`, mobile viewports, the active `/apply` form, and the minimal `/ig` and `/tiktok` social credit pages intentionally stay widget-free. With no saved preference, it should stay closed by default; explicit user expand/collapse choices persist across future eligible mounts.
+- `components/global-elevenlabs-widget.tsx` now renders the stock floating widget only on non-mobile `/pricing` and `/contact`; `/get-started`, `/`, mobile viewports, the active `/apply` form, the minimal `/ig` and `/tiktok` social credit pages, and all other public routes intentionally stay widget-free. With no saved preference, it should stay closed by default; explicit user expand/collapse choices persist across future eligible mounts.
 - The floating host should stay at a top-most z-index so nav, skip links, charts, and other fixed site chrome never render above the expanded widget.
 - `components/runtime-client-shell.tsx` now keeps route-surface setup plus the core GA page/form listener layer on the critical path, while `components/runtime-deferred-features.tsx` still defers heavier client-only work like monitors, Vercel Analytics, and the public widget bundle during browser idle time.
 - `NEXT_PUBLIC_ELEVENLABS_WIDGET_DISABLED` exists as a deliberate debug/test seam. When set to a truthy value, the stock embed script and floating widget stay unmounted so deterministic visual builds do not bake live vendor UI into locked snapshots.
@@ -57,9 +57,9 @@ For a current whole-project map, start with `docs/project-overview.md`. This gui
 - If you change the homepage or global widget interaction model, re-run `pnpm exec jest __tests__/components/GlobalElevenLabsWidget.test.tsx __tests__/components/ElevenLabsWidget.test.tsx`.
 - For z-index, scrolling, or layout bugs involving the stock widget, validate against a fresh production bundle: `pnpm build && pnpm start -p <port>`. `next start` serves the last production build on disk, and the ElevenLabs custom element can behave differently from `pnpm dev` / Fast Refresh.
 - The fastest runtime sanity checks are:
-  - homepage, `/ig`, and `/tiktok`: no public ElevenLabs script or floating widget should mount
-  - non-mobile inner pages: widget host should compute to `position: fixed` with the elevated global z-index and remain topmost in the visible widget region after scrolling
-  - mobile inner pages: no public ElevenLabs script or floating widget should mount
+  - homepage, `/get-started`, `/apply`, `/ig`, `/tiktok`, blog posts, and other non-assistant routes: no public ElevenLabs script or floating widget should mount on first load
+  - non-mobile `/pricing` and `/contact`: widget host should compute to `position: fixed` with the elevated global z-index and remain topmost in the visible widget region after scrolling
+  - mobile `/pricing` and `/contact`: no public ElevenLabs script or floating widget should mount
   - default first-load behavior: widget should mount collapsed unless the user has already saved an explicit preference
 - The stock widget does not expose a documented "full-screen page-blocking modal" mode. Treat the visible widget surface as the layering boundary we control today; if product wants a true viewport scrim that blocks all underlying content, that is a migration conversation to ElevenLabs' official SDK/UI layer rather than a Shadow DOM styling patch.
 
@@ -87,7 +87,7 @@ Key details:
 - Forms post to Formspree via `fetch` with `Accept: application/json`. On success we push the user to `/thank-you` or `/analysis-thank-you` so our custom screens always render.
 - Use the `_subject` hidden field for inbox filtering and `_gotcha` as the honeypot.
 - When adding a new Formspree endpoint, import `useFormValidation({ onValidSubmit })` and only navigate after the request returns `response.ok`.
-- `/get-started` is now the Free Practice Audit entry page, while `/apply` is the focused question-by-question audit request form. Keep the copy and thank-you flow explicit that review is guaranteed after a real practice submission, while the later strategy meeting is optional and selective.
+- `/get-started` is now the free Growth Dashboard entry page, while `/apply` is the focused question-by-question dashboard intake form. Keep the copy and thank-you flow explicit that a Light Audit follows a real practice submission, while the later Deep Growth Audit or sprint path is optional and selective.
 
 ### AEO assessment landing regression tests
 
@@ -122,7 +122,7 @@ Custom confirmation routes live in `app/thank-you/` and `app/analysis-thank-you/
 - `public/llms.txt` is not a Google ranking input, but it should still mirror canonical search surfaces. Keep it limited to canonical, indexable Prism URLs and avoid noindex routes, redirects, or off-site detours unless there is a deliberate reason.
 - Use absolute canonicals (`https://www.design-prism.com/...`) for every indexable route.
 - Noindex routes should remain crawlable (meta `robots`), but **must be excluded** from the sitemap via `app/sitemap.ts`.
-- Keep the indexable set intentionally narrow and dental-first. `lib/seo/search-visibility.ts` is the source of truth for search visibility; new routes should default to noindex unless they support the dental growth system story: dental websites, SEO/AI search, reviews, ads, tracking, photography, proof, pricing, or the Free Practice Audit funnel.
+- Keep the indexable set intentionally narrow and dental-first. `lib/seo/search-visibility.ts` is the source of truth for search visibility; new routes should default to noindex unless they support the dental growth system story: dental websites, SEO/AI search, reviews, ads, tracking, photography, proof, pricing, or the Growth Dashboard funnel.
 - Broad Prism surfaces such as apps, software, Replit/OpenAI guides, podcast/library pages, careers, scholarships, non-dental industry pages, and social/community utilities should stay usable for direct visitors but out of the sitemap and public LLM map unless product direction explicitly changes.
 - Blog posts are curated for search with `INDEXABLE_BLOG_SLUGS` and optional `searchVisibility` frontmatter. New posts are not indexable by default; add them to the curated dental/local-growth allowlist only when they strengthen Prism's dental growth authority.
 - `/blog` filter/search views (`/blog?category=...`, `/blog?q=...`) are set to **noindex, follow** via `X-Robots-Tag` in `proxy.ts` so query-param URLs don’t pollute the index.
@@ -207,19 +207,21 @@ Custom confirmation routes live in `app/thank-you/` and `app/analysis-thank-you/
 ## Pricing Page Content
 
 - Pricing UI is in `app/pricing/client-page.tsx` with the shared dark-system hero in `components/pricing/PricingHero.tsx`.
-- Keep canonical pricing copy exact on this page: `$1,000 one-time`, `$2,000/month`, and `$0` free audit.
-- Structured data here should only emit canonical offers and point to `https://www.design-prism.com/pricing`.
+- Keep canonical pricing copy aligned with `lib/pricing-model.ts`: free Growth Dashboard, included Light Audit, normally `$500` Deep Growth Audit, 60-day Growth Sprints starting at `$3,500`, and optional ongoing Growth Partner support starting at `$1,500/month`.
+- Structured data here should only emit the Deep Growth Audit and 60-day Growth Sprint offers and point to `https://www.design-prism.com/pricing`.
 - Pricing, about, homepage, and `/get-started` now share the core-route typography and CTA system from `components/core-route/CoreRoutePrimitives.tsx`. Reuse those primitives before hand-rolling new route-level actions or section headers.
+- Primary pricing CTAs should say `Create Free Growth Dashboard` and point to `/get-started`. The secondary CTA should be an in-page `#growth-path` link unless the pricing journey itself changes.
 
 ## Free Analysis & Contact Pages
 
-- `/free-analysis` and `/contact` are intentionally minimal (hero, form card, CTA).
+- `/free-analysis` and `/contact` are intentionally minimal form routes.
+- `/contact` should not include demo-booking or calendar CTAs; keep it to the contact form, expectations, and direct email.
 - Copy updates happen directly in `app/free-analysis/page.tsx` and `app/contact/page.tsx`.
 - Both pages reuse the shared forms mentioned above, so field changes only need to happen once.
 
 ## CTA Routing
 
-Any CTA labeled “free analysis” should point to `/free-analysis`. When you add a new CTA, double-check the href so we don’t regress to `/get-started` accidentally.
+Any CTA labeled “free audit” or “free practice audit” should point to `/get-started`. Keep `/free-analysis` links only for surfaces that explicitly need that legacy analysis form.
 
 ## Typography & Casing
 
@@ -244,8 +246,9 @@ The navbar dynamically sets a CSS variable (`--prism-header-height`) so other st
 ## Navbar And Footer
 
 - `components/navbar.tsx` and `components/footer.tsx` are the canonical site chrome for both the homepage and inner routes. Prefer changing them once instead of introducing route-specific variants unless product direction explicitly splits the chrome again.
-- The current chrome language is minimal black surfaces, white/off-white type, and text-first hover states. Keep hover changes color-only so text remains readable and layout stays stable.
+- The current chrome language is minimal black surfaces, white/off-white type, and restrained tactile hover/focus states. Subtle transforms/glow are okay on the logo mark when they respect reduced motion and do not change layout width; keep nav text hover states stable and readable.
 - Primary nav labels live in `lib/constants.ts` (`NAV_ITEMS`). When you add or remove an item, verify the shared desktop nav, mobile sheet, locked route snapshots, and a representative case study detail page.
+- The footer has one primary funnel CTA: `Free audit` via `TrackedLink` to `/get-started`. Do not add a footer calendar or "Book call" path unless the funnel strategy changes.
 
 ## Deployment
 

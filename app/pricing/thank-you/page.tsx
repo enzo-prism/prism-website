@@ -9,7 +9,8 @@ import LeadSuccessTracker from "@/components/thank-you/LeadSuccessTracker"
 
 export const metadata: Metadata = buildRouteMetadata({
   titleStem: "plan sent | next steps from prism",
-  description: "Thanks for reviewing Prism pricing. We'll follow up with next steps for your website overhaul, growth partnership, or free audit path.",
+  description:
+    "Thanks for reviewing Prism pricing. We'll follow up with clear next steps for the Growth Dashboard, Light Audit, Deep Growth Audit, or sprint path.",
   path: "/pricing/thank-you",
   index: false,
   ogImage: "/prism-opengraph.png",

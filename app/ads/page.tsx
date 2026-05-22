@@ -534,12 +534,12 @@ export default async function AdsPage() {
         serviceType="Digital marketing"
         areaServed="United States"
         offerDetails={{
-          name: "Growth Partnership",
-          description: "Ongoing website, design, SEO, and ads execution managed by Prism's dedicated team.",
+          name: "60-Day Growth Sprint",
+          description:
+            "Focused ads, landing path, creative testing, and tracking sprint scoped from the Prism Growth Dashboard and audit path.",
           businessFunction: "http://purl.org/goodrelations/v1#ProvideService",
-          price: "2000",
+          price: "3500",
           priceCurrency: "USD",
-          billingPeriod: "P1M",
           url: "https://www.design-prism.com/pricing",
         }}
         aggregateRating={aggregateRating}

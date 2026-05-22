@@ -13,22 +13,23 @@ import styles from '@/components/get-started/get-started-page.module.css'
 import { cn } from '@/lib/utils'
 import { buildRouteMetadata } from '@/lib/seo/metadata'
 
-const PAGE_TITLE = 'Free dental practice audit | Prism'
+const PAGE_TITLE = 'Free Growth Dashboard | Prism'
 const PAGE_DESCRIPTION =
-  'Submit your dental practice for a focused review of the website, Google presence, reviews, booking path, tracking, and clearest growth opportunities.'
+  'Create your free Prism Growth Dashboard so Prism can review your dental website, Google presence, reviews, booking path, tracking, and clearest growth opportunities.'
 const CANONICAL_URL = 'https://www.design-prism.com/get-started'
 
 const APPLICATION_NOTES = [
-  'Free. Reviewed by a real person.',
-  'Built for dental practices that want clearer patient growth.',
+  'Free to start. Reviewed by a real person.',
+  'Built for dental practices that want a clearer growth system.',
 ] as const
 
 const APPLICATION_PREVIEW = [
+  'Practice context',
   'Website',
   'Google Maps',
   'Reviews',
-  'Booking path',
   'Tracking',
+  'Growth goals',
 ] as const
 
 export const metadata: Metadata = buildRouteMetadata({
@@ -57,8 +58,8 @@ export default function GetStartedPage() {
           >
             <div className="space-y-8">
               <CoreSectionHeading
-                title="One short audit request."
-                description="About a minute. Just the essentials we need to review your practice."
+                title="One short dashboard intake."
+                description="About a minute. Just the essentials Prism needs to prepare your free Light Audit."
                 titleClassName="max-w-[13ch]"
               />
 
@@ -106,7 +107,8 @@ export default function GetStartedPage() {
               <div className="relative z-10 space-y-8">
                 <div className="space-y-3">
                   <p className="max-w-[34rem] font-mono text-[0.98rem] leading-8 text-[#D0D0C8]">
-                    No sales maze. No calendar wall. No long brief.
+                    No sales maze. No calendar wall. No long brief before Prism
+                    can see the business clearly.
                   </p>
                 </div>
 
@@ -129,13 +131,13 @@ export default function GetStartedPage() {
                 <div className="space-y-3 border-t border-white/10 pt-6">
                   <CoreActionLink
                     href="/apply"
-                    label="start free audit"
+                    label="create free growth dashboard"
                     location="get started entry cta"
                   >
-                    Start free audit
+                    Create Free Growth Dashboard
                   </CoreActionLink>
                   <p className="font-mono text-[0.78rem] leading-6 text-[#8C8C85]">
-                    We review every real practice submission.
+                    Every real practice submission receives a Light Audit.
                   </p>
                 </div>
               </div>

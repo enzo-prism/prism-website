@@ -4,6 +4,7 @@ import {
   isAllowedElevenLabsExternalUrl,
   registerElevenLabsClientTools,
 } from '@/lib/elevenlabs'
+import { shouldRenderPublicElevenLabsWidget } from '@/lib/elevenlabs-widget'
 
 describe('elevenlabs link configuration', () => {
   it('uses trusted booking hosts by default', () => {
@@ -41,6 +42,24 @@ describe('elevenlabs link configuration', () => {
     expect(isPublicElevenLabsWidgetEnabled({} as NodeJS.ProcessEnv)).toBe(false)
 
     delete window.__PRISM_DISABLE_ELEVENLABS_WIDGET__
+  })
+
+  it('limits the public floating widget to pricing and contact pages', () => {
+    expect(shouldRenderPublicElevenLabsWidget('/pricing')).toBe(true)
+    expect(shouldRenderPublicElevenLabsWidget('/contact')).toBe(true)
+    expect(shouldRenderPublicElevenLabsWidget('/pricing/')).toBe(true)
+    expect(shouldRenderPublicElevenLabsWidget('/contact?source=footer')).toBe(
+      true,
+    )
+
+    expect(shouldRenderPublicElevenLabsWidget('/')).toBe(false)
+    expect(shouldRenderPublicElevenLabsWidget('/about')).toBe(false)
+    expect(shouldRenderPublicElevenLabsWidget('/get-started')).toBe(false)
+    expect(shouldRenderPublicElevenLabsWidget('/services')).toBe(false)
+    expect(shouldRenderPublicElevenLabsWidget('/apply')).toBe(false)
+    expect(shouldRenderPublicElevenLabsWidget('/blog/dental-seo')).toBe(false)
+    expect(shouldRenderPublicElevenLabsWidget(null)).toBe(false)
+    expect(shouldRenderPublicElevenLabsWidget('pricing')).toBe(false)
   })
 
   it('only allows trusted https destinations', () => {

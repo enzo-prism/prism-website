@@ -28,15 +28,15 @@ describe('Footer', () => {
   it('uses the homepage footer treatment by default', () => {
     render(<Footer />)
 
-    expect(screen.getByText(/conversion-first websites\. one growth system\./i))
-      .toBeInTheDocument()
-    expect(screen.getByRole('link', { name: /book call/i })).toHaveAttribute(
-      'href',
-      '/get-started#book-call',
-    )
+    expect(
+      screen.getByText(/conversion-first websites\. one growth system\./i),
+    ).toBeInTheDocument()
+    expect(
+      screen.queryByRole('link', { name: /book call/i }),
+    ).not.toBeInTheDocument()
     expect(screen.getByRole('link', { name: /free audit/i })).toHaveAttribute(
       'href',
-      '/free-analysis',
+      '/get-started',
     )
     expect(screen.getByRole('link', { name: /^pricing$/i })).toHaveAttribute(
       'href',

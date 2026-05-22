@@ -101,6 +101,29 @@ describe('Navbar', () => {
     expect(screen.getByText(/impossible is temporary/i)).toBeInTheDocument()
   })
 
+  it('gives the logo a stable hover and focus treatment', () => {
+    mockUsePathname.mockReturnValue('/get-started')
+
+    render(<Navbar />)
+
+    const logoLink = screen.getByRole('link', { name: /prism home/i })
+    const logoMark = screen.getByTestId('navbar-logo-mark')
+    const logoGlow = screen.getByTestId('navbar-logo-glow')
+
+    expect(logoLink.className).toContain('group/logo')
+    expect(logoLink.className).toContain('focus-visible:ring-[#d8bc79]/35')
+    expect(logoMark.className).toContain(
+      'motion-safe:group-hover/logo:scale-105',
+    )
+    expect(logoMark.className).toContain(
+      'motion-safe:group-focus-visible/logo:scale-105',
+    )
+    expect(logoMark.className).toContain('group-hover/logo:border-[#d8bc79]/55')
+    expect(logoGlow).toHaveAttribute('aria-hidden', 'true')
+    expect(logoGlow.className).toContain('group-hover/logo:opacity-100')
+    expect(logoGlow.className).toContain('group-focus-visible/logo:opacity-100')
+  })
+
   it('opens a simple inline mobile nav instead of a separate modal layer', () => {
     mockUsePathname.mockReturnValue('/about')
 

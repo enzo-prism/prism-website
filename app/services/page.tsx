@@ -107,25 +107,25 @@ const coreServices: CoreService[] = [
 
 const bundleExamples = [
   {
-    name: "Website Overhaul Path",
-    description: "Best for teams that need a complete rebuild before layering more channels.",
-    includes: ["Conversion-first rebuild", "Technical SEO + analytics", "Launch support + handoff"],
-    ctaLabel: "See website overhaul pricing",
+    name: "Growth Dashboard Path",
+    description: "Best for teams that want Prism to diagnose the clearest visible opportunities first.",
+    includes: ["Free dashboard intake", "Light Audit", "Clear next step"],
+    ctaLabel: "Create Growth Dashboard",
     ctaHref: "/pricing",
   },
   {
-    name: "Growth Partnership Path",
-    description: "Best for teams that want ongoing website, SEO, ads, and design execution.",
-    includes: ["Dedicated sprint team", "Weekly optimization cycles", "Cross-channel reporting"],
-    ctaLabel: "See growth partnership pricing",
+    name: "60-Day Sprint Path",
+    description: "Best for teams ready to act on a focused audit-backed growth priority.",
+    includes: ["Scoped sprint", "Highest-leverage opportunities", "Clear tracking"],
+    ctaLabel: "See sprint pricing",
     ctaHref: "/pricing",
   },
   {
-    name: "Free Audit Path",
-    description: "Best for teams that want expert direction before choosing a paid path.",
-    includes: ["Website + visibility review", "Actionable priority list", "Clear recommended next step"],
-    ctaLabel: "Start with free audit",
-    ctaHref: "/free-analysis",
+    name: "Ongoing Partner Path",
+    description: "Best after a sprint creates enough signal for continued growth execution.",
+    includes: ["Support level", "Execution level", "Premium partner level"],
+    ctaLabel: "See partner levels",
+    ctaHref: "/pricing",
   },
 ]
 
@@ -140,7 +140,7 @@ const workflow = [
   },
   {
     title: "layer the growth levers",
-    description: "paid media, content, and automation join the mix as we hit traction milestones, with bundles tailored to your goals and budget.",
+    description: "paid media, content, and automation join the mix as we hit traction milestones, with scope tailored to your goals and budget.",
   },
   {
     title: "optimize and report",

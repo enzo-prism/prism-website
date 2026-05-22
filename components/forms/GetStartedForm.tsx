@@ -63,11 +63,11 @@ const PRIORITY_OPTIONS = [
 ] as const
 
 const BUDGET_OPTIONS = [
-  'Under $1k',
-  '$1k to $1.5k',
-  '$1.5k to $3k',
-  '$3k to $5k',
-  '$5k+',
+  'Not sure yet',
+  'Deep Growth Audit only',
+  '$3.5k to $5k',
+  '$5k to $7.5k',
+  '$7.5k+',
 ] as const
 
 const TIMELINE_OPTIONS = [
@@ -538,7 +538,7 @@ export default function GetStartedForm() {
       }
 
       if (stepId === 'budget') {
-        syncRadioGroupValidity('budget', 'Choose a budget')
+        syncRadioGroupValidity('budget', 'Choose an investment range')
       }
 
       if (stepId === 'timeline') {
@@ -570,7 +570,7 @@ export default function GetStartedForm() {
   }, [primaryGoal, syncRadioGroupValidity])
 
   useEffect(() => {
-    syncRadioGroupValidity('budget', 'Choose a budget')
+    syncRadioGroupValidity('budget', 'Choose an investment range')
   }, [budget, syncRadioGroupValidity])
 
   useEffect(() => {
@@ -724,7 +724,7 @@ export default function GetStartedForm() {
     if (currentStep === 'budget' && !budget) {
       return {
         name: 'budget',
-        message: 'Choose a budget',
+        message: 'Choose an investment range',
       }
     }
 
@@ -1042,7 +1042,7 @@ export default function GetStartedForm() {
       case 'budget':
         return (
           <fieldset className="space-y-3">
-            <legend className="sr-only">Monthly budget?</legend>
+          <legend className="sr-only">Growth investment range?</legend>
             <div className="grid gap-3">
               {BUDGET_OPTIONS.map((option) =>
                 renderChoiceOption({
@@ -1188,7 +1188,7 @@ export default function GetStartedForm() {
           <div className="space-y-3">
             <div className="grid gap-3 rounded-none border border-white/10 bg-black/30 p-4">
               <ReviewRow
-                label="Audit"
+                label="Dashboard"
                 value={selectedServices
                   .map((service) => getOptionLabel(SERVICE_OPTIONS, service))
                   .join(', ')}
@@ -1225,13 +1225,13 @@ export default function GetStartedForm() {
           : currentStep === 'priority'
             ? 'What matters most?'
             : currentStep === 'budget'
-              ? 'Monthly budget?'
+              ? 'Growth investment range?'
               : currentStep === 'timeline'
                 ? 'When do you want to start?'
                 : currentStep === 'company'
                   ? 'Practice name'
                   : currentStep === 'contact'
-                    ? 'Where should we send the audit?'
+                    ? 'Where should we send the Light Audit?'
                     : currentStep === 'notes'
                       ? 'Anything we should know?'
                       : 'Review and submit.'
@@ -1270,7 +1270,7 @@ export default function GetStartedForm() {
       <input
         type="hidden"
         name="_subject"
-        value="New Prism practice audit request"
+        value="New Prism Growth Dashboard request"
       />
       <input type="hidden" name="_redirect" value={redirectUrl} />
       <input type="hidden" name="form_name" value="growth_application" />
@@ -1331,7 +1331,7 @@ export default function GetStartedForm() {
                 : `${progressStep} of ${QUESTION_STEP_COUNT}`}
             </p>
             <p className="font-mono text-[0.72rem] uppercase tracking-[0.24em] text-[#767670]">
-              Practice audit
+              Growth Dashboard
             </p>
           </div>
           <div className="h-px w-full overflow-hidden bg-white/10">
@@ -1382,10 +1382,10 @@ export default function GetStartedForm() {
                 disabled={isSubmitting}
                 data-step-autofocus="true"
                 onClick={() =>
-                  trackCTAClick('submit practice audit', 'apply form review')
+                  trackCTAClick('submit growth dashboard', 'apply form review')
                 }
               >
-                {isSubmitting ? 'Submitting...' : 'Submit audit request'}
+                {isSubmitting ? 'Submitting...' : 'Create Growth Dashboard'}
               </Button>
             ) : (
               <Button

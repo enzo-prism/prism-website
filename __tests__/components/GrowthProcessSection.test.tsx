@@ -37,26 +37,26 @@ describe('GrowthProcessSection', () => {
     render(<GrowthProcessSection />)
 
     const submitCardLink = screen.getByRole('link', {
-      name: /start the free practice audit form/i,
+      name: /create the free growth dashboard/i,
     })
 
     expect(submitCardLink).toHaveAttribute('href', '/apply')
     expect(
       screen
-        .getByRole('heading', { level: 2, name: /submit your practice/i })
+        .getByRole('heading', { level: 2, name: /create growth dashboard/i })
         .closest('a'),
     ).toBe(submitCardLink)
     expect(
       screen
         .getByRole('heading', {
           level: 2,
-          name: /review the patient journey/i,
+          name: /receive light audit/i,
         })
         .closest('a'),
     ).toBeNull()
     expect(
       screen
-        .getByRole('heading', { level: 2, name: /get a clear growth plan/i })
+        .getByRole('heading', { level: 2, name: /choose the clear next step/i })
         .closest('a'),
     ).toBeNull()
 
@@ -64,8 +64,29 @@ describe('GrowthProcessSection', () => {
 
     expect(trackLinkInteraction).toHaveBeenCalledWith(
       '/apply',
-      'start free audit from submit practice card',
+      'create free growth dashboard from process card',
       'get started process card',
     )
+  })
+
+  it('keeps the final Light Audit handoff short and speed-focused', () => {
+    render(<GrowthProcessSection />)
+
+    expect(
+      screen.getByText(/ready for the light audit\?/i),
+    ).toBeInTheDocument()
+    expect(
+      screen.getByRole('group', {
+        name: /takes about one minute to complete\. quick and easy\./i,
+      }),
+    ).toBeInTheDocument()
+    expect(screen.getByText(/min to complete/i)).toBeInTheDocument()
+    expect(screen.getByText(/quick \+ easy/i)).toBeInTheDocument()
+    expect(
+      screen.queryByText(/start with one short dashboard intake\./i),
+    ).not.toBeInTheDocument()
+    expect(
+      screen.queryByText(/dashboard first\. deep growth audit if it fits\./i),
+    ).not.toBeInTheDocument()
   })
 })

@@ -7,7 +7,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Next.js App Router marketing website for Prism, synced with v0.dev and deployed on Vercel.
+Next.js App Router marketing website for Prism's dental growth systems: websites, SEO/AI search, reviews, ads, tracking, photography, proof, pricing, and the Growth Dashboard to Light Audit funnel. The site is synced with v0.dev and deployed on Vercel through GitHub Actions.
 
 ## Essential Commands
 
@@ -26,6 +26,9 @@ pnpm test -- --testNamePattern="pattern"
 # Diagnostics
 pnpm diagnose:images  # Image system check
 pnpm verify:deploy    # Pre-deployment validation
+pnpm seo:inventory     # Render route metadata inventory
+pnpm seo:lint          # Validate SEO/search-surface rules
+pnpm verify:pricing-consistency
 
 # Git sync (v0.dev/Cursor/Claude coordination)
 pnpm git:status       # Check sync health
@@ -49,10 +52,14 @@ pnpm git:cleanup      # Clean stale branches
 ### Key Files
 | Purpose | Location |
 |---------|----------|
-| Custom Image component | `/components/image.tsx` (always use this) |
+| Project map | `docs/project-overview.md` |
+| Search visibility | `lib/seo/search-visibility.ts` |
+| Canonical pricing | `lib/pricing-model.ts` |
+| Public ElevenLabs widget | `lib/elevenlabs-widget.ts`, `components/global-elevenlabs-widget.tsx` |
+| Image guidance | `docs/image-best-practices.md`, `docs/image-configuration.md` |
 | MDX processing | `/lib/mdx.tsx` |
 | Image utilities | `/utils/image-utils.ts` |
-| Form validation hook | `/hooks/useFormValidation` |
+| Form validation hook | `/hooks/use-form-validation.ts` |
 | MDX mock for tests | `__mocks__/mdxremote.js` |
 
 ## Critical Patterns
@@ -64,7 +71,7 @@ pnpm git:cleanup      # Clean stale branches
 
 **Components**
 - Use existing UI components from `/components/ui`
-- Always use custom Image component from `/components/image.tsx`
+- Use `next/image` for simple route-local images and `CoreImage` for shared marketing surfaces that need fallback/analytics behavior
 - Mobile components in `/components/mobile/`
 - GPU-accelerated animations only (transform, opacity)
 
@@ -78,6 +85,8 @@ Required variables (see `.env.example`):
 ```bash
 NEXT_PUBLIC_BASE_URL=              # Canonical host
 NEXT_PUBLIC_GA_MEASUREMENT_ID=     # Optional GA override
+NEXT_PUBLIC_DASHBOARD_INTAKE_ENDPOINT= # Optional preferred /apply dashboard endpoint
+NEXT_PUBLIC_APPLY_FORM_ENDPOINT=   # Optional Formspree-compatible /apply endpoint
 NEXT_PUBLIC_ELEVENLABS_AGENT_ID=   # Optional ElevenLabs public agent override
 ```
 

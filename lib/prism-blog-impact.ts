@@ -258,7 +258,8 @@ const AI_IMPACT: PrismImpactConfig = {
       label: "Prism pricing",
       href: "/pricing",
       kind: "internal",
-      reason: "Review the canonical website overhaul and growth partnership options.",
+      reason:
+        "Review the canonical Growth Dashboard, audit, sprint, and ongoing partner path.",
     },
     {
       label: "Book a growth implementation call",
@@ -384,7 +385,8 @@ const DARK_FACTORY_OVERRIDE: PrismImpactConfig = {
       label: "Prism pricing",
       href: "/pricing",
       kind: "internal",
-      reason: "Review the canonical website overhaul and growth partnership options.",
+      reason:
+        "Review the canonical Growth Dashboard, audit, sprint, and ongoing partner path.",
     },
     {
       label: "AI and automation services",

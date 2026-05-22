@@ -99,12 +99,12 @@ const lockedRoutes = [
   {
     name: 'pricing',
     path: '/pricing',
-    readyHeading: /simple pricing for teams that want a clearer growth path\./i,
+    readyHeading: /a clearer way to invest in growth\./i,
   },
   {
     name: 'get-started',
     path: '/get-started',
-    readyHeading: /see what is holding your practice back\./i,
+    readyHeading: /create your growth dashboard\./i,
   },
 ] as const
 

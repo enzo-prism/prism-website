@@ -687,13 +687,12 @@ export default async function LocalListingsPage() {
         serviceType="Local SEO"
         areaServed="United States"
         offerDetails={{
-          name: 'Growth Partnership',
+          name: '60-Day Growth Sprint',
           description:
-            'Local presence, website, SEO, ads, and reporting managed through one partnership model.',
+            'Focused local visibility, listings, review, and reporting sprint scoped from the Prism Growth Dashboard and audit path.',
           businessFunction: 'http://purl.org/goodrelations/v1#ProvideService',
-          price: '2000',
+          price: '3500',
           priceCurrency: 'USD',
-          billingPeriod: 'P1M',
           url: 'https://www.design-prism.com/pricing',
         }}
         aggregateRating={aggregateRating}

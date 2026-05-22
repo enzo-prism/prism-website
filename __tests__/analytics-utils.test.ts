@@ -80,13 +80,13 @@ describe('analytics utilities', () => {
   it('stores and consumes pending apply lead context once', () => {
     storePendingApplyLeadContext({
       form_name: 'growth_application',
-      budget: '$1.5k to $3k',
+      budget: '$3.5k to $5k',
       timeline: 'Within 30 days',
     })
 
     expect(consumePendingApplyLeadContext()).toEqual({
       form_name: 'growth_application',
-      budget: '$1.5k to $3k',
+      budget: '$3.5k to $5k',
       timeline: 'Within 30 days',
     })
     expect(consumePendingApplyLeadContext()).toBeNull()

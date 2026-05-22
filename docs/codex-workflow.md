@@ -39,13 +39,23 @@ Default operating loop:
 | Case studies | `lib/case-study-data.ts`, `app/case-studies/*`, `components/case-studies/*` | `docs/pages-overview.md` |
 | Deploy/release | `.github/workflows/deploy.yml`, `vercel.json`, `docs/build-and-deploy-guide.md` | `docs/build-and-deploy-guide.md` |
 
+## 1.1.1 Documentation alignment checklist
+
+When the user asks to "analyze the project" or "update the project docs", do a source-of-truth pass before editing prose:
+
+1. Count current routes, route handlers, blog files, case-study detail pages, and docs files so `docs/project-overview.md` stays current.
+2. Compare global rules across `README.md`, `AGENTS.md`, and `docs/project-overview.md`; those three should agree before deeper docs add detail.
+3. Check stale policy terms with `rg`, especially retired pricing phrases, broad assistant routing, old sales-chat env vars, obsolete image-component migration advice, and calendar/demo-booking CTAs.
+4. Update existing docs in place. Do not add a new top-level doc unless the user explicitly asks for one.
+5. For docs-only changes, run the nearest cheap validation (`pnpm design:lint` if the design contract moved, focused Jest if public machine-readable files changed, or a targeted `rg` stale-term check when only prose changed).
+
 ## 1.2 ElevenLabs widget workflow
 
 When a task touches the live assistant surface, start with the current ownership map instead of searching blindly:
 
-- `lib/elevenlabs-widget.ts` – canonical live public widget config (public agent id, markdown-link host allowlist, public kill switch)
+- `lib/elevenlabs-widget.ts` – canonical live public widget config (route allowlist, public agent id, markdown-link host allowlist, public kill switch)
 - `components/elevenlabs/ElevenLabsWidget.tsx` – stock custom-element wrapper + host-style enforcement after the widget upgrades
-- `components/global-elevenlabs-widget.tsx` – floating stock widget on non-mobile public inner pages; homepage, `/ig`, `/tiktok`, and mobile viewports excluded
+- `components/global-elevenlabs-widget.tsx` – floating stock widget limited to non-mobile `/pricing` and `/contact`; every other public route and all mobile viewports excluded
 - `types/elevenlabs-widget.d.ts` – JSX typing for `<elevenlabs-convai>`
 - `lib/elevenlabs.ts` – legacy deterministic/backend-era helpers; not the primary place for live stock-widget config anymore
 
@@ -53,7 +63,7 @@ Rules that will save you time:
 
 - Treat the stock widget as an opinionated vendor surface. Prefer documented attributes and host-level wrapper styles only.
 - Do not style the widget Shadow DOM unless there is no other path and the product decision is explicit.
-- Public-page invariant: when mounted, the floating widget host must stay above the site chrome in the visible widget region.
+- Public-page invariant: when mounted on `/pricing` or `/contact`, the floating widget host must stay above the site chrome in the visible widget region.
 - Mobile invariant: mobile viewports must not mount the floating widget or load the ElevenLabs embed script.
 - Default-state invariant: without a saved preference, the launcher should mount collapsed.
 - The stock widget is not a documented full-screen page-blocking modal scrim. If product wants that, push toward ElevenLabs' official SDK/UI layer instead of stretching the stock embed.

@@ -111,7 +111,7 @@ describe('Vercel analytics URL normalization', () => {
   it('builds compact apply-submit events for the Vercel dashboard', () => {
     expect(
       buildVercelCustomEvent('apply_submit', {
-        budget: '$1.5k to $3k',
+        budget: '$3.5k to $5k',
         timeline: 'Within 30 days',
         service_count: 2,
         noisy: 'ignore',
@@ -119,7 +119,7 @@ describe('Vercel analytics URL normalization', () => {
     ).toEqual({
       name: 'Apply Submitted',
       properties: {
-        budget: '$1.5k to $3k',
+        budget: '$3.5k to $5k',
         timeline: 'Within 30 days',
         service_count: 2,
       },
@@ -129,7 +129,7 @@ describe('Vercel analytics URL normalization', () => {
   it('builds compact apply-submit attempt and success events for the Vercel dashboard', () => {
     expect(
       buildVercelCustomEvent('apply_submit_attempt', {
-        budget: '$1.5k to $3k',
+        budget: '$3.5k to $5k',
         timeline: 'Within 30 days',
         service_count: 2,
         elapsed_seconds: 44,
@@ -138,7 +138,7 @@ describe('Vercel analytics URL normalization', () => {
     ).toEqual({
       name: 'Apply Submit Attempted',
       properties: {
-        budget: '$1.5k to $3k',
+        budget: '$3.5k to $5k',
         timeline: 'Within 30 days',
         service_count: 2,
       },
@@ -146,7 +146,7 @@ describe('Vercel analytics URL normalization', () => {
 
     expect(
       buildVercelCustomEvent('apply_submit_success', {
-        budget: '$1.5k to $3k',
+        budget: '$3.5k to $5k',
         timeline: 'Within 30 days',
         service_count: 2,
         noisy: 'ignore',
@@ -154,7 +154,7 @@ describe('Vercel analytics URL normalization', () => {
     ).toEqual({
       name: 'Apply Submit Succeeded',
       properties: {
-        budget: '$1.5k to $3k',
+        budget: '$3.5k to $5k',
         timeline: 'Within 30 days',
         service_count: 2,
       },
@@ -252,7 +252,7 @@ describe('Vercel analytics URL normalization', () => {
         form_location: 'apply_page',
         lead_type: 'growth_application',
         lead_source: 'google',
-        budget: '$3k to $5k',
+        budget: '$5k to $7.5k',
         service_count: 2,
         noisy: 'ignore',
       }),
@@ -263,7 +263,7 @@ describe('Vercel analytics URL normalization', () => {
         form_location: 'apply_page',
         lead_type: 'growth_application',
         lead_source: 'google',
-        budget: '$3k to $5k',
+        budget: '$5k to $7.5k',
         service_count: 2,
       },
     })

@@ -58,7 +58,8 @@ Production is intentionally single-path: GitHub Actions runs the release gates a
 ## Deployment checklist
 
 - Pricing sign-off:
-  - `/pricing` shows only `$1,000 one-time`, `$2,000/month`, and `$0` audit
+  - `/pricing` leads with Create Free Growth Dashboard and shows the current audit, sprint, and ongoing partner path
+  - retired fixed-plan language such as `Website Overhaul` and exact `$2,000/month` Growth Partnership does not reappear on pricing-sensitive surfaces
   - legacy pricing routes resolve to `/pricing`
 - SEO sign-off when route intent/canonicals changed:
   - `pnpm exec jest __tests__/sitemap.test.ts __tests__/seo-indexability-guards.test.tsx --runInBand`

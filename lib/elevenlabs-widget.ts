@@ -6,12 +6,13 @@ const DEFAULT_MARKDOWN_LINK_ALLOWED_HOSTS = [
   'design-prism.com',
 ] as const
 const ENABLED_ENV_VALUES = new Set(['1', 'true', 'yes', 'on'])
-const PUBLIC_ELEVENLABS_WIDGET_EXCLUDED_PATHS = new Set([
-  '/',
-  '/apply',
-  '/ig',
-  '/tiktok',
-])
+export const PUBLIC_ELEVENLABS_WIDGET_ALLOWED_PATHS = [
+  '/pricing',
+  '/contact',
+] as const
+const PUBLIC_ELEVENLABS_WIDGET_ALLOWED_PATH_SET = new Set<string>(
+  PUBLIC_ELEVENLABS_WIDGET_ALLOWED_PATHS,
+)
 export const PUBLIC_ELEVENLABS_WIDGET_MOBILE_MAX_WIDTH_PX = 767
 export const PUBLIC_ELEVENLABS_WIDGET_MOBILE_MEDIA_QUERY = `(max-width: ${PUBLIC_ELEVENLABS_WIDGET_MOBILE_MAX_WIDTH_PX}px)`
 
@@ -30,6 +31,38 @@ function normalizeAllowedHosts(value: string): string[] {
 
 function isTruthyEnvValue(value: string | undefined): boolean {
   return value ? ENABLED_ENV_VALUES.has(value.trim().toLowerCase()) : false
+}
+
+function normalizePublicWidgetPathname(
+  pathname: string | null | undefined,
+): string | null {
+  if (!pathname) {
+    return null
+  }
+
+  let nextPathname = pathname.trim()
+
+  if (!nextPathname) {
+    return null
+  }
+
+  if (/^https?:\/\//i.test(nextPathname)) {
+    try {
+      nextPathname = new URL(nextPathname).pathname
+    } catch {
+      return null
+    }
+  }
+
+  nextPathname = nextPathname.split('#')[0]?.split('?')[0] ?? ''
+
+  if (!nextPathname.startsWith('/')) {
+    return null
+  }
+
+  return nextPathname.length > 1
+    ? nextPathname.replace(/\/+$/, '')
+    : nextPathname
 }
 
 export function getPublicElevenLabsAgentId(
@@ -83,9 +116,11 @@ export function isPublicElevenLabsWidgetEnabled(
 export function shouldRenderPublicElevenLabsWidget(
   pathname: string | null | undefined,
 ): boolean {
-  if (!pathname) {
+  const normalizedPathname = normalizePublicWidgetPathname(pathname)
+
+  if (!normalizedPathname) {
     return false
   }
 
-  return !PUBLIC_ELEVENLABS_WIDGET_EXCLUDED_PATHS.has(pathname)
+  return PUBLIC_ELEVENLABS_WIDGET_ALLOWED_PATH_SET.has(normalizedPathname)
 }

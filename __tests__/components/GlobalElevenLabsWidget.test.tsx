@@ -90,21 +90,24 @@ describe('GlobalElevenLabsWidget', () => {
     process.env.NEXT_PUBLIC_ELEVENLABS_WIDGET_DISABLED = originalWidgetDisabled
   })
 
-  it('renders the floating widget closed by default on inner pages', async () => {
-    usePathname.mockReturnValue('/about')
+  it.each(['/pricing', '/contact'])(
+    'renders the floating widget closed by default on %s',
+    async (eligiblePath) => {
+      usePathname.mockReturnValue(eligiblePath)
 
-    render(<GlobalElevenLabsWidget />)
+      render(<GlobalElevenLabsWidget />)
 
-    await waitFor(() => {
-      expect(elevenLabsWidgetMock).toHaveBeenCalled()
-    })
+      await waitFor(() => {
+        expect(elevenLabsWidgetMock).toHaveBeenCalled()
+      })
 
-    expect(getLastWidgetProps().defaultExpanded).toBe(false)
-  })
+      expect(getLastWidgetProps().defaultExpanded).toBe(false)
+    },
+  )
 
   it('does not mount the floating widget on mobile viewports', async () => {
     mockWidgetViewport(true)
-    usePathname.mockReturnValue('/about')
+    usePathname.mockReturnValue('/pricing')
 
     render(<GlobalElevenLabsWidget />)
 
@@ -115,44 +118,17 @@ describe('GlobalElevenLabsWidget', () => {
     expect(elevenLabsWidgetMock).not.toHaveBeenCalled()
   })
 
-  it('does not mount the floating widget on the homepage', async () => {
-    usePathname.mockReturnValue('/')
-
-    render(<GlobalElevenLabsWidget />)
-
-    await waitFor(() => {
-      expect(publishPrismWidgetExpandedState).toHaveBeenCalledWith(false)
-    })
-
-    expect(elevenLabsWidgetMock).not.toHaveBeenCalled()
-  })
-
-  it('does not mount the floating widget inside the application form', async () => {
-    usePathname.mockReturnValue('/apply')
-
-    render(<GlobalElevenLabsWidget />)
-
-    await waitFor(() => {
-      expect(publishPrismWidgetExpandedState).toHaveBeenCalledWith(false)
-    })
-
-    expect(elevenLabsWidgetMock).not.toHaveBeenCalled()
-  })
-
-  it('does not mount the floating widget on the Instagram shortcut page', async () => {
-    usePathname.mockReturnValue('/ig')
-
-    render(<GlobalElevenLabsWidget />)
-
-    await waitFor(() => {
-      expect(publishPrismWidgetExpandedState).toHaveBeenCalledWith(false)
-    })
-
-    expect(elevenLabsWidgetMock).not.toHaveBeenCalled()
-  })
-
-  it('does not mount the floating widget on the TikTok shortcut page', async () => {
-    usePathname.mockReturnValue('/tiktok')
+  it.each([
+    '/',
+    '/about',
+    '/get-started',
+    '/services',
+    '/blog/how-to-choose-local-seo-agency',
+    '/apply',
+    '/ig',
+    '/tiktok',
+  ])('does not mount the floating widget on %s', async (blockedPath) => {
+    usePathname.mockReturnValue(blockedPath)
 
     render(<GlobalElevenLabsWidget />)
 
@@ -168,7 +144,7 @@ describe('GlobalElevenLabsWidget', () => {
       'prism-elevenlabs-widget-preference',
       'expanded',
     )
-    usePathname.mockReturnValue('/about')
+    usePathname.mockReturnValue('/pricing')
 
     render(<GlobalElevenLabsWidget />)
 
@@ -180,7 +156,7 @@ describe('GlobalElevenLabsWidget', () => {
   })
 
   it('persists explicit expand and collapse choices while syncing Prism chrome state', async () => {
-    usePathname.mockReturnValue('/about')
+    usePathname.mockReturnValue('/pricing')
 
     render(<GlobalElevenLabsWidget />)
 
@@ -210,7 +186,7 @@ describe('GlobalElevenLabsWidget', () => {
   })
 
   it('does not turn automatic defaults into sticky preferences without user interaction', async () => {
-    usePathname.mockReturnValue('/about')
+    usePathname.mockReturnValue('/pricing')
 
     render(<GlobalElevenLabsWidget />)
 
@@ -230,7 +206,7 @@ describe('GlobalElevenLabsWidget', () => {
 
   it('honors the explicit public widget kill switch', () => {
     process.env.NEXT_PUBLIC_ELEVENLABS_WIDGET_DISABLED = 'true'
-    usePathname.mockReturnValue('/about')
+    usePathname.mockReturnValue('/pricing')
 
     render(<GlobalElevenLabsWidget />)
 
