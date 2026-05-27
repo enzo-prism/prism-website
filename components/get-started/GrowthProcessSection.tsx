@@ -12,21 +12,24 @@ type GrowthProcessStep = {
   icon: string
 }
 
+// Shared Lordicon palette: white primary with a soft Prism-green secondary.
+const ICON_COLORS = 'primary:#ffffff,secondary:#9cf4a7'
+
 export const GROWTH_PROCESS_STEPS: GrowthProcessStep[] = [
   {
     stage: '01',
     label: 'Create dashboard',
-    icon: 'https://cdn.lordicon.com/gyvwavwk.json',
+    icon: 'https://cdn.lordicon.com/esmahubl.json',
   },
   {
     stage: '02',
     label: 'Get Light Audit',
-    icon: 'https://cdn.lordicon.com/nvsrnluo.json',
+    icon: 'https://cdn.lordicon.com/sufmcece.json',
   },
   {
     stage: '03',
     label: 'Clear next step',
-    icon: 'https://cdn.lordicon.com/sjutzequ.json',
+    icon: 'https://cdn.lordicon.com/xvvptxob.json',
   },
 ]
 
@@ -48,7 +51,7 @@ export default function GrowthProcessSection() {
           {GROWTH_PROCESS_STEPS.map((step) => (
             <li key={step.stage} className="flex flex-col items-center gap-5">
               <div className="h-[clamp(150px,22vw,210px)] w-[clamp(150px,22vw,210px)]">
-                <LordIcon src={step.icon} />
+                <LordIcon src={step.icon} colors={ICON_COLORS} />
               </div>
               <div className="flex flex-col items-center gap-2">
                 <span className="font-mono text-[0.78rem] uppercase tracking-[0.3em] text-[#6E6E68]">
