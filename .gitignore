@@ -31,6 +31,7 @@ test-results/
 
 # Local agent/browser scratch artifacts
 /.claude/
+/.codex/
 /.codex-artifacts/
 /.playwright-mcp/
 tmp-*.png
