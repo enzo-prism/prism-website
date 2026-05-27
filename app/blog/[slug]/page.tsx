@@ -127,7 +127,19 @@ export async function generateMetadata({
       description: seoDescription,
       images: twitterImages,
     },
-    alternates: { canonical },
+    alternates: {
+      canonical,
+      // Advertise the clean, LLM-readable markdown source so AI answer engines
+      // can ingest the post text without parsing the full HTML page.
+      types: {
+        "text/markdown": [
+          {
+            url: `${base}/api/blog/${slug}/markdown`,
+            title: `${frontmatter.title} (Markdown)`,
+          },
+        ],
+      },
+    },
     robots:
       frontmatter.searchVisibility === "noindex"
         ? { index: false, follow: true }

@@ -65,9 +65,13 @@ export function CaseStudySchema({
   const webpageId = `${url}#webpage`
   const videoId = video ? `${url}#video` : undefined
 
+  // "CaseStudy" is not a valid schema.org type, so search engines and AI parsers
+  // discard it. Model the case study as an Article (a recognized CreativeWork)
+  // with the client as `about` and the result captured in `abstract`.
   schema.push({
     "@context": "https://schema.org",
-    "@type": "CaseStudy",
+    "@type": "Article",
+    headline: title,
     name: title,
     description,
     url,
@@ -75,10 +79,12 @@ export function CaseStudySchema({
     image: imageUrl,
     datePublished,
     dateModified,
-    about: clientName,
-    provider: organizationId ? { "@id": organizationId } : undefined,
+    articleSection: "Case study",
+    about: clientName ? { "@type": "Organization", name: clientName } : undefined,
+    author: organizationId ? { "@id": organizationId } : undefined,
+    publisher: organizationId ? { "@id": organizationId } : undefined,
     subjectOf: videoId ? { "@id": videoId } : undefined,
-    outcome,
+    abstract: outcome,
   })
 
   schema.push({

@@ -8,11 +8,12 @@ import {
   cleanTrimmedTitle,
   normalizeDescription,
   normalizeTitleStem,
+  simplifyTitleStem,
 } from "@/lib/seo/rules"
 
 describe("SEO metadata rules", () => {
   it("normalizes title stems by removing trailing brand suffix variants", () => {
-    expect(normalizeTitleStem("seo audit service | prism | prism")).toBe("SEO audit")
+    expect(normalizeTitleStem("seo audit service | prism | prism")).toBe("SEO audit service")
     expect(normalizeTitleStem("local listings - Design Prism")).toBe("Local listings")
   })
 
@@ -22,15 +23,39 @@ describe("SEO metadata rules", () => {
   })
 
   it("preserves useful brand descriptors and common SEO acronyms", () => {
-    expect(normalizeTitleStem("ai seo services | prism")).toBe("AI SEO")
+    expect(normalizeTitleStem("ai seo services | prism")).toBe("AI SEO services")
     expect(normalizeTitleStem("wine country root canal | prism case study")).toBe(
       "Wine country root canal | Case Study",
     )
   })
 
-  it("simplifies common title filler before truncation", () => {
-    expect(normalizeTitleStem("paid ads management for small businesses | prism")).toBe("Ads")
-    expect(normalizeTitleStem("local seo agency | prism")).toBe("SEO")
+  it("keeps keyword-rich qualifiers in title stems instead of stripping them", () => {
+    expect(normalizeTitleStem("paid ads management for small businesses | prism")).toBe(
+      "Paid ads management for small businesses",
+    )
+    expect(normalizeTitleStem("local seo agency | prism")).toBe("Local SEO agency")
+  })
+
+  it("simplifies aggressively only via simplifyTitleStem (the overflow fallback)", () => {
+    expect(simplifyTitleStem("paid ads management for small businesses | prism")).toBe("Ads")
+    expect(simplifyTitleStem("local seo agency | prism")).toBe("SEO")
+  })
+
+  it("preserves keyword-rich titles that fit within the SERP budget", () => {
+    expect(buildAbsoluteTitle("Paid Ads Management for Small Businesses")).toBe(
+      "Paid Ads Management for Small Businesses | Prism",
+    )
+    expect(buildAbsoluteTitle("Local Listing Optimization for Small Businesses")).toBe(
+      "Local Listing Optimization for Small Businesses | Prism",
+    )
+  })
+
+  it("falls back to a simplified, trimmed stem when a title overflows the budget", () => {
+    const title = buildAbsoluteTitle(
+      "Comprehensive Local SEO Services and Google Maps Optimization for Multi-Location Dental Practices",
+    )
+    expect(title.endsWith(BRAND_SUFFIX)).toBe(true)
+    expect(title.length).toBeLessThanOrEqual(TITLE_MAX_LENGTH)
   })
 
   it("builds absolute titles with exactly one Prism suffix", () => {
@@ -65,13 +90,19 @@ describe("SEO metadata rules", () => {
     ).toBe("Prism builds Google Maps SEO with AI and GA4 reporting.")
   })
 
-  it("builds minimal descriptions from the route title when requested", () => {
+  it("uses the authored prose description when one is supplied", () => {
     expect(
       buildMinimalDescription(
         "website design, content, seo + ads",
         "Done-for-you website design, content systems, SEO, and paid ads for local brands.",
       ),
-    ).toBe("Websites, content, SEO + ads.")
+    ).toBe("Done-for-you website design, content systems, SEO, and paid ads for local brands.")
+  })
+
+  it("synthesizes a description from the title only when no prose is provided", () => {
+    expect(buildMinimalDescription("Local SEO services + strategy")).toBe(
+      "Local SEO services + strategy.",
+    )
   })
 })
 
@@ -91,7 +122,7 @@ describe("buildRouteMetadata", () => {
       : []
 
     expect(metadata.title).toEqual({ absolute: "Pricing | Prism" })
-    expect(metadata.description).toBe("Pricing.")
+    expect(metadata.description).toBe("Simple pricing for local growth teams.")
     expect(metadata.alternates?.canonical).toBe("https://www.design-prism.com/pricing")
     expect(ogImages[0]).toMatchObject({ url: "/pricing-og.png" })
     expect(metadata.twitter?.images).toEqual(["/pricing-og.png"])

@@ -2,9 +2,13 @@ export const BRAND_NAME = "Prism"
 export const BRAND_SUFFIX = " | Prism"
 
 export const TITLE_MIN_LENGTH = 10
-export const TITLE_MAX_LENGTH = 40
+// Google renders ~60 chars of a title before truncating. Keep the keyword-rich
+// stem within budget while still leaving room for the " | Prism" suffix.
+export const TITLE_MAX_LENGTH = 60
 export const DESCRIPTION_MIN_LENGTH = 24
-export const DESCRIPTION_MAX_LENGTH = 80
+// Google renders ~155-160 chars of a meta description. Use the full window so
+// authored copy carries real keywords and value props for search + AI engines.
+export const DESCRIPTION_MAX_LENGTH = 160
 
 export const DEFAULT_OG_IMAGE = "/prism-opengraph.png"
 
@@ -248,7 +252,21 @@ export function stripLeadingBrand(input: string): string {
   return `${label}: ${rest}`
 }
 
+// Normalize a title stem while PRESERVING keyword-rich phrasing (qualifiers like
+// "for dentists", "local", "management"). Aggressive simplification is reserved
+// for the overflow fallback in buildAbsoluteTitle so we only drop keywords when
+// a title genuinely exceeds the SERP budget.
 export function normalizeTitleStem(input: string): string {
+  const withoutBrand = stripTerminalBrand(stripLeadingBrand(input))
+  const cased = capitalizeLeadingLetter(
+    normalizeCommonSeoTerms(sentenceCaseIfNeeded(withoutBrand)),
+  )
+  return cased || BRAND_NAME
+}
+
+// Collapse a stem to its most minimal keyword form. Used only when the full
+// keyword-rich stem is too long to fit within TITLE_MAX_LENGTH.
+export function simplifyTitleStem(input: string): string {
   const withoutBrand = stripTerminalBrand(stripLeadingBrand(input))
   const cased = capitalizeLeadingLetter(
     simplifyMinimalTitle(
@@ -259,9 +277,18 @@ export function normalizeTitleStem(input: string): string {
 }
 
 export function buildAbsoluteTitle(stem: string): string {
-  const normalizedStem = normalizeTitleStem(stem)
   const maxStemLength = TITLE_MAX_LENGTH - BRAND_SUFFIX.length
-  const trimmedStem = cleanTrimmedTitle(trimToWordBoundary(normalizedStem, maxStemLength))
+
+  // Prefer the full keyword-rich stem whenever it fits the SERP budget.
+  const fullStem = cleanTrimmedTitle(normalizeTitleStem(stem))
+  if (fullStem && fullStem !== BRAND_NAME && fullStem.length <= maxStemLength) {
+    return `${fullStem}${BRAND_SUFFIX}`
+  }
+
+  // Too long: fall back to the simplified stem, then hard-trim to the budget.
+  const simplified = cleanTrimmedTitle(simplifyTitleStem(stem))
+  const candidate = simplified && simplified.length <= maxStemLength ? simplified : fullStem || simplified
+  const trimmedStem = cleanTrimmedTitle(trimToWordBoundary(candidate, maxStemLength))
   return `${trimmedStem || BRAND_NAME}${BRAND_SUFFIX}`
 }
 
@@ -286,30 +313,35 @@ export function normalizeDescription(input: string): string {
   return cleanTrimmedDescription(trimToWordBoundary(collapsed, DESCRIPTION_MAX_LENGTH))
 }
 
+function ensureSentenceEnd(value: string): string {
+  if (!value) return `${BRAND_NAME}.`
+  return /[.!?]$/.test(value) ? value : `${value}.`
+}
+
+// Build a meta description for a route. Prefers the authored, keyword-rich prose
+// description (normalized + trimmed to the SERP window) and only synthesizes a
+// short description from the title stem when no usable prose is supplied.
 export function buildMinimalDescription(
-  primary: string,
-  fallback?: string,
+  titleStem: string,
+  description?: string,
 ): string {
-  const source = primary.trim().length > 0 ? primary : fallback ?? BRAND_NAME
-  const normalizedSource = normalizeTitleStem(source)
-  let output = cleanTrimmedDescription(
-    trimToWordBoundary(normalizedSource, DESCRIPTION_MAX_LENGTH - 1),
+  const prose = (description ?? "").trim()
+  if (prose.length >= DESCRIPTION_MIN_LENGTH) {
+    const normalized = normalizeDescription(prose)
+    if (normalized) return ensureSentenceEnd(normalized)
+  }
+
+  // Fallback: derive a concise description from the (keyword-preserving) title.
+  const stem = normalizeTitleStem(titleStem.trim().length > 0 ? titleStem : BRAND_NAME)
+  const fromStem = cleanTrimmedDescription(
+    trimToWordBoundary(stem, DESCRIPTION_MAX_LENGTH - 1),
   )
+  if (fromStem && fromStem !== BRAND_NAME) return ensureSentenceEnd(fromStem)
 
-  if (!output) {
-    output = cleanTrimmedDescription(
-      trimToWordBoundary(
-        normalizeDescription(fallback ?? BRAND_NAME),
-        DESCRIPTION_MAX_LENGTH - 1,
-      ),
-    )
-  }
+  // Last resort: use whatever prose we have, even if short.
+  if (prose) return ensureSentenceEnd(normalizeDescription(prose))
 
-  if (!output) {
-    return `${BRAND_NAME}.`
-  }
-
-  return /[.!?]$/.test(output) ? output : `${output}.`
+  return `${BRAND_NAME}.`
 }
 
 export function requiresManualBlogSeo(slug: string, title: string): boolean {

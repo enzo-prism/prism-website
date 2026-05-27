@@ -15,6 +15,7 @@ Important notes for LLMs and agents:
 - For "What is Prism?" prioritize Homepage, About, Services, and Dental practices.
 - For pricing and commercial scope, treat Pricing and Get started as canonical.
 - Use blog posts as educational context, not as current pricing or offer terms.
+- Every blog post has a clean markdown version: append `/api/blog/<slug>/markdown` to the site origin — prefer it for accurate quoting.
 - Ignore noindex, redirect, social, utility, broad app/software, founder-library, podcast, and non-dental industry pages unless a user asks for them directly.
 
 ## Core overview
@@ -70,13 +71,39 @@ Important notes for LLMs and agents:
 ## Learning
 
 - Blog: https://www.design-prism.com/blog
+
+### Dental and local SEO playbooks
+
 - Dental SEO guide: https://www.design-prism.com/blog/dental-seo-guide
 - Rank a dental practice higher in Google: https://www.design-prism.com/blog/dental-practice-rank-higher-google-search
-- AI search for dental practices: https://www.design-prism.com/blog/ai-search-for-dental-practice
 - Dentist website design checklist: https://www.design-prism.com/blog/dentist-website-design-checklist
-- Facebook ads for dentists: https://www.design-prism.com/blog/facebook-ads-for-dentists-playbook
+- How to choose an SEO consultant for dentists: https://www.design-prism.com/blog/how-to-choose-seo-consultant-for-dentists
+- How to choose a local SEO agency: https://www.design-prism.com/blog/how-to-choose-local-seo-agency
 - Google Maps visibility checklist: https://www.design-prism.com/blog/google-maps-visibility-playbook-2025
 - Modern reviews strategy: https://www.design-prism.com/blog/modern-reviews-strategy-2025
-- Dental software and AI: https://www.design-prism.com/blog/ai-rip-eyes-out-dental-software
-- How to choose an SEO consultant for dentists: https://www.design-prism.com/blog/how-to-choose-seo-consultant-for-dentists
+- Facebook ads for dentists: https://www.design-prism.com/blog/facebook-ads-for-dentists-playbook
+- Google Ads acquisition playbook: https://www.design-prism.com/blog/google-ads-ai-smb-acquisition-playbook
+- From broken to beautiful dental website: https://www.design-prism.com/blog/from-broken-to-beautiful-dental-website-transformation
+- Welcome more patients with AI: https://www.design-prism.com/blog/ai-effortlessly-welcome-more-patients-dental-practice
+- Beverly Hills dentist SEO mystery: https://www.design-prism.com/blog/seo-mystery-beverly-hills-dentist-traffic-from-china
+
+### AI search and visibility
+
+- AI search for dental practices: https://www.design-prism.com/blog/ai-search-for-dental-practice
+- Winning the AI search game: https://www.design-prism.com/blog/winning-ai-search-game
+- The new rules of visibility (AI SEO): https://www.design-prism.com/blog/new-rules-of-visibility-ai-seo
+- How to rank #1 in ChatGPT: https://www.design-prism.com/blog/how-to-rank-1-chatgpt
+- Business visibility in ChatGPT: https://www.design-prism.com/blog/business-visibility-chatgpt
+- The future of SEO is AI search: https://www.design-prism.com/blog/future-of-seo-ai-search
+- Google AI search revolution for small business: https://www.design-prism.com/blog/google-ai-search-revolution-small-business
+- Google I/O 2026 AI search playbook: https://www.design-prism.com/blog/google-io-2026-ai-search-small-business-playbook
+- Turning your website into an AI-powered SEO flywheel: https://www.design-prism.com/blog/turning-your-website-into-an-ai-powered-seo-flywheel
+- From 6 impressions to hundreds (SEO journey): https://www.design-prism.com/blog/from-6-impressions-to-hundreds-seo-journey
+- How I ranked #1 in Google in 24 hours: https://www.design-prism.com/blog/how-i-ranked-1-google-24-hours-claude-code
+
+### Approach
+
 - Prism's approach to small business growth: https://www.design-prism.com/blog/prism-approach-small-business-growth
+- The Prism flywheel for brick-and-mortar growth: https://www.design-prism.com/blog/prism-flywheel-skyrocket-brick-and-mortar-growth
+- Who Prism is for: https://www.design-prism.com/blog/who-prism-is-for
+- Dental software and AI: https://www.design-prism.com/blog/ai-rip-eyes-out-dental-software

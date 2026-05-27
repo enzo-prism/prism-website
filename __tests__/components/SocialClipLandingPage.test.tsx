@@ -77,7 +77,7 @@ describe('SocialClipLandingPage analytics', () => {
     jest.clearAllMocks()
   })
 
-  it('renders one prominent blog action and tracks it by channel', () => {
+  it('renders one prominent YouTube action and tracks it by channel', () => {
     render(
       <SocialClipLandingPage
         channel={{
@@ -98,7 +98,7 @@ describe('SocialClipLandingPage analytics', () => {
         /The frameworks, tools, and tactics used by top founders are out there/i,
       ),
     ).toBeInTheDocument()
-    expect(screen.getByText(/start with the prism blog/i)).toBeInTheDocument()
+    expect(screen.getByText(/watch prism on youtube/i)).toBeInTheDocument()
     expect(
       screen.queryByText(/steal the AI playbooks/i),
     ).not.toBeInTheDocument()
@@ -108,23 +108,27 @@ describe('SocialClipLandingPage analytics', () => {
       ),
     ).toHaveAttribute('data-src', '/prism-logo.jpeg')
 
-    const blogActions = screen.getAllByRole('link', {
-      name: /start with the blog/i,
+    const youtubeActions = screen.getAllByRole('link', {
+      name: /watch on youtube/i,
     })
-    const blogIcon = within(blogActions[0]).getByTestId('pixelish-icon')
+    const youtubeIcon = within(youtubeActions[0]).getByTestId('pixelish-icon')
 
-    expect(blogActions).toHaveLength(1)
-    expect(blogActions[0]).toHaveAttribute('href', '/blog')
-    expect(blogActions[0]).toHaveAttribute(
-      'data-cta-text',
-      'start with the blog',
+    expect(youtubeActions).toHaveLength(1)
+    expect(youtubeActions[0]).toHaveAttribute(
+      'href',
+      'https://www.youtube.com/@the_design_prism',
     )
-    expect(blogActions[0]).toHaveAttribute(
+    expect(youtubeActions[0]).toHaveAttribute('target', '_blank')
+    expect(youtubeActions[0]).toHaveAttribute(
+      'data-cta-text',
+      'watch on youtube',
+    )
+    expect(youtubeActions[0]).toHaveAttribute(
       'data-cta-location',
       'tiktok landing actions',
     )
-    expect(blogIcon).toHaveAttribute('data-invert', 'false')
-    expect(blogIcon).toHaveClass('group-hover:invert')
+    expect(youtubeIcon).toHaveAttribute('data-invert', 'false')
+    expect(youtubeIcon).toHaveClass('group-hover:invert')
     expect(
       screen.queryByRole('link', { name: /free audit/i }),
     ).not.toBeInTheDocument()
@@ -135,10 +139,13 @@ describe('SocialClipLandingPage analytics', () => {
       screen.queryByRole('link', { name: /^tiktok$/i }),
     ).not.toBeInTheDocument()
 
-    fireEvent.click(blogActions[0])
+    fireEvent.click(youtubeActions[0])
 
     expect(trackCTAClick).not.toHaveBeenCalled()
-    expect(trackExternalLinkClick).not.toHaveBeenCalled()
+    expect(trackExternalLinkClick).toHaveBeenCalledWith(
+      'https://www.youtube.com/@the_design_prism',
+      'watch on youtube',
+    )
   })
 
   it('keeps the channel handle as a tracked outbound profile link', () => {

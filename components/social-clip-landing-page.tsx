@@ -275,18 +275,23 @@ function CreditSection({ section }: { section: CreditSection }) {
   )
 }
 
-function BlogCta({ location }: { location: string }) {
-  const label = 'start with the blog'
+const YOUTUBE_CHANNEL_URL = 'https://www.youtube.com/@the_design_prism'
+
+function YouTubeCta({ location }: { location: string }) {
+  const label = 'watch on youtube'
 
   return (
     <Link
-      href="/blog"
+      href={YOUTUBE_CHANNEL_URL}
+      target="_blank"
+      rel="noopener noreferrer"
+      onClick={() => trackExternalLinkClick(YOUTUBE_CHANNEL_URL, label)}
       data-cta-text={label}
       data-cta-location={location}
       className="group inline-flex min-h-14 items-center gap-4 border border-foreground bg-foreground px-5 font-mono text-[11px] uppercase tracking-normal text-background transition-colors hover:bg-transparent hover:text-foreground focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-4 focus-visible:ring-offset-background"
     >
       <PixelishIcon
-        src="/pixelish/document-letter.svg"
+        src="/pixelish/socials-youtube.svg"
         alt=""
         size={16}
         aria-hidden="true"
@@ -334,7 +339,7 @@ export default function SocialClipLandingPage({
   headerLabel = 'Prism',
   title = 'Why Not You',
   description = 'The frameworks, tools, and tactics used by top founders are out there. AI can help you put them to work. Decide to go for it.',
-  metaLine = 'start with the prism blog. learn the tools. build before you scale.',
+  metaLine = 'watch prism on youtube. learn the tools. build before you scale.',
 }: SocialClipLandingPageProps) {
   const visibleCreditSections = creditSections.map((section) =>
     hiddenSectionDetailIds.includes(section.id)
@@ -392,7 +397,7 @@ export default function SocialClipLandingPage({
               {metaLine}
             </p>
             <nav aria-label={`${channel.label} page actions`} className="mt-8">
-              <BlogCta
+              <YouTubeCta
                 location={`${channel.label.toLowerCase()} landing actions`}
               />
             </nav>
