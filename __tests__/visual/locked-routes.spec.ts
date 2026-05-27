@@ -104,7 +104,11 @@ const lockedRoutes = [
   {
     name: 'get-started',
     path: '/get-started',
-    readyHeading: /create your growth dashboard\./i,
+    readyHeading: /three steps to your free light audit\./i,
+    // The hero step icons are looping Lordicon (lottie) animations, so their
+    // rendered frame is non-deterministic. Mask them to keep the locked layout
+    // snapshot stable while still locking the surrounding hero structure.
+    mask: ['lord-icon'],
   },
 ] as const
 
@@ -126,8 +130,14 @@ for (const route of lockedRoutes) {
     await expectLockedRouteSnapshotSurface(page)
     await page.waitForTimeout(750)
 
+    const mask =
+      'mask' in route && route.mask
+        ? route.mask.map((selector) => page.locator(selector))
+        : undefined
+
     await expect(page).toHaveScreenshot(`${route.name}.png`, {
       timeout: 15_000,
+      ...(mask ? { mask } : {}),
     })
   })
 }

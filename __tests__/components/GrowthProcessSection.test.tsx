@@ -1,6 +1,8 @@
 import { fireEvent, render, screen } from '@testing-library/react'
 
-import GrowthProcessSection from '@/components/get-started/GrowthProcessSection'
+import GrowthProcessSection, {
+  GROWTH_PROCESS_STEPS,
+} from '@/components/get-started/GrowthProcessSection'
 
 const trackLinkInteraction = jest.fn()
 
@@ -28,65 +30,58 @@ jest.mock('next/link', () => ({
   },
 }))
 
+jest.mock('next/script', () => ({
+  __esModule: true,
+  default: function MockScript() {
+    return null
+  },
+}))
+
 describe('GrowthProcessSection', () => {
   beforeEach(() => {
     jest.clearAllMocks()
   })
 
-  it('links the submit-practice card to the first apply form step', () => {
-    render(<GrowthProcessSection />)
+  it('renders a single hero heading and three animated, minimally labeled steps', () => {
+    const { container } = render(<GrowthProcessSection />)
 
-    const submitCardLink = screen.getByRole('link', {
-      name: /create the free growth dashboard/i,
+    expect(
+      screen.getByRole('heading', {
+        level: 1,
+        name: /three steps to your free light audit/i,
+      }),
+    ).toBeInTheDocument()
+
+    const icons = container.querySelectorAll('lord-icon')
+    expect(icons).toHaveLength(3)
+    expect(Array.from(icons).map((icon) => icon.getAttribute('src'))).toEqual(
+      GROWTH_PROCESS_STEPS.map((step) => step.icon),
+    )
+    icons.forEach((icon) => {
+      expect(icon).toHaveAttribute('trigger', 'loop')
     })
 
-    expect(submitCardLink).toHaveAttribute('href', '/apply')
-    expect(
-      screen
-        .getByRole('heading', { level: 2, name: /create growth dashboard/i })
-        .closest('a'),
-    ).toBe(submitCardLink)
-    expect(
-      screen
-        .getByRole('heading', {
-          level: 2,
-          name: /receive light audit/i,
-        })
-        .closest('a'),
-    ).toBeNull()
-    expect(
-      screen
-        .getByRole('heading', { level: 2, name: /choose the clear next step/i })
-        .closest('a'),
-    ).toBeNull()
+    for (const step of GROWTH_PROCESS_STEPS) {
+      expect(screen.getByText(step.label)).toBeInTheDocument()
+      expect(screen.getByText(step.stage)).toBeInTheDocument()
+    }
+  })
 
-    fireEvent.click(submitCardLink)
+  it('drives the single primary CTA to the apply form with tracking', () => {
+    render(<GrowthProcessSection />)
+
+    const cta = screen.getByRole('link', {
+      name: /create free growth dashboard/i,
+    })
+
+    expect(cta).toHaveAttribute('href', '/apply')
+
+    fireEvent.click(cta)
 
     expect(trackLinkInteraction).toHaveBeenCalledWith(
       '/apply',
-      'create free growth dashboard from process card',
-      'get started process card',
+      'create free growth dashboard',
+      'get started hero',
     )
-  })
-
-  it('keeps the final Light Audit handoff short and speed-focused', () => {
-    render(<GrowthProcessSection />)
-
-    expect(
-      screen.getByText(/ready for the light audit\?/i),
-    ).toBeInTheDocument()
-    expect(
-      screen.getByRole('group', {
-        name: /takes about one minute to complete\. quick and easy\./i,
-      }),
-    ).toBeInTheDocument()
-    expect(screen.getByText(/min to complete/i)).toBeInTheDocument()
-    expect(screen.getByText(/quick \+ easy/i)).toBeInTheDocument()
-    expect(
-      screen.queryByText(/start with one short dashboard intake\./i),
-    ).not.toBeInTheDocument()
-    expect(
-      screen.queryByText(/dashboard first\. deep growth audit if it fits\./i),
-    ).not.toBeInTheDocument()
   })
 })
