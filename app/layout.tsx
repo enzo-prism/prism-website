@@ -100,6 +100,15 @@ export default function RootLayout({
                 __html: `
                   window.dataLayer = window.dataLayer || [];
                   function gtag(){dataLayer.push(arguments);}
+                  // Consent Mode v2 — set defaults before any config call.
+                  // US-focused traffic: granted by default (no change to data volume),
+                  // while still emitting the v2 signals Google Ads needs for EEA modeling.
+                  gtag('consent', 'default', {
+                    ad_storage: 'granted',
+                    ad_user_data: 'granted',
+                    ad_personalization: 'granted',
+                    analytics_storage: 'granted',
+                  });
                   gtag('js', new Date());
                   gtag('config', '${GA_MEASUREMENT_ID}', { send_page_view: false });
                   gtag('config', '${GOOGLE_ADS_ID}');
