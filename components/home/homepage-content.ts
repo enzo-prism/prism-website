@@ -462,15 +462,18 @@ export const HOMEPAGE_HOW_IT_WORKS = {
 export const HOMEPAGE_HOW_IT_WORKS_STEPS = [
   {
     title: 'Submit practice',
-    description: '',
+    description:
+      'Tell us about your practice in about a minute — no long brief, no sales maze.',
   },
   {
     title: 'We audit',
-    description: '',
+    description:
+      'A real person reviews your website, Google presence, reviews, and tracking.',
   },
   {
     title: 'Get next steps',
-    description: '',
+    description:
+      'Receive a free Light Audit with the single clearest move to grow.',
   },
 ] as const
 

@@ -111,15 +111,16 @@ describe('Navbar', () => {
     const logoGlow = screen.getByTestId('navbar-logo-glow')
 
     expect(logoLink.className).toContain('group/logo')
-    expect(logoLink.className).toContain('focus-visible:ring-[#d8bc79]/35')
+    expect(logoLink.className).toContain('focus-visible:ring-[#5cdcff]/40')
     expect(logoMark.className).toContain(
       'motion-safe:group-hover/logo:scale-105',
     )
     expect(logoMark.className).toContain(
       'motion-safe:group-focus-visible/logo:scale-105',
     )
-    expect(logoMark.className).toContain('group-hover/logo:border-[#d8bc79]/55')
+    expect(logoMark.className).toContain('group-hover/logo:border-white/45')
     expect(logoGlow).toHaveAttribute('aria-hidden', 'true')
+    expect(logoGlow.className).toContain('mix-blend-screen')
     expect(logoGlow.className).toContain('group-hover/logo:opacity-100')
     expect(logoGlow.className).toContain('group-focus-visible/logo:opacity-100')
   })

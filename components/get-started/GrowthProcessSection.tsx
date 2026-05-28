@@ -12,24 +12,24 @@ type GrowthProcessStep = {
   icon: string
 }
 
-// Shared Lordicon palette: white primary with a soft Prism-green secondary.
-const ICON_COLORS = 'primary:#ffffff,secondary:#9cf4a7'
+// Shared Lordicon palette: white primary with a Prism-green secondary.
+const ICON_COLORS = 'primary:#ffffff,secondary:#16c72e'
 
 export const GROWTH_PROCESS_STEPS: GrowthProcessStep[] = [
   {
     stage: '01',
     label: 'Create dashboard',
-    icon: 'https://cdn.lordicon.com/esmahubl.json',
+    icon: 'https://cdn.lordicon.com/wfjtyzqa.json',
   },
   {
     stage: '02',
     label: 'Get Light Audit',
-    icon: 'https://cdn.lordicon.com/sufmcece.json',
+    icon: 'https://cdn.lordicon.com/raxyqlxo.json',
   },
   {
     stage: '03',
     label: 'Clear next step',
-    icon: 'https://cdn.lordicon.com/xvvptxob.json',
+    icon: 'https://cdn.lordicon.com/rusvgrhw.json',
   },
 ]
 

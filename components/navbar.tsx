@@ -149,22 +149,22 @@ export default function Navbar() {
       <div className="container mx-auto flex h-[72px] items-center justify-between px-4 sm:px-6">
         <Link
           href="/"
-          className="group/logo flex min-w-0 items-center gap-3 rounded-full text-[#f5f0e8] transition-[color,transform] duration-300 ease-out hover:text-white focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[#d8bc79]/35 focus-visible:ring-offset-4 focus-visible:ring-offset-black motion-safe:hover:-translate-y-0.5"
+          className="group/logo flex min-w-0 items-center gap-3 rounded-full text-[#f5f0e8] transition-[color,transform] duration-300 ease-out hover:text-white focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[#5cdcff]/40 focus-visible:ring-offset-4 focus-visible:ring-offset-black motion-safe:hover:-translate-y-0.5"
           onClick={() => trackNavigation('logo', '/')}
           aria-label="Prism home"
         >
           <div
             data-testid="navbar-logo-mark"
-            className="relative h-10 w-10 shrink-0 overflow-hidden rounded-2xl border border-white/14 bg-white shadow-[0_10px_30px_rgba(0,0,0,0.24)] transition-[border-color,box-shadow,transform] duration-300 ease-out group-hover/logo:border-[#d8bc79]/55 group-hover/logo:shadow-[0_0_0_1px_rgba(245,240,232,0.14),0_16px_34px_rgba(0,0,0,0.34),0_0_26px_rgba(216,188,121,0.22)] group-focus-visible/logo:border-[#d8bc79]/55 group-focus-visible/logo:shadow-[0_0_0_1px_rgba(245,240,232,0.14),0_16px_34px_rgba(0,0,0,0.34),0_0_26px_rgba(216,188,121,0.22)] motion-safe:group-hover/logo:-rotate-3 motion-safe:group-hover/logo:scale-105 motion-safe:group-focus-visible/logo:-rotate-3 motion-safe:group-focus-visible/logo:scale-105"
+            className="relative h-10 w-10 shrink-0 overflow-hidden rounded-2xl border border-white/14 bg-white shadow-[0_10px_30px_rgba(0,0,0,0.24)] transition-[border-color,box-shadow,transform] duration-300 ease-out group-hover/logo:border-white/45 group-hover/logo:shadow-[0_0_0_1px_rgba(255,255,255,0.18),-7px_0_24px_rgba(92,220,255,0.5),7px_0_24px_rgba(255,69,207,0.5),0_16px_34px_rgba(0,0,0,0.42)] group-focus-visible/logo:border-white/45 group-focus-visible/logo:shadow-[0_0_0_1px_rgba(255,255,255,0.18),-7px_0_24px_rgba(92,220,255,0.5),7px_0_24px_rgba(255,69,207,0.5),0_16px_34px_rgba(0,0,0,0.42)] motion-safe:group-hover/logo:scale-105 motion-safe:group-focus-visible/logo:scale-105"
           >
             <span
               data-testid="navbar-logo-glow"
               aria-hidden="true"
-              className="pointer-events-none absolute inset-0 z-10 bg-[radial-gradient(circle_at_28%_22%,rgba(216,188,121,0.36),transparent_42%),linear-gradient(135deg,rgba(255,255,255,0.22),transparent_58%)] opacity-0 mix-blend-multiply transition-opacity duration-300 group-hover/logo:opacity-100 group-focus-visible/logo:opacity-100"
+              className="pointer-events-none absolute inset-0 z-10 bg-[linear-gradient(118deg,rgba(92,220,255,0.55)_0%,rgba(255,255,255,0.3)_46%,rgba(255,69,207,0.55)_100%)] opacity-0 mix-blend-screen transition-opacity duration-300 group-hover/logo:opacity-100 group-focus-visible/logo:opacity-100"
             />
             <span
               aria-hidden="true"
-              className="pointer-events-none absolute inset-y-2 left-2 z-20 w-px bg-[#d8bc79]/0 transition-[background-color,box-shadow] duration-300 group-hover/logo:bg-[#d8bc79]/70 group-hover/logo:shadow-[0_0_14px_rgba(216,188,121,0.72)] group-focus-visible/logo:bg-[#d8bc79]/70 group-focus-visible/logo:shadow-[0_0_14px_rgba(216,188,121,0.72)]"
+              className="pointer-events-none absolute inset-y-0 -left-1/2 z-20 w-1/2 -skew-x-12 bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.78),transparent)] opacity-0 transition-[transform,opacity] duration-500 ease-out group-hover/logo:opacity-100 group-focus-visible/logo:opacity-100 motion-safe:group-hover/logo:translate-x-[300%] motion-safe:group-focus-visible/logo:translate-x-[300%]"
             />
             <CoreImage
               src={LOGO_CONFIG.src}
@@ -183,12 +183,12 @@ export default function Navbar() {
             <span className="whitespace-nowrap text-sm font-semibold uppercase tracking-[0.22em] text-[#f5f0e8] transition-[color,transform] duration-300 ease-out group-hover/logo:text-white group-focus-visible/logo:text-white motion-safe:group-hover/logo:translate-x-px motion-safe:group-focus-visible/logo:translate-x-px">
               Prism
             </span>
-            <span className="whitespace-nowrap text-[10px] font-medium uppercase tracking-[0.26em] text-[#b8afa2] transition-[color,transform] duration-300 ease-out group-hover/logo:text-[#d8bc79] group-focus-visible/logo:text-[#d8bc79] motion-safe:group-hover/logo:translate-x-0.5 motion-safe:group-focus-visible/logo:translate-x-0.5">
+            <span className="whitespace-nowrap text-[10px] font-medium uppercase tracking-[0.26em] text-[#b8afa2] transition-[color,transform] duration-300 ease-out group-hover/logo:text-[#5cdcff] group-focus-visible/logo:text-[#5cdcff] motion-safe:group-hover/logo:translate-x-0.5 motion-safe:group-focus-visible/logo:translate-x-0.5">
               impossible is temporary
             </span>
             <span
               aria-hidden="true"
-              className="absolute -bottom-1 left-0 h-px w-0 bg-gradient-to-r from-[#d8bc79]/70 via-[#f5f0e8]/55 to-transparent opacity-0 transition-[width,opacity] duration-300 group-hover/logo:w-full group-hover/logo:opacity-100 group-focus-visible/logo:w-full group-focus-visible/logo:opacity-100"
+              className="absolute -bottom-1 left-0 h-px w-0 bg-gradient-to-r from-[#5cdcff]/80 via-white/55 to-[#ff45cf]/80 opacity-0 transition-[width,opacity] duration-300 group-hover/logo:w-full group-hover/logo:opacity-100 group-focus-visible/logo:w-full group-focus-visible/logo:opacity-100"
             />
           </div>
         </Link>
