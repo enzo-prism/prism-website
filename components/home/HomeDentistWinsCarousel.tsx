@@ -2,14 +2,35 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { ChevronLeft, ChevronRight } from 'lucide-react'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import {
+  ArrowUpRight,
+  ChevronLeft,
+  ChevronRight,
+  MapPin,
+} from 'lucide-react'
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  type PointerEvent as ReactPointerEvent,
+} from 'react'
 
 import type { HomepageDentistWinSlide } from '@/components/home/homepage-content'
 import { cn } from '@/lib/utils'
 import { trackCTAClick } from '@/utils/analytics'
 
 const SCROLL_TOLERANCE = 8
+const AUTOPLAY_INTERVAL = 5200
+const RESUME_DELAY = 7000
+
+function prefersReducedMotion() {
+  return (
+    typeof window !== 'undefined' &&
+    typeof window.matchMedia === 'function' &&
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  )
+}
 
 type HomeDentistWinsCarouselProps = {
   slides: readonly HomepageDentistWinSlide[]
@@ -19,8 +40,11 @@ export default function HomeDentistWinsCarousel({
   slides,
 }: HomeDentistWinsCarouselProps) {
   const railRef = useRef<HTMLDivElement>(null)
+  const resumeTimerRef = useRef<number | null>(null)
   const [canScrollLeft, setCanScrollLeft] = useState(false)
   const [canScrollRight, setCanScrollRight] = useState(false)
+  const [progress, setProgress] = useState(0)
+  const [isPaused, setIsPaused] = useState(false)
   const [revealedSlideKeys, setRevealedSlideKeys] = useState<Set<string>>(
     () => new Set(),
   )
@@ -32,6 +56,9 @@ export default function HomeDentistWinsCarousel({
     const { scrollLeft, scrollWidth, clientWidth } = rail
     setCanScrollLeft(scrollLeft > SCROLL_TOLERANCE)
     setCanScrollRight(scrollLeft + clientWidth < scrollWidth - SCROLL_TOLERANCE)
+
+    const max = scrollWidth - clientWidth
+    setProgress(max > 0 ? Math.min(1, Math.max(0, scrollLeft / max)) : 0)
   }, [])
 
   useEffect(() => {
@@ -70,15 +97,68 @@ export default function HomeDentistWinsCarousel({
       amount = firstCard.getBoundingClientRect().width + gap
     }
 
-    const prefersReducedMotion = window.matchMedia(
-      '(prefers-reduced-motion: reduce)',
-    ).matches
-
     rail.scrollBy({
       left: direction === 'left' ? -amount : amount,
-      behavior: prefersReducedMotion ? 'auto' : 'smooth',
+      behavior: prefersReducedMotion() ? 'auto' : 'smooth',
     })
   }, [])
+
+  // Gentle auto-advance that loops back to the start and respects reduced motion.
+  useEffect(() => {
+    if (isPaused || prefersReducedMotion()) return
+
+    const id = window.setInterval(() => {
+      const rail = railRef.current
+      if (!rail) return
+
+      const atEnd =
+        rail.scrollLeft + rail.clientWidth >= rail.scrollWidth - SCROLL_TOLERANCE
+
+      if (atEnd) {
+        rail.scrollTo({ left: 0, behavior: 'smooth' })
+      } else {
+        scrollByAmount('right')
+      }
+    }, AUTOPLAY_INTERVAL)
+
+    return () => window.clearInterval(id)
+  }, [isPaused, scrollByAmount])
+
+  const pauseAutoplay = useCallback(() => {
+    if (resumeTimerRef.current) {
+      window.clearTimeout(resumeTimerRef.current)
+      resumeTimerRef.current = null
+    }
+    setIsPaused(true)
+  }, [])
+
+  const resumeAutoplay = useCallback(() => {
+    setIsPaused(false)
+  }, [])
+
+  const scheduleResume = useCallback(() => {
+    if (resumeTimerRef.current) window.clearTimeout(resumeTimerRef.current)
+    resumeTimerRef.current = window.setTimeout(
+      () => setIsPaused(false),
+      RESUME_DELAY,
+    )
+  }, [])
+
+  useEffect(
+    () => () => {
+      if (resumeTimerRef.current) window.clearTimeout(resumeTimerRef.current)
+    },
+    [],
+  )
+
+  const handleArrowClick = useCallback(
+    (direction: 'left' | 'right') => {
+      pauseAutoplay()
+      scrollByAmount(direction)
+      scheduleResume()
+    },
+    [pauseAutoplay, scrollByAmount, scheduleResume],
+  )
 
   const toggleSlideColor = useCallback((slideKey: string) => {
     setRevealedSlideKeys((current) => {
@@ -94,19 +174,40 @@ export default function HomeDentistWinsCarousel({
     })
   }, [])
 
+  const handleCardPointerMove = useCallback(
+    (event: ReactPointerEvent<HTMLElement>) => {
+      const el = event.currentTarget
+      const rect = el.getBoundingClientRect()
+      el.style.setProperty('--spot-x', `${event.clientX - rect.left}px`)
+      el.style.setProperty('--spot-y', `${event.clientY - rect.top}px`)
+    },
+    [],
+  )
+
   return (
     <div className="relative">
-      <div className="mb-4 flex justify-end gap-2 sm:mb-5">
-        <CarouselButton
-          direction="left"
-          disabled={!canScrollLeft}
-          onClick={() => scrollByAmount('left')}
-        />
-        <CarouselButton
-          direction="right"
-          disabled={!canScrollRight}
-          onClick={() => scrollByAmount('right')}
-        />
+      <div className="mb-4 flex items-center gap-4 sm:mb-5">
+        <div
+          className="relative h-px flex-1 overflow-hidden bg-white/10"
+          aria-hidden="true"
+        >
+          <div
+            className="absolute inset-y-0 left-0 bg-gradient-to-r from-[#d8bc79] to-[#f5f0e8] shadow-[0_0_12px_rgba(216,188,121,0.5)] transition-[width] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
+            style={{ width: `${Math.max(progress * 100, 6)}%` }}
+          />
+        </div>
+        <div className="flex gap-2">
+          <CarouselButton
+            direction="left"
+            disabled={!canScrollLeft}
+            onClick={() => handleArrowClick('left')}
+          />
+          <CarouselButton
+            direction="right"
+            disabled={!canScrollRight}
+            onClick={() => handleArrowClick('right')}
+          />
+        </div>
       </div>
 
       <div className="relative overflow-hidden">
@@ -130,6 +231,12 @@ export default function HomeDentistWinsCarousel({
           className="flex snap-x snap-mandatory gap-3 overflow-x-auto overscroll-x-contain scroll-smooth px-1 pb-2 scrollbar-hide sm:gap-4"
           role="list"
           aria-label="Top dentists in California using Prism"
+          onMouseEnter={pauseAutoplay}
+          onMouseLeave={resumeAutoplay}
+          onFocusCapture={pauseAutoplay}
+          onBlurCapture={scheduleResume}
+          onTouchStart={pauseAutoplay}
+          onTouchEnd={scheduleResume}
         >
           {slides.map((slide, index) => {
             const slideKey = buildSlideKey(slide)
@@ -143,10 +250,11 @@ export default function HomeDentistWinsCarousel({
                 role="listitem"
               >
                 <article
+                  onPointerMove={handleCardPointerMove}
                   className={cn(
-                    'group/card relative overflow-hidden rounded-[1.75rem] border bg-white/[0.03] shadow-[0_28px_90px_-70px_rgba(245,240,232,0.5)] transition-[transform,border-color,background-color,box-shadow] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 hover:border-white/24 hover:bg-white/[0.05] hover:shadow-[0_34px_100px_-62px_rgba(245,240,232,0.72)] focus-within:-translate-y-1 focus-within:border-white/24 focus-within:bg-white/[0.05] focus-within:shadow-[0_34px_100px_-62px_rgba(245,240,232,0.72)] motion-reduce:transition-none',
+                    'group/card relative overflow-hidden rounded-[1.75rem] border bg-white/[0.03] shadow-[0_28px_90px_-70px_rgba(216,188,121,0.45)] transition-[transform,border-color,background-color,box-shadow] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 hover:border-[#d8bc79]/40 hover:bg-white/[0.05] hover:shadow-[0_36px_110px_-60px_rgba(216,188,121,0.6)] focus-within:-translate-y-1 focus-within:border-[#d8bc79]/40 focus-within:bg-white/[0.05] focus-within:shadow-[0_36px_110px_-60px_rgba(216,188,121,0.6)] motion-reduce:transition-none',
                     isColorRevealed
-                      ? 'border-white/22 bg-white/[0.045]'
+                      ? 'border-[#d8bc79]/30 bg-white/[0.045]'
                       : 'border-white/12',
                   )}
                 >
@@ -155,7 +263,7 @@ export default function HomeDentistWinsCarousel({
                     aria-pressed={isColorRevealed}
                     aria-label={`${isColorRevealed ? 'Hide' : 'Show'} color version for ${slide.dentist}, ${slide.practice}`}
                     onClick={() => toggleSlideColor(slideKey)}
-                    className="relative block w-full cursor-pointer overflow-hidden text-left focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-white/25 focus-visible:ring-offset-4 focus-visible:ring-offset-black"
+                    className="relative block w-full cursor-pointer overflow-hidden text-left focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[#d8bc79]/35 focus-visible:ring-offset-4 focus-visible:ring-offset-black"
                   >
                     <span className="sr-only">
                       {isColorRevealed
@@ -194,9 +302,29 @@ export default function HomeDentistWinsCarousel({
                         data-dentist-win-hover-glow
                         className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/card:opacity-100 group-focus-within/card:opacity-100 motion-reduce:transition-none"
                       >
-                        <div className="absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-[#f5f0e8]/35 to-transparent" />
-                        <div className="absolute inset-0 bg-[radial-gradient(circle_at_52%_18%,rgba(245,240,232,0.16),transparent_38%),linear-gradient(135deg,rgba(216,188,121,0.13),transparent_42%)]" />
+                        <div className="absolute inset-x-5 top-0 h-px bg-gradient-to-r from-transparent via-[#d8bc79]/60 to-transparent" />
+                        <div
+                          className="absolute inset-0"
+                          style={{
+                            background:
+                              'radial-gradient(240px circle at var(--spot-x, 50%) var(--spot-y, 12%), rgba(216,188,121,0.22), transparent 62%)',
+                          }}
+                        />
                       </div>
+
+                      <div className="pointer-events-none absolute inset-x-0 top-0 z-10 flex items-start justify-between gap-3 p-4 sm:p-5">
+                        {slide.contextLabel ? (
+                          <span className="inline-flex items-center rounded-full border border-white/16 bg-black/45 px-2.5 py-1 font-mono text-[9px] font-semibold uppercase tracking-[0.18em] text-[#e7e0d4] backdrop-blur-sm">
+                            {slide.contextLabel}
+                          </span>
+                        ) : (
+                          <span />
+                        )}
+                        <span className="font-mono text-[10px] font-semibold tracking-[0.22em] text-[#f5f0e8]/65">
+                          {String(index + 1).padStart(2, '0')}
+                        </span>
+                      </div>
+
                       <div className="absolute inset-x-0 bottom-0 z-10 p-5 pb-16 sm:p-6 sm:pb-16">
                         <p className="font-sans text-[1.45rem] font-medium leading-none tracking-normal text-[#f5f0e8] sm:text-[1.7rem]">
                           {slide.dentist}
@@ -204,7 +332,12 @@ export default function HomeDentistWinsCarousel({
                         <p className="mt-2 font-sans text-[0.98rem] leading-5 text-[#d8d0c5]">
                           {slide.practice}
                         </p>
-                        <p className="mt-4 font-mono text-[10px] font-semibold uppercase tracking-[0.24em] text-[#b8afa2]">
+                        <p className="mt-4 inline-flex items-center gap-1.5 font-mono text-[10px] font-semibold uppercase tracking-[0.24em] text-[#b8afa2]">
+                          <MapPin
+                            aria-hidden="true"
+                            className="h-3 w-3 text-[#d8bc79]"
+                            strokeWidth={2}
+                          />
                           {slide.location}
                         </p>
                       </div>
@@ -212,6 +345,7 @@ export default function HomeDentistWinsCarousel({
                   </button>
                   <Link
                     href={slide.href}
+                    prefetch={false}
                     aria-label={`Open case study for ${slide.practice}`}
                     onClick={() =>
                       trackCTAClick(
@@ -219,11 +353,11 @@ export default function HomeDentistWinsCarousel({
                         'homepage dentist wins carousel',
                       )
                     }
-                    className="group/link absolute bottom-5 right-5 z-20 inline-flex min-h-9 items-center gap-2 border border-white/16 bg-black/55 px-3 font-mono text-[10px] font-semibold uppercase tracking-[0.16em] text-[#d8d0c5] backdrop-blur-sm transition-[transform,border-color,background-color,color,box-shadow] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-0.5 hover:border-white/30 hover:bg-black/75 hover:text-[#f5f0e8] hover:shadow-[0_18px_38px_-28px_rgba(245,240,232,0.45)] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-white/25 focus-visible:ring-offset-4 focus-visible:ring-offset-black motion-reduce:transition-none sm:bottom-6 sm:right-6"
+                    className="group/link absolute bottom-5 right-5 z-20 inline-flex min-h-9 items-center gap-2 border border-[#d8bc79]/25 bg-black/55 px-3 font-mono text-[10px] font-semibold uppercase tracking-[0.16em] text-[#e7e0d4] backdrop-blur-sm transition-[transform,border-color,background-color,color,box-shadow] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-0.5 hover:border-[#d8bc79]/60 hover:bg-black/75 hover:text-[#f5f0e8] hover:shadow-[0_18px_38px_-26px_rgba(216,188,121,0.6)] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[#d8bc79]/35 focus-visible:ring-offset-4 focus-visible:ring-offset-black motion-reduce:transition-none sm:bottom-6 sm:right-6"
                   >
                     case study
-                    <ChevronRight
-                      className="h-3 w-3 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/link:translate-x-0.5 motion-reduce:transition-none"
+                    <ArrowUpRight
+                      className="h-3 w-3 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 motion-reduce:transition-none"
                       aria-hidden="true"
                     />
                   </Link>
@@ -246,7 +380,7 @@ function DentistPlaceholder({ slide }: { slide: HomepageDentistWinSlide }) {
       className="absolute inset-0 flex items-center justify-center overflow-hidden bg-[radial-gradient(circle_at_26%_18%,rgba(245,240,232,0.12),transparent_34%),linear-gradient(135deg,rgba(245,240,232,0.1),rgba(15,15,15,0.92)_52%,rgba(0,0,0,0.98))] transition-transform duration-[1100ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/card:scale-[1.025] group-focus-within/card:scale-[1.025] motion-reduce:transition-none"
     >
       <div className="absolute inset-0 opacity-[0.18] transition-opacity duration-700 group-hover/card:opacity-[0.28] group-focus-within/card:opacity-[0.28] motion-reduce:transition-none [background-image:linear-gradient(rgba(245,240,232,0.18)_1px,transparent_1px),linear-gradient(90deg,rgba(245,240,232,0.18)_1px,transparent_1px)] [background-size:26px_26px]" />
-      <div className="relative flex h-32 w-32 items-center justify-center rounded-full border border-white/12 bg-black/35 font-mono text-3xl font-semibold uppercase tracking-[0.08em] text-[#f5f0e8] shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_24px_70px_-42px_rgba(245,240,232,0.34)] transition-[border-color,box-shadow] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/card:border-white/22 group-hover/card:shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_28px_78px_-40px_rgba(245,240,232,0.5)] group-focus-within/card:border-white/22 group-focus-within/card:shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_28px_78px_-40px_rgba(245,240,232,0.5)] motion-reduce:transition-none sm:h-36 sm:w-36">
+      <div className="relative flex h-32 w-32 items-center justify-center rounded-full border border-white/12 bg-black/35 font-mono text-3xl font-semibold uppercase tracking-[0.08em] text-[#f5f0e8] shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_24px_70px_-42px_rgba(245,240,232,0.34)] transition-[border-color,box-shadow] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/card:border-[#d8bc79]/30 group-hover/card:shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_28px_78px_-40px_rgba(216,188,121,0.5)] group-focus-within/card:border-[#d8bc79]/30 group-focus-within/card:shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_28px_78px_-40px_rgba(216,188,121,0.5)] motion-reduce:transition-none sm:h-36 sm:w-36">
         {buildInitials(slide.dentist)}
       </div>
     </div>
@@ -285,7 +419,7 @@ function CarouselButton({ direction, disabled, onClick }: CarouselButtonProps) {
       }
       disabled={disabled}
       onClick={onClick}
-      className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/14 bg-white/[0.03] text-[#c9c1b6] transition-[transform,border-color,background-color,color,opacity,box-shadow] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-0.5 hover:border-white/28 hover:bg-white/[0.07] hover:text-[#f5f0e8] hover:shadow-[0_18px_42px_-30px_rgba(245,240,232,0.5)] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-white/25 focus-visible:ring-offset-4 focus-visible:ring-offset-black active:translate-y-0 disabled:pointer-events-none disabled:opacity-35 motion-reduce:transition-none"
+      className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/14 bg-white/[0.03] text-[#c9c1b6] transition-[transform,border-color,background-color,color,opacity,box-shadow] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-0.5 hover:border-[#d8bc79]/45 hover:bg-white/[0.07] hover:text-[#f5f0e8] hover:shadow-[0_18px_42px_-28px_rgba(216,188,121,0.55)] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[#d8bc79]/35 focus-visible:ring-offset-4 focus-visible:ring-offset-black active:translate-y-0 disabled:pointer-events-none disabled:opacity-35 motion-reduce:transition-none"
     >
       <Icon className="h-4 w-4" aria-hidden="true" />
     </button>
