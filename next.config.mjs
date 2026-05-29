@@ -17,6 +17,13 @@ typescript: {
   turbopack: {
     root: configRoot,
   },
+  experimental: {
+    // Next already tree-shakes lucide-react / recharts / date-fns by default.
+    // Add the heavy barrels it does NOT cover so per-route bundles only pull the
+    // pieces they use (framer-motion is imported across ~40 files; drei/three
+    // power a few landing pages + the ElevenLabs orb).
+    optimizePackageImports: ['framer-motion', '@react-three/drei'],
+  },
 outputFileTracingIncludes: {
   "/api/latest-posts": ["content/blog/**/*"],
   "/blog": ["content/blog/**/*"],
