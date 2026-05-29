@@ -48,7 +48,7 @@ import { VideoObjectSchema } from "@/components/schema-markup"
   creatorName="Prism"
 />
 
-Anthropic shipped **Claude Opus 4.8** this morning. The benchmarks are great, the early-access crowd is loud — but if you run a dental practice, a med spa, or a home-services company, none of that tells you the only thing you actually care about:
+Anthropic shipped [**Claude Opus 4.8**](https://www.anthropic.com/news/claude-opus-4-8) this morning. The benchmarks are great, the early-access crowd is loud — but if you run a dental practice, a med spa, or a home-services company, none of that tells you the only thing you actually care about:
 
 **does this change what I can get built for my business, and how fast?**
 
@@ -64,11 +64,34 @@ Opus 4.8 is Anthropic's newest top-tier AI model. The reason it matters to you i
 
 A year ago, "AI-built website" meant a generic, slightly-off template you could spot from a mile away. That era is over. What I saw on launch day was premium, on-brand work that I'd happily put in front of a paying client. That shift is the whole story for small businesses.
 
+According to [Anthropic's own announcement](https://www.anthropic.com/news/claude-opus-4-8), Opus 4.8 sets new records across coding, agentic, and knowledge-work tasks. Here's their published comparison against the previous Opus and the other frontier models:
+
+<figure className="my-8">
+  <img
+    src="/blog/opus-4-8-benchmarks-anthropic.png"
+    alt="Anthropic's official Claude Opus 4.8 benchmark table comparing Opus 4.8, Opus 4.7, GPT-5.5, and Gemini 3.1 Pro across agentic coding (SWE-Bench Pro), terminal coding, reasoning (Humanity's Last Exam), computer use (OSWorld-Verified), knowledge work (GDPval-AA), and financial analysis."
+    width="2600"
+    height="1392"
+    loading="lazy"
+    className="w-full h-auto rounded-xl border border-neutral-200 dark:border-neutral-800"
+  />
+  <figcaption className="mt-3 text-sm text-neutral-500 dark:text-neutral-400">
+    Opus 4.8 vs. Opus 4.7, GPT‑5.5, and Gemini 3.1 Pro on Anthropic's published benchmarks. Source: <a href="https://www.anthropic.com/news/claude-opus-4-8">Anthropic — Introducing Claude Opus 4.8</a>.
+  </figcaption>
+</figure>
+
+You don't need to memorize those numbers. Here's the plain-English read for a business owner: on **real-world coding** (SWE-Bench Pro — fixing actual bugs in a real codebase, which is exactly what building your website or app is), Opus 4.8 jumps to **69.2%**, ahead of every other model on the chart. It also leads on agentic computer use, multidisciplinary reasoning, and knowledge work. The one row where a competitor wins is raw terminal coding, where GPT‑5.5 edges ahead. Translation: **the AI doing your project is now measurably the best in the world at the kind of messy, multi-step, real-codebase work your website and app actually require.**
+
+Two more things worth knowing, because they affect what you can ask for:
+
+- **It's the same price as the last version.** Anthropic kept Opus 4.8 at $5 per million input tokens and $25 per million output tokens — so you get a meaningfully better model without a price hike (there's also a faster "Fast mode" for time-sensitive work).
+- **It plugs into [Claude Code](https://www.anthropic.com/product/claude-code)**, Anthropic's agentic coding system — the tool I'm actually driving in the video. Alongside 4.8, they shipped *Dynamic Workflows*, which lets Claude Code run many sub-tasks in parallel. For you, that's the difference between "redesign one page" and "redesign and wire up the whole site" in a single session.
+
 ## Case Study 1: Rebuilding a Real Client Website
 
 The first thing I tested was a redesign for a **periodontist client**. Their current site is built the "OG" way — Webflow, Figma, and Relume components, stitched together with some external icon kits and a JotForm embed for booking. It's a solid, clean, minimalist site. Lots of white space, a premium feel, a few scroll-reveal animations. Nothing wrong with it. Just… average-good.
 
-Then I ran the redesign through **Claude Code on Opus 4.8, on its highest reasoning mode**, and the difference was night and day.
+Then I ran the redesign through [**Claude Code**](https://www.anthropic.com/product/claude-code) on Opus 4.8, on its highest reasoning mode, and the difference was night and day.
 
 A few things stood out immediately:
 
@@ -113,7 +136,7 @@ I won't oversell it. Three honest notes from the day:
 2. **It's slower at the very top reasoning setting** — and worth it for design-quality work, which is exactly the tradeoff founders know well: ship fast, or ship clean. We're getting closer to both.
 3. **Taste and iteration still come from a human.** The website wasn't one-shot. The app features needed me to notice the problem first. The model is an extraordinary executor — it is not your strategist, your brand, or your customer.
 
-For the record: I think 4.8 is a clear step up from 4.7, and right now I'm enjoying it more than the other frontier model I run day to day. Now I'm just curious how OpenAI answers.
+For the record: I think 4.8 is a clear step up from 4.7 — and [Anthropic's published benchmarks](https://www.anthropic.com/news/claude-opus-4-8) back that up, with Opus 4.8 leading on real-world coding, reasoning, computer use, and knowledge work. The one spot a rival still wins is raw terminal coding, where GPT‑5.5 comes out ahead. Day to day, though, I'm enjoying 4.8 more than GPT‑5.5 — and now I'm just curious how OpenAI answers.
 
 ## What This Actually Means for Your Business
 
@@ -131,3 +154,9 @@ Claude Opus 4.8 is the real deal, and you don't have to be a developer to benefi
 The catch is that the *output* is only as good as the *taste and strategy* behind it. That's the part we obsess over.
 
 If you want a website and growth system built on this new bar — premium design, real SEO structure, and the retention mechanics that keep customers coming back — [reach out to Prism](https://www.design-prism.com/get-started) and we'll map it out with you.
+
+## Sources & Further Reading
+
+- [Introducing Claude Opus 4.8 — Anthropic](https://www.anthropic.com/news/claude-opus-4-8) (official announcement + benchmarks)
+- [Claude Opus — Anthropic](https://www.anthropic.com/claude/opus) (model overview and pricing)
+- [Claude Code — Anthropic](https://www.anthropic.com/product/claude-code) (the agentic coding system used in the video)
