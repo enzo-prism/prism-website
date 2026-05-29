@@ -216,7 +216,10 @@ test('home services section snapshot stays stable', async ({ page }) => {
   const servicesSection = servicesHeading.locator('xpath=ancestor::section[1]')
   await expect(servicesSection).toBeVisible()
   await servicesSection.scrollIntoViewIfNeeded()
-  await stabilizeDesktopSectionHeight(page, servicesSection, 520)
+  await stabilizeSectionHeight(page, servicesSection, {
+    mobile: 913,
+    desktop: 580,
+  })
 
   await stabilizePage(page)
   await expectLockedRouteSnapshotSurface(page)
@@ -243,6 +246,10 @@ test('home proof section snapshot stays stable', async ({ page }) => {
   const proofSection = proofHeading.locator('xpath=ancestor::section[1]')
   await expect(proofSection).toBeVisible()
   await proofSection.scrollIntoViewIfNeeded()
+  await stabilizeSectionHeight(page, proofSection, {
+    mobile: 1753,
+    desktop: 691,
+  })
 
   await stabilizePage(page)
   await expectLockedRouteSnapshotSurface(page)
