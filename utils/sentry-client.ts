@@ -43,7 +43,10 @@ export async function initSentryClient(): Promise<SentryModule | null> {
       try {
         Sentry.init({
           dsn: DEFAULT_SENTRY_DSN,
-          tracesSampleRate: 1,
+          // 100% tracing sends a performance beacon for every session (CPU +
+          // network). 10% keeps useful signal on a marketing site at a fraction
+          // of the cost.
+          tracesSampleRate: 0.1,
           debug: false,
         })
       } catch {

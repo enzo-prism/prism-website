@@ -1,11 +1,13 @@
 import type { Metadata, Viewport } from "next"
 import { GeistMono } from "geist/font/mono"
-import { GeistPixelGrid, GeistPixelSquare } from "geist/font/pixel"
 import { GeistSans } from "geist/font/sans"
 import Script from "next/script"
 import type React from "react"
 import { Suspense } from "react"
 import "./globals.css"
+// Decorative pixel fonts: only the two used variants, declared with
+// preload:false (see lib/fonts) instead of the geist/font/pixel barrel.
+import { geistPixelGrid, geistPixelSquare } from "@/lib/fonts"
 // Import the schema components
 import { GlobalSchemaGraph } from "@/components/schema-markup"
 import RuntimeClientShell from "@/components/runtime-client-shell"
@@ -81,7 +83,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`m-0 p-0 w-full dark ${GeistSans.variable} ${GeistMono.variable} ${GeistPixelSquare.variable} ${GeistPixelGrid.variable}`}
+      className={`m-0 p-0 w-full dark ${GeistSans.variable} ${GeistMono.variable} ${geistPixelSquare.variable} ${geistPixelGrid.variable}`}
       suppressHydrationWarning
     >
       <head>

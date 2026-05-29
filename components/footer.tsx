@@ -79,6 +79,7 @@ export default function Footer({ variant: _variant = 'default' }: FooterProps) {
               <Link
                 key={item.label}
                 href={item.href}
+                prefetch={false}
                 className="transition-colors hover:text-[#f5f0e8]"
               >
                 {item.label}
@@ -93,18 +94,21 @@ export default function Footer({ variant: _variant = 'default' }: FooterProps) {
             <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs">
               <Link
                 href="/privacy-policy"
+                prefetch={false}
                 className="transition-colors hover:text-[#f5f0e8]"
               >
                 privacy
               </Link>
               <Link
                 href="/terms-of-service"
+                prefetch={false}
                 className="transition-colors hover:text-[#f5f0e8]"
               >
                 terms
               </Link>
               <Link
                 href="/contact"
+                prefetch={false}
                 className="transition-colors hover:text-[#f5f0e8]"
               >
                 contact
