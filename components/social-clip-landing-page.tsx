@@ -2,9 +2,11 @@
 
 import Link from 'next/link'
 import Image from 'next/image'
+import { useState } from 'react'
 
 import PixelishIcon from '@/components/pixelish/PixelishIcon'
 import { LOGO_CONFIG } from '@/lib/constants'
+import { cn } from '@/lib/utils'
 import { trackExternalLinkClick } from '@/utils/analytics'
 
 type Channel = {
@@ -246,7 +248,16 @@ function CreditList({ credits }: { credits: Credit[] }) {
   )
 }
 
+const CREDIT_COLLAPSE_THRESHOLD = 12
+
 function CreditSection({ section }: { section: CreditSection }) {
+  const [expanded, setExpanded] = useState(false)
+  // The full lists are long; on phones (the primary audience here) we cap them
+  // with a fade + "show all" so the page stays tight and premium. Desktop keeps
+  // the complete list (lg:* removes the cap and hides the toggle).
+  const collapsible = section.credits.length > CREDIT_COLLAPSE_THRESHOLD
+  const capped = collapsible && !expanded
+
   return (
     <section aria-labelledby={`${section.id}-credits`} className="space-y-5">
       <div className="flex items-end justify-between gap-5">
@@ -270,7 +281,45 @@ function CreditSection({ section }: { section: CreditSection }) {
           {section.credits.length}
         </span>
       </div>
-      <CreditList credits={section.credits} />
+
+      <div
+        className={cn(
+          'relative',
+          capped
+            ? 'max-h-[24rem] overflow-hidden lg:max-h-none lg:overflow-visible'
+            : null,
+        )}
+      >
+        <CreditList credits={section.credits} />
+        {capped ? (
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-black via-black/85 to-transparent lg:hidden"
+          />
+        ) : null}
+      </div>
+
+      {collapsible ? (
+        <button
+          type="button"
+          onClick={() => setExpanded((value) => !value)}
+          aria-expanded={expanded}
+          className="group inline-flex min-h-12 w-full items-center justify-center gap-2 border border-border font-mono text-[10px] uppercase tracking-normal text-muted-foreground transition-colors hover:border-foreground hover:text-foreground focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-4 focus-visible:ring-offset-background active:bg-muted/40 lg:hidden"
+        >
+          <span>
+            {expanded ? 'show less' : `show all ${section.credits.length}`}
+          </span>
+          <PixelishIcon
+            src={
+              expanded ? '/pixelish/arrow-up.svg' : '/pixelish/arrow-right.svg'
+            }
+            alt=""
+            size={11}
+            aria-hidden="true"
+            className="transition-transform group-hover:translate-x-0.5"
+          />
+        </button>
+      ) : null}
     </section>
   )
 }
@@ -288,7 +337,7 @@ function YouTubeCta({ location }: { location: string }) {
       onClick={() => trackExternalLinkClick(YOUTUBE_CHANNEL_URL, label)}
       data-cta-text={label}
       data-cta-location={location}
-      className="group inline-flex min-h-14 items-center gap-4 border border-foreground bg-foreground px-5 font-mono text-[11px] uppercase tracking-normal text-background transition-colors hover:bg-transparent hover:text-foreground focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-4 focus-visible:ring-offset-background"
+      className="group inline-flex min-h-14 w-full items-center justify-center gap-4 border border-foreground bg-foreground px-5 font-mono text-[11px] uppercase tracking-normal text-background transition-colors hover:bg-transparent hover:text-foreground focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-4 focus-visible:ring-offset-background active:translate-y-px sm:w-auto sm:justify-start"
     >
       <PixelishIcon
         src="/pixelish/socials-youtube.svg"
@@ -300,6 +349,131 @@ function YouTubeCta({ location }: { location: string }) {
       />
       <span>{label}</span>
     </Link>
+  )
+}
+
+const MARBLE_APP_STORE_URL =
+  'https://apps.apple.com/us/app/marble-fit/id6757725234'
+
+function AppStoreCta({ location }: { location: string }) {
+  const label = 'download on the app store'
+
+  return (
+    <Link
+      href={MARBLE_APP_STORE_URL}
+      target="_blank"
+      rel="noopener noreferrer"
+      onClick={() => trackExternalLinkClick(MARBLE_APP_STORE_URL, label)}
+      data-cta-text={label}
+      data-cta-location={location}
+      className="group inline-flex min-h-14 w-full items-center justify-center gap-4 border border-foreground bg-foreground px-5 font-mono text-[11px] uppercase tracking-normal text-background transition-colors hover:bg-transparent hover:text-foreground focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-4 focus-visible:ring-offset-background active:translate-y-px sm:w-auto sm:justify-start"
+    >
+      <PixelishIcon
+        src="/pixelish/logo-apple.svg"
+        alt=""
+        size={16}
+        aria-hidden="true"
+        invert={false}
+        className="transition-[filter,transform] group-hover:translate-x-1 group-hover:invert"
+      />
+      <span>{label}</span>
+    </Link>
+  )
+}
+
+function MarbleAppCard() {
+  const specs = [
+    { label: 'platform', value: 'iPhone' },
+    { label: 'category', value: 'Lifting tracker' },
+    { label: 'designed by', value: 'Ex-Apple team' },
+    { label: 'made by', value: 'Prism' },
+  ]
+
+  return (
+    <div className="mx-auto w-full max-w-sm lg:mx-0 lg:ml-auto">
+      <div className="border border-border bg-muted/20 p-6 sm:p-7">
+        <div className="flex items-center gap-4">
+          <span className="flex h-16 w-16 shrink-0 items-center justify-center rounded-[1.15rem] border border-border bg-foreground shadow-[0_8px_30px_-12px_rgba(255,255,255,0.35)]">
+            <PixelishIcon
+              src="/pixelish/emoji-workout.svg"
+              alt=""
+              size={34}
+              aria-hidden="true"
+              invert={false}
+            />
+          </span>
+          <div className="min-w-0">
+            <p className="text-lg font-medium leading-tight">Marble</p>
+            <p className="mt-1 font-mono text-[10px] uppercase leading-none tracking-normal text-muted-foreground">
+              health &amp; fitness
+            </p>
+          </div>
+        </div>
+
+        <dl className="mt-6 grid grid-cols-2 gap-px border border-border bg-border">
+          {specs.map((spec) => (
+            <div key={spec.label} className="bg-black p-4">
+              <dt className="font-mono text-[10px] uppercase leading-none tracking-normal text-muted-foreground">
+                {spec.label}
+              </dt>
+              <dd className="mt-2 text-sm leading-tight text-foreground">
+                {spec.value}
+              </dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+    </div>
+  )
+}
+
+function ProductsByPrism({ location }: { location: string }) {
+  const features = [
+    'ex-apple team',
+    'built for iphone',
+    'lifting tracker',
+    'founders + athletes',
+  ]
+
+  return (
+    <section
+      aria-labelledby="products-by-prism-heading"
+      className="mt-16 border-y border-border py-8 sm:mt-20"
+    >
+      <div className="grid gap-10 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:items-center">
+        <div>
+          <p className="font-mono text-[10px] uppercase leading-5 tracking-normal text-muted-foreground">
+            products by prism
+          </p>
+          <h2
+            id="products-by-prism-heading"
+            className="mt-3 text-3xl font-medium leading-tight tracking-normal sm:text-4xl"
+          >
+            Marble — the best lifting tracker on iPhone.
+          </h2>
+          <p className="mt-5 max-w-xl text-pretty text-sm leading-6 text-muted-foreground sm:text-base">
+            Designed and engineered by ex-Apple designers and engineers on the
+            Prism team. Marble is the fastest, cleanest way to track every lift
+            — built for the founders and athletes you study here.
+          </p>
+          <ul className="mt-6 flex flex-wrap gap-2">
+            {features.map((feature) => (
+              <li
+                key={feature}
+                className="border border-border px-2.5 py-1 font-mono text-[10px] uppercase leading-none tracking-normal text-muted-foreground"
+              >
+                {feature}
+              </li>
+            ))}
+          </ul>
+          <div className="mt-8">
+            <AppStoreCta location={location} />
+          </div>
+        </div>
+
+        <MarbleAppCard />
+      </div>
+    </section>
   )
 }
 
@@ -402,6 +576,10 @@ export default function SocialClipLandingPage({
               />
             </nav>
           </section>
+
+          <ProductsByPrism
+            location={`${channel.label.toLowerCase()} landing products`}
+          />
 
           <div className="mt-16 space-y-16 sm:mt-20">
             <section
