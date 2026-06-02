@@ -22,8 +22,7 @@ export default function ApplyDashboardClaimCta() {
           Your private dashboard is ready.
         </p>
         <p className="mt-2 font-mono text-[0.9rem] leading-7 text-[#C6C6C0]">
-          We sent this link to your inbox too. Claim your dashboard now to see
-          where audit findings and future growth updates will live.
+          Claim it now. The same link is in your inbox.
         </p>
       </div>
       <a

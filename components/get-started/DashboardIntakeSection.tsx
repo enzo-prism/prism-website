@@ -1,13 +1,10 @@
 import {
-  Activity,
   Ban,
   Building2,
   Clock,
   Globe,
-  MapPin,
   ShieldCheck,
   Sparkles,
-  Star,
   Stethoscope,
   Target,
   UserCheck,
@@ -51,24 +48,34 @@ const NEGATIONS = ['No sales maze', 'No calendar wall', 'No long brief'] as cons
 const INTAKE_STEPS: IntakeStep[] = [
   {
     stage: '01',
-    label: 'Practice context',
-    hint: 'Who you are & where',
-    icon: Building2,
+    label: 'Focus',
+    hint: 'What needs work',
+    icon: Target,
   },
-  { stage: '02', label: 'Website', hint: 'Your current site', icon: Globe },
+  { stage: '02', label: 'Link', hint: 'Site or profile', icon: Globe },
   {
     stage: '03',
-    label: 'Google Maps',
-    hint: 'Local map presence',
-    icon: MapPin,
+    label: 'Fit',
+    hint: 'Budget & timing',
+    icon: Clock,
   },
-  { stage: '04', label: 'Reviews', hint: 'Reputation signals', icon: Star },
-  { stage: '05', label: 'Tracking', hint: 'What you measure', icon: Activity },
+  {
+    stage: '04',
+    label: 'Practice',
+    hint: 'Name only',
+    icon: Building2,
+  },
+  {
+    stage: '05',
+    label: 'Contact',
+    hint: 'Where to send it',
+    icon: UserCheck,
+  },
   {
     stage: '06',
-    label: 'Growth goals',
-    hint: 'Where you want to go',
-    icon: Target,
+    label: 'Review',
+    hint: 'Submit when ready',
+    icon: ShieldCheck,
   },
 ]
 
@@ -137,7 +144,7 @@ export default function DashboardIntakeSection() {
                 What you&rsquo;ll cover
               </p>
               <p className="font-mono text-[0.72rem] uppercase tracking-[0.2em] text-[#767670]">
-                6 sections
+                6 steps
               </p>
             </div>
 

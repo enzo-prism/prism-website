@@ -39,17 +39,17 @@ const APPLY_NEXT_STEPS = [
   {
     label: "01",
     title: "Dashboard intake received",
-    body: "Thanks, we've got it. Your Growth Dashboard intake is in the queue.",
+    body: "Your Growth Dashboard intake is in the queue.",
   },
   {
     label: "02",
     title: "Dashboard link sent",
-    body: "We sent a private dashboard link to the email you entered. Claim it to follow the audit from one place.",
+    body: "Claim it here or from your inbox.",
   },
   {
     label: "03",
-    title: "Light Audit findings live there",
-    body: "Your Light Audit findings will appear in the dashboard. If you become a Prism client, growth data and progress updates will live there too.",
+    title: "Light Audit follows",
+    body: "Findings will live in the dashboard.",
   },
 ] as const
 
@@ -78,10 +78,12 @@ export default async function ThankYouPage({
               </h1>
               <p className="mt-6 max-w-[42rem] font-mono text-[1rem] leading-8 text-[#A0A09A]">
                 {isApplyFlow
-                  ? "Thanks, we've got it. Every real practice submission receives a Light Audit, and we sent a private dashboard link to the email you entered. Claim it to follow findings and future growth updates from one place."
+                  ? "Thanks, we've got it. Every real practice submission receives a Light Audit. Claim your dashboard to follow the review from one place."
                   : "We received your submission. Every real inquiry gets reviewed. If there&apos;s a fit, we&apos;ll reach out with the right next step."}
               </p>
             </div>
+
+            {isApplyFlow ? <ApplyDashboardClaimCta /> : null}
 
             <div className="grid gap-5 lg:grid-cols-3">
               {nextSteps.map((step) => (
@@ -109,7 +111,7 @@ export default async function ThankYouPage({
                 </p>
                 <p className="mt-2 font-mono text-[0.92rem] leading-7 text-[#A0A09A]">
                   {isApplyFlow
-                    ? "Check your inbox for the dashboard link, or claim it from this page if you submitted from this browser."
+                    ? "Check your inbox for the same dashboard link."
                     : "You can review case studies or head back home."}
                 </p>
               </div>
@@ -129,7 +131,6 @@ export default async function ThankYouPage({
                 </Link>
               </div>
             </div>
-            {isApplyFlow ? <ApplyDashboardClaimCta /> : null}
           </section>
         </main>
         <Footer />

@@ -1,7 +1,7 @@
 'use client'
 
 import type { FocusEvent, FormEvent, KeyboardEvent } from 'react'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useRouter } from 'next/navigation'
 
 import { Alert, AlertDescription } from '@/components/ui/alert'
@@ -32,34 +32,50 @@ const FORM_ACTION =
 const DEFAULT_REDIRECT = 'https://www.design-prism.com/thank-you?source=apply'
 const APPLY_FORM_NAME = 'growth_application'
 const APPLY_FORM_LOCATION = 'apply_page'
+const APPLY_DRAFT_STORAGE_KEY = 'prism_apply_draft_v1'
 
-const SERVICE_OPTIONS = [
-  { label: 'Dental website', value: 'Dental website' },
-  { label: 'Google Maps / SEO', value: 'Google Maps / SEO' },
-  { label: 'Reviews', value: 'Reviews' },
-  { label: 'Ads', value: 'Ads' },
-  { label: 'Tracking', value: 'Tracking' },
-  { label: 'AI search', value: 'AI search' },
-  { label: 'Not sure', value: 'Not sure yet' },
+const FOCUS_OPTIONS = [
+  {
+    label: 'More patient calls',
+    value: 'calls',
+    serviceValue: 'Google Maps / SEO',
+    goalValue: 'I need more patient calls',
+  },
+  {
+    label: 'Google visibility',
+    value: 'google',
+    serviceValue: 'Google Maps / SEO',
+    goalValue: 'I need better Google visibility',
+  },
+  {
+    label: 'Modern website',
+    value: 'website',
+    serviceValue: 'Dental website',
+    goalValue: 'I need a modern dental website',
+  },
+  {
+    label: 'Reviews & trust',
+    value: 'reviews',
+    serviceValue: 'Reviews',
+    goalValue: 'I need stronger reviews and patient trust',
+  },
+  {
+    label: 'Clearer tracking',
+    value: 'tracking',
+    serviceValue: 'Tracking',
+    goalValue: 'I need to know what is working',
+  },
+  {
+    label: 'Not sure yet',
+    value: 'not-sure',
+    serviceValue: 'Not sure yet',
+    goalValue: 'Not sure yet',
+  },
 ] as const
 
-const WEBSITE_OPTIONS = [
-  { label: 'Yes', value: 'yes' },
-  { label: 'No', value: 'no' },
-] as const
-
-const PRIORITY_OPTIONS = [
-  { label: 'More patient calls', value: 'I need more patient calls' },
-  {
-    label: 'Better Google visibility',
-    value: 'I need better Google visibility',
-  },
-  { label: 'Modern website', value: 'I need a modern dental website' },
-  {
-    label: 'More trust',
-    value: 'I need stronger reviews and patient trust',
-  },
-  { label: 'Clearer tracking', value: 'I need to know what is working' },
+const PROFILE_OPTIONS = [
+  { label: 'Website', value: 'yes' },
+  { label: 'Profile only', value: 'no' },
 ] as const
 
 const BUDGET_OPTIONS = [
@@ -78,19 +94,16 @@ const TIMELINE_OPTIONS = [
 ] as const
 
 const FORM_STEPS = [
-  'services',
-  'website',
+  'focus',
   'link',
-  'priority',
-  'budget',
-  'timeline',
-  'company',
+  'fit',
+  'practice',
   'contact',
-  'notes',
   'review',
 ] as const
 
-const QUESTION_STEP_COUNT = FORM_STEPS.length - 1
+const REVIEW_STEP_INDEX = FORM_STEPS.indexOf('review')
+const QUESTION_STEP_COUNT = FORM_STEPS.length
 const STEP_FORWARD_KEYS = new Set(['ArrowRight', 'ArrowDown'])
 const STEP_BACK_KEYS = new Set(['ArrowLeft', 'ArrowUp'])
 const NON_TEXT_INPUT_TYPES = new Set([
@@ -108,10 +121,24 @@ const NON_TEXT_INPUT_TYPES = new Set([
 
 type FormStepId = (typeof FORM_STEPS)[number]
 type ErrorMap = Record<string, string>
+type FocusValue = (typeof FOCUS_OPTIONS)[number]['value']
 type ValidFieldElement =
   | HTMLInputElement
   | HTMLTextAreaElement
   | HTMLSelectElement
+
+type ApplyDraft = {
+  selectedFocuses?: string[]
+  hasWebsite?: string
+  reviewLink?: string
+  budget?: string
+  timeline?: string
+  company?: string
+  fullName?: string
+  email?: string
+  additionalContext?: string
+  stepId?: string
+}
 
 function isFieldElement(element: Element): element is ValidFieldElement {
   return (
@@ -156,6 +183,67 @@ function isValidReviewLink(value: string) {
   }
 }
 
+function canUseSessionStorage() {
+  return typeof window !== 'undefined' && Boolean(window.sessionStorage)
+}
+
+function readApplyDraft(): ApplyDraft | null {
+  if (!canUseSessionStorage()) return null
+
+  try {
+    const raw = window.sessionStorage.getItem(APPLY_DRAFT_STORAGE_KEY)
+    if (!raw) return null
+    const parsed = JSON.parse(raw)
+    return parsed && typeof parsed === 'object' ? parsed : null
+  } catch {
+    return null
+  }
+}
+
+function writeApplyDraft(draft: ApplyDraft) {
+  if (!canUseSessionStorage()) return
+
+  try {
+    window.sessionStorage.setItem(APPLY_DRAFT_STORAGE_KEY, JSON.stringify(draft))
+  } catch {
+    // no-op
+  }
+}
+
+function clearApplyDraft() {
+  if (!canUseSessionStorage()) return
+
+  try {
+    window.sessionStorage.removeItem(APPLY_DRAFT_STORAGE_KEY)
+  } catch {
+    // no-op
+  }
+}
+
+function hasDraftContent(draft: ApplyDraft) {
+  return Boolean(
+    draft.selectedFocuses?.length ||
+      draft.reviewLink ||
+      draft.budget ||
+      draft.timeline ||
+      draft.company ||
+      draft.fullName ||
+      draft.email ||
+      draft.additionalContext,
+  )
+}
+
+function shouldSkipAutoFocus() {
+  return Boolean(
+    typeof window !== 'undefined' &&
+      window.matchMedia?.('(max-width: 767px)').matches,
+  )
+}
+
+function isFocusValue(value: string): value is FocusValue {
+  return FOCUS_OPTIONS.some((option) => option.value === value)
+}
+
 function FieldError({ error, id }: { error: string; id: string }) {
   if (!error) return null
 
@@ -179,19 +267,11 @@ function getOptionLabel(
 
 function getStepFields(stepId: FormStepId): readonly string[] {
   switch (stepId) {
-    case 'services':
+    case 'focus':
       return ['service_focus']
-    case 'website':
-      return ['has_website']
     case 'link':
-      return ['review_link']
-    case 'priority':
-      return ['primary_goal']
-    case 'budget':
-      return ['budget']
-    case 'timeline':
-      return ['timeline']
-    case 'company':
+      return ['has_website', 'review_link']
+    case 'practice':
       return ['company']
     case 'contact':
       return ['full_name', 'email']
@@ -201,7 +281,7 @@ function getStepFields(stepId: FormStepId): readonly string[] {
 }
 
 function getLegacyAnalyticsStep(stepIndex: number) {
-  return stepIndex <= FORM_STEPS.indexOf('priority') ? 1 : 2
+  return stepIndex <= FORM_STEPS.indexOf('link') ? 1 : 2
 }
 
 function getValidationErrorType(field?: ValidFieldElement) {
@@ -228,12 +308,12 @@ export default function GetStartedForm() {
   const hasTrackedAbandonRef = useRef(false)
   const hasSubmittedSuccessfullyRef = useRef(false)
   const shouldFocusStepRef = useRef(false)
+  const returnToReviewRef = useRef(false)
 
   const [stepIndex, setStepIndex] = useState(0)
-  const [selectedServices, setSelectedServices] = useState<string[]>([])
-  const [hasWebsite, setHasWebsite] = useState('')
+  const [selectedFocuses, setSelectedFocuses] = useState<string[]>([])
+  const [hasWebsite, setHasWebsite] = useState('yes')
   const [reviewLink, setReviewLink] = useState('')
-  const [primaryGoal, setPrimaryGoal] = useState('')
   const [budget, setBudget] = useState('')
   const [timeline, setTimeline] = useState('')
   const [company, setCompany] = useState('')
@@ -243,6 +323,28 @@ export default function GetStartedForm() {
   const [submitError, setSubmitError] = useState<string | null>(null)
   const [redirectUrl, setRedirectUrl] = useState(DEFAULT_REDIRECT)
   const [manualErrors, setManualErrors] = useState<ErrorMap>({})
+  const [draftReady, setDraftReady] = useState(false)
+
+  const selectedFocusOptions = useMemo(
+    () =>
+      selectedFocuses
+        .map((value) =>
+          FOCUS_OPTIONS.find((option) => option.value === value),
+        )
+        .filter(Boolean) as Array<(typeof FOCUS_OPTIONS)[number]>,
+    [selectedFocuses],
+  )
+  const selectedServices = useMemo(
+    () =>
+      Array.from(
+        new Set(selectedFocusOptions.map((option) => option.serviceValue)),
+      ),
+    [selectedFocusOptions],
+  )
+  const primaryGoal = selectedFocusOptions[0]?.goalValue || ''
+  const focusLabels = selectedFocusOptions
+    .map((option) => option.label)
+    .join(', ')
 
   const currentStep = FORM_STEPS[stepIndex]
   const isReviewStep = currentStep === 'review'
@@ -269,7 +371,7 @@ export default function GetStartedForm() {
           elapsed_seconds: elapsedSeconds,
           step: 2,
           step_id: 'review',
-          funnel_step: FORM_STEPS.indexOf('review') + 1,
+          funnel_step: REVIEW_STEP_INDEX + 1,
           question_count: QUESTION_STEP_COUNT,
         }
 
@@ -315,6 +417,7 @@ export default function GetStartedForm() {
         }
 
         storeApplyDashboardClaimUrl(dashboardClaimUrl)
+        clearApplyDraft()
         hasSubmittedSuccessfullyRef.current = true
         trackEvent('apply_step_2_complete', submitAnalyticsParams)
         trackEvent('apply_submit', submitAnalyticsParams)
@@ -335,8 +438,38 @@ export default function GetStartedForm() {
     })
 
   useEffect(() => {
+    const draft = readApplyDraft()
+
+    if (draft) {
+      const safeFocuses = (draft.selectedFocuses || []).filter(isFocusValue)
+      const nextStepIndex = FORM_STEPS.includes(draft.stepId as FormStepId)
+        ? FORM_STEPS.indexOf(draft.stepId as FormStepId)
+        : 0
+
+      setSelectedFocuses(safeFocuses)
+      setHasWebsite(draft.hasWebsite === 'no' ? 'no' : 'yes')
+      setReviewLink(draft.reviewLink || '')
+      setBudget(draft.budget || '')
+      setTimeline(draft.timeline || '')
+      setCompany(draft.company || '')
+      setFullName(draft.fullName || '')
+      setEmail(draft.email || '')
+      setAdditionalContext(draft.additionalContext || '')
+      setStepIndex(nextStepIndex)
+      currentStepIndexRef.current = nextStepIndex
+      if (hasDraftContent(draft)) {
+        hasInteractedRef.current = true
+      }
+    }
+
+    setDraftReady(true)
+  }, [])
+
+  useEffect(() => {
+    if (!draftReady) return
+
     currentStepIndexRef.current = stepIndex
-  }, [stepIndex])
+  }, [draftReady, stepIndex])
 
   useEffect(() => {
     selectedServicesCountRef.current = selectedServices.length
@@ -349,13 +482,16 @@ export default function GetStartedForm() {
   }, [])
 
   useEffect(() => {
+    if (!draftReady) return
+
     trackEvent('apply_form_view', {
       form_name: APPLY_FORM_NAME,
       form_location: APPLY_FORM_LOCATION,
     })
-  }, [])
+  }, [draftReady])
 
   useEffect(() => {
+    if (!draftReady) return
     if (viewedStepsRef.current.has(currentStep)) return
 
     viewedStepsRef.current.add(currentStep)
@@ -370,7 +506,50 @@ export default function GetStartedForm() {
       question_count: QUESTION_STEP_COUNT,
       service_count: selectedServices.length,
     })
-  }, [currentStep, isReviewStep, selectedServices.length, stepIndex])
+  }, [
+    currentStep,
+    draftReady,
+    isReviewStep,
+    selectedServices.length,
+    stepIndex,
+  ])
+
+  useEffect(() => {
+    if (!draftReady) return
+    if (hasSubmittedSuccessfullyRef.current) return
+
+    const draft: ApplyDraft = {
+      selectedFocuses,
+      hasWebsite,
+      reviewLink,
+      budget,
+      timeline,
+      company,
+      fullName,
+      email,
+      additionalContext,
+      stepId: currentStep,
+    }
+
+    if (!hasDraftContent(draft)) {
+      clearApplyDraft()
+      return
+    }
+
+    writeApplyDraft(draft)
+  }, [
+    additionalContext,
+    budget,
+    company,
+    currentStep,
+    draftReady,
+    email,
+    fullName,
+    hasWebsite,
+    reviewLink,
+    selectedFocuses,
+    timeline,
+  ])
 
   const markInteracted = useCallback(() => {
     hasInteractedRef.current = true
@@ -414,12 +593,12 @@ export default function GetStartedForm() {
   )
 
   const syncServiceValidity = useCallback(
-    (selected = selectedServices) => {
+    (selected = selectedFocuses) => {
       const input = servicesValidationRef.current
       if (!input) return
 
       if (selected.length === 0) {
-        input.setCustomValidity('Choose at least one area')
+        input.setCustomValidity('Choose at least one focus')
         return
       }
 
@@ -430,7 +609,7 @@ export default function GetStartedForm() {
 
       input.setCustomValidity('')
     },
-    [selectedServices],
+    [selectedFocuses],
   )
 
   const commitTextField = useCallback((field: ValidFieldElement) => {
@@ -438,6 +617,7 @@ export default function GetStartedForm() {
     if (field.name === 'company') setCompany(field.value)
     if (field.name === 'full_name') setFullName(field.value)
     if (field.name === 'email') setEmail(field.value)
+    if (field.name === 'additional_context') setAdditionalContext(field.value)
   }, [])
 
   const syncTextFieldValidity = useCallback(
@@ -495,6 +675,8 @@ export default function GetStartedForm() {
   }, [])
 
   const focusFirstStepControl = useCallback(() => {
+    if (shouldSkipAutoFocus()) return
+
     const focusTarget = formRef.current?.querySelector<HTMLElement>(
       '[data-step-autofocus="true"]',
     )
@@ -504,6 +686,8 @@ export default function GetStartedForm() {
 
   const focusNamedField = useCallback(
     (name: string) => {
+      if (shouldSkipAutoFocus()) return
+
       if (name === 'service_focus') {
         formRef.current
           ?.querySelector<HTMLElement>('[data-service-option="true"]')
@@ -522,27 +706,12 @@ export default function GetStartedForm() {
 
   const syncValidationForStep = useCallback(
     (stepId: FormStepId) => {
-      if (stepId === 'services') {
+      if (stepId === 'focus') {
         syncServiceValidity()
       }
 
-      if (stepId === 'website') {
-        syncRadioGroupValidity(
-          'has_website',
-          'Let us know if you have a website',
-        )
-      }
-
-      if (stepId === 'priority') {
-        syncRadioGroupValidity('primary_goal', 'Choose what matters most')
-      }
-
-      if (stepId === 'budget') {
-        syncRadioGroupValidity('budget', 'Choose an investment range')
-      }
-
-      if (stepId === 'timeline') {
-        syncRadioGroupValidity('timeline', 'Choose a start time')
+      if (stepId === 'link') {
+        syncRadioGroupValidity('has_website', 'Choose where we should look')
       }
 
       getNamedFields(getStepFields(stepId)).forEach((field) => {
@@ -559,23 +728,11 @@ export default function GetStartedForm() {
 
   useEffect(() => {
     syncServiceValidity()
-  }, [selectedServices, syncServiceValidity])
+  }, [selectedFocuses, syncServiceValidity])
 
   useEffect(() => {
-    syncRadioGroupValidity('has_website', 'Let us know if you have a website')
+    syncRadioGroupValidity('has_website', 'Choose where we should look')
   }, [hasWebsite, syncRadioGroupValidity])
-
-  useEffect(() => {
-    syncRadioGroupValidity('primary_goal', 'Choose what matters most')
-  }, [primaryGoal, syncRadioGroupValidity])
-
-  useEffect(() => {
-    syncRadioGroupValidity('budget', 'Choose an investment range')
-  }, [budget, syncRadioGroupValidity])
-
-  useEffect(() => {
-    syncRadioGroupValidity('timeline', 'Choose a start time')
-  }, [timeline, syncRadioGroupValidity])
 
   useEffect(() => {
     if (!shouldFocusStepRef.current) return
@@ -649,17 +806,17 @@ export default function GetStartedForm() {
     handleBlur(event)
   }
 
-  const handleServiceToggle = (service: string) => {
+  const handleFocusToggle = (focus: FocusValue) => {
     markInteracted()
 
-    const isSelected = selectedServices.includes(service)
+    const isSelected = selectedFocuses.includes(focus)
     const nextSelection = isSelected
-      ? selectedServices.filter((item) => item !== service)
-      : selectedServices.length < 3
-        ? [...selectedServices, service]
-        : selectedServices
+      ? selectedFocuses.filter((item) => item !== focus)
+      : selectedFocuses.length < 3
+        ? [...selectedFocuses, focus]
+        : selectedFocuses
 
-    if (!isSelected && selectedServices.length >= 3) {
+    if (!isSelected && selectedFocuses.length >= 3) {
       const input = servicesValidationRef.current
       input?.setCustomValidity('Choose up to three')
       if (input) {
@@ -669,7 +826,7 @@ export default function GetStartedForm() {
         form_name: APPLY_FORM_NAME,
         form_location: APPLY_FORM_LOCATION,
         step: 1,
-        step_id: 'services',
+        step_id: 'focus',
         field_name: 'service_focus',
         error_type: 'limit',
         service_count: selectedServices.length,
@@ -679,9 +836,9 @@ export default function GetStartedForm() {
       return
     }
 
-    setSelectedServices(nextSelection)
+    setSelectedFocuses(nextSelection)
     trackEvent('apply_service_selected', {
-      service,
+      service: focus,
       selected: !isSelected,
       form_name: APPLY_FORM_NAME,
       form_location: APPLY_FORM_LOCATION,
@@ -699,39 +856,21 @@ export default function GetStartedForm() {
     })
   }
 
+  const handleBudgetSelect = (value: string) => {
+    markInteracted()
+    setBudget(value)
+    trackEvent('apply_budget_selected', {
+      form_name: APPLY_FORM_NAME,
+      form_location: APPLY_FORM_LOCATION,
+      budget: value,
+    })
+  }
+
   const getManualStepError = () => {
-    if (currentStep === 'services' && selectedServices.length === 0) {
+    if (currentStep === 'focus' && selectedFocuses.length === 0) {
       return {
         name: 'service_focus',
-        message: 'Choose at least one area',
-      }
-    }
-
-    if (currentStep === 'website' && !hasWebsite) {
-      return {
-        name: 'has_website',
-        message: 'Let us know if you have a website',
-      }
-    }
-
-    if (currentStep === 'priority' && !primaryGoal) {
-      return {
-        name: 'primary_goal',
-        message: 'Choose what matters most',
-      }
-    }
-
-    if (currentStep === 'budget' && !budget) {
-      return {
-        name: 'budget',
-        message: 'Choose an investment range',
-      }
-    }
-
-    if (currentStep === 'timeline' && !timeline) {
-      return {
-        name: 'timeline',
-        message: 'Choose a start time',
+        message: 'Choose at least one focus',
       }
     }
 
@@ -796,7 +935,7 @@ export default function GetStartedForm() {
       question_count: QUESTION_STEP_COUNT,
     })
 
-    if (currentStep === 'priority') {
+    if (currentStep === 'link') {
       trackCTAClick('continue application', 'apply form step 1')
       trackEvent('apply_step_1_complete', {
         form_name: APPLY_FORM_NAME,
@@ -808,12 +947,31 @@ export default function GetStartedForm() {
       })
     }
 
-    goToStep(Math.min(stepIndex + 1, FORM_STEPS.length - 1))
+    if (returnToReviewRef.current) {
+      returnToReviewRef.current = false
+      goToStep(REVIEW_STEP_INDEX)
+      return
+    }
+
+    goToStep(Math.min(stepIndex + 1, REVIEW_STEP_INDEX))
   }
 
   const handleBack = () => {
     setSubmitError(null)
+
+    if (returnToReviewRef.current && !isReviewStep) {
+      returnToReviewRef.current = false
+      goToStep(REVIEW_STEP_INDEX)
+      return
+    }
+
     goToStep(Math.max(stepIndex - 1, 0))
+  }
+
+  const handleEditStep = (stepId: FormStepId) => {
+    setSubmitError(null)
+    returnToReviewRef.current = true
+    goToStep(FORM_STEPS.indexOf(stepId))
   }
 
   const handleStepKeyboardNavigation = (
@@ -849,16 +1007,6 @@ export default function GetStartedForm() {
       event.preventDefault()
       handleBack()
     }
-  }
-
-  const handleBudgetSelect = (value: string) => {
-    markInteracted()
-    setBudget(value)
-    trackEvent('apply_budget_selected', {
-      form_name: APPLY_FORM_NAME,
-      form_location: APPLY_FORM_LOCATION,
-      budget: value,
-    })
   }
 
   const handleFinalSubmit = async (event: FormEvent<HTMLFormElement>) => {
@@ -918,25 +1066,24 @@ export default function GetStartedForm() {
 
   const renderStepBody = () => {
     switch (currentStep) {
-      case 'services':
+      case 'focus':
         return (
           <div className="grid gap-3 sm:grid-cols-2">
-            {SERVICE_OPTIONS.map((service) => {
-              const isSelected = selectedServices.includes(service.value)
+            {FOCUS_OPTIONS.map((focus) => {
+              const isSelected = selectedFocuses.includes(focus.value)
 
               return (
                 <button
-                  key={service.value}
+                  key={focus.value}
                   type="button"
                   role="checkbox"
+                  aria-label={focus.label}
                   aria-checked={isSelected}
                   data-service-option="true"
                   data-step-autofocus={
-                    service.value === SERVICE_OPTIONS[0].value
-                      ? 'true'
-                      : undefined
+                    focus.value === FOCUS_OPTIONS[0].value ? 'true' : undefined
                   }
-                  onClick={() => handleServiceToggle(service.value)}
+                  onClick={() => handleFocusToggle(focus.value)}
                   className={cn(
                     choiceCardClassName,
                     isSelected
@@ -946,17 +1093,15 @@ export default function GetStartedForm() {
                 >
                   <span
                     className={cn(
-                      'inline-flex h-5 w-5 shrink-0 items-center justify-center border text-[0.72rem] font-medium transition-colors',
+                      'inline-flex h-5 w-5 shrink-0 items-center justify-center border transition-colors',
                       isSelected
-                        ? 'border-[#9EFF2E]/70 bg-[#9EFF2E]/18 text-[#9EFF2E]'
-                        : 'border-white/16 text-transparent',
+                        ? 'border-[#9EFF2E]/70 bg-[#9EFF2E]/18'
+                        : 'border-white/16',
                     )}
                     aria-hidden="true"
-                  >
-                    +
-                  </span>
+                  />
                   <span className="font-mono text-[0.9rem] uppercase tracking-[0.12em]">
-                    {service.label}
+                    {focus.label}
                   </span>
                 </button>
               )
@@ -964,124 +1109,102 @@ export default function GetStartedForm() {
           </div>
         )
 
-      case 'website':
-        return (
-          <fieldset className="space-y-3">
-            <legend className="sr-only">Do you have a website?</legend>
-            <div className="grid gap-3 sm:grid-cols-2">
-              {WEBSITE_OPTIONS.map((option) =>
-                renderChoiceOption({
-                  name: 'has_website',
-                  value: option.value,
-                  checked: hasWebsite === option.value,
-                  label: option.label,
-                  onSelect: setHasWebsite,
-                  shouldFocusOnStepEntry:
-                    option.value === (hasWebsite || WEBSITE_OPTIONS[0].value),
-                }),
-              )}
-            </div>
-            {renderError('has_website')}
-          </fieldset>
-        )
-
       case 'link':
         return (
-          <div className="space-y-3">
-            <Label htmlFor="apply-review-link" className="sr-only">
-              What should we review?
-            </Label>
-            <Input
-              id="apply-review-link"
-              name="review_link"
-              type="url"
-              required
-              autoComplete="url"
-              inputMode="url"
-              value={reviewLink}
-              placeholder={
-                hasWebsite === 'yes'
-                  ? 'yourpractice.com'
-                  : 'maps.google.com/your-practice'
-              }
-              className={fieldClassName}
-              data-step-autofocus="true"
-              aria-invalid={Boolean(getError('review_link'))}
-              aria-describedby={getDescribedBy('review_link')}
-              onChange={(event) => {
-                markInteracted()
-                setReviewLink(event.currentTarget.value)
-              }}
-              onBlur={handleValidatedBlur}
-            />
-            {renderError('review_link')}
+          <div className="space-y-5">
+            <fieldset className="space-y-3">
+              <legend className="sr-only">Where should we look?</legend>
+              <div className="grid gap-3 sm:grid-cols-2">
+                {PROFILE_OPTIONS.map((option) =>
+                  renderChoiceOption({
+                    name: 'has_website',
+                    value: option.value,
+                    checked: hasWebsite === option.value,
+                    label: option.label,
+                    onSelect: setHasWebsite,
+                    shouldFocusOnStepEntry:
+                      option.value === (hasWebsite || PROFILE_OPTIONS[0].value),
+                  }),
+                )}
+              </div>
+              {renderError('has_website')}
+            </fieldset>
+
+            <div className="space-y-3">
+              <Label htmlFor="apply-review-link" className="sr-only">
+                What should we review?
+              </Label>
+              <Input
+                id="apply-review-link"
+                name="review_link"
+                type="url"
+                required
+                autoComplete="url"
+                inputMode="url"
+                value={reviewLink}
+                placeholder={
+                  hasWebsite === 'yes'
+                    ? 'yourpractice.com'
+                    : 'maps.google.com/your-practice'
+                }
+                className={fieldClassName}
+                aria-invalid={Boolean(getError('review_link'))}
+                aria-describedby={getDescribedBy('review_link')}
+                onChange={(event) => {
+                  markInteracted()
+                  setReviewLink(event.currentTarget.value)
+                }}
+                onBlur={handleValidatedBlur}
+              />
+              {renderError('review_link')}
+            </div>
           </div>
         )
 
-      case 'priority':
+      case 'fit':
         return (
-          <fieldset className="space-y-3">
-            <legend className="sr-only">What matters most?</legend>
-            <div className="grid gap-3">
-              {PRIORITY_OPTIONS.map((option) =>
-                renderChoiceOption({
-                  name: 'primary_goal',
-                  value: option.value,
-                  checked: primaryGoal === option.value,
-                  label: option.label,
-                  onSelect: setPrimaryGoal,
-                  shouldFocusOnStepEntry:
-                    option.value === (primaryGoal || PRIORITY_OPTIONS[0].value),
-                }),
-              )}
-            </div>
-            {renderError('primary_goal')}
-          </fieldset>
+          <div className="grid gap-5 lg:grid-cols-2">
+            <fieldset className="space-y-3">
+              <legend className="font-mono text-[0.74rem] uppercase tracking-[0.18em] text-[#8C8C85]">
+                Budget
+              </legend>
+              <div className="grid gap-3">
+                {BUDGET_OPTIONS.map((option) =>
+                  renderChoiceOption({
+                    name: 'budget',
+                    value: option,
+                    checked: budget === option,
+                    label: option,
+                    onSelect: handleBudgetSelect,
+                    shouldFocusOnStepEntry:
+                      option === (budget || BUDGET_OPTIONS[0]),
+                  }),
+                )}
+              </div>
+            </fieldset>
+
+            <fieldset className="space-y-3">
+              <legend className="font-mono text-[0.74rem] uppercase tracking-[0.18em] text-[#8C8C85]">
+                Timing
+              </legend>
+              <div className="grid gap-3">
+                {TIMELINE_OPTIONS.map((option) =>
+                  renderChoiceOption({
+                    name: 'timeline',
+                    value: option,
+                    checked: timeline === option,
+                    label: option,
+                    onSelect: setTimeline,
+                    shouldFocusOnStepEntry:
+                      !budget && option === (timeline || TIMELINE_OPTIONS[0]),
+                  }),
+                )}
+              </div>
+            </fieldset>
+          </div>
         )
 
-      case 'budget':
-        return (
-          <fieldset className="space-y-3">
-          <legend className="sr-only">Growth investment range?</legend>
-            <div className="grid gap-3">
-              {BUDGET_OPTIONS.map((option) =>
-                renderChoiceOption({
-                  name: 'budget',
-                  value: option,
-                  checked: budget === option,
-                  label: option,
-                  onSelect: handleBudgetSelect,
-                  shouldFocusOnStepEntry:
-                    option === (budget || BUDGET_OPTIONS[0]),
-                }),
-              )}
-            </div>
-            {renderError('budget')}
-          </fieldset>
-        )
-
-      case 'timeline':
-        return (
-          <fieldset className="space-y-3">
-            <legend className="sr-only">When do you want to start?</legend>
-            <div className="grid gap-3">
-              {TIMELINE_OPTIONS.map((option) =>
-                renderChoiceOption({
-                  name: 'timeline',
-                  value: option,
-                  checked: timeline === option,
-                  label: option,
-                  onSelect: setTimeline,
-                  shouldFocusOnStepEntry:
-                    option === (timeline || TIMELINE_OPTIONS[0]),
-                }),
-              )}
-            </div>
-            {renderError('timeline')}
-          </fieldset>
-        )
-
-      case 'company':
+      case 'practice':
         return (
           <div className="space-y-3">
             <Label htmlFor="apply-company" className="sr-only">
@@ -1145,6 +1268,7 @@ export default function GetStartedForm() {
                 type="email"
                 required
                 autoComplete="email"
+                spellCheck={false}
                 value={email}
                 placeholder="you@practice.com"
                 className={fieldClassName}
@@ -1161,54 +1285,54 @@ export default function GetStartedForm() {
           </div>
         )
 
-      case 'notes':
-        return (
-          <div className="space-y-3">
-            <Label htmlFor="apply-notes" className="sr-only">
-              Anything important?
-            </Label>
-            <Textarea
-              id="apply-notes"
-              name="additional_context"
-              maxLength={600}
-              value={additionalContext}
-              placeholder="Optional"
-              className="min-h-[150px] border-white/12 bg-black/40 px-4 py-3 text-[1rem] leading-7 text-[#F5F5F2] placeholder:text-[#6E6E68] focus-visible:border-[#9EFF2E]/65 focus-visible:ring-[#9EFF2E]/35 focus-visible:ring-offset-0"
-              data-step-autofocus="true"
-              onChange={(event) => {
-                markInteracted()
-                setAdditionalContext(event.currentTarget.value)
-              }}
-            />
-          </div>
-        )
-
       case 'review':
         return (
-          <div className="space-y-3">
+          <div className="space-y-5">
             <div className="grid gap-3 rounded-none border border-white/10 bg-black/30 p-4">
               <ReviewRow
-                label="Dashboard"
-                value={selectedServices
-                  .map((service) => getOptionLabel(SERVICE_OPTIONS, service))
-                  .join(', ')}
+                label="Focus"
+                value={focusLabels}
+                onEdit={() => handleEditStep('focus')}
               />
               <ReviewRow
-                label="Website"
-                value={hasWebsite === 'yes' ? 'Yes' : 'No'}
+                label="Link"
+                value={`${getOptionLabel(PROFILE_OPTIONS, hasWebsite)} / ${reviewLink}`}
+                onEdit={() => handleEditStep('link')}
               />
-              <ReviewRow label="Link" value={reviewLink} />
               <ReviewRow
-                label="Goal"
-                value={getOptionLabel(PRIORITY_OPTIONS, primaryGoal)}
+                label="Fit"
+                value={`${budget || 'Not shared'} / ${timeline || 'Not shared'}`}
+                onEdit={() => handleEditStep('fit')}
               />
-              <ReviewRow label="Budget" value={budget} />
-              <ReviewRow label="Timing" value={timeline} />
-              <ReviewRow label="Practice" value={company} />
-              <ReviewRow label="Contact" value={`${fullName} / ${email}`} />
-              {additionalContext ? (
-                <ReviewRow label="Note" value={additionalContext} />
-              ) : null}
+              <ReviewRow
+                label="Practice"
+                value={company}
+                onEdit={() => handleEditStep('practice')}
+              />
+              <ReviewRow
+                label="Contact"
+                value={`${fullName} / ${email}`}
+                onEdit={() => handleEditStep('contact')}
+              />
+            </div>
+
+            <div className="space-y-3">
+              <Label htmlFor="apply-notes" className="sr-only">
+                Anything important?
+              </Label>
+              <Textarea
+                id="apply-notes"
+                name="additional_context"
+                maxLength={600}
+                value={additionalContext}
+                placeholder="Optional"
+                className="min-h-[120px] border-white/12 bg-black/40 px-4 py-3 text-[1rem] leading-7 text-[#F5F5F2] placeholder:text-[#6E6E68] focus-visible:border-[#9EFF2E]/65 focus-visible:ring-[#9EFF2E]/35 focus-visible:ring-offset-0"
+                onChange={(event) => {
+                  markInteracted()
+                  setAdditionalContext(event.currentTarget.value)
+                }}
+                onBlur={handleValidatedBlur}
+              />
             </div>
           </div>
         )
@@ -1216,34 +1340,28 @@ export default function GetStartedForm() {
   }
 
   const heading =
-    currentStep === 'services'
-      ? 'What should we review?'
-      : currentStep === 'website'
-        ? 'Does the practice have a website?'
-        : currentStep === 'link'
-          ? 'Where should we look first?'
-          : currentStep === 'priority'
-            ? 'What matters most?'
-            : currentStep === 'budget'
-              ? 'Growth investment range?'
-              : currentStep === 'timeline'
-                ? 'When do you want to start?'
-                : currentStep === 'company'
-                  ? 'Practice name'
-                  : currentStep === 'contact'
-                    ? 'Where should we send the Light Audit?'
-                    : currentStep === 'notes'
-                      ? 'Anything we should know?'
-                      : 'Review and submit.'
+    currentStep === 'focus'
+      ? 'What do you want improved?'
+      : currentStep === 'link'
+        ? 'Where should we look first?'
+        : currentStep === 'fit'
+          ? 'After the free audit.'
+          : currentStep === 'practice'
+            ? 'Practice name'
+            : currentStep === 'contact'
+              ? 'Where should we send it?'
+              : 'Review and submit.'
 
   const helper =
-    currentStep === 'services'
+    currentStep === 'focus'
       ? 'Pick up to 3.'
       : currentStep === 'link'
-        ? 'Website, Google Business Profile, booking page, or social profile.'
-        : currentStep === 'notes'
-          ? 'Optional.'
-          : ''
+        ? 'Website, Google profile, booking page, or social.'
+        : currentStep === 'fit'
+          ? 'Optional. If Prism helps after the audit.'
+          : currentStep === 'review'
+            ? 'Add a note only if it helps.'
+            : ''
 
   return (
     <form
@@ -1293,6 +1411,8 @@ export default function GetStartedForm() {
         />
       ))}
 
+      <input type="hidden" name="focus_labels" value={focusLabels} />
+
       <input
         ref={servicesValidationRef}
         name="service_focus"
@@ -1314,11 +1434,6 @@ export default function GetStartedForm() {
           <input type="hidden" name="company" value={company} />
           <input type="hidden" name="full_name" value={fullName} />
           <input type="hidden" name="email" value={email} />
-          <input
-            type="hidden"
-            name="additional_context"
-            value={additionalContext}
-          />
         </>
       ) : null}
 
@@ -1357,7 +1472,7 @@ export default function GetStartedForm() {
 
             <div className="space-y-4">
               {renderStepBody()}
-              {currentStep === 'services' ? renderError('service_focus') : null}
+              {currentStep === 'focus' ? renderError('service_focus') : null}
             </div>
           </div>
         </div>
@@ -1385,7 +1500,7 @@ export default function GetStartedForm() {
                   trackCTAClick('submit growth dashboard', 'apply form review')
                 }
               >
-                {isSubmitting ? 'Submitting...' : 'Create Growth Dashboard'}
+                {isSubmitting ? 'Submitting…' : 'Create Growth Dashboard'}
               </Button>
             ) : (
               <Button
@@ -1396,7 +1511,7 @@ export default function GetStartedForm() {
                   handleNext()
                 }}
               >
-                {currentStep === 'notes' ? 'Review' : 'Continue'}
+                Continue
               </Button>
             )}
           </div>
@@ -1424,15 +1539,31 @@ async function readJsonResponse(response: Response) {
   }
 }
 
-function ReviewRow({ label, value }: { label: string; value: string }) {
+function ReviewRow({
+  label,
+  value,
+  onEdit,
+}: {
+  label: string
+  value: string
+  onEdit: () => void
+}) {
   return (
-    <div className="grid gap-1 border-b border-white/10 pb-3 last:border-b-0 last:pb-0 sm:grid-cols-[8rem_minmax(0,1fr)] sm:gap-4">
+    <div className="grid gap-2 border-b border-white/10 pb-3 last:border-b-0 last:pb-0 sm:grid-cols-[8rem_minmax(0,1fr)_auto] sm:items-center sm:gap-4">
       <span className="font-mono text-[0.7rem] uppercase tracking-[0.22em] text-[#767670]">
         {label}
       </span>
-      <span className="break-words font-mono text-[0.86rem] leading-6 text-[#D6D6CF]">
+      <span className="min-w-0 break-words font-mono text-[0.86rem] leading-6 text-[#D6D6CF]">
         {value}
       </span>
+      <button
+        type="button"
+        className="justify-self-start font-mono text-[0.68rem] uppercase tracking-[0.18em] text-[#9EFF2E] transition-colors hover:text-[#D4FF94] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[#9EFF2E]/35 sm:justify-self-end"
+        aria-label={`Edit ${label}`}
+        onClick={onEdit}
+      >
+        Edit
+      </button>
     </div>
   )
 }

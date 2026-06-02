@@ -133,9 +133,9 @@ Quick reference for the pages we edit most often.
 
 - `/apply` is the focused question-by-question Growth Dashboard intake and is the real form surface for the Growth Dashboard to Light Audit funnel.
 - The page intentionally removes the full navbar, footer, marketing sidebar, and floating ElevenLabs widget so the user sees one decision at a time after they start.
-- `components/forms/GetStartedForm.tsx` renders the micro-step flow: dental growth focus, website status, review link, primary goal, growth investment range, timeline, practice name, contact, optional note, and review/submit.
-- `GetStartedForm` posts to Formspree with the growth-application payload (`service_focus`, `service_interest[]`, `has_website`, `review_link`, `primary_goal`, `budget`, `timeline`, `company`, `full_name`, `email`, `additional_context`, `_subject`, `_redirect`, `form_name`, `_gotcha`) and redirects to `/thank-you?source=apply` on success.
-- The form supports keyboard-first progression: Enter advances validated non-review steps, arrow shortcuts move forward/back when they do not override text editing or native radio behavior, and focus is restored to the next step's primary control.
+- `components/forms/GetStartedForm.tsx` renders the compressed intake: focus, link, optional fit context, practice, contact, and review/submit.
+- `GetStartedForm` posts to Formspree with the growth-application payload (`service_focus`, `service_interest[]`, `focus_labels`, `has_website`, `review_link`, `primary_goal`, `budget`, `timeline`, `company`, `full_name`, `email`, `additional_context`, `_subject`, `_redirect`, `form_name`, `_gotcha`) and redirects to `/thank-you?source=apply` on success.
+- The form supports edit actions on review rows, same-tab draft restore via `sessionStorage`, and keyboard-first progression. Enter advances validated non-review steps, arrow shortcuts move forward/back when they do not override text editing or native radio behavior, and desktop focus is restored to the next step's primary control.
 - Keep the field names, Formspree endpoint behavior, analytics event names, and redirect behavior unchanged even though the visible copy now says Growth Dashboard and Light Audit.
 - The flow intentionally does not embed a calendar. Review is guaranteed after a real practice submission; the strategy session is selective.
 

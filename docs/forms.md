@@ -61,13 +61,14 @@ The `/apply` route should feel like a focused Growth Dashboard mode, not another
   - `has_website`
   - `review_link`
   - `primary_goal`
-  - `budget`
-  - `timeline`
   - `company`
   - `full_name`
   - `email`
 - Optional payload fields:
   - `service_interest[]`
+  - `focus_labels`
+  - `budget`
+  - `timeline`
   - `additional_context`
 - Hidden metadata contract:
   - `_subject` = `New Prism Growth Dashboard request`
@@ -86,11 +87,21 @@ The `/apply` route should feel like a focused Growth Dashboard mode, not another
   - When the dashboard intake API returns `dashboard.claimUrl`, store it in session storage for the apply thank-you CTA; do not include it in analytics payloads.
   - On success, `router.push("/thank-you?source=apply")`
   - On failure, inline error state remains visible and user stays on the review/submit screen
+- Current visible steps:
+  - Focus: choose up to three improvement areas.
+  - Link: choose website/profile and enter the URL to review.
+  - Fit: optional budget and timing context.
+  - Practice: practice name.
+  - Contact: name and email.
+  - Review: edit rows, add optional notes, and submit.
+- Draft behavior:
+  - Store in-progress answers in same-tab `sessionStorage` under `prism_apply_draft_v1`.
+  - Restore answers on reload and clear the draft after a successful submit.
 - Keyboard flow:
   - Enter advances the current non-review step after the same per-step validation as the Continue button.
   - Shift+Enter preserves a line break in the optional notes textarea.
   - ArrowRight/ArrowDown advance and ArrowLeft/ArrowUp go back only when focus is not inside text-editing controls or native radio groups.
-  - After a keyboard or button step transition, focus moves to the first field/control for the new step; validation failures return focus to the first invalid field or choice group.
+  - After a keyboard or button step transition, focus moves to the first field/control for the new step on desktop; mobile viewports skip auto-focus to avoid keyboard jumps. Validation failures return focus to the first invalid field or choice group on desktop.
 - Analytics:
   - `trackEvent("apply_form_view", ...)`
   - `trackEvent("apply_form_start", ...)`

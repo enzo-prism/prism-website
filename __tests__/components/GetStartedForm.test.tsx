@@ -54,48 +54,67 @@ function createMockResponse(overrides: MockResponseOverrides = {}): Response {
   } as unknown as Response
 }
 
-function completeStepOne() {
-  fireEvent.click(screen.getByRole('checkbox', { name: /dental website/i }))
-  fireEvent.click(screen.getByRole('button', { name: /continue/i }))
-
-  fireEvent.click(screen.getByLabelText(/^yes$/i))
-  fireEvent.click(screen.getByRole('button', { name: /continue/i }))
-
-  fireEvent.change(screen.getByLabelText(/what should we review/i), {
-    target: { value: 'design-prism.com' },
+function mockMatchMedia(matches: boolean) {
+  Object.defineProperty(window, 'matchMedia', {
+    writable: true,
+    value: jest.fn().mockImplementation((query: string) => ({
+      matches,
+      media: query,
+      onchange: null,
+      addListener: jest.fn(),
+      removeListener: jest.fn(),
+      addEventListener: jest.fn(),
+      removeEventListener: jest.fn(),
+      dispatchEvent: jest.fn(),
+    })),
   })
-  fireEvent.click(screen.getByRole('button', { name: /continue/i }))
+}
 
-  fireEvent.click(screen.getByLabelText(/more patient calls/i))
+function clickContinue() {
   fireEvent.click(screen.getByRole('button', { name: /continue/i }))
 }
 
-function completeContextQuestions() {
-  fireEvent.click(screen.getByLabelText(/\$3\.5k to \$5k/i))
-  fireEvent.click(screen.getByRole('button', { name: /continue/i }))
+function completeFocus() {
+  fireEvent.click(screen.getByRole('checkbox', { name: /more patient calls/i }))
+  clickContinue()
+}
 
-  fireEvent.click(screen.getByLabelText(/within 30 days/i))
-  fireEvent.click(screen.getByRole('button', { name: /continue/i }))
-
-  fireEvent.change(screen.getByLabelText(/practice name/i), {
-    target: { value: 'Prism' },
+function completeLink(value = 'design-prism.com') {
+  fireEvent.change(screen.getByLabelText(/what should we review/i), {
+    target: { value },
   })
-  fireEvent.click(screen.getByRole('button', { name: /continue/i }))
+  clickContinue()
+}
 
+function completeFit() {
+  fireEvent.click(screen.getByLabelText(/\$3\.5k to \$5k/i))
+  fireEvent.click(screen.getByLabelText(/within 30 days/i))
+  clickContinue()
+}
+
+function completePractice(value = 'Prism') {
+  fireEvent.change(screen.getByLabelText(/practice name/i), {
+    target: { value },
+  })
+  clickContinue()
+}
+
+function completeContact() {
   fireEvent.change(screen.getByLabelText(/full name/i), {
     target: { value: 'Jordan Ramirez' },
   })
   fireEvent.change(screen.getByLabelText(/^email$/i), {
     target: { value: 'jordan@example.com' },
   })
-  fireEvent.click(screen.getByRole('button', { name: /continue/i }))
+  clickContinue()
+}
 
-  fireEvent.change(screen.getByLabelText(/anything important/i), {
-    target: {
-      value: 'We want a cleaner site and better lead flow before summer.',
-    },
-  })
-  fireEvent.click(screen.getByRole('button', { name: /review/i }))
+function reachReview() {
+  completeFocus()
+  completeLink()
+  completeFit()
+  completePractice()
+  completeContact()
 }
 
 describe('GetStartedForm', () => {
@@ -104,9 +123,11 @@ describe('GetStartedForm', () => {
   beforeEach(() => {
     jest.clearAllMocks()
     fetchSpy.mockReset()
+    window.sessionStorage.clear()
+    mockMatchMedia(false)
   })
 
-  it('renders step 1 with the hidden Formspree metadata', () => {
+  it('renders the compressed first step with hidden Formspree metadata', async () => {
     const { container } = render(<GetStartedForm />)
 
     expect(container.querySelector('form')).toHaveAttribute(
@@ -120,7 +141,7 @@ describe('GetStartedForm', () => {
     expect(
       screen.getByRole('heading', {
         level: 1,
-        name: /what should we review/i,
+        name: /what do you want improved/i,
       }),
     ).toBeInTheDocument()
     expect(
@@ -142,65 +163,58 @@ describe('GetStartedForm', () => {
     expect(
       screen.getByRole('button', { name: /continue/i }),
     ).toBeInTheDocument()
-    expect(trackEvent).toHaveBeenCalledWith(
-      'apply_question_view',
-      expect.objectContaining({
-        form_name: 'growth_application',
-        form_location: 'apply_page',
-        step: 1,
-        step_id: 'services',
-      }),
-    )
+    await waitFor(() => {
+      expect(trackEvent).toHaveBeenCalledWith(
+        'apply_question_view',
+        expect.objectContaining({
+          form_name: 'growth_application',
+          form_location: 'apply_page',
+          step: 1,
+          step_id: 'focus',
+          question_count: 6,
+        }),
+      )
+    })
   })
 
-  it('blocks progress and shows inline errors when the current answer is missing', async () => {
+  it('blocks progress and shows inline errors when required answers are missing', async () => {
     render(<GetStartedForm />)
 
-    fireEvent.click(screen.getByRole('button', { name: /continue/i }))
+    clickContinue()
 
     await waitFor(() => {
       expect(document.getElementById('service_focus-error')).toHaveTextContent(
-        /choose at least one area|constraints not satisfied/i,
+        /choose at least one focus|constraints not satisfied/i,
       )
     })
     expect(trackEvent).toHaveBeenCalledWith(
       'apply_validation_error',
       expect.objectContaining({
         step: 1,
-        step_id: 'services',
+        step_id: 'focus',
         field_name: 'service_focus',
         error_type: 'required',
       }),
     )
 
-    fireEvent.click(screen.getByRole('checkbox', { name: /dental website/i }))
-    fireEvent.click(screen.getByRole('button', { name: /continue/i }))
-    fireEvent.click(screen.getByRole('button', { name: /continue/i }))
+    fireEvent.click(screen.getByRole('checkbox', { name: /more patient calls/i }))
+    clickContinue()
+    clickContinue()
 
     await waitFor(() => {
-      expect(document.getElementById('has_website-error')).toHaveTextContent(
-        /let us know if you have a website/i,
+      expect(document.getElementById('review_link-error')).toHaveTextContent(
+        /add a link we can review/i,
       )
     })
-    expect(trackEvent).toHaveBeenCalledWith(
-      'apply_validation_error',
-      expect.objectContaining({
-        step: 2,
-        step_id: 'website',
-        field_name: 'has_website',
-        error_type: 'required',
-      }),
-    )
-
     expect(fetchSpy).not.toHaveBeenCalled()
   })
 
   it('tracks the first meaningful interaction as an apply form start only once', () => {
     render(<GetStartedForm />)
 
-    fireEvent.click(screen.getByRole('checkbox', { name: /dental website/i }))
-    fireEvent.click(screen.getByRole('button', { name: /continue/i }))
-    fireEvent.click(screen.getByLabelText(/^yes$/i))
+    fireEvent.click(screen.getByRole('checkbox', { name: /more patient calls/i }))
+    clickContinue()
+    fireEvent.click(screen.getByLabelText(/profile only/i))
 
     const applyFormStartCalls = trackEvent.mock.calls.filter(
       ([eventName]) => eventName === 'apply_form_start',
@@ -213,20 +227,22 @@ describe('GetStartedForm', () => {
         form_name: 'growth_application',
         form_location: 'apply_page',
         step: 1,
+        step_id: 'focus',
       }),
     ])
   })
 
-  it('advances to budget after the focused fit questions', async () => {
+  it('advances to fit after the focused intake questions', async () => {
     render(<GetStartedForm />)
 
-    completeStepOne()
+    completeFocus()
+    completeLink()
 
     await waitFor(() => {
       expect(
         screen.getByRole('heading', {
           level: 1,
-          name: /growth investment range/i,
+          name: /after the free audit/i,
         }),
       ).toBeInTheDocument()
     })
@@ -239,30 +255,35 @@ describe('GetStartedForm', () => {
       'apply_step_1_complete',
       expect.objectContaining({
         step: 1,
+        step_id: 'link',
         service_count: 1,
       }),
     )
   })
 
-  it('advances answered steps with Enter and forward arrow shortcuts', async () => {
+  it('allows the optional fit step to be skipped', async () => {
     render(<GetStartedForm />)
 
-    const service = screen.getByRole('checkbox', { name: /dental website/i })
-    fireEvent.click(service)
-    fireEvent.keyDown(service, { key: 'ArrowRight', code: 'ArrowRight' })
+    completeFocus()
+    completeLink()
+    clickContinue()
 
     await waitFor(() => {
       expect(
         screen.getByRole('heading', {
           level: 1,
-          name: /does the practice have a website/i,
+          name: /practice name/i,
         }),
       ).toBeInTheDocument()
     })
+  })
 
-    const yesOption = screen.getByLabelText(/^yes$/i)
-    fireEvent.click(yesOption)
-    fireEvent.keyDown(yesOption, { key: 'Enter', code: 'Enter' })
+  it('advances answered steps with Enter and forward arrow shortcuts', async () => {
+    render(<GetStartedForm />)
+
+    const focus = screen.getByRole('checkbox', { name: /more patient calls/i })
+    fireEvent.click(focus)
+    fireEvent.keyDown(focus, { key: 'ArrowRight', code: 'ArrowRight' })
 
     await waitFor(() => {
       expect(
@@ -283,7 +304,7 @@ describe('GetStartedForm', () => {
       expect(
         screen.getByRole('heading', {
           level: 1,
-          name: /what matters most/i,
+          name: /after the free audit/i,
         }),
       ).toBeInTheDocument()
     })
@@ -292,12 +313,7 @@ describe('GetStartedForm', () => {
   it('keeps native arrow behavior for text inputs and radio groups', async () => {
     render(<GetStartedForm />)
 
-    fireEvent.click(screen.getByRole('checkbox', { name: /dental website/i }))
-    fireEvent.click(screen.getByRole('button', { name: /continue/i }))
-
-    const yesOption = screen.getByLabelText(/^yes$/i)
-    fireEvent.click(yesOption)
-    fireEvent.click(screen.getByRole('button', { name: /continue/i }))
+    completeFocus()
 
     const reviewLinkInput = screen.getByLabelText(/what should we review/i)
     fireEvent.change(reviewLinkInput, {
@@ -321,18 +337,18 @@ describe('GetStartedForm', () => {
       expect(
         screen.getByRole('heading', {
           level: 1,
-          name: /what matters most/i,
+          name: /after the free audit/i,
         }),
       ).toBeInTheDocument()
     })
 
-    const goalOption = screen.getByLabelText(/more patient calls/i)
-    fireEvent.keyDown(goalOption, { key: 'ArrowDown', code: 'ArrowDown' })
+    const budgetOption = screen.getByLabelText(/\$3\.5k to \$5k/i)
+    fireEvent.keyDown(budgetOption, { key: 'ArrowDown', code: 'ArrowDown' })
 
     expect(
       screen.getByRole('heading', {
         level: 1,
-        name: /what matters most/i,
+        name: /after the free audit/i,
       }),
     ).toBeInTheDocument()
   })
@@ -340,13 +356,14 @@ describe('GetStartedForm', () => {
   it('moves back with reverse arrow shortcuts from non-editing controls', async () => {
     render(<GetStartedForm />)
 
-    completeStepOne()
+    completeFocus()
+    completeLink()
 
     await waitFor(() => {
       expect(
         screen.getByRole('heading', {
           level: 1,
-          name: /growth investment range/i,
+          name: /after the free audit/i,
         }),
       ).toBeInTheDocument()
     })
@@ -360,13 +377,104 @@ describe('GetStartedForm', () => {
       expect(
         screen.getByRole('heading', {
           level: 1,
-          name: /what matters most/i,
+          name: /where should we look first/i,
         }),
       ).toBeInTheDocument()
     })
   })
 
-  it('posts the application payload, stores the claim link, and redirects to the apply thank-you state', async () => {
+  it('lets review rows jump back for edits and return directly to review', async () => {
+    render(<GetStartedForm />)
+
+    reachReview()
+
+    await waitFor(() => {
+      expect(
+        screen.getByRole('heading', {
+          level: 1,
+          name: /review and submit/i,
+        }),
+      ).toBeInTheDocument()
+    })
+
+    fireEvent.click(screen.getByRole('button', { name: /edit practice/i }))
+
+    await waitFor(() => {
+      expect(
+        screen.getByRole('heading', {
+          level: 1,
+          name: /practice name/i,
+        }),
+      ).toBeInTheDocument()
+    })
+
+    fireEvent.change(screen.getByLabelText(/practice name/i), {
+      target: { value: 'Prism Dental' },
+    })
+    clickContinue()
+
+    await waitFor(() => {
+      expect(
+        screen.getByRole('heading', {
+          level: 1,
+          name: /review and submit/i,
+        }),
+      ).toBeInTheDocument()
+      expect(screen.getByText('Prism Dental')).toBeInTheDocument()
+    })
+  })
+
+  it('restores a session draft after reload', async () => {
+    const { unmount } = render(<GetStartedForm />)
+
+    completeFocus()
+    fireEvent.change(screen.getByLabelText(/what should we review/i), {
+      target: { value: 'design-prism.com' },
+    })
+
+    await waitFor(() => {
+      expect(
+        window.sessionStorage.getItem('prism_apply_draft_v1'),
+      ).toContain('design-prism.com')
+    })
+
+    unmount()
+    render(<GetStartedForm />)
+
+    await waitFor(() => {
+      expect(
+        screen.getByRole('heading', {
+          level: 1,
+          name: /where should we look first/i,
+        }),
+      ).toBeInTheDocument()
+      expect(screen.getByLabelText(/what should we review/i)).toHaveValue(
+        'design-prism.com',
+      )
+    })
+  })
+
+  it('skips autofocus on mobile viewports', async () => {
+    mockMatchMedia(true)
+    const focusSpy = jest.spyOn(HTMLElement.prototype, 'focus')
+
+    render(<GetStartedForm />)
+
+    completeFocus()
+
+    await waitFor(() => {
+      expect(
+        screen.getByRole('heading', {
+          level: 1,
+          name: /where should we look first/i,
+        }),
+      ).toBeInTheDocument()
+    })
+    expect(focusSpy).not.toHaveBeenCalled()
+    focusSpy.mockRestore()
+  })
+
+  it('posts the application payload, clears the draft, stores the claim link, and redirects', async () => {
     fetchSpy.mockImplementation(() =>
       Promise.resolve(
         createMockResponse({
@@ -382,18 +490,24 @@ describe('GetStartedForm', () => {
     )
     render(<GetStartedForm />)
 
-    completeStepOne()
-    completeContextQuestions()
+    reachReview()
+    fireEvent.change(screen.getByLabelText(/anything important/i), {
+      target: {
+        value: 'We want a cleaner site and better lead flow before summer.',
+      },
+    })
 
     expect(fetchSpy).not.toHaveBeenCalled()
-    expect(trackEvent).toHaveBeenCalledWith(
-      'apply_review_view',
-      expect.objectContaining({
-        form_name: 'growth_application',
-        form_location: 'apply_page',
-        step_id: 'review',
-      }),
-    )
+    await waitFor(() => {
+      expect(trackEvent).toHaveBeenCalledWith(
+        'apply_review_view',
+        expect.objectContaining({
+          form_name: 'growth_application',
+          form_location: 'apply_page',
+          step_id: 'review',
+        }),
+      )
+    })
 
     fireEvent.click(
       screen.getByRole('button', { name: /create growth dashboard/i }),
@@ -417,6 +531,7 @@ describe('GetStartedForm', () => {
       expect(storeApplyDashboardClaimUrl).toHaveBeenCalledWith(
         'https://dashboard.design-prism.com/claim/token_123',
       )
+      expect(window.sessionStorage.getItem('prism_apply_draft_v1')).toBeNull()
     })
 
     expect(trackEvent).toHaveBeenCalledWith(
@@ -453,11 +568,12 @@ describe('GetStartedForm', () => {
     expect(options.headers).toMatchObject({ Accept: 'application/json' })
 
     const formData = options.body as FormData
+    expect(formData.get('focus_labels')).toBe('More patient calls')
     expect(formData.get('has_website')).toBe('yes')
     expect(formData.get('review_link')).toBe('https://design-prism.com')
     expect(formData.get('primary_goal')).toBe('I need more patient calls')
-    expect(formData.get('service_focus')).toBe('Dental website')
-    expect(formData.getAll('service_interest[]')).toEqual(['Dental website'])
+    expect(formData.get('service_focus')).toBe('Google Maps / SEO')
+    expect(formData.getAll('service_interest[]')).toEqual(['Google Maps / SEO'])
     expect(formData.get('budget')).toBe('$3.5k to $5k')
     expect(formData.get('timeline')).toBe('Within 30 days')
     expect(formData.get('company')).toBe('Prism')
@@ -471,33 +587,13 @@ describe('GetStartedForm', () => {
     expect(formData.get('_codex_test')).toBe('false')
   })
 
-  it('keeps the user on step 2 with inline error state when submission fails', async () => {
+  it('keeps the user on review with inline error state when submission fails', async () => {
     fetchSpy.mockImplementation(() =>
       Promise.resolve(createMockResponse({ ok: false, status: 500 })),
     )
     render(<GetStartedForm />)
 
-    completeStepOne()
-
-    fireEvent.click(screen.getByLabelText(/deep growth audit only/i))
-    fireEvent.click(screen.getByRole('button', { name: /continue/i }))
-
-    fireEvent.click(screen.getByLabelText(/asap/i))
-    fireEvent.click(screen.getByRole('button', { name: /continue/i }))
-
-    fireEvent.change(screen.getByLabelText(/practice name/i), {
-      target: { value: 'Prism' },
-    })
-    fireEvent.click(screen.getByRole('button', { name: /continue/i }))
-
-    fireEvent.change(screen.getByLabelText(/full name/i), {
-      target: { value: 'Jordan Ramirez' },
-    })
-    fireEvent.change(screen.getByLabelText(/^email$/i), {
-      target: { value: 'jordan@example.com' },
-    })
-    fireEvent.click(screen.getByRole('button', { name: /continue/i }))
-    fireEvent.click(screen.getByRole('button', { name: /review/i }))
+    reachReview()
 
     fireEvent.click(
       screen.getByRole('button', { name: /create growth dashboard/i }),
@@ -517,8 +613,8 @@ describe('GetStartedForm', () => {
     expect(trackEvent).toHaveBeenCalledWith(
       'apply_submit_attempt',
       expect.objectContaining({
-        budget: 'Deep Growth Audit only',
-        timeline: 'ASAP',
+        budget: '$3.5k to $5k',
+        timeline: 'Within 30 days',
         service_count: 1,
       }),
     )

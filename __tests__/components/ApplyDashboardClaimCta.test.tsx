@@ -29,6 +29,7 @@ describe('ApplyDashboardClaimCta', () => {
       )
     })
     expect(screen.getByText(/your private dashboard is ready/i)).toBeInTheDocument()
+    expect(screen.getByText(/same link is in your inbox/i)).toBeInTheDocument()
   })
 
   it('renders nothing when no claim URL is stored', async () => {
