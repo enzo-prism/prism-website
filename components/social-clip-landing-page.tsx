@@ -355,7 +355,13 @@ function YouTubeCta({ location }: { location: string }) {
 const MARBLE_APP_STORE_URL =
   'https://apps.apple.com/us/app/marble-fit/id6757725234'
 
-function AppStoreCta({ location }: { location: string }) {
+function AppStoreCta({
+  location,
+  tone = 'dark',
+}: {
+  location: string
+  tone?: 'dark' | 'light'
+}) {
   const label = 'download on the app store'
 
   return (
@@ -366,7 +372,12 @@ function AppStoreCta({ location }: { location: string }) {
       onClick={() => trackExternalLinkClick(MARBLE_APP_STORE_URL, label)}
       data-cta-text={label}
       data-cta-location={location}
-      className="group inline-flex min-h-14 w-full items-center justify-center gap-4 border border-foreground bg-foreground px-5 font-mono text-[11px] uppercase tracking-normal text-background transition-colors hover:bg-transparent hover:text-foreground focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-4 focus-visible:ring-offset-background active:translate-y-px sm:w-auto sm:justify-start"
+      className={cn(
+        'group inline-flex min-h-14 w-full items-center justify-center gap-4 border px-5 font-mono text-[11px] uppercase tracking-normal transition-colors focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-4 active:translate-y-px sm:w-auto sm:justify-start',
+        tone === 'light'
+          ? 'border-background bg-background text-foreground hover:bg-transparent hover:text-background focus-visible:ring-offset-foreground'
+          : 'border-foreground bg-foreground text-background hover:bg-transparent hover:text-foreground focus-visible:ring-offset-background',
+      )}
     >
       <PixelishIcon
         src="/pixelish/logo-apple.svg"
@@ -374,104 +385,130 @@ function AppStoreCta({ location }: { location: string }) {
         size={16}
         aria-hidden="true"
         invert={false}
-        className="transition-[filter,transform] group-hover:translate-x-1 group-hover:invert"
+        className={cn(
+          'transition-[filter,transform] group-hover:translate-x-1',
+          tone === 'light'
+            ? 'invert group-hover:invert-0'
+            : 'group-hover:invert',
+        )}
       />
       <span>{label}</span>
     </Link>
   )
 }
 
-function MarbleAppCard() {
-  const specs = [
-    { label: 'platform', value: 'iPhone' },
-    { label: 'category', value: 'Lifting tracker' },
-    { label: 'designed by', value: 'Ex-Apple team' },
-    { label: 'made by', value: 'Prism' },
-  ]
+type MarbleScreen = {
+  src: string
+  alt: string
+  label: string
+}
 
+const marbleScreens: MarbleScreen[] = [
+  {
+    src: '/products/marble/journal-light.png',
+    alt: "Marble journal screen showing today's logged sets",
+    label: 'journal',
+  },
+  {
+    src: '/products/marble/calendar-light.png',
+    alt: 'Marble calendar screen with streak markers',
+    label: 'calendar',
+  },
+  {
+    src: '/products/marble/trends-light.png',
+    alt: 'Marble trends screen with weekly training charts',
+    label: 'trends',
+  },
+]
+
+function MarblePhone({
+  screen,
+  className,
+  priority = false,
+}: {
+  screen: MarbleScreen
+  className?: string
+  priority?: boolean
+}) {
   return (
-    <div className="mx-auto w-full max-w-sm lg:mx-0 lg:ml-auto">
-      <div className="border border-border bg-muted/20 p-6 sm:p-7">
-        <div className="flex items-center gap-4">
-          <span className="flex h-16 w-16 shrink-0 items-center justify-center rounded-[1.15rem] border border-border bg-foreground shadow-[0_8px_30px_-12px_rgba(255,255,255,0.35)]">
-            <PixelishIcon
-              src="/pixelish/emoji-workout.svg"
-              alt=""
-              size={34}
-              aria-hidden="true"
-              invert={false}
-            />
-          </span>
-          <div className="min-w-0">
-            <p className="text-lg font-medium leading-tight">Marble</p>
-            <p className="mt-1 font-mono text-[10px] uppercase leading-none tracking-normal text-muted-foreground">
-              health &amp; fitness
-            </p>
-          </div>
-        </div>
+    <figure className={cn('min-w-0', className)}>
+      <div className="relative mx-auto aspect-[660/1431] w-full overflow-hidden rounded-[2rem] border border-background/25 bg-background p-1.5 shadow-2xl">
+        <span
+          aria-hidden="true"
+          className="absolute left-1/2 top-3 z-10 h-3 w-16 -translate-x-1/2 rounded-full bg-background"
+        />
+        <Image
+          src={screen.src}
+          alt={screen.alt}
+          width={660}
+          height={1431}
+          sizes="(min-width: 1024px) 180px, (min-width: 640px) 28vw, 44vw"
+          priority={priority}
+          className="h-full w-full rounded-[1.6rem] object-cover object-top"
+        />
+      </div>
+      <figcaption className="mt-3 text-center font-mono text-[10px] uppercase leading-none tracking-normal text-background/55">
+        {screen.label}
+      </figcaption>
+    </figure>
+  )
+}
 
-        <dl className="mt-6 grid grid-cols-2 gap-px border border-border bg-border">
-          {specs.map((spec) => (
-            <div key={spec.label} className="bg-black p-4">
-              <dt className="font-mono text-[10px] uppercase leading-none tracking-normal text-muted-foreground">
-                {spec.label}
-              </dt>
-              <dd className="mt-2 text-sm leading-tight text-foreground">
-                {spec.value}
-              </dd>
-            </div>
-          ))}
-        </dl>
+function MarbleProductPreview() {
+  return (
+    <div className="border border-background/10 bg-foreground p-4 text-background sm:p-6 lg:p-7">
+      <div className="flex items-center justify-between gap-4 font-mono text-[10px] uppercase leading-none tracking-normal text-background/55">
+        <span>marble</span>
+        <span>screens</span>
+      </div>
+
+      <div className="mt-6 grid grid-cols-[minmax(0,1fr)_minmax(0,0.72fr)] items-end gap-4 sm:grid-cols-3">
+        <MarblePhone
+          screen={marbleScreens[1]}
+          className="hidden max-w-[10.5rem] -rotate-3 opacity-90 sm:block"
+        />
+        <MarblePhone
+          screen={marbleScreens[0]}
+          priority
+          className="max-w-[13rem] sm:max-w-[12rem] lg:max-w-[13.25rem]"
+        />
+        <MarblePhone
+          screen={marbleScreens[2]}
+          className="max-w-[9.5rem] rotate-3 opacity-90 sm:max-w-[10.5rem]"
+        />
       </div>
     </div>
   )
 }
 
 function ProductsByPrism({ location }: { location: string }) {
-  const features = [
-    'ex-apple team',
-    'built for iphone',
-    'lifting tracker',
-    'founders + athletes',
-  ]
-
   return (
     <section
       aria-labelledby="products-by-prism-heading"
       className="mt-16 border-y border-border py-8 sm:mt-20"
     >
-      <div className="grid gap-10 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:items-center">
+      <div className="grid gap-8 lg:grid-cols-[minmax(0,0.45fr)_minmax(0,1.55fr)] lg:items-center">
         <div>
           <p className="font-mono text-[10px] uppercase leading-5 tracking-normal text-muted-foreground">
             products by prism
           </p>
           <h2
             id="products-by-prism-heading"
-            className="mt-3 text-3xl font-medium leading-tight tracking-normal sm:text-4xl"
+            className="mt-3 max-w-xl text-3xl font-medium leading-tight tracking-normal sm:text-4xl"
           >
-            Marble — the best lifting tracker on iPhone.
+            Marble.
           </h2>
-          <p className="mt-5 max-w-xl text-pretty text-sm leading-6 text-muted-foreground sm:text-base">
-            Designed and engineered by ex-Apple designers and engineers on the
-            Prism team. Marble is the fastest, cleanest way to track every lift
-            — built for the founders and athletes you study here.
+          <p className="mt-4 font-mono text-[10px] uppercase leading-5 tracking-normal text-muted-foreground">
+            train. log. evolve.
           </p>
-          <ul className="mt-6 flex flex-wrap gap-2">
-            {features.map((feature) => (
-              <li
-                key={feature}
-                className="border border-border px-2.5 py-1 font-mono text-[10px] uppercase leading-none tracking-normal text-muted-foreground"
-              >
-                {feature}
-              </li>
-            ))}
-          </ul>
-          <div className="mt-8">
-            <AppStoreCta location={location} />
-          </div>
         </div>
 
-        <MarbleAppCard />
+        <div className="overflow-hidden border border-border bg-muted/20 p-2">
+          <MarbleProductPreview />
+          <div className="border-x border-b border-background/10 bg-foreground px-4 pb-4 text-background sm:flex sm:justify-end sm:px-6 sm:pb-6 lg:px-7 lg:pb-7">
+            <AppStoreCta location={`${location} preview`} tone="light" />
+          </div>
+        </div>
       </div>
     </section>
   )

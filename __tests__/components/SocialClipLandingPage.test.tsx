@@ -206,6 +206,65 @@ describe('SocialClipLandingPage analytics', () => {
     )
   })
 
+  it('shows a minimal Marble product section with real app screenshots', () => {
+    render(
+      <SocialClipLandingPage
+        channel={{
+          label: 'TikTok',
+          handle: '@the_design_prism',
+          href: 'https://www.tiktok.com/@the_design_prism',
+          iconSrc: '/pixelish/socials-tiktok.svg',
+        }}
+      />,
+    )
+
+    expect(
+      screen.getByRole('heading', {
+        name: /^Marble\.$/i,
+      }),
+    ).toBeInTheDocument()
+    expect(screen.getByText(/^screens$/i)).toBeInTheDocument()
+    expect(screen.getByText(/train\. log\. evolve\./i)).toBeInTheDocument()
+    expect(screen.queryByText(/real app screens/i)).not.toBeInTheDocument()
+    expect(screen.queryByText(/works offline/i)).not.toBeInTheDocument()
+    expect(
+      screen.queryByText(/A quiet, offline workout journal/i),
+    ).not.toBeInTheDocument()
+    expect(screen.getByAltText(/Marble journal screen/i)).toHaveAttribute(
+      'data-src',
+      '/products/marble/journal-light.png',
+    )
+    expect(screen.getByAltText(/Marble calendar screen/i)).toHaveAttribute(
+      'data-src',
+      '/products/marble/calendar-light.png',
+    )
+    expect(screen.getByAltText(/Marble trends screen/i)).toHaveAttribute(
+      'data-src',
+      '/products/marble/trends-light.png',
+    )
+
+    const appStoreActions = screen.getAllByRole('link', {
+      name: /download on the app store/i,
+    })
+
+    expect(appStoreActions).toHaveLength(1)
+    expect(appStoreActions[0]).toHaveAttribute(
+      'href',
+      'https://apps.apple.com/us/app/marble-fit/id6757725234',
+    )
+    expect(appStoreActions[0]).toHaveAttribute(
+      'data-cta-location',
+      'tiktok landing products preview',
+    )
+
+    fireEvent.click(appStoreActions[0])
+
+    expect(trackExternalLinkClick).toHaveBeenCalledWith(
+      'https://apps.apple.com/us/app/marble-fit/id6757725234',
+      'download on the app store',
+    )
+  })
+
   it('hides section detail copy when configured', () => {
     render(
       <SocialClipLandingPage
