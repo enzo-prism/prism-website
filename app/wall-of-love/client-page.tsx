@@ -8,6 +8,8 @@ import { trackCTAClick } from '@/utils/analytics'
 import PixelishImg from '@/components/pixelish/PixelishImg'
 import HeroBackgroundLoop from '@/components/HeroBackgroundLoop'
 import {
+  formatSocialHandle,
+  isClientQuote,
   quotesData,
   renderFormattedText,
   takeawaysData,
@@ -145,14 +147,28 @@ export default function WallOfLoveClientPage() {
           <div className="space-y-4 sm:space-y-5 columns-1 md:columns-2 xl:columns-3 gap-5">
             {feed.map((item) => {
               const isQuote = item.kind === 'quote'
+              const quote = isQuote ? (item.data as Quote) : null
+              const isClient = quote ? isClientQuote(quote) : false
+
+              // Paying clients show their real name + a "client" marker; every
+              // other voice is a social comment, surfaced as an @handle.
+              const sourceName = isQuote
+                ? (item.data as Quote).client
+                : (item.data as Takeaway).handle
+              const displayName = isClient
+                ? sourceName
+                : formatSocialHandle(sourceName)
+              const monogram =
+                displayName.replace(/^@/, '').charAt(0).toUpperCase() || '•'
+
               return (
                 <blockquote
                   key={`${item.kind}-${item.data.id}`}
                   className="mb-4 w-full break-inside-avoid overflow-hidden rounded-md border border-border/60 bg-card/30 p-4 shadow-none backdrop-blur-sm sm:p-5"
                   aria-label={
-                    isQuote
-                      ? `Testimonial from ${item.data.client}`
-                      : `Viewer takeaway from @${(item.data as Takeaway).handle}`
+                    isClient
+                      ? `Testimonial from ${displayName}, Prism client`
+                      : `Comment from ${displayName}`
                   }
                 >
                   <p className="text-[15px] leading-relaxed text-foreground sm:text-base">
@@ -164,12 +180,30 @@ export default function WallOfLoveClientPage() {
                     )}
                     &rdquo;
                   </p>
-                  <footer className="mt-3 flex items-center justify-end text-right">
-                    <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-muted-foreground font-pixel sm:text-xs">
-                      {isQuote
-                        ? (item.data as Quote).client
-                        : `@${(item.data as Takeaway).handle}`}
-                    </p>
+                  <footer className="mt-4 flex items-center gap-2.5 border-t border-border/40 pt-3">
+                    <span
+                      aria-hidden="true"
+                      className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-border/60 bg-muted/40 text-[11px] font-semibold text-muted-foreground"
+                    >
+                      {monogram}
+                    </span>
+                    <div className="flex min-w-0 flex-wrap items-center gap-x-1.5 gap-y-1">
+                      {isClient ? (
+                        <>
+                          <span className="truncate text-sm font-medium text-foreground">
+                            {displayName}
+                          </span>
+                          <span className="inline-flex items-center rounded-full border border-border/60 bg-muted/30 px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-[0.1em] text-muted-foreground">
+                            client
+                          </span>
+                        </>
+                      ) : (
+                        <span className="truncate text-sm font-medium text-foreground">
+                          <span className="text-muted-foreground">@</span>
+                          {displayName.replace(/^@/, '')}
+                        </span>
+                      )}
+                    </div>
                   </footer>
                 </blockquote>
               )

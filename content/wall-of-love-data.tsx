@@ -675,6 +675,19 @@ export const renderFormattedText = (text: string): ReactNode[] => {
   })
 }
 
+/**
+ * Quotes sourced from social comments store the author's handle in `client`.
+ * Quotes from paying website clients store a real name plus the "website
+ * client" company tag. The Wall of Love surfaces social authors as @handles
+ * and real clients with their name + a "client" marker.
+ */
+export const isClientQuote = (quote: Quote): boolean =>
+  quote.company === "website client"
+
+/** Normalize a raw handle into a single, deduplicated `@handle` form. */
+export const formatSocialHandle = (rawHandle: string): string =>
+  `@${rawHandle.replace(/^@+/, "").trim()}`
+
 const consentSafeQuotes = quotesData.filter((quote) => !quote.requiresConsent)
 const heroSpotlightQuotes = consentSafeQuotes.filter((quote) => quote.heroSpotlight)
 const pinnedHeroCandidates = consentSafeQuotes.filter((quote) => quote.pinned && !quote.heroSpotlight)
