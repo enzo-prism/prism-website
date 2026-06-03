@@ -28,17 +28,21 @@ export const coreRouteHeroFrameClassName =
 export const coreRoutePanelClassName =
   'rounded-[2rem] border border-white/12 bg-black/35'
 
+// Shared premium hover language across all CTA variants: a gentle lift, a warm
+// gold-tinted glow (#d8bc79), and the site's signature easing curve — matching
+// the carousel/card motion. Resting state is intentionally left untouched so
+// locked visual snapshots stay stable; only hover/active/transition change.
 export const corePrimaryActionClassName =
-  'inline-flex min-h-12 items-center gap-2 border-b border-[#f5f0e8] pb-1 text-sm font-semibold uppercase tracking-[0.18em] text-[#f5f0e8] transition-colors hover:text-white focus-visible:rounded-sm focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-white/25 focus-visible:ring-offset-4 focus-visible:ring-offset-black'
+  'inline-flex min-h-12 items-center gap-2 border-b border-[#f5f0e8] pb-1 text-sm font-semibold uppercase tracking-[0.18em] text-[#f5f0e8] transition-[color,border-color,transform] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-px hover:border-[#d8bc79] hover:text-white focus-visible:rounded-sm focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-white/25 focus-visible:ring-offset-4 focus-visible:ring-offset-black motion-reduce:transition-none'
 
 export const coreSecondaryActionClassName =
-  'inline-flex min-h-12 items-center justify-center rounded-full border border-white/16 px-5 text-sm font-semibold uppercase tracking-[0.16em] text-[#c9c1b6] transition-colors hover:border-white/30 hover:bg-white/[0.04] hover:text-[#f5f0e8] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-white/25 focus-visible:ring-offset-4 focus-visible:ring-offset-black'
+  'inline-flex min-h-12 items-center justify-center rounded-full border border-white/16 px-5 text-sm font-semibold uppercase tracking-[0.16em] text-[#c9c1b6] transition-[transform,border-color,background-color,color,box-shadow] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-0.5 hover:border-[#d8bc79]/40 hover:bg-white/[0.06] hover:text-[#f5f0e8] hover:shadow-[0_18px_42px_-28px_rgba(216,188,121,0.55)] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-white/25 focus-visible:ring-offset-4 focus-visible:ring-offset-black active:translate-y-0 motion-reduce:transition-none'
 
 export const coreHeroPrimaryActionClassName =
-  'inline-flex min-h-14 w-full items-center justify-center rounded-xl border border-[#f5f0e8]/70 bg-[#f5f0e8] px-6 font-sans text-[0.97rem] font-medium tracking-[-0.01em] text-[#050505] shadow-[inset_0_1px_0_rgba(255,255,255,0.45),0_20px_40px_-26px_rgba(245,240,232,0.72)] transition-[transform,background-color,border-color,box-shadow] hover:border-white hover:bg-white hover:text-[#050505] hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.55),0_24px_42px_-24px_rgba(245,240,232,0.82)] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[#f5f0e8]/35 focus-visible:ring-offset-4 focus-visible:ring-offset-black active:translate-y-px sm:min-w-[12.5rem] sm:w-auto'
+  'inline-flex min-h-14 w-full items-center justify-center rounded-xl border border-[#f5f0e8]/70 bg-[#f5f0e8] px-6 font-sans text-[0.97rem] font-medium tracking-[-0.01em] text-[#050505] shadow-[inset_0_1px_0_rgba(255,255,255,0.45),0_20px_40px_-26px_rgba(245,240,232,0.72)] transition-[transform,background-color,border-color,box-shadow] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-0.5 hover:border-white hover:bg-white hover:text-[#050505] hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.6),0_30px_60px_-26px_rgba(216,188,121,0.45),0_22px_44px_-24px_rgba(245,240,232,0.85)] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[#f5f0e8]/35 focus-visible:ring-offset-4 focus-visible:ring-offset-black active:translate-y-px motion-reduce:transition-none sm:min-w-[12.5rem] sm:w-auto'
 
 export const coreHeroSecondaryActionClassName =
-  'inline-flex min-h-14 w-full items-center justify-center rounded-xl border border-white/14 bg-white/[0.03] px-6 font-sans text-[0.97rem] font-medium tracking-[-0.01em] text-[#f5f0e8] transition-[transform,background-color,border-color] hover:border-white/28 hover:bg-white/[0.07] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-white/25 focus-visible:ring-offset-4 focus-visible:ring-offset-black active:translate-y-px sm:min-w-[12.5rem] sm:w-auto'
+  'inline-flex min-h-14 w-full items-center justify-center rounded-xl border border-white/14 bg-white/[0.03] px-6 font-sans text-[0.97rem] font-medium tracking-[-0.01em] text-[#f5f0e8] transition-[transform,background-color,border-color,box-shadow] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-0.5 hover:border-[#d8bc79]/35 hover:bg-white/[0.07] hover:shadow-[0_24px_48px_-30px_rgba(216,188,121,0.5)] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-white/25 focus-visible:ring-offset-4 focus-visible:ring-offset-black active:translate-y-px motion-reduce:transition-none sm:min-w-[12.5rem] sm:w-auto'
 
 type CoreActionLinkProps = {
   href: string
