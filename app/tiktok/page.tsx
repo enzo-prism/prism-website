@@ -1,13 +1,13 @@
 import type { Metadata } from 'next'
 
 import { WebPageSchema } from '@/components/schema-markup'
-import TikTokLandingPage from './tiktok-landing-page'
+import SocialThanksPage from '@/components/social-thanks-page'
 import { buildRouteMetadata } from '@/lib/seo/metadata'
 
-const PAGE_TITLE = 'prism on tiktok | prism'
+const PAGE_TITLE = 'Thanks for supporting Prism on TikTok'
 const PAGE_DESCRIPTION =
-  'A short Prism social page for founders: get inspired, study the patterns, ' +
-  'then watch Prism on YouTube to learn practical AI tools and tactics.'
+  'Thanks for supporting Prism on TikTok. Go deeper with Prism guides ' +
+  'for founders on YouTube, download Marble for iOS, or become a client.'
 const CANONICAL_URL = 'https://www.design-prism.com/tiktok'
 
 export const metadata: Metadata = buildRouteMetadata({
@@ -21,7 +21,13 @@ export const metadata: Metadata = buildRouteMetadata({
 export default function TikTokPage() {
   return (
     <>
-      <TikTokLandingPage />
+      <SocialThanksPage
+        channel={{
+          label: 'TikTok',
+          handle: '@the_design_prism',
+          href: 'https://www.tiktok.com/@the_design_prism',
+        }}
+      />
       <WebPageSchema
         name={PAGE_TITLE}
         description={PAGE_DESCRIPTION}

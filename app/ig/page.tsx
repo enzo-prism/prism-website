@@ -1,12 +1,12 @@
 import type { Metadata } from 'next'
 import { WebPageSchema } from '@/components/schema-markup'
-import InstagramLandingPage from './instagram-landing-page'
+import SocialThanksPage from '@/components/social-thanks-page'
 import { buildRouteMetadata } from '@/lib/seo/metadata'
 
-const PAGE_TITLE = 'instagram clip credits | prism'
+const PAGE_TITLE = 'Thanks for supporting Prism on Instagram'
 const PAGE_DESCRIPTION =
-  'A short Prism social page for founders: get inspired, study the patterns, ' +
-  'then watch Prism on YouTube to learn practical AI tools and tactics.'
+  'Thanks for supporting Prism on Instagram. Go deeper with Prism guides ' +
+  'for founders on YouTube, download Marble for iOS, or become a client.'
 const CANONICAL_URL = 'https://www.design-prism.com/ig'
 
 export const metadata: Metadata = buildRouteMetadata({
@@ -20,7 +20,13 @@ export const metadata: Metadata = buildRouteMetadata({
 export default function IGPage() {
   return (
     <>
-      <InstagramLandingPage />
+      <SocialThanksPage
+        channel={{
+          label: 'Instagram',
+          handle: '@the_design_prism',
+          href: 'https://www.instagram.com/the_design_prism/',
+        }}
+      />
       <WebPageSchema
         name={PAGE_TITLE}
         description={PAGE_DESCRIPTION}

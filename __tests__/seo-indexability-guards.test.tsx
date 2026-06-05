@@ -11,9 +11,9 @@ jest.mock("@/app/ai-website-launch/client-page", () => ({
     return null
   },
 }))
-jest.mock("@/app/ig/instagram-landing-page", () => ({
+jest.mock("@/components/social-thanks-page", () => ({
   __esModule: true,
-  default: function MockInstagramLandingPage() {
+  default: function MockSocialThanksPage() {
     return null
   },
 }))
@@ -44,12 +44,6 @@ jest.mock("@/app/offers/summer-website-makeover/client-page", () => ({
 jest.mock("@/app/pricing-dental/client-page", () => ({
   __esModule: true,
   default: function MockPricingDentalClientPage() {
-    return null
-  },
-}))
-jest.mock("@/app/tiktok/tiktok-landing-page", () => ({
-  __esModule: true,
-  default: function MockTikTokLandingPage() {
     return null
   },
 }))

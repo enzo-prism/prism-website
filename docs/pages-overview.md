@@ -65,8 +65,8 @@ Quick reference for the pages we edit most often.
   - `/models`
 - These routes should keep `robots: { index: false, follow: false }` and stay excluded from `app/sitemap.ts`.
 - Do not use these as canonical acquisition pages for SEO campaigns. Point search-facing users toward durable commercial surfaces like `/services`, `/websites`, `/ads`, `/local-listings`, `/pricing`, `/ai-seo-services`, and `/seo`.
-- `/ig` and `/tiktok` are intentionally ultra-minimal social landing pages with no global floating assistant. Their shared page uses sparse text, rules, ranked lists, pixel icons, and a compact Products by Prism block for Marble that may show real app screenshots sourced from the official Marble site. The page lists founder/business-builder credits from the Forbes 2026 richest-people snapshot and athlete credits from ESPN's top athletes since 2000 list, while route-level copy/actions can adapt to the channel (`/tiktok` is the more conversion-aware handoff surface).
-- These social routes should keep explicit CTA tracking on the visible action chips, source links, and header profile link so inbound social traffic is measurable in GA4/Vercel without adding extra UI chrome.
+- `/ig` and `/tiktok` are intentionally ultra-minimal social thank-you pages with no global floating assistant. Their shared page (`components/social-thanks-page.tsx`) is a single dark, vertically centered column: a "Thanks for supporting us on {platform}" headline plus exactly four action cards — Prism guides for founders on YouTube, the Marble iOS app on the App Store, the `/wall-of-love` proof page, and a become-a-client handoff into `/get-started`. Keep copy on these pages minimal; do not reintroduce ranked credit lists, product screenshot showcases, or extra sections.
+- These social routes should keep explicit CTA tracking on the action cards and the header profile link so inbound social traffic is measurable in GA4/Vercel without adding extra UI chrome.
 
 ## Websites (`app/websites/page.tsx`)
 
