@@ -23,12 +23,12 @@ export const GROWTH_PROCESS_STEPS: GrowthProcessStep[] = [
   },
   {
     stage: '02',
-    label: 'Get Light Audit',
+    label: 'Get Growth Audit',
     icon: 'https://cdn.lordicon.com/raxyqlxo.json',
   },
   {
     stage: '03',
-    label: 'Clear next step',
+    label: 'Clear next move',
     icon: 'https://cdn.lordicon.com/rusvgrhw.json',
   },
 ]
@@ -44,7 +44,7 @@ export default function GrowthProcessSection() {
 
       <div className="mx-auto flex max-w-5xl flex-col items-center text-center">
         <h1 className="max-w-[16ch] text-balance font-sans text-[clamp(2.4rem,6vw,4.25rem)] font-medium leading-[1.02] tracking-[-0.05em] text-[#F5F5F2]">
-          Three steps to your free Light Audit.
+          Three steps to your free Growth Audit.
         </h1>
 
         <ol className="mt-14 grid w-full grid-cols-1 gap-12 sm:mt-20 sm:grid-cols-3 sm:gap-6">

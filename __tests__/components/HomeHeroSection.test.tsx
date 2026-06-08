@@ -74,18 +74,18 @@ describe('HomeHeroSection', () => {
       'ellipse_at_24%_48%',
     )
 
-    expect(screen.getByText(/dental growth/i)).toBeInTheDocument()
+    expect(screen.getByText(/business growth/i)).toBeInTheDocument()
     expect(
       screen.getByRole('heading', {
         level: 1,
-        name: /get found\. get trusted\. get booked\./i,
+        name: /growth, built for your business\./i,
       }),
     ).toBeInTheDocument()
     expect(
-      screen.getByText(/premium growth systems for modern dental practices\./i),
+      screen.getByText(/websites, search, reviews, content, ads, tracking/i),
     ).toBeInTheDocument()
     expect(screen.getByTestId('home-hero-social-proof')).toHaveTextContent(
-      /20\+ reviews from dental and local leaders/i,
+      /20\+ reviews from founders, doctors, operators, and local leaders/i,
     )
     expect(screen.getByLabelText(/5 star rating/i)).toBeInTheDocument()
 
@@ -101,7 +101,7 @@ describe('HomeHeroSection', () => {
     expect(iconSrcs).toContain('/home-hero/logos/openai.svg')
 
     expect(
-      screen.getByRole('link', { name: /free practice audit/i }),
+      screen.getByRole('link', { name: /free growth audit/i }),
     ).toHaveAttribute('href', '/get-started')
     expect(
       screen.getByRole('link', { name: /see the system/i }),
@@ -109,7 +109,7 @@ describe('HomeHeroSection', () => {
 
     expect(
       screen.getByRole('link', {
-        name: /5 star rating 20\+ reviews from dental and local leaders results/i,
+        name: /5 star rating 20\+ reviews from founders, doctors, operators, and local leaders results/i,
       }),
     ).toHaveAttribute('href', '/case-studies')
     expect(

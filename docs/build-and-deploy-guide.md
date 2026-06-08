@@ -2,7 +2,7 @@
 
 Keep Prism's Next.js builds predictable by following this checklist whenever you touch UI code or ship to Vercel.
 
-Production is intentionally single-path: GitHub Actions runs the release gates and publishes with `vercel deploy --prod --yes`. `vercel.json` disables Vercel Git auto-deploy on `main` so production does not get duplicate deploys from both GitHub Actions and the Vercel Git integration.
+Production is intentionally single-path: GitHub Actions publishes with `vercel deploy --prod --yes`. `vercel.json` disables Vercel Git auto-deploy on `main` so production does not get duplicate deploys from both GitHub Actions and the Vercel Git integration. The locked-route screenshot job still runs in CI, but it is temporarily non-blocking while baselines stabilize; typecheck, pricing verification, and deploy remain blocking.
 
 ## Required toolchain
 
@@ -48,6 +48,7 @@ Production is intentionally single-path: GitHub Actions runs the release gates a
 - `vercel pull --yes --environment=production` to sync production env vars locally.
 - `pnpm verify:pricing-consistency` before build/deploy to block pricing drift.
 - Preview deployment: `vercel deploy --yes`
+- Preview access check: `curl -I -L <preview-url>` should return `HTTP 200` directly. If the response points at `_vercel_sso` or says "Authentication Required", fix Vercel preview protection before sending the link for review.
 - Production override/recovery deployment: `vercel deploy --prod --yes`
 - Deployment inventory / debugging:
   - `vercel ls`
@@ -64,16 +65,16 @@ Production is intentionally single-path: GitHub Actions runs the release gates a
 - SEO sign-off when route intent/canonicals changed:
   - `pnpm exec jest __tests__/sitemap.test.ts __tests__/seo-indexability-guards.test.tsx --runInBand`
   - `pnpm seo:inventory && pnpm seo:lint`
-- Search-surface sign-off when dental-first visibility changed:
+- Search-surface sign-off when growth-first visibility changed:
   - sitemap stays in the expected narrow range and excludes noindex routes
-  - `public/llms.txt` includes only canonical dental growth, proof, and curated learning URLs
+  - `public/llms.txt` includes only canonical growth, specialty, proof, and curated learning URLs
   - representative broad pages such as `/apps`, `/software`, `/openai`, and `/local-seo-agency` are noindex
   - representative dental pages such as `/dental-website`, `/dental-practice-seo-expert`, `/google/dental-ads`, and `/ai-agents/dental` remain indexable
 
 ## CI parity notes
 
 - Production workflow order is:
-  1. `UI Lock Screenshots` (`pnpm test:visual:locked`)
+  1. `UI Lock Screenshots` (`pnpm test:visual:locked`, currently `continue-on-error: true`)
   2. `Build and Deploy` (`pnpm typecheck`, `vercel pull --environment=production`, `pnpm verify:pricing-consistency`, `vercel deploy --prod --yes`)
 - Keep local troubleshooting aligned with that order.
 - If production deploy fails, reproduce locally with `pnpm build` first. Most failures are deterministic once you mirror the production bundle.

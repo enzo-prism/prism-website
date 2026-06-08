@@ -253,7 +253,7 @@ export default function PricingPageClient() {
             <CoreSectionHeading
               eyebrow="Why this path"
               title="Fixed plans create false confidence before diagnosis."
-              description="Two practices can need the same outcome and completely different work. Prism starts with the Growth Dashboard and Light Audit so the highest-leverage opportunities shape the investment."
+              description="Two businesses can need the same outcome and completely different work. Prism starts with the Growth Dashboard and Light Audit so the highest-leverage opportunities shape the investment."
               titleClassName="max-w-[12ch]"
             />
           </div>

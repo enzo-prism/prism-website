@@ -71,10 +71,10 @@ describe('/get-started page', () => {
     expect(
       screen.getByRole('link', { name: /create free growth dashboard/i }),
     ).toHaveAttribute('href', '/apply')
-    expect(screen.getByText(/focus/i)).toBeInTheDocument()
+    expect(screen.getAllByText(/focus/i).length).toBeGreaterThan(0)
     expect(screen.getByText(/6 steps/i)).toBeInTheDocument()
     expect(
-      screen.getAllByText(/every real practice submission receives a light audit/i)
+      screen.getAllByText(/every real business submission receives a growth audit/i)
         .length,
     ).toBeGreaterThan(0)
   })

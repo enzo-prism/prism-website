@@ -16,10 +16,12 @@ jest.mock('next/link', () => ({
   default: function MockNextLink({
     href,
     children,
+    prefetch: _prefetch,
     ...props
   }: {
     href: string
     children: React.ReactNode
+    prefetch?: boolean
     [key: string]: unknown
   }) {
     return (
@@ -48,7 +50,7 @@ describe('GrowthProcessSection', () => {
     expect(
       screen.getByRole('heading', {
         level: 1,
-        name: /three steps to your free light audit/i,
+        name: /three steps to your free growth audit/i,
       }),
     ).toBeInTheDocument()
 

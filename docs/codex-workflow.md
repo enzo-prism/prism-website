@@ -6,7 +6,7 @@ Guidance for future Codex sessions so we can ship faster without rediscovering c
 
 ## 0. Start here
 
-Before changing broad behavior, read `docs/project-overview.md`. It is the current map for the dental-first project shape, source-of-truth files, search visibility policy, common change playbooks, and release truth.
+Before changing broad behavior, read `docs/project-overview.md`. It is the current map for the growth-first project shape, source-of-truth files, search visibility policy, common change playbooks, and release truth.
 
 Default operating loop:
 
@@ -24,7 +24,7 @@ Default operating loop:
 - **Styling** – Tailwind v4 classes inline; no styled-components.
 - **UI kit** – `components/ui/*` (Button, Carousel, etc.). Import from there instead of re‑implementing.
 - **Forms** – Marketing forms post to [Formspree](https://formspree.io/) using the shared `useFormValidation` hook (HTML5 validation + client-side fetch + redirect). Keep actions and field names explicit so PMs can read submissions quickly.
-- **Search** – `lib/seo/search-visibility.ts` is the shared policy for indexable routes and blog posts. New routes/posts should default to noindex unless they support dental growth systems.
+- **Search** – `lib/seo/search-visibility.ts` is the shared policy for indexable routes and blog posts. New routes/posts should default to noindex unless they support Prism's growth system, proof, or a deliberate specialty cluster.
 - **Metadata** – Static routes should use `buildRouteMetadata` from `lib/seo/metadata.ts` so canonical URLs, titles, Open Graph, Twitter, and robots stay aligned.
 
 ## 1.1 Project change map
@@ -48,6 +48,8 @@ When the user asks to "analyze the project" or "update the project docs", do a s
 3. Check stale policy terms with `rg`, especially retired pricing phrases, broad assistant routing, old sales-chat env vars, obsolete image-component migration advice, and calendar/demo-booking CTAs.
 4. Update existing docs in place. Do not add a new top-level doc unless the user explicitly asks for one.
 5. For docs-only changes, run the nearest cheap validation (`pnpm design:lint` if the design contract moved, focused Jest if public machine-readable files changed, or a targeted `rg` stale-term check when only prose changed).
+
+Homepage proof-card reminder: `HomeDentistWinsSection` / `HomeDentistWinsCarousel` are legacy names for the current mixed-client proof carousel. The live homepage card art is abstract (`data-client-win-abstract`) and image-free; do not bring back the old portrait/photo color-toggle behavior unless the design direction changes and the homepage carousel tests are updated.
 
 ## 1.2 ElevenLabs widget workflow
 

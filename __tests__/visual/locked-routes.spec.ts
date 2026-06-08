@@ -93,7 +93,7 @@ const lockedRoutes = [
   {
     name: 'home',
     path: '/',
-    readyHeading: /get found\. get trusted\. get booked\./i,
+    readyHeading: /growth, built for your business\./i,
   },
   { name: 'about', path: '/about', readyHeading: /built by enzo sison\./i },
   {
@@ -104,7 +104,7 @@ const lockedRoutes = [
   {
     name: 'get-started',
     path: '/get-started',
-    readyHeading: /three steps to your free light audit\./i,
+    readyHeading: /three steps to your free growth audit\./i,
     // The hero step icons are looping Lordicon (lottie) animations, so their
     // rendered frame is non-deterministic. Mask them to keep the locked layout
     // snapshot stable while still locking the surrounding hero structure.
@@ -151,7 +151,7 @@ test('home promise section snapshot stays stable', async ({ page }) => {
 
   const systemHeading = page.getByRole('heading', {
     level: 2,
-    name: /found\. trusted\. booked\./i,
+    name: /found\. trusted\. chosen\./i,
   })
   await expect(systemHeading).toBeVisible({ timeout: 20_000 })
 
@@ -178,7 +178,7 @@ test('home problem section snapshot stays stable', async ({ page }) => {
 
   const problemHeading = page.getByRole('heading', {
     level: 2,
-    name: /patients decide fast/i,
+    name: /growth leaks happen everywhere/i,
   })
   await expect(problemHeading).toBeVisible({ timeout: 20_000 })
 
@@ -209,7 +209,7 @@ test('home services section snapshot stays stable', async ({ page }) => {
 
   const servicesHeading = page.getByRole('heading', {
     level: 2,
-    name: /one system\. seven parts\./i,
+    name: /one growth system\. seven parts\./i,
   })
   await expect(servicesHeading).toBeVisible({ timeout: 20_000 })
 
@@ -239,7 +239,7 @@ test('home proof section snapshot stays stable', async ({ page }) => {
 
   const proofHeading = page.getByRole('heading', {
     level: 2,
-    name: /dental proof/i,
+    name: /proof across markets/i,
   })
   await expect(proofHeading).toBeVisible({ timeout: 20_000 })
 
@@ -278,12 +278,12 @@ test('home promise and service cards stay contained across responsive breakpoint
 
     const sections = [
       {
-        heading: /found\. trusted\. booked\./i,
+        heading: /found\. trusted\. chosen\./i,
         cardSelector: '[data-home-promise-card]',
         expectedCount: 3,
       },
       {
-        heading: /one system\. seven parts\./i,
+        heading: /one growth system\. seven parts\./i,
         cardSelector: '[data-home-service-card]',
         expectedCount: 7,
       },
@@ -368,14 +368,14 @@ test('home hero layout stays readable across responsive breakpoints', async ({
     await expect(
       page.getByRole('heading', {
         level: 1,
-        name: /get found\. get trusted\. get booked\./i,
+        name: /growth, built for your business\./i,
       }),
     ).toBeVisible({ timeout: 20_000 })
 
     const hero = page.locator('#homepage-hero')
     await expect(hero).toBeVisible({ timeout: 20_000 })
     await expect(
-      hero.getByRole('link', { name: /free practice audit/i }),
+      hero.getByRole('link', { name: /free growth audit/i }),
     ).toBeVisible({
       timeout: 20_000,
     })

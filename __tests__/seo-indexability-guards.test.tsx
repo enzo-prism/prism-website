@@ -142,7 +142,7 @@ describe("SEO indexability guards", () => {
     ]))
   })
 
-  it("keeps the shared search policy dental-first", () => {
+  it("keeps the shared search policy growth-first with dental specialty routes", () => {
     expect(isRouteIndexable("/dental-website")).toBe(true)
     expect(isRouteIndexable("/dental-practice-seo-expert")).toBe(true)
     expect(isRouteIndexable("/ai-agents/dental")).toBe(true)
@@ -151,7 +151,7 @@ describe("SEO indexability guards", () => {
     expect(isRouteIndexable("/why-nonprofits-love-prism")).toBe(false)
   })
 
-  it("curates blog posts for dental and local-growth search intent", () => {
+  it("curates blog posts for growth, dental, and local search intent", () => {
     expect(isBlogPostIndexable("dental-seo-guide")).toBe(true)
     expect(isBlogPostIndexable("ai-search-for-dental-practice")).toBe(true)
     expect(isBlogPostIndexable("openclaw-manus-codex-scaling-business")).toBe(false)

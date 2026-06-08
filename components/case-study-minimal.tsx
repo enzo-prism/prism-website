@@ -80,7 +80,7 @@ export default function MinimalCaseStudyPage({ slug }: MinimalCaseStudyPageProps
             homeMobileAlt={`Mobile view of the ${caseStudy.client} site`}
             primaryCta={{
               href: '/get-started',
-              label: `Start a free practice audit from ${slug} case study`,
+              label: `Start a free growth audit from ${slug} case study`,
               text: 'Free Practice Audit',
             }}
           />
@@ -143,7 +143,7 @@ export default function MinimalCaseStudyPage({ slug }: MinimalCaseStudyPageProps
               <Button asChild className="rounded-full px-5">
                 <TrackedLink
                   href="/get-started"
-                  label={`Start a free practice audit from ${slug} case study footer`}
+                  label={`Start a free growth audit from ${slug} case study footer`}
                   location={`${trackedLocation} footer`}
                 >
                   <span className="inline-flex items-center gap-2">

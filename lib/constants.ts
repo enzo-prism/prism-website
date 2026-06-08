@@ -26,7 +26,7 @@ export const LOGO_SIZES = {
   small: { width: 40, height: 40 },
 } as const 
 
-export const FREE_AUDIT_CTA_TEXT = "Get a free practice audit"
+export const FREE_AUDIT_CTA_TEXT = "Get a free growth audit"
 
 export type NavItem = { label: string; href: string }
 

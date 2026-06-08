@@ -67,7 +67,7 @@ export const CANONICAL_PRICING_OFFERS: Record<PricingOfferId, PricingOffer> = {
     priceKind: "free",
     priceLabel: GROWTH_DASHBOARD_PRICE_LABEL,
     description:
-      "A free starting point that gives Prism the context to review your practice and prepare a focused Light Audit.",
+      "A free starting point that gives Prism the context to review your business and prepare a focused Light Audit.",
     primaryCta: PRICING_PRIMARY_CTA,
     secondaryCta: PRICING_SECONDARY_CTA,
   },
@@ -104,7 +104,7 @@ export const CANONICAL_PRICING_OFFERS: Record<PricingOfferId, PricingOffer> = {
     priceKind: "starting_at",
     priceLabel: GROWTH_SPRINT_STARTING_PRICE_LABEL,
     description:
-      "A focused sprint scoped from your audit around the highest-leverage opportunities for patient growth.",
+      "A focused sprint scoped from your audit around the highest-leverage opportunities for qualified growth.",
     primaryCta: PRICING_PRIMARY_CTA,
   },
   ongoing_growth_partner: {

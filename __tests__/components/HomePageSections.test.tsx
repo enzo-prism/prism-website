@@ -7,10 +7,12 @@ jest.mock('next/link', () => ({
   default: function MockNextLink({
     href,
     children,
+    prefetch: _prefetch,
     ...props
   }: {
     href: string | { pathname?: string }
     children: React.ReactNode
+    prefetch?: boolean
     [key: string]: unknown
   }) {
     return (
@@ -46,43 +48,43 @@ jest.mock('@/components/home/DeferredAsciiHeroBackdrop', () => ({
 }))
 
 describe('ClientPage homepage flow', () => {
-  it('renders the expanded homepage section headings in order', () => {
+  it('renders the current growth-first homepage section headings', () => {
     render(<ClientPage />)
 
     expect(
       screen.getByRole('heading', {
         level: 1,
-        name: /growth, handled for you\./i,
+        name: /growth, built for your business\./i,
       }),
     ).toBeInTheDocument()
     expect(
       screen.getByRole('heading', {
         level: 2,
-        name: /you have a business to run/i,
+        name: /great companies use prism/i,
       }),
     ).toBeInTheDocument()
     expect(
       screen.getByRole('heading', {
         level: 2,
-        name: /ai tools, handled for you\./i,
+        name: /first 90 days\./i,
       }),
     ).toBeInTheDocument()
     expect(
       screen.getByRole('heading', {
         level: 2,
-        name: /you run the business\. we handle the growth\./i,
+        name: /growth leaks happen everywhere\./i,
       }),
     ).toBeInTheDocument()
     expect(
       screen.getByRole('heading', {
         level: 2,
-        name: /what we take care of for you/i,
+        name: /found\. trusted\. chosen\./i,
       }),
     ).toBeInTheDocument()
     expect(
       screen.getByRole('heading', {
         level: 2,
-        name: /why business owners choose prism/i,
+        name: /one growth system\. seven parts\./i,
       }),
     ).toBeInTheDocument()
     expect(
@@ -94,31 +96,25 @@ describe('ClientPage homepage flow', () => {
     expect(
       screen.getByRole('heading', {
         level: 2,
-        name: /real businesses need real results/i,
+        name: /proof across markets/i,
       }),
     ).toBeInTheDocument()
     expect(
       screen.getByRole('heading', {
         level: 2,
-        name: /questions business owners usually ask/i,
-      }),
-    ).toBeInTheDocument()
-    expect(
-      screen.getByRole('heading', {
-        level: 2,
-        name: /stop worrying about tech\. start growing with prism\./i,
+        name: /find the growth leak\./i,
       }),
     ).toBeInTheDocument()
   })
 
-  it('renders icon-backed problem blocks and handle pills', () => {
+  it('renders icon-backed problem blocks and buyer scan pills', () => {
     render(<ClientPage />)
 
     const problemPoints = screen.getAllByTestId('home-problem-point')
     const stackItems = screen.getAllByTestId('home-problem-stack-item')
 
-    expect(problemPoints).toHaveLength(3)
-    expect(stackItems).toHaveLength(6)
+    expect(problemPoints).toHaveLength(4)
+    expect(stackItems).toHaveLength(4)
     expect(
       problemPoints.every((point) => point.querySelector('img')),
     ).toBeTruthy()
@@ -129,38 +125,8 @@ describe('ClientPage homepage flow', () => {
           item.querySelector('img')?.getAttribute('src'),
         ),
       ).size,
-    ).toBe(6)
-  })
-
-  it('renders the AI tool logo matrix with high-quality SVG assets', () => {
-    render(<ClientPage />)
-
-    const toolCards = screen.getAllByTestId('home-ai-tool-card')
-
-    expect(toolCards).toHaveLength(6)
-    expect(screen.getByAltText(/codex logo/i)).toHaveAttribute(
-      'src',
-      '/logos/ai-tools/codex.svg',
-    )
-    expect(screen.getByAltText(/claude code logo/i)).toHaveAttribute(
-      'src',
-      '/logos/ai-tools/claude.svg',
-    )
-    expect(screen.getByAltText(/gemini logo/i)).toHaveAttribute(
-      'src',
-      '/logos/ai-tools/gemini.svg',
-    )
-    expect(screen.getByAltText(/openclaw logo/i)).toHaveAttribute(
-      'src',
-      '/logos/ai-tools/openclaw.svg',
-    )
-    expect(screen.getByAltText(/grok logo/i)).toHaveAttribute(
-      'src',
-      '/logos/ai-tools/grok.svg',
-    )
-    expect(screen.getByAltText(/cursor logo/i)).toHaveAttribute(
-      'src',
-      '/logos/ai-tools/cursor.svg',
-    )
+    ).toBe(4)
+    expect(screen.getByText(/what buyers scan/i)).toBeInTheDocument()
+    expect(screen.queryAllByTestId('home-ai-tool-card')).toHaveLength(0)
   })
 })

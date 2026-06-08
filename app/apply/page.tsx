@@ -7,7 +7,7 @@ import { buildRouteMetadata } from '@/lib/seo/metadata'
 
 const PAGE_TITLE = 'Create your free Growth Dashboard | Prism'
 const PAGE_DESCRIPTION =
-  'Complete the Prism Growth Dashboard intake for your dental website, Google presence, reviews, booking path, tracking, and patient growth opportunities.'
+  'Complete the Prism Growth Dashboard intake for your website, search visibility, proof, offer clarity, tracking, and growth opportunities.'
 const CANONICAL_URL = 'https://www.design-prism.com/apply'
 
 export const metadata: Metadata = buildRouteMetadata({

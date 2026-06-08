@@ -183,7 +183,7 @@ test('ElevenLabs widget stays off homepage and non-assistant public routes', asy
   await expect(
     page.getByRole('heading', {
       level: 1,
-      name: /get found\. get trusted\. get booked\./i,
+      name: /growth, built for your business\./i,
     }),
   ).toBeVisible({ timeout: 20_000 })
   await expect

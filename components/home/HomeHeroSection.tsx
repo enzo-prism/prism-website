@@ -106,7 +106,7 @@ export default function HomeHeroSection() {
               <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:gap-4">
                 <CoreActionLink
                   href="/get-started"
-                  label="get a free practice audit"
+                  label="get a free growth audit"
                   location="homepage hero"
                   variant="heroPrimary"
                 >

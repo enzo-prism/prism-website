@@ -75,7 +75,7 @@ function clickContinue() {
 }
 
 function completeFocus() {
-  fireEvent.click(screen.getByRole('checkbox', { name: /more patient calls/i }))
+  fireEvent.click(screen.getByRole('checkbox', { name: /more qualified leads/i }))
   clickContinue()
 }
 
@@ -93,7 +93,7 @@ function completeFit() {
 }
 
 function completePractice(value = 'Prism') {
-  fireEvent.change(screen.getByLabelText(/practice name/i), {
+  fireEvent.change(screen.getByLabelText(/business name/i), {
     target: { value },
   })
   clickContinue()
@@ -197,7 +197,7 @@ describe('GetStartedForm', () => {
       }),
     )
 
-    fireEvent.click(screen.getByRole('checkbox', { name: /more patient calls/i }))
+    fireEvent.click(screen.getByRole('checkbox', { name: /more qualified leads/i }))
     clickContinue()
     clickContinue()
 
@@ -212,9 +212,9 @@ describe('GetStartedForm', () => {
   it('tracks the first meaningful interaction as an apply form start only once', () => {
     render(<GetStartedForm />)
 
-    fireEvent.click(screen.getByRole('checkbox', { name: /more patient calls/i }))
+    fireEvent.click(screen.getByRole('checkbox', { name: /more qualified leads/i }))
     clickContinue()
-    fireEvent.click(screen.getByLabelText(/profile only/i))
+    fireEvent.click(screen.getByLabelText(/profile \/ social/i))
 
     const applyFormStartCalls = trackEvent.mock.calls.filter(
       ([eventName]) => eventName === 'apply_form_start',
@@ -272,7 +272,7 @@ describe('GetStartedForm', () => {
       expect(
         screen.getByRole('heading', {
           level: 1,
-          name: /practice name/i,
+          name: /business name/i,
         }),
       ).toBeInTheDocument()
     })
@@ -281,7 +281,7 @@ describe('GetStartedForm', () => {
   it('advances answered steps with Enter and forward arrow shortcuts', async () => {
     render(<GetStartedForm />)
 
-    const focus = screen.getByRole('checkbox', { name: /more patient calls/i })
+    const focus = screen.getByRole('checkbox', { name: /more qualified leads/i })
     fireEvent.click(focus)
     fireEvent.keyDown(focus, { key: 'ArrowRight', code: 'ArrowRight' })
 
@@ -397,18 +397,18 @@ describe('GetStartedForm', () => {
       ).toBeInTheDocument()
     })
 
-    fireEvent.click(screen.getByRole('button', { name: /edit practice/i }))
+    fireEvent.click(screen.getByRole('button', { name: /edit business/i }))
 
     await waitFor(() => {
       expect(
         screen.getByRole('heading', {
           level: 1,
-          name: /practice name/i,
+          name: /business name/i,
         }),
       ).toBeInTheDocument()
     })
 
-    fireEvent.change(screen.getByLabelText(/practice name/i), {
+    fireEvent.change(screen.getByLabelText(/business name/i), {
       target: { value: 'Prism Dental' },
     })
     clickContinue()
@@ -524,7 +524,7 @@ describe('GetStartedForm', () => {
           budget: '$3.5k to $5k',
           timeline: 'Within 30 days',
           service_count: 1,
-          primary_goal: 'I need more patient calls',
+          primary_goal: 'I need more qualified leads',
           has_website: 'yes',
         }),
       )
@@ -568,12 +568,12 @@ describe('GetStartedForm', () => {
     expect(options.headers).toMatchObject({ Accept: 'application/json' })
 
     const formData = options.body as FormData
-    expect(formData.get('focus_labels')).toBe('More patient calls')
+    expect(formData.get('focus_labels')).toBe('More qualified leads')
     expect(formData.get('has_website')).toBe('yes')
     expect(formData.get('review_link')).toBe('https://design-prism.com')
-    expect(formData.get('primary_goal')).toBe('I need more patient calls')
-    expect(formData.get('service_focus')).toBe('Google Maps / SEO')
-    expect(formData.getAll('service_interest[]')).toEqual(['Google Maps / SEO'])
+    expect(formData.get('primary_goal')).toBe('I need more qualified leads')
+    expect(formData.get('service_focus')).toBe('Qualified demand')
+    expect(formData.getAll('service_interest[]')).toEqual(['Qualified demand'])
     expect(formData.get('budget')).toBe('$3.5k to $5k')
     expect(formData.get('timeline')).toBe('Within 30 days')
     expect(formData.get('company')).toBe('Prism')

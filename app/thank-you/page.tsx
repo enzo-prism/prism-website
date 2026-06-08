@@ -48,8 +48,8 @@ const APPLY_NEXT_STEPS = [
   },
   {
     label: "03",
-    title: "Light Audit follows",
-    body: "Findings will live in the dashboard.",
+    title: "Growth Audit follows",
+    body: "Growth findings will live in the dashboard.",
   },
 ] as const
 
@@ -78,7 +78,7 @@ export default async function ThankYouPage({
               </h1>
               <p className="mt-6 max-w-[42rem] font-mono text-[1rem] leading-8 text-[#A0A09A]">
                 {isApplyFlow
-                  ? "Thanks, we've got it. Every real practice submission receives a Light Audit. Claim your dashboard to follow the review from one place."
+                  ? "Thanks, we've got it. Every real business submission receives a Growth Audit. Claim your dashboard to follow the review from one place."
                   : "We received your submission. Every real inquiry gets reviewed. If there&apos;s a fit, we&apos;ll reach out with the right next step."}
               </p>
             </div>

@@ -1,6 +1,5 @@
 'use client'
 
-import Image from 'next/image'
 import Link from 'next/link'
 import {
   ArrowUpRight,
@@ -13,16 +12,23 @@ import {
   useEffect,
   useRef,
   useState,
+  type CSSProperties,
   type PointerEvent as ReactPointerEvent,
 } from 'react'
 
-import type { HomepageDentistWinSlide } from '@/components/home/homepage-content'
+import type { HomepageClientWinSlide } from '@/components/home/homepage-content'
 import { cn } from '@/lib/utils'
 import { trackCTAClick } from '@/utils/analytics'
 
 const SCROLL_TOLERANCE = 8
 const AUTOPLAY_INTERVAL = 5200
 const RESUME_DELAY = 7000
+const ABSTRACT_VISUAL_THEMES = [
+  { accent: '#d8bc79', secondary: '#5cdcff', tertiary: '#9eff2e' },
+  { accent: '#5cdcff', secondary: '#d8bc79', tertiary: '#ff45cf' },
+  { accent: '#9eff2e', secondary: '#5cdcff', tertiary: '#d8bc79' },
+  { accent: '#ff45cf', secondary: '#d8bc79', tertiary: '#5cdcff' },
+] as const
 
 function prefersReducedMotion() {
   return (
@@ -33,7 +39,7 @@ function prefersReducedMotion() {
 }
 
 type HomeDentistWinsCarouselProps = {
-  slides: readonly HomepageDentistWinSlide[]
+  slides: readonly HomepageClientWinSlide[]
 }
 
 export default function HomeDentistWinsCarousel({
@@ -45,9 +51,6 @@ export default function HomeDentistWinsCarousel({
   const [canScrollRight, setCanScrollRight] = useState(false)
   const [progress, setProgress] = useState(0)
   const [isPaused, setIsPaused] = useState(false)
-  const [revealedSlideKeys, setRevealedSlideKeys] = useState<Set<string>>(
-    () => new Set(),
-  )
 
   const updateScrollState = useCallback(() => {
     const rail = railRef.current
@@ -87,7 +90,7 @@ export default function HomeDentistWinsCarousel({
     const rail = railRef.current
     if (!rail) return
 
-    const firstCard = rail.querySelector<HTMLElement>('[data-dentist-win-card]')
+    const firstCard = rail.querySelector<HTMLElement>('[data-client-win-card]')
     let amount = Math.max(rail.clientWidth * 0.82, 320)
 
     if (firstCard) {
@@ -160,20 +163,6 @@ export default function HomeDentistWinsCarousel({
     [pauseAutoplay, scrollByAmount, scheduleResume],
   )
 
-  const toggleSlideColor = useCallback((slideKey: string) => {
-    setRevealedSlideKeys((current) => {
-      const next = new Set(current)
-
-      if (next.has(slideKey)) {
-        next.delete(slideKey)
-      } else {
-        next.add(slideKey)
-      }
-
-      return next
-    })
-  }, [])
-
   const handleCardPointerMove = useCallback(
     (event: ReactPointerEvent<HTMLElement>) => {
       const el = event.currentTarget
@@ -230,7 +219,7 @@ export default function HomeDentistWinsCarousel({
           ref={railRef}
           className="flex snap-x snap-mandatory gap-3 overflow-x-auto overscroll-x-contain scroll-smooth px-1 pb-2 scrollbar-hide sm:gap-4"
           role="list"
-          aria-label="Top dentists in California using Prism"
+          aria-label="Client growth stories using Prism"
           onMouseEnter={pauseAutoplay}
           onMouseLeave={resumeAutoplay}
           onFocusCapture={pauseAutoplay}
@@ -240,67 +229,38 @@ export default function HomeDentistWinsCarousel({
         >
           {slides.map((slide, index) => {
             const slideKey = buildSlideKey(slide)
-            const isColorRevealed = revealedSlideKeys.has(slideKey)
 
             return (
               <div
                 key={slideKey}
-                data-dentist-win-card
+                data-client-win-card
                 className="w-[82vw] max-w-[22rem] shrink-0 snap-start sm:w-[22rem] sm:max-w-none lg:w-[24rem]"
                 role="listitem"
               >
-                <article
+                <Link
+                  href={slide.href}
+                  prefetch={false}
+                  aria-label={`Open case study for ${slide.company}`}
                   onPointerMove={handleCardPointerMove}
-                  className={cn(
-                    'group/card relative overflow-hidden rounded-[1.75rem] border bg-white/[0.03] shadow-[0_28px_90px_-70px_rgba(216,188,121,0.45)] transition-[transform,border-color,background-color,box-shadow] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 hover:border-[#d8bc79]/40 hover:bg-white/[0.05] hover:shadow-[0_36px_110px_-60px_rgba(216,188,121,0.6)] focus-within:-translate-y-1 focus-within:border-[#d8bc79]/40 focus-within:bg-white/[0.05] focus-within:shadow-[0_36px_110px_-60px_rgba(216,188,121,0.6)] motion-reduce:transition-none',
-                    isColorRevealed
-                      ? 'border-[#d8bc79]/30 bg-white/[0.045]'
-                      : 'border-white/12',
-                  )}
+                  onClick={() =>
+                    trackCTAClick(
+                      `view ${slide.company} case study`,
+                      'homepage client wins carousel',
+                    )
+                  }
+                  className="group/card block h-full rounded-[1.75rem] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[#d8bc79]/35 focus-visible:ring-offset-4 focus-visible:ring-offset-black"
                 >
-                  <button
-                    type="button"
-                    aria-pressed={isColorRevealed}
-                    aria-label={`${isColorRevealed ? 'Hide' : 'Show'} color version for ${slide.dentist}, ${slide.practice}`}
-                    onClick={() => toggleSlideColor(slideKey)}
-                    className="relative block w-full cursor-pointer overflow-hidden text-left focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[#d8bc79]/35 focus-visible:ring-offset-4 focus-visible:ring-offset-black"
-                  >
-                    <span className="sr-only">
-                      {isColorRevealed
-                        ? 'Color version is shown.'
-                        : 'Black and white version is shown.'}
-                    </span>
+                  <article className="relative h-full overflow-hidden rounded-[1.75rem] border border-white/12 bg-white/[0.03] shadow-[0_28px_90px_-70px_rgba(216,188,121,0.45)] transition-[transform,border-color,background-color,box-shadow] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/card:-translate-y-1 group-hover/card:border-[#d8bc79]/40 group-hover/card:bg-white/[0.05] group-hover/card:shadow-[0_36px_110px_-60px_rgba(216,188,121,0.6)] group-focus-visible/card:-translate-y-1 group-focus-visible/card:border-[#d8bc79]/40 group-focus-visible/card:bg-white/[0.05] group-focus-visible/card:shadow-[0_36px_110px_-60px_rgba(216,188,121,0.6)] motion-reduce:transition-none">
                     <div className="relative aspect-[4/5]">
-                      {slide.imageSrc ? (
-                        <Image
-                          src={slide.imageSrc}
-                          alt={slide.imageAlt}
-                          fill
-                          sizes="(min-width: 1024px) 24rem, (min-width: 640px) 22rem, 82vw"
-                          priority={index < 2}
-                          className={cn(
-                            'object-cover grayscale saturate-0 contrast-125 brightness-90 transition-[filter,transform] duration-[1100ms] ease-[cubic-bezier(0.16,1,0.3,1)] will-change-transform motion-reduce:transition-none group-hover/card:scale-[1.045] group-hover/card:grayscale-0 group-hover/card:saturate-100 group-hover/card:contrast-100 group-hover/card:brightness-100 group-focus-within/card:scale-[1.045] group-focus-within/card:grayscale-0 group-focus-within/card:saturate-100 group-focus-within/card:contrast-100 group-focus-within/card:brightness-100',
-                            isColorRevealed &&
-                              'grayscale-0 saturate-100 contrast-100 brightness-100',
-                          )}
-                          style={{
-                            objectPosition: slide.objectPosition ?? 'center',
-                          }}
-                        />
-                      ) : (
-                        <DentistPlaceholder slide={slide} />
-                      )}
+                      <AbstractClientWinVisual slide={slide} index={index} />
                       <div
                         aria-hidden="true"
-                        className={cn(
-                          'absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.1)_18%,rgba(0,0,0,0.3)_58%,rgba(0,0,0,0.9)_100%)] transition-opacity duration-[1000ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/card:opacity-[0.78] group-focus-within/card:opacity-[0.78] motion-reduce:transition-none',
-                          isColorRevealed ? 'opacity-85' : 'opacity-100',
-                        )}
+                        className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0)_8%,rgba(0,0,0,0.22)_56%,rgba(0,0,0,0.92)_100%)] transition-opacity duration-[1000ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/card:opacity-[0.82] group-focus-visible/card:opacity-[0.82] motion-reduce:transition-none"
                       />
                       <div
                         aria-hidden="true"
-                        data-dentist-win-hover-glow
-                        className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/card:opacity-100 group-focus-within/card:opacity-100 motion-reduce:transition-none"
+                        data-client-win-hover-glow
+                        className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/card:opacity-100 group-focus-visible/card:opacity-100 motion-reduce:transition-none"
                       >
                         <div className="absolute inset-x-5 top-0 h-px bg-gradient-to-r from-transparent via-[#d8bc79]/60 to-transparent" />
                         <div
@@ -327,10 +287,10 @@ export default function HomeDentistWinsCarousel({
 
                       <div className="absolute inset-x-0 bottom-0 z-10 p-5 pb-16 sm:p-6 sm:pb-16">
                         <p className="font-sans text-[1.45rem] font-medium leading-none tracking-normal text-[#f5f0e8] sm:text-[1.7rem]">
-                          {slide.dentist}
+                          {slide.leader}
                         </p>
                         <p className="mt-2 font-sans text-[0.98rem] leading-5 text-[#d8d0c5]">
-                          {slide.practice}
+                          {slide.company}
                         </p>
                         <p className="mt-4 inline-flex items-center gap-1.5 font-mono text-[10px] font-semibold uppercase tracking-[0.24em] text-[#b8afa2]">
                           <MapPin
@@ -342,49 +302,161 @@ export default function HomeDentistWinsCarousel({
                         </p>
                       </div>
                     </div>
-                  </button>
-                  <Link
-                    href={slide.href}
-                    prefetch={false}
-                    aria-label={`Open case study for ${slide.practice}`}
-                    onClick={() =>
-                      trackCTAClick(
-                        `view ${slide.practice} case study`,
-                        'homepage dentist wins carousel',
-                      )
-                    }
-                    className="group/link absolute bottom-5 right-5 z-20 inline-flex min-h-9 items-center gap-2 border border-[#d8bc79]/25 bg-black/55 px-3 font-mono text-[10px] font-semibold uppercase tracking-[0.16em] text-[#e7e0d4] backdrop-blur-sm transition-[transform,border-color,background-color,color,box-shadow] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-0.5 hover:border-[#d8bc79]/60 hover:bg-black/75 hover:text-[#f5f0e8] hover:shadow-[0_18px_38px_-26px_rgba(216,188,121,0.6)] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[#d8bc79]/35 focus-visible:ring-offset-4 focus-visible:ring-offset-black motion-reduce:transition-none sm:bottom-6 sm:right-6"
-                  >
-                    case study
-                    <ArrowUpRight
-                      className="h-3 w-3 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 motion-reduce:transition-none"
-                      aria-hidden="true"
-                    />
-                  </Link>
-                </article>
+                    <span className="absolute bottom-5 right-5 z-20 inline-flex min-h-9 items-center gap-2 border border-[#d8bc79]/25 bg-black/55 px-3 font-mono text-[10px] font-semibold uppercase tracking-[0.16em] text-[#e7e0d4] backdrop-blur-sm transition-[transform,border-color,background-color,color,box-shadow] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/card:-translate-y-0.5 group-hover/card:border-[#d8bc79]/60 group-hover/card:bg-black/75 group-hover/card:text-[#f5f0e8] group-hover/card:shadow-[0_18px_38px_-26px_rgba(216,188,121,0.6)] group-focus-visible/card:-translate-y-0.5 group-focus-visible/card:border-[#d8bc79]/60 group-focus-visible/card:bg-black/75 group-focus-visible/card:text-[#f5f0e8] motion-reduce:transition-none sm:bottom-6 sm:right-6">
+                      case study
+                      <ArrowUpRight
+                        className="h-3 w-3 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/card:translate-x-0.5 group-hover/card:-translate-y-0.5 group-focus-visible/card:translate-x-0.5 group-focus-visible/card:-translate-y-0.5 motion-reduce:transition-none"
+                        aria-hidden="true"
+                      />
+                    </span>
+                  </article>
+                </Link>
               </div>
             )
           })}
-          <span className="sr-only">Swipe for more Prism dental clients.</span>
+          <span className="sr-only">Swipe for more Prism client stories.</span>
         </div>
       </div>
     </div>
   )
 }
 
-function DentistPlaceholder({ slide }: { slide: HomepageDentistWinSlide }) {
+function AbstractClientWinVisual({
+  slide,
+  index,
+}: {
+  slide: HomepageClientWinSlide
+  index: number
+}) {
+  const theme = ABSTRACT_VISUAL_THEMES[index % ABSTRACT_VISUAL_THEMES.length]
+  const labels = buildSignalLabels(slide)
+  const gradientId = `client-win-line-${index}`
+
   return (
     <div
       aria-hidden="true"
-      data-dentist-win-placeholder
-      className="absolute inset-0 flex items-center justify-center overflow-hidden bg-[radial-gradient(circle_at_26%_18%,rgba(245,240,232,0.12),transparent_34%),linear-gradient(135deg,rgba(245,240,232,0.1),rgba(15,15,15,0.92)_52%,rgba(0,0,0,0.98))] transition-transform duration-[1100ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/card:scale-[1.025] group-focus-within/card:scale-[1.025] motion-reduce:transition-none"
+      data-client-win-abstract
+      className="absolute inset-0 overflow-hidden bg-[linear-gradient(135deg,rgba(245,240,232,0.07),rgba(16,16,15,0.94)_38%,rgba(0,0,0,0.98))] transition-transform duration-[1100ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/card:scale-[1.025] group-focus-visible/card:scale-[1.025] motion-reduce:transition-none"
+      style={
+        {
+          '--client-win-accent': theme.accent,
+          '--client-win-secondary': theme.secondary,
+          '--client-win-tertiary': theme.tertiary,
+        } as CSSProperties
+      }
     >
-      <div className="absolute inset-0 opacity-[0.18] transition-opacity duration-700 group-hover/card:opacity-[0.28] group-focus-within/card:opacity-[0.28] motion-reduce:transition-none [background-image:linear-gradient(rgba(245,240,232,0.18)_1px,transparent_1px),linear-gradient(90deg,rgba(245,240,232,0.18)_1px,transparent_1px)] [background-size:26px_26px]" />
-      <div className="relative flex h-32 w-32 items-center justify-center rounded-full border border-white/12 bg-black/35 font-mono text-3xl font-semibold uppercase tracking-[0.08em] text-[#f5f0e8] shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_24px_70px_-42px_rgba(245,240,232,0.34)] transition-[border-color,box-shadow] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/card:border-[#d8bc79]/30 group-hover/card:shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_28px_78px_-40px_rgba(216,188,121,0.5)] group-focus-within/card:border-[#d8bc79]/30 group-focus-within/card:shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_28px_78px_-40px_rgba(216,188,121,0.5)] motion-reduce:transition-none sm:h-36 sm:w-36">
-        {buildInitials(slide.dentist)}
+      <div className="absolute inset-0 opacity-[0.16] transition-opacity duration-700 group-hover/card:opacity-[0.28] group-focus-visible/card:opacity-[0.28] motion-reduce:transition-none [background-image:linear-gradient(rgba(245,240,232,0.18)_1px,transparent_1px),linear-gradient(90deg,rgba(245,240,232,0.18)_1px,transparent_1px)] [background-size:26px_26px]" />
+      <div
+        className="absolute inset-x-6 top-7 h-px opacity-50"
+        style={{
+          background: `linear-gradient(90deg, transparent, ${theme.accent}, transparent)`,
+        }}
+      />
+      <div className="absolute left-1/2 top-[45%] h-48 w-48 -translate-x-1/2 -translate-y-1/2 rounded-[2rem] border border-white/10 opacity-70 transition-colors duration-700 [animation-duration:26s] group-hover/card:border-[#d8bc79]/40 group-focus-visible/card:border-[#d8bc79]/40 motion-safe:animate-spin motion-reduce:transition-none" />
+      <div className="absolute left-1/2 top-[45%] h-36 w-56 -translate-x-1/2 -translate-y-1/2 rounded-[2.25rem] border border-white/8 opacity-70 [animation-direction:reverse] [animation-duration:34s] motion-safe:animate-spin motion-reduce:transition-none" />
+
+      <svg
+        className="absolute inset-0 h-full w-full opacity-85"
+        viewBox="0 0 320 400"
+        preserveAspectRatio="none"
+      >
+        <defs>
+          <linearGradient id={gradientId} x1="0%" x2="100%" y1="0%" y2="0%">
+            <stop offset="0%" stopColor={theme.secondary} stopOpacity="0" />
+            <stop offset="34%" stopColor={theme.accent} stopOpacity="0.82" />
+            <stop offset="100%" stopColor={theme.tertiary} stopOpacity="0.35" />
+          </linearGradient>
+        </defs>
+        <path
+          d="M34 118 C96 56 154 132 224 78 C250 58 276 50 306 58"
+          fill="none"
+          stroke={`url(#${gradientId})`}
+          strokeDasharray="8 13"
+          strokeLinecap="round"
+          strokeWidth="1.5"
+          className="motion-safe:animate-pulse"
+        />
+        <path
+          d="M18 246 C92 198 134 284 214 220 C250 190 280 190 312 206"
+          fill="none"
+          stroke={`url(#${gradientId})`}
+          strokeDasharray="2 10"
+          strokeLinecap="round"
+          strokeWidth="1.5"
+          className="opacity-80 motion-safe:animate-pulse"
+          style={{ animationDelay: '700ms' }}
+        />
+        <path
+          d="M62 330 L122 292 L176 316 L256 258"
+          fill="none"
+          stroke={theme.secondary}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeOpacity="0.45"
+          strokeWidth="1.25"
+        />
+      </svg>
+
+      {[
+        ['15%', '22%', '0ms'],
+        ['74%', '18%', '400ms'],
+        ['18%', '58%', '900ms'],
+        ['78%', '62%', '1200ms'],
+        ['50%', '74%', '1500ms'],
+      ].map(([left, top, delay]) => (
+        <span
+          key={`${left}-${top}`}
+          className="absolute h-3 w-3 rounded-[0.35rem] border border-white/18 motion-safe:animate-pulse"
+          style={{
+            left,
+            top,
+            animationDelay: delay,
+            backgroundColor: `${theme.accent}33`,
+            boxShadow: `0 0 22px ${theme.accent}45`,
+          }}
+        />
+      ))}
+
+      <div className="absolute left-1/2 top-[44%] flex h-32 w-32 -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center rounded-[1.65rem] border border-white/14 bg-black/55 text-center shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_24px_70px_-42px_rgba(245,240,232,0.34)] backdrop-blur-sm transition-[border-color,box-shadow] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/card:border-[#d8bc79]/45 group-hover/card:shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_28px_78px_-40px_rgba(216,188,121,0.5)] group-focus-visible/card:border-[#d8bc79]/45 group-focus-visible/card:shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_28px_78px_-40px_rgba(216,188,121,0.5)] motion-reduce:transition-none sm:h-36 sm:w-36">
+        <span className="font-mono text-[9px] font-semibold uppercase tracking-[0.26em] text-[#b8afa2]">
+          Prism
+        </span>
+        <span className="mt-2 font-sans text-3xl font-medium tracking-normal text-[#f5f0e8]">
+          {buildInitials(slide.leader)}
+        </span>
+        <span
+          className="mt-2 h-px w-12"
+          style={{ backgroundColor: `${theme.accent}b3` }}
+        />
+      </div>
+
+      <div className="absolute bottom-28 left-4 right-4 grid grid-cols-3 gap-2">
+        {labels.map((label, labelIndex) => (
+          <span
+            key={`${label}-${labelIndex}`}
+            className="min-w-0 rounded-md border border-white/10 bg-black/35 px-2 py-1.5 text-center font-mono text-[8px] font-semibold uppercase tracking-[0.16em] text-[#d8d0c5] backdrop-blur-sm"
+            style={{
+              color:
+                labelIndex === 0
+                  ? theme.accent
+                  : labelIndex === 1
+                    ? theme.secondary
+                    : '#d8d0c5',
+            }}
+          >
+            {label}
+          </span>
+        ))}
       </div>
     </div>
   )
+}
+
+function buildSignalLabels(slide: HomepageClientWinSlide) {
+  const primary = slide.contextLabel.split(/\s|\+/).filter(Boolean)[0] ?? 'growth'
+  const secondary = slide.company.split(/\s+/).filter(Boolean)[0] ?? 'system'
+
+  return [primary, secondary, 'growth']
 }
 
 function buildInitials(name: string) {
@@ -398,8 +470,8 @@ function buildInitials(name: string) {
     .join('')
 }
 
-function buildSlideKey(slide: HomepageDentistWinSlide) {
-  return `${slide.href}-${slide.practice}-${slide.dentist}`
+function buildSlideKey(slide: HomepageClientWinSlide) {
+  return `${slide.href}-${slide.company}-${slide.leader}`
 }
 
 type CarouselButtonProps = {
@@ -415,7 +487,7 @@ function CarouselButton({ direction, disabled, onClick }: CarouselButtonProps) {
     <button
       type="button"
       aria-label={
-        direction === 'left' ? 'Show previous dentist' : 'Show next dentist'
+        direction === 'left' ? 'Show previous client' : 'Show next client'
       }
       disabled={disabled}
       onClick={onClick}

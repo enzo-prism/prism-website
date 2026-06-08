@@ -19,12 +19,12 @@ import { CASE_STUDIES } from '@/lib/case-study-data'
 const CASE_STUDY_ICONS: Record<string, string> = {
   'dr-christopher-wong': '/pixelish/arrow-refresh.svg',
   'exquisite-dentistry': '/pixelish/award-checkmark.svg',
-  'laguna-beach-dental-arts': '/pixelish/house.svg',
-  'family-first-smile-care': '/pixelish/users.svg',
-  'grace-dental-santa-rosa': '/pixelish/lens.svg',
-  'town-centre-dental': '/pixelish/bar-chart-high.svg',
-  'coast-periodontics-and-laser-surgery': '/pixelish/award-plus.svg',
-  'wine-country-root-canal': '/pixelish/emoji-heart.svg',
+  'olympic-bootworks': '/pixelish/handbag.svg',
+  'roseville-dental-academy': '/pixelish/kanban.svg',
+  'rebellious-aging': '/pixelish/emoji-heart.svg',
+  'saorsa-growth-partners': '/pixelish/briefcase.svg',
+  'belize-kids-foundation': '/pixelish/award-plus.svg',
+  'canary-cove': '/pixelish/house.svg',
 }
 
 const HOMEPAGE_CASE_STUDIES = HOMEPAGE_CASE_STUDY_SLUGS.map((slug) =>

@@ -2,16 +2,16 @@
 
 This is the current operator map for the Prism website. Use it before making broad changes, adding routes, changing search visibility, touching forms, or shipping to production.
 
-Prism is now a dental growth systems website: websites, SEO and AI search, Google Maps, reviews, ads, tracking, photography, proof, pricing, and the Growth Dashboard to Light Audit funnel. Older app, software, founder, library, podcast, and general AI pages can remain usable for direct visitors, but they should not compete with the dental growth signal in search.
+Prism is now a business growth systems website: websites, SEO and AI search, Google Maps, reviews, ads, tracking, content, proof, pricing, and the Growth Dashboard to Light Audit funnel. Dental remains one of Prism's strongest proof verticals, but the public homepage and intake flow should speak to founders, owners, operators, and growth-focused companies more broadly.
 
 ## Current Shape
 
 - Framework: Next.js 16 App Router, React 19, TypeScript, Tailwind v4.
 - Runtime: Node.js 22.x and pnpm 10.x.
-- Production: GitHub Actions publishes to Vercel with source deploys. Vercel Git auto-deploy is disabled for `main`.
+- Production: GitHub Actions publishes to Vercel with source deploys. Vercel Git auto-deploy is disabled for `main`; the locked-route visual job currently runs non-blocking while baselines stabilize.
 - Design system: root `DESIGN.md`, generated tokens in `generated/`, shared primitives in `components/core-route/` and `components/ui/`.
-- Active positioning: dental-first, not dental-only. Non-dental proof can stay live, but dental proof should be visually and machine-readably dominant.
-- Current scale from this audit: 113 page routes, 5 route handlers, 86 blog MDX files, 22 case studies (21 of which render through the shared visual minimal template with browser + mobile screenshot heroes), and 25 docs files.
+- Active positioning: growth-first, dental-proven. Dental proof should stay visible and credible, while non-dental case studies should appear as first-class proof of the broader growth system.
+- Current scale from this audit: 113 page routes, 5 route handlers, 87 blog MDX files, 22 case studies (21 of which render through the shared visual minimal template with browser + mobile screenshot heroes), and 25 docs files.
 
 ## Source Of Truth Files
 
@@ -43,11 +43,12 @@ Prism is now a dental growth systems website: websites, SEO and AI search, Googl
 - `components/forms/GetStartedForm.tsx` is the active Growth Dashboard intake. It prefers `NEXT_PUBLIC_DASHBOARD_INTAKE_ENDPOINT`, then falls back through Formspree-compatible endpoints.
 - `app/robots.ts` manages crawl access only. Use page-level robots metadata for noindex decisions.
 - `app/sitemap.ts` emits only canonical, indexable static routes, case study detail pages, and curated blog posts.
-- `public/llms.txt` is a curated machine-readable map of the dental growth system. Keep it narrower than the full route tree.
+- `public/llms.txt` is a curated machine-readable map of the growth system, proof, and specialty clusters. Keep it narrower than the full route tree.
 
 ## Content And Route Map
 
-- Homepage: `app/page.tsx` delegates to `app/client-page.tsx`, which composes the dental-first homepage from `components/home/*`.
+- Homepage: `app/page.tsx` delegates to `app/client-page.tsx`, which composes the growth-first homepage from `components/home/*`.
+- Homepage client proof: `components/home/HomeDentistWinsSection.tsx` and `HomeDentistWinsCarousel.tsx` still carry legacy component names, but the live section is broader client proof. Card data comes from `HOMEPAGE_CLIENT_WINS` in `components/home/homepage-content.ts`; cards use abstract animated visuals (`data-client-win-abstract`) instead of real images.
 - Core marketing routes: `app/about`, `app/pricing`, `app/get-started`, `app/apply`, `app/services`, `app/websites`, `app/ads`, `app/local-listings`, `app/seo`, `app/ai-seo-services`, `app/aeo`, `app/proof`, and `app/wall-of-love`.
 - Dental cluster: `app/dental-website`, `app/dental-practice-seo-expert`, `app/custom-email-for-dental-practices`, `app/dental-photography/*`, `app/google/dental-ads`, `app/google/dental-patient-forms`, `app/facebook-ads-for-dentists`, `app/tiktok-ads-for-dentists`, and `app/ai-agents/dental`.
 - Case studies: canonical data lives in `lib/case-study-data.ts`; detail pages render through lightweight shared case study components and should remain indexable.
@@ -59,12 +60,12 @@ Prism is now a dental growth systems website: websites, SEO and AI search, Googl
 
 `lib/seo/search-visibility.ts` is the canonical search policy.
 
-- Add a static route to `INDEXABLE_STATIC_ROUTES` only when it supports dental growth systems, pricing, proof, legal, or the Growth Dashboard funnel.
+- Add a static route to `INDEXABLE_STATIC_ROUTES` only when it supports Prism's growth system, pricing, proof, legal, the Growth Dashboard funnel, or a deliberate specialty cluster.
 - Add broad, utility, social, legacy, or off-theme routes to `NOINDEX_ROUTES` or `NOINDEX_PREFIXES`.
 - Keep every case study detail page indexable unless there is a specific quality or legal reason to hide one.
-- Add blog posts to `INDEXABLE_BLOG_SLUGS` only when they strengthen dental or local-growth authority.
+- Add blog posts to `INDEXABLE_BLOG_SLUGS` only when they strengthen growth, local visibility, AI search, dental, or another deliberate specialty authority.
 - Leave noindex pages crawlable unless the page is private or API-only. Search engines need to see the meta noindex directive.
-- Keep `public/llms.txt` aligned with the same dental-first map. It should not become a sitewide route index.
+- Keep `public/llms.txt` aligned with the same curated growth map. It should not become a sitewide route index.
 
 When search visibility changes, run:
 
@@ -110,7 +111,7 @@ Local previews are useful, but production truth is the GitHub Actions run plus l
 6. After success, verify live public routes:
    - `https://www.design-prism.com/sitemap.xml`
    - `https://www.design-prism.com/robots.txt`
-   - representative indexable dental routes
+   - representative indexable growth and dental routes
    - representative noindex broad routes
    - `https://www.design-prism.com/llms.txt`
 

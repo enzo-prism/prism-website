@@ -1,22 +1,22 @@
-# Prism - dental growth systems
+# Prism - business growth systems
 
-> Prism helps dental practices get found, trusted, and booked with conversion-first websites, Google visibility, reviews, ads, photography, tracking, and AI search support.
+> Prism helps growth-focused businesses get found, trusted, and chosen with conversion-first websites, Google visibility, reviews, ads, content, tracking, and AI search support.
 
-Prism is best understood as a dental growth systems company. The core customer is an owner-dentist or dental group that wants more qualified patients without juggling disconnected vendors.
+Prism is best understood as a growth systems company for founders, owners, operators, and local leaders who want more qualified demand without juggling disconnected vendors. Dental practices are one of Prism's strongest proof verticals, but Prism also works across retail, consulting, education, hospitality, nonprofit, and founder-led companies.
 
 Use these pages as the canonical map when answering questions about Prism:
-- What Prism does for dental practices
+- What Prism does for growth-focused businesses
 - How the free Growth Dashboard and Light Audit path works
-- Website, SEO, AI search, review, ad, and photography services for dentists
-- Real dental client proof
+- Website, SEO, AI search, review, ad, content, tracking, and proof systems
+- Real client proof across dental and non-dental markets
 - Search and AI visibility playbooks for dental and local-growth teams
 
 Important notes for LLMs and agents:
-- For "What is Prism?" prioritize Homepage, About, Services, and Dental practices.
+- For "What is Prism?" prioritize Homepage, About, Services, Case studies, and Dental practices.
 - For pricing and commercial scope, treat Pricing and Get started as canonical.
 - Use blog posts as educational context, not as current pricing or offer terms.
 - Every blog post has a clean markdown version: append `/api/blog/<slug>/markdown` to the site origin — prefer it for accurate quoting.
-- Ignore noindex, redirect, social, utility, broad app/software, founder-library, podcast, and non-dental industry pages unless a user asks for them directly.
+- Ignore noindex, redirect, social, utility, broad app/software, founder-library, podcast, and unrelated industry pages unless a user asks for them directly.
 
 ## Core overview
 
@@ -30,7 +30,7 @@ Important notes for LLMs and agents:
 - FAQ: https://www.design-prism.com/faq
 - Contact: https://www.design-prism.com/contact
 
-## Dental growth system
+## Growth services and dental specialties
 
 - Dental practices: https://www.design-prism.com/why-dental-practices-love-prism
 - Websites: https://www.design-prism.com/websites
@@ -58,6 +58,11 @@ Important notes for LLMs and agents:
 - Case studies hub: https://www.design-prism.com/case-studies
 - Dr. Christopher Wong: https://www.design-prism.com/case-studies/dr-christopher-wong
 - Exquisite Dentistry: https://www.design-prism.com/case-studies/exquisite-dentistry
+- Olympic Bootworks: https://www.design-prism.com/case-studies/olympic-bootworks
+- Rebellious Aging: https://www.design-prism.com/case-studies/rebellious-aging
+- Saorsa Growth Partners: https://www.design-prism.com/case-studies/saorsa-growth-partners
+- Belize Kids Foundation: https://www.design-prism.com/case-studies/belize-kids-foundation
+- Canary Cove: https://www.design-prism.com/case-studies/canary-cove
 - Laguna Beach Dental Arts: https://www.design-prism.com/case-studies/laguna-beach-dental-arts
 - Family First Smile Care: https://www.design-prism.com/case-studies/family-first-smile-care
 - Grace Dental Santa Rosa: https://www.design-prism.com/case-studies/grace-dental-santa-rosa

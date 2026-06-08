@@ -79,9 +79,9 @@ export default function HomeProofBandSection() {
               </div>
 
               <p className="sr-only">
-                Prism targets a first 90 day growth ramp for dentists: day 30,
-                plus 25 percent patient actions; day 60, plus 50 percent
-                qualified demand; day 90, 10 to 30 new patient opportunities per
+                Prism targets a first 90 day growth ramp for businesses: day
+                30, plus 25 percent qualified actions; day 60, plus 50 percent
+                qualified demand; day 90, 10 to 30 growth opportunities per
                 month.
               </p>
             </div>

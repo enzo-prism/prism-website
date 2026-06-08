@@ -5,16 +5,16 @@ import {
   coreRouteSectionCompactClassName,
 } from '@/components/core-route/CoreRoutePrimitives'
 import HomeDentistWinsCarousel from '@/components/home/HomeDentistWinsCarousel'
-import { HOMEPAGE_DENTIST_WINS } from '@/components/home/homepage-content'
+import { HOMEPAGE_CLIENT_WINS } from '@/components/home/homepage-content'
 
 export default function HomeDentistWinsSection() {
-  const { eyebrow, title, slides } = HOMEPAGE_DENTIST_WINS
+  const { eyebrow, title, slides } = HOMEPAGE_CLIENT_WINS
   const clientCount = slides.length
   const cityCount = new Set(slides.map((slide) => slide.location)).size
 
   const trustStats = [
-    { icon: Building2, label: `${clientCount} client practices` },
-    { icon: MapPin, label: `${cityCount} California cities` },
+    { icon: Building2, label: `${clientCount} client stories` },
+    { icon: MapPin, label: `${cityCount} markets` },
     { icon: BadgeCheck, label: 'Verified case studies' },
   ]
 

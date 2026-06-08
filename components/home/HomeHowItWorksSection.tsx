@@ -35,7 +35,7 @@ export default function HomeHowItWorksSection() {
 
             <CoreActionLink
               href="/get-started"
-              label="get a free practice audit"
+              label="get a free growth audit"
               location="homepage how it works"
               className="text-[0.72rem] tracking-[0.12em] sm:text-sm sm:tracking-[0.18em]"
             >

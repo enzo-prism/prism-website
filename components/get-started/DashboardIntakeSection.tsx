@@ -5,7 +5,6 @@ import {
   Globe,
   ShieldCheck,
   Sparkles,
-  Stethoscope,
   Target,
   UserCheck,
   type LucideIcon,
@@ -37,9 +36,9 @@ const TRUST_SIGNALS: TrustSignal[] = [
   { icon: Sparkles, label: 'Free to start' },
   { icon: UserCheck, label: 'Reviewed by a real person' },
   {
-    icon: Stethoscope,
-    label: 'Built for dental practices',
-    sub: 'that want a clearer growth system',
+    icon: Building2,
+    label: 'Built for growth-focused companies',
+    sub: 'including dental, retail, consulting, nonprofit, hospitality, and local service teams',
   },
 ]
 
@@ -61,7 +60,7 @@ const INTAKE_STEPS: IntakeStep[] = [
   },
   {
     stage: '04',
-    label: 'Practice',
+    label: 'Business',
     hint: 'Name only',
     icon: Building2,
   },
@@ -94,7 +93,7 @@ export default function DashboardIntakeSection() {
         <div className="space-y-8">
           <CoreSectionHeading
             title="One short dashboard intake."
-            description="About a minute. Just the essentials Prism needs to prepare your free Light Audit."
+            description="About a minute. Just the essentials Prism needs to prepare your free Growth Audit."
             titleClassName="max-w-[13ch]"
           />
 
@@ -199,7 +198,7 @@ export default function DashboardIntakeSection() {
                   strokeWidth={1.6}
                   className="shrink-0 text-[#9eff2e]"
                 />
-                Every real practice submission receives a Light Audit.
+                Every real business submission receives a Growth Audit.
               </p>
             </div>
           </div>

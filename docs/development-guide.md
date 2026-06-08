@@ -23,7 +23,7 @@ For a current whole-project map, start with `docs/project-overview.md`. This gui
   - `pnpm verify:pricing-consistency`
 - For non-chat changes touching shared infrastructure, update and run the nearest smoke tests in the relevant package (`pnpm test`, `pnpm test:visual:locked`, etc.) before merging.
 - Run `pnpm test:visual:locked` before merging changes that touch the UI of `/`, `/about`, `/pricing`, or `/get-started` (screenshot-locked routes).
-- `pnpm test:visual:locked` now builds with `NEXT_PUBLIC_ELEVENLABS_WIDGET_DISABLED=true` and boots an isolated `next start` server on port `3300`, so the locked route snapshots stay focused on first-party page chrome instead of the live third-party ElevenLabs overlay or whichever localhost server happens to already be running. `pnpm test:visual:widget` does the inverse: it forces a fresh production build without the kill switch so the real widget behavior check never reuses a stale disabled bundle.
+- `pnpm test:visual:locked` now builds with `NEXT_PUBLIC_ELEVENLABS_WIDGET_DISABLED=true` and boots an isolated `next start` server on port `3300`, so the locked route snapshots stay focused on first-party page chrome instead of the live third-party ElevenLabs overlay or whichever localhost server happens to already be running. The CI job currently runs non-blocking while baselines stabilize; local UI work should still run it when locked routes are affected. `pnpm test:visual:widget` does the inverse: it forces a fresh production build without the kill switch so the real widget behavior check never reuses a stale disabled bundle.
 - Run `pnpm test:home-scroll:mobile` when changing homepage hero CTAs, fixed-header sizing, anchor behavior, or the `/` section order. This Codex-optimized guard checks the “See the system” CTA on compact, baseline, and large phone viewports in Chromium and WebKit, then asserts the `#how-it-works` section lands at the exact header-aware offset for direct hash loads, fresh CTA clicks, and same-hash re-clicks.
 - For cross-browser route-load smoke checks, run `pnpm build`, start `pnpm start -p 3301` in a second terminal, then run `pnpm test:performance:smoke`. The smoke script covers `/`, `/about`, `/pricing`, and `/get-started` on Chromium, Firefox, and WebKit using both desktop and mobile profiles.
 - Run `pnpm test:visual` when you need broader visual coverage beyond the locked routes.
@@ -35,13 +35,14 @@ For a current whole-project map, start with `docs/project-overview.md`. This gui
 ### Homepage refresh checklist
 
 - The homepage first viewport is one integrated dark composition: shared site navbar, copy-led hero card, and a subtle ASCII motion layer behind the text instead of a route-only overlay header treatment.
-- The homepage structure is intentionally ultra-minimal: hero, dental client carousel, compact proof band, patient decision problem, Found/Trusted/Booked system, service labels, short process, compact dental proof, and final audit CTA. Avoid reintroducing older apps/training/wall-of-love-carousel sections unless product direction changes.
+- The homepage structure is intentionally ultra-minimal: hero, mixed client carousel, compact proof band, buyer decision problem, Found/Trusted/Chosen system, service labels, short process, compact proof, and final audit CTA. Avoid reintroducing older apps/training/wall-of-love-carousel sections unless product direction changes.
 - `components/home/HomeAiToolsSection.tsx` is no longer part of the homepage story. If AI/tool proof comes back, it should be a tiny supporting proof detail instead of a logo matrix or explanatory section.
 - AI tool logos remain vendored from SVGL into `public/logos/ai-tools/` for any future proof detail or deeper page that needs them; they are not an active homepage requirement.
 - OpenClaw, Grok, and Cursor use supplied custom SVGs in the same folder and should be treated as local brand assets if that proof returns.
 - `components/home/HomeHeroSection.tsx` is the canonical homepage hero surface. Keep the shared `AsciiHeroBackdrop` treatment restrained so motion supports the copy instead of overpowering it.
 - Keep the reduced-motion fallback pinned to the static ASCII frame so visual tests remain deterministic, and keep the shared navbar/footer consistent across the homepage and inner routes.
-- The dental client carousel directly below the hero should keep photo slides black-and-white at rest, reveal color on hover, and persist color with a card click/tap. Keep the separate case-study chip for navigation so mobile taps do not accidentally leave the homepage.
+- The client carousel directly below the hero is broad business proof, not a dental photo gallery. Its card data lives in `HOMEPAGE_CLIENT_WINS`; the component names still say `HomeDentistWins*` for compatibility, but the live behavior is mixed-client case-study cards.
+- Carousel cards should use abstract animated growth-system visuals (`data-client-win-abstract`) instead of real images. Keep the grid, routing lines, Prism initials node, context labels, and hover/focus glow restrained, motion-aware, and useful with reduced motion. The whole card links to the case study; do not reintroduce the old color-toggle/photo card behavior.
 - ElevenLabs renders markdown in agent replies, but external links only become clickable when the host is allowlisted on the widget. Keep `markdown-link-allowed-hosts` in sync with whatever calendar or booking destination the agent is instructed to share, rely on the documented `markdown-link-include-www="true"` behavior instead of duplicating `www` hosts in code, and keep `markdown-link-allow-http="false"` so the public widget never emits insecure links.
 - Keep the stock widget aligned with the official docs: wrapper-only layout, documented attributes, and dashboard-level styling.
 - Avoid deep geometry overrides inside the widget Shadow DOM. ElevenLabs treats the embed as an opinionated surface; keep customization focused on supported attributes and host-level layering, and move heavier design customization to the official SDK/UI layer if we need a bespoke chat surface later.
@@ -87,7 +88,7 @@ Key details:
 - Forms post to Formspree via `fetch` with `Accept: application/json`. On success we push the user to `/thank-you` or `/analysis-thank-you` so our custom screens always render.
 - Use the `_subject` hidden field for inbox filtering and `_gotcha` as the honeypot.
 - When adding a new Formspree endpoint, import `useFormValidation({ onValidSubmit })` and only navigate after the request returns `response.ok`.
-- `/get-started` is now the free Growth Dashboard entry page, while `/apply` is the focused question-by-question dashboard intake form. Keep the copy and thank-you flow explicit that a Light Audit follows a real practice submission, while the later Deep Growth Audit or sprint path is optional and selective.
+- `/get-started` is now the free Growth Dashboard entry page, while `/apply` is the focused question-by-question dashboard intake form. Keep the copy and thank-you flow explicit that a review follows a real business submission, while the later Deep Growth Audit or sprint path is optional and selective.
 
 ### AEO assessment landing regression tests
 
@@ -110,7 +111,7 @@ Custom confirmation routes live in `app/thank-you/` and `app/analysis-thank-you/
 - Shared normalization preserves common search terms and product nouns (`SEO`, `AI`, `Google Maps`, `ChatGPT`, `TikTok`, etc.) and keeps useful brand descriptors like `Case Study`, `Podcast`, and `Careers` instead of stripping them out.
 - Default metadata workflow for static routes:
   - Set a clear `titleStem` + `description` on the page and let `buildRouteMetadata` generate the final title, canonical, OG, Twitter, and robots fields.
-  - Write for search intent first, brand second. Prefer phrases like `Dental website design + local SEO` over internal labels like `Why dental practices love Prism`.
+  - Write for search intent first, brand second. Prefer phrases like `Business growth systems + local SEO` over internal labels like `Why companies love Prism`.
   - If `seo/inventory.csv` shows a clipped or vague result, improve the route’s source copy first; do **not** immediately tighten or loosen the global limits.
 - Default metadata workflow for blog and library routes:
   - Let the generator fall back to `title` / `description` by default.
@@ -122,9 +123,9 @@ Custom confirmation routes live in `app/thank-you/` and `app/analysis-thank-you/
 - `public/llms.txt` is not a Google ranking input, but it should still mirror canonical search surfaces. Keep it limited to canonical, indexable Prism URLs and avoid noindex routes, redirects, or off-site detours unless there is a deliberate reason.
 - Use absolute canonicals (`https://www.design-prism.com/...`) for every indexable route.
 - Noindex routes should remain crawlable (meta `robots`), but **must be excluded** from the sitemap via `app/sitemap.ts`.
-- Keep the indexable set intentionally narrow and dental-first. `lib/seo/search-visibility.ts` is the source of truth for search visibility; new routes should default to noindex unless they support the dental growth system story: dental websites, SEO/AI search, reviews, ads, tracking, photography, proof, pricing, or the Growth Dashboard funnel.
-- Broad Prism surfaces such as apps, software, Replit/OpenAI guides, podcast/library pages, careers, scholarships, non-dental industry pages, and social/community utilities should stay usable for direct visitors but out of the sitemap and public LLM map unless product direction explicitly changes.
-- Blog posts are curated for search with `INDEXABLE_BLOG_SLUGS` and optional `searchVisibility` frontmatter. New posts are not indexable by default; add them to the curated dental/local-growth allowlist only when they strengthen Prism's dental growth authority.
+- Keep the indexable set intentionally narrow and growth-first. `lib/seo/search-visibility.ts` is the source of truth for search visibility; new routes should default to noindex unless they support the growth system story: websites, SEO/AI search, reviews, ads, tracking, content, proof, pricing, the Growth Dashboard funnel, or a deliberate specialty cluster.
+- Broad Prism surfaces such as apps, software, Replit/OpenAI guides, podcast/library pages, careers, scholarships, unrelated industry pages, and social/community utilities should stay usable for direct visitors but out of the sitemap and public LLM map unless product direction explicitly changes.
+- Blog posts are curated for search with `INDEXABLE_BLOG_SLUGS` and optional `searchVisibility` frontmatter. New posts are not indexable by default; add them to the curated growth/local/dental allowlist only when they strengthen Prism's authority.
 - `/blog` filter/search views (`/blog?category=...`, `/blog?q=...`) are set to **noindex, follow** via `X-Robots-Tag` in `proxy.ts` so query-param URLs don’t pollute the index.
 - If a blog post `image` frontmatter uses an absolute Prism URL (e.g. `https://www.design-prism.com/...`), we normalize it for Next/Image. Prefer relative paths like `/api/og/...` or `/blog/...` for consistency.
 - Blog cards and post hero images now validate frontmatter `image` values at read time. If the file is missing, uses an invalid sentinel (`null`/`undefined`/empty), or points to a raster extension whose asset is actually SVG markup, posts now fall back to the shared default featured image (`https://res.cloudinary.com/dhqpqfw6w/image/upload/v1770786137/Prism_rgeypo.png`) instead of rendering a broken image.
@@ -221,7 +222,7 @@ Custom confirmation routes live in `app/thank-you/` and `app/analysis-thank-you/
 
 ## CTA Routing
 
-Any CTA labeled “free audit” or “free practice audit” should point to `/get-started`. Keep `/free-analysis` links only for surfaces that explicitly need that legacy analysis form.
+Any CTA labeled “free audit” or “free growth audit” should point to `/get-started`. Keep `/free-analysis` links only for surfaces that explicitly need that legacy analysis form.
 
 ## Typography & Casing
 
@@ -252,4 +253,4 @@ The navbar dynamically sets a CSS variable (`--prism-header-height`) so other st
 
 ## Deployment
 
-Merges to `main` publish through the GitHub `Deploy to Vercel` workflow. Vercel Git auto-deploy is disabled for `main` in `vercel.json` so production has a single source of truth. If you need a preview, open a PR and use the Vercel preview deployment URL.
+Merges to `main` publish through the GitHub `Deploy to Vercel` workflow. Vercel Git auto-deploy is disabled for `main` in `vercel.json` so production has a single source of truth. If you need a preview, use `vercel deploy --yes` or open a PR and use the Vercel preview deployment URL. Preview links should be public for review; verify with `curl -I -L <preview-url>` and confirm a direct `HTTP 200` response instead of Vercel SSO.

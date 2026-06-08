@@ -59,7 +59,7 @@ Open Graph behavior is date-based in `app/blog/[slug]/page.tsx`: posts before 20
 Use overrides sparingly. The default workflow is:
 
 - Start with a strong on-page `title` and `description`.
-- Keep the post noindex unless it clearly supports Prism's dental growth system authority. Search-visible posts are controlled by `INDEXABLE_BLOG_SLUGS` in `lib/seo/search-visibility.ts`; use `searchVisibility: "noindex"` when a post should remain available but never enter search.
+- Keep the post noindex unless it clearly supports Prism's growth-system authority, local-growth authority, or a deliberate specialty cluster. Search-visible posts are controlled by `INDEXABLE_BLOG_SLUGS` in `lib/seo/search-visibility.ts`; use `searchVisibility: "noindex"` when a post should remain available but never enter search.
 - `getAllPosts()` returns only indexable/curated posts by default. Use `getAllPosts({ includeNoindex: true })` only for internal audits, migrations, or explicit admin-style tooling.
 - Regenerate `seo/inventory.csv` and inspect the final rendered `final_title` + `meta_description`.
 - Only add `seoTitle` or `seoDescription` when the rendered snippet is weak, duplicated, clipped, or misses the real search intent.

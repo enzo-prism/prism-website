@@ -156,13 +156,23 @@ Prism should feel:
 
 The safest mental model is **black shell + warm ivory type + selective mono metadata + pixel accents + paced section rhythm**.
 
-### Dental-first Black Apple
+### Growth-first Black System
 
-For the homepage and `/get-started`, Prism should feel like a premium operating system for modern dental practices: calm, precise, spacious, and trust-led. The copy should favor short outcome language such as **found, trusted, booked** and concrete dental terms such as owner-dentists, patients, Google Maps, reviews, treatment pages, booking path, and front desk.
+For the homepage and `/get-started`, Prism should feel like a premium operating system for business growth: calm, precise, spacious, and trust-led. The copy should favor short outcome language such as **found, trusted, chosen**, and concrete growth terms such as founders, owners, operators, qualified demand, search visibility, proof, AI discovery, tracking, and conversion paths.
 
-Keep the design dark and restrained. Do not pivot these pages into clinical white healthcare styling, loud agency gradients, or luxury editorial excess. The Apple-like pattern here is clarity: fewer words, clearer hierarchy, premium spacing, patient-decision logic, and confident CTAs around the free practice audit.
+Keep the design dark and restrained. Do not pivot these pages into loud agency gradients, generic SaaS gloss, or luxury editorial excess. The Apple-like pattern here is clarity: fewer words, clearer hierarchy, premium spacing, buyer-decision logic, and confident CTAs around the free Growth Dashboard / Growth Audit path.
 
-Homepage copy should stay ultra-minimal. Prefer short labels over explanations, compact proof over long cards, and one clear idea per section. Deeper pages can carry the detail; the homepage should make the offer obvious in seconds.
+Dental remains one of Prism's strongest proof verticals, but the main homepage and get-started flow should make it clear that Prism also helps other serious businesses grow. Use dental proof as evidence inside a broader growth story, not as the only audience definition.
+
+Homepage copy should stay ultra-minimal. Prefer short labels over explanations, compact proof over long cards, and one clear idea per section. Deeper pages can carry the detail; the homepage should make the growth offer obvious in seconds.
+
+### Abstract Client Proof Cards
+
+The homepage client proof carousel should not use real client photos or website screenshots in the card artwork. Those cards are a brand-system proof surface, not a media gallery. Use abstract growth-system motion instead: subtle grids, routed signal lines, pulsing nodes, Prism-centered initials, and small context labels that hint at the client type.
+
+Keep the abstraction premium and restrained. The cards should still feel like case-study links, with the leader/company/location and a clear case-study affordance, but the visual should communicate systems, signal, and momentum rather than portraits.
+
+Respect reduced motion. Motion can scale, pulse, route, or rotate slowly, but the card must remain legible and useful when animation is disabled.
 
 ## Scope
 

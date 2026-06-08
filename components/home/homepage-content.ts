@@ -47,16 +47,12 @@ type HomepageAiTool = {
   logoAlt: string
 }
 
-export type HomepageDentistWinSlide = {
-  dentist: string
-  practice: string
+export type HomepageClientWinSlide = {
+  leader: string
+  company: string
   location: string
   href: string
   contextLabel: string
-  imageSrc?: string
-  imageAlt: string
-  objectPosition?: string
-  isPlaceholder?: boolean
 }
 
 export type HomepageGrowthRampMetric = {
@@ -69,12 +65,12 @@ export type HomepageGrowthRampMetric = {
 export const HOMEPAGE_CASE_STUDY_SLUGS = [
   'dr-christopher-wong',
   'exquisite-dentistry',
-  'laguna-beach-dental-arts',
-  'family-first-smile-care',
-  'grace-dental-santa-rosa',
-  'town-centre-dental',
-  'coast-periodontics-and-laser-surgery',
-  'wine-country-root-canal',
+  'olympic-bootworks',
+  'roseville-dental-academy',
+  'rebellious-aging',
+  'saorsa-growth-partners',
+  'belize-kids-foundation',
+  'canary-cove',
 ] as const
 
 const HOMEPAGE_HERO_REVIEW_COUNT = getHeroReviewCount()
@@ -82,9 +78,10 @@ const HOMEPAGE_HERO_REVIEW_COUNT_LABEL =
   HOMEPAGE_HERO_REVIEW_COUNT >= 20 ? '20+' : `${HOMEPAGE_HERO_REVIEW_COUNT}`
 
 export const HOMEPAGE_HERO = {
-  eyebrow: 'Dental growth',
-  title: 'Get found. Get trusted. Get booked.',
-  description: 'Premium growth systems for modern dental practices.',
+  eyebrow: 'Business growth',
+  title: 'Growth, built for your business.',
+  description:
+    'Prism builds the websites, search, reviews, content, ads, tracking, and AI-ready systems that help businesses get found, trusted, and chosen.',
   supportPoints: [
     {
       label: 'Can ChatGPT recommend you?',
@@ -93,149 +90,105 @@ export const HOMEPAGE_HERO = {
       variant: 'aiRecommendation',
     },
     {
-      label: 'Reviews',
+      label: 'Proof',
       iconSrc: '/pixelish/award-checkmark.svg',
     },
     {
-      label: 'Appointments',
+      label: 'Qualified demand',
       iconSrc: '/pixelish/calendar.svg',
     },
   ] satisfies readonly HomepageHeroSupportPoint[],
   socialProof: {
-    headline: `${HOMEPAGE_HERO_REVIEW_COUNT_LABEL} reviews from dental and local leaders`,
+    headline: `${HOMEPAGE_HERO_REVIEW_COUNT_LABEL} reviews from founders, doctors, operators, and local leaders`,
     linkLabel: 'Results',
   },
-  primaryCtaLabel: 'Free Practice Audit',
+  primaryCtaLabel: 'Free Growth Audit',
   secondaryCtaLabel: 'See the system',
 } as const
 
-export const HOMEPAGE_DENTIST_WINS = {
+export const HOMEPAGE_CLIENT_WINS = {
   eyebrow: 'Clients',
-  title: 'Top Dentists in CA use Prism',
+  title: 'Great companies use Prism',
   description: '',
   slides: [
     {
-      dentist: 'Dr. Alexie Aguil',
-      practice: 'Exquisite Dentistry',
+      leader: 'Buck Brown',
+      company: 'Olympic Bootworks',
+      location: 'Tahoe, CA',
+      href: '/case-studies/olympic-bootworks',
+      contextLabel: 'Retail + ecommerce',
+    },
+    {
+      leader: 'Dr. Alexie Aguil',
+      company: 'Exquisite Dentistry',
       location: 'Beverly Hills, CA',
       href: '/case-studies/exquisite-dentistry',
-      contextLabel: 'Patient practice',
-      imageSrc: '/dr-alexie-aguil.png',
-      imageAlt: 'Dr. Alexie Aguil of Exquisite Dentistry',
-      objectPosition: '68% center',
+      contextLabel: 'Dental growth',
     },
     {
-      dentist: 'Dr. Christopher B. Wong',
-      practice: 'Silicon Valley Dental',
+      leader: 'Dr. Christopher B. Wong',
+      company: 'Silicon Valley Dental',
       location: 'Palo Alto, CA',
       href: '/case-studies/dr-christopher-wong',
-      contextLabel: 'Patient practice',
-      imageSrc: '/dr-chris-wong.png',
-      imageAlt: 'Dr. Christopher B. Wong inside his dental practice',
-      objectPosition: 'center center',
+      contextLabel: 'Dental growth',
     },
     {
-      dentist: 'Dr. Craig Anderson',
-      practice: 'Wine Country Root Canal',
-      location: 'Santa Rosa, CA',
-      href: '/case-studies/wine-country-root-canal',
-      contextLabel: 'Specialty practice',
-      imageSrc: '/dr-craig-anderson.webp',
-      imageAlt: 'Dr. Craig Anderson of Wine Country Root Canal',
-      objectPosition: 'center 18%',
-    },
-    {
-      dentist: 'Dr. Bryce Chun',
-      practice: 'Coast Periodontics',
-      location: 'San Luis Obispo, CA',
-      href: '/case-studies/coast-periodontics-and-laser-surgery',
-      contextLabel: 'Specialty practice',
-      imageSrc: '/dr-bryce-chun.jpeg',
-      imageAlt: 'Dr. Bryce Chun of Coast Periodontics',
-      objectPosition: 'center 18%',
-    },
-    {
-      dentist: 'Dr. Michael Narodovich',
-      practice: 'Roseville Dental Academy',
+      leader: 'Roseville Dental Academy',
+      company: 'Admissions platform',
       location: 'Roseville, CA',
       href: '/case-studies/roseville-dental-academy',
-      contextLabel: 'Dental education',
-      imageSrc: '/dr-narodovich-headshot.png',
-      imageAlt: 'Dr. Michael Narodovich of Roseville Dental Academy',
-      objectPosition: 'center 18%',
+      contextLabel: 'Education + analytics',
     },
     {
-      dentist: 'Dr. Tim Chuang',
-      practice: 'Family First Smile Care',
+      leader: 'Rebellious Aging',
+      company: 'Online community',
       location: 'Los Gatos, CA',
-      href: '/case-studies/family-first-smile-care',
-      contextLabel: 'Patient practice',
-      imageSrc: '/dr-tim-chuang.png',
-      imageAlt: 'Dr. Tim Chuang of Family First Smile Care',
-      objectPosition: 'center 18%',
+      href: '/case-studies/rebellious-aging',
+      contextLabel: 'Community brand',
     },
     {
-      dentist: 'Dr. Tingjen Ji',
-      practice: 'Grace Dental Santa Rosa',
-      location: 'Santa Rosa, CA',
-      href: '/case-studies/grace-dental-santa-rosa',
-      contextLabel: 'Patient practice',
-      imageSrc: '/dr-ji-headshot.png',
-      imageAlt: 'Dr. Tingjen Ji of Grace Dental Santa Rosa',
-      objectPosition: 'center 18%',
-    },
-    {
-      dentist: 'Dr. Gerard Banaga',
-      practice: 'Town Centre Dental',
-      location: 'Brentwood, CA',
-      href: '/case-studies/town-centre-dental',
-      contextLabel: 'Patient practice',
-      imageSrc: '/dr-banaga-headshot.png',
-      imageAlt: 'Dr. Gerard Banaga of Town Centre Dental',
-      objectPosition: 'center center',
-    },
-    {
-      dentist: 'Dr. Michael Njo',
-      practice: 'Dental Strategies + PTI',
-      location: 'San Mateo, CA',
-      href: '/case-studies/michael-njo-dds',
-      contextLabel: 'Practice + advisory',
-      imageSrc: '/dr-michael-njo.jpeg',
-      imageAlt:
-        'Dr. Michael Njo of Dental Strategies and Practice Transitions Institute',
-      objectPosition: 'center center',
-    },
-    {
-      dentist: 'Liz Armato',
-      practice: 'Dentist Retreat',
+      leader: 'Saorsa Growth Partners',
+      company: 'Advisory firm',
       location: 'San Francisco, CA',
-      href: '/case-studies/leadership-retreat',
-      contextLabel: 'Event website',
-      imageSrc: '/liz-armato-pti.jpg',
-      imageAlt: 'Liz Armato of Dentist Retreat',
-      objectPosition: 'center center',
+      href: '/case-studies/saorsa-growth-partners',
+      contextLabel: 'Consulting',
     },
     {
-      dentist: 'Dr. Teagan Willes',
-      practice: 'Laguna Beach Dental Arts',
-      location: 'Laguna Beach, CA',
-      href: '/case-studies/laguna-beach-dental-arts',
-      contextLabel: 'Case study client',
-      imageSrc: '/dr-teagan-willes-headshot.jpeg',
-      imageAlt: 'Dr. Teagan Willes near the Laguna Beach Dental Arts practice',
-      objectPosition: '70% center',
+      leader: 'Belize Kids Foundation',
+      company: 'Nonprofit',
+      location: 'San Pedro, Belize',
+      href: '/case-studies/belize-kids-foundation',
+      contextLabel: 'Nonprofit impact',
     },
     {
-      dentist: 'Dr. Ahmed Mataria',
-      practice: 'Mataria Dental Group',
-      location: 'Torrance, CA',
-      href: '/case-studies/mataria-dental-group',
-      contextLabel: 'Case study client',
-      imageSrc: '/dr-ahmed-mataria.jpeg',
-      imageAlt: 'Dr. Ahmed Mataria of Mataria Dental Group',
-      objectPosition: 'center center',
+      leader: 'Canary Cove',
+      company: 'Private resort',
+      location: 'San Pedro, Belize',
+      href: '/case-studies/canary-cove',
+      contextLabel: 'Hospitality',
     },
-  ] satisfies readonly HomepageDentistWinSlide[],
+    {
+      leader: 'Infobell IT',
+      company: 'Managed IT services',
+      location: 'San Jose, CA',
+      href: '/case-studies/infobell-it',
+      contextLabel: 'B2B services',
+    },
+    {
+      leader: 'We Are Saplings',
+      company: 'Education',
+      location: 'New York City, NY',
+      href: '/case-studies/we-are-saplings',
+      contextLabel: 'Education',
+    },
+    {
+      leader: 'Dr. Craig Anderson',
+      company: 'Wine Country Root Canal',
+      location: 'Santa Rosa, CA',
+      href: '/case-studies/wine-country-root-canal',
+      contextLabel: 'Specialty healthcare',
+    },
+  ] satisfies readonly HomepageClientWinSlide[],
 } as const
 
 export const HOMEPAGE_GROWTH_RAMP = {
@@ -243,32 +196,33 @@ export const HOMEPAGE_GROWTH_RAMP = {
   title: 'First 90 days.',
   microcopy: 'Aggressive targets. Real systems.',
   finePrint:
-    'Targets vary by market, specialty, starting point, budget, and front-desk follow-up.',
+    'Targets vary by market, offer, starting point, budget, and team follow-through.',
   metrics: [
     {
       day: 'Day 30',
       value: '+25%',
-      label: 'patient actions',
-      detail: 'Calls, forms, booking clicks, directions.',
+      label: 'qualified actions',
+      detail: 'Calls, forms, booking clicks, demos, directions, or inquiries.',
     },
     {
       day: 'Day 60',
       value: '+50%',
       label: 'qualified demand',
-      detail: 'Higher-intent traffic and tracked source clarity.',
+      detail: 'Higher-intent traffic and clearer source attribution.',
     },
     {
       day: 'Day 90',
       value: '10-30',
-      label: 'new patient opportunities/mo',
-      detail: 'Target range once website, Google, reviews, and ads compound.',
+      label: 'growth opportunities/mo',
+      detail: 'Target range once website, search, proof, ads, and AI compound.',
     },
   ] satisfies readonly HomepageGrowthRampMetric[],
 } as const
 
 export const HOMEPAGE_PROBLEM = {
-  title: 'Patients decide fast.',
-  description: 'They check Google, reviews, ChatGPT, and your website.',
+  title: 'Growth leaks happen everywhere.',
+  description:
+    'People check search, reviews, AI answers, your website, and your proof before they choose.',
   points: [
     {
       label: 'Can they find you?',
@@ -281,27 +235,27 @@ export const HOMEPAGE_PROBLEM = {
       iconSrc: '/pixelish/award-checkmark.svg',
     },
     {
-      label: 'Can ChatGPT recommend you?',
+      label: 'Can AI explain you?',
       text: '',
       iconSrc: '/pixelish/chatgpt.svg',
       brandLogo: 'openai',
       brandLogoTheme: 'dark',
     },
     {
-      label: 'Can they book?',
+      label: 'Can they take action?',
       text: '',
       iconSrc: '/pixelish/calendar.svg',
     },
   ] satisfies readonly HomepageProblemPoint[],
-  stackLabel: 'What patients scan',
+  stackLabel: 'What buyers scan',
   stack: [
     { label: 'Website', iconSrc: '/pixelish/browser.svg' },
     {
-      label: 'Google Maps',
+      label: 'Search',
       iconSrc: '/pixelish/lens.svg',
       brandLogo: 'googleMaps',
     },
-    { label: 'Reviews', iconSrc: '/pixelish/emoji-heart.svg' },
+    { label: 'Proof', iconSrc: '/pixelish/emoji-heart.svg' },
     {
       label: 'ChatGPT',
       iconSrc: '/pixelish/chatgpt.svg',
@@ -348,31 +302,31 @@ export const HOMEPAGE_AI_TOOLS = {
 } as const
 
 export const HOMEPAGE_PROMISE = {
-  title: 'Found. Trusted. Booked.',
+  title: 'Found. Trusted. Chosen.',
 } as const
 
 export const HOMEPAGE_PROMISE_CARDS: readonly HomepageIconCard[] = [
   {
     title: 'Found',
-    description: 'Google Maps',
+    description: 'Search + AI',
     iconSrc: '/pixelish/lens.svg',
     brandLogo: 'googleMaps',
   },
   {
     title: 'Trusted',
-    description: 'Reviews',
+    description: 'Proof + reviews',
     iconSrc: '/pixelish/award-checkmark.svg',
   },
   {
-    title: 'Booked',
-    description: 'Appointments',
+    title: 'Chosen',
+    description: 'Calls, forms, sales',
     iconSrc: '/pixelish/users.svg',
   },
 ] as const
 
 export const HOMEPAGE_SERVICES = {
-  title: 'One system. Seven parts.',
-  description: 'Google. Reviews. ChatGPT. Booked demand.',
+  title: 'One growth system. Seven parts.',
+  description: 'Website. Search. Proof. Ads. Content. AI. Tracking.',
   closingLine: '',
 } as const
 
@@ -383,13 +337,13 @@ export const HOMEPAGE_SERVICE_ITEMS: readonly HomepageIconCard[] = [
     iconSrc: '/pixelish/browser.svg',
   },
   {
-    title: 'Google Maps',
+    title: 'Search',
     description: '',
     iconSrc: '/pixelish/lens.svg',
     brandLogo: 'googleMaps',
   },
   {
-    title: 'Reviews',
+    title: 'Proof',
     description: '',
     iconSrc: '/pixelish/emoji-heart.svg',
   },
@@ -399,7 +353,7 @@ export const HOMEPAGE_SERVICE_ITEMS: readonly HomepageIconCard[] = [
     iconSrc: '/pixelish/device-radio.svg',
   },
   {
-    title: 'Treatment pages',
+    title: 'Content',
     description: '',
     iconSrc: '/pixelish/document-letter.svg',
   },
@@ -409,7 +363,7 @@ export const HOMEPAGE_SERVICE_ITEMS: readonly HomepageIconCard[] = [
     iconSrc: '/pixelish/bar-chart-average.svg',
   },
   {
-    title: 'ChatGPT',
+    title: 'AI discovery',
     description: '',
     iconSrc: '/pixelish/chatgpt.svg',
     brandLogo: 'openai',
@@ -418,32 +372,32 @@ export const HOMEPAGE_SERVICE_ITEMS: readonly HomepageIconCard[] = [
 ] as const
 
 export const HOMEPAGE_WHY_PRISM = {
-  title: 'Why owner-dentists choose Prism',
+  title: 'Why founders choose Prism',
 } as const
 
 export const HOMEPAGE_DIFFERENTIATORS: readonly HomepageIconCard[] = [
   {
-    title: 'Simple enough for a busy practice',
+    title: 'Simple enough for a busy operator',
     description:
-      'Clear priorities, plain-English updates, and no extra homework for the doctor or front desk.',
+      'Clear priorities, plain-English updates, and no extra homework for your team.',
     iconSrc: '/pixelish/checkmark.svg',
   },
   {
-    title: 'Premium without feeling clinical',
+    title: 'Premium without feeling generic',
     description:
-      'A calm, modern presence that feels high-trust without turning the practice into a generic healthcare template.',
+      'A calm, modern presence that feels high-trust without turning your company into another template.',
     iconSrc: '/pixelish/award.svg',
   },
   {
     title: 'One connected partner',
     description:
-      'Website, Google visibility, reviews, ads, content, tracking, and AI search move together instead of fighting across vendors.',
+      'Website, search, proof, ads, content, tracking, and AI visibility move together instead of fighting across vendors.',
     iconSrc: '/pixelish/command.svg',
   },
   {
-    title: 'Built around patient decisions',
+    title: 'Built around buyer decisions',
     description:
-      'Every page, profile, and campaign is shaped around how patients compare practices before they call.',
+      'Every page, profile, and campaign is shaped around how real people compare options before they act.',
     iconSrc: '/pixelish/graph-chart-high.svg',
   },
   {
@@ -456,31 +410,32 @@ export const HOMEPAGE_DIFFERENTIATORS: readonly HomepageIconCard[] = [
 
 export const HOMEPAGE_HOW_IT_WORKS = {
   title: 'How it works',
-  ctaLabel: 'Start free audit',
+  ctaLabel: 'Start free growth audit',
 } as const
 
 export const HOMEPAGE_HOW_IT_WORKS_STEPS = [
   {
-    title: 'Submit practice',
+    title: 'Submit business',
     description:
-      'Tell us about your practice in about a minute — no long brief, no sales maze.',
+      'Tell us about your company in about a minute - no long brief, no sales maze.',
   },
   {
     title: 'We audit',
     description:
-      'A real person reviews your website, Google presence, reviews, and tracking.',
+      'A real person reviews your website, search visibility, proof, offer, and tracking.',
   },
   {
-    title: 'Get next steps',
+    title: 'Get growth path',
     description:
-      'Receive a free Light Audit with the single clearest move to grow.',
+      'Receive a free Growth Audit with the clearest move to grow next.',
   },
 ] as const
 
 export const HOMEPAGE_PROOF = {
-  title: 'Dental proof',
-  description: '',
-  ctaLabel: 'See dental results',
+  title: 'Proof across markets',
+  description:
+    'Dental is a major Prism strength. The same growth system also supports retail, consulting, nonprofits, education, hospitality, and founder-led brands.',
+  ctaLabel: 'See client results',
 } as const
 
 export const HOMEPAGE_CASE_STUDY_SUMMARIES: Record<string, string> = {
@@ -500,6 +455,18 @@ export const HOMEPAGE_CASE_STUDY_SUMMARIES: Record<string, string> = {
     'A specialist site that turns intimidating procedures into calm, confidence-building patient education.',
   'wine-country-root-canal':
     'An endodontic experience that makes urgent specialty care feel calm, precise, and easier to choose.',
+  'olympic-bootworks':
+    'A Tahoe retail business gained a two-site ecommerce system and cleaner owned infrastructure.',
+  'roseville-dental-academy':
+    'A GoDaddy web presence became an admissions platform with analytics, forms, Search Console, Hotjar, and AI support.',
+  'rebellious-aging':
+    'A movement gained the digital foundation and local discovery groundwork to grow with more clarity.',
+  'saorsa-growth-partners':
+    'A consulting firm gained sharper positioning, credibility, and lead capture.',
+  'belize-kids-foundation':
+    'A nonprofit gained clearer program storytelling, supporter journeys, and analytics groundwork.',
+  'canary-cove':
+    'A private island experience gained immersive visuals, concierge-ready booking flows, and tracking.',
 }
 
 export const HOMEPAGE_CASE_STUDY_SIGNALS: Record<
@@ -548,52 +515,87 @@ export const HOMEPAGE_CASE_STUDY_SIGNALS: Record<
     outcome: 'Specialty trust',
     proof: 'Root canal care feels precise, calm, and easier to act on.',
   },
+  'olympic-bootworks': {
+    artifact: 'Ecommerce growth base',
+    outcome: 'Retail demand captured',
+    proof:
+      'Inventory, brand story, search, and email moved into one owned system.',
+  },
+  'roseville-dental-academy': {
+    artifact: 'Admissions platform',
+    outcome: 'Lead flow clarified',
+    proof:
+      'Forms, analytics, AI support, and visibility were rebuilt around enrollment.',
+  },
+  'rebellious-aging': {
+    artifact: 'Movement foundation',
+    outcome: 'Community growth base',
+    proof:
+      'The brand gained a clearer home for people ready to join the movement.',
+  },
+  'saorsa-growth-partners': {
+    artifact: 'Advisory positioning',
+    outcome: 'Credibility + lead capture',
+    proof:
+      'The site makes the offer sharper for enterprise and founder conversations.',
+  },
+  'belize-kids-foundation': {
+    artifact: 'Impact storytelling',
+    outcome: 'Supporter clarity',
+    proof: 'Programs, stories, and donation paths became easier to understand.',
+  },
+  'canary-cove': {
+    artifact: 'Hospitality experience',
+    outcome: 'Concierge-ready demand',
+    proof:
+      'The private resort story became more immersive and easier to act on.',
+  },
 }
 
 export const HOMEPAGE_FIT = {
   title: 'Who Prism is built for',
   fitHeading: 'Prism is a good fit if...',
   fitItems: [
-    'You are an owner-dentist or dental leader who wants more qualified patients to find the practice.',
-    'You care about Google Maps, reviews, patient trust, and booked appointments.',
-    'Your website feels behind the quality of your care.',
-    'You want clear tracking without becoming the marketing manager.',
+    'You are a founder, owner, or operator who wants more qualified demand.',
+    'You care about search, proof, trust, AI visibility, and measurable action.',
+    'Your website feels behind the quality of your business.',
+    'You want clear tracking without becoming the marketing department.',
     'You want a trusted partner you can keep working with long term.',
-    'You care about premium design, clarity, and steady practice growth.',
+    'You care about premium design, clarity, and steady business growth.',
   ],
-  fitClosing: 'If that sounds like your practice, Prism was built for you.',
+  fitClosing: 'If that sounds like your company, Prism was built for you.',
   notFitHeading: 'Prism may not be the right fit if...',
   notFitItems: [
     'You want the cheapest option.',
     'You want overnight results with no real strategy.',
     'You want a vendor to just take random orders.',
-    'You do not value quality, patient trust, or long term growth.',
+    'You do not value quality, trust, or long term growth.',
   ],
   notFitClosing:
-    'We do our best work with practices that want to build something strong over time.',
+    'We do our best work with companies that want to build something strong over time.',
 } as const
 
 export const HOMEPAGE_FINAL_CTA = {
-  title: 'See what to fix first.',
+  title: 'Find the growth leak.',
   description:
-    'Free audit for your website, Google profile, reviews, and booking path.',
-  primaryCtaLabel: 'Start free audit',
+    'Free audit for your website, search visibility, proof, offer, tracking, and next growth move.',
+  primaryCtaLabel: 'Start free growth audit',
   supportLine: '',
 } as const
 
 export const HOMEPAGE_STATS = [
-  { value: '10', label: 'dental practice stories' },
-  { value: '5-star', label: 'review-led trust signals' },
-  { value: 'one team', label: 'website + Google + reviews + ads' },
+  { value: '22', label: 'client growth stories' },
+  { value: '7+', label: 'markets served' },
+  { value: 'one team', label: 'website + search + proof + ads' },
   { value: '24/7', label: 'AI-ready discovery layer' },
 ] as const
 
 export const HOMEPAGE_HERO_FACTS = [
-  { value: '10', label: 'dental practice stories' },
+  { value: '22', label: 'client growth stories' },
   { value: 'one partner', label: 'from audit to execution' },
   {
-    value: 'website + Google + reviews + ads',
-    label: 'under one dental growth rhythm',
+    value: 'website + search + proof + ads',
+    label: 'under one growth rhythm',
   },
 ] as const
 
@@ -608,34 +610,34 @@ export const HOMEPAGE_SYSTEM_STEPS = [
   },
   {
     title: 'Booking',
-    description: 'Turn intent into appointments.',
+    description: 'Turn intent into action.',
   },
 ] as const
 
 export const HOMEPAGE_CAPABILITIES = [
   {
-    title: 'Dental websites',
-    description: 'Explain care clearly.',
+    title: 'Websites',
+    description: 'Make the business easy to choose.',
   },
   {
-    title: 'Google Maps',
-    description: 'Show up locally.',
+    title: 'Search',
+    description: 'Show up where buyers look.',
   },
   {
-    title: 'Treatment pages',
-    description: 'Answer patient questions.',
+    title: 'Content',
+    description: 'Answer buyer questions.',
   },
   {
-    title: 'Dental ads',
-    description: 'Find the right patients.',
+    title: 'Ads',
+    description: 'Find the right audience.',
   },
   {
-    title: 'Reviews',
-    description: 'Build patient trust.',
+    title: 'Proof',
+    description: 'Build trust before the first call.',
   },
   {
     title: 'Tracking',
-    description: 'Know what books.',
+    description: 'Know what creates demand.',
   },
 ] as const
 
@@ -699,23 +701,25 @@ export const HOMEPAGE_SEARCH_CONSOLE_SLIDES = [
 export const HOMEPAGE_ROADMAP_PHASES = [
   {
     title: 'Visibility',
-    description: 'What to fix first so patients can find you.',
+    description: 'What to fix first so the right people can find you.',
   },
   {
     title: 'Trust',
-    description: 'What helps patients feel ready to call.',
+    description: 'What helps buyers feel ready to act.',
   },
   {
     title: 'Booking',
-    description: 'What turns online attention into appointments.',
+    description:
+      'What turns online attention into calls, forms, bookings, or sales.',
   },
 ] as const
 
 export const HOMEPAGE_CTA_NOTES = [
   'Website',
-  'Google',
-  'Reviews',
-  'Booking',
+  'Search',
+  'Proof',
+  'AI',
+  'Tracking',
 ] as const
 
 const HOMEPAGE_TESTIMONIAL_IDS = [1, 2] as const
@@ -731,17 +735,17 @@ export const HOMEPAGE_FAQ_ITEMS: HomepageFAQItem[] = [
       {
         type: 'paragraph',
         content:
-          'The homepage is dental-first because Prism has deep proof in dental and healthcare-adjacent local growth. We still help select non-dental local businesses, but the free practice audit is built for dental practices.',
+          "No. Dental is one of Prism's strongest proof areas, but Prism also works with retail, consulting, nonprofit, education, hospitality, local service, and founder-led companies.",
       },
     ],
   },
   {
-    question: 'What do you review in the free practice audit?',
+    question: 'What do you review in the free growth audit?',
     answer: [
       {
         type: 'paragraph',
         content:
-          'We review the website, Google presence, reviews, booking path, treatment pages, tracking, and the patient trust signals that affect whether someone calls.',
+          'We review the website, search visibility, proof, offer clarity, tracking, and the trust signals that affect whether someone takes the next step.',
       },
     ],
   },
@@ -761,7 +765,7 @@ export const HOMEPAGE_FAQ_ITEMS: HomepageFAQItem[] = [
       {
         type: 'paragraph',
         content:
-          'Yes. Sometimes the right move is a full rebuild. Sometimes it is fixing visibility, reviews, service pages, speed, calls, forms, or tracking first.',
+          'Yes. Sometimes the right move is a full rebuild. Sometimes it is fixing visibility, proof, content, speed, calls, forms, or tracking first.',
       },
     ],
   },
@@ -771,7 +775,7 @@ export const HOMEPAGE_FAQ_ITEMS: HomepageFAQItem[] = [
       {
         type: 'paragraph',
         content:
-          'Start with the free practice audit. Submit your practice, and we will review the patient journey before recommending next steps.',
+          'Start with the free growth audit. Submit your company, and we will review the growth path before recommending next steps.',
       },
     ],
   },

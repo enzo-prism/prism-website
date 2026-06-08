@@ -4,30 +4,17 @@ import HomeDentistWinsCarousel from '@/components/home/HomeDentistWinsCarousel'
 
 const mockTrackCTAClick = jest.fn()
 
-jest.mock('next/image', () => ({
-  __esModule: true,
-  default: function MockNextImage({
-    alt,
-    className,
-    src,
-  }: {
-    alt: string
-    className?: string
-    src: string
-  }) {
-    return <img alt={alt} className={className} src={src} />
-  },
-}))
-
 jest.mock('next/link', () => ({
   __esModule: true,
   default: function MockNextLink({
     children,
     href,
+    prefetch: _prefetch,
     ...props
   }: {
     children: React.ReactNode
     href: string
+    prefetch?: boolean
     [key: string]: unknown
   }) {
     return (
@@ -44,14 +31,11 @@ jest.mock('@/utils/analytics', () => ({
 
 const slides = [
   {
-    dentist: 'Dr. Alexie Aguil',
-    practice: 'Exquisite Dentistry',
+    leader: 'Dr. Alexie Aguil',
+    company: 'Exquisite Dentistry',
     location: 'Beverly Hills, CA',
     href: '/case-studies/exquisite-dentistry',
     contextLabel: 'Patient practice',
-    imageSrc: '/dr-alexie-aguil.png',
-    imageAlt: 'Dr. Alexie Aguil of Exquisite Dentistry',
-    objectPosition: '68% center',
   },
 ] as const
 
@@ -60,81 +44,59 @@ describe('HomeDentistWinsCarousel', () => {
     mockTrackCTAClick.mockReset()
   })
 
-  it('keeps slides black and white until the card is toggled', () => {
-    render(<HomeDentistWinsCarousel slides={slides} />)
+  it('renders abstract animated visuals instead of real card images', () => {
+    const { container } = render(<HomeDentistWinsCarousel slides={slides} />)
 
-    const toggle = screen.getByRole('button', {
-      name: /show color version for dr\. alexie aguil/i,
-    })
-    const image = screen.getByAltText(/dr\. alexie aguil/i)
+    const abstractVisual = container.querySelector('[data-client-win-abstract]')
 
-    expect(toggle).toHaveAttribute('aria-pressed', 'false')
-    expect(image).toHaveClass('grayscale')
-    expect(image).toHaveClass('saturate-0')
-    expect(image).not.toHaveClass('grayscale-0')
-
-    fireEvent.click(toggle)
-
-    expect(toggle).toHaveAttribute('aria-pressed', 'true')
-    expect(toggle).toHaveAccessibleName(
-      /hide color version for dr\. alexie aguil/i,
-    )
-    expect(image).toHaveClass('grayscale-0')
-    expect(image).toHaveClass('saturate-100')
-
-    fireEvent.click(toggle)
-
-    expect(toggle).toHaveAttribute('aria-pressed', 'false')
+    expect(abstractVisual).toBeInTheDocument()
+    expect(container.querySelector('[data-client-win-card] img')).toBeNull()
+    expect(
+      screen.queryByRole('button', { name: /show color version/i }),
+    ).not.toBeInTheDocument()
   })
 
-  it('keeps case study navigation separate from the color toggle', () => {
+  it('uses the whole card as the tracked case study navigation', () => {
     render(<HomeDentistWinsCarousel slides={slides} />)
 
-    const toggle = screen.getByRole('button', {
-      name: /show color version for dr\. alexie aguil/i,
-    })
     const link = screen.getByRole('link', {
       name: /open case study for exquisite dentistry/i,
     })
 
-    fireEvent.click(toggle)
-
-    expect(mockTrackCTAClick).not.toHaveBeenCalled()
     expect(link).toHaveAttribute('href', '/case-studies/exquisite-dentistry')
 
     fireEvent.click(link)
 
     expect(mockTrackCTAClick).toHaveBeenCalledWith(
       'view Exquisite Dentistry case study',
-      'homepage dentist wins carousel',
+      'homepage client wins carousel',
     )
   })
 
-  it('uses a smoother hover treatment for dentist win cards', () => {
+  it('uses a smoother hover treatment for abstract client win cards', () => {
     const { container } = render(<HomeDentistWinsCarousel slides={slides} />)
 
-    const card = container.querySelector('[data-dentist-win-card] article')
-    const image = screen.getByAltText(/dr\. alexie aguil/i)
-    const glow = container.querySelector('[data-dentist-win-hover-glow]')
-    const link = screen.getByRole('link', {
+    const cardLink = screen.getByRole('link', {
       name: /open case study for exquisite dentistry/i,
     })
-    const arrow = link.querySelector('svg')
+    const card = container.querySelector('[data-client-win-card] article')
+    const abstractVisual = container.querySelector('[data-client-win-abstract]')
+    const glow = container.querySelector('[data-client-win-hover-glow]')
+    const arrow = cardLink.querySelector('span svg')
 
+    expect(cardLink).toHaveClass('group/card')
     expect(card).toHaveClass(
       'transition-[transform,border-color,background-color,box-shadow]',
     )
     expect(card).toHaveClass('duration-700')
-    expect(card).toHaveClass('hover:-translate-y-1')
-    expect(card).toHaveClass('focus-within:-translate-y-1')
+    expect(card).toHaveClass('group-hover/card:-translate-y-1')
+    expect(card).toHaveClass('group-focus-visible/card:-translate-y-1')
     expect(card).toHaveClass('motion-reduce:transition-none')
-    expect(image).toHaveClass('duration-[1100ms]')
-    expect(image).toHaveClass('group-hover/card:scale-[1.045]')
-    expect(image).toHaveClass('group-focus-within/card:grayscale-0')
+    expect(abstractVisual).toHaveClass('duration-[1100ms]')
+    expect(abstractVisual).toHaveClass('group-hover/card:scale-[1.025]')
+    expect(abstractVisual).toHaveClass('group-focus-visible/card:scale-[1.025]')
     expect(glow).toHaveClass('group-hover/card:opacity-100')
-    expect(glow).toHaveClass('group-focus-within/card:opacity-100')
-    expect(link).toHaveClass('group/link')
-    expect(link).toHaveClass('hover:-translate-y-0.5')
-    expect(arrow).toHaveClass('group-hover/link:translate-x-0.5')
+    expect(glow).toHaveClass('group-focus-visible/card:opacity-100')
+    expect(arrow).toHaveClass('group-hover/card:translate-x-0.5')
   })
 })

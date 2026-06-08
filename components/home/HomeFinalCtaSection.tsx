@@ -32,7 +32,7 @@ export default function HomeFinalCtaSection() {
             <div className="mt-10 flex flex-col gap-5 sm:flex-row sm:items-center">
               <CoreActionLink
                 href="/get-started"
-                label="start free audit"
+                label="start free growth audit"
                 location="homepage final cta"
                 variant="heroPrimary"
               >

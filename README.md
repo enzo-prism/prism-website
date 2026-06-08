@@ -3,7 +3,7 @@
 [![Deployed on Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?style=for-the-badge&logo=vercel)](https://vercel.com/enzo-design-prisms-projects/v0-prism-website-design)
 [![Built with v0](https://img.shields.io/badge/Built%20with-v0.dev-black?style=for-the-badge)](https://v0.dev/chat/projects/8xmj81uf3fc)
 
-Next.js App Router project that powers Prism's dental growth systems website: marketing pages, proof, dental service funnels, blog, forms, and legacy direct-visitor surfaces. The codebase stays in sync with [v0.dev](https://v0.dev) chats and ships to production through GitHub Actions + Vercel source deploys.
+Next.js App Router project that powers Prism's business growth systems website: marketing pages, proof, specialty service funnels, blog, forms, and legacy direct-visitor surfaces. The codebase stays in sync with [v0.dev](https://v0.dev) chats and ships to production through GitHub Actions + Vercel source deploys.
 
 ---
 
@@ -33,8 +33,8 @@ The repo assumes pnpm; npm/yarn installs will fall out of sync.
 - **Package manager** – pnpm 10.x via `corepack enable`. All commands should use `pnpm`; references to `npm run …` are outdated.
 - **Architecture** – Marketing forms post to Formspree using the shared `useFormValidation` hook (HTML5 validation + client-side `fetch` + thank-you redirect). We do **not** use React Hook Form, Zod, or server actions for these flows today. If this changes, update this section immediately.
 - **Canonical pricing policy** – `/pricing` is the only canonical pricing URL and follows the Growth Dashboard path: free Growth Dashboard, included Light Audit, normally `$500` Deep Growth Audit, 60-day Growth Sprints starting at `$3,500`, and optional ongoing Growth Partner support starting at `$1,500/month`. Legacy pricing routes permanently redirect to `/pricing`.
-- **Search visibility policy** – Prism's public search/LLM footprint is dental-first. `lib/seo/search-visibility.ts` controls static route indexability and the curated blog allowlist used by sitemap, RSS/latest-post APIs, SEO inventory, and tests. New routes/posts should remain noindex unless they support dental growth systems, pricing, proof, legal, or the Growth Dashboard funnel.
-- **Deploy mode policy** – GitHub Actions is the only production publisher. `main` source deploys through `.github/workflows/deploy.yml`, while Vercel Git auto-deploy for `main` is disabled in `vercel.json` to avoid duplicate production releases.
+- **Search visibility policy** – Prism's public search/LLM footprint is growth-first with dental as a strong specialty proof cluster. `lib/seo/search-visibility.ts` controls static route indexability and the curated blog allowlist used by sitemap, RSS/latest-post APIs, SEO inventory, and tests. New routes/posts should remain noindex unless they support growth systems, pricing, proof, legal, the Growth Dashboard funnel, or a deliberate specialty cluster.
+- **Deploy mode policy** – GitHub Actions is the only production publisher. `main` source deploys through `.github/workflows/deploy.yml`, while Vercel Git auto-deploy for `main` is disabled in `vercel.json` to avoid duplicate production releases. The locked-route screenshot job still runs in CI, but it is temporarily non-blocking while visual baselines stabilize.
 - **Documentation** – When you add a new flow or change behavior, edit the relevant file under `/docs` (or this README/AGENTS if the rule is global). Do _not_ add new top-level docs without approval; prefer updating existing guides.
 - **Environment variables** – Required vars are limited to those listed in [docs/environment-setup.md](./docs/environment-setup.md) and `.env.example` (GA overrides, Formspree-compatible endpoints, ElevenLabs public config, optional site URLs). Do not list vars that aren’t part of the supported setup.
 - **Assistant surface** – `/get-started` no longer mounts the custom `SalesChat` UI or the stock ElevenLabs launcher. The public ElevenLabs floating widget from `components/global-elevenlabs-widget.tsx` is limited to non-mobile `/pricing` and `/contact`; mobile viewports and every other public route stay widget-free so focused flows stay clean.
@@ -64,7 +64,7 @@ The repo assumes pnpm; npm/yarn installs will fall out of sync.
 | `pnpm lint`                       | ESLint + Tailwind conventions.                                                                                                                                                                                                                                                                                                 |
 | `pnpm typecheck`                  | TypeScript project-wide type safety.                                                                                                                                                                                                                                                                                           |
 | `pnpm test`                       | Jest + Testing Library suite.                                                                                                                                                                                                                                                                                                  |
-| `pnpm test:visual:locked`         | Playwright visual checks for locked routes (`/`, `/about`, `/pricing`, `/get-started`); matches deploy workflow gate, intentionally suppresses the live ElevenLabs widget, and runs against an isolated `next start` server on port `3300` so page-lock screenshots stay deterministic.                                        |
+| `pnpm test:visual:locked`         | Playwright visual checks for locked routes (`/`, `/about`, `/pricing`, `/get-started`); runs in the deploy workflow, is currently non-blocking in CI while baselines stabilize, intentionally suppresses the live ElevenLabs widget, and runs against an isolated `next start` server on port `3300` so page-lock screenshots stay deterministic. |
 | `pnpm test:home-scroll:mobile`    | Codex-fast mobile Playwright guard for the homepage “See How It Works” CTA. Builds once, starts production Next on port `3310`, and verifies direct hash loads plus fresh/same-hash CTA clicks land `#how-it-works` exactly below the fixed header across compact, baseline, and large phone viewports in Chromium and WebKit. |
 | `pnpm test:visual:animations`     | Focused cross-browser loop verification for the homepage hero, `/case-studies`, and `/wall-of-love`, covering Chromium, Firefox, WebKit, and mobile emulation.                                                                                                                                                                 |
 | `pnpm test:performance:smoke`     | Cross-browser performance smoke for `/`, `/about`, `/pricing`, and `/get-started` against a running production preview (`PERF_BASE_URL`, defaults to `http://127.0.0.1:3301`).                                                                                                                                                 |
@@ -97,7 +97,7 @@ The repo assumes pnpm; npm/yarn installs will fall out of sync.
 - `lib/` – Business logic (constants, analytics helpers, MDX helpers, SEO utilities).
 - `scripts/` – Diagnostics (deployment verifier, MCP helpers, SEO/site checks).
 - `docs/` – Workflow guides (blog architecture, development, forms, etc.).
-- `public/llms.txt` – Curated machine-readable map of canonical dental-growth pages for LLMs and agents.
+- `public/llms.txt` – Curated machine-readable map of canonical growth, proof, and specialty pages for LLMs and agents.
 
 ## Documentation map
 
@@ -125,14 +125,14 @@ The repo assumes pnpm; npm/yarn installs will fall out of sync.
 - `vercel login` then `vercel link` (first time in repo) to target the project.
 - `vercel pull --yes --environment=production` to sync remote env vars for parity checks.
 - `vercel deploy --prod --yes` for manual production deploys (source deploy; matches CI behavior and should be used only for intentional overrides or rollback recovery).
-- `vercel deploy --yes` for preview deployments.
+- `vercel deploy --yes` for preview deployments. Prism preview links should remain publicly reviewable; verify a new preview with `curl -I -L <preview-url>` and confirm it returns `HTTP 200` without Vercel SSO markers.
 - `vercel ls` for deployment history, `vercel inspect <deployment-url>` for metadata, and `vercel logs <deployment-url> --follow` for runtime debugging.
 - `vercel rollback <deployment-url>` when rollback is needed.
 
 ## Deployment
 
-- Merges to `main` trigger the GitHub `Deploy to Vercel` workflow, which runs the release gates and then publishes with `vercel deploy --prod --yes`.
-- Deploy workflow gates run in order: `UI Lock Screenshots` (`pnpm test:visual:locked`) -> `Build and Deploy`.
+- Merges to `main` trigger the GitHub `Deploy to Vercel` workflow, which runs the visual check plus blocking build/deploy checks and then publishes with `vercel deploy --prod --yes`.
+- Deploy workflow runs in order: `UI Lock Screenshots` (`pnpm test:visual:locked`, currently non-blocking) -> `Build and Deploy`.
 - v0.dev remains the design/control plane; updates published from v0 sync back into this repo.
 - Vercel Git auto-deploy is disabled only for `main`; preview deployments from PR branches remain available for QA.
 

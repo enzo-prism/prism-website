@@ -36,33 +36,33 @@ const APPLY_DRAFT_STORAGE_KEY = 'prism_apply_draft_v1'
 
 const FOCUS_OPTIONS = [
   {
-    label: 'More patient calls',
-    value: 'calls',
-    serviceValue: 'Google Maps / SEO',
-    goalValue: 'I need more patient calls',
+    label: 'More qualified leads',
+    value: 'leads',
+    serviceValue: 'Qualified demand',
+    goalValue: 'I need more qualified leads',
   },
   {
-    label: 'Google visibility',
-    value: 'google',
-    serviceValue: 'Google Maps / SEO',
-    goalValue: 'I need better Google visibility',
+    label: 'Search visibility',
+    value: 'search',
+    serviceValue: 'Search / AI visibility',
+    goalValue: 'I need better search visibility',
   },
   {
-    label: 'Modern website',
+    label: 'Website or funnel',
     value: 'website',
-    serviceValue: 'Dental website',
-    goalValue: 'I need a modern dental website',
+    serviceValue: 'Website / funnel',
+    goalValue: 'I need a stronger website or funnel',
   },
   {
-    label: 'Reviews & trust',
-    value: 'reviews',
-    serviceValue: 'Reviews',
-    goalValue: 'I need stronger reviews and patient trust',
+    label: 'Proof & trust',
+    value: 'proof',
+    serviceValue: 'Proof / reviews',
+    goalValue: 'I need stronger proof and trust',
   },
   {
     label: 'Clearer tracking',
     value: 'tracking',
-    serviceValue: 'Tracking',
+    serviceValue: 'Tracking / analytics',
     goalValue: 'I need to know what is working',
   },
   {
@@ -75,7 +75,7 @@ const FOCUS_OPTIONS = [
 
 const PROFILE_OPTIONS = [
   { label: 'Website', value: 'yes' },
-  { label: 'Profile only', value: 'no' },
+  { label: 'Profile / social', value: 'no' },
 ] as const
 
 const BUDGET_OPTIONS = [
@@ -641,7 +641,7 @@ export default function GetStartedForm() {
       }
 
       if (field.name === 'company') {
-        if (!value) message = 'Enter your practice name'
+        if (!value) message = 'Enter your business name'
       }
 
       if (field.name === 'full_name') {
@@ -1144,8 +1144,8 @@ export default function GetStartedForm() {
                 value={reviewLink}
                 placeholder={
                   hasWebsite === 'yes'
-                    ? 'yourpractice.com'
-                    : 'maps.google.com/your-practice'
+                    ? 'yourcompany.com'
+                    : 'maps.google.com/your-business'
                 }
                 className={fieldClassName}
                 aria-invalid={Boolean(getError('review_link'))}
@@ -1208,7 +1208,7 @@ export default function GetStartedForm() {
         return (
           <div className="space-y-3">
             <Label htmlFor="apply-company" className="sr-only">
-              Practice name
+              Business name
             </Label>
             <Input
               id="apply-company"
@@ -1216,7 +1216,7 @@ export default function GetStartedForm() {
               required
               autoComplete="organization"
               value={company}
-              placeholder="Practice name"
+              placeholder="Business name"
               className={fieldClassName}
               data-step-autofocus="true"
               aria-invalid={Boolean(getError('company'))}
@@ -1270,7 +1270,7 @@ export default function GetStartedForm() {
                 autoComplete="email"
                 spellCheck={false}
                 value={email}
-                placeholder="you@practice.com"
+                placeholder="you@company.com"
                 className={fieldClassName}
                 aria-invalid={Boolean(getError('email'))}
                 aria-describedby={getDescribedBy('email')}
@@ -1305,7 +1305,7 @@ export default function GetStartedForm() {
                 onEdit={() => handleEditStep('fit')}
               />
               <ReviewRow
-                label="Practice"
+                label="Business"
                 value={company}
                 onEdit={() => handleEditStep('practice')}
               />
@@ -1347,7 +1347,7 @@ export default function GetStartedForm() {
         : currentStep === 'fit'
           ? 'After the free audit.'
           : currentStep === 'practice'
-            ? 'Practice name'
+            ? 'Business name'
             : currentStep === 'contact'
               ? 'Where should we send it?'
               : 'Review and submit.'
