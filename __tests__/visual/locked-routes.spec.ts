@@ -262,7 +262,12 @@ test('home proof section snapshot stays stable', async ({ page }) => {
 
 test('home promise and service cards stay contained across responsive breakpoints', async ({
   page,
-}) => {
+}, testInfo) => {
+  test.skip(
+    testInfo.project.name !== 'desktop-chromium',
+    'Manual breakpoint loop already covers mobile and tablet sizes.',
+  )
+
   await disableElevenLabsWidget(page)
 
   const breakpoints = [
@@ -350,7 +355,12 @@ test('home promise and service cards stay contained across responsive breakpoint
 
 test('home hero layout stays readable across responsive breakpoints', async ({
   page,
-}) => {
+}, testInfo) => {
+  test.skip(
+    testInfo.project.name !== 'desktop-chromium',
+    'Manual breakpoint loop already covers mobile and tablet sizes.',
+  )
+
   const breakpoints = [
     { width: 390, height: 844 },
     { width: 430, height: 932 },
