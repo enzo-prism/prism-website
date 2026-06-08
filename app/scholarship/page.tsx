@@ -3,9 +3,9 @@ import { WebPageSchema } from "@/components/schema-markup"
 import ScholarshipPageClient from "./ScholarshipPageClient"
 import { buildRouteMetadata } from "@/lib/seo/metadata"
 
-const PAGE_TITLE = "community website scholarship | prism"
+const PAGE_TITLE = 'Free community website scholarship'
 const PAGE_DESCRIPTION =
-  "each month prism builds a free website for a community member. apply for the scholarship and we'll review your story before the next pick."
+  'Each month Prism builds a free website for one community member. Share your story and apply for the scholarship before we choose the next recipient.'
 const CANONICAL_URL = "https://www.design-prism.com/scholarship"
 
 export const metadata: Metadata = buildRouteMetadata({

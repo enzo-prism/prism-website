@@ -139,8 +139,8 @@ const consultingCaseStudies = CASE_STUDIES.filter((study) => study.segments.incl
 const consultingGradientClasses = ["from-blue-100 via-white to-blue-50", "from-amber-100 via-white to-amber-50"]
 
 export const metadata: Metadata = buildRouteMetadata({
-  titleStem: "Consulting website + lead generation",
-  description: "Websites, authority content, automation, and conversion systems that help consulting firms attract and qualify better leads.",
+  titleStem: 'Consulting websites & lead generation',
+  description: 'Websites, authority content, automation, and conversion systems that help consulting firms attract, qualify, and win better clients.',
   path: "/why-consulting-companies-love-prism",
 })
 

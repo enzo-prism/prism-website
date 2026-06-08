@@ -3,9 +3,9 @@ import { WebPageSchema } from "@/components/schema-markup"
 import YouTubeLandingPage from "./youtube-landing-page"
 import { buildRouteMetadata } from "@/lib/seo/metadata"
 
-const PAGE_TITLE = "youtube community | prism"
+const PAGE_TITLE = 'Prism on YouTube: growth tactics'
 const PAGE_DESCRIPTION =
-  "explore the exact youtube tactics prism uses to build modern growth systems for ambitious brands and business owners."
+  'Watch the exact tactics Prism uses to build modern growth systems for ambitious local brands and business owners, free on YouTube.'
 const CANONICAL_URL = "https://www.design-prism.com/youtube"
 
 export const metadata: Metadata = buildRouteMetadata({

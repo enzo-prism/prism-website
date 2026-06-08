@@ -1,9 +1,9 @@
 import type { Metadata } from "next"
 import { buildRouteMetadata } from "@/lib/seo/metadata"
 export const metadata: Metadata = buildRouteMetadata({
-  titleStem: "Business growth systems",
+  titleStem: 'Websites, SEO & ads for local growth',
   description:
-    "Prism builds websites, search visibility, proof, ads, content, tracking, and AI-ready growth systems for founders, owners, and operators.",
+    'Prism builds AI-ready websites, local SEO, ads, reviews, and tracking into one growth system for founders, owners, and local operators.',
   path: "/",
 })
 

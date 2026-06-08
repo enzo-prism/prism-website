@@ -158,9 +158,9 @@ const partnershipPoints = [
   "Proven playbooks that reduce wasted spend"
 ]
 
-const PAGE_TITLE = "google ads for dentists"
+const PAGE_TITLE = 'Google Ads for dentists'
 const PAGE_DESCRIPTION =
-  "prism helps dental practices attract more patients with compliant google ads for implants, invisalign, and general dentistry—built for policy safety."
+  'Prism helps dental practices attract more patients with compliant Google Ads for implants, Invisalign, and general dentistry, built for policy safety.'
 const CANONICAL_URL = "https://www.design-prism.com/google/dental-ads"
 
 export const metadata: Metadata = buildRouteMetadata({

@@ -6,9 +6,9 @@ import { WebPageSchema } from "@/components/schema-markup"
 import PrismFlywheelClient from "./client-page"
 import { buildRouteMetadata } from "@/lib/seo/metadata"
 
-const PAGE_TITLE = "prism flywheel | powering exponential growth"
+const PAGE_TITLE = 'The Prism growth flywheel'
 const PAGE_DESCRIPTION =
-  "discover prism's flywheel: a compounding system using frontier ai like grok and claude to build maximum leverage for your business growth."
+  'See how the Prism flywheel compounds frontier AI, content, and proof into durable leverage that keeps generating leads for your business.'
 const CANONICAL_URL = "https://www.design-prism.com/prism-flywheel"
 
 export const metadata: Metadata = buildRouteMetadata({

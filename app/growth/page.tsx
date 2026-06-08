@@ -41,9 +41,9 @@ const services = [
   },
 ]
 
-const PAGE_TITLE = "Growth retainers | prism"
+const PAGE_TITLE = 'Growth retainers for live websites'
 const PAGE_DESCRIPTION =
-  "Turn your Prism-built site into a full growth engine with SEO, ads, and automation retainers."
+  'Turn your Prism-built site into a full growth engine with SEO, ads, and automation retainers that keep compounding leads after launch.'
 const CANONICAL_URL = "https://www.design-prism.com/growth"
 
 export const metadata: Metadata = buildRouteMetadata({

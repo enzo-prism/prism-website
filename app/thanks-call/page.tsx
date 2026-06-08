@@ -3,8 +3,8 @@ import ThanksCallPageClient from "./client-page"
 import { buildRouteMetadata } from "@/lib/seo/metadata"
 
 export const metadata: Metadata = buildRouteMetadata({
-  titleStem: "call scheduled | thanks from prism",
-  description: "your call has been scheduled successfully. join our instagram community while you wait.",
+  titleStem: 'Your call is scheduled',
+  description: 'Your call with Prism is booked. Watch for the calendar invite, and join our Instagram community for founder growth tips while you wait.',
   path: "/thanks-call",
   index: false,
 })

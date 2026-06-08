@@ -12,8 +12,8 @@ import PixelishIcon from "@/components/pixelish/PixelishIcon"
 import { buildRouteMetadata } from "@/lib/seo/metadata"
 
 export const metadata: Metadata = buildRouteMetadata({
-  titleStem: "Analysis received | prism",
-  description: "We're preparing your free analysis—book a call if you want a live walkthrough.",
+  titleStem: 'Your free analysis is on its way',
+  description: 'We are preparing your free website and visibility analysis. Book a call if you want Prism to walk through the findings with you live.',
   path: "/analysis-thank-you",
   index: false,
 })

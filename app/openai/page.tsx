@@ -82,9 +82,9 @@ const workflow = [
   },
 ]
 
-const PAGE_TITLE = 'openai growth systems | design prism'
+const PAGE_TITLE = 'OpenAI growth systems'
 const PAGE_DESCRIPTION =
-  'See how Prism uses OpenAI tools, copilots, and distribution intelligence to expand your practice across chat, search, and assistant surfaces.'
+  'See how Prism uses OpenAI tools, copilots, and distribution intelligence to expand your presence across chat, search, and assistant surfaces.'
 const CANONICAL_URL = 'https://www.design-prism.com/openai'
 
 export const metadata: Metadata = buildRouteMetadata({

@@ -38,9 +38,9 @@ const WEBSITE_SCREENSHOTS = {
 } as const
 
 export const metadata: Metadata = buildRouteMetadata({
-  titleStem: 'case study: Roseville Dental Academy admissions system',
+  titleStem: 'Roseville Dental Academy case study',
   description:
-    'How Prism moved Roseville Dental Academy from a GoDaddy stock site into a Vercel-hosted admissions system with GA4, Search Console, Hotjar, Formspree, and ElevenLabs AI.',
+    'How Prism moved Roseville Dental Academy from a stock GoDaddy site to a Vercel-hosted admissions system with GA4, Search Console, and AI built in.',
   path: `/case-studies/${SLUG}`,
   ogImage: WEBSITE_SCREENSHOTS.og,
 })

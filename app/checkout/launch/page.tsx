@@ -10,8 +10,8 @@ import { websiteProjects } from "@/lib/website-projects"
 import { buildRouteMetadata } from "@/lib/seo/metadata"
 
 export const metadata: Metadata = buildRouteMetadata({
-  titleStem: "launch plan checkout | prism",
-  description: "confirm your prism launch website plan and finalize billing details.",
+  titleStem: 'Launch plan checkout',
+  description: 'Confirm your Prism Launch website plan and finalize billing details to get started. Secure checkout, clear scope, no surprises.',
   path: "/checkout/launch",
   index: false,
 })

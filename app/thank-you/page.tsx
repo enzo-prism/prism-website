@@ -10,9 +10,9 @@ import LeadSuccessTracker from "@/components/thank-you/LeadSuccessTracker"
 import { buildRouteMetadata } from "@/lib/seo/metadata"
 
 export const metadata: Metadata = buildRouteMetadata({
-  titleStem: "Thank you | Prism",
+  titleStem: 'Thank you',
   description:
-    "We received your submission. Every real inquiry is reviewed, and Prism reaches out when the next step is a fit.",
+    'We received your submission. Every real inquiry is reviewed, and Prism reaches out when the next step is genuinely a fit for both sides.',
   path: "/thank-you",
   index: false,
 })
@@ -79,7 +79,7 @@ export default async function ThankYouPage({
               <p className="mt-6 max-w-[42rem] font-mono text-[1rem] leading-8 text-[#A0A09A]">
                 {isApplyFlow
                   ? "Thanks, we've got it. Every real business submission receives a Growth Audit. Claim your dashboard to follow the review from one place."
-                  : "We received your submission. Every real inquiry gets reviewed. If there&apos;s a fit, we&apos;ll reach out with the right next step."}
+                  : "We received your submission. Every real inquiry gets reviewed. If there's a fit, we'll reach out with the right next step."}
               </p>
             </div>
 

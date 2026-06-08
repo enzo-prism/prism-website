@@ -6,8 +6,8 @@ import PricingDentalClient from "./client-page"
 import { buildRouteMetadata } from "@/lib/seo/metadata"
 
 export const metadata: Metadata = buildRouteMetadata({
-  titleStem: "dental marketing pricing | prism",
-  description: "transparent pricing plans designed specifically for dental practices. choose between starter and pro plans to grow your practice and attract more patients.",
+  titleStem: 'Dental marketing pricing',
+  description: 'Transparent marketing plans built for dental practices. Choose a starter or pro plan to grow your practice and attract more new patients each month.',
   path: "/pricing-dental",
   index: false,
 })

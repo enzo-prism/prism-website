@@ -123,9 +123,9 @@ const sources = [
   "HIPAA and email: HHS allows email with safeguards; Google Workspace offers BAAs on paid tiers.",
 ]
 
-const PAGE_TITLE = "custom email for dental practices"
+const PAGE_TITLE = 'Custom email for dental practices'
 const PAGE_DESCRIPTION =
-  "why name@yourpractice.com beats free mailboxes. prism sets up secure, professional email so dental practices look legit, hire faster, and stay compliant."
+  'Why name@yourpractice.com beats free inboxes. Prism sets up secure, professional email so dental teams look legit, hire faster, and stay compliant.'
 const CANONICAL_URL = "https://www.design-prism.com/custom-email-for-dental-practices"
 
 export const metadata: Metadata = buildRouteMetadata({

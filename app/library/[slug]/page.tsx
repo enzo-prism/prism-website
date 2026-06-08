@@ -24,7 +24,8 @@ const buildMetadata = (post: LibraryPost): Metadata => {
   const title = buildAbsoluteTitle(rawTitle)
   const description = buildMinimalDescription(
     rawTitle,
-    post.editorial?.takeaways?.[0] ??
+    post.editorial?.seoDescription ??
+      post.editorial?.takeaways?.[0] ??
       post.caption ??
       `Short lesson from Prism Library: ${post.title}.`,
   )

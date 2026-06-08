@@ -36,8 +36,8 @@ const lessons = [
 ]
 
 export const metadata: Metadata = buildRouteMetadata({
-  titleStem: "Dr. Michael Njo | Prism Podcast",
-  description: "Read Dr. Michael Njo's story of discipline, reinvention, and mentorship—from building a practice to guiding dentists through Practice Transitions Institute.",
+  titleStem: 'Dr. Michael Njo on the Prism Podcast',
+  description: 'Dr. Michael Njo\'s story of discipline, reinvention, and mentorship, from building a practice to guiding dentists through Practice Transitions Institute.',
   path: "/podcast/michael-njo",
   ogImage: "/prism-opengraph.png",
 })

@@ -8,8 +8,8 @@ import { sanitizeReviewText } from "@/lib/schema-helpers"
 import { buildRouteMetadata } from "@/lib/seo/metadata"
 
 export const metadata: Metadata = buildRouteMetadata({
-  titleStem: "Client testimonials + reviews",
-  description: "Reviews from dental practices, nonprofits, and local brands that hired Prism for website design, SEO, and growth systems.",
+  titleStem: 'Client testimonials & reviews',
+  description: 'Real reviews from dental practices, nonprofits, and local brands that hired Prism for website design, SEO, ads, and full growth systems.',
   path: "/wall-of-love",
   ogImage: "/prism-opengraph.png",
 })

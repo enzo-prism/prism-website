@@ -11,9 +11,9 @@ import { Button } from "@/components/ui/button"
 import GuideTabs from "./GuideTabs"
 import { buildRouteMetadata } from "@/lib/seo/metadata"
 
-const PAGE_TITLE = "dental before + after system: in-practice guide | prism"
+const PAGE_TITLE = 'Dental before & after photo system'
 const PAGE_DESCRIPTION =
-  "follow prism's 0→100% workflow to capture dental before-and-after photos in-house, with gear tiers, scripts, storage, and rollout tips."
+  'Follow Prism\'s 0-to-100 workflow to capture dental before-and-after photos in-house, with gear tiers, scripts, storage, and a simple rollout plan.'
 const CANONICAL_URL = "https://www.design-prism.com/dental-photography/before-after"
 
 export const metadata: Metadata = buildRouteMetadata({

@@ -8,9 +8,9 @@ import { buildRouteMetadata } from "@/lib/seo/metadata"
 import LeadSuccessTracker from "@/components/thank-you/LeadSuccessTracker"
 
 export const metadata: Metadata = buildRouteMetadata({
-  titleStem: "plan sent | next steps from prism",
+  titleStem: 'Pricing reviewed: next steps',
   description:
-    "Thanks for reviewing Prism pricing. We'll follow up with clear next steps for the Growth Dashboard, Light Audit, Deep Growth Audit, or sprint path.",
+    'Thanks for reviewing Prism pricing. We will follow up with clear next steps for the Growth Dashboard, audits, or a focused growth sprint.',
   path: "/pricing/thank-you",
   index: false,
   ogImage: "/prism-opengraph.png",

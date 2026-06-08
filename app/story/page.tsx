@@ -77,9 +77,9 @@ const engineDeliverables = [
   "A Story Vault (your growing library of customer stories — your most valuable content asset).",
 ]
 
-const PAGE_TITLE = "story-driven marketing | design prism"
+const PAGE_TITLE = 'Story-driven marketing for local brands'
 const PAGE_DESCRIPTION =
-  "Turn customer impact into a growth engine. Prism’s Customer Signal Engine captures real stories and turns them into SEO, conversions, and community."
+  'Turn customer impact into a growth engine. Prism captures real customer stories and turns them into SEO, conversions, and community momentum.'
 const CANONICAL_URL = "https://www.design-prism.com/story"
 
 export const metadata: Metadata = buildRouteMetadata({

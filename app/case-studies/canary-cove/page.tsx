@@ -3,9 +3,9 @@ import MinimalCaseStudyPage from '@/components/case-study-minimal'
 import { buildRouteMetadata } from '@/lib/seo/metadata'
 
 export const metadata: Metadata = buildRouteMetadata({
-  titleStem: 'Canary Cove Case Study',
+  titleStem: 'Canary Cove case study',
   description:
-    'How Prism built a property brand and digital presence for Canary Cove — a boutique residential development in coastal California. Brand design, custom website, SEO/AEO, and enterprise analytics.',
+    'How Prism shaped the brand, website, and SEO for Canary Cove, a boutique residential development on the coast of California, with analytics built in.',
   path: '/case-studies/canary-cove',
 })
 

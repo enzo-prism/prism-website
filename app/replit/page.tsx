@@ -66,9 +66,9 @@ const LEARNING_CHANNELS = [
   },
 ]
 
-const PAGE_TITLE = 'prism × replit website builds & tutorials'
+const PAGE_TITLE = 'Prism x Replit website builds'
 const PAGE_DESCRIPTION =
-  'prism partners with replit to design, build, and teach modern website creation with free guides and tutorials.'
+  'Prism partners with Replit to design, build, and teach modern website creation, with free guides and tutorials for founders and builders.'
 const CANONICAL_URL = 'https://www.design-prism.com/replit'
 
 export const metadata: Metadata = buildRouteMetadata({

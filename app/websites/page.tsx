@@ -21,8 +21,8 @@ import { websiteProjects } from "@/lib/website-projects"
 import { buildRouteMetadata } from "@/lib/seo/metadata"
 
 export const metadata: Metadata = buildRouteMetadata({
-  titleStem: "Small Business Website Design & Builds | Prism",
-  description: "Websites engineered to convert and stay sharp long-term. Strategy, design, development, and SEO-ready foundations.",
+  titleStem: 'Small business website design & builds',
+  description: 'Custom small-business websites engineered to convert and stay sharp long term, with strategy, design, development, and SEO-ready foundations.',
   path: "/websites",
   ogImage: "/prism-opengraph.png",
 })

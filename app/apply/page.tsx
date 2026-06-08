@@ -5,9 +5,9 @@ import { WebPageSchema } from '@/components/schema-markup'
 import TrackedLink from '@/components/tracked-link'
 import { buildRouteMetadata } from '@/lib/seo/metadata'
 
-const PAGE_TITLE = 'Create your free Growth Dashboard | Prism'
+const PAGE_TITLE = 'Create your free Growth Dashboard'
 const PAGE_DESCRIPTION =
-  'Complete the Prism Growth Dashboard intake for your website, search visibility, proof, offer clarity, tracking, and growth opportunities.'
+  'Complete the Prism Growth Dashboard intake covering your website, search visibility, proof, offer clarity, tracking, and biggest growth opportunities.'
 const CANONICAL_URL = 'https://www.design-prism.com/apply'
 
 export const metadata: Metadata = buildRouteMetadata({

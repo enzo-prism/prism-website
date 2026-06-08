@@ -12,8 +12,8 @@ import { CASE_STUDIES } from "@/lib/case-study-data"
 import { buildRouteMetadata } from "@/lib/seo/metadata"
 
 export const metadata: Metadata = buildRouteMetadata({
-  titleStem: "Facebook Ads for Dentists | Prism",
-  description: "Prism runs Facebook & Instagram ads for dentists with patient-ready creative, landing pages, and reporting tied to calls and booked consults.",
+  titleStem: 'Facebook ads for dentists',
+  description: 'Prism runs Facebook and Instagram ads for dentists with patient-ready creative, landing pages, and reporting tied to calls and booked consults.',
   path: "/facebook-ads-for-dentists",
   ogImage: "/prism-opengraph.png",
 })

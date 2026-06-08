@@ -8,8 +8,8 @@ import { PodcastEpisodeSchema, PodcastSeriesSchema } from "@/components/schema-m
 import { buildRouteMetadata } from "@/lib/seo/metadata"
 
 export const metadata: Metadata = buildRouteMetadata({
-  titleStem: "Growth podcast for founders + operators",
-  description: "Founder Enzo Sison interviews builders, operators, and dentists about growth, systems, and the decisions behind real momentum.",
+  titleStem: 'Growth podcast for founders & operators',
+  description: 'Founder Enzo Sison interviews builders, operators, and dentists about growth, systems, and the real decisions behind lasting momentum.',
   path: "/podcast",
   ogImage: "/prism-opengraph.png",
 })

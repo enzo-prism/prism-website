@@ -9,8 +9,8 @@ import { HowToSchema, ServiceSchema } from "@/components/schema-markup"
 import { buildRouteMetadata } from "@/lib/seo/metadata"
 
 export const metadata: Metadata = buildRouteMetadata({
-  titleStem: "on-page seo services | prism",
-  description: "see how prism structures content, technical seo, and engagement signals so every page feels like the perfect answer for local searches.",
+  titleStem: 'On-page SEO services',
+  description: 'Prism structures content, technical SEO, and engagement signals so every page reads like the perfect answer for the local searches that matter.',
   path: "/seo/on-page",
   ogImage: "/prism-opengraph.png",
 })

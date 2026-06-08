@@ -138,8 +138,8 @@ const communityCaseStudies = CASE_STUDIES.filter((study) => study.segments.inclu
 const communityGradientClasses = ["from-rose-100 via-white to-rose-50", "from-emerald-100 via-white to-emerald-50"]
 
 export const metadata: Metadata = buildRouteMetadata({
-  titleStem: "Community growth systems + web design",
-  description: "Design, funnels, analytics, and automation that help online community founders grow without carrying all the tech work themselves.",
+  titleStem: 'Growth systems for community founders',
+  description: 'Design, funnels, analytics, and automation that help online community founders grow without carrying all the tech and design work themselves.',
   path: "/why-online-community-founders-love-prism",
 })
 

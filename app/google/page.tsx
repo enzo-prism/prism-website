@@ -82,9 +82,9 @@ const learningLinks = [
   },
 ]
 
-const PAGE_TITLE = 'google workspace & ads partner'
+const PAGE_TITLE = 'Google Workspace & Ads partner'
 const PAGE_DESCRIPTION =
-  'prism is a google partner helping small businesses grow with workspace, ads, analytics, and business profile optimization. get started with partner pricing.'
+  'Prism is a Google partner helping small businesses grow with Workspace, Google Ads, Analytics, and Business Profile optimization done right.'
 const CANONICAL_URL = 'https://www.design-prism.com/google'
 
 export const metadata: Metadata = buildRouteMetadata({

@@ -7,9 +7,9 @@ import { WebPageSchema } from "@/components/schema-markup"
 import AiWebsiteLaunchClientPage from "./client-page"
 import { buildRouteMetadata } from "@/lib/seo/metadata"
 
-const PAGE_TITLE = "AI Website Builder for Small Businesses | Prism"
+const PAGE_TITLE = 'AI website builder for small business'
 const PAGE_DESCRIPTION =
-  "Get a modern, SEO-ready website built with AI in 48 hours for just $400. No subscriptions—launch fast and start growing with Prism."
+  'Get a modern, SEO-ready website built with AI in 48 hours for $400. No subscriptions, no lock-in. Launch fast and start growing with Prism.'
 const CANONICAL_URL = "https://www.design-prism.com/ai-website-launch"
 
 export const metadata: Metadata = buildRouteMetadata({

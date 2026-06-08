@@ -3,9 +3,9 @@ import MinimalCaseStudyPage from '@/components/case-study-minimal'
 import { buildRouteMetadata } from '@/lib/seo/metadata'
 
 export const metadata: Metadata = buildRouteMetadata({
-  titleStem: 'Practice Transitions Institute Case Study',
+  titleStem: 'Practice Transitions Institute case study',
   description:
-    'How Prism built authority infrastructure for Practice Transitions Institute — a dental transition consultancy in San Mateo, CA. Brand design, custom website, SEO/AEO, local listing optimization, and enterprise analytics.',
+    'How Prism built authority infrastructure for Practice Transitions Institute, a San Mateo dental transition consultancy with a proven process.',
   path: '/case-studies/practice-transitions-institute',
 })
 

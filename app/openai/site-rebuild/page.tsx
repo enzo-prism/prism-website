@@ -23,9 +23,9 @@ const guideSections = [
   { id: "wrap-up", label: "Wrap up", iconSrc: "/pixelish/checkmark.svg" },
 ]
 
-const PAGE_TITLE = "rebuild any site locally with codex | prism openai guide"
+const PAGE_TITLE = 'Rebuild any site locally with Codex'
 const PAGE_DESCRIPTION =
-  "Follow Prism’s no-fluff playbook to download a live site, extract its content, prep Codex context, and rebuild the experience on your machine."
+  'Follow Prism\'s no-fluff playbook to download a live site, extract its content, prep Codex context, and rebuild the experience on your own machine.'
 const CANONICAL_URL = "https://www.design-prism.com/openai/site-rebuild"
 
 export const metadata: Metadata = buildRouteMetadata({

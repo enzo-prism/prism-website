@@ -12,8 +12,8 @@ import { CASE_STUDIES } from "@/lib/case-study-data"
 import { buildRouteMetadata } from "@/lib/seo/metadata"
 
 export const metadata: Metadata = buildRouteMetadata({
-  titleStem: "TikTok Ads for Dentists | Prism",
-  description: "Prism runs TikTok ads for dentists with creative, landing pages, and tracking that turn attention into booked consults—without spam.",
+  titleStem: 'TikTok ads for dentists',
+  description: 'Prism runs TikTok ads for dentists with scroll-stopping creative, landing pages, and tracking that turn attention into booked consults, not spam.',
   path: "/tiktok-ads-for-dentists",
   ogImage: "/prism-opengraph.png",
 })

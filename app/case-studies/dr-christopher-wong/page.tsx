@@ -7,9 +7,9 @@ const cs = CASE_STUDIES.find((cs) => cs.slug === 'dr-christopher-wong')
 const structured = cs?.structured
 
 export const metadata: Metadata = buildRouteMetadata({
-  titleStem: 'case study: dr. wong dental m&a relaunch',
+  titleStem: 'Dr. Wong dental M&A relaunch',
   description:
-    'from ownership transition risk to a future-proof, ai-powered dental practice in palo alto.',
+    'How Prism took Silicon Valley Dental from ownership-transition risk to a future-proof, AI-powered practice in Palo Alto, brand and tracking included.',
   path: '/case-studies/dr-christopher-wong',
   ogImage: structured?.heroImage ?? '/dr-wong-polaroids.png',
 })

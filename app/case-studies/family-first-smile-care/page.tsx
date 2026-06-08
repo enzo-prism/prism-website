@@ -3,9 +3,9 @@ import MinimalCaseStudyPage from '@/components/case-study-minimal'
 import { buildRouteMetadata } from '@/lib/seo/metadata'
 
 export const metadata: Metadata = buildRouteMetadata({
-  titleStem: 'family first smile care case study | dental website',
+  titleStem: 'Family First Smile Care case study',
   description:
-    'how we created a modern, patient‑friendly website for family first smile care with clear services, comfort highlights, and conversion paths.',
+    'How Prism built a modern, patient-friendly website for Family First Smile Care, with clear services, comfort highlights, and real conversion paths.',
   path: '/case-studies/family-first-smile-care',
 })
 

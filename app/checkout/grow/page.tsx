@@ -8,8 +8,8 @@ import type { Metadata } from "next"
 import { buildRouteMetadata } from "@/lib/seo/metadata"
 
 export const metadata: Metadata = buildRouteMetadata({
-  titleStem: "grow plan checkout | prism",
-  description: "confirm your prism grow website plan and finalize billing details.",
+  titleStem: 'Grow plan checkout',
+  description: 'Confirm your Prism Grow website plan and finalize billing details to kick off your build. Secure checkout, clear scope, no surprises.',
   path: "/checkout/grow",
   index: false,
 })

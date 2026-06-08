@@ -100,9 +100,9 @@ const faqs = [
   },
 ]
 
-const PAGE_TITLE = "AI Phone Agents for Dental Practices | Design Prism"
+const PAGE_TITLE = 'AI phone agents for dental practices'
 const PAGE_DESCRIPTION =
-  "Custom ElevenLabs AI voice agents for dental practices. Automate patient calls, appointment scheduling, insurance verification, and after-hours support. Deployed by Prism in days."
+  'Custom AI voice agents for dental practices that answer patient calls, book appointments, verify insurance, and cover after-hours support, 24/7.'
 const CANONICAL_URL = "https://www.design-prism.com/ai-agents/dental"
 
 export const metadata: Metadata = buildRouteMetadata({

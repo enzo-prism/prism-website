@@ -6,9 +6,9 @@ import type { Metadata } from "next"
 import SMBClientPage from "./client-page"
 import { buildRouteMetadata } from "@/lib/seo/metadata"
 
-const PAGE_TITLE = "small business ai services | gpt-5 solutions by prism"
+const PAGE_TITLE = 'Small business AI services'
 const PAGE_DESCRIPTION =
-  "leverage gpt-5 across marketing, operations, and support. prism sets up, trains, and tunes ai workflows tailored to your small business."
+  'Prism sets up, trains, and tunes practical AI workflows across marketing, operations, and support, tailored to how your small business actually runs.'
 const CANONICAL_URL = "https://www.design-prism.com/smb"
 
 export const metadata: Metadata = buildRouteMetadata({

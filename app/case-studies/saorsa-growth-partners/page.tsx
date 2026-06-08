@@ -3,9 +3,9 @@ import MinimalCaseStudyPage from '@/components/case-study-minimal'
 import { buildRouteMetadata } from '@/lib/seo/metadata'
 
 export const metadata: Metadata = buildRouteMetadata({
-  titleStem: 'saorsa growth partners case study',
+  titleStem: 'Saorsa Growth Partners case study',
   description:
-    'Clarity, credibility, and lead capture for a focused advisory firm.',
+    'How Prism delivered clarity, credibility, and lead capture for Saorsa Growth Partners, a focused advisory firm, with a custom site and tracking.',
   path: '/case-studies/saorsa-growth-partners',
 })
 

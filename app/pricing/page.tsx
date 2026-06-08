@@ -5,9 +5,9 @@ import PricingPageClient from './client-page'
 import { buildRouteMetadata } from '@/lib/seo/metadata'
 
 export const metadata: Metadata = buildRouteMetadata({
-  titleStem: 'Pricing | Prism',
+  titleStem: 'Pricing & growth plans',
   description:
-    'Prism pricing starts with a free Growth Dashboard, Light Audit, normally $500 Deep Growth Audit, focused 60-day sprints, and optional ongoing growth partner support.',
+    'Prism pricing starts with a free Growth Dashboard and Light Audit, then a Deep Growth Audit, focused 60-day sprints, and ongoing growth support.',
   path: '/pricing',
   ogImage: '/prism-opengraph.png',
 })

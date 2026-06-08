@@ -12,9 +12,9 @@ import { Button } from '@/components/ui/button'
 import RecentShootsSection from './recent-shoots-section'
 import { buildRouteMetadata } from '@/lib/seo/metadata'
 
-const PAGE_TITLE = 'office & team photography for dental practices | prism'
+const PAGE_TITLE = 'Office & team photography for dentists'
 const PAGE_DESCRIPTION =
-  'book a single shoot day to capture your team, lobby, and operatory moments so every digital touchpoint feels authentic.'
+  'Book one shoot day to capture your team, lobby, and operatory moments so every digital touchpoint feels authentic to the patients you want.'
 const CANONICAL_URL =
   'https://www.design-prism.com/dental-photography/office-team'
 

@@ -3,9 +3,9 @@ import { WebPageSchema } from "@/components/schema-markup"
 import ModelsPageClient from "./client-page"
 import { buildRouteMetadata } from "@/lib/seo/metadata"
 
-const PAGE_TITLE = "Prism Models"
+const PAGE_TITLE = 'Prism models: free whitening & photos'
 const PAGE_DESCRIPTION =
-  "join prism models for free whitening, professional photos, and paid creative projects that help dental practices tell real stories."
+  'Join Prism models for free teeth whitening, professional photos, and paid creative projects that help dental practices tell real patient stories.'
 const CANONICAL_URL = "https://www.design-prism.com/models"
 
 export const metadata: Metadata = buildRouteMetadata({

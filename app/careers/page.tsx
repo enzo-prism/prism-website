@@ -3,8 +3,8 @@ import CareersClientPage from "./client-page"
 import { buildRouteMetadata } from "@/lib/seo/metadata"
 
 export const metadata: Metadata = buildRouteMetadata({
-  titleStem: "careers at prism | open roles",
-  description: "join our team at prism. explore career opportunities at our digital agency creating websites, apps, and designs that drive results.",
+  titleStem: 'Careers at Prism: open roles',
+  description: 'Join Prism and help build websites, apps, and designs that drive real results. Explore open roles at our lean, AI-first digital studio.',
   path: "/careers",
   ogImage: "/prism-opengraph.png",
 })

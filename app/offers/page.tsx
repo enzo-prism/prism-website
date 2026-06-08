@@ -6,9 +6,9 @@ import type { Metadata } from "next"
 import OffersClientPage from "./client-page"
 import { buildRouteMetadata } from "@/lib/seo/metadata"
 
-const PAGE_TITLE = "special offers for prism clients"
+const PAGE_TITLE = 'Special offers for Prism clients'
 const PAGE_DESCRIPTION =
-  "browse the latest limited-time offers from prism for websites, apps, and design support, all crafted to launch momentum quickly."
+  'Browse current limited-time offers from Prism for websites, apps, and design support, each built to launch real momentum quickly.'
 const CANONICAL_URL = "https://www.design-prism.com/offers"
 
 export const metadata: Metadata = buildRouteMetadata({

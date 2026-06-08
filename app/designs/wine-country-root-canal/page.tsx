@@ -3,9 +3,9 @@ import { WebPageSchema } from "@/components/schema-markup"
 import WineCountryRootCanalDesignReview from "./client-page"
 import { buildRouteMetadata } from "@/lib/seo/metadata"
 
-const PAGE_TITLE = "Wine Country Root Canal design review | Prism"
+const PAGE_TITLE = 'Wine Country Root Canal design review'
 const PAGE_DESCRIPTION =
-  "Review the live design system, collateral, and next steps for Dr. Anderson. Prism’s design board centralizes feedback, files, and rollout notes."
+  'Review the live design system, collateral, and next steps for Dr. Anderson on Prism\'s design board, where feedback, files, and rollout notes live.'
 const CANONICAL_URL = "https://www.design-prism.com/designs/wine-country-root-canal"
 
 export const metadata: Metadata = buildRouteMetadata({

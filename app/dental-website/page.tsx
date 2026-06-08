@@ -164,8 +164,8 @@ const faqs = [
 ]
 
 export const metadata: Metadata = buildRouteMetadata({
-  titleStem: "Dental Practice Website Design That Converts | Prism",
-  description: "Modern dental practice websites that get found, build trust, and convert visits into booked appointments. Fast, mobile-first, and built for long-term content.",
+  titleStem: 'Dental practice website design',
+  description: 'Modern dental websites that get found, build trust, and convert visits into booked appointments. Fast, mobile-first, and built for long-term content.',
   path: "/dental-website",
   ogImage: "/prism-opengraph.png",
 })

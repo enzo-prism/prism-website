@@ -3,9 +3,9 @@ import MinimalCaseStudyPage from '@/components/case-study-minimal'
 import { buildRouteMetadata } from '@/lib/seo/metadata'
 
 export const metadata: Metadata = buildRouteMetadata({
-  titleStem: 'Case Study: Exquisite Dentistry brand relaunch',
+  titleStem: 'Exquisite Dentistry brand relaunch',
   description:
-    'Turning a legacy Beverly Hills brand into a modern, trackable growth engine.',
+    'How Prism turned a legacy Beverly Hills dental brand into a modern, trackable growth engine, with a new site, SEO, and full-funnel analytics.',
   path: '/case-studies/exquisite-dentistry',
   ogImage: '/exquisite-dentistry-consultation.png',
 })

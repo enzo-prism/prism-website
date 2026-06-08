@@ -3,9 +3,9 @@ import { WebPageSchema } from "@/components/schema-markup"
 import ClientPage from "./client-page"
 import { buildRouteMetadata } from "@/lib/seo/metadata"
 
-const PAGE_TITLE = "one-time design for $750 | prism"
+const PAGE_TITLE = 'One-time custom design for $750'
 const PAGE_DESCRIPTION =
-  "get a perfect logo, banner, flyer, or any single custom design asset crafted by prism's pros for $750. unlimited revisions until you love it."
+  'Get a polished logo, banner, flyer, or single custom design asset crafted by Prism\'s team for a flat $750, with revisions until you love it.'
 const CANONICAL_URL = "https://www.design-prism.com/one-time-fee"
 
 export const metadata: Metadata = buildRouteMetadata({

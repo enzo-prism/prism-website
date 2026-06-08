@@ -15,9 +15,9 @@ import ServiceIllustration from '@/components/animated/ServiceIllustration'
 import { buildRouteMetadata } from '@/lib/seo/metadata'
 
 export const metadata: Metadata = buildRouteMetadata({
-  titleStem: 'AI SEO Services | Prism',
+  titleStem: 'AI SEO services',
   description:
-    'AI SEO services that help your brand get cited in Google AI Overviews, ChatGPT, Gemini, and Perplexity—built on clear pages, proof, and iteration.',
+    'AI SEO that helps your brand get cited in Google AI Overviews, ChatGPT, Gemini, and Perplexity, built on clear pages, real proof, and steady iteration.',
   path: '/ai-seo-services',
   ogImage: '/prism-opengraph.png',
 })

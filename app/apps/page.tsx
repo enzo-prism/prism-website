@@ -11,8 +11,8 @@ import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
 import { buildRouteMetadata } from "@/lib/seo/metadata"
 
 export const metadata: Metadata = buildRouteMetadata({
-  titleStem: "mobile app development portfolio & services",
-  description: "Explore custom mobile apps for restaurants, healthcare, and small businesses, with demos of native iOS and Android builds.",
+  titleStem: 'Mobile app development & portfolio',
+  description: 'Explore custom mobile apps for restaurants, healthcare, and small businesses, with live demos of native iOS and Android builds from Prism.',
   path: "/apps",
   ogImage: "/prism-opengraph.png",
 })

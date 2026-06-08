@@ -144,8 +144,8 @@ const stayingReasons = [
 ]
 
 export const metadata: Metadata = buildRouteMetadata({
-  titleStem: "Nonprofit website + donor growth",
-  description: "Story-first websites, campaigns, and automation that help nonprofits attract supporters, simplify technology, and grow donations.",
+  titleStem: 'Nonprofit websites & donor growth',
+  description: 'Story-first websites, campaigns, and automation that help nonprofits attract supporters, simplify their tech, and grow donations.',
   path: "/why-nonprofits-love-prism",
 })
 

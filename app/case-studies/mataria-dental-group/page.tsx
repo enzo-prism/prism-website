@@ -6,9 +6,9 @@ import { buildRouteMetadata } from '@/lib/seo/metadata'
 const cs = CASE_STUDIES.find((item) => item.slug === 'mataria-dental-group')
 
 export const metadata: Metadata = buildRouteMetadata({
-  titleStem: 'case study: mataria dental group m&a launch',
+  titleStem: 'Mataria Dental Group M&A launch',
   description:
-    'how prism relaunched mataria dental group in torrance with a new dental website, listings, content, social campaigns, and analytics.',
+    'How Prism relaunched Mataria Dental Group in Torrance with a new dental website, listings, content, social campaigns, and full analytics.',
   path: '/case-studies/mataria-dental-group',
   ogImage: cs?.structured?.heroImage ?? '/mataria-hero.png',
 })

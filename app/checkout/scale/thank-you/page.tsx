@@ -10,8 +10,8 @@ import TrackedLink from "@/components/tracked-link"
 import { buildRouteMetadata } from "@/lib/seo/metadata"
 
 export const metadata: Metadata = buildRouteMetadata({
-  titleStem: "scale checkout received | prism",
-  description: "we received your scale plan submission—book a kickoff call to accelerate next steps.",
+  titleStem: 'Scale plan order received',
+  description: 'We received your Scale plan order. Book a kickoff call with Prism to accelerate next steps and scale your website and growth systems.',
   path: "/checkout/scale/thank-you",
   index: false,
 })

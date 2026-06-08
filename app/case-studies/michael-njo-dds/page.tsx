@@ -3,9 +3,9 @@ import MinimalCaseStudyPage from '@/components/case-study-minimal'
 import { buildRouteMetadata } from '@/lib/seo/metadata'
 
 export const metadata: Metadata = buildRouteMetadata({
-  titleStem: 'Michael Njo DDS Case Study',
+  titleStem: 'Michael Njo DDS case study',
   description:
-    'How Prism built a complete digital presence for Michael Njo DDS — a San Mateo general dental practice. Brand design, custom website, Google Ads, SEO/AEO, local listing optimization, and enterprise analytics.',
+    'How Prism built a complete digital presence for Michael Njo DDS, a San Mateo general dental practice with deep community roots, from brand to analytics.',
   path: '/case-studies/michael-njo-dds',
 })
 

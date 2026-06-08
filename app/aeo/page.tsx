@@ -13,9 +13,9 @@ import { ArrowRight } from "lucide-react"
 import { buildRouteMetadata } from "@/lib/seo/metadata"
 
 export const metadata: Metadata = buildRouteMetadata({
-  titleStem: "AEO Assessment | Prism",
+  titleStem: 'Free AEO assessment',
   description:
-    "Get a free AEO assessment to see how your website performs in answer-based discovery across Google AI Overviews, ChatGPT, Gemini, and Perplexity.",
+    'Get a free AEO assessment to see how your site shows up in answer-based discovery across Google AI Overviews, ChatGPT, Gemini, and Perplexity.',
   path: "/aeo",
   ogImage: "/prism-opengraph.png",
 })

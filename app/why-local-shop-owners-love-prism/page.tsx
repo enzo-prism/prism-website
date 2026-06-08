@@ -145,8 +145,8 @@ const stayingReasons = [
 ]
 
 export const metadata: Metadata = buildRouteMetadata({
-  titleStem: "Website + local marketing for shops",
-  description: "Website design, local SEO, ads, and automation that help local shops bring in more customers without tech headaches.",
+  titleStem: 'Websites & local marketing for shops',
+  description: 'Website design, local SEO, ads, and automation that help local shop owners bring in more customers without the usual tech headaches.',
   path: "/why-local-shop-owners-love-prism",
 })
 

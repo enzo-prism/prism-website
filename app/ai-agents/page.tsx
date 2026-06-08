@@ -117,9 +117,9 @@ const whyPrism = [
   },
 ]
 
-const PAGE_TITLE = "ElevenLabs AI Agents for Small Business | Design Prism"
+const PAGE_TITLE = 'AI voice agents for small business'
 const PAGE_DESCRIPTION =
-  "Prism builds and implements custom ElevenLabs AI voice agents for small and medium businesses. 24/7 phone answering, appointment scheduling, and customer support — deployed in days."
+  'Prism builds and deploys custom ElevenLabs AI voice agents that answer calls, book appointments, and convert leads for small businesses, 24/7.'
 const CANONICAL_URL = "https://www.design-prism.com/ai-agents"
 
 export const metadata: Metadata = buildRouteMetadata({

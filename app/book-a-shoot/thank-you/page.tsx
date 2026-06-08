@@ -10,8 +10,8 @@ import { Button } from "@/components/ui/button"
 import { buildRouteMetadata } from "@/lib/seo/metadata"
 
 export const metadata: Metadata = buildRouteMetadata({
-  titleStem: "shoot request received | prism",
-  description: "Your photography windows are on our calendar—look for a confirmation email with next steps.",
+  titleStem: 'Shoot request received',
+  description: 'Your photography windows are on our calendar. Look for a confirmation email from Prism with next steps and how to prep your team.',
   path: "/book-a-shoot/thank-you",
   index: false,
 })

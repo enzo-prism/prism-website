@@ -9,9 +9,9 @@ import { ContactPageSchema } from '@/components/schema-markup'
 import { buildRouteMetadata } from '@/lib/seo/metadata'
 
 export const metadata: Metadata = buildRouteMetadata({
-  titleStem: 'Contact | prism',
+  titleStem: 'Contact Prism',
   description:
-    'Reach Prism to talk through the right plan for your AI-powered website and growth goals.',
+    'Talk to Prism about the right plan for your website, SEO, ads, and growth goals. Tell us what you need and we will map the next step.',
   path: '/contact',
   ogImage: '/prism-opengraph.png',
 })

@@ -3,9 +3,9 @@ import PrismAIClient from "./prism-ai-client"
 import { WebPageSchema } from "@/components/schema-markup"
 import { buildRouteMetadata } from "@/lib/seo/metadata"
 
-const PAGE_TITLE = "prism ai - build your website with ai | design prism"
+const PAGE_TITLE = 'Build your website with Prism AI'
 const PAGE_DESCRIPTION =
-  "describe your dream website and let prism ai build it for you. get started in minutes."
+  'Describe your dream website and let Prism AI build the first version for you in minutes, then refine it with our team into a site that converts.'
 const CANONICAL_URL = "https://www.design-prism.com/ai"
 
 export const metadata: Metadata = buildRouteMetadata({

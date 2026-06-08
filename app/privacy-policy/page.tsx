@@ -5,9 +5,9 @@ import type { Metadata } from "next"
 import Link from "next/link"
 import { buildRouteMetadata } from "@/lib/seo/metadata"
 
-const PAGE_TITLE = "privacy policy | prism agency"
+const PAGE_TITLE = 'Privacy policy'
 const PAGE_DESCRIPTION =
-  "learn how prism agency collects, uses, and protects your personal information across our website and services."
+  'How Prism collects, uses, and protects your personal information across our website and services. Read our full privacy policy here.'
 const CANONICAL_URL = "https://www.design-prism.com/privacy-policy"
 
 export const metadata: Metadata = buildRouteMetadata({

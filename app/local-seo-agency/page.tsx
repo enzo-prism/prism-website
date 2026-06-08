@@ -13,8 +13,8 @@ import { ArrowRight, Check } from "lucide-react"
 import { buildRouteMetadata } from "@/lib/seo/metadata"
 
 export const metadata: Metadata = buildRouteMetadata({
-  titleStem: "Local SEO Agency for Small Businesses | Prism",
-  description: "Prism is a local SEO agency for small businesses, improving Google Maps and local search with listings, reviews, local pages, and reporting tied to calls.",
+  titleStem: 'Local SEO agency for small business',
+  description: 'Prism is a local SEO agency improving Google Maps and local search for small businesses with listings, reviews, local pages, and call-tracked reporting.',
   path: "/local-seo-agency",
   ogImage: "/prism-opengraph.png",
 })

@@ -4,10 +4,9 @@ import { WebPageSchema } from '@/components/schema-markup'
 import SocialThanksPage from '@/components/social-thanks-page'
 import { buildRouteMetadata } from '@/lib/seo/metadata'
 
-const PAGE_TITLE = 'Thanks for supporting Prism on TikTok'
+const PAGE_TITLE = 'Thanks for following Prism on TikTok'
 const PAGE_DESCRIPTION =
-  'Thanks for supporting Prism on TikTok. Go deeper with Prism guides ' +
-  'for founders on YouTube, download Marble for iOS, or become a client.'
+  'Thanks for supporting Prism on TikTok. Go deeper with founder growth guides on YouTube, download Marble for iOS, or become a client.'
 const CANONICAL_URL = 'https://www.design-prism.com/tiktok'
 
 export const metadata: Metadata = buildRouteMetadata({

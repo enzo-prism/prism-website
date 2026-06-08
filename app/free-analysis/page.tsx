@@ -8,9 +8,9 @@ import PixelishIcon from "@/components/pixelish/PixelishIcon"
 import { WebPageSchema } from "@/components/schema-markup"
 import { buildRouteMetadata } from "@/lib/seo/metadata"
 
-const PAGE_TITLE = "Free analysis | prism"
+const PAGE_TITLE = 'Free website & visibility analysis'
 const PAGE_DESCRIPTION =
-  "Request a free review of your current website, Google listing, and visibility metrics."
+  'Request a free Prism review of your website, Google Business Profile, and search visibility, with clear, prioritized fixes you can act on fast.'
 const CANONICAL_URL = "https://www.design-prism.com/free-analysis"
 
 export const metadata: Metadata = buildRouteMetadata({

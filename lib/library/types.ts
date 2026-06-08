@@ -16,6 +16,7 @@ export type LibraryEditorial = {
   tags: string[]
   group: string
   featuredWeight?: number
+  seoDescription?: string
 }
 
 export type LibraryPost = {

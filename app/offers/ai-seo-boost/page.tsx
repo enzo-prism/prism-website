@@ -4,8 +4,8 @@ import { ServiceSchema } from "@/components/schema-markup"
 import { buildRouteMetadata } from "@/lib/seo/metadata"
 
 export const metadata: Metadata = buildRouteMetadata({
-  titleStem: "ai seo boost™ - get recommended by ai bots | prism",
-  description: "make chatgpt, gemini & perplexity name-drop your brand first. specialized ai search optimization that gets you recommended by ai bots 24/7. 90-day guarantee.",
+  titleStem: 'AI SEO Boost: get recommended by AI',
+  description: 'Make ChatGPT, Gemini, and Perplexity name-drop your brand first with AI SEO Boost, specialized optimization that gets you recommended 24/7.',
   path: "/offers/ai-seo-boost",
   index: false,
   ogImage: "/offers/ai-seo-boost-card.png",

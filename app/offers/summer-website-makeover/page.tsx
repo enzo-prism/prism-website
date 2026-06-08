@@ -3,9 +3,9 @@ import { WebPageSchema } from "@/components/schema-markup"
 import SummerWebsiteMakeoverClientPage from "./client-page"
 import { buildRouteMetadata } from "@/lib/seo/metadata"
 
-const PAGE_TITLE = "summer website makeover offer | prism"
+const PAGE_TITLE = 'Summer website makeover offer'
 const PAGE_DESCRIPTION =
-  "triple your traffic and conversions in 30 days with prism's summer website makeover—full-stack rebuild, seo, and cro with guaranteed results."
+  'Triple your traffic and conversions in 30 days with Prism\'s summer website makeover: a full rebuild, SEO, and CRO with results you can measure.'
 const CANONICAL_URL = "https://www.design-prism.com/offers/summer-website-makeover"
 
 export const metadata: Metadata = buildRouteMetadata({

@@ -11,8 +11,8 @@ import { Button } from "@/components/ui/button"
 import { buildRouteMetadata } from "@/lib/seo/metadata"
 
 export const metadata: Metadata = buildRouteMetadata({
-  titleStem: "AEO assessment received | prism",
-  description: "Your free AEO assessment is submitted and we will send your recommendations soon.",
+  titleStem: 'Your AEO assessment is on its way',
+  description: 'Your free AEO assessment is submitted. The Prism team will review your answer-engine visibility and send tailored recommendations shortly.',
   path: "/aeo-thank-you",
   index: false,
 })

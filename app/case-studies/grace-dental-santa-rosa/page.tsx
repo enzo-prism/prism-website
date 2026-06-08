@@ -3,9 +3,9 @@ import MinimalCaseStudyPage from '@/components/case-study-minimal'
 import { buildRouteMetadata } from '@/lib/seo/metadata'
 
 export const metadata: Metadata = buildRouteMetadata({
-  titleStem: 'grace dental santa rosa case study — post‑m&a relaunch',
+  titleStem: 'Grace Dental Santa Rosa relaunch',
   description:
-    'how we partnered with grace dental (tingjen ji, dds msd) to relaunch the brand and site, and stand up acquisition and tracking.',
+    'How Prism partnered with Grace Dental (Tingjen Ji, DDS MSD) on a post-M&A relaunch: new brand, modern site, and full acquisition and tracking setup.',
   path: '/case-studies/grace-dental-santa-rosa',
 })
 

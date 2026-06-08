@@ -9,6 +9,8 @@ export const libraryEditorial: Record<string, LibraryEditorial> = {
     takeaways: [],
     tags: [],
     group: "Founder Lessons",
+    seoDescription:
+      "Mark Zuckerberg on why inexperience can be an edge: a short founder lesson from the Prism library on moving fast and questioning defaults.",
   },
   "instagram:DS5xtbrkubQ": {
     speaker: {
@@ -18,5 +20,7 @@ export const libraryEditorial: Record<string, LibraryEditorial> = {
     takeaways: [],
     tags: [],
     group: "Founder Lessons",
+    seoDescription:
+      "Brian Armstrong on thinking bigger: a short founder lesson from the Prism library on raising your ambition and actually acting on it.",
   },
 }

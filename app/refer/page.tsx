@@ -103,9 +103,9 @@ const referralBenefits = [
   }
 ]
 
-const PAGE_TITLE = "refer a business to prism & earn"
+const PAGE_TITLE = 'Refer a business to Prism & earn'
 const PAGE_DESCRIPTION =
-  "know someone who needs a better website, listings, or ad strategy? refer them to prism for a free analysis and earn up to $1,000 referral payout when they become a client."
+  'Know a business that needs a better website, listings, or ad strategy? Refer them to Prism for a free analysis and earn up to $1,000 when they sign.'
 const CANONICAL_URL = "https://www.design-prism.com/refer"
 
 export const metadata: Metadata = buildRouteMetadata({

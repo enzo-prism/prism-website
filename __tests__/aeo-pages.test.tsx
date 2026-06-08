@@ -119,7 +119,7 @@ jest.mock('@/components/thank-you/LeadSuccessTracker', () => ({
 
 describe('AEO landing and thank-you routes', () => {
   it('exports SEO metadata for /aeo', () => {
-    expect(aeoMetadata.title).toEqual({ absolute: 'AEO Assessment | Prism' })
+    expect(aeoMetadata.title).toEqual({ absolute: 'Free AEO assessment | Prism' })
     expect(aeoMetadata.alternates?.canonical).toBe(
       'https://www.design-prism.com/aeo',
     )
@@ -154,7 +154,7 @@ describe('AEO landing and thank-you routes', () => {
 
   it('exports noindex metadata and renders conversion copy on /aeo-thank-you', () => {
     expect(aeoThankYouMetadata.title).toEqual({
-      absolute: 'AEO assessment received | Prism',
+      absolute: 'Your AEO assessment is on its way | Prism',
     })
     expect(aeoThankYouMetadata.alternates?.canonical).toBe(
       'https://www.design-prism.com/aeo-thank-you',

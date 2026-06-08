@@ -8,9 +8,9 @@ import { CollectionPageSchema, ItemListSchema } from "@/components/schema-markup
 import { getFeaturedPost, getLibraryPosts } from "@/lib/library"
 import { buildRouteMetadata } from "@/lib/seo/metadata"
 
-const PAGE_TITLE = "prism library | founder + athlete short lessons"
+const PAGE_TITLE = 'Prism library: founder & athlete lessons'
 const PAGE_DESCRIPTION =
-  "short lessons from founders and world-class athletes, curated to help you build a stronger company and a stronger competitive mindset."
+  'Short lessons from founders and world-class athletes, curated by Prism to help you build a stronger company and a stronger competitive mindset.'
 const CANONICAL_URL = "https://www.design-prism.com/library"
 
 export const metadata: Metadata = buildRouteMetadata({

@@ -12,9 +12,9 @@ import { HOTTEST_CONTENT } from "@/lib/hottest-content"
 import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
 import { buildRouteMetadata } from "@/lib/seo/metadata"
 
-const PAGE_TITLE = "prism's hottest content library"
+const PAGE_TITLE = 'Prism\'s hottest content library'
 const PAGE_DESCRIPTION =
-  "see prism’s top-performing instagram reels exactly as they appeared on the platform. live embeds with full context from the original posts."
+  'See Prism\'s top-performing Instagram reels exactly as they appeared on the platform, with live embeds and full context from the original posts.'
 const CANONICAL_URL = "https://www.design-prism.com/hottest-content"
 
 export const metadata: Metadata = buildRouteMetadata({

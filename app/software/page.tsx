@@ -9,8 +9,8 @@ import { PRISM_APPS } from "@/lib/software-apps"
 import { buildRouteMetadata } from "@/lib/seo/metadata"
 
 export const metadata: Metadata = buildRouteMetadata({
-  titleStem: "Free growth software tools",
-  description: "Explore free software from Prism built to increase leads, conversions, and customer lifetime value.",
+  titleStem: 'Free growth software tools',
+  description: 'Explore free tools from Prism built to increase leads, conversions, and customer lifetime value for small and local businesses.',
   path: "/software",
   ogImage: "/prism-opengraph.png",
 })
