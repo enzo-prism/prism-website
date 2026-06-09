@@ -631,14 +631,12 @@ select {
     transition-duration: 0.1s !important;
   }
 
-  /* Mobile-specific animation optimizations */
+  /* Mobile-specific animation optimizations.
+     Do not reintroduce a blanket animation-duration clamp here: forcing all
+     animations to a short duration multiplies the frequency of infinite
+     ambient loops (scan-lines, pulses, spins), which strobes on mobile.
+     Slow or disable specific animations by class instead. */
   @media (max-width: 768px) {
-    /* Simplify all animations on mobile */
-    body *:not(.ecosystem-animation):not(.ecosystem-animation *) {
-      animation-duration: 0.3s !important;
-      transition-duration: 0.2s !important;
-    }
-
     /* Disable complex animations during scroll */
     .is-scrolling .blog-card-3d,
     .is-scrolling .card-3d,
