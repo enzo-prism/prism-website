@@ -39,6 +39,17 @@ export function buildCloudinaryVideoPoster(videoUrl: string) {
     .replace(/\.mp4($|\?)/, '.jpg$1')
 }
 
+/**
+ * A dated, source-attributed metric for a case study. Only publish values
+ * verified against the named source (e.g. Google Search Console) — these
+ * render publicly and feed search/AI citations.
+ */
+export type CaseStudyResultMetric = {
+  value: string
+  label: string
+  detail: string
+}
+
 export type CaseStudyMeta = {
   id: string
   title: string
@@ -59,6 +70,7 @@ export type CaseStudyMeta = {
     datePublished?: string
     dateModified?: string
     outcomes?: string[]
+    results?: CaseStudyResultMetric[]
     focus?: string
     scope?: string
     canonicalUrl?: string
@@ -85,13 +97,27 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
       heroImage: 'https://www.design-prism.com/dr-wong-polaroids.png',
       heroVideoId: 'HrksJeYb02Q',
       datePublished: '2025-01-15T00:00:00.000Z',
-      dateModified: '2026-02-19T00:00:00.000Z',
+      dateModified: '2026-06-09T00:00:00.000Z',
       outcomes: [
         'The M&A transition was supported by a clear, story-driven online presence rather than leaving patients to guess what happened.',
         'The practice now runs on a modern dental website with strong SEO foundations and clean UX.',
         'Local presence and review profiles now reflect Dr. Wong as the primary dentist, not just the previous owner.',
         'Acquisition has shifted from passive word-of-mouth to active, AI-optimized ads and Google campaigns.',
         'The development and design stack is modern, AI-native, and capable of continuous improvement rather than one-off redesigns.',
+      ],
+      results: [
+        {
+          value: '+142%',
+          label: 'Google Search impressions, year over year',
+          detail:
+            'Google Search Console: Mar–May 2025 vs Mar–May 2026 (9.2k → 22.4k impressions).',
+        },
+        {
+          value: '~3×',
+          label: 'monthly search visibility growth',
+          detail:
+            'Google Search Console: ~2.8k impressions in Feb 2025 grew to ~8.4k/month by Apr–May 2026.',
+        },
       ],
       focus: 'Dental M&A handoff',
       scope: 'Website, SEO, ads, AI stack',
@@ -234,7 +260,19 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
       heroImage:
         'https://www.design-prism.com/case-studies/roseville-dental-academy-og.jpg',
       datePublished: '2026-05-22T00:00:00.000Z',
-      dateModified: '2026-05-22T00:00:00.000Z',
+      dateModified: '2026-06-09T00:00:00.000Z',
+      results: [
+        {
+          value: '593',
+          label: 'Google clicks in the first full month after launch',
+          detail: 'Google Search Console, May 2026.',
+        },
+        {
+          value: '14.2k',
+          label: 'Google Search impressions in the first full month',
+          detail: 'Google Search Console, May 2026.',
+        },
+      ],
       outcomes: [
         'Roseville Dental Academy moved from a limited stock-site setup to a Vercel-hosted production site that can be iterated like real software.',
         'The new admissions surface connects GA4, custom conversion events, Search Console, Hotjar, Formspree, and AI assistant support into one measurement-ready system.',
@@ -355,6 +393,17 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
       'Program storytelling, supporter flows, and analytics groundwork that keep impact front and center.',
     slug: 'belize-kids-foundation',
     segments: ['nonprofit'],
+    structured: {
+      dateModified: '2026-06-09T00:00:00.000Z',
+      results: [
+        {
+          value: '+90%',
+          label: 'Google Search impressions, year over year',
+          detail:
+            'Google Search Console: ~460/month avg (Jun–Aug 2025) grew to ~870/month avg (Mar–May 2026).',
+        },
+      ],
+    },
   },
   {
     id: '14',
@@ -464,6 +513,22 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
       'Clarity, credibility, and lead capture for a focused advisory firm.',
     slug: 'saorsa-growth-partners',
     segments: ['consulting'],
+    structured: {
+      dateModified: '2026-06-09T00:00:00.000Z',
+      results: [
+        {
+          value: '5.3×',
+          label: 'monthly Google clicks in five months',
+          detail: 'Google Search Console: 10 clicks (Jan 2026) → 53 (May 2026).',
+        },
+        {
+          value: '+273%',
+          label: 'Google Search impressions in five months',
+          detail:
+            'Google Search Console: 505 impressions (Jan 2026) → 1,883 (May 2026).',
+        },
+      ],
+    },
   },
   {
     id: '21',

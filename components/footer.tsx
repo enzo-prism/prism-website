@@ -6,11 +6,41 @@ type FooterItem = {
   label: string
 }
 
-const homeFooterLinks: FooterItem[] = [
-  { label: 'Pricing', href: '/pricing' },
-  { label: 'Work', href: '/case-studies' },
-  { label: 'About', href: '/about' },
-  { label: 'Contact', href: '/contact' },
+type FooterColumn = {
+  heading: string
+  links: FooterItem[]
+}
+
+const footerColumns: FooterColumn[] = [
+  {
+    heading: 'System',
+    links: [
+      { label: 'Websites', href: '/websites' },
+      { label: 'SEO', href: '/seo' },
+      { label: 'AI search', href: '/ai-seo-services' },
+      { label: 'Ads', href: '/ads' },
+      { label: 'Local listings', href: '/local-listings' },
+      { label: 'All services', href: '/services' },
+    ],
+  },
+  {
+    heading: 'Proof',
+    links: [
+      { label: 'Case studies', href: '/case-studies' },
+      { label: 'Wall of love', href: '/wall-of-love' },
+      { label: 'Prism Proof', href: '/proof' },
+    ],
+  },
+  {
+    heading: 'Company',
+    links: [
+      { label: 'About', href: '/about' },
+      { label: 'Pricing', href: '/pricing' },
+      { label: 'Blog', href: '/blog' },
+      { label: 'FAQ', href: '/faq' },
+      { label: 'Contact', href: '/contact' },
+    ],
+  },
 ]
 
 const socialLinks = [
@@ -47,7 +77,7 @@ export default function Footer({ variant: _variant = 'default' }: FooterProps) {
   return (
     <footer className="border-t border-white/12 bg-black">
       <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
-        <div className="flex flex-col gap-10 lg:flex-row lg:items-end lg:justify-between">
+        <div className="flex flex-col gap-10 lg:flex-row lg:items-start lg:justify-between">
           <div className="space-y-6">
             <div className="space-y-2">
               <p className="text-sm font-semibold uppercase tracking-[0.28em] text-[#f5f0e8]">
@@ -74,16 +104,26 @@ export default function Footer({ variant: _variant = 'default' }: FooterProps) {
             </div>
           </div>
 
-          <div className="flex flex-wrap gap-x-5 gap-y-3 border-t border-white/12 pt-5 text-sm text-[#b8afa2] lg:border-t-0 lg:pt-0">
-            {homeFooterLinks.map((item) => (
-              <Link
-                key={item.label}
-                href={item.href}
-                prefetch={false}
-                className="transition-colors hover:text-[#f5f0e8]"
-              >
-                {item.label}
-              </Link>
+          <div className="grid grid-cols-2 gap-x-10 gap-y-8 border-t border-white/12 pt-6 sm:grid-cols-3 lg:border-t-0 lg:pt-0">
+            {footerColumns.map((column) => (
+              <div key={column.heading} className="space-y-3">
+                <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.24em] text-[#8f877b]">
+                  {column.heading}
+                </p>
+                <ul className="space-y-2">
+                  {column.links.map((item) => (
+                    <li key={item.label}>
+                      <Link
+                        href={item.href}
+                        prefetch={false}
+                        className="text-sm text-[#b8afa2] transition-colors hover:text-[#f5f0e8]"
+                      >
+                        {item.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             ))}
           </div>
         </div>

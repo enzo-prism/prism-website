@@ -139,7 +139,12 @@ Custom confirmation routes live in `app/thank-you/` and `app/analysis-thank-you/
   - Run `pnpm exec jest __tests__/sitemap.test.ts __tests__/seo-indexability-guards.test.tsx --runInBand` plus `pnpm seo:inventory && pnpm seo:lint` after changing indexability rules.
 - Run `pnpm seo:inventory && pnpm seo:lint` before shipping large metadata changes.
 
-### Analytics & Conversion Tracking
+### AI visibility loop (GEO)
+
+- `pnpm seo:ai-report [days]` (default 90) prints AI answer-engine referrals (ChatGPT, Perplexity, Claude, Gemini, Copilot) from the Prism GA4 property plus the Search Console clicks/impressions trend and top queries. It requires the locally authenticated `gog` CLI and is an operator tool, not CI.
+- Quarterly cadence: run the report, refresh the top indexable pillar posts (update facts, dates, FAQs, and `modifiedTime`), promote any strong noindexed posts into `INDEXABLE_BLOG_SLUGS`, and prune posts that no longer earn impressions.
+- Case-study `structured.results` metrics must stay verifiable against the named source (usually each client's Search Console). When refreshing them, bump `dateModified` and keep value/label/detail consistent with what the source shows.
+- Keep the canonical one-sentence Prism definition synchronized across `public/llms.txt`, the `GlobalSchemaGraph` Organization `description`, and the about page so engines see one consistent entity.
 
 - Global Google Analytics + Google Ads tagging happens in `app/layout.tsx`. Both IDs come from `lib/constants.ts` (`GA_MEASUREMENT_ID` and `GOOGLE_ADS_ID`), so set `NEXT_PUBLIC_GA_MEASUREMENT_ID` if you need to override the fallback GA property.
 - GA now loads with `afterInteractive` so the critical pageview + lead funnel listeners attach earlier. Keep heavier client-only systems deferred, but do not push the core GA page/form listeners behind browser-idle loading again unless we intentionally accept lower analytics fidelity.

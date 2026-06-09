@@ -96,6 +96,7 @@ export const INDEXABLE_BLOG_SLUGS = [
   "dental-practice-1-3m-swamp",
   "dental-practice-rank-higher-google-search",
   "dental-seo-guide",
+  "dental-website-cost-guide-2026",
   "dentist-website-design-checklist",
   "facebook-ads-for-dentists-playbook",
   "from-6-impressions-to-hundreds-seo-journey",

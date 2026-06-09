@@ -1,6 +1,7 @@
 import Footer from '@/components/footer'
 import CaseStudyExplainerVideo from '@/components/case-studies/CaseStudyExplainerVideo'
 import CaseStudyOutcomesGrid from '@/components/case-studies/CaseStudyOutcomesGrid'
+import CaseStudyResultsBand from '@/components/case-studies/CaseStudyResultsBand'
 import CaseStudySnapshotStats from '@/components/case-studies/CaseStudySnapshotStats'
 import CaseStudyVisualHero from '@/components/case-studies/CaseStudyVisualHero'
 import Navbar from '@/components/navbar'
@@ -37,7 +38,14 @@ export default function MinimalCaseStudyPage({ slug }: MinimalCaseStudyPageProps
     caseStudy.structured?.canonicalUrl ??
     `https://www.design-prism.com/case-studies/${caseStudy.slug}`
   const websiteUrl = caseStudy.websiteUrl
-  const schemaDescription = `Prism case study for ${caseStudy.client} featuring the live website plus the services and tech stack used for the engagement.`
+  const results = caseStudy.structured?.results ?? []
+  const resultsSentence =
+    results.length > 0
+      ? ` Measured results: ${results
+          .map((metric) => `${metric.value} ${metric.label}`)
+          .join('; ')}.`
+      : ''
+  const schemaDescription = `Prism case study for ${caseStudy.client} featuring the live website plus the services and tech stack used for the engagement.${resultsSentence}`
 
   const desktopShot = `/case-studies/${slug}-home-desktop.jpg`
   const mobileShot = `/case-studies/${slug}-home-mobile.jpg`
@@ -108,6 +116,13 @@ export default function MinimalCaseStudyPage({ slug }: MinimalCaseStudyPageProps
         )}
 
         <CaseStudySnapshotStats stats={statCards} />
+
+        {results.length > 0 ? (
+          <CaseStudyResultsBand
+            clientName={caseStudy.client}
+            results={results}
+          />
+        ) : null}
 
         {caseStudy.explainerVideo ? (
           <CaseStudyExplainerVideo

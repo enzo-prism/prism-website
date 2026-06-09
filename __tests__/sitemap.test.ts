@@ -24,7 +24,7 @@ describe("sitemap", () => {
     ]))
 
     expect(urls.length).toBeGreaterThanOrEqual(85)
-    expect(urls.length).toBeLessThanOrEqual(95)
+    expect(urls.length).toBeLessThanOrEqual(100)
 
     const seen = new Set<string>()
     for (const url of urls) {

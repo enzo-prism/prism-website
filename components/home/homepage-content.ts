@@ -15,6 +15,7 @@ type HomepageIconCard = {
   title: string
   description: string
   iconSrc: string
+  href?: string
   brandLogo?: BrandLogoKey
   brandLogoTheme?: BrandLogoTheme
 }
@@ -326,32 +327,38 @@ export const HOMEPAGE_SERVICE_ITEMS: readonly HomepageIconCard[] = [
     title: 'Website',
     description: 'A fast, credible site that makes choosing you easy.',
     iconSrc: '/pixelish/browser.svg',
+    href: '/websites',
   },
   {
     title: 'Search',
     description: 'Show up on Google and Maps when people look.',
     iconSrc: '/pixelish/lens.svg',
     brandLogo: 'googleMaps',
+    href: '/seo',
   },
   {
     title: 'Reviews & proof',
     description: 'Real reviews and results that build trust fast.',
     iconSrc: '/pixelish/emoji-heart.svg',
+    href: '/proof',
   },
   {
     title: 'Ads',
     description: 'Reach the right people without wasting budget.',
     iconSrc: '/pixelish/device-radio.svg',
+    href: '/ads',
   },
   {
     title: 'Content',
     description: 'Answer the questions buyers actually ask.',
     iconSrc: '/pixelish/document-letter.svg',
+    href: '/blog',
   },
   {
     title: 'Tracking',
     description: 'Know exactly where calls and customers come from.',
     iconSrc: '/pixelish/bar-chart-average.svg',
+    href: '/services',
   },
   {
     title: 'AI discovery',
@@ -359,6 +366,7 @@ export const HOMEPAGE_SERVICE_ITEMS: readonly HomepageIconCard[] = [
     iconSrc: '/pixelish/chatgpt.svg',
     brandLogo: 'openai',
     brandLogoTheme: 'dark',
+    href: '/ai-seo-services',
   },
 ] as const
 

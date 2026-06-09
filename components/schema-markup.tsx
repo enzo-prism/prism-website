@@ -147,6 +147,31 @@ export function GlobalSchemaGraph() {
     "@type": "Organization",
     "@id": "https://www.design-prism.com/#organization",
     name: "Prism",
+    alternateName: "Design Prism",
+    // Keep this definition in sync with public/llms.txt and the about page so
+    // search and AI engines see one consistent entity description.
+    description:
+      "Prism helps growth-focused businesses get found, trusted, and chosen with conversion-first websites, Google visibility, reviews, ads, content, tracking, and AI search support.",
+    slogan: "Impossible is temporary",
+    foundingDate: "2023",
+    founder: {
+      "@type": "Person",
+      "@id": "https://www.design-prism.com/#founder",
+      name: "Enzo Sison",
+      url: "https://www.design-prism.com/about",
+      sameAs: ["https://www.enzosison.com", "https://x.com/NosisTheGod"],
+    },
+    knowsAbout: [
+      "dental practice marketing",
+      "local SEO",
+      "AI search optimization",
+      "answer engine optimization",
+      "conversion-first web design",
+      "Google Business Profile optimization",
+      "Google Ads",
+      "review and reputation systems",
+      "analytics and conversion tracking",
+    ],
     url: "https://www.design-prism.com",
     logo: "https://www.design-prism.com/prism-logo.jpeg",
     sameAs: [

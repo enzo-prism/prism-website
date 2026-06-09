@@ -1,3 +1,5 @@
+import Link from 'next/link'
+
 import Breadcrumbs from '@/components/breadcrumbs'
 import CaseStudiesList from '@/components/case-studies/CaseStudiesList'
 import Footer from '@/components/footer'
@@ -8,6 +10,15 @@ import {
   ItemListSchema,
 } from '@/components/schema-markup'
 import { CASE_STUDIES } from '@/lib/case-study-data'
+
+// Headline metrics sourced from case-study data so the hub band can never
+// drift from what the detail pages publish.
+const measuredHighlights = CASE_STUDIES.flatMap((study) => {
+  const metric = study.structured?.results?.[0]
+  return metric
+    ? [{ client: study.client, slug: study.slug, metric }]
+    : []
+}).slice(0, 4)
 
 const CASE_STUDIES_HERO_VIDEO =
   'https://res.cloudinary.com/dhqpqfw6w/video/upload/v1771353172/ocean-ascii-hq_lbqose.mp4'
@@ -62,6 +73,34 @@ export default function CaseStudiesPage() {
                 </p>
               </div>
             </div>
+
+            {measuredHighlights.length > 0 ? (
+              <div className="mt-8 rounded-3xl border border-border/60 bg-card/40 px-6 py-7 md:px-8">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-muted-foreground">
+                  measured results · google search console
+                </p>
+                <div className="mt-5 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+                  {measuredHighlights.map(({ client, slug, metric }) => (
+                    <Link
+                      key={slug}
+                      href={`/case-studies/${slug}`}
+                      prefetch={false}
+                      className="group space-y-1.5 rounded-xl focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-foreground/25"
+                    >
+                      <p className="text-3xl font-semibold tracking-tight text-foreground">
+                        {metric.value}
+                      </p>
+                      <p className="text-xs leading-5 text-muted-foreground">
+                        {metric.label}
+                      </p>
+                      <p className="text-xs font-medium text-muted-foreground/80 underline-offset-4 group-hover:underline">
+                        {client}
+                      </p>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            ) : null}
 
             <div className="mt-10 md:mt-12">
               <CaseStudiesList studies={dentalFirstCaseStudies} />
