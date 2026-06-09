@@ -60,7 +60,7 @@ describe('/get-started page', () => {
     expect(
       screen.getByRole('heading', {
         level: 2,
-        name: /one short dashboard intake\./i,
+        name: /one short intake\./i,
       }),
     ).toBeInTheDocument()
   })
@@ -69,7 +69,7 @@ describe('/get-started page', () => {
     render(<GetStartedPage />)
 
     expect(
-      screen.getByRole('link', { name: /create free growth dashboard/i }),
+      screen.getByRole('link', { name: /start my free growth audit/i }),
     ).toHaveAttribute('href', '/apply')
     expect(screen.getAllByText(/focus/i).length).toBeGreaterThan(0)
     expect(screen.getByText(/6 steps/i)).toBeInTheDocument()

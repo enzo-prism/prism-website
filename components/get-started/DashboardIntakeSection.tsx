@@ -92,8 +92,8 @@ export default function DashboardIntakeSection() {
       >
         <div className="space-y-8">
           <CoreSectionHeading
-            title="One short dashboard intake."
-            description="About a minute. Just the essentials Prism needs to prepare your free Growth Audit."
+            title="One short intake."
+            description="About a minute. Just the essentials Prism needs to prepare your free Growth Audit — delivered in your own free Growth Dashboard."
             titleClassName="max-w-[13ch]"
           />
 
@@ -189,7 +189,7 @@ export default function DashboardIntakeSection() {
                 label="create free growth dashboard"
                 location="get started entry cta"
               >
-                Create Free Growth Dashboard
+                Start my free growth audit
               </CoreActionLink>
               <p className="flex items-center gap-2 font-mono text-[0.78rem] leading-6 text-[#8C8C85]">
                 <ShieldCheck

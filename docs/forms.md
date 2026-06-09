@@ -90,10 +90,12 @@ The `/apply` route should feel like a focused Growth Dashboard mode, not another
 - Current visible steps:
   - Focus: choose up to three improvement areas.
   - Link: choose website/profile and enter the URL to review.
-  - Fit: optional budget and timing context.
-  - Business: business name.
+  - Fit: optional budget and timing context ("Optional: budget & timing") with an explicit "Skip for now" button that clears both fields, fires `apply_question_skip`, and advances.
+  - Business: business name ("What is your business called?").
   - Contact: name and email.
-  - Review: edit rows, add optional notes, and submit.
+  - Review: edit rows, add optional notes, and submit via "Get my free growth audit".
+- Mobile step footer: the Back/Skip/Continue row is sticky at the viewport bottom on small screens so the primary action stays visible on long steps; it returns to static placement at `sm:` and up.
+- Vocabulary: user-facing funnel copy leads with the free Growth Audit; the Growth Dashboard is described as where the audit is delivered. Backend field names, `_subject`, analytics event names, and CTA tracking labels intentionally keep their original `growth dashboard` naming for ops and GA continuity.
 - Draft behavior:
   - Store in-progress answers in same-tab `sessionStorage` under `prism_apply_draft_v1`.
   - Restore answers on reload and clear the draft after a successful submit.
@@ -107,6 +109,7 @@ The `/apply` route should feel like a focused Growth Dashboard mode, not another
   - `trackEvent("apply_form_start", ...)`
   - `trackEvent("apply_question_view", ...)`
   - `trackEvent("apply_question_complete", ...)`
+  - `trackEvent("apply_question_skip", ...)` when the optional fit step is skipped
   - `trackEvent("apply_validation_error", ...)`
   - `trackEvent("apply_review_view", ...)`
   - `trackEvent("apply_submit_attempt", ...)`

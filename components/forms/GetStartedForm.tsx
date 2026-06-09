@@ -866,6 +866,29 @@ export default function GetStartedForm() {
     })
   }
 
+  const handleSkipFit = () => {
+    markInteracted()
+    setSubmitError(null)
+    setBudget('')
+    setTimeline('')
+    trackEvent('apply_question_skip', {
+      form_name: APPLY_FORM_NAME,
+      form_location: APPLY_FORM_LOCATION,
+      step: stepIndex + 1,
+      step_id: currentStep,
+      service_count: selectedServices.length,
+      question_count: QUESTION_STEP_COUNT,
+    })
+
+    if (returnToReviewRef.current) {
+      returnToReviewRef.current = false
+      goToStep(REVIEW_STEP_INDEX)
+      return
+    }
+
+    goToStep(Math.min(stepIndex + 1, REVIEW_STEP_INDEX))
+  }
+
   const getManualStepError = () => {
     if (currentStep === 'focus' && selectedFocuses.length === 0) {
       return {
@@ -1026,6 +1049,7 @@ export default function GetStartedForm() {
     label,
     onSelect,
     shouldFocusOnStepEntry,
+    compact = false,
   }: {
     name: string
     value: string
@@ -1033,6 +1057,7 @@ export default function GetStartedForm() {
     label: string
     onSelect: (value: string) => void
     shouldFocusOnStepEntry: boolean
+    compact?: boolean
   }) => (
     <label key={value} className="block">
       <input
@@ -1054,10 +1079,16 @@ export default function GetStartedForm() {
       <span
         className={cn(
           choiceCardClassName,
+          compact ? 'min-h-[48px] py-2.5' : null,
           'peer-checked:border-[#9EFF2E]/60 peer-checked:bg-[#9EFF2E]/10 peer-checked:text-[#F5F5F2] peer-focus-visible:ring-2 peer-focus-visible:ring-[#9EFF2E]/35 peer-focus-visible:ring-offset-0',
         )}
       >
-        <span className="font-mono text-[0.9rem] uppercase tracking-[0.12em]">
+        <span
+          className={cn(
+            'font-mono uppercase tracking-[0.12em]',
+            compact ? 'text-[0.82rem]' : 'text-[0.9rem]',
+          )}
+        >
           {label}
         </span>
       </span>
@@ -1164,11 +1195,11 @@ export default function GetStartedForm() {
       case 'fit':
         return (
           <div className="grid gap-5 lg:grid-cols-2">
-            <fieldset className="space-y-3">
+            <fieldset className="space-y-2.5">
               <legend className="font-mono text-[0.74rem] uppercase tracking-[0.18em] text-[#8C8C85]">
                 Budget
               </legend>
-              <div className="grid gap-3">
+              <div className="grid gap-2.5">
                 {BUDGET_OPTIONS.map((option) =>
                   renderChoiceOption({
                     name: 'budget',
@@ -1178,16 +1209,17 @@ export default function GetStartedForm() {
                     onSelect: handleBudgetSelect,
                     shouldFocusOnStepEntry:
                       option === (budget || BUDGET_OPTIONS[0]),
+                    compact: true,
                   }),
                 )}
               </div>
             </fieldset>
 
-            <fieldset className="space-y-3">
+            <fieldset className="space-y-2.5">
               <legend className="font-mono text-[0.74rem] uppercase tracking-[0.18em] text-[#8C8C85]">
                 Timing
               </legend>
-              <div className="grid gap-3">
+              <div className="grid gap-2.5">
                 {TIMELINE_OPTIONS.map((option) =>
                   renderChoiceOption({
                     name: 'timeline',
@@ -1197,6 +1229,7 @@ export default function GetStartedForm() {
                     onSelect: setTimeline,
                     shouldFocusOnStepEntry:
                       !budget && option === (timeline || TIMELINE_OPTIONS[0]),
+                    compact: true,
                   }),
                 )}
               </div>
@@ -1345,9 +1378,9 @@ export default function GetStartedForm() {
       : currentStep === 'link'
         ? 'Where should we look first?'
         : currentStep === 'fit'
-          ? 'After the free audit.'
+          ? 'Optional: budget & timing'
           : currentStep === 'practice'
-            ? 'Business name'
+            ? 'What is your business called?'
             : currentStep === 'contact'
               ? 'Where should we send it?'
               : 'Review and submit.'
@@ -1358,7 +1391,7 @@ export default function GetStartedForm() {
       : currentStep === 'link'
         ? 'Website, Google profile, booking page, or social.'
         : currentStep === 'fit'
-          ? 'Optional. If Prism helps after the audit.'
+          ? 'Only if you might want Prism’s help after the free audit. Skipping changes nothing.'
           : currentStep === 'review'
             ? 'Add a note only if it helps.'
             : ''
@@ -1446,7 +1479,7 @@ export default function GetStartedForm() {
                 : `${progressStep} of ${QUESTION_STEP_COUNT}`}
             </p>
             <p className="font-mono text-[0.72rem] uppercase tracking-[0.24em] text-[#767670]">
-              Growth Dashboard
+              Free growth audit
             </p>
           </div>
           <div className="h-px w-full overflow-hidden bg-white/10">
@@ -1477,7 +1510,7 @@ export default function GetStartedForm() {
           </div>
         </div>
 
-        <div className="border-t border-white/10 pt-5">
+        <div className="sticky bottom-0 z-20 -mx-5 border-t border-white/10 bg-[#080808] px-5 pb-4 pt-4 sm:static sm:mx-0 sm:bg-transparent sm:px-0 sm:pb-0 sm:pt-5">
           <div className="flex items-center gap-3">
             {stepIndex > 0 ? (
               <Button
@@ -1487,6 +1520,17 @@ export default function GetStartedForm() {
                 onClick={handleBack}
               >
                 Back
+              </Button>
+            ) : null}
+
+            {currentStep === 'fit' ? (
+              <Button
+                type="button"
+                variant="outline"
+                className="min-h-12 border-white/14 bg-transparent px-5 font-mono text-[0.78rem] uppercase tracking-[0.18em] text-[#A8A8A1] hover:border-white/28 hover:bg-white/5 hover:text-[#F5F5F2]"
+                onClick={handleSkipFit}
+              >
+                Skip for now
               </Button>
             ) : null}
 
@@ -1500,7 +1544,7 @@ export default function GetStartedForm() {
                   trackCTAClick('submit growth dashboard', 'apply form review')
                 }
               >
-                {isSubmitting ? 'Submitting…' : 'Create Growth Dashboard'}
+                {isSubmitting ? 'Submitting…' : 'Get my free growth audit'}
               </Button>
             ) : (
               <Button

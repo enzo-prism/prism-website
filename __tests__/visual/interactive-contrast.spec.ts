@@ -373,7 +373,7 @@ test.describe("interactive contrast", () => {
         : ["default", "hover", "focus"]
 
     await expectReadableStates(
-      page.getByRole("link", { name: /create free growth dashboard/i }).first(),
+      page.getByRole("link", { name: /start my free growth audit/i }).first(),
       4.5,
       interactiveStates,
     )

@@ -313,6 +313,7 @@ export type EventType =
   | 'apply_form_start'
   | 'apply_question_view'
   | 'apply_question_complete'
+  | 'apply_question_skip'
   | 'apply_review_view'
   | 'apply_validation_error'
   | 'apply_step_1_complete'

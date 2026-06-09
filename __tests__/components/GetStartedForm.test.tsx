@@ -242,7 +242,7 @@ describe('GetStartedForm', () => {
       expect(
         screen.getByRole('heading', {
           level: 1,
-          name: /after the free audit/i,
+          name: /optional: budget & timing/i,
         }),
       ).toBeInTheDocument()
     })
@@ -272,10 +272,43 @@ describe('GetStartedForm', () => {
       expect(
         screen.getByRole('heading', {
           level: 1,
-          name: /business name/i,
+          name: /what is your business called\?/i,
         }),
       ).toBeInTheDocument()
     })
+  })
+
+  it('skips budget and timing with the explicit skip action', async () => {
+    render(<GetStartedForm />)
+
+    completeFocus()
+    completeLink()
+
+    await waitFor(() => {
+      expect(
+        screen.getByRole('heading', {
+          level: 1,
+          name: /optional: budget & timing/i,
+        }),
+      ).toBeInTheDocument()
+    })
+
+    fireEvent.click(screen.getByLabelText(/\$3\.5k to \$5k/i))
+    fireEvent.click(screen.getByRole('button', { name: /skip for now/i }))
+
+    await waitFor(() => {
+      expect(
+        screen.getByRole('heading', {
+          level: 1,
+          name: /what is your business called\?/i,
+        }),
+      ).toBeInTheDocument()
+    })
+
+    expect(trackEvent).toHaveBeenCalledWith(
+      'apply_question_skip',
+      expect.objectContaining({ step_id: 'fit' }),
+    )
   })
 
   it('advances answered steps with Enter and forward arrow shortcuts', async () => {
@@ -304,7 +337,7 @@ describe('GetStartedForm', () => {
       expect(
         screen.getByRole('heading', {
           level: 1,
-          name: /after the free audit/i,
+          name: /optional: budget & timing/i,
         }),
       ).toBeInTheDocument()
     })
@@ -337,7 +370,7 @@ describe('GetStartedForm', () => {
       expect(
         screen.getByRole('heading', {
           level: 1,
-          name: /after the free audit/i,
+          name: /optional: budget & timing/i,
         }),
       ).toBeInTheDocument()
     })
@@ -348,7 +381,7 @@ describe('GetStartedForm', () => {
     expect(
       screen.getByRole('heading', {
         level: 1,
-        name: /after the free audit/i,
+        name: /optional: budget & timing/i,
       }),
     ).toBeInTheDocument()
   })
@@ -363,7 +396,7 @@ describe('GetStartedForm', () => {
       expect(
         screen.getByRole('heading', {
           level: 1,
-          name: /after the free audit/i,
+          name: /optional: budget & timing/i,
         }),
       ).toBeInTheDocument()
     })
@@ -403,7 +436,7 @@ describe('GetStartedForm', () => {
       expect(
         screen.getByRole('heading', {
           level: 1,
-          name: /business name/i,
+          name: /what is your business called\?/i,
         }),
       ).toBeInTheDocument()
     })
@@ -510,7 +543,7 @@ describe('GetStartedForm', () => {
     })
 
     fireEvent.click(
-      screen.getByRole('button', { name: /create growth dashboard/i }),
+      screen.getByRole('button', { name: /get my free growth audit/i }),
     )
 
     await waitFor(() => {
@@ -596,7 +629,7 @@ describe('GetStartedForm', () => {
     reachReview()
 
     fireEvent.click(
-      screen.getByRole('button', { name: /create growth dashboard/i }),
+      screen.getByRole('button', { name: /get my free growth audit/i }),
     )
 
     await waitFor(() => {

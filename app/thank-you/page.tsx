@@ -38,18 +38,18 @@ const DEFAULT_NEXT_STEPS = [
 const APPLY_NEXT_STEPS = [
   {
     label: "01",
-    title: "Dashboard intake received",
-    body: "Your Growth Dashboard intake is in the queue.",
+    title: "Request received",
+    body: "Your free Growth Audit request is in the queue.",
   },
   {
     label: "02",
     title: "Dashboard link sent",
-    body: "Claim it here or from your inbox.",
+    body: "Your audit lives in a free dashboard. Claim it here or from your inbox.",
   },
   {
     label: "03",
     title: "Growth Audit follows",
-    body: "Growth findings will live in the dashboard.",
+    body: "Findings and your clearest next move land in the dashboard.",
   },
 ] as const
 
@@ -71,14 +71,14 @@ export default async function ThankYouPage({
           <section className="mx-auto max-w-[1180px] space-y-8">
             <div className="border border-white/10 bg-[#070707] px-6 py-8 sm:px-10 sm:py-12">
               <p className="font-mono text-[0.76rem] uppercase tracking-[0.4em] text-[#9EFF2E]">
-                {isApplyFlow ? "GROWTH DASHBOARD" : "RECEIVED"}
+                {isApplyFlow ? "FREE GROWTH AUDIT" : "RECEIVED"}
               </p>
               <h1 className="mt-6 max-w-[9ch] text-balance font-sans text-[clamp(2.45rem,5.4vw,4.6rem)] font-medium leading-[0.98] tracking-[-0.06em] text-[#F5F5F2]">
-                {isApplyFlow ? "Dashboard intake received." : "Review in progress."}
+                {isApplyFlow ? "Audit request received." : "Review in progress."}
               </h1>
               <p className="mt-6 max-w-[42rem] font-mono text-[1rem] leading-8 text-[#A0A09A]">
                 {isApplyFlow
-                  ? "Thanks, we've got it. Every real business submission receives a Growth Audit. Claim your dashboard to follow the review from one place."
+                  ? "Thanks, we've got it. Every real business submission receives a Growth Audit. Your audit lives in a free Growth Dashboard — claim it to follow the review from one place."
                   : "We received your submission. Every real inquiry gets reviewed. If there's a fit, we'll reach out with the right next step."}
               </p>
             </div>

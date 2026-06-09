@@ -73,7 +73,7 @@ describe('GrowthProcessSection', () => {
     render(<GrowthProcessSection />)
 
     const cta = screen.getByRole('link', {
-      name: /create free growth dashboard/i,
+      name: /start my free growth audit/i,
     })
 
     expect(cta).toHaveAttribute('href', '/apply')

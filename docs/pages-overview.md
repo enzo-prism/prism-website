@@ -119,9 +119,9 @@ Quick reference for the pages we edit most often.
 
 ## Get Started (`app/get-started/page.tsx`)
 
-- `/get-started` is now the free Growth Dashboard entry page for growth-focused businesses, built from `components/get-started/GrowthProcessSection.tsx` plus the in-page handoff panel that points into `/apply`.
-- The page leads with the three-step process (`Create Growth Dashboard`, `Get Growth Audit`, `Clear next move`) and then routes into the dedicated intake form instead of embedding the form inline.
-- The green `Create Growth Dashboard` process card is a tracked shortcut to `/apply`, so clicking the first step opens the first question of the intake form. Keep the later process cards informational unless they become real actions.
+- `/get-started` is the free Growth Audit entry page for growth-focused businesses, built from `components/get-started/GrowthProcessSection.tsx` plus the in-page handoff panel that points into `/apply`.
+- The hero is conversion-first: headline, one-line value statement, trust chips (free / ≈1 minute / reviewed by a real person), and the primary "Start my free growth audit" CTA must all land in the first viewport on mobile. The three-step Lordicon row (`Share your business`, `We audit it`, `Get your next move`) sits compact below the CTA — do not let it push the CTA back below the fold.
+- User-facing copy on this funnel leads with the free Growth Audit; the Growth Dashboard is positioned as where the audit is delivered. CTA tracking labels intentionally keep the legacy `create free growth dashboard` value for GA continuity.
 - It remains the one intentional accent surface within the core route family: same dark shell, shared CTA grammar, and shared section-heading logic, but with terminal framing and neon status accents.
 - `/get-started` intentionally does not mount the stock ElevenLabs floating widget; the Growth Dashboard handoff should stay focused and route into `/apply`.
 - The page no longer mounts the custom `SalesChat` client or depends on any legacy route-level assistant gating.
@@ -133,7 +133,7 @@ Quick reference for the pages we edit most often.
 
 - `/apply` is the focused question-by-question Growth Dashboard intake and is the real form surface for the Growth Dashboard to Light Audit funnel.
 - The page intentionally removes the full navbar, footer, marketing sidebar, and floating ElevenLabs widget so the user sees one decision at a time after they start.
-- `components/forms/GetStartedForm.tsx` renders the compressed intake: focus, link, optional fit context, business, contact, and review/submit.
+- `components/forms/GetStartedForm.tsx` renders the compressed intake: focus, link, optional fit context (with an explicit "Skip for now" action), business, contact, and review/submit. The step footer is sticky at the viewport bottom on mobile so Back/Skip/Continue stay reachable on long steps.
 - `GetStartedForm` posts to Formspree with the growth-application payload (`service_focus`, `service_interest[]`, `focus_labels`, `has_website`, `review_link`, `primary_goal`, `budget`, `timeline`, `company`, `full_name`, `email`, `additional_context`, `_subject`, `_redirect`, `form_name`, `_gotcha`) and redirects to `/thank-you?source=apply` on success.
 - The form supports edit actions on review rows, same-tab draft restore via `sessionStorage`, and keyboard-first progression. Enter advances validated non-review steps, arrow shortcuts move forward/back when they do not override text editing or native radio behavior, and desktop focus is restored to the next step's primary control.
 - Keep the field names, Formspree endpoint behavior, analytics event names, and redirect behavior unchanged even though the visible copy now says Growth Dashboard, Growth Audit, or review.
