@@ -6,6 +6,7 @@ import {
   coreRouteSectionCompactClassName,
 } from '@/components/core-route/CoreRoutePrimitives'
 import HomeDentistWinsCarousel from '@/components/home/HomeDentistWinsCarousel'
+import HomeReveal from '@/components/home/HomeReveal'
 import { HOMEPAGE_CLIENT_WINS } from '@/components/home/homepage-content'
 
 type ClientMetric = {
@@ -29,7 +30,7 @@ export default function HomeDentistWinsSection() {
     <section className={coreRouteSectionCompactClassName}>
       <div className={coreRouteContainerClassName}>
         <div className="flex flex-col gap-10 sm:gap-12">
-          <div className="flex flex-col gap-9 lg:flex-row lg:items-end lg:justify-between lg:gap-16">
+          <HomeReveal className="flex flex-col gap-9 lg:flex-row lg:items-end lg:justify-between lg:gap-16">
             <div className="flex max-w-xl flex-col gap-4">
               <span className="inline-flex items-center gap-2.5 self-start font-mono text-[10px] font-medium uppercase tracking-[0.28em] text-[#8a8175]">
                 <span className="relative flex h-1.5 w-1.5">
@@ -39,13 +40,9 @@ export default function HomeDentistWinsSection() {
                 {eyebrow}
               </span>
 
-              <div
-                role="heading"
-                aria-level={2}
-                className="font-sans text-[2rem] font-medium leading-[1.02] tracking-[-0.045em] text-[#f5f0e8] sm:text-[2.35rem] lg:text-[2.6rem]"
-              >
+              <h2 className="font-sans text-[2rem] font-medium leading-[1.02] tracking-[-0.045em] text-[#f5f0e8] sm:text-[2.35rem] lg:text-[2.6rem]">
                 {title}
-              </div>
+              </h2>
             </div>
 
             <dl className="flex items-end gap-7 sm:gap-9 lg:shrink-0">
@@ -85,9 +82,11 @@ export default function HomeDentistWinsSection() {
                 )
               })}
             </dl>
-          </div>
+          </HomeReveal>
 
-          <HomeDentistWinsCarousel slides={slides} />
+          <HomeReveal delay={120}>
+            <HomeDentistWinsCarousel slides={slides} />
+          </HomeReveal>
         </div>
       </div>
     </section>

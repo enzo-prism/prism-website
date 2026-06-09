@@ -1,84 +1,68 @@
 import {
   CoreSectionHeading,
-  coreRouteContainedSectionClassName,
   coreRouteContainerClassName,
+  coreRouteIntroBandClassName,
   coreRouteSectionClassName,
 } from '@/components/core-route/CoreRoutePrimitives'
-import { HOMEPAGE_FIT } from '@/components/home/homepage-content'
+import {
+  HOMEPAGE_FIT,
+  HOMEPAGE_FIT_AUDIENCES,
+} from '@/components/home/homepage-content'
+import HomeReveal from '@/components/home/HomeReveal'
 import PixelishIcon from '@/components/pixelish/PixelishIcon'
 
 export default function HomeFitSection() {
   return (
     <section className={coreRouteSectionClassName}>
       <div className={coreRouteContainerClassName}>
-        <div className={coreRouteContainedSectionClassName}>
+        <HomeReveal className={coreRouteIntroBandClassName}>
           <CoreSectionHeading
+            eyebrow={HOMEPAGE_FIT.eyebrow}
             title={HOMEPAGE_FIT.title}
-            titleClassName="max-w-[15ch] lg:max-w-[17ch]"
+            description={HOMEPAGE_FIT.description}
+            titleClassName="max-w-[18ch] lg:max-w-[20ch]"
+            descriptionClassName="max-w-[38rem]"
           />
+        </HomeReveal>
 
-          <div className="mt-10 grid gap-6 lg:grid-cols-2">
-            <article className="rounded-[1.6rem] border border-white/10 bg-black/20 p-6 sm:p-7">
-              <div className="flex items-center gap-3">
-                <PixelishIcon
-                  src="/pixelish/circle-checkmark.svg"
-                  alt=""
-                  size={20}
+        <div className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-3 lg:gap-4">
+          {HOMEPAGE_FIT_AUDIENCES.map((audience, index) => (
+            <HomeReveal key={audience.title} delay={index * 90}>
+              <article
+                data-home-fit-card={audience.title}
+                className="group relative h-full overflow-hidden rounded-[1.5rem] border border-white/10 bg-white/[0.02] p-5 transition-[transform,border-color,background-color,box-shadow] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 hover:border-[#d8bc79]/35 hover:bg-white/[0.045] hover:shadow-[0_30px_90px_-65px_rgba(216,188,121,0.65)] motion-reduce:transition-none sm:p-6"
+              >
+                <span
                   aria-hidden="true"
-                  className="h-[17px] w-[17px] opacity-80"
+                  className="pointer-events-none absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-[#d8bc79]/35 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100 motion-reduce:transition-none"
                 />
-                <h3 className="font-sans text-[1.35rem] font-medium tracking-[-0.04em] text-[#f5f0e8]">
-                  {HOMEPAGE_FIT.fitHeading}
+
+                <span className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/12 bg-black/40 transition-[border-color,box-shadow] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:border-[#d8bc79]/40 group-hover:shadow-[0_0_26px_-14px_rgba(216,188,121,0.9)] motion-reduce:transition-none">
+                  <PixelishIcon
+                    src={audience.iconSrc}
+                    alt=""
+                    size={18}
+                    aria-hidden="true"
+                    className="h-4 w-4 opacity-80"
+                  />
+                </span>
+
+                <h3 className="text-ui-tight mt-5 max-w-[18ch] font-sans text-[1.18rem] font-medium leading-[1.1] tracking-[-0.035em] text-[#f5f0e8]">
+                  {audience.title}
                 </h3>
-              </div>
-
-              <ul className="mt-6 space-y-4">
-                {HOMEPAGE_FIT.fitItems.map((item) => (
-                  <li
-                    key={item}
-                    className="border-t border-white/12 pt-4 font-sans text-[0.98rem] leading-7 text-[#b8afa2]"
-                  >
-                    {item}
-                  </li>
-                ))}
-              </ul>
-
-              <p className="mt-6 font-sans text-[0.94rem] leading-7 text-[#948b80]">
-                {HOMEPAGE_FIT.fitClosing}
-              </p>
-            </article>
-
-            <article className="rounded-[1.6rem] border border-white/10 bg-black/20 p-6 sm:p-7">
-              <div className="flex items-center gap-3">
-                <PixelishIcon
-                  src="/pixelish/circle-exclamation.svg"
-                  alt=""
-                  size={20}
-                  aria-hidden="true"
-                  className="h-[17px] w-[17px] opacity-80"
-                />
-                <h3 className="font-sans text-[1.35rem] font-medium tracking-[-0.04em] text-[#f5f0e8]">
-                  {HOMEPAGE_FIT.notFitHeading}
-                </h3>
-              </div>
-
-              <ul className="mt-6 space-y-4">
-                {HOMEPAGE_FIT.notFitItems.map((item) => (
-                  <li
-                    key={item}
-                    className="border-t border-white/12 pt-4 font-sans text-[0.98rem] leading-7 text-[#b8afa2]"
-                  >
-                    {item}
-                  </li>
-                ))}
-              </ul>
-
-              <p className="mt-6 font-sans text-[0.94rem] leading-7 text-[#948b80]">
-                {HOMEPAGE_FIT.notFitClosing}
-              </p>
-            </article>
-          </div>
+                <p className="mt-3 text-pretty font-sans text-[0.94rem] leading-6 text-[#a8a092]">
+                  {audience.description}
+                </p>
+              </article>
+            </HomeReveal>
+          ))}
         </div>
+
+        <HomeReveal delay={280}>
+          <p className="mt-8 border-t border-white/10 pt-5 font-sans text-[0.92rem] leading-6 text-[#8f877b]">
+            {HOMEPAGE_FIT.notFitLine}
+          </p>
+        </HomeReveal>
       </div>
     </section>
   )

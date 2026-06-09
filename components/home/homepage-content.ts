@@ -78,10 +78,11 @@ const HOMEPAGE_HERO_REVIEW_COUNT_LABEL =
   HOMEPAGE_HERO_REVIEW_COUNT >= 20 ? '20+' : `${HOMEPAGE_HERO_REVIEW_COUNT}`
 
 export const HOMEPAGE_HERO = {
-  eyebrow: 'Business growth',
-  title: 'Growth, built for your business.',
+  eyebrow: 'The growth system for real businesses',
+  title: 'Get found. Get trusted. Get chosen.',
+  titleLines: ['Get found.', 'Get trusted.', 'Get chosen.'],
   description:
-    'Prism builds the websites, search, reviews, content, ads, tracking, and AI-ready systems that help businesses get found, trusted, and chosen.',
+    'Prism is one team that builds and runs everything that brings you customers — your website, Google search, reviews, ads, and AI visibility. One system, working together.',
   supportPoints: [
     {
       label: 'Can ChatGPT recommend you?',
@@ -90,20 +91,29 @@ export const HOMEPAGE_HERO = {
       variant: 'aiRecommendation',
     },
     {
-      label: 'Proof',
-      iconSrc: '/pixelish/award-checkmark.svg',
+      label: 'One team',
+      iconSrc: '/pixelish/command.svg',
     },
     {
-      label: 'Qualified demand',
-      iconSrc: '/pixelish/calendar.svg',
+      label: 'Measurable results',
+      iconSrc: '/pixelish/bar-chart-average.svg',
     },
   ] satisfies readonly HomepageHeroSupportPoint[],
+  systemStrip: [
+    'Website',
+    'Search',
+    'Reviews',
+    'Ads',
+    'Content',
+    'Tracking',
+    'AI',
+  ],
   socialProof: {
     headline: `${HOMEPAGE_HERO_REVIEW_COUNT_LABEL} reviews from founders, doctors, operators, and local leaders`,
-    linkLabel: 'Results',
+    linkLabel: 'See results',
   },
-  primaryCtaLabel: 'Free Growth Audit',
-  secondaryCtaLabel: 'See the system',
+  primaryCtaLabel: 'Get my free growth audit',
+  secondaryCtaLabel: 'See how it works',
 } as const
 
 export const HOMEPAGE_CLIENT_WINS = {
@@ -192,9 +202,9 @@ export const HOMEPAGE_CLIENT_WINS = {
 } as const
 
 export const HOMEPAGE_GROWTH_RAMP = {
-  eyebrow: 'Growth ramp',
+  eyebrow: 'What to expect',
   title: 'First 90 days.',
-  microcopy: 'Aggressive targets. Real systems.',
+  microcopy: 'Clear targets. Real systems. No guesswork.',
   finePrint:
     'Targets vary by market, offer, starting point, budget, and team follow-through.',
   metrics: [
@@ -220,34 +230,36 @@ export const HOMEPAGE_GROWTH_RAMP = {
 } as const
 
 export const HOMEPAGE_PROBLEM = {
-  title: 'Growth leaks happen everywhere.',
+  eyebrow: 'Why it works',
+  title: 'Buyers check everything before they choose.',
   description:
-    'People check search, reviews, AI answers, your website, and your proof before they choose.',
+    'Your website. Your reviews. Your Google listing. Even ChatGPT. If one piece is weak, people quietly pick someone else — and you never find out why.',
+  closingLine: 'Prism makes every one of those checks work in your favor.',
   points: [
     {
-      label: 'Can they find you?',
-      text: '',
+      label: 'Can people find you?',
+      text: 'Search and maps decide who gets seen.',
       iconSrc: '/pixelish/lens.svg',
     },
     {
       label: 'Do they trust you?',
-      text: '',
+      text: 'Reviews and proof decide who makes the shortlist.',
       iconSrc: '/pixelish/award-checkmark.svg',
     },
     {
-      label: 'Can AI explain you?',
-      text: '',
+      label: 'Can AI recommend you?',
+      text: 'ChatGPT and AI search now answer before you can.',
       iconSrc: '/pixelish/chatgpt.svg',
       brandLogo: 'openai',
       brandLogoTheme: 'dark',
     },
     {
-      label: 'Can they take action?',
-      text: '',
+      label: 'Is the next step easy?',
+      text: 'Calls, forms, and booking decide who gets chosen.',
       iconSrc: '/pixelish/calendar.svg',
     },
   ] satisfies readonly HomepageProblemPoint[],
-  stackLabel: 'What buyers scan',
+  stackLabel: 'What buyers check',
   stack: [
     { label: 'Website', iconSrc: '/pixelish/browser.svg' },
     {
@@ -255,7 +267,7 @@ export const HOMEPAGE_PROBLEM = {
       iconSrc: '/pixelish/lens.svg',
       brandLogo: 'googleMaps',
     },
-    { label: 'Proof', iconSrc: '/pixelish/emoji-heart.svg' },
+    { label: 'Reviews', iconSrc: '/pixelish/emoji-heart.svg' },
     {
       label: 'ChatGPT',
       iconSrc: '/pixelish/chatgpt.svg',
@@ -301,70 +313,49 @@ export const HOMEPAGE_AI_TOOLS = {
   ] satisfies readonly HomepageAiTool[],
 } as const
 
-export const HOMEPAGE_PROMISE = {
-  title: 'Found. Trusted. Chosen.',
-} as const
-
-export const HOMEPAGE_PROMISE_CARDS: readonly HomepageIconCard[] = [
-  {
-    title: 'Found',
-    description: 'Search + AI',
-    iconSrc: '/pixelish/lens.svg',
-    brandLogo: 'googleMaps',
-  },
-  {
-    title: 'Trusted',
-    description: 'Proof + reviews',
-    iconSrc: '/pixelish/award-checkmark.svg',
-  },
-  {
-    title: 'Chosen',
-    description: 'Calls, forms, sales',
-    iconSrc: '/pixelish/users.svg',
-  },
-] as const
-
 export const HOMEPAGE_SERVICES = {
-  title: 'One growth system. Seven parts.',
-  description: 'Website. Search. Proof. Ads. Content. AI. Tracking.',
+  eyebrow: 'What Prism does',
+  title: 'One team. The whole system.',
+  description:
+    'Most businesses juggle five vendors and hope it adds up. With Prism, one team builds every piece and keeps them working together.',
   closingLine: '',
 } as const
 
 export const HOMEPAGE_SERVICE_ITEMS: readonly HomepageIconCard[] = [
   {
     title: 'Website',
-    description: '',
+    description: 'A fast, credible site that makes choosing you easy.',
     iconSrc: '/pixelish/browser.svg',
   },
   {
     title: 'Search',
-    description: '',
+    description: 'Show up on Google and Maps when people look.',
     iconSrc: '/pixelish/lens.svg',
     brandLogo: 'googleMaps',
   },
   {
-    title: 'Proof',
-    description: '',
+    title: 'Reviews & proof',
+    description: 'Real reviews and results that build trust fast.',
     iconSrc: '/pixelish/emoji-heart.svg',
   },
   {
     title: 'Ads',
-    description: '',
+    description: 'Reach the right people without wasting budget.',
     iconSrc: '/pixelish/device-radio.svg',
   },
   {
     title: 'Content',
-    description: '',
+    description: 'Answer the questions buyers actually ask.',
     iconSrc: '/pixelish/document-letter.svg',
   },
   {
     title: 'Tracking',
-    description: '',
+    description: 'Know exactly where calls and customers come from.',
     iconSrc: '/pixelish/bar-chart-average.svg',
   },
   {
     title: 'AI discovery',
-    description: '',
+    description: 'Be the business ChatGPT and AI search recommend.',
     iconSrc: '/pixelish/chatgpt.svg',
     brandLogo: 'openai',
     brandLogoTheme: 'dark',
@@ -410,31 +401,31 @@ export const HOMEPAGE_DIFFERENTIATORS: readonly HomepageIconCard[] = [
 
 export const HOMEPAGE_HOW_IT_WORKS = {
   title: 'How it works',
-  ctaLabel: 'Start free growth audit',
+  ctaLabel: 'Start your free growth audit',
 } as const
 
 export const HOMEPAGE_HOW_IT_WORKS_STEPS = [
   {
-    title: 'Submit business',
-    description:
-      'Tell us about your company in about a minute - no long brief, no sales maze.',
+    title: 'Tell us about your business',
+    description: 'Takes about a minute. No long brief, no sales maze.',
   },
   {
-    title: 'We audit',
+    title: 'We audit your growth path',
     description:
-      'A real person reviews your website, search visibility, proof, offer, and tracking.',
+      'A real person reviews your website, search visibility, reviews, and tracking.',
   },
   {
-    title: 'Get growth path',
+    title: 'Get your growth plan, free',
     description:
-      'Receive a free Growth Audit with the clearest move to grow next.',
+      'A clear read on what is working, what is leaking, and the next move worth making.',
   },
 ] as const
 
 export const HOMEPAGE_PROOF = {
+  eyebrow: 'Results',
   title: 'Proof across markets',
   description:
-    'Dental is a major Prism strength. The same growth system also supports retail, consulting, nonprofits, education, hospitality, and founder-led brands.',
+    'Dental is where the system is proven deepest. The same system grows retail, consulting, education, hospitality, nonprofits, and founder-led brands.',
   ctaLabel: 'See client results',
 } as const
 
@@ -552,8 +543,34 @@ export const HOMEPAGE_CASE_STUDY_SIGNALS: Record<
   },
 }
 
+export const HOMEPAGE_FIT_AUDIENCES: readonly HomepageIconCard[] = [
+  {
+    title: 'Founders & startup teams',
+    description:
+      'You are building something real and need customers to find it — without hiring a marketing department.',
+    iconSrc: '/pixelish/graph-chart-high.svg',
+  },
+  {
+    title: 'Local & specialty practices',
+    description:
+      'Dentists, clinics, and local services where trust decides everything. Dental is where Prism has the deepest proof.',
+    iconSrc: '/pixelish/award.svg',
+  },
+  {
+    title: 'Owners & operators',
+    description:
+      'You run the business day to day and want one partner to own growth — not another vendor to manage.',
+    iconSrc: '/pixelish/users.svg',
+  },
+] as const
+
 export const HOMEPAGE_FIT = {
-  title: 'Who Prism is built for',
+  eyebrow: 'Who it is for',
+  title: 'Built for the people running the business.',
+  description:
+    'You should not have to become the marketing department to grow. That is the point of Prism.',
+  notFitLine:
+    'Not a fit if you want the cheapest option or overnight results — Prism builds growth that lasts.',
   fitHeading: 'Prism is a good fit if...',
   fitItems: [
     'You are a founder, owner, or operator who wants more qualified demand.',
@@ -578,9 +595,9 @@ export const HOMEPAGE_FIT = {
 export const HOMEPAGE_FINAL_CTA = {
   title: 'Find the growth leak.',
   description:
-    'Free audit for your website, search visibility, proof, offer, tracking, and next growth move.',
-  primaryCtaLabel: 'Start free growth audit',
-  supportLine: '',
+    'Get a free audit of your website, search visibility, reviews, and tracking — plus the clearest next move for your business. No pressure. No obligation.',
+  primaryCtaLabel: 'Start my free growth audit',
+  supportLine: 'Reviewed by a real person, not a bot.',
 } as const
 
 export const HOMEPAGE_STATS = [
@@ -717,7 +734,7 @@ export const HOMEPAGE_ROADMAP_PHASES = [
 export const HOMEPAGE_CTA_NOTES = [
   'Website',
   'Search',
-  'Proof',
+  'Reviews',
   'AI',
   'Tracking',
 ] as const

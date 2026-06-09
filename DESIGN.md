@@ -320,10 +320,11 @@ Avoid stacking too many consecutive sections in the exact same mode. The page sh
 The homepage hero is the reference surface for tone:
 
 - support chips at the top
-- one direct headline
+- one direct headline (currently three short outcome lines with muted verbs and a staggered rise-in)
 - one short subhead
 - simple primary and secondary CTA row
 - subtle social proof
+- a quiet mono "system strip" along the hero's bottom rule with pulsing signal dots
 - restrained motion behind the copy
 
 Do not overload the hero with dense copy, too many badges, or a second competing visual system.
@@ -380,8 +381,10 @@ Motion should feel deliberate and technical, not flashy.
 
 - ASCII hero motion
 - looping hero or section video when it genuinely adds atmosphere
-- subtle hover state transitions
-- progressive reveal where it supports hierarchy
+- subtle hover state transitions, including pointer-tracked spotlight highlights on card grids
+- progressive reveal where it supports hierarchy (`components/home/HomeReveal.tsx` — content must stay visible for no-JS and reduced-motion visitors)
+- stat count-up on first view (`components/home/HomeCountUp.tsx`)
+- quiet signal accents: slow scan-lines along hairlines, pulsing status dots, and traveling rail pulses (`home-scan-line`, `home-signal-dot`, `home-rail-flow` in `app/globals.css`)
 
 ### Motion rules
 

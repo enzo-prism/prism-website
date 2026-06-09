@@ -22,7 +22,7 @@ async function waitForHomepage(page: Page) {
   await expect(
     page.getByRole('heading', {
       level: 1,
-      name: /growth, handled for you\./i,
+      name: /get found\. get trusted\. get chosen\./i,
     }),
   ).toBeVisible({ timeout: 20_000 })
   await expect(

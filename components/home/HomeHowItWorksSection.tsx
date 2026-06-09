@@ -11,6 +11,7 @@ import {
   HOMEPAGE_HOW_IT_WORKS,
   HOMEPAGE_HOW_IT_WORKS_STEPS,
 } from '@/components/home/homepage-content'
+import HomeReveal from '@/components/home/HomeReveal'
 
 import styles from './HomeHowItWorksSection.module.css'
 
@@ -26,7 +27,7 @@ export default function HomeHowItWorksSection() {
     >
       <div className={coreRouteContainerClassName}>
         <div className={coreRouteContainedSectionClassName}>
-          <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
+          <HomeReveal className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
             <CoreSectionHeading
               eyebrow="Get started in 3 steps"
               title={HOMEPAGE_HOW_IT_WORKS.title}
@@ -41,7 +42,7 @@ export default function HomeHowItWorksSection() {
             >
               {HOMEPAGE_HOW_IT_WORKS.ctaLabel}
             </CoreActionLink>
-          </div>
+          </HomeReveal>
 
           <ol className={`mt-12 ${styles.flow}`}>
             <span className={styles.rail} aria-hidden="true">

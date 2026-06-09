@@ -74,15 +74,19 @@ describe('HomeHeroSection', () => {
       'ellipse_at_24%_48%',
     )
 
-    expect(screen.getByText(/business growth/i)).toBeInTheDocument()
+    expect(
+      screen.getByText(/the growth system for real businesses/i),
+    ).toBeInTheDocument()
     expect(
       screen.getByRole('heading', {
         level: 1,
-        name: /growth, built for your business\./i,
+        name: /get found\. get trusted\. get chosen\./i,
       }),
     ).toBeInTheDocument()
     expect(
-      screen.getByText(/websites, search, reviews, content, ads, tracking/i),
+      screen.getByText(
+        /one team that builds and runs everything that brings you customers/i,
+      ),
     ).toBeInTheDocument()
     expect(screen.getByTestId('home-hero-social-proof')).toHaveTextContent(
       /20\+ reviews from founders, doctors, operators, and local leaders/i,
@@ -100,16 +104,22 @@ describe('HomeHeroSection', () => {
     expect(screen.queryByText(/^google maps$/i)).not.toBeInTheDocument()
     expect(iconSrcs).toContain('/home-hero/logos/openai.svg')
 
+    const systemStrip = screen.getByRole('list', {
+      name: /what the prism growth system includes/i,
+    })
+    expect(systemStrip).toBeInTheDocument()
+    expect(systemStrip.querySelectorAll('li')).toHaveLength(7)
+
     expect(
-      screen.getByRole('link', { name: /free growth audit/i }),
+      screen.getByRole('link', { name: /get my free growth audit/i }),
     ).toHaveAttribute('href', '/get-started')
     expect(
-      screen.getByRole('link', { name: /see the system/i }),
+      screen.getByRole('link', { name: /see how it works/i }),
     ).toHaveAttribute('href', '#how-it-works')
 
     expect(
       screen.getByRole('link', {
-        name: /5 star rating 20\+ reviews from founders, doctors, operators, and local leaders results/i,
+        name: /5 star rating 20\+ reviews from founders, doctors, operators, and local leaders see results/i,
       }),
     ).toHaveAttribute('href', '/case-studies')
     expect(

@@ -329,7 +329,7 @@ test.describe("interactive contrast", () => {
         : ["default", "hover", "focus"]
 
     await expectReadableStates(
-      page.getByRole("link", { name: /get a free growth plan/i }).first(),
+      page.getByRole("link", { name: /get my free growth audit/i }).first(),
       4.5,
       interactiveStates,
     )
@@ -344,14 +344,6 @@ test.describe("interactive contrast", () => {
       page.getByRole("link", { name: /see client results/i }),
       4.5,
       interactiveStates,
-    )
-
-    await expectReadableStates(
-      page.getByRole("button", {
-        name: /do i need to understand ai or marketing tools\?/i,
-      }),
-      4.5,
-      ["default", "focus"],
     )
 
     if (viewport && viewport.width < 768) {
@@ -381,7 +373,7 @@ test.describe("interactive contrast", () => {
         : ["default", "hover", "focus"]
 
     await expectReadableStates(
-      page.getByRole("link", { name: /start application/i }).first(),
+      page.getByRole("link", { name: /create free growth dashboard/i }).first(),
       4.5,
       interactiveStates,
     )
@@ -395,18 +387,13 @@ test.describe("interactive contrast", () => {
       interactiveStates,
     )
 
-    await page.getByRole("checkbox", { name: /new website/i }).click()
-    await page.getByLabel(/yes/i).check({ force: true })
-    await page.getByLabel(/current website/i).fill("design-prism.com")
-    await page
-      .getByLabel(/i need more leads\/customers online/i)
-      .check({ force: true })
-    await page.getByRole("button", { name: /continue/i }).first().click()
-
-    await expectReadableStates(
-      page.getByRole("button", { name: /submit application/i }),
-      4.5,
-      interactiveStates,
-    )
+    // Focus-selection chips are the first interactive step of the Growth
+    // Dashboard intake; check both unselected and selected treatments.
+    const focusOption = page.getByRole("checkbox", {
+      name: /more qualified leads/i,
+    })
+    await expectReadableStates(focusOption, 4.5, interactiveStates)
+    await focusOption.click()
+    await expectReadableStates(focusOption, 4.5, ["default"])
   })
 })

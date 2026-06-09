@@ -13,6 +13,7 @@ import {
   HOMEPAGE_CASE_STUDY_SIGNALS,
   HOMEPAGE_PROOF,
 } from '@/components/home/homepage-content'
+import HomeReveal from '@/components/home/HomeReveal'
 import PixelishIcon from '@/components/pixelish/PixelishIcon'
 import { CASE_STUDIES } from '@/lib/case-study-data'
 
@@ -44,9 +45,10 @@ export default function HomeProofSection() {
   return (
     <section className={coreRouteSectionClassName}>
       <div className={coreRouteContainerClassName}>
-        <div className={coreRouteIntroBandClassName}>
+        <HomeReveal className={coreRouteIntroBandClassName}>
           <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
             <CoreSectionHeading
+              eyebrow={HOMEPAGE_PROOF.eyebrow}
               title={HOMEPAGE_PROOF.title}
               description={HOMEPAGE_PROOF.description || undefined}
               titleClassName="max-w-[17ch] lg:max-w-[19ch]"
@@ -62,44 +64,52 @@ export default function HomeProofSection() {
               {HOMEPAGE_PROOF.ctaLabel}
             </CoreActionLink>
           </div>
-        </div>
+        </HomeReveal>
 
         <div className="mt-10 grid auto-rows-fr gap-3 sm:grid-cols-2 lg:grid-cols-4">
-          {HOMEPAGE_CASE_STUDIES.map((study) => (
-            <Link
+          {HOMEPAGE_CASE_STUDIES.map((study, index) => (
+            <HomeReveal
               key={study.slug}
-              href={`/case-studies/${study.slug}`}
-              data-home-proof-card={study.slug}
-              className="group relative flex h-full min-h-40 flex-col overflow-hidden rounded-[1.25rem] border border-white/10 bg-[linear-gradient(135deg,rgba(255,255,255,0.04),rgba(255,255,255,0.014)_45%,rgba(0,0,0,0.18))] p-4 transition-[transform,background-color,border-color,box-shadow] hover:-translate-y-1 hover:border-white/18 hover:bg-white/[0.04] hover:shadow-[0_24px_80px_-60px_rgba(245,240,232,0.5)] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-white/25 focus-visible:ring-offset-4 focus-visible:ring-offset-black"
+              delay={(index % 4) * 70}
+              className="h-full"
             >
-              <span
-                aria-hidden="true"
-                className="absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-[#d8bc79]/30 to-transparent opacity-70"
-              />
-              <div className="flex items-start justify-between gap-4">
-                <div className="min-w-0">
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl border border-white/12 bg-black/35 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]">
-                    <PixelishIcon
-                      src={study.iconSrc}
-                      alt=""
-                      size={20}
-                      aria-hidden="true"
-                      className="h-[17px] w-[17px] opacity-80"
-                    />
+              <Link
+                href={`/case-studies/${study.slug}`}
+                data-home-proof-card={study.slug}
+                className="group relative flex h-full min-h-40 flex-col overflow-hidden rounded-[1.25rem] border border-white/10 bg-[linear-gradient(135deg,rgba(255,255,255,0.04),rgba(255,255,255,0.014)_45%,rgba(0,0,0,0.18))] p-4 transition-[transform,background-color,border-color,box-shadow] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 hover:border-[#d8bc79]/30 hover:bg-white/[0.04] hover:shadow-[0_24px_80px_-60px_rgba(216,188,121,0.6)] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-white/25 focus-visible:ring-offset-4 focus-visible:ring-offset-black active:translate-y-0 motion-reduce:transition-none"
+              >
+                <span
+                  aria-hidden="true"
+                  className="absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-[#d8bc79]/30 to-transparent opacity-70 transition-opacity duration-500 group-hover:opacity-100 motion-reduce:transition-none"
+                />
+                <div className="flex items-start justify-between gap-4">
+                  <div className="min-w-0">
+                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl border border-white/12 bg-black/35 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] transition-[border-color,box-shadow] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:border-[#d8bc79]/40 group-hover:shadow-[0_0_26px_-14px_rgba(216,188,121,0.9)] motion-reduce:transition-none">
+                      <PixelishIcon
+                        src={study.iconSrc}
+                        alt=""
+                        size={20}
+                        aria-hidden="true"
+                        className="h-[17px] w-[17px] opacity-80"
+                      />
+                    </div>
+                    <h3 className="mt-5 font-sans text-[1.12rem] font-medium leading-[1.05] tracking-[-0.04em] text-[#f5f0e8]">
+                      {study.business}
+                    </h3>
                   </div>
-                  <h3 className="mt-5 font-sans text-[1.12rem] font-medium leading-[1.05] tracking-[-0.04em] text-[#f5f0e8]">
-                    {study.business}
-                  </h3>
+                  <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/12 text-[#8f877b] transition-[border-color,color,transform] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:border-[#d8bc79]/45 group-hover:text-[#f5f0e8] motion-reduce:transition-none">
+                    <ArrowUpRight
+                      className="h-4 w-4 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-y-0.5 group-hover:translate-x-0.5 motion-reduce:transition-none"
+                      aria-hidden="true"
+                    />
+                  </span>
                 </div>
-                <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/12 text-[#8f877b] transition-colors group-hover:border-white/24 group-hover:text-[#f5f0e8]">
-                  <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
-                </span>
-              </div>
 
-              <p className="mt-auto border-t border-white/10 pt-4 font-mono text-[9px] font-semibold uppercase tracking-[0.18em] text-[#8f877b]">
-                {study.signal?.outcome ?? study.category}
-              </p>
-            </Link>
+                <p className="mt-auto border-t border-white/10 pt-4 font-mono text-[9px] font-semibold uppercase tracking-[0.18em] text-[#8f877b] transition-colors duration-500 group-hover:text-[#bdb5a8] motion-reduce:transition-none">
+                  {study.signal?.outcome ?? study.category}
+                </p>
+              </Link>
+            </HomeReveal>
           ))}
         </div>
       </div>

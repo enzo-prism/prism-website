@@ -93,7 +93,7 @@ const lockedRoutes = [
   {
     name: 'home',
     path: '/',
-    readyHeading: /growth, built for your business\./i,
+    readyHeading: /get found\. get trusted\. get chosen\./i,
   },
   { name: 'about', path: '/about', readyHeading: /built by enzo sison\./i },
   {
@@ -142,29 +142,29 @@ for (const route of lockedRoutes) {
   })
 }
 
-test('home promise section snapshot stays stable', async ({ page }) => {
+test('home fit section snapshot stays stable', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' })
   await seedDeterministicRandom(page)
   await disableElevenLabsWidget(page)
   await page.goto('/', { waitUntil: 'domcontentloaded' })
   await page.waitForTimeout(250)
 
-  const systemHeading = page.getByRole('heading', {
+  const fitHeading = page.getByRole('heading', {
     level: 2,
-    name: /found\. trusted\. chosen\./i,
+    name: /built for the people running the business\./i,
   })
-  await expect(systemHeading).toBeVisible({ timeout: 20_000 })
+  await expect(fitHeading).toBeVisible({ timeout: 20_000 })
 
-  const systemSection = systemHeading.locator('xpath=ancestor::section[1]')
-  await expect(systemSection).toBeVisible()
-  await systemSection.scrollIntoViewIfNeeded()
-  await stabilizeDesktopSectionHeight(page, systemSection, 460)
+  const fitSection = fitHeading.locator('xpath=ancestor::section[1]')
+  await expect(fitSection).toBeVisible()
+  await fitSection.scrollIntoViewIfNeeded()
+  await stabilizeDesktopSectionHeight(page, fitSection, 640)
 
   await stabilizePage(page)
   await expectLockedRouteSnapshotSurface(page)
   await page.waitForTimeout(300)
 
-  await expect(systemSection).toHaveScreenshot('home-promise-section.png', {
+  await expect(fitSection).toHaveScreenshot('home-fit-section.png', {
     timeout: 15_000,
   })
 })
@@ -178,7 +178,7 @@ test('home problem section snapshot stays stable', async ({ page }) => {
 
   const problemHeading = page.getByRole('heading', {
     level: 2,
-    name: /growth leaks happen everywhere/i,
+    name: /buyers check everything before they choose/i,
   })
   await expect(problemHeading).toBeVisible({ timeout: 20_000 })
 
@@ -186,8 +186,8 @@ test('home problem section snapshot stays stable', async ({ page }) => {
   await expect(problemSection).toBeVisible()
   await problemSection.scrollIntoViewIfNeeded()
   await stabilizeSectionHeight(page, problemSection, {
-    mobile: 751,
-    desktop: 431,
+    mobile: 1141,
+    desktop: 683,
   })
 
   await stabilizePage(page)
@@ -209,7 +209,7 @@ test('home services section snapshot stays stable', async ({ page }) => {
 
   const servicesHeading = page.getByRole('heading', {
     level: 2,
-    name: /one growth system\. seven parts\./i,
+    name: /one team\. the whole system\./i,
   })
   await expect(servicesHeading).toBeVisible({ timeout: 20_000 })
 
@@ -217,8 +217,8 @@ test('home services section snapshot stays stable', async ({ page }) => {
   await expect(servicesSection).toBeVisible()
   await servicesSection.scrollIntoViewIfNeeded()
   await stabilizeSectionHeight(page, servicesSection, {
-    mobile: 913,
-    desktop: 580,
+    mobile: 1717,
+    desktop: 1016,
   })
 
   await stabilizePage(page)
@@ -247,8 +247,8 @@ test('home proof section snapshot stays stable', async ({ page }) => {
   await expect(proofSection).toBeVisible()
   await proofSection.scrollIntoViewIfNeeded()
   await stabilizeSectionHeight(page, proofSection, {
-    mobile: 1753,
-    desktop: 691,
+    mobile: 1909,
+    desktop: 873,
   })
 
   await stabilizePage(page)
@@ -260,7 +260,7 @@ test('home proof section snapshot stays stable', async ({ page }) => {
   })
 })
 
-test('home promise and service cards stay contained across responsive breakpoints', async ({
+test('home fit and service cards stay contained across responsive breakpoints', async ({
   page,
 }, testInfo) => {
   test.skip(
@@ -283,12 +283,12 @@ test('home promise and service cards stay contained across responsive breakpoint
 
     const sections = [
       {
-        heading: /found\. trusted\. chosen\./i,
-        cardSelector: '[data-home-promise-card]',
+        heading: /built for the people running the business\./i,
+        cardSelector: '[data-home-fit-card]',
         expectedCount: 3,
       },
       {
-        heading: /one growth system\. seven parts\./i,
+        heading: /one team\. the whole system\./i,
         cardSelector: '[data-home-service-card]',
         expectedCount: 7,
       },
@@ -378,19 +378,19 @@ test('home hero layout stays readable across responsive breakpoints', async ({
     await expect(
       page.getByRole('heading', {
         level: 1,
-        name: /growth, built for your business\./i,
+        name: /get found\. get trusted\. get chosen\./i,
       }),
     ).toBeVisible({ timeout: 20_000 })
 
     const hero = page.locator('#homepage-hero')
     await expect(hero).toBeVisible({ timeout: 20_000 })
     await expect(
-      hero.getByRole('link', { name: /free growth audit/i }),
+      hero.getByRole('link', { name: /get my free growth audit/i }),
     ).toBeVisible({
       timeout: 20_000,
     })
     await expect(
-      hero.getByRole('link', { name: /see the system/i }),
+      hero.getByRole('link', { name: /see how it works/i }),
     ).toBeVisible({ timeout: 20_000 })
 
     const result = await page.evaluate(() => {

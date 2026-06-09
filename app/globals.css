@@ -3053,3 +3053,137 @@ select {
 .btn-icon-responsive {
   @apply h-4 w-4 sm:h-5 sm:w-5;
 }
+
+/* ------------------------------------------------------------------ */
+/* Homepage motion system (Prism Black)                                */
+/* Progressive reveals, hero entrance, and quiet signal motion for the */
+/* growth-first homepage. Every pattern degrades to a static state     */
+/* under prefers-reduced-motion.                                       */
+/* ------------------------------------------------------------------ */
+
+.home-reveal[data-home-reveal='hidden'] {
+  opacity: 0;
+  transform: translateY(26px);
+}
+
+.home-reveal[data-home-reveal='revealed'] {
+  opacity: 1;
+  transform: translateY(0);
+  transition:
+    opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: var(--home-reveal-delay, 0ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-reveal[data-home-reveal='hidden'],
+  .home-reveal[data-home-reveal='revealed'] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* Staggered rise-in for hero copy on first paint. */
+@keyframes home-hero-rise {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.home-hero-rise {
+  animation: home-hero-rise 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: var(--hero-rise-delay, 0ms);
+}
+
+/* Quiet pulse for system-strip status dots. */
+@keyframes home-signal-pulse {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(0.85);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.home-signal-dot {
+  animation: home-signal-pulse 2.6s ease-in-out infinite;
+  animation-delay: var(--signal-delay, 0ms);
+}
+
+/* Slow scanning highlight that travels along a hairline. */
+@keyframes home-scan-line {
+  0% {
+    transform: translateX(-120%);
+    opacity: 0;
+  }
+
+  12% {
+    opacity: 1;
+  }
+
+  88% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateX(320%);
+    opacity: 0;
+  }
+}
+
+.home-scan-line {
+  animation: home-scan-line 5.5s ease-in-out infinite;
+}
+
+/* Vertical signal pulse used by the buyer-journey rail. */
+@keyframes home-rail-flow {
+  0% {
+    transform: translateY(-130%);
+    opacity: 0;
+  }
+
+  14% {
+    opacity: 1;
+  }
+
+  86% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(480%);
+    opacity: 0;
+  }
+}
+
+.home-rail-flow {
+  animation: home-rail-flow 4.8s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-hero-rise {
+    animation: none;
+  }
+
+  .home-signal-dot,
+  .home-scan-line,
+  .home-rail-flow {
+    animation: none;
+  }
+
+  .home-scan-line,
+  .home-rail-flow {
+    opacity: 0;
+  }
+}
