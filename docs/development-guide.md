@@ -189,10 +189,11 @@ Custom confirmation routes live in `app/thank-you/` and `app/analysis-thank-you/
 - Prefer `components/HeroBackgroundLoop.tsx` (for static hero posters + loop background) or `components/HeroLoopingVideo.tsx` (general looping hero card component). Both components now consume policy state and keep `<video>` unmounted unless autoplay is explicitly allowed.
 - The current policy intentionally allows muted inline autoplay on mobile when motion preferences and network conditions are healthy. We only fall back to posters for reduced motion, constrained connections (`saveData`, `2g`, `slow-2g`), explicit `forcePoster`, or real autoplay failure.
 - Both loop wrappers now retry playback when the page becomes visible again and pause when the hero scrolls out of view, which keeps Safari/WebKit and mobile battery behavior saner without losing the motion on phones.
+- Both wrappers attach the inline-presentation guard (`lib/hero-inline-playback.ts`) as soon as the `<video>` mounts. The guard watches `webkitbeginfullscreen` / `webkitpresentationmodechanged` / `enterpictureinpicture` / `fullscreenchange`; if a video ever escapes inline presentation (e.g. in-app WKWebViews that ignore `playsinline` and hoist playing videos into the native fullscreen player), it pauses, forces the video back inline, and the wrapper unmounts the `<video>` in favor of the poster. Decorative loops must never show native player UI or go fullscreen.
 - Keep a poster-first UX for reduced-motion, constrained-network, or media load failure states.
 - If a page needs a forced fallback, pass `playbackPolicy="forcePoster"` and let the shared policy pick poster-only behavior.
 - Add regression guardrails with:
-  - `pnpm exec jest __tests__/hero-loop-gating.test.tsx __tests__/hero-media-policy.test.ts __tests__/hero-autoplay-safety.test.ts`
+  - `pnpm exec jest __tests__/hero-loop-gating.test.tsx __tests__/hero-media-policy.test.ts __tests__/hero-autoplay-safety.test.ts __tests__/hero-loop-inline-guard.test.tsx`
   - `pnpm test:visual:animations`
 - If you introduce any new decorative autoplay video, update this section and run the above tests before merge.
 

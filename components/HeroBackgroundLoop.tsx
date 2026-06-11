@@ -4,6 +4,11 @@ import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 
 import { useHeroPlaybackIntent } from '@/hooks/use-hero-playback-intent'
+import {
+  forceHeroVideoInline,
+  isHeroVideoPresentationInline,
+  watchHeroVideoInlinePlayback,
+} from '@/lib/hero-inline-playback'
 import type {
   HeroPlaybackIntent,
   HeroPlaybackPolicyOverride,
@@ -79,6 +84,12 @@ export default function HeroBackgroundLoop({
     let isIntersecting = true
     let observer: IntersectionObserver | null = null
 
+    const detachInlineGuard = watchHeroVideoInlinePlayback(video, () => {
+      if (!cancelled) {
+        handleVideoError()
+      }
+    })
+
     const attemptPlay = async () => {
       if (cancelled || document.hidden || !isIntersecting) {
         return
@@ -90,6 +101,14 @@ export default function HeroBackgroundLoop({
         const playResult = video.play()
         if (playResult && typeof playResult.catch === 'function') {
           await playResult
+        }
+
+        // Embedded browsers that ignore `playsinline` hoist playback into the
+        // native fullscreen player; bail out to the poster instead.
+        if (!cancelled && !isHeroVideoPresentationInline(video)) {
+          video.pause()
+          forceHeroVideoInline(video)
+          handleVideoError()
         }
       } catch {
         if (!cancelled) {
@@ -137,6 +156,7 @@ export default function HeroBackgroundLoop({
       cancelled = true
       observer?.disconnect()
       document.removeEventListener('visibilitychange', handleVisibilityChange)
+      detachInlineGuard()
       video.pause()
     }
   }, [shouldRenderVideo, videoSrc])
@@ -171,6 +191,7 @@ export default function HeroBackgroundLoop({
           webkit-playsinline="true"
           x-webkit-airplay="deny"
           controls={false}
+          controlsList="nodownload nofullscreen noplaybackrate noremoteplayback"
           disablePictureInPicture
           disableRemotePlayback
           tabIndex={-1}

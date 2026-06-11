@@ -10,6 +10,9 @@ const ROOT_DIR = path.resolve(__dirname, '..')
 const SEARCH_DIRS = ['app', 'components']
 const AUTOPLAY_REGEX = /\bautoPlay\b/
 
+// The hero loop wrappers pair autoPlay with the inline-presentation guard in
+// lib/hero-inline-playback.ts, which forces playback back inline and falls
+// back to the poster if any browser hoists the video into the native player.
 const APPROVED_FILES = new Set([
   'components/HeroBackgroundLoop.tsx',
   'components/HeroLoopingVideo.tsx',
