@@ -1,6 +1,7 @@
 import { cn } from '@/lib/utils'
 import { DEFAULT_BLOG_FEATURED_IMAGE } from '@/lib/blog-images'
 import { ArrowRight } from 'lucide-react'
+import Image from 'next/image'
 import Link from 'next/link'
 
 interface SimpleBlogPostCardProps {
@@ -52,12 +53,13 @@ export default function SimpleBlogPostCard({
             gradientClass,
           )}
         >
-          <img
+          <Image
             src={featuredImage}
             alt={`${title} featured image`}
+            fill
             loading="lazy"
-            decoding="async"
-            className="h-full w-full object-cover"
+            sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+            className="object-cover"
           />
         </div>
       </Link>

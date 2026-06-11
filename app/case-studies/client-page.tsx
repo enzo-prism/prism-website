@@ -57,9 +57,9 @@ const caseStudyListItems = orderedCaseStudies.map((study) => ({
 }))
 
 const CASE_STUDIES_HERO_VIDEO =
-  'https://res.cloudinary.com/dhqpqfw6w/video/upload/v1771353172/ocean-ascii-hq_lbqose.mp4'
+  'https://res.cloudinary.com/dhqpqfw6w/video/upload/w_1280,q_auto,vc_auto/v1771353172/ocean-ascii-hq_lbqose.mp4'
 const CASE_STUDIES_HERO_POSTER =
-  'https://res.cloudinary.com/dhqpqfw6w/image/upload/v1771353245/Screenshot_2026-02-17_at_10.33.32_AM_lsxdpz.webp'
+  'https://res.cloudinary.com/dhqpqfw6w/image/upload/f_auto,q_auto,w_1600/v1771353245/Screenshot_2026-02-17_at_10.33.32_AM_lsxdpz.webp'
 
 export default function CaseStudiesPage() {
   return (

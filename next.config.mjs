@@ -59,6 +59,33 @@ images: {
   contentSecurityPolicy:
     "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com; connect-src 'self' https://www.google-analytics.com; img-src 'self' data: https://www.google-analytics.com https://res.cloudinary.com https://wholesale.azdentall.com https://dentiphoto.com https://dentalaccessories.org; media-src 'self' https://res.cloudinary.com https://wholesale.azdentall.com https://dentiphoto.com https://dentalaccessories.org; frame-src 'self' https://www.googletagmanager.com;",
 },
+  async headers() {
+    // Decorative media under /public is effectively content-versioned: changed
+    // assets must ship under a new filename (e.g. planet-lite-2026.mp4) so the
+    // long-lived cache below can never serve stale content.
+    return [
+      {
+        source: '/animations/:path*',
+        headers: [
+          { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
+        ],
+      },
+      {
+        // frames.json keeps a fixed name across regenerations (pnpm ascii:bundle),
+        // so it must revalidate instead of inheriting the immutable rule above.
+        source: '/animations/:path*/frames.json',
+        headers: [
+          { key: 'Cache-Control', value: 'public, max-age=0, must-revalidate' },
+        ],
+      },
+      {
+        source: '/ascii/:path*',
+        headers: [
+          { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
+        ],
+      },
+    ]
+  },
   async redirects() {
     return [
       // Specific legacy mappings

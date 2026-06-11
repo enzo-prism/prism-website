@@ -213,6 +213,12 @@ export interface ASCIIAnimationProps {
   continueOnFrameError?: boolean
   forceAutoplay?: boolean
   respectReducedMotion?: boolean
+  /**
+   * Fetch a pre-built frames.json (see scripts/build-ascii-frame-bundles.mjs)
+   * in one request instead of hundreds of per-frame files. Falls back to
+   * per-frame fetching when the bundle is missing or malformed.
+   */
+  bundledFrames?: boolean
 }
 
 type LoadedFramesStore = Array<string[] | null>
@@ -239,6 +245,7 @@ export default function ASCIIAnimation({
   continueOnFrameError = true,
   forceAutoplay = false,
   respectReducedMotion = true,
+  bundledFrames = false,
 }: ASCIIAnimationProps) {
   const [frames, setFrames] = useState<string[]>([])
   const [isLoading, setIsLoading] = useState(true)
@@ -337,6 +344,28 @@ export default function ASCIIAnimation({
     [],
   )
 
+  const loadBundledFrames = useCallback(async (baseUrl: string): Promise<boolean> => {
+    try {
+      const response = await fetch(`${baseUrl}/frames.json`)
+      if (!response.ok) return false
+
+      const payload: unknown = await response.json()
+      if (
+        !Array.isArray(payload) ||
+        payload.length === 0 ||
+        !payload.every((frame) => typeof frame === "string")
+      ) {
+        return false
+      }
+
+      loadedFrameLines.current = payload.map((frame) => splitFrameLines(frame))
+      rebuildRenderableFrames()
+      return true
+    } catch {
+      return false
+    }
+  }, [rebuildRenderableFrames])
+
   // Load remaining frames (phase 2)
   const loadRemainingFrames = useCallback(async () => {
     if (fullLoadTriggered.current) return
@@ -344,6 +373,11 @@ export default function ASCIIAnimation({
 
     const source = resolvedSource.current
     if (!source) {
+      setIsLoading(false)
+      return
+    }
+
+    if (bundledFrames && (await loadBundledFrames(source.baseUrl))) {
       setIsLoading(false)
       return
     }
@@ -439,9 +473,11 @@ export default function ASCIIAnimation({
       setIsLoading(false)
     }
   }, [
+    bundledFrames,
     continueOnFrameError,
     frameFiles,
     fetchFrameLines,
+    loadBundledFrames,
     loadStrategy,
     maxConcurrentFetches,
     rebuildRenderableFrames,

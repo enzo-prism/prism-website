@@ -20,6 +20,7 @@ type AsciiHeroBackdropProps = {
   maxConcurrentFetches?: number
   continueOnFrameError?: boolean
   forceAutoplay?: boolean
+  bundledFrames?: boolean
 }
 
 export default function AsciiHeroBackdrop({
@@ -40,6 +41,7 @@ export default function AsciiHeroBackdrop({
   maxConcurrentFetches = 6,
   continueOnFrameError = true,
   forceAutoplay = false,
+  bundledFrames = true,
 }: AsciiHeroBackdropProps) {
   return (
     <>
@@ -60,6 +62,7 @@ export default function AsciiHeroBackdrop({
         maxConcurrentFetches={maxConcurrentFetches}
         continueOnFrameError={continueOnFrameError}
         forceAutoplay={forceAutoplay}
+        bundledFrames={bundledFrames}
       />
       <div aria-hidden="true" className={scrimClassName} />
       <div aria-hidden="true" className={focusScrimClassName} />

@@ -10,7 +10,17 @@ describe("case study explainer configuration", () => {
         "https://res.cloudinary.com/demo/video/upload/v123/sample-video.mp4",
       ),
     ).toBe(
-      "https://res.cloudinary.com/demo/video/upload/so_0/v123/sample-video.jpg",
+      "https://res.cloudinary.com/demo/video/upload/so_0,q_auto/v123/sample-video.jpg",
+    )
+  })
+
+  it("strips video delivery transforms before deriving the poster", () => {
+    expect(
+      buildCloudinaryVideoPoster(
+        "https://res.cloudinary.com/demo/video/upload/q_auto,vc_auto/v123/sample-video.mp4",
+      ),
+    ).toBe(
+      "https://res.cloudinary.com/demo/video/upload/so_0,q_auto/v123/sample-video.jpg",
     )
   })
 

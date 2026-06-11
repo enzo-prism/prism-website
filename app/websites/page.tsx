@@ -297,8 +297,8 @@ export default async function WebsitesPage() {
               <p className="text-center text-[10px] font-semibold uppercase tracking-[0.32em] text-muted-foreground font-pixel">hear from our founder</p>
               <VideoPlayer
                 className="mt-4"
-                src="https://res.cloudinary.com/dhqpqfw6w/video/upload/v1763160814/prism_websites_vsl_2_ojqiku.mp4"
-                poster="https://res.cloudinary.com/dhqpqfw6w/video/upload/so_0/prism_websites_vsl_2_ojqiku.jpg"
+                src="https://res.cloudinary.com/dhqpqfw6w/video/upload/q_auto,vc_auto/v1763160814/prism_websites_vsl_2_ojqiku.mp4"
+                poster="https://res.cloudinary.com/dhqpqfw6w/video/upload/so_0,q_auto/prism_websites_vsl_2_ojqiku.jpg"
                 title="Founder Enzo Sison explains Prism Websites"
                 caption="Enzo explains how slow load times, unclear messaging, and disorganized SEO choke growth—and how Prism’s fast, conversion-ready websites boost visibility, drive more inquiries, and keep customers coming back."
                 schema={{
@@ -306,10 +306,10 @@ export default async function WebsitesPage() {
                   name: "Founder Enzo Sison explains Prism Websites",
                   description:
                     "Enzo Sison explains why most small-business websites leave money on the table and how Prism’s fast, conversion-focused builds improve discovery, conversion, and retention.",
-                  thumbnailUrl: "https://res.cloudinary.com/dhqpqfw6w/video/upload/so_0/prism_websites_vsl_2_ojqiku.jpg",
+                  thumbnailUrl: "https://res.cloudinary.com/dhqpqfw6w/video/upload/so_0,q_auto/prism_websites_vsl_2_ojqiku.jpg",
                   uploadDate: "2025-01-24T00:00:00Z",
                   duration: "PT60S",
-                  contentUrl: "https://res.cloudinary.com/dhqpqfw6w/video/upload/v1763160814/prism_websites_vsl_2_ojqiku.mp4",
+                  contentUrl: "https://res.cloudinary.com/dhqpqfw6w/video/upload/q_auto,vc_auto/v1763160814/prism_websites_vsl_2_ojqiku.mp4",
                   embedUrl: "https://www.design-prism.com/websites#founder-vsl",
                   width: 1920,
                   height: 1080,

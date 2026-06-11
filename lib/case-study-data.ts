@@ -34,8 +34,11 @@ export function buildCloudinaryVideoPoster(videoUrl: string) {
     return videoUrl
   }
 
+  // Drop any delivery transformations (e.g. q_auto,vc_auto) before the
+  // version segment — they target video codecs and don't apply to the
+  // derived poster frame.
   return videoUrl
-    .replace('/video/upload/', '/video/upload/so_0/')
+    .replace(/\/video\/upload\/(?:[^/]+\/)*?(v\d+\/)/, '/video/upload/so_0,q_auto/$1')
     .replace(/\.mp4($|\?)/, '.jpg$1')
 }
 
@@ -169,7 +172,7 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
       },
     },
     explainerVideo: {
-      src: 'https://res.cloudinary.com/dhqpqfw6w/video/upload/v1774726440/exquisite-case-study-notebook-lm_l5ruuq.mp4',
+      src: 'https://res.cloudinary.com/dhqpqfw6w/video/upload/q_auto,vc_auto/v1774726440/exquisite-case-study-notebook-lm_l5ruuq.mp4',
       title: 'See the rebuild that turned legacy prestige into a modern growth engine',
       summary:
         'A quick breakdown of how Prism rebuilt the site, cleaned up the funnel, and protected discovery while bringing the digital experience up to the level of the practice.',
@@ -433,7 +436,7 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
       },
     },
     explainerVideo: {
-      src: 'https://res.cloudinary.com/dhqpqfw6w/video/upload/v1774726565/sr4-case-study-notebook-lm_ayuxeg.mp4',
+      src: 'https://res.cloudinary.com/dhqpqfw6w/video/upload/q_auto,vc_auto/v1774726565/sr4-case-study-notebook-lm_ayuxeg.mp4',
       title: 'Watch how Prism translated SR4’s methodology into a sharper digital presence',
       summary:
         'This explainer walks through the brand refresh, the narrative structure of the new site, and the search foundation Prism built so the right organizations can find SR4.',
@@ -470,7 +473,7 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
       },
     },
     explainerVideo: {
-      src: 'https://res.cloudinary.com/dhqpqfw6w/video/upload/v1774726921/infobell-case-study-notebook-lm_rzpjwc.mp4',
+      src: 'https://res.cloudinary.com/dhqpqfw6w/video/upload/q_auto,vc_auto/v1774726921/infobell-case-study-notebook-lm_rzpjwc.mp4',
       title: 'Understand the trust architecture Prism built for Infobell IT',
       summary:
         'A concise walkthrough of how Prism made a technical service business feel more credible, easier to understand, and more discoverable for high-intent MSP buyers.',
@@ -635,7 +638,7 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
       },
     },
     explainerVideo: {
-      src: 'https://res.cloudinary.com/dhqpqfw6w/video/upload/v1774726719/pti-case-study-notebook-lm_j9ggam.mp4',
+      src: 'https://res.cloudinary.com/dhqpqfw6w/video/upload/q_auto,vc_auto/v1774726719/pti-case-study-notebook-lm_j9ggam.mp4',
       title: 'Watch how Prism turned PTI’s reputation into visible authority online',
       summary:
         'This walkthrough shows how Prism built the site, search presence, and trust infrastructure for a firm guiding dentists through one of the biggest decisions of their careers.',

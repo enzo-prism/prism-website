@@ -70,8 +70,8 @@ export default async function SeoPage() {
             <p className="text-center text-xs font-semibold uppercase tracking-[0.28em] text-neutral-400 md:text-left">hear from our founder</p>
             <VideoPlayer
               className="mt-4"
-              src="https://res.cloudinary.com/dhqpqfw6w/video/upload/v1763150128/seo_vsl_prism_website_oqk1xm.mp4"
-              poster="https://res.cloudinary.com/dhqpqfw6w/video/upload/so_0/seo_vsl_prism_website_oqk1xm.jpg"
+              src="https://res.cloudinary.com/dhqpqfw6w/video/upload/q_auto,vc_auto/v1763150128/seo_vsl_prism_website_oqk1xm.mp4"
+              poster="https://res.cloudinary.com/dhqpqfw6w/video/upload/so_0,q_auto/seo_vsl_prism_website_oqk1xm.jpg"
               title="Founder Enzo Sison on intentional seo that compounds"
               caption="Enzo explains why SEO isn’t about tricks—it’s about becoming the obvious answer when buyers are ready. He covers how Prism builds the foundation (on-page clarity, technical structure, schema, AI-search readiness, and location intent), ties it to the metrics that matter (awareness, conversion, lifetime value), and shares why pairing SEO with dialed-in websites and listings plus month-to-month ownership gives you compounding traffic without hiring a full team."
               schema={{
@@ -79,10 +79,10 @@ export default async function SeoPage() {
                 name: "Founder Enzo Sison on SEO that compounds",
                 description:
                   "Enzo Sison explains why SEO is about being the obvious answer when buyers search, how Prism builds the technical and content foundation, and how that work compounds across awareness, conversion, and lifetime value.",
-                thumbnailUrl: "https://res.cloudinary.com/dhqpqfw6w/video/upload/so_0/seo_vsl_prism_website_oqk1xm.jpg",
+                thumbnailUrl: "https://res.cloudinary.com/dhqpqfw6w/video/upload/so_0,q_auto/seo_vsl_prism_website_oqk1xm.jpg",
                 uploadDate: "2025-01-24T00:00:00Z",
                 duration: "PT60S",
-                contentUrl: "https://res.cloudinary.com/dhqpqfw6w/video/upload/v1763150128/seo_vsl_prism_website_oqk1xm.mp4",
+                contentUrl: "https://res.cloudinary.com/dhqpqfw6w/video/upload/q_auto,vc_auto/v1763150128/seo_vsl_prism_website_oqk1xm.mp4",
                 embedUrl: "https://www.design-prism.com/seo#founder-vsl",
                 width: 1920,
                 height: 1080,

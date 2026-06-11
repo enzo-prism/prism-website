@@ -672,14 +672,14 @@ function HeroSection() {
         className="absolute inset-0"
         style={{
           backgroundImage:
-            "url('https://res.cloudinary.com/dhqpqfw6w/image/upload/v1761853323/thumbnail_yscklx.webp')",
+            "url('https://res.cloudinary.com/dhqpqfw6w/image/upload/f_auto,q_auto,w_1600/v1761853323/thumbnail_yscklx.webp')",
           backgroundSize: 'cover',
           backgroundPosition: 'center',
         }}
       >
         <HeroBackgroundLoop
-          videoSrc="https://res.cloudinary.com/dhqpqfw6w/video/upload/v1761852734/models_2_x9gxtj.mp4"
-          posterSrc="https://res.cloudinary.com/dhqpqfw6w/image/upload/v1761853323/thumbnail_yscklx.webp"
+          videoSrc="https://res.cloudinary.com/dhqpqfw6w/video/upload/q_auto,vc_auto/v1761852734/models_2_x9gxtj.mp4"
+          posterSrc="https://res.cloudinary.com/dhqpqfw6w/image/upload/f_auto,q_auto,w_1600/v1761853323/thumbnail_yscklx.webp"
           posterAlt="Models program hero"
           videoClassName="pointer-events-none hidden h-full w-full object-cover sm:block"
           posterClassName="absolute inset-0 h-full w-full object-cover"

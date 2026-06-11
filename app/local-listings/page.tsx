@@ -320,8 +320,8 @@ export default async function LocalListingsPage() {
             </p>
             <VideoPlayer
               className="mt-4"
-              src="https://res.cloudinary.com/dhqpqfw6w/video/upload/v1763162481/local_listings_di9gy7.mp4"
-              poster="https://res.cloudinary.com/dhqpqfw6w/video/upload/so_0/local_listings_di9gy7.jpg"
+              src="https://res.cloudinary.com/dhqpqfw6w/video/upload/q_auto,vc_auto/v1763162481/local_listings_di9gy7.mp4"
+              poster="https://res.cloudinary.com/dhqpqfw6w/video/upload/so_0,q_auto/local_listings_di9gy7.jpg"
               title="Founder Enzo Sison on owning your local listings"
               caption="Enzo explains why your Google Business Profile is the real first impression, how Prism refreshes every listing (Google, Apple, Yelp, Bing, and more), and how better listings boost visibility, calls, and loyal regulars."
               schema={{
@@ -330,11 +330,11 @@ export default async function LocalListingsPage() {
                 description:
                   'Enzo Sison covers why outdated listings kill trust and how Prism rebuilds Google, Apple, Yelp, and Bing profiles—photos, services, descriptions, posts, and reviews—to lift visibility, conversions, and repeat business.',
                 thumbnailUrl:
-                  'https://res.cloudinary.com/dhqpqfw6w/video/upload/so_0/local_listings_di9gy7.jpg',
+                  'https://res.cloudinary.com/dhqpqfw6w/video/upload/so_0,q_auto/local_listings_di9gy7.jpg',
                 uploadDate: '2025-01-24T00:00:00Z',
                 duration: 'PT60S',
                 contentUrl:
-                  'https://res.cloudinary.com/dhqpqfw6w/video/upload/v1763162481/local_listings_di9gy7.mp4',
+                  'https://res.cloudinary.com/dhqpqfw6w/video/upload/q_auto,vc_auto/v1763162481/local_listings_di9gy7.mp4',
                 embedUrl:
                   'https://www.design-prism.com/local-listings#founder-vsl',
                 width: 1920,

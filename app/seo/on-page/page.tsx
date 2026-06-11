@@ -18,8 +18,8 @@ export const metadata: Metadata = buildRouteMetadata({
 export default function SeoOnPagePage() {
   const { hero, intro, pillars, closing, closingBullets } = seoOnPageContent
   const videoSectionId = "on-page-seo-video"
-  const videoSrc = "https://res.cloudinary.com/dhqpqfw6w/video/upload/v1763420060/on-page_seo_zvif3p.mp4"
-  const videoPoster = "https://res.cloudinary.com/dhqpqfw6w/video/upload/v1763420060/on-page_seo_zvif3p.jpg"
+  const videoSrc = "https://res.cloudinary.com/dhqpqfw6w/video/upload/q_auto,vc_auto/v1763420060/on-page_seo_zvif3p.mp4"
+  const videoPoster = "https://res.cloudinary.com/dhqpqfw6w/video/upload/q_auto,vc_auto/v1763420060/on-page_seo_zvif3p.jpg"
   const videoDescription =
     "Enzo breaks down why Prism's on-page work starts with intent-mapped content, technical clarity, and schema so the site becomes the best possible answer."
 

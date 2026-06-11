@@ -211,6 +211,9 @@ Custom confirmation routes live in `app/thank-you/` and `app/analysis-thank-you/
 - Keep the placeholder/preview frame visible while additional chunks stream in so mobile motion starts quickly even when the full set is large.
 - Never fail the entire animation because of a single frame request; keep partial sequence playback when at least 2 frames are available.
 - If zero frames load, render the deterministic fallback `"No frames loaded"`.
+- `AsciiHeroBackdrop` defaults to `bundledFrames`, which fetches a single pre-built `frames.json` per animation folder instead of hundreds of per-frame files (the homepage wave hero used to issue 301 requests). Regenerate bundles with `pnpm ascii:bundle` after adding or editing frames; the loader falls back to per-frame fetching when a bundle is missing.
+- `/animations/*` and `/ascii/*` are served with `Cache-Control: immutable` (see `next.config.mjs`). Changed assets must ship under a new filename — never overwrite an existing file in those folders.
+- Cloudinary media must carry delivery transforms in the URL: `q_auto,vc_auto` (plus a `w_…` cap for oversized sources) on videos, `f_auto,q_auto,w_…` on images that bypass `next/image` (raw posters, CSS backgrounds, `<video poster>`). `buildCloudinaryVideoPoster` strips video transforms when deriving poster frames.
 
 ## Pricing Page Content
 

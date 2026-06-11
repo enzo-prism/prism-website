@@ -17,6 +17,7 @@ function makeMockResponse(
     ok: options.ok ?? true,
     status,
     text: async () => body,
+    json: async () => JSON.parse(body),
   } as Response
 }
 
@@ -130,6 +131,74 @@ describe("ASCIIAnimation resilient frame loading", () => {
 
     await waitFor(() => expect(screen.getByText(/\/4$/)).toBeInTheDocument())
     expect(screen.queryByText("No frames loaded")).not.toBeInTheDocument()
+  })
+
+  it("loads every frame from frames.json in a single request when bundling is enabled", async () => {
+    const bundle = JSON.stringify([
+      "FRAME_00001",
+      "FRAME_00002",
+      "FRAME_00003",
+      "FRAME_00004",
+      "FRAME_00005",
+    ])
+    const responses: Array<() => Promise<Response>> = [
+      () => Promise.resolve(makeMockResponse("FRAME_00001")),
+      () => Promise.resolve(makeMockResponse("FRAME_00001")),
+      () => Promise.resolve(makeMockResponse(bundle)),
+    ]
+
+    jest.spyOn(global, "fetch").mockImplementation(() => {
+      const next = responses.shift()
+      if (!next) {
+        throw new Error("Unexpected fetch call")
+      }
+      return next()
+    })
+
+    render(
+      <ASCIIAnimation
+        frameFolder="hero"
+        frameCount={5}
+        lazy={false}
+        bundledFrames
+        showFrameCounter
+      />,
+    )
+
+    await waitFor(() => expect(screen.getByText(/\/5$/)).toBeInTheDocument())
+    expect(responses).toHaveLength(0)
+  })
+
+  it("falls back to per-frame fetching when the bundle is missing", async () => {
+    const responses: Array<() => Promise<Response>> = [
+      () => Promise.resolve(makeMockResponse("FRAME_00001")),
+      () => Promise.resolve(makeMockResponse("FRAME_00001")),
+      () => Promise.resolve(makeMockResponse("missing", { ok: false, status: 404 })),
+      () => Promise.resolve(makeMockResponse("FRAME_00002")),
+      () => Promise.resolve(makeMockResponse("FRAME_00003")),
+      () => Promise.resolve(makeMockResponse("FRAME_00004")),
+      () => Promise.resolve(makeMockResponse("FRAME_00005")),
+    ]
+
+    jest.spyOn(global, "fetch").mockImplementation(() => {
+      const next = responses.shift()
+      if (!next) {
+        throw new Error("Unexpected fetch call")
+      }
+      return next()
+    })
+
+    render(
+      <ASCIIAnimation
+        frameFolder="hero"
+        frameCount={5}
+        lazy={false}
+        bundledFrames
+        showFrameCounter
+      />,
+    )
+
+    await waitFor(() => expect(screen.getByText(/\/5$/)).toBeInTheDocument())
   })
 
   it("falls back to deterministic placeholder if no frame can be loaded", async () => {

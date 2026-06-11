@@ -433,7 +433,7 @@ export default function DentalWebsitePage() {
           <div className="container mx-auto max-w-5xl grid gap-10 md:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] md:items-center">
             <div className="overflow-hidden rounded-3xl border border-neutral-200 bg-neutral-50 shadow-md">
               <HeroLoopingVideo
-                videoSrc="https://res.cloudinary.com/dhqpqfw6w/video/upload/v1762028676/scheduling-dental-website_nehxuw.mp4"
+                videoSrc="https://res.cloudinary.com/dhqpqfw6w/video/upload/q_auto,vc_auto/v1762028676/scheduling-dental-website_nehxuw.mp4"
                 posterSrc="https://res.cloudinary.com/dhqpqfw6w/image/upload/v1762028718/scheduling-dental-website_dnebtj.webp"
                 alt="Preview of a dental practice website scheduling flow"
                 className="border-none shadow-none"
@@ -480,7 +480,7 @@ export default function DentalWebsitePage() {
           <div className="container mx-auto max-w-5xl space-y-10">
             <div className="overflow-hidden rounded-3xl border border-neutral-200 bg-neutral-50 shadow-md">
               <HeroLoopingVideo
-                videoSrc="https://res.cloudinary.com/dhqpqfw6w/video/upload/v1762028436/dental-website_axxdfz.mp4"
+                videoSrc="https://res.cloudinary.com/dhqpqfw6w/video/upload/q_auto,vc_auto/v1762028436/dental-website_axxdfz.mp4"
                 posterSrc="https://res.cloudinary.com/dhqpqfw6w/image/upload/v1762028473/dental-website-thumbnail_bpbzex.webp"
                 alt="Preview of a modern dental practice website design"
                 className="border-none shadow-none"

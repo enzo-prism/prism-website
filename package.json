@@ -29,6 +29,7 @@
     "mcp:health": "node scripts/mcp-health-check.js",
     "mcp:test-github": "node scripts/test-github-mcp.js",
     "mcp:validate": "pnpm mcp:health && echo '✅ MCP servers are ready for Claude Code'",
+    "ascii:bundle": "node scripts/build-ascii-frame-bundles.mjs",
     "diagnose:images": "npx ts-node scripts/image-system-diagnostic.ts",
     "verify:deploy": "npx ts-node scripts/verify-deployment.ts",
     "git:status": "node scripts/git-sync-monitor.js check",

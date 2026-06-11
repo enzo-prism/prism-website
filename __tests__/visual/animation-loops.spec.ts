@@ -64,24 +64,20 @@ async function waitForVideoLoop(
   expect(initialState.width).toBeGreaterThan(0)
   expect(initialState.height).toBeGreaterThan(0)
 
+  // Poll on actual playback progress: `paused` flips false synchronously at
+  // play(), long before the first frame of a remote stream decodes, so it is
+  // not a reliable readiness signal on its own.
   await expect
     .poll(
       async () =>
-        await video.evaluate((node: HTMLVideoElement) => {
-          const element = node as HTMLVideoElement
-          return {
-            currentTime: element.currentTime,
-            paused: element.paused,
-          }
-        }),
+        await video.evaluate(
+          (node: HTMLVideoElement) => node.currentTime,
+        ),
       {
-        timeout: 4000,
+        timeout: 8000,
       },
     )
-    .toMatchObject({
-      paused: false,
-      currentTime: expect.any(Number),
-    })
+    .toBeGreaterThan(initialState.currentTime)
 
   const nextState = await video.evaluate((node: HTMLVideoElement) => {
     const element = node as HTMLVideoElement
@@ -92,7 +88,6 @@ async function waitForVideoLoop(
   })
 
   expect(nextState.paused).toBe(false)
-  expect(nextState.currentTime).toBeGreaterThan(initialState.currentTime)
 }
 
 test.describe('Hero animation loops', () => {

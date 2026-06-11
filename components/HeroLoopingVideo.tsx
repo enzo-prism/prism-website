@@ -16,9 +16,9 @@ import type {
 } from '@/lib/hero-media-policy'
 
 const DEFAULT_VIDEO_SRC =
-  'https://res.cloudinary.com/dhqpqfw6w/video/upload/v1761612491/surfer_loop_vduya4.mp4'
+  'https://res.cloudinary.com/dhqpqfw6w/video/upload/q_auto,vc_auto/v1761612491/surfer_loop_vduya4.mp4'
 const DEFAULT_POSTER_SRC =
-  'https://res.cloudinary.com/dhqpqfw6w/image/upload/v1761612479/Frame_63_gbe1tk.png'
+  'https://res.cloudinary.com/dhqpqfw6w/image/upload/f_auto,q_auto,w_1600/v1761612479/Frame_63_gbe1tk.png'
 
 type HeroLoopingVideoProps = {
   className?: string
@@ -219,7 +219,7 @@ export default function HeroLoopingVideo({
             tabIndex={-1}
             draggable={false}
             poster={posterSrc}
-            preload="auto"
+            preload="metadata"
             aria-hidden="true"
             data-hero-loop="true"
             onCanPlay={() => setIsVideoReady(true)}

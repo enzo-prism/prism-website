@@ -21,7 +21,7 @@ type FeedItem =
   | { kind: 'quote'; data: Quote }
   | { kind: 'takeaway'; data: Takeaway }
 
-const PLANET_VIDEO_SRC = '/ascii/motion/wall-of-love/planet-lite.mp4'
+const PLANET_VIDEO_SRC = '/ascii/motion/wall-of-love/planet-lite-2026.mp4'
 const PLANET_POSTER_SRC = '/ascii/static/wall-of-love/planet.png'
 
 // Generic Fisher–Yates shuffle
