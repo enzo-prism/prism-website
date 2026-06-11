@@ -7,6 +7,7 @@ export const metadata: Metadata = buildRouteMetadata({
   description:
     'How Prism built a warm, conversion-focused website and brand for Belize Kids Foundation, a nonprofit expanding education and opportunity for kids in Belize.',
   path: '/case-studies/belize-kids-foundation',
+  ogImage: '/case-studies/belize-kids-foundation-home-desktop.jpg',
 })
 
 export default function BelizeKidsFoundationCaseStudyPage() {

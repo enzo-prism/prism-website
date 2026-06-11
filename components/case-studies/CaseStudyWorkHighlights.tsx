@@ -49,6 +49,7 @@ import {
   Building2,
   X,
 } from 'lucide-react'
+import Link from 'next/link'
 import { useState } from 'react'
 
 import {
@@ -56,6 +57,17 @@ import {
   type BrandLogoKey,
   type BrandLogoTheme,
 } from '@/components/brand-logo'
+
+// Services with a dedicated marketing page get a deep link in the dialog.
+const SERVICE_ROUTE_MAP: Record<string, { href: string; label: string }> = {
+  'Website design': { href: '/websites', label: 'Explore Prism websites' },
+  'SEO/AEO': { href: '/seo', label: 'Explore Prism SEO' },
+  'Google Ads': { href: '/ads', label: 'Explore Prism ads' },
+  'Local listing optimization': {
+    href: '/local-listings',
+    label: 'Explore Prism local listings',
+  },
+}
 
 type CaseStudyWorkHighlightsProps = {
   caseStudySlug: string
@@ -593,6 +605,15 @@ export function CaseStudyWorkHighlights({
                     {selectedCopy?.whyPrism}
                   </p>
                 </div>
+                {selectedItem.type === 'service' &&
+                SERVICE_ROUTE_MAP[selectedItem.name] ? (
+                  <Link
+                    href={SERVICE_ROUTE_MAP[selectedItem.name].href}
+                    className="mt-3 inline-flex items-center gap-1 text-sm font-medium text-foreground underline underline-offset-4 hover:text-foreground/80"
+                  >
+                    {SERVICE_ROUTE_MAP[selectedItem.name].label} →
+                  </Link>
+                ) : null}
               </>
             ) : null}
           </DialogHeader>

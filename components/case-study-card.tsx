@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowUpRight, PlayCircle } from 'lucide-react'
 
@@ -20,6 +21,10 @@ interface CaseStudyCardProps {
   clientLogo?: string
   hasExplainerVideo?: boolean
   tone?: CaseStudyCardTone
+  /** Website screenshot rendered above the card body (dark tone only). */
+  screenshotSrc?: string
+  /** Source-verified headline metric; render only published values. */
+  metric?: { value: string; label: string }
 }
 
 export default function CaseStudyCard({
@@ -31,13 +36,15 @@ export default function CaseStudyCard({
   clientLogo,
   hasExplainerVideo = false,
   tone = 'default',
+  screenshotSrc,
+  metric,
 }: CaseStudyCardProps) {
   const isLight = tone === 'light'
 
   return (
     <Link
       href={`/case-studies/${slug}`}
-      className="block rounded-[1.75rem] focus:outline-hidden focus-visible:ring-2 focus-visible:ring-ring/60"
+      className="group block rounded-[1.75rem] focus:outline-hidden focus-visible:ring-2 focus-visible:ring-ring/60"
     >
       <Card
         className={cn(
@@ -47,6 +54,18 @@ export default function CaseStudyCard({
             : 'rounded-md bg-card/30 backdrop-blur-sm hover:bg-card/45',
         )}
       >
+        {!isLight && screenshotSrc ? (
+          <div className="relative aspect-[16/10] overflow-hidden border-b border-border/40 bg-muted/20">
+            <Image
+              src={screenshotSrc}
+              alt={`${business} website built by Prism`}
+              fill
+              sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+              className="object-cover object-top transition-transform duration-300 group-hover:scale-[1.02]"
+            />
+          </div>
+        ) : null}
+
         <CardContent
           className={cn('flex h-full flex-col', isLight ? 'p-6' : 'p-5')}
         >
@@ -86,8 +105,14 @@ export default function CaseStudyCard({
             {business}
           </h3>
 
-          {isLight && description ? (
-            <p className="mt-3 text-sm leading-7 text-[rgba(15,23,42,0.62)]">
+          {description ? (
+            <p
+              className={cn(
+                isLight
+                  ? 'mt-3 text-sm leading-7 text-[rgba(15,23,42,0.62)]'
+                  : 'mt-2 text-sm leading-6 text-muted-foreground',
+              )}
+            >
               {description}
             </p>
           ) : null}
@@ -96,11 +121,20 @@ export default function CaseStudyCard({
             className={cn(
               isLight
                 ? 'mt-4 text-[10px] font-semibold uppercase tracking-[0.28em] text-[rgba(15,23,42,0.35)] font-mono'
-                : 'mt-1 text-sm text-muted-foreground',
+                : 'mt-2 text-sm text-muted-foreground/80',
             )}
           >
             {location}
           </p>
+
+          {!isLight && metric ? (
+            <p className="mt-4 text-sm leading-6">
+              <span className="font-semibold text-foreground">
+                {metric.value}
+              </span>{' '}
+              <span className="text-muted-foreground">{metric.label}</span>
+            </p>
+          ) : null}
 
           {hasExplainerVideo ? (
             <div

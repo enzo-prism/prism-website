@@ -7,6 +7,7 @@ export const metadata: Metadata = buildRouteMetadata({
   description:
     'How Prism built authority infrastructure for Practice Transitions Institute, a San Mateo dental transition consultancy with a proven process.',
   path: '/case-studies/practice-transitions-institute',
+  ogImage: '/case-studies/practice-transitions-institute-home-desktop.jpg',
 })
 
 export default function PracticeTransitionsInstituteCaseStudyPage() {

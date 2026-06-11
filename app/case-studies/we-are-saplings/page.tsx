@@ -7,6 +7,7 @@ export const metadata: Metadata = buildRouteMetadata({
   description:
     'How Prism built a joyful, mission-driven digital presence for We Are Saplings, a nature-based early-childhood education program.',
   path: '/case-studies/we-are-saplings',
+  ogImage: '/case-studies/we-are-saplings-home-desktop.jpg',
 })
 
 export default function WeAreSaplingsCaseStudyPage() {

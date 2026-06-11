@@ -7,6 +7,7 @@ export const metadata: Metadata = buildRouteMetadata({
   description:
     'How Prism built an audience platform for Rebellious Aging, a contrarian wellness brand challenging how people think about getting older.',
   path: '/case-studies/rebellious-aging',
+  ogImage: '/case-studies/rebellious-aging-home-desktop.jpg',
 })
 
 export default function RebelliousAgingCaseStudyPage() {

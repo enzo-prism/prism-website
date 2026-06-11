@@ -7,6 +7,7 @@ export const metadata: Metadata = buildRouteMetadata({
   description:
     'How Prism partnered with Grace Dental (Tingjen Ji, DDS MSD) on a post-M&A relaunch: new brand, modern site, and full acquisition and tracking setup.',
   path: '/case-studies/grace-dental-santa-rosa',
+  ogImage: '/case-studies/grace-dental-santa-rosa-home-desktop.jpg',
 })
 
 export default function GraceDentalSantaRosaCase() {

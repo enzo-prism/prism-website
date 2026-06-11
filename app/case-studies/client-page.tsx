@@ -1,4 +1,7 @@
+import { ArrowRight } from 'lucide-react'
 import Link from 'next/link'
+import { existsSync } from 'node:fs'
+import path from 'node:path'
 
 import Breadcrumbs from '@/components/breadcrumbs'
 import CaseStudiesList from '@/components/case-studies/CaseStudiesList'
@@ -9,7 +12,9 @@ import {
   CollectionPageSchema,
   ItemListSchema,
 } from '@/components/schema-markup'
-import { CASE_STUDIES } from '@/lib/case-study-data'
+import TrackedLink from '@/components/tracked-link'
+import { Button } from '@/components/ui/button'
+import { CASE_STUDIES, type CaseStudyMeta } from '@/lib/case-study-data'
 
 // Headline metrics sourced from case-study data so the hub band can never
 // drift from what the detail pages publish.
@@ -20,16 +25,41 @@ const measuredHighlights = CASE_STUDIES.flatMap((study) => {
     : []
 }).slice(0, 4)
 
+function screenshotSrcFor(slug: string) {
+  const assetPath = `/case-studies/${slug}-home-desktop.jpg`
+  return existsSync(
+    path.join(process.cwd(), 'public', assetPath.replace(/^\//, '')),
+  )
+    ? assetPath
+    : undefined
+}
+
+// Lead with studies that carry proof: measured results first, explainer
+// videos second, everything else in data order.
+const proofWeight = (study: CaseStudyMeta) =>
+  (study.structured?.results?.length ? 2 : 0) + (study.explainerVideo ? 1 : 0)
+
+const orderedCaseStudies = [...CASE_STUDIES].sort(
+  (a, b) => proofWeight(b) - proofWeight(a),
+)
+
+const caseStudyListItems = orderedCaseStudies.map((study) => ({
+  id: study.id,
+  client: study.client,
+  category: study.category,
+  location: study.location,
+  slug: study.slug,
+  description: study.description,
+  clientLogo: study.clientLogo,
+  hasExplainerVideo: Boolean(study.explainerVideo),
+  screenshotSrc: screenshotSrcFor(study.slug),
+  metric: study.structured?.results?.[0],
+}))
+
 const CASE_STUDIES_HERO_VIDEO =
   'https://res.cloudinary.com/dhqpqfw6w/video/upload/v1771353172/ocean-ascii-hq_lbqose.mp4'
 const CASE_STUDIES_HERO_POSTER =
   'https://res.cloudinary.com/dhqpqfw6w/image/upload/v1771353245/Screenshot_2026-02-17_at_10.33.32_AM_lsxdpz.webp'
-
-const dentalFirstCaseStudies = [...CASE_STUDIES].sort((a, b) => {
-  if (a.category === 'dentistry' && b.category !== 'dentistry') return -1
-  if (a.category !== 'dentistry' && b.category === 'dentistry') return 1
-  return 0
-})
 
 export default function CaseStudiesPage() {
   return (
@@ -67,9 +97,10 @@ export default function CaseStudiesPage() {
                   recent client work
                 </h1>
                 <p className="mt-5 max-w-2xl text-sm text-muted-foreground sm:text-base">
-                  Dental growth systems first: websites, SEO, reviews, ads,
-                  photography, and tracking that turn patient searches into
-                  booked appointments.
+                  One growth system for founders, doctors, and local
+                  operators: websites, SEO, reviews, ads, photography, and
+                  tracking that turn searches into booked patients, clients,
+                  and customers.
                 </p>
               </div>
             </div>
@@ -99,11 +130,53 @@ export default function CaseStudiesPage() {
                     </Link>
                   ))}
                 </div>
+                <p className="mt-6 max-w-3xl text-xs leading-5 text-muted-foreground/80">
+                  How we measure: every metric quoted on this page comes from a
+                  named, dated source — Google Search Console or GA4 over a
+                  specific date range — and links to the case study where the
+                  full context lives. When a project doesn&apos;t have measured
+                  results yet, we say so instead of estimating.
+                </p>
               </div>
             ) : null}
 
             <div className="mt-10 md:mt-12">
-              <CaseStudiesList studies={dentalFirstCaseStudies} />
+              <CaseStudiesList studies={caseStudyListItems} />
+            </div>
+          </div>
+        </section>
+
+        <section className="px-4 pb-16 pt-4 md:pb-20">
+          <div className="container mx-auto max-w-4xl px-4 text-center md:px-6">
+            <h2 className="text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
+              Want results like these?
+            </h2>
+            <p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-muted-foreground">
+              Prism builds websites, search visibility, reviews, ads, and
+              analytics as one connected growth system — then measures what
+              changes.
+            </p>
+            <div className="mt-7 flex flex-wrap items-center justify-center gap-4">
+              <Button asChild className="rounded-full px-5">
+                <TrackedLink
+                  href="/get-started"
+                  label="Start a free growth audit from case studies hub"
+                  location="case studies hub footer"
+                >
+                  <span className="inline-flex items-center gap-2">
+                    <span>Get a free audit</span>
+                    <ArrowRight className="size-4" aria-hidden="true" />
+                  </span>
+                </TrackedLink>
+              </Button>
+              <TrackedLink
+                href="/wall-of-love"
+                label="Read client reviews from case studies hub"
+                location="case studies hub footer"
+                className="text-sm font-medium text-muted-foreground underline-offset-4 hover:text-foreground hover:underline"
+              >
+                Read what clients say
+              </TrackedLink>
             </div>
           </div>
         </section>
@@ -111,14 +184,14 @@ export default function CaseStudiesPage() {
       <Footer />
       <CollectionPageSchema
         name="Prism case studies"
-        description="Dental growth wins from Prism clients, with selected cross-industry proof from local, nonprofit, and consulting businesses."
+        description="Measured client wins from Prism across dental, local business, retail, nonprofit, education, hospitality, and consulting engagements."
         url="https://www.design-prism.com/case-studies"
         isPartOfId="https://www.design-prism.com/#website"
       />
       <ItemListSchema
         name="Prism case study highlights"
         url="https://www.design-prism.com/case-studies"
-        items={dentalFirstCaseStudies.map((study) => ({
+        items={orderedCaseStudies.map((study) => ({
           name: study.title,
           description: study.description,
           url: `https://www.design-prism.com/case-studies/${study.slug}`,

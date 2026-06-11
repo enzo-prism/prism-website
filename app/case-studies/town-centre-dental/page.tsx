@@ -7,6 +7,7 @@ export const metadata: Metadata = buildRouteMetadata({
   description:
     'How Prism helped Town Centre Dental in Brentwood modernize its web presence, streamline booking, and build sustainable new-patient acquisition.',
   path: '/case-studies/town-centre-dental',
+  ogImage: '/case-studies/town-centre-dental-home-desktop.jpg',
 })
 
 export default function TownCentreDentalCase() {

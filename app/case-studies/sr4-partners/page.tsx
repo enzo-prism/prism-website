@@ -7,6 +7,7 @@ export const metadata: Metadata = buildRouteMetadata({
   description:
     'How Prism built a digital presence for SR4 Partners, a human-centered business consultancy: brand refresh, custom site, SEO/AEO, and analytics.',
   path: '/case-studies/sr4-partners',
+  ogImage: '/case-studies/sr4-partners-home-desktop.jpg',
 })
 
 export default function SR4PartnersCaseStudyPage() {

@@ -11,61 +11,92 @@ export type CaseStudyListItem = {
   category: string
   location: string
   slug: string
+  description?: string
+  clientLogo?: string
+  hasExplainerVideo?: boolean
+  screenshotSrc?: string
+  metric?: { value: string; label: string }
 }
 
-const CATEGORY_ICON_MAP: Record<string, string> = {
-  all: "/pixelish/folder.svg",
-  dentistry: "/pixelish/user.svg",
-  retail: "/pixelish/handbag.svg",
-  education: "/pixelish/document-letter.svg",
-  nonprofit: "/pixelish/emoji-heart.svg",
-  consulting: "/pixelish/briefcase.svg",
-  event: "/pixelish/calendar.svg",
-  "private resort": "/pixelish/house.svg",
-  "online community": "/pixelish/users.svg",
+type FilterGroup = {
+  key: string
+  label: string
+  /** Categories claimed by this group; omitted for "all" and the catch-all. */
+  categories?: string[]
+  iconSrc: string
 }
 
-const FALLBACK_ICON_SRC = "/pixelish/lens-plus.svg"
+const FILTER_GROUPS: FilterGroup[] = [
+  { key: "all", label: "all", iconSrc: "/pixelish/folder.svg" },
+  {
+    key: "dentistry",
+    label: "dentistry",
+    categories: ["dentistry"],
+    iconSrc: "/pixelish/user.svg",
+  },
+  {
+    key: "consulting",
+    label: "consulting",
+    categories: ["consulting"],
+    iconSrc: "/pixelish/briefcase.svg",
+  },
+  {
+    key: "nonprofit-community",
+    label: "nonprofit & community",
+    categories: ["nonprofit", "online community"],
+    iconSrc: "/pixelish/emoji-heart.svg",
+  },
+  {
+    key: "more-industries",
+    label: "more industries",
+    iconSrc: "/pixelish/handbag.svg",
+  },
+]
+
+const CLAIMED_CATEGORIES = new Set(
+  FILTER_GROUPS.flatMap((group) => group.categories ?? []),
+)
+
+function matchesGroup(group: FilterGroup, category: string) {
+  if (group.key === "all") return true
+  if (group.categories) return group.categories.includes(category)
+  // Catch-all group: any category no named group claims.
+  return !CLAIMED_CATEGORIES.has(category)
+}
 
 export default function CaseStudiesList({ studies }: { studies: CaseStudyListItem[] }) {
-  const [activeCategory, setActiveCategory] = useState<string>("all")
+  const [activeGroupKey, setActiveGroupKey] = useState<string>("all")
 
-  const categories = useMemo(() => {
-    const unique = Array.from(new Set(studies.map((study) => study.category))).sort(
-      (a, b) => {
-        if (a === "dentistry") return -1
-        if (b === "dentistry") return 1
-        return a.localeCompare(b)
-      },
-    )
-    return ["all", ...unique]
-  }, [studies])
+  const groupsWithCounts = useMemo(
+    () =>
+      FILTER_GROUPS.map((group) => ({
+        ...group,
+        count: studies.filter((study) => matchesGroup(group, study.category))
+          .length,
+      })).filter((group) => group.count > 0),
+    [studies],
+  )
 
   const filteredStudies = useMemo(() => {
-    if (activeCategory === "all") {
-      return [...studies].sort((a, b) => {
-        if (a.category === "dentistry" && b.category !== "dentistry") return -1
-        if (a.category !== "dentistry" && b.category === "dentistry") return 1
-        return 0
-      })
-    }
-    return studies.filter((study) => study.category === activeCategory)
-  }, [activeCategory, studies])
+    const group = FILTER_GROUPS.find((item) => item.key === activeGroupKey)
+    if (!group || group.key === "all") return studies
+    return studies.filter((study) => matchesGroup(group, study.category))
+  }, [activeGroupKey, studies])
 
   return (
     <>
       <div className="mt-6 flex flex-wrap gap-2" aria-label="filter case studies">
-        {categories.map((category) => {
-          const isActive = activeCategory === category
-          const iconSrc = CATEGORY_ICON_MAP[category] ?? FALLBACK_ICON_SRC
+        {groupsWithCounts.map((group) => {
+          const isActive = activeGroupKey === group.key
 
           return (
             <button
-              key={category}
+              key={group.key}
               type="button"
+              aria-pressed={isActive}
               onClick={() => {
-                setActiveCategory(category)
-                trackNavigation("case_study_filter", category)
+                setActiveGroupKey(group.key)
+                trackNavigation("case_study_filter", group.key)
               }}
               className={`inline-flex items-center gap-2 rounded-md border px-3 py-2 text-[10px] font-semibold uppercase tracking-[0.16em] font-pixel transition ${
                 isActive
@@ -78,14 +109,17 @@ export default function CaseStudiesList({ studies }: { studies: CaseStudyListIte
                 aria-hidden="true"
               >
                 <img
-                  src={iconSrc}
+                  src={group.iconSrc}
                   alt=""
                   width={14}
                   height={14}
                   className={`h-full w-full object-contain ${isActive ? "invert-0" : "dark:invert"}`}
                 />
               </span>
-              <span>{category}</span>
+              <span>{group.label}</span>
+              <span className={isActive ? "opacity-80" : "opacity-60"}>
+                {group.count}
+              </span>
             </button>
           )
         })}
@@ -99,6 +133,10 @@ export default function CaseStudiesList({ studies }: { studies: CaseStudyListIte
             category={study.category}
             location={study.location}
             slug={study.slug}
+            description={study.description}
+            hasExplainerVideo={study.hasExplainerVideo}
+            screenshotSrc={study.screenshotSrc}
+            metric={study.metric}
           />
         ))}
         {filteredStudies.length === 0 ? (

@@ -7,6 +7,7 @@ export const metadata: Metadata = buildRouteMetadata({
   description:
     'How Prism built a mission-driven website and brand for Canary Foundation, a nonprofit pioneering early cancer detection, with enterprise analytics.',
   path: '/case-studies/canary-foundation',
+  ogImage: '/case-studies/canary-foundation-home-desktop.jpg',
 })
 
 export default function CanaryFoundationCaseStudyPage() {

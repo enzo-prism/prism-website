@@ -7,6 +7,7 @@ export const metadata: Metadata = buildRouteMetadata({
   description:
     'How Prism delivered clarity, credibility, and lead capture for Saorsa Growth Partners, a focused advisory firm, with a custom site and tracking.',
   path: '/case-studies/saorsa-growth-partners',
+  ogImage: '/case-studies/saorsa-growth-partners-home-desktop.jpg',
 })
 
 export default function SaorsaGrowthPartnersPage() {

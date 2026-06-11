@@ -7,6 +7,7 @@ export const metadata: Metadata = buildRouteMetadata({
   description:
     'How Prism built a calming, authority-driven digital presence for Coast Periodontics and Laser Surgery, a specialist periodontic and implant practice.',
   path: '/case-studies/coast-periodontics-and-laser-surgery',
+  ogImage: '/case-studies/coast-periodontics-and-laser-surgery-home-desktop.jpg',
 })
 
 export default function CoastPeriodonticsCaseStudyPage() {

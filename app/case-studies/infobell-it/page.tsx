@@ -7,6 +7,7 @@ export const metadata: Metadata = buildRouteMetadata({
   description:
     'How Prism built a credible digital presence for Infobell IT, a managed-services and cybersecurity firm competing in a trust-driven B2B market.',
   path: '/case-studies/infobell-it',
+  ogImage: '/case-studies/infobell-it-home-desktop.jpg',
 })
 
 export default function InfobellITCaseStudyPage() {

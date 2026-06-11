@@ -7,6 +7,7 @@ export const metadata: Metadata = buildRouteMetadata({
   description:
     'How Prism shaped the brand, website, and SEO for Canary Cove, a boutique residential development on the coast of California, with analytics built in.',
   path: '/case-studies/canary-cove',
+  ogImage: '/case-studies/canary-cove-home-desktop.jpg',
 })
 
 export default function CanarycoveCaseStudyPage() {

@@ -7,6 +7,7 @@ export const metadata: Metadata = buildRouteMetadata({
   description:
     'How Prism built a compelling event presence that drives registrations for the Leadership Retreat, a boutique annual dental leadership gathering.',
   path: '/case-studies/leadership-retreat',
+  ogImage: '/case-studies/leadership-retreat-home-desktop.jpg',
 })
 
 export default function LeadershipRetreatCaseStudyPage() {
