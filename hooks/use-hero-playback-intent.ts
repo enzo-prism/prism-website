@@ -7,6 +7,8 @@ import {
   TOUCH_MEDIA_QUERY,
 } from '@/lib/media-environment'
 import {
+  INITIAL_HERO_PLAYBACK_INTENT,
+  isEmbeddedWebViewUserAgent,
   resolveHeroPlaybackPolicy,
   resolveHeroPlaybackPlatform,
   type HeroPlaybackIntent,
@@ -30,22 +32,16 @@ type UseHeroPlaybackIntentOptions = {
   onPlaybackStateChange?: (intent: HeroPlaybackIntent) => void
 }
 
-const DEFAULT_INTENT = resolveHeroPlaybackPolicy({
-  playbackPolicy: 'auto',
-  reducedMotion: false,
-  isTouchCoarse: false,
-  viewportWidth: Number.NaN,
-  hasAutoplayError: false,
-  platform: 'unknown',
-})
-
 export function useHeroPlaybackIntent({
   playbackPolicy = 'auto',
   hasAutoplayError = false,
   onPlaybackStateChange,
 }: UseHeroPlaybackIntentOptions) {
+  // Poster-first until the client evaluates real capabilities: this keeps the
+  // autoplay <video> out of server HTML so playback can never begin before the
+  // inline-presentation guards attach during hydration.
   const [playbackIntent, setPlaybackIntent] = useState<HeroPlaybackIntent>(
-    DEFAULT_INTENT,
+    INITIAL_HERO_PLAYBACK_INTENT,
   )
 
   const evaluatePlayback = useCallback(() => {
@@ -66,6 +62,7 @@ export function useHeroPlaybackIntent({
         platform: resolveHeroPlaybackPlatform(navigator.userAgent),
         saveData: Boolean(connection?.saveData),
         effectiveType: connection?.effectiveType ?? '',
+        isEmbeddedWebView: isEmbeddedWebViewUserAgent(navigator.userAgent),
       }),
     )
   }, [hasAutoplayError, playbackPolicy])

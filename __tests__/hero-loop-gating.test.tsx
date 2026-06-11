@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/react'
+import { renderToString } from 'react-dom/server'
 
 import AsciiMotionIcon from '@/components/ascii/AsciiMotionIcon'
 import HeroBackgroundLoop from '@/components/HeroBackgroundLoop'
@@ -225,5 +226,52 @@ describe('Hero background loops are device-gated on touch', () => {
     expect(
       document.querySelector('video[data-hero-loop="true"]'),
     ).toBeInTheDocument()
+  })
+
+  it('keeps the autoplay video out of server-rendered HTML', () => {
+    // Pre-hydration playback would start before the inline-presentation
+    // guards attach, so SSR markup must stay poster-only.
+    const backgroundMarkup = renderToString(
+      <HeroBackgroundLoop
+        videoSrc="https://example.com/video.mp4"
+        posterSrc="https://example.com/poster.jpg"
+        posterAlt="Hero poster"
+        videoClassName="hero-video"
+      />,
+    )
+    const loopingMarkup = renderToString(
+      <HeroLoopingVideo
+        videoSrc="https://example.com/video.mp4"
+        posterSrc="https://example.com/poster.jpg"
+        alt="Hero looping preview"
+      />,
+    )
+
+    expect(backgroundMarkup).not.toContain('<video')
+    expect(loopingMarkup).not.toContain('<video')
+  })
+
+  it('keeps hero loops poster-only inside embedded webviews', () => {
+    setMatchMedia({ pointerCoarse: true })
+    setViewportWidth(390)
+    Object.defineProperty(window.navigator, 'userAgent', {
+      configurable: true,
+      value:
+        'Mozilla/5.0 (iPhone; CPU iPhone OS 17_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 Instagram 320.0.0.23.109',
+    })
+
+    render(
+      <HeroBackgroundLoop
+        videoSrc="https://example.com/video.mp4"
+        posterSrc="https://example.com/poster.jpg"
+        posterAlt="Hero poster"
+        videoClassName="hero-video"
+      />,
+    )
+
+    expect(screen.getByRole('img', { name: 'Hero poster' })).toBeInTheDocument()
+    expect(
+      document.querySelector('video[data-hero-loop="true"]'),
+    ).not.toBeInTheDocument()
   })
 })

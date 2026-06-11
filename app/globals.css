@@ -119,6 +119,17 @@ video[data-hero-loop='true'] {
   user-select: none;
 }
 
+/* Suppress WebKit's shadow-DOM media controls on decorative loops, including
+   the slashed play glyph iOS paints when autoplay is blocked (Low Power Mode). */
+video[data-hero-loop='true']::-webkit-media-controls,
+video[data-hero-loop='true']::-webkit-media-controls-panel,
+video[data-hero-loop='true']::-webkit-media-controls-start-playback-button,
+video[data-hero-loop='true']::-webkit-media-controls-overlay-play-button {
+  display: none !important;
+  -webkit-appearance: none !important;
+  opacity: 0 !important;
+}
+
 /* Ensure no safe area padding interferes on mobile */
 @supports (padding: max(0px)) {
   body {
