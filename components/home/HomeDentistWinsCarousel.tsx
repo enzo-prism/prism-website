@@ -181,7 +181,7 @@ export default function HomeDentistWinsCarousel({
           aria-hidden="true"
         >
           <div
-            className="absolute inset-y-0 left-0 bg-gradient-to-r from-[#d8bc79] to-[#f5f0e8] shadow-[0_0_12px_rgba(216,188,121,0.5)] transition-[width] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
+            className="absolute inset-y-0 left-0 bg-gradient-to-r from-[#d8bc79] to-[#f5f0e8] transition-[width] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
             style={{ width: `${Math.max(progress * 100, 6)}%` }}
           />
         </div>

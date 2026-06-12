@@ -1,5 +1,4 @@
-import { BadgeCheck } from 'lucide-react'
-import type { ComponentType } from 'react'
+import { ArrowUpRight, BadgeCheck } from 'lucide-react'
 
 import {
   coreRouteContainerClassName,
@@ -8,80 +7,59 @@ import {
 import HomeDentistWinsCarousel from '@/components/home/HomeDentistWinsCarousel'
 import HomeReveal from '@/components/home/HomeReveal'
 import { HOMEPAGE_CLIENT_WINS } from '@/components/home/homepage-content'
-
-type ClientMetric = {
-  value: string
-  label: string
-  seal?: ComponentType<{ className?: string; strokeWidth?: number }>
-}
+import TrackedLink from '@/components/tracked-link'
 
 export default function HomeDentistWinsSection() {
-  const { eyebrow, title, slides } = HOMEPAGE_CLIENT_WINS
+  const { title, slides } = HOMEPAGE_CLIENT_WINS
   const clientCount = slides.length
-  const cityCount = new Set(slides.map((slide) => slide.location)).size
-
-  const metrics: ClientMetric[] = [
-    { value: String(clientCount), label: 'Client stories' },
-    { value: String(cityCount), label: 'Markets' },
-    { value: '', label: 'Verified', seal: BadgeCheck },
-  ]
+  const marketCount = new Set(slides.map((slide) => slide.location)).size
 
   return (
     <section className={coreRouteSectionCompactClassName}>
       <div className={coreRouteContainerClassName}>
         <div className="flex flex-col gap-10 sm:gap-12">
-          <HomeReveal className="flex flex-col gap-9 lg:flex-row lg:items-end lg:justify-between lg:gap-16">
-            <div className="flex max-w-xl flex-col gap-4">
-              <span className="inline-flex items-center gap-2.5 self-start font-mono text-[10px] font-medium uppercase tracking-[0.28em] text-[#8a8175]">
-                <span className="relative flex h-1.5 w-1.5">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#d8bc79]/70 motion-reduce:animate-none" />
-                  <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-[#d8bc79]" />
-                </span>
-                {eyebrow}
+          <HomeReveal className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between lg:gap-16">
+            <h2 className="max-w-xl font-sans text-[2rem] font-medium leading-[1.02] tracking-[-0.045em] text-[#f5f0e8] sm:text-[2.35rem] lg:text-[2.6rem]">
+              {title}
+            </h2>
+
+            <p className="flex flex-wrap items-center gap-x-3 gap-y-2 font-mono text-[10px] font-medium uppercase tracking-[0.22em] text-[#8f877b] lg:shrink-0 lg:pb-1">
+              <span className="whitespace-nowrap">
+                <span className="text-[#f5f0e8] tabular-nums">
+                  {clientCount}
+                </span>{' '}
+                client stories
               </span>
-
-              <h2 className="font-sans text-[2rem] font-medium leading-[1.02] tracking-[-0.045em] text-[#f5f0e8] sm:text-[2.35rem] lg:text-[2.6rem]">
-                {title}
-              </h2>
-            </div>
-
-            <dl className="flex items-end gap-7 sm:gap-9 lg:shrink-0">
-              {metrics.map((metric, index) => {
-                const Seal = metric.seal
-
-                return (
-                  <div
-                    key={metric.label}
-                    className="flex items-end gap-7 sm:gap-9"
-                  >
-                    {index > 0 ? (
-                      <span
-                        aria-hidden="true"
-                        className="h-12 w-px self-stretch bg-gradient-to-b from-transparent via-white/15 to-transparent"
-                      />
-                    ) : null}
-                    <div className="flex flex-col-reverse gap-2.5">
-                      <dt className="font-mono text-[10px] font-medium uppercase tracking-[0.22em] text-[#8a8175]">
-                        {metric.label}
-                      </dt>
-                      <dd className="flex h-9 items-end leading-none sm:h-11">
-                        {Seal ? (
-                          <Seal
-                            aria-hidden="true"
-                            className="h-9 w-9 text-[#d8bc79] sm:h-10 sm:w-10"
-                            strokeWidth={1.4}
-                          />
-                        ) : (
-                          <span className="font-sans text-[2.4rem] font-medium leading-none tracking-[-0.04em] text-[#f5f0e8] tabular-nums sm:text-[2.85rem]">
-                            {metric.value}
-                          </span>
-                        )}
-                      </dd>
-                    </div>
-                  </div>
-                )
-              })}
-            </dl>
+              <span aria-hidden="true" className="text-white/20">
+                ·
+              </span>
+              <span className="whitespace-nowrap">
+                <span className="text-[#f5f0e8] tabular-nums">
+                  {marketCount}
+                </span>{' '}
+                markets
+              </span>
+              <span aria-hidden="true" className="text-white/20">
+                ·
+              </span>
+              <TrackedLink
+                href="/proof"
+                label="verified results"
+                location="homepage client wins header"
+                className="group inline-flex items-center gap-1.5 whitespace-nowrap text-[#8f877b] transition-colors duration-500 hover:text-[#f5f0e8] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[#d8bc79]/35 focus-visible:ring-offset-4 focus-visible:ring-offset-black motion-reduce:transition-none"
+              >
+                <BadgeCheck
+                  aria-hidden="true"
+                  className="h-3.5 w-3.5 text-[#d8bc79]"
+                  strokeWidth={1.8}
+                />
+                Verified results
+                <ArrowUpRight
+                  aria-hidden="true"
+                  className="h-3 w-3 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-y-0.5 group-hover:translate-x-0.5 motion-reduce:transition-none"
+                />
+              </TrackedLink>
+            </p>
           </HomeReveal>
 
           <HomeReveal delay={120}>
