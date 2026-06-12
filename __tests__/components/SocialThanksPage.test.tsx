@@ -147,7 +147,7 @@ describe('SocialThanksPage', () => {
     )
   })
 
-  it('tracks the Marble App Store action as an outbound link', () => {
+  it('tracks the Marble workout app action as an outbound link', () => {
     render(<SocialThanksPage channel={tiktokChannel} />)
 
     const appStoreAction = screen.getByRole('link', {
@@ -156,7 +156,7 @@ describe('SocialThanksPage', () => {
 
     expect(appStoreAction).toHaveAttribute(
       'href',
-      'https://apps.apple.com/us/app/marble-fit/id6757725234',
+      'https://marble-fit.app',
     )
     expect(appStoreAction).toHaveAttribute('target', '_blank')
     expect(appStoreAction).toHaveAttribute(
@@ -168,7 +168,7 @@ describe('SocialThanksPage', () => {
 
     expect(trackCTAClick).not.toHaveBeenCalled()
     expect(trackExternalLinkClick).toHaveBeenCalledWith(
-      'https://apps.apple.com/us/app/marble-fit/id6757725234',
+      'https://marble-fit.app',
       'download marble for ios',
     )
   })

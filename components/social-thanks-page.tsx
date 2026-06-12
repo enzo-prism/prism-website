@@ -19,8 +19,7 @@ type SocialThanksPageProps = {
 }
 
 const YOUTUBE_CHANNEL_URL = 'https://www.youtube.com/@the_design_prism'
-const MARBLE_APP_STORE_URL =
-  'https://apps.apple.com/us/app/marble-fit/id6757725234'
+const MARBLE_WORKOUT_APP_URL = 'https://marble-fit.app'
 const BECOME_A_CLIENT_PATH = '/get-started'
 const WALL_OF_LOVE_PATH = '/wall-of-love'
 
@@ -261,7 +260,7 @@ export default function SocialThanksPage({ channel }: SocialThanksPageProps) {
             <ActionCard
               title="Download Marble for iOS"
               detail="track workout progress"
-              href={MARBLE_APP_STORE_URL}
+              href={MARBLE_WORKOUT_APP_URL}
               external
               location={actionsLocation}
               icon={<AppleGlyph />}
