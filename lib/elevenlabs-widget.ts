@@ -15,6 +15,11 @@ const PUBLIC_ELEVENLABS_WIDGET_ALLOWED_PATH_SET = new Set<string>(
 )
 export const PUBLIC_ELEVENLABS_WIDGET_MOBILE_MAX_WIDTH_PX = 767
 export const PUBLIC_ELEVENLABS_WIDGET_MOBILE_MEDIA_QUERY = `(max-width: ${PUBLIC_ELEVENLABS_WIDGET_MOBILE_MAX_WIDTH_PX}px)`
+const PUBLIC_ELEVENLABS_WIDGET_WEBGL_CONTEXT_IDS = [
+  'webgl2',
+  'webgl',
+  'experimental-webgl',
+] as const
 
 declare global {
   interface Window {
@@ -123,4 +128,42 @@ export function shouldRenderPublicElevenLabsWidget(
   }
 
   return PUBLIC_ELEVENLABS_WIDGET_ALLOWED_PATH_SET.has(normalizedPathname)
+}
+
+export function canCreatePublicElevenLabsWidgetWebGLContext(
+  documentRef: Document | undefined = typeof document === 'undefined'
+    ? undefined
+    : document,
+): boolean {
+  if (!documentRef) {
+    return false
+  }
+
+  const canvas = documentRef.createElement('canvas')
+  const getContext = canvas.getContext.bind(canvas) as (
+    contextId: string,
+  ) => RenderingContext | null
+
+  for (const contextId of PUBLIC_ELEVENLABS_WIDGET_WEBGL_CONTEXT_IDS) {
+    try {
+      const context = getContext(contextId)
+
+      if (!context) {
+        continue
+      }
+
+      if (
+        'getExtension' in context &&
+        typeof context.getExtension === 'function'
+      ) {
+        context.getExtension('WEBGL_lose_context')?.loseContext()
+      }
+
+      return true
+    } catch {
+      // Some browsers throw when WebGL is disabled by policy or graphics state.
+    }
+  }
+
+  return false
 }

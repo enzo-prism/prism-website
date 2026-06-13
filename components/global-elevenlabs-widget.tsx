@@ -4,6 +4,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { usePathname } from 'next/navigation'
 
 import ElevenLabsWidget from '@/components/elevenlabs/ElevenLabsWidget'
+import { usePublicElevenLabsWidgetWebGLEligibility } from '@/hooks/use-public-elevenlabs-widget-webgl'
 import { usePublicElevenLabsWidgetViewportEligibility } from '@/hooks/use-public-elevenlabs-widget-viewport'
 import { publishPrismWidgetExpandedState } from '@/lib/elevenlabs'
 import {
@@ -76,8 +77,14 @@ export default function GlobalElevenLabsWidget() {
   const pathname = usePathname()
   const [defaultExpanded, setDefaultExpanded] = useState<boolean | null>(null)
   const lastInteractionTimestampRef = useRef<number | null>(null)
+  const isPublicWidgetEnabled = isPublicElevenLabsWidgetEnabled()
   const shouldRenderWidgetOnRoute = shouldRenderPublicElevenLabsWidget(pathname)
   const isViewportEligible = usePublicElevenLabsWidgetViewportEligibility()
+  const isWebGLEligible = usePublicElevenLabsWidgetWebGLEligibility(
+    isPublicWidgetEnabled &&
+      shouldRenderWidgetOnRoute &&
+      isViewportEligible === true,
+  )
   const widgetStyle = useMemo(
     () => ({
       zIndex: String(GLOBAL_ELEVENLABS_WIDGET_Z_INDEX),
@@ -87,22 +94,28 @@ export default function GlobalElevenLabsWidget() {
 
   useEffect(() => {
     if (
-      !isPublicElevenLabsWidgetEnabled() ||
+      !isPublicWidgetEnabled ||
       !shouldRenderWidgetOnRoute ||
-      isViewportEligible === false
+      isViewportEligible === false ||
+      isWebGLEligible === false
     ) {
       setDefaultExpanded(null)
       publishPrismWidgetExpandedState(false)
       return
     }
 
-    if (isViewportEligible === null) {
+    if (isViewportEligible === null || isWebGLEligible === null) {
       setDefaultExpanded(null)
       return
     }
 
     setDefaultExpanded(resolveDefaultExpandedState())
-  }, [isViewportEligible, shouldRenderWidgetOnRoute])
+  }, [
+    isPublicWidgetEnabled,
+    isViewportEligible,
+    isWebGLEligible,
+    shouldRenderWidgetOnRoute,
+  ])
 
   const handleWidgetInteraction = () => {
     lastInteractionTimestampRef.current = Date.now()
@@ -124,9 +137,10 @@ export default function GlobalElevenLabsWidget() {
   }
 
   if (
-    !isPublicElevenLabsWidgetEnabled() ||
+    !isPublicWidgetEnabled ||
     !shouldRenderWidgetOnRoute ||
     isViewportEligible !== true ||
+    isWebGLEligible !== true ||
     defaultExpanded === null
   ) {
     return null

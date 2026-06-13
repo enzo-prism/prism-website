@@ -27,6 +27,7 @@ jest.mock('next/navigation', () => ({
 }))
 
 const originalMatchMedia = window.matchMedia
+const originalCanvasGetContext = HTMLCanvasElement.prototype.getContext
 
 type MockWidgetProps = {
   defaultExpanded?: boolean
@@ -48,6 +49,16 @@ function mockWidgetViewport(isMobileViewport: boolean) {
       removeListener: jest.fn(),
       dispatchEvent: jest.fn(),
     })),
+  })
+}
+
+function mockWidgetWebGL(isAvailable: boolean) {
+  const loseContext = jest.fn()
+  const getExtension = jest.fn(() => ({ loseContext }))
+
+  Object.defineProperty(HTMLCanvasElement.prototype, 'getContext', {
+    configurable: true,
+    value: jest.fn(() => (isAvailable ? { getExtension } : null)),
   })
 }
 
@@ -74,12 +85,17 @@ describe('GlobalElevenLabsWidget', () => {
     usePathname.mockReset()
     delete process.env.NEXT_PUBLIC_ELEVENLABS_WIDGET_DISABLED
     mockWidgetViewport(false)
+    mockWidgetWebGL(true)
   })
 
   afterAll(() => {
     Object.defineProperty(window, 'matchMedia', {
       configurable: true,
       value: originalMatchMedia,
+    })
+    Object.defineProperty(HTMLCanvasElement.prototype, 'getContext', {
+      configurable: true,
+      value: originalCanvasGetContext,
     })
 
     if (originalWidgetDisabled === undefined) {
@@ -108,6 +124,19 @@ describe('GlobalElevenLabsWidget', () => {
   it('does not mount the floating widget on mobile viewports', async () => {
     mockWidgetViewport(true)
     usePathname.mockReturnValue('/pricing')
+
+    render(<GlobalElevenLabsWidget />)
+
+    await waitFor(() => {
+      expect(publishPrismWidgetExpandedState).toHaveBeenCalledWith(false)
+    })
+
+    expect(elevenLabsWidgetMock).not.toHaveBeenCalled()
+  })
+
+  it('does not mount the floating widget when WebGL is unavailable', async () => {
+    mockWidgetWebGL(false)
+    usePathname.mockReturnValue('/contact')
 
     render(<GlobalElevenLabsWidget />)
 
