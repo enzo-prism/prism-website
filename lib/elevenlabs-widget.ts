@@ -15,11 +15,7 @@ const PUBLIC_ELEVENLABS_WIDGET_ALLOWED_PATH_SET = new Set<string>(
 )
 export const PUBLIC_ELEVENLABS_WIDGET_MOBILE_MAX_WIDTH_PX = 767
 export const PUBLIC_ELEVENLABS_WIDGET_MOBILE_MEDIA_QUERY = `(max-width: ${PUBLIC_ELEVENLABS_WIDGET_MOBILE_MAX_WIDTH_PX}px)`
-const PUBLIC_ELEVENLABS_WIDGET_WEBGL_CONTEXT_IDS = [
-  'webgl2',
-  'webgl',
-  'experimental-webgl',
-] as const
+const PUBLIC_ELEVENLABS_WIDGET_REQUIRED_CONTEXT_ID = 'webgl2'
 
 declare global {
   interface Window {
@@ -141,29 +137,29 @@ export function canCreatePublicElevenLabsWidgetWebGLContext(
 
   const canvas = documentRef.createElement('canvas')
   const getContext = canvas.getContext.bind(canvas) as (
-    contextId: string,
-  ) => RenderingContext | null
+    contextId: typeof PUBLIC_ELEVENLABS_WIDGET_REQUIRED_CONTEXT_ID,
+    contextAttributes?: WebGLContextAttributes,
+  ) => WebGL2RenderingContext | null
 
-  for (const contextId of PUBLIC_ELEVENLABS_WIDGET_WEBGL_CONTEXT_IDS) {
-    try {
-      const context = getContext(contextId)
+  try {
+    const context = getContext(PUBLIC_ELEVENLABS_WIDGET_REQUIRED_CONTEXT_ID, {
+      failIfMajorPerformanceCaveat: true,
+    })
 
-      if (!context) {
-        continue
-      }
-
-      if (
-        'getExtension' in context &&
-        typeof context.getExtension === 'function'
-      ) {
-        context.getExtension('WEBGL_lose_context')?.loseContext()
-      }
-
-      return true
-    } catch {
-      // Some browsers throw when WebGL is disabled by policy or graphics state.
+    if (
+      !context ||
+      typeof context.FRAGMENT_SHADER !== 'number' ||
+      typeof context.VERTEX_SHADER !== 'number' ||
+      context.isContextLost()
+    ) {
+      return false
     }
-  }
 
-  return false
+    context.getExtension('WEBGL_lose_context')?.loseContext()
+
+    return true
+  } catch {
+    // Some browsers throw when WebGL is disabled by policy or graphics state.
+    return false
+  }
 }

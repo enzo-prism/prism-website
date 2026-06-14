@@ -52,13 +52,33 @@ function mockWidgetViewport(isMobileViewport: boolean) {
   })
 }
 
-function mockWidgetWebGL(isAvailable: boolean) {
+function mockWidgetWebGL(isAvailable: boolean, webglFallbackAvailable = false) {
   const loseContext = jest.fn()
   const getExtension = jest.fn(() => ({ loseContext }))
+  const isContextLost = jest.fn(() => false)
+  const mockContext = {
+    FRAGMENT_SHADER: 35632,
+    VERTEX_SHADER: 35633,
+    getExtension,
+    isContextLost,
+  }
 
   Object.defineProperty(HTMLCanvasElement.prototype, 'getContext', {
     configurable: true,
-    value: jest.fn(() => (isAvailable ? { getExtension } : null)),
+    value: jest.fn((contextId: string) => {
+      if (contextId === 'webgl2' && isAvailable) {
+        return mockContext
+      }
+
+      if (
+        (contextId === 'webgl' || contextId === 'experimental-webgl') &&
+        webglFallbackAvailable
+      ) {
+        return mockContext
+      }
+
+      return null
+    }),
   })
 }
 
@@ -136,6 +156,19 @@ describe('GlobalElevenLabsWidget', () => {
 
   it('does not mount the floating widget when WebGL is unavailable', async () => {
     mockWidgetWebGL(false)
+    usePathname.mockReturnValue('/contact')
+
+    render(<GlobalElevenLabsWidget />)
+
+    await waitFor(() => {
+      expect(publishPrismWidgetExpandedState).toHaveBeenCalledWith(false)
+    })
+
+    expect(elevenLabsWidgetMock).not.toHaveBeenCalled()
+  })
+
+  it('does not mount the floating widget when only WebGL 1 is available', async () => {
+    mockWidgetWebGL(false, true)
     usePathname.mockReturnValue('/contact')
 
     render(<GlobalElevenLabsWidget />)
