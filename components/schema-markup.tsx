@@ -468,7 +468,7 @@ export function ServiceSchema({
   serviceType,
   areaServed,
   offerDetails,
-  aggregateRating,
+  aggregateRating: _aggregateRating,
 }: ServiceSchemaProps) {
   const offer =
     offerDetails &&
@@ -511,7 +511,6 @@ export function ServiceSchema({
       url: "https://www.design-prism.com",
     },
     offers: offer,
-    aggregateRating,
   }
 
   return renderJsonLd(data)

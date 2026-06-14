@@ -7,14 +7,6 @@ import PixelishImg from "@/components/pixelish/PixelishImg"
 import { cn } from "@/lib/utils"
 import { getHomepageHeroReviewPool, renderFormattedText } from "@/content/wall-of-love-data"
 import { trackNavigation } from "@/utils/analytics"
-import { sanitizeReviewText } from "@/lib/schema-helpers"
-
-const DEFAULT_REVIEW_RATING = {
-  "@type": "Rating",
-  ratingValue: "5",
-  bestRating: "5",
-  worstRating: "1",
-}
 
 const HERO_QUOTE_COUNT = 3
 
@@ -24,29 +16,6 @@ type HeroReviewSliderCardProps = {
 
 export default function HeroReviewSliderCard({ className }: HeroReviewSliderCardProps) {
   const proofReviews = useMemo(() => getHomepageHeroReviewPool().slice(0, HERO_QUOTE_COUNT), [])
-  const heroReviewForSchema = proofReviews[0] ?? null
-
-  const heroReviewSchema = useMemo(() => {
-    if (!heroReviewForSchema) return null
-    return JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "Review",
-      name: `Review from ${heroReviewForSchema.client}`,
-      author: { "@type": "Person", name: heroReviewForSchema.client },
-      reviewBody: sanitizeReviewText(heroReviewForSchema.text),
-      reviewRating: DEFAULT_REVIEW_RATING,
-      itemReviewed: {
-        "@type": "Organization",
-        "@id": "https://www.design-prism.com/#organization",
-        name: "Prism",
-      },
-      publisher: {
-        "@type": "Organization",
-        "@id": "https://www.design-prism.com/#organization",
-        name: "Prism",
-      },
-    })
-  }, [heroReviewForSchema])
 
   return (
     <div className={cn("flex w-full flex-col items-center gap-3 text-center", className)}>
@@ -84,9 +53,6 @@ export default function HeroReviewSliderCard({ className }: HeroReviewSliderCard
         </Link>
       </div>
 
-      {heroReviewSchema && (
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: heroReviewSchema }} />
-      )}
     </div>
   )
 }
