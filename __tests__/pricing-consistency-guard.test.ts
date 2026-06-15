@@ -33,6 +33,15 @@ describe("pricing consistency guard", () => {
     expect(violations).toEqual([])
   })
 
+  it("allows the dedicated one-time website build offer on /websites", () => {
+    const violations = collectPricingConsistencyViolations(
+      "app/websites/page.tsx",
+      "One-time website build. Starts at $300. price: '300'",
+    )
+
+    expect(violations).toEqual([])
+  })
+
   it("accepts contextual non-core prices when context labels are present", () => {
     const content = [
       "Ad fee examples for local service lines.",

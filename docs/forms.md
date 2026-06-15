@@ -25,6 +25,7 @@ const { handleSubmit, getError, isSubmitting } = useFormValidation({
 - `components/forms/FreeAnalysisForm.tsx`
 - `components/forms/ContactForm.tsx`
 - `components/forms/GetStartedForm.tsx` (`/apply`)
+- `components/forms/WebsiteBuildEstimatorForm.tsx` (`/websites`)
 - `components/forms/ScalingRoadmapForm.tsx`
 - `components/ai-website-launch/AiWebsiteLaunchForm.tsx` (legacy archival form code; the `/ai-website-launch` route redirects to `/pricing` in production and should not receive active traffic)
 - `components/forms/AeoAssessmentForm.tsx`
@@ -120,7 +121,53 @@ The `/apply` route should feel like a focused Growth Dashboard mode, not another
   - `trackEvent("apply_error", ...)`
   - `trackEvent("apply_success", ...)` on the apply thank-you view only when pending application context exists
   - `trackLeadConversion(...)` on the apply thank-you view after the pending application context is consumed
-  - Do not include user-entered names, emails, URLs, free-text notes, or unique per-event timestamps in GA params.
+- Do not include user-entered names, emails, URLs, free-text notes, or unique per-event timestamps in GA params.
+
+## New flow: `/websites` + one-time website build estimator
+
+`components/forms/WebsiteBuildEstimatorForm.tsx` powers the one-time website build request on `app/websites/page.tsx`.
+
+- Required user-facing flow:
+  - Website type
+  - Page count
+  - Add-ons
+  - Style/reference notes
+  - Existing site or profile URL
+  - Timeline
+  - Name/email/business
+  - Review + submit
+- Pricing formula:
+  - Base one-page accepted launch: `$300`
+  - Extra pages: `$150` each
+  - Prism copywriting: `$200`
+  - Light brand direction: `$150`
+  - SEO launch basics: `$200`
+  - Custom form/intake: `$150`
+  - CMS/blog editing: `$400`
+  - Expressive motion/art direction: `$250`
+  - Rush review: `$250`
+- Hidden metadata contract:
+  - `_subject` = `New Prism one-time website build request`
+  - `_redirect` = `/thank-you?source=website-build`
+  - `form_name` = `website_build_request`
+  - `_gotcha` (honeypot)
+  - `estimated_total`, `estimated_range_low`, `estimated_range_high`, `estimated_range`, `price_formula_version`
+- DOM analytics contract:
+  - `<form id="website_build_request" name="website_build_request">`
+- Endpoint strategy:
+  - `NEXT_PUBLIC_WEBSITE_BUILD_FORM_ENDPOINT` (defaults to `https://formspree.io/f/xpqebnbz`)
+- Success flow:
+  - POST via `fetch(form.action, { method: 'POST', headers: { Accept: 'application/json' }, body: new FormData(form) })`
+  - On success, store a pending lead conversion and route to `/thank-you?source=website-build`
+  - On failure, show inline error and keep the user on the review/submit screen
+- Analytics:
+  - `website_build_estimator_start`
+  - `website_build_estimate_update`
+  - `website_build_validation_error`
+  - `website_build_submit_attempt`
+  - `website_build_submit_success`
+  - `website_build_submit_error`
+  - Do not include user-entered names, emails, URLs, or free-text notes in analytics params.
 
 ## New flow: `/aeo` + free AEO assessment
 
@@ -188,7 +235,7 @@ Important routing note:
 
 ## Thank-you pages
 
-- `/thank-you` ([`app/thank-you/page.tsx`](../app/thank-you/page.tsx)) — used by Apply + Contact. The Prism Growth Dashboard flow sends `?source=apply` so the screen can render review expectation copy and analytics.
+- `/thank-you` ([`app/thank-you/page.tsx`](../app/thank-you/page.tsx)) — used by Apply, Contact, and the one-time website build estimator. The Prism Growth Dashboard flow sends `?source=apply`; the website build flow sends `?source=website-build`.
 - `/analysis-thank-you` ([`app/analysis-thank-you/page.tsx`](../app/analysis-thank-you/page.tsx)) — used by the Free Analysis form.
 - `/aeo-thank-you` ([`app/aeo-thank-you/page.tsx`](../app/aeo-thank-you/page.tsx)) — used by the AEO assessment form.
 - `/book-a-shoot/thank-you` ([`app/book-a-shoot/thank-you/page.tsx`](../app/book-a-shoot/thank-you/page.tsx)) — used by the photography booking request form.

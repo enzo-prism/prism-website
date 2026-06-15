@@ -2,7 +2,6 @@ import fs from "node:fs"
 import path from "node:path"
 
 const schemaPages = [
-  "app/websites/page.tsx",
   "app/ads/page.tsx",
   "app/seo/page.tsx",
   "app/local-listings/page.tsx",
@@ -28,8 +27,12 @@ describe("pricing schema consistency", () => {
     }
   })
 
-  it("keeps websites schema tied to the pricing page", () => {
+  it("allows websites schema to publish the one-time website build offer", () => {
     const content = fs.readFileSync(path.join(process.cwd(), "app/websites/page.tsx"), "utf8")
-    expect(content).toContain("Focused website, tracking, and conversion sprint")
+    expect(content).toContain("One-time website build")
+    expect(content).toContain("starting at $300")
+    expect(content).toMatch(/price: ["']300["']/)
+    expect(content).toMatch(/url: CANONICAL_URL/)
+    expect(content).not.toContain("60-Day Growth Sprint")
   })
 })

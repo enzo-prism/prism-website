@@ -60,6 +60,7 @@ Production is intentionally single-path: GitHub Actions publishes with `vercel d
 
 - Pricing sign-off:
   - `/pricing` leads with Create Free Growth Dashboard and shows the current audit, sprint, and ongoing partner path
+  - `/websites` is allowed to publish the dedicated one-time website build offer starting at `$300`, but that exception should stay scoped to the website-build page and schema
   - retired fixed-plan language such as `Website Overhaul` and exact `$2,000/month` Growth Partnership does not reappear on pricing-sensitive surfaces
   - legacy pricing routes resolve to `/pricing`
 - SEO sign-off when route intent/canonicals changed:

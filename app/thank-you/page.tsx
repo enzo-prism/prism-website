@@ -53,6 +53,24 @@ const APPLY_NEXT_STEPS = [
   },
 ] as const
 
+const WEBSITE_BUILD_NEXT_STEPS = [
+  {
+    label: "01",
+    title: "Request received",
+    body: "Your one-time website build request is in the review queue.",
+  },
+  {
+    label: "02",
+    title: "Fit review",
+    body: "Prism checks the scope, assets, timing, and whether the team can make the work excellent.",
+  },
+  {
+    label: "03",
+    title: "Payment link follows",
+    body: "If accepted, Prism sends next steps and a payment link before production starts.",
+  },
+] as const
+
 export default async function ThankYouPage({
   searchParams,
 }: {
@@ -60,7 +78,27 @@ export default async function ThankYouPage({
 }) {
   const resolvedSearchParams = await searchParams
   const isApplyFlow = resolvedSearchParams?.source === "apply"
-  const nextSteps = isApplyFlow ? APPLY_NEXT_STEPS : DEFAULT_NEXT_STEPS
+  const isWebsiteBuildFlow = resolvedSearchParams?.source === "website-build"
+  const nextSteps = isApplyFlow
+    ? APPLY_NEXT_STEPS
+    : isWebsiteBuildFlow
+      ? WEBSITE_BUILD_NEXT_STEPS
+      : DEFAULT_NEXT_STEPS
+  const kicker = isApplyFlow
+    ? "FREE GROWTH AUDIT"
+    : isWebsiteBuildFlow
+      ? "WEBSITE BUILD"
+      : "RECEIVED"
+  const headline = isApplyFlow
+    ? "Audit request received."
+    : isWebsiteBuildFlow
+      ? "Website request received."
+      : "Review in progress."
+  const body = isApplyFlow
+    ? "Thanks, we've got it. Every real business submission receives a Growth Audit. Your audit lives in a free Growth Dashboard — claim it to follow the review from one place."
+    : isWebsiteBuildFlow
+      ? "Thanks, we've got it. Prism reviews one-time website requests before sending a payment link. If the project is a fit, the team will reply with next steps."
+      : "We received your submission. Every real inquiry gets reviewed. If there's a fit, we'll reach out with the right next step."
 
   return (
     <>
@@ -71,15 +109,13 @@ export default async function ThankYouPage({
           <section className="mx-auto max-w-[1180px] space-y-8">
             <div className="border border-white/10 bg-[#070707] px-6 py-8 sm:px-10 sm:py-12">
               <p className="font-mono text-[0.76rem] uppercase tracking-[0.4em] text-[#9EFF2E]">
-                {isApplyFlow ? "FREE GROWTH AUDIT" : "RECEIVED"}
+                {kicker}
               </p>
               <h1 className="mt-6 max-w-[9ch] text-balance font-sans text-[clamp(2.45rem,5.4vw,4.6rem)] font-medium leading-[0.98] tracking-[-0.06em] text-[#F5F5F2]">
-                {isApplyFlow ? "Audit request received." : "Review in progress."}
+                {headline}
               </h1>
               <p className="mt-6 max-w-[42rem] font-mono text-[1rem] leading-8 text-[#A0A09A]">
-                {isApplyFlow
-                  ? "Thanks, we've got it. Every real business submission receives a Growth Audit. Your audit lives in a free Growth Dashboard — claim it to follow the review from one place."
-                  : "We received your submission. Every real inquiry gets reviewed. If there's a fit, we'll reach out with the right next step."}
+                {body}
               </p>
             </div>
 
@@ -112,6 +148,8 @@ export default async function ThankYouPage({
                 <p className="mt-2 font-mono text-[0.92rem] leading-7 text-[#A0A09A]">
                   {isApplyFlow
                     ? "Check your inbox for the same dashboard link."
+                    : isWebsiteBuildFlow
+                      ? "Gather any copy, images, links, or references you want Prism to review."
                     : "You can review case studies or head back home."}
                 </p>
               </div>

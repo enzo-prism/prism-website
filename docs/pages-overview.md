@@ -71,8 +71,11 @@ Quick reference for the pages we edit most often.
 
 ## Websites (`app/websites/page.tsx`)
 
-- Includes hero, founder VSL, benefits, showcases, vertical playbooks, FAQs, SEO copy, and service schema.
-- The VSL near the hero is the canonical marketing video for active pricing-intent funnels.
+- Active one-time website build offer page, replacing the older broad website-service page.
+- Leads with the selective Prism website build offer: world-class one-time websites starting at `$300` for tiny accepted launches.
+- The interactive estimator is `components/forms/WebsiteBuildEstimatorForm.tsx`; it uses Formspree, publishes an estimated review range, and redirects to `/thank-you?source=website-build` after successful submission.
+- The `$300` starting price is intentional only for this page and its one-time website build schema. Keep `/pricing` as the canonical Growth Dashboard, Light Audit, Deep Growth Audit, Growth Sprint, and ongoing partner pricing surface.
+- Keep the page indexable, in `public/llms.txt`, and in the sitemap as Prism's canonical website-build acquisition page.
 
 ## Apps (`app/apps/page.tsx`)
 

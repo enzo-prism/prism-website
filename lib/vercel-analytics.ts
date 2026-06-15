@@ -427,6 +427,110 @@ export function buildVercelCustomEvent(
               : undefined,
         }),
       }
+    case 'website_build_estimator_start':
+      return {
+        name: 'Website Build Estimator Started',
+        properties: compactProperties({
+          estimated_total:
+            typeof eventParams.estimated_total === 'number'
+              ? eventParams.estimated_total
+              : undefined,
+          step_id:
+            typeof eventParams.step_id === 'string'
+              ? eventParams.step_id
+              : undefined,
+        }),
+      }
+    case 'website_build_estimate_update':
+      return {
+        name: 'Website Build Estimate Updated',
+        properties: compactProperties({
+          estimated_total:
+            typeof eventParams.estimated_total === 'number'
+              ? eventParams.estimated_total
+              : undefined,
+          page_count:
+            typeof eventParams.page_count === 'number'
+              ? eventParams.page_count
+              : undefined,
+          add_on_count:
+            typeof eventParams.add_on_count === 'number'
+              ? eventParams.add_on_count
+              : undefined,
+          rush_review:
+            typeof eventParams.rush_review === 'boolean'
+              ? eventParams.rush_review
+              : undefined,
+        }),
+      }
+    case 'website_build_validation_error':
+      return {
+        name: 'Website Build Validation Error',
+        properties: compactProperties({
+          step_id:
+            typeof eventParams.step_id === 'string'
+              ? eventParams.step_id
+              : undefined,
+          field_name:
+            typeof eventParams.field_name === 'string'
+              ? eventParams.field_name
+              : undefined,
+          error_type:
+            typeof eventParams.error_type === 'string'
+              ? eventParams.error_type
+              : undefined,
+        }),
+      }
+    case 'website_build_submit_attempt':
+      return {
+        name: 'Website Build Submit Attempted',
+        properties: compactProperties({
+          estimated_total:
+            typeof eventParams.estimated_total === 'number'
+              ? eventParams.estimated_total
+              : undefined,
+          page_count:
+            typeof eventParams.page_count === 'number'
+              ? eventParams.page_count
+              : undefined,
+          add_on_count:
+            typeof eventParams.add_on_count === 'number'
+              ? eventParams.add_on_count
+              : undefined,
+        }),
+      }
+    case 'website_build_submit_success':
+      return {
+        name: 'Website Build Submit Succeeded',
+        properties: compactProperties({
+          estimated_total:
+            typeof eventParams.estimated_total === 'number'
+              ? eventParams.estimated_total
+              : undefined,
+          page_count:
+            typeof eventParams.page_count === 'number'
+              ? eventParams.page_count
+              : undefined,
+          add_on_count:
+            typeof eventParams.add_on_count === 'number'
+              ? eventParams.add_on_count
+              : undefined,
+        }),
+      }
+    case 'website_build_submit_error':
+      return {
+        name: 'Website Build Submit Error',
+        properties: compactProperties({
+          reason:
+            typeof eventParams.reason === 'string'
+              ? eventParams.reason
+              : undefined,
+          status:
+            typeof eventParams.status === 'number'
+              ? eventParams.status
+              : undefined,
+        }),
+      }
     case 'service_card_click':
       return {
         name: 'Service Card Clicked',

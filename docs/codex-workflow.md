@@ -35,7 +35,7 @@ Default operating loop:
 | Search visibility | `lib/seo/search-visibility.ts`, `app/sitemap.ts`, `public/llms.txt`, `scripts/seo-*` | `docs/project-overview.md`, `docs/development-guide.md`, `docs/blog-content-architecture.md` |
 | Blog post or blog behavior | `content/blog`, `lib/mdx-data.ts`, `app/blog/*`, `components/blog-*` | `docs/blog-content-architecture.md` |
 | Forms and thank-you flows | `components/forms/*`, `hooks/use-form-validation.ts`, `components/thank-you/*`, route pages | `docs/forms.md`, `docs/environment-setup.md` if env vars change |
-| Pricing | `lib/pricing-model.ts`, `app/pricing/*`, pricing tests | README/AGENTS only if the canonical policy changes |
+| Pricing | `lib/pricing-model.ts`, `app/pricing/*`, `app/websites/page.tsx` for the dedicated one-time build exception, pricing tests | README/AGENTS only if the canonical policy changes |
 | Case studies | `lib/case-study-data.ts`, `app/case-studies/*`, `components/case-studies/*` | `docs/pages-overview.md` |
 | Deploy/release | `.github/workflows/deploy.yml`, `vercel.json`, `docs/build-and-deploy-guide.md` | `docs/build-and-deploy-guide.md` |
 

@@ -11,7 +11,7 @@ Prism is now a business growth systems website: websites, SEO and AI search, Goo
 - Production: GitHub Actions publishes to Vercel with source deploys. Vercel Git auto-deploy is disabled for `main`; the locked-route visual job currently runs non-blocking while baselines stabilize.
 - Design system: root `DESIGN.md`, generated tokens in `generated/`, shared primitives in `components/core-route/` and `components/ui/`.
 - Active positioning: growth-first, dental-proven. Dental proof should stay visible and credible, while non-dental case studies should appear as first-class proof of the broader growth system.
-- Current scale from this audit: 113 page routes, 5 route handlers, 87 blog MDX files, 22 case studies (21 of which render through the shared visual minimal template with browser + mobile screenshot heroes), and 25 docs files.
+- Current scale from this audit: 113 page routes, 5 route handlers, 88 blog MDX files, 22 case studies (21 of which render through the shared visual minimal template with browser + mobile screenshot heroes), and 25 docs files.
 
 ## Source Of Truth Files
 
@@ -26,7 +26,7 @@ Prism is now a business growth systems website: websites, SEO and AI search, Goo
 | Forms | `docs/forms.md` | Formspree contracts, field names, thank-you routing, analytics. |
 | Environment | `.env.example`, `docs/environment-setup.md` | Keep supported variables limited and current. |
 | Search visibility | `lib/seo/search-visibility.ts` | Shared index/noindex and blog allowlist policy. |
-| Pricing truth | `lib/pricing-model.ts` | Canonical pricing follows the free Growth Dashboard, included Light Audit, normally `$500` Deep Growth Audit, `$3,500+` sprint, and `$1,500/month+` ongoing partner path. |
+| Pricing truth | `lib/pricing-model.ts`, `app/websites/page.tsx` | Canonical pricing follows the free Growth Dashboard, included Light Audit, normally `$500` Deep Growth Audit, `$3,500+` sprint, and `$1,500/month+` ongoing partner path. `/websites` is the dedicated one-time website build exception, starting at `$300` for tiny accepted launches. |
 | Shared chrome | `components/navbar.tsx`, `components/footer.tsx`, `lib/constants.ts` | Header nav, logo interaction, footer links, and the single footer funnel CTA. |
 | Public assistant | `lib/elevenlabs-widget.ts`, `components/global-elevenlabs-widget.tsx` | Stock ElevenLabs widget route allowlist, mobile suppression, default collapsed state, and public kill switch. |
 | Images | `next.config.mjs`, `components/core-image.tsx`, `components/image.tsx`, `docs/image-best-practices.md` | Next/Image remote hosts plus the current legacy/new component split. |
@@ -41,6 +41,7 @@ Prism is now a business growth systems website: websites, SEO and AI search, Goo
 - `components/elevenlabs/ElevenLabsWidget.tsx` wraps the documented ElevenLabs custom element and applies host-level positioning only.
 - `components/navbar.tsx` and `components/footer.tsx` are the single shared chrome layer. The header logo has a subtle hover/focus treatment; the footer has one primary "Free audit" CTA that routes to `/get-started`.
 - `components/forms/GetStartedForm.tsx` is the active Growth Dashboard intake. It prefers `NEXT_PUBLIC_DASHBOARD_INTAKE_ENDPOINT`, then falls back through Formspree-compatible endpoints.
+- `components/forms/WebsiteBuildEstimatorForm.tsx` is the active `/websites` one-time build estimator. It posts to Formspree, submits calculated estimate metadata, and redirects to `/thank-you?source=website-build` after review-request submission.
 - `app/robots.ts` manages crawl access only. Use page-level robots metadata for noindex decisions.
 - `app/sitemap.ts` emits only canonical, indexable static routes, case study detail pages, and curated blog posts.
 - `public/llms.txt` is a curated machine-readable map of the growth system, proof, and specialty clusters. Keep it narrower than the full route tree.
@@ -93,7 +94,7 @@ fnm exec --using 22 pnpm seo:lint
 | New blog post | `content/blog/<slug>.mdx`, maybe `lib/mdx-edge.ts` for OG metadata | `docs/blog-content-architecture.md` only if workflow changes | `pnpm typecheck`, blog/sitemap Jest |
 | Search-visible blog post | `INDEXABLE_BLOG_SLUGS` | `docs/blog-content-architecture.md` if policy changes | blog/sitemap/llms Jest, SEO inventory/lint |
 | New form | `components/forms/*`, route page, thank-you route if needed | `docs/forms.md`, `.env.example`, `docs/environment-setup.md` if env changes | form Jest, analytics tests if conversion changed |
-| Pricing copy | `lib/pricing-model.ts`, pricing route/components | README/AGENTS only if policy changes | `pnpm verify:pricing-consistency` |
+| Pricing copy | `lib/pricing-model.ts`, pricing route/components, `app/websites/page.tsx` for the dedicated one-time website build exception | README/AGENTS only if policy changes | `pnpm verify:pricing-consistency` |
 | Assistant widget route | `lib/elevenlabs-widget.ts`, `components/global-elevenlabs-widget.tsx`, deferred runtime | README/AGENTS/docs only if public policy changes | widget Jest, `pnpm test:visual:widget` |
 | Visual or layout work | Route/component files, `DESIGN.md` if contract changes | relevant page/design docs | `pnpm lint`, targeted Jest, visual tests for affected routes |
 | New or refreshed case study | `lib/case-study-data.ts` (entry + `websiteUrl`), then `node scripts/capture-case-study-screenshots.mjs <slug>` to populate `public/case-studies/<slug>-home-{desktop,mobile}.jpg` | `docs/pages-overview.md` only if the layout contract or screenshot convention changes | `pnpm typecheck`, sitemap/SEO Jest if the route is new, visit `/case-studies/<slug>` locally to confirm the hero renders |

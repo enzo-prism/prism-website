@@ -1,657 +1,449 @@
-import FAQSection from "@/components/faq-section"
-import Footer from "@/components/footer"
-import Navbar from "@/components/navbar"
-import ScrollToTop from "@/components/scroll-to-top"
-import SeoTextSection from "@/components/seo-text-section"
-import SimpleBlogGrid from "@/components/simple-blog-grid"
-import SimpleBlogPostCard from "@/components/simple-blog-post-card"
-import WebsiteProjectsShowcase from "@/components/website-projects-showcase"
-import VideoPlayer from "@/components/video-player"
-import { Button } from "@/components/ui/button"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { ArrowRight, Check } from "lucide-react"
-import type { Metadata } from "next"
-import Link from "next/link"
-import ServiceIllustration from "@/components/animated/ServiceIllustration"
-import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
-import { getAllPosts } from "@/lib/mdx-data"
-import { ServiceSchema } from "@/components/schema-markup"
-import Image from "next/image"
-import { websiteProjects } from "@/lib/website-projects"
-import { buildRouteMetadata } from "@/lib/seo/metadata"
+import type { Metadata } from 'next'
+import type { ReactNode } from 'react'
+import Image from 'next/image'
+import Link from 'next/link'
+import { ArrowRight, Check, Sparkles } from 'lucide-react'
+
+import Footer from '@/components/footer'
+import Navbar from '@/components/navbar'
+import WebsiteBuildEstimatorForm from '@/components/forms/WebsiteBuildEstimatorForm'
+import {
+  CoreActionLink,
+  CoreSectionHeading,
+  coreRouteContainerClassName,
+  coreRouteSectionClassName,
+  coreRouteSectionCompactClassName,
+} from '@/components/core-route/CoreRoutePrimitives'
+import { FAQSchema, ServiceSchema } from '@/components/schema-markup'
+import { buildRouteMetadata } from '@/lib/seo/metadata'
+import { websiteProjects } from '@/lib/website-projects'
+import { cn } from '@/lib/utils'
+
+const PAGE_TITLE = 'One-time website builds from $300'
+const PAGE_DESCRIPTION =
+  'Prism builds world-class one-time websites for founders, operators, and small teams, starting at $300 for tiny accepted launches.'
+const CANONICAL_URL = 'https://www.design-prism.com/websites'
 
 export const metadata: Metadata = buildRouteMetadata({
-  titleStem: 'Small business website design & builds',
-  description: 'Custom small-business websites engineered to convert and stay sharp long term, with strategy, design, development, and SEO-ready foundations.',
-  path: "/websites",
-  ogImage: "/prism-opengraph.png",
+  titleStem: PAGE_TITLE,
+  description: PAGE_DESCRIPTION,
+  path: '/websites',
+  ogImage: '/prism-opengraph.png',
 })
 
-const whatWeDeliver = [
-  {
-    title: "brand-calibrated design",
-    description: "modern ui that matches your visual identity and keeps every page cohesive.",
-  },
-  {
-    title: "conversion-first architecture",
-    description: "clear flows, persuasive copy, and ctas tuned to move visitors forward.",
-  },
-  {
-    title: "content & positioning",
-    description: "messaging that explains what you do fast and differentiates your offers.",
-  },
-  {
-    title: "technical seo built in",
-    description: "schema, semantic markup, and internal linking ready for organic and ai search.",
-  },
-  {
-    title: "speed & accessibility",
-    description: "core web vitals optimized with fast hosting, compressed media, and wcag-aware layouts.",
-  },
-  {
-    title: "launch & handoff",
-    description: "analytics, automations, and training so your team can confidently run the site day one.",
-  },
-]
+const BASE_INCLUDED = [
+  'One responsive landing page',
+  'Client-provided copy and assets',
+  'Polished Prism design system pass',
+  'Fast launch-ready frontend',
+  'Simple review before payment',
+] as const
 
-const audienceSegments = [
+const FIT_SIGNALS = [
   {
-    name: "Dental & medical teams",
-    description: "conversion-backed treatment pages, patient journeys, and ada-aware design to fill operatories.",
-    href: "/why-dental-practices-love-prism",
+    title: 'A clear idea',
+    body: 'You know the offer, audience, or launch moment the website needs to support.',
   },
   {
-    name: "Local shop owners",
-    description: "product storytelling, local seo structure, and promo blocks that drive in-store and online sales.",
-    href: "/why-local-shop-owners-love-prism",
+    title: 'Room for taste',
+    body: 'You want something sharper than a generic template and are open to Prism direction.',
   },
   {
-    name: "Consulting & professional services",
-    description: "case-study rich sites with thought leadership hubs and lead capture that start bigger engagements.",
-    href: "/why-consulting-companies-love-prism",
+    title: 'Ready enough',
+    body: 'You can provide the essentials or choose add-ons when Prism should shape them.',
   },
   {
-    name: "Online community founders",
-    description: "member onboarding, paywall-ready content, and event funnels that keep engagement high.",
-    href: "/why-online-community-founders-love-prism",
+    title: 'Mutual excitement',
+    body: 'We accept projects the team is genuinely excited to make great.',
   },
-  {
-    name: "Nonprofits & education",
-    description: "mission-first storytelling, donation flows, and program pages that mobilize supporters.",
-    href: "/why-nonprofits-love-prism",
-  },
-]
+] as const
 
-const segmentPlaybooks = [
+const PROCESS_STEPS = [
   {
-    id: "dental",
-    name: "Dental & medical teams",
-    tagline: "conversion-backed patient journeys across services, providers, and locations.",
-    bullets: [
-      "service pages tuned for local intent, schema, and treatment differentiators.",
-      "pre-qualifying intake flows that sync with practice management software.",
-      "before-and-after galleries optimized for accessibility and speed.",
-    ],
-    spotlight: "fills schedule gaps and lifts case acceptance",
-    summary: "we blend education, automation, and reassurance so new and returning patients know which treatment to book and how to move forward.",
-    href: "/why-dental-practices-love-prism",
-    ctaLabel: "see dental playbook",
+    label: 'Estimate',
+    body: 'Use the interactive builder to shape the request and see a review range.',
   },
   {
-    id: "retail",
-    name: "Local shop owners",
-    tagline: "blend in-store storytelling with local seo to drive repeat visits.",
-    bullets: [
-      "campaign-ready promo blocks that keep seasonal offers fresh.",
-      "location, hours, and review modules that reinforce trust in maps and search.",
-      "sms and email capture loops that turn browsers into loyal shoppers.",
-    ],
-    spotlight: "drives foot traffic and repeat purchases",
-    summary: "merchandising, content, and local signals work together so shoppers see what is new, where to find you, and why to choose you first.",
-    href: "/why-local-shop-owners-love-prism",
-    ctaLabel: "see retail approach",
+    label: 'Review',
+    body: 'Prism checks fit, scope, assets, timing, and whether the team can do standout work.',
   },
   {
-    id: "consulting",
-    name: "Consulting & services",
-    tagline: "stand up authority hubs and conversion paths for high-consideration work.",
-    bullets: [
-      "modular case study narratives that surface the transformation fast.",
-      "thought leadership hubs organized by offer, industry, and buyer role.",
-      "crm-integrated lead capture that triages inbound opportunities.",
-    ],
-    spotlight: "improves lead quality and close rates",
-    summary: "we showcase proof, frameworks, and expertise while routing every request into the right follow-up workflow for your team.",
-    href: "/why-consulting-companies-love-prism",
-    ctaLabel: "see consulting playbook",
+    label: 'Payment link',
+    body: 'Accepted projects receive next steps and a payment link before production starts.',
   },
-]
+  {
+    label: 'Build',
+    body: 'We design, build, QA, and ship the agreed website with a focused handoff.',
+  },
+] as const
 
-const processSteps = [
+const FAQ_ITEMS = [
   {
-    step: "Discover",
-    description: "deep dive into goals, brand, users, and the content needed to win trust.",
+    question: 'Is the website really $300?',
+    answer:
+      'The smallest accepted one-page website starts at $300 when copy and assets are ready. Extra pages, copywriting, SEO basics, CMS work, motion, and rush review increase the estimate.',
   },
   {
-    step: "Architect",
-    description: "sitemap, wireframes, and messaging mapped to journeys across devices.",
+    question: 'Can I pay immediately?',
+    answer:
+      'No. Prism reviews each request first and sends a payment link only when the project is a fit for both sides.',
   },
   {
-    step: "Design",
-    description: "high-fidelity layouts, component library, and motion cues refined with your feedback.",
+    question: 'What makes a project a fit?',
+    answer:
+      'Clear goals, enough source material, room for Prism creative direction, and a website idea the team is excited to build.',
   },
   {
-    step: "Build",
-    description: "next.js development, cms setup, qa, and integrations tested in staging.",
+    question: 'What if I need a bigger growth system?',
+    answer:
+      'The one-time website path is for focused builds. If the request needs deeper strategy, ads, SEO, tracking, or ongoing work, Prism will recommend the Growth Audit path instead.',
   },
-  {
-    step: "Launch",
-    description: "analytics, automations, training, and a punch list to keep improving post-launch.",
-  },
-]
+] as const
 
-const performanceWins = [
-  "Faster load times that reduce bounce rate and lift engagement.",
-  "Clear offers and CTAs that turn more visitors into booked calls and form fills.",
-  "Accessible, mobile-first layouts that meet buyers where they research.",
-  "SEO-ready structure that supports long-term rankings and future campaigns.",
-]
+const PROOF_BUILDS = [
+  {
+    title: 'Exquisite Dentistry',
+    type: 'Healthcare',
+    image: '/case-studies/exquisite-dentistry-home-desktop.jpg',
+    url: 'https://exquisitedentistryla.com/',
+  },
+  {
+    title: 'Olympic Bootworks',
+    type: 'Retail',
+    image: '/case-studies/olympic-bootworks-home-desktop.jpg',
+    url: 'https://www.olympicbootworks.com',
+  },
+  {
+    title: 'Saorsa Growth Partners',
+    type: 'Advisory',
+    image: '/case-studies/saorsa-growth-partners-home-desktop.jpg',
+    url: 'https://www.saorsapartners.com',
+  },
+] as const
 
-const handledForYou = [
-  "Research & brand positioning",
-  "Sitemap and information architecture",
-  "Copy briefs and conversion messaging",
-  "Custom UI kit and component library",
-  "CMS setup and content migration",
-  "Technical SEO and schema",
-  "Form, CRM, and automation wiring",
-  "Analytics, dashboards, and tagging",
-  "Post-launch support and training",
-]
-
-const featuredArticle = {
-  title: "from broken wordpress site to a high-converting dental experience",
-  href: "/blog/from-broken-to-beautiful-dental-website-transformation",
-  summary:
-    "See how Prism rebuilt a dental practice’s neglected site into a calm, conversion-ready experience using Lovable for structure and Codex for engineering.",
-  insights: [
-    "Design principles that replaced clutter with clarity and storytelling.",
-    "SEO + AEO architecture so Google and AI engines surface the practice.",
-    "Operational mindset shifts that keep the site evolving after launch.",
-  ],
+function SectionKicker({ children }: { children: ReactNode }) {
+  return (
+    <p className="font-mono text-[0.72rem] font-medium uppercase tracking-[0.26em] text-[#8f877b]">
+      {children}
+    </p>
+  )
 }
 
-const faqItems = [
-  {
-    question: "How long does a website project take?",
-    answer:
-      "Most builds take 6–10 weeks depending on scope, revisions, and content readiness. We set milestones up front so you always know what comes next.",
-  },
-  {
-    question: "Can you work with our existing branding or platform?",
-    answer:
-      "Yes. We can refresh within your current brand system, migrate from platforms like Squarespace or WordPress, or launch net-new design systems.",
-  },
-  {
-    question: "Do you write the copy and provide photography?",
-    answer:
-      "We collaborate on messaging using structured briefs, provide conversion copy support, and can manage photo sourcing or direct your team on what to capture.",
-  },
-  {
-    question: "What happens after launch?",
-    answer:
-      "We handle QA, analytics, automations, and training. Many clients keep us on retainer for CRO tests, content updates, or ongoing SEO.",
-  },
-]
-
-export default async function WebsitesPage() {
-  const heroImage = {
-    src: "https://res.cloudinary.com/dhqpqfw6w/image/upload/v1763934373/Generated_Image_November_23_2025_-_1_45PM_m55vhg.webp",
-    alt: "Prism website portfolio preview",
-  }
-  const aggregateRating = {
-    "@type": "AggregateRating" as const,
-    ratingValue: "4.9",
-    reviewCount: "200",
-    bestRating: "5",
-    worstRating: "1",
-  }
-  const allPosts = (await getAllPosts()) ?? []
-  const websiteBlogPosts = allPosts
-    .filter(post => {
-      const slug = post.slug.toLowerCase()
-      const category = (post.category ?? "").toLowerCase()
-      const description = (post.description ?? "").toLowerCase()
-      return (
-        slug.includes("website") ||
-        description.includes("website") ||
-        category.includes("website") ||
-        category.includes("web development") ||
-        category.includes("web design")
-      )
-    })
-    .slice(0, 3)
+export default function WebsitesPage() {
+  const featuredProjects = websiteProjects.slice(0, 8)
 
   return (
-    <div className="flex min-h-screen flex-col bg-transparent">
+    <div className="flex min-h-screen flex-col bg-black font-sans text-[#f5f0e8]">
       <Navbar />
-
-      <main className="flex-1">
-        <section className="px-4 py-20 sm:py-24">
-          <div className="mx-auto max-w-4xl text-center">
-            <p className="text-[10px] font-semibold uppercase tracking-[0.32em] text-muted-foreground font-pixel">
-              website design & development
-            </p>
-            <h1 className="mt-4 text-5xl font-semibold sm:text-6xl lg:text-7xl">
-              Websites engineered to convert and stay sharp long-term
-            </h1>
-            <p className="mt-6 text-base text-muted-foreground sm:text-lg">
-              We plan, design, and build sites that reflect your brand, explain what you do fast, and turn
-              the right visitors into booked calls, patients, customers, and donors.
-            </p>
-            <div className="mt-10 grid gap-8 md:grid-cols-[1.1fr_0.9fr] md:items-end">
-              <div>
-                <div className="flex flex-wrap items-center justify-center gap-3 md:justify-start">
-                  <Button asChild size="lg" className="rounded-md px-8">
-                    <Link href="/get-started">
-                      Get started
-                      <ArrowRight className="ml-2 h-4 w-4" />
-                    </Link>
-                  </Button>
-                  <Button asChild variant="outline" size="lg" className="rounded-md px-8">
-                    <Link href="#recent-work">See recent launches</Link>
-                  </Button>
-                </div>
-              </div>
-              <div
-                tabIndex={0}
-                role="group"
-                className="group mx-auto flex h-52 w-full max-w-[20rem] items-center justify-center rounded-3xl border border-border/60 bg-card/20 px-6 py-4 shadow-sm transition-[transform,border-color] duration-300 hover:-translate-y-0.5 hover:border-orange-300 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-orange-300/60"
-              >
-                <ServiceIllustration
-                  variant="websites"
-                  className="h-full w-full text-neutral-500 transition-colors group-hover:text-orange-500 group-focus-visible:text-orange-500 group-active:text-orange-600"
-                />
-              </div>
-            </div>
-            <p className="mt-4 text-sm text-muted-foreground">
-              Looking for the right pricing path?{" "}
-              <Link href="/pricing" className="font-semibold text-foreground underline decoration-border/60 underline-offset-4 hover:decoration-border">
-                See canonical pricing
-              </Link>
-              .
-            </p>
-            <div className="mt-10 overflow-hidden rounded-md border border-border/60 bg-card/20 shadow-none">
-              <div className="relative aspect-[16/9] w-full">
-                <Image
-                  src={heroImage.src}
-                  alt={heroImage.alt}
-                  fill
-                  sizes="(min-width: 1280px) 1024px, (min-width: 768px) 768px, 100vw"
-                  className="object-cover transition duration-300 hover:scale-[1.01]"
-                  priority
-                />
-              </div>
-            </div>
-            <div id="websites-founder-vsl" className="mx-auto mt-12 max-w-3xl text-left">
-              <p className="text-center text-[10px] font-semibold uppercase tracking-[0.32em] text-muted-foreground font-pixel">hear from our founder</p>
-              <VideoPlayer
-                className="mt-4"
-                src="https://res.cloudinary.com/dhqpqfw6w/video/upload/q_auto,vc_auto/v1763160814/prism_websites_vsl_2_ojqiku.mp4"
-                poster="https://res.cloudinary.com/dhqpqfw6w/video/upload/so_0,q_auto/prism_websites_vsl_2_ojqiku.jpg"
-                title="Founder Enzo Sison explains Prism Websites"
-                caption="Enzo explains how slow load times, unclear messaging, and disorganized SEO choke growth—and how Prism’s fast, conversion-ready websites boost visibility, drive more inquiries, and keep customers coming back."
-                schema={{
-                  id: "https://www.design-prism.com/websites#founder-vsl",
-                  name: "Founder Enzo Sison explains Prism Websites",
-                  description:
-                    "Enzo Sison explains why most small-business websites leave money on the table and how Prism’s fast, conversion-focused builds improve discovery, conversion, and retention.",
-                  thumbnailUrl: "https://res.cloudinary.com/dhqpqfw6w/video/upload/so_0,q_auto/prism_websites_vsl_2_ojqiku.jpg",
-                  uploadDate: "2025-01-24T00:00:00Z",
-                  duration: "PT60S",
-                  contentUrl: "https://res.cloudinary.com/dhqpqfw6w/video/upload/q_auto,vc_auto/v1763160814/prism_websites_vsl_2_ojqiku.mp4",
-                  embedUrl: "https://www.design-prism.com/websites#founder-vsl",
-                  width: 1920,
-                  height: 1080,
-                  creatorName: "Enzo Sison",
-                }}
-              />
-            </div>
-          </div>
-        </section>
-
-        <section className="border-t border-border/60 bg-card/15 px-4 py-16 sm:py-20">
-          <div className="mx-auto max-w-5xl text-center">
-            <h2 className="text-4xl font-semibold sm:text-5xl">what you get</h2>
-            <p className="mt-3 text-muted-foreground">
-              Everything you need to launch a high-performing site with zero guesswork.
-            </p>
-          </div>
-          <div className="mx-auto mt-12 grid max-w-5xl gap-6 sm:grid-cols-2">
-            {whatWeDeliver.map(item => (
-              <div key={item.title} className="rounded-md border border-border/60 bg-card/30 p-6 text-left shadow-none backdrop-blur-sm">
-                <h3 className="text-lg font-semibold text-foreground">{item.title}</h3>
-                <p className="mt-2 text-sm text-muted-foreground">{item.description}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        <section id="recent-work" className="px-4 py-16 sm:py-20">
-          <div className="mx-auto max-w-4xl">
-            <div className="mb-10 text-center">
-              <h2 className="text-4xl font-semibold sm:text-5xl">recent launches</h2>
-              <p className="mt-3 text-muted-foreground">
-                A sampling of sites we designed, wrote, and built across healthcare, retail, nonprofit, and services—toggle the industries to see the matches.
-              </p>
-            </div>
-            <WebsiteProjectsShowcase projects={websiteProjects} />
-          </div>
-        </section>
-
-        <section className="border-t border-border/60 bg-transparent px-4 py-16 sm:py-20">
-          <div className="mx-auto max-w-4xl">
-            <span className="text-[10px] font-semibold uppercase tracking-[0.32em] text-muted-foreground font-pixel">deep dive</span>
-            <div className="mt-4 rounded-md border border-border/60 bg-card/30 p-8 shadow-none backdrop-blur-sm sm:p-10">
-              <h2 className="text-4xl font-semibold sm:text-5xl">{featuredArticle.title}</h2>
-              <p className="mt-4 text-sm leading-6 text-muted-foreground sm:text-base">{featuredArticle.summary}</p>
-              <ul className="mt-6 space-y-2 text-sm text-muted-foreground">
-                {featuredArticle.insights.map(point => (
-                  <li key={point} className="flex items-start gap-2">
-                    <span className="mt-1 block h-1.5 w-1.5 rounded-full bg-foreground/80" />
-                    <span>{point}</span>
-                  </li>
-                ))}
-              </ul>
-              <Button asChild size="lg" className="mt-8 rounded-md px-8">
-                <Link href={featuredArticle.href}>
-                  Read the full transformation
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
-              </Button>
-            </div>
-          </div>
-        </section>
-
-        <section className="border-t border-border/60 bg-card/15 px-4 py-16 sm:py-20">
-          <div className="mx-auto max-w-5xl text-center">
-            <h2 className="text-4xl font-semibold sm:text-5xl">who we help</h2>
-            <p className="mt-3 text-muted-foreground">
-              Growth-minded local teams across verticals that need a site built to convert, rank, and evolve fast.
-            </p>
-          </div>
-          <div className="mx-auto mt-12 grid max-w-5xl gap-6 sm:grid-cols-2">
-            {audienceSegments.map(segment => (
-              <Link
-                key={segment.name}
-                href={segment.href}
-                className="group block rounded-md border border-border/60 bg-card/30 p-6 text-left shadow-none backdrop-blur-sm transition-colors hover:bg-card/45"
-              >
-                <span className="text-[10px] font-semibold uppercase tracking-[0.32em] text-muted-foreground font-pixel">segment</span>
-                <div className="mt-2">
-                  <h3 className="text-xl font-semibold text-foreground">{segment.name}</h3>
-                  <p className="mt-2 text-sm text-muted-foreground">{segment.description}</p>
-                </div>
-                <span className="mt-4 inline-flex items-center text-xs font-semibold uppercase tracking-[0.18em] text-foreground/80 font-pixel">
-                  Explore why this works
-                  <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                </span>
-              </Link>
-            ))}
-          </div>
-          <div className="mx-auto mt-12 max-w-5xl rounded-md border border-border/60 bg-card/30 p-6 text-left shadow-none backdrop-blur-sm sm:p-8">
-            <div className="text-center sm:text-left">
-              <span className="text-[10px] font-semibold uppercase tracking-[0.32em] text-muted-foreground font-pixel">vertical playbooks</span>
-              <h3 className="mt-4 text-3xl font-semibold sm:text-4xl">
-                see how we tailor each launch
-              </h3>
-              <p className="mt-3 text-sm text-muted-foreground">
-                switch tabs to explore the modules, messaging, and automations we prioritize for different business models.
-              </p>
-            </div>
-            <Tabs defaultValue={segmentPlaybooks[0]?.id} className="mt-6">
-              <TabsList className="mx-auto flex w-full flex-wrap justify-center gap-2 sm:justify-start">
-                {segmentPlaybooks.map(playbook => (
-                  <TabsTrigger
-                    key={playbook.id}
-                    value={playbook.id}
-                  >
-                    {playbook.name}
-                  </TabsTrigger>
-                ))}
-              </TabsList>
-              {segmentPlaybooks.map(playbook => (
-                <TabsContent key={playbook.id} value={playbook.id} className="mt-6 focus-visible:outline-hidden">
-                  <div className="grid gap-6 sm:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)] sm:gap-8">
-                    <div>
-                      <p className="text-sm text-muted-foreground">{playbook.tagline}</p>
-                      <ul className="mt-5 space-y-3 text-sm text-muted-foreground">
-                        {playbook.bullets.map(point => (
-                          <li key={point} className="flex items-start gap-3">
-                            <span className="mt-1 inline-flex h-5 w-5 flex-none items-center justify-center rounded-md border border-border/60 bg-muted/30">
-                              <Check className="h-3 w-3" />
-                            </span>
-                            <span>{point}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                    <div className="flex h-full flex-col justify-between rounded-md border border-border/60 bg-card/20 p-6">
-                      <div>
-                        <span className="text-[10px] font-semibold uppercase tracking-[0.32em] text-muted-foreground font-pixel">
-                          impact focus
-                        </span>
-                        <p className="mt-3 text-sm font-semibold text-foreground">{playbook.spotlight}</p>
-                        <p className="mt-3 text-sm text-muted-foreground">{playbook.summary}</p>
-                        {playbook.id === "dental" ? (
-                          <p className="mt-4 text-sm text-muted-foreground">
-                            need{" "}
-                            <Link
-                              href="/dental-website"
-                              className="font-semibold text-foreground underline decoration-border/60 underline-offset-4 hover:decoration-border"
-                            >
-                              a dental practice website
-                            </Link>
-                            ? see the dental practice website blueprint.
-                          </p>
-                        ) : null}
-                      </div>
-                      <Button
-                        asChild
-                        variant="outline"
-                        className="mt-6 inline-flex items-center justify-center rounded-md px-6"
-                      >
-                        <Link href={playbook.href}>
-                          {playbook.ctaLabel}
-                          <ArrowRight className="ml-2 h-4 w-4" />
-                        </Link>
-                      </Button>
-                    </div>
-                  </div>
-                </TabsContent>
-              ))}
-            </Tabs>
-          </div>
-          <div className="mx-auto mt-12 max-w-4xl rounded-md border border-border/60 bg-card/30 p-8 text-left shadow-none backdrop-blur-sm sm:flex sm:items-center sm:justify-between sm:gap-8">
-            <div>
-              <span className="text-[10px] font-semibold uppercase tracking-[0.32em] text-muted-foreground font-pixel">referral program</span>
-              <h3 className="mt-4 text-3xl font-semibold sm:text-4xl">know a team who needs a better website?</h3>
-              <p className="mt-3 text-sm text-muted-foreground">
-                Share Prism’s referral program and we’ll send them a free analysis. If they launch with us, you earn a payout for the intro.
-              </p>
-            </div>
-            <Button asChild size="lg" className="mt-6 rounded-md px-8 sm:mt-0">
-              <Link href="/refer">refer a business</Link>
-            </Button>
-          </div>
-        </section>
-
-        <section className="px-4 py-16 sm:py-20">
-          <div className="mx-auto max-w-4xl text-center">
-            <h2 className="text-4xl font-semibold sm:text-5xl">our simple process</h2>
-            <p className="mt-3 text-muted-foreground">
-              Fast to launch, collaborative through revisions, and clear about responsibilities.
-            </p>
-          </div>
-          <div className="mx-auto mt-12 max-w-4xl space-y-4">
-            {processSteps.map((stage, index) => (
-              <div
-                key={stage.step}
-                className="flex flex-col gap-3 rounded-md border border-border/60 bg-card/20 p-6 shadow-none backdrop-blur-sm sm:flex-row sm:items-center"
-              >
-                <div className="flex h-10 w-10 items-center justify-center rounded-md bg-primary text-[10px] font-semibold text-primary-foreground font-pixel tracking-[0.16em]">
-                  {index + 1}
-                </div>
-                <div>
-                  <h3 className="text-lg font-semibold text-foreground">{stage.step}</h3>
-                  <p className="mt-1 text-sm text-muted-foreground">{stage.description}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        <section className="border-t border-border/60 bg-card/20 px-4 py-16 text-white sm:py-20">
-          <div className="mx-auto max-w-4xl text-center">
-            <h2 className="text-4xl font-semibold sm:text-5xl">performance wins you can see</h2>
-            <p className="mt-3 text-muted-foreground">
-              Impact that shows up in analytics, search rankings, and how fast prospects choose you.
-            </p>
-          </div>
-          <div className="mx-auto mt-12 grid max-w-4xl gap-6 sm:grid-cols-2">
-            {performanceWins.map(item => (
-              <div key={item} className="flex items-start gap-3 rounded-2xl border border-white/10 bg-white/5 p-6 text-left">
-                <div className="mt-1 rounded-full bg-white/10 p-1">
-                  <Check className="h-4 w-4" />
-                </div>
-                <p className="text-sm text-foreground">{item}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        <section className="px-4 py-16 sm:py-20">
-          <div className="mx-auto max-w-4xl text-center">
-            <h2 className="text-4xl font-semibold sm:text-5xl">what we handle for you</h2>
-            <p className="mt-3 text-muted-foreground">Full-service delivery so your team can focus on running the business.</p>
-          </div>
-          <div className="mx-auto mt-10 flex max-w-4xl flex-wrap justify-center gap-3">
-            {handledForYou.map(item => (
-              <span key={item} className="rounded-md border border-border/60 bg-muted/30 px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-muted-foreground font-pixel">
-                {item}
-              </span>
-            ))}
-          </div>
-        </section>
-
-        {websiteBlogPosts.length > 0 ? (
-          <section className="border-t border-border/60 bg-card/15 px-4 py-16 sm:py-20">
+      <main className="flex-1" id="main-content" tabIndex={-1}>
+        <section className="border-b border-white/12 px-4 pb-16 pt-16 sm:px-6 sm:pb-20 sm:pt-24">
+          <div className="mx-auto max-w-6xl">
             <div className="mx-auto max-w-4xl text-center">
-              <span className="text-[10px] font-semibold uppercase tracking-[0.32em] text-muted-foreground font-pixel">from the blog</span>
-              <h2 className="mt-4 text-4xl font-semibold sm:text-5xl">
-                website strategy notes
-              </h2>
-              <p className="mt-3 text-muted-foreground">
-                Fresh playbooks on architecting, writing, and maintaining sites that convert.
+              <SectionKicker>One-time website build</SectionKicker>
+              <h1 className="mx-auto mt-6 max-w-[12ch] text-balance text-[clamp(2.65rem,7.5vw,5.8rem)] font-medium leading-[0.94] tracking-[-0.06em] text-[#f5f0e8]">
+                A world-class website, without the agency maze.
+              </h1>
+              <p className="mx-auto mt-6 max-w-2xl text-pretty text-[1.08rem] leading-8 text-[#b8afa2] sm:text-[1.18rem]">
+                Prism builds focused, beautiful websites for founders, owners,
+                and operators. Tiny accepted launches start at $300. Every
+                request is reviewed before any payment link is sent.
               </p>
-            </div>
-            <div className="mx-auto mt-10 max-w-6xl">
-              <SimpleBlogGrid posts={websiteBlogPosts}>
-                {websiteBlogPosts.map(post => (
-                  <SimpleBlogPostCard
-                    key={post.slug}
-                    title={post.title}
-                    category={post.category}
-                    date={post.date}
-                    author={post.author}
-                    description={post.description}
-                    slug={post.slug}
-                    image={post.image}
-                    gradientClass={post.gradientClass}
-                  />
-                ))}
-              </SimpleBlogGrid>
-            </div>
-            <div className="mt-10 text-center">
-              <Button asChild variant="outline" className="rounded-md px-8">
-                <Link href="/blog">browse all articles</Link>
-              </Button>
-            </div>
-          </section>
-        ) : null}
 
-        <FAQSection
-          title="website design faq"
-          subtitle="Straight answers about scope, timeline, and what collaboration looks like."
-          items={faqItems}
-          className="bg-card/15"
-        />
+              <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+                <CoreActionLink
+                  href="#estimate"
+                  variant="heroPrimary"
+                  label="start website estimate"
+                  location="websites hero"
+                >
+                  Build my estimate
+                </CoreActionLink>
+                <CoreActionLink
+                  href="#proof"
+                  variant="heroSecondary"
+                  label="see website proof"
+                  location="websites hero"
+                >
+                  See recent builds
+                </CoreActionLink>
+              </div>
 
-        <section className="border-t border-border/60 bg-card/15 px-4 py-20 sm:py-24">
-          <div className="mx-auto max-w-4xl text-center">
-            <h2 className="text-4xl font-semibold sm:text-5xl">
-              Ready to launch a better website?
-            </h2>
-            <p className="mt-4 text-muted-foreground sm:text-lg">
-              We’ll map a clear plan, design the system, and build a site that keeps working long after launch.
-            </p>
-            <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-              <Button asChild size="lg" className="rounded-md px-8">
-                <Link href="/get-started?service=website-design">
-                  {FREE_AUDIT_CTA_TEXT}
-                  <ArrowRight className="ml-2 h-4 w-4" />
+              <div className="mt-8 flex flex-wrap items-center justify-center gap-2">
+                {['Starts at $300', 'One-time build', 'Accepted selectively'].map(
+                  (item) => (
+                    <span
+                      key={item}
+                      className="inline-flex min-h-10 items-center rounded-full border border-white/12 bg-white/[0.03] px-4 font-mono text-[0.72rem] uppercase tracking-[0.18em] text-[#c9c1b6]"
+                    >
+                      {item}
+                    </span>
+                  ),
+                )}
+              </div>
+            </div>
+
+            <div className="mt-14 grid gap-4 md:grid-cols-3">
+              {PROOF_BUILDS.map((build) => (
+                <Link
+                  key={build.title}
+                  href={build.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group overflow-hidden border border-white/12 bg-[#070707] transition-[border-color,transform] duration-500 hover:-translate-y-1 hover:border-[#d8bc79]/45 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[#d8bc79]/35"
+                >
+                  <div className="relative aspect-[16/10] overflow-hidden bg-[#111]">
+                    <Image
+                      src={build.image}
+                      alt={`${build.title} website screenshot`}
+                      fill
+                      sizes="(min-width: 1024px) 360px, (min-width: 768px) 32vw, 100vw"
+                      className="object-cover object-top transition-transform duration-700 group-hover:scale-[1.03]"
+                      priority={build.title === PROOF_BUILDS[0].title}
+                    />
+                  </div>
+                  <div className="flex items-center justify-between gap-4 p-4">
+                    <div>
+                      <p className="font-mono text-[0.68rem] uppercase tracking-[0.22em] text-[#8f877b]">
+                        {build.type}
+                      </p>
+                      <h2 className="mt-2 text-[1.05rem] font-medium tracking-[-0.03em] text-[#f5f0e8]">
+                        {build.title}
+                      </h2>
+                    </div>
+                    <ArrowRight
+                      aria-hidden="true"
+                      className="h-4 w-4 shrink-0 text-[#d8bc79]"
+                    />
+                  </div>
                 </Link>
-              </Button>
-              <Button asChild variant="outline" size="lg" className="rounded-md px-8">
-                <Link href="/contact">Talk to a strategist</Link>
-              </Button>
-              <Button asChild variant="outline" size="lg" className="rounded-md px-8">
-                <Link href="/pricing">See pricing</Link>
-              </Button>
+              ))}
             </div>
           </div>
         </section>
 
-        <SeoTextSection title="custom website design & development">
-          <p>
-            we build fast, accessible, search-friendly websites that turn traffic into pipeline. our approach
-            blends brand clarity, information architecture, and technical seo—clean markup, semantic headings,
-            structured data, and image performance—to help you rank and convert on mobile. made with next.js
-            and a design system you can iterate on.
-          </p>
-          <p>
-            looking specifically for{" "}
-            <Link href="/local-seo-services" className="font-semibold text-foreground underline decoration-border/60 underline-offset-4 hover:decoration-border">
-              local seo services
-            </Link>
-            {" "}or a{" "}
-            <Link href="/local-seo-agency" className="font-semibold text-foreground underline decoration-border/60 underline-offset-4 hover:decoration-border">
-              local seo agency
-            </Link>{" "}
-            partner? see what prism ships beyond the website: listings, reviews, and local content systems that compound.
-          </p>
-        </SeoTextSection>
-      </main>
+        <section className={coreRouteSectionCompactClassName}>
+          <div
+            className={cn(
+              coreRouteContainerClassName,
+              'grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start',
+            )}
+          >
+            <CoreSectionHeading
+              eyebrow="The $300 floor"
+              title="Small, sharp, launchable."
+              description="The base offer is intentionally tiny: one responsive page using your existing words and assets. It is a way to get a real Prism-built website without a long agency process."
+            />
 
+            <div className="grid gap-3 sm:grid-cols-2">
+              {BASE_INCLUDED.map((item) => (
+                <div
+                  key={item}
+                  className="flex min-h-20 items-center gap-3 border border-white/10 bg-white/[0.03] p-4"
+                >
+                  <Check
+                    aria-hidden="true"
+                    className="h-4 w-4 shrink-0 text-[#d8bc79]"
+                  />
+                  <p className="text-sm leading-6 text-[#d6cec2]">{item}</p>
+                </div>
+              ))}
+              <div className="flex min-h-20 items-center gap-3 border border-[#d8bc79]/20 bg-[#d8bc79]/8 p-4">
+                <Sparkles
+                  aria-hidden="true"
+                  className="h-4 w-4 shrink-0 text-[#d8bc79]"
+                />
+                <p className="text-sm leading-6 text-[#e8dcc8]">
+                  Larger scopes are estimated instantly below and reviewed by
+                  the team before acceptance.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section
+          id="estimate"
+          className="scroll-mt-24 border-b border-white/12 px-4 py-20 sm:px-6 sm:py-24"
+        >
+          <div
+            className={cn(
+              coreRouteContainerClassName,
+              'grid gap-10 xl:grid-cols-[0.72fr_1.28fr] xl:items-start',
+            )}
+          >
+            <div className="space-y-7">
+              <CoreSectionHeading
+                eyebrow="Estimator"
+                title="Shape the request."
+                description="Pick the scope, see the review range, and send the request to Prism. The estimate helps both sides move faster without turning the page into a checkout."
+              />
+              <div className="space-y-4 border-t border-white/10 pt-6">
+                <p className="font-mono text-[0.82rem] leading-7 text-[#b8afa2]">
+                  The review is selective by design. Prism only accepts one-time
+                  builds when the project has enough clarity, enough taste
+                  upside, and enough room for the team to make something worth
+                  showing.
+                </p>
+                <p className="font-mono text-[0.82rem] leading-7 text-[#8f877b]">
+                  No card is collected here. If accepted, you receive the next
+                  step and payment link after review.
+                </p>
+              </div>
+            </div>
+
+            <WebsiteBuildEstimatorForm />
+          </div>
+        </section>
+
+        <section className={coreRouteSectionClassName}>
+          <div
+            className={cn(
+              coreRouteContainerClassName,
+              'grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-start',
+            )}
+          >
+            <CoreSectionHeading
+              eyebrow="Selective by default"
+              title="We are looking for good raw material."
+              description="Affordable does not mean automatic. The best small website builds have a clear reason to exist and enough trust between both sides to move quickly."
+            />
+            <div className="grid gap-4 sm:grid-cols-2">
+              {FIT_SIGNALS.map((signal) => (
+                <article
+                  key={signal.title}
+                  className="border border-white/10 bg-[#070707] p-5"
+                >
+                  <h2 className="text-xl font-medium tracking-[-0.04em] text-[#f5f0e8]">
+                    {signal.title}
+                  </h2>
+                  <p className="mt-4 text-sm leading-7 text-[#b8afa2]">
+                    {signal.body}
+                  </p>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section
+          id="proof"
+          className="scroll-mt-24 border-b border-white/12 px-4 py-20 sm:px-6 sm:py-24"
+        >
+          <div className={coreRouteContainerClassName}>
+            <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+              <CoreSectionHeading
+                eyebrow="Recent proof"
+                title="The bar is real."
+                description="The one-time offer is smaller, but the taste standard comes from the same Prism website system."
+              />
+              <CoreActionLink
+                href="/case-studies"
+                variant="secondary"
+                label="view case studies"
+                location="websites proof"
+              >
+                Case studies
+              </CoreActionLink>
+            </div>
+
+            <div className="mt-10 grid gap-px overflow-hidden border border-white/10 bg-white/10 md:grid-cols-2 lg:grid-cols-4">
+              {featuredProjects.map((project, index) => (
+                <Link
+                  key={project.id}
+                  href={project.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group bg-black p-5 transition-colors hover:bg-[#0b0b0b] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[#d8bc79]/35"
+                >
+                  <p className="font-mono text-[0.68rem] uppercase tracking-[0.24em] text-[#6f685d]">
+                    {String(index + 1).padStart(2, '0')} / {project.category}
+                  </p>
+                  <h2 className="mt-5 text-xl font-medium tracking-[-0.04em] text-[#f5f0e8]">
+                    {project.title}
+                  </h2>
+                  <p className="mt-3 text-sm leading-6 text-[#b8afa2]">
+                    {project.description}
+                  </p>
+                  <span className="mt-6 inline-flex items-center gap-2 font-mono text-[0.72rem] uppercase tracking-[0.18em] text-[#d8bc79]">
+                    Open site
+                    <ArrowRight aria-hidden="true" className="h-3.5 w-3.5" />
+                  </span>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className={coreRouteSectionClassName}>
+          <div className={coreRouteContainerClassName}>
+            <CoreSectionHeading
+              eyebrow="How it works"
+              title="Fast, but not careless."
+              description="The flow stays intentionally small so the work can stay sharp."
+            />
+            <ol className="mt-10 grid gap-4 md:grid-cols-4">
+              {PROCESS_STEPS.map((step, index) => (
+                <li
+                  key={step.label}
+                  className="border border-white/10 bg-[#070707] p-5"
+                >
+                  <p className="font-mono text-[0.7rem] uppercase tracking-[0.24em] text-[#8f877b]">
+                    {String(index + 1).padStart(2, '0')}
+                  </p>
+                  <h2 className="mt-5 text-xl font-medium tracking-[-0.04em] text-[#f5f0e8]">
+                    {step.label}
+                  </h2>
+                  <p className="mt-4 text-sm leading-7 text-[#b8afa2]">
+                    {step.body}
+                  </p>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </section>
+
+        <section className={coreRouteSectionCompactClassName}>
+          <div className={coreRouteContainerClassName}>
+            <CoreSectionHeading
+              eyebrow="FAQ"
+              title="Useful details before you ask."
+            />
+            <div className="mt-10 divide-y divide-white/10 border-y border-white/10">
+              {FAQ_ITEMS.map((item) => (
+                <details key={item.question} className="group py-6">
+                  <summary className="flex cursor-pointer list-none items-center justify-between gap-6 text-left text-xl font-medium tracking-[-0.04em] text-[#f5f0e8]">
+                    {item.question}
+                    <span className="text-[#d8bc79] transition-transform group-open:rotate-45">
+                      +
+                    </span>
+                  </summary>
+                  <p className="mt-4 max-w-3xl text-sm leading-7 text-[#b8afa2]">
+                    {item.answer}
+                  </p>
+                </details>
+              ))}
+            </div>
+          </div>
+        </section>
+      </main>
       <Footer />
-      <ScrollToTop />
       <ServiceSchema
-        serviceId="websites-service"
-        name="Website design & development"
-        description="strategy, copy, and custom development for small business websites that convert local demand."
-        serviceType="Website design"
+        serviceId="one-time-website-build"
+        name="One-time website build"
+        description="Focused one-time website builds for founders, operators, and small teams, starting at $300 for tiny accepted launches."
+        serviceType="Website design and development"
         areaServed="United States"
         offerDetails={{
-          name: "60-Day Growth Sprint",
+          name: 'One-time website build',
           description:
-            "Focused website, tracking, and conversion sprint scoped from the Prism Growth Dashboard and audit path.",
-          businessFunction: "http://purl.org/goodrelations/v1#ProvideService",
-          price: "3500",
-          priceCurrency: "USD",
-          url: "https://www.design-prism.com/pricing",
+            'A selective one-time website build reviewed by Prism before payment, starting at $300 for a tiny accepted launch.',
+          businessFunction: 'http://purl.org/goodrelations/v1#ProvideService',
+          price: '300',
+          priceCurrency: 'USD',
+          url: CANONICAL_URL,
         }}
-        aggregateRating={aggregateRating}
       />
+      <FAQSchema questions={[...FAQ_ITEMS]} />
     </div>
   )
 }

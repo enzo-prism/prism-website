@@ -72,6 +72,11 @@ export const REQUIRED_CANONICAL_SNIPPETS: Record<string, string[]> = {
     "Starts at $3,500",
     "Starts at $1,500/month",
   ],
+  "app/websites/page.tsx": [
+    "One-time website build",
+    "Starts at $300",
+    "price: '300'",
+  ],
 }
 
 export function collectPricingConsistencyViolations(
