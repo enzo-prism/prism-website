@@ -139,7 +139,19 @@ describe('Navbar', () => {
     )
     expect(document.querySelector('#mobile-site-nav')).toBeInTheDocument()
     expect(screen.queryByRole('link', { name: /our story/i })).not.toBeInTheDocument()
+    expect(screen.getAllByRole('link', { name: /websites/i })).toHaveLength(2)
     expect(screen.getAllByRole('link', { name: /results/i })).toHaveLength(2)
+  })
+
+  it('links to the one-time websites page and highlights it on that route', () => {
+    mockUsePathname.mockReturnValue('/websites')
+
+    render(<Navbar />)
+
+    const websitesLinks = screen.getAllByRole('link', { name: /websites/i })
+    expect(websitesLinks).toHaveLength(1)
+    expect(websitesLinks[0]).toHaveAttribute('href', '/websites')
+    expect(websitesLinks[0].className).toContain('text-[#f5f0e8]')
   })
 
   it('highlights section links on nested routes and shows case study breadcrumbs', () => {

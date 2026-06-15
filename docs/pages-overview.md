@@ -151,7 +151,7 @@ Quick reference for the pages we edit most often.
 
 ## Shared Chrome (`components/navbar.tsx`, `components/footer.tsx`)
 
-- Header nav labels live in `lib/constants.ts`; the current public nav is `results`, `reviews`, and `free audit`.
+- Header nav labels live in `lib/constants.ts`; the current public nav is `websites`, `results`, `wall of love`, and `free audit`.
 - The top-left logo links to `/`, tracks `trackNavigation('logo', '/')`, and has a small hover/focus treatment on the logo mark and wordmark. Keep it tactile but stable: no text reflow, no new route-specific header variants, and respect reduced-motion utilities for transforms.
 - The footer has one funnel CTA: `Free audit` links to `/get-started` through `TrackedLink` with `label="Free audit"` and `location="footer"`.
 - Do not reintroduce a footer "Book call" button or contact-page demo calendar without changing the funnel docs first.
