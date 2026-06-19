@@ -3196,3 +3196,54 @@ select {
     opacity: 0;
   }
 }
+
+/* ------------------------------------------------------------------ */
+/* /websites base-offer showcase motion.                              */
+/* ------------------------------------------------------------------ */
+
+@keyframes base-offer-shimmer {
+  0% {
+    transform: translateX(-30%);
+    opacity: 0;
+  }
+
+  35% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateX(420%);
+    opacity: 0;
+  }
+}
+
+.base-offer-shimmer {
+  animation: base-offer-shimmer 5s ease-in-out infinite;
+  animation-delay: 1.2s;
+}
+
+@keyframes base-offer-bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(4px);
+  }
+}
+
+.base-offer-bob {
+  animation: base-offer-bob 2.4s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .base-offer-shimmer,
+  .base-offer-bob {
+    animation: none;
+  }
+
+  .base-offer-shimmer {
+    opacity: 0;
+  }
+}
