@@ -15,6 +15,7 @@ const footerColumns: FooterColumn[] = [
   {
     heading: 'System',
     links: [
+      { label: 'Founder OS', href: '/founder-os' },
       { label: 'Websites', href: '/websites' },
       { label: 'SEO', href: '/seo' },
       { label: 'AI search', href: '/ai-seo-services' },
