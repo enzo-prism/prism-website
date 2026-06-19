@@ -1538,6 +1538,14 @@ select {
     font-size: var(--prism-type-h3) !important;
     line-height: 1.14 !important;
   }
+
+  /* Founder OS surfaces use the light Geist voice — sans headings with tight
+     tracking — instead of the global Pixel heading default. */
+  [data-surface='founder-os'] :is(h1, h2, h3, h4, h5, h6) {
+    font-family: var(--font-sans);
+    letter-spacing: -0.03em !important;
+    text-wrap: balance;
+  }
 }
 
 @layer utilities {
