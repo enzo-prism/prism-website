@@ -344,7 +344,7 @@ function PrimaryButton({
   return (
     <Link
       href={href}
-      className={`inline-flex min-h-12 items-center justify-center gap-2 rounded-lg bg-[#0a0a0a] px-5 text-[0.95rem] font-medium text-[#ffffff] transition-[background-color,transform,box-shadow] duration-200 ${EASE} hover:bg-[#262626] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0063d1] focus-visible:ring-offset-2 focus-visible:ring-offset-[#ffffff]`}
+      className={`fos-cta inline-flex min-h-12 items-center justify-center gap-2 rounded-lg bg-[#0a0a0a] px-5 text-[0.95rem] font-medium text-[#ffffff] transition-[background-color,transform,box-shadow] duration-200 ${EASE} hover:bg-[#262626] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0063d1] focus-visible:ring-offset-2 focus-visible:ring-offset-[#ffffff]`}
     >
       {children}
     </Link>
@@ -722,7 +722,7 @@ export default function FounderOsPage() {
                 return (
                   <div
                     key={step.title}
-                    className="flex flex-col rounded-xl border border-[#ededed] bg-[#ffffff] p-5"
+                    className="flex flex-col rounded-xl border border-[#ededed] bg-[#ffffff] p-5 fos-lift"
                   >
                     <div className="flex items-center justify-between">
                       <IconBadge icon={Icon} />
@@ -854,7 +854,7 @@ export default function FounderOsPage() {
                   return (
                     <div
                       key={agent.name}
-                      className="flex flex-col rounded-xl border border-[#ededed] bg-[#ffffff] p-5"
+                      className="flex flex-col rounded-xl border border-[#ededed] bg-[#ffffff] p-5 fos-lift"
                     >
                       <IconBadge icon={Icon} />
                       <p className="mt-4 font-mono text-[0.66rem] uppercase tracking-[0.16em] text-[#0063d1]">
@@ -910,7 +910,7 @@ export default function FounderOsPage() {
               {PHASES.map((phase) => (
                 <div
                   key={phase.title}
-                  className="relative rounded-2xl border border-[#ededed] bg-[#ffffff] p-6"
+                  className="relative rounded-2xl border border-[#ededed] bg-[#ffffff] p-6 fos-lift"
                 >
                   <span className="font-mono text-[0.7rem] uppercase tracking-[0.16em] text-[#0063d1]">
                     {phase.label}
@@ -960,7 +960,7 @@ export default function FounderOsPage() {
                 return (
                   <div
                     key={item.title}
-                    className="flex gap-4 rounded-xl border border-[#ededed] bg-[#ffffff] p-6"
+                    className="flex gap-4 rounded-xl border border-[#ededed] bg-[#ffffff] p-6 fos-lift"
                   >
                     <IconBadge icon={Icon} />
                     <div>
@@ -1092,7 +1092,7 @@ export default function FounderOsPage() {
               {STAGES.map((stage) => (
                 <div
                   key={stage.name}
-                  className={`flex flex-col rounded-2xl border p-6 sm:p-7 ${
+                  className={`flex flex-col rounded-2xl border p-6 sm:p-7 fos-lift ${
                     stage.featured
                       ? 'border-[#0a0a0a] bg-[#ffffff] shadow-[0_24px_60px_-36px_rgba(0,0,0,0.4)]'
                       : 'border-[#ededed] bg-[#ffffff]'

@@ -3281,3 +3281,31 @@ select {
     animation: none;
   }
 }
+
+/* ------------------------------------------------------------------ */
+/* Founder OS premium hover layer — scoped + reduced-motion aware.     */
+/* Lift only appears on interaction, so the at-rest design is intact.  */
+/* ------------------------------------------------------------------ */
+
+[data-surface='founder-os'] .fos-lift {
+  transition:
+    transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.1),
+    border-color 0.2s ease,
+    box-shadow 0.25s ease;
+}
+
+[data-surface='founder-os'] .fos-cta svg {
+  transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  [data-surface='founder-os'] .fos-lift:hover {
+    transform: translateY(-3px);
+    border-color: #d4d4d4;
+    box-shadow: 0 22px 48px -32px rgba(10, 10, 10, 0.45);
+  }
+
+  [data-surface='founder-os'] .fos-cta:hover svg {
+    transform: translateX(3px);
+  }
+}
