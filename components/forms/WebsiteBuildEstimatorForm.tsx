@@ -3,7 +3,37 @@
 import type { FocusEvent, FormEvent } from 'react'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { ArrowLeft, ArrowRight, Check, Minus, Plus } from 'lucide-react'
+import {
+  ArrowLeft,
+  ArrowRight,
+  Blocks,
+  Building2,
+  CalendarClock,
+  CalendarDays,
+  Check,
+  ClipboardCheck,
+  ClipboardList,
+  Compass,
+  Files,
+  HelpCircle,
+  Layers,
+  Leaf,
+  Link as LinkIcon,
+  Mail,
+  MessageSquareText,
+  Minus,
+  Newspaper,
+  Palette,
+  PanelTop,
+  PenLine,
+  Plus,
+  Rocket,
+  Search,
+  UserRound,
+  Wand2,
+  Zap,
+} from 'lucide-react'
+import type { LucideIcon } from 'lucide-react'
 
 import { Alert, AlertDescription } from '@/components/ui/alert'
 import { Button } from '@/components/ui/button'
@@ -43,11 +73,11 @@ const STEPS = [
 ] as const
 
 const WEBSITE_TYPES = [
-  'Tiny landing page',
-  'Business website',
-  'Portfolio or personal site',
-  'Launch or event page',
-  'Not sure yet',
+  { label: 'Tiny landing page', icon: PanelTop },
+  { label: 'Business website', icon: Building2 },
+  { label: 'Portfolio or personal site', icon: UserRound },
+  { label: 'Launch or event page', icon: Rocket },
+  { label: 'Not sure yet', icon: Compass },
 ] as const
 
 const ADD_ONS = [
@@ -56,36 +86,42 @@ const ADD_ONS = [
     label: 'Prism copywriting',
     description: 'We shape concise launch copy from your notes.',
     price: 200,
+    icon: PenLine,
   },
   {
     id: 'brand-direction',
     label: 'Light brand direction',
     description: 'A simple type, color, and visual direction pass.',
     price: 150,
+    icon: Palette,
   },
   {
     id: 'seo-basics',
     label: 'SEO launch basics',
     description: 'Titles, descriptions, headings, and share image basics.',
     price: 200,
+    icon: Search,
   },
   {
     id: 'custom-form',
     label: 'Custom form or intake',
     description: 'One polished request, lead, or booking form.',
     price: 150,
+    icon: ClipboardList,
   },
   {
     id: 'cms-blog',
     label: 'CMS or blog editing',
     description: 'A simple editing path for posts or pages.',
     price: 400,
+    icon: Newspaper,
   },
   {
     id: 'motion-art-direction',
     label: 'Expressive motion',
     description: 'Subtle motion or art direction beyond the base build.',
     price: 250,
+    icon: Wand2,
   },
 ] as const
 
@@ -95,29 +131,46 @@ const TIMELINE_OPTIONS = [
     label: 'Flexible',
     detail: 'Best fit for thoughtful small builds.',
     rush: false,
+    icon: Leaf,
   },
   {
     value: 'within-30-days',
     label: 'Within 30 days',
     detail: 'Good when assets are ready.',
     rush: false,
+    icon: CalendarDays,
   },
   {
     value: 'rush-review',
     label: 'ASAP / rush review',
     detail: `Adds ${formatCurrency(RUSH_REVIEW_PRICE)} if accepted.`,
     rush: true,
+    icon: Zap,
   },
   {
     value: 'not-sure',
     label: 'Not sure yet',
     detail: 'We will recommend the calmest path.',
     rush: false,
+    icon: HelpCircle,
   },
 ] as const
 
 type StepId = (typeof STEPS)[number]
 type ErrorMap = Record<string, string>
+
+const STEP_ICONS: Record<StepId, LucideIcon> = {
+  type: Layers,
+  pages: Files,
+  addons: Blocks,
+  notes: MessageSquareText,
+  link: LinkIcon,
+  timeline: CalendarClock,
+  contact: Mail,
+  review: ClipboardCheck,
+}
+
+const OPTIONAL_STEPS = new Set<StepId>(['notes', 'link'])
 type ValidFieldElement =
   | HTMLInputElement
   | HTMLTextAreaElement
@@ -185,6 +238,22 @@ function FieldError({ error, id }: { error: string; id: string }) {
     >
       {error}
     </p>
+  )
+}
+
+function OptionIcon({ icon: Icon, active }: { icon: LucideIcon; active: boolean }) {
+  return (
+    <span
+      aria-hidden="true"
+      className={cn(
+        'inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border transition-[border-color,background-color,color,box-shadow] duration-200 ease-[cubic-bezier(0.16,1,0.3,1)]',
+        active
+          ? 'border-[#d8bc79]/45 bg-[#d8bc79]/15 text-[#d8bc79] shadow-[0_0_22px_-12px_rgba(216,188,121,0.9)]'
+          : 'border-white/12 bg-white/[0.03] text-[#b8afa2]',
+      )}
+    >
+      <Icon className="h-4 w-4" />
+    </span>
   )
 }
 
@@ -510,7 +579,7 @@ export default function WebsiteBuildEstimatorForm() {
   const fieldClassName =
     'min-h-14 border-white/12 bg-black/40 px-4 text-[1rem] text-[#f5f0e8] placeholder:text-[#6e6e68] focus-visible:border-[#d8bc79]/65 focus-visible:ring-[#d8bc79]/30 focus-visible:ring-offset-0'
   const choiceClassName =
-    'flex min-h-[64px] w-full items-start justify-between gap-4 border border-white/10 bg-black/30 px-4 py-4 text-left transition-[border-color,background-color,color,box-shadow] duration-200 hover:border-white/22 hover:text-[#f5f0e8] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[#d8bc79]/35 focus-visible:ring-offset-0'
+    'flex min-h-[64px] w-full justify-between gap-4 border border-white/10 bg-black/30 px-4 py-4 text-left transition-[border-color,background-color,color,box-shadow] duration-200 hover:border-white/22 hover:text-[#f5f0e8] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[#d8bc79]/35 focus-visible:ring-offset-0'
 
   const renderStepBody = () => {
     switch (currentStep) {
@@ -518,27 +587,31 @@ export default function WebsiteBuildEstimatorForm() {
         return (
           <div className="grid gap-3 sm:grid-cols-2">
             {WEBSITE_TYPES.map((type) => {
-              const isSelected = websiteType === type
+              const isSelected = websiteType === type.label
               return (
                 <button
-                  key={type}
+                  key={type.label}
                   type="button"
                   aria-pressed={isSelected}
-                  onClick={() => selectWebsiteType(type)}
+                  onClick={() => selectWebsiteType(type.label)}
                   className={cn(
                     choiceClassName,
+                    'items-center',
                     isSelected
                       ? 'border-[#d8bc79]/70 bg-[#d8bc79]/10 text-[#f5f0e8] shadow-[0_0_0_1px_rgba(216,188,121,0.16)]'
                       : 'text-[#d6d0c6]',
                   )}
                 >
-                  <span className="font-mono text-[0.82rem] uppercase tracking-[0.13em]">
-                    {type}
+                  <span className="flex min-w-0 items-center gap-3">
+                    <OptionIcon icon={type.icon} active={isSelected} />
+                    <span className="font-mono text-[0.82rem] uppercase tracking-[0.13em]">
+                      {type.label}
+                    </span>
                   </span>
                   {isSelected ? (
                     <Check
                       aria-hidden="true"
-                      className="mt-0.5 h-4 w-4 shrink-0 text-[#d8bc79]"
+                      className="h-4 w-4 shrink-0 text-[#d8bc79]"
                     />
                   ) : null}
                 </button>
@@ -607,17 +680,21 @@ export default function WebsiteBuildEstimatorForm() {
                   onClick={() => toggleAddOn(addOn.id)}
                   className={cn(
                     choiceClassName,
+                    'items-start',
                     isSelected
                       ? 'border-[#d8bc79]/70 bg-[#d8bc79]/10 text-[#f5f0e8]'
                       : 'text-[#d6d0c6]',
                   )}
                 >
-                  <span>
-                    <span className="block font-mono text-[0.82rem] uppercase tracking-[0.13em]">
-                      {addOn.label}
-                    </span>
-                    <span className="mt-2 block text-sm leading-6 text-[#8f877b]">
-                      {addOn.description}
+                  <span className="flex min-w-0 items-start gap-3">
+                    <OptionIcon icon={addOn.icon} active={isSelected} />
+                    <span className="min-w-0">
+                      <span className="block font-mono text-[0.82rem] uppercase tracking-[0.13em]">
+                        {addOn.label}
+                      </span>
+                      <span className="mt-2 block text-sm leading-6 text-[#8f877b]">
+                        {addOn.description}
+                      </span>
                     </span>
                   </span>
                   <span className="shrink-0 font-mono text-[0.82rem] text-[#d8bc79]">
@@ -695,17 +772,21 @@ export default function WebsiteBuildEstimatorForm() {
                   onClick={() => selectTimeline(option.value)}
                   className={cn(
                     choiceClassName,
+                    'items-start',
                     isSelected
                       ? 'border-[#d8bc79]/70 bg-[#d8bc79]/10 text-[#f5f0e8]'
                       : 'text-[#d6d0c6]',
                   )}
                 >
-                  <span>
-                    <span className="block font-mono text-[0.82rem] uppercase tracking-[0.13em]">
-                      {option.label}
-                    </span>
-                    <span className="mt-2 block text-sm leading-6 text-[#8f877b]">
-                      {option.detail}
+                  <span className="flex min-w-0 items-start gap-3">
+                    <OptionIcon icon={option.icon} active={isSelected} />
+                    <span className="min-w-0">
+                      <span className="block font-mono text-[0.82rem] uppercase tracking-[0.13em]">
+                        {option.label}
+                      </span>
+                      <span className="mt-2 block text-sm leading-6 text-[#8f877b]">
+                        {option.detail}
+                      </span>
                     </span>
                   </span>
                   {option.rush ? (
@@ -845,6 +926,12 @@ export default function WebsiteBuildEstimatorForm() {
                   ? 'Where should we reply?'
                   : 'Review your request.'
 
+  const isOptionalStep = OPTIONAL_STEPS.has(currentStep)
+  const stepSubtext = isOptionalStep
+    ? 'Optional — add detail if it helps, or just continue to skip it.'
+    : 'Build an estimate, send the request, and Prism will review it for fit before any payment link is sent.'
+  const StepIcon = STEP_ICONS[currentStep]
+
   return (
     <form
       ref={formRef}
@@ -911,9 +998,17 @@ export default function WebsiteBuildEstimatorForm() {
         <div className="min-w-0">
           <div className="border-b border-white/10 pb-5">
             <div className="flex items-center justify-between gap-4">
-              <p className="font-mono text-[0.72rem] uppercase tracking-[0.3em] text-[#d8bc79]">
-                {isReviewStep ? 'Review' : `${stepIndex + 1} of ${STEPS.length}`}
-              </p>
+              <div className="flex items-center gap-3">
+                <span
+                  aria-hidden="true"
+                  className="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-[#d8bc79]/30 bg-[#d8bc79]/10 text-[#d8bc79]"
+                >
+                  <StepIcon className="h-4 w-4" />
+                </span>
+                <p className="font-mono text-[0.72rem] uppercase tracking-[0.3em] text-[#d8bc79]">
+                  {isReviewStep ? 'Review' : `${stepIndex + 1} of ${STEPS.length}`}
+                </p>
+              </div>
               <p className="font-mono text-[0.72rem] uppercase tracking-[0.2em] text-[#767068]">
                 Starting at {formatCurrency(BASE_PRICE)}
               </p>
@@ -926,15 +1021,33 @@ export default function WebsiteBuildEstimatorForm() {
             </div>
           </div>
 
+          {/* Mobile-only live estimate: the sidebar is pushed below the fold on small screens. */}
+          <div className="mt-5 flex items-center justify-between gap-4 border border-[#d8bc79]/20 bg-[#d8bc79]/[0.06] px-4 py-3 lg:hidden">
+            <span className="font-mono text-[0.68rem] uppercase tracking-[0.2em] text-[#8f877b]">
+              Estimated range
+            </span>
+            <span
+              key={estimateRange}
+              className="estimate-flash font-mono text-[1.05rem] font-medium tracking-[-0.02em] text-[#f5f0e8] tabular-nums"
+              aria-live="polite"
+            >
+              {estimateRange}
+            </span>
+          </div>
+
           <div className="py-9 sm:py-12">
             <div className="space-y-7">
               <div className="space-y-3">
+                {isOptionalStep ? (
+                  <span className="inline-flex w-fit items-center gap-2 rounded-full border border-white/14 bg-white/[0.03] px-3 py-1 font-mono text-[0.62rem] uppercase tracking-[0.22em] text-[#8f877b]">
+                    Optional step
+                  </span>
+                ) : null}
                 <h2 className="max-w-[13ch] text-balance font-sans text-[clamp(2rem,7vw,4.1rem)] font-medium leading-[0.96] tracking-[-0.055em] text-[#f5f0e8]">
                   {heading}
                 </h2>
                 <p className="max-w-xl font-mono text-[0.86rem] leading-6 text-[#8f877b]">
-                  Build an estimate, send the request, and Prism will review it
-                  for fit before any payment link is sent.
+                  {stepSubtext}
                 </p>
               </div>
 
@@ -994,7 +1107,8 @@ export default function WebsiteBuildEstimatorForm() {
             Estimated review range
           </p>
           <p
-            className="mt-3 text-[2rem] font-medium leading-none tracking-[-0.055em] text-[#f5f0e8]"
+            key={estimateRange}
+            className="estimate-flash mt-3 text-[2rem] font-medium leading-none tracking-[-0.055em] text-[#f5f0e8] tabular-nums"
             aria-live="polite"
           >
             {estimateRange}
