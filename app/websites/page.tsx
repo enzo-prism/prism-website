@@ -2,10 +2,11 @@ import type { Metadata } from 'next'
 import type { ReactNode } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { ArrowRight, Check, Sparkles } from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
 
 import Footer from '@/components/footer'
 import Navbar from '@/components/navbar'
+import BaseOfferShowcase from '@/components/websites/BaseOfferShowcase'
 import WebsiteBuildEstimatorForm from '@/components/forms/WebsiteBuildEstimatorForm'
 import {
   CoreActionLink,
@@ -30,14 +31,6 @@ export const metadata: Metadata = buildRouteMetadata({
   path: '/websites',
   ogImage: '/prism-opengraph.png',
 })
-
-const BASE_INCLUDED = [
-  'One responsive landing page',
-  'Client-provided copy and assets',
-  'Polished Prism design system pass',
-  'Fast launch-ready frontend',
-  'Simple review before payment',
-] as const
 
 const FIT_SIGNALS = [
   {
@@ -221,45 +214,7 @@ export default function WebsitesPage() {
           </div>
         </section>
 
-        <section className={coreRouteSectionCompactClassName}>
-          <div
-            className={cn(
-              coreRouteContainerClassName,
-              'grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start',
-            )}
-          >
-            <CoreSectionHeading
-              eyebrow="The $300 floor"
-              title="Small, sharp, launchable."
-              description="The base offer is intentionally tiny: one responsive page using your existing words and assets. It is a way to get a real Prism-built website without a long agency process."
-            />
-
-            <div className="grid gap-3 sm:grid-cols-2">
-              {BASE_INCLUDED.map((item) => (
-                <div
-                  key={item}
-                  className="flex min-h-20 items-center gap-3 border border-white/10 bg-white/[0.03] p-4"
-                >
-                  <Check
-                    aria-hidden="true"
-                    className="h-4 w-4 shrink-0 text-[#d8bc79]"
-                  />
-                  <p className="text-sm leading-6 text-[#d6cec2]">{item}</p>
-                </div>
-              ))}
-              <div className="flex min-h-20 items-center gap-3 border border-[#d8bc79]/20 bg-[#d8bc79]/8 p-4">
-                <Sparkles
-                  aria-hidden="true"
-                  className="h-4 w-4 shrink-0 text-[#d8bc79]"
-                />
-                <p className="text-sm leading-6 text-[#e8dcc8]">
-                  Larger scopes are estimated instantly below and reviewed by
-                  the team before acceptance.
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
+        <BaseOfferShowcase />
 
         <section
           id="estimate"
