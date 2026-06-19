@@ -85,14 +85,7 @@ pnpm git:cleanup      # Clean stale branches
 
 ## Environment Variables
 
-Required variables (see `.env.example`):
-```bash
-NEXT_PUBLIC_BASE_URL=              # Canonical host
-NEXT_PUBLIC_GA_MEASUREMENT_ID=     # Optional GA override
-NEXT_PUBLIC_DASHBOARD_INTAKE_ENDPOINT= # Optional preferred /apply dashboard endpoint
-NEXT_PUBLIC_APPLY_FORM_ENDPOINT=   # Optional Formspree-compatible /apply endpoint
-NEXT_PUBLIC_ELEVENLABS_AGENT_ID=   # Optional ElevenLabs public agent override
-```
+All env vars are optional with sensible fallbacks; none are strictly required for local dev. `NEXT_PUBLIC_BASE_URL` (canonical host for metadata/OG/RSS) is the most impactful. The authoritative reference — Formspree form endpoints, ElevenLabs widget config, Instagram/TikTok tokens, and deploy-check URLs — lives in `.env.example` and [`docs/environment-setup.md`](docs/environment-setup.md). Copy `.env.example` to `.env.local` and fill only what your workflow touches.
 
 ## Quick Debugging
 

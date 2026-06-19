@@ -11,7 +11,7 @@ Recent updates introduced:
 - **An RSS feed** served from `/blog/feed.xml`
 - **Automatic table of contents generation** from H2/H3 headings
 - **A header-level "Copy markdown" action** that copies the full post MDX source for AI workflows
-- **Dental-first search curation** so only approved posts appear in `/blog`, sitemap, RSS, latest-post APIs, and related-post blocks by default
+- **Growth-first search curation** (with dental as a strong specialty proof cluster) so only approved posts appear in `/blog`, sitemap, RSS, latest-post APIs, and related-post blocks by default
 
 Use this document when adding posts or customizing the discovery experience.
 

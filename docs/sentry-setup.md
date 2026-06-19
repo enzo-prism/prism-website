@@ -58,7 +58,7 @@ The project is configured to work with the Sentry MCP server for enhanced develo
 - Monitor project health and performance
 
 ### MCP Configuration
-The Sentry MCP server is configured in `~/.cursor/mcp.json`:
+The Sentry MCP server is configured in `.mcp.json`:
 ```json
 {
   "Sentry": {
@@ -114,7 +114,7 @@ From your development environment, you can:
    - Check that the organization and project slugs are correct
 
 3. **MCP server not responding**
-   - Verify MCP configuration in `~/.cursor/mcp.json`
+   - Verify MCP configuration in `.mcp.json`
    - Ensure network connectivity to `https://mcp.sentry.dev/mcp`
 
 ### Debugging Steps

@@ -48,7 +48,7 @@ cp .env.example .env.local
 
 ## Notes
 
-- `GOOGLE_ADS_ID` (`AW-11373090310`) and the Hotjar site ID are still hard-coded. Update `lib/constants.ts` or `components/hotjar-script.tsx` if you ever need environment-specific values.
+- `GOOGLE_ADS_ID` (`AW-11373090310`) and the Hotjar site ID are still hard-coded. Update `lib/constants.ts` or the inline `hotjar-loader` script in `app/layout.tsx` if you ever need environment-specific values.
 - Vercel Web Analytics does not require an env var. Enable it in the Vercel project dashboard and deploy.
 - `NEXT_PUBLIC_BASE_URL` should always match the public domain you expect search engines and OG scrapers to use.
 - The Prism Library falls back to `content/library/seed.ts` whenever Instagram/TikTok credentials are missing.

@@ -74,7 +74,7 @@ Added preconnect hints for faster Vimeo loading:
 ## Next Steps for Further Optimization
 
 1. **Create Video Poster Image**:
-   - Visit https://vimeo.com/1095467469
+   - Visit https://vimeo.com/1104840957 (the video embedded on `/prism-flywheel`)
    - Capture an attractive frame
    - Save as `/public/hero-video-poster.jpg`
    - Optimize to <100KB
