@@ -71,9 +71,9 @@ Prism is now a business growth systems website: websites, SEO and AI search, Goo
 When search visibility changes, run:
 
 ```bash
-fnm exec --using 22 pnpm exec jest __tests__/sitemap.test.ts __tests__/seo-indexability-guards.test.tsx __tests__/llms.test.ts __tests__/blog-canonical.test.ts --runInBand
-fnm exec --using 22 pnpm seo:inventory
-fnm exec --using 22 pnpm seo:lint
+pnpm exec jest __tests__/sitemap.test.ts __tests__/seo-indexability-guards.test.tsx __tests__/llms.test.ts __tests__/blog-canonical.test.ts --runInBand
+pnpm seo:inventory
+pnpm seo:lint
 ```
 
 ## Form And Lead Flow

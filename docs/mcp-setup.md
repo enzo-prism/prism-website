@@ -1,5 +1,7 @@
 # MCP Server Setup for Claude Code
 
+> **Related:** [`mcp-maintenance.md`](mcp-maintenance.md) for ongoing maintenance and troubleshooting, and [`mcp-workflows.md`](mcp-workflows.md) for usage patterns.
+
 This repo only needs a small MCP story today. For normal Prism website work, the useful servers are GitHub, Sentry, and optionally Figma.
 
 Supabase is not part of the current Prism website runtime or canonical workflow. If a future project in this repo needs a database MCP again, document it as a fresh addition instead of assuming old Supabase setup notes still apply.
