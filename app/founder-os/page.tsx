@@ -328,7 +328,7 @@ const EASE = 'ease-[cubic-bezier(0.175,0.885,0.32,1.1)]'
 
 function Eyebrow({ children }: { children: ReactNode }) {
   return (
-    <p className="font-mono text-[0.7rem] font-medium uppercase tracking-[0.22em] text-[#8f8f8f]">
+    <p className="font-mono text-[0.7rem] font-medium uppercase tracking-[0.22em] text-[#6e6e6e]">
       {children}
     </p>
   )
@@ -344,7 +344,7 @@ function PrimaryButton({
   return (
     <Link
       href={href}
-      className={`inline-flex min-h-12 items-center justify-center gap-2 rounded-lg bg-[#0a0a0a] px-5 text-[0.95rem] font-medium text-white transition-[background-color,transform,box-shadow] duration-200 ${EASE} hover:bg-[#262626] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0070f3] focus-visible:ring-offset-2 focus-visible:ring-offset-white`}
+      className={`inline-flex min-h-12 items-center justify-center gap-2 rounded-lg bg-[#0a0a0a] px-5 text-[0.95rem] font-medium text-[#ffffff] transition-[background-color,transform,box-shadow] duration-200 ${EASE} hover:bg-[#262626] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0063d1] focus-visible:ring-offset-2 focus-visible:ring-offset-[#ffffff]`}
     >
       {children}
     </Link>
@@ -361,7 +361,7 @@ function SecondaryButton({
   return (
     <Link
       href={href}
-      className={`inline-flex min-h-12 items-center justify-center gap-2 rounded-lg border border-[#d4d4d4] bg-white px-5 text-[0.95rem] font-medium text-[#0a0a0a] transition-[background-color,border-color] duration-200 ${EASE} hover:border-[#a3a3a3] hover:bg-[#fafafa] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0070f3] focus-visible:ring-offset-2 focus-visible:ring-offset-white`}
+      className={`inline-flex min-h-12 items-center justify-center gap-2 rounded-lg border border-[#d4d4d4] bg-[#ffffff] px-5 text-[0.95rem] font-medium text-[#0a0a0a] transition-[background-color,border-color] duration-200 ${EASE} hover:border-[#6e6e6e] hover:bg-[#fafafa] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0063d1] focus-visible:ring-offset-2 focus-visible:ring-offset-[#ffffff]`}
     >
       {children}
     </Link>
@@ -420,7 +420,7 @@ function ChatLine({
       <div
         className={
           isFounder
-            ? 'max-w-[85%] rounded-2xl rounded-br-md bg-[#0a0a0a] px-4 py-2.5 text-[0.92rem] leading-6 text-white'
+            ? 'max-w-[85%] rounded-2xl rounded-br-md bg-[#0a0a0a] px-4 py-2.5 text-[0.92rem] leading-6 text-[#ffffff]'
             : 'max-w-[92%] rounded-2xl rounded-bl-md border border-[#ededed] bg-[#fafafa] px-4 py-3 text-[0.92rem] leading-6 text-[#262626]'
         }
       >
@@ -432,7 +432,7 @@ function ChatLine({
 
 function SourceChip({ children }: { children: ReactNode }) {
   return (
-    <span className="inline-flex items-center gap-1 rounded-full border border-[#e2e2e2] bg-white px-2 py-0.5 font-mono text-[0.62rem] uppercase tracking-[0.1em] text-[#737373]">
+    <span className="inline-flex items-center gap-1 rounded-full border border-[#e2e2e2] bg-[#ffffff] px-2 py-0.5 font-mono text-[0.62rem] uppercase tracking-[0.1em] text-[#737373]">
       {children}
     </span>
   )
@@ -444,14 +444,14 @@ function SourceChip({ children }: { children: ReactNode }) {
 
 export default function FounderOsPage() {
   return (
-    <div className="min-h-screen bg-white font-sans text-[#0a0a0a] antialiased [color-scheme:light] selection:bg-[#0a0a0a] selection:text-white">
+    <div className="min-h-screen bg-[#ffffff] font-sans text-[#0a0a0a] antialiased [color-scheme:light] selection:bg-[#0a0a0a] selection:text-[#ffffff]">
       {/* Header — self-contained light chrome */}
-      <header className="sticky top-0 z-50 border-b border-[#ededed] bg-white/85 backdrop-blur-md">
+      <header className="sticky top-0 z-50 border-b border-[#ededed] bg-[#ffffff]/85 backdrop-blur-md">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5 sm:px-8">
           <div className="flex items-center gap-3">
             <Link
               href="/"
-              className="text-[0.95rem] font-semibold tracking-[-0.01em] text-[#0a0a0a] transition-colors hover:text-[#0070f3] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0070f3] focus-visible:ring-offset-2"
+              className="text-[0.95rem] font-semibold tracking-[-0.01em] text-[#0a0a0a] transition-colors hover:text-[#0063d1] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0063d1] focus-visible:ring-offset-2"
               aria-label="Prism home"
             >
               Prism
@@ -490,7 +490,7 @@ export default function FounderOsPage() {
             </Link>
             <Link
               href={APPLY_HREF}
-              className={`inline-flex min-h-9 items-center rounded-lg bg-[#0a0a0a] px-3.5 text-[0.82rem] font-medium text-white transition-colors duration-200 ${EASE} hover:bg-[#262626] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0070f3] focus-visible:ring-offset-2`}
+              className={`inline-flex min-h-9 items-center rounded-lg bg-[#0a0a0a] px-3.5 text-[0.82rem] font-medium text-[#ffffff] transition-colors duration-200 ${EASE} hover:bg-[#262626] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0063d1] focus-visible:ring-offset-2`}
             >
               Apply
             </Link>
@@ -503,7 +503,7 @@ export default function FounderOsPage() {
         <section className="border-b border-[#ededed] px-5 pb-16 pt-16 sm:px-8 sm:pb-24 sm:pt-24">
           <div className="mx-auto max-w-3xl text-center">
             <span className="inline-flex items-center gap-2 rounded-full border border-[#e2e2e2] bg-[#fafafa] px-3 py-1 font-mono text-[0.66rem] uppercase tracking-[0.18em] text-[#737373]">
-              <Sparkles className="h-3.5 w-3.5 text-[#0070f3]" aria-hidden="true" />
+              <Sparkles className="h-3.5 w-3.5 text-[#0063d1]" aria-hidden="true" />
               A managed AI operating layer
             </span>
             <h1 className="mt-6 text-balance text-[clamp(2.6rem,6.4vw,4.6rem)] font-semibold leading-[1.02] tracking-[-0.045em] text-[#0a0a0a]">
@@ -524,7 +524,7 @@ export default function FounderOsPage() {
                 Watch the command demo
               </SecondaryButton>
             </div>
-            <p className="mt-6 font-mono text-[0.72rem] uppercase tracking-[0.14em] text-[#8f8f8f]">
+            <p className="mt-6 font-mono text-[0.72rem] uppercase tracking-[0.14em] text-[#6e6e6e]">
               Powered by frontier models · Controlled by your permissions ·
               Managed by Prism
             </p>
@@ -535,7 +535,7 @@ export default function FounderOsPage() {
             {TRIAD.map((item) => {
               const Icon = item.icon
               return (
-                <div key={item.word} className="bg-white p-6 sm:p-7">
+                <div key={item.word} className="bg-[#ffffff] p-6 sm:p-7">
                   <IconBadge icon={Icon} />
                   <h3 className="mt-4 text-[1.35rem] font-semibold tracking-[-0.02em] text-[#0a0a0a]">
                     {item.word}.
@@ -569,7 +569,7 @@ export default function FounderOsPage() {
                 ].map(([term, def]) => (
                   <div key={term} className="flex gap-3">
                     <CheckCircle2
-                      className="mt-0.5 h-5 w-5 shrink-0 text-[#0070f3]"
+                      className="mt-0.5 h-5 w-5 shrink-0 text-[#0063d1]"
                       strokeWidth={1.7}
                       aria-hidden="true"
                     />
@@ -587,10 +587,10 @@ export default function FounderOsPage() {
             </div>
 
             {/* Chat mock */}
-            <div className="rounded-2xl border border-[#e2e2e2] bg-white p-3 shadow-[0_24px_60px_-32px_rgba(0,0,0,0.25)] sm:p-4">
+            <div className="rounded-2xl border border-[#e2e2e2] bg-[#ffffff] p-3 shadow-[0_24px_60px_-32px_rgba(0,0,0,0.25)] sm:p-4">
               <div className="flex items-center justify-between border-b border-[#f0f0f0] px-2 pb-3">
                 <div className="flex items-center gap-2">
-                  <span className="inline-flex h-7 w-7 items-center justify-center rounded-lg bg-[#0a0a0a] text-white">
+                  <span className="inline-flex h-7 w-7 items-center justify-center rounded-lg bg-[#0a0a0a] text-[#ffffff]">
                     <BrainCircuit className="h-4 w-4" aria-hidden="true" />
                   </span>
                   <span className="text-[0.85rem] font-medium text-[#0a0a0a]">
@@ -598,7 +598,7 @@ export default function FounderOsPage() {
                   </span>
                 </div>
                 <span className="inline-flex items-center gap-1.5 font-mono text-[0.62rem] uppercase tracking-[0.12em] text-[#737373]">
-                  <span className="h-1.5 w-1.5 rounded-full bg-[#16a34a] motion-safe:animate-pulse" />
+                  <span className="h-1.5 w-1.5 rounded-full bg-[#15803d] motion-safe:animate-pulse" />
                   Live
                 </span>
               </div>
@@ -641,7 +641,7 @@ export default function FounderOsPage() {
                   Approve plan one and headline three. Hold the rest.
                 </ChatLine>
                 <ChatLine who="system">
-                  <span className="inline-flex items-center gap-1.5 font-medium text-[#16a34a]">
+                  <span className="inline-flex items-center gap-1.5 font-medium text-[#15803d]">
                     <CheckCircle2 className="h-4 w-4" aria-hidden="true" />
                     Done.
                   </span>{' '}
@@ -688,10 +688,10 @@ export default function FounderOsPage() {
               {CONTEXT_ITEMS.map((item) => (
                 <div
                   key={item}
-                  className="flex min-h-28 flex-col justify-between gap-4 bg-white p-5"
+                  className="flex min-h-28 flex-col justify-between gap-4 bg-[#ffffff] p-5"
                 >
                   <Boxes
-                    className="h-5 w-5 text-[#0070f3]"
+                    className="h-5 w-5 text-[#0063d1]"
                     strokeWidth={1.6}
                     aria-hidden="true"
                   />
@@ -719,7 +719,7 @@ export default function FounderOsPage() {
                 return (
                   <div
                     key={step.title}
-                    className="flex flex-col rounded-xl border border-[#ededed] bg-white p-5"
+                    className="flex flex-col rounded-xl border border-[#ededed] bg-[#ffffff] p-5"
                   >
                     <div className="flex items-center justify-between">
                       <IconBadge icon={Icon} />
@@ -743,11 +743,11 @@ export default function FounderOsPage() {
         {/* How control works */}
         <section
           id="control"
-          className="scroll-mt-20 border-b border-[#ededed] bg-[#0a0a0a] px-5 py-20 text-white sm:px-8 sm:py-28"
+          className="scroll-mt-20 border-b border-[#ededed] bg-[#0a0a0a] px-5 py-20 text-[#ffffff] sm:px-8 sm:py-28"
         >
           <div className="mx-auto max-w-6xl">
             <div className="max-w-2xl">
-              <p className="font-mono text-[0.7rem] font-medium uppercase tracking-[0.22em] text-[#8f8f8f]">
+              <p className="font-mono text-[0.7rem] font-medium uppercase tracking-[0.22em] text-[#a8a8a8]">
                 How control works
               </p>
               <h2 className="mt-4 text-balance text-[clamp(1.85rem,3.6vw,2.7rem)] font-semibold leading-[1.08] tracking-[-0.03em]">
@@ -760,17 +760,17 @@ export default function FounderOsPage() {
               </p>
             </div>
 
-            <div className="mt-10 overflow-hidden rounded-2xl border border-white/12">
+            <div className="mt-10 overflow-hidden rounded-2xl border border-[#ffffff]/12">
               {PERMISSION_LADDER.map((row, index) => (
                 <div
                   key={row.name}
                   className={`grid grid-cols-1 gap-2 px-5 py-4 sm:grid-cols-[3rem_1fr_1.4fr] sm:items-center sm:gap-5 ${
-                    index === 0 ? '' : 'border-t border-white/10'
+                    index === 0 ? '' : 'border-t border-[#ffffff]/10'
                   } ${row.tone === 'danger' ? 'bg-[#e5484d]/10' : ''}`}
                 >
                   <span
                     className={`font-mono text-sm ${
-                      row.tone === 'danger' ? 'text-[#ff6b70]' : 'text-[#8f8f8f]'
+                      row.tone === 'danger' ? 'text-[#ff6b70]' : 'text-[#a8a8a8]'
                     }`}
                   >
                     {row.level}
@@ -778,12 +778,12 @@ export default function FounderOsPage() {
                   <div className="flex items-center gap-2">
                     <span
                       className={`text-[0.98rem] font-medium ${
-                        row.tone === 'danger' ? 'text-[#ff8a8d]' : 'text-white'
+                        row.tone === 'danger' ? 'text-[#ff8a8d]' : 'text-[#ffffff]'
                       }`}
                     >
                       {row.name}
                     </span>
-                    <span className="font-mono text-[0.72rem] uppercase tracking-[0.1em] text-[#8f8f8f]">
+                    <span className="font-mono text-[0.72rem] uppercase tracking-[0.1em] text-[#a8a8a8]">
                       {row.capability}
                     </span>
                   </div>
@@ -795,8 +795,8 @@ export default function FounderOsPage() {
             </div>
 
             <div className="mt-6 grid gap-4 sm:grid-cols-2">
-              <div className="rounded-xl border border-white/12 bg-white/[0.03] p-5">
-                <p className="font-mono text-[0.7rem] uppercase tracking-[0.16em] text-[#8f8f8f]">
+              <div className="rounded-xl border border-[#ffffff]/12 bg-[#ffffff]/[0.03] p-5">
+                <p className="font-mono text-[0.7rem] uppercase tracking-[0.16em] text-[#a8a8a8]">
                   Every answer carries
                 </p>
                 <p className="mt-2 text-[0.95rem] leading-6 text-[#e5e5e5]">
@@ -804,8 +804,8 @@ export default function FounderOsPage() {
                   missing.
                 </p>
               </div>
-              <div className="rounded-xl border border-white/12 bg-white/[0.03] p-5">
-                <p className="font-mono text-[0.7rem] uppercase tracking-[0.16em] text-[#8f8f8f]">
+              <div className="rounded-xl border border-[#ffffff]/12 bg-[#ffffff]/[0.03] p-5">
+                <p className="font-mono text-[0.7rem] uppercase tracking-[0.16em] text-[#a8a8a8]">
                   Every action carries
                 </p>
                 <p className="mt-2 text-[0.95rem] leading-6 text-[#e5e5e5]">
@@ -830,10 +830,10 @@ export default function FounderOsPage() {
                 {INSTALL_SCOPE.map((item) => (
                   <li
                     key={item}
-                    className="flex items-start gap-3 bg-white p-4 text-[0.92rem] leading-6 text-[#262626]"
+                    className="flex items-start gap-3 bg-[#ffffff] p-4 text-[0.92rem] leading-6 text-[#262626]"
                   >
                     <CheckCircle2
-                      className="mt-0.5 h-[1.05rem] w-[1.05rem] shrink-0 text-[#0070f3]"
+                      className="mt-0.5 h-[1.05rem] w-[1.05rem] shrink-0 text-[#0063d1]"
                       strokeWidth={1.7}
                       aria-hidden="true"
                     />
@@ -851,10 +851,10 @@ export default function FounderOsPage() {
                   return (
                     <div
                       key={agent.name}
-                      className="flex flex-col rounded-xl border border-[#ededed] bg-white p-5"
+                      className="flex flex-col rounded-xl border border-[#ededed] bg-[#ffffff] p-5"
                     >
                       <IconBadge icon={Icon} />
-                      <p className="mt-4 font-mono text-[0.66rem] uppercase tracking-[0.16em] text-[#0070f3]">
+                      <p className="mt-4 font-mono text-[0.66rem] uppercase tracking-[0.16em] text-[#0063d1]">
                         {agent.role}
                       </p>
                       <h3 className="mt-1 text-[1.05rem] font-semibold tracking-[-0.01em] text-[#0a0a0a]">
@@ -907,14 +907,14 @@ export default function FounderOsPage() {
               {PHASES.map((phase) => (
                 <div
                   key={phase.title}
-                  className="relative rounded-2xl border border-[#ededed] bg-white p-6"
+                  className="relative rounded-2xl border border-[#ededed] bg-[#ffffff] p-6"
                 >
-                  <span className="font-mono text-[0.7rem] uppercase tracking-[0.16em] text-[#0070f3]">
+                  <span className="font-mono text-[0.7rem] uppercase tracking-[0.16em] text-[#0063d1]">
                     {phase.label}
                   </span>
                   <h3 className="mt-3 flex items-center gap-2 text-[1.25rem] font-semibold tracking-[-0.02em] text-[#0a0a0a]">
                     <CalendarClock
-                      className="h-5 w-5 text-[#8f8f8f]"
+                      className="h-5 w-5 text-[#6e6e6e]"
                       strokeWidth={1.6}
                       aria-hidden="true"
                     />
@@ -926,8 +926,8 @@ export default function FounderOsPage() {
                 </div>
               ))}
             </div>
-            <div className="mt-8 rounded-2xl border border-[#0070f3]/25 bg-[#0070f3]/[0.05] p-6">
-              <p className="font-mono text-[0.7rem] uppercase tracking-[0.18em] text-[#0070f3]">
+            <div className="mt-8 rounded-2xl border border-[#0063d1]/25 bg-[#0063d1]/[0.05] p-6">
+              <p className="font-mono text-[0.7rem] uppercase tracking-[0.18em] text-[#0063d1]">
                 The installation guarantee
               </p>
               <p className="mt-3 max-w-3xl text-[1.02rem] leading-7 text-[#262626]">
@@ -957,7 +957,7 @@ export default function FounderOsPage() {
                 return (
                   <div
                     key={item.title}
-                    className="flex gap-4 rounded-xl border border-[#ededed] bg-white p-6"
+                    className="flex gap-4 rounded-xl border border-[#ededed] bg-[#ffffff] p-6"
                   >
                     <IconBadge icon={Icon} />
                     <div>
@@ -989,9 +989,9 @@ export default function FounderOsPage() {
               title="Founder OS amplifies an operating system. It won’t create one where none exists."
             />
             <div className="mt-10 grid gap-4 lg:grid-cols-2">
-              <div className="rounded-2xl border border-[#ededed] bg-white p-6 sm:p-8">
+              <div className="rounded-2xl border border-[#ededed] bg-[#ffffff] p-6 sm:p-8">
                 <div className="flex items-center gap-2">
-                  <CheckCircle2 className="h-5 w-5 text-[#16a34a]" aria-hidden="true" />
+                  <CheckCircle2 className="h-5 w-5 text-[#15803d]" aria-hidden="true" />
                   <h3 className="text-[1.1rem] font-semibold tracking-[-0.01em] text-[#0a0a0a]">
                     A fit if…
                   </h3>
@@ -1004,16 +1004,16 @@ export default function FounderOsPage() {
                     >
                       <span
                         aria-hidden="true"
-                        className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#16a34a]"
+                        className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#15803d]"
                       />
                       {item}
                     </li>
                   ))}
                 </ul>
               </div>
-              <div className="rounded-2xl border border-[#ededed] bg-white p-6 sm:p-8">
+              <div className="rounded-2xl border border-[#ededed] bg-[#ffffff] p-6 sm:p-8">
                 <div className="flex items-center gap-2">
-                  <CircleSlash className="h-5 w-5 text-[#a3a3a3]" aria-hidden="true" />
+                  <CircleSlash className="h-5 w-5 text-[#6e6e6e]" aria-hidden="true" />
                   <h3 className="text-[1.1rem] font-semibold tracking-[-0.01em] text-[#0a0a0a]">
                     Not yet if…
                   </h3>
@@ -1061,7 +1061,7 @@ export default function FounderOsPage() {
                     key={layer}
                     className={`flex items-center gap-3 px-5 py-3.5 ${
                       index === 0 ? '' : 'border-t border-[#ededed]'
-                    } ${index === arr.length - 1 ? 'bg-white' : ''}`}
+                    } ${index === arr.length - 1 ? 'bg-[#ffffff]' : ''}`}
                   >
                     <span className="font-mono text-[0.66rem] text-[#bdbdbd]">
                       {String(index + 1).padStart(2, '0')}
@@ -1091,16 +1091,16 @@ export default function FounderOsPage() {
                   key={stage.name}
                   className={`flex flex-col rounded-2xl border p-6 sm:p-7 ${
                     stage.featured
-                      ? 'border-[#0a0a0a] bg-white shadow-[0_24px_60px_-36px_rgba(0,0,0,0.4)]'
-                      : 'border-[#ededed] bg-white'
+                      ? 'border-[#0a0a0a] bg-[#ffffff] shadow-[0_24px_60px_-36px_rgba(0,0,0,0.4)]'
+                      : 'border-[#ededed] bg-[#ffffff]'
                   }`}
                 >
                   <div className="flex items-center justify-between">
-                    <span className="font-mono text-[0.66rem] uppercase tracking-[0.16em] text-[#8f8f8f]">
+                    <span className="font-mono text-[0.66rem] uppercase tracking-[0.16em] text-[#6e6e6e]">
                       {stage.stage}
                     </span>
                     {stage.featured ? (
-                      <span className="rounded-full bg-[#0a0a0a] px-2.5 py-0.5 font-mono text-[0.6rem] uppercase tracking-[0.14em] text-white">
+                      <span className="rounded-full bg-[#0a0a0a] px-2.5 py-0.5 font-mono text-[0.6rem] uppercase tracking-[0.14em] text-[#ffffff]">
                         Core
                       </span>
                     ) : null}
@@ -1111,7 +1111,7 @@ export default function FounderOsPage() {
                   <p className="mt-4 text-[2rem] font-semibold tracking-[-0.04em] text-[#0a0a0a]">
                     {stage.price}
                   </p>
-                  <p className="mt-1 font-mono text-[0.72rem] uppercase tracking-[0.1em] text-[#8f8f8f]">
+                  <p className="mt-1 font-mono text-[0.72rem] uppercase tracking-[0.1em] text-[#6e6e6e]">
                     {stage.cadence}
                   </p>
                   <p className="mt-5 text-[0.92rem] leading-6 text-[#525252]">
@@ -1175,7 +1175,7 @@ export default function FounderOsPage() {
                     {item.question}
                     <span
                       aria-hidden="true"
-                      className="text-[#0070f3] transition-transform duration-200 group-open:rotate-45"
+                      className="text-[#0063d1] transition-transform duration-200 group-open:rotate-45"
                     >
                       +
                     </span>
@@ -1207,7 +1207,7 @@ export default function FounderOsPage() {
               </PrimaryButton>
               <SecondaryButton href="#demo">See the command demo</SecondaryButton>
             </div>
-            <p className="mt-6 font-mono text-[0.78rem] uppercase tracking-[0.16em] text-[#8f8f8f]">
+            <p className="mt-6 font-mono text-[0.78rem] uppercase tracking-[0.16em] text-[#6e6e6e]">
               Know. Decide. Approve.
             </p>
           </div>
@@ -1215,7 +1215,7 @@ export default function FounderOsPage() {
       </main>
 
       {/* Footer — self-contained light chrome */}
-      <footer className="border-t border-[#ededed] bg-white px-5 py-12 sm:px-8">
+      <footer className="border-t border-[#ededed] bg-[#ffffff] px-5 py-12 sm:px-8">
         <div className="mx-auto flex max-w-6xl flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <div className="flex items-center gap-3">
@@ -1229,7 +1229,7 @@ export default function FounderOsPage() {
                 Founder OS
               </span>
             </div>
-            <p className="mt-2 max-w-md text-[0.85rem] leading-6 text-[#8f8f8f]">
+            <p className="mt-2 max-w-md text-[0.85rem] leading-6 text-[#6e6e6e]">
               A managed AI operating layer for founder-led companies — governed
               by the founder, improved by frontier models, operated by Prism.
             </p>
@@ -1253,7 +1253,7 @@ export default function FounderOsPage() {
           </nav>
         </div>
         <div className="mx-auto mt-8 max-w-6xl border-t border-[#f0f0f0] pt-6">
-          <p className="text-[0.75rem] text-[#a3a3a3]">
+          <p className="text-[0.75rem] text-[#6e6e6e]">
             © {2026} Prism. Founder OS connects the systems that matter and runs
             controlled, approved execution. It does not provide financial, legal,
             or clinical decisions.
