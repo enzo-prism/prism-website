@@ -32,6 +32,7 @@ Important notes for LLMs and agents:
 
 ## Growth services and dental specialties
 
+- Founder OS (managed AI operating layer for founder-led companies): https://www.design-prism.com/founder-os
 - Dental practices: https://www.design-prism.com/why-dental-practices-love-prism
 - One-time website builds: https://www.design-prism.com/websites
 - Dental website design: https://www.design-prism.com/dental-website
