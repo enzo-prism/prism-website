@@ -11,6 +11,7 @@ export const INDEXABLE_STATIC_ROUTES = [
   "/free-analysis",
   "/services",
   "/websites",
+  "/founder-os",
   "/ads",
   "/local-listings",
   "/seo",
