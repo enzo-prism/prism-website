@@ -26,6 +26,7 @@ const { handleSubmit, getError, isSubmitting } = useFormValidation({
 - `components/forms/ContactForm.tsx`
 - `components/forms/GetStartedForm.tsx` (`/apply`)
 - `components/forms/WebsiteBuildEstimatorForm.tsx` (`/websites`)
+- `components/forms/FounderOsApplicationForm.tsx` (`/founder-os/apply`)
 - `components/forms/ScalingRoadmapForm.tsx`
 - `components/ai-website-launch/AiWebsiteLaunchForm.tsx` (legacy archival form code; the `/ai-website-launch` route redirects to `/pricing` in production and should not receive active traffic)
 - `components/forms/AeoAssessmentForm.tsx`
@@ -168,6 +169,37 @@ The `/apply` route should feel like a focused Growth Dashboard mode, not another
   - `website_build_submit_success`
   - `website_build_submit_error`
   - Do not include user-entered names, emails, URLs, or free-text notes in analytics params.
+
+## New flow: `/founder-os/apply` + Founder OS application
+
+`components/forms/FounderOsApplicationForm.tsx` powers the premium Founder OS application on `app/founder-os/apply/page.tsx`. Unlike the marketing forms above, it is a long, **selective application** (not a contact form): a 90-second fit check, then ~12 substantive screens grouped into six named sections (Fit → Leverage → Workflow → Systems → Control → Readiness).
+
+- Behavior:
+  - Section-based progress (not a percentage), Back on every step, per-step validation, and conditional branches (multi-location scale, proprietary systems, regulated-data compliance).
+  - Declining the investment gate routes to an off-ramp (Growth Dashboard, foundation work, waitlist) with an "continue anyway" path.
+  - Two required open responses: the first trustworthy question and the first workflow.
+  - On success it renders an **in-place confirmation** (echoing the applicant's first workflow + 90-day target) — it does **not** redirect to a `/thank-you` route, and there is intentionally no calendar.
+- Hidden metadata contract:
+  - `_subject` = `New Founder OS application`
+  - `form_name` = `founder_os_application`
+  - `_gotcha` (honeypot)
+  - `<FormspreeOpsFields formKey="founder_os_application">`
+  - Every answer is mirrored as a hidden input (so the `FormData` payload is complete), plus the two acknowledgments and optional marketing consent.
+- DOM analytics contract:
+  - `<form id="founder_os_application" name="founder_os_application">`
+- Endpoint strategy:
+  - `NEXT_PUBLIC_FOUNDER_OS_FORM_ENDPOINT` (defaults to `https://formspree.io/f/xkoalapv`)
+- Success flow:
+  - POST via `fetch(form.action, { method: 'POST', headers: { Accept: 'application/json' }, body: new FormData(form) })`
+  - On `response.ok`, show the in-place confirmation and fire the success events; on failure, keep the user on the review screen with an inline error.
+- Analytics:
+  - `founder_os_application_start`
+  - `founder_os_application_validation_error`
+  - `founder_os_application_submit_attempt`
+  - `founder_os_application_submit_success`
+  - `founder_os_application_submit_error`
+  - Do not include user-entered names, emails, URLs, or free-text answers in analytics params.
+- The `/founder-os/apply` route is `noindex` (transactional surface); the marketing page `/founder-os` is the indexable acquisition surface.
 
 ## New flow: `/aeo` + free AEO assessment
 
