@@ -25,6 +25,7 @@ import {
   Workflow,
 } from 'lucide-react'
 
+import FosReveal from '@/components/founder-os/FosReveal'
 import { FAQSchema, ServiceSchema } from '@/components/schema-markup'
 import { buildRouteMetadata } from '@/lib/seo/metadata'
 
@@ -448,6 +449,7 @@ export default function FounderOsPage() {
       data-surface="founder-os"
       className="min-h-screen bg-[#ffffff] font-sans text-[#0a0a0a] antialiased [color-scheme:light] selection:bg-[#0a0a0a] selection:text-[#ffffff]"
     >
+      <FosReveal />
       {/* Header — self-contained light chrome */}
       <header className="sticky top-0 z-50 border-b border-[#ededed] bg-[#ffffff]/85 backdrop-blur-md">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5 sm:px-8">
@@ -746,8 +748,12 @@ export default function FounderOsPage() {
         {/* How control works */}
         <section
           id="control"
-          className="scroll-mt-20 border-b border-[#ededed] bg-[#0a0a0a] px-5 py-20 text-[#ffffff] sm:px-8 sm:py-28"
+          className="relative scroll-mt-20 overflow-hidden border-b border-[#ededed] bg-[#0a0a0a] px-5 py-20 text-[#ffffff] sm:px-8 sm:py-28"
         >
+          <span
+            aria-hidden="true"
+            className="home-scan-line pointer-events-none absolute inset-y-0 w-1/3 bg-gradient-to-r from-transparent via-[#ffffff]/[0.06] to-transparent"
+          />
           <div className="mx-auto max-w-6xl">
             <div className="max-w-2xl">
               <p className="font-mono text-[0.7rem] font-medium uppercase tracking-[0.22em] text-[#a8a8a8]">
