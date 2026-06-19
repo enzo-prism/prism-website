@@ -32,6 +32,7 @@ export type NavItem = { label: string; href: string }
 
 export const NAV_ITEMS: NavItem[] = [
   { label: "websites", href: "/websites" },
+  { label: "founder os", href: "/founder-os" },
   { label: "results", href: "/case-studies" },
   { label: "wall of love", href: "/wall-of-love" },
   { label: "free audit", href: "/get-started" },
