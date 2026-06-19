@@ -29,7 +29,7 @@ import { FAQSchema, ServiceSchema } from '@/components/schema-markup'
 import { buildRouteMetadata } from '@/lib/seo/metadata'
 
 const CANONICAL_URL = 'https://www.design-prism.com/founder-os'
-const APPLY_HREF = '/contact?topic=founder-os'
+const APPLY_HREF = '/founder-os/apply'
 
 export const metadata: Metadata = buildRouteMetadata({
   titleStem: 'Founder OS: a managed AI operating layer',
@@ -444,7 +444,10 @@ function SourceChip({ children }: { children: ReactNode }) {
 
 export default function FounderOsPage() {
   return (
-    <div className="min-h-screen bg-[#ffffff] font-sans text-[#0a0a0a] antialiased [color-scheme:light] selection:bg-[#0a0a0a] selection:text-[#ffffff]">
+    <div
+      data-surface="founder-os"
+      className="min-h-screen bg-[#ffffff] font-sans text-[#0a0a0a] antialiased [color-scheme:light] selection:bg-[#0a0a0a] selection:text-[#ffffff]"
+    >
       {/* Header — self-contained light chrome */}
       <header className="sticky top-0 z-50 border-b border-[#ededed] bg-[#ffffff]/85 backdrop-blur-md">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5 sm:px-8">
@@ -498,7 +501,7 @@ export default function FounderOsPage() {
         </div>
       </header>
 
-      <main id="main-content">
+      <main id="main-content" tabIndex={-1}>
         {/* Hero */}
         <section className="border-b border-[#ededed] px-5 pb-16 pt-16 sm:px-8 sm:pb-24 sm:pt-24">
           <div className="mx-auto max-w-3xl text-center">
