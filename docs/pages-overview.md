@@ -77,6 +77,15 @@ Quick reference for the pages we edit most often.
 - The `$300` starting price is intentional only for this page and its one-time website build schema. Keep `/pricing` as the canonical Growth Dashboard, Light Audit, Deep Growth Audit, Growth Sprint, and ongoing partner pricing surface.
 - Keep the page indexable, in `public/llms.txt`, and in the sitemap as Prism's canonical website-build acquisition page.
 
+## Founder OS (`app/founder-os/page.tsx`)
+
+- Founder OS is Prism's premium, managed AI operating-layer offer — a distinct, high-ticket track separate from the Growth Dashboard funnel.
+- This route is an **intentional design exception**. It uses a self-contained **light Geist** system (white surfaces, sharp Geist Sans headings, restrained blue accent), deliberately distinct from the dark marketing site, with its own light header/footer instead of the shared dark chrome. The light heading, hover, and reveal styles are scoped via the `[data-surface='founder-os']` attribute in `app/globals.css`; do not "fix" it back to the dark system. (Note: the global `white` token is remapped to near-black in this theme, so these pages use explicit `#ffffff`, never `bg-white`/`text-white`.)
+- Pricing shown is the offer's own ladder (`$10,000` Founder Systems Blueprint → from `$50,000` installation → from `$10,000/month` managed). It is intentional to this page only, does not change `/pricing`, and is not scanned by `verify:pricing-consistency`.
+- Motion is reduced-motion + no-JS safe: `components/founder-os/FosReveal.tsx` (scroll reveal), card hover-lift, and a `home-scan-line` accent on the dark control panel, all scoped to the surface.
+- The application lives at `app/founder-os/apply/page.tsx` via `components/forms/FounderOsApplicationForm.tsx` (see [forms.md](./forms.md)).
+- Keep `/founder-os` indexable, in `public/llms.txt`, and in the sitemap; keep `/founder-os/apply` noindex. `ServiceSchema` + `FAQSchema` are present on the marketing page.
+
 ## Apps (`app/apps/page.tsx`)
 
 - Mobile app portfolio + process overview.
@@ -151,7 +160,7 @@ Quick reference for the pages we edit most often.
 
 ## Shared Chrome (`components/navbar.tsx`, `components/footer.tsx`)
 
-- Header nav labels live in `lib/constants.ts`; the current public nav is `websites`, `results`, `wall of love`, and `free audit`.
+- Header nav labels live in `lib/constants.ts`; the current public nav is `websites`, `founder os`, `results`, `wall of love`, and `free audit`. The footer System column also links `Founder OS`.
 - The top-left logo links to `/`, tracks `trackNavigation('logo', '/')`, and has a small hover/focus treatment on the logo mark and wordmark. Keep it tactile but stable: no text reflow, no new route-specific header variants, and respect reduced-motion utilities for transforms.
 - The footer has one funnel CTA: `Free audit` links to `/get-started` through `TrackedLink` with `label="Free audit"` and `location="footer"`.
 - Do not reintroduce a footer "Book call" button or contact-page demo calendar without changing the funnel docs first.

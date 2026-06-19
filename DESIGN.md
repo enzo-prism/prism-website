@@ -186,6 +186,10 @@ This contract is repo-wide, but it is most important for the public marketing sy
 
 Other routes can diverge when the content format truly requires it, but they should still feel related. Do not casually create a new visual language for a single page.
 
+### Sanctioned light surface: Founder OS
+
+`/founder-os` and `/founder-os/apply` are a deliberate, product-approved exception to the dark-first system: they use a self-contained **light Geist** theme (white / near-neutral surfaces, sharp Geist Sans headings, restrained blue accent) so the premium offer reads as a distinct software product, separate from the dark marketing site. The entire light treatment — headings, hover-lift, scroll-reveal — is scoped via the `[data-surface='founder-os']` attribute in `app/globals.css`. Do not migrate these pages back to the dark system, and do not leak their light tokens onto other routes. **Gotcha:** the global `white` color token is remapped to near-black in this theme, so the Founder OS surface must use explicit `#ffffff` (never `bg-white`/`text-white`).
+
 If Prism later adds `.stitch/`, keep `.stitch/DESIGN.md` as concept memory and keep this root `DESIGN.md` as the implementation contract for shipped code.
 
 ## Code anchors
