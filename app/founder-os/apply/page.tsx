@@ -87,7 +87,7 @@ export default function FounderOsApplyPage() {
           Prism stores your application to evaluate fit and may use trusted
           service providers to process it. Application data is not used to train
           public AI models. Please don&apos;t submit credentials, customer
-          records, patient information, or other confidential source data — Prism
+          records, patient information, or other confidential source data. Prism
           will set up a secure process if detailed material is needed later. See
           the{' '}
           <Link href="/privacy-policy" className="text-[#0063d1] underline-offset-2 hover:underline">

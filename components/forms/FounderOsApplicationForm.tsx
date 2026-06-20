@@ -874,7 +874,7 @@ export default function FounderOsApplicationForm() {
               First workflow
             </dt>
             <dd className="mt-1 text-[0.92rem] leading-6 text-[#0a0a0a]">
-              {a.first_workflow || '—'}
+              {a.first_workflow || 'Not provided'}
             </dd>
           </div>
           <div>
@@ -882,7 +882,7 @@ export default function FounderOsApplicationForm() {
               90-day target
             </dt>
             <dd className="mt-1 text-[0.92rem] leading-6 text-[#0a0a0a]">
-              {a.success_metric || '—'}
+              {a.success_metric || 'Not provided'}
             </dd>
           </div>
         </dl>
@@ -1008,7 +1008,7 @@ export default function FounderOsApplicationForm() {
             }}
             className="inline-flex min-h-11 flex-1 items-center justify-center gap-2 rounded-lg border border-[#d4d4d4] bg-[#ffffff] px-5 text-[0.9rem] font-medium text-[#0a0a0a] transition-colors hover:bg-[#f5f5f5] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0063d1] focus-visible:ring-offset-2"
           >
-            Our complexity is unusual — continue anyway
+            Our complexity is unusual, continue anyway
             <ArrowRight className="h-4 w-4" aria-hidden="true" />
           </button>
         ) : stepId === 'review' ? (
@@ -1079,8 +1079,8 @@ export default function FounderOsApplicationForm() {
               />
             </Field>
             <p className="text-[0.8rem] leading-6 text-[#6e6e6e]">
-              The URL lets Prism research public context — positioning, industry,
-              team, and platform — so we don&apos;t ask you to retype it.
+              The URL lets Prism research public context like positioning,
+              industry, team, and platform, so we don&apos;t ask you to retype it.
             </p>
           </>
         )
@@ -1246,7 +1246,7 @@ export default function FounderOsApplicationForm() {
       case 'bottlenecks':
         return (
           <>
-            <Field label="Pick up to three — where leadership is still the glue" required>
+            <Field label="Pick up to three areas where leadership is still the glue" required>
               <div className="grid gap-2 sm:grid-cols-2">
                 {BOTTLENECKS.map((b) => (
                   <Choice
@@ -1301,7 +1301,7 @@ export default function FounderOsApplicationForm() {
       case 'first_workflow':
         return (
           <Field
-            label="If Prism built only one workflow first, what should it handle — trigger to outcome?"
+            label="If Prism built only one workflow first, what should it handle from trigger to outcome?"
             required
             hint="Describe the business outcome, not the technology. e.g. “Detect stalled high-value leads, gather context, draft a personalized follow-up, and ask me to approve it in Slack.”"
           >
@@ -1363,7 +1363,7 @@ export default function FounderOsApplicationForm() {
                 ))}
               </div>
             </Field>
-            <Field label="Largest consequence of the current process — pick up to two" required>
+            <Field label="Largest consequence of the current process (pick up to two)" required>
               <div className="grid gap-2 sm:grid-cols-2">
                 {CONSEQUENCES.map((c) => (
                   <Choice
@@ -1606,7 +1606,7 @@ export default function FounderOsApplicationForm() {
             <Field
               label="What should the first release be allowed to do?"
               required
-              hint="Read-only first is often the wiser starting point — we don't score caution negatively."
+              hint="Read-only first is often the wiser starting point. We don't score caution negatively."
             >
               <div className="grid gap-2">
                 {ALLOWED_ACTIONS.map((o) => (
@@ -1669,7 +1669,7 @@ export default function FounderOsApplicationForm() {
             </Field>
             <Field
               label="Why is this worth addressing now rather than next year?"
-              hint="A real trigger — growth outpacing process, an approaching launch, a founder bottleneck — beats “AI seems important.”"
+              hint="A real trigger (growth outpacing process, an approaching launch, a founder bottleneck) beats “AI seems important.”"
             >
               <textarea
                 value={a.why_now}
@@ -1722,7 +1722,7 @@ export default function FounderOsApplicationForm() {
         return (
           <>
             <p className="text-[0.88rem] leading-6 text-[#6e6e6e]">
-              All optional — these help us prepare, and don&apos;t affect your score.
+              All optional. These help us prepare and don&apos;t affect your score.
             </p>
             <Field label="Where would you prefer to interact with Founder OS?">
               <div className="grid gap-2 sm:grid-cols-2">
@@ -1751,7 +1751,7 @@ export default function FounderOsApplicationForm() {
                 ))}
               </div>
             </Field>
-            <Field label="Share a two-minute Loom explaining the bottleneck" hint="Paste a link — no file uploads.">
+            <Field label="Share a two-minute Loom explaining the bottleneck" hint="Paste a link, no file uploads.">
               <input
                 type="url"
                 value={a.loom_link}
@@ -1776,18 +1776,18 @@ export default function FounderOsApplicationForm() {
           <>
             <div className="divide-y divide-[#ededed] rounded-xl border border-[#ededed]">
               {[
-                ['Company', `${a.company_website || '—'} · ${a.business_model || '—'}`],
-                ['First workflow', a.first_workflow || '—'],
-                ['Systems', a.systems.join(', ') || '—'],
+                ['Company', `${a.company_website || 'Not provided'} · ${a.business_model || 'Not provided'}`],
+                ['First workflow', a.first_workflow || 'Not provided'],
+                ['Systems', a.systems.join(', ') || 'Not provided'],
                 [
                   'Control',
-                  `${a.allowed_actions || '—'}${
+                  `${a.allowed_actions || 'Not provided'}${
                     a.worst_consequence ? ` · worst case: ${a.worst_consequence}` : ''
                   }`,
                 ],
                 [
                   'Readiness',
-                  `${a.commercial_readiness || '—'}${
+                  `${a.commercial_readiness || 'Not provided'}${
                     a.start_timing ? ` · ${a.start_timing}` : ''
                   }`,
                 ],

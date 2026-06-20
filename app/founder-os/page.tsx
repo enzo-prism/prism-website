@@ -47,7 +47,7 @@ export const metadata: Metadata = buildRouteMetadata({
 const TRIAD = [
   {
     word: 'Know',
-    body: 'A reliable, current view of the business — reconciled across systems, with a source and a freshness time on every claim.',
+    body: 'A reliable, current view of the business, reconciled across systems. Every claim carries a source and a freshness time.',
     icon: Eye,
   },
   {
@@ -57,7 +57,7 @@ const TRIAD = [
   },
   {
     word: 'Approve',
-    body: 'Controlled execution through one interface. You approve a plan and its limits — never an opaque “go do it.”',
+    body: 'Controlled execution through one interface. You approve a plan and its limits, never an opaque “go do it.”',
     icon: BadgeCheck,
   },
 ] as const
@@ -95,7 +95,7 @@ const LOOP_STEPS = [
   {
     step: '04',
     title: 'Execute',
-    body: 'Drafts or performs approved actions through controlled tools — nothing more.',
+    body: 'Drafts or performs approved actions through controlled tools. Nothing more.',
     icon: Workflow,
   },
   {
@@ -143,7 +143,7 @@ const PERMISSION_LADDER = [
     tone: 'accent',
   },
   {
-    level: '—',
+    level: '✕',
     name: 'Prohibited',
     capability: 'Never autonomous',
     example: 'Move money, sign contracts, make clinical decisions',
@@ -167,7 +167,7 @@ const AGENTS = [
   {
     name: 'Content & Website',
     role: 'Specialist',
-    body: 'Uses your positioning and voice to draft content, campaigns, pages, and emails — staged for review, never auto-published.',
+    body: 'Uses your positioning and voice to draft content, campaigns, pages, and emails, all staged for review and never auto-published.',
     icon: PenLine,
   },
   {
@@ -213,7 +213,7 @@ const PHASES = [
   {
     label: 'Days 31–60',
     title: 'Draft',
-    body: 'Agents prepare work — briefs, recommendations, content, follow-ups — staged for your review. Evaluation thresholds and rollback are proven.',
+    body: 'Agents prepare work for your review: briefs, recommendations, content, and follow-ups. Evaluation thresholds and rollback are proven.',
   },
   {
     label: 'Days 61–90',
@@ -246,7 +246,7 @@ const NOT_FIT = [
 const SECURITY = [
   {
     title: 'Dedicated and isolated',
-    body: 'One isolated environment per client — never a shared multi-tenant gateway. Strict container or VM boundaries.',
+    body: 'One isolated environment per client, never a shared multi-tenant gateway. Strict container or VM boundaries.',
     icon: Lock,
   },
   {
@@ -272,7 +272,7 @@ const STAGES = [
     name: 'Founder Systems Blueprint',
     price: '$10,000',
     cadence: 'two weeks · credited toward installation',
-    body: 'A paid diagnostic that maps your systems, KPIs and sources, workflows, value and risk — plus a working prototype on one narrow dataset and a 90-day roadmap.',
+    body: 'A paid diagnostic that maps your systems, KPIs and sources, workflows, value, and risk. It also delivers a working prototype on one narrow dataset and a 90-day roadmap.',
     featured: false,
   },
   {
@@ -297,7 +297,7 @@ const FAQ_ITEMS = [
   {
     question: 'Is this an AI that runs my company by itself?',
     answer:
-      'No — and that is the point. Founder OS gives you a source-backed view, prioritized recommendations, and controlled execution. Autonomy expands one staged level at a time, only after measured reliability, and you approve the plan and its limits.',
+      'No, and that is the point. Founder OS gives you a source-backed view, prioritized recommendations, and controlled execution. Autonomy expands one staged level at a time, only after measured reliability, and you approve the plan and its limits.',
   },
   {
     question: 'What does it cost?',
@@ -317,8 +317,68 @@ const FAQ_ITEMS = [
   {
     question: 'Which AI models power it?',
     answer:
-      'A model-agnostic architecture routes work across frontier models from leading providers and is continuously tested and upgraded, so your system improves as the underlying technology advances. We commit to capabilities and service levels — not one model version.',
+      'A model-agnostic architecture routes work across frontier models from leading providers and is continuously tested and upgraded, so your system improves as the underlying technology advances. We commit to capabilities and service levels, not to one model version.',
   },
+] as const
+
+/* Real tech-stack logos (SVGs sourced from svgl.app and stored in /public/logos/founder-os) */
+const STACK_GROUPS = [
+  {
+    label: 'Chat and communication',
+    logos: [
+      { name: 'Slack', file: 'slack' },
+      { name: 'WhatsApp', file: 'whatsapp' },
+      { name: 'Microsoft Teams', file: 'microsoft-teams' },
+      { name: 'Telegram', file: 'telegram' },
+      { name: 'Google Chat', file: 'google-chat' },
+      { name: 'Gmail', file: 'gmail' },
+      { name: 'Zoom', file: 'zoom' },
+      { name: 'Discord', file: 'discord' },
+    ],
+  },
+  {
+    label: 'Growth, ads and analytics',
+    logos: [
+      { name: 'Google Analytics', file: 'google-analytics' },
+      { name: 'Google Ads and Search', file: 'google' },
+      { name: 'Meta Ads', file: 'meta' },
+      { name: 'TikTok', file: 'tiktok' },
+      { name: 'LinkedIn', file: 'linkedin' },
+      { name: 'Instagram', file: 'instagram' },
+      { name: 'Ahrefs', file: 'ahrefs' },
+      { name: 'PostHog', file: 'posthog' },
+    ],
+  },
+  {
+    label: 'Pipeline, customers and commerce',
+    logos: [
+      { name: 'Salesforce', file: 'salesforce' },
+      { name: 'Stripe', file: 'stripe' },
+      { name: 'Shopify', file: 'shopify' },
+      { name: 'Calendly', file: 'calendly' },
+    ],
+  },
+  {
+    label: 'Content, docs and operations',
+    logos: [
+      { name: 'Notion', file: 'notion' },
+      { name: 'Linear', file: 'linear' },
+      { name: 'Google Sheets', file: 'google-sheets' },
+      { name: 'Google Drive', file: 'google-drive' },
+      { name: 'Asana', file: 'asana' },
+      { name: 'Figma', file: 'figma' },
+    ],
+  },
+] as const
+
+const AI_PROVIDERS = [
+  { name: 'OpenAI', file: 'openai' },
+  { name: 'Anthropic', file: 'anthropic' },
+  { name: 'Google Gemini', file: 'gemini' },
+  { name: 'Mistral AI', file: 'mistral' },
+  { name: 'xAI', file: 'xai' },
+  { name: 'Meta Llama', file: 'meta' },
+  { name: 'Perplexity', file: 'perplexity' },
 ] as const
 
 /* ------------------------------------------------------------------ */
@@ -439,6 +499,23 @@ function SourceChip({ children }: { children: ReactNode }) {
   )
 }
 
+function StackLogo({ name, file }: { name: string; file: string }) {
+  return (
+    <div className="group flex min-h-[4.25rem] items-center justify-center rounded-xl border border-[#ededed] bg-[#ffffff] p-4 transition-colors duration-200 hover:border-[#d4d4d4]">
+      {/* Brand SVGs sourced from svgl.app; each mark is a trademark of its owner. */}
+      <img
+        src={`/logos/founder-os/${file}.svg`}
+        alt={name}
+        width={32}
+        height={32}
+        loading="lazy"
+        decoding="async"
+        className="h-7 w-auto max-w-[6.5rem] object-contain opacity-65 grayscale transition duration-200 ease-out group-hover:opacity-100 group-hover:grayscale-0"
+      />
+    </div>
+  )
+}
+
 /* ------------------------------------------------------------------ */
 /* Page                                                                */
 /* ------------------------------------------------------------------ */
@@ -450,7 +527,7 @@ export default function FounderOsPage() {
       className="min-h-screen bg-[#ffffff] font-sans text-[#0a0a0a] antialiased [color-scheme:light] selection:bg-[#0a0a0a] selection:text-[#ffffff]"
     >
       <FosReveal />
-      {/* Header — self-contained light chrome */}
+      {/* Header: self-contained light chrome */}
       <header className="sticky top-0 z-50 border-b border-[#ededed] bg-[#ffffff]/85 backdrop-blur-md">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5 sm:px-8">
           <div className="flex items-center gap-3">
@@ -517,7 +594,7 @@ export default function FounderOsPage() {
             <p className="mx-auto mt-6 max-w-2xl text-pretty text-[1.12rem] leading-8 text-[#525252]">
               Prism connects the systems that run your company and builds a
               managed team of AI agents around the way you work. Know what is
-              happening, understand why, and approve what happens next — from
+              happening, understand why, and approve what happens next. All from
               Slack or WhatsApp.
             </p>
             <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
@@ -569,7 +646,7 @@ export default function FounderOsPage() {
               <dl className="mt-8 space-y-4 border-t border-[#ededed] pt-6">
                 {[
                   ['Source-backed', 'Every claim carries where it came from and how fresh it is.'],
-                  ['Cross-system', 'It traces a number across ads, site, forms, and CRM — not one dashboard.'],
+                  ['Cross-system', 'It traces a number across ads, site, forms, and CRM, not a single dashboard.'],
                   ['Approval-gated', 'Drafts everything; publishes only what you approve.'],
                 ].map(([term, def]) => (
                   <div key={term} className="flex gap-3">
@@ -674,7 +751,7 @@ export default function FounderOsPage() {
               </p>
               <p className="text-[#0a0a0a]">
                 Founder OS removes the founder as the human integration between
-                everything — without removing the founder from the decisions
+                everything, without removing the founder from the decisions
                 that matter.
               </p>
             </div>
@@ -687,7 +764,7 @@ export default function FounderOsPage() {
             <SectionHeading
               eyebrow="What it knows"
               title="A managed Company Operating Context."
-              description="The durable product isn’t a chatbot or a model subscription — those are replaceable. It’s a living context that Prism builds and maintains so every agent works from the same source of truth."
+              description="The durable product isn’t a chatbot or a model subscription; those are replaceable. It’s a living context that Prism builds and maintains so every agent works from the same source of truth."
             />
             <div className="mt-10 grid gap-px overflow-hidden rounded-2xl border border-[#ededed] bg-[#ededed] sm:grid-cols-2 lg:grid-cols-4">
               {CONTEXT_ITEMS.map((item) => (
@@ -707,7 +784,7 @@ export default function FounderOsPage() {
           </div>
         </section>
 
-        {/* What it does — the command loop */}
+        {/* What it does: the command loop */}
         <section
           id="how"
           className="scroll-mt-20 border-b border-[#ededed] px-5 py-20 sm:px-8 sm:py-28"
@@ -716,7 +793,7 @@ export default function FounderOsPage() {
             <SectionHeading
               eyebrow="What it does"
               title="The Command Loop."
-              description="Not “chat with your data” — that’s one feature. This is an operating loop that turns information into decisions and controlled action, then learns from the result."
+              description="Not “chat with your data.” That’s one feature. This is an operating loop that turns information into decisions and controlled action, then learns from the result."
             />
             <div className="mt-10 grid gap-4 md:grid-cols-5">
               {LOOP_STEPS.map((step) => {
@@ -745,6 +822,41 @@ export default function FounderOsPage() {
           </div>
         </section>
 
+        {/* Integrations: connects to the real stack */}
+        <section
+          id="integrations"
+          className="scroll-mt-20 border-b border-[#ededed] bg-[#fafafa] px-5 py-20 sm:px-8 sm:py-28"
+        >
+          <div className="mx-auto max-w-6xl">
+            <SectionHeading
+              eyebrow="Integrations"
+              title="Connects to the systems you already run."
+              description="Founder OS reads from and acts through the tools your company already lives in. The first installation connects five to eight core systems, then expands as the system earns trust."
+            />
+            <div className="mt-12 space-y-10">
+              {STACK_GROUPS.map((group) => (
+                <div key={group.label}>
+                  <p className="font-mono text-[0.68rem] uppercase tracking-[0.18em] text-[#6e6e6e]">
+                    {group.label}
+                  </p>
+                  <ul className="mt-4 grid grid-cols-3 gap-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8">
+                    {group.logos.map((logo) => (
+                      <li key={logo.name}>
+                        <StackLogo name={logo.name} file={logo.file} />
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+            <p className="mt-8 max-w-3xl text-[0.88rem] leading-6 text-[#737373]">
+              Plus the systems specific to your business. If a tool has an API or
+              a clean export, Founder OS can usually reach it through a controlled
+              connector.
+            </p>
+          </div>
+        </section>
+
         {/* How control works */}
         <section
           id="control"
@@ -763,7 +875,7 @@ export default function FounderOsPage() {
                 Power without loss of control.
               </h2>
               <p className="mt-4 text-[1.05rem] leading-7 text-[#bdbdbd]">
-                Autonomy expands one explicit level at a time — and only after
+                Autonomy expands one explicit level at a time, and only after
                 measured reliability. You approve a plan and its limits, never an
                 opaque instruction to “go do it.”
               </p>
@@ -832,7 +944,7 @@ export default function FounderOsPage() {
             <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
               <SectionHeading
                 eyebrow="What gets installed"
-                title="Bounded — not small."
+                title="Bounded, not small."
                 description="V1 doesn’t promise every department. It installs a dependable core: one command agent, three specialists, and three production workflows that prove the concept end to end."
               />
               <ul className="grid gap-px overflow-hidden rounded-2xl border border-[#ededed] bg-[#ededed] sm:grid-cols-2">
@@ -878,7 +990,7 @@ export default function FounderOsPage() {
               </div>
               <p className="mt-5 max-w-3xl text-[0.9rem] leading-6 text-[#737373]">
                 Finance, legal, HR, and sensitive healthcare operations stay
-                outside the initial product — or strictly read-only — until the
+                outside the initial product, or strictly read-only, until the
                 core system is proven.
               </p>
             </div>
@@ -910,7 +1022,7 @@ export default function FounderOsPage() {
             <SectionHeading
               eyebrow="The 90-day process"
               title="Visibility, then recommendations, then approved execution."
-              description="Every installation is staged. Agents earn write access — they don’t start with it."
+              description="Every installation is staged. Agents earn write access; they don’t start with it."
             />
             <div className="mt-10 grid gap-4 md:grid-cols-3">
               {PHASES.map((phase) => (
@@ -941,9 +1053,9 @@ export default function FounderOsPage() {
               </p>
               <p className="mt-3 max-w-3xl text-[1.02rem] leading-7 text-[#262626]">
                 By day 90, your source-backed executive brief, cross-system
-                command agent, and three controlled workflows are live — or Prism
-                continues the implementation, with no additional build fees,
-                until those agreed deliverables are operating.
+                command agent, and three controlled workflows are live. If they
+                are not, Prism continues the implementation with no additional
+                build fees until those agreed deliverables are operating.
               </p>
             </div>
           </div>
@@ -958,7 +1070,7 @@ export default function FounderOsPage() {
             <SectionHeading
               eyebrow="Security & ownership"
               title="At this level, security is part of the product."
-              description="A buyer evaluating a $50,000 installation will investigate hard. Every deployment is dedicated, isolated, audited, and reversible — and ships with a security packet."
+              description="A buyer evaluating a $50,000 installation will investigate hard. Every deployment is dedicated, isolated, audited, and reversible, and ships with a security packet."
             />
             <div className="mt-10 grid gap-4 sm:grid-cols-2">
               {SECURITY.map((item) => {
@@ -1053,7 +1165,7 @@ export default function FounderOsPage() {
               <SectionHeading
                 eyebrow="Architecture"
                 title="Model-agnostic by design."
-                description="Work is routed across frontier models from leading providers and continuously tested and upgraded — so your system improves as the technology advances. We commit to capabilities and service levels, not one model version. OpenClaw and Hermes are replaceable components; Prism owns the context, connectors, permissions, workflows, and evaluations."
+                description="Work is routed across frontier models from leading providers and continuously tested and upgraded, so your system improves as the technology advances. We commit to capabilities and service levels, not to one model version. OpenClaw and Hermes are replaceable components; Prism owns the context, connectors, permissions, workflows, and evaluations."
               />
               <div className="overflow-hidden rounded-2xl border border-[#ededed] bg-[#fafafa]">
                 {[
@@ -1079,6 +1191,18 @@ export default function FounderOsPage() {
                   </div>
                 ))}
               </div>
+            </div>
+            <div className="mt-10 border-t border-[#ededed] pt-8">
+              <p className="font-mono text-[0.68rem] uppercase tracking-[0.18em] text-[#6e6e6e]">
+                The model router draws from frontier providers
+              </p>
+              <ul className="mt-5 grid grid-cols-3 gap-3 sm:grid-cols-4 md:grid-cols-7">
+                {AI_PROVIDERS.map((provider) => (
+                  <li key={provider.name}>
+                    <StackLogo name={provider.name} file={provider.file} />
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
         </section>
@@ -1139,7 +1263,7 @@ export default function FounderOsPage() {
           </div>
         </section>
 
-        {/* Proof — honest */}
+        {/* Proof: honest */}
         <section className="border-b border-[#ededed] px-5 py-20 sm:px-8 sm:py-28">
           <div className="mx-auto max-w-3xl">
             <Eyebrow>Proof</Eyebrow>
@@ -1147,15 +1271,15 @@ export default function FounderOsPage() {
               Prism is its own first customer.
             </h2>
             <p className="mt-5 text-[1.05rem] leading-8 text-[#525252]">
-              We’re building Founder OS on Prism before we sell it — connecting
+              We’re building Founder OS on Prism before we sell it. We connect
               our own analytics, search, advertising, pipeline, and content, and
-              running the daily brief ourselves every morning. We’d rather show a
+              run the daily brief ourselves every morning. We’d rather show a
               measured deployment than promise a number we can’t yet prove.
             </p>
             <p className="mt-4 text-[1.05rem] leading-8 text-[#525252]">
-              A small founding cohort is forming now. Measured results — founder
-              hours reclaimed, decision-cycle time, workflow reliability — will be
-              published here as they’re verified, not estimated.
+              A small founding cohort is forming now. As results are verified,
+              not estimated, we publish them here: founder hours reclaimed,
+              decision-cycle time, and workflow reliability.
             </p>
             <div className="mt-7 flex flex-wrap gap-2">
               {['Founder hours reclaimed', 'Decision cycle time', 'Workflow reliability', 'Human correction rate'].map(
@@ -1223,7 +1347,7 @@ export default function FounderOsPage() {
         </section>
       </main>
 
-      {/* Footer — self-contained light chrome */}
+      {/* Footer: self-contained light chrome */}
       <footer className="border-t border-[#ededed] bg-[#ffffff] px-5 py-12 sm:px-8">
         <div className="mx-auto flex max-w-6xl flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
           <div>
@@ -1239,7 +1363,7 @@ export default function FounderOsPage() {
               </span>
             </div>
             <p className="mt-2 max-w-md text-[0.85rem] leading-6 text-[#6e6e6e]">
-              A managed AI operating layer for founder-led companies — governed
+              A managed AI operating layer for founder-led companies: governed
               by the founder, improved by frontier models, operated by Prism.
             </p>
           </div>
@@ -1272,7 +1396,7 @@ export default function FounderOsPage() {
 
       <ServiceSchema
         serviceId="founder-os"
-        name="Founder OS — managed AI operating layer"
+        name="Founder OS: managed AI operating layer"
         description="A managed AI operating layer for founder-led companies. Prism connects core systems, builds a command agent plus specialist agents, and progresses from visibility to recommendations to approved execution over 90 days."
         serviceType="AI operations and managed automation"
         areaServed="United States"

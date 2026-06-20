@@ -5,8 +5,8 @@ import { useEffect } from 'react'
 /**
  * Progressive scroll reveal for the Founder OS surface.
  *
- * Server-rendered content stays fully visible until hydration. After mount —
- * and only when motion is allowed — content still below the viewport is
+ * Server-rendered content stays fully visible until hydration. After mount,
+ * and only when motion is allowed, content still below the viewport is
  * hidden and revealed on intersection. No-JS visitors, crawlers, and
  * reduced-motion users always see everything immediately.
  *
@@ -47,7 +47,7 @@ export default function FosReveal() {
 
     for (const el of targets) {
       const rect = el.getBoundingClientRect()
-      // Anything already in (or near) the viewport stays visible — animating it
+      // Anything already in (or near) the viewport stays visible, since animating it
       // after hydration would read as a flash rather than a reveal.
       if (rect.top < window.innerHeight * 0.92) {
         el.setAttribute('data-fos-reveal', 'in')
