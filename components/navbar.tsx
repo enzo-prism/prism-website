@@ -106,6 +106,27 @@ export default function Navbar() {
     setIsMobileMenuOpen(false)
   }, [pathname])
 
+  useEffect(() => {
+    if (!isMobileMenuOpen) return
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setIsMobileMenuOpen(false)
+    }
+    const handleResize = () => {
+      // The horizontal nav takes over at lg (1024px); close the panel so it
+      // never lingers behind the desktop layout after a resize or rotation.
+      if (window.innerWidth >= 1024) setIsMobileMenuOpen(false)
+    }
+
+    document.addEventListener('keydown', handleKeyDown)
+    window.addEventListener('resize', handleResize)
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown)
+      window.removeEventListener('resize', handleResize)
+    }
+  }, [isMobileMenuOpen])
+
   useLayoutEffect(() => {
     const header = headerRef.current
     if (!header) return
@@ -183,7 +204,7 @@ export default function Navbar() {
             <span className="whitespace-nowrap text-sm font-semibold uppercase tracking-[0.22em] text-[#f5f0e8] transition-[color,transform] duration-300 ease-out group-hover/logo:text-white group-focus-visible/logo:text-white motion-safe:group-hover/logo:translate-x-px motion-safe:group-focus-visible/logo:translate-x-px">
               Prism
             </span>
-            <span className="whitespace-nowrap text-[10px] font-medium uppercase tracking-[0.26em] text-[#b8afa2] transition-[color,transform] duration-300 ease-out group-hover/logo:text-[#5cdcff] group-focus-visible/logo:text-[#5cdcff] motion-safe:group-hover/logo:translate-x-0.5 motion-safe:group-focus-visible/logo:translate-x-0.5">
+            <span className="max-[360px]:hidden whitespace-nowrap text-[10px] font-medium uppercase tracking-[0.26em] text-[#b8afa2] transition-[color,transform] duration-300 ease-out group-hover/logo:text-[#5cdcff] group-focus-visible/logo:text-[#5cdcff] motion-safe:group-hover/logo:translate-x-0.5 motion-safe:group-focus-visible/logo:translate-x-0.5">
               impossible is temporary
             </span>
             <span
@@ -193,7 +214,7 @@ export default function Navbar() {
           </div>
         </Link>
 
-        <nav aria-label="Main" className="hidden items-center gap-8 md:flex">
+        <nav aria-label="Main" className="hidden items-center gap-6 lg:flex xl:gap-8">
           <NavbarLinks
             pathname={pathname}
             variant="desktop"
@@ -201,13 +222,13 @@ export default function Navbar() {
           />
         </nav>
 
-        <div className="flex items-center md:hidden">
+        <div className="flex items-center lg:hidden">
           <button
             type="button"
             aria-controls={MOBILE_NAV_ID}
             aria-expanded={isMobileMenuOpen}
             aria-label={isMobileMenuOpen ? 'Close menu' : 'Open menu'}
-            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/14 bg-white/[0.03] text-[#f5f0e8] transition-[border-color,background-color,color] hover:border-white/28 hover:bg-white/[0.06] hover:text-white focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-white/25 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+            className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/14 bg-white/[0.03] text-[#f5f0e8] transition-[border-color,background-color,color] hover:border-white/28 hover:bg-white/[0.06] hover:text-white focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-white/25 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
             onClick={() => setIsMobileMenuOpen((open) => !open)}
           >
             <span className="sr-only">
@@ -240,7 +261,7 @@ export default function Navbar() {
       {isMobileMenuOpen ? (
         <div
           id={MOBILE_NAV_ID}
-          className="border-t border-white/12 bg-black md:hidden"
+          className="max-h-[calc(100dvh-72px)] overflow-y-auto overscroll-contain border-t border-white/12 bg-black lg:hidden"
         >
           <nav aria-label="Main" className="container mx-auto px-4 sm:px-6">
             <div className="divide-y divide-white/12">

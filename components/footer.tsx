@@ -98,26 +98,26 @@ export default function Footer({ variant: _variant = 'default' }: FooterProps) {
                 href="/get-started"
                 label="Free audit"
                 location="footer"
-                className="inline-flex min-h-12 items-center border-b border-[#f5f0e8] pb-1 text-sm font-semibold uppercase tracking-[0.18em] text-[#f5f0e8] transition-colors hover:text-white"
+                className="inline-flex min-h-12 items-center border-b border-[#f5f0e8] pb-1 text-sm font-semibold uppercase tracking-[0.18em] text-[#f5f0e8] transition-colors hover:text-white focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[#5cdcff]/40 focus-visible:ring-offset-4 focus-visible:ring-offset-black"
               >
                 Free audit
               </TrackedLink>
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-x-10 gap-y-8 border-t border-white/12 pt-6 sm:grid-cols-3 lg:border-t-0 lg:pt-0">
+          <div className="grid grid-cols-2 gap-x-6 gap-y-8 border-t border-white/12 pt-6 sm:grid-cols-3 sm:gap-x-10 lg:border-t-0 lg:pt-0">
             {footerColumns.map((column) => (
               <div key={column.heading} className="space-y-3">
                 <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.24em] text-[#8f877b]">
                   {column.heading}
                 </p>
-                <ul className="space-y-2">
+                <ul className="space-y-1">
                   {column.links.map((item) => (
                     <li key={item.label}>
                       <Link
                         href={item.href}
                         prefetch={false}
-                        className="text-sm text-[#b8afa2] transition-colors hover:text-[#f5f0e8]"
+                        className="inline-block rounded-sm py-1 text-sm text-[#b8afa2] transition-colors hover:text-[#f5f0e8] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[#5cdcff]/40 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
                       >
                         {item.label}
                       </Link>
@@ -136,21 +136,21 @@ export default function Footer({ variant: _variant = 'default' }: FooterProps) {
               <Link
                 href="/privacy-policy"
                 prefetch={false}
-                className="transition-colors hover:text-[#f5f0e8]"
+                className="inline-flex items-center rounded-sm py-1 transition-colors hover:text-[#f5f0e8] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[#5cdcff]/40 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
               >
                 privacy
               </Link>
               <Link
                 href="/terms-of-service"
                 prefetch={false}
-                className="transition-colors hover:text-[#f5f0e8]"
+                className="inline-flex items-center rounded-sm py-1 transition-colors hover:text-[#f5f0e8] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[#5cdcff]/40 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
               >
                 terms
               </Link>
               <Link
                 href="/contact"
                 prefetch={false}
-                className="transition-colors hover:text-[#f5f0e8]"
+                className="inline-flex items-center rounded-sm py-1 transition-colors hover:text-[#f5f0e8] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[#5cdcff]/40 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
               >
                 contact
               </Link>
@@ -165,7 +165,7 @@ export default function Footer({ variant: _variant = 'default' }: FooterProps) {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={`Prism on ${social.label}`}
-                className="transition-colors hover:text-[#f5f0e8]"
+                className="inline-flex items-center rounded-sm py-1 transition-colors hover:text-[#f5f0e8] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[#5cdcff]/40 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
               >
                 {social.label}
               </Link>
