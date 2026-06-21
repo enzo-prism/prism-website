@@ -158,7 +158,7 @@ The checker prints each URL’s redirect chain, final URL, and canonical tag val
 
 ## Need-to-knows
 
-- Analytics defaults to GA4 property `G-P9VY77PRC0` unless `NEXT_PUBLIC_GA_MEASUREMENT_ID` is set.
+- Analytics defaults to GA4 property `G-P9VY77PRC0` unless `NEXT_PUBLIC_GA_MEASUREMENT_ID` is set. GA, Google Ads, and Hotjar load only in the real production environment (gated by `IS_PRODUCTION_ENV` via `NEXT_PUBLIC_VERCEL_ENV`, with a `NODE_ENV` fallback), so Vercel preview deployments do not pollute the live property or fire conversions.
 - Vercel Web Analytics is mounted globally through the runtime client shell via `components/vercel-analytics.tsx`; it auto-tracks page views on Vercel, keeps `utm_*` parameters for campaign filtering, and strips non-marketing query params / hash fragments before events are sent.
 - The `/apply` capture can post directly to the Prism dashboard intake API through `NEXT_PUBLIC_DASHBOARD_INTAKE_ENDPOINT`; if unset, it falls back to the existing Formspree-backed client submission path.
 - The `/websites` estimator posts one-time website build requests to Formspree, carries calculated estimate metadata, and is intentionally reviewed before payment instead of acting as checkout.

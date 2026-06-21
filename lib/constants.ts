@@ -4,7 +4,20 @@ const FALLBACK_GA_MEASUREMENT_ID = "G-P9VY77PRC0"
 const envMeasurementId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID?.trim()
 
 export const GA_MEASUREMENT_ID = envMeasurementId && envMeasurementId.length > 0 ? envMeasurementId : FALLBACK_GA_MEASUREMENT_ID
-export const IS_ANALYTICS_ENABLED = process.env.NODE_ENV === "production" && Boolean(GA_MEASUREMENT_ID)
+
+// Only the real production environment should report analytics. On Vercel,
+// preview deployments also build with NODE_ENV === "production", so gating on
+// NODE_ENV alone leaks preview/QA traffic — and real Google Ads lead
+// conversions — into the live property. NEXT_PUBLIC_VERCEL_ENV is exposed by
+// Vercel as "production" | "preview" | "development"; off Vercel it is unset,
+// so we fall back to NODE_ENV (keeps local `next build` and the test suite
+// behaving as before).
+const vercelEnv = process.env.NEXT_PUBLIC_VERCEL_ENV
+export const IS_PRODUCTION_ENV = vercelEnv
+  ? vercelEnv === "production"
+  : process.env.NODE_ENV === "production"
+
+export const IS_ANALYTICS_ENABLED = IS_PRODUCTION_ENV && Boolean(GA_MEASUREMENT_ID)
 export const GOOGLE_ADS_ID = "AW-11373090310"
 export const GOOGLE_ADS_LEAD_CONVERSION_SEND_TO = `${GOOGLE_ADS_ID}/hBMrCMijk70bEIasjq8q`
 

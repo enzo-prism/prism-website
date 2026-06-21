@@ -50,7 +50,8 @@ cp .env.example .env.local
 ## Notes
 
 - `GOOGLE_ADS_ID` (`AW-11373090310`) and the Hotjar site ID are still hard-coded. Update `lib/constants.ts` or the inline `hotjar-loader` script in `app/layout.tsx` if you ever need environment-specific values.
-- Vercel Web Analytics does not require an env var. Enable it in the Vercel project dashboard and deploy.
+- Google Analytics, Google Ads, and Hotjar load **only in the real production environment**. The gate is `IS_PRODUCTION_ENV` in `lib/constants.ts`, which reads `NEXT_PUBLIC_VERCEL_ENV` (auto-exposed by Vercel as `production` / `preview` / `development`) and falls back to `NODE_ENV` off-platform. Because Vercel preview builds also run with `NODE_ENV === "production"`, this guard is what stops preview/QA deployments from reporting to the live GA4 property or firing real Google Ads lead conversions. You do not set `NEXT_PUBLIC_VERCEL_ENV` yourself; Vercel provides it.
+- Vercel Web Analytics does not require an env var. Enable it in the Vercel project dashboard and deploy. Unlike GA, it is intentionally left ungated so preview traffic is still visible in Vercel's own dashboard.
 - `NEXT_PUBLIC_BASE_URL` should always match the public domain you expect search engines and OG scrapers to use.
 - The Prism Library falls back to `content/library/seed.ts` whenever Instagram/TikTok credentials are missing.
 - `NEXT_PUBLIC_ELEVENLABS_WIDGET_DISABLED=true` is the preferred way to keep visual tests deterministic or isolate non-widget page debugging.

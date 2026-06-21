@@ -12,7 +12,7 @@ import { geistPixelGrid, geistPixelSquare } from "@/lib/fonts"
 import { GlobalSchemaGraph } from "@/components/schema-markup"
 import RuntimeClientShell from "@/components/runtime-client-shell"
 import SkipToContent from "@/components/skip-to-content"
-import { GA_MEASUREMENT_ID, GOOGLE_ADS_ID, IS_ANALYTICS_ENABLED } from "@/lib/constants"
+import { GA_MEASUREMENT_ID, GOOGLE_ADS_ID, IS_ANALYTICS_ENABLED, IS_PRODUCTION_ENV } from "@/lib/constants"
 import { buildAbsoluteTitle, buildMinimalDescription } from "@/lib/seo/rules"
 
 const DEFAULT_TITLE = buildAbsoluteTitle("Websites, SEO + ads")
@@ -119,7 +119,7 @@ export default function RootLayout({
             />
           </>
         )}
-        {process.env.NODE_ENV === "production" && (
+        {IS_PRODUCTION_ENV && (
           <Script id="hotjar-loader" strategy="lazyOnload">
             {`
               (function(h,o,t,j,a,r){
