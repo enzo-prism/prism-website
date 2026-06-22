@@ -280,7 +280,10 @@ export default function HomeDentistWinsCarousel({
                         ) : (
                           <span />
                         )}
-                        <span className="font-mono text-[10px] font-semibold tracking-[0.22em] text-[#f5f0e8]/65">
+                        <span
+                          aria-hidden="true"
+                          className="font-mono text-[10px] font-semibold tracking-[0.22em] text-[#f5f0e8]/65"
+                        >
                           {String(index + 1).padStart(2, '0')}
                         </span>
                       </div>

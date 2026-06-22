@@ -60,7 +60,7 @@ export default function HomeHowItWorksSection() {
                   <div className={styles.track}>
                     <span className={styles.node}>
                       <Icon aria-hidden="true" size={24} strokeWidth={1.6} />
-                      <span className={styles.badge}>
+                      <span className={styles.badge} aria-hidden="true">
                         {String(index + 1).padStart(2, '0')}
                       </span>
                     </span>
