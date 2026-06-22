@@ -66,7 +66,7 @@ export default async function Blog({
   return (
     <div className="blog-reading-surface flex min-h-screen flex-col">
       <Navbar />
-      <main className="relative flex-1">
+      <main className="relative flex-1" id="main-content" tabIndex={-1}>
         <div className="container mx-auto px-4 md:px-6">
           <Breadcrumbs items={[{ name: "home", url: "/" }, { name: "blog", url: "/blog" }]} />
         </div>
@@ -93,7 +93,7 @@ export default async function Blog({
           <div className="container mx-auto px-4 md:px-6">
             {filteredPosts.length > 0 ? (
               <SimpleBlogGrid>
-                {filteredPosts.map((post) => (
+                {filteredPosts.map((post, index) => (
                     <SimpleBlogPostCard
                       key={post.slug}
                       title={post.title}
@@ -105,6 +105,7 @@ export default async function Blog({
                       image={post.image}
                       gradientClass={post.gradientClass}
                       prefetch={false}
+                      priority={index === 0}
                   />
                 ))}
               </SimpleBlogGrid>

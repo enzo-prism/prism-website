@@ -38,7 +38,7 @@ export default function BlogPage({ posts }: { posts: BlogPost[] }) {
   return (
     <div className="flex min-h-screen flex-col">
       <Navbar />
-      <main className="flex-1 relative">
+      <main className="flex-1 relative" id="main-content" tabIndex={-1}>
         <div className="container mx-auto px-4 md:px-6">
           <Breadcrumbs items={[{ name: "Home", url: "/" }, { name: "Blog", url: "/blog" }]} />
         </div>

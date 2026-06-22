@@ -37,7 +37,10 @@ export default function HomeEcosystemSection() {
                 key={step.title}
                 className="border-t border-white/12 pt-5 first:pt-0 first:border-t-0"
               >
-                <p className="font-mono text-[11px] font-semibold uppercase tracking-[0.32em] text-[#8f877b]">
+                <p
+                  aria-hidden="true"
+                  className="font-mono text-[11px] font-semibold uppercase tracking-[0.32em] text-[#8f877b]"
+                >
                   0{index + 1}
                 </p>
                 <h3 className="mt-4 max-w-[18ch] font-sans text-[1.65rem] font-medium leading-[1.02] tracking-[-0.05em] text-[#f5f0e8]">

@@ -16,6 +16,8 @@ interface SimpleBlogPostCardProps {
   compact?: boolean
   gradientClass: string
   prefetch?: boolean
+  /** Eager-load + fetchpriority high for the first card (the /blog LCP image). */
+  priority?: boolean
 }
 
 export default function SimpleBlogPostCard({
@@ -30,6 +32,7 @@ export default function SimpleBlogPostCard({
   compact = false,
   gradientClass,
   prefetch,
+  priority = false,
 }: SimpleBlogPostCardProps) {
   const featuredImage =
     typeof image === 'string' && image.trim().length > 0
@@ -57,7 +60,8 @@ export default function SimpleBlogPostCard({
             src={featuredImage}
             alt={`${title} featured image`}
             fill
-            loading="lazy"
+            priority={priority}
+            loading={priority ? undefined : 'lazy'}
             sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
             className="object-cover"
           />

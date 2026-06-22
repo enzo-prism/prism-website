@@ -135,7 +135,7 @@ export default function BlogPostLayout({
       <BlogScrollProgress />
 
       <Navbar />
-      <main className="flex-1">
+      <main className="flex-1" id="main-content" tabIndex={-1}>
         <div className="w-full py-6 sm:py-8 md:py-10">
           <div className="container mx-auto px-4 sm:px-6">
             <div className={cn('mx-auto', hasToc ? 'max-w-6xl' : 'max-w-3xl')}>
