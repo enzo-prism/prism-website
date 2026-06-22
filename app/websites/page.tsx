@@ -114,6 +114,28 @@ const PROOF_BUILDS = [
   },
 ] as const
 
+// Real, source-attributed results from lib/case-study-data.ts. Used as proof at
+// the estimate decision point — do not edit these without updating the source.
+const ESTIMATE_PROOF_POINTS = [
+  {
+    value: '5.3×',
+    label: 'monthly Google clicks in five months for Saorsa Growth Partners',
+    href: '/case-studies/saorsa-growth-partners',
+  },
+  {
+    value: '593',
+    label:
+      'Google clicks in the first full month after launch for Roseville Dental Academy',
+    href: '/case-studies/roseville-dental-academy',
+  },
+  {
+    value: '+142%',
+    label:
+      'Google Search impressions year over year for Dr. Christopher Wong',
+    href: '/case-studies/dr-christopher-wong',
+  },
+] as const
+
 function SectionKicker({ children }: { children: ReactNode }) {
   return (
     <p className="font-mono text-[0.72rem] font-medium uppercase tracking-[0.26em] text-[#8f877b]">
@@ -242,6 +264,36 @@ export default function WebsitesPage() {
                 <p className="font-mono text-[0.82rem] leading-7 text-[#8f877b]">
                   No card is collected here. If accepted, you receive the next
                   step and payment link after review.
+                </p>
+              </div>
+
+              <div className="border-t border-white/10 pt-6">
+                <p className="font-mono text-[0.72rem] uppercase tracking-[0.2em] text-[#d8bc79]">
+                  Selective review &middot; no payment until we confirm fit
+                </p>
+                <p className="mt-4 text-sm leading-7 text-[#b8afa2]">
+                  The same Prism website system that produced these measured
+                  results:
+                </p>
+                <ul className="mt-5 grid gap-px overflow-hidden border border-white/10 bg-white/10">
+                  {ESTIMATE_PROOF_POINTS.map((proof) => (
+                    <li key={proof.label} className="bg-black">
+                      <Link
+                        href={proof.href}
+                        className="group flex items-baseline gap-4 p-4 transition-colors hover:bg-[#0b0b0b] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[#d8bc79]/35"
+                      >
+                        <span className="shrink-0 font-sans text-[1.6rem] font-medium leading-none tracking-[-0.04em] text-[#f5f0e8]">
+                          {proof.value}
+                        </span>
+                        <span className="text-[0.82rem] leading-6 text-[#b8afa2] group-hover:text-[#c9c1b6]">
+                          {proof.label}
+                        </span>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+                <p className="mt-4 font-mono text-[0.68rem] uppercase tracking-[0.16em] text-[#6f685d]">
+                  Source: Google Search Console
                 </p>
               </div>
             </div>

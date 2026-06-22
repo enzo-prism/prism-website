@@ -70,8 +70,8 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   minimumScale: 1,
-  maximumScale: 1,
-  userScalable: false,
+  // Pinch-zoom intentionally left enabled (WCAG 1.4.4). Inputs are >=16px so
+  // iOS focus-zoom is not a concern.
   viewportFit: "cover",
 }
 
@@ -92,12 +92,12 @@ export default function RootLayout({
             {/* Google tag (gtag.js) */}
             <Script
               id="ga-loader"
-              strategy="afterInteractive"
+              strategy="lazyOnload"
               src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
             />
             <Script
               id="ga-config"
-              strategy="afterInteractive"
+              strategy="lazyOnload"
               dangerouslySetInnerHTML={{
                 __html: `
                   window.dataLayer = window.dataLayer || [];

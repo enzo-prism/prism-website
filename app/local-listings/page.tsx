@@ -10,7 +10,7 @@ import { ArrowRight, Check } from 'lucide-react'
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { FREE_AUDIT_CTA_TEXT } from '@/lib/constants'
-import { ServiceSchema } from '@/components/schema-markup'
+import { FAQSchema, ServiceSchema } from '@/components/schema-markup'
 import { getAllPosts } from '@/lib/mdx-data'
 import VideoPlayer from '@/components/video-player'
 import { buildRouteMetadata } from '@/lib/seo/metadata'
@@ -693,10 +693,12 @@ export default async function LocalListingsPage() {
           businessFunction: 'http://purl.org/goodrelations/v1#ProvideService',
           price: '3500',
           priceCurrency: 'USD',
+          availability: 'https://schema.org/InStock',
           url: 'https://www.design-prism.com/pricing',
         }}
         aggregateRating={aggregateRating}
       />
+      <FAQSchema questions={faqItems} />
     </div>
   )
 }

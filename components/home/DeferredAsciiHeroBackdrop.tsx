@@ -198,17 +198,29 @@ export default function DeferredAsciiHeroBackdrop(
     return null
   }
 
+  // The ASCII backdrop is purely decorative. Wrap it in an aria-hidden layer
+  // with `contain: paint` so (a) it is removed from the accessibility tree and
+  // (b) its painted <pre> text is not selected as the LCP element — the hero
+  // headline should win LCP instead. `ariaLabel` is intentionally dropped here
+  // so the inner container does not get role="img"/aria-label.
   return (
-    <AsciiHeroBackdrop
-      {...props}
-      fps={profile.fps}
-      quality={profile.quality}
-      loadStrategy={profile.loadStrategy}
-      batchSize={profile.batchSize}
-      maxConcurrentFetches={profile.maxConcurrentFetches}
-      fit={fit ?? profile.fit}
-      zoom={zoom ?? profile.zoom}
-      offsetY={offsetY ?? profile.offsetY}
-    />
+    <div
+      aria-hidden="true"
+      className="pointer-events-none absolute inset-0"
+      style={{ contain: 'paint' }}
+    >
+      <AsciiHeroBackdrop
+        {...props}
+        ariaLabel={undefined}
+        fps={profile.fps}
+        quality={profile.quality}
+        loadStrategy={profile.loadStrategy}
+        batchSize={profile.batchSize}
+        maxConcurrentFetches={profile.maxConcurrentFetches}
+        fit={fit ?? profile.fit}
+        zoom={zoom ?? profile.zoom}
+        offsetY={offsetY ?? profile.offsetY}
+      />
+    </div>
   )
 }

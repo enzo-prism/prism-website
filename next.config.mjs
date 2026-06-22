@@ -90,6 +90,15 @@ images: {
           { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
         ],
       },
+      {
+        // Next's optimized image endpoint is content-addressed by url+w+q+hash,
+        // so each variant URL is stable forever — immutable is safe and avoids
+        // re-fetching already-optimized images on every navigation.
+        source: '/_next/image(.*)',
+        headers: [
+          { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
+        ],
+      },
     ]
   },
   async redirects() {

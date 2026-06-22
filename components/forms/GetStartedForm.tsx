@@ -1189,6 +1189,44 @@ export default function GetStartedForm() {
               />
               {renderError('review_link')}
             </div>
+
+            <div className="space-y-2 border-t border-white/10 pt-5">
+              <Label
+                htmlFor="apply-early-email"
+                className="font-mono text-[0.74rem] uppercase tracking-[0.14em] text-[#8C8C85]"
+              >
+                Want us to save your progress? Add your email (optional)
+              </Label>
+              <Input
+                id="apply-early-email"
+                name="email"
+                type="email"
+                autoComplete="email"
+                spellCheck={false}
+                value={email}
+                placeholder="you@company.com"
+                className={fieldClassName}
+                onChange={(event) => {
+                  markInteracted()
+                  setEmail(event.currentTarget.value)
+                }}
+                onBlur={(event) => {
+                  if (event.currentTarget.value.trim()) {
+                    trackEvent('apply_early_email_capture', {
+                      form_name: APPLY_FORM_NAME,
+                      form_location: APPLY_FORM_LOCATION,
+                      step: stepIndex + 1,
+                      step_id: currentStep,
+                    })
+                  }
+                  handleBlur(event)
+                }}
+              />
+              <p className="font-mono text-[0.74rem] leading-5 text-[#767670]">
+                We will only use it to send your free growth audit. Skip it and
+                keep going if you prefer.
+              </p>
+            </div>
           </div>
         )
 

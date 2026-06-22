@@ -4,7 +4,7 @@ import Navbar from "@/components/navbar"
 import ScrollToTop from "@/components/scroll-to-top"
 import SimpleBlogGrid from "@/components/simple-blog-grid"
 import SimpleBlogPostCard from "@/components/simple-blog-post-card"
-import { ServiceSchema } from "@/components/schema-markup"
+import { FAQSchema, ServiceSchema } from "@/components/schema-markup"
 import AdsHeroIllustration from "@/components/animated/AdsHeroIllustration"
 import VideoPlayer from "@/components/video-player"
 import { Button } from "@/components/ui/button"
@@ -540,10 +540,12 @@ export default async function AdsPage() {
           businessFunction: "http://purl.org/goodrelations/v1#ProvideService",
           price: "3500",
           priceCurrency: "USD",
+          availability: "https://schema.org/InStock",
           url: "https://www.design-prism.com/pricing",
         }}
         aggregateRating={aggregateRating}
       />
+      <FAQSchema questions={faqItems} />
     </div>
   )
 }

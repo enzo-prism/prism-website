@@ -9,7 +9,7 @@ if (dsn) {
   const Sentry = require("@sentry/nextjs")
   Sentry.init({
     dsn,
-    tracesSampleRate: 1,
+    tracesSampleRate: process.env.VERCEL_ENV === 'production' ? 0.1 : 1,
     debug: false,
   })
 }

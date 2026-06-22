@@ -1,5 +1,10 @@
 import React from "react"
 
+import {
+  CANONICAL_PRICING_OFFERS,
+  GROWTH_SPRINT_COMMON_RANGE_LABEL,
+} from "@/lib/pricing-model"
+
 const renderJsonLd = (data: unknown) => (
   <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }} />
 )
@@ -180,6 +185,50 @@ export function GlobalSchemaGraph() {
       "https://x.com/NosisTheGod",
       "https://www.tiktok.com/@the_design_prism",
       "https://www.linkedin.com/company/web-prism/?viewAsMember=true",
+    ],
+    // Canonical pricing-backed offers so AI/search engines see Prism's core
+    // products. Values come from lib/pricing-model.ts — do not hardcode here.
+    makesOffer: [
+      {
+        "@type": "Offer",
+        name: CANONICAL_PRICING_OFFERS.deep_growth_audit.name,
+        description: CANONICAL_PRICING_OFFERS.deep_growth_audit.description,
+        price: String(CANONICAL_PRICING_OFFERS.deep_growth_audit.price),
+        priceCurrency: CANONICAL_PRICING_OFFERS.deep_growth_audit.priceCurrency,
+        availability: "https://schema.org/InStock",
+        url: "https://www.design-prism.com/pricing",
+      },
+      {
+        "@type": "Offer",
+        name: CANONICAL_PRICING_OFFERS.growth_sprint.name,
+        description: CANONICAL_PRICING_OFFERS.growth_sprint.description,
+        price: String(CANONICAL_PRICING_OFFERS.growth_sprint.price),
+        priceCurrency: CANONICAL_PRICING_OFFERS.growth_sprint.priceCurrency,
+        priceRange: GROWTH_SPRINT_COMMON_RANGE_LABEL,
+        availability: "https://schema.org/InStock",
+        url: "https://www.design-prism.com/pricing",
+      },
+      {
+        "@type": "Offer",
+        name: CANONICAL_PRICING_OFFERS.ongoing_growth_partner.name,
+        description:
+          CANONICAL_PRICING_OFFERS.ongoing_growth_partner.description,
+        price: String(CANONICAL_PRICING_OFFERS.ongoing_growth_partner.price),
+        priceCurrency:
+          CANONICAL_PRICING_OFFERS.ongoing_growth_partner.priceCurrency,
+        priceSpecification: {
+          "@type": "UnitPriceSpecification",
+          price: String(
+            CANONICAL_PRICING_OFFERS.ongoing_growth_partner.price,
+          ),
+          priceCurrency:
+            CANONICAL_PRICING_OFFERS.ongoing_growth_partner.priceCurrency,
+          billingDuration: 1,
+          unitCode: "MON",
+        },
+        availability: "https://schema.org/InStock",
+        url: "https://www.design-prism.com/pricing",
+      },
     ],
   }
 

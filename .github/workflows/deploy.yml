@@ -15,6 +15,8 @@ jobs:
     # The redesign is intentional and the site builds/works, so make this gate
     # non-blocking to ship. Restore (remove continue-on-error) once the locked
     # tests are stabilized and baselines regenerated.
+    # TODO: make this gate blocking (remove continue-on-error) once the visual
+    # baselines are regenerated.
     continue-on-error: true
     container:
       image: mcr.microsoft.com/playwright:v1.57.0-jammy
@@ -75,6 +77,14 @@ jobs:
 
       - name: Typecheck
         run: pnpm run typecheck
+
+      # Plain `pnpm lint` (no --max-warnings 0) so pre-existing warnings don't
+      # block deploys; errors still fail the job.
+      - name: Lint
+        run: pnpm lint
+
+      - name: Test
+        run: pnpm test
 
       - name: Vercel Pull (Production)
         run: npx vercel pull --yes --environment=production --token "$VERCEL_TOKEN"

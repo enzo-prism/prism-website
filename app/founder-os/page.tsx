@@ -39,6 +39,7 @@ import {
 
 import FosReveal from '@/components/founder-os/FosReveal'
 import { FAQSchema, ServiceSchema } from '@/components/schema-markup'
+import { BOOKING_URL } from '@/lib/booking'
 import { buildRouteMetadata } from '@/lib/seo/metadata'
 
 const CANONICAL_URL = 'https://www.design-prism.com/founder-os'
@@ -510,6 +511,24 @@ const PROOF_METRICS = [
   },
 ] as const
 
+const CLIENT_PROOF = [
+  {
+    value: '+142%',
+    label: 'Google Search impressions, year over year',
+    detail: 'Dr. Christopher Wong, per Google Search Console.',
+  },
+  {
+    value: '5.3x',
+    label: 'monthly Google clicks in five months',
+    detail: 'Saorsa Growth Partners, per Google Search Console.',
+  },
+  {
+    value: '14.2k',
+    label: 'search impressions in the first full month',
+    detail: 'Roseville Dental Academy, per Google Search Console.',
+  },
+] as const
+
 const ARCHITECTURE_LAYERS = [
   'Business systems',
   'Source registry and context layer',
@@ -612,6 +631,20 @@ function SecondaryButton({
     >
       {children}
     </Link>
+  )
+}
+
+function BookCallButton() {
+  return (
+    <a
+      href={BOOKING_URL}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={`inline-flex min-h-12 items-center justify-center gap-2 rounded-lg border border-[#d4d4d4] bg-[#ffffff] px-5 text-[0.95rem] font-medium text-[#0a0a0a] transition-[background-color,border-color] duration-200 ${EASE} hover:border-[#6e6e6e] hover:bg-[#fafafa] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0063d1] focus-visible:ring-offset-2 focus-visible:ring-offset-[#ffffff]`}
+    >
+      Book a 30 minute fit call
+      <CalendarCheck className="h-4 w-4" aria-hidden="true" />
+    </a>
   )
 }
 
@@ -923,6 +956,7 @@ export default function FounderOsPage() {
                   Apply for a Blueprint
                   <ArrowRight className="h-4 w-4" aria-hidden="true" />
                 </PrimaryButton>
+                <BookCallButton />
                 <SecondaryButton href="#demo">See demo</SecondaryButton>
               </div>
               <div
@@ -954,7 +988,7 @@ export default function FounderOsPage() {
                 className="home-hero-rise mt-6 border-t border-[#d4d4d4] pt-4"
                 style={heroRiseDelay(720)}
               >
-                <p className="font-mono text-[0.62rem] uppercase tracking-[0.18em] text-[#8a8a8a]">
+                <p className="font-mono text-[0.62rem] uppercase tracking-[0.18em] text-[#737373]">
                   connects the stack
                 </p>
                 <ul className="mt-3 grid grid-cols-3 gap-2 sm:grid-cols-6">
@@ -1441,7 +1475,10 @@ export default function FounderOsPage() {
                     key={item}
                     className="grid gap-2 px-5 py-3.5 sm:grid-cols-[2.5rem_1fr_6rem] sm:items-center"
                   >
-                    <span className="font-mono text-[0.66rem] text-[#bdbdbd]">
+                    <span
+                      aria-hidden="true"
+                      className="font-mono text-[0.66rem] text-[#6b6b6b]"
+                    >
                       {String(index + 1).padStart(2, '0')}
                     </span>
                     <span className="text-[0.9rem] leading-6 text-[#262626]">
@@ -1521,7 +1558,7 @@ export default function FounderOsPage() {
                         key={term}
                         className="grid grid-cols-[5.25rem_1fr] gap-3 border-t border-[#ededed] pt-3 first:border-t-0 first:pt-0"
                       >
-                        <dt className="font-mono uppercase tracking-[0.12em] text-[#8a8a8a]">
+                        <dt className="font-mono uppercase tracking-[0.12em] text-[#737373]">
                           {term}
                         </dt>
                         <dd className="text-[#262626]">{value}</dd>
@@ -1732,7 +1769,7 @@ export default function FounderOsPage() {
                   </div>
                   {index < 2 ? (
                     <ArrowRight
-                      className="hidden h-5 w-5 text-[#bdbdbd] sm:block"
+                      className="hidden h-5 w-5 text-[#6b6b6b] sm:block"
                       aria-hidden="true"
                     />
                   ) : null}
@@ -1883,7 +1920,10 @@ export default function FounderOsPage() {
                   key={layer}
                   className={`flex items-center gap-3 px-5 py-3.5 ${index === 0 ? '' : 'border-t border-[#ededed]'} ${index === arr.length - 1 ? 'bg-[#ffffff]' : ''}`}
                 >
-                  <span className="font-mono text-[0.66rem] text-[#bdbdbd]">
+                  <span
+                    aria-hidden="true"
+                    className="font-mono text-[0.66rem] text-[#6b6b6b]"
+                  >
                     {String(index + 1).padStart(2, '0')}
                   </span>
                   <span className="text-[0.92rem] text-[#262626]">{layer}</span>
@@ -1974,6 +2014,29 @@ export default function FounderOsPage() {
               to approved action, improve workflow reliability, and lower human
               correction rate.
             </p>
+            <div className="mt-8 border-t border-[#ededed] pt-6">
+              <p className="font-mono text-[0.66rem] uppercase tracking-[0.18em] text-[#6e6e6e]">
+                Verified Prism client results
+              </p>
+              <div className="mt-4 grid gap-3 sm:grid-cols-3">
+                {CLIENT_PROOF.map((item) => (
+                  <div
+                    key={item.label}
+                    className="rounded-2xl border border-[#ededed] bg-[#ffffff] p-4 shadow-[0_14px_38px_-34px_rgba(10,10,10,0.3)]"
+                  >
+                    <p className="text-[1.6rem] font-semibold tracking-[-0.04em] text-[#0a0a0a]">
+                      {item.value}
+                    </p>
+                    <p className="mt-1 text-[0.85rem] leading-5 text-[#525252]">
+                      {item.label}
+                    </p>
+                    <p className="mt-2 font-mono text-[0.58rem] uppercase tracking-[0.12em] text-[#737373]">
+                      {item.detail}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
             <div className="mt-7 grid gap-3 sm:grid-cols-2">
               {PROOF_METRICS.map((metric) => {
                 const Icon = metric.icon
@@ -2046,10 +2109,15 @@ export default function FounderOsPage() {
                 Apply for a Founder Systems Blueprint
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </PrimaryButton>
+              <BookCallButton />
               <SecondaryButton href="#demo">
                 See the command demo
               </SecondaryButton>
             </div>
+            <p className="mt-4 text-[0.85rem] leading-6 text-[#737373]">
+              Not ready for the full application? Book a 30 minute fit call
+              first.
+            </p>
             <div className="mt-8 flex flex-wrap justify-center gap-2">
               {CTA_COMMAND_CHIPS.map((chip) => (
                 <CommandChip key={chip}>{chip}</CommandChip>

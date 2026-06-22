@@ -6,7 +6,7 @@ import FAQSection from "@/components/faq-section"
 import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
 import ScrollToTop from "@/components/scroll-to-top"
-import { HowToSchema, PersonSchema, ServiceSchema } from "@/components/schema-markup"
+import { FAQSchema, HowToSchema, PersonSchema, ServiceSchema } from "@/components/schema-markup"
 import { Button } from "@/components/ui/button"
 import { CASE_STUDIES } from "@/lib/case-study-data"
 import { buildRouteMetadata } from "@/lib/seo/metadata"
@@ -618,7 +618,25 @@ export default function DentalPracticeSeoExpertPage() {
         description="Dentist SEO, including Google Maps optimization, listings, reviews, on-page structure, and technical cleanup tied to calls and bookings."
         serviceType="Dentist SEO services"
         areaServed="United States"
+        offerDetails={{
+          name: "60-Day Growth Sprint",
+          description:
+            "Focused dentist SEO, maps, listings, reviews, and on-page sprint scoped from the Prism Growth Dashboard and audit path.",
+          businessFunction: "http://purl.org/goodrelations/v1#ProvideService",
+          price: "3500",
+          priceCurrency: "USD",
+          availability: "https://schema.org/InStock",
+          url: "https://www.design-prism.com/pricing",
+        }}
+        aggregateRating={{
+          "@type": "AggregateRating",
+          ratingValue: "4.9",
+          reviewCount: "200",
+          bestRating: "5",
+          worstRating: "1",
+        }}
       />
+      <FAQSchema questions={faqItems} />
       <HowToSchema
         name="Dentist SEO process"
         description="A repeatable dentist SEO system: audit, architecture, implementation, trust, and iteration."
