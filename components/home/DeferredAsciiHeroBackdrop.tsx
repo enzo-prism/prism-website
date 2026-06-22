@@ -45,6 +45,7 @@ type DeferredAsciiHeroBackdropProps = {
   maxConcurrentFetches?: number
   continueOnFrameError?: boolean
   forceAutoplay?: boolean
+  renderMode?: 'dom' | 'canvas'
 }
 
 function scheduleBackdropLoad(callback: () => void) {
