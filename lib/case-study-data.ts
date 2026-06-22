@@ -367,26 +367,40 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
   },
   {
     id: '8',
-    title: 'Designing a Digital Home for Bold Aging',
+    title: 'Building a Brand and Audience Engine for Bold Aging',
     client: 'Rebellious Aging',
-    websiteUrl: 'https://www.rebelliousaging.com',
+    websiteUrl: 'https://rebelwithsuz.com',
     category: 'online community',
     founder: 'Suz Rohde',
     industry: 'Online Community',
     location: 'Los Gatos, CA',
     description:
-      'Foundational website refresh and local discovery groundwork for a movement that celebrates aging loudly.',
+      'A defiant brand identity, a content-first website, and a multi-channel audience engine across Substack, YouTube, TikTok, and a Facebook community for a movement that celebrates aging loudly.',
     slug: 'rebellious-aging',
     segments: ['community'],
     structured: {
+      dateModified: '2026-06-22T00:00:00.000Z',
+      focus: 'Brand and audience engine',
+      scope:
+        'Brand identity, website, Substack, YouTube, TikTok, Facebook community, decks and print',
+      outcomes: [
+        'A defiant, warm brand identity (logo, color, and type) that reads more like a magazine than a generic wellness brand, applied consistently across web, social, and print.',
+        'A content-first website at rebelwithsuz.com built for a growing library, search-first discovery, and clear paths from reader to community member.',
+        'A Substack publication designed so Suz can publish essays and grow an owned email audience that does not depend on social algorithms.',
+        'A YouTube channel established for long-form video that anchors the content series and feeds the rest of the ecosystem.',
+        'A TikTok presence that turns the movement\'s point of view into short-form discovery and reach.',
+        'A Facebook community built as the gathering place where readers become members and the conversation lives.',
+        'Business cards, slide decks, and supporting collateral designed in the same system so every offline and presentation touchpoint matches the brand.',
+      ],
       story: {
         situation:
-          'Rebellious Aging is built on a sharp conviction: the mainstream narrative around aging is wrong. The movement had a bold point of view and growing content, but no digital home that could make it discoverable, hold a content library, or turn readers into community members.',
+          'Rebellious Aging is built on a sharp conviction: the mainstream narrative around aging is wrong. Founder Suz Rohde had a bold point of view and growing content, but no cohesive brand and no connected system to make it discoverable, hold a content library, and turn an audience into a community.',
         approach:
-          'Prism developed a visual identity with warmth and defiance — closer to a magazine than a generic wellness site — and built a platform structured for a deep content library, search-first architecture, clear paths into the community, and analytics on what resonates.',
+          'Prism built the whole stack: a defiant brand identity (logo, type, color, business cards, and slide decks), a content-first website at rebelwithsuz.com, and a multi-channel audience engine spanning Substack, YouTube, TikTok, and a Facebook community, all designed in one consistent voice and wired for content-led growth.',
         result:
-          'Rebellious Aging now has a digital home as bold as its positioning, with the foundation for local discovery and content-led growth in place.',
+          'Rebellious Aging now has a brand and a connected audience engine as bold as its positioning. An owned home, owned email, owned video, and an active community work together instead of scattered, disconnected profiles.',
       },
+      canonicalUrl: 'https://www.design-prism.com/case-studies/rebellious-aging',
     },
   },
   {

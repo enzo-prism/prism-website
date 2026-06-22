@@ -5,7 +5,7 @@ import { buildRouteMetadata } from '@/lib/seo/metadata'
 export const metadata: Metadata = buildRouteMetadata({
   titleStem: 'Rebellious Aging case study',
   description:
-    'How Prism built an audience platform for Rebellious Aging, a contrarian wellness brand challenging how people think about getting older.',
+    'How Prism built the brand identity, content-first website, and multi-channel audience engine (Substack, YouTube, TikTok, Facebook community) for Rebellious Aging.',
   path: '/case-studies/rebellious-aging',
   ogImage: '/case-studies/rebellious-aging-home-desktop.jpg',
 })
