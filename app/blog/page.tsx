@@ -82,6 +82,7 @@ export default async function Blog({
               description="Thoughtful breakdowns on design, development, and digital strategy from the Prism team."
               ariaLabel="Hands ASCII animation behind the Blog page hero"
               className="blog-reading-surface"
+              renderMode="canvas"
             />
           </div>
         </section>

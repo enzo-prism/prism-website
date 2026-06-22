@@ -219,6 +219,12 @@ export interface ASCIIAnimationProps {
    * per-frame fetching when the bundle is missing or malformed.
    */
   bundledFrames?: boolean
+  /**
+   * "canvas" renders frames into a <canvas> instead of a <pre> text node.
+   * Canvas is NOT an LCP candidate, so decorative hero backdrops stop stealing
+   * Largest Contentful Paint from the real hero headline. Default "dom".
+   */
+  renderMode?: "dom" | "canvas"
 }
 
 type LoadedFramesStore = Array<string[] | null>
@@ -246,6 +252,7 @@ export default function ASCIIAnimation({
   forceAutoplay = false,
   respectReducedMotion = true,
   bundledFrames = false,
+  renderMode = "dom",
 }: ASCIIAnimationProps) {
   const [frames, setFrames] = useState<string[]>([])
   const [isLoading, setIsLoading] = useState(true)
@@ -262,11 +269,65 @@ export default function ASCIIAnimation({
   const fullLoadTriggered = useRef(false)
   const resolvedSource = useRef<{ baseUrl: string; isFlat: boolean } | null>(null)
   const isInViewRef = useRef(false)
+  const canvasRef = useRef<HTMLCanvasElement>(null)
+  const resolvedColorRef = useRef<string>("")
+  const renderModeRef = useRef<"dom" | "canvas">(renderMode)
+  const drawFrameRef = useRef<((frameStr: string) => void) | null>(null)
 
   // Keep framesRef synced with React state.
   useEffect(() => {
     framesRef.current = frames
   }, [frames])
+
+  // Canvas render path: draw a frame's characters into the <canvas> (line by
+  // line, monospace). Canvas is not an LCP candidate, so this keeps the
+  // decorative backdrop out of LCP. The element is then CSS-scaled to fit,
+  // exactly like the <pre> path.
+  const drawFrameToCanvas = useCallback((frameStr: string) => {
+    const canvas = canvasRef.current
+    if (!canvas || !frameStr) return
+    const lines = frameStr.split("\n")
+    const rows = lines.length
+    let cols = 0
+    for (const line of lines) if (line.length > cols) cols = line.length
+    if (rows === 0 || cols === 0) return
+    const ch = 8
+    const cw = ch * 0.6
+    const cssW = Math.max(1, Math.ceil(cols * cw))
+    const cssH = Math.max(1, Math.ceil(rows * ch))
+    const dpr = Math.min(
+      typeof window !== "undefined" ? window.devicePixelRatio || 1 : 1,
+      2,
+    )
+    if (
+      canvas.dataset.cssw !== String(cssW) ||
+      canvas.dataset.cssh !== String(cssH)
+    ) {
+      canvas.style.width = `${cssW}px`
+      canvas.style.height = `${cssH}px`
+      canvas.width = Math.ceil(cssW * dpr)
+      canvas.height = Math.ceil(cssH * dpr)
+      canvas.dataset.cssw = String(cssW)
+      canvas.dataset.cssh = String(cssH)
+    }
+    const ctx = canvas.getContext("2d")
+    if (!ctx) return
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
+    ctx.clearRect(0, 0, cssW, cssH)
+    ctx.font = `${ch}px ui-monospace, SFMono-Regular, Menlo, monospace`
+    ctx.textBaseline = "top"
+    ctx.fillStyle = resolvedColorRef.current || "rgba(245, 240, 232, 0.95)"
+    for (let i = 0; i < rows; i++) {
+      if (lines[i]) ctx.fillText(lines[i], 0, i * ch)
+    }
+  }, [])
+
+  // Keep refs the rAF callback reads in sync (the AnimationManager is memoized
+  // on [fps], so it cannot close over the latest renderMode / draw fn directly).
+  useEffect(() => {
+    renderModeRef.current = renderMode
+    drawFrameRef.current = drawFrameToCanvas
+  }, [renderMode, drawFrameToCanvas])
 
   const animationManager = useMemo(
     () =>
@@ -277,7 +338,9 @@ export default function ASCIIAnimation({
         const nextFrame = (currentFrameRef.current + 1) % allFrames.length
         currentFrameRef.current = nextFrame
 
-        if (preRef.current) {
+        if (renderModeRef.current === "canvas") {
+          drawFrameRef.current?.(allFrames[nextFrame])
+        } else if (preRef.current) {
           preRef.current.textContent = allFrames[nextFrame]
           preRef.current.dataset.currentFrame = String(nextFrame)
         }
@@ -714,24 +777,34 @@ export default function ASCIIAnimation({
 
   // Handle resize and scaling.
   useLayoutEffect(() => {
+    const content = preRef.current ?? canvasRef.current
     if (
       !containerRef.current ||
-      !preRef.current ||
+      !content ||
       frames.length === 0 ||
       typeof ResizeObserver === "undefined"
     ) {
       return
     }
 
+    // In canvas mode, resolve the inherited foreground color once and paint the
+    // first frame so the canvas has a natural size for the scale math below.
+    if (renderMode === "canvas" && canvasRef.current) {
+      if (!resolvedColorRef.current) {
+        resolvedColorRef.current = getComputedStyle(canvasRef.current).color
+      }
+      drawFrameToCanvas(frames[currentFrameRef.current] ?? frames[0])
+    }
+
     const updateScale = () => {
       const container = containerRef.current
-      const content = preRef.current
-      if (!container || !content) return
+      const node = preRef.current ?? canvasRef.current
+      if (!container || !node) return
 
       const availableWidth = container.clientWidth
       const availableHeight = container.clientHeight
-      const naturalWidth = content.scrollWidth
-      const naturalHeight = content.scrollHeight
+      const naturalWidth = node.scrollWidth
+      const naturalHeight = node.scrollHeight
 
       if (naturalWidth === 0 || naturalHeight === 0) return
 
@@ -756,7 +829,7 @@ export default function ASCIIAnimation({
     return () => {
       resizeObserver.disconnect()
     }
-  }, [frames, fit, zoom, scaled])
+  }, [frames, fit, zoom, scaled, renderMode, drawFrameToCanvas])
 
   if (isLoading && frames.length === 0) {
     return (
@@ -807,29 +880,43 @@ export default function ASCIIAnimation({
           Frame: {currentFrameRef.current + 1}/{frames.length}
         </div>
       )}
-      <pre
-        ref={preRef}
-        className={`leading-none origin-center ${textSize}`}
-        data-current-frame={currentFrameRef.current}
-        style={{
-          transform: `translateY(${offsetY}%) scale(${scale})`,
-          willChange: "transform, opacity",
-          opacity: scaled ? 1 : 0,
-          transition: "opacity 0.5s ease-in",
-          ...(gradient
-            ? {
-                background: gradient,
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                backgroundClip: "text",
-              }
-            : color
-              ? { color }
-              : {}),
-        }}
-      >
-        {frames[currentFrameRef.current]}
-      </pre>
+      {renderMode === "canvas" ? (
+        <canvas
+          ref={canvasRef}
+          aria-hidden="true"
+          className="origin-center"
+          style={{
+            transform: `translateY(${offsetY}%) scale(${scale})`,
+            willChange: "transform, opacity",
+            opacity: scaled ? 1 : 0,
+            transition: "opacity 0.5s ease-in",
+          }}
+        />
+      ) : (
+        <pre
+          ref={preRef}
+          className={`leading-none origin-center ${textSize}`}
+          data-current-frame={currentFrameRef.current}
+          style={{
+            transform: `translateY(${offsetY}%) scale(${scale})`,
+            willChange: "transform, opacity",
+            opacity: scaled ? 1 : 0,
+            transition: "opacity 0.5s ease-in",
+            ...(gradient
+              ? {
+                  background: gradient,
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  backgroundClip: "text",
+                }
+              : color
+                ? { color }
+                : {}),
+          }}
+        >
+          {frames[currentFrameRef.current]}
+        </pre>
+      )}
     </div>
   )
 }

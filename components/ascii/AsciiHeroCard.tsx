@@ -18,6 +18,7 @@ type AsciiHeroCardProps = {
   contentClassName?: string
   ariaLabel?: string
   animationTextSize?: string
+  renderMode?: 'dom' | 'canvas'
 }
 
 export default function AsciiHeroCard({
@@ -33,6 +34,7 @@ export default function AsciiHeroCard({
   contentClassName,
   ariaLabel,
   animationTextSize = "text-[2.4px] sm:text-[2.9px] md:text-[3.5px]",
+  renderMode = 'dom',
 }: AsciiHeroCardProps) {
   return (
     <div
@@ -48,6 +50,7 @@ export default function AsciiHeroCard({
         ariaLabel={ariaLabel ?? `${title} ASCII animation`}
         textSize={animationTextSize}
         quality="high"
+        renderMode={renderMode}
       />
 
       <div

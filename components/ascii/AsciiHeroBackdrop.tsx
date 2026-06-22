@@ -21,6 +21,7 @@ type AsciiHeroBackdropProps = {
   continueOnFrameError?: boolean
   forceAutoplay?: boolean
   bundledFrames?: boolean
+  renderMode?: 'dom' | 'canvas'
 }
 
 export default function AsciiHeroBackdrop({
@@ -42,6 +43,7 @@ export default function AsciiHeroBackdrop({
   continueOnFrameError = true,
   forceAutoplay = false,
   bundledFrames = true,
+  renderMode = 'dom',
 }: AsciiHeroBackdropProps) {
   return (
     <>
@@ -63,6 +65,7 @@ export default function AsciiHeroBackdrop({
         continueOnFrameError={continueOnFrameError}
         forceAutoplay={forceAutoplay}
         bundledFrames={bundledFrames}
+        renderMode={renderMode}
       />
       <div aria-hidden="true" className={scrimClassName} />
       <div aria-hidden="true" className={focusScrimClassName} />

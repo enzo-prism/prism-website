@@ -2,7 +2,7 @@
 "use client"
 
 import { useRef, useState, useEffect, useCallback } from "react"
-import OptimizedImage from "./optimized-image"
+import Image from "next/image"
 
 // Import the tracking function at the top of the file
 import { trackClientShowcaseInteraction } from "@/utils/analytics"
@@ -354,7 +354,7 @@ export default function ClientShowcase() {
               <div className={`relative overflow-hidden rounded-xl ${client.gradient}`} style={{ aspectRatio: "9/16" }}>
                 <div className="absolute inset-0 w-full h-full">
                   {client.image ? (
-                    <OptimizedImage
+                    <Image
                       src={client.image}
                       alt={`Photo of ${client.name}`}
                       width={280}
@@ -363,10 +363,6 @@ export default function ClientShowcase() {
                       sizes="(max-width: 640px) 60vw, (max-width: 1024px) 35vw, 280px"
                       quality={90}
                       priority={index < 5} // Prioritize loading for first 5 images
-                      fallbackSrc={`/placeholder.svg?height=498&width=280&query=${encodeURIComponent(client.name)}`}
-                      fallbackColor={
-                        client.gradient.includes("from-") ? client.gradient.split("from-")[1].split(" ")[0] : "#f3f4f6"
-                      }
                     />
                   ) : (
                     <div className={`w-full h-full ${client.gradient}`}></div>

@@ -28,6 +28,7 @@ export default function HomeHeroSection() {
             frameCount={300}
             fps={18}
             quality="high"
+            renderMode="canvas"
             textSize="text-[2.3px] sm:text-[2.8px] md:text-[3.2px]"
             ariaLabel="Wave ASCII animation behind the homepage hero"
             forceAutoplay
