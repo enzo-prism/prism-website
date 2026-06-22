@@ -12,6 +12,7 @@ import { geistPixelGrid, geistPixelSquare } from "@/lib/fonts"
 import { GlobalSchemaGraph } from "@/components/schema-markup"
 import RuntimeClientShell from "@/components/runtime-client-shell"
 import SkipToContent from "@/components/skip-to-content"
+import { SpeedInsights } from "@vercel/speed-insights/next"
 import { GA_MEASUREMENT_ID, GOOGLE_ADS_ID, IS_ANALYTICS_ENABLED, IS_PRODUCTION_ENV } from "@/lib/constants"
 import { buildAbsoluteTitle, buildMinimalDescription } from "@/lib/seo/rules"
 
@@ -156,6 +157,7 @@ export default function RootLayout({
         <Suspense fallback={null}>
           {children}
         </Suspense>
+        <SpeedInsights />
       </body>
     </html>
   )

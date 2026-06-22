@@ -2,7 +2,6 @@
 
 import { Suspense } from 'react'
 import { usePathname } from 'next/navigation'
-import { SpeedInsights } from '@vercel/speed-insights/next'
 
 import { ElevenLabsWidgetScript } from '@/components/elevenlabs/ElevenLabsWidget'
 import ErrorTracker from '@/components/error-tracker'
@@ -38,7 +37,6 @@ export default function RuntimeDeferredFeatures() {
         <ScrollTracker />
         <Suspense fallback={null}>
           <VercelAnalytics />
-          <SpeedInsights />
           {shouldMountPublicWidget ? (
             <>
               <ElevenLabsWidgetScript />

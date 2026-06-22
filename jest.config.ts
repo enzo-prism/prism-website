@@ -13,6 +13,8 @@ const config: Config = {
     '^(\\.{1,2}/.*)\\.js$': '$1',
     'next-mdx-remote/rsc': '<rootDir>/__mocks__/mdxremote.js',
     '^@vercel/analytics$': '<rootDir>/__mocks__/vercel-analytics.ts',
+    '^@vercel/speed-insights/next$': '<rootDir>/__mocks__/vercel-speed-insights.ts',
+    '^@vercel/speed-insights$': '<rootDir>/__mocks__/vercel-speed-insights.ts',
   },
   transform: {
     '^.+\\.(ts|tsx)$': ['ts-jest', { tsconfig: 'tsconfig.jest.json' }],
