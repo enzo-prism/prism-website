@@ -32,7 +32,7 @@ export function BrowserScreenshotFrame({
   priority = false,
   className,
   imageClassName,
-  sizes = '(min-width: 1024px) 46vw, 100vw',
+  sizes = '(min-width: 1280px) 480px, (min-width: 768px) 45vw, calc(100vw - 64px)',
 }: {
   src: string
   alt: string
@@ -75,7 +75,7 @@ export function MobileScreenshotFrame({
   src,
   alt,
   className,
-  sizes = '(min-width: 768px) 15vw, 45vw',
+  sizes = '(min-width: 1024px) 176px, (min-width: 640px) 160px, 144px',
 }: {
   src: string
   alt: string
