@@ -90,15 +90,12 @@ images: {
           { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
         ],
       },
-      {
-        // Next's optimized image endpoint is content-addressed by url+w+q+hash,
-        // so each variant URL is stable forever — immutable is safe and avoids
-        // re-fetching already-optimized images on every navigation.
-        source: '/_next/image(.*)',
-        headers: [
-          { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
-        ],
-      },
+      // NOTE: browser-side immutable caching of Next's /_next/image endpoint is
+      // NOT configurable here — Next controls that route's Cache-Control
+      // internally (it returns max-age=0, must-revalidate to browsers regardless
+      // of next.config headers()). Vercel still edge-caches optimized variants,
+      // so repeat loads are fast 304s. A true browser-immutable fix needs a
+      // different image delivery path (e.g. a CDN with its own cache-control).
     ]
   },
   async redirects() {
