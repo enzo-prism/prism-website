@@ -1021,15 +1021,16 @@ export default function WebsiteBuildEstimatorForm() {
             </div>
           </div>
 
-          {/* Mobile-only live estimate: the sidebar is pushed below the fold on small screens. */}
-          <div className="mt-5 flex items-center justify-between gap-4 border border-[#d8bc79]/20 bg-[#d8bc79]/[0.06] px-4 py-3 lg:hidden">
+          {/* Mobile-only live estimate: the sidebar is pushed below the fold on
+              small screens, so we pin a compact running total to the top of the
+              viewport while the user scrolls and edits the current step. */}
+          <div className="sticky top-2 z-30 mt-5 flex items-center justify-between gap-4 border border-[#d8bc79]/30 bg-[#0d0d0d]/95 px-4 py-3 shadow-[0_12px_30px_-18px_rgba(0,0,0,0.9)] backdrop-blur supports-[backdrop-filter]:bg-[#0d0d0d]/80 lg:hidden">
             <span className="font-mono text-[0.68rem] uppercase tracking-[0.2em] text-[#8f877b]">
               Estimated range
             </span>
             <span
               key={estimateRange}
               className="estimate-flash font-mono text-[1.05rem] font-medium tracking-[-0.02em] text-[#f5f0e8] tabular-nums"
-              aria-live="polite"
             >
               {estimateRange}
             </span>

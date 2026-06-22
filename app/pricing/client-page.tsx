@@ -1,3 +1,5 @@
+import Link from 'next/link'
+
 import PricingHero from '@/components/pricing/PricingHero'
 import {
   CoreActionLink,
@@ -124,6 +126,27 @@ const partnerLevels = [
     price: 'From $3,500+/month',
     description:
       'Higher-touch growth execution, strategy, testing, creative direction, and multi-channel support.',
+  },
+] as const
+
+// Real, source-attributed results from lib/case-study-data.ts (Google Search
+// Console). Used as quantified proof beside the primary pricing CTA — keep in
+// sync with the source; do not invent metrics.
+const CTA_PROOF_POINTS = [
+  {
+    value: '5.3×',
+    label: 'monthly Google clicks in five months — Saorsa Growth Partners',
+    href: '/case-studies/saorsa-growth-partners',
+  },
+  {
+    value: '593',
+    label: 'Google clicks in the first month after launch — Roseville Dental Academy',
+    href: '/case-studies/roseville-dental-academy',
+  },
+  {
+    value: '+142%',
+    label: 'Google Search impressions year over year — Dr. Christopher Wong',
+    href: '/case-studies/dr-christopher-wong',
   },
 ] as const
 
@@ -427,6 +450,27 @@ export default function PricingPageClient() {
             description="Create your free Prism Growth Dashboard and get a focused view of your biggest visible opportunities."
             titleClassName="max-w-[13ch]"
           />
+
+          <div className="mt-10 grid gap-px overflow-hidden border border-white/12 bg-white/10 sm:grid-cols-3">
+            {CTA_PROOF_POINTS.map((proof) => (
+              <Link
+                key={proof.label}
+                href={proof.href}
+                className="group bg-black p-6 transition-colors hover:bg-[#0b0b0b] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[#d8bc79]/35"
+              >
+                <p className="font-sans text-[2rem] font-medium leading-none tracking-[-0.04em] text-[#f5f0e8]">
+                  {proof.value}
+                </p>
+                <p className="mt-3 text-[0.92rem] leading-6 text-[#b8afa2] group-hover:text-[#c9c1b6]">
+                  {proof.label}
+                </p>
+              </Link>
+            ))}
+          </div>
+          <p className="mt-4 font-mono text-[0.68rem] uppercase tracking-[0.16em] text-[#6f685d]">
+            Source: Google Search Console
+          </p>
+
           <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:gap-5">
             <CoreActionLink href={PRICING_PRIMARY_CTA.href} variant="heroPrimary">
               {PRICING_PRIMARY_CTA.label}
@@ -438,6 +482,9 @@ export default function PricingPageClient() {
               {PRICING_SECONDARY_CTA.label}
             </CoreActionLink>
           </div>
+          <p className="mt-6 font-mono text-[0.72rem] uppercase tracking-[0.18em] text-[#d8bc79]">
+            Free to start &middot; no card required &middot; cancel anytime before paid work
+          </p>
         </div>
       </section>
 

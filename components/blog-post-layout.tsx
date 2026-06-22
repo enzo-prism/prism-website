@@ -1,6 +1,7 @@
 import { BlogPostErrorBoundary } from '@/components/blog-error-boundary'
 import BlogHeroMedia from '@/components/blog/BlogHeroMedia'
 import BlogScrollProgress from '@/components/blog/BlogScrollProgress'
+import BlogConversionCta from '@/components/blog/BlogConversionCta'
 import CopyBlogMarkdownButton from '@/components/blog/copy-blog-markdown-button'
 import GetStartedCTA from '@/components/GetStartedCTA'
 import Footer from '@/components/footer'
@@ -240,6 +241,8 @@ export default function BlogPostLayout({
                 ) : null}
 
                 <BlogPostFeedback slug={slug} />
+
+                <BlogConversionCta slug={slug} />
 
                 {activePrismImpact ? (
                   <section className="mt-16 rounded-2xl border border-border/60 bg-card/40 p-6 sm:p-8">

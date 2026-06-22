@@ -480,6 +480,19 @@ function isEmail(value: string) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim())
 }
 
+// Fields that render their own inline error inside the Field component.
+const INLINE_ERROR_FIELDS = new Set<string>([
+  'company_website',
+  'operating_country',
+  'full_name',
+  'work_email',
+  'job_title',
+  'first_question',
+  'first_workflow',
+  'current_workflow',
+  'success_metric',
+])
+
 /* ------------------------------------------------------------------ */
 /* Primitives                                                         */
 /* ------------------------------------------------------------------ */
@@ -489,12 +502,14 @@ function Field({
   required,
   hint,
   error,
+  errorId,
   children,
 }: {
   label: string
   required?: boolean
   hint?: string
   error?: string
+  errorId?: string
   children: ReactNode
 }) {
   return (
@@ -508,7 +523,12 @@ function Field({
       {hint ? <p className="text-[0.85rem] leading-6 text-[#6e6e6e]">{hint}</p> : null}
       {children}
       {error ? (
-        <p className="font-mono text-[0.72rem] uppercase tracking-[0.08em] text-[#cc2e2e]">
+        <p
+          id={errorId}
+          role="alert"
+          aria-live="assertive"
+          className="font-mono text-[0.72rem] uppercase tracking-[0.08em] text-[#cc2e2e]"
+        >
           {error}
         </p>
       ) : null}
@@ -575,6 +595,7 @@ function CharCount({ value, max }: { value: string; max: number }) {
 export default function FounderOsApplicationForm() {
   const formRef = useRef<HTMLFormElement>(null)
   const startedRef = useRef(false)
+  const errorRef = useRef<HTMLParagraphElement>(null)
   const [stepId, setStepId] = useState<StepId | 'offramp'>('company')
   const [continueAnyway, setContinueAnyway] = useState(false)
   const [a, setA] = useState<Answers>(EMPTY)
@@ -618,6 +639,57 @@ export default function FounderOsApplicationForm() {
   const showLocations =
     a.business_model === 'Local or multi-location service business' ||
     a.business_model === 'Healthcare or dental'
+
+  // When a step error is showing, work out which field caused it so we can
+  // wire aria-invalid/aria-describedby and move focus to the right control.
+  const invalidField = useMemo<string | null>(() => {
+    if (!error || stepId === 'offramp') return null
+    switch (stepId) {
+      case 'company':
+        if (!isUrlish(a.company_website)) return 'company_website'
+        if (!a.business_model) return 'business_model'
+        if (!a.operating_country.trim()) return 'operating_country'
+        return null
+      case 'contact':
+        if (!a.full_name.trim()) return 'full_name'
+        if (!isEmail(a.work_email)) return 'work_email'
+        if (!a.job_title.trim()) return 'job_title'
+        return null
+      case 'first_question':
+        return 'first_question'
+      case 'first_workflow':
+        return 'first_workflow'
+      case 'current_workflow':
+        return 'current_workflow'
+      case 'success':
+        return 'success_metric'
+      default:
+        return null
+    }
+  }, [error, stepId, a])
+
+  const fieldProps = (name: string) => {
+    const invalid = invalidField === name
+    return {
+      'aria-invalid': invalid || undefined,
+      'aria-describedby': invalid ? `${name}-error` : undefined,
+      'data-fos-focus': invalid ? 'true' : undefined,
+    }
+  }
+
+  // Fields in INLINE_ERROR_FIELDS render their own inline error inside the Field
+  // component, so we suppress the duplicate step-level banner for them.
+  const showStepError = Boolean(
+    error && !(invalidField && INLINE_ERROR_FIELDS.has(invalidField)),
+  )
+
+  // Light pacing cue so the long application feels finite near the end.
+  const pacingCue =
+    stepId === 'optional'
+      ? 'Almost done. This is the last section before review.'
+      : stepId === 'review'
+        ? 'Last step. Review your answers and submit.'
+        : ''
 
   const validateStep = (id: StepId): string => {
     switch (id) {
@@ -705,11 +777,33 @@ export default function FounderOsApplicationForm() {
   const scrollTop = () =>
     formRef.current?.scrollIntoView?.({ block: 'start', behavior: 'smooth' })
 
+  const focusFirstInvalid = () => {
+    if (typeof window === 'undefined') return
+    if (window.matchMedia?.('(max-width: 767px)').matches) return
+
+    window.requestAnimationFrame(() => {
+      const form = formRef.current
+      const marked = form?.querySelector<HTMLElement>('[data-fos-focus="true"]')
+      // If the marked element isn't focusable (e.g. a choice-group wrapper),
+      // fall back to the first interactive control inside it.
+      const focusable =
+        marked &&
+        (marked.matches('input, textarea, select, button, [tabindex]')
+          ? marked
+          : marked.querySelector<HTMLElement>(
+              'input, textarea, select, button, [tabindex]',
+            ))
+      const target = focusable || errorRef.current
+      target?.focus({ preventScroll: true })
+    })
+  }
+
   const goNext = () => {
     if (stepId === 'offramp') return
     const err = validateStep(stepId)
     if (err) {
       setError(err)
+      focusFirstInvalid()
       trackEvent('founder_os_application_validation_error', {
         form_name: FORM_NAME,
         form_location: FORM_LOCATION,
@@ -753,6 +847,7 @@ export default function FounderOsApplicationForm() {
     const err = validateStep('review')
     if (err) {
       setError(err)
+      focusFirstInvalid()
       return
     }
     setSubmitError('')
@@ -974,11 +1069,23 @@ export default function FounderOsApplicationForm() {
             ? 'Founder OS may be more than you need right now.'
             : HEADINGS[stepId]}
         </h2>
+        {pacingCue ? (
+          <p className="mt-3 inline-flex items-center gap-2 text-[0.85rem] leading-6 text-[#15803d]">
+            <CheckCircle2 className="h-4 w-4" aria-hidden="true" />
+            {pacingCue}
+          </p>
+        ) : null}
 
         <div className="mt-7 space-y-7">{renderStep()}</div>
 
-        {error ? (
-          <p className="mt-5 flex items-center gap-2 font-mono text-[0.74rem] uppercase tracking-[0.08em] text-[#cc2e2e]">
+        {showStepError ? (
+          <p
+            ref={errorRef}
+            role="alert"
+            aria-live="assertive"
+            tabIndex={-1}
+            className="mt-5 flex items-center gap-2 font-mono text-[0.74rem] uppercase tracking-[0.08em] text-[#cc2e2e] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#cc2e2e]/40 focus-visible:ring-offset-2"
+          >
             <ShieldAlert className="h-4 w-4" aria-hidden="true" />
             {error}
           </p>
@@ -1027,7 +1134,7 @@ export default function FounderOsApplicationForm() {
             onClick={goNext}
             className="inline-flex min-h-11 flex-1 items-center justify-center gap-2 rounded-lg bg-[#0a0a0a] px-5 text-[0.9rem] font-medium text-[#ffffff] transition-colors hover:bg-[#262626] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0063d1] focus-visible:ring-offset-2"
           >
-            Continue
+            {stepId === 'optional' ? 'Skip or continue to review' : 'Continue'}
             <ArrowRight className="h-4 w-4" aria-hidden="true" />
           </button>
         )}
@@ -1046,7 +1153,12 @@ export default function FounderOsApplicationForm() {
       case 'company':
         return (
           <>
-            <Field label="Company website" required error={undefined}>
+            <Field
+              label="Company website"
+              required
+              error={invalidField === 'company_website' ? error : undefined}
+              errorId="company_website-error"
+            >
               <input
                 type="url"
                 inputMode="url"
@@ -1054,11 +1166,15 @@ export default function FounderOsApplicationForm() {
                 value={a.company_website}
                 onChange={(e) => set('company_website', e.target.value)}
                 placeholder="yourcompany.com"
-                className={inputClass()}
+                className={inputClass(invalidField === 'company_website')}
+                {...fieldProps('company_website')}
               />
             </Field>
             <Field label="Business model" required>
-              <div className="grid gap-2 sm:grid-cols-2">
+              <div
+                className="grid gap-2 sm:grid-cols-2"
+                {...fieldProps('business_model')}
+              >
                 {BUSINESS_MODELS.map((m) => (
                   <Choice
                     key={m}
@@ -1070,12 +1186,18 @@ export default function FounderOsApplicationForm() {
                 ))}
               </div>
             </Field>
-            <Field label="Primary operating country" required>
+            <Field
+              label="Primary operating country"
+              required
+              error={invalidField === 'operating_country' ? error : undefined}
+              errorId="operating_country-error"
+            >
               <input
                 value={a.operating_country}
                 onChange={(e) => set('operating_country', e.target.value)}
                 placeholder="United States"
-                className={inputClass()}
+                className={inputClass(invalidField === 'operating_country')}
+                {...fieldProps('operating_country')}
               />
             </Field>
             <p className="text-[0.8rem] leading-6 text-[#6e6e6e]">
@@ -1202,32 +1324,50 @@ export default function FounderOsApplicationForm() {
               application?
             </p>
             <div className="grid gap-5 sm:grid-cols-2">
-              <Field label="Full name" required>
+              <Field
+                label="Full name"
+                required
+                error={invalidField === 'full_name' ? error : undefined}
+                errorId="full_name-error"
+              >
                 <input
                   autoComplete="name"
                   value={a.full_name}
                   onChange={(e) => set('full_name', e.target.value)}
                   placeholder="Your name"
-                  className={inputClass()}
+                  className={inputClass(invalidField === 'full_name')}
+                  {...fieldProps('full_name')}
                 />
               </Field>
-              <Field label="Work email" required>
+              <Field
+                label="Work email"
+                required
+                error={invalidField === 'work_email' ? error : undefined}
+                errorId="work_email-error"
+              >
                 <input
                   type="email"
                   autoComplete="email"
                   value={a.work_email}
                   onChange={(e) => set('work_email', e.target.value)}
                   placeholder="you@company.com"
-                  className={inputClass()}
+                  className={inputClass(invalidField === 'work_email')}
+                  {...fieldProps('work_email')}
                 />
               </Field>
-              <Field label="Job title" required>
+              <Field
+                label="Job title"
+                required
+                error={invalidField === 'job_title' ? error : undefined}
+                errorId="job_title-error"
+              >
                 <input
                   autoComplete="organization-title"
                   value={a.job_title}
                   onChange={(e) => set('job_title', e.target.value)}
                   placeholder="Founder, COO, Head of Ops…"
-                  className={inputClass()}
+                  className={inputClass(invalidField === 'job_title')}
+                  {...fieldProps('job_title')}
                 />
               </Field>
               <Field label="LinkedIn profile">
@@ -1284,13 +1424,16 @@ export default function FounderOsApplicationForm() {
             label="The first question you wish you could ask and get a trustworthy, source-linked answer to"
             required
             hint="e.g. “Why did qualified leads fall this month?” · “Which client accounts need me today?” · “Which campaigns produce actual revenue?”"
+            error={invalidField === 'first_question' ? error : undefined}
+            errorId="first_question-error"
           >
             <textarea
               value={a.first_question}
               maxLength={500}
               onChange={(e) => set('first_question', e.target.value)}
               placeholder="Ask the question you can't reliably answer today."
-              className={`${inputClass()} min-h-32 py-3 leading-7`}
+              className={`${inputClass(invalidField === 'first_question')} min-h-32 py-3 leading-7`}
+              {...fieldProps('first_question')}
             />
             <div className="flex justify-end">
               <CharCount value={a.first_question} max={500} />
@@ -1304,13 +1447,16 @@ export default function FounderOsApplicationForm() {
             label="If Prism built only one workflow first, what should it handle from trigger to outcome?"
             required
             hint="Describe the business outcome, not the technology. e.g. “Detect stalled high-value leads, gather context, draft a personalized follow-up, and ask me to approve it in Slack.”"
+            error={invalidField === 'first_workflow' ? error : undefined}
+            errorId="first_workflow-error"
           >
             <textarea
               value={a.first_workflow}
               maxLength={700}
               onChange={(e) => set('first_workflow', e.target.value)}
               placeholder="From the trigger to the result you want."
-              className={`${inputClass()} min-h-36 py-3 leading-7`}
+              className={`${inputClass(invalidField === 'first_workflow')} min-h-36 py-3 leading-7`}
+              {...fieldProps('first_workflow')}
             />
             <div className="flex justify-end">
               <CharCount value={a.first_workflow} max={700} />
@@ -1324,13 +1470,16 @@ export default function FounderOsApplicationForm() {
             label="How does this workflow happen today?"
             required
             hint="What triggers it? Who touches it? Which systems? Where does it slow down or need you? Three to six bullets is plenty."
+            error={invalidField === 'current_workflow' ? error : undefined}
+            errorId="current_workflow-error"
           >
             <textarea
               value={a.current_workflow}
               maxLength={1000}
               onChange={(e) => set('current_workflow', e.target.value)}
               placeholder={'• New leads enter HubSpot from three forms\n• An assistant checks ad source and company size\n• Nothing alerts me when a high-value lead goes untouched'}
-              className={`${inputClass()} min-h-44 py-3 leading-7`}
+              className={`${inputClass(invalidField === 'current_workflow')} min-h-44 py-3 leading-7`}
+              {...fieldProps('current_workflow')}
             />
             <div className="flex justify-end">
               <CharCount value={a.current_workflow} max={1000} />
@@ -1386,13 +1535,16 @@ export default function FounderOsApplicationForm() {
             label="What measurable result would make the first 90 days an undeniable win?"
             required
             hint="Use a number when you can: “save 20 team-hours a week,” “cut lead response from 6 hours to 15 minutes,” “reduce weekly reporting from two days to one hour.”"
+            error={invalidField === 'success_metric' ? error : undefined}
+            errorId="success_metric-error"
           >
             <textarea
               value={a.success_metric}
               maxLength={400}
               onChange={(e) => set('success_metric', e.target.value)}
               placeholder="Name the observable improvement."
-              className={`${inputClass()} min-h-32 py-3 leading-7`}
+              className={`${inputClass(invalidField === 'success_metric')} min-h-32 py-3 leading-7`}
+              {...fieldProps('success_metric')}
             />
             <div className="flex justify-end">
               <CharCount value={a.success_metric} max={400} />
@@ -1721,9 +1873,15 @@ export default function FounderOsApplicationForm() {
       case 'optional':
         return (
           <>
-            <p className="text-[0.88rem] leading-6 text-[#6e6e6e]">
-              All optional. These help us prepare and don&apos;t affect your score.
-            </p>
+            <div className="flex flex-wrap items-center gap-2 rounded-lg border border-[#ededed] bg-[#fafafa] px-4 py-3">
+              <span className="font-mono text-[0.62rem] uppercase tracking-[0.16em] text-[#15803d]">
+                Optional
+              </span>
+              <p className="text-[0.88rem] leading-6 text-[#525252]">
+                You can skip this. Every field here is optional, helps us prepare,
+                and does not affect your score.
+              </p>
+            </div>
             <Field label="Where would you prefer to interact with Founder OS?">
               <div className="grid gap-2 sm:grid-cols-2">
                 {CHANNELS.map((o) => (

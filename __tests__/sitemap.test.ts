@@ -23,8 +23,11 @@ describe("sitemap", () => {
       "https://www.design-prism.com/blog",
     ]))
 
+    // Upper bound raised from 100 after intentionally promoting service pages
+    // (/ai, /ai-agents, /local-seo-agency, /local-seo-services) and ~10 blog
+    // posts to indexable in lib/seo/search-visibility.ts.
     expect(urls.length).toBeGreaterThanOrEqual(85)
-    expect(urls.length).toBeLessThanOrEqual(100)
+    expect(urls.length).toBeLessThanOrEqual(120)
 
     const seen = new Set<string>()
     for (const url of urls) {

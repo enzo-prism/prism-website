@@ -708,6 +708,23 @@ export default function DentalWebsitePage() {
         description="Dental practice website design, copy, and development built to earn trust, load fast, and support long-term local visibility."
         serviceType="Website design"
         areaServed="United States"
+        offerDetails={{
+          name: "60-Day Growth Sprint",
+          description:
+            "Focused dental website build, conversion path, and tracking sprint scoped from the Prism Growth Dashboard and audit path.",
+          businessFunction: "http://purl.org/goodrelations/v1#ProvideService",
+          price: "3500",
+          priceCurrency: "USD",
+          availability: "https://schema.org/InStock",
+          url: "https://www.design-prism.com/pricing",
+        }}
+        aggregateRating={{
+          "@type": "AggregateRating",
+          ratingValue: "4.9",
+          reviewCount: "200",
+          bestRating: "5",
+          worstRating: "1",
+        }}
       />
       <FAQSchema questions={faqs} />
     </>

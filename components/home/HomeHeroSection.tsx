@@ -114,7 +114,7 @@ export default function HomeHeroSection() {
                     <span
                       key={line}
                       className="home-hero-rise block"
-                      style={heroRiseDelay(140 + index * 110)}
+                      style={heroRiseDelay(index * 70)}
                     >
                       <span className="text-[#8f877b]">{verb}</span>{' '}
                       <span>{outcome.join(' ')}</span>{' '}

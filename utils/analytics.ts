@@ -327,6 +327,7 @@ export type EventType =
   | 'apply_abandon_step_2'
   | 'apply_budget_selected'
   | 'apply_service_selected'
+  | 'apply_early_email_capture'
   | 'website_build_estimator_start'
   | 'website_build_estimate_update'
   | 'website_build_validation_error'

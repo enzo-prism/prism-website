@@ -101,6 +101,14 @@ body[data-route-surface='home-black'] {
   color: #f5f0e8;
 }
 
+/* Global keyboard focus fallback (WCAG 2.4.7). Low-specificity safety net for
+   any interactive element without an explicit ring — component-level
+   `:focus-visible` rings (higher specificity) still win. */
+:focus-visible {
+  outline: 2px solid #f5f0e8;
+  outline-offset: 2px;
+}
+
 /* Decorative videos should never capture taps or trigger native fullscreen. */
 video[aria-hidden='true'] {
   pointer-events: none;
@@ -3101,21 +3109,21 @@ select {
   }
 }
 
-/* Staggered rise-in for hero copy on first paint. */
+/* Staggered rise-in for hero copy on first paint.
+   Transform-only (no opacity fade) so the headline is painted/visible at the
+   first frame and stays LCP-eligible — perf fix, see HomeHeroSection. */
 @keyframes home-hero-rise {
   from {
-    opacity: 0;
-    transform: translateY(22px);
+    transform: translateY(14px);
   }
 
   to {
-    opacity: 1;
     transform: translateY(0);
   }
 }
 
 .home-hero-rise {
-  animation: home-hero-rise 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: home-hero-rise 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
   animation-delay: var(--hero-rise-delay, 0ms);
 }
 
