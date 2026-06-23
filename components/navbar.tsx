@@ -261,7 +261,7 @@ export default function Navbar() {
       {isMobileMenuOpen ? (
         <div
           id={MOBILE_NAV_ID}
-          className="max-h-[calc(100dvh-72px)] overflow-y-auto overscroll-contain border-t border-white/12 bg-black lg:hidden"
+          className="h-[calc(100dvh-72px)] overflow-y-auto overscroll-contain border-t border-white/12 bg-black lg:hidden"
         >
           <nav aria-label="Main" className="container mx-auto px-4 sm:px-6">
             <div className="divide-y divide-white/12">

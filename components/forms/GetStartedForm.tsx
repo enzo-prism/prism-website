@@ -174,10 +174,23 @@ function normalizeReviewLink(value: string) {
   return `https://${trimmed}`
 }
 
-function isValidReviewLink(value: string) {
+function isValidReviewLink(value: string, requireDomain = false) {
+  if (/\s/.test(value)) return false
+
   try {
     const parsed = new URL(value)
-    return Boolean(parsed.hostname)
+    if (!parsed.hostname) return false
+
+    if (requireDomain) {
+      // Website-URL path: demand a real domain (a dot + a 2+ letter TLD).
+      // This rejects bare words like "not a url" or "localhost" that
+      // otherwise pass once `https://` is prepended.
+      return /^(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z]{2,}$/.test(
+        parsed.hostname,
+      )
+    }
+
+    return true
   } catch {
     return false
   }
@@ -634,7 +647,10 @@ export default function GetStartedForm() {
             field.value = normalized
           }
 
-          if (!isValidReviewLink(field.value)) {
+          // Only the website-URL path requires a real domain; the
+          // profile/handle path stays intentionally permissive.
+          const requireDomain = hasWebsite === 'yes'
+          if (!isValidReviewLink(field.value, requireDomain)) {
             message = 'Add a valid link'
           }
         }
@@ -659,7 +675,7 @@ export default function GetStartedForm() {
       field.setCustomValidity(message)
       commitTextField(field)
     },
-    [commitTextField],
+    [commitTextField, hasWebsite],
   )
 
   const getNamedFields = useCallback((names: readonly string[]) => {
@@ -700,6 +716,28 @@ export default function GetStartedForm() {
       )
 
       field?.focus({ preventScroll: true })
+    },
+    [getNamedFields],
+  )
+
+  const scrollFieldIntoView = useCallback(
+    (name: string) => {
+      // Bring the first invalid control (or its error message) into view even
+      // on mobile, where auto-focus is skipped and the sticky footer can
+      // otherwise occlude inline errors.
+      const form = formRef.current
+      if (!form) return
+
+      const target =
+        form.querySelector<HTMLElement>(`#${name}-error`) ||
+        (name === 'service_focus'
+          ? form.querySelector<HTMLElement>('[data-service-option="true"]')
+          : getNamedFields([name]).find(
+              (candidate) =>
+                candidate.type !== 'hidden' && candidate.tabIndex !== -1,
+            ) || null)
+
+      target?.scrollIntoView?.({ block: 'center', behavior: 'smooth' })
     },
     [getNamedFields],
   )
@@ -832,7 +870,10 @@ export default function GetStartedForm() {
         service_count: selectedServices.length,
         question_count: QUESTION_STEP_COUNT,
       })
-      queueMicrotask(() => focusNamedField('service_focus'))
+      queueMicrotask(() => {
+        focusNamedField('service_focus')
+        scrollFieldIntoView('service_focus')
+      })
       return
     }
 
@@ -920,7 +961,10 @@ export default function GetStartedForm() {
         service_count: selectedServices.length,
         question_count: QUESTION_STEP_COUNT,
       })
-      queueMicrotask(() => focusNamedField(manualError.name))
+      queueMicrotask(() => {
+        focusNamedField(manualError.name)
+        scrollFieldIntoView(manualError.name)
+      })
       return
     }
 
@@ -941,11 +985,12 @@ export default function GetStartedForm() {
         service_count: selectedServices.length,
         question_count: QUESTION_STEP_COUNT,
       })
-      queueMicrotask(() =>
-        focusNamedField(
-          invalidField?.name || getStepFields(currentStep)[0] || 'unknown',
-        ),
-      )
+      queueMicrotask(() => {
+        const invalidName =
+          invalidField?.name || getStepFields(currentStep)[0] || 'unknown'
+        focusNamedField(invalidName)
+        scrollFieldIntoView(invalidName)
+      })
       return
     }
 
@@ -1528,7 +1573,7 @@ export default function GetStartedForm() {
           </div>
         </div>
 
-        <div className="flex flex-1 flex-col justify-center py-12 sm:py-16">
+        <div className="flex flex-1 flex-col justify-center py-12 pb-24 sm:py-16 sm:pb-16">
           <div className="space-y-7">
             <div className="space-y-3">
               <h1 className="max-w-[12ch] text-balance font-sans text-[clamp(2.25rem,8vw,4.8rem)] font-medium leading-[0.95] tracking-[-0.06em] text-[#F5F5F2]">
@@ -1554,7 +1599,7 @@ export default function GetStartedForm() {
               <Button
                 type="button"
                 variant="outline"
-                className="min-h-12 border-white/14 bg-transparent px-5 font-mono text-[0.78rem] uppercase tracking-[0.18em] text-[#D0D0C8] hover:border-white/28 hover:bg-white/5 hover:text-[#F5F5F2]"
+                className="min-h-12 shrink-0 border-white/14 bg-transparent px-5 font-mono text-[0.78rem] uppercase tracking-[0.18em] text-[#D0D0C8] hover:border-white/28 hover:bg-white/5 hover:text-[#F5F5F2]"
                 onClick={handleBack}
               >
                 Back
@@ -1564,8 +1609,8 @@ export default function GetStartedForm() {
             {currentStep === 'fit' ? (
               <Button
                 type="button"
-                variant="outline"
-                className="min-h-12 border-white/14 bg-transparent px-5 font-mono text-[0.78rem] uppercase tracking-[0.18em] text-[#A8A8A1] hover:border-white/28 hover:bg-white/5 hover:text-[#F5F5F2]"
+                variant="ghost"
+                className="min-h-12 shrink-0 border-0 bg-transparent px-2 font-mono text-[0.7rem] uppercase tracking-[0.16em] text-[#767670] shadow-none underline-offset-4 hover:bg-transparent hover:text-[#A8A8A1] hover:underline"
                 onClick={handleSkipFit}
               >
                 Skip for now

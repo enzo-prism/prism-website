@@ -196,9 +196,12 @@ function normalizeUrl(value: string) {
 }
 
 function isValidUrl(value: string) {
+  if (/\s/.test(value)) return false
   try {
     const parsed = new URL(value)
-    return Boolean(parsed.hostname)
+    // Require a dotted hostname with a 2+ letter TLD so bare words
+    // ("not a url", "foo", "foo.") are rejected after normalization.
+    return /^(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}$/.test(parsed.hostname)
   } catch {
     return false
   }
@@ -857,6 +860,7 @@ export default function WebsiteBuildEstimatorForm() {
                   id="website-build-email"
                   name="email"
                   type="email"
+                  inputMode="email"
                   required
                   autoComplete="email"
                   spellCheck={false}
@@ -1024,7 +1028,7 @@ export default function WebsiteBuildEstimatorForm() {
           {/* Mobile-only live estimate: the sidebar is pushed below the fold on
               small screens, so we pin a compact running total to the top of the
               viewport while the user scrolls and edits the current step. */}
-          <div className="sticky top-2 z-30 mt-5 flex items-center justify-between gap-4 border border-[#d8bc79]/30 bg-[#0d0d0d]/95 px-4 py-3 shadow-[0_12px_30px_-18px_rgba(0,0,0,0.9)] backdrop-blur supports-[backdrop-filter]:bg-[#0d0d0d]/80 lg:hidden">
+          <div className="sticky top-[80px] z-30 mt-5 flex items-center justify-between gap-4 border border-[#d8bc79]/30 bg-[#0d0d0d]/95 px-4 py-3 shadow-[0_12px_30px_-18px_rgba(0,0,0,0.9)] backdrop-blur supports-[backdrop-filter]:bg-[#0d0d0d]/80 lg:hidden">
             <span className="font-mono text-[0.68rem] uppercase tracking-[0.2em] text-[#8f877b]">
               Estimated range
             </span>

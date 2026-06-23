@@ -762,7 +762,7 @@ function PremiumSection({
   return (
     <section
       id={id}
-      className={`relative scroll-mt-20 overflow-hidden border-b border-[#ededed] px-5 py-20 sm:px-8 sm:py-28 ${toneClassName} ${className}`}
+      className={`relative scroll-mt-28 overflow-hidden border-b border-[#ededed] px-5 py-20 sm:px-8 sm:py-28 ${toneClassName} ${className}`}
     >
       {tone !== 'dark' ? (
         <div
