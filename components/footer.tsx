@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import TrackedLink from '@/components/tracked-link'
+import { BOOKING_URL } from '@/lib/booking'
 
 type FooterItem = {
   href: string
@@ -102,6 +103,16 @@ export default function Footer({ variant: _variant = 'default' }: FooterProps) {
               >
                 Free audit
               </TrackedLink>
+              <a
+                href={BOOKING_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                data-cta-text="book a call"
+                data-cta-location="footer"
+                className="inline-flex min-h-12 items-center border-b border-[#8f877b] pb-1 text-sm font-semibold uppercase tracking-[0.18em] text-[#b8afa2] transition-colors hover:border-[#f5f0e8] hover:text-[#f5f0e8] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[#5cdcff]/40 focus-visible:ring-offset-4 focus-visible:ring-offset-black"
+              >
+                Book a call
+              </a>
             </div>
           </div>
 
