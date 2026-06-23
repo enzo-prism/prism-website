@@ -96,6 +96,7 @@ export default function ContactForm() {
           name="name"
           placeholder="Jordan Ramirez"
           autoComplete="name"
+          className="min-h-11"
           aria-invalid={Boolean(getError('name'))}
           aria-describedby={describedBy('name')}
           onBlur={handleBlur}
@@ -110,15 +111,35 @@ export default function ContactForm() {
           id="contact-email"
           name="email"
           type="email"
+          inputMode="email"
           required
           placeholder="you@company.com"
           autoComplete="email"
+          className="min-h-11"
           aria-invalid={Boolean(getError('email'))}
           aria-describedby={describedBy('email')}
           onBlur={handleBlur}
           onInput={handleInput}
         />
         {renderError('email')}
+      </div>
+
+      <div className="grid gap-2">
+        <Label htmlFor="contact-phone">Phone (optional)</Label>
+        <Input
+          id="contact-phone"
+          name="phone"
+          type="tel"
+          inputMode="tel"
+          placeholder="(555) 123-4567"
+          autoComplete="tel"
+          className="min-h-11"
+          aria-invalid={Boolean(getError('phone'))}
+          aria-describedby={describedBy('phone')}
+          onBlur={handleBlur}
+          onInput={handleInput}
+        />
+        {renderError('phone')}
       </div>
 
       <div className="grid gap-2">
