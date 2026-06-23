@@ -779,7 +779,7 @@ export default function FounderOsApplicationForm() {
 
   const focusFirstInvalid = () => {
     if (typeof window === 'undefined') return
-    if (window.matchMedia?.('(max-width: 767px)').matches) return
+    const isMobile = window.matchMedia?.('(max-width: 767px)').matches ?? false
 
     window.requestAnimationFrame(() => {
       const form = formRef.current
@@ -794,7 +794,15 @@ export default function FounderOsApplicationForm() {
               'input, textarea, select, button, [tabindex]',
             ))
       const target = focusable || errorRef.current
+      // Focus without scrolling so the on-screen keyboard doesn't yank the
+      // viewport, then explicitly bring the field (or error banner) into view.
       target?.focus({ preventScroll: true })
+      if (isMobile) {
+        // On mobile the inline/banner error can render far above the viewport,
+        // so smooth-scroll it into view; otherwise the page looks unresponsive.
+        const scrollTarget = focusable || errorRef.current
+        scrollTarget?.scrollIntoView({ block: 'center', behavior: 'smooth' })
+      }
     })
   }
 
@@ -2016,7 +2024,7 @@ export default function FounderOsApplicationForm() {
               {[
                 ['Prism Growth Dashboard', 'Start with the free Growth Dashboard and systems work.', '/get-started'],
                 ['A systems foundation', 'Tracking, CRM cleanup, and data consolidation first.', '/services'],
-                ['Founder OS waitlist', 'We&apos;ll reach out when the timing fits.', '/contact?topic=founder-os-waitlist'],
+                ['Founder OS waitlist', 'We’ll reach out when the timing fits.', '/contact?topic=founder-os-waitlist'],
               ].map(([title, body, href]) => (
                 <a
                   key={title}

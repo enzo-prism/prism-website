@@ -49,4 +49,5 @@ export const NAV_ITEMS: NavItem[] = [
   { label: "results", href: "/case-studies" },
   { label: "wall of love", href: "/wall-of-love" },
   { label: "free audit", href: "/get-started" },
+  { label: "contact", href: "/contact" },
 ]
