@@ -49,7 +49,7 @@ type HomepageAiTool = {
 }
 
 export type HomepageClientWinSlide = {
-  leader: string
+  /** Company / brand name shown as the prominent card label (never a person). */
   company: string
   location: string
   href: string
@@ -125,7 +125,6 @@ export const HOMEPAGE_CLIENT_WINS = {
   description: '',
   slides: [
     {
-      leader: 'Dr. Alexie Aguil',
       company: 'Exquisite Dentistry',
       location: 'Beverly Hills, CA',
       href: '/case-studies/exquisite-dentistry',
@@ -133,7 +132,6 @@ export const HOMEPAGE_CLIENT_WINS = {
       image: '/case-studies/exquisite-dentistry-home-mobile.jpg',
     },
     {
-      leader: 'Buck Brown',
       company: 'Olympic Bootworks',
       location: 'Tahoe, CA',
       href: '/case-studies/olympic-bootworks',
@@ -141,7 +139,6 @@ export const HOMEPAGE_CLIENT_WINS = {
       image: '/case-studies/olympic-bootworks-home-mobile.jpg',
     },
     {
-      leader: 'Srikanth Ravi',
       company: 'sr4 Partners',
       location: 'Chicago, IL',
       href: '/case-studies/sr4-partners',
@@ -149,55 +146,48 @@ export const HOMEPAGE_CLIENT_WINS = {
       image: '/case-studies/sr4-partners-home-mobile.jpg',
     },
     {
-      leader: 'Dr. Christopher B. Wong',
-      company: 'Silicon Valley Dental',
+      company: 'Christopher B. Wong, DDS',
       location: 'Palo Alto, CA',
       href: '/case-studies/dr-christopher-wong',
       contextLabel: 'Dental growth',
       image: '/case-studies/dr-christopher-wong-home-mobile.jpg',
     },
     {
-      leader: 'Rebellious Aging',
-      company: 'Online community',
+      company: 'Rebellious Aging',
       location: 'Los Gatos, CA',
       href: '/case-studies/rebellious-aging',
       contextLabel: 'Community brand',
       image: '/case-studies/rebellious-aging-home-mobile.jpg',
     },
     {
-      leader: 'Laguna Beach Dental Arts',
-      company: 'Cosmetic dentistry',
+      company: 'Laguna Beach Dental Arts',
       location: 'Laguna Beach, CA',
       href: '/case-studies/laguna-beach-dental-arts',
       contextLabel: 'Dental growth',
       image: '/case-studies/laguna-beach-dental-arts-home-mobile.jpg',
     },
     {
-      leader: 'Saorsa Growth Partners',
-      company: 'Advisory firm',
+      company: 'Saorsa Growth Partners',
       location: 'San Francisco, CA',
       href: '/case-studies/saorsa-growth-partners',
       contextLabel: 'Consulting',
       image: '/case-studies/saorsa-growth-partners-home-mobile.jpg',
     },
     {
-      leader: 'Roseville Dental Academy',
-      company: 'Admissions platform',
+      company: 'Roseville Dental Academy',
       location: 'Roseville, CA',
       href: '/case-studies/roseville-dental-academy',
       contextLabel: 'Education + analytics',
       image: '/case-studies/roseville-dental-academy-home-mobile.jpg',
     },
     {
-      leader: 'Belize Kids Foundation',
-      company: 'Nonprofit',
+      company: 'Belize Kids',
       location: 'San Pedro, Belize',
       href: '/case-studies/belize-kids-foundation',
       contextLabel: 'Nonprofit impact',
       image: '/case-studies/belize-kids-foundation-home-mobile.jpg',
     },
     {
-      leader: 'Dr. Steven S. Ku',
       company: 'Coast Periodontics',
       location: 'San Luis Obispo, CA',
       href: '/case-studies/coast-periodontics-and-laser-surgery',
@@ -205,15 +195,13 @@ export const HOMEPAGE_CLIENT_WINS = {
       image: '/case-studies/coast-periodontics-and-laser-surgery-home-mobile.jpg',
     },
     {
-      leader: 'Canary Cove',
-      company: 'Private resort',
+      company: 'Canary Cove',
       location: 'San Pedro, Belize',
       href: '/case-studies/canary-cove',
       contextLabel: 'Hospitality',
       image: '/case-studies/canary-cove-home-mobile.jpg',
     },
     {
-      leader: 'Dr. Jayleen Pang',
       company: 'Family First Smile Care',
       location: 'Los Gatos, CA',
       href: '/case-studies/family-first-smile-care',
@@ -221,31 +209,27 @@ export const HOMEPAGE_CLIENT_WINS = {
       image: '/case-studies/family-first-smile-care-home-mobile.jpg',
     },
     {
-      leader: 'Infobell IT',
-      company: 'Managed IT services',
+      company: 'Infobell IT',
       location: 'San Jose, CA',
       href: '/case-studies/infobell-it',
       contextLabel: 'B2B services',
       image: '/case-studies/infobell-it-home-mobile.jpg',
     },
     {
-      leader: 'Grace Dental',
-      company: 'Santa Rosa dentistry',
+      company: 'Grace Dental',
       location: 'Santa Rosa, CA',
       href: '/case-studies/grace-dental-santa-rosa',
       contextLabel: 'Dental growth',
       image: '/case-studies/grace-dental-santa-rosa-home-mobile.jpg',
     },
     {
-      leader: 'We Are Saplings',
-      company: 'Education',
+      company: 'We Are Saplings',
       location: 'New York City, NY',
       href: '/case-studies/we-are-saplings',
       contextLabel: 'Education',
       image: '/case-studies/we-are-saplings-home-mobile.jpg',
     },
     {
-      leader: 'Dr. Michael Njo',
       company: 'Dental Strategies',
       location: 'Bay Area, CA',
       href: '/case-studies/michael-njo-dds',
@@ -253,23 +237,20 @@ export const HOMEPAGE_CLIENT_WINS = {
       image: '/case-studies/michael-njo-dds-home-mobile.jpg',
     },
     {
-      leader: 'Canary Foundation',
-      company: 'Cancer research nonprofit',
+      company: 'Canary Foundation',
       location: 'Palo Alto, CA',
       href: '/case-studies/canary-foundation',
       contextLabel: 'Nonprofit impact',
       image: '/case-studies/canary-foundation-home-mobile.jpg',
     },
     {
-      leader: 'Town Centre Dental',
-      company: 'Family dentistry',
+      company: 'Town Centre Dental',
       location: 'Brentwood, CA',
       href: '/case-studies/town-centre-dental',
       contextLabel: 'Dental growth',
       image: '/case-studies/town-centre-dental-home-mobile.jpg',
     },
     {
-      leader: 'Dr. Kurt Laue',
       company: 'Practice Transitions Institute',
       location: 'San Mateo, CA',
       href: '/case-studies/practice-transitions-institute',
@@ -277,7 +258,6 @@ export const HOMEPAGE_CLIENT_WINS = {
       image: '/case-studies/practice-transitions-institute-home-mobile.jpg',
     },
     {
-      leader: 'Dr. Craig Anderson',
       company: 'Wine Country Root Canal',
       location: 'Santa Rosa, CA',
       href: '/case-studies/wine-country-root-canal',
@@ -285,16 +265,14 @@ export const HOMEPAGE_CLIENT_WINS = {
       image: '/case-studies/wine-country-root-canal-home-mobile.jpg',
     },
     {
-      leader: 'Dentist Retreat',
-      company: 'Leadership summit',
+      company: 'Leadership Retreat',
       location: 'San Francisco, CA',
       href: '/case-studies/leadership-retreat',
       contextLabel: 'Events + education',
       image: '/case-studies/leadership-retreat-home-mobile.jpg',
     },
     {
-      leader: 'Mataria Dental Group',
-      company: 'Group dentistry',
+      company: 'Mataria Dental Group',
       location: 'Torrance, CA',
       href: '/case-studies/mataria-dental-group',
       contextLabel: 'Dental growth',

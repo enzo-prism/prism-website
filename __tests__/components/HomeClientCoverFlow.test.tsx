@@ -48,7 +48,6 @@ jest.mock('@/utils/analytics', () => ({
 
 const slides = [
   {
-    leader: 'Buck Brown',
     company: 'Olympic Bootworks',
     location: 'Tahoe, CA',
     href: '/case-studies/olympic-bootworks',
@@ -56,7 +55,6 @@ const slides = [
     image: '/case-studies/olympic-bootworks-home-mobile.jpg',
   },
   {
-    leader: 'Dr. Alexie Aguil',
     company: 'Exquisite Dentistry',
     location: 'Beverly Hills, CA',
     href: '/case-studies/exquisite-dentistry',
@@ -126,10 +124,10 @@ describe('HomeClientCoverFlow', () => {
     )
   })
 
-  it('keeps a legible caption + case-study link off the angled covers', () => {
+  it('shows the company name (not a person) + case-study link in the caption', () => {
     render(<HomeClientCoverFlow slides={slides} />)
 
-    expect(screen.getByText('Buck Brown')).toBeInTheDocument()
+    expect(screen.getByText('Olympic Bootworks')).toBeInTheDocument()
     expect(screen.getByText('Tahoe, CA')).toBeInTheDocument()
 
     const captionLink = screen.getByRole('link', { name: /view case study/i })

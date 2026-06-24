@@ -773,10 +773,10 @@ export default function HomeClientCoverFlow({
       <div className="mt-4 flex flex-col gap-5 sm:mt-5 sm:flex-row sm:items-end sm:justify-between">
         <div className="min-h-[3.5rem]">
           <p className="font-sans text-[1.45rem] font-medium leading-none tracking-[-0.025em] text-[#f5f0e8] sm:text-[1.75rem]">
-            {activeSlide.leader}
+            {activeSlide.company}
           </p>
           <p className="mt-2.5 flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-[10px] font-semibold uppercase tracking-[0.2em] text-[#b8afa2]">
-            <span className="text-[#d8d0c5]">{activeSlide.company}</span>
+            <span className="text-[#d8d0c5]">{activeSlide.contextLabel}</span>
             <span aria-hidden="true" className="text-white/20">
               ·
             </span>
