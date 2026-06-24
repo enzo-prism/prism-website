@@ -49,7 +49,7 @@ When the user asks to "analyze the project" or "update the project docs", do a s
 4. Update existing docs in place. Do not add a new top-level doc unless the user explicitly asks for one.
 5. For docs-only changes, run the nearest cheap validation (`pnpm design:lint` if the design contract moved, focused Jest if public machine-readable files changed, or a targeted `rg` stale-term check when only prose changed).
 
-Homepage proof-card reminder: `HomeDentistWinsSection` / `HomeDentistWinsCarousel` are legacy names for the current mixed-client proof carousel. The live homepage card art is abstract (`data-client-win-abstract`) and image-free; do not bring back the old portrait/photo color-toggle behavior unless the design direction changes and the homepage carousel tests are updated.
+Homepage proof-card reminder: `HomeDentistWinsSection` is a legacy-named wrapper around the current `components/home/HomeClientCoverFlow.tsx` — a restrained 3D Cover Flow deck of **real client-website screenshots** (each slide's `image` in `HOMEPAGE_CLIENT_WINS`). It is input-led (no autoplay) and touch-adaptive via `isTouch` (`useMobile('(hover: none), (pointer: coarse)')`): phones swipe 1:1 (one casual swipe = one card), with no parallax/tilt/hover and fewer mounted covers. The old abstract, image-free art (`data-client-win-abstract`, `HomeDentistWinsCarousel`) was retired; do not bring it back unless the design direction changes and `__tests__/components/HomeClientCoverFlow.test.tsx` is updated.
 
 ## 1.2 ElevenLabs widget workflow
 

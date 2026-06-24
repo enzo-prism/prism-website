@@ -160,3 +160,23 @@ if (typeof (globalThis as any).fetch === "undefined") {
     throw new Error("fetch is not implemented in the Jest environment")
   }
 }
+
+// jsdom does not implement matchMedia. Components that read media queries
+// (e.g. the useMobile hook for coarse-pointer detection) need a safe default
+// so they can render under test. Defaults to "no match" (fine pointer, no
+// reduced motion); individual tests can override window.matchMedia as needed.
+if (
+  typeof window !== "undefined" &&
+  typeof window.matchMedia !== "function"
+) {
+  ;(window as any).matchMedia = (query: string) => ({
+    matches: false,
+    media: query,
+    onchange: null,
+    addEventListener: () => {},
+    removeEventListener: () => {},
+    addListener: () => {},
+    removeListener: () => {},
+    dispatchEvent: () => false,
+  })
+}

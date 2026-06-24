@@ -54,6 +54,8 @@ export type HomepageClientWinSlide = {
   location: string
   href: string
   contextLabel: string
+  /** Portrait screenshot of the client's live website used as the cover-flow cover. */
+  image: string
 }
 
 export type HomepageGrowthRampMetric = {
@@ -128,6 +130,7 @@ export const HOMEPAGE_CLIENT_WINS = {
       location: 'Tahoe, CA',
       href: '/case-studies/olympic-bootworks',
       contextLabel: 'Retail + ecommerce',
+      image: '/case-studies/olympic-bootworks-home-mobile.jpg',
     },
     {
       leader: 'Dr. Alexie Aguil',
@@ -135,6 +138,7 @@ export const HOMEPAGE_CLIENT_WINS = {
       location: 'Beverly Hills, CA',
       href: '/case-studies/exquisite-dentistry',
       contextLabel: 'Dental growth',
+      image: '/case-studies/exquisite-dentistry-home-mobile.jpg',
     },
     {
       leader: 'Dr. Christopher B. Wong',
@@ -142,6 +146,7 @@ export const HOMEPAGE_CLIENT_WINS = {
       location: 'Palo Alto, CA',
       href: '/case-studies/dr-christopher-wong',
       contextLabel: 'Dental growth',
+      image: '/case-studies/dr-christopher-wong-home-mobile.jpg',
     },
     {
       leader: 'Roseville Dental Academy',
@@ -149,6 +154,7 @@ export const HOMEPAGE_CLIENT_WINS = {
       location: 'Roseville, CA',
       href: '/case-studies/roseville-dental-academy',
       contextLabel: 'Education + analytics',
+      image: '/case-studies/roseville-dental-academy-home-mobile.jpg',
     },
     {
       leader: 'Rebellious Aging',
@@ -156,6 +162,7 @@ export const HOMEPAGE_CLIENT_WINS = {
       location: 'Los Gatos, CA',
       href: '/case-studies/rebellious-aging',
       contextLabel: 'Community brand',
+      image: '/case-studies/rebellious-aging-home-mobile.jpg',
     },
     {
       leader: 'Saorsa Growth Partners',
@@ -163,6 +170,7 @@ export const HOMEPAGE_CLIENT_WINS = {
       location: 'San Francisco, CA',
       href: '/case-studies/saorsa-growth-partners',
       contextLabel: 'Consulting',
+      image: '/case-studies/saorsa-growth-partners-home-mobile.jpg',
     },
     {
       leader: 'Belize Kids Foundation',
@@ -170,6 +178,7 @@ export const HOMEPAGE_CLIENT_WINS = {
       location: 'San Pedro, Belize',
       href: '/case-studies/belize-kids-foundation',
       contextLabel: 'Nonprofit impact',
+      image: '/case-studies/belize-kids-foundation-home-mobile.jpg',
     },
     {
       leader: 'Canary Cove',
@@ -177,6 +186,7 @@ export const HOMEPAGE_CLIENT_WINS = {
       location: 'San Pedro, Belize',
       href: '/case-studies/canary-cove',
       contextLabel: 'Hospitality',
+      image: '/case-studies/canary-cove-home-mobile.jpg',
     },
     {
       leader: 'Infobell IT',
@@ -184,6 +194,7 @@ export const HOMEPAGE_CLIENT_WINS = {
       location: 'San Jose, CA',
       href: '/case-studies/infobell-it',
       contextLabel: 'B2B services',
+      image: '/case-studies/infobell-it-home-mobile.jpg',
     },
     {
       leader: 'We Are Saplings',
@@ -191,6 +202,7 @@ export const HOMEPAGE_CLIENT_WINS = {
       location: 'New York City, NY',
       href: '/case-studies/we-are-saplings',
       contextLabel: 'Education',
+      image: '/case-studies/we-are-saplings-home-mobile.jpg',
     },
     {
       leader: 'Dr. Craig Anderson',
@@ -198,6 +210,7 @@ export const HOMEPAGE_CLIENT_WINS = {
       location: 'Santa Rosa, CA',
       href: '/case-studies/wine-country-root-canal',
       contextLabel: 'Specialty healthcare',
+      image: '/case-studies/wine-country-root-canal-home-mobile.jpg',
     },
   ] satisfies readonly HomepageClientWinSlide[],
 } as const
