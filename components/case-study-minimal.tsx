@@ -289,6 +289,9 @@ export default function MinimalCaseStudyPage({ slug }: MinimalCaseStudyPageProps
         dateModified={caseStudy.structured?.dateModified}
         clientName={caseStudy.client}
         outcome={`Live website, service list, and tech stack overview for ${caseStudy.client}.`}
+        // Give the Article a real author/publisher by referencing the canonical
+        // Prism Organization @id (merges with the global org node on the page).
+        organization={{ name: 'Prism', url: 'https://www.design-prism.com/' }}
         breadcrumbs={[
           { name: 'Home', url: 'https://www.design-prism.com' },
           {

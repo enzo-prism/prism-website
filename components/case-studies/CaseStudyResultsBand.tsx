@@ -1,3 +1,5 @@
+import { BadgeCheck } from 'lucide-react'
+
 import type { CaseStudyResultMetric } from '@/lib/case-study-data'
 
 type CaseStudyResultsBandProps = {
@@ -21,8 +23,9 @@ export default function CaseStudyResultsBand({
       className="border-b border-border/60 px-4 py-14 md:py-20"
     >
       <div className="container mx-auto max-w-4xl px-4 md:px-6">
-        <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-muted-foreground">
-          measured results
+        <p className="inline-flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.24em] text-muted-foreground">
+          <BadgeCheck aria-hidden="true" className="h-3.5 w-3.5" strokeWidth={2} />
+          measured results · verified
         </p>
         <div
           className={`mt-8 grid gap-8 ${results.length > 1 ? 'sm:grid-cols-2' : ''}`}
@@ -35,8 +38,20 @@ export default function CaseStudyResultsBand({
               <p className="text-sm font-medium uppercase tracking-[0.14em] text-muted-foreground">
                 {metric.label}
               </p>
-              <p className="max-w-[26rem] text-sm leading-6 text-muted-foreground/80">
-                {metric.detail}
+              {/* Source attribution sits next to the number — third-party,
+                  dated sources are what make a stat credible. */}
+              <p className="flex max-w-[26rem] items-start gap-2 text-sm leading-6 text-muted-foreground">
+                <BadgeCheck
+                  aria-hidden="true"
+                  className="mt-0.5 h-4 w-4 shrink-0 text-foreground/70"
+                  strokeWidth={2}
+                />
+                <span>
+                  <span className="font-semibold text-foreground/80">
+                    Source:{' '}
+                  </span>
+                  {metric.detail}
+                </span>
               </p>
             </article>
           ))}

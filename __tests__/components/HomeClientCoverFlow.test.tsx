@@ -53,6 +53,11 @@ const slides = [
     href: '/case-studies/olympic-bootworks',
     contextLabel: 'Retail + ecommerce',
     image: '/case-studies/olympic-bootworks-home-mobile.jpg',
+    metric: {
+      value: '+142%',
+      label: 'search impressions',
+      source: 'Google Search Console',
+    },
   },
   {
     company: 'Exquisite Dentistry',
@@ -122,6 +127,15 @@ describe('HomeClientCoverFlow', () => {
       'view Olympic Bootworks case study',
       'homepage client cover flow',
     )
+  })
+
+  it('shows a verified headline metric with its source when present', () => {
+    render(<HomeClientCoverFlow slides={slides} />)
+
+    expect(screen.getByText('+142%')).toBeInTheDocument()
+    expect(screen.getByText('search impressions')).toBeInTheDocument()
+    // the source attribution must travel with the metric (anti-fabrication)
+    expect(screen.getByText('Google Search Console')).toBeInTheDocument()
   })
 
   it('shows the company name (not a person) + case-study link in the caption', () => {

@@ -56,6 +56,17 @@ export type HomepageClientWinSlide = {
   contextLabel: string
   /** Portrait screenshot of the client's live website used as the cover-flow cover. */
   image: string
+  /**
+   * Optional headline result. ONLY populate from a metric that is verified
+   * against the named `source` (mirrors the client's `structured.results` in
+   * lib/case-study-data.ts). Never invent a value — cards without verified
+   * data simply omit this and show their `contextLabel` instead.
+   */
+  metric?: {
+    value: string
+    label: string
+    source: string
+  }
 }
 
 export type HomepageGrowthRampMetric = {
@@ -151,6 +162,11 @@ export const HOMEPAGE_CLIENT_WINS = {
       href: '/case-studies/dr-christopher-wong',
       contextLabel: 'Dental growth',
       image: '/case-studies/dr-christopher-wong-home-mobile.jpg',
+      metric: {
+        value: '+142%',
+        label: 'Google search impressions YoY',
+        source: 'Google Search Console',
+      },
     },
     {
       company: 'Rebellious Aging',
@@ -172,6 +188,11 @@ export const HOMEPAGE_CLIENT_WINS = {
       href: '/case-studies/saorsa-growth-partners',
       contextLabel: 'Consulting',
       image: '/case-studies/saorsa-growth-partners-home-mobile.jpg',
+      metric: {
+        value: '5.3×',
+        label: 'monthly Google clicks in 5 months',
+        source: 'Google Search Console',
+      },
     },
     {
       company: 'Roseville Dental Academy',
@@ -179,6 +200,11 @@ export const HOMEPAGE_CLIENT_WINS = {
       href: '/case-studies/roseville-dental-academy',
       contextLabel: 'Education + analytics',
       image: '/case-studies/roseville-dental-academy-home-mobile.jpg',
+      metric: {
+        value: '593',
+        label: 'Google clicks in month one',
+        source: 'Google Search Console',
+      },
     },
     {
       company: 'Belize Kids',
@@ -186,6 +212,11 @@ export const HOMEPAGE_CLIENT_WINS = {
       href: '/case-studies/belize-kids-foundation',
       contextLabel: 'Nonprofit impact',
       image: '/case-studies/belize-kids-foundation-home-mobile.jpg',
+      metric: {
+        value: '+90%',
+        label: 'Google search impressions YoY',
+        source: 'Google Search Console',
+      },
     },
     {
       company: 'Coast Periodontics',

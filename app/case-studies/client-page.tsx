@@ -195,7 +195,9 @@ export default function CaseStudiesPage() {
           name: study.title,
           description: study.description,
           url: `https://www.design-prism.com/case-studies/${study.slug}`,
-          itemType: 'CaseStudy',
+          // "CaseStudy" is not a real schema.org type and gets discarded; model
+          // each item as an Article, matching the detail-page schema.
+          itemType: 'Article',
         }))}
       />
     </div>

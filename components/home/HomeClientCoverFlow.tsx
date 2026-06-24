@@ -10,7 +10,13 @@ import {
 } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
-import { ArrowUpRight, ChevronLeft, ChevronRight, MapPin } from 'lucide-react'
+import {
+  ArrowUpRight,
+  BadgeCheck,
+  ChevronLeft,
+  ChevronRight,
+  MapPin,
+} from 'lucide-react'
 import {
   useCallback,
   useEffect,
@@ -771,10 +777,33 @@ export default function HomeClientCoverFlow({
 
       {/* Active client caption + dedicated case-study link. */}
       <div className="mt-4 flex flex-col gap-5 sm:mt-5 sm:flex-row sm:items-end sm:justify-between">
-        <div className="min-h-[3.5rem]">
+        <div className="min-h-[4.25rem]">
           <p className="font-sans text-[1.45rem] font-medium leading-none tracking-[-0.025em] text-[#f5f0e8] sm:text-[1.75rem]">
             {activeSlide.company}
           </p>
+          {/* Verified headline result — shown only for clients with a metric
+              verified against a named source (never fabricated). */}
+          {activeSlide.metric ? (
+            <p className="mt-2 flex flex-wrap items-center gap-x-2 gap-y-1">
+              <BadgeCheck
+                aria-hidden="true"
+                className="h-3.5 w-3.5 text-[#d8bc79]"
+                strokeWidth={2}
+              />
+              <span className="font-sans text-[15px] font-semibold tracking-tight text-[#d8bc79]">
+                {activeSlide.metric.value}
+              </span>
+              <span className="font-mono text-[10px] font-semibold uppercase tracking-[0.16em] text-[#d8d0c5]">
+                {activeSlide.metric.label}
+              </span>
+              <span aria-hidden="true" className="text-white/20">
+                ·
+              </span>
+              <span className="font-mono text-[9px] uppercase tracking-[0.16em] text-[#8f877b]">
+                {activeSlide.metric.source}
+              </span>
+            </p>
+          ) : null}
           <p className="mt-2.5 flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-[10px] font-semibold uppercase tracking-[0.2em] text-[#b8afa2]">
             <span className="text-[#d8d0c5]">{activeSlide.contextLabel}</span>
             <span aria-hidden="true" className="text-white/20">
