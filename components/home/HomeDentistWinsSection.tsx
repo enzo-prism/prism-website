@@ -43,7 +43,7 @@ export default function HomeDentistWinsSection() {
                 ·
               </span>
               <TrackedLink
-                href="/proof"
+                href="/case-studies"
                 label="verified results"
                 location="homepage client wins header"
                 className="group inline-flex items-center gap-1.5 whitespace-nowrap text-[#8f877b] transition-colors duration-500 hover:text-[#f5f0e8] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[#d8bc79]/35 focus-visible:ring-offset-4 focus-visible:ring-offset-black motion-reduce:transition-none"
