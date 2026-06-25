@@ -168,9 +168,9 @@ Homepage copy should stay ultra-minimal. Prefer short labels over explanations, 
 
 ### Abstract Client Proof Cards
 
-The homepage client proof carousel should not use real client photos or website screenshots in the card artwork. Those cards are a brand-system proof surface, not a media gallery. Use abstract growth-system motion instead: subtle grids, routed signal lines, pulsing nodes, Prism-centered initials, and small context labels that hint at the client type.
+The homepage client proof carousel uses real client website screenshots, not abstract placeholder artwork. Those screenshots are part of the proof system: they let buyers and AI/search systems connect Prism's claims to visible portfolio quality and live case-study pages.
 
-Keep the abstraction premium and restrained. The cards should still feel like case-study links, with the leader/company/location and a clear case-study affordance, but the visual should communicate systems, signal, and momentum rather than portraits.
+Keep the screenshot treatment premium and restrained. Each card should still feel like a case-study link with the company, context, location, and a clear affordance. Refresh screenshots when a client's live hero changes, and avoid adding photos or decorative art that would make the proof surface feel less verifiable.
 
 Respect reduced motion. Motion can scale, pulse, route, or rotate slowly, but the card must remain legible and useful when animation is disabled.
 

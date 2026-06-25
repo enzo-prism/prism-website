@@ -186,7 +186,7 @@ Quick reference for the pages we edit most often.
 - The homepage is growth-first and dental-proven. Default language should speak to founders, owners, operators, qualified demand, Google/AI visibility, reviews, conversion paths, tracking, and measurable growth opportunities.
 - The main CTA points to the Growth Dashboard entry (`/get-started`). The secondary homepage CTA should continue to hash-scroll to `#how-it-works`.
 - Keep homepage copy extremely short: use labels, one-line headings, and compact cards. Move longer explanations to deeper pages.
-- The client proof surface under the hero is the `HOMEPAGE_CLIENT_WINS` deck, rendered by `components/home/HomeClientCoverFlow.tsx` (mounted via the legacy-named `HomeDentistWinsSection.tsx` wrapper that keeps the "Great companies use Prism" heading + `N client stories · M markets · Verified results` line, both auto-computed from the slides). It is a mixed-client set spanning retail, dental, education, community, consulting, nonprofit, hospitality, B2B services, and specialty healthcare proof.
+- The client proof surface under the hero is the `HOMEPAGE_CLIENT_WINS` deck, rendered by `components/home/HomeClientCoverFlow.tsx` (mounted via the legacy-named `HomeDentistWinsSection.tsx` wrapper that keeps the "Great companies use Prism" heading + `N client stories · M markets · Verified case studies` line, auto-computed from the slides where relevant). It is a mixed-client set spanning retail, dental, education, community, consulting, nonprofit, hospitality, B2B services, and specialty healthcare proof.
 - There is **one card per published case study** (currently 22) — the deck is kept in sync with the `/case-studies` index and `CASE_STUDIES` in `lib/case-study-data.ts`. When a case study is added/removed there, add/remove the matching slide in `HOMEPAGE_CLIENT_WINS` (slide order is hand-curated to interleave industries, not to mirror the data order). Each slide carries `company` (the brand/business name shown as the prominent card label — **never a person's name**), `location`, `contextLabel`, plus `href` + `image` derived from the slug.
 - Cover Flow cards render **real client-website screenshots** — the portrait `public/case-studies/<slug>-home-mobile.jpg` capture referenced by each slide's `image` field. Because the card crops to its top ~62%, a capture must lead with the site's clean branded hero: dismiss cookie/consent banners, newsletter/promo popups, chat widgets (incl. the ElevenLabs `convai` embed), and top announcement bars before shooting, and for a sparse or text-first hero, scroll the branded section to the top. The previous abstract `AbstractClientWinVisual` / `data-client-win-abstract` / no-image contract (and `HomeDentistWinsCarousel`) were retired; the current contract is covered by `__tests__/components/HomeClientCoverFlow.test.tsx`.
 - The deck is a restrained 3D Cover Flow / diagonal card fan: one shared camera, a one-time back-to-front entrance fan-open on scroll-in, hover lift + neighbour yield, damped pointer parallax, press feedback, and a single `cubic-bezier(0.22,1,0.36,1)` easing — **no autoplay** (the deck is still at rest, input-led). The active cover is a real `<Link>` to its case study; the caption below shows the active client's **company name** (not a person) with `contextLabel · location` and a dedicated case-study link.
@@ -271,15 +271,17 @@ Each uses card-based layouts: confirmation message + CTA + follow-up details. Th
 
 ## Local SEO Services (`app/local-seo-services/page.tsx`)
 
-- Legacy/general local SEO service page. It remains live for direct visitors, but is noindex and excluded from sitemap/LLM maps after the growth-first search cleanup.
+- Indexable local SEO service page. It supports the growth-system search cluster with concrete deliverables for Google Business Profile, listings, reviews, local pages, technical hygiene, and reporting tied to calls and leads.
 - Cross-links into `/seo` (methodology) and `/local-listings` (listings subsystem) so internal linking reinforces the topical cluster without duplicating content.
-- Includes structured data (`ServiceSchema`, `HowToSchema`, and `FAQSection`) and should be kept human-first (avoid doorway patterns or keyword stuffing).
+- Includes structured data (`ServiceSchema`, `HowToSchema`, and `FAQSection`) and is included in `lib/seo/search-visibility.ts`, `app/sitemap.ts`, and `public/llms.txt`.
+- Keep it human-first and avoid doorway patterns or keyword stuffing.
 
 ## Local SEO Agency (`app/local-seo-agency/page.tsx`)
 
-- Legacy/general local SEO agency page. It remains live for direct visitors, but is noindex and excluded from sitemap/LLM maps after the growth-first search cleanup.
+- Indexable local SEO agency page. It positions Prism as the execution partner for small businesses that need local search strategy plus implementation.
 - Links to `/local-seo-services` for the deliverables breakdown, and to `/seo` + `/local-listings` for supporting context.
 - Includes structured data (`ServiceSchema`, `HowToSchema`, and `FAQSection`) and a “what we won’t do” section to keep messaging aligned with Google spam policies.
+- Keep it included in `lib/seo/search-visibility.ts`, `app/sitemap.ts`, and `public/llms.txt` unless product direction changes.
 
 ## Ads (`app/ads/page.tsx`)
 

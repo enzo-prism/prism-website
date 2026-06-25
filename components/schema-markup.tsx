@@ -19,7 +19,19 @@ interface CaseStudySchemaProps {
   datePublished?: string
   dateModified?: string
   clientName?: string
+  clientUrl?: string
+  industry?: string
+  location?: string
+  scope?: string
   outcome?: string
+  results?: {
+    value: string
+    label: string
+    detail: string
+    sourceName?: string
+    dateRange?: string
+    sourceUrl?: string
+  }[]
   breadcrumbs?: BreadcrumbItem[]
   organization?: {
     name: string
@@ -45,7 +57,12 @@ export function CaseStudySchema({
   datePublished,
   dateModified,
   clientName,
+  clientUrl,
+  industry,
+  location,
+  scope,
   outcome,
+  results,
   breadcrumbs,
   organization,
   video,
@@ -76,6 +93,7 @@ export function CaseStudySchema({
   schema.push({
     "@context": "https://schema.org",
     "@type": "Article",
+    "@id": `${url}#article`,
     headline: title,
     name: title,
     description,
@@ -85,10 +103,23 @@ export function CaseStudySchema({
     datePublished,
     dateModified,
     articleSection: "Case study",
-    about: clientName ? { "@type": "Organization", name: clientName } : undefined,
+    about: clientName
+      ? { "@type": "Organization", name: clientName, url: clientUrl }
+      : undefined,
     author: organizationId ? { "@id": organizationId } : undefined,
     publisher: organizationId ? { "@id": organizationId } : undefined,
     subjectOf: videoId ? { "@id": videoId } : undefined,
+    keywords: [industry, location, scope, "Prism case study"].filter(Boolean),
+    citation: results?.map((metric) => metric.detail),
+    mentions: results?.map((metric) => ({
+      "@type": "Thing",
+      name: `${metric.value} ${metric.label}`,
+      description: metric.detail,
+      additionalType: "https://schema.org/QuantitativeValue",
+      measurementTechnique: metric.sourceName,
+      temporalCoverage: metric.dateRange,
+      sameAs: metric.sourceUrl,
+    })),
     abstract: outcome,
   })
 
@@ -100,6 +131,9 @@ export function CaseStudySchema({
     name: title,
     description,
     primaryImageOfPage: imageUrl,
+    about: clientName
+      ? { "@type": "Organization", name: clientName, url: clientUrl }
+      : undefined,
   })
 
   if (organization && organizationId) {
@@ -176,6 +210,49 @@ export function GlobalSchemaGraph() {
       "Google Ads",
       "review and reputation systems",
       "analytics and conversion tracking",
+    ],
+    hasPart: [
+      {
+        "@type": "CollectionPage",
+        "@id": "https://www.design-prism.com/case-studies#collection",
+        name: "Prism case studies",
+        url: "https://www.design-prism.com/case-studies",
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://www.design-prism.com/proof#webpage",
+        name: "Prism Proof",
+        url: "https://www.design-prism.com/proof",
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://www.design-prism.com/wall-of-love#webpage",
+        name: "Prism client testimonials",
+        url: "https://www.design-prism.com/wall-of-love",
+      },
+    ],
+    subjectOf: [
+      {
+        "@type": "Article",
+        "@id": "https://www.design-prism.com/case-studies/dr-christopher-wong#article",
+        name: "Dr. Christopher B. Wong case study",
+        url: "https://www.design-prism.com/case-studies/dr-christopher-wong",
+        abstract: "+142% Google Search impressions year over year.",
+      },
+      {
+        "@type": "Article",
+        "@id": "https://www.design-prism.com/case-studies/roseville-dental-academy#article",
+        name: "Roseville Dental Academy case study",
+        url: "https://www.design-prism.com/case-studies/roseville-dental-academy",
+        abstract: "593 Google clicks and 14.2k impressions in the first full month after launch.",
+      },
+      {
+        "@type": "Article",
+        "@id": "https://www.design-prism.com/case-studies/saorsa-growth-partners#article",
+        name: "Saorsa Growth Partners case study",
+        url: "https://www.design-prism.com/case-studies/saorsa-growth-partners",
+        abstract: "5.3x monthly Google clicks in five months.",
+      },
     ],
     url: "https://www.design-prism.com",
     logo: "https://www.design-prism.com/prism-logo.jpeg",

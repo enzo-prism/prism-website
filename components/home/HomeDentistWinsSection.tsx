@@ -44,7 +44,7 @@ export default function HomeDentistWinsSection() {
               </span>
               <TrackedLink
                 href="/case-studies"
-                label="verified results"
+                label="verified case studies"
                 location="homepage client wins header"
                 className="group inline-flex items-center gap-1.5 whitespace-nowrap text-[#8f877b] transition-colors duration-500 hover:text-[#f5f0e8] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[#d8bc79]/35 focus-visible:ring-offset-4 focus-visible:ring-offset-black motion-reduce:transition-none"
               >
@@ -53,7 +53,7 @@ export default function HomeDentistWinsSection() {
                   className="h-3.5 w-3.5 text-[#d8bc79]"
                   strokeWidth={1.8}
                 />
-                Verified results
+                Verified case studies
                 <ArrowUpRight
                   aria-hidden="true"
                   className="h-3 w-3 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-y-0.5 group-hover:translate-x-0.5 motion-reduce:transition-none"

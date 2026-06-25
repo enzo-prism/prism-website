@@ -17,15 +17,16 @@ describe("sitemap", () => {
       "https://www.design-prism.com/local-listings",
       "https://www.design-prism.com/seo/audit",
       "https://www.design-prism.com/ai-agents/dental",
+      "https://www.design-prism.com/local-seo-agency",
+      "https://www.design-prism.com/local-seo-services",
       "https://www.design-prism.com/pricing",
       "https://www.design-prism.com/case-studies",
       "https://www.design-prism.com/case-studies/roseville-dental-academy",
       "https://www.design-prism.com/blog",
     ]))
 
-    // Upper bound raised from 100 after intentionally promoting service pages
-    // (/ai, /ai-agents, /local-seo-agency, /local-seo-services) and ~10 blog
-    // posts to indexable in lib/seo/search-visibility.ts.
+    // Upper bound allows the deliberately promoted service pages and curated
+    // blog posts in lib/seo/search-visibility.ts.
     expect(urls.length).toBeGreaterThanOrEqual(85)
     expect(urls.length).toBeLessThanOrEqual(120)
 
@@ -42,7 +43,8 @@ describe("sitemap", () => {
     expect(urls.some((url) => url.includes("/library/"))).toBe(false)
     expect(urls.some((url) => url.startsWith("https://www.design-prism.com/podcast/"))).toBe(false)
     expect(urls.some((url) => url.endsWith("/aeo-thank-you"))).toBe(false)
-    expect(urls).not.toEqual(expect.arrayContaining([
+    const excludedUrls = [
+      "https://www.design-prism.com/ai",
       "https://www.design-prism.com/pricing-dental",
       "https://www.design-prism.com/ai-website-launch",
       "https://www.design-prism.com/one-time-fee",
@@ -54,14 +56,16 @@ describe("sitemap", () => {
       "https://www.design-prism.com/apps",
       "https://www.design-prism.com/software",
       "https://www.design-prism.com/openai",
-      "https://www.design-prism.com/local-seo-agency",
-      "https://www.design-prism.com/local-seo-services",
       "https://www.design-prism.com/seo/on-page",
       "https://www.design-prism.com/seo/off-page",
       "https://www.design-prism.com/library",
       "https://www.design-prism.com/podcast",
       "https://www.design-prism.com/refer",
-    ]))
+    ]
+
+    for (const excludedUrl of excludedUrls) {
+      expect(urls).not.toContain(excludedUrl)
+    }
 
     for (const entry of entries) {
       expect(entry).not.toHaveProperty("priority")

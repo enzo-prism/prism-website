@@ -1,6 +1,6 @@
 import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
-import { WebPageSchema } from "@/components/schema-markup"
+import { FAQSchema, ServiceSchema, WebPageSchema } from "@/components/schema-markup"
 import type { Metadata } from "next"
 import Link from "next/link"
 import ProofCTAs from "./ProofCTAs"
@@ -10,6 +10,29 @@ const PAGE_TITLE = 'Proof: a testimonial engine for dentists'
 const PAGE_DESCRIPTION =
   'Capture patient stories once and repurpose them into case studies, schema, reels, and Google Business Profile posts that lift trust and case acceptance.'
 const CANONICAL_URL = "https://www.design-prism.com/proof"
+
+const proofFaqItems = [
+  {
+    question: "How much time does my team spend?",
+    answer:
+      "Close to zero. Prism installs the capture flow, packages the assets, and publishes approved stories.",
+  },
+  {
+    question: "Do patients actually submit?",
+    answer:
+      "Yes, when the ask is easy and timely. Prism Proof flows are mobile-first and take about 60 to 120 seconds.",
+  },
+  {
+    question: "What if a patient shares PHI?",
+    answer:
+      "Prism reviews every submission and only publishes what is authorized for use.",
+  },
+  {
+    question: "Can Prism Proof run in multiple locations?",
+    answer:
+      "Yes. The capture, approval, publishing, and reporting system can scale across multi-location practices.",
+  },
+]
 
 export const metadata: Metadata = buildRouteMetadata({
   titleStem: PAGE_TITLE,
@@ -212,6 +235,20 @@ export default function ProofPage() {
         image="https://www.design-prism.com/prism-opengraph.png"
         isPartOfId="https://www.design-prism.com/#website"
       />
+      <ServiceSchema
+        serviceId="prism-proof"
+        name="Prism Proof"
+        description={PAGE_DESCRIPTION}
+        serviceType="Patient testimonial capture and reputation content system"
+        areaServed="US"
+        offerDetails={{
+          name: "Prism Proof",
+          description:
+            "A testimonial capture and distribution system that turns patient stories into website proof, video clips, schema, social drafts, and reporting.",
+          url: CANONICAL_URL,
+        }}
+      />
+      <FAQSchema questions={proofFaqItems} />
     </>
   )
 }

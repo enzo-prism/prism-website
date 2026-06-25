@@ -1,6 +1,5 @@
 import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
-import { OrganizationSchema, WebsiteSchema } from "@/components/schema-markup"
 import type { Metadata } from "next"
 import WallOfLoveClientPage from "./client-page"
 import { buildRouteMetadata } from "@/lib/seo/metadata"
@@ -15,8 +14,6 @@ export const metadata: Metadata = buildRouteMetadata({
 export default function WallOfLovePage() {
   return (
     <>
-      <OrganizationSchema />
-      <WebsiteSchema />
       <Navbar />
       <WallOfLoveClientPage />
       <Footer />

@@ -59,6 +59,7 @@ import { renderToStaticMarkup } from "react-dom/server"
 
 import sitemap from "@/app/sitemap"
 import { metadata as aiMetadata } from "@/app/ai/page"
+import { metadata as aiAgentsMetadata } from "@/app/ai-agents/page"
 import { metadata as aiWebsiteLaunchMetadata } from "@/app/ai-website-launch/page"
 import { metadata as growthMetadata } from "@/app/growth/page"
 import { metadata as hottestContentMetadata } from "@/app/hottest-content/page"
@@ -83,6 +84,7 @@ describe("SEO indexability guards", () => {
   it("keeps community and utility routes out of the index", () => {
     const routeMetadata = [
       aiMetadata,
+      aiAgentsMetadata,
       hottestContentMetadata,
       igMetadata,
       modelsMetadata,
@@ -114,7 +116,7 @@ describe("SEO indexability guards", () => {
   it("excludes non-canonical routes from the sitemap", async () => {
     const urls = (await sitemap()).map((entry) => entry.url)
 
-    expect(urls).not.toEqual(expect.arrayContaining([
+    const excludedUrls = [
       "https://www.design-prism.com/ai",
       "https://www.design-prism.com/ai-agents",
       "https://www.design-prism.com/ai-website-launch",
@@ -125,8 +127,6 @@ describe("SEO indexability guards", () => {
       "https://www.design-prism.com/hottest-content",
       "https://www.design-prism.com/ig",
       "https://www.design-prism.com/library",
-      "https://www.design-prism.com/local-seo-agency",
-      "https://www.design-prism.com/local-seo-services",
       "https://www.design-prism.com/models",
       "https://www.design-prism.com/offers",
       "https://www.design-prism.com/offers/ai-seo-boost",
@@ -139,13 +139,21 @@ describe("SEO indexability guards", () => {
       "https://www.design-prism.com/software",
       "https://www.design-prism.com/tiktok",
       "https://www.design-prism.com/youtube",
-    ]))
+    ]
+
+    for (const excludedUrl of excludedUrls) {
+      expect(urls).not.toContain(excludedUrl)
+    }
   })
 
   it("keeps the shared search policy growth-first with dental specialty routes", () => {
     expect(isRouteIndexable("/dental-website")).toBe(true)
     expect(isRouteIndexable("/dental-practice-seo-expert")).toBe(true)
     expect(isRouteIndexable("/ai-agents/dental")).toBe(true)
+    expect(isRouteIndexable("/local-seo-agency")).toBe(true)
+    expect(isRouteIndexable("/local-seo-services")).toBe(true)
+    expect(isRouteIndexable("/ai")).toBe(false)
+    expect(isRouteIndexable("/ai-agents")).toBe(false)
     expect(isRouteIndexable("/apps")).toBe(false)
     expect(isRouteIndexable("/openai/site-rebuild")).toBe(false)
     expect(isRouteIndexable("/why-nonprofits-love-prism")).toBe(false)

@@ -25,6 +25,14 @@ const measuredHighlights = CASE_STUDIES.flatMap((study) => {
     : []
 }).slice(0, 4)
 
+const measuredCaseStudyCount = CASE_STUDIES.filter(
+  (study) => (study.structured?.results?.length ?? 0) > 0,
+).length
+const marketCount = new Set(CASE_STUDIES.map((study) => study.industry)).size
+const screenshotBackedCount = CASE_STUDIES.filter((study) =>
+  screenshotSrcFor(study.slug),
+).length
+
 function screenshotSrcFor(slug: string) {
   const assetPath = `/case-studies/${slug}-home-desktop.jpg`
   return existsSync(
@@ -140,6 +148,53 @@ export default function CaseStudiesPage() {
               </div>
             ) : null}
 
+            <section
+              aria-label="Prism proof sources"
+              className="mt-8 border-y border-border/60 py-8"
+            >
+              <div className="grid gap-6 md:grid-cols-[1.1fr_1.9fr] md:items-start">
+                <div>
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-muted-foreground">
+                    proof a buyer can verify
+                  </p>
+                  <h2 className="mt-3 text-balance text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
+                    Public work, dated metrics, and the process behind both.
+                  </h2>
+                </div>
+                <div className="grid gap-5 sm:grid-cols-3">
+                  {[
+                    {
+                      value: CASE_STUDIES.length.toString(),
+                      label: 'published client stories',
+                      detail: 'Each links to a live client site when available.',
+                    },
+                    {
+                      value: measuredCaseStudyCount.toString(),
+                      label: 'measured result sets',
+                      detail: 'Every number names GA4 or Google Search Console.',
+                    },
+                    {
+                      value: marketCount.toString(),
+                      label: 'markets represented',
+                      detail: `${screenshotBackedCount} studies include real website screenshots.`,
+                    },
+                  ].map((item) => (
+                    <div key={item.label} className="space-y-2">
+                      <p className="text-3xl font-semibold tracking-tight text-foreground">
+                        {item.value}
+                      </p>
+                      <p className="text-xs font-medium uppercase tracking-[0.14em] text-muted-foreground">
+                        {item.label}
+                      </p>
+                      <p className="text-xs leading-5 text-muted-foreground/80">
+                        {item.detail}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </section>
+
             <div className="mt-10 md:mt-12">
               <CaseStudiesList studies={caseStudyListItems} />
             </div>
@@ -193,8 +248,13 @@ export default function CaseStudiesPage() {
         url="https://www.design-prism.com/case-studies"
         items={orderedCaseStudies.map((study) => ({
           name: study.title,
-          description: study.description,
+          description: study.structured?.results?.[0]
+            ? `${study.description} Verified metric: ${study.structured.results[0].value} ${study.structured.results[0].label}.`
+            : study.description,
           url: `https://www.design-prism.com/case-studies/${study.slug}`,
+          image: screenshotSrcFor(study.slug)
+            ? `https://www.design-prism.com${screenshotSrcFor(study.slug)}`
+            : undefined,
           // "CaseStudy" is not a real schema.org type and gets discarded; model
           // each item as an Article, matching the detail-page schema.
           itemType: 'Article',

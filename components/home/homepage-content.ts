@@ -148,6 +148,11 @@ export const HOMEPAGE_CLIENT_WINS = {
       href: '/case-studies/olympic-bootworks',
       contextLabel: 'Retail + ecommerce',
       image: '/case-studies/olympic-bootworks-home-mobile.jpg',
+      metric: {
+        value: '+1,302%',
+        label: 'Google search impressions YoY',
+        source: 'Google Search Console',
+      },
     },
     {
       company: 'sr4 Partners',

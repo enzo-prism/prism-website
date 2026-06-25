@@ -26,6 +26,29 @@ describe("GlobalSchemaGraph", () => {
         "https://www.linkedin.com/company/web-prism/?viewAsMember=true",
       ]),
     )
+    expect(organization.hasPart).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          url: "https://www.design-prism.com/case-studies",
+        }),
+        expect.objectContaining({
+          url: "https://www.design-prism.com/proof",
+        }),
+        expect.objectContaining({
+          url: "https://www.design-prism.com/wall-of-love",
+        }),
+      ]),
+    )
+    expect(organization.subjectOf).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          url: "https://www.design-prism.com/case-studies/dr-christopher-wong",
+        }),
+        expect.objectContaining({
+          url: "https://www.design-prism.com/case-studies/roseville-dental-academy",
+        }),
+      ]),
+    )
 
     expect(localBusiness).toBeTruthy()
     expect(localBusiness.url).toBe("https://www.design-prism.com")

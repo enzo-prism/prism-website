@@ -67,6 +67,12 @@ export default function MinimalCaseStudyPage({ slug }: MinimalCaseStudyPageProps
           .join('; ')}.`
       : ''
   const schemaDescription = `Prism case study for ${caseStudy.client} featuring the live website plus the services and tech stack used for the engagement.${resultsSentence}`
+  const schemaOutcome =
+    results.length > 0
+      ? results
+          .map((metric) => `${metric.value} ${metric.label}. Source: ${metric.detail}`)
+          .join(' ')
+      : `Live website, service list, and tech stack overview for ${caseStudy.client}.`
 
   const desktopShot = `/case-studies/${slug}-home-desktop.jpg`
   const mobileShot = `/case-studies/${slug}-home-mobile.jpg`
@@ -288,7 +294,12 @@ export default function MinimalCaseStudyPage({ slug }: MinimalCaseStudyPageProps
         datePublished={caseStudy.structured?.datePublished}
         dateModified={caseStudy.structured?.dateModified}
         clientName={caseStudy.client}
-        outcome={`Live website, service list, and tech stack overview for ${caseStudy.client}.`}
+        clientUrl={websiteUrl}
+        industry={caseStudy.industry}
+        location={caseStudy.location}
+        scope={caseStudy.structured?.scope}
+        outcome={schemaOutcome}
+        results={results}
         // Give the Article a real author/publisher by referencing the canonical
         // Prism Organization @id (merges with the global org node on the page).
         organization={{ name: 'Prism', url: 'https://www.design-prism.com/' }}

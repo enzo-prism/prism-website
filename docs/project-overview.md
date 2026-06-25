@@ -11,6 +11,7 @@ Prism is now a business growth systems website: websites, SEO and AI search, Goo
 - Production: GitHub Actions publishes to Vercel with source deploys. Vercel Git auto-deploy is disabled for `main`; the locked-route visual job currently runs non-blocking while baselines stabilize.
 - Design system: root `DESIGN.md`, generated tokens in `generated/`, shared primitives in `components/core-route/` and `components/ui/`.
 - Active positioning: growth-first, dental-proven. Dental proof should stay visible and credible, while non-dental case studies should appear as first-class proof of the broader growth system.
+- Proof architecture: `/case-studies`, `lib/case-study-data.ts`, `components/schema-markup.tsx`, and `public/llms.txt` now work together so public proof is visible to buyers and machine-readable for AI/search systems. Publish only dated, source-attributed GA4 or Google Search Console metrics in `structured.results`.
 - Current scale from this audit: 113 page routes, 5 route handlers, 88 blog MDX files, 22 case studies (21 of which render through the shared visual minimal template with browser + mobile screenshot heroes), and 25 docs files.
 
 ## Source Of Truth Files
@@ -52,7 +53,7 @@ Prism is now a business growth systems website: websites, SEO and AI search, Goo
 - Homepage client proof: `components/home/HomeDentistWinsSection.tsx` (legacy name) wraps `components/home/HomeClientCoverFlow.tsx`, a restrained 3D Cover Flow deck of broad client proof with **one card per published case study** (kept in sync with `/case-studies` / `CASE_STUDIES`). Card data comes from `HOMEPAGE_CLIENT_WINS` in `components/home/homepage-content.ts`; each slide renders a **real client-website screenshot** (`public/case-studies/<slug>-home-mobile.jpg` via the slide's `image` field), captured leading with the site's clean branded hero (dismiss popups/cookie bars/chat widgets first). The motion is input-led with no autoplay and adapts to touch via `isTouch` (`useMobile('(hover: none), (pointer: coarse)')`): phones get a direct 1:1 swipe (one casual swipe = one card), a tighter fan, fewer mounted covers, and no parallax/tilt/hover. The old abstract-visual carousel (`HomeDentistWinsCarousel`, `data-client-win-abstract`) was retired.
 - Core marketing routes: `app/about`, `app/pricing`, `app/get-started`, `app/apply`, `app/services`, `app/websites`, `app/ads`, `app/local-listings`, `app/seo`, `app/ai-seo-services`, `app/aeo`, `app/proof`, and `app/wall-of-love`.
 - Dental cluster: `app/dental-website`, `app/dental-practice-seo-expert`, `app/custom-email-for-dental-practices`, `app/dental-photography/*`, `app/google/dental-ads`, `app/google/dental-patient-forms`, `app/facebook-ads-for-dentists`, `app/tiktok-ads-for-dentists`, and `app/ai-agents/dental`.
-- Case studies: canonical data lives in `lib/case-study-data.ts`; detail pages render through lightweight shared case study components and should remain indexable.
+- Case studies: canonical data lives in `lib/case-study-data.ts`; detail pages render through lightweight shared case study components and should remain indexable. The shared schema receives client URL, industry, location, scope, and verified metric citations so AI/search systems can read the actual outcome instead of a generic case-study summary.
 - Blog: MDX files live in `content/blog`; metadata, post loading, and search curation flow through `lib/mdx-data.ts`, `app/blog/[slug]/page.tsx`, and `lib/seo/search-visibility.ts`.
 - Library and podcast: live direct-visitor surfaces, but currently noindex and excluded from sitemap/LLM maps.
 - Redirected legacy pricing/offers routes: handled in `next.config.mjs`; preserve redirects to `/pricing`.
@@ -67,6 +68,7 @@ Prism is now a business growth systems website: websites, SEO and AI search, Goo
 - Add blog posts to `INDEXABLE_BLOG_SLUGS` only when they strengthen growth, local visibility, AI search, dental, or another deliberate specialty authority.
 - Leave noindex pages crawlable unless the page is private or API-only. Search engines need to see the meta noindex directive.
 - Keep `public/llms.txt` aligned with the same curated growth map. It should not become a sitewide route index.
+- `/local-seo-agency` and `/local-seo-services` are intentional indexable growth-system routes. Broad utility routes like `/ai` and the parent `/ai-agents` stay noindex while `/ai-agents/dental` remains indexable.
 
 When search visibility changes, run:
 

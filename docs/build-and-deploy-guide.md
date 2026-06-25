@@ -69,8 +69,8 @@ Production is intentionally single-path: GitHub Actions publishes with `vercel d
 - Search-surface sign-off when growth-first visibility changed:
   - sitemap stays in the expected narrow range and excludes noindex routes
   - `public/llms.txt` includes only canonical growth, specialty, proof, and curated learning URLs
-  - representative broad pages such as `/apps`, `/software`, `/openai`, and `/local-seo-agency` are noindex
-  - representative dental pages such as `/dental-website`, `/dental-practice-seo-expert`, `/google/dental-ads`, and `/ai-agents/dental` remain indexable
+  - representative broad/utility pages such as `/apps`, `/software`, `/openai`, `/ai`, and `/ai-agents` are noindex
+  - representative growth and dental pages such as `/local-seo-agency`, `/local-seo-services`, `/dental-website`, `/dental-practice-seo-expert`, `/google/dental-ads`, and `/ai-agents/dental` remain indexable
 
 ## CI parity notes
 
@@ -93,8 +93,8 @@ curl -sS -L https://www.design-prism.com/llms.txt
 
 Spot-check robots tags on both sides of the search policy:
 
-- Indexable: `/dental-website`, `/dental-practice-seo-expert`, `/google/dental-ads`, `/blog/dental-seo-guide`
-- Noindex: `/apps`, `/software`, `/openai`, `/local-seo-agency`, off-theme blog posts
+- Indexable: `/local-seo-agency`, `/local-seo-services`, `/dental-website`, `/dental-practice-seo-expert`, `/google/dental-ads`, `/blog/dental-seo-guide`
+- Noindex: `/apps`, `/software`, `/openai`, `/ai`, `/ai-agents`, off-theme blog posts
 
 `robots.txt` should not block public noindex pages. It should only keep API routes closed while allowing `/api/og/`.
 

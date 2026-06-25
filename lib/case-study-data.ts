@@ -51,6 +51,9 @@ export type CaseStudyResultMetric = {
   value: string
   label: string
   detail: string
+  sourceName?: string
+  dateRange?: string
+  sourceUrl?: string
 }
 
 /**
@@ -123,12 +126,16 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
         {
           value: '+142%',
           label: 'Google Search impressions, year over year',
+          sourceName: 'Google Search Console',
+          dateRange: 'Mar-May 2025 vs Mar-May 2026',
           detail:
             'Google Search Console: Mar–May 2025 vs Mar–May 2026 (9.2k → 22.4k impressions).',
         },
         {
           value: '~3×',
           label: 'monthly search visibility growth',
+          sourceName: 'Google Search Console',
+          dateRange: 'Feb 2025 to Apr-May 2026',
           detail:
             'Google Search Console: ~2.8k impressions in Feb 2025 grew to ~8.4k/month by Apr–May 2026.',
         },
@@ -203,7 +210,7 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
       heroImage: 'https://www.design-prism.com/olympic-bootworks-hero.png',
       heroVideoId: 'Cgi7CZHMYQ0',
       datePublished: '2025-02-15T00:00:00.000Z',
-      dateModified: '2025-02-15T00:00:00.000Z',
+      dateModified: '2026-06-25T00:00:00.000Z',
       outcomes: [
         'Traffic, search impressions, and online engagement compounded over time.',
         'Olympic Bootworks went from “great store, weak website” to a two-site system built for brand + ecommerce.',
@@ -211,13 +218,31 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
         'The business escaped website + email technical debt and moved to owned infrastructure.',
         'Prism gained deep ecommerce + POS integration reps that now power the broader Prism flywheel.',
       ],
+      results: [
+        {
+          value: '+1,302%',
+          label: 'Google Search impressions, year over year',
+          sourceName: 'Google Search Console',
+          dateRange: 'Mar 24-Jun 21, 2025 vs Mar 24-Jun 21, 2026',
+          detail:
+            'Google Search Console: 801 impressions (Mar 24–Jun 21, 2025) grew to 11,234 impressions (Mar 24–Jun 21, 2026).',
+        },
+        {
+          value: '13.6k',
+          label: 'GA4 sessions in the latest complete 90 days',
+          sourceName: 'GA4',
+          dateRange: 'Mar 26-Jun 23, 2026',
+          detail:
+            'GA4: 13,604 sessions and 12,992 new users from Mar 26–Jun 23, 2026.',
+        },
+      ],
       story: {
         situation:
           'Olympic Bootworks had the hard part — a legendary bootfitting reputation, Olympians in the fitting room, and customers who drive hours. Online they had a basic Squarespace page, weak local discovery, and no way to sell high-ticket Fantic e-bikes without relying on walk-ins.',
         approach:
           'Prism rebuilt the legacy site into a modern, mobile-first brand and services experience, launched a dedicated Fantic Warehouse microsite built for confident online buying, linked inventory to the POS, and moved the shop onto an owned Google Workspace and email stack with clean DNS.',
         result:
-          'The website became a sales channel and an ops asset instead of a brochure: traffic, search impressions, and online engagement compounded, and Fantic inventory gained a real online sales channel.',
+          'The website became a sales channel and an ops asset instead of a brochure: Google Search impressions grew from 801 to 11,234 year over year, GA4 recorded 13,604 sessions in the latest complete 90-day window, and Fantic inventory gained a real online sales channel.',
       },
       focus: 'Ecommerce + multi-site launch',
       scope:
@@ -345,11 +370,15 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
         {
           value: '593',
           label: 'Google clicks in the first full month after launch',
+          sourceName: 'Google Search Console',
+          dateRange: 'May 2026',
           detail: 'Google Search Console, May 2026.',
         },
         {
           value: '14.2k',
           label: 'Google Search impressions in the first full month',
+          sourceName: 'Google Search Console',
+          dateRange: 'May 2026',
           detail: 'Google Search Console, May 2026.',
         },
       ],
@@ -543,6 +572,8 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
         {
           value: '+90%',
           label: 'Google Search impressions, year over year',
+          sourceName: 'Google Search Console',
+          dateRange: 'Jun-Aug 2025 vs Mar-May 2026',
           detail:
             'Google Search Console: ~460/month avg (Jun–Aug 2025) grew to ~870/month avg (Mar–May 2026).',
         },
@@ -731,11 +762,15 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
         {
           value: '5.3×',
           label: 'monthly Google clicks in five months',
+          sourceName: 'Google Search Console',
+          dateRange: 'Jan-May 2026',
           detail: 'Google Search Console: 10 clicks (Jan 2026) → 53 (May 2026).',
         },
         {
           value: '+273%',
           label: 'Google Search impressions in five months',
+          sourceName: 'Google Search Console',
+          dateRange: 'Jan-May 2026',
           detail:
             'Google Search Console: 505 impressions (Jan 2026) → 1,883 (May 2026).',
         },

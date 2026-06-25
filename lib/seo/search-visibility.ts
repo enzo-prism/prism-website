@@ -36,8 +36,6 @@ export const INDEXABLE_STATIC_ROUTES = [
   "/google/dental-patient-forms",
   "/facebook-ads-for-dentists",
   "/tiktok-ads-for-dentists",
-  "/ai",
-  "/ai-agents",
   "/ai-agents/dental",
   "/local-seo-agency",
   "/local-seo-services",
@@ -46,6 +44,8 @@ export const INDEXABLE_STATIC_ROUTES = [
 export const NOINDEX_ROUTES = [
   "/analysis-thank-you",
   "/aeo-thank-you",
+  "/ai",
+  "/ai-agents",
   "/ai-website-launch",
   "/apps",
   "/book-a-shoot/thank-you",
