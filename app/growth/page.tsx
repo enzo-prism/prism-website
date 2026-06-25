@@ -6,6 +6,7 @@ import RevealOnScroll from "@/components/reveal-on-scroll"
 import { WebPageSchema } from "@/components/schema-markup"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
+import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
 import { buildRouteMetadata } from "@/lib/seo/metadata"
 
 const services = [
@@ -94,7 +95,7 @@ export default function GrowthPage() {
           </div>
           <RevealOnScroll delay={0.15} className="mt-12 flex flex-col items-center gap-4 text-center">
             <Button asChild className="rounded-2xl bg-slate-900 px-8 py-6 text-base font-semibold">
-              <Link href="/get-started?plan=grow">Book a Growth Review →</Link>
+              <Link href="/get-started?plan=grow">{FREE_AUDIT_CTA_TEXT} →</Link>
             </Button>
             <p className="text-sm text-slate-500">
               We'll review your current data, set quarterly priorities, and begin within 7 days.

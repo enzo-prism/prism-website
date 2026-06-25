@@ -34,11 +34,12 @@ import {
 import VideoCarousel from "@/components/video-carousel"
 import type { CaseStudyMeta } from "@/lib/case-study-data"
 import { CASE_STUDIES } from "@/lib/case-study-data"
+import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
 import { pixelishForEmoji } from "@/lib/pixelish-emoji"
 import { buildRouteMetadata } from "@/lib/seo/metadata"
 
-const CTA_PRIMARY_LABEL = "Get Started"
-const CTA_SECONDARY_LABEL = "Get Started"
+const CTA_PRIMARY_LABEL = FREE_AUDIT_CTA_TEXT
+const CTA_SECONDARY_LABEL = "Start your audit"
 const CTA_PRIMARY_HREF = "/get-started"
 const CTA_SECONDARY_HREF = "/get-started"
 
@@ -345,7 +346,7 @@ export default function DentalPracticesPage() {
                 </ul>
               </div>
               <p className="mt-8 text-sm text-neutral-600">
-                Want a calmer week and clearer numbers? Get started by booking a demo with the Prism team.
+                Want a calmer week and clearer numbers? Start with a free growth audit from the Prism team.
               </p>
               <div className="mt-10 flex flex-wrap justify-center gap-4">
                 <Link href={CTA_PRIMARY_HREF}>

@@ -19,6 +19,7 @@ import ScrollToTop from "@/components/scroll-to-top"
 import { WebPageSchema } from "@/components/schema-markup"
 import { Button } from "@/components/ui/button"
 import PixelishIcon from "@/components/pixelish/PixelishIcon"
+import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
 import { pixelishForEmoji } from "@/lib/pixelish-emoji"
 import { buildRouteMetadata } from "@/lib/seo/metadata"
 
@@ -34,7 +35,7 @@ const servicesHighlights = [
     title: "search campaigns that convert",
     description:
       "we build and manage campaigns for every dental service you offer — cleanings, invisalign, implants, whitening, and more. your ads show when patients are searching, not scrolling.",
-    ctaLabel: "Get a Free Audit",
+    ctaLabel: FREE_AUDIT_CTA_TEXT,
     href: GET_FREE_AUDIT_HREF,
     icon: Target,
     external: false
@@ -217,7 +218,7 @@ export default function GoogleDentalAdsPage() {
                   className="h-auto rounded-full px-8 py-4 text-base font-semibold"
                 >
                   <Link href={GET_FREE_AUDIT_HREF} className="lowercase">
-                    get a free audit <ArrowRight className="h-5 w-5" aria-hidden />
+                    {FREE_AUDIT_CTA_TEXT} <ArrowRight className="h-5 w-5" aria-hidden />
                   </Link>
                 </Button>
                 <Button
@@ -624,7 +625,7 @@ export default function GoogleDentalAdsPage() {
                 className="h-auto rounded-full px-8 py-4 text-base font-semibold"
               >
                 <Link href={GET_FREE_AUDIT_HREF}>
-                  Get a Free Audit <ArrowRight className="h-5 w-5" aria-hidden />
+                  {FREE_AUDIT_CTA_TEXT} <ArrowRight className="h-5 w-5" aria-hidden />
                 </Link>
               </Button>
               <Button

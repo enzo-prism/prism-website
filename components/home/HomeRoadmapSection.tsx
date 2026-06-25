@@ -1,6 +1,7 @@
 import TrackedLink from '@/components/tracked-link'
 import { HOMEPAGE_ROADMAP_PHASES } from '@/components/home/homepage-content'
 import ScalingRoadmapForm from '@/components/forms/ScalingRoadmapForm'
+import { FREE_AUDIT_CTA_TEXT } from '@/lib/constants'
 
 export default function HomeRoadmapSection() {
   return (
@@ -50,15 +51,15 @@ export default function HomeRoadmapSection() {
           </div>
           <div className="mt-8 border-t border-black/8 pt-6">
             <p className="text-sm text-[rgba(15,23,42,0.48)]">
-              Or book a 30-minute strategy call:
+              Or start with Prism&apos;s free audit:
             </p>
             <TrackedLink
-              href="/get-started#book-call"
-              label="book a 30-min call"
+              href="/get-started"
+              label={FREE_AUDIT_CTA_TEXT}
               location="homepage roadmap"
               className="mt-4 inline-flex items-center justify-center rounded-2xl border border-black/10 bg-[#fcfcfb] px-5 py-3 text-sm font-semibold text-[rgba(15,23,42,0.64)] transition-colors hover:text-[#0a0a0b]"
             >
-              Book a 30-min call
+              {FREE_AUDIT_CTA_TEXT}
             </TrackedLink>
           </div>
         </div>

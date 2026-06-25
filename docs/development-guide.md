@@ -234,6 +234,8 @@ Custom confirmation routes live in `app/thank-you/` and `app/analysis-thank-you/
 
 Any CTA labeled “free audit” or “free growth audit” should point to `/get-started`. Keep `/free-analysis` links only for surfaces that explicitly need that legacy analysis form.
 
+Any CTA that points to `/get-started` should describe the Growth Audit / Growth Dashboard path, not a demo, booking, strategy call, or practice-only audit. Use `FREE_AUDIT_CTA_TEXT` for general route-level CTAs when possible; compact shared chrome can keep the documented `Free audit` label.
+
 ## Typography & Casing
 
 - Do not enforce global lowercase transforms for site copy; preserve natural capitalization for readability.

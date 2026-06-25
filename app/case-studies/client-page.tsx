@@ -15,6 +15,7 @@ import {
 import TrackedLink from '@/components/tracked-link'
 import { Button } from '@/components/ui/button'
 import { CASE_STUDIES, type CaseStudyMeta } from '@/lib/case-study-data'
+import { FREE_AUDIT_CTA_TEXT } from '@/lib/constants'
 
 // Headline metrics sourced from case-study data so the hub band can never
 // drift from what the detail pages publish.
@@ -219,7 +220,7 @@ export default function CaseStudiesPage() {
                   location="case studies hub footer"
                 >
                   <span className="inline-flex items-center gap-2">
-                    <span>Get a free audit</span>
+                    <span>{FREE_AUDIT_CTA_TEXT}</span>
                     <ArrowRight className="size-4" aria-hidden="true" />
                   </span>
                 </TrackedLink>
@@ -239,7 +240,7 @@ export default function CaseStudiesPage() {
       <Footer />
       <CollectionPageSchema
         name="Prism case studies"
-        description="Measured client wins from Prism across dental, local business, retail, nonprofit, education, hospitality, and consulting engagements."
+        description="Measured client wins from Prism across local business, founder-led, nonprofit, consulting, retail, education, hospitality, and dental engagements."
         url="https://www.design-prism.com/case-studies"
         isPartOfId="https://www.design-prism.com/#website"
       />

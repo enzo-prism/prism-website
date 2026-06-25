@@ -4,6 +4,7 @@ import type { Metadata } from "next"
 import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
 import { WebPageSchema } from "@/components/schema-markup"
+import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
 import { buildRouteMetadata } from "@/lib/seo/metadata"
 
 const agentCapabilities = [
@@ -161,7 +162,7 @@ export default function AIAgentsPage() {
                   href="/get-started"
                   className="inline-flex items-center justify-center rounded-full bg-neutral-900 px-6 py-3 text-sm font-semibold text-white transition hover:bg-neutral-800"
                 >
-                  talk with prism
+                  {FREE_AUDIT_CTA_TEXT}
                 </Link>
                 <Link
                   href="#use-cases"
@@ -308,15 +309,15 @@ export default function AIAgentsPage() {
                 ready to never miss another call?
               </h2>
               <p className="mt-4 text-base text-neutral-600">
-                start with a complimentary strategy session. we&apos;ll map your call flows, identify automation
-                opportunities, and show you exactly how an ai agent fits your business.
+                start with a free growth audit. we&apos;ll map your call flows, identify automation opportunities,
+                and show how an ai agent fits your business.
               </p>
               <div className="mt-8 flex flex-wrap justify-center gap-3">
                 <Link
                   href="/get-started"
                   className="inline-flex items-center justify-center rounded-full bg-neutral-900 px-6 py-3 text-sm font-semibold text-white transition hover:bg-neutral-800"
                 >
-                  book a strategy call
+                  {FREE_AUDIT_CTA_TEXT}
                 </Link>
                 <Link
                   href="/pricing"

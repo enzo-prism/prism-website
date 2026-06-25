@@ -11,6 +11,7 @@ import { CaseStudySchema } from '@/components/schema-markup'
 import TrackedLink from '@/components/tracked-link'
 import { Button } from '@/components/ui/button'
 import { CASE_STUDIES } from '@/lib/case-study-data'
+import { FREE_AUDIT_CTA_TEXT } from '@/lib/constants'
 import { ArrowRight, Sparkles } from 'lucide-react'
 import { notFound } from 'next/navigation'
 import { existsSync } from 'node:fs'
@@ -116,7 +117,7 @@ export default function MinimalCaseStudyPage({ slug }: MinimalCaseStudyPageProps
             primaryCta={{
               href: '/get-started',
               label: `Start a free growth audit from ${slug} case study`,
-              text: 'Free Practice Audit',
+              text: FREE_AUDIT_CTA_TEXT,
             }}
           />
         ) : (

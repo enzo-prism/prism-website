@@ -24,6 +24,7 @@ import TrackedLink from '@/components/tracked-link'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { CASE_STUDIES } from '@/lib/case-study-data'
+import { FREE_AUDIT_CTA_TEXT } from '@/lib/constants'
 import { buildRouteMetadata } from '@/lib/seo/metadata'
 import { cn } from '@/lib/utils'
 
@@ -308,7 +309,7 @@ export default function RosevilleDentalAcademyCaseStudyPage() {
                     location="Roseville Dental Academy case study hero"
                   >
                     <span className="inline-flex items-center gap-2">
-                      <span>Free Practice Audit</span>
+                      <span>{FREE_AUDIT_CTA_TEXT}</span>
                       <ArrowRight className="size-4" aria-hidden="true" />
                     </span>
                   </TrackedLink>

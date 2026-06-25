@@ -10,6 +10,7 @@ import {
 import Footer from '@/components/footer'
 import Navbar from '@/components/navbar'
 import PixelishIcon from '@/components/pixelish/PixelishIcon'
+import { FREE_AUDIT_CTA_TEXT } from '@/lib/constants'
 import { cn } from '@/lib/utils'
 
 type SocialLandingLink = {
@@ -145,7 +146,7 @@ export default function SocialAccountLandingPage({
                     label={`${platform} landing free audit`}
                     location={`${platform.toLowerCase()}_landing_hero`}
                   >
-                    Free practice audit
+                    {FREE_AUDIT_CTA_TEXT}
                   </CoreActionLink>
                   <CoreActionLink
                     href={platformUrl}
@@ -270,7 +271,7 @@ export default function SocialAccountLandingPage({
 
                 <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
                   <CoreActionLink href="/get-started" variant="heroPrimary">
-                    Start free audit
+                    {FREE_AUDIT_CTA_TEXT}
                   </CoreActionLink>
                   <CoreActionLink href="/case-studies" variant="heroSecondary">
                     See client work

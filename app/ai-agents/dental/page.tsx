@@ -5,6 +5,7 @@ import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
 import ScrollToTop from "@/components/scroll-to-top"
 import { FAQSchema, WebPageSchema } from "@/components/schema-markup"
+import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
 import { buildRouteMetadata } from "@/lib/seo/metadata"
 
 const agentFeatures = [
@@ -96,7 +97,7 @@ const faqs = [
   {
     question: "what does it cost?",
     answer:
-      "pricing depends on call volume and integrations. book a strategy call to get a custom quote for your practice.",
+      "pricing depends on call volume and integrations. start with a free growth audit so Prism can map the right next step.",
   },
 ]
 
@@ -141,7 +142,7 @@ export default function DentalAIAgentsPage() {
                   href="/get-started"
                   className="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-neutral-900 transition hover:bg-neutral-100"
                 >
-                  get started
+                  {FREE_AUDIT_CTA_TEXT}
                 </Link>
                 <Link
                   href="/ai-agents"
@@ -330,15 +331,15 @@ export default function DentalAIAgentsPage() {
             </p>
             <h2 className="mt-4 text-3xl font-semibold tracking-tight text-neutral-900 sm:text-4xl">next step</h2>
             <p className="mt-4 text-base text-neutral-600">
-              book a complimentary strategy call. we&apos;ll map your call volume, identify automation opportunities,
-              and show you exactly how an ai agent fits your practice.
+              start with a free growth audit. we&apos;ll map your call volume, identify automation opportunities,
+              and show how an ai agent fits your practice.
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-3">
               <Link
                 href="/get-started"
                 className="inline-flex items-center justify-center rounded-full bg-neutral-900 px-8 py-3 text-sm font-semibold text-white transition hover:bg-neutral-800"
               >
-                book a strategy call
+                {FREE_AUDIT_CTA_TEXT}
               </Link>
               <Link
                 href="/pricing"

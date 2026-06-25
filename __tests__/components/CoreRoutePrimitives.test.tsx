@@ -68,17 +68,17 @@ describe('CoreActionLink', () => {
     render(
       <CoreActionLink
         href="/get-started"
-        label="book strategy call"
+        label="get free growth audit"
         location="pricing hero"
         variant="secondary"
       >
-        Book a strategy call
+        Get a free growth audit
       </CoreActionLink>,
     )
 
-    const link = screen.getByRole('link', { name: /book a strategy call/i })
+    const link = screen.getByRole('link', { name: /get a free growth audit/i })
     expect(link).toHaveAttribute('href', '/get-started')
-    expect(link).toHaveAttribute('data-cta-label', 'book strategy call')
+    expect(link).toHaveAttribute('data-cta-label', 'get free growth audit')
     expect(link).toHaveAttribute('data-cta-location', 'pricing hero')
     expect(link.className).toContain('rounded-full')
   })

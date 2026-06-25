@@ -674,7 +674,7 @@ export default function DentalWebsitePage() {
             <p className="text-sm font-medium uppercase tracking-[0.32em] text-neutral-500">ready for a practice website that performs?</p>
             <h2 className="mt-4 text-3xl font-semibold tracking-tight text-neutral-900 sm:text-4xl">next step</h2>
             <p className="mt-4 text-base text-neutral-600">
-              start with a complimentary audit, see real patient journeys, and get a tailored roadmap for your new dental practice website.
+              start with a free growth audit, see real patient journeys, and get a tailored roadmap for your online presence.
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-3">
               <Button asChild size="lg" className="rounded-full px-8 py-3 text-base lowercase">
