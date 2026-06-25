@@ -201,7 +201,7 @@ export default function DeferredAsciiHeroBackdrop(
 
   // The ASCII backdrop is purely decorative. Wrap it in an aria-hidden layer
   // with `contain: paint` so (a) it is removed from the accessibility tree and
-  // (b) its painted <pre> text is not selected as the LCP element — the hero
+  // (b) its painted <pre> text is not selected as the LCP element, so the hero
   // headline should win LCP instead. `ariaLabel` is intentionally dropped here
   // so the inner container does not get role="img"/aria-label.
   return (

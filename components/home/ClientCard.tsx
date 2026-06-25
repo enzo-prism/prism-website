@@ -27,7 +27,7 @@ export default function ClientCard({
     <div
       className="relative overflow-hidden rounded-2xl border border-neutral-200 bg-white p-4 text-left transition-[border-color,background-color,box-shadow] duration-300 ease-out hover:border-neutral-300 hover:bg-neutral-50 hover:shadow-md focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-neutral-300 group-focus-visible/client:border-neutral-300 group-focus-visible/client:bg-neutral-50 group-focus-visible/client:shadow-md dark:border-neutral-800 dark:bg-neutral-900 dark:hover:border-neutral-700 dark:hover:bg-neutral-800 dark:group-focus-visible/client:border-neutral-700 dark:group-focus-visible/client:bg-neutral-800"
       role="group"
-      aria-label={`${title}${location ? ` — ${location}` : ""}`}
+      aria-label={`${title}${location ? `, ${location}` : ""}`}
     >
       <div
         aria-hidden="true"
@@ -68,7 +68,7 @@ export default function ClientCard({
     return (
       <Link
         href={url}
-        aria-label={`${title}${location ? ` — ${location}` : ""}`}
+        aria-label={`${title}${location ? `, ${location}` : ""}`}
         onClick={() => {
           trackNavigation("client_card", url)
           if (isExternal) trackExternalLinkClick(url, title)

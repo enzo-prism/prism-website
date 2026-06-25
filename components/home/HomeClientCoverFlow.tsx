@@ -35,7 +35,7 @@ import { cn } from '@/lib/utils'
 import { trackCTAClick } from '@/utils/analytics'
 
 // --- Motion tokens (one easing curve everywhere; transform/opacity only) ----
-// A confident takeoff and a long, quiet landing — never bouncy. The deck is
+// A confident takeoff and a long, quiet landing, never bouncy. The deck is
 // one physical object: still at rest, input-led, weighty when it does move.
 const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1]
 const T_ENTER = { duration: 0.78, ease: EASE } // one-time deck fan-open
@@ -215,7 +215,7 @@ export default function HomeClientCoverFlow({
 
     const rect = scene.getBoundingClientRect()
     const viewportH = window.innerHeight || 0
-    if (rect.top < viewportH * 0.85) return // already visible — skip entrance
+    if (rect.top < viewportH * 0.85) return // already visible, skip entrance
 
     setEntered(false)
     setSettled(false)
@@ -317,9 +317,9 @@ export default function HomeClientCoverFlow({
           try {
             sceneRef.current?.setPointerCapture(event.pointerId)
           } catch {
-            /* invalid pointer — ignore */
+            /* invalid pointer, ignore */
           }
-          // The deck is being handled directly — drop hover/tilt + camera.
+          // The deck is being handled directly, drop hover/tilt + camera.
           setHoveredIndex(null)
           setPressedIndex(null)
           tiltRawX.set(0)
@@ -347,7 +347,7 @@ export default function HomeClientCoverFlow({
   const finishDrag = useCallback(
     (event: ReactPointerEvent<HTMLDivElement>, commit: boolean) => {
       const start = dragStartRef.current
-      // Only the pointer that owns the active gesture may end it — a stray
+      // Only the pointer that owns the active gesture may end it; a stray
       // second-finger up must not disturb the in-flight drag.
       if (!start || start.id !== event.pointerId) return
       dragStartRef.current = null
@@ -355,7 +355,7 @@ export default function HomeClientCoverFlow({
         try {
           sceneRef.current?.releasePointerCapture(event.pointerId)
         } catch {
-          /* not captured — ignore */
+          /* not captured, ignore */
         }
         if (commit) {
           const dx = event.clientX - start.x
@@ -511,12 +511,12 @@ export default function HomeClientCoverFlow({
         onPointerLeave={handleScenePointerLeave}
         onKeyDown={handleStageKeyDown}
       >
-        {/* deck — drag translation */}
+        {/* deck: drag translation */}
         <motion.div
           className="absolute left-1/2 top-1/2 [transform-style:preserve-3d]"
           style={{ x: dragX, width: 0, height: 0 }}
         >
-          {/* deck — shared damped camera (one rotation for the whole scene) */}
+          {/* deck: shared damped camera (one rotation for the whole scene) */}
           <motion.div
             className="[transform-style:preserve-3d]"
             style={{
@@ -530,7 +530,7 @@ export default function HomeClientCoverFlow({
               const offset = wrapOffset(index - activeIndex, count)
               // Mount only the visible window plus a one-card buffer ring (kept
               // at opacity 0 for smooth reorders); far covers are unmounted to
-              // cut compositor layers + image decodes — most on phones where
+              // cut compositor layers + image decodes, most on phones where
               // maxVisible is 2.
               if (Math.abs(offset) > maxVisible + 1) return null
               const base = entered
@@ -592,7 +592,7 @@ export default function HomeClientCoverFlow({
                     } as CSSProperties
                   }
                 >
-                  {/* tilt — hover/press lift (fine pointer); inert on touch */}
+                  {/* tilt: hover/press lift (fine pointer); inert on touch */}
                   <motion.div
                     className="relative h-full w-full [transform-style:preserve-3d]"
                     animate={
@@ -617,7 +617,7 @@ export default function HomeClientCoverFlow({
                       isTouch
                         ? undefined
                         : (event) => {
-                            // Mouse only — a pen can hover away without a
+                            // Mouse only; a pen can hover away without a
                             // pointerup and would otherwise stick "pressed".
                             if (event.pointerType === 'mouse') setPressedIndex(index)
                           }
@@ -641,7 +641,7 @@ export default function HomeClientCoverFlow({
                           }
                     }
                   >
-                    {/* contact shadow — one fixed light direction. On touch a
+                    {/* contact shadow: one fixed light direction. On touch a
                         single static, low-radius shadow (no animated blur). */}
                     {isTouch ? (
                       isActive ? (
@@ -698,7 +698,7 @@ export default function HomeClientCoverFlow({
                         className="object-cover object-top"
                       />
 
-                      {/* Depth dim — animates OPACITY only (no CSS filter) */}
+                      {/* Depth dim: animates OPACITY only (no CSS filter) */}
                       <motion.div
                         aria-hidden="true"
                         className="pointer-events-none absolute inset-0 bg-black"
@@ -706,7 +706,7 @@ export default function HomeClientCoverFlow({
                         transition={hoveredOffset !== null ? T_LIFT : T_REORDER}
                       />
 
-                      {/* Top sheen — one fixed light direction */}
+                      {/* Top sheen: one fixed light direction */}
                       <div
                         aria-hidden="true"
                         className="pointer-events-none absolute inset-0 bg-[linear-gradient(140deg,rgba(255,255,255,0.14),transparent_28%)]"
@@ -781,7 +781,7 @@ export default function HomeClientCoverFlow({
           <p className="font-sans text-[1.45rem] font-medium leading-none tracking-[-0.025em] text-[#f5f0e8] sm:text-[1.75rem]">
             {activeSlide.company}
           </p>
-          {/* Verified headline result — shown only for clients with a metric
+          {/* Verified headline result: shown only for clients with a metric
               verified against a named source (never fabricated). */}
           {activeSlide.metric ? (
             <p className="mt-2 flex flex-wrap items-center gap-x-2 gap-y-1">

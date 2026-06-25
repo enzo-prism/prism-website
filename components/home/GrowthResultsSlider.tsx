@@ -19,37 +19,37 @@ const slides: Slide[] = [
   {
     platform: "instagram",
     image: "/growth/instagram-nvidia-stanford.png",
-    caption: "Instagram reel insights — @nvidia @stanford",
+    caption: "Instagram reel insights for @nvidia and @stanford",
     alt: "Instagram reel insights showing reach and interactions",
   },
   {
     platform: "instagram",
     image: "/growth/instagram-hormozi.png",
-    caption: "Instagram reel insights — @hormozi",
+    caption: "Instagram reel insights for @hormozi",
     alt: "Instagram reel insights for @hormozi showing reach and saves",
   },
   {
     platform: "instagram",
     image: "/growth/instagram-stats-6.png",
-    caption: "Instagram profile stats — community growth snapshot",
+    caption: "Instagram profile growth snapshot",
     alt: "Instagram analytics screen highlighting profile growth metrics",
   },
   {
     platform: "tiktok",
     image: "/growth/tiktok-video-analysis.png",
-    caption: "TikTok video analysis — key metrics",
+    caption: "TikTok video performance breakdown",
     alt: "TikTok analytics screenshot showing video analysis metrics",
   },
   {
     platform: "tiktok",
     image: "/growth/tiktok-stats-2.png",
-    caption: "TikTok stats — campaign performance snapshot",
+    caption: "TikTok campaign performance snapshot",
     alt: "TikTok analytics view highlighting performance metrics for a campaign",
   },
   {
     platform: "youtube",
     image: "/growth/youtube-analytics.png",
-    caption: "YouTube analytics — subscribers and views",
+    caption: "YouTube subscriber and view growth",
     alt: "YouTube analytics screenshot showing subscribers and views",
   },
 ]

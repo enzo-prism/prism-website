@@ -59,7 +59,7 @@ export type HomepageClientWinSlide = {
   /**
    * Optional headline result. ONLY populate from a metric that is verified
    * against the named `source` (mirrors the client's `structured.results` in
-   * lib/case-study-data.ts). Never invent a value — cards without verified
+   * lib/case-study-data.ts). Never invent a value. Cards without verified
    * data simply omit this and show their `contextLabel` instead.
    */
   metric?: {
@@ -96,7 +96,7 @@ export const HOMEPAGE_HERO = {
   title: 'Get found. Get trusted. Get chosen.',
   titleLines: ['Get found.', 'Get trusted.', 'Get chosen.'],
   description:
-    'Prism is one team that builds and runs everything that brings you customers — your website, Google search, reviews, ads, and AI visibility. One system, working together.',
+    'Prism is one team that builds and runs everything that brings you customers: your website, Google search, reviews, ads, and AI visibility. One system, pulling in the same direction.',
   supportPoints: [
     {
       label: 'Can ChatGPT recommend you?',
@@ -349,7 +349,7 @@ export const HOMEPAGE_PROBLEM = {
   eyebrow: 'Why it works',
   title: 'Buyers check everything before they choose.',
   description:
-    'Your website. Your reviews. Your Google listing. Even ChatGPT. If one piece is weak, people quietly pick someone else — and you never find out why.',
+    'Your website. Your reviews. Your Google listing. Even ChatGPT. If one piece is weak, people quietly pick someone else, and you never find out why.',
   closingLine: 'Prism makes every one of those checks work in your favor.',
   points: [
     {
@@ -670,7 +670,7 @@ export const HOMEPAGE_FIT_AUDIENCES: readonly HomepageIconCard[] = [
   {
     title: 'Founders & startup teams',
     description:
-      'You are building something real and need customers to find it — without hiring a marketing department.',
+      'You are building something real and need customers to find it, without hiring a marketing department.',
     iconSrc: '/pixelish/graph-chart-high.svg',
   },
   {
@@ -682,7 +682,7 @@ export const HOMEPAGE_FIT_AUDIENCES: readonly HomepageIconCard[] = [
   {
     title: 'Owners & operators',
     description:
-      'You run the business day to day and want one partner to own growth — not another vendor to manage.',
+      'You run the business day to day and want one partner to own growth, not another vendor to manage.',
     iconSrc: '/pixelish/users.svg',
   },
 ] as const
@@ -693,7 +693,7 @@ export const HOMEPAGE_FIT = {
   description:
     'You should not have to become the marketing department to grow. That is the point of Prism.',
   notFitLine:
-    'Not a fit if you want the cheapest option or overnight results — Prism builds growth that lasts.',
+    'Not a fit if you want the cheapest option or overnight results. Prism builds growth that lasts.',
   fitHeading: 'Prism is a good fit if...',
   fitItems: [
     'You are a founder, owner, or operator who wants more qualified demand.',
@@ -718,7 +718,7 @@ export const HOMEPAGE_FIT = {
 export const HOMEPAGE_FINAL_CTA = {
   title: 'Find the growth leak.',
   description:
-    'Get a free audit of your website, search visibility, reviews, and tracking — plus the clearest next move for your business. No pressure. No obligation.',
+    'Get a free audit of your website, search visibility, reviews, and tracking. See exactly where growth is leaking, plus the clearest next move for your business. No pressure. No obligation.',
   primaryCtaLabel: 'Start my free growth audit',
   supportLine: 'Reviewed by a real person, not a bot.',
 } as const

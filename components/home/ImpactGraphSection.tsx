@@ -96,7 +96,7 @@ export default function ImpactGraphSection() {
               <li>spend nights + weekends on marketing</li>
             </ul>
             <p className="text-balance text-sm text-neutral-600 lowercase sm:text-base">
-              prism owns the whole growth system — so your workload drops while inbound compounds.
+              prism owns the whole growth system, so your workload drops while inbound compounds.
             </p>
 
             <div className="flex flex-col gap-3 sm:flex-row">
@@ -143,7 +143,7 @@ export default function ImpactGraphSection() {
                 <p>you don’t manage the project.</p>
                 <p>you don’t chase updates.</p>
                 <p>
-                  message us anytime for a status check — we reply with what’s done and what’s next.
+                  message us anytime for a status check. we reply with what’s done and what’s next.
                 </p>
               </div>
             </div>

@@ -122,7 +122,7 @@ export default function HomeSystemGrid({ items }: HomeSystemGridProps) {
             href={item.href}
             prefetch={false}
             data-home-service-card={item.title}
-            aria-label={`${item.title} — ${item.description}`}
+            aria-label={`${item.title}. ${item.description}`}
             onPointerMove={handlePointerMove}
             onClick={() =>
               trackCTAClick(
