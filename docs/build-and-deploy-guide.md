@@ -59,10 +59,11 @@ Production is intentionally single-path: GitHub Actions publishes with `vercel d
 ## Deployment checklist
 
 - Pricing sign-off:
-  - `/pricing` leads with Create Free Growth Dashboard and shows the current audit, sprint, and ongoing partner path
-  - `/websites` is allowed to publish the dedicated one-time website build offer starting at `$300`, but that exception should stay scoped to the website-build page and schema
-  - retired fixed-plan language such as `Website Overhaul` and exact `$2,000/month` Growth Partnership does not reappear on pricing-sensitive surfaces
-  - legacy pricing routes resolve to `/pricing`
+  - `/pricing` compares the four productized offers (Website `$300` flat, Content OS `$5,000` + `$1,000/month`, Dental OS custom, Prism Infinity `$2,000/month`), sourced from `lib/pricing-model.ts`; the primary CTA orders the `$300` website
+  - `/websites` publishes the `$300` flat website order (describe → success → Stripe `$300` Payment Link), and `/get-started` keeps the free Growth Dashboard / free-audit on-ramp
+  - prices spell `/month` (never `/mo`); the `$2,000/month` token is now valid (Prism Infinity), but retired fixed-plan language such as `Website Overhaul` must not reappear on pricing-sensitive surfaces — `pnpm verify:pricing-consistency` enforces this
+  - `/founder-os` redirects to `/content-os`; other legacy pricing routes resolve to `/pricing`
+  - known pending cleanup: `/ads`, `/seo`, `/local-listings` still cite the retired `$3,500` Growth Sprint in copy/schema
 - SEO sign-off when route intent/canonicals changed:
   - `pnpm exec jest __tests__/sitemap.test.ts __tests__/seo-indexability-guards.test.tsx --runInBand`
   - `pnpm seo:inventory && pnpm seo:lint`

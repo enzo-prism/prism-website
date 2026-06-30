@@ -92,11 +92,10 @@ const HOMEPAGE_HERO_REVIEW_COUNT_LABEL =
   HOMEPAGE_HERO_REVIEW_COUNT >= 20 ? '20+' : `${HOMEPAGE_HERO_REVIEW_COUNT}`
 
 export const HOMEPAGE_HERO = {
-  eyebrow: 'The growth system for real businesses',
-  title: 'Get found. Get trusted. Get chosen.',
-  titleLines: ['Get found.', 'Get trusted.', 'Get chosen.'],
+  title: 'Prism',
+  subheading: 'the #1 growth partner for small businesses',
   description:
-    'Prism is one team that builds and runs everything that brings you customers: your website, Google search, reviews, ads, and AI visibility. One system, pulling in the same direction.',
+    'One team that builds and runs everything that grows your business: your website, content, ads, search, and social, all driven by AI and proven by results.',
   supportPoints: [
     {
       label: 'Can ChatGPT recommend you?',
@@ -104,30 +103,56 @@ export const HOMEPAGE_HERO = {
       iconInvert: false,
       variant: 'aiRecommendation',
     },
-    {
-      label: 'One team',
-      iconSrc: '/pixelish/command.svg',
-    },
-    {
-      label: 'Measurable results',
-      iconSrc: '/pixelish/bar-chart-average.svg',
-    },
   ] satisfies readonly HomepageHeroSupportPoint[],
+  stats: {
+    note: 'Latest · June 2026',
+    headline: {
+      label: 'Traffic & attention',
+      items: [
+        { value: '18,563', unit: '/mo', label: 'new users to client websites' },
+        { value: '71,000', unit: '', label: 'followers across our channels' },
+        { value: '17M+', unit: '', label: 'views across our channels' },
+      ],
+    },
+    reach: {
+      label: 'Our channels',
+      channels: [
+        {
+          platform: 'YouTube',
+          followers: '24,000',
+          views: '3M+',
+          url: 'https://www.youtube.com/@the_design_prism',
+        },
+        {
+          platform: 'Instagram',
+          followers: '38,000',
+          views: '10M+',
+          url: 'https://www.instagram.com/the_design_prism/',
+        },
+        {
+          platform: 'TikTok',
+          followers: '9,000',
+          views: '4M+',
+          url: 'https://www.tiktok.com/@the_design_prism',
+        },
+      ],
+    },
+  },
   systemStrip: [
     'Website',
-    'Search',
-    'Reviews',
-    'Ads',
     'Content',
-    'Tracking',
+    'Ads',
+    'SEO',
+    'Reviews',
+    'Social',
     'AI',
   ],
   socialProof: {
     headline: `${HOMEPAGE_HERO_REVIEW_COUNT_LABEL} reviews from founders, doctors, operators, and local leaders`,
     linkLabel: 'See results',
   },
-  primaryCtaLabel: 'Get my free growth audit',
-  secondaryCtaLabel: 'See how it works',
+  primaryCta: { label: 'Order now', href: '/websites' },
+  secondaryCta: { label: 'Explore plans', href: '#offers' },
 } as const
 
 export const HOMEPAGE_CLIENT_WINS = {

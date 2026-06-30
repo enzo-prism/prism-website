@@ -30,7 +30,7 @@ describe("pricing schema consistency", () => {
   it("allows websites schema to publish the one-time website build offer", () => {
     const content = fs.readFileSync(path.join(process.cwd(), "app/websites/page.tsx"), "utf8")
     expect(content).toContain("One-time website build")
-    expect(content).toContain("starting at $300")
+    expect(content).toContain("$300 flat")
     expect(content).toMatch(/price: ["']300["']/)
     expect(content).toMatch(/url: CANONICAL_URL/)
     expect(content).not.toContain("60-Day Growth Sprint")

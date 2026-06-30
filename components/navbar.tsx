@@ -20,14 +20,26 @@ type BreadcrumbItem = {
 type NavVariant = 'desktop' | 'mobile'
 
 const MOBILE_NAV_ID = 'mobile-site-nav'
+// The inline desktop nav takes over from the menu button at this width.
+const DESKTOP_NAV_BREAKPOINT = 1280
 const HEADER_CLASSES =
   'border-b border-white/12 bg-black text-[#f5f0e8] transition-[background-color,border-color,color]'
+// Compact desktop links: tighter tracking + no-wrap so all seven items plus the
+// logo and the persistent CTA fit on one row from xl (1280px) up without overflow.
 const DESKTOP_LINK_CLASSES =
-  'border-b pb-1 text-[11px] font-semibold uppercase tracking-[0.26em] transition-colors'
+  'whitespace-nowrap border-b pb-1 text-[11px] font-semibold uppercase tracking-[0.2em] transition-colors'
 const MOBILE_LINK_CLASSES =
   'block py-4 text-sm font-semibold uppercase tracking-[0.24em] transition-colors'
 
-function getCaseStudyBreadcrumbs(pathname: string | null): BreadcrumbItem[] | null {
+// Persistent primary action. Mirrors the "order" nav item destination but reads
+// as a filled CTA (ivory on near-black per the hero-primary-button token).
+const PRIMARY_CTA = { label: 'Order now', href: '/websites' } as const
+const CTA_BASE_CLASSES =
+  'items-center justify-center rounded-md bg-[#f5f0e8] font-semibold uppercase tracking-[0.2em] text-[#050505] transition-colors hover:bg-white focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[#5cdcff]/40 focus-visible:ring-offset-2 focus-visible:ring-offset-black'
+
+function getCaseStudyBreadcrumbs(
+  pathname: string | null,
+): BreadcrumbItem[] | null {
   if (!pathname?.startsWith('/case-studies')) return null
 
   const baseTrail = [
@@ -52,9 +64,7 @@ function isNavItemActive(pathname: string | null, href: string) {
 
 function getNavItemClasses(active: boolean, variant: NavVariant) {
   const activeClasses =
-    variant === 'desktop'
-      ? 'border-[#f5f0e8] text-[#f5f0e8]'
-      : 'text-[#f5f0e8]'
+    variant === 'desktop' ? 'border-[#f5f0e8] text-[#f5f0e8]' : 'text-[#f5f0e8]'
 
   const inactiveClasses =
     variant === 'desktop'
@@ -113,9 +123,10 @@ export default function Navbar() {
       if (event.key === 'Escape') setIsMobileMenuOpen(false)
     }
     const handleResize = () => {
-      // The horizontal nav takes over at lg (1024px); close the panel so it
+      // The horizontal nav takes over at xl (1280px); close the panel so it
       // never lingers behind the desktop layout after a resize or rotation.
-      if (window.innerWidth >= 1024) setIsMobileMenuOpen(false)
+      if (window.innerWidth >= DESKTOP_NAV_BREAKPOINT)
+        setIsMobileMenuOpen(false)
     }
 
     document.addEventListener('keydown', handleKeyDown)
@@ -214,21 +225,35 @@ export default function Navbar() {
           </div>
         </Link>
 
-        <nav aria-label="Main" className="hidden items-center gap-6 lg:flex xl:gap-8">
-          <NavbarLinks
-            pathname={pathname}
-            variant="desktop"
-            onNavigate={handleNavigate}
-          />
-        </nav>
+        <div className="flex items-center gap-3 sm:gap-4">
+          <nav
+            aria-label="Main"
+            className="hidden items-center gap-4 xl:flex 2xl:gap-6"
+          >
+            <NavbarLinks
+              pathname={pathname}
+              variant="desktop"
+              onNavigate={handleNavigate}
+            />
+          </nav>
 
-        <div className="flex items-center lg:hidden">
+          <Link
+            href={PRIMARY_CTA.href}
+            onClick={() => handleNavigate('order-cta', PRIMARY_CTA.href)}
+            className={cn(
+              'hidden whitespace-nowrap px-4 py-2 text-[11px] md:inline-flex',
+              CTA_BASE_CLASSES,
+            )}
+          >
+            {PRIMARY_CTA.label}
+          </Link>
+
           <button
             type="button"
             aria-controls={MOBILE_NAV_ID}
             aria-expanded={isMobileMenuOpen}
             aria-label={isMobileMenuOpen ? 'Close menu' : 'Open menu'}
-            className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/14 bg-white/[0.03] text-[#f5f0e8] transition-[border-color,background-color,color] hover:border-white/28 hover:bg-white/[0.06] hover:text-white focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-white/25 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+            className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/14 bg-white/[0.03] text-[#f5f0e8] transition-[border-color,background-color,color] hover:border-white/28 hover:bg-white/[0.06] hover:text-white focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-white/25 focus-visible:ring-offset-2 focus-visible:ring-offset-black xl:hidden"
             onClick={() => setIsMobileMenuOpen((open) => !open)}
           >
             <span className="sr-only">
@@ -261,15 +286,30 @@ export default function Navbar() {
       {isMobileMenuOpen ? (
         <div
           id={MOBILE_NAV_ID}
-          className="h-[calc(100dvh-72px)] overflow-y-auto overscroll-contain border-t border-white/12 bg-black lg:hidden"
+          className="h-[calc(100dvh-72px)] overflow-y-auto overscroll-contain border-t border-white/12 bg-black xl:hidden"
         >
-          <nav aria-label="Main" className="container mx-auto px-4 sm:px-6">
+          <nav
+            aria-label="Mobile"
+            className="container mx-auto flex min-h-full flex-col px-4 pb-[max(1.5rem,env(safe-area-inset-bottom))] sm:px-6"
+          >
             <div className="divide-y divide-white/12">
               <NavbarLinks
                 pathname={pathname}
                 variant="mobile"
                 onNavigate={handleNavigate}
               />
+            </div>
+            <div className="mt-auto pt-8">
+              <Link
+                href={PRIMARY_CTA.href}
+                onClick={() => handleNavigate('order-cta', PRIMARY_CTA.href)}
+                className={cn(
+                  'flex min-h-[52px] w-full px-5 text-sm',
+                  CTA_BASE_CLASSES,
+                )}
+              >
+                {PRIMARY_CTA.label}
+              </Link>
             </div>
           </nav>
         </div>

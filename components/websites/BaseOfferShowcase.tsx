@@ -48,8 +48,8 @@ const BASE_FEATURES: BaseFeature[] = [
   },
   {
     icon: ShieldCheck,
-    label: 'Review before payment',
-    detail: 'See it, approve it, then pay. No upfront risk.',
+    label: 'Yours to keep',
+    detail: 'The finished website is 100% yours, with no lock-in.',
   },
 ]
 
@@ -122,9 +122,9 @@ export default function BaseOfferShowcase() {
         {/* Heading column */}
         <div style={revealStyle(phase, 0)}>
           <CoreSectionHeading
-            eyebrow="The $300 floor"
-            title="Small, sharp, launchable."
-            description="The base offer is intentionally tiny: one responsive page using your existing words and assets. A real Prism-built website without the long agency process."
+            eyebrow="Flat $300"
+            title="One price. Built to your spec."
+            description="Every website is a flat $300, one-time. You describe exactly what you want, and we build a real Prism-grade site to match — no tiers, no add-on creep, no long agency process."
           />
           <div
             className="mt-8 flex flex-wrap items-center gap-3"
@@ -136,7 +136,7 @@ export default function BaseOfferShowcase() {
             </span>
             <span className="inline-flex items-center gap-2 rounded-full border border-[#d8bc79]/25 bg-[#d8bc79]/[0.06] px-4 py-2 font-mono text-[0.7rem] uppercase tracking-[0.2em] text-[#d8bc79]">
               <Sparkles aria-hidden="true" className="h-3.5 w-3.5" />
-              Add-ons estimated below
+              $300 flat · one-time
             </span>
           </div>
         </div>
@@ -160,7 +160,7 @@ export default function BaseOfferShowcase() {
             />
             <div className="relative">
               <p className="font-mono text-[0.68rem] uppercase tracking-[0.26em] text-[#8f877b]">
-                Starting at
+                Flat price
               </p>
               <div className="relative mt-1 overflow-hidden">
                 <span className="block text-[clamp(2.8rem,8vw,3.8rem)] font-medium leading-none tracking-[-0.06em] text-[#f5f0e8] tabular-nums">
@@ -177,7 +177,7 @@ export default function BaseOfferShowcase() {
                 One-time
               </p>
               <p className="mt-1 font-mono text-[0.7rem] uppercase tracking-[0.2em] text-[#8f877b]">
-                Reviewed first
+                Built to your spec
               </p>
             </div>
           </div>
@@ -237,9 +237,9 @@ export default function BaseOfferShowcase() {
               )
             })}
 
-            {/* Bridge cell linking to the estimator below */}
+            {/* Bridge cell linking to the order form below */}
             <a
-              href="#estimate"
+              href="#start"
               className="group relative flex items-center gap-4 bg-[#d8bc79]/[0.05] p-5 transition-[background-color] duration-300 hover:bg-[#d8bc79]/[0.1] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#d8bc79]/40"
             >
               <span
@@ -250,10 +250,10 @@ export default function BaseOfferShowcase() {
               </span>
               <span className="min-w-0">
                 <span className="block text-[0.95rem] font-medium leading-6 tracking-[-0.01em] text-[#e8dcc8]">
-                  Need more scope?
+                  Ready to start?
                 </span>
                 <span className="block text-[0.82rem] leading-6 text-[#d8bc79]">
-                  Estimate it instantly below
+                  Describe your website below
                 </span>
               </span>
               <ArrowDown

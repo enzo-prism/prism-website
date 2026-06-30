@@ -6,6 +6,7 @@ import HomeFitSection from '@/components/home/HomeFitSection'
 import HomeHashScrollStabilizer from '@/components/home/HomeHashScrollStabilizer'
 import HomeHeroSection from '@/components/home/HomeHeroSection'
 import HomeHowItWorksSection from '@/components/home/HomeHowItWorksSection'
+import HomeOffersSection from '@/components/home/HomeOffersSection'
 import HomeProblemSection from '@/components/home/HomeProblemSection'
 import HomeProofBandSection from '@/components/home/HomeProofBandSection'
 import HomeProofSection from '@/components/home/HomeProofSection'
@@ -26,6 +27,7 @@ export default function ClientPage() {
         <HomeHowItWorksSection />
         <HomeProofSection />
         <HomeFinalCtaSection />
+        <HomeOffersSection />
       </main>
       <Footer />
     </div>

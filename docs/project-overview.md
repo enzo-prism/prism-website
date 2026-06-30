@@ -2,7 +2,7 @@
 
 This is the current operator map for the Prism website. Use it before making broad changes, adding routes, changing search visibility, touching forms, or shipping to production.
 
-Prism is now a business growth systems website: websites, SEO and AI search, Google Maps, reviews, ads, tracking, content, proof, pricing, and the Growth Dashboard to Light Audit funnel. Dental remains one of Prism's strongest proof verticals, but the public homepage and intake flow should speak to founders, owners, operators, and growth-focused companies more broadly.
+Prism is a business growth systems website organized around four productized offers: **Website** (`$300` flat, one-time), **Content OS** (`$5,000` to implement + `$1,000/month`), **Dental OS** (custom-priced), and **Prism Infinity** (`$2,000/month` unlimited). `/get-started` is kept as a free on-ramp (free Growth Dashboard + request a free deep audit). Supporting surfaces span websites, SEO and AI search, Google Maps, reviews, ads, tracking, content, and proof. Dental remains one of Prism's strongest proof verticals, but the public homepage and the order/intake flows should speak to founders, owners, operators, and growth-focused companies more broadly.
 
 ## Current Shape
 
@@ -12,7 +12,7 @@ Prism is now a business growth systems website: websites, SEO and AI search, Goo
 - Design system: root `DESIGN.md`, generated tokens in `generated/`, shared primitives in `components/core-route/` and `components/ui/`.
 - Active positioning: growth-first, dental-proven. Dental proof should stay visible and credible, while non-dental case studies should appear as first-class proof of the broader growth system.
 - Proof architecture: `/case-studies`, `lib/case-study-data.ts`, `components/schema-markup.tsx`, and `public/llms.txt` now work together so public proof is visible to buyers and machine-readable for AI/search systems. Publish only dated, source-attributed GA4 or Google Search Console metrics in `structured.results`.
-- Current scale from this audit: 113 page routes, 5 route handlers, 88 blog MDX files, 22 case studies (21 of which render through the shared visual minimal template with browser + mobile screenshot heroes), and 25 docs files.
+- Current scale from this audit: 118 page routes, 6 route handlers, 88 blog MDX files, 22 case studies (21 of which render through the shared visual minimal template with browser + mobile screenshot heroes), and 26 docs files.
 
 ## Source Of Truth Files
 
@@ -27,7 +27,7 @@ Prism is now a business growth systems website: websites, SEO and AI search, Goo
 | Forms | `docs/forms.md` | Formspree contracts, field names, thank-you routing, analytics. |
 | Environment | `.env.example`, `docs/environment-setup.md` | Keep supported variables limited and current. |
 | Search visibility | `lib/seo/search-visibility.ts` | Shared index/noindex and blog allowlist policy. |
-| Pricing truth | `lib/pricing-model.ts`, `app/websites/page.tsx` | Canonical pricing follows the free Growth Dashboard, included Light Audit, normally `$500` Deep Growth Audit, `$3,500+` sprint, and `$1,500/month+` ongoing partner path. `/websites` is the dedicated one-time website build exception, starting at `$300` for tiny accepted launches. |
+| Pricing truth | `lib/pricing-model.ts`, `lib/pricing-consistency.ts`, `lib/payment-links.ts` | `lib/pricing-model.ts` models the four offers: Website (`$300` flat one-time, optional `$100/month` care), Content OS (`$5,000` + `$1,000/month`), Dental OS (custom), Prism Infinity (`$2,000/month`). `/pricing` compares all four; `/get-started` stays a free on-ramp. Always spell `/month` (never `/mo`). `pnpm verify:pricing-consistency` gates deploys. Stripe Payment Links resolve through `lib/payment-links.ts` (Website link is live; others pending). The old five-tier ladder is retired; `/ads`, `/seo`, `/local-listings` still cite the retired `$3,500` Growth Sprint (pending cleanup). |
 | Shared chrome | `components/navbar.tsx`, `components/footer.tsx`, `lib/constants.ts` | Header nav, logo interaction, footer links, and the single footer funnel CTA. `/get-started` CTAs should stay Growth Audit / Growth Dashboard aligned, not demo-call or practice-only audit language. |
 | Public assistant | `lib/elevenlabs-widget.ts`, `components/global-elevenlabs-widget.tsx` | Stock ElevenLabs widget route allowlist, mobile suppression, default collapsed state, and public kill switch. |
 | Images | `next.config.mjs`, `components/core-image.tsx`, `components/image.tsx`, `docs/image-best-practices.md` | Next/Image remote hosts plus the current legacy/new component split. |
@@ -40,9 +40,9 @@ Prism is now a business growth systems website: websites, SEO and AI search, Goo
 - `components/runtime-deferred-features.tsx` defers heavier browser-only features such as monitors, Vercel Analytics, toaster wiring, and the stock ElevenLabs widget.
 - `components/global-elevenlabs-widget.tsx` is the live public floating widget surface on eligible non-mobile `/pricing` and `/contact` only.
 - `components/elevenlabs/ElevenLabsWidget.tsx` wraps the documented ElevenLabs custom element and applies host-level positioning only.
-- `components/navbar.tsx` and `components/footer.tsx` are the single shared chrome layer. The header logo has a subtle hover/focus treatment; the footer has one primary "Free audit" CTA that routes to `/get-started`.
+- `components/navbar.tsx` and `components/footer.tsx` are the single shared chrome layer, repositioned around the offers and overhauled to be fully responsive (the nav uses an `xl` breakpoint with a full-height mobile panel plus a persistent "Order now" CTA; the footer uses a responsive column grid + monochrome icon socials). Nav labels come from `NAV_ITEMS` in `lib/constants.ts`: order (`/websites`), content os, dental os, prism infinity, pricing, get started, contact. The footer leads with two CTAs — "Order a website" (`/websites`) and "Get started free" (`/get-started`).
 - `components/forms/GetStartedForm.tsx` is the active Growth Dashboard intake. It prefers `NEXT_PUBLIC_DASHBOARD_INTAKE_ENDPOINT`, then falls back through Formspree-compatible endpoints.
-- `components/forms/WebsiteBuildEstimatorForm.tsx` is the active `/websites` one-time build estimator. It posts to Formspree, submits calculated estimate metadata, and redirects to `/thank-you?source=website-build` after review-request submission.
+- `components/forms/WebsiteOrderForm.tsx` is the active `/websites` order form: the buyer describes the website, submits to Formspree, sees an in-page success screen, then pays the `$300` Stripe Payment Link (new tab) via `lib/payment-links.ts`. It replaces the retired `WebsiteBuildEstimatorForm.tsx` dynamic estimator (no thank-you redirect, no price estimator).
 - `app/robots.ts` manages crawl access only. Use page-level robots metadata for noindex decisions.
 - `app/sitemap.ts` emits only canonical, indexable static routes, case study detail pages, and curated blog posts.
 - `public/llms.txt` is a curated machine-readable map of the growth system, proof, and specialty clusters. Keep it narrower than the full route tree.
@@ -51,12 +51,13 @@ Prism is now a business growth systems website: websites, SEO and AI search, Goo
 
 - Homepage: `app/page.tsx` delegates to `app/client-page.tsx`, which composes the growth-first homepage from `components/home/*`.
 - Homepage client proof: `components/home/HomeDentistWinsSection.tsx` (legacy name) wraps `components/home/HomeClientCoverFlow.tsx`, a restrained 3D Cover Flow deck of broad client proof with **one card per published case study** (kept in sync with `/case-studies` / `CASE_STUDIES`). Card data comes from `HOMEPAGE_CLIENT_WINS` in `components/home/homepage-content.ts`; each slide renders a **real client-website screenshot** (`public/case-studies/<slug>-home-mobile.jpg` via the slide's `image` field), captured leading with the site's clean branded hero (dismiss popups/cookie bars/chat widgets first). The motion is input-led with no autoplay and adapts to touch via `isTouch` (`useMobile('(hover: none), (pointer: coarse)')`): phones get a direct 1:1 swipe (one casual swipe = one card), a tighter fan, fewer mounted covers, and no parallax/tilt/hover. The old abstract-visual carousel (`HomeDentistWinsCarousel`, `data-client-win-abstract`) was retired.
-- Core marketing routes: `app/about`, `app/pricing`, `app/get-started`, `app/apply`, `app/services`, `app/websites`, `app/ads`, `app/local-listings`, `app/seo`, `app/ai-seo-services`, `app/aeo`, `app/proof`, and `app/wall-of-love`.
+- Offer routes: `app/websites` (Website, `$300` flat), `app/content-os` (Content OS), `app/dental-os` (Dental OS), and `app/prism-infinity` (Prism Infinity). `app/pricing` compares all four. `/founder-os` and `/founder-os/apply` 301-redirect to `/content-os`; the `app/founder-os/*` files remain only as archival code behind the redirect.
+- Other core marketing routes: `app/about`, `app/get-started`, `app/apply`, `app/services`, `app/ads`, `app/local-listings`, `app/seo`, `app/ai-seo-services`, `app/aeo`, `app/proof`, and `app/wall-of-love`.
 - Dental cluster: `app/dental-website`, `app/dental-practice-seo-expert`, `app/custom-email-for-dental-practices`, `app/dental-photography/*`, `app/google/dental-ads`, `app/google/dental-patient-forms`, `app/facebook-ads-for-dentists`, `app/tiktok-ads-for-dentists`, and `app/ai-agents/dental`.
 - Case studies: canonical data lives in `lib/case-study-data.ts`; detail pages render through lightweight shared case study components and should remain indexable. The shared schema receives client URL, industry, location, scope, and verified metric citations so AI/search systems can read the actual outcome instead of a generic case-study summary.
 - Blog: MDX files live in `content/blog`; metadata, post loading, and search curation flow through `lib/mdx-data.ts`, `app/blog/[slug]/page.tsx`, and `lib/seo/search-visibility.ts`.
 - Library and podcast: live direct-visitor surfaces, but currently noindex and excluded from sitemap/LLM maps.
-- Redirected legacy pricing/offers routes: handled in `next.config.mjs`; preserve redirects to `/pricing`.
+- Redirected legacy pricing/offers routes: handled in `next.config.mjs`; preserve redirects to `/pricing`. `/founder-os` and `/founder-os/apply` redirect to `/content-os`.
 
 ## Search Surface Rules
 

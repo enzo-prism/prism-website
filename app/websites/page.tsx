@@ -7,7 +7,7 @@ import { ArrowRight } from 'lucide-react'
 import Footer from '@/components/footer'
 import Navbar from '@/components/navbar'
 import BaseOfferShowcase from '@/components/websites/BaseOfferShowcase'
-import WebsiteBuildEstimatorForm from '@/components/forms/WebsiteBuildEstimatorForm'
+import WebsiteOrderForm from '@/components/forms/WebsiteOrderForm'
 import {
   CoreActionLink,
   CoreSectionHeading,
@@ -17,13 +17,21 @@ import {
 } from '@/components/core-route/CoreRoutePrimitives'
 import { FAQSchema, ServiceSchema } from '@/components/schema-markup'
 import { buildRouteMetadata } from '@/lib/seo/metadata'
+import { hasPaymentLink, paymentLink } from '@/lib/payment-links'
 import { websiteProjects } from '@/lib/website-projects'
 import { cn } from '@/lib/utils'
 
-const PAGE_TITLE = 'One-time website builds from $300'
+const PAGE_TITLE = 'Order a custom website for $300'
 const PAGE_DESCRIPTION =
-  'Prism builds world-class one-time websites for founders, operators, and small teams, starting at $300 for tiny accepted launches.'
+  'Describe the website you want, pay a flat $300, and Prism delivers it within 7 days with infinite iterations until you love it. The finished site is 100% yours; add $100/month care or host it yourself.'
 const CANONICAL_URL = 'https://www.design-prism.com/websites'
+
+// Optional post-launch care plan. Opens checkout in a new tab once a real
+// Stripe link is wired; until then it falls back to /contact (same tab).
+const WEBSITE_CARE_LINK = paymentLink('websiteCare')
+const CARE_LINK_IS_EXTERNAL = hasPaymentLink('websiteCare')
+const CARE_LINK_TARGET = CARE_LINK_IS_EXTERNAL ? '_blank' : undefined
+const CARE_LINK_REL = CARE_LINK_IS_EXTERNAL ? 'noopener noreferrer' : undefined
 
 export const metadata: Metadata = buildRouteMetadata({
   titleStem: PAGE_TITLE,
@@ -32,64 +40,69 @@ export const metadata: Metadata = buildRouteMetadata({
   ogImage: '/prism-opengraph.png',
 })
 
-const FIT_SIGNALS = [
+const OWNERSHIP_POINTS = [
   {
-    title: 'A clear idea',
-    body: 'You know the offer, audience, or launch moment the website needs to support.',
+    title: 'It is 100% yours',
+    body: 'The moment it ships, the website and everything in it belongs to you. No lock-in, no hostage hosting.',
   },
   {
-    title: 'Room for taste',
-    body: 'You want something sharper than a generic template and are open to Prism direction.',
+    title: 'Infinite iterations',
+    body: 'We keep refining until you genuinely love it. There is no revision limit and no extra charge to get it right.',
   },
   {
-    title: 'Ready enough',
-    body: 'You can provide the essentials or choose add-ons when Prism should shape them.',
+    title: 'Live in about 7 days',
+    body: 'The moment you pay, our team starts building to your exact spec. Your site goes live within a week.',
   },
   {
-    title: 'Mutual excitement',
-    body: 'We accept projects the team is genuinely excited to make great.',
+    title: 'Your call after launch',
+    body: 'When you are happy, add a $100/month care plan, or host it yourself. Either way, the site stays yours.',
   },
 ] as const
 
 const PROCESS_STEPS = [
   {
-    label: 'Estimate',
-    body: 'Use the interactive builder to shape the request and see a review range.',
+    label: 'Describe it',
+    body: 'Tell us exactly what you want, with as much context as you like. Pages, style, inspiration, content — the more, the better.',
   },
   {
-    label: 'Review',
-    body: 'Prism checks fit, scope, assets, timing, and whether the team can do standout work.',
+    label: 'Pay $300',
+    body: 'A flat $300, one-time. Paying kicks off the build — no retainer, no surprise scope, no upsells.',
   },
   {
-    label: 'Payment link',
-    body: 'Accepted projects receive next steps and a payment link before production starts.',
+    label: 'Live in 7 days',
+    body: 'Our team designs, builds, QA-checks, and launches your website within about a week.',
   },
   {
-    label: 'Build',
-    body: 'We design, build, QA, and ship the agreed website with a focused handoff.',
+    label: 'Until you love it',
+    body: 'We do infinite iterations until you are thrilled. The finished site is 100% yours.',
   },
 ] as const
 
 const FAQ_ITEMS = [
   {
-    question: 'Is the website really $300?',
+    question: 'Is it really a flat $300?',
     answer:
-      'The smallest accepted one-page website starts at $300 when copy and assets are ready. Extra pages, copywriting, SEO basics, CMS work, motion, and rush review increase the estimate.',
+      'Yes. Every website is a flat $300, one-time. You tell us exactly what you want, pay once, and we build and launch it within about 7 days. There is no dynamic pricing and no add-on creep.',
   },
   {
-    question: 'Can I pay immediately?',
+    question: 'How does ordering work?',
     answer:
-      'No. Prism reviews each request first and sends a payment link only when the project is a fit for both sides.',
+      'You describe the website you want and submit your request. Then you pay the $300 to kick off the build. The moment you pay, our team starts developing the site to your exact spec.',
   },
   {
-    question: 'What makes a project a fit?',
+    question: 'What if I do not like the first version?',
     answer:
-      'Clear goals, enough source material, room for Prism creative direction, and a website idea the team is excited to build.',
+      'You get infinite iterations. We keep refining until you genuinely love it — there is no revision limit and no extra charge to get it right.',
   },
   {
-    question: 'What if I need a bigger growth system?',
+    question: 'Do I own the website?',
     answer:
-      'The one-time website path is for focused builds. If the request needs deeper strategy, ads, SEO, tracking, or ongoing work, Prism will recommend the Growth Audit path instead.',
+      'Completely. Once it ships, the website and everything in it is 100% yours. There is no lock-in.',
+  },
+  {
+    question: 'What happens after launch?',
+    answer:
+      'Your call. Add a $100/month care plan for hosting, updates, and ongoing edits handled by Prism, or host the site yourself. Either way, it stays yours.',
   },
 ] as const
 
@@ -114,9 +127,9 @@ const PROOF_BUILDS = [
   },
 ] as const
 
-// Real, source-attributed results from lib/case-study-data.ts. Used as proof at
-// the estimate decision point — do not edit these without updating the source.
-const ESTIMATE_PROOF_POINTS = [
+// Real, source-attributed results from lib/case-study-data.ts (Google Search
+// Console). Used as proof beside the order form — keep in sync with the source.
+const PROOF_POINTS = [
   {
     value: '5.3×',
     label: 'monthly Google clicks in five months for Saorsa Growth Partners',
@@ -130,8 +143,7 @@ const ESTIMATE_PROOF_POINTS = [
   },
   {
     value: '+142%',
-    label:
-      'Google Search impressions year over year for Dr. Christopher Wong',
+    label: 'Google Search impressions year over year for Dr. Christopher Wong',
     href: '/case-studies/dr-christopher-wong',
   },
 ] as const
@@ -155,23 +167,23 @@ export default function WebsitesPage() {
           <div className="mx-auto max-w-6xl">
             <div className="mx-auto max-w-4xl text-center">
               <SectionKicker>One-time website build</SectionKicker>
-              <h1 className="mx-auto mt-6 max-w-[12ch] text-balance text-[clamp(2.65rem,7.5vw,5.8rem)] font-medium leading-[0.94] tracking-[-0.06em] text-[#f5f0e8]">
-                A world-class website, without the agency maze.
+              <h1 className="mx-auto mt-6 max-w-[14ch] text-balance text-[clamp(2.65rem,7.5vw,5.8rem)] font-medium leading-[0.94] tracking-[-0.06em] text-[#f5f0e8]">
+                A website you&rsquo;ll love. $300.
               </h1>
               <p className="mx-auto mt-6 max-w-2xl text-pretty text-[1.08rem] leading-8 text-[#b8afa2] sm:text-[1.18rem]">
-                Prism builds focused, beautiful websites for founders, owners,
-                and operators. Tiny accepted launches start at $300. Every
-                request is reviewed before any payment link is sent.
+                Tell us exactly what you want, pay a flat $300, and it&rsquo;s
+                live within 7 days &mdash; with infinite iterations until you
+                love it. The finished site is 100% yours.
               </p>
 
               <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
                 <CoreActionLink
-                  href="#estimate"
+                  href="#start"
                   variant="heroPrimary"
-                  label="start website estimate"
+                  label="start your website"
                   location="websites hero"
                 >
-                  Build my estimate
+                  Start your website
                 </CoreActionLink>
                 <CoreActionLink
                   href="#proof"
@@ -184,16 +196,19 @@ export default function WebsitesPage() {
               </div>
 
               <div className="mt-8 flex flex-wrap items-center justify-center gap-2">
-                {['Starts at $300', 'One-time build', 'Accepted selectively'].map(
-                  (item) => (
-                    <span
-                      key={item}
-                      className="inline-flex min-h-10 items-center rounded-full border border-white/12 bg-white/[0.03] px-4 font-mono text-[0.72rem] uppercase tracking-[0.18em] text-[#c9c1b6]"
-                    >
-                      {item}
-                    </span>
-                  ),
-                )}
+                {[
+                  '$300 flat',
+                  'Live in 7 days',
+                  'Infinite iterations',
+                  'Yours to keep',
+                ].map((item) => (
+                  <span
+                    key={item}
+                    className="inline-flex min-h-10 items-center rounded-full border border-white/12 bg-white/[0.03] px-4 font-mono text-[0.72rem] uppercase tracking-[0.18em] text-[#c9c1b6]"
+                  >
+                    {item}
+                  </span>
+                ))}
               </div>
             </div>
 
@@ -239,7 +254,7 @@ export default function WebsitesPage() {
         <BaseOfferShowcase />
 
         <section
-          id="estimate"
+          id="start"
           className="scroll-mt-24 border-b border-white/12 px-4 py-20 sm:px-6 sm:py-24"
         >
           <div
@@ -250,33 +265,31 @@ export default function WebsitesPage() {
           >
             <div className="space-y-7">
               <CoreSectionHeading
-                eyebrow="Estimator"
-                title="Shape the request."
-                description="Pick the scope, see the review range, and send the request to Prism. The estimate helps both sides move faster without turning the page into a checkout."
+                eyebrow="Start"
+                title="Tell us what to build."
+                description="Describe the website you want with as much context as you like. Submit your request, pay the flat $300, and our team starts building to your exact spec."
               />
               <div className="space-y-4 border-t border-white/10 pt-6">
-                <p className="font-mono text-[0.82rem] leading-7 text-[#b8afa2]">
-                  The review is selective by design. Prism only accepts one-time
-                  builds when the project has enough clarity, enough taste
-                  upside, and enough room for the team to make something worth
-                  showing.
+                <p className="font-sans text-[0.92rem] leading-7 text-[#b8afa2]">
+                  One website, one price: a flat $300, one-time. No dynamic
+                  pricing, no add-on creep. Live within 7 days, with infinite
+                  iterations until you love it.
                 </p>
-                <p className="font-mono text-[0.82rem] leading-7 text-[#8f877b]">
-                  No card is collected here. If accepted, you receive the next
-                  step and payment link after review.
+                <p className="font-sans text-[0.92rem] leading-7 text-[#8f877b]">
+                  The finished site is 100% yours. After launch, add $100/month
+                  care or host it yourself &mdash; your call.
                 </p>
               </div>
 
               <div className="border-t border-white/10 pt-6">
                 <p className="font-mono text-[0.72rem] uppercase tracking-[0.2em] text-[#d8bc79]">
-                  Selective review &middot; no payment until we confirm fit
+                  $300 flat &middot; live in 7 days &middot; infinite iterations
                 </p>
                 <p className="mt-4 text-sm leading-7 text-[#b8afa2]">
-                  The same Prism website system that produced these measured
-                  results:
+                  The same Prism website system behind these measured results:
                 </p>
                 <ul className="mt-5 grid gap-px overflow-hidden border border-white/10 bg-white/10">
-                  {ESTIMATE_PROOF_POINTS.map((proof) => (
+                  {PROOF_POINTS.map((proof) => (
                     <li key={proof.label} className="bg-black">
                       <Link
                         href={proof.href}
@@ -298,7 +311,7 @@ export default function WebsitesPage() {
               </div>
             </div>
 
-            <WebsiteBuildEstimatorForm />
+            <WebsiteOrderForm />
           </div>
         </section>
 
@@ -310,21 +323,21 @@ export default function WebsitesPage() {
             )}
           >
             <CoreSectionHeading
-              eyebrow="Selective by default"
-              title="We are looking for good raw material."
-              description="Affordable does not mean automatic. The best small website builds have a clear reason to exist and enough trust between both sides to move quickly."
+              eyebrow="What you get"
+              title="One flat price. The whole thing, yours."
+              description="No tiers, no estimates, no negotiation. You describe it, we build it, and we keep going until you love it."
             />
             <div className="grid gap-4 sm:grid-cols-2">
-              {FIT_SIGNALS.map((signal) => (
+              {OWNERSHIP_POINTS.map((point) => (
                 <article
-                  key={signal.title}
+                  key={point.title}
                   className="border border-white/10 bg-[#070707] p-5"
                 >
                   <h2 className="text-xl font-medium tracking-[-0.04em] text-[#f5f0e8]">
-                    {signal.title}
+                    {point.title}
                   </h2>
                   <p className="mt-4 text-sm leading-7 text-[#b8afa2]">
-                    {signal.body}
+                    {point.body}
                   </p>
                 </article>
               ))}
@@ -341,7 +354,7 @@ export default function WebsitesPage() {
               <CoreSectionHeading
                 eyebrow="Recent proof"
                 title="The bar is real."
-                description="The one-time offer is smaller, but the taste standard comes from the same Prism website system."
+                description="A flat $300 does not mean a flat result. Every build comes from the same Prism website system."
               />
               <CoreActionLink
                 href="/case-studies"
@@ -385,8 +398,8 @@ export default function WebsitesPage() {
           <div className={coreRouteContainerClassName}>
             <CoreSectionHeading
               eyebrow="How it works"
-              title="Fast, but not careless."
-              description="The flow stays intentionally small so the work can stay sharp."
+              title="Describe it, pay, and we build."
+              description="Four steps, no friction. You stay in control the whole way through."
             />
             <ol className="mt-10 grid gap-4 md:grid-cols-4">
               {PROCESS_STEPS.map((step, index) => (
@@ -411,9 +424,33 @@ export default function WebsitesPage() {
 
         <section className={coreRouteSectionCompactClassName}>
           <div className={coreRouteContainerClassName}>
+            <div className="grid gap-6 rounded-[2rem] border border-white/12 bg-black/35 p-8 sm:p-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:items-center">
+              <CoreSectionHeading
+                eyebrow="After launch"
+                title="When you love it, it is your call."
+                description="Add a $100/month care plan for hosting, updates, and ongoing edits handled by Prism, or host the site yourself. Either way, the website stays 100% yours. Cancel anytime."
+              />
+              <div className="lg:justify-self-end">
+                <CoreActionLink
+                  href={WEBSITE_CARE_LINK}
+                  variant="heroSecondary"
+                  label="add website care"
+                  location="websites care"
+                  target={CARE_LINK_TARGET}
+                  rel={CARE_LINK_REL}
+                >
+                  Add Website Care &mdash; $100/month
+                </CoreActionLink>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className={coreRouteSectionCompactClassName}>
+          <div className={coreRouteContainerClassName}>
             <CoreSectionHeading
               eyebrow="FAQ"
-              title="Useful details before you ask."
+              title="Useful details before you start."
             />
             <div className="mt-10 divide-y divide-white/10 border-y border-white/10">
               {FAQ_ITEMS.map((item) => (
@@ -437,13 +474,13 @@ export default function WebsitesPage() {
       <ServiceSchema
         serviceId="one-time-website-build"
         name="One-time website build"
-        description="Focused one-time website builds for founders, operators, and small teams, starting at $300 for tiny accepted launches."
+        description="Custom one-time website builds for founders, operators, and small teams: a flat $300, delivered within 7 days with infinite iterations until you love it."
         serviceType="Website design and development"
         areaServed="United States"
         offerDetails={{
           name: 'One-time website build',
           description:
-            'A selective one-time website build reviewed by Prism before payment, starting at $300 for a tiny accepted launch.',
+            'A custom one-time website build for a flat $300, delivered within 7 days with infinite iterations until you love it. The finished site is 100% yours.',
           businessFunction: 'http://purl.org/goodrelations/v1#ProvideService',
           price: '300',
           priceCurrency: 'USD',

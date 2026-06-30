@@ -12,9 +12,9 @@ import {
 } from '@/lib/pricing-model'
 
 const heroSignals = [
-  CANONICAL_PRICING_OFFERS.growth_dashboard,
-  CANONICAL_PRICING_OFFERS.light_audit,
-  CANONICAL_PRICING_OFFERS.deep_growth_audit,
+  CANONICAL_PRICING_OFFERS.website,
+  CANONICAL_PRICING_OFFERS.content_os,
+  CANONICAL_PRICING_OFFERS.prism_infinity,
 ] as const
 
 export default function PricingHero() {
@@ -31,7 +31,7 @@ export default function PricingHero() {
             <CoreSectionHeading
               eyebrow="Pricing"
               title="A clearer way to invest in growth."
-              description="Create your free Prism Growth Dashboard. Prism will identify your clearest opportunities, then recommend the right next step: Light Audit, Deep Growth Audit, focused sprint, or ongoing growth partner."
+              description="Pick how you want to grow: order a website for $300, scale your content and ads with Content OS, package your whole dental front office with Dental OS, or get every Prism service on tap with Prism Infinity."
               as="h1"
               variant="hero"
               titleClassName="max-w-[9ch]"

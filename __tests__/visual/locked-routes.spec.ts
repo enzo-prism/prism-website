@@ -93,7 +93,7 @@ const lockedRoutes = [
   {
     name: 'home',
     path: '/',
-    readyHeading: /get found\. get trusted\. get chosen\./i,
+    readyHeading: /^prism$/i,
   },
   { name: 'about', path: '/about', readyHeading: /built by enzo sison\./i },
   {
@@ -378,19 +378,19 @@ test('home hero layout stays readable across responsive breakpoints', async ({
     await expect(
       page.getByRole('heading', {
         level: 1,
-        name: /get found\. get trusted\. get chosen\./i,
+        name: /^prism$/i,
       }),
     ).toBeVisible({ timeout: 20_000 })
 
     const hero = page.locator('#homepage-hero')
     await expect(hero).toBeVisible({ timeout: 20_000 })
     await expect(
-      hero.getByRole('link', { name: /get my free growth audit/i }),
+      hero.getByRole('link', { name: /order now/i }),
     ).toBeVisible({
       timeout: 20_000,
     })
     await expect(
-      hero.getByRole('link', { name: /see how it works/i }),
+      hero.getByRole('link', { name: /explore plans/i }),
     ).toBeVisible({ timeout: 20_000 })
 
     const result = await page.evaluate(() => {
@@ -401,10 +401,10 @@ test('home hero layout stays readable across responsive breakpoints', async ({
 
       const heroRect = hero.getBoundingClientRect()
       const primaryCta = hero.querySelector<HTMLAnchorElement>(
-        'a[href="/get-started"]',
+        'a[href="/websites"]',
       )
       const secondaryCta = hero.querySelector<HTMLAnchorElement>(
-        'a[href="#how-it-works"], a[href="/#how-it-works"]',
+        'a[href="#offers"], a[href="/#offers"]',
       )
       const primaryCtaRect = primaryCta?.getBoundingClientRect()
       const secondaryCtaRect = secondaryCta?.getBoundingClientRect()

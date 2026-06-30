@@ -1,9 +1,6 @@
 import React from "react"
 
-import {
-  CANONICAL_PRICING_OFFERS,
-  GROWTH_SPRINT_COMMON_RANGE_LABEL,
-} from "@/lib/pricing-model"
+import { CANONICAL_PRICING_OFFERS } from "@/lib/pricing-model"
 
 const renderJsonLd = (data: unknown) => (
   <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }} />
@@ -268,43 +265,37 @@ export function GlobalSchemaGraph() {
     makesOffer: [
       {
         "@type": "Offer",
-        name: CANONICAL_PRICING_OFFERS.deep_growth_audit.name,
-        description: CANONICAL_PRICING_OFFERS.deep_growth_audit.description,
-        price: String(CANONICAL_PRICING_OFFERS.deep_growth_audit.price),
-        priceCurrency: CANONICAL_PRICING_OFFERS.deep_growth_audit.priceCurrency,
+        name: CANONICAL_PRICING_OFFERS.website.name,
+        description: CANONICAL_PRICING_OFFERS.website.description,
+        price: String(CANONICAL_PRICING_OFFERS.website.price),
+        priceCurrency: CANONICAL_PRICING_OFFERS.website.priceCurrency,
         availability: "https://schema.org/InStock",
-        url: "https://www.design-prism.com/pricing",
+        url: "https://www.design-prism.com/websites",
       },
       {
         "@type": "Offer",
-        name: CANONICAL_PRICING_OFFERS.growth_sprint.name,
-        description: CANONICAL_PRICING_OFFERS.growth_sprint.description,
-        price: String(CANONICAL_PRICING_OFFERS.growth_sprint.price),
-        priceCurrency: CANONICAL_PRICING_OFFERS.growth_sprint.priceCurrency,
-        priceRange: GROWTH_SPRINT_COMMON_RANGE_LABEL,
+        name: CANONICAL_PRICING_OFFERS.content_os.name,
+        description: CANONICAL_PRICING_OFFERS.content_os.description,
+        price: String(CANONICAL_PRICING_OFFERS.content_os.price),
+        priceCurrency: CANONICAL_PRICING_OFFERS.content_os.priceCurrency,
         availability: "https://schema.org/InStock",
-        url: "https://www.design-prism.com/pricing",
+        url: "https://www.design-prism.com/content-os",
       },
       {
         "@type": "Offer",
-        name: CANONICAL_PRICING_OFFERS.ongoing_growth_partner.name,
-        description:
-          CANONICAL_PRICING_OFFERS.ongoing_growth_partner.description,
-        price: String(CANONICAL_PRICING_OFFERS.ongoing_growth_partner.price),
-        priceCurrency:
-          CANONICAL_PRICING_OFFERS.ongoing_growth_partner.priceCurrency,
+        name: CANONICAL_PRICING_OFFERS.prism_infinity.name,
+        description: CANONICAL_PRICING_OFFERS.prism_infinity.description,
+        price: String(CANONICAL_PRICING_OFFERS.prism_infinity.price),
+        priceCurrency: CANONICAL_PRICING_OFFERS.prism_infinity.priceCurrency,
         priceSpecification: {
           "@type": "UnitPriceSpecification",
-          price: String(
-            CANONICAL_PRICING_OFFERS.ongoing_growth_partner.price,
-          ),
-          priceCurrency:
-            CANONICAL_PRICING_OFFERS.ongoing_growth_partner.priceCurrency,
+          price: String(CANONICAL_PRICING_OFFERS.prism_infinity.price),
+          priceCurrency: CANONICAL_PRICING_OFFERS.prism_infinity.priceCurrency,
           billingDuration: 1,
           unitCode: "MON",
         },
         availability: "https://schema.org/InStock",
-        url: "https://www.design-prism.com/pricing",
+        url: "https://www.design-prism.com/prism-infinity",
       },
     ],
   }

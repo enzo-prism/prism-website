@@ -75,19 +75,29 @@ describe('HomeHeroSection', () => {
     )
 
     expect(
-      screen.getByText(/the growth system for real businesses/i),
-    ).toBeInTheDocument()
-    expect(
       screen.getByRole('heading', {
         level: 1,
-        name: /get found\. get trusted\. get chosen\./i,
+        name: /^prism$/i,
       }),
     ).toBeInTheDocument()
     expect(
+      screen.getByText(/the #1 growth partner for small businesses/i),
+    ).toBeInTheDocument()
+    expect(
       screen.getByText(
-        /one team that builds and runs everything that brings you customers/i,
+        /one team that builds and runs everything that grows your business/i,
       ),
     ).toBeInTheDocument()
+
+    const stats = screen.getByTestId('home-hero-stats')
+    expect(stats).toHaveTextContent('18,563')
+    expect(stats).toHaveTextContent('71,000')
+    expect(stats).toHaveTextContent('17M+')
+    expect(stats).not.toHaveTextContent('$100,000')
+    expect(stats).toHaveTextContent(/youtube/i)
+    expect(stats).toHaveTextContent(/instagram/i)
+    expect(stats).toHaveTextContent(/tiktok/i)
+
     expect(screen.getByTestId('home-hero-social-proof')).toHaveTextContent(
       /20\+ reviews from founders, doctors, operators, and local leaders/i,
     )
@@ -98,8 +108,7 @@ describe('HomeHeroSection', () => {
       point.querySelector('img')?.getAttribute('src'),
     )
 
-    expect(supportPoints).toHaveLength(3)
-    expect(new Set(iconSrcs).size).toBe(3)
+    expect(supportPoints).toHaveLength(1)
     expect(screen.getByText(/can chatgpt recommend you\?/i)).toBeInTheDocument()
     expect(screen.queryByText(/^google maps$/i)).not.toBeInTheDocument()
     expect(iconSrcs).toContain('/home-hero/logos/openai.svg')
@@ -111,11 +120,11 @@ describe('HomeHeroSection', () => {
     expect(systemStrip.querySelectorAll('li')).toHaveLength(7)
 
     expect(
-      screen.getByRole('link', { name: /get my free growth audit/i }),
-    ).toHaveAttribute('href', '/get-started')
+      screen.getByRole('link', { name: /order now/i }),
+    ).toHaveAttribute('href', '/websites')
     expect(
-      screen.getByRole('link', { name: /see how it works/i }),
-    ).toHaveAttribute('href', '#how-it-works')
+      screen.getByRole('link', { name: /explore plans/i }),
+    ).toHaveAttribute('href', '#offers')
 
     expect(
       screen.getByRole('link', {

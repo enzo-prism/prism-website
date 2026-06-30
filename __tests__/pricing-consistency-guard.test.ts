@@ -24,10 +24,10 @@ describe("pricing consistency guard", () => {
     )
   })
 
-  it("requires the current Growth Dashboard pricing snippets", () => {
+  it("requires the current productized pricing snippets", () => {
     const violations = collectPricingConsistencyViolations(
       "lib/pricing-model.ts",
-      "Create Free Growth Dashboard. Normally $500. Starts at $3,500. Starts at $1,500/month.",
+      "Order your website — $300. $300 one-time. $5,000 + $1,000/month. $2,000/month.",
     )
 
     expect(violations).toEqual([])
@@ -36,7 +36,7 @@ describe("pricing consistency guard", () => {
   it("allows the dedicated one-time website build offer on /websites", () => {
     const violations = collectPricingConsistencyViolations(
       "app/websites/page.tsx",
-      "One-time website build. Starts at $300. price: '300'",
+      "One-time website build. $300 flat. price: '300'",
     )
 
     expect(violations).toEqual([])

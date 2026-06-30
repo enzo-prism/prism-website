@@ -37,7 +37,6 @@ export const LEGACY_PRICING_TOKEN_RULES: PricingTokenRule[] = [
   { label: "Website Overhaul retired offer name", pattern: /Website Overhaul/i },
   { label: "Growth Partnership retired offer name", pattern: /Growth Partnership/i },
   { label: "Free Expert Audit retired offer name", pattern: /Free Expert Audit/i },
-  { label: "$2,000/month retired growth partnership price", pattern: /\$2,000\/month\b/i },
   { label: "$400 legacy website price", pattern: /\$400\b/ },
   { label: "$900/mo legacy plan price", pattern: /\$900\/mo\b/i },
   { label: "$1,500/mo legacy plan price", pattern: /\$1,500\/mo\b/i },
@@ -67,14 +66,14 @@ export const REQUIRED_CANONICAL_SNIPPETS: Record<string, string[]> = {
     "PRICING_PRIMARY_CTA",
   ],
   "lib/pricing-model.ts": [
-    "Create Free Growth Dashboard",
-    "Normally $500",
-    "Starts at $3,500",
-    "Starts at $1,500/month",
+    "Order your website — $300",
+    "$300 one-time",
+    "$5,000 + $1,000/month",
+    "$2,000/month",
   ],
   "app/websites/page.tsx": [
     "One-time website build",
-    "Starts at $300",
+    "$300 flat",
     "price: '300'",
   ],
 }

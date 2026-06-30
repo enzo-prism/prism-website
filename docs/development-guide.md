@@ -218,10 +218,10 @@ Custom confirmation routes live in `app/thank-you/` and `app/analysis-thank-you/
 ## Pricing Page Content
 
 - Pricing UI is in `app/pricing/client-page.tsx` with the shared dark-system hero in `components/pricing/PricingHero.tsx`.
-- Keep canonical pricing copy aligned with `lib/pricing-model.ts`: free Growth Dashboard, included Light Audit, normally `$500` Deep Growth Audit, 60-day Growth Sprints starting at `$3,500`, and optional ongoing Growth Partner support starting at `$1,500/month`.
-- Structured data here should only emit the Deep Growth Audit and 60-day Growth Sprint offers and point to `https://www.design-prism.com/pricing`.
+- Keep canonical pricing copy aligned with `lib/pricing-model.ts`, which models the **four productized offers**: Website (`$300` flat one-time, optional `$100/month` care), Content OS (`$5,000` to implement + `$1,000/month`), Dental OS (custom-priced), and Prism Infinity (`$2,000/month`). `/pricing` compares all four; `/get-started` keeps the free Growth Dashboard / free-audit on-ramp. The old five-tier ladder (`$500` Deep Growth Audit, `$3,500` Growth Sprint, `$1,500/month` Growth Partner) is retired. Always spell `/month` (never `/mo`), and run `pnpm verify:pricing-consistency` (`lib/pricing-consistency.ts`) on any pricing copy change.
+- Structured data here should emit the four-offer schema and point to `https://www.design-prism.com/pricing`.
 - Pricing, about, homepage, and `/get-started` now share the core-route typography and CTA system from `components/core-route/CoreRoutePrimitives.tsx`. Reuse those primitives before hand-rolling new route-level actions or section headers.
-- Primary pricing CTAs should say `Create Free Growth Dashboard` and point to `/get-started`. The secondary CTA should be an in-page `#growth-path` link unless the pricing journey itself changes.
+- The primary pricing CTA orders the `$300` website (`PRICING_PRIMARY_CTA` → `/websites`); higher-ticket offers lead with "Book a call". Payments use Stripe Payment Links via `lib/payment-links.ts`.
 
 ## Free Analysis & Contact Pages
 

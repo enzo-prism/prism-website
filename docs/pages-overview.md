@@ -31,13 +31,16 @@ Quick reference for the pages we edit most often.
 
 ## Pricing (`app/pricing/client-page.tsx`)
 
-- `/pricing` is the single canonical pricing URL.
-- Core pricing policy follows the Growth Dashboard path: free Growth Dashboard, included Light Audit, normally `$500` Deep Growth Audit, 60-day Growth Sprints starting at `$3,500`, and optional ongoing Growth Partner support starting at `$1,500/month`.
-- Main UI sections live in `app/pricing/client-page.tsx`; the hero lives in `components/pricing/PricingHero.tsx`.
-- `/pricing` now uses the shared dark core-route system from `components/core-route/CoreRoutePrimitives.tsx`, so section headings and primary/secondary CTAs should stay aligned with the homepage, `/about`, and `/get-started`.
-- Section order is intentional: hero, growth path, pricing snapshot, why no preset plans, Deep Growth Audit, 60-day sprint examples, ongoing partner levels, preferred referral note, FAQ, final CTA.
-- Every primary CTA should say `Create Free Growth Dashboard` and route to `/get-started`; the secondary pricing CTA should be `See Example Growth Path` and route to `#growth-path`.
-- Structured data on this page should emit the Deep Growth Audit and 60-day Growth Sprint offers only; do not publish hard-plan schema for ongoing partner levels.
+- `/pricing` is the single canonical pricing URL and now compares Prism's **four productized offers**, all sourced from `CANONICAL_PRICING_OFFERS` / `PRICING_OFFER_ORDER` in `lib/pricing-model.ts`:
+  - **Website** — `$300` flat, one-time, optional `$100/month` care (`/websites`).
+  - **Content OS** — `$5,000` to implement over 3 months, then `$1,000/month` (`/content-os`).
+  - **Dental OS** — custom-priced, "book a call" (`/dental-os`).
+  - **Prism Infinity** — `$2,000/month`, unlimited services (`/prism-infinity`).
+- Main UI sections live in `app/pricing/client-page.tsx`; the hero lives in `components/pricing/PricingHero.tsx` ("A clearer way to invest in growth.").
+- `/pricing` uses the shared dark core-route system from `components/core-route/CoreRoutePrimitives.tsx`, so section headings and CTAs stay aligned with the homepage, `/about`, and `/get-started`.
+- Section order is intentional: hero, "Four offers. Buy once, or run an ongoing system." snapshot, per-offer cards, the website order steps (the `growthPathSteps` array, repurposed to "Describe your website" steps), ongoing-system levels (the `partnerLevels` array, repurposed to Content OS / Prism Infinity), FAQ (covering the `$300` website, care plan, Content OS, Prism Infinity, and Dental OS), and final CTA. The `growthPathSteps`/`pricingSnapshot`/`partnerLevels` variable names were retained (and are still required by `lib/pricing-consistency.ts`) even though their content is now the four-offer model.
+- The primary CTA orders the `$300` website (`PRICING_PRIMARY_CTA`, "Order your website — $300" → `/websites`); higher-ticket offers lead with "Book a call".
+- The retired five-tier ladder (free Growth Dashboard pricing, `$500` Deep Growth Audit, `$3,500` Growth Sprint, `$1,500/month` Growth Partner) is no longer shown here; `/get-started` keeps the free Growth Dashboard / free-audit on-ramp.
 
 ## Checkout (`app/checkout/*/page.tsx`)
 
@@ -72,22 +75,31 @@ Quick reference for the pages we edit most often.
 
 ## Websites (`app/websites/page.tsx`)
 
-- Active one-time website build offer page, replacing the older broad website-service page.
-- Leads with the selective Prism website build offer: world-class one-time websites starting at `$300` for tiny accepted launches.
-- The interactive estimator is `components/forms/WebsiteBuildEstimatorForm.tsx`; it uses Formspree, publishes an estimated review range, and redirects to `/thank-you?source=website-build` after successful submission.
-- The `$300` starting price is intentional only for this page and its one-time website build schema. Keep `/pricing` as the canonical Growth Dashboard, Light Audit, Deep Growth Audit, Growth Sprint, and ongoing partner pricing surface.
-- Keep the page indexable, in `public/llms.txt`, and in the sitemap as Prism's canonical website-build acquisition page.
+- Active offer page for the **Website** product: a custom website for `$300` flat, one-time (not "starting at $300" — it is a flat price). Delivered in ~7 days, infinite iterations until the buyer loves it, and the finished site is 100% theirs. Afterward they can add a `$100/month` care plan or self-host.
+- The flow is **describe → submit → success → pay**: the buyer describes the website they want (as much context as they like), submits (captured via Formspree at `NEXT_PUBLIC_WEBSITE_BUILD_FORM_ENDPOINT` / `https://formspree.io/f/xpqebnbz`), sees an in-page success screen, then pays the `$300` Stripe Payment Link (opens in a new tab) to kick off the build. `components/forms/WebsiteOrderForm.tsx` powers this; the pay button resolves through `lib/payment-links.ts` (`hasPaymentLink("website")` / `paymentLink("website")`, live link `buy.stripe.com/8x2dRa3Aid1gasMeQDdZ60N`, with a `/contact` fallback).
+- The old model is retired: this is **not** review-first / selective / "no card collected", and there is no dynamic price estimator. `WebsiteBuildEstimatorForm.tsx` (the old estimator) is being removed.
+- Keep the page indexable, in `public/llms.txt`, and in the sitemap as Prism's canonical website-order acquisition page.
 
-## Founder OS (`app/founder-os/page.tsx`)
+## Content OS (`app/content-os/page.tsx`)
 
-- Founder OS is Prism's premium, managed AI command-layer offer — a distinct, high-ticket track separate from the Growth Dashboard funnel. The page now carries a full premium command-system design: compact animated hero, command demo, founder bottleneck map, operating ledger, install registry, agent roster, runbook cards, control policy, Blueprint packet, rollout checkpoints, integration rail, fit scorecard, pricing path, measurement console, FAQ, and final command CTA.
-- This route is an **intentional design exception**. It uses a self-contained **light Geist** system (white surfaces, sharp Geist Sans headings, restrained blue accent), deliberately distinct from the dark marketing site, with its own light header/footer instead of the shared dark chrome. The light heading, hover, and reveal styles are scoped via the `[data-surface='founder-os']` attribute in `app/globals.css`; do not "fix" it back to the dark system. (Note: the global `white` token is remapped to near-black in this theme, so these pages use explicit `#ffffff`, never `bg-white`/`text-white`.)
-- Pricing shown is the offer's own ladder (`$10,000` Founder Systems Blueprint → from `$50,000` installation → from `$10,000/month` managed). It is intentional to this page only, does not change `/pricing`, and is not scanned by `verify:pricing-consistency`.
-- Motion and performance are intentionally lightweight: the page remains a Server Component with `components/founder-os/FosReveal.tsx` as the only client island; below-fold sections use Founder OS scoped `content-visibility`; motion is reduced-motion + no-JS safe; and the visual system relies on CSS-only `home-hero-rise` / `home-scan-line` / `home-signal-dot`, `fos-hero-title-rise`, `fos-orbit-*`, `fos-float`, and `fos-lift` patterns in `app/globals.css`.
-- The page proves its reach with real tech-stack logos: an **Integrations** section (chat/comms, growth/ads/analytics, pipeline/commerce, content/ops), a tool-to-context-to-command map, and a frontier-model-provider row inside the architecture section. Brand SVGs are sourced from [svgl.app](https://svgl.app), stored in `public/logos/founder-os/`, and rendered with plain `<img>` (grayscale at rest, full color on hover), the same approach as `components/home/HomeAiToolsSection.tsx`. To add or swap a logo, drop the SVG into that folder and reference it from the `STACK_GROUPS` / `AI_PROVIDERS` arrays in `app/founder-os/page.tsx`.
-- All Founder OS surface copy (`app/founder-os/page.tsx`, `app/founder-os/apply/page.tsx`, the form, and `FosReveal.tsx`) is intentionally em-dash-free; keep new copy that way, using periods, colons, or commas instead.
-- The application lives at `app/founder-os/apply/page.tsx` via `components/forms/FounderOsApplicationForm.tsx` (see [forms.md](./forms.md)).
-- Keep `/founder-os` indexable, in `public/llms.txt`, and in the sitemap; keep `/founder-os/apply` noindex. `ServiceSchema` + `FAQSchema` are present on the marketing page.
+- The **Content OS** offer: `$5,000` to implement (over 3 months) + `$1,000/month`. AI agents that scale a client's content and ads across every social platform and their website, then optimize every month.
+- This route **replaced the retired Founder OS** offer (see the redirect note below). It is indexable, in `public/llms.txt`, and in the sitemap, and carries `ServiceSchema` plus FAQ structured data.
+- The headline price is intentional to this offer and is part of the canonical four-offer model in `lib/pricing-model.ts`; keep `/month` spelled out (never `/mo`).
+
+## Dental OS (`app/dental-os/page.tsx`)
+
+- The **Dental OS** offer: the full Prism growth system (website, SEO and AI search, Google Maps, reviews, and ads) packaged for dental practices, **custom-priced** ("book a call").
+- Indexable, in `public/llms.txt`, in the sitemap, and carries `ServiceSchema` plus FAQ structured data. Pricing is scoped per practice rather than a fixed number; the offer's primary CTA leads to `/contact?topic=dental-os`.
+
+## Prism Infinity (`app/prism-infinity/page.tsx`)
+
+- The **Prism Infinity** offer: `$2,000/month` for unlimited Prism services across engineering, design, and marketing (logo/print design, web development, video editing, content, ads, slide decks, in-person photoshoots, and more) on one subscription, pausable/cancelable anytime.
+- Indexable, in `public/llms.txt`, in the sitemap, and carries `ServiceSchema` plus FAQ structured data. The `$2,000/month` token is intentional here and is allowed by `lib/pricing-consistency.ts`.
+
+## Founder OS (retired → redirects to `/content-os`)
+
+- Founder OS is **retired**. `/founder-os` and `/founder-os/apply` now 301-redirect to `/content-os` (see `next.config.mjs`), and the route is no longer in `lib/seo/search-visibility.ts` / `public/llms.txt`.
+- The `app/founder-os/*` page files and `components/forms/FounderOsApplicationForm.tsx` remain only as archival code behind the redirect; do not link to them from active pages or treat Founder OS as a live offer.
 
 ## Apps (`app/apps/page.tsx`)
 
@@ -136,6 +148,7 @@ Quick reference for the pages we edit most often.
 ## Get Started (`app/get-started/page.tsx`)
 
 - `/get-started` is the free Growth Audit entry page for growth-focused businesses, built from `components/get-started/GrowthProcessSection.tsx` plus the in-page handoff panel that points into `/apply`.
+- After the repositioning to the four productized offers, `/get-started` is **intentionally kept as the free on-ramp** (free Growth Dashboard + request a free deep audit from the team). It stays surfaced in the nav ("get started"), the footer ("Get started free"), and a callout under the homepage offers section, even though the rest of the pricing ladder it used to anchor is retired.
 - The hero is conversion-first: headline, one-line value statement, trust chips (free / ≈1 minute / reviewed by a real person), and the primary "Start my free growth audit" CTA must all land in the first viewport on mobile. The three-step Lordicon row (`Share your business`, `We audit it`, `Get your next move`) sits compact below the CTA — do not let it push the CTA back below the fold.
 - User-facing copy on this funnel leads with the free Growth Audit; the Growth Dashboard is positioned as where the audit is delivered. CTA tracking labels intentionally keep the legacy `create free growth dashboard` value for GA continuity.
 - It remains the one intentional accent surface within the core route family: same dark shell, shared CTA grammar, and shared section-heading logic, but with terminal framing and neon status accents.
@@ -163,9 +176,9 @@ Quick reference for the pages we edit most often.
 
 ## Shared Chrome (`components/navbar.tsx`, `components/footer.tsx`)
 
-- Header nav labels live in `lib/constants.ts`; the current public nav is `websites`, `founder os`, `results`, `wall of love`, and `free audit`. The footer System column also links `Founder OS`.
+- Header nav labels live in `NAV_ITEMS` in `lib/constants.ts`; the current public nav is repositioned around the offers: `order` (`/websites`), `content os`, `dental os`, `prism infinity`, `pricing`, `get started`, and `contact`, plus a persistent "Order now" CTA. The nav was overhauled to be fully responsive, using an `xl` breakpoint with a full-height mobile panel. The footer System column links `Website — $300` and `Content OS` (the old `Founder OS` link became Content OS).
 - The top-left logo links to `/`, tracks `trackNavigation('logo', '/')`, and has a small hover/focus treatment on the logo mark and wordmark. Keep it tactile but stable: no text reflow, no new route-specific header variants, and respect reduced-motion utilities for transforms.
-- The footer has one funnel CTA: `Free audit` links to `/get-started` through `TrackedLink` with `label="Free audit"` and `location="footer"`.
+- The footer was overhauled to a responsive column grid with monochrome icon socials, and leads with two CTAs: `Order a website` (`/websites`, `label="Order a website"`) and `Get started free` (`/get-started`, `label="Get started free"`), both through `TrackedLink` with `location="footer"`.
 - Do not reintroduce a footer "Book call" button or contact-page demo calendar without changing the funnel docs first.
 
 ## AI Agents for Dentists (`app/ai-agents/dental/page.tsx`)
@@ -181,11 +194,12 @@ Quick reference for the pages we edit most often.
 
 ## Homepage (`app/client-page.tsx`)
 
-- `app/client-page.tsx` is now a section composer for the growth homepage, ordered to answer a buyer's questions in sequence: hero ("Get found. Get trusted. Get chosen." — what Prism is), mixed client Cover Flow deck (proof), buyer-checks problem section (why it works), bento system grid (what Prism does), first-90-days band with count-up stats (what to expect), audience fit cards (who it is for), short process, compact proof grid, and final audit CTA.
-- The homepage hero is built from `components/home/HomeHeroSection.tsx` and uses the shared ASCII `wave` backdrop in a subtler treatment than `/software`, plus a staggered `home-hero-rise` entrance, muted-verb headline lines, and a mono "system strip" (Website → AI) with pulsing signal dots along the hero's bottom rule.
-- Homepage motion runs through small client islands: `components/home/HomeReveal.tsx` (scroll reveal that never hides content for no-JS or reduced-motion visitors), `components/home/HomeCountUp.tsx` (stat count-up in the 90-day band), and `components/home/HomeSystemGrid.tsx` (pointer-tracked spotlight bento cards). The old Found/Trusted/Chosen promise section folded into the hero headline.
+- `app/client-page.tsx` is a section composer for the growth homepage. Current order: hero, mixed client Cover Flow deck (proof), buyer-checks problem section, bento system grid, first-90-days band with count-up stats, audience fit cards, short process, compact proof grid, final CTA, and then `HomeOffersSection` ("Four ways to grow with Prism.") as the **last** section.
+- The homepage hero is built from `components/home/HomeHeroSection.tsx`; copy comes from `components/home/homepage-content.ts`. The H1 is "Prism" with the subhead "the #1 growth partner for small businesses". The proof block now leads with **attention + traffic, not revenue**: 18,563 new users/month to client sites, 71,000 followers, and 17M+ views across YouTube/Instagram/TikTok (each linking to the profile in a new tab), plus a "100% grown by Prism AI Agents, powered by Content OS" attribution that links to `/content-os`. The old "Get found. Get trusted. Get chosen." / revenue framing is retired.
+- The "Four ways to grow with Prism" offers section (`components/home/HomeOffersSection.tsx`) renders the four offers and ends with a free on-ramp callout: "Not ready to buy? Start free..." → `/get-started` ("Get started free").
+- Homepage motion runs through small client islands: `components/home/HomeReveal.tsx` (scroll reveal that never hides content for no-JS or reduced-motion visitors), `components/home/HomeCountUp.tsx` (stat count-up in the 90-day band), and `components/home/HomeSystemGrid.tsx` (pointer-tracked spotlight bento cards).
 - The homepage is growth-first and dental-proven. Default language should speak to founders, owners, operators, qualified demand, Google/AI visibility, reviews, conversion paths, tracking, and measurable growth opportunities.
-- The main CTA points to the Growth Dashboard entry (`/get-started`). The secondary homepage CTA should continue to hash-scroll to `#how-it-works`.
+- The primary hero CTA is "Order now" (no price) and points to `/websites`; the secondary CTA is "Explore plans" and hash-scrolls to `#offers`.
 - Keep homepage copy extremely short: use labels, one-line headings, and compact cards. Move longer explanations to deeper pages.
 - The client proof surface under the hero is the `HOMEPAGE_CLIENT_WINS` deck, rendered by `components/home/HomeClientCoverFlow.tsx` (mounted via the legacy-named `HomeDentistWinsSection.tsx` wrapper that keeps the "Great companies use Prism" heading + `N client stories · M markets · Verified case studies` line, auto-computed from the slides where relevant). It is a mixed-client set spanning retail, dental, education, community, consulting, nonprofit, hospitality, B2B services, and specialty healthcare proof.
 - There is **one card per published case study** (currently 22) — the deck is kept in sync with the `/case-studies` index and `CASE_STUDIES` in `lib/case-study-data.ts`. When a case study is added/removed there, add/remove the matching slide in `HOMEPAGE_CLIENT_WINS` (slide order is hand-curated to interleave industries, not to mirror the data order). Each slide carries `company` (the brand/business name shown as the prominent card label — **never a person's name**), `location`, `contextLabel`, plus `href` + `image` derived from the slug.

@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from '@testing-library/react'
+import { fireEvent, render, screen, within } from '@testing-library/react'
 
 import Navbar from '@/components/navbar'
 
@@ -72,16 +72,18 @@ describe('Navbar', () => {
     const banner = screen.getByRole('banner')
     expect(banner.className).toContain('bg-black')
     expect(banner.className).toContain('fixed')
-    expect(screen.getByRole('button', { name: /open menu/i })).toBeInTheDocument()
+    expect(
+      screen.getByRole('button', { name: /open menu/i }),
+    ).toBeInTheDocument()
     expect(screen.getByRole('button', { name: /open menu/i })).toHaveAttribute(
       'aria-expanded',
       'false',
     )
     expect(
-      screen.getAllByRole('link', { name: /free audit/i })[0].className,
+      screen.getAllByRole('link', { name: /^order$/i })[0].className,
     ).toContain('border-b')
     expect(screen.getByTestId('navbar-core-image')).toBeInTheDocument()
-    expect(screen.getByText(/prism/i)).toBeInTheDocument()
+    expect(screen.getByText(/^prism$/i)).toBeInTheDocument()
     expect(screen.getByText(/impossible is temporary/i)).toBeInTheDocument()
   })
 
@@ -93,9 +95,11 @@ describe('Navbar', () => {
     const banner = screen.getByRole('banner')
     expect(banner.className).toContain('bg-black')
     expect(banner.className).toContain('sticky')
-    expect(screen.getByRole('button', { name: /open menu/i })).toBeInTheDocument()
     expect(
-      screen.getAllByRole('link', { name: /free audit/i })[0].className,
+      screen.getByRole('button', { name: /open menu/i }),
+    ).toBeInTheDocument()
+    expect(
+      screen.getAllByRole('link', { name: /^order$/i })[0].className,
     ).toContain('border-b')
     expect(screen.getByTestId('navbar-core-image')).toBeInTheDocument()
     expect(screen.getByText(/impossible is temporary/i)).toBeInTheDocument()
@@ -138,30 +142,63 @@ describe('Navbar', () => {
       'true',
     )
     expect(document.querySelector('#mobile-site-nav')).toBeInTheDocument()
-    expect(screen.queryByRole('link', { name: /our story/i })).not.toBeInTheDocument()
-    expect(screen.getAllByRole('link', { name: /websites/i })).toHaveLength(2)
-    expect(screen.getAllByRole('link', { name: /results/i })).toHaveLength(2)
+    expect(
+      screen.queryByRole('link', { name: /our story/i }),
+    ).not.toBeInTheDocument()
+    expect(screen.getAllByRole('link', { name: /^order$/i })).toHaveLength(2)
+    expect(screen.getAllByRole('link', { name: /content os/i })).toHaveLength(2)
   })
 
-  it('links to the one-time websites page and highlights it on that route', () => {
+  it('links the order item to the website order page and highlights it on that route', () => {
     mockUsePathname.mockReturnValue('/websites')
 
     render(<Navbar />)
 
-    const websitesLinks = screen.getAllByRole('link', { name: /websites/i })
-    expect(websitesLinks).toHaveLength(1)
-    expect(websitesLinks[0]).toHaveAttribute('href', '/websites')
-    expect(websitesLinks[0].className).toContain('text-[#f5f0e8]')
+    const orderLinks = screen.getAllByRole('link', { name: /^order$/i })
+    expect(orderLinks).toHaveLength(1)
+    expect(orderLinks[0]).toHaveAttribute('href', '/websites')
+    expect(orderLinks[0].className).toContain('text-[#f5f0e8]')
   })
 
-  it('highlights section links on nested routes and shows case study breadcrumbs', () => {
+  it('exposes a persistent filled order CTA that links to the website order page', () => {
+    mockUsePathname.mockReturnValue('/about')
+
+    render(<Navbar />)
+
+    // The CTA reads as "Order now — $300", so it never collides with the
+    // exact "order" nav-item count, but it must still route to /websites.
+    const ctaLinks = screen.getAllByRole('link', { name: /order now/i })
+    expect(ctaLinks.length).toBeGreaterThanOrEqual(1)
+    ctaLinks.forEach((cta) => {
+      expect(cta).toHaveAttribute('href', '/websites')
+      expect(cta.className).toContain('bg-[#f5f0e8]')
+    })
+
+    // The CTA must not inflate the exact-match "order" nav-item count.
+    expect(screen.getAllByRole('link', { name: /^order$/i })).toHaveLength(1)
+  })
+
+  it('places the primary order CTA inside the open mobile panel', () => {
+    mockUsePathname.mockReturnValue('/about')
+
+    render(<Navbar />)
+
+    fireEvent.click(screen.getByRole('button', { name: /open menu/i }))
+
+    const panel = document.querySelector('#mobile-site-nav')
+    expect(panel).toBeInTheDocument()
+
+    const panelCta = within(panel as HTMLElement).getByRole('link', {
+      name: /order now/i,
+    })
+    expect(panelCta).toHaveAttribute('href', '/websites')
+  })
+
+  it('shows case study breadcrumbs on nested case-study routes', () => {
     mockUsePathname.mockReturnValue('/case-studies/exquisite-dentistry')
 
     render(<Navbar />)
 
-    expect(
-      screen.getAllByRole('link', { name: /results/i })[0].className,
-    ).toContain('text-[#f5f0e8]')
     expect(screen.getByTestId('breadcrumbs-mock')).toBeInTheDocument()
   })
 })

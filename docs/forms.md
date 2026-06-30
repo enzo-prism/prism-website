@@ -25,8 +25,8 @@ const { handleSubmit, getError, isSubmitting } = useFormValidation({
 - `components/forms/FreeAnalysisForm.tsx`
 - `components/forms/ContactForm.tsx`
 - `components/forms/GetStartedForm.tsx` (`/apply`)
-- `components/forms/WebsiteBuildEstimatorForm.tsx` (`/websites`)
-- `components/forms/FounderOsApplicationForm.tsx` (`/founder-os/apply`)
+- `components/forms/WebsiteOrderForm.tsx` (`/websites`; replaces the retired `WebsiteBuildEstimatorForm.tsx`)
+- `components/forms/FounderOsApplicationForm.tsx` (legacy archival form code; `/founder-os/apply` now 301-redirects to `/content-os` and should not receive active traffic)
 - `components/forms/ScalingRoadmapForm.tsx`
 - `components/ai-website-launch/AiWebsiteLaunchForm.tsx` (legacy archival form code; the `/ai-website-launch` route redirects to `/pricing` in production and should not receive active traffic)
 - `components/forms/AeoAssessmentForm.tsx`
@@ -124,55 +124,32 @@ The `/apply` route should feel like a focused Growth Dashboard mode, not another
   - `trackLeadConversion(...)` on the apply thank-you view after the pending application context is consumed
 - Do not include user-entered names, emails, URLs, free-text notes, or unique per-event timestamps in GA params.
 
-## New flow: `/websites` + one-time website build estimator
+## `/websites` order flow: describe → success → pay `$300`
 
-`components/forms/WebsiteBuildEstimatorForm.tsx` powers the one-time website build request on `app/websites/page.tsx`.
+`components/forms/WebsiteOrderForm.tsx` powers the `$300` flat website order on `app/websites/page.tsx`. It replaces the retired `WebsiteBuildEstimatorForm.tsx` (the dynamic price estimator). There is **no** price estimator, no `/thank-you` redirect, and no "reviewed before payment" gate — the buyer pays right after submitting.
 
-- Required user-facing flow:
-  - Website type
-  - Page count
-  - Add-ons
-  - Style/reference notes
-  - Existing site or profile URL
-  - Timeline
-  - Name/email/business
-  - Review + submit
-- Pricing formula:
-  - Base one-page accepted launch: `$300`
-  - Extra pages: `$150` each
-  - Prism copywriting: `$200`
-  - Light brand direction: `$150`
-  - SEO launch basics: `$200`
-  - Custom form/intake: `$150`
-  - CMS/blog editing: `$400`
-  - Expressive motion/art direction: `$250`
-  - Rush review: `$250`
-- Hidden metadata contract:
-  - `_subject` = `New Prism one-time website build request`
-  - `_redirect` = `/thank-you?source=website-build`
-  - `form_name` = `website_build_request`
-  - `_gotcha` (honeypot)
-  - `estimated_total`, `estimated_range_low`, `estimated_range_high`, `estimated_range`, `price_formula_version`
-- DOM analytics contract:
-  - `<form id="website_build_request" name="website_build_request">`
-- Endpoint strategy:
+- User-facing flow:
+  - The buyer **describes** the website they want (as much context as they like) plus name/email/business.
+  - On submit, the description is **captured via Formspree** (no thank-you redirect).
+  - The form then shows an **in-page success screen**.
+  - From the success screen, a pay button **opens the Stripe `$300` Payment Link in a new tab** to kick off the build.
+- Endpoint strategy (unchanged from the old form):
   - `NEXT_PUBLIC_WEBSITE_BUILD_FORM_ENDPOINT` (defaults to `https://formspree.io/f/xpqebnbz`)
-- Success flow:
+- Submit flow:
   - POST via `fetch(form.action, { method: 'POST', headers: { Accept: 'application/json' }, body: new FormData(form) })`
-  - On success, store a pending lead conversion and route to `/thank-you?source=website-build`
-  - On failure, show inline error and keep the user on the review/submit screen
-- Analytics:
-  - `website_build_estimator_start`
-  - `website_build_estimate_update`
-  - `website_build_validation_error`
-  - `website_build_submit_attempt`
-  - `website_build_submit_success`
-  - `website_build_submit_error`
-  - Do not include user-entered names, emails, URLs, or free-text notes in analytics params.
+  - On success, swap to the in-page success state (do **not** `router.push` a thank-you route).
+  - On failure, show inline error and keep the user on the form.
+- Stripe pay step:
+  - The pay button resolves through `lib/payment-links.ts`: `paymentLink("website")` returns the live link (`https://buy.stripe.com/8x2dRa3Aid1gasMeQDdZ60N`, Stripe product "Website by Prism") or the `/contact` fallback, and `hasPaymentLink("website")` gates whether it opens in a new tab vs. routes to `/contact`.
+  - The Website link is live and wired; the optional `$100/month` care, Content OS, and Prism Infinity links still need creating (see `scripts/create-website-link.sh` and `scripts/create-stripe-links.sh`).
+- Keep ops metadata, the honeypot, and any analytics events for this form aligned with the live `WebsiteOrderForm.tsx` source; do not reintroduce estimator-only fields (`estimated_total`, `estimated_range_*`, `price_formula_version`) or the `?source=website-build` thank-you redirect.
+- Do not include user-entered names, emails, URLs, or free-text notes in analytics params.
 
-## New flow: `/founder-os/apply` + Founder OS application
+## Retired flow: `/founder-os/apply` + Founder OS application
 
-`components/forms/FounderOsApplicationForm.tsx` powers the premium Founder OS application on `app/founder-os/apply/page.tsx`. Unlike the marketing forms above, it is a long, **selective application** (not a contact form): a 90-second fit check, then ~12 substantive screens grouped into six named sections (Fit → Leverage → Workflow → Systems → Control → Readiness).
+> **Retired.** Founder OS is no longer a live offer. `/founder-os` and `/founder-os/apply` now 301-redirect to `/content-os` (see `next.config.mjs`), so this form receives no active traffic. The contract below is kept only as archival reference for the `components/forms/FounderOsApplicationForm.tsx` code that still exists behind the redirect.
+
+`components/forms/FounderOsApplicationForm.tsx` powered the premium Founder OS application on `app/founder-os/apply/page.tsx`. Unlike the marketing forms above, it was a long, **selective application** (not a contact form): a 90-second fit check, then ~12 substantive screens grouped into six named sections (Fit → Leverage → Workflow → Systems → Control → Readiness).
 
 - Behavior:
   - Section-based progress (not a percentage), Back on every step, per-step validation, and conditional branches (multi-location scale, proprietary systems, regulated-data compliance).
@@ -267,7 +244,7 @@ Important routing note:
 
 ## Thank-you pages
 
-- `/thank-you` ([`app/thank-you/page.tsx`](../app/thank-you/page.tsx)) — used by Apply, Contact, and the one-time website build estimator. The Prism Growth Dashboard flow sends `?source=apply`; the website build flow sends `?source=website-build`.
+- `/thank-you` ([`app/thank-you/page.tsx`](../app/thank-you/page.tsx)) — used by Apply and Contact. The Prism Growth Dashboard flow sends `?source=apply`. (The `/websites` order flow no longer redirects here — it shows an in-page success screen, then opens the Stripe `$300` Payment Link.)
 - `/analysis-thank-you` ([`app/analysis-thank-you/page.tsx`](../app/analysis-thank-you/page.tsx)) — used by the Free Analysis form.
 - `/aeo-thank-you` ([`app/aeo-thank-you/page.tsx`](../app/aeo-thank-you/page.tsx)) — used by the AEO assessment form.
 - `/book-a-shoot/thank-you` ([`app/book-a-shoot/thank-you/page.tsx`](../app/book-a-shoot/thank-you/page.tsx)) — used by the photography booking request form.

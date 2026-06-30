@@ -54,7 +54,13 @@ describe('ClientPage homepage flow', () => {
     expect(
       screen.getByRole('heading', {
         level: 1,
-        name: /get found\. get trusted\. get chosen\./i,
+        name: /^prism$/i,
+      }),
+    ).toBeInTheDocument()
+    expect(
+      screen.getByRole('heading', {
+        level: 2,
+        name: /four ways to grow with prism\./i,
       }),
     ).toBeInTheDocument()
     expect(

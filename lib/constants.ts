@@ -44,10 +44,11 @@ export const FREE_AUDIT_CTA_TEXT = "Get a free growth audit"
 export type NavItem = { label: string; href: string }
 
 export const NAV_ITEMS: NavItem[] = [
-  { label: "websites", href: "/websites" },
-  { label: "founder os", href: "/founder-os" },
-  { label: "results", href: "/case-studies" },
-  { label: "wall of love", href: "/wall-of-love" },
-  { label: "free audit", href: "/get-started" },
+  { label: "order", href: "/websites" },
+  { label: "content os", href: "/content-os" },
+  { label: "dental os", href: "/dental-os" },
+  { label: "prism infinity", href: "/prism-infinity" },
+  { label: "pricing", href: "/pricing" },
+  { label: "get started", href: "/get-started" },
   { label: "contact", href: "/contact" },
 ]
