@@ -206,7 +206,10 @@ export default function CoreImage({
           className={`${className} ${!loaded && !error ? "opacity-0" : "opacity-100"} transition-opacity duration-300 hardware-accelerated ${disableShadow ? '' : 'drop-shadow-md'}`}
           priority={priority}
           sizes={sizes || (validWidth < 640 ? "100vw" : validWidth < 1024 ? "50vw" : "33vw")}
-          quality={quality || 85}
+          // Default to the lighter configured tier (next.config `qualities:
+          // [75, 90]`); 85 silently snapped up to 90. Surfaces that need 90
+          // (navbar logo, hero art) pass it explicitly.
+          quality={quality || 75}
           placeholder="blur"
           blurDataURL={blurDataURL}
           // Bypass Next.js optimizer for legacy local files with spaces in the path

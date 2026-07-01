@@ -29,6 +29,7 @@ import {
   type PointerEvent as ReactPointerEvent,
 } from 'react'
 
+import CoverFlowStaticFallback from '@/components/home/CoverFlowStaticFallback'
 import type { HomepageClientWinSlide } from '@/components/home/homepage-content'
 import { useMobile } from '@/hooks/use-mobile'
 import { cn } from '@/lib/utils'
@@ -723,7 +724,7 @@ export default function HomeClientCoverFlow({
                           <div className="pointer-events-none absolute inset-x-0 top-0 p-3">
                             <span
                               className={cn(
-                                'inline-flex items-center rounded-full border border-white/16 px-2.5 py-1 font-mono text-[8px] font-semibold uppercase tracking-[0.16em] text-[#e7e0d4]',
+                                'inline-flex items-center rounded-full border border-white/16 px-2.5 py-1 font-mono text-[10px] font-semibold uppercase tracking-[0.16em] text-[#e7e0d4]',
                                 isTouch ? 'bg-black/70' : 'bg-black/50 backdrop-blur-sm',
                               )}
                             >
@@ -739,7 +740,7 @@ export default function HomeClientCoverFlow({
                                 className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-[linear-gradient(180deg,transparent,rgba(0,0,0,0.78))]"
                               />
                               <div className="pointer-events-none absolute inset-x-0 bottom-0 p-3.5">
-                                <span className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-full border border-[#d8bc79]/40 bg-black/55 px-3 py-1.5 font-mono text-[9px] font-semibold uppercase tracking-[0.18em] text-[#f5f0e8] backdrop-blur-sm">
+                                <span className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-full border border-[#d8bc79]/40 bg-black/55 px-3 py-1.5 font-mono text-[10px] font-semibold uppercase tracking-[0.18em] text-[#f5f0e8] backdrop-blur-sm">
                                   View case study
                                   <ArrowUpRight
                                     className="h-3 w-3 text-[#d8bc79]"
@@ -799,7 +800,7 @@ export default function HomeClientCoverFlow({
               <span aria-hidden="true" className="text-white/20">
                 ·
               </span>
-              <span className="font-mono text-[9px] uppercase tracking-[0.16em] text-[#8f877b]">
+              <span className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#8f877b]">
                 {activeSlide.metric.source}
               </span>
             </p>
@@ -829,7 +830,7 @@ export default function HomeClientCoverFlow({
                   'homepage client cover flow caption',
                 )
               }
-              className="group inline-flex items-center gap-1.5 text-[#b8afa2] transition-colors duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:text-[#f5f0e8] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[#d8bc79]/35 focus-visible:ring-offset-4 focus-visible:ring-offset-black motion-reduce:transition-none"
+              className="group -my-3 inline-flex min-h-11 items-center gap-1.5 py-3 text-[#b8afa2] transition-colors duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:text-[#f5f0e8] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[#d8bc79]/35 focus-visible:ring-offset-4 focus-visible:ring-offset-black motion-reduce:transition-none"
             >
               View case study
               <ArrowUpRight
@@ -909,49 +910,3 @@ function CoverFlowButton({ direction, onClick }: CoverFlowButtonProps) {
   )
 }
 
-function CoverFlowStaticFallback({
-  slides,
-}: {
-  slides: readonly HomepageClientWinSlide[]
-}) {
-  return (
-    <div
-      className="flex snap-x snap-mandatory gap-4 overflow-x-auto overscroll-x-contain px-1 pb-2 scrollbar-hide"
-      role="list"
-      aria-label="Client websites built with Prism"
-    >
-      {slides.map((slide) => (
-        <Link
-          key={`${slide.href}-${slide.company}`}
-          href={slide.href}
-          prefetch={false}
-          role="listitem"
-          aria-label={`Open the ${slide.company} case study`}
-          className="group/cover relative block w-[62vw] max-w-[15rem] shrink-0 snap-start overflow-hidden rounded-[1.4rem] border border-white/10 bg-[#0c0c0b] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[#d8bc79]/45 focus-visible:ring-offset-4 focus-visible:ring-offset-black"
-        >
-          <div className="relative aspect-[3/4]">
-            <Image
-              src={slide.image}
-              alt={`${slide.company} website built by Prism`}
-              fill
-              sizes="(max-width: 640px) 62vw, 240px"
-              className="object-cover object-top"
-            />
-            <div
-              aria-hidden="true"
-              className="pointer-events-none absolute inset-x-0 bottom-0 h-2/5 bg-[linear-gradient(180deg,transparent,rgba(0,0,0,0.82))]"
-            />
-            <div className="absolute inset-x-0 bottom-0 p-3.5">
-              <p className="font-sans text-[0.95rem] font-medium leading-tight text-[#f5f0e8]">
-                {slide.company}
-              </p>
-              <p className="mt-1 font-mono text-[9px] font-semibold uppercase tracking-[0.18em] text-[#b8afa2]">
-                {slide.location}
-              </p>
-            </div>
-          </div>
-        </Link>
-      ))}
-    </div>
-  )
-}

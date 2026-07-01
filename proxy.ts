@@ -49,5 +49,11 @@ export function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/:path*"],
+  // Skip Next's own asset pipeline and static files: canonical-host and
+  // trailing-slash redirects only matter for page routes, and running the
+  // proxy on /_next/* + media added invocation latency to requests that
+  // should be pure CDN hits.
+  matcher: [
+    "/((?!_next/static|_next/image|favicon.ico|favicon-rounded.png|animations/|ascii/|logos/|pixelish/|home-hero/|case-studies/|unicorn/|.*\\.(?:png|jpg|jpeg|gif|webp|avif|svg|ico|json|js|css|map|woff|woff2|ttf|otf|mp4|webm|mp3)$).*)",
+  ],
 };

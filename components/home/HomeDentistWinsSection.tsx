@@ -4,7 +4,7 @@ import {
   coreRouteContainerClassName,
   coreRouteSectionCompactClassName,
 } from '@/components/core-route/CoreRoutePrimitives'
-import HomeClientCoverFlow from '@/components/home/HomeClientCoverFlow'
+import HomeClientCoverFlowLazy from '@/components/home/HomeClientCoverFlowLazy'
 import HomeReveal from '@/components/home/HomeReveal'
 import { HOMEPAGE_CLIENT_WINS } from '@/components/home/homepage-content'
 import TrackedLink from '@/components/tracked-link'
@@ -63,7 +63,7 @@ export default function HomeDentistWinsSection() {
           </HomeReveal>
 
           <HomeReveal delay={120}>
-            <HomeClientCoverFlow slides={slides} />
+            <HomeClientCoverFlowLazy slides={slides} />
           </HomeReveal>
         </div>
       </div>

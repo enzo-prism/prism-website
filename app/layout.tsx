@@ -121,16 +121,34 @@ export default function RootLayout({
           </>
         )}
         {IS_PRODUCTION_ENV && (
-          <Script id="hotjar-loader" strategy="lazyOnload">
+          // Hotjar instruments DOM mutation/scroll/input observers — one of
+          // the heaviest third parties for input latency on low-end phones.
+          // Load it only after the visitor first interacts (or after 12s as
+          // a fallback) instead of on every page load.
+          <Script id="hotjar-loader" strategy="afterInteractive">
             {`
-              (function(h,o,t,j,a,r){
-                h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
-                h._hjSettings={hjid:3698826,hjsv:6};
-                a=o.getElementsByTagName('head')[0];
-                r=o.createElement('script');r.async=1;
-                r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
-                a.appendChild(r);
-              })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+              (function(){
+                var loaded = false;
+                function loadHotjar(){
+                  if (loaded) return;
+                  loaded = true;
+                  ['pointerdown','scroll','keydown','touchstart'].forEach(function(evt){
+                    window.removeEventListener(evt, loadHotjar);
+                  });
+                  (function(h,o,t,j,a,r){
+                    h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+                    h._hjSettings={hjid:3698826,hjsv:6};
+                    a=o.getElementsByTagName('head')[0];
+                    r=o.createElement('script');r.async=1;
+                    r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+                    a.appendChild(r);
+                  })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+                }
+                ['pointerdown','scroll','keydown','touchstart'].forEach(function(evt){
+                  window.addEventListener(evt, loadHotjar, { passive: true, once: false });
+                });
+                setTimeout(loadHotjar, 12000);
+              })();
             `}
           </Script>
         )}

@@ -131,11 +131,13 @@ export function optimizeScrollPerformance(): void {
                          !navigator.maxTouchPoints &&
                          !window.matchMedia("(pointer: coarse)").matches
 
-  // Only apply webkit-overflow-scrolling on actual touch devices, not Safari desktop
+  // Only apply webkit-overflow-scrolling on actual touch devices, not Safari desktop.
+  // Note: do NOT set `overscroll-behavior: none` here — it disables
+  // pull-to-refresh and native edge behavior, which a marketing site
+  // gains nothing from suppressing.
   if (isTouchDevice() && !isSafariDesktop) {
     // Set CSS properties for better scrolling on mobile
     html.style.setProperty("-webkit-overflow-scrolling", "touch")
-    html.style.setProperty("overscroll-behavior", "none")
   } else if (isSafariDesktop) {
     // Remove any scroll-related styles for Safari desktop
     html.style.removeProperty("-webkit-overflow-scrolling")
@@ -383,20 +385,15 @@ export function initializeScrollOptimizations(): void {
     return
   }
 
-  // Wait for DOM to be ready
+  // Wait for DOM to be ready.
+  // preventScrollBounce() is intentionally no longer wired up: it registered
+  // a passive touchmove handler that called preventDefault (a silent no-op
+  // that still ran JS on every touch frame during scroll).
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", () => {
       optimizeScrollPerformance()
-      // Only prevent scroll bounce on actual touch devices
-      if (isTouchDevice() && /iPad|iPhone|iPod/.test(navigator.userAgent)) {
-        preventScrollBounce()
-      }
     })
   } else {
     optimizeScrollPerformance()
-    // Only prevent scroll bounce on actual touch devices
-    if (isTouchDevice() && /iPad|iPhone|iPod/.test(navigator.userAgent)) {
-      preventScrollBounce()
-    }
   }
 }
