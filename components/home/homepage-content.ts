@@ -406,7 +406,7 @@ export const HOMEPAGE_PROBLEM = {
     {
       label: 'Search',
       iconSrc: '/pixelish/lens.svg',
-      brandLogo: 'googleMaps',
+      brandLogo: 'google',
     },
     { label: 'Reviews', iconSrc: '/pixelish/emoji-heart.svg' },
     {
@@ -471,10 +471,17 @@ export const HOMEPAGE_SERVICE_ITEMS: readonly HomepageIconCard[] = [
   },
   {
     title: 'Search',
-    description: 'Show up on Google and Maps when people look.',
+    description: 'Show up on Google when people search for what you do.',
+    iconSrc: '/pixelish/lens.svg',
+    brandLogo: 'google',
+    href: '/seo',
+  },
+  {
+    title: 'Local & Maps',
+    description: 'Win the Google map pack and local searches near you.',
     iconSrc: '/pixelish/lens.svg',
     brandLogo: 'googleMaps',
-    href: '/seo',
+    href: '/local-seo-services',
   },
   {
     title: 'Reviews & proof',

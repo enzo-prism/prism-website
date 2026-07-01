@@ -1,3 +1,4 @@
+import BrandLogo, { type BrandLogoKey } from "@/components/brand-logo"
 import FAQSection from "@/components/faq-section"
 import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
@@ -68,18 +69,27 @@ const budgetGuards = [
   },
 ]
 
-const platforms = [
+type AdPlatform = {
+  name: string
+  why: string
+  logoBrands?: readonly BrandLogoKey[]
+}
+
+const platforms: readonly AdPlatform[] = [
   {
     name: "Google Ads",
     why: "High-intent searches when people need you now.",
+    logoBrands: ["google"],
   },
   {
     name: "Facebook & Instagram",
     why: "Precise audiences plus creative that builds demand and trust.",
+    logoBrands: ["facebook", "instagram"],
   },
   {
     name: "TikTok",
     why: "Native, fast-moving creative that grabs attention and converts.",
+    logoBrands: ["tiktok"],
   },
   {
     name: "Yelp Ads",
@@ -332,6 +342,22 @@ export default async function AdsPage() {
           <div className="mx-auto mt-12 grid max-w-4xl gap-6 sm:grid-cols-2">
             {platforms.map(platform => (
               <div key={platform.name} className="rounded-2xl border border-neutral-200 bg-white p-6 text-left shadow-sm">
+                <div className="mb-4 flex items-center gap-2">
+                  {platform.logoBrands?.length ? (
+                    platform.logoBrands.map(brand => (
+                      <span
+                        key={brand}
+                        className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-neutral-200 bg-neutral-50"
+                      >
+                        <BrandLogo brand={brand} decorative className="h-4.5 w-4.5" />
+                      </span>
+                    ))
+                  ) : (
+                    <span className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-neutral-200 bg-neutral-50 text-neutral-500">
+                      <Check className="h-4 w-4" aria-hidden />
+                    </span>
+                  )}
+                </div>
                 <span className="text-xs font-medium uppercase tracking-wide text-neutral-400">channel</span>
                 <h3 className="mt-2 text-xl font-semibold text-neutral-900">{platform.name}</h3>
                 <p className="mt-2 text-sm text-neutral-600">{platform.why}</p>

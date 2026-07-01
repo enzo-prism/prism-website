@@ -141,7 +141,7 @@ describe('ClientPage homepage flow', () => {
 
     expect(
       container.querySelectorAll('[data-home-service-card]'),
-    ).toHaveLength(7)
+    ).toHaveLength(8)
     expect(container.querySelectorAll('[data-home-fit-card]')).toHaveLength(3)
     expect(
       container.querySelectorAll('[data-home-proof-card]').length,

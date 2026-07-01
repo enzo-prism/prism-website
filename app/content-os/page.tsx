@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import type { ReactNode } from 'react'
 import { Globe, Megaphone, Share2, Sparkles } from 'lucide-react'
 
+import BrandLogo, { type BrandLogoKey } from '@/components/brand-logo'
 import Footer from '@/components/footer'
 import Navbar from '@/components/navbar'
 import {
@@ -89,10 +90,25 @@ const STEPS = [
 ] as const
 
 const PROOF_TILES = [
-  { platform: 'YouTube', value: '24,000', detail: '3M+ views' },
-  { platform: 'Instagram', value: '38,000', detail: '10M+ views' },
-  { platform: 'TikTok', value: '9,000', detail: '4M+ views' },
-] as const
+  {
+    platform: 'YouTube',
+    brand: 'youtube',
+    value: '24,000',
+    detail: '3M+ views',
+  },
+  {
+    platform: 'Instagram',
+    brand: 'instagram',
+    value: '38,000',
+    detail: '10M+ views',
+  },
+  { platform: 'TikTok', brand: 'tiktok', value: '9,000', detail: '4M+ views' },
+] as const satisfies readonly {
+  platform: string
+  brand: BrandLogoKey
+  value: string
+  detail: string
+}[]
 
 const FAQ_ITEMS = [
   {
@@ -275,9 +291,17 @@ export default function ContentOsPage() {
                   key={tile.platform}
                   className="border border-white/12 bg-[#070707] p-6"
                 >
-                  <p className="font-mono text-[0.68rem] uppercase tracking-[0.24em] text-[#8f877b]">
-                    {tile.platform}
-                  </p>
+                  <div className="flex items-center gap-2">
+                    <BrandLogo
+                      brand={tile.brand}
+                      theme="dark"
+                      decorative
+                      className="h-4 w-4"
+                    />
+                    <p className="font-mono text-[0.68rem] uppercase tracking-[0.24em] text-[#8f877b]">
+                      {tile.platform}
+                    </p>
+                  </div>
                   <p className="mt-6 font-sans text-[2.6rem] font-medium leading-none tracking-[-0.05em] text-[#d8bc79]">
                     {tile.value}
                   </p>

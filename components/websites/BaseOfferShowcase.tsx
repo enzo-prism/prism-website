@@ -162,14 +162,20 @@ export default function BaseOfferShowcase() {
               <p className="font-mono text-[0.68rem] uppercase tracking-[0.26em] text-[#8f877b]">
                 Flat price
               </p>
-              <div className="relative mt-1 overflow-hidden">
+              <div className="relative mt-1">
                 <span className="block text-[clamp(2.8rem,8vw,3.8rem)] font-medium leading-none tracking-[-0.06em] text-[#f5f0e8] tabular-nums">
                   $300
                 </span>
+                {/* The shimmer sweep lives in its own clipped layer so
+                    overflow-hidden contains the animation without slicing the
+                    number's glyph ink (leading-none makes the line box 1em, so
+                    a clip on the text itself would crop the bottom of $300). */}
                 <span
                   aria-hidden="true"
-                  className="base-offer-shimmer pointer-events-none absolute inset-y-2 -left-1/2 w-1/2 bg-[linear-gradient(100deg,transparent,rgba(245,240,232,0.5),transparent)] blur-[1px]"
-                />
+                  className="pointer-events-none absolute inset-0 overflow-hidden"
+                >
+                  <span className="base-offer-shimmer absolute inset-y-2 -left-1/2 w-1/2 bg-[linear-gradient(100deg,transparent,rgba(245,240,232,0.5),transparent)] blur-[1px]" />
+                </span>
               </div>
             </div>
             <div className="relative ml-auto text-right">

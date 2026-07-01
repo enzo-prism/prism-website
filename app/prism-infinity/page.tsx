@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import type { ReactNode } from 'react'
 
+import BrandLogo, { type BrandLogoKey } from '@/components/brand-logo'
 import Footer from '@/components/footer'
 import Navbar from '@/components/navbar'
 import {
@@ -120,7 +121,12 @@ const BENEFITS = [
   },
 ] as const
 
-const PROOF_STATS = [
+const PROOF_STATS: readonly {
+  value: string
+  label: string
+  detail: string
+  brand?: BrandLogoKey
+}[] = [
   {
     value: '$100,000',
     label: 'revenue driven for clients',
@@ -130,16 +136,19 @@ const PROOF_STATS = [
     value: '24,000',
     label: 'YouTube followers',
     detail: '3M+ views',
+    brand: 'youtube',
   },
   {
     value: '38,000',
     label: 'Instagram followers',
     detail: '10M+ views',
+    brand: 'instagram',
   },
   {
     value: '9,000',
     label: 'TikTok followers',
     detail: '4M+ views',
+    brand: 'tiktok',
   },
 ] as const
 
@@ -400,7 +409,15 @@ export default function PrismInfinityPage() {
                     <dt className="font-sans text-[clamp(1.9rem,4vw,2.6rem)] font-medium leading-none tracking-[-0.04em] text-[#d8bc79]">
                       {stat.value}
                     </dt>
-                    <dd className="mt-3 text-sm leading-6 text-[#b8afa2]">
+                    <dd className="mt-3 flex items-center gap-2 text-sm leading-6 text-[#b8afa2]">
+                      {stat.brand ? (
+                        <BrandLogo
+                          brand={stat.brand}
+                          theme="dark"
+                          decorative
+                          className="h-3.5 w-3.5 shrink-0"
+                        />
+                      ) : null}
                       {stat.label}
                     </dd>
                     <dd className="mt-1 font-mono text-[0.66rem] uppercase tracking-[0.2em] text-[#7d766a]">
