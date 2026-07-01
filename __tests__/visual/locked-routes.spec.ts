@@ -290,7 +290,7 @@ test('home fit and service cards stay contained across responsive breakpoints', 
       {
         heading: /one team\. the whole system\./i,
         cardSelector: '[data-home-service-card]',
-        expectedCount: 7,
+        expectedCount: 8,
       },
     ]
 

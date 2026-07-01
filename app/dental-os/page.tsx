@@ -285,7 +285,7 @@ export default function DentalOsPage() {
                 <li key={item.name} className="bg-black">
                   <div className="flex flex-col gap-2 p-6 sm:flex-row sm:items-baseline sm:gap-6">
                     <div className="flex items-baseline gap-3 sm:w-52 sm:shrink-0">
-                      <span className="font-mono text-[0.7rem] uppercase tracking-[0.24em] text-[#6f685d]">
+                      <span className="font-mono text-[0.7rem] uppercase tracking-[0.24em] text-[#8f877b]">
                         {String(index + 1).padStart(2, '0')}
                       </span>
                       <h3 className="text-lg font-medium tracking-[-0.03em] text-[#f5f0e8]">
@@ -367,13 +367,13 @@ export default function DentalOsPage() {
                     <span className="mt-4 text-sm leading-6 text-[#b8afa2]">
                       {metric.label}
                     </span>
-                    <span className="mt-5 font-mono text-[0.64rem] uppercase tracking-[0.16em] text-[#6f685d]">
+                    <span className="mt-5 font-mono text-[0.64rem] uppercase tracking-[0.16em] text-[#8f877b]">
                       {metric.source}
                     </span>
                   </Link>
                 ))}
               </div>
-              <p className="mt-6 font-mono text-[0.66rem] uppercase tracking-[0.16em] text-[#6f685d]">
+              <p className="mt-6 font-mono text-[0.66rem] uppercase tracking-[0.16em] text-[#8f877b]">
                 Source: Google Search Console
               </p>
 
@@ -402,7 +402,7 @@ export default function DentalOsPage() {
                           className="mt-1 h-4 w-4 shrink-0 text-[#d8bc79] transition-transform group-hover:translate-x-0.5"
                         />
                       </div>
-                      <p className="mt-4 font-mono text-[0.64rem] uppercase tracking-[0.18em] text-[#6f685d]">
+                      <p className="mt-4 font-mono text-[0.64rem] uppercase tracking-[0.18em] text-[#8f877b]">
                         {client.location}
                       </p>
                     </Link>

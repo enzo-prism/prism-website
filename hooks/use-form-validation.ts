@@ -52,6 +52,7 @@ export function useFormValidation(options?: UseFormValidationOptions) {
     setHasSubmitted(true)
     const newErrors: ErrorMap = {}
     let isValid = true
+    let firstInvalidField: ValidFieldElement | null = null
 
     fields.forEach((field) => {
       if (!field.name) return
@@ -59,10 +60,29 @@ export function useFormValidation(options?: UseFormValidationOptions) {
       newErrors[field.name] = fieldError
       if (fieldError) {
         isValid = false
+        firstInvalidField ??= field
       }
     })
 
     setErrors((prev) => ({ ...prev, ...newErrors }))
+
+    // On long forms the submit button sits below the fold of the first
+    // error; without this, a failed submit on mobile looks like nothing
+    // happened. Bring the first invalid field into view and focus it.
+    if (firstInvalidField) {
+      const field = firstInvalidField as ValidFieldElement
+      if (typeof field.scrollIntoView === "function") {
+        const prefersReducedMotion =
+          typeof window !== "undefined" &&
+          window.matchMedia?.("(prefers-reduced-motion: reduce)").matches
+        field.scrollIntoView({
+          behavior: prefersReducedMotion ? "auto" : "smooth",
+          block: "center",
+        })
+      }
+      field.focus({ preventScroll: true })
+    }
+
     return isValid
   }, [])
 

@@ -348,16 +348,14 @@ body.is-scrolling-fast .animation-paused {
 
 /* Allow browser default zoom/gestures; scope touch-action to interactive elements only */
 
-/* Allow touch interactions on clickable elements */
+/* Allow touch interactions on clickable elements.
+   Note: no `user-select: none` here — blocking selection on links breaks
+   copying link text (emails, phone numbers) and reads as a web-view jail. */
 a,
 button,
 [role='button'],
 .mobile-blog-card {
   touch-action: manipulation;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
 }
 
 /* Allow text selection in text content areas */
@@ -387,9 +385,36 @@ select {
   user-select: text;
 }
 
-/* Prevent double-tap zoom */
+/* Mobile nav panel entrance (transform/opacity only; motion-safe gated at
+   the call site). */
+@keyframes nav-panel-in {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes nav-item-rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Quiet tap highlight; double-tap zoom is already prevented by
+   touch-action: manipulation on interactive elements. The universal
+   -webkit-touch-callout: none was removed: it disabled iOS long-press
+   previews / open-in-new-tab / image saving site-wide. Decorative media
+   that needs it (hero loop videos) sets it locally. */
 * {
-  -webkit-touch-callout: none;
   -webkit-tap-highlight-color: transparent;
 }
 
@@ -630,19 +655,27 @@ select {
     animation-play-state: running;
   }
 
-  /* Enhanced scroll performance classes */
-  body.is-scrolling * {
-    animation-play-state: paused !important;
+  /* Horizontal container padding that respects notch/safe-area insets in
+     landscape (viewport-fit=cover extends layout under the sensor housing). */
+  .container-px-safe {
+    padding-left: max(1rem, env(safe-area-inset-left));
+    padding-right: max(1rem, env(safe-area-inset-right));
   }
 
-  /* Use this opt-in class on heavy elements if you still want to disable transitions while scrolling */
+  @media (min-width: 640px) {
+    .container-px-safe {
+      padding-left: max(1.5rem, env(safe-area-inset-left));
+      padding-right: max(1.5rem, env(safe-area-inset-right));
+    }
+  }
+
+  /* Scroll performance classes (opt-in only).
+     The old blanket rules (`body.is-scrolling * { animation-play-state:
+     paused }` and `body.is-scrolling-fast * { animation: none }`) were
+     removed: they froze ambient signal loops mid-scroll and restarted
+     entrance animations from zero after a fast wheel scroll. */
   body.is-scrolling .disable-transitions-during-scroll {
     transition: none !important;
-  }
-
-  body.is-scrolling-fast * {
-    will-change: auto !important;
-    animation: none !important;
   }
 
   body.is-scrolling-slow [data-scroll-animate] {
@@ -1514,17 +1547,20 @@ select {
     @apply bg-transparent text-foreground;
   }
 
-  /* Make Pixel the default “voice” for headings across the site.
-     Body copy stays Geist Sans via `font-sans` on <body>. */
+  /* Headings default to the Geist Sans display voice (see DESIGN.md:
+     "Pixel is an accent language, not the default reading system").
+     No !important here: authored utility classes (size / tracking /
+     leading / font) must always win. The previous pixel-era block used
+     `!important`, which silently overrode every display heading on the
+     site with +0.08em tracking and capped sizes. */
   h1,
   h2,
   h3,
   h4,
   h5,
   h6 {
-    font-family: var(--font-pixel);
-    letter-spacing: 0.08em !important;
-    /* Prevent lonely words/widows in big Pixel headings. */
+    font-family: var(--font-sans);
+    letter-spacing: -0.03em;
     text-wrap: balance;
   }
 
@@ -1532,19 +1568,22 @@ select {
     font-family: var(--font-pixel-accent);
   }
 
+  /* Fallback scale for legacy headings authored without explicit text-*
+     classes (Tailwind preflight would otherwise render them at body size).
+     Authored utilities override these. */
   main h1 {
-    font-size: var(--prism-type-h1) !important;
-    line-height: 1.02 !important;
+    font-size: var(--prism-type-h1);
+    line-height: 1.02;
   }
 
   main h2 {
-    font-size: var(--prism-type-h2) !important;
-    line-height: 1.08 !important;
+    font-size: var(--prism-type-h2);
+    line-height: 1.08;
   }
 
   main h3 {
-    font-size: var(--prism-type-h3) !important;
-    line-height: 1.14 !important;
+    font-size: var(--prism-type-h3);
+    line-height: 1.14;
   }
 
   /* Founder OS surfaces use the light Geist voice — sans headings with tight

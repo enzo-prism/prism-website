@@ -373,7 +373,7 @@ export default function PricingPageClient() {
               </Link>
             ))}
           </div>
-          <p className="mt-4 font-mono text-[0.68rem] uppercase tracking-[0.16em] text-[#6f685d]">
+          <p className="mt-4 font-mono text-[0.68rem] uppercase tracking-[0.16em] text-[#8f877b]">
             Source: Google Search Console
           </p>
 

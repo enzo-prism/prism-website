@@ -198,6 +198,7 @@ export default function BaseOfferShowcase() {
                   key={feature.label}
                   type="button"
                   aria-expanded={isActive}
+                  aria-controls={`base-offer-detail-${index}`}
                   onMouseEnter={() => setActiveIndex(index)}
                   onMouseLeave={() => setActiveIndex(null)}
                   onFocus={() => setActiveIndex(index)}
@@ -229,11 +230,15 @@ export default function BaseOfferShowcase() {
                       {feature.label}
                     </span>
                     <span
+                      id={`base-offer-detail-${index}`}
                       className={cn(
                         'block max-w-[26ch] overflow-hidden text-[0.82rem] leading-6 text-[#9a9288] transition-[max-height,opacity,margin] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]',
+                        // Hover-revealed on fine pointers; on touch there is
+                        // no affordance that these cells expand, so keep the
+                        // detail copy visible by default.
                         isActive
                           ? 'mt-1.5 max-h-16 opacity-100'
-                          : 'max-h-0 opacity-0',
+                          : 'max-h-0 opacity-0 pointer-coarse:mt-1.5 pointer-coarse:max-h-16 pointer-coarse:opacity-100',
                       )}
                     >
                       {feature.detail}

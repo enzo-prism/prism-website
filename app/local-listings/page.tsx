@@ -687,12 +687,10 @@ export default async function LocalListingsPage() {
         serviceType="Local SEO"
         areaServed="United States"
         offerDetails={{
-          name: '60-Day Growth Sprint',
+          name: 'Prism local visibility',
           description:
-            'Focused local visibility, listings, review, and reporting sprint scoped from the Prism Growth Dashboard and audit path.',
+            "Listings, review flows, local visibility, and reporting delivered under Prism's productized offers.",
           businessFunction: 'http://purl.org/goodrelations/v1#ProvideService',
-          price: '3500',
-          priceCurrency: 'USD',
           availability: 'https://schema.org/InStock',
           url: 'https://www.design-prism.com/pricing',
         }}

@@ -115,7 +115,9 @@ describe('Navbar', () => {
     const logoGlow = screen.getByTestId('navbar-logo-glow')
 
     expect(logoLink.className).toContain('group/logo')
-    expect(logoLink.className).toContain('focus-visible:ring-[#5cdcff]/40')
+    // Focus rings stay warm/neutral per the design contract; the cyan/pink
+    // refraction accents are reserved for the hover glow treatment.
+    expect(logoLink.className).toContain('focus-visible:ring-white/30')
     expect(logoMark.className).toContain(
       'motion-safe:group-hover/logo:scale-105',
     )

@@ -370,7 +370,7 @@ export default function ContentOsPage() {
                 <details key={item.question} className="group py-6">
                   <summary className="flex cursor-pointer list-none items-center justify-between gap-6 text-left text-xl font-medium tracking-[-0.04em] text-[#f5f0e8]">
                     {item.question}
-                    <span className="text-[#d8bc79] transition-transform group-open:rotate-45">
+                    <span className="text-[#d8bc79] transition-transform group-open:rotate-45 motion-reduce:transition-none">
                       +
                     </span>
                   </summary>

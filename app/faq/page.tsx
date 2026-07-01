@@ -19,7 +19,7 @@ const faqs = [
   },
   {
     question: "How much does a website cost?",
-    answer: "Start by creating a free Prism Growth Dashboard. Prism then prepares a Light Audit, may recommend a normally $500 Deep Growth Audit, and scopes any 60-day sprint from the diagnosis. Sprints start at $3,500."
+    answer: "A Prism website is a flat $300, one-time. That covers design, build, and launch, with an optional $100/month care plan for hosting-level upkeep, edits, and support. For bigger systems — Content OS, Dental OS, or Prism Infinity — see the pricing page."
   },
   {
     question: "What's included in your website development service?",
@@ -43,11 +43,11 @@ const faqs = [
   },
   {
     question: "What is your digital marketing approach?",
-    answer: "Our digital marketing approach combines SEO, paid ads, conversion-focused creative, reviews, local visibility, and clear analytics. Prism starts with diagnosis, then recommends the focused sprint or ongoing growth partner level that matches the highest-leverage opportunities."
+    answer: "Our digital marketing approach combines SEO, paid ads, conversion-focused creative, reviews, local visibility, and clear analytics. Content OS installs a content engine that compounds, and Prism Infinity covers every Prism service under one monthly plan when you want us running the whole system."
   },
   {
     question: "Do you provide ongoing support and maintenance?",
-    answer: "Yes. Ongoing growth partner support is usually recommended after a sprint creates signal. Partnerships start at $1,500/month and commonly range from $2,000-$3,500+/month depending on scope."
+    answer: "Yes. Websites can add a $100/month care plan for updates, edits, and support. For ongoing growth across everything — websites, content, SEO, ads, and more — Prism Infinity is $2,000/month with unlimited requests, one at a time."
   },
   {
     question: "What is 'The Prism Method'?",
@@ -67,7 +67,7 @@ const faqs = [
   },
   {
     question: "What's your payment structure?",
-    answer: "The Growth Dashboard is free to start, the Light Audit is included after intake, the Deep Growth Audit is normally $500, and focused 60-day sprints start at $3,500. Ongoing growth partner work starts at $1,500/month after fit is clear."
+    answer: "Simple flat pricing: the Website is $300 one-time, Content OS is $5,000 to implement over 3 months then $1,000/month, Dental OS is custom-quoted after a call, and Prism Infinity is $2,000/month. You can also start free — create a Growth Dashboard and request a free deep audit from the team."
   },
   {
     question: "How do you measure success?",
@@ -77,55 +77,55 @@ const faqs = [
 
 export default function FAQPage() {
   return (
-    <>
+    <div className="flex min-h-screen flex-col bg-transparent text-[#f5f0e8]">
       <Navbar />
-      <main className="min-h-screen bg-white">
-        <div className="container mx-auto px-4 py-16">
-          <div className="max-w-4xl mx-auto">
-            <header className="text-center mb-16">
-              <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-                frequently asked questions
+      <main className="flex-1" id="main-content" tabIndex={-1}>
+        <div className="container mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-24">
+          <div className="mx-auto max-w-3xl">
+            <header className="mb-14 sm:mb-20">
+              <p className="font-mono text-[10px] font-medium uppercase tracking-[0.26em] text-[#8f877b]">
+                FAQ
+              </p>
+              <h1 className="mt-4 text-balance font-sans text-[clamp(2.05rem,4.8vw,3.65rem)] font-medium leading-[1] tracking-[-0.05em] text-[#f5f0e8]">
+                Frequently asked questions
               </h1>
-              <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-                Get answers to common questions about our web development, app development, and digital marketing services.
+              <p className="mt-5 max-w-[44rem] text-pretty font-sans text-[1.05rem] leading-7 text-[#b8afa2]">
+                Answers to common questions about our web development, app
+                development, and digital marketing services.
               </p>
             </header>
 
-            <div className="space-y-6">
-              {faqs.map((faq, index) => (
-                <div
-                  key={index}
-                  className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm hover:shadow-md transition-shadow"
-                >
-                  <h2 className="text-xl font-semibold text-gray-900 mb-3">
+            <dl className="divide-y divide-white/12 border-y border-white/12">
+              {faqs.map((faq) => (
+                <div key={faq.question} className="py-7 sm:py-8">
+                  <dt className="font-sans text-[1.15rem] font-medium leading-snug tracking-[-0.02em] text-[#f5f0e8]">
                     {faq.question}
-                  </h2>
-                  <p className="text-gray-600 leading-relaxed">
+                  </dt>
+                  <dd className="mt-3 text-pretty font-sans text-[0.98rem] leading-7 text-[#b8afa2]">
                     {faq.answer}
-                  </p>
+                  </dd>
                 </div>
               ))}
-            </div>
+            </dl>
 
-            <div className="mt-16 text-center">
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">
-                still have questions?
+            <div className="mt-16 sm:mt-20">
+              <h2 className="font-sans text-[1.7rem] font-medium leading-tight tracking-[-0.03em] text-[#f5f0e8]">
+                Still have questions?
               </h2>
-              <p className="text-gray-600 mb-8">
-                We're here to help! Get in touch with our team for personalized answers.
+              <p className="mt-3 max-w-[40rem] text-pretty font-sans text-[0.98rem] leading-7 text-[#b8afa2]">
+                We&apos;re here to help. Get in touch with the team for
+                personalized answers.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
                 <a
                   href="mailto:support@design-prism.com"
-                  className="inline-flex items-center px-6 py-3 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors"
+                  className="inline-flex min-h-12 items-center justify-center rounded-md bg-[#f5f0e8] px-6 font-sans text-[0.95rem] font-medium text-[#050505] transition-colors hover:bg-white focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-white/30 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
                 >
-                  Email Us
+                  Email us
                 </a>
                 <a
                   href="/get-started"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
+                  className="inline-flex min-h-12 items-center justify-center rounded-md border border-white/16 bg-white/[0.03] px-6 font-sans text-[0.95rem] font-medium text-[#f5f0e8] transition-colors hover:border-white/30 hover:bg-white/[0.06] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-white/30 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
                 >
                   {FREE_AUDIT_CTA_TEXT}
                 </a>
@@ -136,6 +136,6 @@ export default function FAQPage() {
       </main>
       <Footer />
       <FAQSchema questions={faqs} />
-    </>
+    </div>
   )
 }

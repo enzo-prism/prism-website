@@ -105,7 +105,7 @@ export default function HomeProofSection() {
                   </span>
                 </div>
 
-                <p className="mt-auto border-t border-white/10 pt-4 font-mono text-[9px] font-semibold uppercase tracking-[0.18em] text-[#8f877b] transition-colors duration-500 group-hover:text-[#bdb5a8] motion-reduce:transition-none">
+                <p className="mt-auto border-t border-white/10 pt-4 font-mono text-[10px] font-semibold uppercase tracking-[0.18em] text-[#8f877b] transition-colors duration-500 group-hover:text-[#bdb5a8] motion-reduce:transition-none">
                   {study.signal?.outcome ?? study.category}
                 </p>
               </Link>

@@ -1487,7 +1487,7 @@ export default function GetStartedForm() {
       className={cn(
         styles.formFrame,
         styles.scanlines,
-        'mx-auto min-h-[min(720px,calc(100vh-8rem))] max-w-[760px] border border-white/10 bg-[#080808] p-5 sm:p-8',
+        'mx-auto min-h-[min(720px,calc(100dvh-8rem))] max-w-[760px] border border-white/10 bg-[#080808] p-5 sm:p-8',
       )}
       action={FORM_ACTION}
       method="POST"
@@ -1593,7 +1593,7 @@ export default function GetStartedForm() {
           </div>
         </div>
 
-        <div className="sticky bottom-0 z-20 -mx-5 border-t border-white/10 bg-[#080808] px-5 pb-4 pt-4 sm:static sm:mx-0 sm:bg-transparent sm:px-0 sm:pb-0 sm:pt-5">
+        <div className="sticky bottom-0 z-20 -mx-5 border-t border-white/10 bg-[#080808] px-5 pb-[max(1rem,env(safe-area-inset-bottom))] pt-4 sm:static sm:mx-0 sm:bg-transparent sm:px-0 sm:pb-0 sm:pt-5">
           <div className="flex items-center gap-3">
             {stepIndex > 0 ? (
               <Button

@@ -91,7 +91,7 @@ const legalLinks: FooterItem[] = [
 
 // Shared visible-focus ring; per-link offset is appended at the call site.
 const focusRing =
-  'focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[#5cdcff]/40 focus-visible:ring-offset-black'
+  'focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-white/30 focus-visible:ring-offset-black'
 
 type FooterProps = {
   variant?: 'default' | 'home'
@@ -162,13 +162,13 @@ export default function Footer({ variant: _variant = 'default' }: FooterProps) {
                 <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.24em] text-[#8f877b]">
                   {column.heading}
                 </p>
-                <ul className="space-y-0.5">
+                <ul className="space-y-1">
                   {column.links.map((item) => (
                     <li key={item.label}>
                       <Link
                         href={item.href}
                         prefetch={false}
-                        className={`inline-flex min-h-10 items-center rounded-sm text-sm text-[#b8afa2] transition-colors hover:text-[#f5f0e8] focus-visible:ring-offset-2 ${focusRing}`}
+                        className={`inline-flex min-h-11 items-center rounded-sm text-sm text-[#b8afa2] transition-colors hover:text-[#f5f0e8] focus-visible:ring-offset-2 ${focusRing}`}
                       >
                         {item.label}
                       </Link>
@@ -196,7 +196,7 @@ export default function Footer({ variant: _variant = 'default' }: FooterProps) {
                   key={item.href}
                   href={item.href}
                   prefetch={false}
-                  className={`inline-flex min-h-10 items-center rounded-sm text-xs text-[#8f877b] transition-colors hover:text-[#f5f0e8] focus-visible:ring-offset-2 ${focusRing}`}
+                  className={`inline-flex min-h-11 items-center rounded-sm text-xs text-[#8f877b] transition-colors hover:text-[#f5f0e8] focus-visible:ring-offset-2 ${focusRing}`}
                 >
                   {item.label}
                 </Link>

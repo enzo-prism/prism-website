@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
 
 import Footer from '@/components/footer'
+import MobileOrderBar from '@/components/websites/MobileOrderBar'
 import Navbar from '@/components/navbar'
 import BaseOfferShowcase from '@/components/websites/BaseOfferShowcase'
 import WebsiteOrderForm from '@/components/forms/WebsiteOrderForm'
@@ -305,7 +306,7 @@ export default function WebsitesPage() {
                     </li>
                   ))}
                 </ul>
-                <p className="mt-4 font-mono text-[0.68rem] uppercase tracking-[0.16em] text-[#6f685d]">
+                <p className="mt-4 font-mono text-[0.68rem] uppercase tracking-[0.16em] text-[#8f877b]">
                   Source: Google Search Console
                 </p>
               </div>
@@ -375,7 +376,7 @@ export default function WebsitesPage() {
                   rel="noopener noreferrer"
                   className="group bg-black p-5 transition-colors hover:bg-[#0b0b0b] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[#d8bc79]/35"
                 >
-                  <p className="font-mono text-[0.68rem] uppercase tracking-[0.24em] text-[#6f685d]">
+                  <p className="font-mono text-[0.68rem] uppercase tracking-[0.24em] text-[#8f877b]">
                     {String(index + 1).padStart(2, '0')} / {project.category}
                   </p>
                   <h2 className="mt-5 text-xl font-medium tracking-[-0.04em] text-[#f5f0e8]">
@@ -457,7 +458,7 @@ export default function WebsitesPage() {
                 <details key={item.question} className="group py-6">
                   <summary className="flex cursor-pointer list-none items-center justify-between gap-6 text-left text-xl font-medium tracking-[-0.04em] text-[#f5f0e8]">
                     {item.question}
-                    <span className="text-[#d8bc79] transition-transform group-open:rotate-45">
+                    <span className="text-[#d8bc79] transition-transform group-open:rotate-45 motion-reduce:transition-none">
                       +
                     </span>
                   </summary>
@@ -488,6 +489,7 @@ export default function WebsitesPage() {
         }}
       />
       <FAQSchema questions={[...FAQ_ITEMS]} />
+      <MobileOrderBar />
     </div>
   )
 }

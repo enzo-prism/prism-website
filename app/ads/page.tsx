@@ -560,12 +560,10 @@ export default async function AdsPage() {
         serviceType="Digital marketing"
         areaServed="United States"
         offerDetails={{
-          name: "60-Day Growth Sprint",
+          name: "Prism ads management",
           description:
-            "Focused ads, landing path, creative testing, and tracking sprint scoped from the Prism Growth Dashboard and audit path.",
+            "Full-funnel paid ads with creative, targeting, landing paths, and tracking, delivered under Prism's productized offers.",
           businessFunction: "http://purl.org/goodrelations/v1#ProvideService",
-          price: "3500",
-          priceCurrency: "USD",
           availability: "https://schema.org/InStock",
           url: "https://www.design-prism.com/pricing",
         }}

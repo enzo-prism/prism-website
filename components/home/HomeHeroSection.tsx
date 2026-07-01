@@ -228,6 +228,9 @@ export default function HomeHeroSection() {
                                 src={`/home-hero/social/${channel.platform.toLowerCase()}.svg`}
                                 alt=""
                                 aria-hidden="true"
+                                width={22}
+                                height={15}
+                                loading="lazy"
                                 className="h-[15px] w-auto max-w-[22px] shrink-0"
                               />
                               <span className="font-mono text-[10px] font-semibold uppercase tracking-[0.2em] text-[#b8afa2] transition-colors group-hover/social:text-[#d6cec2]">

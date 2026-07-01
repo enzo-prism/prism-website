@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation'
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 
 import Breadcrumbs from '@/components/breadcrumbs'
-import { CASE_STUDIES } from '@/lib/case-study-data'
+import { findCaseStudyNavItem } from '@/lib/case-study-nav-data'
 import { LOGO_CONFIG, NAV_ITEMS } from '@/lib/constants'
 import { cn } from '@/lib/utils'
 import { trackNavigation } from '@/utils/analytics'
@@ -35,7 +35,7 @@ const MOBILE_LINK_CLASSES =
 // as a filled CTA (ivory on near-black per the hero-primary-button token).
 const PRIMARY_CTA = { label: 'Order now', href: '/websites' } as const
 const CTA_BASE_CLASSES =
-  'items-center justify-center rounded-md bg-[#f5f0e8] font-semibold uppercase tracking-[0.2em] text-[#050505] transition-colors hover:bg-white focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[#5cdcff]/40 focus-visible:ring-offset-2 focus-visible:ring-offset-black'
+  'items-center justify-center rounded-md bg-[#f5f0e8] font-semibold uppercase tracking-[0.2em] text-[#050505] transition-colors hover:bg-white focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-white/30 focus-visible:ring-offset-2 focus-visible:ring-offset-black'
 
 function getCaseStudyBreadcrumbs(
   pathname: string | null,
@@ -51,8 +51,7 @@ function getCaseStudyBreadcrumbs(
   if (parts.length <= 1) return null
 
   const slug = parts[1]
-  const match = CASE_STUDIES.find((study) => study.slug === slug)
-  const label = match?.client ?? slug.replace(/-/g, ' ')
+  const label = findCaseStudyNavItem(slug)?.client ?? slug.replace(/-/g, ' ')
   return [...baseTrail, { name: label, url: pathname }]
 }
 
@@ -88,15 +87,21 @@ function NavbarLinks({
 }) {
   return (
     <>
-      {NAV_ITEMS.map((item) => (
+      {NAV_ITEMS.map((item, index) => (
         <Link
           key={item.href}
           href={item.href}
           onClick={() => onNavigate(item.label, item.href)}
-          className={getNavItemClasses(
-            isNavItemActive(pathname, item.href),
-            variant,
+          className={cn(
+            getNavItemClasses(isNavItemActive(pathname, item.href), variant),
+            variant === 'mobile' &&
+              'motion-safe:animate-[nav-item-rise_360ms_cubic-bezier(0.22,1,0.36,1)_both]',
           )}
+          style={
+            variant === 'mobile'
+              ? { animationDelay: `${index * 40}ms` }
+              : undefined
+          }
         >
           {item.label}
         </Link>
@@ -119,6 +124,20 @@ export default function Navbar() {
   useEffect(() => {
     if (!isMobileMenuOpen) return
 
+    // Full-screen menu: lock the page behind it (touch scroll otherwise
+    // chains to the body) and make it inert so focus cannot tab into
+    // content underneath the panel.
+    const { body } = document
+    const previousOverflow = body.style.overflow
+    body.style.overflow = 'hidden'
+
+    const inertTargets = Array.from(
+      document.querySelectorAll<HTMLElement>('main, footer'),
+    ).filter((element) => !element.closest('header'))
+    inertTargets.forEach((element) => {
+      element.setAttribute('inert', '')
+    })
+
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') setIsMobileMenuOpen(false)
     }
@@ -135,6 +154,10 @@ export default function Navbar() {
     return () => {
       document.removeEventListener('keydown', handleKeyDown)
       window.removeEventListener('resize', handleResize)
+      body.style.overflow = previousOverflow
+      inertTargets.forEach((element) => {
+        element.removeAttribute('inert')
+      })
     }
   }, [isMobileMenuOpen])
 
@@ -178,10 +201,10 @@ export default function Navbar() {
         isHome ? 'fixed inset-x-0 top-0 z-50' : 'sticky top-0 z-50 w-full',
       )}
     >
-      <div className="container mx-auto flex h-[72px] items-center justify-between px-4 sm:px-6">
+      <div className="container-px-safe container mx-auto flex h-[72px] items-center justify-between">
         <Link
           href="/"
-          className="group/logo flex min-w-0 items-center gap-3 rounded-full text-[#f5f0e8] transition-[color,transform] duration-300 ease-out hover:text-white focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[#5cdcff]/40 focus-visible:ring-offset-4 focus-visible:ring-offset-black motion-safe:hover:-translate-y-0.5"
+          className="group/logo flex min-w-0 items-center gap-3 rounded-full text-[#f5f0e8] transition-[color,transform] duration-300 ease-out hover:text-white focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-white/30 focus-visible:ring-offset-4 focus-visible:ring-offset-black motion-safe:hover:-translate-y-0.5"
           onClick={() => trackNavigation('logo', '/')}
           aria-label="Prism home"
         >
@@ -215,7 +238,7 @@ export default function Navbar() {
             <span className="whitespace-nowrap text-sm font-semibold uppercase tracking-[0.22em] text-[#f5f0e8] transition-[color,transform] duration-300 ease-out group-hover/logo:text-white group-focus-visible/logo:text-white motion-safe:group-hover/logo:translate-x-px motion-safe:group-focus-visible/logo:translate-x-px">
               Prism
             </span>
-            <span className="max-[360px]:hidden whitespace-nowrap text-[10px] font-medium uppercase tracking-[0.26em] text-[#b8afa2] transition-[color,transform] duration-300 ease-out group-hover/logo:text-[#5cdcff] group-focus-visible/logo:text-[#5cdcff] motion-safe:group-hover/logo:translate-x-0.5 motion-safe:group-focus-visible/logo:translate-x-0.5">
+            <span className="max-[479px]:hidden whitespace-nowrap text-[10px] font-medium uppercase tracking-[0.26em] text-[#b8afa2] transition-[color,transform] duration-300 ease-out group-hover/logo:text-[#5cdcff] group-focus-visible/logo:text-[#5cdcff] motion-safe:group-hover/logo:translate-x-0.5 motion-safe:group-focus-visible/logo:translate-x-0.5">
               impossible is temporary
             </span>
             <span
@@ -241,11 +264,14 @@ export default function Navbar() {
             href={PRIMARY_CTA.href}
             onClick={() => handleNavigate('order-cta', PRIMARY_CTA.href)}
             className={cn(
-              'hidden whitespace-nowrap px-4 py-2 text-[11px] md:inline-flex',
+              // Keep the primary action reachable on phones too; only the
+              // narrowest viewports (<400px) fall back to the menu CTA.
+              'inline-flex whitespace-nowrap px-3.5 py-2 text-[10px] max-[359px]:hidden sm:px-4 sm:text-[11px]',
               CTA_BASE_CLASSES,
             )}
           >
-            {PRIMARY_CTA.label}
+            <span className="sm:hidden">Order</span>
+            <span className="hidden sm:inline">{PRIMARY_CTA.label}</span>
           </Link>
 
           <button
@@ -286,11 +312,11 @@ export default function Navbar() {
       {isMobileMenuOpen ? (
         <div
           id={MOBILE_NAV_ID}
-          className="h-[calc(100dvh-72px)] overflow-y-auto overscroll-contain border-t border-white/12 bg-black xl:hidden"
+          className="h-[calc(100dvh-72px)] overflow-y-auto overscroll-contain border-t border-white/12 bg-black motion-safe:animate-[nav-panel-in_220ms_cubic-bezier(0.22,1,0.36,1)_both] xl:hidden"
         >
           <nav
             aria-label="Mobile"
-            className="container mx-auto flex min-h-full flex-col px-4 pb-[max(1.5rem,env(safe-area-inset-bottom))] sm:px-6"
+            className="container-px-safe container mx-auto flex min-h-full flex-col pb-[max(1.5rem,env(safe-area-inset-bottom))]"
           >
             <div className="divide-y divide-white/12">
               <NavbarLinks

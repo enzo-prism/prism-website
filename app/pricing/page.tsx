@@ -7,7 +7,7 @@ import { buildRouteMetadata } from '@/lib/seo/metadata'
 export const metadata: Metadata = buildRouteMetadata({
   titleStem: 'Pricing & growth plans',
   description:
-    'Prism pricing starts with a free Growth Dashboard and Light Audit, then a Deep Growth Audit, focused 60-day sprints, and ongoing growth support.',
+    'Prism pricing: a $300 flat-fee website, Content OS at $5,000 + $1,000/month, custom Dental OS, and Prism Infinity at $2,000/month for unlimited services.',
   path: '/pricing',
   ogImage: '/prism-opengraph.png',
 })

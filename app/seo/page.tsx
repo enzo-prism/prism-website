@@ -575,12 +575,10 @@ export default async function SeoPage() {
         serviceType="SEO services"
         areaServed="United States"
         offerDetails={{
-          name: "60-Day Growth Sprint",
+          name: "Prism SEO services",
           description:
-            "Focused SEO, local visibility, content, and tracking sprint scoped from the Prism Growth Dashboard and audit path.",
+            "On-page structure, off-page authority, content, and tracking delivered under Prism's productized offers.",
           businessFunction: "http://purl.org/goodrelations/v1#Sell",
-          price: "3500",
-          priceCurrency: "USD",
           availability: "https://schema.org/InStock",
           url: "https://www.design-prism.com/pricing",
         }}

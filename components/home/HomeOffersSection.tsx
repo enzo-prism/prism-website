@@ -5,6 +5,7 @@ import {
   coreRouteSectionClassName,
   CoreSectionHeading,
 } from '@/components/core-route/CoreRoutePrimitives'
+import HomeReveal from '@/components/home/HomeReveal'
 import {
   CANONICAL_PRICING_OFFERS,
   PRICING_OFFER_ORDER,
@@ -22,11 +23,13 @@ export default function HomeOffersSection() {
   return (
     <section id="offers" className={coreRouteSectionClassName}>
       <div className={coreRouteContainerClassName}>
-        <CoreSectionHeading
-          eyebrow="What you can order"
-          title="Four ways to grow with Prism."
-          description="Start with a website for $300, or plug in a system that runs your content, your whole dental front office, or every Prism service at once."
-        />
+        <HomeReveal>
+          <CoreSectionHeading
+            eyebrow="What you can order"
+            title="Four ways to grow with Prism."
+            description="Start with a website for $300, or plug in a system that runs your content, your whole dental front office, or every Prism service at once."
+          />
+        </HomeReveal>
 
         <div className="mt-12 grid gap-4 sm:gap-5 lg:grid-cols-2">
           {PRICING_OFFER_ORDER.map((offerId, index) => {
@@ -34,14 +37,18 @@ export default function HomeOffersSection() {
             const isLead = offerId === 'website'
 
             return (
-              <div
+              <HomeReveal
                 key={offerId}
-                className={cn(
-                  coreRoutePanelClassName,
-                  'flex flex-col gap-5 p-6 transition-[transform,border-color,box-shadow] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 hover:border-[#d8bc79]/35 hover:shadow-[0_28px_60px_-40px_rgba(216,188,121,0.5)] motion-reduce:transition-none sm:p-8',
-                  isLead && 'border-white/20 bg-black/45',
-                )}
+                delay={80 + index * 60}
+                className="h-full"
               >
+                <div
+                  className={cn(
+                    coreRoutePanelClassName,
+                    'flex h-full flex-col gap-5 p-6 transition-[transform,border-color,box-shadow] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 hover:border-[#d8bc79]/35 hover:shadow-[0_28px_60px_-40px_rgba(216,188,121,0.5)] motion-reduce:transition-none sm:p-8',
+                    isLead && 'border-white/20 bg-black/45',
+                  )}
+                >
                 <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.24em] text-[#7d766a]">
                   {OFFER_INDEX_LABELS[offerId] ?? `0${index + 1}`}
                 </p>
@@ -65,17 +72,18 @@ export default function HomeOffersSection() {
                   </p>
                 </div>
 
-                <div className="mt-auto pt-2">
-                  <CoreActionLink
-                    href={offer.primaryCta.href}
-                    label={offer.primaryCta.label.toLowerCase()}
-                    location={`homepage offers · ${offer.name}`}
-                    variant="primary"
-                  >
-                    {offer.primaryCta.label}
-                  </CoreActionLink>
+                  <div className="mt-auto pt-2">
+                    <CoreActionLink
+                      href={offer.primaryCta.href}
+                      label={offer.primaryCta.label.toLowerCase()}
+                      location={`homepage offers · ${offer.name}`}
+                      variant="primary"
+                    >
+                      {offer.primaryCta.label}
+                    </CoreActionLink>
+                  </div>
                 </div>
-              </div>
+              </HomeReveal>
             )
           })}
         </div>

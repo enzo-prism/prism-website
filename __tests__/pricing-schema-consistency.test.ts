@@ -16,11 +16,14 @@ describe("pricing schema consistency", () => {
     })
   }
 
-  it("keeps service schemas aligned to the 60-day Growth Sprint starting price", () => {
+  it("keeps retired pricing out of service schemas", () => {
     for (const relativePath of schemaPages) {
       const content = fs.readFileSync(path.join(process.cwd(), relativePath), "utf8")
-      expect(content).toMatch(/name: ["']60-Day Growth Sprint["']/)
-      expect(content).toMatch(/price: ["']3500["']/)
+      // The five-tier ladder (60-day sprints at $3,500) is retired; service
+      // schemas publish price-free offers that point at /pricing instead of
+      // claiming amounts that can rot.
+      expect(content).not.toMatch(/60-Day Growth Sprint/)
+      expect(content).not.toMatch(/price: ["']3500["']/)
       expect(content).not.toContain('price: "1000"')
       expect(content).not.toContain('price: "2000"')
       expect(content).not.toContain('billingPeriod: "P1M"')
