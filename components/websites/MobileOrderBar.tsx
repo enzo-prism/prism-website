@@ -68,7 +68,7 @@ export default function MobileOrderBar() {
           </p>
         </div>
         <a
-          href="#start"
+          href="#order"
           tabIndex={visible ? 0 : -1}
           onClick={() =>
             trackCTAClick('start your website', 'websites mobile order bar')

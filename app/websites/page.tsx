@@ -179,7 +179,7 @@ export default function WebsitesPage() {
 
               <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
                 <CoreActionLink
-                  href="#start"
+                  href="#order"
                   variant="heroPrimary"
                   label="start your website"
                   location="websites hero"

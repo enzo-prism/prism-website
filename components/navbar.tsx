@@ -126,10 +126,14 @@ export default function Navbar() {
 
     // Full-screen menu: lock the page behind it (touch scroll otherwise
     // chains to the body) and make it inert so focus cannot tab into
-    // content underneath the panel.
-    const { body } = document
-    const previousOverflow = body.style.overflow
+    // content underneath the panel. Both scrollers are locked: body
+    // overflow alone does not reach the viewport when the root element
+    // carries its own overflow styles.
+    const { body, documentElement } = document
+    const previousBodyOverflow = body.style.overflow
+    const previousHtmlOverflow = documentElement.style.overflow
     body.style.overflow = 'hidden'
+    documentElement.style.overflow = 'hidden'
 
     const inertTargets = Array.from(
       document.querySelectorAll<HTMLElement>('main, footer'),
@@ -154,7 +158,8 @@ export default function Navbar() {
     return () => {
       document.removeEventListener('keydown', handleKeyDown)
       window.removeEventListener('resize', handleResize)
-      body.style.overflow = previousOverflow
+      body.style.overflow = previousBodyOverflow
+      documentElement.style.overflow = previousHtmlOverflow
       inertTargets.forEach((element) => {
         element.removeAttribute('inert')
       })

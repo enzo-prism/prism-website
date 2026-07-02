@@ -409,6 +409,77 @@ select {
   }
 }
 
+/* Fullscreen website-order flow (launcher overlay on /websites).
+   Transform/opacity only; every use is motion-safe gated at the call site. */
+@keyframes order-overlay-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes order-panel-in {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes order-step-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes order-rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes order-commit-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Gold underline draws left-to-right, then settles to a quiet hairline. */
+@keyframes order-commit-underline {
+  0% {
+    transform: scaleX(0);
+    background-color: rgba(216, 188, 121, 0.9);
+  }
+  55% {
+    transform: scaleX(1);
+    background-color: rgba(216, 188, 121, 0.9);
+  }
+  100% {
+    transform: scaleX(1);
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+}
+
 /* Quiet tap highlight; double-tap zoom is already prevented by
    touch-action: manipulation on interactive elements. The universal
    -webkit-touch-callout: none was removed: it disabled iOS long-press
@@ -2912,35 +2983,11 @@ select {
   }
 }
 
-/* Safari Desktop Specific Fixes */
-@supports (-webkit-appearance: none) and (not (-webkit-touch-callout: none)) {
-  /* This targets Safari desktop only */
-  html {
-    scroll-behavior: auto !important;
-    overflow: visible !important;
-    height: auto !important;
-  }
-
-  body {
-    scroll-behavior: auto !important;
-    -webkit-overflow-scrolling: auto !important;
-    overflow-y: auto !important;
-    position: relative !important;
-    height: auto !important;
-    min-height: 100vh !important;
-  }
-
-  .scroll-smooth {
-    scroll-behavior: auto !important;
-  }
-
-  /* Fix any containers that might block scrolling */
-  main,
-  div[role='main'] {
-    height: auto !important;
-    overflow: visible !important;
-  }
-}
+/* The legacy "Safari Desktop Specific Fixes" block was removed here. Its
+   @supports condition — (-webkit-appearance) and (not (-webkit-touch-callout))
+   — is actually TRUE in every non-iOS engine (Chromium, Firefox), and its
+   `html { overflow: visible !important } body { overflow-y: auto !important }`
+   defeated every modal scroll lock (mobile nav, order dialog) site-wide. */
 
 /* Safari scroll container fixes */
 @supports (-webkit-appearance: none) {
