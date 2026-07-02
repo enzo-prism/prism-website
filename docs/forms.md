@@ -26,6 +26,7 @@ const { handleSubmit, getError, isSubmitting } = useFormValidation({
 - `components/forms/ContactForm.tsx`
 - `components/forms/GetStartedForm.tsx` (`/apply`)
 - `components/forms/WebsiteOrderForm.tsx` (`/websites`; replaces the retired `WebsiteBuildEstimatorForm.tsx`)
+- `components/forms/ReferralForm.tsx` (`/refer`; $100-per-closed-referral program)
 - `components/forms/FounderOsApplicationForm.tsx` (legacy archival form code; `/founder-os/apply` now 301-redirects to `/content-os` and should not receive active traffic)
 - `components/forms/ScalingRoadmapForm.tsx`
 - `components/ai-website-launch/AiWebsiteLaunchForm.tsx` (legacy archival form code; the `/ai-website-launch` route redirects to `/pricing` in production and should not receive active traffic)
@@ -241,6 +242,16 @@ Success criteria from these tests:
 Important routing note:
 
 - `/offers` now redirects to `/pricing` in production and is noindex. If you need to verify the legacy AEO discoverability wiring there, test the `OffersClientPage` component directly rather than treating `/offers` as an active search surface.
+
+## `/refer` referral form ($100 program)
+
+- Component: `components/forms/ReferralForm.tsx`, rendered by `app/refer/page.tsx` (dark system; replaced the legacy light page + external Typeform).
+- Offer: a flat `$100` referral payout, paid when the referred business becomes a paying Prism client (website, Content OS, Dental OS, or Prism Infinity). Fine print lives on the page; keep "referral payout, not service pricing" framing so pricing-consistency context rules stay satisfied if legacy tokens ever reappear.
+- Endpoint: `NEXT_PUBLIC_REFERRAL_FORM_ENDPOINT`, **temporarily falling back to the shared contact Formspree inbox (`xjkjbpdb`)** until a dedicated Formspree form is created. Submissions are identifiable by `form_key=referral` / `_subject: "New referral — $100 program"`. To wire the real backend: create the Formspree form, then set the env var (or replace the fallback constant in `ReferralForm.tsx`).
+- Fields: `referrer_name`\*, `referrer_email`\*, `friend_name`\*, `friend_business`, `friend_contact`\* (email or phone, free text), `friend_need`, `note` + standard ops fields (`FormspreeOpsFields formKey="referral"`), `_gotcha` honeypot, hidden `form_name=referral`.
+- Success: in-page success state with a "Refer another friend" reset (keeps the referrer's name/email, clears the friend fields). No thank-you route.
+- Analytics: `trackFormSubmission('referral', 'referral_form', { conversionMode: 'immediate', sendGoogleAdsConversion: false })` — referral payouts are not sales leads.
+- Entry points: /tiktok /ig /youtube link hubs ("Refer a friend" card), footer Company column, `/referral` + `/referrals` + `/affiliate` redirects.
 
 ## Thank-you pages
 

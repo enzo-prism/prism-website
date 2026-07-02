@@ -467,8 +467,8 @@ export default async function LocalListingsPage() {
                 know someone struggling with listings?
               </h3>
               <p className="mt-3 text-sm text-neutral-600">
-                Send them to our referral program. We’ll run a listings audit,
-                share next steps, and pay you when they partner with Prism.
+                Send them to our referral program. We take it from there, and
+                you get $100 when they become a Prism client.
               </p>
             </div>
             <Button

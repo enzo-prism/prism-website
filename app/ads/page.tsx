@@ -415,7 +415,7 @@ export default async function AdsPage() {
               <span className="text-xs font-semibold uppercase tracking-[0.28em] text-neutral-400">referral program</span>
               <h3 className="mt-3 text-2xl font-semibold lowercase text-neutral-900">know a team who needs better ads?</h3>
               <p className="mt-3 text-sm text-neutral-600">
-                Point them to Prism’s referral program. We’ll audit their accounts, share the plan, and pay you when they launch.
+                Point them to Prism’s referral program. We take it from there, and you get $100 when they become a client.
               </p>
             </div>
             <Button asChild size="lg" className="mt-6 rounded-full px-8 sm:mt-0">

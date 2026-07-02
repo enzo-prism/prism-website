@@ -95,7 +95,7 @@ describe('SocialLinkHub', () => {
     jest.clearAllMocks()
   })
 
-  it('frames the page around the studio, not gratitude, with six routed actions', () => {
+  it('frames the page around the studio, not gratitude, with seven routed actions', () => {
     render(<SocialLinkHub platform="tiktok" />)
 
     expect(
@@ -112,7 +112,7 @@ describe('SocialLinkHub', () => {
     const nav = screen.getByRole('navigation', {
       name: /tiktok page actions/i,
     })
-    expect(within(nav).getAllByRole('link')).toHaveLength(6)
+    expect(within(nav).getAllByRole('link')).toHaveLength(7)
 
     // The retired gratitude/clip-credit framings stay retired.
     expect(screen.queryByText(/thanks for supporting/i)).not.toBeInTheDocument()
@@ -158,6 +158,10 @@ describe('SocialLinkHub', () => {
       'href',
       '/get-started',
     )
+
+    const referLink = screen.getByRole('link', { name: /refer a friend/i })
+    expect(referLink).toHaveAttribute('href', '/refer')
+    expect(referLink).toHaveAttribute('data-cta-text', 'refer a friend')
   })
 
   it('keeps canonical pricing language on the offer cards', () => {
@@ -167,6 +171,9 @@ describe('SocialLinkHub', () => {
     expect(screen.getByText(/\$5,000 \+ \$1,000\/month/i)).toBeInTheDocument()
     expect(
       screen.getByText(/\$2,000\/month · pause anytime/i),
+    ).toBeInTheDocument()
+    expect(
+      screen.getByText(/\$100 when they become a client/i),
     ).toBeInTheDocument()
     // Never the retired "/mo" shorthand.
     expect(screen.queryByText(/\/mo\b/)).not.toBeInTheDocument()

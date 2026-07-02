@@ -37,6 +37,7 @@ const footerColumns: FooterColumn[] = [
       { label: 'Pricing', href: '/pricing' },
       { label: 'Blog', href: '/blog' },
       { label: 'FAQ', href: '/faq' },
+      { label: 'Refer a friend — $100', href: '/refer' },
       { label: 'Contact', href: '/contact' },
     ],
   },

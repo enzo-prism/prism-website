@@ -314,6 +314,20 @@ export default function SocialLinkHub({
 
             <div className="mt-3 grid gap-3">
             <ActionCard
+              title="Refer a friend"
+              detail="$100 when they become a client"
+              href="/refer"
+              location={actionsLocation}
+              icon={
+                <PixelishIcon
+                  src="/pixelish/currency-dollar.svg"
+                  alt=""
+                  size={15}
+                  aria-hidden="true"
+                />
+              }
+            />
+            <ActionCard
               title="Start free"
               detail="growth audit · no pressure"
               href="/get-started"

@@ -163,6 +163,8 @@ images: {
 
       // 2025 legacy cleanup
       { source: '/affiliate', destination: '/refer', permanent: true },
+      { source: '/referral', destination: '/refer', permanent: true },
+      { source: '/referrals', destination: '/refer', permanent: true },
       { source: '/shop', destination: '/pricing', permanent: true },
       { source: '/search', destination: '/blog', permanent: true },
       { source: '/blog/brand-strategy', destination: '/blog', permanent: true },
