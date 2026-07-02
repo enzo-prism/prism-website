@@ -1,11 +1,12 @@
 import type { Metadata } from 'next'
+
 import { WebPageSchema } from '@/components/schema-markup'
-import SocialThanksPage from '@/components/social-thanks-page'
+import SocialLinkHub from '@/components/social-link-hub'
 import { buildRouteMetadata } from '@/lib/seo/metadata'
 
-const PAGE_TITLE = 'Thanks for following Prism on Instagram'
+const PAGE_TITLE = 'Prism on Instagram'
 const PAGE_DESCRIPTION =
-  'Thanks for supporting Prism on Instagram. Go deeper with founder growth guides on YouTube, download Marble for iOS, or become a client.'
+  'The studio behind the feed. Order a $300 flat website, see 22 verified case studies, or explore Content OS and Prism Infinity.'
 const CANONICAL_URL = 'https://www.design-prism.com/ig'
 
 export const metadata: Metadata = buildRouteMetadata({
@@ -19,13 +20,7 @@ export const metadata: Metadata = buildRouteMetadata({
 export default function IGPage() {
   return (
     <>
-      <SocialThanksPage
-        channel={{
-          label: 'Instagram',
-          handle: '@the_design_prism',
-          href: 'https://www.instagram.com/the_design_prism/',
-        }}
-      />
+      <SocialLinkHub platform="instagram" />
       <WebPageSchema
         name={PAGE_TITLE}
         description={PAGE_DESCRIPTION}

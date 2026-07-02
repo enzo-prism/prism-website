@@ -1,25 +1,26 @@
-import type { Metadata } from "next"
-import { WebPageSchema } from "@/components/schema-markup"
-import YouTubeLandingPage from "./youtube-landing-page"
-import { buildRouteMetadata } from "@/lib/seo/metadata"
+import type { Metadata } from 'next'
 
-const PAGE_TITLE = 'Prism on YouTube: growth tactics'
+import { WebPageSchema } from '@/components/schema-markup'
+import SocialLinkHub from '@/components/social-link-hub'
+import { buildRouteMetadata } from '@/lib/seo/metadata'
+
+const PAGE_TITLE = 'Prism on YouTube'
 const PAGE_DESCRIPTION =
-  'Watch the exact tactics Prism uses to build modern growth systems for ambitious local brands and business owners, free on YouTube.'
-const CANONICAL_URL = "https://www.design-prism.com/youtube"
+  'The studio behind the channel. Order a $300 flat website, see 22 verified case studies, or explore Content OS and Prism Infinity.'
+const CANONICAL_URL = 'https://www.design-prism.com/youtube'
 
 export const metadata: Metadata = buildRouteMetadata({
   titleStem: PAGE_TITLE,
   description: PAGE_DESCRIPTION,
-  path: "/youtube",
+  path: '/youtube',
   index: false,
-  ogImage: "/prism-opengraph.png",
+  ogImage: '/prism-opengraph.png',
 })
 
 export default function YouTubePage() {
   return (
     <>
-      <YouTubeLandingPage />
+      <SocialLinkHub platform="youtube" />
       <WebPageSchema
         name={PAGE_TITLE}
         description={PAGE_DESCRIPTION}

@@ -11,12 +11,6 @@ jest.mock("@/app/ai-website-launch/client-page", () => ({
     return null
   },
 }))
-jest.mock("@/components/social-thanks-page", () => ({
-  __esModule: true,
-  default: function MockSocialThanksPage() {
-    return null
-  },
-}))
 jest.mock("@/app/models/client-page", () => ({
   __esModule: true,
   default: function MockModelsPageClient() {
@@ -47,9 +41,9 @@ jest.mock("@/app/pricing-dental/client-page", () => ({
     return null
   },
 }))
-jest.mock("@/app/youtube/youtube-landing-page", () => ({
+jest.mock("@/components/social-link-hub", () => ({
   __esModule: true,
-  default: function MockYouTubeLandingPage() {
+  default: function MockSocialLinkHub() {
     return null
   },
 }))
