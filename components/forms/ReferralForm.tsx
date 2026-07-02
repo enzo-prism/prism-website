@@ -11,17 +11,10 @@ import { useFormValidation } from '@/hooks/use-form-validation'
 import { trackFormSubmission } from '@/utils/analytics'
 import { FormspreeOpsFields } from './FormspreeOpsFields'
 
-/**
- * Referral form: $100 per referral who becomes a Prism client.
- *
- * TEMPORARY ENDPOINT: submissions post to the shared contact inbox
- * (identifiable by form_key="referral") until the dedicated Formspree
- * form exists. To wire the real backend, set
- * NEXT_PUBLIC_REFERRAL_FORM_ENDPOINT or replace the fallback below.
- */
+/** Referral form: $100 per referral who becomes a Prism client. */
 const FORM_ACTION =
   process.env.NEXT_PUBLIC_REFERRAL_FORM_ENDPOINT ??
-  'https://formspree.io/f/xjkjbpdb'
+  'https://formspree.io/f/meebpgaj'
 const FORM_NAME = 'referral'
 const FORM_LOCATION = 'referral_form'
 const FORM_KEY = 'referral'

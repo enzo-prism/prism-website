@@ -247,7 +247,7 @@ Important routing note:
 
 - Component: `components/forms/ReferralForm.tsx`, rendered by `app/refer/page.tsx` (dark system; replaced the legacy light page + external Typeform).
 - Offer: a flat `$100` referral payout, paid when the referred business becomes a paying Prism client (website, Content OS, Dental OS, or Prism Infinity). Fine print lives on the page; keep "referral payout, not service pricing" framing so pricing-consistency context rules stay satisfied if legacy tokens ever reappear.
-- Endpoint: `NEXT_PUBLIC_REFERRAL_FORM_ENDPOINT`, **temporarily falling back to the shared contact Formspree inbox (`xjkjbpdb`)** until a dedicated Formspree form is created. Submissions are identifiable by `form_key=referral` / `_subject: "New referral — $100 program"`. To wire the real backend: create the Formspree form, then set the env var (or replace the fallback constant in `ReferralForm.tsx`).
+- Endpoint: `NEXT_PUBLIC_REFERRAL_FORM_ENDPOINT` ?? `https://formspree.io/f/meebpgaj` (dedicated referral form, wired 2026-07-02). Submissions carry `form_key=referral` / `_subject: "New referral — $100 program"`.
 - Fields: `referrer_name`\*, `referrer_email`\*, `friend_name`\*, `friend_business`, `friend_contact`\* (email or phone, free text), `friend_need`, `note` + standard ops fields (`FormspreeOpsFields formKey="referral"`), `_gotcha` honeypot, hidden `form_name=referral`.
 - Success: in-page success state with a "Refer another friend" reset (keeps the referrer's name/email, clears the friend fields). No thank-you route.
 - Analytics: `trackFormSubmission('referral', 'referral_form', { conversionMode: 'immediate', sendGoogleAdsConversion: false })` — referral payouts are not sales leads.
