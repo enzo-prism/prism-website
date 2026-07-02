@@ -7,7 +7,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Next.js App Router marketing website for Prism's business growth systems. It is built around four productized offers — Website ($300 flat, one-time), Content OS ($5,000 + $1,000/month), Dental OS (custom), and Prism Infinity ($2,000/month) — modeled canonically in `lib/pricing-model.ts`, plus a kept free `/get-started` on-ramp. Supporting surfaces include SEO/AI search, reviews, ads, tracking, photography, proof, and pricing. The site is synced with v0.dev and deployed on Vercel through GitHub Actions.
+Next.js App Router marketing website for Prism's business growth systems. It is built around four productized offers — Website ($300 flat, one-time), Content OS ($5,000 + $1,000/month), Dental OS (custom), and Prism Infinity ($2,000/month) — modeled canonically in `lib/pricing-model.ts`, plus a kept free `/get-started` on-ramp. Supporting surfaces include SEO/AI search, reviews, ads, tracking, photography, proof, pricing, the social link hubs (/tiktok /ig /youtube), and the $100 referral program at /refer. The site is synced with v0.dev and deployed on Vercel through GitHub Actions.
 
 ## Essential Commands
 

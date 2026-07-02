@@ -65,19 +65,20 @@ Quick reference for the pages we edit most often.
   - `/ig`
   - `/youtube`
   - `/tiktok`
+  - `/refer`
   - `/hottest-content`
   - `/ai`
   - `/models`
 - These routes should keep `robots: { index: false, follow: false }` and stay excluded from `app/sitemap.ts`.
 - Do not use these as canonical acquisition pages for SEO campaigns. Point search-facing users toward durable commercial surfaces like `/services`, `/websites`, `/ads`, `/local-listings`, `/pricing`, `/ai-seo-services`, and `/seo`.
-- `/ig` and `/tiktok` are intentionally ultra-minimal social thank-you pages with no global floating assistant. Their shared page (`components/social-thanks-page.tsx`) is a single dark, vertically centered column: a "Thanks for supporting us on {platform}" headline plus exactly four action cards — Prism guides for founders on YouTube, the Marble iOS app on the App Store, the `/wall-of-love` proof page, and a become-a-client handoff into `/get-started`. Keep copy on these pages minimal; do not reintroduce ranked credit lists, product screenshot showcases, or extra sections.
+- `/ig`, `/tiktok`, and `/youtube` are link-in-bio hubs with no global floating assistant. Their shared page (`components/social-link-hub.tsx`) is a single dark, mobile-first column: a platform-aware "You found the studio behind the videos / feed / channel" headline, a two-number proof strip, then seven action cards — Order your website (`/websites#order`, primary), See the proof (`/case-studies`), "The system behind this video/feed/channel" (`/content-os`), Everything Prism unlimited (`/prism-infinity`), Refer a friend (`/refer`, $100), Start free (`/get-started`), and a platform cross-link (the YouTube channel on tiktok/ig, `/wall-of-love` on youtube). The Marble App Store card was removed from the client funnel. Keep copy minimal; do not reintroduce ranked credit lists, product screenshot showcases, gratitude framing, or extra sections.
 - These social routes should keep explicit CTA tracking on the action cards and the header profile link so inbound social traffic is measurable in GA4/Vercel without adding extra UI chrome.
 
 ## Websites (`app/websites/page.tsx`)
 
 - Active offer page for the **Website** product: a custom website for `$300` flat, one-time (not "starting at $300" — it is a flat price). Delivered in ~7 days, infinite iterations until the buyer loves it, and the finished site is 100% theirs. Afterward they can add a `$100/month` care plan or self-host.
-- The flow is **describe → submit → success → pay**: the buyer describes the website they want (as much context as they like), submits (captured via Formspree at `NEXT_PUBLIC_WEBSITE_BUILD_FORM_ENDPOINT` / `https://formspree.io/f/xpqebnbz`), sees an in-page success screen, then pays the `$300` Stripe Payment Link (opens in a new tab) to kick off the build. `components/forms/WebsiteOrderForm.tsx` powers this; the pay button resolves through `lib/payment-links.ts` (`hasPaymentLink("website")` / `paymentLink("website")`, live link `buy.stripe.com/8x2dRa3Aid1gasMeQDdZ60N`, with a `/contact` fallback).
-- The old model is retired: this is **not** review-first / selective / "no card collected", and there is no dynamic price estimator. `WebsiteBuildEstimatorForm.tsx` (the old estimator) is being removed.
+- The flow is **launcher → fullscreen dialog → staged success → pay**: the buyer opens a fullscreen one-question-at-a-time order dialog (from the launcher panel at `#start`/`#order`, the hero CTA, or the sticky `MobileOrderBar` — both target `/websites#order`), answers six steps with a live order-manifest rail, reviews, submits (Formspree at `NEXT_PUBLIC_WEBSITE_BUILD_FORM_ENDPOINT` / `https://formspree.io/f/xpqebnbz`; in-progress answers persist in same-tab `sessionStorage` under `prism_website_order_draft_v1`), then a staged in-dialog success state opens the `$300` Stripe Payment Link (new tab) to kick off the build. `components/forms/WebsiteOrderForm.tsx` powers this; the pay button resolves through `lib/payment-links.ts` (`hasPaymentLink("website")` / `paymentLink("website")`, live link `buy.stripe.com/8x2dRa3Aid1gasMeQDdZ60N`, with a `/contact` fallback).
+- The old model is retired: this is **not** review-first / selective / "no card collected", and there is no dynamic price estimator. `WebsiteBuildEstimatorForm.tsx` (the old estimator) has been removed.
 - Keep the page indexable, in `public/llms.txt`, and in the sitemap as Prism's canonical website-order acquisition page.
 
 ## Content OS (`app/content-os/page.tsx`)
@@ -95,6 +96,11 @@ Quick reference for the pages we edit most often.
 
 - The **Prism Infinity** offer: `$2,000/month` for unlimited Prism services across engineering, design, and marketing (logo/print design, web development, video editing, content, ads, slide decks, in-person photoshoots, and more) on one subscription, pausable/cancelable anytime.
 - Indexable, in `public/llms.txt`, in the sitemap, and carries `ServiceSchema` plus FAQ structured data. The `$2,000/month` token is intentional here and is allowed by `lib/pricing-consistency.ts`.
+
+## Refer (`app/refer/page.tsx`)
+
+- The `$100` referral program page (noindex, sitemap-excluded; `/referral`, `/referrals`, and `/affiliate` all redirect here). Dark system, one column: "A friend who becomes a client. $100." hero, a 3-step how-it-works, the on-page `components/forms/ReferralForm.tsx` (Formspree `NEXT_PUBLIC_REFERRAL_FORM_ENDPOINT` → `meebpgaj`, in-page success with a "Refer another friend" reset), a payout FAQ, and fine print ($100 is a referral payout, not service pricing; paid when the referred business becomes a paying client — website, Content OS, Dental OS, or Prism Infinity; self-referrals excluded; no cap).
+- The retired program ("earn up to $1,000" + external Typeform) must not come back; entry points are the social link hubs' "Refer a friend" card, the footer "Refer a friend — $100" link, and the `/ads` + `/local-listings` referral blurbs.
 
 ## Founder OS (retired → redirects to `/content-os`)
 
@@ -176,7 +182,7 @@ Quick reference for the pages we edit most often.
 
 ## Shared Chrome (`components/navbar.tsx`, `components/footer.tsx`)
 
-- Header nav labels live in `NAV_ITEMS` in `lib/constants.ts`; the current public nav is repositioned around the offers: `order` (`/websites`), `content os`, `dental os`, `prism infinity`, `pricing`, `get started`, and `contact`, plus a persistent "Order now" CTA. The nav was overhauled to be fully responsive, using an `xl` breakpoint with a full-height mobile panel. The footer System column links `Website — $300` and `Content OS` (the old `Founder OS` link became Content OS).
+- Header nav labels live in `NAV_ITEMS` in `lib/constants.ts`; the current public nav is repositioned around the offers: `order` (`/websites`), `content os`, `dental os`, `prism infinity`, `pricing`, `get started`, and `contact`, plus a persistent "Order now" CTA. The nav was overhauled to be fully responsive, using an `xl` breakpoint with a full-height mobile panel that locks scroll on both `html` and `body`, marks the page behind it `inert`, and animates in with staggered links; a compact "Order" CTA stays visible in the header on phones (hidden only below 360px). The footer System column links `Website — $300` and `Content OS` (the old `Founder OS` link became Content OS), and the Company column carries `Refer a friend — $100` (`/refer`).
 - The top-left logo links to `/`, tracks `trackNavigation('logo', '/')`, and has a small hover/focus treatment on the logo mark and wordmark. Keep it tactile but stable: no text reflow, no new route-specific header variants, and respect reduced-motion utilities for transforms.
 - The footer was overhauled to a responsive column grid with monochrome icon socials, and leads with two CTAs: `Order a website` (`/websites`, `label="Order a website"`) and `Get started free` (`/get-started`, `label="Get started free"`), both through `TrackedLink` with `location="footer"`.
 - Do not reintroduce a footer "Book call" button or contact-page demo calendar without changing the funnel docs first.

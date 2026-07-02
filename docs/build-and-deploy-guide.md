@@ -63,7 +63,7 @@ Production is intentionally single-path: GitHub Actions publishes with `vercel d
   - `/websites` publishes the `$300` flat website order (describe → success → Stripe `$300` Payment Link), and `/get-started` keeps the free Growth Dashboard / free-audit on-ramp
   - prices spell `/month` (never `/mo`); the `$2,000/month` token is now valid (Prism Infinity), but retired fixed-plan language such as `Website Overhaul` must not reappear on pricing-sensitive surfaces — `pnpm verify:pricing-consistency` enforces this
   - `/founder-os` redirects to `/content-os`; other legacy pricing routes resolve to `/pricing`
-  - known pending cleanup: `/ads`, `/seo`, `/local-listings` still cite the retired `$3,500` Growth Sprint in copy/schema
+  - `/ads`, `/seo`, `/local-listings` ship price-free offer schemas; `pricing-schema-consistency.test.ts` blocks the retired `$3,500` Growth Sprint schema from returning
 - SEO sign-off when route intent/canonicals changed:
   - `pnpm exec jest __tests__/sitemap.test.ts __tests__/seo-indexability-guards.test.tsx --runInBand`
   - `pnpm seo:inventory && pnpm seo:lint`

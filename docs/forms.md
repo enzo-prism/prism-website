@@ -125,15 +125,16 @@ The `/apply` route should feel like a focused Growth Dashboard mode, not another
   - `trackLeadConversion(...)` on the apply thank-you view after the pending application context is consumed
 - Do not include user-entered names, emails, URLs, free-text notes, or unique per-event timestamps in GA params.
 
-## `/websites` order flow: describe → success → pay `$300`
+## `/websites` order flow: fullscreen dialog → staged success → pay `$300`
 
 `components/forms/WebsiteOrderForm.tsx` powers the `$300` flat website order on `app/websites/page.tsx`. It replaces the retired `WebsiteBuildEstimatorForm.tsx` (the dynamic price estimator). There is **no** price estimator, no `/thank-you` redirect, and no "reviewed before payment" gate — the buyer pays right after submitting.
 
 - User-facing flow:
-  - The buyer **describes** the website they want (as much context as they like) plus name/email/business.
-  - On submit, the description is **captured via Formspree** (no thank-you redirect).
-  - The form then shows an **in-page success screen**.
-  - From the success screen, a pay button **opens the Stripe `$300` Payment Link in a new tab** to kick off the build.
+  - The page renders a **launcher panel**; the launcher button, the hero CTA, and the sticky `MobileOrderBar` (both `/websites#order`) open a **fullscreen one-question-at-a-time dialog** (portal; the page behind is scroll-locked on `html`+`body` and marked `inert`; focus is trapped; Escape closes with state preserved).
+  - Six steps (brand → audience/goal → brief → references → contact → review) with per-step validation, Enter-first keyboard flow, and a live **order-manifest rail** (desktop) / commit strip (mobile).
+  - In-progress answers persist in same-tab `sessionStorage` under `prism_website_order_draft_v1` (restored on reopen/reload; cleared on successful submit — the launcher then reads "Resume your order").
+  - On submit from review, the order is **captured via Formspree** (no thank-you redirect), then a **staged in-dialog success state** appears.
+  - From the success state (and the launcher's post-submit state), a pay button **opens the Stripe `$300` Payment Link in a new tab** to kick off the build.
 - Endpoint strategy (unchanged from the old form):
   - `NEXT_PUBLIC_WEBSITE_BUILD_FORM_ENDPOINT` (defaults to `https://formspree.io/f/xpqebnbz`)
 - Submit flow:
@@ -143,7 +144,7 @@ The `/apply` route should feel like a focused Growth Dashboard mode, not another
 - Stripe pay step:
   - The pay button resolves through `lib/payment-links.ts`: `paymentLink("website")` returns the live link (`https://buy.stripe.com/8x2dRa3Aid1gasMeQDdZ60N`, Stripe product "Website by Prism") or the `/contact` fallback, and `hasPaymentLink("website")` gates whether it opens in a new tab vs. routes to `/contact`.
   - The Website link is live and wired; the optional `$100/month` care, Content OS, and Prism Infinity links still need creating (see `scripts/create-website-link.sh` and `scripts/create-stripe-links.sh`).
-- Keep ops metadata, the honeypot, and any analytics events for this form aligned with the live `WebsiteOrderForm.tsx` source; do not reintroduce estimator-only fields (`estimated_total`, `estimated_range_*`, `price_formula_version`) or the `?source=website-build` thank-you redirect.
+- Keep ops metadata, the honeypot, and any analytics events for this form aligned with the live `WebsiteOrderForm.tsx` source — including the `#order` deep link, the `prism_website_order_draft_v1` draft key, and the dialog scroll-lock/`inert` behavior; do not reintroduce estimator-only fields (`estimated_total`, `estimated_range_*`, `price_formula_version`) or the `?source=website-build` thank-you redirect.
 - Do not include user-entered names, emails, URLs, or free-text notes in analytics params.
 
 ## Retired flow: `/founder-os/apply` + Founder OS application
