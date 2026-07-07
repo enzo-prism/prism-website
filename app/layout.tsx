@@ -91,14 +91,20 @@ export default function RootLayout({
         {IS_ANALYTICS_ENABLED && (
           <>
             {/* Google tag (gtag.js) */}
+            {/* afterInteractive (not lazyOnload): gtag.js must load promptly so
+              queued page_view / generate_lead / Google Ads conversion hits in
+              dataLayer actually flush. lazyOnload waits for browser idle after
+              full load, so fast-bouncing visitors and pre-idle conversions were
+              silently dropped. gtag.js is async and non-render-blocking, so the
+              LCP cost is negligible while data capture becomes reliable. */}
             <Script
               id="ga-loader"
-              strategy="lazyOnload"
+              strategy="afterInteractive"
               src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
             />
             <Script
               id="ga-config"
-              strategy="lazyOnload"
+              strategy="afterInteractive"
               dangerouslySetInnerHTML={{
                 __html: `
                   window.dataLayer = window.dataLayer || [];
