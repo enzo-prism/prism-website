@@ -65,7 +65,10 @@ export default function HomeImpossibleHero() {
     <section
       aria-label="Impossible is temporary"
       data-testid="home-impossible-hero"
-      className="relative flex min-h-[100svh] flex-col items-center justify-center overflow-hidden border-b border-white/12 pb-16 pt-[calc(var(--prism-header-height,4.5rem)+1rem)]"
+      className={cn(
+        'relative flex min-h-[100svh] flex-col items-center justify-center overflow-hidden border-b border-white/12 pb-16 pt-[calc(var(--prism-header-height,4.5rem)+1rem)]',
+        styles.scene,
+      )}
     >
       <div className="flex w-full flex-col items-center">
         <svg
