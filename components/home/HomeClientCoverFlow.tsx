@@ -50,6 +50,35 @@ const CARD_ASPECT = 3 / 4
 const DEPTH_DESKTOP = 3 // visible depth layers each side (fine pointer)
 const DEPTH_TOUCH = 2 // fewer cards composite on phones
 const SWIPE_THRESHOLD = 44
+// A phone swipe is a shorter, thumb-driven gesture than a mouse drag: advance
+// on a lighter travel and catch a gentler flick so the deck feels responsive
+// rather than sticky.
+const SWIPE_THRESHOLD_TOUCH = 30
+const FLICK_VELOCITY = 0.5
+const FLICK_VELOCITY_TOUCH = 0.32
+const HAPTIC_MS = 6
+
+// Elastic drag: track the finger 1:1 within ~a card width, then apply
+// diminishing resistance so a long or fast swipe feels bounded and deliberate
+// instead of sliding the whole deck off into the feathered edge. The release
+// spring still carries it home.
+function rubberBandDrag(dx: number, cardWidth: number) {
+  const limit = cardWidth * 0.9
+  const abs = Math.abs(dx)
+  if (abs <= limit) return dx
+  return Math.sign(dx) * (limit + (abs - limit) * 0.34)
+}
+
+// A single soft tick when the front card changes — premium tactile confirmation
+// on Android (iOS Safari ignores the Vibration API, so it's a no-op there).
+function triggerHaptic() {
+  if (typeof navigator === 'undefined') return
+  try {
+    navigator.vibrate?.(HAPTIC_MS)
+  } catch {
+    /* unsupported, ignore */
+  }
+}
 
 type CardGeometry = {
   x: number
@@ -241,11 +270,18 @@ export default function HomeClientCoverFlow({
     }
   }, [reduceMotion])
 
+  // Mirror the active index in a ref so goTo can fire a haptic only on a real
+  // change without depending on (and re-creating with) activeIndex.
+  const activeIndexRef = useRef(0)
   const goTo = useCallback(
     (next: number) => {
-      setActiveIndex(((next % count) + count) % count)
+      const target = ((next % count) + count) % count
+      if (target === activeIndexRef.current) return
+      if (isTouch) triggerHaptic()
+      activeIndexRef.current = target
+      setActiveIndex(target)
     },
-    [count],
+    [count, isTouch],
   )
 
   const step = useCallback(
@@ -334,13 +370,13 @@ export default function HomeClientCoverFlow({
             if (dt > 0) velocityRef.current = (event.clientX - last.x) / dt
           }
           lastMoveRef.current = { x: event.clientX, t: event.timeStamp }
-          dragX.set(dx)
+          dragX.set(rubberBandDrag(dx, cardWidth))
           return
         }
       }
       if (!isTouch) updateParallax(event.clientX, event.clientY)
     },
-    [dragX, isTouch, resetCamera, tiltRawX, tiltRawY, updateParallax],
+    [cardWidth, dragX, isTouch, resetCamera, tiltRawX, tiltRawY, updateParallax],
   )
 
   // `commit` distinguishes a real release (advance the deck) from an aborted
@@ -361,14 +397,21 @@ export default function HomeClientCoverFlow({
         if (commit) {
           const dx = event.clientX - start.x
           const v = velocityRef.current
-          const isFlick = Math.abs(v) > 0.5
+          // dx here is the raw finger travel (not the rubber-banded visual),
+          // so the intent thresholds read true reach regardless of the elastic
+          // damping applied to the deck's on-screen translation.
+          const isFlick =
+            Math.abs(v) > (isTouch ? FLICK_VELOCITY_TOUCH : FLICK_VELOCITY)
+          const swipeThreshold = isTouch
+            ? SWIPE_THRESHOLD_TOUCH
+            : SWIPE_THRESHOLD
           let steps = 0
           if (isFlick) {
             // A genuine flick can travel multiple cards (capped).
             steps =
               Math.sign(-v) *
               Math.min(1 + Math.round(Math.abs(dx) / (cardWidth * 1.1)), 3)
-          } else if (Math.abs(dx) > SWIPE_THRESHOLD) {
+          } else if (Math.abs(dx) > swipeThreshold) {
             // A deliberate drag past threshold = one card per card-width.
             steps =
               Math.sign(-dx) * Math.max(1, Math.round(Math.abs(dx) / cardWidth))
@@ -804,7 +847,16 @@ export default function HomeClientCoverFlow({
                 {activeSlide.metric.source}
               </span>
             </p>
-          ) : null}
+          ) : (
+            // Reserve the metric line's height on slides without a verified
+            // metric so swiping between metric / no-metric clients doesn't shift
+            // the caption (and the dots below it) up and down on a phone.
+            <p aria-hidden="true" className="mt-2 flex items-center invisible">
+              <span className="font-sans text-[15px] font-semibold">
+                &nbsp;
+              </span>
+            </p>
+          )}
           <p className="mt-2.5 flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-[10px] font-semibold uppercase tracking-[0.2em] text-[#b8afa2]">
             <span className="text-[#d8d0c5]">{activeSlide.contextLabel}</span>
             <span aria-hidden="true" className="text-white/20">
