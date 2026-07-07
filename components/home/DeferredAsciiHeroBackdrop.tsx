@@ -164,6 +164,18 @@ export default function DeferredAsciiHeroBackdrop(
     )
     const handleChange = () => evaluateProfile()
 
+    // resize fires continuously while dragging a window edge; re-resolving the
+    // profile (and re-rendering) on every event is wasteful, so coalesce bursts
+    // into a single rAF-deferred evaluation.
+    let resizeFrame: number | null = null
+    const handleResize = () => {
+      if (resizeFrame !== null) return
+      resizeFrame = window.requestAnimationFrame(() => {
+        resizeFrame = null
+        evaluateProfile()
+      })
+    }
+
     evaluateProfile()
 
     if (reducedMotionQuery.addEventListener) {
@@ -172,7 +184,7 @@ export default function DeferredAsciiHeroBackdrop(
       reducedMotionQuery.addListener(handleChange)
     }
 
-    window.addEventListener('resize', handleChange)
+    window.addEventListener('resize', handleResize)
 
     return () => {
       if (reducedMotionQuery.removeEventListener) {
@@ -180,7 +192,8 @@ export default function DeferredAsciiHeroBackdrop(
       } else {
         reducedMotionQuery.removeListener(handleChange)
       }
-      window.removeEventListener('resize', handleChange)
+      window.removeEventListener('resize', handleResize)
+      if (resizeFrame !== null) window.cancelAnimationFrame(resizeFrame)
     }
   }, [evaluateProfile])
 

@@ -1,7 +1,12 @@
 'use client'
 
 import Link from 'next/link'
-import { useCallback, type PointerEvent as ReactPointerEvent } from 'react'
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  type PointerEvent as ReactPointerEvent,
+} from 'react'
 
 import BrandLogo, {
   type BrandLogoKey,
@@ -37,12 +42,46 @@ const CARD_SPANS = [
 ] as const
 
 export default function HomeSystemGrid({ items }: HomeSystemGridProps) {
+  // The spotlight follows the pointer via CSS custom properties. Writing them
+  // straight from the pointermove handler forces a style recalc per event
+  // (pointermove fires far faster than the display refresh). Coalescing the
+  // read + write into a single rAF keeps hover smooth under rapid movement.
+  const frameRef = useRef<number | null>(null)
+  const pendingRef = useRef<{
+    node: HTMLElement
+    clientX: number
+    clientY: number
+  } | null>(null)
+
   const handlePointerMove = useCallback(
     (event: ReactPointerEvent<HTMLElement>) => {
-      const node = event.currentTarget
-      const rect = node.getBoundingClientRect()
-      node.style.setProperty('--spot-x', `${event.clientX - rect.left}px`)
-      node.style.setProperty('--spot-y', `${event.clientY - rect.top}px`)
+      pendingRef.current = {
+        node: event.currentTarget,
+        clientX: event.clientX,
+        clientY: event.clientY,
+      }
+      if (frameRef.current !== null) return
+      frameRef.current = requestAnimationFrame(() => {
+        frameRef.current = null
+        const pending = pendingRef.current
+        if (!pending) return
+        const rect = pending.node.getBoundingClientRect()
+        pending.node.style.setProperty(
+          '--spot-x',
+          `${pending.clientX - rect.left}px`,
+        )
+        pending.node.style.setProperty(
+          '--spot-y',
+          `${pending.clientY - rect.top}px`,
+        )
+      })
+    },
+    [],
+  )
+
+  useEffect(
+    () => () => {
+      if (frameRef.current !== null) cancelAnimationFrame(frameRef.current)
     },
     [],
   )

@@ -23,6 +23,19 @@
  *   3.4s+          idle loops: beam breath, prism halo breath, sheen sweep
  */
 
+/*
+ * Once the 100svh hero scrolls away, skip its rendering entirely. The scene
+ * carries the page's most expensive paint — a full-viewport feTurbulence grain,
+ * several feGaussianBlur filters, and three infinite idle loops — so pausing
+ * that compositing off-screen is the biggest smoothness/battery win on the
+ * page. contain-intrinsic-size reserves the height so scrolling stays jump-free,
+ * and CSS animation timelines resume (not restart) when it re-enters view.
+ */
+.scene {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 100svh;
+}
+
 .beamCore,
 .beamGlow {
   stroke-dasharray: 1;
