@@ -319,6 +319,25 @@ Avoid stacking too many consecutive sections in the exact same mode. The page sh
 
 ## Core components
 
+### Impossible hero (refraction scene)
+
+The homepage opens with a purely visual, full-viewport brand hero
+(`components/home/HomeImpossibleHero.tsx`): a white beam refracting through
+the Prism triangle into a six-band spectrum, with the single line
+"Impossible is temporary.", a mono support line ("Unlock your potential
+with Prism"), and a quiet scroll cue. Rules for this surface:
+
+- It is CSS-only motion (server component, zero client JS). Keep it that way.
+- The spectrum colors (`#e23b2e #ee7a22 #f2c230 #5fa345 #3e6db5 #6c4e9e`)
+  are a scoped brand moment for this scene only — they are not page accents
+  and must not leak into other sections.
+- The base styles are the finished still frame; entrance choreography and
+  idle loops live behind `prefers-reduced-motion: no-preference` in the
+  component's CSS module.
+- No CTAs, badges, or copy beyond the tagline and its mono support line.
+  The conversion hero (`HomeHeroSection`, below) sits directly beneath it
+  and keeps the page h1.
+
 ### Hero
 
 The homepage hero is the reference surface for tone:

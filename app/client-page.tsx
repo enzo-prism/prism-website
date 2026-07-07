@@ -6,6 +6,7 @@ import HomeFitSection from '@/components/home/HomeFitSection'
 import HomeHashScrollStabilizer from '@/components/home/HomeHashScrollStabilizer'
 import HomeHeroSection from '@/components/home/HomeHeroSection'
 import HomeHowItWorksSection from '@/components/home/HomeHowItWorksSection'
+import HomeImpossibleHero from '@/components/home/HomeImpossibleHero'
 import HomeOffersSection from '@/components/home/HomeOffersSection'
 import HomeProblemSection from '@/components/home/HomeProblemSection'
 import HomeProofBandSection from '@/components/home/HomeProofBandSection'
@@ -18,6 +19,7 @@ export default function ClientPage() {
       <Navbar />
       <HomeHashScrollStabilizer />
       <main className="flex-1" id="main-content" tabIndex={-1}>
+        <HomeImpossibleHero />
         <HomeHeroSection />
         <HomeDentistWinsSection />
         <HomeProblemSection />

@@ -20,7 +20,7 @@ export default function HomeHeroSection() {
   return (
     <section
       id="homepage-hero"
-      className="border-b border-white/12 px-4 pb-20 pt-[calc(var(--prism-header-height,4.5rem)+2.5rem)] sm:px-6 sm:pb-24 sm:pt-[calc(var(--prism-header-height,4.5rem)+3.5rem)]"
+      className="border-b border-white/12 px-4 py-20 sm:px-6 sm:py-24"
     >
       <div className={coreRouteContainerClassName}>
         <div className={coreRouteHeroFrameClassName}>
