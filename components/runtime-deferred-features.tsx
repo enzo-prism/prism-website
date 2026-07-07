@@ -13,7 +13,6 @@ import RootClientMonitors from '@/components/root-client-monitors'
 import ScrollTracker from '@/components/scroll-tracker'
 import SentryContextProvider from '@/components/sentry-context-provider'
 import ToasterLazy from '@/components/toaster-lazy'
-import VercelAnalytics from '@/components/vercel-analytics'
 
 export default function RuntimeDeferredFeatures() {
   const pathname = usePathname()
@@ -36,7 +35,6 @@ export default function RuntimeDeferredFeatures() {
         <ErrorTracker />
         <ScrollTracker />
         <Suspense fallback={null}>
-          <VercelAnalytics />
           {shouldMountPublicWidget ? (
             <>
               <ElevenLabsWidgetScript />
