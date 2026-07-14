@@ -6,6 +6,7 @@ import HomeFitSection from '@/components/home/HomeFitSection'
 import HomeHashScrollStabilizer from '@/components/home/HomeHashScrollStabilizer'
 import HomeHeroSection from '@/components/home/HomeHeroSection'
 import HomeHowItWorksSection from '@/components/home/HomeHowItWorksSection'
+import HomeElevenLabsAgentSection from '@/components/home/HomeElevenLabsAgentSection'
 import HomeImpossibleHero from '@/components/home/HomeImpossibleHero'
 import HomeOffersSection from '@/components/home/HomeOffersSection'
 import HomeProblemSection from '@/components/home/HomeProblemSection'
@@ -26,6 +27,7 @@ export default function ClientPage() {
         <HomeServicesSection />
         <HomeProofBandSection />
         <HomeFitSection />
+        <HomeElevenLabsAgentSection />
         <HomeHowItWorksSection />
         <HomeProofSection />
         <HomeFinalCtaSection />

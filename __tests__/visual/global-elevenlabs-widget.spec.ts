@@ -176,14 +176,14 @@ test('ElevenLabs widget stays unmounted on mobile pricing and contact landings',
     })
 })
 
-test('ElevenLabs widget stays off homepage and non-assistant public routes', async ({
+test('Homepage requires consent while non-assistant public routes stay widget-free', async ({
   page,
 }) => {
   await page.goto('/', { waitUntil: 'domcontentloaded' })
   await expect(
     page.getByRole('heading', {
       level: 1,
-      name: /growth, built for your business\./i,
+      name: /^prism$/i,
     }),
   ).toBeVisible({ timeout: 20_000 })
   await expect
@@ -208,6 +208,42 @@ test('ElevenLabs widget stays off homepage and non-assistant public routes', asy
       expect.objectContaining({
         markdownLinkAllowHttpValues: [],
         markdownLinkIncludeWwwValues: [],
+      }),
+    )
+
+  await page.locator('#prism-guide').scrollIntoViewIfNeeded()
+  const consentButton = page.getByRole('button', {
+    name: /agree & open guide/i,
+  })
+  await expect(consentButton).toBeVisible({ timeout: 20_000 })
+  await expect
+    .poll(async () => getWidgetState(page), { timeout: 20_000 })
+    .toMatchObject({
+      customElementDefined: false,
+      widgetCount: 0,
+      scriptCount: 0,
+      heroWidgetCount: 0,
+      floatingWidgetCount: 0,
+    })
+
+  await consentButton.click()
+  await expect
+    .poll(async () => getWidgetState(page), { timeout: 20_000 })
+    .toMatchObject({
+      customElementDefined: true,
+      widgetCount: 1,
+      scriptCount: 1,
+      expandedCount: 1,
+      defaultFloatingCount: 0,
+      heroWidgetCount: 1,
+      floatingWidgetCount: 0,
+    })
+  await expect
+    .poll(async () => getWidgetState(page), { timeout: 20_000 })
+    .toEqual(
+      expect.objectContaining({
+        markdownLinkAllowHttpValues: ['false'],
+        markdownLinkIncludeWwwValues: ['true'],
       }),
     )
 
@@ -244,7 +280,7 @@ test('ElevenLabs widget stays off homepage and non-assistant public routes', asy
   await expect(
     page.getByRole('heading', {
       level: 1,
-      name: /create your growth dashboard\./i,
+      name: /three steps to your free growth audit\./i,
     }),
   ).toBeVisible({
     timeout: 20_000,

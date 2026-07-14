@@ -87,7 +87,8 @@ The repo assumes pnpm; npm/yarn installs will fall out of sync.
 - Expected runtime invariants:
   - On non-mobile `/pricing` and `/contact`, the widget host should resolve to `position: fixed` with the elevated global z-index and remain the topmost element in the widget’s visible region after scrolling.
   - On mobile `/pricing` and `/contact`, the widget and ElevenLabs embed script should stay unmounted.
-  - On all other public routes, including `/`, `/about`, `/get-started`, `/apply`, `/ig`, `/tiktok`, and blog posts, the widget and ElevenLabs embed script should stay unmounted on first load.
+  - On `/`, one inline guide may appear after the audience-fit section when `NEXT_PUBLIC_ELEVENLABS_HOMEPAGE_ENABLED=true`. The vendor script and widget must remain unloaded until the visitor accepts the AI/recording notice; mobile and unsupported-WebGL browsers get the first-party fallback only.
+  - On all other public routes, including `/about`, `/get-started`, `/apply`, `/ig`, `/tiktok`, and blog posts, the widget and ElevenLabs embed script should stay unmounted on first load.
   - Without a saved preference, the stock launcher should mount collapsed by default on first load.
 - The stock widget is not a documented full-screen modal scrim. Do not fake that by reaching into shadow internals; if product wants a true bespoke modal layer, migrate to ElevenLabs’ official SDK/UI path instead of stretching the stock embed past its intended surface.
 

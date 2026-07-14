@@ -114,6 +114,16 @@ export function isPublicElevenLabsWidgetEnabled(
   return !isTruthyEnvValue(disabledValue)
 }
 
+export function isHomeElevenLabsEmbedEnabled(
+  env: NodeJS.ProcessEnv = process.env,
+): boolean {
+  const enabledValue =
+    env.NEXT_PUBLIC_ELEVENLABS_HOMEPAGE_ENABLED ??
+    process.env.NEXT_PUBLIC_ELEVENLABS_HOMEPAGE_ENABLED
+
+  return isPublicElevenLabsWidgetEnabled(env) && isTruthyEnvValue(enabledValue)
+}
+
 export function shouldRenderPublicElevenLabsWidget(
   pathname: string | null | undefined,
 ): boolean {

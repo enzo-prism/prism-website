@@ -1,28 +1,28 @@
-import Footer from "@/components/footer"
-import Navbar from "@/components/navbar"
-import { WebPageSchema } from "@/components/schema-markup"
-import type { Metadata } from "next"
-import Link from "next/link"
-import { buildRouteMetadata } from "@/lib/seo/metadata"
+import Footer from '@/components/footer'
+import Navbar from '@/components/navbar'
+import { WebPageSchema } from '@/components/schema-markup'
+import type { Metadata } from 'next'
+import Link from 'next/link'
+import { buildRouteMetadata } from '@/lib/seo/metadata'
 
 const PAGE_TITLE = 'Privacy'
 const PAGE_DESCRIPTION =
-  'Learn how Prism collects, uses, and protects personal information across our website and services.'
-const CANONICAL_URL = "https://www.design-prism.com/privacy-policy"
+  'Learn how Prism collects, uses, and protects personal information across our website, AI guide, and services.'
+const CANONICAL_URL = 'https://www.design-prism.com/privacy-policy'
 
 export const metadata: Metadata = buildRouteMetadata({
   titleStem: PAGE_TITLE,
   description: PAGE_DESCRIPTION,
-  path: "/privacy-policy",
-  ogImage: "/prism-opengraph.png",
+  path: '/privacy-policy',
+  ogImage: '/prism-opengraph.png',
 })
 
 export default function PrivacyPolicyPage() {
-  const lastUpdated = "January 1, 2025"
+  const lastUpdated = 'July 13, 2026'
 
   const linkClassName =
-    "font-semibold text-foreground underline decoration-border/60 underline-offset-4 hover:decoration-border"
-  
+    'font-semibold text-foreground underline decoration-border/60 underline-offset-4 hover:decoration-border'
+
   return (
     <>
       <Navbar />
@@ -33,50 +33,71 @@ export default function PrivacyPolicyPage() {
               <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 lowercase">
                 privacy policy
               </h1>
-              <p className="text-gray-600">
-                Last updated: {lastUpdated}
-              </p>
+              <p className="text-gray-600">Last updated: {lastUpdated}</p>
             </header>
 
             <div className="prose prose-gray dark:prose-invert max-w-none">
               <section className="mb-8">
-                <h2 className="text-2xl font-semibold text-gray-900 mb-4">introduction</h2>
+                <h2 className="text-2xl font-semibold text-gray-900 mb-4">
+                  introduction
+                </h2>
                 <p className="text-gray-600 mb-4">
-                  prism agency ("we," "our," or "us") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website design-prism.com, use our services, or engage with us in any way.
+                  prism agency ("we," "our," or "us") is committed to protecting
+                  your privacy. This Privacy Policy explains how we collect,
+                  use, disclose, and safeguard your information when you visit
+                  our website design-prism.com, use our services, or engage with
+                  us in any way.
                 </p>
                 <p className="text-gray-600 mb-4">
-                  Please read this privacy policy carefully. By using our services, you agree to the collection and use of information in accordance with this policy.
+                  Please read this privacy policy carefully. By using our
+                  services, you agree to the collection and use of information
+                  in accordance with this policy.
                 </p>
               </section>
 
               <section className="mb-8">
-                <h2 className="text-2xl font-semibold text-gray-900 mb-4">information we collect</h2>
-                
-                <h3 className="text-xl font-semibold text-gray-800 mt-6 mb-3">personal information</h3>
+                <h2 className="text-2xl font-semibold text-gray-900 mb-4">
+                  information we collect
+                </h2>
+
+                <h3 className="text-xl font-semibold text-gray-800 mt-6 mb-3">
+                  personal information
+                </h3>
                 <p className="text-gray-600 mb-4">
-                  We may collect personal information that you voluntarily provide to us when you:
+                  We may collect personal information that you voluntarily
+                  provide to us when you:
                 </p>
                 <ul className="list-disc pl-6 text-gray-600 mb-4">
                   <li>Fill out contact forms on our website</li>
                   <li>Subscribe to our newsletter or blog</li>
                   <li>Request a quote or consultation</li>
                   <li>Create an account or profile</li>
-                  <li>Communicate with us via email, phone, or other channels</li>
+                  <li>
+                    Communicate with us via email, phone, or other channels
+                  </li>
                 </ul>
                 <p className="text-gray-600 mb-4">
                   This information may include:
                 </p>
                 <ul className="list-disc pl-6 text-gray-600 mb-4">
-                  <li>Name and contact information (email address, phone number, mailing address)</li>
-                  <li>Business information (company name, industry, website)</li>
+                  <li>
+                    Name and contact information (email address, phone number,
+                    mailing address)
+                  </li>
+                  <li>
+                    Business information (company name, industry, website)
+                  </li>
                   <li>Project requirements and preferences</li>
                   <li>Payment and billing information</li>
                   <li>Any other information you choose to provide</li>
                 </ul>
 
-                <h3 className="text-xl font-semibold text-gray-800 mt-6 mb-3">automatically collected information</h3>
+                <h3 className="text-xl font-semibold text-gray-800 mt-6 mb-3">
+                  automatically collected information
+                </h3>
                 <p className="text-gray-600 mb-4">
-                  When you visit our website, we automatically collect certain information about your device and usage, including:
+                  When you visit our website, we automatically collect certain
+                  information about your device and usage, including:
                 </p>
                 <ul className="list-disc pl-6 text-gray-600 mb-4">
                   <li>Browser type and version</li>
@@ -89,7 +110,53 @@ export default function PrivacyPolicyPage() {
               </section>
 
               <section className="mb-8">
-                <h2 className="text-2xl font-semibold text-gray-900 mb-4">how we use your information</h2>
+                <h2 className="text-2xl font-semibold text-gray-900 mb-4">
+                  AI guide conversations
+                </h2>
+                <p className="text-gray-600 mb-4">
+                  Prism offers an AI guide powered by ElevenLabs and third-party
+                  large language model providers. The guide is an AI system, not
+                  a human. Before a conversation begins, we provide a notice and
+                  ask you to agree to the recording and processing described
+                  here.
+                </p>
+                <p className="text-gray-600 mb-4">
+                  If you use the guide by voice or text, the information
+                  collected may include your audio, a transcript of the
+                  conversation, the messages and other information you choose to
+                  provide, and technical information needed to operate the
+                  conversation. Prism, ElevenLabs, and their affiliates,
+                  subcontractors, service providers, and third-party model
+                  providers may record, view, process, store, and share these
+                  communications to provide and support the guide, improve
+                  products and services, train machine learning models, maintain
+                  safety, and comply with applicable law.
+                </p>
+                <p className="text-gray-600 mb-4">
+                  ElevenLabs provides controls for audio saving and separate
+                  retention periods for audio recordings and conversation
+                  transcripts. The retention period that applies may depend on
+                  the settings active when you use the guide, operational needs,
+                  and legal requirements. We do not promise a specific retention
+                  period in this policy.
+                </p>
+                <p className="text-gray-600 mb-4">
+                  Do not share payment card or bank account numbers,
+                  government-issued identifiers, health information, passwords,
+                  or other sensitive or regulated information with the guide.
+                  For more information about acceptable use and the limits of
+                  the guide, please review our{' '}
+                  <Link href="/terms-of-service" className={linkClassName}>
+                    Terms of Service
+                  </Link>
+                  .
+                </p>
+              </section>
+
+              <section className="mb-8">
+                <h2 className="text-2xl font-semibold text-gray-900 mb-4">
+                  how we use your information
+                </h2>
                 <p className="text-gray-600 mb-4">
                   We use the information we collect to:
                 </p>
@@ -106,106 +173,196 @@ export default function PrivacyPolicyPage() {
               </section>
 
               <section className="mb-8">
-                <h2 className="text-2xl font-semibold text-gray-900 mb-4">cookies and tracking technologies</h2>
+                <h2 className="text-2xl font-semibold text-gray-900 mb-4">
+                  cookies and tracking technologies
+                </h2>
                 <p className="text-gray-600 mb-4">
-                  We use cookies and similar tracking technologies to track activity on our website and store certain information. These technologies may include:
+                  We use cookies and similar tracking technologies to track
+                  activity on our website and store certain information. These
+                  technologies may include:
                 </p>
                 <ul className="list-disc pl-6 text-gray-600 mb-4">
-                  <li><strong>Cookies:</strong> Small data files stored on your device</li>
-                  <li><strong>Web Beacons:</strong> Electronic images used to count users who have visited certain pages</li>
-                  <li><strong>Analytics Tools:</strong> Google Analytics, Hotjar, and similar services to understand how visitors use our site</li>
+                  <li>
+                    <strong>Cookies:</strong> Small data files stored on your
+                    device
+                  </li>
+                  <li>
+                    <strong>Web Beacons:</strong> Electronic images used to
+                    count users who have visited certain pages
+                  </li>
+                  <li>
+                    <strong>Analytics Tools:</strong> Google Analytics, Hotjar,
+                    and similar services to understand how visitors use our site
+                  </li>
                 </ul>
                 <p className="text-gray-600 mb-4">
-                  You can instruct your browser to refuse all cookies or to indicate when a cookie is being sent. However, if you do not accept cookies, you may not be able to use some portions of our website.
+                  You can instruct your browser to refuse all cookies or to
+                  indicate when a cookie is being sent. However, if you do not
+                  accept cookies, you may not be able to use some portions of
+                  our website.
                 </p>
               </section>
 
               <section className="mb-8">
-                <h2 className="text-2xl font-semibold text-gray-900 mb-4">sharing your information</h2>
+                <h2 className="text-2xl font-semibold text-gray-900 mb-4">
+                  sharing your information
+                </h2>
                 <p className="text-gray-600 mb-4">
-                  We do not sell, trade, or rent your personal information to third parties. We may share your information in the following situations:
+                  We do not sell, trade, or rent your personal information to
+                  third parties. We may share your information in the following
+                  situations:
                 </p>
                 <ul className="list-disc pl-6 text-gray-600 mb-4">
-                  <li><strong>Service Providers:</strong> With third-party vendors who perform services on our behalf</li>
-                  <li><strong>Legal Requirements:</strong> If required by law or to protect our rights</li>
-                  <li><strong>Business Transfers:</strong> In connection with a merger, acquisition, or sale of assets</li>
-                  <li><strong>Consent:</strong> With your explicit consent for any other purpose</li>
+                  <li>
+                    <strong>Service Providers:</strong> With third-party vendors
+                    who perform services on our behalf
+                  </li>
+                  <li>
+                    <strong>Legal Requirements:</strong> If required by law or
+                    to protect our rights
+                  </li>
+                  <li>
+                    <strong>Business Transfers:</strong> In connection with a
+                    merger, acquisition, or sale of assets
+                  </li>
+                  <li>
+                    <strong>Consent:</strong> With your explicit consent for any
+                    other purpose
+                  </li>
                 </ul>
               </section>
 
               <section className="mb-8">
-                <h2 className="text-2xl font-semibold text-gray-900 mb-4">data security</h2>
+                <h2 className="text-2xl font-semibold text-gray-900 mb-4">
+                  data security
+                </h2>
                 <p className="text-gray-600 mb-4">
-                  We implement appropriate technical and organizational security measures to protect your personal information against unauthorized access, alteration, disclosure, or destruction. However, no method of transmission over the internet or electronic storage is 100% secure, and we cannot guarantee absolute security.
+                  We implement appropriate technical and organizational security
+                  measures to protect your personal information against
+                  unauthorized access, alteration, disclosure, or destruction.
+                  However, no method of transmission over the internet or
+                  electronic storage is 100% secure, and we cannot guarantee
+                  absolute security.
                 </p>
               </section>
 
               <section className="mb-8">
-                <h2 className="text-2xl font-semibold text-gray-900 mb-4">your rights and choices</h2>
+                <h2 className="text-2xl font-semibold text-gray-900 mb-4">
+                  your rights and choices
+                </h2>
                 <p className="text-gray-600 mb-4">
-                  Depending on your location, you may have certain rights regarding your personal information:
+                  Depending on your location, you may have certain rights
+                  regarding your personal information:
                 </p>
                 <ul className="list-disc pl-6 text-gray-600 mb-4">
-                  <li><strong>Access:</strong> Request a copy of the personal information we hold about you</li>
-                  <li><strong>Correction:</strong> Request correction of inaccurate information</li>
-                  <li><strong>Deletion:</strong> Request deletion of your personal information</li>
-                  <li><strong>Opt-out:</strong> Opt-out of marketing communications</li>
-                  <li><strong>Data Portability:</strong> Request your data in a portable format</li>
+                  <li>
+                    <strong>Access:</strong> Request a copy of the personal
+                    information we hold about you
+                  </li>
+                  <li>
+                    <strong>Correction:</strong> Request correction of
+                    inaccurate information
+                  </li>
+                  <li>
+                    <strong>Deletion:</strong> Request deletion of your personal
+                    information
+                  </li>
+                  <li>
+                    <strong>Opt-out:</strong> Opt-out of marketing
+                    communications
+                  </li>
+                  <li>
+                    <strong>Data Portability:</strong> Request your data in a
+                    portable format
+                  </li>
                 </ul>
                 <p className="text-gray-600 mb-4">
-                  To exercise these rights, please contact us using the information provided below.
+                  To exercise these rights, please contact us using the
+                  information provided below.
                 </p>
               </section>
 
               <section className="mb-8">
-                <h2 className="text-2xl font-semibold text-gray-900 mb-4">children's privacy</h2>
+                <h2 className="text-2xl font-semibold text-gray-900 mb-4">
+                  children's privacy
+                </h2>
                 <p className="text-gray-600 mb-4">
-                  Our services are not directed to individuals under the age of 13. We do not knowingly collect personal information from children under 13. If you become aware that a child has provided us with personal information, please contact us, and we will take steps to delete such information.
+                  Our services are not directed to individuals under the age of
+                  13. We do not knowingly collect personal information from
+                  children under 13. If you become aware that a child has
+                  provided us with personal information, please contact us, and
+                  we will take steps to delete such information.
                 </p>
               </section>
 
               <section className="mb-8">
-                <h2 className="text-2xl font-semibold text-gray-900 mb-4">international data transfers</h2>
+                <h2 className="text-2xl font-semibold text-gray-900 mb-4">
+                  international data transfers
+                </h2>
                 <p className="text-gray-600 mb-4">
-                  Your information may be transferred to and processed in countries other than your country of residence. These countries may have data protection laws that are different from the laws of your country. By using our services, you consent to the transfer of information to countries outside of your country of residence.
+                  Your information may be transferred to and processed in
+                  countries other than your country of residence. These
+                  countries may have data protection laws that are different
+                  from the laws of your country. By using our services, you
+                  consent to the transfer of information to countries outside of
+                  your country of residence.
                 </p>
               </section>
 
               <section className="mb-8">
-                <h2 className="text-2xl font-semibold text-gray-900 mb-4">third-party links</h2>
+                <h2 className="text-2xl font-semibold text-gray-900 mb-4">
+                  third-party links
+                </h2>
                 <p className="text-gray-600 mb-4">
-                  Our website may contain links to third-party websites. We are not responsible for the privacy practices or content of these third-party sites. We encourage you to review the privacy policies of any third-party sites you visit.
+                  Our website may contain links to third-party websites. We are
+                  not responsible for the privacy practices or content of these
+                  third-party sites. We encourage you to review the privacy
+                  policies of any third-party sites you visit.
                 </p>
               </section>
 
               <section className="mb-8">
-                <h2 className="text-2xl font-semibold text-gray-900 mb-4">changes to this privacy policy</h2>
+                <h2 className="text-2xl font-semibold text-gray-900 mb-4">
+                  changes to this privacy policy
+                </h2>
                 <p className="text-gray-600 mb-4">
-                  We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page and updating the "Last updated" date. You are advised to review this Privacy Policy periodically for any changes.
+                  We may update our Privacy Policy from time to time. We will
+                  notify you of any changes by posting the new Privacy Policy on
+                  this page and updating the "Last updated" date. You are
+                  advised to review this Privacy Policy periodically for any
+                  changes.
                 </p>
               </section>
 
               <section className="mb-8">
-                <h2 className="text-2xl font-semibold text-gray-900 mb-4">contact us</h2>
+                <h2 className="text-2xl font-semibold text-gray-900 mb-4">
+                  contact us
+                </h2>
                 <p className="text-gray-600 mb-4">
-                  If you have any questions about this Privacy Policy or our privacy practices, please contact us at:
+                  If you have any questions about this Privacy Policy or our
+                  privacy practices, please contact us at:
                 </p>
                 <div className="bg-gray-50 p-6 rounded-lg">
-                  <p className="text-gray-700 font-semibold mb-2">prism agency</p>
+                  <p className="text-gray-700 font-semibold mb-2">
+                    prism agency
+                  </p>
                   <p className="text-gray-600">
-                    Email:{" "}
-                    <a href="mailto:support@design-prism.com" className={linkClassName}>
+                    Email:{' '}
+                    <a
+                      href="mailto:support@design-prism.com"
+                      className={linkClassName}
+                    >
                       support@design-prism.com
                     </a>
                   </p>
                   <p className="text-gray-600">
-                    Phone:{" "}
+                    Phone:{' '}
                     <a href="tel:+1234567890" className={linkClassName}>
                       (123) 456-7890
                     </a>
                   </p>
                   <p className="text-gray-600">
-                    Website:{" "}
+                    Website:{' '}
                     <Link href="/" className={linkClassName}>
                       design-prism.com
                     </Link>

@@ -11,7 +11,7 @@ import {
 } from '@/lib/elevenlabs-widget'
 
 const ELEVENLABS_WIDGET_EMBED_SRC =
-  'https://unpkg.com/@elevenlabs/convai-widget-embed'
+  'https://unpkg.com/@elevenlabs/convai-widget-embed@0.14.10/dist/index.js'
 const ELEVENLABS_WIDGET_TAG = 'elevenlabs-convai'
 const ELEVENLABS_WIDGET_COLLAPSE_LABEL = 'Collapse'
 
@@ -156,9 +156,11 @@ export default function ElevenLabsWidget({
         return Boolean(defaultExpanded)
       }
 
-      return shadowRoot.querySelector(
-        `button[aria-label="${ELEVENLABS_WIDGET_COLLAPSE_LABEL}"]`,
-      ) instanceof HTMLElement
+      return (
+        shadowRoot.querySelector(
+          `button[aria-label="${ELEVENLABS_WIDGET_COLLAPSE_LABEL}"]`,
+        ) instanceof HTMLElement
+      )
     }
 
     const syncExpandedState = () => {

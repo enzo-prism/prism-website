@@ -58,6 +58,7 @@ When a task touches the live assistant surface, start with the current ownership
 - `lib/elevenlabs-widget.ts` – canonical live public widget config (route allowlist, public agent id, markdown-link host allowlist, public kill switch)
 - `components/elevenlabs/ElevenLabsWidget.tsx` – stock custom-element wrapper + host-style enforcement after the widget upgrades
 - `components/global-elevenlabs-widget.tsx` – floating stock widget limited to non-mobile `/pricing` and `/contact`; every other public route and all mobile viewports excluded
+- `components/home/HomeElevenLabsAgentSection.tsx` – independently flagged homepage inline guide with near-viewport loading, desktop/WebGL checks, and a required affirmative-consent gate
 - `types/elevenlabs-widget.d.ts` – JSX typing for `<elevenlabs-convai>`
 - `lib/elevenlabs.ts` – legacy deterministic/backend-era helpers; not the primary place for live stock-widget config anymore
 
@@ -67,6 +68,7 @@ Rules that will save you time:
 - Do not style the widget Shadow DOM unless there is no other path and the product decision is explicit.
 - Public-page invariant: when mounted on `/pricing` or `/contact`, the floating widget host must stay above the site chrome in the visible widget region.
 - Mobile invariant: mobile viewports must not mount the floating widget or load the ElevenLabs embed script.
+- Consent invariant: the homepage vendor script and widget must not load until the visitor accepts the immediately preceding AI/recording notice.
 - Default-state invariant: without a saved preference, the launcher should mount collapsed.
 - The stock widget is not a documented full-screen page-blocking modal scrim. If product wants that, push toward ElevenLabs' official SDK/UI layer instead of stretching the stock embed.
 

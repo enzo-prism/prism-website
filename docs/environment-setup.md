@@ -24,6 +24,7 @@ cp .env.example .env.local
 | `NEXT_PUBLIC_GET_STARTED_FORM_ENDPOINT`              | Optional            | Backward-compatible fallback for older local configs that still use the legacy env name. | Used only when `NEXT_PUBLIC_APPLY_FORM_ENDPOINT` is unset.                                   | `components/forms/GetStartedForm.tsx`                                                                        |
 | `NEXT_PUBLIC_ELEVENLABS_AGENT_ID`                    | Optional            | Public agent id used by the shared floating widget on `/pricing` and `/contact`.         | Falls back to Prism Sales (`agent_4701kkcyc4efefkv5x4awhysjyrh`).                            | `lib/elevenlabs.ts`, `components/global-elevenlabs-widget.tsx`                                               |
 | `NEXT_PUBLIC_ELEVENLABS_MARKDOWN_LINK_ALLOWED_HOSTS` | Optional            | Comma-separated host allowlist for clickable markdown links inside ElevenLabs responses. | Falls back to trusted booking hosts plus Prism domains.                                      | `lib/elevenlabs.ts`, `components/global-elevenlabs-widget.tsx`                                               |
+| `NEXT_PUBLIC_ELEVENLABS_HOMEPAGE_ENABLED`           | Optional            | Opt-in for the consent-gated inline Prism guide on the homepage.                          | Disabled unless explicitly set truthy.                                                       | `lib/elevenlabs-widget.ts`, `components/home/HomeElevenLabsAgentSection.tsx`                                 |
 | `NEXT_PUBLIC_ELEVENLABS_WIDGET_DISABLED`             | Optional            | Public kill switch for deterministic visual builds or widget debugging.                  | Disabled only when explicitly set truthy. Leave unset for normal development and production. | `lib/elevenlabs.ts`, `components/elevenlabs/ElevenLabsWidget.tsx`, `components/global-elevenlabs-widget.tsx` |
 | `INSTAGRAM_ACCESS_TOKEN`                             | Optional            | Instagram Graph API token for Prism Library.                                             | Falls back to the seed dataset.                                                              | `lib/library/getLibraryPosts.ts`                                                                             |
 | `INSTAGRAM_USER_ID`                                  | Optional            | Instagram Graph API user ID for Prism Library.                                           | Falls back to the seed dataset.                                                              | `lib/library/getLibraryPosts.ts`                                                                             |
@@ -47,6 +48,13 @@ cp .env.example .env.local
 - `NEXT_PUBLIC_ELEVENLABS_AGENT_ID` names the public widget agent only. It is not a server-side assistant key and should not be used to revive the retired custom sales-chat stack.
 - Without a saved preference, the widget should start collapsed by default.
 - Keep its z-index high enough that sticky nav and other fixed chrome never render above the visible widget when it is mounted.
+
+### Homepage guide
+
+- `NEXT_PUBLIC_ELEVENLABS_HOMEPAGE_ENABLED=true` enables one bounded inline guide after the homepage audience-fit section on supported desktop browsers.
+- Keep the flag off until the public agent configuration, Prism Privacy Policy, and Prism Terms of Service contain the required AI, recording, processing, and end-user terms disclosures.
+- The first-party disclosure and affirmative acceptance control render before access. The ElevenLabs script and custom element load only after acceptance and only when the section is near the viewport.
+- Mobile and unsupported-WebGL browsers receive a lightweight fallback link instead of the vendor runtime. `NEXT_PUBLIC_ELEVENLABS_WIDGET_DISABLED=true` overrides both homepage and global surfaces.
 
 ## Notes
 

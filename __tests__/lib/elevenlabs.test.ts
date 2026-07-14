@@ -5,6 +5,7 @@ import {
   registerElevenLabsClientTools,
 } from '@/lib/elevenlabs'
 import { shouldRenderPublicElevenLabsWidget } from '@/lib/elevenlabs-widget'
+import { isHomeElevenLabsEmbedEnabled } from '@/lib/elevenlabs-widget'
 
 describe('elevenlabs link configuration', () => {
   it('uses trusted booking hosts by default', () => {
@@ -34,6 +35,21 @@ describe('elevenlabs link configuration', () => {
         NEXT_PUBLIC_ELEVENLABS_WIDGET_DISABLED: 'no',
       } as unknown as NodeJS.ProcessEnv),
     ).toBe(true)
+  })
+
+  it('keeps the homepage embed opt-in and subordinate to the global kill switch', () => {
+    expect(isHomeElevenLabsEmbedEnabled({} as NodeJS.ProcessEnv)).toBe(false)
+    expect(
+      isHomeElevenLabsEmbedEnabled({
+        NEXT_PUBLIC_ELEVENLABS_HOMEPAGE_ENABLED: 'true',
+      } as unknown as NodeJS.ProcessEnv),
+    ).toBe(true)
+    expect(
+      isHomeElevenLabsEmbedEnabled({
+        NEXT_PUBLIC_ELEVENLABS_HOMEPAGE_ENABLED: 'true',
+        NEXT_PUBLIC_ELEVENLABS_WIDGET_DISABLED: 'true',
+      } as unknown as NodeJS.ProcessEnv),
+    ).toBe(false)
   })
 
   it('lets the browser runtime disable the widget before hydration for deterministic visual tests', () => {

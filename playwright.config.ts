@@ -1,10 +1,12 @@
-import { defineConfig, devices } from "@playwright/test"
+import { defineConfig, devices } from '@playwright/test'
 
-const port = process.env.PLAYWRIGHT_PORT ? Number(process.env.PLAYWRIGHT_PORT) : 3000
+const port = process.env.PLAYWRIGHT_PORT
+  ? Number(process.env.PLAYWRIGHT_PORT)
+  : 3000
 const baseURL = process.env.PLAYWRIGHT_BASE_URL ?? `http://localhost:${port}`
 
 export default defineConfig({
-  testDir: "__tests__/visual",
+  testDir: '__tests__/visual',
   fullyParallel: true,
   timeout: 60_000,
   expect: {
@@ -14,22 +16,30 @@ export default defineConfig({
   },
   use: {
     baseURL,
-    trace: "retain-on-failure",
-    screenshot: "only-on-failure",
-    video: "retain-on-failure",
+    trace: 'retain-on-failure',
+    screenshot: 'only-on-failure',
+    video: 'retain-on-failure',
   },
   projects: [
     {
-      name: "desktop-chromium",
+      name: 'desktop-chromium',
       use: {
-        ...devices["Desktop Chrome"],
+        ...devices['Desktop Chrome'],
         viewport: { width: 1280, height: 720 },
+        launchOptions: {
+          args: [
+            '--enable-webgl',
+            '--enable-unsafe-swiftshader',
+            '--ignore-gpu-blocklist',
+            '--use-angle=swiftshader',
+          ],
+        },
       },
     },
     {
-      name: "mobile-chromium",
+      name: 'mobile-chromium',
       use: {
-        ...devices["iPhone 13"],
+        ...devices['iPhone 13'],
       },
     },
   ],
