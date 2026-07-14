@@ -29,15 +29,15 @@ Default operating loop:
 
 ## 1.1 Project change map
 
-| Task | First files to inspect | Docs to update |
-| --- | --- | --- |
-| Homepage copy/layout | `app/client-page.tsx`, `components/home/*`, `components/home/homepage-content.ts` | `docs/pages-overview.md`, `docs/development-guide.md` if workflow changes |
-| Search visibility | `lib/seo/search-visibility.ts`, `app/sitemap.ts`, `public/llms.txt`, `scripts/seo-*` | `docs/project-overview.md`, `docs/development-guide.md`, `docs/blog-content-architecture.md` |
-| Blog post or blog behavior | `content/blog`, `lib/mdx-data.ts`, `app/blog/*`, `components/blog-*` | `docs/blog-content-architecture.md` |
-| Forms and thank-you flows | `components/forms/*`, `hooks/use-form-validation.ts`, `components/thank-you/*`, route pages | `docs/forms.md`, `docs/environment-setup.md` if env vars change |
-| Pricing | `lib/pricing-model.ts`, `app/pricing/*`, `app/websites/page.tsx` for the dedicated one-time build exception, pricing tests | README/AGENTS only if the canonical policy changes |
-| Case studies | `lib/case-study-data.ts`, `app/case-studies/*`, `components/case-studies/*` | `docs/pages-overview.md` |
-| Deploy/release | `.github/workflows/deploy.yml`, `vercel.json`, `docs/build-and-deploy-guide.md` | `docs/build-and-deploy-guide.md` |
+| Task                       | First files to inspect                                                                                                     | Docs to update                                                                               |
+| -------------------------- | -------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| Homepage copy/layout       | `app/client-page.tsx`, `components/home/*`, `components/home/homepage-content.ts`                                          | `docs/pages-overview.md`, `docs/development-guide.md` if workflow changes                    |
+| Search visibility          | `lib/seo/search-visibility.ts`, `app/sitemap.ts`, `public/llms.txt`, `scripts/seo-*`                                       | `docs/project-overview.md`, `docs/development-guide.md`, `docs/blog-content-architecture.md` |
+| Blog post or blog behavior | `content/blog`, `lib/mdx-data.ts`, `app/blog/*`, `components/blog-*`                                                       | `docs/blog-content-architecture.md`                                                          |
+| Forms and thank-you flows  | `components/forms/*`, `hooks/use-form-validation.ts`, `components/thank-you/*`, route pages                                | `docs/forms.md`, `docs/environment-setup.md` if env vars change                              |
+| Pricing                    | `lib/pricing-model.ts`, `app/pricing/*`, `app/websites/page.tsx` for the dedicated one-time build exception, pricing tests | README/AGENTS only if the canonical policy changes                                           |
+| Case studies               | `lib/case-study-data.ts`, `app/case-studies/*`, `components/case-studies/*`                                                | `docs/pages-overview.md`                                                                     |
+| Deploy/release             | `.github/workflows/deploy.yml`, `vercel.json`, `docs/build-and-deploy-guide.md`                                            | `docs/build-and-deploy-guide.md`                                                             |
 
 ## 1.1.1 Documentation alignment checklist
 
@@ -57,7 +57,7 @@ When a task touches the live assistant surface, start with the current ownership
 
 - `lib/elevenlabs-widget.ts` – canonical live public widget config (route allowlist, public agent id, markdown-link host allowlist, public kill switch)
 - `components/elevenlabs/ElevenLabsWidget.tsx` – stock custom-element wrapper + host-style enforcement after the widget upgrades
-- `components/global-elevenlabs-widget.tsx` – floating stock widget limited to non-mobile `/pricing` and `/contact`; every other public route and all mobile viewports excluded
+- `components/global-elevenlabs-widget.tsx` – floating stock widget limited to non-mobile `/pricing` and `/contact`; every other public route and all mobile viewports are excluded from this global launcher
 - `components/home/HomeElevenLabsAgentSection.tsx` – independently flagged homepage inline guide with near-viewport loading, desktop/WebGL checks, and a required affirmative-consent gate
 - `types/elevenlabs-widget.d.ts` – JSX typing for `<elevenlabs-convai>`
 - `lib/elevenlabs.ts` – legacy deterministic/backend-era helpers; not the primary place for live stock-widget config anymore
@@ -70,15 +70,22 @@ Rules that will save you time:
 - Mobile invariant: mobile viewports must not mount the floating widget or load the ElevenLabs embed script.
 - Consent invariant: the homepage vendor script and widget must not load until the visitor accepts the immediately preceding AI/recording notice.
 - Default-state invariant: without a saved preference, the launcher should mount collapsed.
+- Runtime invariant: `components/elevenlabs/ElevenLabsWidget.tsx` pins `@elevenlabs/convai-widget-embed@0.14.10`; upgrade it only with deliberate production-bundle and visual verification.
 - The stock widget is not a documented full-screen page-blocking modal scrim. If product wants that, push toward ElevenLabs' official SDK/UI layer instead of stretching the stock embed.
 
 Verification path for widget bugs:
 
 1. Run `pnpm build`.
 2. Run `pnpm start -p <port>`.
-3. Run `pnpm exec jest __tests__/components/GlobalElevenLabsWidget.test.tsx __tests__/components/ElevenLabsWidget.test.tsx --runInBand`.
+3. Run `pnpm exec jest __tests__/components/HomeElevenLabsAgentSection.test.tsx __tests__/components/GlobalElevenLabsWidget.test.tsx __tests__/components/ElevenLabsWidget.test.tsx --runInBand`.
 4. Run `pnpm exec jest __tests__/lib/elevenlabs.test.ts --runInBand`.
 5. Run `pnpm test:visual:widget`.
+
+External agent-configuration check:
+
+- The public widget endpoint can confirm public agent identity and native terms fields, but it cannot reveal private retention settings or safely authorize an update.
+- As verified on July 13, 2026, the public `terms_text`, `terms_html`, and `terms_key` fields are null. The homepage is protected by Prism's first-party consent gate; native terms for the floating launcher remain a separate ElevenLabs account setting.
+- To change native terms, audio storage, or retention, use authenticated ElevenLabs dashboard/API access: read the complete current agent configuration, deep-merge the intended field, update it, then verify both the authenticated response and the public widget. Never send a blind partial patch.
 
 Why this matters:
 

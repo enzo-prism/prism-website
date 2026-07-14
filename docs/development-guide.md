@@ -16,8 +16,8 @@ For a current whole-project map, start with `docs/project-overview.md`. This gui
   - `pnpm design:lint`
   - `pnpm design:sync`
   - or the combined `pnpm design:check`
-- For `/get-started`, `/apply`, or floating-widget assistant-surface changes, run:
-  - `pnpm exec jest __tests__/app/get-started.test.tsx __tests__/app/apply.test.tsx __tests__/components/GetStartedForm.test.tsx __tests__/components/GlobalElevenLabsWidget.test.tsx __tests__/components/ElevenLabsWidget.test.tsx __tests__/lib/elevenlabs.test.ts --runInBand`
+- For `/get-started`, `/apply`, or public assistant-surface changes, run:
+  - `pnpm exec jest __tests__/app/get-started.test.tsx __tests__/app/apply.test.tsx __tests__/components/GetStartedForm.test.tsx __tests__/components/HomeElevenLabsAgentSection.test.tsx __tests__/components/GlobalElevenLabsWidget.test.tsx __tests__/components/ElevenLabsWidget.test.tsx __tests__/lib/elevenlabs.test.ts --runInBand`
   - `pnpm test:visual:widget`
 - For pricing-sensitive changes, run:
   - `pnpm verify:pricing-consistency`
@@ -45,17 +45,19 @@ For a current whole-project map, start with `docs/project-overview.md`. This gui
 - Cover Flow cards render **real client-website screenshots** (each slide's `image`, a `public/case-studies/<slug>-home-mobile.jpg` capture). Motion is a restrained, input-led deck: one shared camera, a one-time back-to-front fan-open entrance, hover lift + neighbour yield, damped pointer parallax, a single `cubic-bezier(0.22,1,0.36,1)` easing, and **no autoplay**. Touch (`isTouch = useMobile('(hover: none), (pointer: coarse)')`) drops parallax/tilt/hover, uses one static shadow, mounts fewer covers with a tighter fan, drops the on-card CTA pill, and swipes 1:1 (casual swipe = one card, flick = more). Keep `prefers-reduced-motion` on the flat scroll-snap fallback. The active cover links to the case study; do not reintroduce the retired abstract-visual / `data-client-win-abstract` / color-toggle behavior. New mobile screenshots are captured with `node scripts/capture-case-study-screenshots.mjs <slug>`.
 - ElevenLabs renders markdown in agent replies, but external links only become clickable when the host is allowlisted on the widget. Keep `markdown-link-allowed-hosts` in sync with whatever calendar or booking destination the agent is instructed to share, rely on the documented `markdown-link-include-www="true"` behavior instead of duplicating `www` hosts in code, and keep `markdown-link-allow-http="false"` so the public widget never emits insecure links.
 - Keep the stock widget aligned with the official docs: wrapper-only layout, documented attributes, and dashboard-level styling.
+- The embed runtime is deliberately pinned to `@elevenlabs/convai-widget-embed@0.14.10`. Treat a version bump as an assistant-surface change and re-run focused Jest, the widget Playwright suite, and production-bundle visual checks.
 - Avoid deep geometry overrides inside the widget Shadow DOM. ElevenLabs treats the embed as an opinionated surface; keep customization focused on supported attributes and host-level layering, and move heavier design customization to the official SDK/UI layer if we need a bespoke chat surface later.
 - The stock embed runtime forces its own host positioning, so `components/elevenlabs/ElevenLabsWidget.tsx` now re-applies only the host-level styles we actually need after the custom element mounts. Use that path for safe layer fixes like homepage section scoping or inner-page z-index elevation; do not reach into vendor shadow children for layout control.
 - The public agent id resolves via `lib/elevenlabs.ts` and can be overridden with `NEXT_PUBLIC_ELEVENLABS_AGENT_ID`.
 - `components/global-elevenlabs-widget.tsx` renders the stock floating widget only on non-mobile `/pricing` and `/contact`; focused routes remain widget-free. The homepage separately owns one inline, feature-flagged guide after `HomeFitSection`. It must present the AI/recording notice and capture affirmative acceptance before loading the vendor script or custom element; mobile and unsupported-WebGL browsers receive a first-party fallback. With no saved preference, the floating launcher should stay closed by default.
 - The floating host should stay at a top-most z-index so nav, skip links, charts, and other fixed site chrome never render above the expanded widget.
 - `components/runtime-client-shell.tsx` now keeps route-surface setup plus the core GA page/form listener layer on the critical path, while `components/runtime-deferred-features.tsx` still defers heavier client-only work like monitors, Vercel Analytics, and the public widget bundle during browser idle time.
-- `NEXT_PUBLIC_ELEVENLABS_HOMEPAGE_ENABLED` is default-off and independently controls the homepage inline guide. `NEXT_PUBLIC_ELEVENLABS_WIDGET_DISABLED` is the global debug/test kill switch and overrides both inline and floating surfaces.
-- `lib/elevenlabs.ts` retains richer legacy client-tool helpers, but the exploratory `PrismElevenLabsPanel` component has been removed; the stock widget is the only supported surface. Do not rebuild bespoke panel UI casually when the product goal is "look and behave like the official widget."
+- `NEXT_PUBLIC_ELEVENLABS_HOMEPAGE_ENABLED` is default-off in code, explicitly enabled in production, and independently controls the homepage inline guide. `NEXT_PUBLIC_ELEVENLABS_WIDGET_DISABLED` is the global debug/test kill switch and overrides both inline and floating surfaces.
+- The public agent endpoint currently reports native `terms_text`, `terms_html`, and `terms_key` as `null`. The homepage first-party gate therefore remains mandatory. Native Terms, domain restrictions, audio saving, and retention require authenticated dashboard/API reads before any narrowly scoped update; never infer private retention state from the public endpoint or blind-PATCH a partial widget configuration.
+- `lib/elevenlabs.ts` retains richer legacy client-tool helpers, but the exploratory `PrismElevenLabsPanel` component has been removed; the stock widget is the only supported assistant implementation across the floating and inline surfaces. Do not rebuild bespoke panel UI casually when the product goal is "look and behave like the official widget."
 - In dev, the stock widget may log `[ConversationalAI] Cannot fetch config for agent ... signal is aborted without reason` during Fast Refresh or unmount cleanup. The current ElevenLabs bundle aborts its own config fetch on cleanup, so treat that message as harmless if the widget still renders and `pnpm build` + `pnpm start` are clean.
 - If you change hero copy/layout, update the locked-route snapshot test and re-run `pnpm test:visual:locked`.
-- If you change the homepage or global widget interaction model, re-run `pnpm exec jest __tests__/components/GlobalElevenLabsWidget.test.tsx __tests__/components/ElevenLabsWidget.test.tsx`.
+- If you change the homepage or global widget interaction model, re-run `pnpm exec jest __tests__/components/HomeElevenLabsAgentSection.test.tsx __tests__/components/GlobalElevenLabsWidget.test.tsx __tests__/components/ElevenLabsWidget.test.tsx --runInBand`.
 - For z-index, scrolling, or layout bugs involving the stock widget, validate against a fresh production bundle: `pnpm build && pnpm start -p <port>`. `next start` serves the last production build on disk, and the ElevenLabs custom element can behave differently from `pnpm dev` / Fast Refresh.
 - The fastest runtime sanity checks are:
   - homepage: no vendor script or widget on first load; with the homepage flag enabled, the inline widget may mount only after desktop/WebGL checks, near-viewport activation, and affirmative acceptance
@@ -68,7 +70,7 @@ For a current whole-project map, start with `docs/project-overview.md`. This gui
 ### Retired custom sales-chat note
 
 - The old custom `SalesChat` client, `/api/chat`, `/api/sales-chat/*`, and related orchestration helpers are no longer part of the supported Prism website stack.
-- The live assistant experience is the stock ElevenLabs floating widget via `components/global-elevenlabs-widget.tsx`.
+- The supported assistant experience uses the stock ElevenLabs widget in two forms: floating on eligible `/pricing` and `/contact` pages, and consent-gated inline on the homepage.
 - If product ever needs a custom assistant again, treat it as a fresh implementation with new docs, tests, and contracts instead of assuming the pre-2026 deterministic chat backend still exists.
 
 ## Styling Pipeline
