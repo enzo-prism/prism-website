@@ -90,6 +90,12 @@ function countBrandSuffixes(title: string) {
   return (title.match(/\|\s*Prism/gi) || []).length
 }
 
+function hasValidBranding(title: string) {
+  const trimmed = title.trim()
+  const suffixCount = countBrandSuffixes(trimmed)
+  return suffixCount === 1 || (suffixCount === 0 && /^Prism(?:\s|$)/i.test(trimmed))
+}
+
 function extractDisallowRules(sourceText: string): string[] {
   const disallows: string[] = []
   const regex = /disallow:\s*\[([\s\S]*?)\]/g
@@ -133,11 +139,11 @@ function lint() {
   })
 
   indexable.forEach((row) => {
-    const suffixCount = countBrandSuffixes(row.final_title ?? "")
-    if (suffixCount !== 1) {
+    const finalTitle = row.final_title ?? ""
+    if (!hasValidBranding(finalTitle)) {
       findings.push({
-        code: "suffix_not_once",
-        detail: `${row.route} (count=${suffixCount})`,
+        code: "invalid_branding",
+        detail: `${row.route} (${finalTitle})`,
       })
     }
   })

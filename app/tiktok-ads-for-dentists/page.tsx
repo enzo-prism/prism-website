@@ -13,7 +13,7 @@ import { buildRouteMetadata } from "@/lib/seo/metadata"
 
 export const metadata: Metadata = buildRouteMetadata({
   titleStem: 'TikTok ads for dentists',
-  description: 'Prism runs TikTok ads for dentists with scroll-stopping creative, landing pages, and tracking that turn attention into booked consults, not spam.',
+  description: 'TikTok ads for dentists with focused creative, landing pages, and tracking built to drive booked consultations.',
   path: "/tiktok-ads-for-dentists",
   ogImage: "/prism-opengraph.png",
 })

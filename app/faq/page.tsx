@@ -6,8 +6,8 @@ import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
 import { buildRouteMetadata } from "@/lib/seo/metadata"
 
 export const metadata: Metadata = buildRouteMetadata({
-  titleStem: 'Frequently asked questions',
-  description: 'Answers to common questions about Prism: pricing, timelines, what we build, and how our AI-powered web, app, and marketing services work.',
+  titleStem: 'FAQ',
+  description: 'Answers about Prism pricing, timelines, services, and how our website, SEO, ads, and growth work fits together.',
   path: "/faq",
   ogImage: "/prism-opengraph.png",
 })

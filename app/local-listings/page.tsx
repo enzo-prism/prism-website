@@ -22,9 +22,9 @@ type Platform = {
 }
 
 export const metadata: Metadata = buildRouteMetadata({
-  titleStem: 'Local listing optimization',
+  titleStem: 'Local listings',
   description:
-    'Accurate, optimized listings across Google, Apple, Yelp, Bing, Facebook, and more, so you rank higher and win more nearby customers.',
+    'Keep your business accurate across Google, Apple, Yelp, Bing, Facebook, and other local directories.',
   path: '/local-listings',
   ogImage: '/prism-opengraph.png',
 })

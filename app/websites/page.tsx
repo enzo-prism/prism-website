@@ -22,9 +22,9 @@ import { hasPaymentLink, paymentLink } from '@/lib/payment-links'
 import { websiteProjects } from '@/lib/website-projects'
 import { cn } from '@/lib/utils'
 
-const PAGE_TITLE = 'Order a custom website for $300'
+const PAGE_TITLE = '$300 custom websites'
 const PAGE_DESCRIPTION =
-  'Describe the website you want, pay a flat $300, and Prism delivers it within 7 days with infinite iterations until you love it. The finished site is 100% yours; add $100/month care or host it yourself.'
+  'Get a custom website for a flat $300, delivered in seven days with unlimited revisions and full ownership.'
 const CANONICAL_URL = 'https://www.design-prism.com/websites'
 
 // Optional post-launch care plan. Opens checkout in a new tab once a real

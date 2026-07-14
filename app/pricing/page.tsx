@@ -5,9 +5,9 @@ import PricingPageClient from './client-page'
 import { buildRouteMetadata } from '@/lib/seo/metadata'
 
 export const metadata: Metadata = buildRouteMetadata({
-  titleStem: 'Pricing & growth plans',
+  titleStem: 'Pricing',
   description:
-    'Prism pricing: a $300 flat-fee website, Content OS at $5,000 + $1,000/month, custom Dental OS, and Prism Infinity at $2,000/month for unlimited services.',
+    'Explore Prism pricing for custom websites, Content OS, Dental OS, and unlimited creative and growth support.',
   path: '/pricing',
   ogImage: '/prism-opengraph.png',
 })

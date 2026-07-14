@@ -2,13 +2,13 @@ export const BRAND_NAME = "Prism"
 export const BRAND_SUFFIX = " | Prism"
 
 export const TITLE_MIN_LENGTH = 10
-// Google renders ~60 chars of a title before truncating. Keep the keyword-rich
-// stem within budget while still leaving room for the " | Prism" suffix.
-export const TITLE_MAX_LENGTH = 60
+// Google does not publish a fixed title limit. This is an internal budget for
+// concise, descriptive titles that display cleanly across common devices.
+export const TITLE_MAX_LENGTH = 56
 export const DESCRIPTION_MIN_LENGTH = 24
-// Google renders ~155-160 chars of a meta description. Use the full window so
-// authored copy carries real keywords and value props for search + AI engines.
-export const DESCRIPTION_MAX_LENGTH = 160
+// Google truncates snippets to fit the device. Keep authored descriptions
+// focused while leaving enough room to explain the page's main value.
+export const DESCRIPTION_MAX_LENGTH = 150
 
 export const DEFAULT_OG_IMAGE = "/prism-opengraph.png"
 
@@ -281,6 +281,9 @@ export function buildAbsoluteTitle(stem: string): string {
 
   // Prefer the full keyword-rich stem whenever it fits the SERP budget.
   const fullStem = cleanTrimmedTitle(normalizeTitleStem(stem))
+  if (/^Prism(?:\s|$)/i.test(fullStem)) {
+    return cleanTrimmedTitle(trimToWordBoundary(fullStem, TITLE_MAX_LENGTH))
+  }
   if (fullStem && fullStem !== BRAND_NAME && fullStem.length <= maxStemLength) {
     return `${fullStem}${BRAND_SUFFIX}`
   }
@@ -315,7 +318,11 @@ export function normalizeDescription(input: string): string {
 
 function ensureSentenceEnd(value: string): string {
   if (!value) return `${BRAND_NAME}.`
-  return /[.!?]$/.test(value) ? value : `${value}.`
+  if (/[.!?]$/.test(value)) return value
+  const trimmed = cleanTrimmedDescription(
+    trimToWordBoundary(value, DESCRIPTION_MAX_LENGTH - 1),
+  )
+  return `${trimmed || BRAND_NAME}.`
 }
 
 // Build a meta description for a route. Prefers the authored, keyword-rich prose

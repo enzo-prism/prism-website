@@ -106,12 +106,12 @@ Custom confirmation routes live in `app/thank-you/` and `app/analysis-thank-you/
 ## SEO Hygiene
 
 - Route-level metadata should use `buildRouteMetadata` from `lib/seo/metadata.ts` so titles, descriptions, canonical URLs, Open Graph, Twitter, and robots directives stay consistent.
-- Titles are normalized to a single `| Prism` suffix (no duplicate suffix chains); descriptions are normalized with shared rules in `lib/seo/rules.ts`.
-- Metadata should stay descriptive and concise, not artificially short: shared rules trim page titles to 60 characters max (including `| Prism`) and meta descriptions to 155 characters max across route, blog, and library pages.
+- Titles use one `| Prism` suffix unless the title already starts with the brand, such as `Prism Infinity`; descriptions are normalized with shared rules in `lib/seo/rules.ts`.
+- Metadata should stay clean, descriptive, and concise. The shared internal budgets trim page titles to 56 characters and meta descriptions to 150 characters across route, blog, and library pages; these are editorial guardrails, not limits published by Google.
 - Shared normalization preserves common search terms and product nouns (`SEO`, `AI`, `Google Maps`, `ChatGPT`, `TikTok`, etc.) and keeps useful brand descriptors like `Case Study`, `Podcast`, and `Careers` instead of stripping them out.
 - Default metadata workflow for static routes:
   - Set a clear `titleStem` + `description` on the page and let `buildRouteMetadata` generate the final title, canonical, OG, Twitter, and robots fields.
-  - Write for search intent first, brand second. Prefer phrases like `Business growth systems + local SEO` over internal labels like `Why companies love Prism`.
+  - Write for one clear search intent, then remove filler and repeated keywords. Prefer `Local SEO services` over a stacked list of near-duplicate terms.
   - If `seo/inventory.csv` shows a clipped or vague result, improve the route’s source copy first; do **not** immediately tighten or loosen the global limits.
 - Default metadata workflow for blog and library routes:
   - Let the generator fall back to `title` / `description` by default.

@@ -17,8 +17,8 @@ import { getAllPosts } from "@/lib/mdx-data"
 import { buildRouteMetadata } from "@/lib/seo/metadata"
 
 export const metadata: Metadata = buildRouteMetadata({
-  titleStem: 'Paid ads management for small business',
-  description: 'Google, Meta, TikTok, and Yelp ads planned, launched, and optimized to drive more calls, form fills, and booked appointments for your business.',
+  titleStem: 'Ads for small business',
+  description: 'Google, Meta, TikTok, and Yelp ads built to drive qualified calls, form fills, and booked appointments.',
   path: "/ads",
   ogImage: "/prism-opengraph.png",
 })

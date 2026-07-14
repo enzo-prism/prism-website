@@ -35,9 +35,9 @@ const SETUP_LINE = `${CONTENT_OS_SETUP_PRICE_LABEL} over 3 months`
 const PRICE_LINE = `${SETUP_LINE}, then ${CONTENT_OS_MONTHLY_PRICE_LABEL}`
 
 export const metadata: Metadata = buildRouteMetadata({
-  titleStem: 'Content OS: AI agents for content and ads',
+  titleStem: 'Content OS',
   description:
-    'AI agents that scale your content and ads across every social platform and your website. Implemented in 3 months, then optimized every month.',
+    'AI agents that create and improve content and ads across your website and social channels.',
   path: '/content-os',
   ogImage: '/prism-opengraph.png',
 })

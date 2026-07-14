@@ -308,8 +308,8 @@ const featuredCaseStudies = featuredCaseStudyDetails
   .filter((study): study is CaseStudyMeta & { highlight: FeaturedHighlight } => Boolean(study))
 
 export const metadata: Metadata = buildRouteMetadata({
-  titleStem: 'Dental website design & local SEO',
-  description: 'Websites, local SEO, Google Business Profile optimization, reviews, and tracking that help dental practices win more new-patient calls.',
+  titleStem: 'Dental marketing',
+  description: 'Websites, local SEO, Google Business Profile, reviews, and tracking that help dental practices attract new patients.',
   path: "/why-dental-practices-love-prism",
   ogImage: "/prism-opengraph.png",
 })

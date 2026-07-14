@@ -66,6 +66,11 @@ describe("SEO metadata rules", () => {
     expect(suffixCount).toBe(1)
   })
 
+  it("does not repeat the brand in brand-led titles", () => {
+    expect(buildAbsoluteTitle("Prism Infinity")).toBe("Prism Infinity")
+    expect(buildAbsoluteTitle("Prism")).toBe("Prism")
+  })
+
   it("cleans awkward trailing punctuation and joiners from shortened titles", () => {
     expect(cleanTrimmedTitle("Websites, google maps seo +")).toBe("Websites, google maps seo")
     expect(cleanTrimmedTitle("Paid ads management for")).toBe("Paid ads management")
@@ -97,6 +102,16 @@ describe("SEO metadata rules", () => {
         "Done-for-you website design, content systems, SEO, and paid ads for local brands.",
       ),
     ).toBe("Done-for-you website design, content systems, SEO, and paid ads for local brands.")
+  })
+
+  it("keeps sentence punctuation within the description budget", () => {
+    const description = buildMinimalDescription(
+      "Local SEO",
+      "A focused local search description without ending punctuation ".repeat(6),
+    )
+
+    expect(description.endsWith(".")).toBe(true)
+    expect(description.length).toBeLessThanOrEqual(DESCRIPTION_MAX_LENGTH)
   })
 
   it("synthesizes a description from the title only when no prose is provided", () => {

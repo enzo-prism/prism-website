@@ -7,9 +7,9 @@ import Navbar from '@/components/navbar'
 import { WebPageSchema } from '@/components/schema-markup'
 import { buildRouteMetadata } from '@/lib/seo/metadata'
 
-const PAGE_TITLE = 'Get started with a free Growth Audit'
+const PAGE_TITLE = 'Free growth audit'
 const PAGE_DESCRIPTION =
-  'Start your free Prism Growth Audit. We review your website, search visibility, proof, offer, and tracking, then send your clearest path to growth.'
+  'Get a focused review of your website, search visibility, proof, offer, and tracking with a clear path forward.'
 const CANONICAL_URL = 'https://www.design-prism.com/get-started'
 
 export const metadata: Metadata = buildRouteMetadata({

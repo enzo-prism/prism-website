@@ -19,9 +19,9 @@ import { PRISM_INFINITY_PRICE_LABEL } from '@/lib/pricing-model'
 import { buildRouteMetadata } from '@/lib/seo/metadata'
 import { cn } from '@/lib/utils'
 
-const PAGE_TITLE = 'Prism Infinity — unlimited design, web & marketing'
+const PAGE_TITLE = 'Prism Infinity'
 const PAGE_DESCRIPTION =
-  'Prism Infinity is $2,000/month for unlimited design, web, video, content, and ads, delivered one request at a time. Pause or cancel anytime.'
+  'Unlimited design, websites, video, content, and ads for $2,000 per month. Submit one request at a time and pause anytime.'
 const CANONICAL_URL = 'https://www.design-prism.com/prism-infinity'
 const SUBSCRIBE_HREF = paymentLink('infinity')
 const INTRO_HREF = '/contact?topic=prism-infinity'

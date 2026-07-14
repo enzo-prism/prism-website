@@ -112,7 +112,7 @@ Quick reference for the pages we edit most often.
 - Mobile app portfolio + process overview.
 - Direct-visitor/reference surface only after the growth-first search cleanup. It is noindex and excluded from sitemap/LLM maps unless product direction changes.
 - Uses `ItemList` JSON-LD for the showcased projects; avoid `SoftwareApplication` rich-result schema unless we can supply accurate pricing + reviews/ratings.
-- Route metadata now comes from `buildRouteMetadata` (`lib/seo/metadata.ts`) and always normalizes to a single `| Prism` suffix.
+- Route metadata comes from `buildRouteMetadata` (`lib/seo/metadata.ts`) and uses one `| Prism` suffix unless the title is already brand-led.
 - For static pages, set `titleStem` + `description` in the page metadata call and let the helper generate canonical/Open Graph/Twitter/robots fields consistently.
 - Prefer search-intent titles over internal page labels. Future metadata work should optimize for what a searcher wants (`website design`, `local SEO`, `Google Maps`, `case studies`, etc.), then confirm the final rendered output in `seo/inventory.csv`.
 

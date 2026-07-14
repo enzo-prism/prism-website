@@ -40,9 +40,9 @@ const OUTPUT_CSV = path.join(OUTPUT_DIR, "inventory.csv")
 const CANONICAL_HOST = "www.design-prism.com"
 const BRAND_SUFFIX = " | Prism"
 const TITLE_MIN_LENGTH = 10
-const TITLE_MAX_LENGTH = 60
+const TITLE_MAX_LENGTH = 56
 const DESCRIPTION_MIN_LENGTH = 24
-const DESCRIPTION_MAX_LENGTH = 155
+const DESCRIPTION_MAX_LENGTH = 150
 
 const TERMINAL_BRAND_PATTERN = /\s*(?:\||-|–|—|:)\s*(?:design\s+)?prism(?:\s+((?:agency|blog|careers|podcast|services|openai\s+guide|case\s+study)))?\s*$/i
 const LEADING_BRAND_PATTERN = /^\s*(?:design\s+)?prism(?:\s+((?:ai|blog|careers|podcast|services|openai\s+guide)))?\s*(?:\||-|–|—|:)\s*/i
@@ -266,6 +266,9 @@ function normalizeTitleStem(input: string): string {
 
 function buildAbsoluteTitle(stem: string): string {
   const normalizedStem = normalizeTitleStem(stem)
+  if (/^Prism(?:\s|$)/i.test(normalizedStem)) {
+    return cleanTrimmedTitle(trimToWordBoundary(normalizedStem, TITLE_MAX_LENGTH))
+  }
   const maxStemLength = TITLE_MAX_LENGTH - BRAND_SUFFIX.length
   return `${cleanTrimmedTitle(trimToWordBoundary(normalizedStem, maxStemLength))}${BRAND_SUFFIX}`
 }
@@ -677,6 +680,12 @@ function countBrandSuffixes(value: string) {
   return (value.match(/\|\s*Prism/gi) || []).length
 }
 
+function hasValidBranding(title: string) {
+  const trimmed = title.trim()
+  const suffixCount = countBrandSuffixes(trimmed)
+  return suffixCount === 1 || (suffixCount === 0 && /^Prism(?:\s|$)/i.test(trimmed))
+}
+
 function issueListToString(issues: string[]) {
   const unique = Array.from(new Set(issues.filter(Boolean)))
   return unique.join(";")
@@ -688,9 +697,8 @@ function classifyIndexability(robots: string) {
 
 function computeTitleIssues(finalTitle: string, robots: string): string {
   const issues = computeSeoIssueFlags(finalTitle, "title")
-  if (robots !== "noindex") {
-    const suffixCount = countBrandSuffixes(finalTitle)
-    if (suffixCount !== 1) issues.push("suffix_not_once")
+  if (robots !== "noindex" && !hasValidBranding(finalTitle)) {
+    issues.push("invalid_branding")
   }
   return issueListToString(issues)
 }

@@ -13,7 +13,7 @@ import { buildRouteMetadata } from "@/lib/seo/metadata"
 
 export const metadata: Metadata = buildRouteMetadata({
   titleStem: 'Facebook ads for dentists',
-  description: 'Prism runs Facebook and Instagram ads for dentists with patient-ready creative, landing pages, and reporting tied to calls and booked consults.',
+  description: 'Facebook and Instagram ads for dentists with clear creative, focused landing pages, and call tracking.',
   path: "/facebook-ads-for-dentists",
   ogImage: "/prism-opengraph.png",
 })

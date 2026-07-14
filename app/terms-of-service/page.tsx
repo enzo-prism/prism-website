@@ -5,9 +5,9 @@ import type { Metadata } from "next"
 import Link from "next/link"
 import { buildRouteMetadata } from "@/lib/seo/metadata"
 
-const PAGE_TITLE = 'Terms of service'
+const PAGE_TITLE = 'Terms'
 const PAGE_DESCRIPTION =
-  'The terms and conditions for using Prism web development, app development, and digital marketing services. Read the full agreement here.'
+  'Read the terms for using Prism website, app, design, SEO, advertising, and digital marketing services.'
 const CANONICAL_URL = "https://www.design-prism.com/terms-of-service"
 
 export const metadata: Metadata = buildRouteMetadata({

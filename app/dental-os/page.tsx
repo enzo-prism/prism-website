@@ -25,9 +25,9 @@ import { cn } from '@/lib/utils'
 const CANONICAL_URL = 'https://www.design-prism.com/dental-os'
 
 export const metadata: Metadata = buildRouteMetadata({
-  titleStem: 'Dental OS: the growth system for dental practices',
+  titleStem: 'Dental OS',
   description:
-    'Dental OS is the Prism growth system for dental practices: website, SEO, AI search, Google Maps, reviews, and ads — tuned to how patients choose a dentist.',
+    'A complete dental growth system for websites, SEO, AI search, Google Maps, reviews, and ads.',
   path: '/dental-os',
   ogImage: '/prism-opengraph.png',
 })

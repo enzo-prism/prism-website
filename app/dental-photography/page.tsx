@@ -127,9 +127,9 @@ const specialtyTracks = [
   },
 ]
 
-const PAGE_TITLE = 'Dental photography for every campaign'
+const PAGE_TITLE = 'Dental photography'
 const PAGE_DESCRIPTION =
-  'Prism captures on-site dental photography and video that power your website, paid ads, local listings, and social launches with real, authentic visuals.'
+  'On-site dental photography and video for your website, paid ads, local listings, and social channels.'
 const CANONICAL_URL = 'https://www.design-prism.com/dental-photography'
 
 export const metadata: Metadata = buildRouteMetadata({

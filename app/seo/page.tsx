@@ -15,8 +15,8 @@ import VideoPlayer from "@/components/video-player"
 import { buildRouteMetadata } from "@/lib/seo/metadata"
 
 export const metadata: Metadata = buildRouteMetadata({
-  titleStem: 'Local SEO services & strategy',
-  description: 'Local SEO strategy, on-page work, technical cleanup, reviews, and authority building that help service brands rank and get chosen by nearby customers.',
+  titleStem: 'Local SEO',
+  description: 'Improve local rankings with technical cleanup, clear pages, reviews, listings, and authority building.',
   path: "/seo",
   ogImage: "/prism-opengraph.png",
 })

@@ -15,7 +15,7 @@ import { buildRouteMetadata } from "@/lib/seo/metadata"
 export const metadata: Metadata = buildRouteMetadata({
   titleStem: 'Free AEO assessment',
   description:
-    'Get a free AEO assessment to see how your site shows up in answer-based discovery across Google AI Overviews, ChatGPT, Gemini, and Perplexity.',
+    'See how your website appears in Google AI Overviews, ChatGPT, Gemini, and Perplexity with a free AEO assessment.',
   path: "/aeo",
   ogImage: "/prism-opengraph.png",
 })

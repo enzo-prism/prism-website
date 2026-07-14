@@ -521,9 +521,9 @@ const referenceLinks = [
   },
 ]
 
-const PAGE_TITLE = 'Secure patient forms in Google Workspace'
+const PAGE_TITLE = 'Dental forms in Google Workspace'
 const PAGE_DESCRIPTION =
-  'A step-by-step HIPAA guide for dentists using Google Workspace: secure shared drives, Vault, compliant forms, and real patient-data safeguards.'
+  'A practical guide to secure dental forms, shared drives, Vault, and patient-data safeguards in Google Workspace.'
 const CANONICAL_URL = "https://www.design-prism.com/google/dental-patient-forms"
 
 export const metadata: Metadata = buildRouteMetadata({

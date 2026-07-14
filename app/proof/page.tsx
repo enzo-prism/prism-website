@@ -6,9 +6,9 @@ import Link from "next/link"
 import ProofCTAs from "./ProofCTAs"
 import { buildRouteMetadata } from "@/lib/seo/metadata"
 
-const PAGE_TITLE = 'Proof: a testimonial engine for dentists'
+const PAGE_TITLE = 'Patient testimonial system'
 const PAGE_DESCRIPTION =
-  'Capture patient stories once and repurpose them into case studies, schema, reels, and Google Business Profile posts that lift trust and case acceptance.'
+  'Turn patient stories into case studies, social clips, structured data, and Google Business Profile posts.'
 const CANONICAL_URL = "https://www.design-prism.com/proof"
 
 const proofFaqItems = [

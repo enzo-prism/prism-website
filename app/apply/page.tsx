@@ -5,9 +5,9 @@ import { WebPageSchema } from '@/components/schema-markup'
 import TrackedLink from '@/components/tracked-link'
 import { buildRouteMetadata } from '@/lib/seo/metadata'
 
-const PAGE_TITLE = 'Start your free Growth Audit'
+const PAGE_TITLE = 'Growth audit application'
 const PAGE_DESCRIPTION =
-  'Complete the short Prism Growth Audit intake covering your website, search visibility, proof, offer clarity, tracking, and biggest growth opportunities.'
+  'Share your website and goals so Prism can prepare your free growth audit and recommend the clearest next step.'
 const CANONICAL_URL = 'https://www.design-prism.com/apply'
 
 export const metadata: Metadata = buildRouteMetadata({

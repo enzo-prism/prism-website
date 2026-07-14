@@ -161,7 +161,7 @@ const partnershipPoints = [
 
 const PAGE_TITLE = 'Google Ads for dentists'
 const PAGE_DESCRIPTION =
-  'Prism helps dental practices attract more patients with compliant Google Ads for implants, Invisalign, and general dentistry, built for policy safety.'
+  'Google Ads for implants, Invisalign, and general dentistry with focused landing pages and clear tracking.'
 const CANONICAL_URL = "https://www.design-prism.com/google/dental-ads"
 
 export const metadata: Metadata = buildRouteMetadata({

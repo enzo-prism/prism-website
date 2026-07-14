@@ -8,8 +8,8 @@ import { HowToSchema, ServiceSchema } from "@/components/schema-markup"
 import { buildRouteMetadata } from "@/lib/seo/metadata"
 
 export const metadata: Metadata = buildRouteMetadata({
-  titleStem: 'SEO audit service',
-  description: 'A Prism SEO audit finds the technical, on-page, and trust issues blocking your rankings, then delivers a prioritized plan tied to real leads.',
+  titleStem: 'SEO audit',
+  description: 'Find the technical, on-page, and trust issues holding back your rankings, then get a clear plan to fix them.',
   path: "/seo/audit",
   ogImage: "/prism-opengraph.png",
 })

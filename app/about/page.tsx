@@ -3,8 +3,8 @@ import AboutClientPage from "./client-page"
 import { buildRouteMetadata } from "@/lib/seo/metadata"
 
 export const metadata: Metadata = buildRouteMetadata({
-  titleStem: 'About Enzo Sison & the Prism team',
-  description: 'Meet Enzo Sison and the team behind Prism, and the design, SEO, paid media, and growth-systems work we do for local brands and practices.',
+  titleStem: 'About',
+  description: 'Meet the team behind Prism and learn how we build websites, SEO, ads, and growth systems for local businesses.',
   path: "/about",
 })
 

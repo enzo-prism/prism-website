@@ -214,8 +214,8 @@ const faqItems = [
 const slugify = (value: string) => value.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)+/g, "")
 
 export const metadata: Metadata = buildRouteMetadata({
-  titleStem: 'Websites, local SEO & ads services',
-  description: 'One partner for website design, local SEO, paid ads, content, and analytics, all built to help your business get found, trusted, and chosen.',
+  titleStem: 'Services',
+  description: 'Websites, local SEO, paid ads, content, and analytics built to help your business get found, trusted, and chosen.',
   path: "/services",
   ogImage: "/prism-opengraph.png",
 })

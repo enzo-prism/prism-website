@@ -9,9 +9,9 @@ import PixelishIcon from "@/components/pixelish/PixelishIcon"
 import { buildRouteMetadata } from "@/lib/seo/metadata"
 import BookAShootForm from "./BookAShootForm"
 
-const PAGE_TITLE = 'Book a dental photography shoot'
+const PAGE_TITLE = 'Book dental photography'
 const PAGE_DESCRIPTION =
-  'Share two dates and one-hour windows and Prism will capture the office and team photography that fuels your website, ads, and listings.'
+  'Choose a time for Prism to capture office and team photos for your dental website, ads, and local listings.'
 const CANONICAL_URL = "https://www.design-prism.com/book-a-shoot"
 
 export const metadata: Metadata = buildRouteMetadata({
