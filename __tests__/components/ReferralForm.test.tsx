@@ -5,7 +5,8 @@ import ReferralForm from '@/components/forms/ReferralForm'
 const trackFormSubmission = jest.fn()
 
 jest.mock('@/utils/analytics', () => ({
-  trackFormSubmission: (...args: Array<unknown>) => trackFormSubmission(...args),
+  trackFormSubmission: (...args: Array<unknown>) =>
+    trackFormSubmission(...args),
 }))
 
 function createMockResponse(ok = true): Response {
@@ -31,6 +32,11 @@ function fillRequiredFields() {
   fireEvent.change(screen.getByLabelText(/their email or phone/i), {
     target: { value: 'jordan@leedental.com' },
   })
+  fireEvent.click(
+    screen.getByRole('checkbox', {
+      name: /permission to share these contact details/i,
+    }),
+  )
 }
 
 describe('ReferralForm', () => {
@@ -70,6 +76,30 @@ describe('ReferralForm', () => {
     expect(fetchSpy).not.toHaveBeenCalled()
   })
 
+  it('requires permission before sharing a friend’s contact details', () => {
+    render(<ReferralForm />)
+
+    fireEvent.change(screen.getByLabelText(/^your name$/i), {
+      target: { value: 'Alex Rivera' },
+    })
+    fireEvent.change(screen.getByLabelText(/^your email$/i), {
+      target: { value: 'alex@example.com' },
+    })
+    fireEvent.change(screen.getByLabelText(/friend's name/i), {
+      target: { value: 'Jordan Lee' },
+    })
+    fireEvent.change(screen.getByLabelText(/their email or phone/i), {
+      target: { value: 'jordan@leedental.com' },
+    })
+
+    fireEvent.click(screen.getByRole('button', { name: /send the referral/i }))
+
+    expect(
+      screen.getByText(/confirm you have permission to share their details/i),
+    ).toBeInTheDocument()
+    expect(fetchSpy).not.toHaveBeenCalled()
+  })
+
   it('submits the referral and shows the success state with a reset action', async () => {
     fetchSpy.mockImplementation(() => Promise.resolve(createMockResponse()))
 
@@ -87,6 +117,7 @@ describe('ReferralForm', () => {
     expect(body.get('referrer_email')).toBe('alex@example.com')
     expect(body.get('friend_name')).toBe('Jordan Lee')
     expect(body.get('friend_contact')).toBe('jordan@leedental.com')
+    expect(body.get('referral_permission')).toBe('confirmed')
 
     // Referral payouts are not sales leads: no Google Ads conversion.
     expect(trackFormSubmission).toHaveBeenCalledWith(

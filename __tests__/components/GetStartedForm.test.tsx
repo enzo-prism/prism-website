@@ -75,7 +75,9 @@ function clickContinue() {
 }
 
 function completeFocus() {
-  fireEvent.click(screen.getByRole('checkbox', { name: /more qualified leads/i }))
+  fireEvent.click(
+    screen.getByRole('checkbox', { name: /more qualified leads/i }),
+  )
   clickContinue()
 }
 
@@ -87,7 +89,7 @@ function completeLink(value = 'design-prism.com') {
 }
 
 function completeFit() {
-  fireEvent.click(screen.getByLabelText(/\$3\.5k to \$5k/i))
+  fireEvent.click(screen.getByLabelText(/content os/i))
   fireEvent.click(screen.getByLabelText(/within 30 days/i))
   clickContinue()
 }
@@ -197,7 +199,9 @@ describe('GetStartedForm', () => {
       }),
     )
 
-    fireEvent.click(screen.getByRole('checkbox', { name: /more qualified leads/i }))
+    fireEvent.click(
+      screen.getByRole('checkbox', { name: /more qualified leads/i }),
+    )
     clickContinue()
     clickContinue()
 
@@ -212,7 +216,9 @@ describe('GetStartedForm', () => {
   it('tracks the first meaningful interaction as an apply form start only once', () => {
     render(<GetStartedForm />)
 
-    fireEvent.click(screen.getByRole('checkbox', { name: /more qualified leads/i }))
+    fireEvent.click(
+      screen.getByRole('checkbox', { name: /more qualified leads/i }),
+    )
     clickContinue()
     fireEvent.click(screen.getByLabelText(/profile \/ social/i))
 
@@ -242,7 +248,7 @@ describe('GetStartedForm', () => {
       expect(
         screen.getByRole('heading', {
           level: 1,
-          name: /optional: budget & timing/i,
+          name: /optional: offer fit & timing/i,
         }),
       ).toBeInTheDocument()
     })
@@ -259,6 +265,36 @@ describe('GetStartedForm', () => {
         service_count: 1,
       }),
     )
+  })
+
+  it('explains that draft recovery stays in the current tab and device', () => {
+    render(<GetStartedForm />)
+
+    completeFocus()
+
+    expect(
+      screen.getByText(/progress saves in this tab on this device/i),
+    ).toBeInTheDocument()
+    expect(screen.getByText(/won't email a resume link/i)).toBeInTheDocument()
+    expect(
+      screen.getByLabelText(/email for your free audit/i),
+    ).toBeInTheDocument()
+  })
+
+  it('uses the current offer lineup instead of the retired budget ladder', () => {
+    render(<GetStartedForm />)
+
+    completeFocus()
+    completeLink()
+
+    expect(
+      screen.getByLabelText(/start with the free audit/i),
+    ).toBeInTheDocument()
+    expect(screen.getByLabelText(/^website$/i)).toBeInTheDocument()
+    expect(screen.getByLabelText(/content os/i)).toBeInTheDocument()
+    expect(screen.getByLabelText(/dental os/i)).toBeInTheDocument()
+    expect(screen.getByLabelText(/prism infinity/i)).toBeInTheDocument()
+    expect(screen.queryByText(/\$3\.5k|\$7\.5k/i)).not.toBeInTheDocument()
   })
 
   it('allows the optional fit step to be skipped', async () => {
@@ -288,12 +324,12 @@ describe('GetStartedForm', () => {
       expect(
         screen.getByRole('heading', {
           level: 1,
-          name: /optional: budget & timing/i,
+          name: /optional: offer fit & timing/i,
         }),
       ).toBeInTheDocument()
     })
 
-    fireEvent.click(screen.getByLabelText(/\$3\.5k to \$5k/i))
+    fireEvent.click(screen.getByLabelText(/content os/i))
     fireEvent.click(screen.getByRole('button', { name: /skip for now/i }))
 
     await waitFor(() => {
@@ -314,7 +350,9 @@ describe('GetStartedForm', () => {
   it('advances answered steps with Enter and forward arrow shortcuts', async () => {
     render(<GetStartedForm />)
 
-    const focus = screen.getByRole('checkbox', { name: /more qualified leads/i })
+    const focus = screen.getByRole('checkbox', {
+      name: /more qualified leads/i,
+    })
     fireEvent.click(focus)
     fireEvent.keyDown(focus, { key: 'ArrowRight', code: 'ArrowRight' })
 
@@ -337,7 +375,7 @@ describe('GetStartedForm', () => {
       expect(
         screen.getByRole('heading', {
           level: 1,
-          name: /optional: budget & timing/i,
+          name: /optional: offer fit & timing/i,
         }),
       ).toBeInTheDocument()
     })
@@ -370,18 +408,18 @@ describe('GetStartedForm', () => {
       expect(
         screen.getByRole('heading', {
           level: 1,
-          name: /optional: budget & timing/i,
+          name: /optional: offer fit & timing/i,
         }),
       ).toBeInTheDocument()
     })
 
-    const budgetOption = screen.getByLabelText(/\$3\.5k to \$5k/i)
+    const budgetOption = screen.getByLabelText(/content os/i)
     fireEvent.keyDown(budgetOption, { key: 'ArrowDown', code: 'ArrowDown' })
 
     expect(
       screen.getByRole('heading', {
         level: 1,
-        name: /optional: budget & timing/i,
+        name: /optional: offer fit & timing/i,
       }),
     ).toBeInTheDocument()
   })
@@ -396,7 +434,7 @@ describe('GetStartedForm', () => {
       expect(
         screen.getByRole('heading', {
           level: 1,
-          name: /optional: budget & timing/i,
+          name: /optional: offer fit & timing/i,
         }),
       ).toBeInTheDocument()
     })
@@ -466,9 +504,9 @@ describe('GetStartedForm', () => {
     })
 
     await waitFor(() => {
-      expect(
-        window.sessionStorage.getItem('prism_apply_draft_v1'),
-      ).toContain('design-prism.com')
+      expect(window.sessionStorage.getItem('prism_apply_draft_v1')).toContain(
+        'design-prism.com',
+      )
     })
 
     unmount()
@@ -554,7 +592,7 @@ describe('GetStartedForm', () => {
           form_name: 'growth_application',
           form_location: 'apply_page',
           lead_type: 'growth_application',
-          budget: '$3.5k to $5k',
+          budget: 'Content OS',
           timeline: 'Within 30 days',
           service_count: 1,
           primary_goal: 'I need more qualified leads',
@@ -570,7 +608,7 @@ describe('GetStartedForm', () => {
     expect(trackEvent).toHaveBeenCalledWith(
       'apply_submit_attempt',
       expect.objectContaining({
-        budget: '$3.5k to $5k',
+        budget: 'Content OS',
         timeline: 'Within 30 days',
         service_count: 1,
       }),
@@ -578,7 +616,7 @@ describe('GetStartedForm', () => {
     expect(trackEvent).toHaveBeenCalledWith(
       'apply_submit',
       expect.objectContaining({
-        budget: '$3.5k to $5k',
+        budget: 'Content OS',
         timeline: 'Within 30 days',
         service_count: 1,
       }),
@@ -586,7 +624,7 @@ describe('GetStartedForm', () => {
     expect(trackEvent).toHaveBeenCalledWith(
       'apply_submit_success',
       expect.objectContaining({
-        budget: '$3.5k to $5k',
+        budget: 'Content OS',
         timeline: 'Within 30 days',
         service_count: 1,
       }),
@@ -607,7 +645,7 @@ describe('GetStartedForm', () => {
     expect(formData.get('primary_goal')).toBe('I need more qualified leads')
     expect(formData.get('service_focus')).toBe('Qualified demand')
     expect(formData.getAll('service_interest[]')).toEqual(['Qualified demand'])
-    expect(formData.get('budget')).toBe('$3.5k to $5k')
+    expect(formData.get('budget')).toBe('Content OS')
     expect(formData.get('timeline')).toBe('Within 30 days')
     expect(formData.get('company')).toBe('Prism')
     expect(formData.get('full_name')).toBe('Jordan Ramirez')
@@ -646,7 +684,7 @@ describe('GetStartedForm', () => {
     expect(trackEvent).toHaveBeenCalledWith(
       'apply_submit_attempt',
       expect.objectContaining({
-        budget: '$3.5k to $5k',
+        budget: 'Content OS',
         timeline: 'Within 30 days',
         service_count: 1,
       }),

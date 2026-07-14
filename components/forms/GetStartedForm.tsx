@@ -79,11 +79,12 @@ const PROFILE_OPTIONS = [
 ] as const
 
 const BUDGET_OPTIONS = [
+  'Start with the free audit',
+  'Website',
+  'Content OS',
+  'Dental OS',
+  'Prism Infinity',
   'Not sure yet',
-  'Deep Growth Audit only',
-  '$3.5k to $5k',
-  '$5k to $7.5k',
-  '$7.5k+',
 ] as const
 
 const TIMELINE_OPTIONS = [
@@ -217,7 +218,10 @@ function writeApplyDraft(draft: ApplyDraft) {
   if (!canUseSessionStorage()) return
 
   try {
-    window.sessionStorage.setItem(APPLY_DRAFT_STORAGE_KEY, JSON.stringify(draft))
+    window.sessionStorage.setItem(
+      APPLY_DRAFT_STORAGE_KEY,
+      JSON.stringify(draft),
+    )
   } catch {
     // no-op
   }
@@ -236,20 +240,20 @@ function clearApplyDraft() {
 function hasDraftContent(draft: ApplyDraft) {
   return Boolean(
     draft.selectedFocuses?.length ||
-      draft.reviewLink ||
-      draft.budget ||
-      draft.timeline ||
-      draft.company ||
-      draft.fullName ||
-      draft.email ||
-      draft.additionalContext,
+    draft.reviewLink ||
+    draft.budget ||
+    draft.timeline ||
+    draft.company ||
+    draft.fullName ||
+    draft.email ||
+    draft.additionalContext,
   )
 }
 
 function shouldSkipAutoFocus() {
   return Boolean(
     typeof window !== 'undefined' &&
-      window.matchMedia?.('(max-width: 767px)').matches,
+    window.matchMedia?.('(max-width: 767px)').matches,
   )
 }
 
@@ -341,9 +345,7 @@ export default function GetStartedForm() {
   const selectedFocusOptions = useMemo(
     () =>
       selectedFocuses
-        .map((value) =>
-          FOCUS_OPTIONS.find((option) => option.value === value),
-        )
+        .map((value) => FOCUS_OPTIONS.find((option) => option.value === value))
         .filter(Boolean) as Array<(typeof FOCUS_OPTIONS)[number]>,
     [selectedFocuses],
   )
@@ -1240,7 +1242,7 @@ export default function GetStartedForm() {
                 htmlFor="apply-early-email"
                 className="font-mono text-[0.74rem] uppercase tracking-[0.14em] text-[#8C8C85]"
               >
-                Want us to save your progress? Add your email (optional)
+                Email for your free audit (optional)
               </Label>
               <Input
                 id="apply-early-email"
@@ -1268,8 +1270,8 @@ export default function GetStartedForm() {
                 }}
               />
               <p className="font-mono text-[0.74rem] leading-5 text-[#767670]">
-                We will only use it to send your free growth audit. Skip it and
-                keep going if you prefer.
+                Your progress saves in this tab on this device. We won&apos;t
+                email a resume link.
               </p>
             </div>
           </div>
@@ -1280,7 +1282,7 @@ export default function GetStartedForm() {
           <div className="grid gap-5 lg:grid-cols-2">
             <fieldset className="space-y-2.5">
               <legend className="font-mono text-[0.74rem] uppercase tracking-[0.18em] text-[#8C8C85]">
-                Budget
+                What feels closest?
               </legend>
               <div className="grid gap-2.5">
                 {BUDGET_OPTIONS.map((option) =>
@@ -1461,7 +1463,7 @@ export default function GetStartedForm() {
       : currentStep === 'link'
         ? 'Where should we look first?'
         : currentStep === 'fit'
-          ? 'Optional: budget & timing'
+          ? 'Optional: offer fit & timing'
           : currentStep === 'practice'
             ? 'What is your business called?'
             : currentStep === 'contact'

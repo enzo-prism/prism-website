@@ -208,6 +208,29 @@
   margin-top: 4px;
 }
 
+.prism-ai-consent {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  color: var(--muted-foreground);
+  font-size: 13px;
+  line-height: 1.6;
+  cursor: pointer;
+}
+
+.prism-ai-consent input {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 auto;
+  margin-top: 2px;
+  accent-color: var(--foreground);
+}
+
+.prism-ai-consent input:focus-visible {
+  outline: 2px solid var(--foreground);
+  outline-offset: 3px;
+}
+
 /* Error messages */
 .prism-ai-error {
   display: block;

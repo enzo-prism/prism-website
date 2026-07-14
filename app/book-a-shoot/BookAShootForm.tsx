@@ -1,5 +1,6 @@
 'use client'
 
+import type { FocusEvent, FormEvent } from 'react'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 
@@ -15,6 +16,7 @@ import { trackFormSubmission } from '@/utils/analytics'
 
 const FORM_ACTION = 'https://formspree.io/f/xjkjkggn'
 const DEFAULT_REDIRECT = 'https://www.design-prism.com/book-a-shoot/thank-you'
+const BOOKING_TIME_ZONE = 'America/Los_Angeles'
 
 const timeWindowOptions = [
   { value: '08:00', label: '8:00 - 9:00 AM' },
@@ -27,9 +29,28 @@ const timeWindowOptions = [
   { value: '15:00', label: '3:00 - 4:00 PM' },
 ]
 
+type ValidFieldElement =
+  | HTMLInputElement
+  | HTMLTextAreaElement
+  | HTMLSelectElement
+
+function formatLocalDate(date: Date) {
+  const year = date.getFullYear()
+  const month = String(date.getMonth() + 1).padStart(2, '0')
+  const day = String(date.getDate()).padStart(2, '0')
+  return `${year}-${month}-${day}`
+}
+
+function getMinimumShootDate() {
+  const tomorrow = new Date()
+  tomorrow.setDate(tomorrow.getDate() + 1)
+  return formatLocalDate(tomorrow)
+}
+
 export default function BookAShootForm() {
   const router = useRouter()
   const [redirectUrl, setRedirectUrl] = useState(DEFAULT_REDIRECT)
+  const [minimumShootDate, setMinimumShootDate] = useState('')
   const [submitError, setSubmitError] = useState<string | null>(null)
 
   const { getError, handleBlur, handleInput, handleSubmit, isSubmitting } =
@@ -65,8 +86,62 @@ export default function BookAShootForm() {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       setRedirectUrl(`${window.location.origin}/book-a-shoot/thank-you`)
+      setMinimumShootDate(getMinimumShootDate())
     }
   }, [])
+
+  const syncBookingValidity = (form: HTMLFormElement) => {
+    const today = formatLocalDate(new Date())
+    const dayOneDate = form.elements.namedItem(
+      'day_one_date',
+    ) as HTMLInputElement | null
+    const dayOneTime = form.elements.namedItem(
+      'day_one_time',
+    ) as HTMLSelectElement | null
+    const dayTwoDate = form.elements.namedItem(
+      'day_two_date',
+    ) as HTMLInputElement | null
+    const dayTwoTime = form.elements.namedItem(
+      'day_two_time',
+    ) as HTMLSelectElement | null
+
+    const dateFields = [dayOneDate, dayTwoDate]
+    dateFields.forEach((field) => {
+      field?.setCustomValidity(
+        field.value && field.value <= today ? 'Choose a future date' : '',
+      )
+    })
+
+    const hasDuplicateWindow = Boolean(
+      dayOneDate?.value &&
+      dayOneTime?.value &&
+      dayTwoDate?.value &&
+      dayTwoTime?.value &&
+      dayOneDate.value === dayTwoDate.value &&
+      dayOneTime.value === dayTwoTime.value,
+    )
+
+    dayTwoTime?.setCustomValidity(
+      hasDuplicateWindow ? 'Choose a different second date or time' : '',
+    )
+  }
+
+  const handleBookingInput = (event: FormEvent<ValidFieldElement>) => {
+    const form = event.currentTarget.form
+    if (form) syncBookingValidity(form)
+    handleInput(event)
+  }
+
+  const handleBookingBlur = (event: FocusEvent<ValidFieldElement>) => {
+    const form = event.currentTarget.form
+    if (form) syncBookingValidity(form)
+    handleBlur(event)
+  }
+
+  const handleBookingSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    syncBookingValidity(event.currentTarget)
+    await handleSubmit(event)
+  }
 
   const renderError = (name: string) => {
     const error = getError(name)
@@ -83,8 +158,10 @@ export default function BookAShootForm() {
     )
   }
 
-  const describedBy = (name: string) =>
-    getError(name) ? `${name}-error` : undefined
+  const describedBy = (name: string, extraIds: string[] = []) => {
+    const ids = getError(name) ? [...extraIds, `${name}-error`] : extraIds
+    return ids.length ? ids.join(' ') : undefined
+  }
 
   return (
     <form
@@ -93,7 +170,7 @@ export default function BookAShootForm() {
       action={FORM_ACTION}
       method="POST"
       noValidate
-      onSubmit={handleSubmit}
+      onSubmit={handleBookingSubmit}
       className="space-y-6"
     >
       <input
@@ -103,6 +180,7 @@ export default function BookAShootForm() {
       />
       <input type="hidden" name="_redirect" value={redirectUrl} />
       <input type="hidden" name="form_name" value="book_a_shoot" />
+      <input type="hidden" name="booking_timezone" value={BOOKING_TIME_ZONE} />
       <FormspreeOpsFields formKey="book_a_shoot" />
       <input
         type="text"
@@ -127,81 +205,131 @@ export default function BookAShootForm() {
           autoComplete="email"
           aria-invalid={Boolean(getError('email'))}
           aria-describedby={describedBy('email')}
-          onBlur={handleBlur}
-          onInput={handleInput}
+          onBlur={handleBookingBlur}
+          onInput={handleBookingInput}
         />
         {renderError('email')}
       </div>
 
-      <div className="space-y-2">
-        <p className="text-sm font-medium text-neutral-800">preferred day #1</p>
+      <p id="book-shoot-timezone" className="text-sm text-neutral-600">
+        All one-hour windows are in Pacific Time.
+      </p>
+
+      <fieldset className="space-y-2">
+        <legend className="text-sm font-medium text-neutral-800">
+          preferred window #1
+        </legend>
         <div className="grid gap-4 md:grid-cols-2">
-          <Input
-            type="date"
-            name="day_one_date"
-            required
-            className="rounded-2xl border-neutral-200 bg-neutral-50 px-4 py-3 text-base text-neutral-900 focus-visible:border-ring focus-visible:ring-ring focus-visible:ring-offset-0 sm:text-sm"
-            aria-invalid={Boolean(getError('day_one_date'))}
-            aria-describedby={describedBy('day_one_date')}
-            onBlur={handleBlur}
-            onInput={handleInput}
-          />
-          <select
-            name="day_one_time"
-            required
-            className="rounded-2xl border border-neutral-200 bg-neutral-50 px-4 py-3 text-base text-neutral-900 focus:border-ring focus:outline-hidden focus:ring-1 focus:ring-ring focus:ring-offset-0 sm:text-sm"
-            defaultValue=""
-            aria-invalid={Boolean(getError('day_one_time'))}
-            aria-describedby={describedBy('day_one_time')}
-            onBlur={handleBlur}
-            onInput={handleInput}
-          >
-            <option value="">best one-hour window</option>
-            {timeWindowOptions.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.label}
-              </option>
-            ))}
-          </select>
+          <div className="space-y-2">
+            <Label
+              htmlFor="book-shoot-day-one-date"
+              className="text-neutral-700"
+            >
+              date
+            </Label>
+            <Input
+              id="book-shoot-day-one-date"
+              type="date"
+              name="day_one_date"
+              min={minimumShootDate || undefined}
+              required
+              className="rounded-2xl border-neutral-200 bg-neutral-50 px-4 py-3 text-base text-neutral-900 focus-visible:border-ring focus-visible:ring-ring focus-visible:ring-offset-0 sm:text-sm"
+              aria-invalid={Boolean(getError('day_one_date'))}
+              aria-describedby={describedBy('day_one_date')}
+              onBlur={handleBookingBlur}
+              onInput={handleBookingInput}
+            />
+          </div>
+          <div className="space-y-2">
+            <Label
+              htmlFor="book-shoot-day-one-time"
+              className="text-neutral-700"
+            >
+              one-hour window
+            </Label>
+            <select
+              id="book-shoot-day-one-time"
+              name="day_one_time"
+              required
+              className="w-full rounded-2xl border border-neutral-200 bg-neutral-50 px-4 py-3 text-base text-neutral-900 focus:border-ring focus:outline-hidden focus:ring-1 focus:ring-ring focus:ring-offset-0 sm:text-sm"
+              defaultValue=""
+              aria-invalid={Boolean(getError('day_one_time'))}
+              aria-describedby={describedBy('day_one_time', [
+                'book-shoot-timezone',
+              ])}
+              onBlur={handleBookingBlur}
+              onInput={handleBookingInput}
+            >
+              <option value="">select a window</option>
+              {timeWindowOptions.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
         {renderError('day_one_date')}
         {renderError('day_one_time')}
-      </div>
+      </fieldset>
 
-      <div className="space-y-2">
-        <p className="text-sm font-medium text-neutral-800">preferred day #2</p>
+      <fieldset className="space-y-2">
+        <legend className="text-sm font-medium text-neutral-800">
+          preferred window #2
+        </legend>
         <div className="grid gap-4 md:grid-cols-2">
-          <Input
-            type="date"
-            name="day_two_date"
-            required
-            className="rounded-2xl border-neutral-200 bg-neutral-50 px-4 py-3 text-base text-neutral-900 focus-visible:border-ring focus-visible:ring-ring focus-visible:ring-offset-0 sm:text-sm"
-            aria-invalid={Boolean(getError('day_two_date'))}
-            aria-describedby={describedBy('day_two_date')}
-            onBlur={handleBlur}
-            onInput={handleInput}
-          />
-          <select
-            name="day_two_time"
-            required
-            className="rounded-2xl border border-neutral-200 bg-neutral-50 px-4 py-3 text-base text-neutral-900 focus:border-ring focus:outline-hidden focus:ring-1 focus:ring-ring focus:ring-offset-0 sm:text-sm"
-            defaultValue=""
-            aria-invalid={Boolean(getError('day_two_time'))}
-            aria-describedby={describedBy('day_two_time')}
-            onBlur={handleBlur}
-            onInput={handleInput}
-          >
-            <option value="">best one-hour window</option>
-            {timeWindowOptions.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.label}
-              </option>
-            ))}
-          </select>
+          <div className="space-y-2">
+            <Label
+              htmlFor="book-shoot-day-two-date"
+              className="text-neutral-700"
+            >
+              date
+            </Label>
+            <Input
+              id="book-shoot-day-two-date"
+              type="date"
+              name="day_two_date"
+              min={minimumShootDate || undefined}
+              required
+              className="rounded-2xl border-neutral-200 bg-neutral-50 px-4 py-3 text-base text-neutral-900 focus-visible:border-ring focus-visible:ring-ring focus-visible:ring-offset-0 sm:text-sm"
+              aria-invalid={Boolean(getError('day_two_date'))}
+              aria-describedby={describedBy('day_two_date')}
+              onBlur={handleBookingBlur}
+              onInput={handleBookingInput}
+            />
+          </div>
+          <div className="space-y-2">
+            <Label
+              htmlFor="book-shoot-day-two-time"
+              className="text-neutral-700"
+            >
+              one-hour window
+            </Label>
+            <select
+              id="book-shoot-day-two-time"
+              name="day_two_time"
+              required
+              className="w-full rounded-2xl border border-neutral-200 bg-neutral-50 px-4 py-3 text-base text-neutral-900 focus:border-ring focus:outline-hidden focus:ring-1 focus:ring-ring focus:ring-offset-0 sm:text-sm"
+              defaultValue=""
+              aria-invalid={Boolean(getError('day_two_time'))}
+              aria-describedby={describedBy('day_two_time', [
+                'book-shoot-timezone',
+              ])}
+              onBlur={handleBookingBlur}
+              onInput={handleBookingInput}
+            >
+              <option value="">select a window</option>
+              {timeWindowOptions.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
         {renderError('day_two_date')}
         {renderError('day_two_time')}
-      </div>
+      </fieldset>
 
       <div className="space-y-2">
         <Label htmlFor="book-shoot-notes" className="text-neutral-800">
@@ -213,8 +341,8 @@ export default function BookAShootForm() {
           rows={4}
           className="w-full rounded-2xl border-neutral-200 bg-neutral-50 px-4 py-3 text-sm text-neutral-900 shadow-none focus-visible:border-ring focus-visible:ring-ring focus-visible:ring-offset-0"
           placeholder="number of operatories, parking instructions, etc."
-          onBlur={handleBlur}
-          onInput={handleInput}
+          onBlur={handleBookingBlur}
+          onInput={handleBookingInput}
         />
       </div>
 

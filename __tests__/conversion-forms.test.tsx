@@ -56,6 +56,12 @@ function createMockResponse(ok = true): Response {
   } as unknown as Response
 }
 
+function futureDate(daysAhead: number) {
+  const date = new Date()
+  date.setDate(date.getDate() + daysAhead)
+  return date.toISOString().slice(0, 10)
+}
+
 describe('secondary conversion forms', () => {
   const fetchSpy = jest.spyOn(global, 'fetch')
 
@@ -74,13 +80,13 @@ describe('secondary conversion forms', () => {
       target: { value: 'doctor@example.com' },
     })
     fireEvent.change(container.querySelector('input[name="day_one_date"]')!, {
-      target: { value: '2026-06-01' },
+      target: { value: futureDate(30) },
     })
     fireEvent.change(container.querySelector('select[name="day_one_time"]')!, {
       target: { value: '09:00' },
     })
     fireEvent.change(container.querySelector('input[name="day_two_date"]')!, {
-      target: { value: '2026-06-02' },
+      target: { value: futureDate(31) },
     })
     fireEvent.change(container.querySelector('select[name="day_two_time"]')!, {
       target: { value: '10:00' },
@@ -154,11 +160,61 @@ describe('secondary conversion forms', () => {
       RequestInit,
     ]
     const formData = options.body as FormData
+    expect(formData.get('first_name')).toBe('Alex')
+    expect(formData.get('last_name')).toBe('Rivera')
+    expect(formData.get('email')).toBe('alex@example.com')
+    expect(formData.get('heard_about')).toBe('search')
+    expect(formData.get('project_description')).toBe(
+      'I am building a service business website for local customers.',
+    )
+    expect(formData.get('page')).toBe('scholarship')
     expect(formData.get('form_name')).toBe('scholarship_application')
     expect(formData.get('site')).toBe('prism-site')
     expect(formData.get('form_key')).toBe('scholarship')
     expect(formData.get('_codex_test')).toBe('false')
     expect(formData.get('gclid')).toBe('GCLID-123')
+  })
+
+  it('blocks incomplete and invalid scholarship applications and focuses the first error', () => {
+    render(<ScholarshipPageClient />)
+
+    fireEvent.click(screen.getByRole('button', { name: /submit application/i }))
+
+    const firstName = screen.getByLabelText(/first name/i)
+    expect(fetchSpy).not.toHaveBeenCalled()
+    expect(firstName).toHaveAttribute('aria-invalid', 'true')
+    expect(firstName).toHaveAttribute(
+      'aria-describedby',
+      'scholarship-firstName-error',
+    )
+    expect(document.activeElement).toBe(firstName)
+    expect(
+      document.getElementById('scholarship-firstName-error'),
+    ).toHaveAttribute('aria-live', 'polite')
+
+    fireEvent.change(firstName, { target: { value: 'Alex' } })
+    fireEvent.change(screen.getByLabelText(/last name/i), {
+      target: { value: 'Rivera' },
+    })
+    fireEvent.change(screen.getByLabelText(/^email$/i), {
+      target: { value: 'not-an-email' },
+    })
+    fireEvent.change(screen.getByLabelText(/how did you first hear/i), {
+      target: { value: 'search' },
+    })
+    fireEvent.change(screen.getByLabelText(/tell us about the website/i), {
+      target: {
+        value: 'I am building a service business website for local customers.',
+      },
+    })
+
+    fireEvent.click(screen.getByRole('button', { name: /submit application/i }))
+
+    const email = screen.getByLabelText(/^email$/i)
+    expect(fetchSpy).not.toHaveBeenCalled()
+    expect(email).toHaveAttribute('aria-invalid', 'true')
+    expect(email).toHaveAttribute('aria-describedby', 'scholarship-email-error')
+    expect(document.activeElement).toBe(email)
   })
 
   it('tracks model applications as GA4 leads without Google Ads conversion', async () => {
@@ -201,11 +257,81 @@ describe('secondary conversion forms', () => {
       RequestInit,
     ]
     const formData = options.body as FormData
+    expect(formData.get('name')).toBe('Jordan Lee')
+    expect(formData.get('location')).toBe('Beverly Hills, CA')
+    expect(formData.get('preferred_contact_method')).toBe('email')
+    expect(formData.get('email')).toBe('jordan@example.com')
     expect(formData.get('form_name')).toBe('model_application')
     expect(formData.get('site')).toBe('prism-site')
     expect(formData.get('form_key')).toBe('models')
     expect(formData.get('_codex_test')).toBe('false')
     expect(formData.get('gclid')).toBe('GCLID-123')
+  })
+
+  it('blocks incomplete and invalid model applications and focuses the first error', () => {
+    const { container } = render(<ModelsPageClient />)
+    const form = container.querySelector('form') as HTMLFormElement
+
+    fireEvent.click(within(form).getByRole('button', { name: /apply now/i }))
+
+    const name = within(form).getByLabelText(/^name$/i)
+    expect(fetchSpy).not.toHaveBeenCalled()
+    expect(name).toHaveAttribute('aria-invalid', 'true')
+    expect(name).toHaveAttribute('aria-describedby', 'models-name-error')
+    expect(document.activeElement).toBe(name)
+    expect(document.getElementById('models-name-error')).toHaveAttribute(
+      'aria-live',
+      'polite',
+    )
+
+    fireEvent.change(name, { target: { value: 'Jordan Lee' } })
+    fireEvent.change(within(form).getByLabelText(/city \/ state/i), {
+      target: { value: 'Beverly Hills, CA' },
+    })
+    fireEvent.click(
+      form.querySelector(
+        'input[name="preferred_contact_method"][value="email"]',
+      )!,
+    )
+    fireEvent.change(within(form).getByLabelText(/email address/i), {
+      target: { value: 'not-an-email' },
+    })
+
+    fireEvent.click(within(form).getByRole('button', { name: /apply now/i }))
+
+    const email = within(form).getByLabelText(/email address/i)
+    expect(fetchSpy).not.toHaveBeenCalled()
+    expect(email).toHaveAttribute('aria-invalid', 'true')
+    expect(email).toHaveAttribute('aria-describedby', 'models-email-error')
+    expect(document.activeElement).toBe(email)
+  })
+
+  it('blocks model text applications with an invalid phone number', () => {
+    const { container } = render(<ModelsPageClient />)
+    const form = container.querySelector('form') as HTMLFormElement
+
+    fireEvent.change(within(form).getByLabelText(/^name$/i), {
+      target: { value: 'Jordan Lee' },
+    })
+    fireEvent.change(within(form).getByLabelText(/city \/ state/i), {
+      target: { value: 'Beverly Hills, CA' },
+    })
+    fireEvent.click(
+      form.querySelector(
+        'input[name="preferred_contact_method"][value="text"]',
+      )!,
+    )
+    fireEvent.change(within(form).getByLabelText(/mobile number/i), {
+      target: { value: '123' },
+    })
+
+    fireEvent.click(within(form).getByRole('button', { name: /apply now/i }))
+
+    const phone = within(form).getByLabelText(/mobile number/i)
+    expect(fetchSpy).not.toHaveBeenCalled()
+    expect(phone).toHaveAttribute('aria-invalid', 'true')
+    expect(phone).toHaveAttribute('aria-describedby', 'models-phone-error')
+    expect(document.activeElement).toBe(phone)
   })
 
   it('keeps the AI launch thank-you redirect from polluting GA attribution', async () => {

@@ -16,6 +16,7 @@ import PixelishImg from '@/components/pixelish/PixelishImg'
 import { pixelishForEmoji } from '@/lib/pixelish-emoji'
 import { appendAttributionToFormData } from '@/lib/marketing-attribution'
 import { trackCTAClick, trackFormSubmission } from '@/utils/analytics'
+import { useFormValidation } from '@/hooks/use-form-validation'
 
 const offerHighlights = [
   {
@@ -122,44 +123,19 @@ const dentalPartners = [
 ]
 
 export default function ModelsPageClient() {
-  const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSuccess, setIsSuccess] = useState(false)
-  const [error, setError] = useState<string | null>(null)
+  const [submitError, setSubmitError] = useState<string | null>(null)
   const [contactMethod, setContactMethod] = useState<'email' | 'text' | ''>('')
 
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    setError(null)
+  const submitApplication = async (form: HTMLFormElement) => {
+    setSubmitError(null)
     setIsSuccess(false)
 
-    const form = event.currentTarget
     const formData = new FormData(form)
-
     const selectedContactMethod = (
       contactMethod ||
       (formData.get('preferred_contact_method')?.toString() ?? '')
     ).toLowerCase() as 'email' | 'text' | ''
-
-    if (selectedContactMethod !== 'email' && selectedContactMethod !== 'text') {
-      setError('please choose how we should contact you.')
-      return
-    }
-
-    if (selectedContactMethod === 'email') {
-      const emailValue = (formData.get('email')?.toString() ?? '').trim()
-      if (!emailValue) {
-        setError('please enter your email address.')
-        return
-      }
-    }
-
-    if (selectedContactMethod === 'text') {
-      const phoneValue = (formData.get('phone')?.toString() ?? '').trim()
-      if (!phoneValue) {
-        setError('please enter your mobile number.')
-        return
-      }
-    }
 
     formData.set('preferred_contact_method', selectedContactMethod)
     formData.set('_subject', 'New Prism models application')
@@ -168,7 +144,6 @@ export default function ModelsPageClient() {
     appendAttributionToFormData(formData)
 
     try {
-      setIsSubmitting(true)
       const response = await fetch(form.action, {
         method: 'POST',
         body: formData,
@@ -178,7 +153,7 @@ export default function ModelsPageClient() {
       if (response.ok) {
         form.reset()
         setContactMethod('')
-        setError(null)
+        setSubmitError(null)
         setIsSuccess(true)
         trackFormSubmission('model_application', 'models_form', {
           conversionMode: 'immediate',
@@ -192,25 +167,55 @@ export default function ModelsPageClient() {
       const message =
         (body && (body.error || body.message)) ||
         "we couldn't submit your application. please try again or email support@design-prism.com."
-      setError(
+      setSubmitError(
         typeof message === 'string'
           ? message.toLowerCase()
           : "we couldn't submit your application. please try again or email support@design-prism.com.",
       )
     } catch (submissionError) {
       console.error('error submitting models application:', submissionError)
-      setError(
+      setSubmitError(
         "we couldn't submit your application. please try again or email support@design-prism.com.",
       )
-    } finally {
-      setIsSubmitting(false)
     }
+  }
+
+  const {
+    getError,
+    handleBlur,
+    handleInput,
+    handleSubmit: handleValidatedSubmit,
+    isSubmitting,
+  } = useFormValidation({ onValidSubmit: submitApplication })
+
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    setSubmitError(null)
+    setIsSuccess(false)
+    void handleValidatedSubmit(event)
   }
 
   const handleContactMethodChange = (value: 'email' | 'text') => {
     setContactMethod(value)
-    setError(null)
+    setSubmitError(null)
   }
+
+  const renderError = (name: string) => {
+    const error = getError(name)
+    if (!error) return null
+
+    return (
+      <p
+        id={`models-${name}-error`}
+        className="text-sm font-medium text-red-600"
+        aria-live="polite"
+      >
+        {error}
+      </p>
+    )
+  }
+
+  const getDescribedBy = (name: string) =>
+    getError(name) ? `models-${name}-error` : undefined
 
   return (
     <div className="flex min-h-screen flex-col bg-white text-neutral-900">
@@ -408,22 +413,38 @@ export default function ModelsPageClient() {
                   aria-hidden="true"
                 />
                 <div className="grid gap-6 sm:grid-cols-2 sm:gap-7 lg:gap-8">
-                  <FormField label="name" name="name">
+                  <FormField
+                    label="name"
+                    name="name"
+                    error={renderError('name')}
+                  >
                     <Input
                       id="models-name"
                       name="name"
                       placeholder="first and last name"
                       required
                       className="h-11"
+                      aria-invalid={Boolean(getError('name'))}
+                      aria-describedby={getDescribedBy('name')}
+                      onBlur={handleBlur}
+                      onInput={handleInput}
                     />
                   </FormField>
-                  <FormField label="city / state" name="location">
+                  <FormField
+                    label="city / state"
+                    name="location"
+                    error={renderError('location')}
+                  >
                     <Input
                       id="models-location"
                       name="location"
                       placeholder="beverly hills, ca"
                       required
                       className="h-11"
+                      aria-invalid={Boolean(getError('location'))}
+                      aria-describedby={getDescribedBy('location')}
+                      onBlur={handleBlur}
+                      onInput={handleInput}
                     />
                   </FormField>
                   <div className="sm:col-span-2">
@@ -437,11 +458,21 @@ export default function ModelsPageClient() {
                         name="social"
                         placeholder="@yourhandle"
                         className="h-11"
+                        onBlur={handleBlur}
+                        onInput={handleInput}
                       />
                     </FormField>
                   </div>
                   <div className="sm:col-span-2">
-                    <fieldset className="rounded-3xl border border-neutral-200 bg-neutral-50 p-5 sm:p-6">
+                    <fieldset
+                      className="rounded-3xl border border-neutral-200 bg-neutral-50 p-5 sm:p-6"
+                      aria-invalid={Boolean(
+                        getError('preferred_contact_method'),
+                      )}
+                      aria-describedby={getDescribedBy(
+                        'preferred_contact_method',
+                      )}
+                    >
                       <legend className="text-sm font-semibold lowercase text-neutral-900">
                         preferred contact method
                       </legend>
@@ -483,7 +514,11 @@ export default function ModelsPageClient() {
                             value="email"
                             className="sr-only"
                             checked={contactMethod === 'email'}
-                            onChange={() => handleContactMethodChange('email')}
+                            onChange={(event) => {
+                              handleContactMethodChange('email')
+                              handleInput(event)
+                            }}
+                            onBlur={handleBlur}
                             required
                           />
                         </label>
@@ -521,11 +556,16 @@ export default function ModelsPageClient() {
                             value="text"
                             className="sr-only"
                             checked={contactMethod === 'text'}
-                            onChange={() => handleContactMethodChange('text')}
+                            onChange={(event) => {
+                              handleContactMethodChange('text')
+                              handleInput(event)
+                            }}
+                            onBlur={handleBlur}
                             required
                           />
                         </label>
                       </div>
+                      {renderError('preferred_contact_method')}
                       <div className="mt-6 space-y-4">
                         {contactMethod === 'email' ? (
                           <div className="flex flex-col gap-2">
@@ -543,8 +583,12 @@ export default function ModelsPageClient() {
                               autoComplete="email"
                               className="h-11"
                               required
-                              onChange={() => setError(null)}
+                              aria-invalid={Boolean(getError('email'))}
+                              aria-describedby={getDescribedBy('email')}
+                              onBlur={handleBlur}
+                              onInput={handleInput}
                             />
+                            {renderError('email')}
                           </div>
                         ) : null}
                         {contactMethod === 'text' ? (
@@ -561,10 +605,16 @@ export default function ModelsPageClient() {
                               name="phone"
                               placeholder="(555) 555-5555"
                               autoComplete="tel"
+                              inputMode="tel"
+                              pattern="(?:\+?1[ .-]?)?(?:\([2-9][0-9]{2}\)|[2-9][0-9]{2})[ .-]?[0-9]{3}[ .-]?[0-9]{4}"
                               className="h-11"
                               required
-                              onChange={() => setError(null)}
+                              aria-invalid={Boolean(getError('phone'))}
+                              aria-describedby={getDescribedBy('phone')}
+                              onBlur={handleBlur}
+                              onInput={handleInput}
                             />
+                            {renderError('phone')}
                             <p className="text-xs text-neutral-400">
                               we only text with shoot updates and reminders.
                             </p>
@@ -574,11 +624,17 @@ export default function ModelsPageClient() {
                     </fieldset>
                   </div>
                 </div>
-                {error ? (
-                  <p className="text-sm font-medium text-red-600">{error}</p>
+                {submitError ? (
+                  <p className="text-sm font-medium text-red-600" role="alert">
+                    {submitError}
+                  </p>
                 ) : null}
                 {isSuccess ? (
-                  <p className="rounded-2xl bg-green-50 p-4 text-sm font-medium text-green-700">
+                  <p
+                    className="rounded-2xl bg-green-50 p-4 text-sm font-medium text-green-700"
+                    role="status"
+                    aria-live="polite"
+                  >
                     thanks! we’ll reach out soon if we have a shoot opportunity
                     near you.
                   </p>
@@ -722,26 +778,31 @@ function FormField({
   name,
   children,
   optional,
+  error,
 }: {
   label: string
   name: string
   children: React.ReactNode
   optional?: boolean
+  error?: React.ReactNode
 }) {
   return (
-    <label
-      className="flex flex-col gap-2.5 text-sm text-neutral-700 sm:gap-3"
-      htmlFor={`models-${name}`}
-    >
-      <span className="flex items-center justify-between font-medium lowercase">
-        {label}
-        {optional ? (
-          <span className="text-xs tracking-[0.2em] text-neutral-300">
-            optional
-          </span>
-        ) : null}
-      </span>
-      {children}
-    </label>
+    <div className="flex flex-col gap-2.5 text-sm text-neutral-700 sm:gap-3">
+      <label
+        className="flex flex-col gap-2.5 sm:gap-3"
+        htmlFor={`models-${name}`}
+      >
+        <span className="flex items-center justify-between font-medium lowercase">
+          {label}
+          {optional ? (
+            <span className="text-xs tracking-[0.2em] text-neutral-300">
+              optional
+            </span>
+          ) : null}
+        </span>
+        {children}
+      </label>
+      {error}
+    </div>
   )
 }

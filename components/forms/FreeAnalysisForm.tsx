@@ -85,7 +85,7 @@ export default function FreeAnalysisForm() {
       <input type="hidden" name="_subject" value="New submission from Prism" />
       <input type="hidden" name="_redirect" value={redirectUrl} />
       <input type="hidden" name="form_name" value="free_analysis" />
-      <FormspreeOpsFields formKey="aeo_assessment" />
+      <FormspreeOpsFields formKey="free_analysis" />
       <input
         type="text"
         name="_gotcha"

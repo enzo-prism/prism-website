@@ -9,6 +9,7 @@ import {
 } from '@/components/forms/FormspreeOpsFields'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
+import { useFormValidation } from '@/hooks/use-form-validation'
 import { appendAttributionToFormData } from '@/lib/marketing-attribution'
 import { trackFormSubmission } from '@/utils/analytics'
 import Link from 'next/link'
@@ -111,12 +112,10 @@ export default function ScholarshipPageClient() {
     }
   }, [])
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
+  const submitApplication = async (form: HTMLFormElement) => {
     setStatus('submitting')
     setErrorMessage(null)
 
-    const form = event.currentTarget
     const formData = new FormData(form)
     const payload = new FormData()
     payload.append('first_name', String(formData.get('firstName') || ''))
@@ -163,6 +162,38 @@ export default function ScholarshipPageClient() {
       setStatus('error')
     }
   }
+
+  const {
+    getError,
+    handleBlur,
+    handleInput,
+    handleSubmit: handleValidatedSubmit,
+    isSubmitting,
+  } = useFormValidation({ onValidSubmit: submitApplication })
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    setStatus('idle')
+    setErrorMessage(null)
+    void handleValidatedSubmit(event)
+  }
+
+  const renderError = (name: string) => {
+    const error = getError(name)
+    if (!error) return null
+
+    return (
+      <p
+        id={`scholarship-${name}-error`}
+        className="text-sm text-rose-600"
+        aria-live="polite"
+      >
+        {error}
+      </p>
+    )
+  }
+
+  const getDescribedBy = (name: string) =>
+    getError(name) ? `scholarship-${name}-error` : undefined
 
   const countdownBlocks = useMemo(
     () => [
@@ -272,7 +303,12 @@ export default function ScholarshipPageClient() {
                         required
                         autoComplete="given-name"
                         placeholder="alex"
+                        aria-invalid={Boolean(getError('firstName'))}
+                        aria-describedby={getDescribedBy('firstName')}
+                        onBlur={handleBlur}
+                        onInput={handleInput}
                       />
+                      {renderError('firstName')}
                     </div>
                     <div className="space-y-2">
                       <label
@@ -287,7 +323,12 @@ export default function ScholarshipPageClient() {
                         required
                         autoComplete="family-name"
                         placeholder="rivera"
+                        aria-invalid={Boolean(getError('lastName'))}
+                        aria-describedby={getDescribedBy('lastName')}
+                        onBlur={handleBlur}
+                        onInput={handleInput}
                       />
+                      {renderError('lastName')}
                     </div>
                   </div>
                   <div className="space-y-2">
@@ -304,7 +345,12 @@ export default function ScholarshipPageClient() {
                       required
                       autoComplete="email"
                       placeholder="you@example.com"
+                      aria-invalid={Boolean(getError('email'))}
+                      aria-describedby={getDescribedBy('email')}
+                      onBlur={handleBlur}
+                      onInput={handleInput}
                     />
+                    {renderError('email')}
                   </div>
                   <div className="space-y-2">
                     <label
@@ -319,6 +365,10 @@ export default function ScholarshipPageClient() {
                       required
                       className="w-full rounded-xl border border-neutral-200 bg-white px-3 py-2 text-sm text-neutral-900 focus:border-ring focus:outline-hidden focus:ring-1 focus:ring-ring"
                       defaultValue=""
+                      aria-invalid={Boolean(getError('referral'))}
+                      aria-describedby={getDescribedBy('referral')}
+                      onBlur={handleBlur}
+                      onChange={handleInput}
                     >
                       <option value="" disabled>
                         choose an option
@@ -329,6 +379,7 @@ export default function ScholarshipPageClient() {
                         </option>
                       ))}
                     </select>
+                    {renderError('referral')}
                   </div>
                   <div className="space-y-2">
                     <label
@@ -344,27 +395,37 @@ export default function ScholarshipPageClient() {
                       required
                       rows={5}
                       placeholder="share what you are building, who it serves, and what the site should help you achieve."
+                      aria-invalid={Boolean(getError('project'))}
+                      aria-describedby={getDescribedBy('project')}
+                      onBlur={handleBlur}
+                      onInput={handleInput}
                     />
+                    {renderError('project')}
                   </div>
                   {status === 'success' ? (
-                    <p className="rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700">
+                    <p
+                      className="rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700"
+                      role="status"
+                      aria-live="polite"
+                    >
                       thanks for applying. we will review your submission before
                       the next pick and follow up via email.
                     </p>
                   ) : null}
                   {status === 'error' && errorMessage ? (
-                    <p className="rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700">
+                    <p
+                      className="rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700"
+                      role="alert"
+                    >
                       {errorMessage}
                     </p>
                   ) : null}
                   <Button
                     type="submit"
                     className="w-full rounded-full bg-neutral-900 py-3 text-base lowercase text-white hover:bg-neutral-800"
-                    disabled={status === 'submitting'}
+                    disabled={isSubmitting}
                   >
-                    {status === 'submitting'
-                      ? 'submitting…'
-                      : 'submit application'}
+                    {isSubmitting ? 'submitting…' : 'submit application'}
                   </Button>
                   <p className="text-xs text-neutral-400">
                     we review every entry manually and reach out via email if

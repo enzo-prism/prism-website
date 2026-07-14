@@ -86,6 +86,7 @@ All marketing forms live under `components/forms/` (Contact, Free Analysis, Get 
 Key details:
 
 - Forms post to Formspree via `fetch` with `Accept: application/json`. On success we push the user to `/thank-you` or `/analysis-thank-you` so our custom screens always render.
+- Free Analysis and AEO currently share the same physical Formspree endpoint but must keep distinct ops identities: `form_key=free_analysis` versus `form_key=aeo_assessment`.
 - Use the `_subject` hidden field for inbox filtering and `_gotcha` as the honeypot.
 - When adding a new Formspree endpoint, import `useFormValidation({ onValidSubmit })` and only navigate after the request returns `response.ok`.
 - `/get-started` is now the free Growth Dashboard entry page, while `/apply` is the focused question-by-question dashboard intake form. Keep the copy and thank-you flow explicit that a review follows a real business submission, while the later Deep Growth Audit or sprint path is optional and selective.

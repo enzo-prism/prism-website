@@ -100,7 +100,7 @@ function isFieldElement(element: Element): element is ValidFieldElement {
 function shouldSkipAutoFocus() {
   return Boolean(
     typeof window !== 'undefined' &&
-      window.matchMedia?.('(max-width: 767px)').matches,
+    window.matchMedia?.('(max-width: 767px)').matches,
   )
 }
 
@@ -113,6 +113,13 @@ function countLinkTokens(text: string) {
   return text
     .split(/[\s,\n]+/)
     .filter((token) => /(\.|:\/\/)/.test(token) && token.length > 3).length
+}
+
+function createOrderReference() {
+  const randomId = globalThis.crypto?.randomUUID?.().split('-')[0]
+  const fallbackId = Date.now().toString(36)
+
+  return `PRISM-${(randomId ?? fallbackId).toUpperCase()}`
 }
 
 /**
@@ -159,6 +166,7 @@ export default function WebsiteOrderForm() {
   const launchButtonRef = useRef<HTMLButtonElement | null>(null)
   const successHeadingRef = useRef<HTMLHeadingElement | null>(null)
   const returnToReviewRef = useRef(false)
+  const orderReferenceRef = useRef<string | null>(null)
 
   const [brandName, setBrandName] = useState('')
   const [audience, setAudience] = useState('')
@@ -177,6 +185,7 @@ export default function WebsiteOrderForm() {
   const [completedSteps, setCompletedSteps] = useState<readonly StepId[]>([])
   const [status, setStatus] = useState<OrderStatus>('order')
   const [submittedBrand, setSubmittedBrand] = useState('')
+  const [submittedReference, setSubmittedReference] = useState('')
   const [submitError, setSubmitError] = useState<string | null>(null)
   const [hasDraft, setHasDraft] = useState(false)
   const [announcement, setAnnouncement] = useState('')
@@ -188,11 +197,17 @@ export default function WebsiteOrderForm() {
       onValidSubmit: async (form) => {
         setSubmitError(null)
 
+        const orderReference =
+          orderReferenceRef.current ?? createOrderReference()
+        orderReferenceRef.current = orderReference
+        const payload = new FormData(form)
+        payload.set('order_reference', orderReference)
+
         try {
           const response = await fetch(form.action, {
             method: 'POST',
             headers: { Accept: 'application/json' },
-            body: new FormData(form),
+            body: payload,
           })
 
           if (!response.ok) {
@@ -214,8 +229,11 @@ export default function WebsiteOrderForm() {
         })
 
         setSubmittedBrand(brandName.trim())
+        setSubmittedReference(orderReference)
         setStatus('success')
-        setAnnouncement('Order received. Pay $300 to start the build.')
+        setAnnouncement(
+          `Request received. Reference ${orderReference}. Pay $300 to start the build.`,
+        )
         try {
           window.sessionStorage.removeItem(DRAFT_STORAGE_KEY)
         } catch {
@@ -567,7 +585,8 @@ export default function WebsiteOrderForm() {
         'a[href], button:not([disabled]), input:not([disabled]):not([type="hidden"]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
       ),
     ).filter(
-      (element) => !element.closest('[hidden]') && element.offsetParent !== null,
+      (element) =>
+        !element.closest('[hidden]') && element.offsetParent !== null,
     )
     if (focusables.length === 0) return
 
@@ -708,9 +727,7 @@ export default function WebsiteOrderForm() {
 
   const latestCompletedStep = completedSteps[completedSteps.length - 1]
   const progressValue = status === 'success' ? STEP_ORDER.length : stepIndex
-  const progressPercent = Math.round(
-    (progressValue / STEP_ORDER.length) * 100,
-  )
+  const progressPercent = Math.round((progressValue / STEP_ORDER.length) * 100)
 
   const hasProgress =
     hasDraft ||
@@ -815,6 +832,7 @@ export default function WebsiteOrderForm() {
                 {status === 'success' ? (
                   <SuccessPanel
                     submittedBrand={submittedBrand}
+                    orderReference={submittedReference}
                     successHeadingRef={successHeadingRef}
                     onPayClick={handlePayClick}
                   />
@@ -1212,7 +1230,10 @@ export default function WebsiteOrderForm() {
                             onClick={handleBack}
                             className={backButtonClassName}
                           >
-                            <ArrowLeft aria-hidden="true" className="h-3.5 w-3.5" />
+                            <ArrowLeft
+                              aria-hidden="true"
+                              className="h-3.5 w-3.5"
+                            />
                             Back
                           </button>
                         ) : (
@@ -1239,7 +1260,10 @@ export default function WebsiteOrderForm() {
                               key="place-order"
                               type="submit"
                               disabled={isSubmitting}
-                              className={cn(continueButtonClassName, 'min-h-14')}
+                              className={cn(
+                                continueButtonClassName,
+                                'min-h-14',
+                              )}
                             >
                               {isSubmitting
                                 ? 'Placing order…'
@@ -1266,8 +1290,8 @@ export default function WebsiteOrderForm() {
                       </div>
                       {activeStep === 'review' ? (
                         <p className="mx-auto mt-3 w-full max-w-2xl text-center font-mono text-[0.68rem] leading-6 text-[#8f877b]">
-                          Flat $300, one time. You pay on the next step to
-                          start the build.
+                          Flat $300, one time. You pay on the next step to start
+                          the build.
                         </p>
                       ) : null}
                     </div>
@@ -1367,13 +1391,18 @@ export default function WebsiteOrderForm() {
             </p>
             <h3 className="mt-4 max-w-[16ch] text-balance font-sans text-[clamp(1.8rem,5vw,2.6rem)] font-medium leading-[1.02] tracking-[-0.045em] text-[#f5f0e8]">
               {submittedBrand
-                ? `${submittedBrand}'s website is queued.`
-                : 'Your website is queued.'}
+                ? `${submittedBrand}'s brief is saved.`
+                : 'Your website brief is saved.'}
             </h3>
             <p className="mt-4 max-w-xl text-[1rem] leading-7 text-[#b8afa2]">
-              Complete your $300 payment to start the build. We deliver in
-              about 7 days, then iterate until you love it.
+              Complete your $300 payment to start the build. We deliver in about
+              7 days, then iterate until you love it.
             </p>
+            {submittedReference ? (
+              <p className="mt-3 font-mono text-[0.68rem] uppercase tracking-[0.18em] text-[#8f877b]">
+                Reference {submittedReference}
+              </p>
+            ) : null}
             <a
               href={paymentLink('website')}
               target="_blank"
@@ -1467,7 +1496,8 @@ function StepSection({
     >
       <div className="motion-safe:animate-[order-step-in_400ms_cubic-bezier(0.22,1,0.36,1)_both]">
         <p className="font-mono text-[0.66rem] uppercase tracking-[0.26em] text-[#8f877b] tabular-nums">
-          {String(stepIndex + 1).padStart(2, '0')} — {stepId === 'review' ? 'Review' : 'Question'}
+          {String(stepIndex + 1).padStart(2, '0')} —{' '}
+          {stepId === 'review' ? 'Review' : 'Question'}
         </p>
         <h2
           id={`website-order-step-${stepId}-title`}
@@ -1487,16 +1517,18 @@ function StepSection({
 
 function SuccessPanel({
   submittedBrand,
+  orderReference,
   successHeadingRef,
   onPayClick,
 }: {
   submittedBrand: string
+  orderReference: string
   successHeadingRef: RefObject<HTMLHeadingElement | null>
   onPayClick: () => void
 }) {
   const checklist = [
     { label: 'Brief received', delay: 300 },
-    { label: 'Build slot reserved', delay: 900 },
+    { label: 'Request saved', delay: 900 },
     { label: 'Pay to start the build', delay: 1500 },
   ]
 
@@ -1521,6 +1553,12 @@ function SuccessPanel({
             ? `We've got your vision for ${submittedBrand}'s website.`
             : "We've got your vision for your new website."}
         </p>
+
+        {orderReference ? (
+          <p className="mt-4 font-mono text-[0.7rem] uppercase tracking-[0.2em] text-[#8f877b]">
+            Reference {orderReference}
+          </p>
+        ) : null}
 
         <ul className="mt-9 grid gap-3">
           {checklist.map((item, index) => (

@@ -62,6 +62,7 @@ export default function ReferralForm() {
   const [friendContact, setFriendContact] = useState('')
   const [friendNeed, setFriendNeed] = useState('')
   const [note, setNote] = useState('')
+  const [hasReferralPermission, setHasReferralPermission] = useState(false)
 
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [submitError, setSubmitError] = useState<string | null>(null)
@@ -122,6 +123,11 @@ export default function ReferralForm() {
       case 'friend_contact':
         if (!value) message = 'Enter an email or phone number for them'
         break
+      case 'referral_permission':
+        if (field instanceof HTMLInputElement && !field.checked) {
+          message = 'Confirm you have permission to share their details'
+        }
+        break
     }
 
     field.setCustomValidity(message)
@@ -146,6 +152,7 @@ export default function ReferralForm() {
     setFriendContact('')
     setFriendNeed('')
     setNote('')
+    setHasReferralPermission(false)
     setSubmitError(null)
     setIsSubmitted(false)
   }
@@ -277,7 +284,10 @@ export default function ReferralForm() {
               onChange={(event) => setFriendName(event.currentTarget.value)}
               onBlur={handleValidatedBlur}
             />
-            <FieldError error={getError('friend_name')} id="friend_name-error" />
+            <FieldError
+              error={getError('friend_name')}
+              id="friend_name-error"
+            />
           </div>
 
           <div className="space-y-3">
@@ -294,9 +304,7 @@ export default function ReferralForm() {
               value={friendBusiness}
               placeholder="Lee Family Dental"
               className={fieldClassName}
-              onChange={(event) =>
-                setFriendBusiness(event.currentTarget.value)
-              }
+              onChange={(event) => setFriendBusiness(event.currentTarget.value)}
             />
           </div>
         </div>
@@ -320,6 +328,50 @@ export default function ReferralForm() {
           <FieldError
             error={getError('friend_contact')}
             id="friend_contact-error"
+          />
+        </div>
+
+        <div className="space-y-3 border-t border-white/10 pt-6">
+          <div className="flex items-start gap-3">
+            <input
+              id="referral-permission"
+              name="referral_permission"
+              type="checkbox"
+              required
+              value="confirmed"
+              checked={hasReferralPermission}
+              className="mt-0.5 h-5 w-5 shrink-0 accent-primary"
+              aria-invalid={Boolean(getError('referral_permission'))}
+              aria-describedby={
+                getError('referral_permission')
+                  ? 'referral-permission-help referral_permission-error'
+                  : 'referral-permission-help'
+              }
+              onChange={(event) => {
+                setHasReferralPermission(event.currentTarget.checked)
+                syncFieldValidity(event.currentTarget)
+                if (getError('referral_permission')) {
+                  validateFields([event.currentTarget])
+                }
+              }}
+              onBlur={handleValidatedBlur}
+            />
+            <Label
+              htmlFor="referral-permission"
+              className="text-[0.95rem] leading-6 text-[#b8afa2]"
+            >
+              I have their permission to share these contact details with Prism.
+            </Label>
+          </div>
+          <p
+            id="referral-permission-help"
+            className="pl-8 font-mono text-[0.68rem] leading-5 text-[#8f877b]"
+          >
+            We&apos;ll use their details only to follow up about this referral.
+          </p>
+          <FieldError
+            error={getError('referral_permission')}
+            id="referral_permission-error"
           />
         </div>
 

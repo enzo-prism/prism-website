@@ -774,17 +774,22 @@ export default function WineCountryRootCanalDesignReview() {
   const [selectedConcept, setSelectedConcept] = useState<string>('')
   const [voterName, setVoterName] = useState('')
   const [notes, setNotes] = useState('')
-  const [voteStatus, setVoteStatus] = useState<'idle' | 'error' | 'success'>(
-    'idle',
-  )
+  const [voteStatus, setVoteStatus] = useState<
+    'idle' | 'validation-error' | 'network-error' | 'success'
+  >('idle')
+  const [isVoteSubmitting, setIsVoteSubmitting] = useState(false)
   const [isVoteOpen, setIsVoteOpen] = useState(false)
 
   const handleVoteSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
+    if (isVoteSubmitting) return
     if (!selectedConcept) {
-      setVoteStatus('error')
+      setVoteStatus('validation-error')
       return
     }
+
+    setIsVoteSubmitting(true)
+    setVoteStatus('idle')
     try {
       const response = await fetch('https://formspree.io/f/mldayroq', {
         method: 'POST',
@@ -804,7 +809,9 @@ export default function WineCountryRootCanalDesignReview() {
 
       setVoteStatus('success')
     } catch {
-      setVoteStatus('error')
+      setVoteStatus('network-error')
+    } finally {
+      setIsVoteSubmitting(false)
     }
   }
 
@@ -1240,17 +1247,21 @@ export default function WineCountryRootCanalDesignReview() {
                 />
               </div>
 
-              {voteStatus === 'error' && (
-                <p className="text-sm font-semibold text-red-600">
-                  Please select a concept before submitting.
+              {(voteStatus === 'validation-error' ||
+                voteStatus === 'network-error') && (
+                <p className="text-sm font-semibold text-red-600" role="alert">
+                  {voteStatus === 'validation-error'
+                    ? 'Please select a concept before submitting.'
+                    : "We couldn't submit your vote. Please try again."}
                 </p>
               )}
 
               <Button
                 type="submit"
+                disabled={isVoteSubmitting}
                 className="w-full rounded-full px-8 py-3 text-base font-semibold"
               >
-                submit vote
+                {isVoteSubmitting ? 'submitting…' : 'submit vote'}
               </Button>
             </form>
           )}

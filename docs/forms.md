@@ -34,6 +34,8 @@ const { handleSubmit, getError, isSubmitting } = useFormValidation({
 - `app/book-a-shoot/BookAShootForm.tsx`
 - `app/scholarship/ScholarshipPageClient.tsx`
 - `app/models/client-page.tsx`
+- `app/ai/prism-ai-client.tsx`
+- `app/designs/wine-country-root-canal/client-page.tsx` (client design vote)
 
 ## Adding a new form
 
@@ -93,7 +95,7 @@ The `/apply` route should feel like a focused Growth Dashboard mode, not another
 - Current visible steps:
   - Focus: choose up to three improvement areas.
   - Link: choose website/profile and enter the URL to review.
-  - Fit: optional budget and timing context ("Optional: budget & timing") with an explicit "Skip for now" button that clears both fields, fires `apply_question_skip`, and advances.
+  - Fit: optional current-offer fit and timing context (free audit, Website, Content OS, Dental OS, Prism Infinity, or not sure) with an explicit "Skip for now" button that clears both fields, fires `apply_question_skip`, and advances. The payload key remains `budget` for analytics and ops compatibility, but retired dollar-tier choices must not return.
   - Business: business name ("What is your business called?").
   - Contact: name and email.
   - Review: edit rows, add optional notes, and submit via "Get my free growth audit".
@@ -102,6 +104,7 @@ The `/apply` route should feel like a focused Growth Dashboard mode, not another
 - Draft behavior:
   - Store in-progress answers in same-tab `sessionStorage` under `prism_apply_draft_v1`.
   - Restore answers on reload and clear the draft after a successful submit.
+  - Keep the helper copy explicit that progress is saved only in the current tab on the current device; the optional early email does not create or send a resume link.
 - Keyboard flow:
   - Enter advances the current non-review step after the same per-step validation as the Continue button.
   - Shift+Enter preserves a line break in the optional notes textarea.
@@ -134,6 +137,8 @@ The `/apply` route should feel like a focused Growth Dashboard mode, not another
   - Six steps (brand → audience/goal → brief → references → contact → review) with per-step validation, Enter-first keyboard flow, and a live **order-manifest rail** (desktop) / commit strip (mobile).
   - In-progress answers persist in same-tab `sessionStorage` under `prism_website_order_draft_v1` (restored on reopen/reload; cleared on successful submit — the launcher then reads "Resume your order").
   - On submit from review, the order is **captured via Formspree** (no thank-you redirect), then a **staged in-dialog success state** appears.
+  - Each network submission receives an `order_reference` (`PRISM-...`) that is sent to Formspree and shown in both success surfaces so support can reconcile intake and payment.
+  - The pre-payment success state says the brief/request is saved. It must not claim that a build slot is reserved or that work has started before Stripe confirms payment.
   - From the success state (and the launcher's post-submit state), a pay button **opens the Stripe `$300` Payment Link in a new tab** to kick off the build.
 - Endpoint strategy (unchanged from the old form):
   - `NEXT_PUBLIC_WEBSITE_BUILD_FORM_ENDPOINT` (defaults to `https://formspree.io/f/xpqebnbz`)
@@ -250,6 +255,7 @@ Important routing note:
 - Offer: a flat `$100` referral payout, paid when the referred business becomes a paying Prism client (website, Content OS, Dental OS, or Prism Infinity). Fine print lives on the page; keep "referral payout, not service pricing" framing so pricing-consistency context rules stay satisfied if legacy tokens ever reappear.
 - Endpoint: `NEXT_PUBLIC_REFERRAL_FORM_ENDPOINT` ?? `https://formspree.io/f/meebpgaj` (dedicated referral form, wired 2026-07-02). Submissions carry `form_key=referral` / `_subject: "New referral — $100 program"`.
 - Fields: `referrer_name`\*, `referrer_email`\*, `friend_name`\*, `friend_business`, `friend_contact`\* (email or phone, free text), `friend_need`, `note` + standard ops fields (`FormspreeOpsFields formKey="referral"`), `_gotcha` honeypot, hidden `form_name=referral`.
+- Consent: `referral_permission=confirmed` is required before submission. The user-facing checkbox must state that the referrer has permission to share the friend's contact details and that Prism will use them only for referral follow-up.
 - Success: in-page success state with a "Refer another friend" reset (keeps the referrer's name/email, clears the friend fields). No thank-you route.
 - Analytics: `trackFormSubmission('referral', 'referral_form', { conversionMode: 'immediate', sendGoogleAdsConversion: false })` — referral payouts are not sales leads.
 - Entry points: /tiktok /ig /youtube link hubs ("Refer a friend" card), footer Company column, `/referral` + `/referrals` + `/affiliate` redirects.
@@ -271,6 +277,7 @@ These routes are noindex/no-follow and **not** blocked in `robots.txt` so search
 - Endpoint: `https://formspree.io/f/xjkjkggn`
 - DOM analytics contract: `<form id="book_a_shoot" name="book_a_shoot">`
 - Success flow: client-side `fetch` with `Accept: application/json`, then `router.push("/book-a-shoot/thank-you")`
+- Scheduling contract: both preferred windows have explicit date/time labels, use `booking_timezone=America/Los_Angeles`, and display Pacific Time to the user. Dates must be later than today, and the second date/time pair must differ from the first.
 - Analytics: `trackFormSubmission("book_a_shoot", "book_a_shoot_form", { lead_type: "shoot_request" })`; the thank-you page mounts `LeadSuccessTracker` and emits `generate_lead` once.
 
 ### `/scholarship`
@@ -278,6 +285,7 @@ These routes are noindex/no-follow and **not** blocked in `robots.txt` so search
 - Endpoint: `NEXT_PUBLIC_SCHOLARSHIP_FORM_ENDPOINT` or `https://formspree.io/f/mwpwwjek`
 - DOM analytics contract: `<form id="scholarship_application" name="scholarship_application">`
 - Success flow: client-side `fetch` with inline success copy.
+- Validation: first name, last name, email, referral source, and project description must pass the shared `useFormValidation` flow before the Formspree payload is built. Errors focus the first invalid control and are linked with `aria-describedby`.
 - Analytics: `trackFormSubmission("scholarship_application", "scholarship_form", { conversionMode: "immediate", sendGoogleAdsConversion: false })`.
 
 ### `/models`
@@ -285,7 +293,21 @@ These routes are noindex/no-follow and **not** blocked in `robots.txt` so search
 - Endpoint: `https://formspree.io/f/mrbyvoqo`
 - DOM analytics contract: `<form id="model_application" name="model_application">`
 - Success flow: client-side `fetch` with inline success copy.
+- Validation: name, city/state, preferred contact method, and the conditional email or mobile field must pass the shared `useFormValidation` flow before submission. Mobile numbers use a US phone pattern; errors focus the first invalid control and are announced.
 - Analytics: `trackFormSubmission("model_application", "models_form", { conversionMode: "immediate", sendGoogleAdsConversion: false })`.
+
+### `/ai`
+
+- Endpoint: `https://formspree.io/f/xzdpoyer`
+- The three-step utility form submits a website brief, company, email, mobile number, and standard Formspree/attribution metadata.
+- `sms_consent=yes` is required with the mobile number. The consent copy includes message/data-rate and opt-out language.
+- The final CTA is "Send My Brief". Success copy confirms receipt and review; it must not say the website is already being built.
+
+### Wine Country design vote
+
+- Endpoint: `https://formspree.io/f/mldayroq`
+- The submit button locks while the request is pending so a single interaction cannot create duplicate votes.
+- Validation and network failures use different, accurate live error messages.
 
 ## FAQ / Troubleshooting
 

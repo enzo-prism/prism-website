@@ -18,6 +18,7 @@ interface FormData {
   companyName: string
   email: string
   phoneNumber: string
+  smsConsent: boolean
 }
 
 export default function PrismAIClient() {
@@ -33,6 +34,7 @@ export default function PrismAIClient() {
     companyName: '',
     email: '',
     phoneNumber: '',
+    smsConsent: false,
   })
 
   const formRef = useRef<HTMLFormElement>(null)
@@ -78,6 +80,9 @@ export default function PrismAIClient() {
         ) {
           newErrors.phoneNumber = 'Valid phone number is required'
         }
+        if (!formData.smsConsent) {
+          newErrors.smsConsent = 'Text message consent is required'
+        }
         break
     }
 
@@ -92,7 +97,7 @@ export default function PrismAIClient() {
 
       if (field) {
         field.focus()
-        field.scrollIntoView({
+        field.scrollIntoView?.({
           block: 'center',
           behavior: prefersReducedMotion.current ? 'auto' : 'smooth',
         })
@@ -108,7 +113,12 @@ export default function PrismAIClient() {
     const { name, value, type } = e.target
     setFormData((prev) => ({
       ...prev,
-      [name]: type === 'number' ? parseInt(value) || 0 : value,
+      [name]:
+        type === 'checkbox'
+          ? (e.target as HTMLInputElement).checked
+          : type === 'number'
+            ? parseInt(value) || 0
+            : value,
     }))
     // Clear error for this field
     if (errors[name]) {
@@ -147,6 +157,7 @@ export default function PrismAIClient() {
       payload.append('company_name', formData.companyName)
       payload.append('email', formData.email)
       payload.append('phone_number', formData.phoneNumber)
+      payload.append('sms_consent', formData.smsConsent ? 'yes' : 'no')
       appendFormspreeOpsMetadata(payload, 'prism_ai')
       appendAttributionToFormData(payload)
 
@@ -206,9 +217,11 @@ export default function PrismAIClient() {
               </defs>
             </svg>
           </div>
-          <h1 className={styles['prism-ai-success-title']}>Success!</h1>
+          <h1 className={styles['prism-ai-success-title']}>
+            Request received.
+          </h1>
           <p className={styles['prism-ai-success-message']}>
-            We'll text you updates as Prism builds your site!
+            Prism will review your brief and text you about the next step.
           </p>
           <Link href="/" className={styles['prism-ai-back-link']}>
             ← Back to Design Prism
@@ -552,7 +565,9 @@ export default function PrismAIClient() {
                     inputMode="tel"
                     aria-invalid={!!errors.phoneNumber}
                     aria-describedby={
-                      errors.phoneNumber ? 'phoneNumber-error' : undefined
+                      errors.phoneNumber
+                        ? 'phoneNumber-helper phoneNumber-error'
+                        : 'phoneNumber-helper'
                     }
                   />
                   {errors.phoneNumber && (
@@ -564,9 +579,40 @@ export default function PrismAIClient() {
                       {errors.phoneNumber}
                     </span>
                   )}
-                  <span className={styles['prism-ai-helper']}>
-                    For SMS updates on your build progress
+                  <span
+                    id="phoneNumber-helper"
+                    className={styles['prism-ai-helper']}
+                  >
+                    Used for follow-up about this website request.
                   </span>
+                </div>
+
+                <div className={styles['prism-ai-field']}>
+                  <label className={styles['prism-ai-consent']}>
+                    <input
+                      type="checkbox"
+                      name="smsConsent"
+                      checked={formData.smsConsent}
+                      onChange={handleInputChange}
+                      aria-invalid={!!errors.smsConsent}
+                      aria-describedby={
+                        errors.smsConsent ? 'smsConsent-error' : undefined
+                      }
+                    />
+                    <span>
+                      I agree to receive text messages about this request.
+                      Message and data rates may apply. Reply STOP to opt out.
+                    </span>
+                  </label>
+                  {errors.smsConsent && (
+                    <span
+                      id="smsConsent-error"
+                      className={styles['prism-ai-error']}
+                      aria-live="polite"
+                    >
+                      {errors.smsConsent}
+                    </span>
+                  )}
                 </div>
 
                 {errors.submit && (
@@ -601,10 +647,10 @@ export default function PrismAIClient() {
                             />
                           </svg>
                         </span>
-                        Building…
+                        Sending…
                       </>
                     ) : (
-                      'Start Building'
+                      'Send My Brief'
                     )}
                   </button>
                 </div>

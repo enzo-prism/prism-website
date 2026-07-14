@@ -187,6 +187,14 @@ describe('WebsiteOrderForm', () => {
     expect(body.get('full_name')).toBe('Jordan Ramirez')
     expect(body.get('email')).toBe('jordan@example.com')
     expect(body.get('audience')).toBe('')
+    expect(body.get('order_reference')).toMatch(/^PRISM-[A-Z0-9]+$/)
+
+    const orderReference = body.get('order_reference') as string
+    expect(
+      screen.getAllByText(new RegExp(orderReference, 'i')).length,
+    ).toBeGreaterThanOrEqual(1)
+    expect(screen.getByText(/request saved/i)).toBeInTheDocument()
+    expect(screen.queryByText(/build slot reserved/i)).not.toBeInTheDocument()
 
     expect(trackEvent).toHaveBeenCalledWith(
       'website_order_submitted',
@@ -281,6 +289,8 @@ describe('WebsiteOrderForm', () => {
     expect(
       screen.getByRole('heading', { name: /review your order/i }),
     ).toBeVisible()
-    expect(screen.getAllByText('Renamed Studio').length).toBeGreaterThanOrEqual(1)
+    expect(screen.getAllByText('Renamed Studio').length).toBeGreaterThanOrEqual(
+      1,
+    )
   })
 })
