@@ -18,6 +18,7 @@ import {
 } from "@/lib/blog-topic-filters"
 import BlogCTAButtonLazy from "./BlogCTAButtonLazy"
 import { buildRouteMetadata } from "@/lib/seo/metadata"
+import { firstSearchParamString, type SearchParamValue } from "@/lib/search-params"
 
 export const metadata: Metadata = buildRouteMetadata({
   titleStem: 'Growth insights',
@@ -29,11 +30,11 @@ export const metadata: Metadata = buildRouteMetadata({
 export default async function Blog({
   searchParams,
 }: {
-  searchParams: Promise<{ category?: string; q?: string }>
+  searchParams: Promise<{ category?: SearchParamValue; q?: SearchParamValue }>
 }) {
   const resolvedSearchParams = await searchParams
-  const rawCategory = resolvedSearchParams?.category ?? "all"
-  const searchQuery = resolvedSearchParams?.q ?? ""
+  const rawCategory = firstSearchParamString(resolvedSearchParams?.category, "all")
+  const searchQuery = firstSearchParamString(resolvedSearchParams?.q)
 
   const posts = await getAllPosts()
   if (!posts) notFound()
