@@ -139,7 +139,7 @@ The `/apply` route should feel like a focused Growth Dashboard mode, not another
   - On submit from review, the order is **captured via Formspree** (no thank-you redirect), then a **staged in-dialog success state** appears.
   - Each network submission receives an `order_reference` (`PRISM-...`) that is sent to Formspree and shown in both success surfaces so support can reconcile intake and payment.
   - The pre-payment success state says the brief/request is saved. It must not claim that a build slot is reserved or that work has started before Stripe confirms payment.
-  - From the success state (and the launcher's post-submit state), a pay button **opens the Stripe `$300` Payment Link in a new tab** to kick off the build.
+  - From the success state (and the launcher's post-submit state), a pay button **opens the Stripe `$300` Payment Link in a new tab** to kick off the build. After payment, Stripe redirects that tab to `/checkout/website/thank-you?session_id={CHECKOUT_SESSION_ID}`, which fires the GA4 `purchase` event.
 - Endpoint strategy (unchanged from the old form):
   - `NEXT_PUBLIC_WEBSITE_BUILD_FORM_ENDPOINT` (defaults to `https://formspree.io/f/xpqebnbz`)
 - Submit flow:
@@ -149,7 +149,9 @@ The `/apply` route should feel like a focused Growth Dashboard mode, not another
 - Stripe pay step:
   - The pay button resolves through `lib/payment-links.ts`: `paymentLink("website")` returns the live link (`https://buy.stripe.com/8x2dRa3Aid1gasMeQDdZ60N`, Stripe product "Website by Prism") or the `/contact` fallback, and `hasPaymentLink("website")` gates whether it opens in a new tab vs. routes to `/contact`.
   - The Website link is live and wired; the optional `$100/month` care, Content OS, and Prism Infinity links still need creating (see `scripts/create-website-link.sh` and `scripts/create-stripe-links.sh`).
-- Keep ops metadata, the honeypot, and any analytics events for this form aligned with the live `WebsiteOrderForm.tsx` source — including the `#order` deep link, the `prism_website_order_draft_v1` draft key, and the dialog scroll-lock/`inert` behavior; do not reintroduce estimator-only fields (`estimated_total`, `estimated_range_*`, `price_formula_version`) or the `?source=website-build` thank-you redirect.
+  - The link's `after_completion` must be a **redirect** to `/checkout/website/thank-you?session_id={CHECKOUT_SESSION_ID}`, not Stripe's `hosted_confirmation` — otherwise the buyer never returns to the site and no purchase can be measured. To change an existing link use `scripts/update-website-payment-link.sh` (dry run by default, `--apply` to write), which updates it **in place**; re-running the create scripts would mint a duplicate product/price/link while `lib/payment-links.ts` kept pointing at the old one.
+- Analytics: the funnel emits `website_order_started` / `website_order_step_completed` / `website_order_submitted` / `website_order_begin_checkout`, and on submit also calls `trackFormSubmission(FORM_NAME, FORM_LOCATION, { conversionMode: 'immediate', value: 300, transaction_id: orderReference })` — `immediate` because this flow shows an in-page success screen and never navigates to a thank-you route, so the default `pending` handoff would never be consumed. The buyer's email is hashed for enhanced conversions first (`setEnhancedConversionUserData`), awaited because gtag's `set` only applies to subsequent events. See [`docs/analytics.md`](analytics.md).
+- Keep ops metadata, the honeypot, and any analytics events for this form aligned with the live `WebsiteOrderForm.tsx` source — including the `#order` deep link, the `prism_website_order_draft_v1` draft key, and the dialog scroll-lock/`inert` behavior; do not reintroduce estimator-only fields (`estimated_total`, `estimated_range_*`, `price_formula_version`), the retired `website_build_*` analytics events, or the `?source=website-build` thank-you redirect.
 - Do not include user-entered names, emails, URLs, or free-text notes in analytics params.
 
 ## Retired flow: `/founder-os/apply` + Founder OS application
@@ -263,6 +265,7 @@ Important routing note:
 ## Thank-you pages
 
 - `/thank-you` ([`app/thank-you/page.tsx`](../app/thank-you/page.tsx)) — used by Apply and Contact. The Prism Growth Dashboard flow sends `?source=apply`. (The `/websites` order flow no longer redirects here — it shows an in-page success screen, then opens the Stripe `$300` Payment Link.)
+- `/checkout/website/thank-you` ([`app/checkout/website/thank-you/page.tsx`](../app/checkout/website/thank-you/page.tsx)) — the **post-payment** confirmation for the `$300` website order, reached by Stripe's redirect with `?session_id={CHECKOUT_SESSION_ID}`. Mounts `PurchaseSuccessTracker`, which shape-checks the session id and fires GA4 `purchase` once per transaction. It deliberately does nothing without a well-formed id, so it is safe to link to but pointless to visit directly.
 - `/analysis-thank-you` ([`app/analysis-thank-you/page.tsx`](../app/analysis-thank-you/page.tsx)) — used by the Free Analysis form.
 - `/aeo-thank-you` ([`app/aeo-thank-you/page.tsx`](../app/aeo-thank-you/page.tsx)) — used by the AEO assessment form.
 - `/book-a-shoot/thank-you` ([`app/book-a-shoot/thank-you/page.tsx`](../app/book-a-shoot/thank-you/page.tsx)) — used by the photography booking request form.

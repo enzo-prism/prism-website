@@ -4,8 +4,10 @@ import { track as trackVercel } from '@vercel/analytics'
 
 import {
   GOOGLE_ADS_LEAD_CONVERSION_SEND_TO,
+  GOOGLE_ADS_PURCHASE_CONVERSION_SEND_TO,
   IS_ANALYTICS_ENABLED,
 } from '@/lib/constants'
+import { resolveLeadValue } from '@/lib/lead-values'
 import { getAttributionContext } from '@/lib/marketing-attribution'
 import { buildVercelCustomEvent } from '@/lib/vercel-analytics'
 import {
@@ -51,6 +53,26 @@ export type LeadConversionContext = {
   budget?: string
   timeline?: string
   elapsed_seconds?: number
+  /**
+   * Stable per-submission id (e.g. the PRISM-XXXX order reference). Google Ads
+   * de-duplicates conversions that share a transaction id, so a retried submit
+   * or a refreshed thank-you page cannot double-count one lead.
+   */
+  transaction_id?: string
+}
+
+export type PurchaseContext = {
+  /** Required. Ads and GA4 both de-duplicate on this. */
+  transaction_id: string
+  value: number
+  currency?: string
+  item_id?: string
+  item_name?: string
+}
+
+export type EnhancedConversionIdentifiers = {
+  email?: string
+  phone?: string
 }
 
 type FormSubmissionOptions = Omit<
@@ -63,6 +85,19 @@ type FormSubmissionOptions = Omit<
 
 type LeadTrackingOptions = {
   sendGoogleAdsConversion?: boolean
+}
+
+type TrackEventOptions = {
+  /**
+   * Structured (non-scalar) GA4 params merged in AFTER the PII sanitizer runs,
+   * because the sanitizer only understands strings, numbers and booleans and
+   * silently drops arrays like GA4's ecommerce `items`.
+   *
+   * Only ever pass values the CALLER constructs from known-safe literals.
+   * Never route user input, form fields, or URL params through here — those
+   * must go through `params` so they get sanitized.
+   */
+  structuredParams?: Record<string, unknown>
 }
 
 type PageViewOptions = {
@@ -115,6 +150,19 @@ const RAW_URL_PARAM_KEYS = new Set([
   'source_url',
 ])
 const SAFE_URL_PARAM_KEYS = new Set(['page_location', 'page_referrer'])
+/**
+ * Opaque machine-generated identifiers (Stripe checkout session ids, PRISM-XXXX
+ * order references). They carry no personal data, but a long digit run inside
+ * one can trip the phone-number heuristic below and get the param silently
+ * dropped — which would break Ads conversion de-duplication.
+ *
+ * These keys skip the heuristics but NOT validation: `transaction_id` is
+ * partly URL-derived, so it is charset-restricted instead. Without that, a
+ * crafted `?session_id=someone@example.com` would carry a raw email straight
+ * into GA4 — the very thing FORBIDDEN_ANALYTICS_PARAM_KEYS exists to stop.
+ */
+const OPAQUE_ID_PARAM_KEYS = new Set(['transaction_id', 'item_id'])
+const OPAQUE_ID_PATTERN = /^[A-Za-z0-9_-]{1,160}$/
 
 function getGtag() {
   if (typeof window === 'undefined') return null
@@ -222,6 +270,11 @@ function sanitizeAnalyticsParamValue(key: string, value: unknown) {
 
   const trimmed = value.trim()
   if (!trimmed) return undefined
+
+  if (OPAQUE_ID_PARAM_KEYS.has(lowerKey)) {
+    return OPAQUE_ID_PATTERN.test(trimmed) ? trimmed : undefined
+  }
+
   if (looksLikeEmail(trimmed) || looksLikePhone(trimmed)) return undefined
 
   if (SAFE_URL_PARAM_KEYS.has(lowerKey)) {
@@ -328,12 +381,12 @@ export type EventType =
   | 'apply_budget_selected'
   | 'apply_service_selected'
   | 'apply_early_email_capture'
-  | 'website_build_estimator_start'
-  | 'website_build_estimate_update'
-  | 'website_build_validation_error'
-  | 'website_build_submit_attempt'
-  | 'website_build_submit_success'
-  | 'website_build_submit_error'
+  // The flat-$300 order funnel (components/forms/WebsiteOrderForm). These
+  // replaced the retired `website_build_*` estimator events.
+  | 'website_order_started'
+  | 'website_order_step_completed'
+  | 'website_order_submitted'
+  | 'website_order_begin_checkout'
   | 'founder_os_application_start'
   | 'founder_os_application_validation_error'
   | 'founder_os_application_submit_attempt'
@@ -360,6 +413,8 @@ export type EventType =
   | 'user_preference'
   | 'skool_email_submission'
   | 'generate_lead'
+  // GA4 recommended ecommerce event. Marked as a Key Event on the property.
+  | 'purchase'
 
 function canUseSessionStorage() {
   return typeof window !== 'undefined' && 'sessionStorage' in window
@@ -434,12 +489,17 @@ export function getDefaultLeadSource() {
 
 function getLeadConversionParams(context: LeadConversionContext) {
   const leadSource = context.lead_source || getDefaultLeadSource()
+  const leadType = context.lead_type || context.form_name
 
+  // The resolved fields go AFTER the spread on purpose. When they sat before
+  // it, a caller passing an explicit `{ value: undefined }` overwrote the
+  // resolved default with undefined, and compactAnalyticsParams then dropped
+  // the param entirely — sending an Ads conversion with no value at all.
   return compactAnalyticsParams({
-    currency: context.currency || 'USD',
-    value: context.value ?? 1,
     ...context,
-    lead_type: context.lead_type || context.form_name,
+    currency: context.currency || 'USD',
+    value: context.value ?? resolveLeadValue(leadType),
+    lead_type: leadType,
     lead_source: leadSource,
   })
 }
@@ -454,11 +514,26 @@ export function trackGoogleAdsLeadConversion(
   const params = getLeadConversionParams(context)
 
   try {
-    getGtag()?.('event', 'conversion', {
-      send_to: GOOGLE_ADS_LEAD_CONVERSION_SEND_TO,
-      value: params.value,
-      currency: params.currency,
-    })
+    // Same guard as trackPurchase: this is a DIRECT gtag call that never
+    // passes through sanitizeAnalyticsParams, so an unvouchable transaction id
+    // would reach Google Ads raw. Today every caller passes a generated
+    // PRISM-XXXX reference, but the guard is what keeps that true.
+    const transactionId =
+      typeof params.transaction_id === 'string' &&
+      OPAQUE_ID_PATTERN.test(params.transaction_id)
+        ? params.transaction_id
+        : undefined
+
+    getGtag()?.(
+      'event',
+      'conversion',
+      compactAnalyticsParams({
+        send_to: GOOGLE_ADS_LEAD_CONVERSION_SEND_TO,
+        value: params.value,
+        currency: params.currency,
+        transaction_id: transactionId,
+      }),
+    )
   } catch (error) {
     console.error(
       '[Analytics] Error tracking Google Ads lead conversion:',
@@ -480,12 +555,358 @@ export function trackLeadConversion(
   }
 }
 
+const RECORDED_PURCHASES_STORAGE_KEY = 'prism_recorded_purchases_v1'
+const RECORDED_PURCHASES_LIMIT = 50
+
+function readRecordedPurchases(): string[] {
+  if (typeof window === 'undefined' || !('localStorage' in window)) return []
+
+  try {
+    const raw = window.localStorage.getItem(RECORDED_PURCHASES_STORAGE_KEY)
+    if (!raw) return []
+    const parsed = JSON.parse(raw)
+    return Array.isArray(parsed) ? parsed.filter((id) => typeof id === 'string') : []
+  } catch {
+    return []
+  }
+}
+
+/**
+ * A redirect-based purchase confirmation can be reloaded, bookmarked, or opened
+ * twice. localStorage (not sessionStorage) because the buyer lands in the
+ * Stripe tab, and may well revisit the URL in another tab or another day.
+ */
+function hasRecordedPurchase(transactionId: string) {
+  return readRecordedPurchases().includes(transactionId)
+}
+
+function recordPurchase(transactionId: string) {
+  if (typeof window === 'undefined' || !('localStorage' in window)) return
+
+  try {
+    const next = [...readRecordedPurchases(), transactionId].slice(
+      -RECORDED_PURCHASES_LIMIT,
+    )
+    window.localStorage.setItem(
+      RECORDED_PURCHASES_STORAGE_KEY,
+      JSON.stringify(next),
+    )
+  } catch {
+    // Private mode / storage disabled: fall through and accept the (rare)
+    // risk of a duplicate rather than losing the conversion entirely.
+  }
+}
+
+const ITEM_VALUE_PATTERN = /^[A-Za-z0-9 ._'&-]{1,80}$/
+
+/** Conservative allowlist for ecommerce item fields that bypass the sanitizer. */
+function sanitizeItemValue(value: string | undefined, fallback: string) {
+  const trimmed = value?.trim()
+  if (!trimmed) return fallback
+  if (looksLikeEmail(trimmed) || looksLikePhone(trimmed)) return fallback
+  return ITEM_VALUE_PATTERN.test(trimmed) ? trimmed : fallback
+}
+
+const ADS_TRANSACTION_ID_MAX_LENGTH = 64
+
+/**
+ * Google Ads caps transaction ids at 64 characters, but a Stripe Checkout
+ * Session id is 66 (`cs_live_` + 58). Left as-is it can be truncated or
+ * rejected, silently breaking the de-duplication it exists to provide.
+ * Dropping the fixed `cs_live_`/`cs_test_` prefix keeps the id unique and
+ * deterministic while fitting the limit. GA4 is unaffected (100-char limit),
+ * so it keeps the full id.
+ */
+function toAdsTransactionId(transactionId: string) {
+  const withoutPrefix = transactionId.replace(/^cs_(live|test)_/, '')
+  return withoutPrefix.slice(0, ADS_TRANSACTION_ID_MAX_LENGTH)
+}
+
+/**
+ * Track a completed purchase in GA4 and (when configured) Google Ads.
+ *
+ * Fires at most once per `transaction_id`. Returns true when the purchase was
+ * recorded, false when it was suppressed as a duplicate or was missing an id.
+ *
+ * NOTE: this is a client-side, redirect-triggered signal — it fires when the
+ * buyer reaches the confirmation URL, which is a proxy for payment, not proof
+ * of it. A Stripe webhook feeding the GA4 Measurement Protocol is the
+ * ad-blocker-proof upgrade; see docs/analytics.md.
+ */
+export function trackPurchase(context: PurchaseContext): boolean {
+  if (typeof window === 'undefined') return false
+
+  const transactionId = context.transaction_id?.trim()
+  if (!transactionId) return false
+
+  // Validate here, not just in the GA4 sanitizer: the Google Ads conversion
+  // below is a DIRECT gtag call that never passes through
+  // sanitizeAnalyticsParams, so a URL-supplied `?session_id=someone@example.com`
+  // would otherwise reach Ads as a raw email. A transaction id we cannot vouch
+  // for is also a transaction id we cannot de-duplicate on, so refuse outright.
+  if (!OPAQUE_ID_PATTERN.test(transactionId)) return false
+
+  if (hasRecordedPurchase(transactionId)) return false
+
+  recordPurchase(transactionId)
+
+  const currency = context.currency || 'USD'
+  // Sanitized here rather than trusted: these end up inside `items`, which is
+  // merged AFTER the sanitizer (see TrackEventOptions), so anything unsafe
+  // would pass straight through. Callers hardcode them today; this keeps that
+  // from silently becoming untrue.
+  const itemId = sanitizeItemValue(context.item_id, 'website')
+  const itemName = sanitizeItemValue(context.item_name, 'Website by Prism')
+
+  trackEvent(
+    'purchase',
+    {
+      transaction_id: transactionId,
+      value: context.value,
+      currency,
+      item_id: itemId,
+      item_name: itemName,
+    },
+    {
+      structuredParams: {
+        items: [
+          {
+            item_id: itemId,
+            item_name: itemName,
+            price: context.value,
+            quantity: 1,
+          },
+        ],
+      },
+    },
+  )
+
+  if (IS_ANALYTICS_ENABLED && GOOGLE_ADS_PURCHASE_CONVERSION_SEND_TO) {
+    try {
+      getGtag()?.('event', 'conversion', {
+        send_to: GOOGLE_ADS_PURCHASE_CONVERSION_SEND_TO,
+        value: context.value,
+        currency,
+        transaction_id: toAdsTransactionId(transactionId),
+      })
+    } catch (error) {
+      console.error('[Analytics] Error tracking Google Ads purchase:', error)
+    }
+  }
+
+  return true
+}
+
+function normalizeEmailForHashing(email: string): string | null {
+  const trimmed = email.trim().toLowerCase()
+  const [local, domain] = trimmed.split('@')
+  if (!local || !domain || domain.indexOf('.') === -1) return null
+
+  // Google's documented normalization: Gmail ignores dots and +suffixes, so
+  // hashing the raw string would miss matches for the same real person.
+  // Only the username is modified — Google's worked example keeps the domain
+  // as-is (janedoe@googlemail.com), so rewriting it to gmail.com would produce
+  // a hash Google never matches.
+  if (domain === 'gmail.com' || domain === 'googlemail.com') {
+    const base = local.split('+')[0].replace(/\./g, '')
+    return base ? `${base}@${domain}` : null
+  }
+
+  return trimmed
+}
+
+function normalizePhoneForHashing(phone: string): string | null {
+  const trimmed = phone.trim()
+  const digits = trimmed.replace(/\D/g, '')
+
+  // E.164 or nothing — a wrongly-guessed country code hashes to a value that
+  // matches no one, which is worse than sending no phone signal at all.
+  if (trimmed.startsWith('+') && digits.length >= 8) return `+${digits}`
+  if (digits.length === 10) return `+1${digits}` // US-focused traffic
+  if (digits.length === 11 && digits.startsWith('1')) return `+${digits}`
+
+  return null
+}
+
+async function sha256Hex(value: string): Promise<string | null> {
+  const subtle = globalThis.crypto?.subtle
+  if (!subtle || typeof TextEncoder === 'undefined') return null
+
+  try {
+    const digest = await subtle.digest('SHA-256', new TextEncoder().encode(value))
+    return Array.from(new Uint8Array(digest))
+      .map((byte) => byte.toString(16).padStart(2, '0'))
+      .join('')
+  } catch {
+    return null
+  }
+}
+
+const ENHANCED_CONVERSION_STORAGE_KEY = 'prism_ec_user_data_v1'
+/**
+ * Short by design. It only has to survive one checkout round trip, and a
+ * hashed identifier should not linger in storage longer than it is useful.
+ */
+const ENHANCED_CONVERSION_TTL_MS = 6 * 60 * 60 * 1000
+
+/**
+ * Persist the HASHED identifiers so the purchase conversion can reuse them.
+ *
+ * `gtag('set', 'user_data', ...)` is page-scoped in-memory state, and the
+ * buyer reaches /checkout/website/thank-you as a fresh document after a
+ * cross-origin Stripe redirect. Without this the highest-value conversion on
+ * the site — the purchase — would fire with no user_data at all.
+ *
+ * Only digests are stored; the raw email never touches storage.
+ */
+function storeEnhancedConversionUserData(userData: Record<string, string>) {
+  if (typeof window === 'undefined' || !('localStorage' in window)) return
+
+  try {
+    window.localStorage.setItem(
+      ENHANCED_CONVERSION_STORAGE_KEY,
+      JSON.stringify({ userData, savedAt: Date.now() }),
+    )
+  } catch {
+    // Storage unavailable: enhanced conversions degrade, nothing else breaks.
+  }
+}
+
+function readStoredEnhancedConversionUserData(): Record<string, string> | null {
+  if (typeof window === 'undefined' || !('localStorage' in window)) return null
+
+  try {
+    const raw = window.localStorage.getItem(ENHANCED_CONVERSION_STORAGE_KEY)
+    if (!raw) return null
+
+    const parsed = JSON.parse(raw) as {
+      userData?: Record<string, string>
+      savedAt?: number
+    }
+
+    if (
+      typeof parsed?.savedAt !== 'number' ||
+      !Number.isFinite(parsed.savedAt) ||
+      Date.now() - parsed.savedAt > ENHANCED_CONVERSION_TTL_MS ||
+      !parsed.userData ||
+      typeof parsed.userData !== 'object'
+    ) {
+      window.localStorage.removeItem(ENHANCED_CONVERSION_STORAGE_KEY)
+      return null
+    }
+
+    const entries = Object.entries(parsed.userData).filter(
+      ([key, value]) =>
+        typeof value === 'string' &&
+        /^[a-f0-9]{64}$/.test(value) &&
+        (key === 'sha256_email_address' || key === 'sha256_phone_number'),
+    )
+
+    return entries.length > 0 ? Object.fromEntries(entries) : null
+  } catch {
+    return null
+  }
+}
+
+/**
+ * Drop the stored hashes once they have been used.
+ *
+ * Without this they linger for the full TTL and can attach to the WRONG
+ * person: someone starts the order form and abandons, then within six hours a
+ * different buyer on the same browser pays through a standalone Payment Link
+ * and lands on the confirmation page — and would inherit the first person's
+ * email hash.
+ */
+export function clearStoredEnhancedConversionUserData() {
+  if (typeof window === 'undefined' || !('localStorage' in window)) return
+
+  try {
+    window.localStorage.removeItem(ENHANCED_CONVERSION_STORAGE_KEY)
+  } catch {
+    // no-op
+  }
+}
+
+/**
+ * Re-apply previously hashed identifiers on a later page load. Used by the
+ * post-Stripe purchase confirmation, which has no access to the raw email.
+ */
+export function applyStoredEnhancedConversionUserData(): boolean {
+  if (typeof window === 'undefined' || !IS_ANALYTICS_ENABLED) return false
+
+  const userData = readStoredEnhancedConversionUserData()
+  if (!userData) return false
+
+  try {
+    getGtag()?.('set', 'user_data', userData)
+    return true
+  } catch (error) {
+    console.error('[Analytics] Error re-applying enhanced conversion data:', error)
+    return false
+  }
+}
+
+/**
+ * Attach hashed first-party identifiers for Google Ads enhanced conversions.
+ *
+ * Only SHA-256 digests ever leave the browser — the raw email and phone are
+ * normalized, hashed, and discarded here, never logged, and never passed
+ * through `trackEvent`. (The digests themselves do reach every configured
+ * gtag destination, GA4 included; that is how `set` works and is why only
+ * hashes are used.) Call this immediately before the conversion fires so gtag
+ * has user_data set when the hit goes out — `set` applies to SUBSEQUENT
+ * events, so ordering is load-bearing.
+ *
+ * Requires enhanced conversions for WEB to be enabled on the conversion action
+ * (and the customer data terms accepted) in Google Ads; without that the data
+ * is simply ignored. Resolves silently on any failure — a conversion must
+ * never be lost because hashing was unavailable (crypto.subtle needs a secure
+ * context).
+ */
+export async function setEnhancedConversionUserData(
+  identifiers: EnhancedConversionIdentifiers,
+): Promise<void> {
+  if (typeof window === 'undefined' || !IS_ANALYTICS_ENABLED) return
+
+  const userData: Record<string, string> = {}
+
+  const email = identifiers.email
+    ? normalizeEmailForHashing(identifiers.email)
+    : null
+  if (email) {
+    const hashed = await sha256Hex(email)
+    if (hashed) userData.sha256_email_address = hashed
+  }
+
+  const phone = identifiers.phone
+    ? normalizePhoneForHashing(identifiers.phone)
+    : null
+  if (phone) {
+    const hashed = await sha256Hex(phone)
+    if (hashed) userData.sha256_phone_number = hashed
+  }
+
+  if (Object.keys(userData).length === 0) return
+
+  storeEnhancedConversionUserData(userData)
+
+  try {
+    getGtag()?.('set', 'user_data', userData)
+  } catch (error) {
+    console.error('[Analytics] Error setting enhanced conversion data:', error)
+  }
+}
+
 /**
  * Track a custom event in Google Analytics
  * @param eventName The name of the event
  * @param params Additional parameters to send with the event
  */
-export function trackEvent(eventName: EventType, params?: Record<string, any>) {
+export function trackEvent(
+  eventName: EventType,
+  params?: Record<string, any>,
+  options: TrackEventOptions = {},
+) {
   if (typeof window === 'undefined') {
     return
   }
@@ -495,13 +916,17 @@ export function trackEvent(eventName: EventType, params?: Record<string, any>) {
 
   // Add attribution and page context to all events without adding unique,
   // high-cardinality values that make GA reports harder to use.
-  const enhancedParams = sanitizeAnalyticsParams({
-    ...getAnalyticsAttributionContext(),
-    page_location: pageLocation,
-    page_title: pageTitle,
-    page_path: window.location.pathname,
-    ...params,
-  })
+  const enhancedParams = {
+    ...sanitizeAnalyticsParams({
+      ...getAnalyticsAttributionContext(),
+      page_location: pageLocation,
+      page_title: pageTitle,
+      page_path: window.location.pathname,
+      ...params,
+    }),
+    // Merged after sanitization by design — see TrackEventOptions.
+    ...(options.structuredParams ?? {}),
+  }
 
   if (process.env.NODE_ENV === 'development') {
     console.log(`[Analytics] Tracked event: ${eventName}`, {

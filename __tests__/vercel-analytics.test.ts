@@ -274,4 +274,106 @@ describe('Vercel analytics URL normalization', () => {
       buildVercelCustomEvent('navigation', { destination: '/pricing' }),
     ).toBeNull()
   })
+
+  describe('the flat-$300 website order funnel', () => {
+    it('maps the order start', () => {
+      expect(
+        buildVercelCustomEvent('website_order_started', {
+          form_name: 'website_order',
+          form_location: 'website_order_form',
+          entry_point: 'hero',
+          noisy: 'ignore',
+        }),
+      ).toEqual({
+        name: 'Website Order Started',
+        properties: {
+          form_name: 'website_order',
+          form_location: 'website_order_form',
+          entry_point: 'hero',
+        },
+      })
+    })
+
+    it('maps step completion', () => {
+      expect(
+        buildVercelCustomEvent('website_order_step_completed', {
+          step: 3,
+          step_id: 'brief',
+          extra_noise: true,
+        }),
+      ).toEqual({
+        name: 'Website Order Step Completed',
+        properties: { step: 3, step_id: 'brief' },
+      })
+    })
+
+    it('maps the submission', () => {
+      expect(
+        buildVercelCustomEvent('website_order_submitted', {
+          value: 300,
+          currency: 'USD',
+          form_name: 'website_order',
+          form_location: 'website_order_form',
+        }),
+      ).toEqual({
+        name: 'Website Order Submitted',
+        properties: {
+          value: 300,
+          currency: 'USD',
+          form_name: 'website_order',
+          form_location: 'website_order_form',
+        },
+      })
+    })
+
+    it('maps the checkout hand-off', () => {
+      expect(
+        buildVercelCustomEvent('website_order_begin_checkout', {
+          value: 300,
+          currency: 'USD',
+          form_location: 'website_order_form',
+        }),
+      ).toEqual({
+        name: 'Website Order Checkout Started',
+        properties: {
+          value: 300,
+          currency: 'USD',
+          form_location: 'website_order_form',
+        },
+      })
+    })
+
+    it('maps a completed purchase without leaking the transaction id', () => {
+      // The Stripe session id is an opaque payment identifier; it belongs in
+      // GA4 for de-duplication, not in the Vercel event property set.
+      expect(
+        buildVercelCustomEvent('purchase', {
+          value: 300,
+          currency: 'USD',
+          item_name: 'Website by Prism',
+          transaction_id: 'cs_live_a1b2c3',
+        }),
+      ).toEqual({
+        name: 'Purchase Completed',
+        properties: {
+          value: 300,
+          currency: 'USD',
+          item_name: 'Website by Prism',
+        },
+      })
+    })
+
+    it('no longer maps the retired website build estimator events', () => {
+      expect(
+        buildVercelCustomEvent('website_build_estimator_start', {
+          estimated_total: 1200,
+        }),
+      ).toBeNull()
+      expect(
+        buildVercelCustomEvent('website_build_submit_success', {
+          estimated_total: 1200,
+        }),
+      ).toBeNull()
+    })
+  })
 })

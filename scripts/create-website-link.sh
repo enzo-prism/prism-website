@@ -32,7 +32,7 @@ URL=$(stripe payment_links create --live \
   -d "custom_fields[0][type]=text" \
   -d "custom_fields[0][optional]=true" \
   -d "after_completion[type]=redirect" \
-  -d "after_completion[redirect][url]=$SITE/thank-you?source=website-order" | field url)
+  -d "after_completion[redirect][url]=$SITE/checkout/website/thank-you?session_id={CHECKOUT_SESSION_ID}" | field url)
 
 echo "" >&2
 echo "✅ Created. Product=$PROD  Price=$PRICE" >&2

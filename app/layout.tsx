@@ -110,8 +110,11 @@ export default function RootLayout({
                   window.dataLayer = window.dataLayer || [];
                   function gtag(){dataLayer.push(arguments);}
                   // Consent Mode v2 — set defaults before any config call.
-                  // US-focused traffic: granted by default (no change to data volume),
-                  // while still emitting the v2 signals Google Ads needs for EEA modeling.
+                  // US-focused traffic: granted by default, so full collection.
+                  // NOTE this does NOT enable EEA conversion modeling — that needs a
+                  // real CMP emitting a denied-to-granted consent update, which the
+                  // site does not have. It also has no region scoping, so EEA/UK
+                  // visitors are not handled compliantly. See docs/analytics.md step 7.
                   gtag('consent', 'default', {
                     ad_storage: 'granted',
                     ad_user_data: 'granted',

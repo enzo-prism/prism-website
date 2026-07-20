@@ -4,9 +4,14 @@ import WebsiteOrderForm from '@/components/forms/WebsiteOrderForm'
 import { paymentLink } from '@/lib/payment-links'
 
 const trackEvent = jest.fn()
+const trackFormSubmission = jest.fn()
+const setEnhancedConversionUserData = jest.fn().mockResolvedValue(undefined)
 
 jest.mock('@/utils/analytics', () => ({
   trackEvent: (...args: Array<unknown>) => trackEvent(...args),
+  trackFormSubmission: (...args: Array<unknown>) => trackFormSubmission(...args),
+  setEnhancedConversionUserData: (...args: Array<unknown>) =>
+    setEnhancedConversionUserData(...args),
 }))
 
 type MockResponseOverrides = {
@@ -200,6 +205,28 @@ describe('WebsiteOrderForm', () => {
       'website_order_submitted',
       expect.objectContaining({ value: 300, currency: 'USD' }),
     )
+
+    // The $300 order must register as a real lead conversion, not just a
+    // custom funnel event — this is what reaches GA4 `generate_lead` and the
+    // Google Ads conversion action. `immediate` because this flow never
+    // navigates to a /thank-you route to consume a pending context.
+    expect(trackFormSubmission).toHaveBeenCalledWith(
+      'website_order',
+      'website_order_form',
+      expect.objectContaining({
+        conversionMode: 'immediate',
+        value: 300,
+        currency: 'USD',
+        lead_type: 'website_order',
+        transaction_id: orderReference,
+      }),
+    )
+
+    // Enhanced conversions: the buyer's email is handed over for hashing
+    // before the conversion fires. The raw address never leaves this call.
+    expect(setEnhancedConversionUserData).toHaveBeenCalledWith({
+      email: 'jordan@example.com',
+    })
 
     // The Stripe link only appears after a successful submission (overlay
     // success panel + the launcher behind it), always in a new tab.

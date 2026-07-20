@@ -29,6 +29,7 @@ pnpm verify:deploy    # Pre-deployment validation
 pnpm seo:inventory     # Render route metadata inventory
 pnpm seo:lint          # Validate SEO/search-surface rules
 pnpm verify:pricing-consistency
+pnpm audit:ga4         # Check the live GA4 config (enhanced measurement, key events, tag destinations)
 
 # Case study assets
 node scripts/capture-case-study-screenshots.mjs [slug ...]  # Playwright capture of <slug>-home-{desktop,mobile}.jpg
@@ -56,6 +57,7 @@ pnpm git:cleanup      # Clean stale branches
 | Purpose | Location |
 |---------|----------|
 | Project map | `docs/project-overview.md` |
+| Analytics + conversions | `docs/analytics.md`, `utils/analytics.ts`, `lib/lead-values.ts` |
 | Search visibility | `lib/seo/search-visibility.ts` |
 | Canonical pricing | `lib/pricing-model.ts` |
 | Public ElevenLabs widget | `lib/elevenlabs-widget.ts`, `components/global-elevenlabs-widget.tsx` |

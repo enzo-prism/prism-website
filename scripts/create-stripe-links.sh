@@ -44,7 +44,7 @@ L_WEB=$(stripe payment_links create $FLAG \
   -d "line_items[0][price]=$PR_WEB" -d "line_items[0][quantity]=1" \
   -d "custom_fields[0][key]=brief" -d "custom_fields[0][label][type]=custom" \
   -d "custom_fields[0][label][custom]=Describe the website you want" -d "custom_fields[0][type]=text" -d "custom_fields[0][optional]=true" \
-  -d "after_completion[type]=redirect" -d "after_completion[redirect][url]=$SITE/thank-you?source=website-order" | jurl)
+  -d "after_completion[type]=redirect" -d "after_completion[redirect][url]=$SITE/checkout/website/thank-you?session_id={CHECKOUT_SESSION_ID}" | jurl)
 L_CARE=$(stripe payment_links create $FLAG \
   -d "line_items[0][price]=$PR_CARE" -d "line_items[0][quantity]=1" \
   -d "after_completion[type]=redirect" -d "after_completion[redirect][url]=$SITE/thank-you?source=website-care" | jurl)

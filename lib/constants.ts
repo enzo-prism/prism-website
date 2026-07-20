@@ -21,6 +21,19 @@ export const IS_ANALYTICS_ENABLED = IS_PRODUCTION_ENV && Boolean(GA_MEASUREMENT_
 export const GOOGLE_ADS_ID = "AW-11373090310"
 export const GOOGLE_ADS_LEAD_CONVERSION_SEND_TO = `${GOOGLE_ADS_ID}/hBMrCMijk70bEIasjq8q`
 
+// A lead and a completed $300 purchase are different business events, so they
+// need different Google Ads conversion actions — otherwise Smart Bidding
+// cannot tell "asked a question" from "paid". The purchase label has to be
+// created in the Google Ads UI (Goals > Conversions > New conversion action >
+// Website > Purchase), then set here via env. Until it is set, the GA4
+// `purchase` event still fires; only the Ads-side conversion is skipped.
+const purchaseConversionLabel =
+  process.env.NEXT_PUBLIC_GOOGLE_ADS_PURCHASE_LABEL?.trim()
+export const GOOGLE_ADS_PURCHASE_CONVERSION_SEND_TO =
+  purchaseConversionLabel && purchaseConversionLabel.length > 0
+    ? `${GOOGLE_ADS_ID}/${purchaseConversionLabel}`
+    : ""
+
 // Logo configuration
 export const LOGO_CONFIG = {
   src: "/prism-logo.jpeg",

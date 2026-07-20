@@ -17,7 +17,11 @@ import { Textarea } from '@/components/ui/textarea'
 import { useFormValidation } from '@/hooks/use-form-validation'
 import { paymentLink } from '@/lib/payment-links'
 import { cn } from '@/lib/utils'
-import { trackEvent, type EventType } from '@/utils/analytics'
+import {
+  setEnhancedConversionUserData,
+  trackEvent,
+  trackFormSubmission,
+} from '@/utils/analytics'
 import { FormspreeOpsFields } from './FormspreeOpsFields'
 
 const FORM_ACTION =
@@ -122,18 +126,18 @@ function createOrderReference() {
   return `PRISM-${(randomId ?? fallbackId).toUpperCase()}`
 }
 
-/**
- * The flat-$300 order funnel emits events (`website_order_submitted`,
- * `website_order_begin_checkout`, step events) that live outside the shared
- * `EventType` union in `utils/analytics`, which this component does not own.
- * Route the typed event name string through that closed union so the funnel
- * events stay type-safe without editing the analytics module.
- */
+/** The flat-$300 order funnel events, now first-class members of `EventType`. */
+type OrderEventName =
+  | 'website_order_started'
+  | 'website_order_step_completed'
+  | 'website_order_submitted'
+  | 'website_order_begin_checkout'
+
 function trackOrderEvent(
-  eventName: string,
+  eventName: OrderEventName,
   params: Record<string, string | number | boolean>,
 ) {
-  trackEvent(eventName as EventType, params)
+  trackEvent(eventName, params)
 }
 
 function FieldError({ error, id }: { error: string; id: string }) {
@@ -226,6 +230,27 @@ export default function WebsiteOrderForm() {
           form_name: FORM_NAME,
           form_location: FORM_LOCATION,
           lead_type: FORM_NAME,
+        })
+
+        // The $300 order is the highest-intent lead on the site, so it must
+        // register as a real conversion — not just a custom funnel event.
+        // `immediate` (not the default `pending`) because this flow shows an
+        // in-page success screen and never navigates to a /thank-you route,
+        // so the pending-context handoff that other forms rely on would never
+        // be consumed. Hash the buyer's email first so Google Ads enhanced
+        // conversions can match the click; awaited because gtag's `set` only
+        // applies to SUBSEQUENT events. The `.catch` is load-bearing:
+        // useFormValidation's onValidSubmit has no catch of its own, so a
+        // rejection here would skip everything below — losing the conversion
+        // and stranding the buyer on the review step with no error message
+        // despite a successful POST.
+        await setEnhancedConversionUserData({ email }).catch(() => {})
+        trackFormSubmission(FORM_NAME, FORM_LOCATION, {
+          conversionMode: 'immediate',
+          value: ORDER_PRICE,
+          currency: 'USD',
+          lead_type: FORM_NAME,
+          transaction_id: orderReference,
         })
 
         setSubmittedBrand(brandName.trim())
