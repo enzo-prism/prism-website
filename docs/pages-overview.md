@@ -69,7 +69,9 @@ Quick reference for the pages we edit most often.
   - `/hottest-content`
   - `/ai`
   - `/models`
+  - `/secret-pearl/privacy`
 - These routes should keep `robots: { index: false, follow: false }` and stay excluded from `app/sitemap.ts`.
+- `/secret-pearl/privacy` is the public App Store privacy policy for Secret Pearl. Keep it factual, accessible without authentication, explicit about local journal storage and optional Apple services, and linked from the shipped app and App Store Connect metadata.
 - Do not use these as canonical acquisition pages for SEO campaigns. Point search-facing users toward durable commercial surfaces like `/services`, `/websites`, `/ads`, `/local-listings`, `/pricing`, `/ai-seo-services`, and `/seo`.
 - `/ig`, `/tiktok`, and `/youtube` are link-in-bio hubs with no global floating assistant. Their shared page (`components/social-link-hub.tsx`) is a single dark, mobile-first column: a platform-aware "You found the studio behind the videos / feed / channel" headline, a two-number proof strip, then seven action cards — Order your website (`/websites#order`, primary), See the proof (`/case-studies`), "The system behind this video/feed/channel" (`/content-os`), Everything Prism unlimited (`/prism-infinity`), Refer a friend (`/refer`, $100), Start free (`/get-started`), and a platform cross-link (the YouTube channel on tiktok/ig, `/wall-of-love` on youtube). The Marble App Store card was removed from the client funnel. Keep copy minimal; do not reintroduce ranked credit lists, product screenshot showcases, gratitude framing, or extra sections.
 - These social routes should keep explicit CTA tracking on the action cards and the header profile link so inbound social traffic is measurable in GA4/Vercel without adding extra UI chrome.
