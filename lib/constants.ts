@@ -57,7 +57,7 @@ export const FREE_AUDIT_CTA_TEXT = "Get a free growth audit"
 export type NavItem = { label: string; href: string }
 
 export const NAV_ITEMS: NavItem[] = [
-  { label: "order", href: "/websites" },
+  { label: "websites", href: "/websites" },
   { label: "content os", href: "/content-os" },
   { label: "dental os", href: "/dental-os" },
   { label: "prism infinity", href: "/prism-infinity" },
@@ -65,3 +65,16 @@ export const NAV_ITEMS: NavItem[] = [
   { label: "get started", href: "/get-started" },
   { label: "contact", href: "/contact" },
 ]
+
+// Desktop collapses the utility items behind a "more" dropdown so the primary
+// bar stays focused on the product/offer surfaces; the mobile panel keeps the
+// full flat list so every destination stays one tap away.
+const MORE_NAV_HREFS = new Set(["/pricing", "/get-started", "/contact"])
+
+export const PRIMARY_NAV_ITEMS: NavItem[] = NAV_ITEMS.filter(
+  (item) => !MORE_NAV_HREFS.has(item.href),
+)
+
+export const MORE_NAV_ITEMS: NavItem[] = NAV_ITEMS.filter((item) =>
+  MORE_NAV_HREFS.has(item.href),
+)

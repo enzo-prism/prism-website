@@ -264,7 +264,7 @@ The navbar dynamically sets a CSS variable (`--prism-header-height`) so other st
 
 - `components/navbar.tsx` and `components/footer.tsx` are the canonical site chrome for both the homepage and inner routes. Prefer changing them once instead of introducing route-specific variants unless product direction explicitly splits the chrome again.
 - The current chrome language is minimal black surfaces, white/off-white type, and restrained tactile hover/focus states. Subtle transforms/glow are okay on the logo mark when they respect reduced motion and do not change layout width; keep nav text hover states stable and readable.
-- Primary nav labels live in `lib/constants.ts` (`NAV_ITEMS`). When you add or remove an item, verify the shared desktop nav, mobile sheet, locked route snapshots, and a representative case study detail page.
+- Primary nav labels live in `lib/constants.ts` (`NAV_ITEMS`), split into `PRIMARY_NAV_ITEMS` (inline on desktop) and `MORE_NAV_ITEMS` (pricing, get started, contact — collapsed behind the desktop "more" disclosure dropdown in `components/navbar.tsx`); the mobile sheet renders the full flat list. When you add or remove an item, decide which group it belongs to, then verify the shared desktop nav (including the dropdown), mobile sheet, locked route snapshots, and a representative case study detail page.
 - The footer leads with two funnel CTAs via `TrackedLink`: `Order a website` (`/websites`) and `Get started free` (`/get-started`), plus a `Refer a friend — $100` link to `/refer` in the Company column. Do not add a footer calendar or "Book call" path unless the funnel strategy changes.
 
 ## Deployment

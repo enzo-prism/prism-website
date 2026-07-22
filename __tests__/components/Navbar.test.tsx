@@ -80,7 +80,7 @@ describe('Navbar', () => {
       'false',
     )
     expect(
-      screen.getAllByRole('link', { name: /^order$/i })[0].className,
+      screen.getAllByRole('link', { name: /^websites$/i })[0].className,
     ).toContain('border-b')
     expect(screen.getByTestId('navbar-core-image')).toBeInTheDocument()
     expect(screen.getByText(/^prism$/i)).toBeInTheDocument()
@@ -99,7 +99,7 @@ describe('Navbar', () => {
       screen.getByRole('button', { name: /open menu/i }),
     ).toBeInTheDocument()
     expect(
-      screen.getAllByRole('link', { name: /^order$/i })[0].className,
+      screen.getAllByRole('link', { name: /^websites$/i })[0].className,
     ).toContain('border-b')
     expect(screen.getByTestId('navbar-core-image')).toBeInTheDocument()
     expect(screen.getByText(/impossible is temporary/i)).toBeInTheDocument()
@@ -147,19 +147,19 @@ describe('Navbar', () => {
     expect(
       screen.queryByRole('link', { name: /our story/i }),
     ).not.toBeInTheDocument()
-    expect(screen.getAllByRole('link', { name: /^order$/i })).toHaveLength(2)
+    expect(screen.getAllByRole('link', { name: /^websites$/i })).toHaveLength(2)
     expect(screen.getAllByRole('link', { name: /content os/i })).toHaveLength(2)
   })
 
-  it('links the order item to the website order page and highlights it on that route', () => {
+  it('links the websites item to the website order page and highlights it on that route', () => {
     mockUsePathname.mockReturnValue('/websites')
 
     render(<Navbar />)
 
-    const orderLinks = screen.getAllByRole('link', { name: /^order$/i })
-    expect(orderLinks).toHaveLength(1)
-    expect(orderLinks[0]).toHaveAttribute('href', '/websites')
-    expect(orderLinks[0].className).toContain('text-[#f5f0e8]')
+    const websitesLinks = screen.getAllByRole('link', { name: /^websites$/i })
+    expect(websitesLinks).toHaveLength(1)
+    expect(websitesLinks[0]).toHaveAttribute('href', '/websites')
+    expect(websitesLinks[0].className).toContain('text-[#f5f0e8]')
   })
 
   it('exposes a persistent filled order CTA that links to the website order page', () => {
@@ -167,8 +167,8 @@ describe('Navbar', () => {
 
     render(<Navbar />)
 
-    // The CTA reads as "Order now — $300", so it never collides with the
-    // exact "order" nav-item count, but it must still route to /websites.
+    // The CTA reads as "Order now", so it never collides with the exact
+    // "websites" nav-item count, but it must still route to /websites.
     const ctaLinks = screen.getAllByRole('link', { name: /order now/i })
     expect(ctaLinks.length).toBeGreaterThanOrEqual(1)
     ctaLinks.forEach((cta) => {
@@ -176,8 +176,80 @@ describe('Navbar', () => {
       expect(cta.className).toContain('bg-[#f5f0e8]')
     })
 
-    // The CTA must not inflate the exact-match "order" nav-item count.
-    expect(screen.getAllByRole('link', { name: /^order$/i })).toHaveLength(1)
+    // The CTA must not inflate the exact-match "websites" nav-item count.
+    expect(screen.getAllByRole('link', { name: /^websites$/i })).toHaveLength(1)
+  })
+
+  it('collapses pricing, get started, and contact behind the desktop more dropdown', () => {
+    mockUsePathname.mockReturnValue('/about')
+
+    render(<Navbar />)
+
+    // Collapsed by default: the utility items render nowhere (the dropdown
+    // starts closed and the mobile panel is not open).
+    expect(
+      screen.queryByRole('link', { name: /^pricing$/i }),
+    ).not.toBeInTheDocument()
+    expect(
+      screen.queryByRole('link', { name: /^get started$/i }),
+    ).not.toBeInTheDocument()
+    expect(
+      screen.queryByRole('link', { name: /^contact$/i }),
+    ).not.toBeInTheDocument()
+
+    const trigger = screen.getByRole('button', { name: /^more$/i })
+    expect(trigger).toHaveAttribute('aria-haspopup', 'true')
+    expect(trigger).toHaveAttribute('aria-expanded', 'false')
+
+    fireEvent.click(trigger)
+    expect(trigger).toHaveAttribute('aria-expanded', 'true')
+    expect(screen.getByRole('link', { name: /^pricing$/i })).toHaveAttribute(
+      'href',
+      '/pricing',
+    )
+    expect(
+      screen.getByRole('link', { name: /^get started$/i }),
+    ).toHaveAttribute('href', '/get-started')
+    expect(screen.getByRole('link', { name: /^contact$/i })).toHaveAttribute(
+      'href',
+      '/contact',
+    )
+
+    // Outside interaction dismisses the dropdown.
+    fireEvent.pointerDown(document.body)
+    expect(trigger).toHaveAttribute('aria-expanded', 'false')
+    expect(
+      screen.queryByRole('link', { name: /^pricing$/i }),
+    ).not.toBeInTheDocument()
+  })
+
+  it('closes the more dropdown on Escape and keeps items reachable in the mobile panel', () => {
+    mockUsePathname.mockReturnValue('/about')
+
+    render(<Navbar />)
+
+    const trigger = screen.getByRole('button', { name: /^more$/i })
+    fireEvent.click(trigger)
+    expect(trigger).toHaveAttribute('aria-expanded', 'true')
+
+    fireEvent.keyDown(document, { key: 'Escape' })
+    expect(trigger).toHaveAttribute('aria-expanded', 'false')
+
+    // Mobile keeps the flat list: all three utility items stay one tap away.
+    fireEvent.click(screen.getByRole('button', { name: /open menu/i }))
+    const panel = document.querySelector('#mobile-site-nav')
+    expect(panel).toBeInTheDocument()
+    expect(
+      within(panel as HTMLElement).getByRole('link', { name: /^pricing$/i }),
+    ).toHaveAttribute('href', '/pricing')
+    expect(
+      within(panel as HTMLElement).getByRole('link', {
+        name: /^get started$/i,
+      }),
+    ).toHaveAttribute('href', '/get-started')
+    expect(
+      within(panel as HTMLElement).getByRole('link', { name: /^contact$/i }),
+    ).toHaveAttribute('href', '/contact')
   })
 
   it('places the primary order CTA inside the open mobile panel', () => {

@@ -6,7 +6,13 @@ import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 
 import Breadcrumbs from '@/components/breadcrumbs'
 import { findCaseStudyNavItem } from '@/lib/case-study-nav-data'
-import { LOGO_CONFIG, NAV_ITEMS } from '@/lib/constants'
+import {
+  LOGO_CONFIG,
+  MORE_NAV_ITEMS,
+  NAV_ITEMS,
+  PRIMARY_NAV_ITEMS,
+} from '@/lib/constants'
+import type { NavItem } from '@/lib/constants'
 import { cn } from '@/lib/utils'
 import { trackNavigation } from '@/utils/analytics'
 
@@ -20,19 +26,21 @@ type BreadcrumbItem = {
 type NavVariant = 'desktop' | 'mobile'
 
 const MOBILE_NAV_ID = 'mobile-site-nav'
+const DESKTOP_MORE_MENU_ID = 'desktop-more-nav'
 // The inline desktop nav takes over from the menu button at this width.
 const DESKTOP_NAV_BREAKPOINT = 1280
 const HEADER_CLASSES =
   'border-b border-white/12 bg-black text-[#f5f0e8] transition-[background-color,border-color,color]'
-// Compact desktop links: tighter tracking + no-wrap so all seven items plus the
-// logo and the persistent CTA fit on one row from xl (1280px) up without overflow.
+// Compact desktop links: tighter tracking + no-wrap so the four primary items,
+// the "more" dropdown, the logo, and the persistent CTA fit on one row from
+// xl (1280px) up without overflow.
 const DESKTOP_LINK_CLASSES =
   'whitespace-nowrap border-b pb-1 text-[11px] font-semibold uppercase tracking-[0.2em] transition-colors'
 const MOBILE_LINK_CLASSES =
   'block py-4 text-sm font-semibold uppercase tracking-[0.24em] transition-colors'
 
-// Persistent primary action. Mirrors the "order" nav item destination but reads
-// as a filled CTA (ivory on near-black per the hero-primary-button token).
+// Persistent primary action. Mirrors the "websites" nav item destination but
+// reads as a filled CTA (ivory on near-black per the hero-primary-button token).
 const PRIMARY_CTA = { label: 'Order now', href: '/websites' } as const
 const CTA_BASE_CLASSES =
   'items-center justify-center rounded-md bg-[#f5f0e8] font-semibold uppercase tracking-[0.2em] text-[#050505] transition-colors hover:bg-white focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-white/30 focus-visible:ring-offset-2 focus-visible:ring-offset-black'
@@ -77,17 +85,19 @@ function getNavItemClasses(active: boolean, variant: NavVariant) {
 }
 
 function NavbarLinks({
+  items,
   pathname,
   variant,
   onNavigate,
 }: {
+  items: NavItem[]
   pathname: string | null
   variant: NavVariant
   onNavigate: (label: string, href: string) => void
 }) {
   return (
     <>
-      {NAV_ITEMS.map((item, index) => (
+      {items.map((item, index) => (
         <Link
           key={item.href}
           href={item.href}
@@ -107,6 +117,119 @@ function NavbarLinks({
         </Link>
       ))}
     </>
+  )
+}
+
+// Desktop-only disclosure that collapses the utility items (pricing, get
+// started, contact) behind a quiet "more" trigger styled like its sibling
+// links. Follows the APG disclosure-navigation pattern: plain links in a
+// toggled panel (no ARIA menu semantics), dismissed by outside pointer,
+// Escape (refocusing the trigger), or navigation.
+function MoreNavDropdown({
+  pathname,
+  onNavigate,
+}: {
+  pathname: string | null
+  onNavigate: (label: string, href: string) => void
+}) {
+  const [isOpen, setIsOpen] = useState(false)
+  const containerRef = useRef<HTMLDivElement | null>(null)
+  const triggerRef = useRef<HTMLButtonElement | null>(null)
+  const hasActiveItem = MORE_NAV_ITEMS.some((item) =>
+    isNavItemActive(pathname, item.href),
+  )
+
+  useEffect(() => {
+    setIsOpen(false)
+  }, [pathname])
+
+  useEffect(() => {
+    if (!isOpen) return
+
+    const handlePointerDown = (event: PointerEvent) => {
+      if (!containerRef.current?.contains(event.target as Node)) {
+        setIsOpen(false)
+      }
+    }
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setIsOpen(false)
+        triggerRef.current?.focus()
+      }
+    }
+
+    document.addEventListener('pointerdown', handlePointerDown)
+    document.addEventListener('keydown', handleKeyDown)
+    return () => {
+      document.removeEventListener('pointerdown', handlePointerDown)
+      document.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [isOpen])
+
+  return (
+    // `flex` (not a plain block) so the inline-flex trigger is block-ified and
+    // the wrapper's height equals the button exactly — a block wrapper would
+    // size from an inline line box (baseline + half-leading), rendering the
+    // trigger a few px lower than its sibling links under `items-center`.
+    <div ref={containerRef} className="relative flex">
+      <button
+        ref={triggerRef}
+        type="button"
+        aria-haspopup="true"
+        aria-expanded={isOpen}
+        aria-controls={DESKTOP_MORE_MENU_ID}
+        onClick={() => setIsOpen((open) => !open)}
+        className={cn(
+          'inline-flex items-center gap-1.5',
+          getNavItemClasses(hasActiveItem, 'desktop'),
+        )}
+      >
+        more
+        <svg
+          aria-hidden="true"
+          viewBox="0 0 12 12"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.5"
+          className={cn(
+            'h-2.5 w-2.5 transition-transform duration-200',
+            isOpen && 'rotate-180',
+          )}
+        >
+          <path
+            d="M2.5 4.5 6 8l3.5-3.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+      </button>
+
+      {isOpen ? (
+        <div
+          id={DESKTOP_MORE_MENU_ID}
+          className="absolute right-0 top-[calc(100%+0.75rem)] z-50 min-w-[11rem] rounded-xl border border-white/12 bg-black p-1.5 shadow-[0_18px_40px_rgba(0,0,0,0.55)]"
+        >
+          {MORE_NAV_ITEMS.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              onClick={() => {
+                onNavigate(item.label, item.href)
+                setIsOpen(false)
+              }}
+              className={cn(
+                'block whitespace-nowrap rounded-lg px-3 py-2.5 text-[11px] font-semibold uppercase tracking-[0.2em] transition-colors',
+                isNavItemActive(pathname, item.href)
+                  ? 'bg-white/[0.06] text-[#f5f0e8]'
+                  : 'text-[#8f877b] hover:bg-white/[0.04] hover:text-[#f5f0e8]',
+              )}
+            >
+              {item.label}
+            </Link>
+          ))}
+        </div>
+      ) : null}
+    </div>
   )
 }
 
@@ -259,10 +382,12 @@ export default function Navbar() {
             className="hidden items-center gap-4 xl:flex 2xl:gap-6"
           >
             <NavbarLinks
+              items={PRIMARY_NAV_ITEMS}
               pathname={pathname}
               variant="desktop"
               onNavigate={handleNavigate}
             />
+            <MoreNavDropdown pathname={pathname} onNavigate={handleNavigate} />
           </nav>
 
           <Link
@@ -325,6 +450,7 @@ export default function Navbar() {
           >
             <div className="divide-y divide-white/12">
               <NavbarLinks
+                items={NAV_ITEMS}
                 pathname={pathname}
                 variant="mobile"
                 onNavigate={handleNavigate}
