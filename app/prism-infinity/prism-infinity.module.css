@@ -1,0 +1,246 @@
+/*
+ * Prism Infinity — motion system.
+ *
+ * Every animation here is compositor-friendly (transform / opacity /
+ * stroke-dashoffset only) and fully disabled under prefers-reduced-motion.
+ * No JavaScript drives any of these loops; the page stays a server
+ * component and the browser handles the rest.
+ */
+
+/* ---------------------------------------------------------------- aurora */
+
+.aurora {
+  animation: aurora-drift 26s ease-in-out infinite alternate;
+}
+
+@keyframes aurora-drift {
+  from {
+    transform: translate3d(-2.5%, -1.5%, 0) scale(1);
+  }
+
+  to {
+    transform: translate3d(2.5%, 2%, 0) scale(1.08);
+  }
+}
+
+/* --------------------------------------------------------- infinity glyph */
+
+/* Faint full loop always visible underneath the comet. */
+.glyphTrail {
+  fill: none;
+  stroke: rgba(245, 240, 232, 0.14);
+  stroke-width: 1.6;
+}
+
+/* Bright gold comet segment orbiting the lemniscate. Path uses
+   pathLength="1" so the dash math is unit-based. */
+.glyphComet {
+  fill: none;
+  stroke: #d8bc79;
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-dasharray: 0.16 0.84;
+  animation: glyph-orbit 5.5s linear infinite;
+}
+
+/* Soft glow copy of the comet for a premium bloom without SVG filters. */
+.glyphGlow {
+  fill: none;
+  stroke: rgba(216, 188, 121, 0.35);
+  stroke-width: 6;
+  stroke-linecap: round;
+  stroke-dasharray: 0.16 0.84;
+  animation: glyph-orbit 5.5s linear infinite;
+}
+
+@keyframes glyph-orbit {
+  to {
+    stroke-dashoffset: -1;
+  }
+}
+
+/* ---------------------------------------------------------------- marquee */
+
+.marquee {
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 8%,
+    black 92%,
+    transparent
+  );
+}
+
+.marqueeTrack {
+  width: max-content;
+  animation: marquee-scroll 44s linear infinite;
+}
+
+.marquee:hover .marqueeTrack {
+  animation-play-state: paused;
+}
+
+@keyframes marquee-scroll {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* ------------------------------------------------------------ queue board */
+
+/* Gold shimmer sweeping across the active request's progress bar. */
+.queueBar {
+  position: relative;
+  overflow: hidden;
+  background: rgba(216, 188, 121, 0.16);
+}
+
+.queueBarFill {
+  position: absolute;
+  inset: 0;
+  transform-origin: left center;
+  background: linear-gradient(
+    90deg,
+    rgba(216, 188, 121, 0.55),
+    #d8bc79 60%,
+    rgba(216, 188, 121, 0.55)
+  );
+  animation: queue-fill 6s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+}
+
+@keyframes queue-fill {
+  0% {
+    transform: scaleX(0.05);
+  }
+
+  70% {
+    transform: scaleX(0.86);
+  }
+
+  92% {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scaleX(1);
+    opacity: 0.4;
+  }
+}
+
+.pulseDot {
+  animation: pulse-dot 2.4s ease-in-out infinite;
+}
+
+@keyframes pulse-dot {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.45;
+    transform: scale(0.72);
+  }
+}
+
+/* --------------------------------------------------------- card treatments */
+
+.liftCard {
+  transition:
+    transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+    background-color 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.liftCard:hover {
+  transform: translateY(-4px);
+  border-color: rgba(216, 188, 121, 0.38);
+  background-color: rgba(255, 255, 255, 0.04);
+  box-shadow: 0 26px 60px -38px rgba(216, 188, 121, 0.5);
+}
+
+.liftCard:hover .cardIcon {
+  color: #d8bc79;
+  transform: translateY(-2px) scale(1.06);
+}
+
+.cardIcon {
+  transition:
+    color 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ------------------------------------------------------------ price shimmer */
+
+.priceShimmer {
+  background: linear-gradient(
+    100deg,
+    #f5f0e8 38%,
+    #d8bc79 50%,
+    #f5f0e8 62%
+  );
+  background-size: 220% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: price-shimmer 6s ease-in-out infinite;
+}
+
+@keyframes price-shimmer {
+  0%,
+  55% {
+    background-position: 115% 0;
+  }
+
+  85%,
+  100% {
+    background-position: -15% 0;
+  }
+}
+
+/* ------------------------------------------------------------ rotating word */
+
+.rotatingWord {
+  display: inline-block;
+  animation: word-in 0.55s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes word-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.55em);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ------------------------------------------------------------ reduced motion */
+
+@media (prefers-reduced-motion: reduce) {
+  .aurora,
+  .glyphComet,
+  .glyphGlow,
+  .marqueeTrack,
+  .queueBarFill,
+  .pulseDot,
+  .priceShimmer,
+  .rotatingWord {
+    animation: none;
+  }
+
+  .queueBarFill {
+    transform: scaleX(0.62);
+  }
+
+  .liftCard,
+  .cardIcon {
+    transition: none;
+  }
+}
