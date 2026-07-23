@@ -198,6 +198,15 @@ export default withSentryConfig(withAnalyzer(nextConfig), {
   silent: true,
   org: "prism-m0",
   project: "prism-website",
+
+  // Tree-shake optional SDK code the site never enables (Session Replay
+  // internals, debug statements) out of the client bundle.
+  bundleSizeOptimizations: {
+    excludeDebugStatements: true,
+    excludeReplayIframe: true,
+    excludeReplayShadowDom: true,
+    excludeReplayWorker: true,
+  },
 }, {
   // For all available options, see:
   // https://docs.sentry.io/platforms/javascript/guides/nextjs/manual-setup/

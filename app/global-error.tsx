@@ -1,6 +1,5 @@
 'use client';
 
-import * as Sentry from '@sentry/nextjs';
 import { useEffect } from 'react';
 import { captureErrorWithContext } from '@/utils/sentry-helpers';
 import { Button } from '@/components/ui/button';

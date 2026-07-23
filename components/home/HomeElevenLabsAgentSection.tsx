@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState, type CSSProperties } from 'react'
+import dynamic from 'next/dynamic'
 
 import {
   CoreActionLink,
@@ -10,9 +11,23 @@ import {
   coreSecondaryActionClassName,
 } from '@/components/core-route/CoreRoutePrimitives'
 import ElevenLabsOrbMark from '@/components/elevenlabs/ElevenLabsOrbMark'
-import ElevenLabsWidget, {
-  ElevenLabsWidgetScript,
-} from '@/components/elevenlabs/ElevenLabsWidget'
+
+// The widget internals only render after the visitor clicks "Agree & open
+// guide", so they are code-split instead of statically bundled. A static
+// import here would drag ~40KB of widget code into the shared home client
+// chunk — which every route importing any components/home/* module (e.g.
+// HomeReveal) would then download.
+const ElevenLabsWidgetScript = dynamic(
+  () =>
+    import('@/components/elevenlabs/ElevenLabsWidget').then(
+      (mod) => mod.ElevenLabsWidgetScript,
+    ),
+  { ssr: false },
+)
+const ElevenLabsWidget = dynamic(
+  () => import('@/components/elevenlabs/ElevenLabsWidget'),
+  { ssr: false },
+)
 import { usePublicElevenLabsWidgetViewportEligibility } from '@/hooks/use-public-elevenlabs-widget-viewport'
 import { usePublicElevenLabsWidgetWebGLEligibility } from '@/hooks/use-public-elevenlabs-widget-webgl'
 import {

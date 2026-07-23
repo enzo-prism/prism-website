@@ -1,6 +1,9 @@
 "use client"
 
-type SentryModule = typeof import("@sentry/nextjs")
+// Lazy-load the curated Sentry surface (utils/sentry-lean.ts) instead of the
+// full `@sentry/nextjs` namespace so unused SDK features (Replay, Feedback)
+// are tree-shaken out of the client chunk.
+type SentryModule = typeof import("./sentry-lean")
 
 const DEFAULT_SENTRY_DSN =
   "https://68c104f36835243619e583be41896f33@o4508365743325184.ingest.us.sentry.io/4509559921049600"
@@ -22,7 +25,7 @@ async function loadSentryModule(): Promise<SentryModule | null> {
   if (loadedModule) return loadedModule
   if (loadPromise) return loadPromise
 
-  loadPromise = import("@sentry/nextjs")
+  loadPromise = import("./sentry-lean")
     .then((mod) => {
       loadedModule = mod
       return mod
