@@ -1,10 +1,10 @@
-"use client"
+'use client'
 
-import SimpleBlogPostCard from "@/components/simple-blog-post-card"
-import { Badge } from "@/components/ui/badge"
-import { ArrowRight } from "lucide-react"
-import Link from "next/link"
-import { useEffect, useRef, useState } from "react"
+import SimpleBlogPostCard from '@/components/simple-blog-post-card'
+import { Badge } from '@/components/ui/badge'
+import { ArrowRight } from 'lucide-react'
+import Link from 'next/link'
+import { useEffect, useRef, useState } from 'react'
 
 type LatestPost = {
   slug: string
@@ -17,7 +17,8 @@ type LatestPost = {
   gradientClass?: string | null
 }
 
-const FALLBACK_GRADIENT = "bg-gradient-to-br from-neutral-200 via-neutral-100 to-white"
+const FALLBACK_GRADIENT =
+  'bg-gradient-to-br from-neutral-200 via-neutral-100 to-white'
 const MAX_RETRIES = 3
 const RETRY_DELAY_MS = 1500
 
@@ -39,9 +40,8 @@ export default function LatestPostsSection() {
       currentController.current = controller
 
       try {
-        const response = await fetch("/api/latest-posts", {
+        const response = await fetch('/api/latest-posts', {
           signal: controller.signal,
-          cache: "no-store",
         })
 
         if (!response.ok) {
@@ -51,7 +51,7 @@ export default function LatestPostsSection() {
         const payload = await response.json()
 
         if (!Array.isArray(payload.posts)) {
-          throw new Error("Invalid response payload")
+          throw new Error('Invalid response payload')
         }
 
         if (!cancelled) {
@@ -63,10 +63,13 @@ export default function LatestPostsSection() {
           return
         }
 
-        console.error("[LatestPostsSection] failed to fetch posts", error)
+        console.error('[LatestPostsSection] failed to fetch posts', error)
 
         if (attempt < MAX_RETRIES) {
-          retryTimeout.current = setTimeout(() => fetchPosts(attempt + 1), RETRY_DELAY_MS * attempt)
+          retryTimeout.current = setTimeout(
+            () => fetchPosts(attempt + 1),
+            RETRY_DELAY_MS * attempt,
+          )
           return
         }
 
@@ -132,7 +135,8 @@ export default function LatestPostsSection() {
               no posts available right now
             </h3>
             <p className="mb-5 text-sm lowercase text-neutral-500">
-              check the blog to dig into our full library of marketing and product experiments.
+              check the blog to dig into our full library of marketing and
+              product experiments.
             </p>
             <Link
               href="/blog"

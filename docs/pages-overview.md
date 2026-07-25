@@ -97,6 +97,7 @@ Quick reference for the pages we edit most often.
 ## Prism Infinity (`app/prism-infinity/page.tsx`)
 
 - The **Prism Infinity** offer: `$2,000/month` for unlimited Prism services across engineering, design, and marketing (logo/print design, web development, video editing, content, ads, slide decks, in-person photoshoots, and more) on one subscription, pausable/cancelable anytime.
+- The services marquee pauses on hover or keyboard focus. Touch/coarse-pointer devices use manual horizontal scrolling with the duplicate visual list hidden. Keep the numbered and included-service collections as valid semantic lists.
 - Indexable, in `public/llms.txt`, in the sitemap, and carries `ServiceSchema` plus FAQ structured data. The `$2,000/month` token is intentional here and is allowed by `lib/pricing-consistency.ts`.
 
 ## Refer (`app/refer/page.tsx`)
@@ -205,7 +206,7 @@ Quick reference for the pages we edit most often.
 - `app/client-page.tsx` is a section composer for the growth homepage. Current order: hero, mixed client Cover Flow deck (proof), buyer-checks problem section, bento system grid, first-90-days band with count-up stats, audience fit cards, short process, compact proof grid, final CTA, and then `HomeOffersSection` ("Four ways to grow with Prism.") as the **last** section.
 - The homepage hero is built from `components/home/HomeHeroSection.tsx`; copy comes from `components/home/homepage-content.ts`. The H1 is "Prism" with the subhead "the #1 growth partner for small businesses". The proof block now leads with **attention + traffic, not revenue**: 18,563 new users/month to client sites, 71,000 followers, and 17M+ views across YouTube/Instagram/TikTok (each linking to the profile in a new tab), plus a "100% grown by Prism AI Agents, powered by Content OS" attribution that links to `/content-os`. The old "Get found. Get trusted. Get chosen." / revenue framing is retired.
 - The "Four ways to grow with Prism" offers section (`components/home/HomeOffersSection.tsx`) renders the four offers and ends with a free on-ramp callout: "Not ready to buy? Start free..." → `/get-started` ("Get started free").
-- Homepage motion runs through small client islands: `components/home/HomeReveal.tsx` (scroll reveal that never hides content for no-JS or reduced-motion visitors), `components/home/HomeCountUp.tsx` (stat count-up in the 90-day band), and `components/home/HomeSystemGrid.tsx` (pointer-tracked spotlight bento cards).
+- Homepage motion runs through small client islands: `components/home/HomeReveal.tsx` (scroll reveal that never hides content for no-JS or reduced-motion visitors), `components/home/HomeCountUp.tsx` (stat count-up in the 90-day band; exposes the final value once to assistive technology while animated and sizing copies remain hidden), and `components/home/HomeSystemGrid.tsx` (pointer-tracked spotlight bento cards).
 - The homepage is growth-first and dental-proven. Default language should speak to founders, owners, operators, qualified demand, Google/AI visibility, reviews, conversion paths, tracking, and measurable growth opportunities.
 - The primary hero CTA is "Order now" (no price) and points to `/websites`; the secondary CTA is "Explore plans" and hash-scrolls to `#offers`.
 - Keep homepage copy extremely short: use labels, one-line headings, and compact cards. Move longer explanations to deeper pages.
@@ -237,7 +238,7 @@ Quick reference for the pages we edit most often.
 - Library layout (hero, featured post, and grid) lives in `components/library/LibraryClient.tsx`; the list page intentionally avoids embeds and extra UI chrome.
 - Direct-visitor/reference surface only after the growth-first search cleanup. Library list/detail routes are noindex and excluded from sitemap/LLM maps.
 - Data comes from `lib/library/getLibraryPosts.ts` and merges the `content/library/seed.ts` fallback with `content/library/editorial.ts` curation metadata.
-- Detail pages live at `app/library/[slug]/page.tsx` and are intentionally simple: text plus a single Instagram/TikTok embed.
+- Detail pages live at `app/library/[slug]/page.tsx` and are intentionally simple: text plus a single Instagram/TikTok embed. TikTok markup is constructed locally from a validated post ID in `lib/library/tiktok.ts`; do not inject third-party oEmbed HTML.
 - To curate a post, add an entry in `content/library/editorial.ts` keyed as `${platform}:${id}` with a speaker name and at least one takeaway (that's what marks a post as curated).
 - `tags`, `group`, and optional `featuredWeight` still live in the editorial metadata for curation, even though tags are not surfaced in the current UI.
 - When API tokens are missing, the Library falls back to `content/library/seed.ts`.

@@ -109,7 +109,11 @@ export const HOMEPAGE_HERO = {
     headline: {
       label: 'Traffic & attention',
       items: [
-        { value: '18,563', unit: '/mo', label: 'new users to client websites' },
+        {
+          value: '18,563',
+          unit: '/month',
+          label: 'new users to client websites',
+        },
         { value: '71,000', unit: '', label: 'followers across our channels' },
         { value: '17M+', unit: '', label: 'views across our channels' },
       ],
@@ -138,15 +142,7 @@ export const HOMEPAGE_HERO = {
       ],
     },
   },
-  systemStrip: [
-    'Website',
-    'Content',
-    'Ads',
-    'SEO',
-    'Reviews',
-    'Social',
-    'AI',
-  ],
+  systemStrip: ['Website', 'Content', 'Ads', 'SEO', 'Reviews', 'Social', 'AI'],
   socialProof: {
     headline: `${HOMEPAGE_HERO_REVIEW_COUNT_LABEL} reviews from founders, doctors, operators, and local leaders`,
     linkLabel: 'See results',
@@ -253,7 +249,8 @@ export const HOMEPAGE_CLIENT_WINS = {
       location: 'San Luis Obispo, CA',
       href: '/case-studies/coast-periodontics-and-laser-surgery',
       contextLabel: 'Specialty healthcare',
-      image: '/case-studies/coast-periodontics-and-laser-surgery-home-mobile.jpg',
+      image:
+        '/case-studies/coast-periodontics-and-laser-surgery-home-mobile.jpg',
     },
     {
       company: 'Canary Cove',

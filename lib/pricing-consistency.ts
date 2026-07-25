@@ -11,69 +11,100 @@ export type PricingConsistencyViolation = {
 }
 
 export const PRICING_STRICT_FILES = [
-  "app/pricing/client-page.tsx",
-  "components/pricing/PricingHero.tsx",
-  "lib/pricing-model.ts",
-  "app/faq/page.tsx",
-  "app/services/page.tsx",
-  "app/get-started/page.tsx",
-  "app/websites/page.tsx",
-  "app/ads/page.tsx",
-  "app/seo/page.tsx",
-  "app/local-listings/page.tsx",
-  "components/footer.tsx",
-  "app/sitemap.ts",
-  "next.config.mjs",
+  'app/pricing/client-page.tsx',
+  'components/pricing/PricingHero.tsx',
+  'lib/pricing-model.ts',
+  'app/faq/page.tsx',
+  'app/services/page.tsx',
+  'app/get-started/page.tsx',
+  'app/websites/page.tsx',
+  'app/ads/page.tsx',
+  'app/seo/page.tsx',
+  'app/local-listings/page.tsx',
+  'content/blog/dental-website-cost-guide-2026.mdx',
+  'components/footer.tsx',
+  'app/sitemap.ts',
+  'next.config.mjs',
 ] as const
 
 export const PRICING_CONTEXT_RULES: Record<string, RegExp[]> = {
-  "app/refer/page.tsx": [/referral payout/i, /not service pricing/i],
-  "app/google/dental-ads/page.tsx": [/ad fee examples/i, /not Prism core pricing/i],
-  "app/dental-photography/before-after/GuideTabs.tsx": [/equipment budget/i, /not prism service pricing/i],
+  'app/refer/page.tsx': [/referral payout/i, /not service pricing/i],
+  'app/google/dental-ads/page.tsx': [
+    /ad fee examples/i,
+    /not Prism core pricing/i,
+  ],
+  'app/dental-photography/before-after/GuideTabs.tsx': [
+    /equipment budget/i,
+    /not prism service pricing/i,
+  ],
 }
 
 export const LEGACY_PRICING_TOKEN_RULES: PricingTokenRule[] = [
-  { label: "$1,000 one-time retired website overhaul price", pattern: /\$1,000 one-time/i },
-  { label: "Website Overhaul retired offer name", pattern: /Website Overhaul/i },
-  { label: "Growth Partnership retired offer name", pattern: /Growth Partnership/i },
-  { label: "Free Expert Audit retired offer name", pattern: /Free Expert Audit/i },
-  { label: "$400 legacy website price", pattern: /\$400\b/ },
-  { label: "$900/mo legacy plan price", pattern: /\$900\/mo\b/i },
-  { label: "$1,500/mo legacy plan price", pattern: /\$1,500\/mo\b/i },
-  { label: "$2,500 legacy website price", pattern: /\$2,500\b/ },
-  { label: "$297 legacy monthly plan price", pattern: /\$297\b/ },
-  { label: "$97 legacy support plan price", pattern: /\$97\b/ },
-  { label: "$3,000/mo legacy dental plan price", pattern: /\$3,000\/mo\b/i },
-  { label: "$3,600/mo legacy bundle price", pattern: /\$3,600\/mo\b/i },
-  { label: "$1,100/mo legacy bundle price", pattern: /\$1,100\/mo\b/i },
-  { label: "$1,400/mo legacy bundle price", pattern: /\$1,400\/mo\b/i },
-  { label: "$300/mo legacy bundle price", pattern: /\$300\/mo\b/i },
-  { label: "starting around $1,000 wording", pattern: /starting around \$1,000/i },
-  { label: "~$1,000 wording", pattern: /~\$1,000/i },
-  { label: "$1,000/mo legacy dental price", pattern: /\$1,000\/mo\b/i },
-  { label: "from $1,500/mo wording", pattern: /from \$1,500\/mo/i },
+  {
+    label: '$1,000 one-time retired website overhaul price',
+    pattern: /\$1,000 one-time/i,
+  },
+  {
+    label: 'Website Overhaul retired offer name',
+    pattern: /Website Overhaul/i,
+  },
+  {
+    label: 'Growth Partnership retired offer name',
+    pattern: /Growth Partnership/i,
+  },
+  {
+    label: 'Free Expert Audit retired offer name',
+    pattern: /Free Expert Audit/i,
+  },
+  {
+    label: 'Deep Growth Audit retired offer name',
+    pattern: /Deep Growth Audit/i,
+  },
+  { label: 'Growth Sprint retired offer name', pattern: /\bGrowth Sprint\b/i },
+  {
+    label: 'Growth Partner retired offer name',
+    pattern: /\bGrowth Partner\b/i,
+  },
+  { label: '$400 legacy website price', pattern: /\$400\b/ },
+  { label: '$900/mo legacy plan price', pattern: /\$900\/mo\b/i },
+  { label: '$1,500/mo legacy plan price', pattern: /\$1,500\/mo\b/i },
+  { label: '$2,500 legacy website price', pattern: /\$2,500\b/ },
+  { label: '$297 legacy monthly plan price', pattern: /\$297\b/ },
+  { label: '$97 legacy support plan price', pattern: /\$97\b/ },
+  { label: '$3,000/mo legacy dental plan price', pattern: /\$3,000\/mo\b/i },
+  { label: '$3,600/mo legacy bundle price', pattern: /\$3,600\/mo\b/i },
+  { label: '$1,100/mo legacy bundle price', pattern: /\$1,100\/mo\b/i },
+  { label: '$1,400/mo legacy bundle price', pattern: /\$1,400\/mo\b/i },
+  { label: '$300/mo legacy bundle price', pattern: /\$300\/mo\b/i },
+  {
+    label: 'starting around $1,000 wording',
+    pattern: /starting around \$1,000/i,
+  },
+  { label: '~$1,000 wording', pattern: /~\$1,000/i },
+  { label: '$1,000/mo legacy dental price', pattern: /\$1,000\/mo\b/i },
+  { label: 'from $1,500/mo wording', pattern: /from \$1,500\/mo/i },
 ]
 
 export const REQUIRED_CANONICAL_SNIPPETS: Record<string, string[]> = {
-  "app/pricing/client-page.tsx": [
-    "growthPathSteps",
-    "pricingSnapshot",
-    "partnerLevels",
-    "PricingStructuredData",
+  'app/pricing/client-page.tsx': [
+    'growthPathSteps',
+    'pricingSnapshot',
+    'partnerLevels',
+    'PricingStructuredData',
   ],
-  "components/pricing/PricingHero.tsx": [
-    "A clearer way to invest in growth.",
-    "PRICING_PRIMARY_CTA",
+  'components/pricing/PricingHero.tsx': [
+    'A clearer way to invest in growth.',
+    'PRICING_PRIMARY_CTA',
   ],
-  "lib/pricing-model.ts": [
-    "Order your website — $300",
-    "$300 one-time",
-    "$5,000 + $1,000/month",
-    "$2,000/month",
+  'lib/pricing-model.ts': [
+    'Order your website — $300',
+    '$300 one-time',
+    '$5,000 + $1,000/month',
+    '$2,000/month',
   ],
-  "app/websites/page.tsx": [
-    "One-time website build",
-    "$300 flat",
+  'app/websites/page.tsx': [
+    'One-time website build',
+    '$300 flat',
     "price: '300'",
   ],
 }
@@ -83,18 +114,27 @@ export function collectPricingConsistencyViolations(
   content: string,
 ): PricingConsistencyViolation[] {
   const violations: PricingConsistencyViolation[] = []
-  const isStrictFile = PRICING_STRICT_FILES.includes(filePath as (typeof PRICING_STRICT_FILES)[number])
+  const isStrictFile = PRICING_STRICT_FILES.includes(
+    filePath as (typeof PRICING_STRICT_FILES)[number],
+  )
   const contextChecks = PRICING_CONTEXT_RULES[filePath]
-  const hasContextLabel = contextChecks ? contextChecks.every((pattern) => pattern.test(content)) : false
+  const hasContextLabel = contextChecks
+    ? contextChecks.every((pattern) => pattern.test(content))
+    : false
 
   if (isStrictFile || contextChecks) {
     for (const rule of LEGACY_PRICING_TOKEN_RULES) {
-      const regex = new RegExp(rule.pattern.source, rule.pattern.flags.includes("g") ? rule.pattern.flags : `${rule.pattern.flags}g`)
+      const regex = new RegExp(
+        rule.pattern.source,
+        rule.pattern.flags.includes('g')
+          ? rule.pattern.flags
+          : `${rule.pattern.flags}g`,
+      )
       let match: RegExpExecArray | null = regex.exec(content)
       while (match) {
         const index = match.index
-        const line = content.slice(0, index).split("\n").length
-        const excerpt = content.split("\n")[line - 1]?.trim() ?? ""
+        const line = content.slice(0, index).split('\n').length
+        const excerpt = content.split('\n')[line - 1]?.trim() ?? ''
         if (!(contextChecks && hasContextLabel)) {
           violations.push({
             filePath,
@@ -116,7 +156,7 @@ export function collectPricingConsistencyViolations(
           filePath,
           line: 1,
           label: `missing canonical snippet: ${snippet}`,
-          excerpt: "",
+          excerpt: '',
         })
       }
     }

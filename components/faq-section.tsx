@@ -2,6 +2,7 @@
 
 import { cn } from "@/lib/utils"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
+import { serializeJsonLd } from "@/components/schema-markup"
 
 interface FAQItem {
   question: string
@@ -51,7 +52,7 @@ export default function FAQSection({
     )}>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+        dangerouslySetInnerHTML={{ __html: serializeJsonLd(faqSchema) }}
       />
       
       <div className="max-w-3xl mx-auto">

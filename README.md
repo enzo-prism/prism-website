@@ -3,7 +3,7 @@
 [![Deployed on Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?style=for-the-badge&logo=vercel)](https://vercel.com/enzo-design-prisms-projects/v0-prism-website-design)
 [![Built with v0](https://img.shields.io/badge/Built%20with-v0.dev-black?style=for-the-badge)](https://v0.dev/chat/projects/8xmj81uf3fc)
 
-Next.js App Router project that powers Prism's business growth systems website: marketing pages, proof, specialty service funnels, blog, forms, and legacy direct-visitor surfaces. The codebase stays in sync with [v0.dev](https://v0.dev) chats and ships to production through GitHub Actions + Vercel source deploys.
+Next.js 16.2.11 App Router project that powers Prism's business growth systems website: marketing pages, proof, specialty service funnels, blog, forms, and legacy direct-visitor surfaces. The codebase stays in sync with [v0.dev](https://v0.dev) chats and ships to production through GitHub Actions + Vercel source deploys.
 
 ---
 
@@ -166,6 +166,8 @@ The checker prints each URL’s redirect chain, final URL, and canonical tag val
 - The `/apply` capture can post directly to the Prism dashboard intake API through `NEXT_PUBLIC_DASHBOARD_INTAKE_ENDPOINT`; if unset, it falls back to the existing Formspree-backed client submission path.
 - The `/websites` order form posts the buyer's website description to Formspree, shows an in-page success screen, then opens the Stripe `$300` Payment Link in a new tab to start the build. `lib/payment-links.ts` (`hasPaymentLink()` / `paymentLink()`) gates whether the pay button opens a live link or falls back to `/contact`. On submit it also fires a real lead conversion (`conversionMode: 'immediate'`, since this flow never navigates to a thank-you route), and after payment Stripe redirects to `/checkout/website/thank-you?session_id=...` where the GA4 `purchase` event fires.
 - **Analytics is documented in [`docs/analytics.md`](docs/analytics.md)** — event flow, conversion wiring, lead values, enhanced conversions, and a runbook for the GA4/Google Ads/Stripe settings that live outside this repo. Run `pnpm audit:ga4` to check the live GA4 configuration for drift.
-- Blog OG images are generated dynamically via `/api/og/blog/[slug]`; add new slugs to `lib/mdx-edge.ts` when introducing MDX posts.
+- Blog OG images are generated dynamically via `/api/og/blog/[slug]` from the same `content/blog/<slug>.mdx` source as the public post, so new posts do not require a second metadata map.
+- `/api/latest-posts` caches the curated blog response for one hour. `/api/store-email` is retired and returns `410 Gone`; active lead capture must use the documented form endpoints instead.
+- Structured-data scripts use the shared safe JSON-LD serializer. Prism Library TikTok embeds are constructed from trusted post IDs and never inject third-party oEmbed HTML.
 
 Happy shipping! Keep docs updated when new flows (forms, env vars, integrations) are introduced so the next person can get productive quickly.

@@ -1,17 +1,17 @@
-import type { Metadata } from "next"
-import Script from "next/script"
-import { notFound } from "next/navigation"
+import type { Metadata } from 'next'
+import Script from 'next/script'
+import { notFound } from 'next/navigation'
 
-import Breadcrumbs from "@/components/breadcrumbs"
-import Footer from "@/components/footer"
-import Navbar from "@/components/navbar"
-import LibraryInstagramEmbed from "@/components/library/LibraryInstagramEmbed"
-import { WebPageSchema } from "@/components/schema-markup"
-import { canonicalUrl } from "@/lib/canonical"
-import { getTikTokEmbedHtml } from "@/lib/library/embeds"
-import { getLibraryPosts } from "@/lib/library/getLibraryPosts"
-import type { LibraryPost } from "@/lib/library/types"
-import { buildAbsoluteTitle, buildMinimalDescription } from "@/lib/seo/rules"
+import Breadcrumbs from '@/components/breadcrumbs'
+import Footer from '@/components/footer'
+import Navbar from '@/components/navbar'
+import LibraryInstagramEmbed from '@/components/library/LibraryInstagramEmbed'
+import { WebPageSchema } from '@/components/schema-markup'
+import { canonicalUrl } from '@/lib/canonical'
+import { getLibraryPosts } from '@/lib/library/getLibraryPosts'
+import { getTikTokVideoId } from '@/lib/library/tiktok'
+import type { LibraryPost } from '@/lib/library/types'
+import { buildAbsoluteTitle, buildMinimalDescription } from '@/lib/seo/rules'
 
 interface PageProps {
   params: Promise<{ slug: string }>
@@ -30,11 +30,11 @@ const buildMetadata = (post: LibraryPost): Metadata => {
       `Short lesson from Prism Library: ${post.title}.`,
   )
   const ogImage =
-    post.thumbnailUrl && post.thumbnailUrl.startsWith("http")
+    post.thumbnailUrl && post.thumbnailUrl.startsWith('http')
       ? post.thumbnailUrl
       : post.thumbnailUrl
-      ? canonicalUrl(post.thumbnailUrl)
-      : null
+        ? canonicalUrl(post.thumbnailUrl)
+        : null
 
   return {
     title: { absolute: title },
@@ -46,7 +46,7 @@ const buildMetadata = (post: LibraryPost): Metadata => {
       images: ogImage ? [{ url: ogImage, alt: post.title }] : undefined,
     },
     twitter: {
-      card: "summary_large_image",
+      card: 'summary_large_image',
       title,
       description,
       images: ogImage ? [ogImage] : undefined,
@@ -56,7 +56,9 @@ const buildMetadata = (post: LibraryPost): Metadata => {
   }
 }
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
   const { slug } = await params
   const posts = await getLibraryPosts()
   const post = posts.find((item) => item.slug === slug)
@@ -71,7 +73,8 @@ export default async function LibraryDetailPage({ params }: PageProps) {
   if (!post) notFound()
 
   const canonical = canonicalUrl(`/library/${post.slug}`)
-  const embedHtml = post.platform === "tiktok" ? await getTikTokEmbedHtml(post.permalink) : null
+  const tikTokVideoId =
+    post.platform === 'tiktok' ? getTikTokVideoId(post.permalink) : null
   return (
     <div className="flex min-h-screen flex-col bg-background">
       <Navbar />
@@ -79,8 +82,8 @@ export default async function LibraryDetailPage({ params }: PageProps) {
         <div className="container mx-auto px-4 md:px-6">
           <Breadcrumbs
             items={[
-              { name: "home", url: "/" },
-              { name: "library", url: "/library" },
+              { name: 'home', url: '/' },
+              { name: 'library', url: '/library' },
               { name: post.title, url: `/library/${post.slug}` },
             ]}
           />
@@ -106,15 +109,28 @@ export default async function LibraryDetailPage({ params }: PageProps) {
               </header>
 
               <div className="rounded-2xl border border-border/60 bg-card/95 p-4">
-                {post.platform === "tiktok" ? (
-                  embedHtml ? (
-                    <div
-                      className="flex justify-center"
-                      dangerouslySetInnerHTML={{ __html: embedHtml }}
-                    />
+                {post.platform === 'tiktok' ? (
+                  tikTokVideoId ? (
+                    <div className="flex justify-center">
+                      <blockquote
+                        className="tiktok-embed"
+                        cite={post.permalink}
+                        data-video-id={tikTokVideoId}
+                      >
+                        <section>
+                          <a
+                            href={post.permalink}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            Watch on TikTok
+                          </a>
+                        </section>
+                      </blockquote>
+                    </div>
                   ) : (
                     <div className="text-sm text-muted-foreground">
-                      Embed unavailable.{" "}
+                      Embed unavailable.{' '}
                       <a
                         href={post.permalink}
                         target="_blank"
@@ -204,19 +220,23 @@ export default async function LibraryDetailPage({ params }: PageProps) {
         </section>
       </main>
       <Footer />
-      {post.platform === "tiktok" ? (
+      {tikTokVideoId ? (
         <Script src="https://www.tiktok.com/embed.js" strategy="lazyOnload" />
       ) : null}
       <WebPageSchema
         name={post.title}
-        description={post.editorial?.takeaways?.[0] ?? post.caption ?? "Prism Library short lesson."}
+        description={
+          post.editorial?.takeaways?.[0] ??
+          post.caption ??
+          'Prism Library short lesson.'
+        }
         url={canonical}
         image={
-          post.thumbnailUrl && post.thumbnailUrl.startsWith("http")
+          post.thumbnailUrl && post.thumbnailUrl.startsWith('http')
             ? post.thumbnailUrl
             : post.thumbnailUrl
-            ? canonicalUrl(post.thumbnailUrl)
-            : "https://www.design-prism.com/prism-opengraph.png"
+              ? canonicalUrl(post.thumbnailUrl)
+              : 'https://www.design-prism.com/prism-opengraph.png'
         }
         isPartOfId="https://www.design-prism.com/#website"
       />

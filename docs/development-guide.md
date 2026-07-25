@@ -136,6 +136,7 @@ Custom confirmation routes live in `app/thank-you/` and `app/analysis-thank-you/
 - Blog posts can define `seoTitle` and `seoDescription` in frontmatter for manual snippet control; if omitted, metadata falls back to `title`/`description` with shared normalization.
 - Keep `/api/og/` **allowed** in `app/robots.ts` if we use OG endpoints in metadata or structured data.
 - Prefer the shared JSON-LD helpers in `components/schema-markup.tsx` (`WebPageSchema`, `CollectionPageSchema`, `ItemListSchema`, `ServiceSchema`, `FAQSchema`, etc.).
+- Any JSON-LD script, including custom schemas, must pass data through `serializeJsonLd`. Do not inject raw `JSON.stringify(...)` output when values can come from content or external data.
 - Every indexable page must render a visible `<h1>` that matches the primary search intent.
 - Success criteria for SEO-safe routing:
   - Any route that permanently redirects or exists only for channel attribution / utility flow purposes must export `robots: { index: false, follow: false }`.

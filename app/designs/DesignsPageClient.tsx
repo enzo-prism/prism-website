@@ -1,7 +1,7 @@
-"use client"
+'use client'
 
-import Footer from "@/components/footer"
-import VideoPlayer from "@/components/video-player"
+import Footer from '@/components/footer'
+import VideoPlayer from '@/components/video-player'
 import {
   Carousel,
   CarouselContent,
@@ -9,74 +9,75 @@ import {
   CarouselNext,
   CarouselPrevious,
   type CarouselApi,
-} from "@/components/ui/carousel"
-import Navbar from "@/components/navbar"
-import { useMobile } from "@/hooks/use-mobile"
-import { ChevronLeft, ChevronRight } from "lucide-react"
-import Image from "next/image"
-import Link from "next/link"
-import { useCallback, useEffect, useState } from "react"
-import PixelishImg from "@/components/pixelish/PixelishImg"
-import { pixelishForEmoji } from "@/lib/pixelish-emoji"
+} from '@/components/ui/carousel'
+import Navbar from '@/components/navbar'
+import { useMobile } from '@/hooks/use-mobile'
+import { ChevronLeft, ChevronRight } from 'lucide-react'
+import Image from 'next/image'
+import Link from 'next/link'
+import { useCallback, useEffect, useState } from 'react'
+import PixelishImg from '@/components/pixelish/PixelishImg'
+import { pixelishForEmoji } from '@/lib/pixelish-emoji'
 
 // Quotes data
 const slides = [
   {
-    id: "1",
-    image: "/designs/obstacle-way.jpeg",
+    id: '1',
+    image: '/designs/obstacle-way.jpeg',
     quote: '"the obstacle is the way."',
-    author: "– marcus aurelius",
+    author: '– marcus aurelius',
   },
   {
-    id: "2",
-    image: "/designs/kobe-soul-eternal.jpeg",
+    id: '2',
+    image: '/designs/kobe-soul-eternal.jpeg',
     quote: '"the soul is never born, never dies."',
-    author: "– bhagavad gita",
+    author: '– bhagavad gita',
   },
   {
-    id: "3",
-    image: "/designs/la28-logos.png",
+    id: '3',
+    image: '/designs/la28-logos.png',
     quote: '"the man on top of the mountain didn\'t fall there."',
-    author: "— vince lombardi",
+    author: '— vince lombardi',
   },
   {
-    id: "4",
-    image: "/designs/mountain-stones.jpeg",
-    quote: '"the man who moves a mountain begins by carrying away small stones."',
-    author: "— confucius",
+    id: '4',
+    image: '/designs/mountain-stones.jpeg',
+    quote:
+      '"the man who moves a mountain begins by carrying away small stones."',
+    author: '— confucius',
   },
   {
-    id: "5",
-    image: "/designs/small-beginnings.jpeg",
+    id: '5',
+    image: '/designs/small-beginnings.jpeg',
     quote: '"do not despise the day of small beginnings."',
-    author: "– book of zechariah",
+    author: '– book of zechariah',
   },
   {
-    id: "6",
-    image: "/designs/journey-step.jpeg",
+    id: '6',
+    image: '/designs/journey-step.jpeg',
     quote: '"a journey of a thousand miles begins with a single step."',
-    author: "– lao tzu",
+    author: '– lao tzu',
   },
   {
-    id: "7",
-    image: "/designs/the-way-is-training.png",
+    id: '7',
+    image: '/designs/the-way-is-training.png',
     quote: '"the way is in training."',
-    author: "— miyamoto musashi",
+    author: '— miyamoto musashi',
   },
   {
-    id: "8",
-    image: "/designs/hearts-that-bend.png",
-    quote: '"blessed are the hearts that can bend; they shall never be broken."',
-    author: "— camus",
+    id: '8',
+    image: '/designs/hearts-that-bend.png',
+    quote:
+      '"blessed are the hearts that can bend; they shall never be broken."',
+    author: '— camus',
   },
   {
-    id: "9",
-    image: "/designs/dark-side-of-the-moon.png",
-    quote: "“Look for what you notice but no one else sees.”",
-    author: "– Rick Rubin",
+    id: '9',
+    image: '/designs/dark-side-of-the-moon.png',
+    quote: '“Look for what you notice but no one else sees.”',
+    author: '– Rick Rubin',
   },
 ]
-
 
 // Simplified: use Embla via our Carousel instead of custom drag + spring transitions
 
@@ -96,11 +97,11 @@ export default function DesignsPageClient() {
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "ArrowRight") nextSlide()
-      if (e.key === "ArrowLeft") prevSlide()
+      if (e.key === 'ArrowRight') nextSlide()
+      if (e.key === 'ArrowLeft') prevSlide()
     }
-    window.addEventListener("keydown", handleKeyDown)
-    return () => window.removeEventListener("keydown", handleKeyDown)
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
   }, [nextSlide, prevSlide])
 
   // Keep current slide index in sync with Embla
@@ -108,11 +109,11 @@ export default function DesignsPageClient() {
     if (!api) return
     const onSelect = () => setCurrentSlide(api.selectedScrollSnap())
     onSelect()
-    api.on("select", onSelect)
-    api.on("reInit", onSelect)
+    api.on('select', onSelect)
+    api.on('reInit', onSelect)
     return () => {
-      api.off("select", onSelect)
-      api.off("reInit", onSelect)
+      api.off('select', onSelect)
+      api.off('reInit', onSelect)
     }
   }, [api])
 
@@ -124,22 +125,34 @@ export default function DesignsPageClient() {
         <section className="px-4 pt-20 pb-12 sm:pt-28 sm:pb-16">
           <div className="mx-auto flex max-w-7xl flex-col gap-10 lg:flex-row lg:items-center">
             <div className="w-full space-y-6 lg:max-w-2xl">
-              <p className="text-xs font-semibold uppercase tracking-[0.35em] text-neutral-500">design at prism</p>
+              <p className="text-xs font-semibold uppercase tracking-[0.35em] text-neutral-500">
+                design at prism
+              </p>
               <h1 className="text-4xl font-semibold leading-tight tracking-tight text-neutral-900 sm:text-5xl">
                 how design works at prism
               </h1>
               <figure className="space-y-3">
                 <blockquote className="text-2xl font-light leading-snug text-neutral-900 sm:text-3xl italic">
-                  &ldquo;design isn&rsquo;t just how something looks, it&rsquo;s how it works.&rdquo;
+                  &ldquo;design isn&rsquo;t just how something looks, it&rsquo;s
+                  how it works.&rdquo;
                 </blockquote>
                 <figcaption className="text-sm font-medium uppercase tracking-[0.35em] text-neutral-500">
                   &mdash; steve jobs
                 </figcaption>
               </figure>
               <div className="space-y-4 text-base leading-relaxed text-neutral-700 sm:text-lg">
-                <p>design is the backbone of everything we do at prism — it connects every part of your business.</p>
-                <p>from websites and ads to video, analytics, and automation, great design shapes how it all works together.</p>
-                <p>we design with purpose — blending beauty, performance, and precision to create outcomes that move your brand forward.</p>
+                <p>
+                  design is the backbone of everything we do at prism — it
+                  connects every part of your business.
+                </p>
+                <p>
+                  from websites and ads to video, analytics, and automation,
+                  great design shapes how it all works together.
+                </p>
+                <p>
+                  we design with purpose — blending beauty, performance, and
+                  precision to create outcomes that move your brand forward.
+                </p>
               </div>
             </div>
 
@@ -161,17 +174,20 @@ export default function DesignsPageClient() {
                 </div>
 
                 <div className="space-y-4">
-                  <p className="text-xs uppercase tracking-[0.35em] text-white/70">connected by design</p>
+                  <p className="text-xs uppercase tracking-[0.35em] text-white/70">
+                    connected by design
+                  </p>
                   <p className="text-lg font-light text-white/90">
-                    every surface we ship is part of a linked system that keeps your story consistent and measurable.
+                    every surface we ship is part of a linked system that keeps
+                    your story consistent and measurable.
                   </p>
                   <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
                     {[
-                      { label: "websites", icon: "🖥️" },
-                      { label: "ads", icon: "📢" },
-                      { label: "video", icon: "🎥" },
-                      { label: "analytics", icon: "📊" },
-                      { label: "automation", icon: "⚙️" },
+                      { label: 'websites', icon: '🖥️' },
+                      { label: 'ads', icon: '📢' },
+                      { label: 'video', icon: '🎥' },
+                      { label: 'analytics', icon: '📊' },
+                      { label: 'automation', icon: '⚙️' },
                     ].map((item) => (
                       <div
                         key={item.label}
@@ -188,7 +204,8 @@ export default function DesignsPageClient() {
                     ))}
                   </div>
                   <p className="text-sm leading-relaxed text-white/75">
-                    every element is crafted to move in sync, so your brand feels intentional across channels and devices.
+                    every element is crafted to move in sync, so your brand
+                    feels intentional across channels and devices.
                   </p>
                 </div>
               </div>
@@ -198,7 +215,9 @@ export default function DesignsPageClient() {
 
         <section className="px-4 py-12 sm:py-16">
           <div id="designs-founder-vsl" className="mx-auto max-w-3xl text-left">
-            <p className="text-center text-xs font-semibold uppercase tracking-[0.28em] text-neutral-400">hear from our founder</p>
+            <p className="text-center text-xs font-semibold uppercase tracking-[0.28em] text-neutral-400">
+              hear from our founder
+            </p>
             <VideoPlayer
               className="mt-4"
               src="https://res.cloudinary.com/dhqpqfw6w/video/upload/q_auto,vc_auto/v1763152551/design-1_ftpmsw.mp4"
@@ -206,18 +225,20 @@ export default function DesignsPageClient() {
               title="Founder Enzo Sison on design as the silent multiplier"
               caption="Enzo explains why inconsistent design erodes trust, how Prism builds cohesive systems across every touchpoint, and how sharper visuals lift awareness, conversion, and loyalty without hiring an internal team."
               schema={{
-                id: "https://www.design-prism.com/designs#founder-vsl",
-                name: "Founder Enzo Sison on design as the silent multiplier",
+                id: 'https://www.design-prism.com/designs#founder-vsl',
+                name: 'Founder Enzo Sison on design as the silent multiplier',
                 description:
-                  "Enzo Sison shares why design is the silent multiplier, how Prism creates cohesive, premium systems across sites, listings, ads, and assets, and how that elevates awareness, conversion, and lifetime value.",
-                thumbnailUrl: "https://res.cloudinary.com/dhqpqfw6w/video/upload/so_0,q_auto/design-1_ftpmsw.jpg",
-                uploadDate: "2025-01-24T00:00:00Z",
-                duration: "PT60S",
-                contentUrl: "https://res.cloudinary.com/dhqpqfw6w/video/upload/q_auto,vc_auto/v1763152551/design-1_ftpmsw.mp4",
-                embedUrl: "https://www.design-prism.com/designs#founder-vsl",
+                  'Enzo Sison shares why design is the silent multiplier, how Prism creates cohesive, premium systems across sites, listings, ads, and assets, and how that elevates awareness, conversion, and lifetime value.',
+                thumbnailUrl:
+                  'https://res.cloudinary.com/dhqpqfw6w/video/upload/so_0,q_auto/design-1_ftpmsw.jpg',
+                uploadDate: '2025-01-24T00:00:00Z',
+                duration: 'PT60S',
+                contentUrl:
+                  'https://res.cloudinary.com/dhqpqfw6w/video/upload/q_auto,vc_auto/v1763152551/design-1_ftpmsw.mp4',
+                embedUrl: 'https://www.design-prism.com/designs#founder-vsl',
                 width: 1920,
                 height: 1080,
-                creatorName: "Enzo Sison",
+                creatorName: 'Enzo Sison',
               }}
             />
           </div>
@@ -227,23 +248,50 @@ export default function DesignsPageClient() {
         <section className="px-4 py-16 sm:py-20 bg-neutral-50">
           <div className="mx-auto max-w-5xl space-y-10">
             <div className="space-y-4 text-center sm:text-left">
-              <p className="text-xs font-semibold uppercase tracking-[0.35em] text-neutral-500">what we design</p>
+              <p className="text-xs font-semibold uppercase tracking-[0.35em] text-neutral-500">
+                what we design
+              </p>
               <h2 className="text-3xl font-semibold leading-tight text-neutral-900 sm:text-4xl">
                 Cohesive visuals that work everywhere
               </h2>
               <p className="text-base leading-relaxed text-neutral-700 sm:text-lg">
-                Great design ties everything together. We build visual systems that keep your brand consistent across every touchpoint.
+                Great design ties everything together. We build visual systems
+                that keep your brand consistent across every touchpoint.
               </p>
             </div>
 
             <div className="grid gap-4 sm:grid-cols-2">
               {[
-                { title: "websites", desc: "Conversion-first sites that turn visitors into loyal clients", icon: "🖥️" },
-                { title: "ads", desc: "Attention-grabbing creatives that drive measurable results", icon: "📢" },
-                { title: "social", desc: "Branded posts and profiles that stay true to your voice", icon: "💬" },
-                { title: "print", desc: "Business cards, brochures, and collateral that leave a mark", icon: "🖨️" },
-                { title: "internal assets", desc: "Decks, docs, and templates that keep teams aligned", icon: "📑" },
-                { title: "systems", desc: "Reusable components and guidelines to keep everything cohesive", icon: "🧭" },
+                {
+                  title: 'websites',
+                  desc: 'Conversion-first sites that turn visitors into loyal clients',
+                  icon: '🖥️',
+                },
+                {
+                  title: 'ads',
+                  desc: 'Attention-grabbing creatives that drive measurable results',
+                  icon: '📢',
+                },
+                {
+                  title: 'social',
+                  desc: 'Branded posts and profiles that stay true to your voice',
+                  icon: '💬',
+                },
+                {
+                  title: 'print',
+                  desc: 'Business cards, brochures, and collateral that leave a mark',
+                  icon: '🖨️',
+                },
+                {
+                  title: 'internal assets',
+                  desc: 'Decks, docs, and templates that keep teams aligned',
+                  icon: '📑',
+                },
+                {
+                  title: 'systems',
+                  desc: 'Reusable components and guidelines to keep everything cohesive',
+                  icon: '🧭',
+                },
               ].map((item) => (
                 <div
                   key={item.title}
@@ -259,7 +307,9 @@ export default function DesignsPageClient() {
                     />
                   </span>
                   <div className="space-y-1">
-                    <p className="text-sm font-semibold uppercase tracking-wide text-neutral-900">{item.title}</p>
+                    <p className="text-sm font-semibold uppercase tracking-wide text-neutral-900">
+                      {item.title}
+                    </p>
                     <p className="text-sm text-neutral-700">{item.desc}</p>
                   </div>
                 </div>
@@ -267,14 +317,20 @@ export default function DesignsPageClient() {
             </div>
 
             <p className="text-center text-sm leading-relaxed text-neutral-600 sm:text-base sm:text-left">
-              Each piece is crafted to blend seamlessly, so your message looks — and feels — unified everywhere your brand lives.
+              Each piece is crafted to blend seamlessly, so your message looks —
+              and feels — unified everywhere your brand lives.
             </p>
 
             <div className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm">
-              <p className="text-xs font-semibold uppercase tracking-[0.35em] text-neutral-500">featured design</p>
-              <h3 className="mt-3 text-2xl font-semibold text-neutral-900">Wine Country Root Canal</h3>
+              <p className="text-xs font-semibold uppercase tracking-[0.35em] text-neutral-500">
+                featured design
+              </p>
+              <h3 className="mt-3 text-2xl font-semibold text-neutral-900">
+                Wine Country Root Canal
+              </h3>
               <p className="mt-3 text-sm text-neutral-600">
-                See the full design review and deliverables for this endodontic brand refresh.
+                See the full design review and deliverables for this endodontic
+                brand refresh.
               </p>
               <Link
                 href="/designs/wine-country-root-canal"
@@ -294,17 +350,26 @@ export default function DesignsPageClient() {
               <div className="w-full max-w-3xl relative">
                 <Carousel
                   setApi={setApi}
-                  opts={{ loop: true, align: "center", containScroll: "trimSnaps" }}
+                  opts={{
+                    loop: true,
+                    align: 'center',
+                    containScroll: 'trimSnaps',
+                  }}
                   className="[&_*]:select-none"
                 >
                   <CarouselContent>
                     {shuffledSlides.map((slide) => (
                       <CarouselItem key={slide.id}>
-                        <div className="relative aspect-square w-full overflow-hidden rounded-lg bg-white" style={{ touchAction: "pan-x" }}>
-                          <img
+                        <div
+                          className="relative aspect-square w-full overflow-hidden rounded-lg bg-white"
+                          style={{ touchAction: 'pan-x' }}
+                        >
+                          <Image
                             src={slide.image}
                             alt={`Design slide: ${slide.quote}`}
-                            className="w-full h-full object-contain pointer-events-none"
+                            fill
+                            sizes="(min-width: 768px) 768px, 100vw"
+                            className="pointer-events-none object-contain"
                             draggable="false"
                           />
                         </div>
@@ -326,7 +391,9 @@ export default function DesignsPageClient() {
                   <p className="text-xl md:text-2xl font-light text-gray-800 mb-2 lowercase">
                     {shuffledSlides[currentSlide].quote}
                   </p>
-                  <p className="text-sm md:text-base text-gray-600 lowercase">{shuffledSlides[currentSlide].author}</p>
+                  <p className="text-sm md:text-base text-gray-600 lowercase">
+                    {shuffledSlides[currentSlide].author}
+                  </p>
                 </div>
 
                 {/* Slide Indicators */}
@@ -339,7 +406,9 @@ export default function DesignsPageClient() {
                         api?.scrollTo(index)
                       }}
                       className={`h-2 rounded-full transition-[width,background-color] duration-200 ${
-                        currentSlide === index ? "w-6 bg-black" : "w-2 bg-gray-300"
+                        currentSlide === index
+                          ? 'w-6 bg-black'
+                          : 'w-2 bg-gray-300'
                       }`}
                       aria-label={`Go to slide ${index + 1}`}
                     />
@@ -363,9 +432,13 @@ export default function DesignsPageClient() {
         <section className="px-4 pb-20 sm:pb-24">
           <div className="max-w-4xl mx-auto rounded-[32px] border border-neutral-200 bg-neutral-900 text-white px-6 py-12 sm:px-10 sm:py-16 shadow-[0_32px_80px_-48px_rgba(15,23,42,0.65)] text-center space-y-6">
             <div className="space-y-4">
-              <h2 className="text-3xl sm:text-4xl font-semibold leading-tight">ready to elevate your brand?</h2>
+              <h2 className="text-3xl sm:text-4xl font-semibold leading-tight">
+                ready to elevate your brand?
+              </h2>
               <p className="text-base sm:text-lg leading-relaxed text-white/70">
-                whether you&rsquo;re starting fresh or refining what you already have, we&rsquo;ll help you design a system that works as beautifully as it looks.
+                whether you&rsquo;re starting fresh or refining what you already
+                have, we&rsquo;ll help you design a system that works as
+                beautifully as it looks.
               </p>
             </div>
             <div className="grid gap-4 sm:grid-cols-2">
@@ -382,7 +455,9 @@ export default function DesignsPageClient() {
                 href="/contact"
                 className="group flex flex-col items-center justify-center rounded-2xl border border-white/40 bg-transparent px-6 py-6 transition-[transform,border-color,background-color] duration-200 hover:-translate-y-1 hover:border-white hover:bg-white/10"
               >
-                <span className="text-lg font-semibold text-white">contact</span>
+                <span className="text-lg font-semibold text-white">
+                  contact
+                </span>
                 <span className="text-sm text-white/70 group-hover:text-white">
                   talk with our team about your design needs
                 </span>
@@ -390,7 +465,6 @@ export default function DesignsPageClient() {
             </div>
           </div>
         </section>
-
       </main>
       <Footer />
     </div>

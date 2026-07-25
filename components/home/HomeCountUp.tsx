@@ -19,7 +19,10 @@ function splitSegments(value: string): Segment[] {
 
   while ((match = pattern.exec(value)) !== null) {
     if (match.index > lastIndex) {
-      segments.push({ text: value.slice(lastIndex, match.index), numeric: false })
+      segments.push({
+        text: value.slice(lastIndex, match.index),
+        numeric: false,
+      })
     }
     segments.push({ text: match[0], numeric: true })
     lastIndex = match.index + match[0].length
@@ -131,11 +134,17 @@ export default function HomeCountUp({
   }, [durationMs, value])
 
   return (
-    <span ref={ref} className={`relative inline-block tabular-nums ${className ?? ''}`}>
+    <span
+      ref={ref}
+      className={`relative inline-block tabular-nums ${className ?? ''}`}
+    >
+      <span className="sr-only">{value}</span>
       <span aria-hidden="true" className="invisible">
         {value}
       </span>
-      <span className="absolute inset-0">{display}</span>
+      <span aria-hidden="true" className="absolute inset-0">
+        {display}
+      </span>
     </span>
   )
 }

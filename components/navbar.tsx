@@ -177,7 +177,7 @@ function MoreNavDropdown({
         type="button"
         aria-haspopup="true"
         aria-expanded={isOpen}
-        aria-controls={DESKTOP_MORE_MENU_ID}
+        aria-controls={isOpen ? DESKTOP_MORE_MENU_ID : undefined}
         onClick={() => setIsOpen((open) => !open)}
         className={cn(
           'inline-flex items-center gap-1.5',

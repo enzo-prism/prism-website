@@ -200,9 +200,11 @@ describe('Navbar', () => {
     const trigger = screen.getByRole('button', { name: /^more$/i })
     expect(trigger).toHaveAttribute('aria-haspopup', 'true')
     expect(trigger).toHaveAttribute('aria-expanded', 'false')
+    expect(trigger).not.toHaveAttribute('aria-controls')
 
     fireEvent.click(trigger)
     expect(trigger).toHaveAttribute('aria-expanded', 'true')
+    expect(trigger).toHaveAttribute('aria-controls', 'desktop-more-nav')
     expect(screen.getByRole('link', { name: /^pricing$/i })).toHaveAttribute(
       'href',
       '/pricing',
@@ -218,6 +220,7 @@ describe('Navbar', () => {
     // Outside interaction dismisses the dropdown.
     fireEvent.pointerDown(document.body)
     expect(trigger).toHaveAttribute('aria-expanded', 'false')
+    expect(trigger).not.toHaveAttribute('aria-controls')
     expect(
       screen.queryByRole('link', { name: /^pricing$/i }),
     ).not.toBeInTheDocument()

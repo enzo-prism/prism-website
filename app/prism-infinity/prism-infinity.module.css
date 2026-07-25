@@ -80,9 +80,33 @@
   animation-play-state: paused;
 }
 
+.marquee:focus-visible {
+  outline: 2px solid #d8bc79;
+  outline-offset: 4px;
+}
+
+.marquee:focus-within .marqueeTrack {
+  animation-play-state: paused;
+}
+
 @keyframes marquee-scroll {
   to {
     transform: translateX(-50%);
+  }
+}
+
+@media (hover: none), (pointer: coarse) {
+  .marquee {
+    overflow-x: auto;
+    mask-image: none;
+  }
+
+  .marqueeTrack {
+    animation: none;
+  }
+
+  .marqueeTrack ul[aria-hidden='true'] {
+    display: none;
   }
 }
 
@@ -176,12 +200,7 @@
 /* ------------------------------------------------------------ price shimmer */
 
 .priceShimmer {
-  background: linear-gradient(
-    100deg,
-    #f5f0e8 38%,
-    #d8bc79 50%,
-    #f5f0e8 62%
-  );
+  background: linear-gradient(100deg, #f5f0e8 38%, #d8bc79 50%, #f5f0e8 62%);
   background-size: 220% 100%;
   -webkit-background-clip: text;
   background-clip: text;

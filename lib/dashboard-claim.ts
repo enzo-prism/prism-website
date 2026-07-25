@@ -1,4 +1,6 @@
-const APPLY_DASHBOARD_CLAIM_URL_STORAGE_KEY = 'prism_apply_dashboard_claim_url_v1'
+const APPLY_DASHBOARD_CLAIM_URL_STORAGE_KEY =
+  'prism_apply_dashboard_claim_url_v1'
+const DASHBOARD_CLAIM_HOST = 'dashboard.design-prism.com'
 
 export function extractDashboardClaimUrl(payload: unknown) {
   if (!payload || typeof payload !== 'object') {
@@ -18,13 +20,22 @@ export function extractDashboardClaimUrl(payload: unknown) {
     : null
 }
 
-export function storeApplyDashboardClaimUrl(claimUrl: string | null | undefined) {
-  if (!claimUrl || !isValidDashboardClaimUrl(claimUrl) || !canUseSessionStorage()) {
+export function storeApplyDashboardClaimUrl(
+  claimUrl: string | null | undefined,
+) {
+  if (
+    !claimUrl ||
+    !isValidDashboardClaimUrl(claimUrl) ||
+    !canUseSessionStorage()
+  ) {
     return
   }
 
   try {
-    window.sessionStorage.setItem(APPLY_DASHBOARD_CLAIM_URL_STORAGE_KEY, claimUrl)
+    window.sessionStorage.setItem(
+      APPLY_DASHBOARD_CLAIM_URL_STORAGE_KEY,
+      claimUrl,
+    )
   } catch {
     // no-op
   }
@@ -36,7 +47,9 @@ export function readApplyDashboardClaimUrl() {
   }
 
   try {
-    const claimUrl = window.sessionStorage.getItem(APPLY_DASHBOARD_CLAIM_URL_STORAGE_KEY)
+    const claimUrl = window.sessionStorage.getItem(
+      APPLY_DASHBOARD_CLAIM_URL_STORAGE_KEY,
+    )
     return claimUrl && isValidDashboardClaimUrl(claimUrl) ? claimUrl : null
   } catch {
     return null
@@ -50,7 +63,11 @@ function canUseSessionStorage() {
 function isValidDashboardClaimUrl(value: string) {
   try {
     const url = new URL(value)
-    return ['http:', 'https:'].includes(url.protocol) && url.pathname.startsWith('/claim/')
+    return (
+      url.protocol === 'https:' &&
+      url.hostname === DASHBOARD_CLAIM_HOST &&
+      url.pathname.startsWith('/claim/')
+    )
   } catch {
     return false
   }

@@ -4,7 +4,7 @@ Prism handles every marketing form through Formspree plus client-side redirects.
 
 ## Shared hook
 
-`hooks/use-form-validation.ts` centralizes HTML5 validation and submission. Pass an `onValidSubmit` callback to run custom code (e.g., `fetch(form.action)` and `router.push('/thank-you')`).
+`hooks/use-form-validation.ts` centralizes HTML5 validation and submission. It blocks repeat submissions synchronously while the first request is pending. Pass an `onValidSubmit` callback to run custom code (e.g., `fetch(form.action)` and `router.push('/thank-you')`).
 
 ```ts
 const { handleSubmit, getError, isSubmitting } = useFormValidation({
@@ -36,6 +36,8 @@ const { handleSubmit, getError, isSubmitting } = useFormValidation({
 - `app/models/client-page.tsx`
 - `app/ai/prism-ai-client.tsx`
 - `app/designs/wine-country-root-canal/client-page.tsx` (client design vote)
+
+`GET` and `POST /api/store-email` are retired. Both return `410 Gone` with `Cache-Control: no-store` and do not parse, retain, or log email addresses. Use the supported Formspree or dashboard intake flows instead.
 
 ## Adding a new form
 
@@ -89,7 +91,7 @@ The `/apply` route should feel like a focused Growth Dashboard mode, not another
   4. `https://formspree.io/f/mreroojo`
 - Success flow:
   - POST via `fetch(form.action, { method: 'POST', headers: { Accept: 'application/json' }, body: new FormData(form) })`
-  - When the dashboard intake API returns `dashboard.claimUrl`, store it in session storage for the apply thank-you CTA; do not include it in analytics payloads.
+  - When the dashboard intake API returns `dashboard.claimUrl`, accept it only when it is an HTTPS URL on `dashboard.design-prism.com` with a `/claim/` path. Store an accepted URL in session storage for the apply thank-you CTA; do not include it in analytics payloads.
   - On success, `router.push("/thank-you?source=apply")`
   - On failure, inline error state remains visible and user stays on the review/submit screen
 - Current visible steps:

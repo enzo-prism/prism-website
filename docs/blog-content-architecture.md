@@ -52,6 +52,8 @@ twitter:
 
 Open Graph behavior is date-based in `app/blog/[slug]/page.tsx`: posts before 2026 always use the shared Prism OG image (`https://res.cloudinary.com/dhqpqfw6w/image/upload/v1770786137/Prism_rgeypo.png`), while posts in 2026 and later use each post’s resolved featured image (`frontmatter.image`). Twitter images still honor explicit `twitter.images` first, then `openGraph.images`, then the date-based OG fallback.
 
+`app/api/og/blog/[slug]/route.tsx` runs on Node.js and reads the same `content/blog/<slug>.mdx` source through `getPost()`. New posts therefore receive a generated OG image without adding a second slug or metadata registry; successful images use immutable caching and unknown slugs return 404. `/api/latest-posts` revalidates hourly, and the homepage uses that normal cache.
+
 `components/blog/copy-blog-markdown-button.tsx` powers the header "Copy markdown" action on blog post routes (`/blog/[slug]`). It fetches the raw MDX source from `app/api/blog/[slug]/markdown/route.ts` on demand, then copies the full post (frontmatter + body) for use in AI tools without inflating initial page payloads. The site-wide page markdown control lives in `components/copy-page-markdown-button.tsx` and is hidden on blog posts so this source-level copy remains the primary blog behavior.
 
 `seoTitle` and `seoDescription` are optional manual overrides used by the post metadata generator. If omitted, the generator falls back to `title` and `description`, then normalizes with the shared SEO rules (`lib/seo/rules.ts`) to enforce sentence case, canonical host, and consistent Prism title branding.

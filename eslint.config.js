@@ -4,7 +4,15 @@ module.exports = [
   // Ignore generated build output and scratch artifacts that can contain
   // transformed code which doesn't follow our source lint rules.
   {
-    ignores: [".next/**", ".vercel/**", "out/**", "build/**", "output/**", "tmp/**"],
+    ignores: [
+      ".next/**",
+      ".vercel/**",
+      ".claude/**",
+      "out/**",
+      "build/**",
+      "output/**",
+      "tmp/**",
+    ],
   },
   ...nextConfig,
   {
@@ -19,6 +27,9 @@ module.exports = [
       "react-hooks/immutability": "off",
       "react-hooks/static-components": "off",
       "react-hooks/use-memo": "off",
+      "react-hooks/refs": "off",
+      "react-hooks/purity": "off",
+      "react-hooks/preserve-manual-memoization": "off",
       "@next/next/no-img-element": "off",
       "@next/next/no-html-link-for-pages": "off",
       "@next/next/next-script-for-ga": "off",

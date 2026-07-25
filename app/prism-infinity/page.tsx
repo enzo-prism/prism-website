@@ -303,7 +303,10 @@ function QueueBoard() {
 
       <ul className="mt-4 space-y-3">
         <li className="flex items-center gap-3 rounded-xl border border-white/8 bg-white/[0.02] px-4 py-3">
-          <Check aria-hidden="true" className="h-4 w-4 shrink-0 text-[#7d766a]" />
+          <Check
+            aria-hidden="true"
+            className="h-4 w-4 shrink-0 text-[#7d766a]"
+          />
           <span className="flex-1 truncate text-sm text-[#8f877b] line-through decoration-white/20">
             {QUEUE_BOARD.delivered}
           </span>
@@ -366,7 +369,10 @@ function ServiceMarquee() {
 
   return (
     <div
+      aria-label="Services included in Prism Infinity. Focus to pause the animation."
       className={cn('overflow-hidden border-y border-white/10', styles.marquee)}
+      role="region"
+      tabIndex={0}
     >
       <div className={cn('flex items-center gap-0 py-5', styles.marqueeTrack)}>
         {[false, true].map((duplicate) => (
@@ -427,8 +433,8 @@ export default function PrismInfinityPage() {
                     One subscription.
                   </h1>
                   <p className="max-w-[40rem] text-pretty font-sans text-[1.02rem] leading-7 text-[#b8afa2] sm:text-[1.12rem] sm:leading-8 lg:max-w-[34rem]">
-                    $2,000/month for unlimited design, web, video, content,
-                    ads, and more — delivered one request at a time.
+                    $2,000/month for unlimited design, web, video, content, ads,
+                    and more — delivered one request at a time.
                   </p>
                 </div>
 
@@ -503,8 +509,9 @@ export default function PrismInfinityPage() {
             <div className="mt-10 grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)] lg:items-start">
               <ol className="grid gap-4">
                 {HOW_IT_WORKS.map((step, index) => (
-                  <HomeReveal key={step.label} delay={index * 90}>
-                    <li
+                  <li key={step.label}>
+                    <HomeReveal
+                      delay={index * 90}
                       className={cn(
                         'flex gap-5 rounded-[1.4rem] border border-white/10 bg-[#070707] p-5 sm:p-6',
                         styles.liftCard,
@@ -530,8 +537,8 @@ export default function PrismInfinityPage() {
                           {step.body}
                         </p>
                       </div>
-                    </li>
-                  </HomeReveal>
+                    </HomeReveal>
+                  </li>
                 ))}
               </ol>
               <HomeReveal delay={180}>
@@ -553,8 +560,9 @@ export default function PrismInfinityPage() {
             </HomeReveal>
             <ul className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {INCLUDED.map((item, index) => (
-                <HomeReveal key={item.title} delay={(index % 3) * 80}>
-                  <li
+                <li key={item.title}>
+                  <HomeReveal
+                    delay={(index % 3) * 80}
                     className={cn(
                       'h-full rounded-[1.4rem] border border-white/10 bg-[#070707] p-5',
                       styles.liftCard,
@@ -570,8 +578,8 @@ export default function PrismInfinityPage() {
                     <p className="mt-3 text-sm leading-6 text-[#b8afa2]">
                       {item.body}
                     </p>
-                  </li>
-                </HomeReveal>
+                  </HomeReveal>
+                </li>
               ))}
             </ul>
             <HomeReveal delay={120}>

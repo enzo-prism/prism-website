@@ -1,9 +1,20 @@
-import React from "react"
+import React from 'react'
 
-import { CANONICAL_PRICING_OFFERS } from "@/lib/pricing-model"
+import { CANONICAL_PRICING_OFFERS } from '@/lib/pricing-model'
+
+export const serializeJsonLd = (data: unknown) =>
+  JSON.stringify(data)
+    .replace(/</g, '\\u003c')
+    .replace(/>/g, '\\u003e')
+    .replace(/&/g, '\\u0026')
+    .replace(/\u2028/g, '\\u2028')
+    .replace(/\u2029/g, '\\u2029')
 
 const renderJsonLd = (data: unknown) => (
-  <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }} />
+  <script
+    type="application/ld+json"
+    dangerouslySetInnerHTML={{ __html: serializeJsonLd(data) }}
+  />
 )
 
 type BreadcrumbItem = { name: string; url: string }
@@ -69,10 +80,10 @@ export function CaseStudySchema({
 
   if (breadcrumbs && breadcrumbs.length > 0) {
     schema.push({
-      "@context": "https://schema.org",
-      "@type": "BreadcrumbList",
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
       itemListElement: breadcrumbs.map((item, index) => ({
-        "@type": "ListItem",
+        '@type': 'ListItem',
         position: index + 1,
         name: item.name,
         item: item.url,
@@ -80,7 +91,9 @@ export function CaseStudySchema({
     })
   }
 
-  const organizationId = organization?.url ? `${organization.url}#organization` : undefined
+  const organizationId = organization?.url
+    ? `${organization.url}#organization`
+    : undefined
   const webpageId = `${url}#webpage`
   const videoId = video ? `${url}#video` : undefined
 
@@ -88,9 +101,9 @@ export function CaseStudySchema({
   // discard it. Model the case study as an Article (a recognized CreativeWork)
   // with the client as `about` and the result captured in `abstract`.
   schema.push({
-    "@context": "https://schema.org",
-    "@type": "Article",
-    "@id": `${url}#article`,
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    '@id': `${url}#article`,
     headline: title,
     name: title,
     description,
@@ -99,20 +112,20 @@ export function CaseStudySchema({
     image: imageUrl,
     datePublished,
     dateModified,
-    articleSection: "Case study",
+    articleSection: 'Case study',
     about: clientName
-      ? { "@type": "Organization", name: clientName, url: clientUrl }
+      ? { '@type': 'Organization', name: clientName, url: clientUrl }
       : undefined,
-    author: organizationId ? { "@id": organizationId } : undefined,
-    publisher: organizationId ? { "@id": organizationId } : undefined,
-    subjectOf: videoId ? { "@id": videoId } : undefined,
-    keywords: [industry, location, scope, "Prism case study"].filter(Boolean),
+    author: organizationId ? { '@id': organizationId } : undefined,
+    publisher: organizationId ? { '@id': organizationId } : undefined,
+    subjectOf: videoId ? { '@id': videoId } : undefined,
+    keywords: [industry, location, scope, 'Prism case study'].filter(Boolean),
     citation: results?.map((metric) => metric.detail),
     mentions: results?.map((metric) => ({
-      "@type": "Thing",
+      '@type': 'Thing',
       name: `${metric.value} ${metric.label}`,
       description: metric.detail,
-      additionalType: "https://schema.org/QuantitativeValue",
+      additionalType: 'https://schema.org/QuantitativeValue',
       measurementTechnique: metric.sourceName,
       temporalCoverage: metric.dateRange,
       sameAs: metric.sourceUrl,
@@ -121,23 +134,23 @@ export function CaseStudySchema({
   })
 
   schema.push({
-    "@context": "https://schema.org",
-    "@type": "WebPage",
-    "@id": webpageId,
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    '@id': webpageId,
     url,
     name: title,
     description,
     primaryImageOfPage: imageUrl,
     about: clientName
-      ? { "@type": "Organization", name: clientName, url: clientUrl }
+      ? { '@type': 'Organization', name: clientName, url: clientUrl }
       : undefined,
   })
 
   if (organization && organizationId) {
     schema.push({
-      "@context": "https://schema.org",
-      "@type": "Organization",
-      "@id": organizationId,
+      '@context': 'https://schema.org',
+      '@type': 'Organization',
+      '@id': organizationId,
       name: organization.name,
       url: organization.url,
       logo: organization.logo,
@@ -147,27 +160,27 @@ export function CaseStudySchema({
 
   if (video && videoId) {
     schema.push({
-      "@context": "https://schema.org",
-      "@type": "VideoObject",
-      "@id": videoId,
+      '@context': 'https://schema.org',
+      '@type': 'VideoObject',
+      '@id': videoId,
       name: video.name,
       description: video.description,
       embedUrl: video.embedUrl,
       uploadDate: video.uploadDate,
       thumbnailUrl: video.thumbnailUrl ?? imageUrl,
-      publisher: organizationId ? { "@id": organizationId } : undefined,
+      publisher: organizationId ? { '@id': organizationId } : undefined,
     })
   }
 
   if (faq && faq.length > 0) {
     schema.push({
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
       mainEntity: faq.map((item) => ({
-        "@type": "Question",
+        '@type': 'Question',
         name: item.question,
         acceptedAnswer: {
-          "@type": "Answer",
+          '@type': 'Answer',
           text: item.answer,
         },
       })),
@@ -179,155 +192,159 @@ export function CaseStudySchema({
 
 export function GlobalSchemaGraph() {
   const organization = {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "@id": "https://www.design-prism.com/#organization",
-    name: "Prism",
-    alternateName: "Design Prism",
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    '@id': 'https://www.design-prism.com/#organization',
+    name: 'Prism',
+    alternateName: 'Design Prism',
     // Keep this definition in sync with public/llms.txt and the about page so
     // search and AI engines see one consistent entity description.
     description:
-      "Prism helps growth-focused businesses get found, trusted, and chosen with conversion-first websites, Google visibility, reviews, ads, content, tracking, and AI search support.",
-    slogan: "Impossible is temporary",
-    foundingDate: "2023",
+      'Prism helps growth-focused businesses get found, trusted, and chosen with conversion-first websites, Google visibility, reviews, ads, content, tracking, and AI search support.',
+    slogan: 'Impossible is temporary',
+    foundingDate: '2023',
     founder: {
-      "@type": "Person",
-      "@id": "https://www.design-prism.com/#founder",
-      name: "Enzo Sison",
-      url: "https://www.design-prism.com/about",
-      sameAs: ["https://www.enzosison.com", "https://x.com/NosisTheGod"],
+      '@type': 'Person',
+      '@id': 'https://www.design-prism.com/#founder',
+      name: 'Enzo Sison',
+      url: 'https://www.design-prism.com/about',
+      sameAs: ['https://www.enzosison.com', 'https://x.com/NosisTheGod'],
     },
     knowsAbout: [
-      "dental practice marketing",
-      "local SEO",
-      "AI search optimization",
-      "answer engine optimization",
-      "conversion-first web design",
-      "Google Business Profile optimization",
-      "Google Ads",
-      "review and reputation systems",
-      "analytics and conversion tracking",
+      'dental practice marketing',
+      'local SEO',
+      'AI search optimization',
+      'answer engine optimization',
+      'conversion-first web design',
+      'Google Business Profile optimization',
+      'Google Ads',
+      'review and reputation systems',
+      'analytics and conversion tracking',
     ],
     hasPart: [
       {
-        "@type": "CollectionPage",
-        "@id": "https://www.design-prism.com/case-studies#collection",
-        name: "Prism case studies",
-        url: "https://www.design-prism.com/case-studies",
+        '@type': 'CollectionPage',
+        '@id': 'https://www.design-prism.com/case-studies#collection',
+        name: 'Prism case studies',
+        url: 'https://www.design-prism.com/case-studies',
       },
       {
-        "@type": "WebPage",
-        "@id": "https://www.design-prism.com/proof#webpage",
-        name: "Prism Proof",
-        url: "https://www.design-prism.com/proof",
+        '@type': 'WebPage',
+        '@id': 'https://www.design-prism.com/proof#webpage',
+        name: 'Prism Proof',
+        url: 'https://www.design-prism.com/proof',
       },
       {
-        "@type": "WebPage",
-        "@id": "https://www.design-prism.com/wall-of-love#webpage",
-        name: "Prism client testimonials",
-        url: "https://www.design-prism.com/wall-of-love",
+        '@type': 'WebPage',
+        '@id': 'https://www.design-prism.com/wall-of-love#webpage',
+        name: 'Prism client testimonials',
+        url: 'https://www.design-prism.com/wall-of-love',
       },
     ],
     subjectOf: [
       {
-        "@type": "Article",
-        "@id": "https://www.design-prism.com/case-studies/dr-christopher-wong#article",
-        name: "Dr. Christopher B. Wong case study",
-        url: "https://www.design-prism.com/case-studies/dr-christopher-wong",
-        abstract: "+142% Google Search impressions year over year.",
+        '@type': 'Article',
+        '@id':
+          'https://www.design-prism.com/case-studies/dr-christopher-wong#article',
+        name: 'Dr. Christopher B. Wong case study',
+        url: 'https://www.design-prism.com/case-studies/dr-christopher-wong',
+        abstract: '+142% Google Search impressions year over year.',
       },
       {
-        "@type": "Article",
-        "@id": "https://www.design-prism.com/case-studies/roseville-dental-academy#article",
-        name: "Roseville Dental Academy case study",
-        url: "https://www.design-prism.com/case-studies/roseville-dental-academy",
-        abstract: "593 Google clicks and 14.2k impressions in the first full month after launch.",
+        '@type': 'Article',
+        '@id':
+          'https://www.design-prism.com/case-studies/roseville-dental-academy#article',
+        name: 'Roseville Dental Academy case study',
+        url: 'https://www.design-prism.com/case-studies/roseville-dental-academy',
+        abstract:
+          '593 Google clicks and 14.2k impressions in the first full month after launch.',
       },
       {
-        "@type": "Article",
-        "@id": "https://www.design-prism.com/case-studies/saorsa-growth-partners#article",
-        name: "Saorsa Growth Partners case study",
-        url: "https://www.design-prism.com/case-studies/saorsa-growth-partners",
-        abstract: "5.3x monthly Google clicks in five months.",
+        '@type': 'Article',
+        '@id':
+          'https://www.design-prism.com/case-studies/saorsa-growth-partners#article',
+        name: 'Saorsa Growth Partners case study',
+        url: 'https://www.design-prism.com/case-studies/saorsa-growth-partners',
+        abstract: '5.3x monthly Google clicks in five months.',
       },
     ],
-    url: "https://www.design-prism.com",
-    logo: "https://www.design-prism.com/prism-logo.jpeg",
+    url: 'https://www.design-prism.com',
+    logo: 'https://www.design-prism.com/prism-logo.jpeg',
     sameAs: [
-      "https://www.instagram.com/the_design_prism/",
-      "https://www.youtube.com/@the_design_prism",
-      "https://x.com/NosisTheGod",
-      "https://www.tiktok.com/@the_design_prism",
-      "https://www.linkedin.com/company/web-prism/?viewAsMember=true",
+      'https://www.instagram.com/the_design_prism/',
+      'https://www.youtube.com/@the_design_prism',
+      'https://x.com/NosisTheGod',
+      'https://www.tiktok.com/@the_design_prism',
+      'https://www.linkedin.com/company/web-prism/?viewAsMember=true',
     ],
     // Canonical pricing-backed offers so AI/search engines see Prism's core
     // products. Values come from lib/pricing-model.ts — do not hardcode here.
     makesOffer: [
       {
-        "@type": "Offer",
+        '@type': 'Offer',
         name: CANONICAL_PRICING_OFFERS.website.name,
         description: CANONICAL_PRICING_OFFERS.website.description,
         price: String(CANONICAL_PRICING_OFFERS.website.price),
         priceCurrency: CANONICAL_PRICING_OFFERS.website.priceCurrency,
-        availability: "https://schema.org/InStock",
-        url: "https://www.design-prism.com/websites",
+        availability: 'https://schema.org/InStock',
+        url: 'https://www.design-prism.com/websites',
       },
       {
-        "@type": "Offer",
+        '@type': 'Offer',
         name: CANONICAL_PRICING_OFFERS.content_os.name,
         description: CANONICAL_PRICING_OFFERS.content_os.description,
         price: String(CANONICAL_PRICING_OFFERS.content_os.price),
         priceCurrency: CANONICAL_PRICING_OFFERS.content_os.priceCurrency,
-        availability: "https://schema.org/InStock",
-        url: "https://www.design-prism.com/content-os",
+        availability: 'https://schema.org/InStock',
+        url: 'https://www.design-prism.com/content-os',
       },
       {
-        "@type": "Offer",
+        '@type': 'Offer',
         name: CANONICAL_PRICING_OFFERS.prism_infinity.name,
         description: CANONICAL_PRICING_OFFERS.prism_infinity.description,
         price: String(CANONICAL_PRICING_OFFERS.prism_infinity.price),
         priceCurrency: CANONICAL_PRICING_OFFERS.prism_infinity.priceCurrency,
         priceSpecification: {
-          "@type": "UnitPriceSpecification",
+          '@type': 'UnitPriceSpecification',
           price: String(CANONICAL_PRICING_OFFERS.prism_infinity.price),
           priceCurrency: CANONICAL_PRICING_OFFERS.prism_infinity.priceCurrency,
           billingDuration: 1,
-          unitCode: "MON",
+          unitCode: 'MON',
         },
-        availability: "https://schema.org/InStock",
-        url: "https://www.design-prism.com/prism-infinity",
+        availability: 'https://schema.org/InStock',
+        url: 'https://www.design-prism.com/prism-infinity',
       },
     ],
   }
 
   const localBusiness = {
-    "@context": "https://schema.org",
-    "@type": "LocalBusiness",
-    "@id": "https://www.design-prism.com/#localbusiness",
-    name: "Prism",
-    url: "https://www.design-prism.com",
-    image: "https://www.design-prism.com/prism-opengraph.png",
-    logo: "https://www.design-prism.com/prism-logo.jpeg",
+    '@context': 'https://schema.org',
+    '@type': 'LocalBusiness',
+    '@id': 'https://www.design-prism.com/#localbusiness',
+    name: 'Prism',
+    url: 'https://www.design-prism.com',
+    image: 'https://www.design-prism.com/prism-opengraph.png',
+    logo: 'https://www.design-prism.com/prism-logo.jpeg',
     address: {
-      "@type": "PostalAddress",
-      streetAddress: "548 Market St #62411",
-      addressLocality: "San Francisco",
-      addressRegion: "CA",
-      postalCode: "94104",
-      addressCountry: "US",
+      '@type': 'PostalAddress',
+      streetAddress: '548 Market St #62411',
+      addressLocality: 'San Francisco',
+      addressRegion: 'CA',
+      postalCode: '94104',
+      addressCountry: 'US',
     },
-    areaServed: "US",
+    areaServed: 'US',
     sameAs: organization.sameAs,
-    parentOrganization: { "@id": "https://www.design-prism.com/#organization" },
+    parentOrganization: { '@id': 'https://www.design-prism.com/#organization' },
   }
 
   const website = {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    "@id": "https://www.design-prism.com/#website",
-    name: "Prism",
-    url: "https://www.design-prism.com",
-    publisher: { "@id": "https://www.design-prism.com/#organization" },
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    '@id': 'https://www.design-prism.com/#website',
+    name: 'Prism',
+    url: 'https://www.design-prism.com',
+    publisher: { '@id': 'https://www.design-prism.com/#organization' },
   }
 
   return renderJsonLd([organization, localBusiness, website])
@@ -337,10 +354,10 @@ export function BreadcrumbSchema({ items }: { items: BreadcrumbItem[] }) {
   if (!items || items.length === 0) return null
 
   const schema = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
     itemListElement: items.map((item, index) => ({
-      "@type": "ListItem",
+      '@type': 'ListItem',
       position: index + 1,
       name: item.name,
       item: item.url,
@@ -358,16 +375,22 @@ interface WebPageSchemaProps {
   isPartOfId?: string
 }
 
-export function WebPageSchema({ name, description, url, image, isPartOfId }: WebPageSchemaProps) {
+export function WebPageSchema({
+  name,
+  description,
+  url,
+  image,
+  isPartOfId,
+}: WebPageSchemaProps) {
   const data = {
-    "@context": "https://schema.org",
-    "@type": "WebPage",
-    "@id": `${url}#webpage`,
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    '@id': `${url}#webpage`,
     name,
     description,
     url,
     primaryImageOfPage: image,
-    isPartOf: isPartOfId ? { "@id": isPartOfId } : undefined,
+    isPartOf: isPartOfId ? { '@id': isPartOfId } : undefined,
   }
 
   return renderJsonLd(data)
@@ -380,15 +403,20 @@ interface CollectionPageSchemaProps {
   isPartOfId?: string
 }
 
-export function CollectionPageSchema({ name, description, url, isPartOfId }: CollectionPageSchemaProps) {
+export function CollectionPageSchema({
+  name,
+  description,
+  url,
+  isPartOfId,
+}: CollectionPageSchemaProps) {
   const data = {
-    "@context": "https://schema.org",
-    "@type": "CollectionPage",
-    "@id": `${url}#collection`,
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    '@id': `${url}#collection`,
     name,
     description,
     url,
-    isPartOf: isPartOfId ? { "@id": isPartOfId } : undefined,
+    isPartOf: isPartOfId ? { '@id': isPartOfId } : undefined,
   }
 
   return renderJsonLd(data)
@@ -410,17 +438,23 @@ interface ItemListSchemaProps {
   url?: string
 }
 
-export function ItemListSchema({ id, name, items, itemType = "CreativeWork", url }: ItemListSchemaProps) {
+export function ItemListSchema({
+  id,
+  name,
+  items,
+  itemType = 'CreativeWork',
+  url,
+}: ItemListSchemaProps) {
   const data = {
-    "@context": "https://schema.org",
-    "@type": "ItemList",
-    "@id": id || (url ? `${url}#itemlist` : undefined),
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    '@id': id || (url ? `${url}#itemlist` : undefined),
     name,
     itemListElement: items.map((item, index) => ({
-      "@type": "ListItem",
+      '@type': 'ListItem',
       position: index + 1,
       item: {
-        "@type": item.itemType || itemType,
+        '@type': item.itemType || itemType,
         name: item.name,
         description: item.description,
         url: item.url,
@@ -442,11 +476,19 @@ interface PersonSchemaProps {
   sameAs?: string[]
 }
 
-export function PersonSchema({ personId, name, jobTitle, description, image, url, sameAs }: PersonSchemaProps) {
+export function PersonSchema({
+  personId,
+  name,
+  jobTitle,
+  description,
+  image,
+  url,
+  sameAs,
+}: PersonSchemaProps) {
   const node = {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    "@id": `${url}#${personId}`,
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    '@id': `${url}#${personId}`,
     name,
     jobTitle,
     description,
@@ -475,11 +517,11 @@ export function BlogPostSchema({
   imageUrl,
   datePublished,
   dateModified,
-  authorName = "Prism",
+  authorName = 'Prism',
 }: BlogPostSchemaProps) {
   const data = {
-    "@context": "https://schema.org",
-    "@type": "BlogPosting",
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
     headline: title,
     description,
     url,
@@ -488,16 +530,16 @@ export function BlogPostSchema({
     datePublished,
     dateModified: dateModified || datePublished,
     author: {
-      "@type": "Person",
+      '@type': 'Person',
       name: authorName,
     },
     publisher: {
-      "@type": "Organization",
-      "@id": "https://www.design-prism.com/#organization",
-      name: "Prism",
+      '@type': 'Organization',
+      '@id': 'https://www.design-prism.com/#organization',
+      name: 'Prism',
       logo: {
-        "@type": "ImageObject",
-        url: "https://www.design-prism.com/prism-logo.jpeg",
+        '@type': 'ImageObject',
+        url: 'https://www.design-prism.com/prism-logo.jpeg',
       },
     },
   }
@@ -514,18 +556,25 @@ interface HowToSchemaProps {
   steps?: { name: string; text: string }[]
 }
 
-export function HowToSchema({ name, description, totalTime, supplies, tools, steps }: HowToSchemaProps) {
+export function HowToSchema({
+  name,
+  description,
+  totalTime,
+  supplies,
+  tools,
+  steps,
+}: HowToSchemaProps) {
   const howToSteps = steps ?? []
   const data = {
-    "@context": "https://schema.org",
-    "@type": "HowTo",
+    '@context': 'https://schema.org',
+    '@type': 'HowTo',
     name,
     description,
     totalTime,
-    supply: supplies?.map((item) => ({ "@type": "HowToSupply", name: item })),
-    tool: tools?.map((item) => ({ "@type": "HowToTool", name: item })),
+    supply: supplies?.map((item) => ({ '@type': 'HowToSupply', name: item })),
+    tool: tools?.map((item) => ({ '@type': 'HowToTool', name: item })),
     step: howToSteps.map((step, index) => ({
-      "@type": "HowToStep",
+      '@type': 'HowToStep',
       position: index + 1,
       name: step.name,
       text: step.text,
@@ -543,13 +592,13 @@ export function FAQSchema({ questions }: FAQSchemaProps) {
   if (!questions || questions.length === 0) return null
 
   const data = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
     mainEntity: questions.map((qa) => ({
-      "@type": "Question",
+      '@type': 'Question',
       name: qa.question,
       acceptedAnswer: {
-        "@type": "Answer",
+        '@type': 'Answer',
         text: qa.answer,
       },
     })),
@@ -588,10 +637,9 @@ export function ServiceSchema({
   aggregateRating: _aggregateRating,
 }: ServiceSchemaProps) {
   const offer =
-    offerDetails &&
-    Object.keys(offerDetails).length > 0
+    offerDetails && Object.keys(offerDetails).length > 0
       ? {
-          "@type": "Offer",
+          '@type': 'Offer',
           name: offerDetails.name,
           description: offerDetails.description,
           price: offerDetails.price,
@@ -599,7 +647,7 @@ export function ServiceSchema({
           priceSpecification:
             offerDetails.priceRange || offerDetails.billingPeriod
               ? {
-                  "@type": "PriceSpecification",
+                  '@type': 'PriceSpecification',
                   price: offerDetails.price,
                   priceCurrency: offerDetails.priceCurrency,
                   billingPeriod: offerDetails.billingPeriod,
@@ -614,18 +662,18 @@ export function ServiceSchema({
       : undefined
 
   const data = {
-    "@context": "https://schema.org",
-    "@type": "Service",
-    "@id": `https://www.design-prism.com/#${serviceId}`,
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    '@id': `https://www.design-prism.com/#${serviceId}`,
     name,
     description,
     serviceType,
     areaServed,
     provider: {
-      "@type": "Organization",
-      "@id": "https://www.design-prism.com/#organization",
-      name: "Prism",
-      url: "https://www.design-prism.com",
+      '@type': 'Organization',
+      '@id': 'https://www.design-prism.com/#organization',
+      name: 'Prism',
+      url: 'https://www.design-prism.com',
     },
     offers: offer,
   }
@@ -657,9 +705,9 @@ export function VideoObjectSchema({
   duration,
 }: VideoObjectSchemaProps) {
   const data = {
-    "@context": "https://schema.org",
-    "@type": "VideoObject",
-    "@id": `${contentUrl || embedUrl || videoId}#${videoId}`,
+    '@context': 'https://schema.org',
+    '@type': 'VideoObject',
+    '@id': `${contentUrl || embedUrl || videoId}#${videoId}`,
     name,
     description,
     thumbnailUrl,
@@ -668,7 +716,7 @@ export function VideoObjectSchema({
     contentUrl: contentUrl || embedUrl,
     creator: creatorName
       ? {
-          "@type": "Person",
+          '@type': 'Person',
           name: creatorName,
         }
       : undefined,
@@ -687,11 +735,18 @@ interface PodcastSeriesSchemaProps {
   sameAs?: string[]
 }
 
-export function PodcastSeriesSchema({ seriesId, name, description, url, image, sameAs }: PodcastSeriesSchemaProps) {
+export function PodcastSeriesSchema({
+  seriesId,
+  name,
+  description,
+  url,
+  image,
+  sameAs,
+}: PodcastSeriesSchemaProps) {
   const data = {
-    "@context": "https://schema.org",
-    "@type": "PodcastSeries",
-    "@id": `${url}#${seriesId}`,
+    '@context': 'https://schema.org',
+    '@type': 'PodcastSeries',
+    '@id': `${url}#${seriesId}`,
     name,
     description,
     url,
@@ -728,7 +783,7 @@ export function PodcastEpisodeSchema({
   const associatedMedia =
     videoEmbedUrl && thumbnailUrl && datePublished
       ? {
-          "@type": "VideoObject",
+          '@type': 'VideoObject',
           name,
           description,
           thumbnailUrl,
@@ -739,12 +794,12 @@ export function PodcastEpisodeSchema({
       : undefined
 
   const data = {
-    "@context": "https://schema.org",
-    "@type": "PodcastEpisode",
-    "@id": `${url}#${episodeId}`,
+    '@context': 'https://schema.org',
+    '@type': 'PodcastEpisode',
+    '@id': `${url}#${episodeId}`,
     partOfSeries: {
-      "@type": "PodcastSeries",
-      "@id": `https://www.design-prism.com/podcast#${seriesId}`,
+      '@type': 'PodcastSeries',
+      '@id': `https://www.design-prism.com/podcast#${seriesId}`,
     },
     name,
     description,
@@ -774,16 +829,16 @@ export function SoftwareApplicationSchema({
   url,
 }: SoftwareApplicationSchemaProps) {
   const data = {
-    "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    "@id": `${url || "https://www.design-prism.com/apps"}#${appId}`,
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareApplication',
+    '@id': `${url || 'https://www.design-prism.com/apps'}#${appId}`,
     name,
     description,
     applicationCategory,
     operatingSystem: operatingSystems,
     offers: url
       ? {
-          "@type": "Offer",
+          '@type': 'Offer',
           url,
         }
       : undefined,
@@ -820,18 +875,18 @@ export function JobPostingSchema({
   qualifications,
 }: JobPostingSchemaProps) {
   const data = {
-    "@context": "https://schema.org",
-    "@type": "JobPosting",
-    "@id": `${url}#${jobId}`,
+    '@context': 'https://schema.org',
+    '@type': 'JobPosting',
+    '@id': `${url}#${jobId}`,
     title,
     description,
     employmentType,
     datePosted,
     validThrough,
     hiringOrganization: {
-      "@type": "Organization",
-      name: "Prism",
-      sameAs: "https://www.design-prism.com",
+      '@type': 'Organization',
+      name: 'Prism',
+      sameAs: 'https://www.design-prism.com',
     },
     jobLocation,
     applicantLocationRequirements: applicantLocations,
@@ -844,11 +899,11 @@ export function JobPostingSchema({
 
 export function ContactPageSchema() {
   const data = {
-    "@context": "https://schema.org",
-    "@type": "ContactPage",
-    name: "Contact Prism",
-    url: "https://www.design-prism.com/contact",
-    description: "Get in touch with Prism for web, app, and growth projects.",
+    '@context': 'https://schema.org',
+    '@type': 'ContactPage',
+    name: 'Contact Prism',
+    url: 'https://www.design-prism.com/contact',
+    description: 'Get in touch with Prism for web, app, and growth projects.',
   }
 
   return renderJsonLd(data)
@@ -870,18 +925,26 @@ interface ProductSchemaProps {
   aggregateRating?: Record<string, unknown>
 }
 
-export function ProductSchema({ productId, name, description, url, image, offer, aggregateRating }: ProductSchemaProps) {
+export function ProductSchema({
+  productId,
+  name,
+  description,
+  url,
+  image,
+  offer,
+  aggregateRating,
+}: ProductSchemaProps) {
   const data = {
-    "@context": "https://schema.org",
-    "@type": "Product",
-    "@id": `${url}#${productId}`,
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    '@id': `${url}#${productId}`,
     name,
     description,
     image,
     url,
     offers: offer
       ? {
-          "@type": "Offer",
+          '@type': 'Offer',
           name: offer.name,
           description: offer.description,
           price: offer.price,
@@ -898,17 +961,17 @@ export function ProductSchema({ productId, name, description, url, image, offer,
 
 export function OrganizationSchema() {
   const data = {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "@id": "https://www.design-prism.com/#organization",
-    name: "Prism",
-    url: "https://www.design-prism.com",
-    logo: "https://www.design-prism.com/prism-opengraph.png",
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    '@id': 'https://www.design-prism.com/#organization',
+    name: 'Prism',
+    url: 'https://www.design-prism.com',
+    logo: 'https://www.design-prism.com/prism-opengraph.png',
     sameAs: [
-      "https://www.youtube.com/@the_design_prism",
-      "https://x.com/NosisTheGod",
-      "https://www.instagram.com/the_design_prism/",
-      "https://www.linkedin.com/company/design-prism/",
+      'https://www.youtube.com/@the_design_prism',
+      'https://x.com/NosisTheGod',
+      'https://www.instagram.com/the_design_prism/',
+      'https://www.linkedin.com/company/design-prism/',
     ],
   }
 
@@ -917,11 +980,11 @@ export function OrganizationSchema() {
 
 export function WebsiteSchema() {
   const data = {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    "@id": "https://www.design-prism.com/#website",
-    url: "https://www.design-prism.com",
-    name: "Prism",
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    '@id': 'https://www.design-prism.com/#website',
+    url: 'https://www.design-prism.com',
+    name: 'Prism',
   }
 
   return renderJsonLd(data)
@@ -957,22 +1020,22 @@ export function LocalBusinessSchema({
   telephone,
 }: LocalBusinessSchemaProps) {
   const data = {
-    "@context": "https://schema.org",
-    "@type": "LocalBusiness",
-    "@id": `${url}#localbusiness`,
+    '@context': 'https://schema.org',
+    '@type': 'LocalBusiness',
+    '@id': `${url}#localbusiness`,
     name,
     url,
     image,
     logo,
     address: {
-      "@type": "PostalAddress",
+      '@type': 'PostalAddress',
       ...address,
     },
     areaServed,
     sameAs,
     priceRange,
     telephone,
-    parentOrganization: { "@id": "https://www.design-prism.com/#organization" },
+    parentOrganization: { '@id': 'https://www.design-prism.com/#organization' },
   }
 
   return renderJsonLd(data)
@@ -998,9 +1061,9 @@ export function DatasetSchema({
   distribution,
 }: DatasetSchemaProps) {
   const data = {
-    "@context": "https://schema.org",
-    "@type": "Dataset",
-    "@id": `${url}#${datasetId}`,
+    '@context': 'https://schema.org',
+    '@type': 'Dataset',
+    '@id': `${url}#${datasetId}`,
     name,
     description,
     url,
@@ -1042,9 +1105,9 @@ export function VideoSchema({
   seekToActionTarget,
 }: VideoSchemaProps) {
   const data = {
-    "@context": "https://schema.org",
-    "@type": "VideoObject",
-    "@id": `${contentUrl}#${id}`,
+    '@context': 'https://schema.org',
+    '@type': 'VideoObject',
+    '@id': `${contentUrl}#${id}`,
     name,
     description,
     thumbnailUrl,
@@ -1056,15 +1119,15 @@ export function VideoSchema({
     height,
     creator: creatorName
       ? {
-          "@type": "Person",
+          '@type': 'Person',
           name: creatorName,
         }
       : undefined,
     potentialAction: seekToActionTarget
       ? {
-          "@type": "SeekToAction",
+          '@type': 'SeekToAction',
           target: seekToActionTarget,
-          "startOffset-input": "required name=seek_to_second_number",
+          'startOffset-input': 'required name=seek_to_second_number',
         }
       : undefined,
   }

@@ -1,9 +1,12 @@
-"use client"
+'use client'
 
-import type React from "react"
-import { FormEvent, useCallback, useState } from "react"
+import type React from 'react'
+import { FormEvent, useCallback, useRef, useState } from 'react'
 
-type ValidFieldElement = HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+type ValidFieldElement =
+  | HTMLInputElement
+  | HTMLTextAreaElement
+  | HTMLSelectElement
 type ErrorMap = Record<string, string>
 
 const isFieldElement = (element: Element): element is ValidFieldElement => {
@@ -23,13 +26,14 @@ export function useFormValidation(options?: UseFormValidationOptions) {
   const [errors, setErrors] = useState<ErrorMap>({})
   const [hasSubmitted, setHasSubmitted] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const submissionInFlightRef = useRef(false)
 
   const updateFieldError = useCallback((field: ValidFieldElement) => {
     const { name } = field
     if (!name) return
     setErrors((prev) => ({
       ...prev,
-      [name]: field.validity.valid ? "" : field.validationMessage,
+      [name]: field.validity.valid ? '' : field.validationMessage,
     }))
   }, [])
 
@@ -37,7 +41,7 @@ export function useFormValidation(options?: UseFormValidationOptions) {
     (event: React.FocusEvent<ValidFieldElement>) => {
       updateFieldError(event.target)
     },
-    [updateFieldError]
+    [updateFieldError],
   )
 
   const handleInput = useCallback(
@@ -45,7 +49,7 @@ export function useFormValidation(options?: UseFormValidationOptions) {
       if (!hasSubmitted) return
       updateFieldError(event.currentTarget)
     },
-    [hasSubmitted, updateFieldError]
+    [hasSubmitted, updateFieldError],
   )
 
   const validateFields = useCallback((fields: ValidFieldElement[]) => {
@@ -56,7 +60,7 @@ export function useFormValidation(options?: UseFormValidationOptions) {
 
     fields.forEach((field) => {
       if (!field.name) return
-      const fieldError = field.validity.valid ? "" : field.validationMessage
+      const fieldError = field.validity.valid ? '' : field.validationMessage
       newErrors[field.name] = fieldError
       if (fieldError) {
         isValid = false
@@ -71,13 +75,13 @@ export function useFormValidation(options?: UseFormValidationOptions) {
     // happened. Bring the first invalid field into view and focus it.
     if (firstInvalidField) {
       const field = firstInvalidField as ValidFieldElement
-      if (typeof field.scrollIntoView === "function") {
+      if (typeof field.scrollIntoView === 'function') {
         const prefersReducedMotion =
-          typeof window !== "undefined" &&
-          window.matchMedia?.("(prefers-reduced-motion: reduce)").matches
+          typeof window !== 'undefined' &&
+          window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
         field.scrollIntoView({
-          behavior: prefersReducedMotion ? "auto" : "smooth",
-          block: "center",
+          behavior: prefersReducedMotion ? 'auto' : 'smooth',
+          block: 'center',
         })
       }
       field.focus({ preventScroll: true })
@@ -89,6 +93,10 @@ export function useFormValidation(options?: UseFormValidationOptions) {
   const handleSubmit = useCallback(
     async (event: FormEvent<HTMLFormElement>) => {
       event.preventDefault()
+      if (submissionInFlightRef.current) {
+        return
+      }
+
       const form = event.currentTarget
       if (!validateFields(Array.from(form.elements).filter(isFieldElement))) {
         setIsSubmitting(false)
@@ -100,21 +108,23 @@ export function useFormValidation(options?: UseFormValidationOptions) {
         return
       }
 
+      submissionInFlightRef.current = true
       setIsSubmitting(true)
       try {
         await onValidSubmit(form)
       } finally {
+        submissionInFlightRef.current = false
         setIsSubmitting(false)
       }
     },
-    [onValidSubmit, validateFields]
+    [onValidSubmit, validateFields],
   )
 
   const getError = useCallback(
     (name: string) => {
-      return errors[name] ?? ""
+      return errors[name] ?? ''
     },
-    [errors]
+    [errors],
   )
 
   return {

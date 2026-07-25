@@ -10,6 +10,8 @@ Production is intentionally single-path: GitHub Actions publishes with `vercel d
 - **pnpm** 10.x via `corepack enable`
 - **macOS/Linux shell** – scripts rely on POSIX utilities and may fail on Windows CMD
 
+`package.json` and `pnpm-lock.yaml` are the dependency source of truth. The current security baseline aligns Next.js packages on 16.2.11 and Sentry packages on 10.68.0, removes the unused `node-notifier` dependency, and pins patched transitive versions through `pnpm.overrides`. Do not remove an override without checking the resolved lockfile and rerunning `pnpm audit --prod`.
+
 ## Local build flow
 
 1. `pnpm install` – keep `node_modules` aligned with the lockfile Vercel uses.
@@ -19,8 +21,9 @@ Production is intentionally single-path: GitHub Actions publishes with `vercel d
 5. `pnpm test:visual:locked` – required when touching `/`, `/about`, `/pricing`, or `/get-started`.
 6. `pnpm exec jest __tests__/sitemap.test.ts __tests__/seo-indexability-guards.test.tsx __tests__/llms.test.ts __tests__/blog-canonical.test.ts --runInBand` – required when changing indexability, sitemap, blog visibility, RSS/latest-post behavior, or `llms.txt`.
 7. `pnpm seo:inventory && pnpm seo:lint` – required when changing metadata, route search visibility, or blog curation.
-8. `pnpm build` – mirrors the production bundle.
-9. `pnpm test:visual` – optional wider visual sweep when you touched other routes.
+8. `pnpm audit --prod` – required after dependency or lockfile changes; production dependencies must report zero known vulnerabilities.
+9. `pnpm build` – mirrors the production bundle.
+10. `pnpm test:visual` – optional wider visual sweep when you touched other routes.
 
 ### Production-parity preview
 
