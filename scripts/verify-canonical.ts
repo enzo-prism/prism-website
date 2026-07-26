@@ -7,7 +7,12 @@ const DEFAULT_PATHS = [
   "/local-listings",
   "/pricing",
   "/case-studies",
+  // A case-study *detail* path, not just the index. The proxy matcher treats
+  // the two separately, and checking only the index is how a matcher exclusion
+  // once disabled canonicalization for every detail page unnoticed.
+  "/case-studies/exquisite-dentistry",
   "/blog",
+  "/blog/dental-seo-guide",
 ];
 
 type RedirectHop = { url: string; status: number };

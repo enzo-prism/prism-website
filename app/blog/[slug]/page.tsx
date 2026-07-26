@@ -23,6 +23,22 @@ interface PageProps {
 // with one segment bundle per slug.
 export const revalidate = 3600
 
+/**
+ * Deliberately empty: prerender nothing at build time, but still opt the route
+ * into the static/ISR bucket.
+ *
+ * Without a `generateStaticParams` export at all, Next classifies `[slug]` as
+ * fully dynamic and ignores the `revalidate` above — production answered every
+ * post with `Cache-Control: private, no-cache, no-store` and re-read plus
+ * re-compiled the MDX on each request. Returning `[]` keeps the deployment
+ * output small (no per-slug segment bundle, which is the point of the comment
+ * above) while restoring `s-maxage=3600, stale-while-revalidate` so the first
+ * visitor generates a post and everyone after that gets a cache hit.
+ */
+export async function generateStaticParams() {
+  return []
+}
+
 const WORDS_PER_MINUTE = 225
 
 const formatReadableDate = (value: string) => {

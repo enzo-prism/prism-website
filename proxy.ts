@@ -28,7 +28,11 @@ export function proxy(request: NextRequest) {
 
   if (isPrismHostname && (hostname !== CANONICAL_HOSTNAME || proto !== "https")) {
     url.protocol = "https:";
-    url.host = CANONICAL_HOSTNAME;
+    // Assigning `host` leaves any existing port intact (WHATWG URL semantics),
+    // which would emit https://www.design-prism.com:3000/... off the default
+    // port. Set hostname + clear port explicitly, same as app/sitemap.ts.
+    url.hostname = CANONICAL_HOSTNAME;
+    url.port = "";
     shouldRedirect = true;
   }
 
@@ -53,7 +57,15 @@ export const config = {
   // trailing-slash redirects only matter for page routes, and running the
   // proxy on /_next/* + media added invocation latency to requests that
   // should be pure CDN hits.
+  //
+  // Only list a directory here when it holds assets the extension alternative
+  // below cannot cover (public/animations ships extensionless frame files) AND
+  // no page route shares its name. `case-studies/` used to be listed, which
+  // silently exempted the 20 indexable /case-studies/<slug> pages from the
+  // canonical-host redirect — every one of them served 200 on the apex host
+  // instead of 301ing to www. Its assets are all image files, so the extension
+  // alternative already excludes them.
   matcher: [
-    "/((?!_next/static|_next/image|favicon.ico|favicon-rounded.png|animations/|ascii/|logos/|pixelish/|home-hero/|case-studies/|unicorn/|.*\\.(?:png|jpg|jpeg|gif|webp|avif|svg|ico|json|js|css|map|woff|woff2|ttf|otf|mp4|webm|mp3)$).*)",
+    "/((?!_next/static|_next/image|favicon.ico|favicon-rounded.png|animations/|ascii/|logos/|pixelish/|home-hero/|unicorn/|.*\\.(?:png|jpg|jpeg|gif|webp|avif|svg|ico|json|js|css|map|woff|woff2|ttf|otf|mp4|webm|mp3)$).*)",
   ],
 };

@@ -24,8 +24,11 @@ interface TimelineEvent {
   }
 }
 
-export default function ScrollingTimeline() {
-  const events: TimelineEvent[] = [
+// Static timeline copy, hoisted to module scope. It takes nothing from props or
+// state, so declaring it inside the component rebuilt ~190 lines of object
+// literals on every render and produced a new array identity each pass — which
+// is why the observer effect below could not safely list it as a dependency.
+const events: TimelineEvent[] = [
     {
       id: 14,
       year: "March 2009",
@@ -216,8 +219,9 @@ export default function ScrollingTimeline() {
       iconSrc: "/pixelish/currency-dollar.svg",
       iconAlt: "Dollar icon",
     },
-  ]
+]
 
+export default function ScrollingTimeline() {
   const eventRefs = useRef<Array<HTMLDivElement | null>>(events.map(() => null))
   const [visibleEvents, setVisibleEvents] = useState<number[]>([events[0].id])
 
@@ -245,24 +249,24 @@ export default function ScrollingTimeline() {
       { threshold: 0.1 }
     )
 
-    events.forEach((event) => {
-      const index = events.findIndex((e) => e.id === event.id)
+    events.forEach((_event, index) => {
       const node = eventRefs.current[index]
       if (node) {
         observer.observe(node)
       }
     })
 
+    // `observer.disconnect()` instead of unobserving node-by-node: this effect
+    // re-runs on every `visibleEvents` change, and the old cleanup read
+    // `eventRefs.current` again on the way out. Any ref that had been
+    // reassigned or nulled since the observe pass was silently skipped, leaking
+    // an observation onto a detached node for the lifetime of the page.
+    // Disconnecting drops every registration this observer owns, whatever the
+    // refs look like now.
     return () => {
-      events.forEach((event) => {
-        const index = events.findIndex((e) => e.id === event.id)
-        const node = eventRefs.current[index]
-        if (node) {
-          observer.unobserve(node)
-        }
-      })
+      observer.disconnect()
     }
-  }, [visibleEvents])
+  }, [events, visibleEvents])
 
   return (
     <div className="relative max-w-3xl mx-auto">

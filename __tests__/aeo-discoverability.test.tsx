@@ -1,7 +1,6 @@
 import React from "react"
 import { render, screen } from "@testing-library/react"
 
-import OffersClientPage from "@/app/offers/client-page"
 import AiSeoServicesPage from "@/app/ai-seo-services/page"
 
 jest.mock("next/link", () => ({
@@ -47,13 +46,8 @@ jest.mock("@/components/gradient-card", () => ({
 }))
 
 describe("AEO discoverability links", () => {
-  it("includes /aeo card in offers page", () => {
-    render(<OffersClientPage />)
-
-    const aeoOffer = screen.getByRole("link", { name: /get your aeo assessment/i })
-    expect(aeoOffer).toHaveAttribute("href", "/aeo")
-  })
-
+  // The /offers page was retired (it 301s to /pricing), so the only remaining
+  // first-party entry point to /aeo is the AI SEO services page.
   it("features /aeo link from AI SEO services page", () => {
     render(<AiSeoServicesPage />)
 

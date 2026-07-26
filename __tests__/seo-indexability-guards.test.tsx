@@ -5,39 +5,9 @@ jest.mock('@/app/ai/prism-ai-client', () => ({
     return null
   },
 }))
-jest.mock('@/app/ai-website-launch/client-page', () => ({
-  __esModule: true,
-  default: function MockAiWebsiteLaunchClientPage() {
-    return null
-  },
-}))
 jest.mock('@/app/models/client-page', () => ({
   __esModule: true,
   default: function MockModelsPageClient() {
-    return null
-  },
-}))
-jest.mock('@/app/offers/client-page', () => ({
-  __esModule: true,
-  default: function MockOffersClientPage() {
-    return null
-  },
-}))
-jest.mock('@/app/offers/ai-seo-boost/client-page', () => ({
-  __esModule: true,
-  default: function MockAiSeoBoostClientPage() {
-    return null
-  },
-}))
-jest.mock('@/app/offers/summer-website-makeover/client-page', () => ({
-  __esModule: true,
-  default: function MockSummerWebsiteMakeoverClientPage() {
-    return null
-  },
-}))
-jest.mock('@/app/pricing-dental/client-page', () => ({
-  __esModule: true,
-  default: function MockPricingDentalClientPage() {
     return null
   },
 }))
@@ -54,16 +24,9 @@ import { renderToStaticMarkup } from 'react-dom/server'
 import sitemap from '@/app/sitemap'
 import { metadata as aiMetadata } from '@/app/ai/page'
 import { metadata as aiAgentsMetadata } from '@/app/ai-agents/page'
-import { metadata as aiWebsiteLaunchMetadata } from '@/app/ai-website-launch/page'
-import { metadata as growthMetadata } from '@/app/growth/page'
 import { metadata as hottestContentMetadata } from '@/app/hottest-content/page'
 import { metadata as igMetadata } from '@/app/ig/page'
 import { metadata as modelsMetadata } from '@/app/models/page'
-import { metadata as offersMetadata } from '@/app/offers/page'
-import { metadata as aiSeoBoostMetadata } from '@/app/offers/ai-seo-boost/page'
-import { metadata as summerWebsiteMakeoverMetadata } from '@/app/offers/summer-website-makeover/page'
-import { metadata as oneTimeFeeMetadata } from '@/app/one-time-fee/page'
-import { metadata as pricingDentalMetadata } from '@/app/pricing-dental/page'
 import { metadata as secretPearlPrivacyMetadata } from '@/app/secret-pearl/privacy/page'
 import { WebsiteSchema } from '@/components/schema-markup'
 import { metadata as tiktokMetadata } from '@/app/tiktok/page'
@@ -93,19 +56,31 @@ describe('SEO indexability guards', () => {
     })
   })
 
+  /**
+   * These paths used to ship a real (noindexed) page behind a 301, so the guard
+   * asserted on each page's exported `robots`. The pages are gone — the paths
+   * are redirect-only now — so the guard asserts the policy itself instead:
+   * whatever happens upstream, none of these may ever become indexable, and
+   * re-adding a page at one of them must not silently opt it into search.
+   */
   it('keeps legacy redirected marketing routes out of the index', () => {
-    const routeMetadata = [
-      aiWebsiteLaunchMetadata,
-      growthMetadata,
-      offersMetadata,
-      aiSeoBoostMetadata,
-      summerWebsiteMakeoverMetadata,
-      oneTimeFeeMetadata,
-      pricingDentalMetadata,
+    const legacyRedirectedPaths = [
+      '/ai-website-launch',
+      '/growth',
+      '/offers',
+      '/offers/ai-seo-boost',
+      '/offers/summer-website-makeover',
+      '/one-time-fee',
+      '/pricing-dental',
+      '/founder-os',
+      '/founder-os/apply',
+      '/checkout/launch',
+      '/checkout/grow',
+      '/checkout/scale',
     ]
 
-    routeMetadata.forEach((metadata) => {
-      expect(metadata.robots).toEqual(NOINDEX_ROBOTS)
+    legacyRedirectedPaths.forEach((path) => {
+      expect(isRouteIndexable(path)).toBe(false)
     })
   })
 

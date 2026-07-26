@@ -140,12 +140,67 @@ GA4 Admin → Data streams → (stream) → Enhanced measurement → gear icon �
 uncheck **"Page changes based on browser history events"**. Leave the other
 enhanced measurement options alone. Without this, SPA navigations double-count.
 
-### 2. Audit the second destination `G-SNZ80JMX80`
+### 2. Tag separation (RESOLVED 2026-07-25 — kept as history)
 
-The Google tag currently fans every hit out to a second GA4 property that is
-referenced nowhere in this codebase. GA4 Admin → Google tag → Configure tag
-settings → Manage connected tags. Either remove it, or acknowledge it with
-`GA_ALLOWED_DESTINATIONS=G-SNZ80JMX80 pnpm audit:ga4`.
+design-prism.com used to record every pageview in **four** destinations. A
+single Google tag named "Family First Smile Care" had **12 tag IDs merged into
+it** (six GA4 properties across four businesses, plus the Ads account) but only
+**two destinations**: `G-54ESSN4BF8` and `AW-11373090310`. Any site firing any
+of those 12 ids therefore wrote into a client's GA4 property.
+
+Measured before the fix, last 7 days on `G-54ESSN4BF8` (Family First Smile
+Care's retired property) by hostname:
+
+| hostname | pageviews | share |
+|---|---:|---:|
+| www.design-prism.com | 539 | 46.6% |
+| localhost | 291 | 25.2% |
+| exquisitedentistryla.com | 111 | 9.6% |
+| 127.0.0.1 | 109 | 9.4% |
+| www.famfirstsmile.com | 102 | **8.8%** |
+
+Under 9% of the client's own property was the client's own site.
+
+**What was changed**
+
+1. Removed `G-SNZ80JMX80` ("Prism", a duplicate of Prism Website) as a
+   destination on the `G-P9VY77PRC0` Google tag.
+2. Turned OFF Enhanced Measurement "page changes based on browser history
+   events" (see item 1) — SPA navigations were counted twice.
+3. Removed `G-54ESSN4BF8` as a destination on the merged tag, reassigning it to
+   a new, uninstalled tag named "FFSC retired property G-54ESSN4BF8 -
+   detached". Google requires a destination be moved to another tag rather than
+   deleted outright.
+4. Created the missing GA4 -> Google Ads link on the client's LIVE property,
+   `properties/518867337` (`G-L7MH47XYXL`, famfirstsmile.com) ->
+   customer `3539046031`. It had none, which is why an actively spending
+   campaign reported zero conversions while the property was recording ~50
+   `generate_lead` events every 28 days.
+
+**Verified end state** — every tag now resolves to exactly itself:
+
+```
+G-P9VY77PRC0    -> G-P9VY77PRC0     design-prism.com
+AW-11373090310  -> AW-11373090310   Prism Google Ads
+G-L7MH47XYXL    -> G-L7MH47XYXL     famfirstsmile.com (client)
+```
+
+`pnpm audit:ga4` exits 0. On the live site a client-side navigation now produces
+exactly one `page_view` for `G-P9VY77PRC0` and nothing for any client property.
+
+**Still open:** the client's `generate_lead` needs to be imported as a
+conversion action in Ads and enabled for the Family First campaign. Google
+surfaces newly linked GA4 key events on its own schedule (`purchase` appeared
+within minutes; the custom events lag). Check Goals -> Conversions for
+"Family First Smile Care, Website (web) generate_lead", enable it, and set it
+primary for that campaign.
+
+**Do not** remove `AW-11373090310` from the merged tag. Prism runs client
+campaigns (Wong-DDS, Family First) out of that account, so it is load-bearing.
+
+`pnpm audit:ga4` walks the destination graph transitively — an earlier version
+parsed only our own tag payload and reported two destinations while the browser
+was really sending to four.
 
 ### 3. Point the live Stripe link at the confirmation page
 

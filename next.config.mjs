@@ -186,6 +186,13 @@ images: {
       { source: '/blog/mobile-app-ux', destination: '/blog', permanent: true },
       { source: '/mission', destination: '/about', permanent: true },
       { source: '/free-resources-prism', destination: '/proof', permanent: true },
+
+      // Live 404s seen in production request logs — real visitors are still
+      // arriving on these from off-site citations (directory listings, an old
+      // Google Business Profile link, stale backlinks). Send them somewhere
+      // useful instead of a dead end.
+      { source: '/contact-us', destination: '/contact', permanent: true },
+      { source: '/hours', destination: '/contact', permanent: true },
     ]
   },
 }

@@ -18,6 +18,41 @@ export const IS_PRODUCTION_ENV = vercelEnv
   : process.env.NODE_ENV === "production"
 
 export const IS_ANALYTICS_ENABLED = IS_PRODUCTION_ENV && Boolean(GA_MEASUREMENT_ID)
+
+/**
+ * Hostnames that must never report analytics, checked at runtime in the browser.
+ *
+ * The NODE_ENV fallback above is true for a local `pnpm build && pnpm start`,
+ * which is the normal way to reproduce a production bug. That meant every local
+ * production run sent real hits to the live GA4 property and fired real Google
+ * Ads page views. It was not theoretical: `localhost` was 30% of pageviews on
+ * the Prism Website property and 25% on a client's, which is the kind of noise
+ * that quietly distorts every engagement and conversion-rate number.
+ *
+ * Build-time env alone cannot catch this, because the offending build IS a
+ * production build. Only the request's hostname can.
+ */
+const NON_REPORTING_HOSTNAMES = new Set([
+  'localhost',
+  '127.0.0.1',
+  '0.0.0.0',
+  '::1',
+])
+
+export function isAnalyticsReportingHost(hostname?: string): boolean {
+  const host = (
+    hostname ?? (typeof window === 'undefined' ? '' : window.location.hostname)
+  )
+    .trim()
+    .toLowerCase()
+
+  if (!host) return false
+  if (NON_REPORTING_HOSTNAMES.has(host)) return false
+  // Private LAN addresses used for device testing (phones hitting the dev box).
+  if (/^(10|192\.168|172\.(1[6-9]|2\d|3[01]))\./.test(host)) return false
+  if (host.endsWith('.local')) return false
+  return true
+}
 export const GOOGLE_ADS_ID = "AW-11373090310"
 export const GOOGLE_ADS_LEAD_CONVERSION_SEND_TO = `${GOOGLE_ADS_ID}/hBMrCMijk70bEIasjq8q`
 

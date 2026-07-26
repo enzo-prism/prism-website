@@ -6,6 +6,7 @@ import {
   GOOGLE_ADS_LEAD_CONVERSION_SEND_TO,
   GOOGLE_ADS_PURCHASE_CONVERSION_SEND_TO,
   IS_ANALYTICS_ENABLED,
+  isAnalyticsReportingHost,
 } from '@/lib/constants'
 import { resolveLeadValue } from '@/lib/lead-values'
 import { getAttributionContext } from '@/lib/marketing-attribution'
@@ -166,6 +167,12 @@ const OPAQUE_ID_PATTERN = /^[A-Za-z0-9_-]{1,160}$/
 
 function getGtag() {
   if (typeof window === 'undefined') return null
+
+  // Single chokepoint for every hit this module sends. A local production
+  // build (`pnpm build && pnpm start`) satisfies the build-time env gate, so
+  // without this the live property collects localhost traffic. See
+  // isAnalyticsReportingHost.
+  if (!isAnalyticsReportingHost()) return null
 
   window.dataLayer = window.dataLayer || []
   if (typeof window.gtag !== 'function') {

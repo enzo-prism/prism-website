@@ -61,13 +61,67 @@ async function fetchTag(id) {
   return response.text()
 }
 
-/** Every destination the Google tag forwards hits to. */
+/** Destinations named directly inside one tag payload. */
 function parseDestinations(source) {
   const ids = new Set()
   for (const match of source.matchAll(/"vtp_instanceDestinationId":"([^"]+)"/g)) {
     ids.add(match[1])
   }
   return [...ids].sort()
+}
+
+/**
+ * Resolve the FULL destination graph, not just the first hop.
+ *
+ * Connected tags chain: our tag names B as a destination, and B's own tag can
+ * name C. At runtime gtag walks the whole chain, so C receives our hits too —
+ * but C appears nowhere in our tag's payload, so a single-payload parse cannot
+ * see it.
+ *
+ * That blind spot was not hypothetical. This audit reported two destinations
+ * while the browser was really sending to four; the two it missed were a hub
+ * property and, through it, a former client's GA4 property that was still
+ * recording design-prism.com pageviews. Walk the graph so a second hop can
+ * never hide again.
+ *
+ * Two roots, not one. `app/layout.tsx` runs `gtag('config', ...)` for BOTH the
+ * GA4 measurement id and the Google Ads id, so the browser loads two tags and
+ * either can fan out. Auditing only the GA4 tag missed a second, independent
+ * route to that same client property hanging off the Ads tag — the GA4 side
+ * came back clean while the browser was still sending to it.
+ *
+ * Ads tags fan out too, so do NOT treat `AW-` ids as terminal.
+ *
+ * Returns a map of destination id -> the chain used to reach it.
+ */
+async function resolveDestinationGraph(rootIds) {
+  const roots = Array.isArray(rootIds) ? rootIds : [rootIds]
+  const paths = new Map(roots.map((id) => [id, [id]]))
+  const queue = [...roots]
+  const visited = new Set()
+
+  while (queue.length > 0) {
+    const current = queue.shift()
+    if (visited.has(current)) continue
+    visited.add(current)
+
+    let source
+    try {
+      source = await fetchTag(current)
+    } catch {
+      // A destination whose tag we cannot fetch still counts as reachable; we
+      // just cannot see past it. Better to report it than to drop it.
+      continue
+    }
+
+    for (const next of parseDestinations(source)) {
+      if (paths.has(next)) continue
+      paths.set(next, [...paths.get(current), next])
+      queue.push(next)
+    }
+  }
+
+  return paths
 }
 
 /**
@@ -113,7 +167,11 @@ function parseKeyEvents(source) {
 async function main() {
   const source = await fetchTag(measurementId)
 
-  const destinations = parseDestinations(source)
+  const destinationPaths = await resolveDestinationGraph([
+    measurementId,
+    GOOGLE_ADS_ID,
+  ])
+  const destinations = [...destinationPaths.keys()].sort()
   const enhancedMeasurement = parseEnhancedMeasurement(source)
   const keyEvents = parseKeyEvents(source)
 
@@ -138,12 +196,25 @@ async function main() {
   // 2. Unexpected destinations silently receiving every hit.
   for (const destination of destinations) {
     if (!allowedDestinations.has(destination)) {
+      const chain = destinationPaths.get(destination) ?? [destination]
+      const hops = chain.length - 1
+      const parent = chain[hops - 1]
+      // The tag that carries the unwanted destination decides which console you
+      // fix it in. An AW- parent lives in Google Ads, not GA4 Admin — pointing
+      // at the wrong console sends people hunting through screens that do not
+      // contain the setting.
+      const where = parent.startsWith('AW-')
+        ? `Google Ads > Admin > Google tag (${parent}) > Manage destinations`
+        : `GA4 Admin > Data streams > (stream) > Configure tag settings > Destinations (tag ${parent})`
       problems.push({
         code: 'unexpected_tag_destination',
         destination,
+        chain,
         message:
-          `${destination} receives every hit from this Google tag but is not referenced anywhere in the codebase. ` +
-          'Fix: GA4 Admin > Google tag > Configure tag settings > Manage connected tags. ' +
+          `${destination} receives every hit from this site but is not referenced anywhere in the codebase. ` +
+          `Reached via ${chain.join(' -> ')}${hops > 1 ? ` (${hops} hops — it hangs off a connected tag, not off us directly)` : ''}. ` +
+          `Fix: ${where} > remove ${destination}. ` +
+          `Note Google requires reassigning a destination to another Google tag rather than deleting it outright. ` +
           `If it is intentional, acknowledge it with GA_ALLOWED_DESTINATIONS=${destination}.`,
       })
     }
@@ -160,10 +231,14 @@ async function main() {
   } else {
     log(`\nGA4 tag audit — ${measurementId}\n${'─'.repeat(48)}`)
 
-    log('\nDestinations receiving hits:')
+    log('\nDestinations receiving hits (full connected-tag graph):')
     for (const destination of destinations) {
       const known = allowedDestinations.has(destination)
-      log(`  ${known ? '✓' : '✗'} ${destination}${known ? '' : '  ← unexpected'}`)
+      const chain = destinationPaths.get(destination) ?? [destination]
+      const via = chain.length > 2 ? `  via ${chain.slice(0, -1).join(' -> ')}` : ''
+      log(
+        `  ${known ? '✓' : '✗'} ${destination}${known ? '' : '  ← unexpected'}${via}`,
+      )
     }
 
     log('\nEnhanced measurement:')

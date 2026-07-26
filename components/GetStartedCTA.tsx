@@ -3,10 +3,23 @@
 import { ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
-import { motion } from "framer-motion"
 import { trackCTAClick } from "@/utils/analytics"
-import { fadeInUp, springScale } from "@/utils/animation-variants"
 import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
+
+/**
+ * Deliberately framer-motion free.
+ *
+ * This CTA renders at the foot of every blog post, and importing `motion` here
+ * put ~276 KB of framer-motion into the client bundle for all ~88 articles —
+ * the single largest blog-only cost, on the site's main organic surface.
+ *
+ * None of that bought any motion. The section passed `initial="hidden"` /
+ * `whileInView="visible"`, but the `fadeInUp` and `springScale` variants it
+ * referenced only define `initial` / `animate` / `exit` keys. With no matching
+ * variant names, framer resolved nothing and the scroll reveal never ran. The
+ * one animation that did work was the arrow's hover nudge, which is a
+ * `group-hover` transform below.
+ */
 
 interface GetStartedCTAProps {
   heading: string
@@ -37,39 +50,28 @@ export default function GetStartedCTA({
   }
 
   return (
-    <motion.section 
-      className={`py-16 md:py-24 ${getBackgroundClasses()} ${className}`}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.3 }}
-      variants={fadeInUp}
-    >
+    <section className={`py-16 md:py-24 ${getBackgroundClasses()} ${className}`}>
       <div className="container mx-auto px-4 md:px-6">
-        <motion.div 
-          className="mx-auto max-w-3xl text-center"
-          variants={springScale}
-        >
-          <motion.h2 
+        <div className="mx-auto max-w-3xl text-center">
+          <h2
             className={`text-3xl font-bold tracking-tighter lowercase sm:text-4xl md:text-5xl mb-6 ${
               variant === "dark" ? "text-white" : "text-neutral-900"
             }`}
-            variants={fadeInUp}
           >
             {heading}
-          </motion.h2>
-          
+          </h2>
+
           {description && (
-            <motion.p 
+            <p
               className={`mx-auto max-w-2xl text-lg lowercase leading-relaxed mb-8 ${
                 variant === "dark" ? "text-neutral-200" : "text-neutral-600"
               }`}
-              variants={fadeInUp}
             >
               {description}
-            </motion.p>
+            </p>
           )}
 
-          <motion.div variants={fadeInUp}>
+          <div>
             <Button 
               size="lg" 
               asChild 
@@ -79,23 +81,20 @@ export default function GetStartedCTA({
                   : "bg-neutral-900 text-white hover:bg-neutral-800"
               }`}
             >
-              <Link 
+              <Link
                 href="/free-analysis"
                 onClick={() => trackCTAClick(ctaText, analyticsLabel)}
+                className="group"
               >
-                <motion.div 
-                  className="flex items-center"
-                  whileHover={{ x: 5 }}
-                  transition={{ type: "spring", stiffness: 400 }}
-                >
+                <span className="flex items-center transition-transform duration-200 ease-out group-hover:translate-x-[5px] motion-reduce:transition-none motion-reduce:group-hover:translate-x-0">
                   {ctaText}
                   <ArrowRight className="ml-2 h-5 w-5" />
-                </motion.div>
+                </span>
               </Link>
             </Button>
-          </motion.div>
-        </motion.div>
+          </div>
+        </div>
       </div>
-    </motion.section>
+    </section>
   )
 }

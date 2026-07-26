@@ -147,6 +147,9 @@ export default function GrowthResultsSlider() {
                     <div className="relative w-full aspect-[9/19.5] overflow-hidden rounded-[2rem] border-8 border-black bg-black shadow-2xl">
                       <div aria-hidden className="absolute left-1/2 top-0 h-6 w-24 -translate-x-1/2 rounded-b-2xl bg-black" />
                       <div className="absolute inset-0">
+                        {/* `quality` must be one of next.config.mjs
+                            `images.qualities` ([75, 90]) — any other value
+                            makes the /_next/image optimizer return 400. */}
                         <CoreImage
                           src={slide.image}
                           alt={slide.alt}
@@ -155,7 +158,7 @@ export default function GrowthResultsSlider() {
                           className="h-full w-full object-cover"
                           sizes="(max-width: 640px) 85vw, 320px"
                           fallbackSrc={`/placeholder.svg?height=1600&width=900&text=${encodeURIComponent(slide.platform)}`}
-                          quality={85}
+                          quality={90}
                         />
                       </div>
                     </div>

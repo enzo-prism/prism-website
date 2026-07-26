@@ -107,8 +107,35 @@ export default function RootLayout({
               strategy="afterInteractive"
               dangerouslySetInnerHTML={{
                 __html: `
+                  // Runtime host gate. IS_ANALYTICS_ENABLED is decided at build
+                  // time and is true for a local production build, so without
+                  // this the config calls below fire real GA4 + Google Ads hits
+                  // from localhost. Keep in sync with isAnalyticsReportingHost
+                  // in lib/constants.ts.
+                  (function(){
+                    // Plain string checks, deliberately no regex: this source
+                    // passes through a template literal and then HTML/RSC
+                    // escaping, and a backslash that survives one layer but not
+                    // the other fails open — which is the direction that
+                    // silently pollutes the live property.
+                    var h = (location.hostname || '').toLowerCase();
+                    var lan = h.indexOf('192.168.') === 0
+                      || h.indexOf('10.') === 0
+                      || h.indexOf('172.') === 0;
+                    if (!h
+                      || h === 'localhost' || h === '127.0.0.1'
+                      || h === '0.0.0.0' || h === '::1'
+                      || h.slice(-6) === '.local'
+                      || lan) {
+                      return;
+                    }
                   window.dataLayer = window.dataLayer || [];
-                  function gtag(){dataLayer.push(arguments);}
+                  // Assign onto window explicitly: this now runs inside the
+                  // host-gate IIFE, so a bare function declaration would no
+                  // longer create the global that gtag.js and utils/analytics
+                  // both rely on.
+                  function gtag(){window.dataLayer.push(arguments);}
+                  window.gtag = gtag;
                   // Consent Mode v2 — set defaults before any config call.
                   // US-focused traffic: granted by default, so full collection.
                   // NOTE this does NOT enable EEA conversion modeling — that needs a
@@ -124,6 +151,7 @@ export default function RootLayout({
                   gtag('js', new Date());
                   gtag('config', '${GA_MEASUREMENT_ID}', { send_page_view: false });
                   gtag('config', '${GOOGLE_ADS_ID}');
+                  })();
                 `,
               }}
             />
@@ -181,9 +209,7 @@ export default function RootLayout({
         <SkipToContent />
         <GlobalSchemaGraph />
         <RuntimeClientShell />
-        <Suspense fallback={null}>
-          {children}
-        </Suspense>
+        {children}
         <SpeedInsights />
       </body>
     </html>

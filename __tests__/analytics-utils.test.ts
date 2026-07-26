@@ -8,6 +8,12 @@ jest.mock('@/lib/constants', () => ({
   GOOGLE_ADS_LEAD_CONVERSION_SEND_TO: 'AW-TEST/lead',
   GOOGLE_ADS_PURCHASE_CONVERSION_SEND_TO: 'AW-TEST/purchase',
   IS_ANALYTICS_ENABLED: true,
+  // jsdom runs these tests on https://www.design-prism.com (see jest.config.ts),
+  // so the real host gate would pass anyway — but the mock replaces the whole
+  // module, and omitting this export makes getGtag() throw and silently drop
+  // every hit. Delegate to the real implementation so the two cannot drift.
+  isAnalyticsReportingHost: (host?: string) =>
+    jest.requireActual('@/lib/constants').isAnalyticsReportingHost(host),
 }))
 
 jest.mock('@/lib/marketing-attribution', () => ({
