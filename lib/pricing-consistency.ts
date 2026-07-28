@@ -21,7 +21,6 @@ export const PRICING_STRICT_FILES = [
   'app/ads/page.tsx',
   'app/seo/page.tsx',
   'app/local-listings/page.tsx',
-  'content/blog/dental-website-cost-guide-2026.mdx',
   'components/footer.tsx',
   'app/sitemap.ts',
   'next.config.mjs',
@@ -29,6 +28,12 @@ export const PRICING_STRICT_FILES = [
 
 export const PRICING_CONTEXT_RULES: Record<string, RegExp[]> = {
   'app/refer/page.tsx': [/referral payout/i, /not service pricing/i],
+  // Editorial market-rate comparisons (e.g. "$5,000–$25,000 agency range") are
+  // allowed as long as the Prism section stays call-first.
+  'content/blog/dental-website-cost-guide-2026.mdx': [
+    /What Prism charges/i,
+    /scoped on a 30-minute call/i,
+  ],
   'app/google/dental-ads/page.tsx': [
     /ad fee examples/i,
     /not Prism core pricing/i,
@@ -83,6 +88,29 @@ export const LEGACY_PRICING_TOKEN_RULES: PricingTokenRule[] = [
   { label: '~$1,000 wording', pattern: /~\$1,000/i },
   { label: '$1,000/mo legacy dental price', pattern: /\$1,000\/mo\b/i },
   { label: 'from $1,500/mo wording', pattern: /from \$1,500\/mo/i },
+  // 2026-07-27 call-first repositioning: NO offer shows public exact pricing.
+  // Every offer — including the PRO Website — is scoped on a 30-minute Zoom
+  // call (BOOK_A_CALL_CTA in lib/pricing-model.ts).
+  {
+    label: '$5,000 retired public Content OS setup price',
+    pattern: /\$5,000\b/,
+  },
+  {
+    label: '$1,000/month retired public Content OS monthly price',
+    pattern: /\$1,000\/month\b/i,
+  },
+  {
+    label: '$2,000/month retired public Prism Infinity price',
+    pattern: /\$2,000\/month\b/i,
+  },
+  {
+    label: '$300 retired public website price',
+    pattern: /\$300\b/,
+  },
+  {
+    label: '$100/month retired public website care price',
+    pattern: /\$100\/month\b/i,
+  },
 ]
 
 export const REQUIRED_CANONICAL_SNIPPETS: Record<string, string[]> = {
@@ -97,15 +125,14 @@ export const REQUIRED_CANONICAL_SNIPPETS: Record<string, string[]> = {
     'PRICING_PRIMARY_CTA',
   ],
   'lib/pricing-model.ts': [
-    'Order your website — $300',
-    '$300 one-time',
-    '$5,000 + $1,000/month',
-    '$2,000/month',
+    'BOOK_A_CALL_CTA',
+    'Book a 30-min call',
+    'NO offer shows public exact pricing',
   ],
   'app/websites/page.tsx': [
-    'One-time website build',
-    '$300 flat',
-    "price: '300'",
+    'Prism PRO website',
+    'BOOK_A_CALL_CTA',
+    'Rank on Google. Get cited by AI.',
   ],
 }
 

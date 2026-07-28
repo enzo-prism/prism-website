@@ -380,6 +380,14 @@ The navbar should stay minimal:
 
 It should feel like part of the page shell, not a separate app chrome layer.
 
+The 2026-07 rail is a flat five-item list (the four offers + contact, no
+dropdowns): links are quiet rounded pills — active is a soft `white/[0.08]`
+wash, hover a lighter `white/[0.04]` — with a 1px `white/14` hairline
+separating contact from the offer group, and the filled ivory "Order now" CTA
+staying the only loud element. The inline rail takes over from the menu
+button at `lg` (1024px). The mobile panel keeps the same five items as a flat
+divided list with aria-hidden mono index prefixes (01–05) for texture.
+
 ### Social proof
 
 Proof should stay subtle and integrated. Small inline proof beats loud testimonial clutter unless the page specifically needs a stronger proof section.

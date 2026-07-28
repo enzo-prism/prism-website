@@ -32,10 +32,10 @@ Important notes for LLMs and agents:
 
 ## Growth services and dental specialties
 
-- Website ($300 one-time, delivered in 7 days, infinite iterations, optional $100/month care): https://www.design-prism.com/websites
-- Content OS (AI agents that scale content and ads across every social platform and your website, $5,000 to implement then $1,000/month): https://www.design-prism.com/content-os
-- Dental OS (the full Prism growth system packaged for dental practices): https://www.design-prism.com/dental-os
-- Prism Infinity (unlimited design, web, video, content, and ads subscription, $2,000/month): https://www.design-prism.com/prism-infinity
+- Website (ultra-premium PRO builds: design systems, engineering, analytics, Google + AI search; scoped on a 30-minute call): https://www.design-prism.com/websites
+- Content OS (AI agents that scale content and ads across every social platform and your website, implemented over 3 months then optimized monthly, scoped on a 30-minute call): https://www.design-prism.com/content-os
+- Dental OS (the full Prism growth system packaged for dental practices, scoped on a 30-minute call): https://www.design-prism.com/dental-os
+- Prism Infinity (unlimited design, web, video, content, and ads on one monthly subscription, scoped on a 30-minute call): https://www.design-prism.com/prism-infinity
 - Dental practices: https://www.design-prism.com/why-dental-practices-love-prism
 - Dental website design: https://www.design-prism.com/dental-website
 - SEO: https://www.design-prism.com/seo

@@ -38,8 +38,7 @@ import HomeCountUp from '@/components/home/HomeCountUp'
 import HomeReveal from '@/components/home/HomeReveal'
 import InfinityRotatingWord from '@/components/prism-infinity/InfinityRotatingWord'
 import { FAQSchema, ServiceSchema } from '@/components/schema-markup'
-import { paymentLink } from '@/lib/payment-links'
-import { PRISM_INFINITY_PRICE_LABEL } from '@/lib/pricing-model'
+import { BOOK_A_CALL_CTA, PRISM_INFINITY_PRICE_LABEL } from '@/lib/pricing-model'
 import { buildRouteMetadata } from '@/lib/seo/metadata'
 import { cn } from '@/lib/utils'
 
@@ -47,11 +46,10 @@ import styles from './prism-infinity.module.css'
 
 const PAGE_TITLE = 'Prism Infinity'
 const PAGE_DESCRIPTION =
-  'Unlimited design, websites, video, content, and ads for $2,000 per month. Submit one request at a time and pause anytime.'
+  'Unlimited design, websites, video, content, and ads on one monthly subscription. Submit one request at a time and pause anytime.'
 const CANONICAL_URL = 'https://www.design-prism.com/prism-infinity'
-const SUBSCRIBE_HREF = paymentLink('infinity')
-const INTRO_HREF = '/contact?topic=prism-infinity'
-const SUBSCRIBE_LABEL = `Subscribe — ${PRISM_INFINITY_PRICE_LABEL}`
+const SUBSCRIBE_HREF = BOOK_A_CALL_CTA.href
+const SUBSCRIBE_LABEL = BOOK_A_CALL_CTA.label
 
 export const metadata: Metadata = buildRouteMetadata({
   titleStem: PAGE_TITLE,
@@ -157,7 +155,7 @@ const BENEFITS: readonly {
 }[] = [
   {
     title: 'Fixed monthly rate',
-    body: 'One flat $2,000/month. No scope creep, no surprise invoices, no hourly billing.',
+    body: 'One flat monthly subscription. No scope creep, no surprise invoices, no hourly billing.',
     icon: BadgeDollarSign,
   },
   {
@@ -243,6 +241,11 @@ const FAQ_ITEMS = [
     question: 'What is out of scope?',
     answer:
       'Prism Infinity covers design, web, video, content, and ads production. It does not include paid ad spend, third-party software or licensing fees, or large custom software builds — we flag those up front and scope them separately.',
+  },
+  {
+    question: 'How much does Prism Infinity cost?',
+    answer:
+      'One flat monthly subscription, scoped to your business. Book a 30-minute Zoom call and we will size the plan together — you leave the call knowing exactly what it costs and what you get.',
   },
 ] as const
 
@@ -433,8 +436,8 @@ export default function PrismInfinityPage() {
                     One subscription.
                   </h1>
                   <p className="max-w-[40rem] text-pretty font-sans text-[1.02rem] leading-7 text-[#b8afa2] sm:text-[1.12rem] sm:leading-8 lg:max-w-[34rem]">
-                    $2,000/month for unlimited design, web, video, content, ads,
-                    and more — delivered one request at a time.
+                    One monthly subscription for unlimited design, web, video,
+                    content, ads, and more — delivered one request at a time.
                   </p>
                 </div>
 
@@ -473,19 +476,13 @@ export default function PrismInfinityPage() {
                 <div className="flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:items-center sm:gap-6">
                   <CoreActionLink
                     href={SUBSCRIBE_HREF}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     variant="heroPrimary"
-                    label="subscribe prism infinity"
+                    label="book a 30-min call"
                     location="prism-infinity hero"
                   >
                     {SUBSCRIBE_LABEL}
-                  </CoreActionLink>
-                  <CoreActionLink
-                    href={INTRO_HREF}
-                    variant="primary"
-                    label="book intro prism infinity"
-                    location="prism-infinity hero"
-                  >
-                    Book a 15-min intro
                   </CoreActionLink>
                 </div>
               </div>
@@ -674,9 +671,11 @@ export default function PrismInfinityPage() {
               </HomeReveal>
               <HomeReveal delay={120} className="lg:justify-self-end">
                 <CoreActionLink
-                  href={INTRO_HREF}
+                  href={SUBSCRIBE_HREF}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   variant="primary"
-                  label="book intro prism infinity"
+                  label="book a 30-min call"
                   location="prism-infinity risk reversal"
                 >
                   Ask us how it works
@@ -743,11 +742,11 @@ export default function PrismInfinityPage() {
               <div className="relative z-10 mx-auto flex max-w-2xl flex-col items-center">
                 <InfinityGlyph className="h-14 w-28" />
                 <div className="mt-6">
-                  <SectionKicker>One simple price</SectionKicker>
+                  <SectionKicker>One subscription</SectionKicker>
                 </div>
                 <p
                   className={cn(
-                    'mt-6 font-sans text-[clamp(3rem,8vw,4.5rem)] font-medium leading-none tracking-[-0.05em]',
+                    'mt-6 font-sans text-[clamp(2.2rem,6vw,3.6rem)] font-medium leading-none tracking-[-0.05em]',
                     styles.priceShimmer,
                   )}
                 >
@@ -755,24 +754,19 @@ export default function PrismInfinityPage() {
                 </p>
                 <p className="mt-5 max-w-md text-pretty text-[1.02rem] leading-8 text-[#b8afa2]">
                   Unlimited requests across design, web, video, content, and
-                  ads. Pause or cancel anytime.
+                  ads. Pause or cancel anytime. Book a 30-minute Zoom call and
+                  we&apos;ll scope your subscription together.
                 </p>
                 <div className="mt-9 flex flex-col items-center gap-4 sm:flex-row sm:gap-6">
                   <CoreActionLink
                     href={SUBSCRIBE_HREF}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     variant="heroPrimary"
-                    label="subscribe prism infinity"
+                    label="book a 30-min call"
                     location="prism-infinity pricing recap"
                   >
                     {SUBSCRIBE_LABEL}
-                  </CoreActionLink>
-                  <CoreActionLink
-                    href={INTRO_HREF}
-                    variant="primary"
-                    label="book intro prism infinity"
-                    location="prism-infinity pricing recap"
-                  >
-                    Book a 15-min intro
                   </CoreActionLink>
                 </div>
               </div>
@@ -824,26 +818,20 @@ export default function PrismInfinityPage() {
               <HomeReveal>
                 <CoreSectionHeading
                   title="Start Prism Infinity."
-                  description="One subscription for everything Prism does. Subscribe today and send your first request within minutes."
+                  description="One subscription for everything Prism does. Book a 30-minute Zoom call and we'll scope it together."
                 />
               </HomeReveal>
               <HomeReveal delay={120}>
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-6">
                   <CoreActionLink
                     href={SUBSCRIBE_HREF}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     variant="heroPrimary"
-                    label="subscribe prism infinity"
+                    label="book a 30-min call"
                     location="prism-infinity final cta"
                   >
-                    Start Prism Infinity
-                  </CoreActionLink>
-                  <CoreActionLink
-                    href={INTRO_HREF}
-                    variant="primary"
-                    label="book call prism infinity"
-                    location="prism-infinity final cta"
-                  >
-                    Book a call
+                    {SUBSCRIBE_LABEL}
                   </CoreActionLink>
                 </div>
               </HomeReveal>
@@ -862,11 +850,8 @@ export default function PrismInfinityPage() {
         offerDetails={{
           name: 'Prism Infinity',
           description:
-            'Unlimited Prism across design, web, video, content, and ads for a flat $2,000/month. Unlimited requests, delivered one at a time. Pause or cancel anytime.',
+            'Unlimited Prism across design, web, video, content, and ads on one monthly subscription. Unlimited requests, delivered one at a time. Pause or cancel anytime. Scoped on a 30-minute call.',
           businessFunction: 'http://purl.org/goodrelations/v1#Sell',
-          price: '2000',
-          priceCurrency: 'USD',
-          billingPeriod: 'P1M',
           availability: 'https://schema.org/InStock',
           url: CANONICAL_URL,
         }}

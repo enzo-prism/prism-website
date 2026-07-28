@@ -18,29 +18,29 @@ import {
 } from '@/lib/pricing-model'
 import { cn } from '@/lib/utils'
 
-// How an order moves once you pick the $300 website. (Identifier kept for the
+// How any Prism engagement starts. (Identifier kept for the
 // pricing-consistency required-snippet guard.)
 const growthPathSteps = [
   {
     stage: '01',
-    title: 'Describe your website',
-    price: 'About a minute',
+    title: 'Book a 30-min call',
+    price: '30 minutes',
     description:
-      'Tell Prism what you do and what you want. A short brief is all it takes to start — no long discovery call required.',
+      'A 30-minute Zoom call. We map your business, market, and goals — no long discovery process, no email estimates.',
   },
   {
     stage: '02',
-    title: 'Pay $300',
-    price: '$300 one-time',
+    title: 'Leave with a clear price',
+    price: 'Scoped live',
     description:
-      'Secure one-time checkout. No retainer, no surprise scope. The price is the price, and work starts right away.',
+      'Every offer is scoped to your business on the call. You leave knowing exactly what it costs and what you get.',
   },
   {
     stage: '03',
-    title: 'Live within 7 days',
-    price: '7 days',
+    title: 'We build',
+    price: 'Prism standard',
     description:
-      'Your site is built and launched within a week, with infinite iterations until you love it. Add care for $100/month when it is ready.',
+      'Design, engineering, and analytics to the Prism standard — with iterations until you love it.',
   },
 ] as const
 
@@ -52,28 +52,33 @@ const pricingSnapshot = PRICING_OFFER_ORDER.map((offerId) => {
     item: offer.name,
     price: offer.priceLabel,
     role: offer.description,
-    href: offer.primaryCta.href,
+    // Rows navigate to the offer page; the booking CTA lives on the offer
+    // cards below. Website's primary CTA is its own page, others' primary CTA
+    // is the external booking link, so prefer the internal secondary link.
+    href: offer.primaryCta.href.startsWith('/')
+      ? offer.primaryCta.href
+      : (offer.secondaryCta?.href ?? offer.primaryCta.href),
   }
 })
 
-// The ongoing, recurring systems. (Identifier kept for the pricing-consistency
-// required-snippet guard.)
+// The ongoing, recurring systems — all scoped on a 30-minute call.
+// (Identifier kept for the pricing-consistency required-snippet guard.)
 const partnerLevels = [
   {
     title: 'Website Care',
-    price: '$100/month',
+    price: 'Scoped with your build',
     description:
       'Hosting, updates, and ongoing edits for your Prism website once it is live. Optional, and only after delivery.',
   },
   {
     title: 'Content OS',
-    price: '$5,000 + $1,000/month',
+    price: 'Scoped on a call',
     description:
-      'AI agents that scale your content and ads across every platform and your website. $5,000 to implement over 3 months, then $1,000/month to keep optimizing.',
+      'AI agents that scale your content and ads across every platform and your website. Implemented over 3 months, then optimized every month.',
   },
   {
     title: 'Prism Infinity',
-    price: '$2,000/month',
+    price: 'Scoped on a call',
     description:
       'Unlimited Prism services across engineering, design, and marketing — one request at a time. Pause or cancel anytime.',
   },
@@ -102,34 +107,34 @@ const CTA_PROOF_POINTS = [
 
 const faqs = [
   {
-    question: 'What does the $300 website include?',
+    question: 'How does Prism pricing work?',
     answer:
-      'A complete, custom website built and launched within 7 days, with infinite iterations until you love it. You describe what you want, pay once, and Prism builds it.',
+      'Every offer is scoped to your business on a 30-minute Zoom call — the website, Content OS, Dental OS, and Prism Infinity. You leave the call with a clear plan and a clear price. No estimates by email, no surprise scope.',
   },
   {
-    question: 'What if I do not like the first version?',
+    question: 'What does the PRO website include?',
     answer:
-      'You get infinite iterations. Prism keeps refining the site until it is exactly right — there is no revision limit on a website build.',
+      'A bespoke design system, software-grade engineering, and analytics wired from day one — structured to rank on Google and get cited by AI assistants like ChatGPT, Gemini, and Claude. Iterations continue until you love it, and the finished site is 100% yours.',
   },
   {
-    question: 'What is the $100/month for?',
+    question: 'What is Website Care?',
     answer:
-      'Optional Website Care: hosting, updates, and ongoing edits after your site is live. You only add it once the site is delivered, and you can cancel anytime.',
+      'Optional ongoing care: hosting, updates, and ongoing edits after your site is live. It is scoped with your build, added only once the site is delivered, and you can cancel anytime.',
   },
   {
     question: 'How does Content OS pricing work?',
     answer:
-      'Content OS is $5,000 to implement over 3 months, then $1,000/month for Prism to keep optimizing your content and ad agents across every platform.',
+      'Content OS is implemented over 3 months, then optimized every month. Pricing is scoped to your business — book a 30-minute Zoom call and we will map the system and the investment together.',
   },
   {
     question: 'What is Prism Infinity?',
     answer:
-      'A $2,000/month subscription for unlimited Prism services — logo and print design, web development, video editing, content, ads, slide decks, photoshoots, and more — delivered one request at a time. Pause or cancel anytime.',
+      'A monthly subscription for unlimited Prism services — logo and print design, web development, video editing, content, ads, slide decks, photoshoots, and more — delivered one request at a time. Pause or cancel anytime. Book a 30-minute call to scope your plan.',
   },
   {
     question: 'How is Dental OS priced?',
     answer:
-      'Dental OS is scoped to your practice and combines your website, SEO and AI search, Google Maps, reviews, and ads into one system. Book a call and Prism will scope it with you.',
+      'Dental OS is scoped to your practice and combines your website, SEO and AI search, Google Maps, reviews, and ads into one system. Book a 30-minute Zoom call and Prism will scope it with you.',
   },
 ] as const
 
@@ -148,7 +153,7 @@ export default function PricingPageClient() {
           <CoreSectionHeading
             eyebrow="Snapshot"
             title="Four offers. Buy once, or run an ongoing system."
-            description="Order a website for $300, or plug in a system that scales your content, packages your whole dental front office, or puts every Prism service on tap."
+            description="A PRO website for your online presence, a system that scales your content, your whole dental front office packaged, or every Prism service on tap."
           />
 
           <div className="overflow-hidden border-y border-white/12">
@@ -179,7 +184,7 @@ export default function PricingPageClient() {
             <CoreSectionHeading
               eyebrow="The offers"
               title="Pick how you want to grow."
-              description="Each offer is a clear price and a clear scope. Start small with a website, or run a full Prism system."
+              description="Book a 30-minute Zoom call and we'll scope the right Prism system together — you leave with a clear plan and a clear price."
             />
           </div>
 
@@ -215,6 +220,14 @@ export default function PricingPageClient() {
                   <div className="mt-auto flex flex-wrap items-center gap-x-6 gap-y-3 pt-2">
                     <CoreActionLink
                       href={offer.primaryCta.href}
+                      target={
+                        offer.primaryCta.href.startsWith('/') ? undefined : '_blank'
+                      }
+                      rel={
+                        offer.primaryCta.href.startsWith('/')
+                          ? undefined
+                          : 'noopener noreferrer'
+                      }
                       label={offer.primaryCta.label.toLowerCase()}
                       location={`pricing offers · ${offer.name}`}
                       variant="primary"
@@ -245,7 +258,7 @@ export default function PricingPageClient() {
             <CoreSectionHeading
               eyebrow="How a website order works"
               title="Describe it, pay, and it is live in 7 days."
-              description="The $300 website is the fastest way to start with Prism. Three steps, no long discovery, infinite iterations until you love it."
+              description="Every engagement starts the same way: a 30-minute Zoom call, a clear scope, and a clear price."
               titleClassName="max-w-[14ch]"
             />
           </div>
@@ -323,7 +336,7 @@ export default function PricingPageClient() {
           <CoreSectionHeading
             eyebrow="FAQ"
             title="Common pricing questions."
-            description="Clear answers on the $300 website, ongoing care, Content OS, Prism Infinity, and Dental OS."
+            description="Clear answers on the PRO website, ongoing care, Content OS, Prism Infinity, and Dental OS."
           />
 
           <div className="border-t border-white/12 lg:border-t-0">
@@ -353,7 +366,7 @@ export default function PricingPageClient() {
         >
           <CoreSectionHeading
             title="Start with a website. Grow into the whole system."
-            description="Order your $300 website today, or explore Content OS, Dental OS, and Prism Infinity."
+            description="Book a 30-minute call to scope your website, Content OS, Dental OS, or Prism Infinity."
             titleClassName="max-w-[14ch]"
           />
 
@@ -378,7 +391,12 @@ export default function PricingPageClient() {
           </p>
 
           <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:gap-5">
-            <CoreActionLink href={PRICING_PRIMARY_CTA.href} variant="heroPrimary">
+            <CoreActionLink
+              href={PRICING_PRIMARY_CTA.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              variant="heroPrimary"
+            >
               {PRICING_PRIMARY_CTA.label}
             </CoreActionLink>
             <CoreActionLink
@@ -389,7 +407,7 @@ export default function PricingPageClient() {
             </CoreActionLink>
           </div>
           <p className="mt-6 font-mono text-[0.72rem] uppercase tracking-[0.18em] text-[#d8bc79]">
-            $300 one-time &middot; live in 7 days &middot; infinite iterations until you love it
+            scoped on a 30-min call &middot; built to the Prism standard &middot; iterations until you love it
           </p>
         </div>
       </section>
@@ -432,8 +450,6 @@ function PricingStructuredData() {
           name: contentOs.name,
           description: contentOs.description,
           businessFunction: 'http://purl.org/goodrelations/v1#ProvideService',
-          price: String(contentOs.price),
-          priceCurrency: 'USD',
           availability: 'https://schema.org/InStock',
           url: 'https://www.design-prism.com/content-os',
         }}
@@ -448,8 +464,6 @@ function PricingStructuredData() {
           name: infinity.name,
           description: infinity.description,
           businessFunction: 'http://purl.org/goodrelations/v1#ProvideService',
-          price: String(infinity.price),
-          priceCurrency: 'USD',
           availability: 'https://schema.org/InStock',
           url: 'https://www.design-prism.com/prism-infinity',
         }}

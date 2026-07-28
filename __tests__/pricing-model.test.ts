@@ -1,32 +1,40 @@
 import {
+  BOOK_A_CALL_CTA,
   CANONICAL_PRICING_OFFERS,
-  CONTENT_OS_MONTHLY_PRICE,
   CONTENT_OS_PRICE_LABEL,
-  CONTENT_OS_SETUP_PRICE,
   DENTAL_OS_PRICE_LABEL,
   PRICING_OFFER_ORDER,
   PRICING_PRIMARY_CTA,
-  PRISM_INFINITY_MONTHLY_PRICE,
   PRISM_INFINITY_PRICE_LABEL,
-  WEBSITE_CARE_MONTHLY_PRICE,
-  WEBSITE_PRICE,
   WEBSITE_PRICE_LABEL,
 } from "@/lib/pricing-model"
+import { BOOKING_URL } from "@/lib/booking"
+
+const ALL_OFFER_IDS = [
+  "website",
+  "content_os",
+  "dental_os",
+  "prism_infinity",
+] as const
 
 describe("pricing model", () => {
-  it("exports canonical numeric prices", () => {
-    expect(WEBSITE_PRICE).toBe(300)
-    expect(WEBSITE_CARE_MONTHLY_PRICE).toBe(100)
-    expect(CONTENT_OS_SETUP_PRICE).toBe(5000)
-    expect(CONTENT_OS_MONTHLY_PRICE).toBe(1000)
-    expect(PRISM_INFINITY_MONTHLY_PRICE).toBe(2000)
+  it("exports canonical display labels with no public dollar amounts", () => {
+    expect(WEBSITE_PRICE_LABEL).toBe("Custom — scoped on a call")
+    expect(CONTENT_OS_PRICE_LABEL).toBe("Custom — scoped on a call")
+    expect(PRISM_INFINITY_PRICE_LABEL).toBe("Custom — scoped on a call")
+    expect(DENTAL_OS_PRICE_LABEL).toBe("Built around your practice")
   })
 
-  it("exports canonical display labels", () => {
-    expect(WEBSITE_PRICE_LABEL).toBe("$300 one-time")
-    expect(CONTENT_OS_PRICE_LABEL).toBe("$5,000 + $1,000/month")
-    expect(PRISM_INFINITY_PRICE_LABEL).toBe("$2,000/month")
-    expect(DENTAL_OS_PRICE_LABEL).toBe("Built around your practice")
+  it("keeps every offer call-first: no public price on any offer", () => {
+    for (const offerId of ALL_OFFER_IDS) {
+      const offer = CANONICAL_PRICING_OFFERS[offerId]
+      expect(offer.priceKind).toBe("custom")
+      expect(offer.price).toBe(0)
+      expect(offer.monthlyPrice).toBeUndefined()
+      expect(offer.priceLabel).not.toMatch(/\$/)
+      expect(offer.priceSubLabel ?? "").not.toMatch(/\$/)
+      expect(offer.description).not.toMatch(/\$/)
+    }
   })
 
   it("models the four productized offers in canonical order", () => {
@@ -36,24 +44,34 @@ describe("pricing model", () => {
       "dental_os",
       "prism_infinity",
     ])
-    expect(CANONICAL_PRICING_OFFERS.website.price).toBe(WEBSITE_PRICE)
-    expect(CANONICAL_PRICING_OFFERS.website.monthlyPrice).toBe(
-      WEBSITE_CARE_MONTHLY_PRICE,
-    )
-    expect(CANONICAL_PRICING_OFFERS.content_os.price).toBe(CONTENT_OS_SETUP_PRICE)
-    expect(CANONICAL_PRICING_OFFERS.content_os.monthlyPrice).toBe(
-      CONTENT_OS_MONTHLY_PRICE,
-    )
-    expect(CANONICAL_PRICING_OFFERS.dental_os.priceKind).toBe("custom")
-    expect(CANONICAL_PRICING_OFFERS.prism_infinity.price).toBe(
-      PRISM_INFINITY_MONTHLY_PRICE,
-    )
   })
 
-  it("points the pricing primary CTA at the website order flow", () => {
-    expect(PRICING_PRIMARY_CTA).toMatchObject({
-      label: "Order your website — $300",
-      href: "/websites",
+  it("points every primary CTA at the 30-min booking link", () => {
+    expect(BOOK_A_CALL_CTA).toMatchObject({
+      label: "Book a 30-min call",
+      href: BOOKING_URL,
     })
+    expect(BOOKING_URL).toMatch(/^https:\/\/calendar\.notion\.so\//)
+    for (const offerId of ALL_OFFER_IDS) {
+      expect(CANONICAL_PRICING_OFFERS[offerId].primaryCta).toEqual(
+        BOOK_A_CALL_CTA,
+      )
+    }
+    expect(PRICING_PRIMARY_CTA).toEqual(BOOK_A_CALL_CTA)
+  })
+
+  it("keeps an internal explore link for every offer page", () => {
+    expect(CANONICAL_PRICING_OFFERS.website.secondaryCta?.href).toBe(
+      "/websites",
+    )
+    expect(CANONICAL_PRICING_OFFERS.content_os.secondaryCta?.href).toBe(
+      "/content-os",
+    )
+    expect(CANONICAL_PRICING_OFFERS.dental_os.secondaryCta?.href).toBe(
+      "/dental-os",
+    )
+    expect(CANONICAL_PRICING_OFFERS.prism_infinity.secondaryCta?.href).toBe(
+      "/prism-infinity",
+    )
   })
 })

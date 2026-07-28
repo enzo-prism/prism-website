@@ -5,10 +5,7 @@ import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
 
 import Footer from '@/components/footer'
-import MobileOrderBar from '@/components/websites/MobileOrderBar'
 import Navbar from '@/components/navbar'
-import BaseOfferShowcase from '@/components/websites/BaseOfferShowcase'
-import WebsiteOrderForm from '@/components/forms/WebsiteOrderForm'
 import {
   CoreActionLink,
   CoreSectionHeading,
@@ -17,22 +14,15 @@ import {
   coreRouteSectionCompactClassName,
 } from '@/components/core-route/CoreRoutePrimitives'
 import { FAQSchema, ServiceSchema } from '@/components/schema-markup'
+import { BOOK_A_CALL_CTA } from '@/lib/pricing-model'
 import { buildRouteMetadata } from '@/lib/seo/metadata'
-import { hasPaymentLink, paymentLink } from '@/lib/payment-links'
 import { websiteProjects } from '@/lib/website-projects'
 import { cn } from '@/lib/utils'
 
-const PAGE_TITLE = '$300 custom websites'
+const PAGE_TITLE = 'Pro websites'
 const PAGE_DESCRIPTION =
-  'Get a custom website for a flat $300, delivered in seven days with unlimited revisions and full ownership.'
+  'Ultra-premium websites for serious businesses: design systems, engineering, and analytics built to rank on Google and get cited by AI.'
 const CANONICAL_URL = 'https://www.design-prism.com/websites'
-
-// Optional post-launch care plan. Opens checkout in a new tab once a real
-// Stripe link is wired; until then it falls back to /contact (same tab).
-const WEBSITE_CARE_LINK = paymentLink('websiteCare')
-const CARE_LINK_IS_EXTERNAL = hasPaymentLink('websiteCare')
-const CARE_LINK_TARGET = CARE_LINK_IS_EXTERNAL ? '_blank' : undefined
-const CARE_LINK_REL = CARE_LINK_IS_EXTERNAL ? 'noopener noreferrer' : undefined
 
 export const metadata: Metadata = buildRouteMetadata({
   titleStem: PAGE_TITLE,
@@ -41,59 +31,85 @@ export const metadata: Metadata = buildRouteMetadata({
   ogImage: '/prism-opengraph.png',
 })
 
-const OWNERSHIP_POINTS = [
+// The three disciplines every PRO build is judged against.
+const PILLARS = [
   {
-    title: 'It is 100% yours',
-    body: 'The moment it ships, the website and everything in it belongs to you. No lock-in, no hostage hosting.',
+    label: 'Design',
+    title: 'A design system, not a template',
+    body: 'Every build starts with its own system — typography scale, color, spacing, and motion — so every page feels composed, not assembled. Ultra-premium art direction that earns trust in the first second.',
+    points: [
+      'Bespoke design system per brand',
+      'Typography, color, and motion standards',
+      'Composed pages, never template blocks',
+    ],
   },
   {
-    title: 'Infinite iterations',
-    body: 'We keep refining until you genuinely love it. There is no revision limit and no extra charge to get it right.',
+    label: 'Engineering',
+    title: 'Built like software, not a brochure',
+    body: 'Modern stack, obsessive performance, and accessibility as a baseline. Fast on a phone in a parking lot, flawless in an audit, and structured so search engines understand every page.',
+    points: [
+      'Core Web Vitals in the green',
+      'Accessible, semantic, hardened markup',
+      'Technical SEO foundations built in',
+    ],
   },
   {
-    title: 'Live in about 7 days',
-    body: 'The moment you pay, our team starts building to your exact spec. Your site goes live within a week.',
+    label: 'Analytics',
+    title: 'Instrumented from day one',
+    body: 'Every call, form, and click is measured. GA4 and conversion tracking are wired before launch, so you know exactly what your website produces — not what you hope it produces.',
+    points: [
+      'GA4 + conversion tracking wired in',
+      'Lead and call attribution',
+      'Reporting you can make decisions with',
+    ],
   },
-  {
-    title: 'Your call after launch',
-    body: 'When you are happy, add a $100/month care plan, or host it yourself. Either way, the site stays yours.',
-  },
+] as const
+
+// Where a PRO website has to win in 2026: classic search AND AI answers.
+const SEARCH_SURFACES = [
+  'Google Search',
+  'Google Maps',
+  'AI Overviews',
+  'ChatGPT',
+  'Gemini',
+  'Claude',
+  'Perplexity',
 ] as const
 
 const PROCESS_STEPS = [
   {
-    label: 'Describe it',
-    body: 'Tell us exactly what you want, with as much context as you like. Pages, style, inspiration, content — the more, the better.',
+    label: 'Book a 30-min call',
+    body: 'A 30-minute Zoom call. We map your business, market, and goals — you leave with a clear plan and a clear price.',
   },
   {
-    label: 'Pay $300',
-    body: 'A flat $300, one-time. Paying kicks off the build — no retainer, no surprise scope, no upsells.',
+    label: 'Design & build',
+    body: 'We design the system, compose the pages, and engineer the build to the Prism standard.',
   },
   {
-    label: 'Live in 7 days',
-    body: 'Our team designs, builds, QA-checks, and launches your website within about a week.',
+    label: 'Wire the instruments',
+    body: 'Analytics, conversion tracking, structured data, and search foundations go in before launch — not after.',
   },
   {
-    label: 'Until you love it',
-    body: 'We do infinite iterations until you are thrilled. The finished site is 100% yours.',
+    label: 'Fully dialed',
+    body: 'We iterate until you love it, then keep the whole presence tuned — search, AI visibility, and conversion.',
   },
 ] as const
 
 const FAQ_ITEMS = [
   {
-    question: 'Is it really a flat $300?',
+    question: 'What makes a Prism PRO website different?',
     answer:
-      'Yes. Every website is a flat $300, one-time. You tell us exactly what you want, pay once, and we build and launch it within about 7 days. There is no dynamic pricing and no add-on creep.',
+      'It is built as a complete online presence, not a brochure: a bespoke design system, software-grade engineering, analytics wired from day one, and search foundations that cover both Google and AI assistants like ChatGPT, Gemini, and Claude.',
   },
   {
-    question: 'How does ordering work?',
+    question: 'How does pricing work?',
     answer:
-      'You describe the website you want and submit your request. Then you pay the $300 to kick off the build. The moment you pay, our team starts developing the site to your exact spec.',
+      'Every build is scoped to the business on a 30-minute Zoom call. You leave the call with a clear plan and a clear price — no estimates by email, no surprise scope.',
   },
   {
-    question: 'What if I do not like the first version?',
+    question: 'How do you make a website rank on AI assistants?',
     answer:
-      'You get infinite iterations. We keep refining until you genuinely love it — there is no revision limit and no extra charge to get it right.',
+      'Structured data, entity-clear content, clean semantics, and authoritative proof — the same discipline that wins Google also makes a business easy for ChatGPT, Gemini, Claude, and Perplexity to find, trust, and cite.',
   },
   {
     question: 'Do I own the website?',
@@ -103,7 +119,7 @@ const FAQ_ITEMS = [
   {
     question: 'What happens after launch?',
     answer:
-      'Your call. Add a $100/month care plan for hosting, updates, and ongoing edits handled by Prism, or host the site yourself. Either way, it stays yours.',
+      'Your call. Prism can keep running the site — updates, analytics, search, and AI visibility — or hand it off fully. Either way, it stays yours.',
   },
 ] as const
 
@@ -129,7 +145,7 @@ const PROOF_BUILDS = [
 ] as const
 
 // Real, source-attributed results from lib/case-study-data.ts (Google Search
-// Console). Used as proof beside the order form — keep in sync with the source.
+// Console). Keep in sync with the source; do not invent metrics.
 const PROOF_POINTS = [
   {
     value: '5.3×',
@@ -167,41 +183,43 @@ export default function WebsitesPage() {
         <section className="border-b border-white/12 px-4 pb-16 pt-16 sm:px-6 sm:pb-20 sm:pt-24">
           <div className="mx-auto max-w-6xl">
             <div className="mx-auto max-w-4xl text-center">
-              <SectionKicker>One-time website build</SectionKicker>
-              <h1 className="mx-auto mt-6 max-w-[14ch] text-balance text-[clamp(2.65rem,7.5vw,5.8rem)] font-medium leading-[0.94] tracking-[-0.06em] text-[#f5f0e8]">
-                A website you&rsquo;ll love. $300.
+              <SectionKicker>The PRO website</SectionKicker>
+              <h1 className="mx-auto mt-6 max-w-[16ch] text-balance text-[clamp(2.65rem,7.5vw,5.4rem)] font-medium leading-[0.94] tracking-[-0.06em] text-[#f5f0e8]">
+                Your online presence, fully dialed.
               </h1>
               <p className="mx-auto mt-6 max-w-2xl text-pretty text-[1.08rem] leading-8 text-[#b8afa2] sm:text-[1.18rem]">
-                Tell us exactly what you want, pay a flat $300, and it&rsquo;s
-                live within 7 days &mdash; with infinite iterations until you
-                love it. The finished site is 100% yours.
+                Ultra-premium design, engineering, and analytics for serious
+                businesses. Built on a real design system, engineered to rank
+                on Google, and structured so AI assistants find and cite you.
               </p>
 
               <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
                 <CoreActionLink
-                  href="#order"
+                  href={BOOK_A_CALL_CTA.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   variant="heroPrimary"
-                  label="start your website"
+                  label="book a 30-min call"
                   location="websites hero"
                 >
-                  Start your website
+                  {BOOK_A_CALL_CTA.label}
                 </CoreActionLink>
                 <CoreActionLink
-                  href="#proof"
+                  href="#work"
                   variant="heroSecondary"
                   label="see website proof"
                   location="websites hero"
                 >
-                  See recent builds
+                  See the work
                 </CoreActionLink>
               </div>
 
               <div className="mt-8 flex flex-wrap items-center justify-center gap-2">
                 {[
-                  '$300 flat',
-                  'Live in 7 days',
-                  'Infinite iterations',
-                  'Yours to keep',
+                  'Design systems',
+                  'Engineered to rank',
+                  'Analytics wired in',
+                  'Google + AI search',
                 ].map((item) => (
                   <span
                     key={item}
@@ -252,110 +270,111 @@ export default function WebsitesPage() {
           </div>
         </section>
 
-        <BaseOfferShowcase />
-
-        <section
-          id="start"
-          className="scroll-mt-24 border-b border-white/12 px-4 py-20 sm:px-6 sm:py-24"
-        >
-          <div
-            className={cn(
-              coreRouteContainerClassName,
-              'grid gap-10 xl:grid-cols-[0.72fr_1.28fr] xl:items-start',
-            )}
-          >
-            <div className="space-y-7">
-              <CoreSectionHeading
-                eyebrow="Start"
-                title="Tell us what to build."
-                description="Describe the website you want with as much context as you like. Submit your request, pay the flat $300, and our team starts building to your exact spec."
-              />
-              <div className="space-y-4 border-t border-white/10 pt-6">
-                <p className="font-sans text-[0.92rem] leading-7 text-[#b8afa2]">
-                  One website, one price: a flat $300, one-time. No dynamic
-                  pricing, no add-on creep. Live within 7 days, with infinite
-                  iterations until you love it.
-                </p>
-                <p className="font-sans text-[0.92rem] leading-7 text-[#8f877b]">
-                  The finished site is 100% yours. After launch, add $100/month
-                  care or host it yourself &mdash; your call.
-                </p>
-              </div>
-
-              <div className="border-t border-white/10 pt-6">
-                <p className="font-mono text-[0.72rem] uppercase tracking-[0.2em] text-[#d8bc79]">
-                  $300 flat &middot; live in 7 days &middot; infinite iterations
-                </p>
-                <p className="mt-4 text-sm leading-7 text-[#b8afa2]">
-                  The same Prism website system behind these measured results:
-                </p>
-                <ul className="mt-5 grid gap-px overflow-hidden border border-white/10 bg-white/10">
-                  {PROOF_POINTS.map((proof) => (
-                    <li key={proof.label} className="bg-black">
-                      <Link
-                        href={proof.href}
-                        className="group flex items-baseline gap-4 p-4 transition-colors hover:bg-[#0b0b0b] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[#d8bc79]/35"
-                      >
-                        <span className="shrink-0 font-sans text-[1.6rem] font-medium leading-none tracking-[-0.04em] text-[#f5f0e8]">
-                          {proof.value}
-                        </span>
-                        <span className="text-[0.82rem] leading-6 text-[#b8afa2] group-hover:text-[#c9c1b6]">
-                          {proof.label}
-                        </span>
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-                <p className="mt-4 font-mono text-[0.68rem] uppercase tracking-[0.16em] text-[#8f877b]">
-                  Source: Google Search Console
-                </p>
-              </div>
-            </div>
-
-            <WebsiteOrderForm />
-          </div>
-        </section>
-
         <section className={coreRouteSectionClassName}>
-          <div
-            className={cn(
-              coreRouteContainerClassName,
-              'grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-start',
-            )}
-          >
+          <div className={coreRouteContainerClassName}>
             <CoreSectionHeading
-              eyebrow="What you get"
-              title="One flat price. The whole thing, yours."
-              description="No tiers, no estimates, no negotiation. You describe it, we build it, and we keep going until you love it."
+              eyebrow="The standard"
+              title="Design. Engineering. Analytics."
+              description="Three disciplines, one build. This is what separates a PRO website from a pretty homepage."
             />
-            <div className="grid gap-4 sm:grid-cols-2">
-              {OWNERSHIP_POINTS.map((point) => (
+            <div className="mt-10 grid gap-4 lg:grid-cols-3">
+              {PILLARS.map((pillar, index) => (
                 <article
-                  key={point.title}
-                  className="border border-white/10 bg-[#070707] p-5"
+                  key={pillar.label}
+                  className="flex flex-col border border-white/10 bg-[#070707] p-6 sm:p-7"
                 >
-                  <h2 className="text-xl font-medium tracking-[-0.04em] text-[#f5f0e8]">
-                    {point.title}
+                  <p className="font-mono text-[0.7rem] uppercase tracking-[0.24em] text-[#8f877b]">
+                    {String(index + 1).padStart(2, '0')} — {pillar.label}
+                  </p>
+                  <h2 className="mt-5 text-[1.35rem] font-medium leading-tight tracking-[-0.04em] text-[#f5f0e8]">
+                    {pillar.title}
                   </h2>
                   <p className="mt-4 text-sm leading-7 text-[#b8afa2]">
-                    {point.body}
+                    {pillar.body}
                   </p>
+                  <ul className="mt-6 space-y-2 border-t border-white/10 pt-5">
+                    {pillar.points.map((point) => (
+                      <li
+                        key={point}
+                        className="flex items-start gap-3 text-[0.82rem] leading-6 text-[#c9c1b6]"
+                      >
+                        <span
+                          aria-hidden="true"
+                          className="mt-[9px] h-1 w-1 shrink-0 rounded-full bg-[#d8bc79]"
+                        />
+                        {point}
+                      </li>
+                    ))}
+                  </ul>
                 </article>
               ))}
             </div>
           </div>
         </section>
 
+        <section className="border-b border-white/12 px-4 py-20 sm:px-6 sm:py-24">
+          <div
+            className={cn(
+              coreRouteContainerClassName,
+              'grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start',
+            )}
+          >
+            <div className="space-y-7">
+              <CoreSectionHeading
+                eyebrow="Visibility"
+                title="Rank on Google. Get cited by AI."
+                description="Customers now ask search engines and AI assistants. A PRO website is structured to win both: technical SEO and local foundations for Google, entity-clear content and structured data so AI systems find, trust, and recommend you."
+              />
+              <div className="flex flex-wrap gap-2">
+                {SEARCH_SURFACES.map((surface) => (
+                  <span
+                    key={surface}
+                    className="inline-flex min-h-9 items-center rounded-full border border-white/12 bg-white/[0.03] px-4 font-mono text-[0.68rem] uppercase tracking-[0.18em] text-[#c9c1b6]"
+                  >
+                    {surface}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <p className="text-sm leading-7 text-[#b8afa2]">
+                The same Prism website system behind these measured results:
+              </p>
+              <ul className="mt-5 grid gap-px overflow-hidden border border-white/10 bg-white/10">
+                {PROOF_POINTS.map((proof) => (
+                  <li key={proof.label} className="bg-black">
+                    <Link
+                      href={proof.href}
+                      className="group flex items-baseline gap-4 p-4 transition-colors hover:bg-[#0b0b0b] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[#d8bc79]/35"
+                    >
+                      <span className="shrink-0 font-sans text-[1.6rem] font-medium leading-none tracking-[-0.04em] text-[#f5f0e8]">
+                        {proof.value}
+                      </span>
+                      <span className="text-[0.82rem] leading-6 text-[#b8afa2] group-hover:text-[#c9c1b6]">
+                        {proof.label}
+                      </span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+              <p className="mt-4 font-mono text-[0.68rem] uppercase tracking-[0.16em] text-[#8f877b]">
+                Source: Google Search Console
+              </p>
+            </div>
+          </div>
+        </section>
+
         <section
-          id="proof"
+          id="work"
           className="scroll-mt-24 border-b border-white/12 px-4 py-20 sm:px-6 sm:py-24"
         >
           <div className={coreRouteContainerClassName}>
             <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
               <CoreSectionHeading
-                eyebrow="Recent proof"
+                eyebrow="The work"
                 title="The bar is real."
-                description="A flat $300 does not mean a flat result. Every build comes from the same Prism website system."
+                description="Every build comes from the same Prism website system — design, engineering, and analytics held to the same standard."
               />
               <CoreActionLink
                 href="/case-studies"
@@ -399,8 +418,8 @@ export default function WebsitesPage() {
           <div className={coreRouteContainerClassName}>
             <CoreSectionHeading
               eyebrow="How it works"
-              title="Describe it, pay, and we build."
-              description="Four steps, no friction. You stay in control the whole way through."
+              title="One call starts it."
+              description="Scoped on a 30-minute Zoom call — you leave with a clear plan and a clear price."
             />
             <ol className="mt-10 grid gap-4 md:grid-cols-4">
               {PROCESS_STEPS.map((step, index) => (
@@ -425,33 +444,9 @@ export default function WebsitesPage() {
 
         <section className={coreRouteSectionCompactClassName}>
           <div className={coreRouteContainerClassName}>
-            <div className="grid gap-6 rounded-[2rem] border border-white/12 bg-black/35 p-8 sm:p-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:items-center">
-              <CoreSectionHeading
-                eyebrow="After launch"
-                title="When you love it, it is your call."
-                description="Add a $100/month care plan for hosting, updates, and ongoing edits handled by Prism, or host the site yourself. Either way, the website stays 100% yours. Cancel anytime."
-              />
-              <div className="lg:justify-self-end">
-                <CoreActionLink
-                  href={WEBSITE_CARE_LINK}
-                  variant="heroSecondary"
-                  label="add website care"
-                  location="websites care"
-                  target={CARE_LINK_TARGET}
-                  rel={CARE_LINK_REL}
-                >
-                  Add Website Care &mdash; $100/month
-                </CoreActionLink>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section className={coreRouteSectionCompactClassName}>
-          <div className={coreRouteContainerClassName}>
             <CoreSectionHeading
               eyebrow="FAQ"
-              title="Useful details before you start."
+              title="Useful details before the call."
             />
             <div className="mt-10 divide-y divide-white/10 border-y border-white/10">
               {FAQ_ITEMS.map((item) => (
@@ -470,26 +465,50 @@ export default function WebsitesPage() {
             </div>
           </div>
         </section>
+
+        <section className={coreRouteSectionClassName}>
+          <div
+            className={cn(
+              coreRouteContainerClassName,
+              'flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between',
+            )}
+          >
+            <CoreSectionHeading
+              title="Get your presence fully dialed."
+              description="Book a 30-minute Zoom call. We'll map your business and scope the build together."
+            />
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
+              <CoreActionLink
+                href={BOOK_A_CALL_CTA.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                variant="heroPrimary"
+                label="book a 30-min call"
+                location="websites final"
+              >
+                {BOOK_A_CALL_CTA.label}
+              </CoreActionLink>
+            </div>
+          </div>
+        </section>
       </main>
       <Footer />
       <ServiceSchema
-        serviceId="one-time-website-build"
-        name="One-time website build"
-        description="Custom one-time website builds for founders, operators, and small teams: a flat $300, delivered within 7 days with infinite iterations until you love it."
+        serviceId="pro-website"
+        name="Prism PRO website"
+        description="Ultra-premium website builds for serious businesses: a bespoke design system, software-grade engineering, and analytics wired from day one — structured to rank on Google and be cited by AI assistants. Scoped on a 30-minute call."
         serviceType="Website design and development"
         areaServed="United States"
         offerDetails={{
-          name: 'One-time website build',
+          name: 'Prism PRO website',
           description:
-            'A custom one-time website build for a flat $300, delivered within 7 days with infinite iterations until you love it. The finished site is 100% yours.',
+            'An ultra-premium website build — design system, engineering, analytics, and Google + AI search foundations. Scoped to the business on a 30-minute call.',
           businessFunction: 'http://purl.org/goodrelations/v1#ProvideService',
-          price: '300',
-          priceCurrency: 'USD',
+          availability: 'https://schema.org/InStock',
           url: CANONICAL_URL,
         }}
       />
       <FAQSchema questions={[...FAQ_ITEMS]} />
-      <MobileOrderBar />
     </div>
   )
 }

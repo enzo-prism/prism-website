@@ -15,7 +15,7 @@ const footerColumns: FooterColumn[] = [
   {
     heading: 'Offers',
     links: [
-      { label: 'Website — $300', href: '/websites' },
+      { label: 'PRO Website', href: '/websites' },
       { label: 'Content OS', href: '/content-os' },
       { label: 'Dental OS', href: '/dental-os' },
       { label: 'Prism Infinity', href: '/prism-infinity' },

@@ -19,7 +19,7 @@ const faqs = [
   },
   {
     question: "How much does a website cost?",
-    answer: "A Prism website is a flat $300, one-time. That covers design, build, and launch, with an optional $100/month care plan for hosting-level upkeep, edits, and support. For bigger systems — Content OS, Dental OS, or Prism Infinity — see the pricing page."
+    answer: "A Prism website is an ultra-premium PRO build: a bespoke design system, software-grade engineering, and analytics wired from day one, structured to rank on Google and get cited by AI. It is scoped to your business on a 30-minute Zoom call — you leave the call with a clear plan and a clear price. Optional ongoing care is scoped with your build."
   },
   {
     question: "What's included in your website development service?",
@@ -47,7 +47,7 @@ const faqs = [
   },
   {
     question: "Do you provide ongoing support and maintenance?",
-    answer: "Yes. Websites can add a $100/month care plan for updates, edits, and support. For ongoing growth across everything — websites, content, SEO, ads, and more — Prism Infinity is $2,000/month with unlimited requests, one at a time."
+    answer: "Yes. Websites can add an ongoing care plan for updates, edits, and support, scoped with your build. For ongoing growth across everything — websites, content, SEO, ads, and more — Prism Infinity is a monthly subscription with unlimited requests, one at a time. Book a 30-minute call to scope it."
   },
   {
     question: "What is 'The Prism Method'?",
@@ -67,7 +67,7 @@ const faqs = [
   },
   {
     question: "What's your payment structure?",
-    answer: "Simple flat pricing: the Website is $300 one-time, Content OS is $5,000 to implement over 3 months then $1,000/month, Dental OS is custom-quoted after a call, and Prism Infinity is $2,000/month. You can also start free — create a Growth Dashboard and request a free deep audit from the team."
+    answer: "Every offer — the PRO website, Content OS, Dental OS, and Prism Infinity — is scoped to your business on a 30-minute Zoom call, so you always leave the call with a clear price. You can also start free — create a Growth Dashboard and request a free deep audit from the team."
   },
   {
     question: "How do you measure success?",

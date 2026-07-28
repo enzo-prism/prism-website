@@ -27,7 +27,7 @@ export default function HomeOffersSection() {
           <CoreSectionHeading
             eyebrow="What you can order"
             title="Four ways to grow with Prism."
-            description="Start with a website for $300, or plug in a system that runs your content, your whole dental front office, or every Prism service at once."
+            description="A PRO website for your online presence, a system that runs your content, your whole dental front office, or every Prism service at once — each scoped on a 30-minute call."
           />
         </HomeReveal>
 
@@ -75,6 +75,16 @@ export default function HomeOffersSection() {
                   <div className="mt-auto pt-2">
                     <CoreActionLink
                       href={offer.primaryCta.href}
+                      target={
+                        offer.primaryCta.href.startsWith('/')
+                          ? undefined
+                          : '_blank'
+                      }
+                      rel={
+                        offer.primaryCta.href.startsWith('/')
+                          ? undefined
+                          : 'noopener noreferrer'
+                      }
                       label={offer.primaryCta.label.toLowerCase()}
                       location={`homepage offers · ${offer.name}`}
                       variant="primary"

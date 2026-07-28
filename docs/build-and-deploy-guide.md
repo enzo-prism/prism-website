@@ -62,9 +62,9 @@ Production is intentionally single-path: GitHub Actions publishes with `vercel d
 ## Deployment checklist
 
 - Pricing sign-off:
-  - `/pricing` compares the four productized offers (Website `$300` flat, Content OS `$5,000` + `$1,000/month`, Dental OS custom, Prism Infinity `$2,000/month`), sourced from `lib/pricing-model.ts`; the primary CTA orders the `$300` website
-  - `/websites` publishes the `$300` flat website order (describe → success → Stripe `$300` Payment Link), and `/get-started` keeps the free Growth Dashboard / free-audit on-ramp
-  - prices spell `/month` (never `/mo`); the `$2,000/month` token is now valid (Prism Infinity), but retired fixed-plan language such as `Website Overhaul` must not reappear on pricing-sensitive surfaces — `pnpm verify:pricing-consistency` enforces this
+  - `/pricing` compares the four productized offers — ALL call-first, no public exact price on any offer, every primary CTA = `BOOK_A_CALL_CTA` — sourced from `lib/pricing-model.ts`
+  - `/websites` publishes the ultra-premium PRO website offer (booking-only, no form, no price), and `/get-started` keeps the free Growth Dashboard / free-audit on-ramp
+  - prices spell `/month` (never `/mo`); the retired public prices `$300`, `$100/month`, `$5,000`, `$1,000/month`, and `$2,000/month` are forbidden on pricing-sensitive surfaces (all-call-first policy), as is retired fixed-plan language such as `Website Overhaul` — `pnpm verify:pricing-consistency` enforces this
   - `/founder-os` redirects to `/content-os`; other legacy pricing routes resolve to `/pricing`
   - `/ads`, `/seo`, `/local-listings` ship price-free offer schemas; `pricing-schema-consistency.test.ts` blocks the retired `$3,500` Growth Sprint schema from returning
 - SEO sign-off when route intent/canonicals changed:

@@ -24,7 +24,7 @@ const offerHighlights = [
     title: 'free whitening',
     description:
       'get a professional whitening treatment from one of our trusted partner dentists.',
-    note: 'a $300-$1,000+ value',
+    note: 'a serious head start',
   },
   {
     icon: '📸',

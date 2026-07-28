@@ -14,7 +14,7 @@ import { trackCTAClick, trackExternalLinkClick } from '@/utils/analytics'
  * Link-in-bio hub for Prism's social profiles (/tiktok, /ig, /youtube).
  *
  * Visitors arrive warm — they just watched Prism's content — so the page
- * routes intent instead of thanking them: order the $300 website, read the
+ * routes intent instead of thanking them: book the PRO website call, read the
  * proof, or explore Content OS ("the system behind this video") and Prism
  * Infinity. One template, platform-aware copy.
  */
@@ -253,9 +253,9 @@ export default function SocialLinkHub({
           <nav aria-label={`${config.label} page actions`} className="mt-9">
             <div className="grid gap-3">
             <ActionCard
-              title="Order your website"
-              detail="$300 flat · live in 7 days"
-              href="/websites#order"
+              title="Get a PRO website"
+              detail="Ultra-premium · scoped on a call"
+              href="/websites"
               tone="primary"
               location={actionsLocation}
               icon={
@@ -284,7 +284,7 @@ export default function SocialLinkHub({
             />
             <ActionCard
               title={config.contentOsTitle}
-              detail="$5,000 + $1,000/month"
+              detail="Scoped on a 30-min call"
               href="/content-os"
               location={actionsLocation}
               icon={
@@ -298,7 +298,7 @@ export default function SocialLinkHub({
             />
             <ActionCard
               title="Everything Prism, unlimited"
-              detail="$2,000/month · pause anytime"
+              detail="Scoped on a 30-min call · pause anytime"
               href="/prism-infinity"
               location={actionsLocation}
               icon={

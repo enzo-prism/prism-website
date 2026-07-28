@@ -128,11 +128,11 @@ describe('SocialLinkHub', () => {
     render(<SocialLinkHub platform="tiktok" />)
 
     const orderLink = screen.getByRole('link', {
-      name: /order your website/i,
+      name: /get a pro website/i,
     })
-    expect(orderLink).toHaveAttribute('href', '/websites#order')
+    expect(orderLink).toHaveAttribute('href', '/websites')
     expect(orderLink).not.toHaveAttribute('target')
-    expect(orderLink).toHaveAttribute('data-cta-text', 'order your website')
+    expect(orderLink).toHaveAttribute('data-cta-text', 'get a pro website')
     expect(orderLink).toHaveAttribute(
       'data-cta-location',
       'tiktok landing actions',
@@ -140,7 +140,7 @@ describe('SocialLinkHub', () => {
 
     fireEvent.click(orderLink)
     expect(trackCTAClick).toHaveBeenCalledWith(
-      'order your website',
+      'get a pro website',
       'tiktok landing actions',
     )
     expect(trackExternalLinkClick).not.toHaveBeenCalled()
@@ -167,11 +167,17 @@ describe('SocialLinkHub', () => {
   it('keeps canonical pricing language on the offer cards', () => {
     render(<SocialLinkHub platform="tiktok" />)
 
-    expect(screen.getByText(/\$300 flat · live in 7 days/i)).toBeInTheDocument()
-    expect(screen.getByText(/\$5,000 \+ \$1,000\/month/i)).toBeInTheDocument()
+    // Call-first offers never show exact public pricing.
     expect(
-      screen.getByText(/\$2,000\/month · pause anytime/i),
+      screen.getByText(/Ultra-premium · scoped on a call/i),
     ).toBeInTheDocument()
+    expect(screen.getByText(/^Scoped on a 30-min call$/i)).toBeInTheDocument()
+    expect(
+      screen.getByText(/Scoped on a 30-min call · pause anytime/i),
+    ).toBeInTheDocument()
+    expect(screen.queryByText(/\$5,000/)).not.toBeInTheDocument()
+    expect(screen.queryByText(/\$2,000/)).not.toBeInTheDocument()
+    expect(screen.queryByText(/\$300/)).not.toBeInTheDocument()
     expect(
       screen.getByText(/\$100 when they become a client/i),
     ).toBeInTheDocument()

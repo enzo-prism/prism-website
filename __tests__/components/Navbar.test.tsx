@@ -81,7 +81,7 @@ describe('Navbar', () => {
     )
     expect(
       screen.getAllByRole('link', { name: /^websites$/i })[0].className,
-    ).toContain('border-b')
+    ).toContain('rounded-full')
     expect(screen.getByTestId('navbar-core-image')).toBeInTheDocument()
     expect(screen.getByText(/^prism$/i)).toBeInTheDocument()
     expect(screen.getByText(/impossible is temporary/i)).toBeInTheDocument()
@@ -100,7 +100,7 @@ describe('Navbar', () => {
     ).toBeInTheDocument()
     expect(
       screen.getAllByRole('link', { name: /^websites$/i })[0].className,
-    ).toContain('border-b')
+    ).toContain('rounded-full')
     expect(screen.getByTestId('navbar-core-image')).toBeInTheDocument()
     expect(screen.getByText(/impossible is temporary/i)).toBeInTheDocument()
   })
@@ -162,31 +162,41 @@ describe('Navbar', () => {
     expect(websitesLinks[0].className).toContain('text-[#f5f0e8]')
   })
 
-  it('exposes a persistent filled order CTA that links to the website order page', () => {
+  it('carries no order CTA button — links only', () => {
     mockUsePathname.mockReturnValue('/about')
 
     render(<Navbar />)
 
-    // The CTA reads as "Order now", so it never collides with the exact
-    // "websites" nav-item count, but it must still route to /websites.
-    const ctaLinks = screen.getAllByRole('link', { name: /order now/i })
-    expect(ctaLinks.length).toBeGreaterThanOrEqual(1)
-    ctaLinks.forEach((cta) => {
-      expect(cta).toHaveAttribute('href', '/websites')
-      expect(cta.className).toContain('bg-[#f5f0e8]')
-    })
-
-    // The CTA must not inflate the exact-match "websites" nav-item count.
-    expect(screen.getAllByRole('link', { name: /^websites$/i })).toHaveLength(1)
+    expect(
+      screen.queryByRole('link', { name: /order now/i }),
+    ).not.toBeInTheDocument()
+    expect(screen.queryByRole('link', { name: /^order$/i })).not.toBeInTheDocument()
   })
 
-  it('collapses pricing, get started, and contact behind the desktop more dropdown', () => {
+  it('shows the flat seven-item rail with no pricing item and no more dropdown', () => {
     mockUsePathname.mockReturnValue('/about')
 
     render(<Navbar />)
 
-    // Collapsed by default: the utility items render nowhere (the dropdown
-    // starts closed and the mobile panel is not open).
+    // The 2026-07-27 redesign: offers | proof | contact, all inline. Pricing
+    // and get-started left the top nav entirely, the "more" disclosure is
+    // gone, and there is no CTA button.
+    for (const [label, href] of [
+      ['websites', '/websites'],
+      ['content os', '/content-os'],
+      ['dental os', '/dental-os'],
+      ['prism infinity', '/prism-infinity'],
+      ['wall of love', '/wall-of-love'],
+      ['case studies', '/case-studies'],
+      ['contact', '/contact'],
+    ] as const) {
+      expect(
+        screen.getAllByRole('link', {
+          name: new RegExp(`^${label}$`, 'i'),
+        })[0],
+      ).toHaveAttribute('href', href)
+    }
+
     expect(
       screen.queryByRole('link', { name: /^pricing$/i }),
     ).not.toBeInTheDocument()
@@ -194,81 +204,42 @@ describe('Navbar', () => {
       screen.queryByRole('link', { name: /^get started$/i }),
     ).not.toBeInTheDocument()
     expect(
-      screen.queryByRole('link', { name: /^contact$/i }),
-    ).not.toBeInTheDocument()
-
-    const trigger = screen.getByRole('button', { name: /^more$/i })
-    expect(trigger).toHaveAttribute('aria-haspopup', 'true')
-    expect(trigger).toHaveAttribute('aria-expanded', 'false')
-    expect(trigger).not.toHaveAttribute('aria-controls')
-
-    fireEvent.click(trigger)
-    expect(trigger).toHaveAttribute('aria-expanded', 'true')
-    expect(trigger).toHaveAttribute('aria-controls', 'desktop-more-nav')
-    expect(screen.getByRole('link', { name: /^pricing$/i })).toHaveAttribute(
-      'href',
-      '/pricing',
-    )
-    expect(
-      screen.getByRole('link', { name: /^get started$/i }),
-    ).toHaveAttribute('href', '/get-started')
-    expect(screen.getByRole('link', { name: /^contact$/i })).toHaveAttribute(
-      'href',
-      '/contact',
-    )
-
-    // Outside interaction dismisses the dropdown.
-    fireEvent.pointerDown(document.body)
-    expect(trigger).toHaveAttribute('aria-expanded', 'false')
-    expect(trigger).not.toHaveAttribute('aria-controls')
-    expect(
-      screen.queryByRole('link', { name: /^pricing$/i }),
+      screen.queryByRole('button', { name: /^more$/i }),
     ).not.toBeInTheDocument()
   })
 
-  it('closes the more dropdown on Escape and keeps items reachable in the mobile panel', () => {
-    mockUsePathname.mockReturnValue('/about')
-
-    render(<Navbar />)
-
-    const trigger = screen.getByRole('button', { name: /^more$/i })
-    fireEvent.click(trigger)
-    expect(trigger).toHaveAttribute('aria-expanded', 'true')
-
-    fireEvent.keyDown(document, { key: 'Escape' })
-    expect(trigger).toHaveAttribute('aria-expanded', 'false')
-
-    // Mobile keeps the flat list: all three utility items stay one tap away.
-    fireEvent.click(screen.getByRole('button', { name: /open menu/i }))
-    const panel = document.querySelector('#mobile-site-nav')
-    expect(panel).toBeInTheDocument()
-    expect(
-      within(panel as HTMLElement).getByRole('link', { name: /^pricing$/i }),
-    ).toHaveAttribute('href', '/pricing')
-    expect(
-      within(panel as HTMLElement).getByRole('link', {
-        name: /^get started$/i,
-      }),
-    ).toHaveAttribute('href', '/get-started')
-    expect(
-      within(panel as HTMLElement).getByRole('link', { name: /^contact$/i }),
-    ).toHaveAttribute('href', '/contact')
-  })
-
-  it('places the primary order CTA inside the open mobile panel', () => {
+  it('keeps all seven items one tap away in the mobile panel', () => {
     mockUsePathname.mockReturnValue('/about')
 
     render(<Navbar />)
 
     fireEvent.click(screen.getByRole('button', { name: /open menu/i }))
-
     const panel = document.querySelector('#mobile-site-nav')
     expect(panel).toBeInTheDocument()
 
-    const panelCta = within(panel as HTMLElement).getByRole('link', {
-      name: /order now/i,
-    })
-    expect(panelCta).toHaveAttribute('href', '/websites')
+    // The mono index prefixes (01–07) are aria-hidden, so accessible names
+    // stay the plain labels.
+    for (const [pattern, href] of [
+      [/^websites$/i, '/websites'],
+      [/^content os$/i, '/content-os'],
+      [/^dental os$/i, '/dental-os'],
+      [/^prism infinity$/i, '/prism-infinity'],
+      [/^wall of love$/i, '/wall-of-love'],
+      [/^case studies$/i, '/case-studies'],
+      [/^contact$/i, '/contact'],
+    ] as const) {
+      expect(
+        within(panel as HTMLElement).getByRole('link', { name: pattern }),
+      ).toHaveAttribute('href', href)
+    }
+
+    expect(
+      within(panel as HTMLElement).queryByRole('link', { name: /pricing/i }),
+    ).not.toBeInTheDocument()
+    // No order CTA inside the panel either.
+    expect(
+      within(panel as HTMLElement).queryByRole('link', { name: /order now/i }),
+    ).not.toBeInTheDocument()
   })
 
   it('shows case study breadcrumbs on nested case-study routes', () => {

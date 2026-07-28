@@ -30,11 +30,11 @@ describe("pricing schema consistency", () => {
     }
   })
 
-  it("allows websites schema to publish the one-time website build offer", () => {
+  it("keeps the websites schema price-free and call-first", () => {
     const content = fs.readFileSync(path.join(process.cwd(), "app/websites/page.tsx"), "utf8")
-    expect(content).toContain("One-time website build")
-    expect(content).toContain("$300 flat")
-    expect(content).toMatch(/price: ["']300["']/)
+    expect(content).toContain("Prism PRO website")
+    expect(content).not.toMatch(/price: ["']\d/)
+    expect(content).not.toContain("$300")
     expect(content).toMatch(/url: CANONICAL_URL/)
     expect(content).not.toContain("60-Day Growth Sprint")
   })

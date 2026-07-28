@@ -17,6 +17,7 @@ import {
 import { FAQSchema, ServiceSchema } from '@/components/schema-markup'
 import { buildRouteMetadata } from '@/lib/seo/metadata'
 import {
+  BOOK_A_CALL_CTA,
   CANONICAL_PRICING_OFFERS,
   DENTAL_OS_PRICE_LABEL,
 } from '@/lib/pricing-model'
@@ -232,12 +233,14 @@ export default function DentalOsPage() {
                 />
                 <div className="mt-9 flex flex-col gap-5 sm:flex-row sm:items-center">
                   <CoreActionLink
-                    href="/contact?topic=dental-os"
+                    href={BOOK_A_CALL_CTA.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     variant="heroPrimary"
-                    label="book a dental call"
+                    label="book a 30-min call"
                     location="dental-os hero"
                   >
-                    Book a call
+                    {BOOK_A_CALL_CTA.label}
                   </CoreActionLink>
                   <CoreActionLink
                     href="#proof"
@@ -480,9 +483,11 @@ export default function DentalOsPage() {
               />
               <div className="flex shrink-0 flex-col gap-5 sm:flex-row sm:items-center">
                 <CoreActionLink
-                  href="/contact?topic=dental-os"
+                  href={BOOK_A_CALL_CTA.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   variant="heroPrimary"
-                  label="book a dental call"
+                  label="book a 30-min call"
                   location="dental-os footer cta"
                 >
                   Book a dental growth call

@@ -120,7 +120,7 @@ describe('HomeHeroSection', () => {
     expect(systemStrip.querySelectorAll('li')).toHaveLength(7)
 
     expect(
-      screen.getByRole('link', { name: /order now/i }),
+      screen.getByRole('link', { name: /get a pro website/i }),
     ).toHaveAttribute('href', '/websites')
     expect(
       screen.getByRole('link', { name: /explore plans/i }),

@@ -31,7 +31,7 @@ export default function PricingHero() {
             <CoreSectionHeading
               eyebrow="Pricing"
               title="A clearer way to invest in growth."
-              description="Pick how you want to grow: order a website for $300, scale your content and ads with Content OS, package your whole dental front office with Dental OS, or get every Prism service on tap with Prism Infinity."
+              description="Pick how you want to grow: a PRO website for your online presence, Content OS to scale your content and ads, Dental OS for your whole practice, or every Prism service on tap with Prism Infinity. Each one scoped on a 30-minute call."
               as="h1"
               variant="hero"
               titleClassName="max-w-[9ch]"
@@ -62,7 +62,12 @@ export default function PricingHero() {
 
           <div className="relative z-10 border-t border-white/12 px-6 py-6 sm:px-10 lg:px-12">
             <div className="flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:gap-5">
-              <CoreActionLink href={PRICING_PRIMARY_CTA.href} variant="heroPrimary">
+              <CoreActionLink
+                href={PRICING_PRIMARY_CTA.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                variant="heroPrimary"
+              >
                 {PRICING_PRIMARY_CTA.label}
               </CoreActionLink>
               <CoreActionLink

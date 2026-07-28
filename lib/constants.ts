@@ -91,25 +91,29 @@ export const FREE_AUDIT_CTA_TEXT = "Get a free growth audit"
 
 export type NavItem = { label: string; href: string }
 
+// Flat nav (2026-07-27 redesign): the four offers, the two proof surfaces,
+// and contact — nothing else. No "more" dropdown and no "Order now" CTA
+// button; /pricing and /get-started left the top nav (both stay reachable
+// via footer, homepage callout, and offer pages).
 export const NAV_ITEMS: NavItem[] = [
   { label: "websites", href: "/websites" },
   { label: "content os", href: "/content-os" },
   { label: "dental os", href: "/dental-os" },
   { label: "prism infinity", href: "/prism-infinity" },
-  { label: "pricing", href: "/pricing" },
-  { label: "get started", href: "/get-started" },
+  { label: "wall of love", href: "/wall-of-love" },
+  { label: "case studies", href: "/case-studies" },
   { label: "contact", href: "/contact" },
 ]
 
-// Desktop collapses the utility items behind a "more" dropdown so the primary
-// bar stays focused on the product/offer surfaces; the mobile panel keeps the
-// full flat list so every destination stays one tap away.
-const MORE_NAV_HREFS = new Set(["/pricing", "/get-started", "/contact"])
+// Desktop renders three hairline-divided groups: offers | proof | contact.
+const PROOF_NAV_HREFS = new Set(["/wall-of-love", "/case-studies"])
 
-export const PRIMARY_NAV_ITEMS: NavItem[] = NAV_ITEMS.filter(
-  (item) => !MORE_NAV_HREFS.has(item.href),
+export const OFFER_NAV_ITEMS: NavItem[] = NAV_ITEMS.filter(
+  (item) => !PROOF_NAV_HREFS.has(item.href) && item.href !== "/contact",
 )
 
-export const MORE_NAV_ITEMS: NavItem[] = NAV_ITEMS.filter((item) =>
-  MORE_NAV_HREFS.has(item.href),
+export const PROOF_NAV_ITEMS: NavItem[] = NAV_ITEMS.filter((item) =>
+  PROOF_NAV_HREFS.has(item.href),
 )
+
+export const CONTACT_NAV_ITEM: NavItem = { label: "contact", href: "/contact" }

@@ -50,7 +50,7 @@ export default function ReferPage() {
               </h1>
               <p className="mt-5 max-w-[44rem] text-pretty font-sans text-[1.05rem] leading-7 text-[#b8afa2]">
                 Tell us about someone who could use Prism. If they become a
-                client — the $300 website, Content OS, Dental OS, or Prism
+                client — the PRO website, Content OS, Dental OS, or Prism
                 Infinity — we send you $100. Every time.
               </p>
             </header>

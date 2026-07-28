@@ -16,23 +16,15 @@ import {
   coreRouteSplitLayoutClassName,
 } from '@/components/core-route/CoreRoutePrimitives'
 import { FAQSchema, ServiceSchema } from '@/components/schema-markup'
-import { paymentLink } from '@/lib/payment-links'
 import {
+  BOOK_A_CALL_CTA,
   CANONICAL_PRICING_OFFERS,
-  CONTENT_OS_MONTHLY_PRICE_LABEL,
-  CONTENT_OS_SETUP_PRICE_LABEL,
 } from '@/lib/pricing-model'
 import { buildRouteMetadata } from '@/lib/seo/metadata'
 import { cn } from '@/lib/utils'
 
 const CANONICAL_URL = 'https://www.design-prism.com/content-os'
-const CONTACT_HREF = '/contact?topic=content-os'
 const CONTENT_OS_OFFER = CANONICAL_PRICING_OFFERS.content_os
-
-// Composed from the canonical pricing labels so the strings stay in sync and
-// always spell the month suffix in full (never the abbreviated form).
-const SETUP_LINE = `${CONTENT_OS_SETUP_PRICE_LABEL} over 3 months`
-const PRICE_LINE = `${SETUP_LINE}, then ${CONTENT_OS_MONTHLY_PRICE_LABEL}`
 
 export const metadata: Metadata = buildRouteMetadata({
   titleStem: 'Content OS',
@@ -122,7 +114,7 @@ const FAQ_ITEMS = [
       'We connect your channels, define your brand voice and offers, build the agent system, and ship the first wave of content and ads so the engine is live and producing by the end of the three months.',
   },
   {
-    question: 'What does the $1,000/month cover?',
+    question: 'What does the monthly optimization cover?',
     answer:
       'Ongoing operation and optimization: the agents keep producing and distributing across every platform, and Prism tunes the system each month based on what is driving reach and revenue.',
   },
@@ -134,7 +126,12 @@ const FAQ_ITEMS = [
   {
     question: 'Can I cancel?',
     answer:
-      'Yes. After the 3-month implementation, the $1,000/month optimization is month-to-month. You can pause or cancel anytime.',
+      'Yes. After the 3-month implementation, the monthly optimization is month-to-month. You can pause or cancel anytime.',
+  },
+  {
+    question: 'How much does Content OS cost?',
+    answer:
+      'Pricing is scoped to your business. Book a 30-minute Zoom call and we will map your channels, goals, and the right system together — you leave the call with a clear plan and a clear price.',
   },
 ] as const
 
@@ -147,8 +144,6 @@ function HeroChip({ children }: { children: ReactNode }) {
 }
 
 export default function ContentOsPage() {
-  const contentOsHref = paymentLink('contentOs')
-
   return (
     <div className="flex min-h-screen flex-col bg-black font-sans text-[#f5f0e8]">
       <Navbar />
@@ -173,27 +168,22 @@ export default function ContentOsPage() {
 
                 <p className="mt-8 text-[1.02rem] leading-7 text-[#b8afa2]">
                   <span className="font-medium text-[#f5f0e8]">
-                    {SETUP_LINE}
+                    Implemented over 3 months
                   </span>
-                  {', '}then {CONTENT_OS_MONTHLY_PRICE_LABEL}.
+                  {', '}then optimized every month. Scoped to your business on
+                  a 30-minute call.
                 </p>
 
                 <div className="mt-9 flex flex-col gap-4 sm:flex-row sm:items-center">
                   <CoreActionLink
-                    href={contentOsHref}
+                    href={BOOK_A_CALL_CTA.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     variant="heroPrimary"
-                    label="get content os"
+                    label="book a 30-min call"
                     location="content-os hero"
                   >
-                    Get Content OS — $5,000
-                  </CoreActionLink>
-                  <CoreActionLink
-                    href={CONTACT_HREF}
-                    variant="primary"
-                    label="book a call"
-                    location="content-os hero"
-                  >
-                    Book a call
+                    {BOOK_A_CALL_CTA.label}
                   </CoreActionLink>
                 </div>
 
@@ -329,33 +319,30 @@ export default function ContentOsPage() {
               <div className="space-y-5">
                 <CoreSectionHeading
                   eyebrow="Pricing"
-                  title="One system. One simple price."
+                  title="Scoped to your business."
                 />
                 <div className="space-y-2">
                   <p className="text-[1.1rem] leading-7 text-[#f5f0e8]">
-                    <span className="font-medium">{SETUP_LINE}</span>
+                    <span className="font-medium">
+                      Every business runs content differently.
+                    </span>
                   </p>
                   <p className="text-[1rem] leading-7 text-[#8f877b]">
-                    then {CONTENT_OS_MONTHLY_PRICE_LABEL} to keep it optimized.
+                    Book a 30-minute Zoom call and we&apos;ll scope the system
+                    and the investment together.
                   </p>
                 </div>
               </div>
               <div className="flex flex-col gap-4 sm:flex-row sm:items-center lg:flex-col lg:items-stretch">
                 <CoreActionLink
-                  href={contentOsHref}
+                  href={BOOK_A_CALL_CTA.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   variant="heroPrimary"
-                  label="get content os"
+                  label="book a 30-min call"
                   location="content-os pricing"
                 >
-                  Get Content OS — $5,000
-                </CoreActionLink>
-                <CoreActionLink
-                  href={CONTACT_HREF}
-                  variant="primary"
-                  label="book a call"
-                  location="content-os pricing"
-                >
-                  Book a call
+                  {BOOK_A_CALL_CTA.label}
                 </CoreActionLink>
               </div>
             </div>
@@ -396,20 +383,14 @@ export default function ContentOsPage() {
             />
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
               <CoreActionLink
-                href={contentOsHref}
+                href={BOOK_A_CALL_CTA.href}
+                target="_blank"
+                rel="noopener noreferrer"
                 variant="heroPrimary"
-                label="start content os"
+                label="book a 30-min call"
                 location="content-os final"
               >
-                Start Content OS
-              </CoreActionLink>
-              <CoreActionLink
-                href={CONTACT_HREF}
-                variant="primary"
-                label="book a call"
-                location="content-os final"
-              >
-                Book a call
+                {BOOK_A_CALL_CTA.label}
               </CoreActionLink>
             </div>
           </div>
@@ -424,10 +405,8 @@ export default function ContentOsPage() {
         areaServed="United States"
         offerDetails={{
           name: CONTENT_OS_OFFER.name,
-          description: `AI agents that scale content and ads across every social platform and your website. ${PRICE_LINE}.`,
+          description: `AI agents that scale content and ads across every social platform and your website. Implemented over 3 months, then optimized every month. Scoped on a 30-minute call.`,
           businessFunction: 'http://purl.org/goodrelations/v1#ProvideService',
-          price: '5000',
-          priceCurrency: 'USD',
           availability: 'https://schema.org/InStock',
           url: CANONICAL_URL,
         }}

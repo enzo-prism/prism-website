@@ -32,14 +32,14 @@ Quick reference for the pages we edit most often.
 ## Pricing (`app/pricing/client-page.tsx`)
 
 - `/pricing` is the single canonical pricing URL and now compares Prism's **four productized offers**, all sourced from `CANONICAL_PRICING_OFFERS` / `PRICING_OFFER_ORDER` in `lib/pricing-model.ts`:
-  - **Website** — `$300` flat, one-time, optional `$100/month` care (`/websites`).
-  - **Content OS** — `$5,000` to implement over 3 months, then `$1,000/month` (`/content-os`).
-  - **Dental OS** — custom-priced, "book a call" (`/dental-os`).
-  - **Prism Infinity** — `$2,000/month`, unlimited services (`/prism-infinity`).
+  - **Website** — the ultra-premium PRO website; scoped on a 30-minute call (`/websites`).
+  - **Content OS** — implemented over 3 months, then optimized monthly; scoped on a 30-minute call (`/content-os`).
+  - **Dental OS** — custom-priced, scoped on a 30-minute call (`/dental-os`).
+  - **Prism Infinity** — unlimited services on one monthly subscription; scoped on a 30-minute call (`/prism-infinity`).
 - Main UI sections live in `app/pricing/client-page.tsx`; the hero lives in `components/pricing/PricingHero.tsx` ("A clearer way to invest in growth.").
 - `/pricing` uses the shared dark core-route system from `components/core-route/CoreRoutePrimitives.tsx`, so section headings and CTAs stay aligned with the homepage, `/about`, and `/get-started`.
-- Section order is intentional: hero, "Four offers. Buy once, or run an ongoing system." snapshot, per-offer cards, the website order steps (the `growthPathSteps` array, repurposed to "Describe your website" steps), ongoing-system levels (the `partnerLevels` array, repurposed to Content OS / Prism Infinity), FAQ (covering the `$300` website, care plan, Content OS, Prism Infinity, and Dental OS), and final CTA. The `growthPathSteps`/`pricingSnapshot`/`partnerLevels` variable names were retained (and are still required by `lib/pricing-consistency.ts`) even though their content is now the four-offer model.
-- The primary CTA orders the `$300` website (`PRICING_PRIMARY_CTA`, "Order your website — $300" → `/websites`); higher-ticket offers lead with "Book a call".
+- Section order is intentional: hero, "Four offers. Buy once, or run an ongoing system." snapshot, per-offer cards, the call-first engagement steps (the `growthPathSteps` array: book a 30-min call → leave with a clear price → we build), ongoing-system levels (the `partnerLevels` array), FAQ (call-first pricing, the PRO website, care, Content OS, Prism Infinity, Dental OS), and final CTA. The `growthPathSteps`/`pricingSnapshot`/`partnerLevels` variable names were retained (and are still required by `lib/pricing-consistency.ts`) even though their content is now the four-offer model.
+- Every primary CTA is "Book a 30-min call" (`PRICING_PRIMARY_CTA` = `BOOK_A_CALL_CTA` → the Notion Calendar `BOOKING_URL`, opened in a new tab); each offer card keeps an internal explore link as its secondary CTA.
 - The retired five-tier ladder (free Growth Dashboard pricing, `$500` Deep Growth Audit, `$3,500` Growth Sprint, `$1,500/month` Growth Partner) is no longer shown here; `/get-started` keeps the free Growth Dashboard / free-audit on-ramp.
 
 ## Checkout (`app/checkout/*/page.tsx`)
@@ -78,27 +78,26 @@ Quick reference for the pages we edit most often.
 
 ## Websites (`app/websites/page.tsx`)
 
-- Active offer page for the **Website** product: a custom website for `$300` flat, one-time (not "starting at $300" — it is a flat price). Delivered in ~7 days, infinite iterations until the buyer loves it, and the finished site is 100% theirs. Afterward they can add a `$100/month` care plan or self-host.
-- The flow is **launcher → fullscreen dialog → staged success → pay**: the buyer opens a fullscreen one-question-at-a-time order dialog (from the launcher panel at `#start`/`#order`, the hero CTA, or the sticky `MobileOrderBar` — both target `/websites#order`), answers six steps with a live order-manifest rail, reviews, submits (Formspree at `NEXT_PUBLIC_WEBSITE_BUILD_FORM_ENDPOINT` / `https://formspree.io/f/xpqebnbz`; in-progress answers persist in same-tab `sessionStorage` under `prism_website_order_draft_v1`), receives a visible `PRISM-...` order reference, then opens the `$300` Stripe Payment Link (new tab) to kick off the build. The pre-payment state says the brief is saved, not queued or reserved. `components/forms/WebsiteOrderForm.tsx` powers this; the pay button resolves through `lib/payment-links.ts` (`hasPaymentLink("website")` / `paymentLink("website")`, live link `buy.stripe.com/8x2dRa3Aid1gasMeQDdZ60N`, with a `/contact` fallback). After payment, Stripe redirects to `/checkout/website/thank-you` (noindex, not in the sitemap), which fires the GA4 `purchase` conversion.
+- Active offer page for the **Website** product: the ultra-premium **PRO website** for serious businesses — a bespoke design system, software-grade engineering, and analytics wired from day one, structured to rank on Google and get cited by AI assistants (ChatGPT, Gemini, Claude, Perplexity). No public price and no order form: every CTA is `BOOK_A_CALL_CTA` (30-minute Notion Calendar Zoom link, new tab). Page sections: hero + proof-build gallery, Design/Engineering/Analytics pillars, "Rank on Google. Get cited by AI." visibility section with measured Search Console results, `#work` project grid, call-first process, FAQ, final booking CTA. Price-free `ServiceSchema` + `FAQSchema`.
+- The old launcher → fullscreen dialog → Stripe pay flow is retired (components deleted); `/checkout/website/thank-you` stays noindex as the legacy Stripe-link landing target.
 - The old model is retired: this is **not** review-first / selective / "no card collected", and there is no dynamic price estimator. `WebsiteBuildEstimatorForm.tsx` (the old estimator) has been removed.
 - Keep the page indexable, in `public/llms.txt`, and in the sitemap as Prism's canonical website-order acquisition page.
 
 ## Content OS (`app/content-os/page.tsx`)
 
-- The **Content OS** offer: `$5,000` to implement (over 3 months) + `$1,000/month`. AI agents that scale a client's content and ads across every social platform and their website, then optimize every month.
-- This route **replaced the retired Founder OS** offer (see the redirect note below). It is indexable, in `public/llms.txt`, and in the sitemap, and carries `ServiceSchema` plus FAQ structured data.
-- The headline price is intentional to this offer and is part of the canonical four-offer model in `lib/pricing-model.ts`; keep `/month` spelled out (never `/mo`).
+- The **Content OS** offer: AI agents that scale a client's content and ads across every social platform and their website — implemented over 3 months, then optimized every month. **No public price**: it is scoped on a 30-minute Zoom call, and every CTA on the page is `BOOK_A_CALL_CTA` (new tab).
+- This route **replaced the retired Founder OS** offer (see the redirect note below). It is indexable, in `public/llms.txt`, and in the sitemap, and carries `ServiceSchema` plus FAQ structured data (the Offer node is price-free by policy).
 
 ## Dental OS (`app/dental-os/page.tsx`)
 
-- The **Dental OS** offer: the full Prism growth system (website, SEO and AI search, Google Maps, reviews, and ads) packaged for dental practices, **custom-priced** ("book a call").
-- Indexable, in `public/llms.txt`, in the sitemap, and carries `ServiceSchema` plus FAQ structured data. Pricing is scoped per practice rather than a fixed number; the offer's primary CTA leads to `/contact?topic=dental-os`.
+- The **Dental OS** offer: the full Prism growth system (website, SEO and AI search, Google Maps, reviews, and ads) packaged for dental practices, **custom-priced** and scoped on a 30-minute call.
+- Indexable, in `public/llms.txt`, in the sitemap, and carries `ServiceSchema` plus FAQ structured data. Pricing is scoped per practice rather than a fixed number; the offer's primary CTAs use `BOOK_A_CALL_CTA` (new tab).
 
 ## Prism Infinity (`app/prism-infinity/page.tsx`)
 
-- The **Prism Infinity** offer: `$2,000/month` for unlimited Prism services across engineering, design, and marketing (logo/print design, web development, video editing, content, ads, slide decks, in-person photoshoots, and more) on one subscription, pausable/cancelable anytime.
+- The **Prism Infinity** offer: unlimited Prism services across engineering, design, and marketing (logo/print design, web development, video editing, content, ads, slide decks, in-person photoshoots, and more) on one monthly subscription, pausable/cancelable anytime. **No public price**: scoped on a 30-minute Zoom call; every CTA is `BOOK_A_CALL_CTA` (new tab).
 - The services marquee pauses on hover or keyboard focus. Touch/coarse-pointer devices use manual horizontal scrolling with the duplicate visual list hidden. Keep the numbered and included-service collections as valid semantic lists.
-- Indexable, in `public/llms.txt`, in the sitemap, and carries `ServiceSchema` plus FAQ structured data. The `$2,000/month` token is intentional here and is allowed by `lib/pricing-consistency.ts`.
+- Indexable, in `public/llms.txt`, in the sitemap, and carries `ServiceSchema` plus FAQ structured data (the Offer node is price-free by policy).
 
 ## Refer (`app/refer/page.tsx`)
 
@@ -185,7 +184,7 @@ Quick reference for the pages we edit most often.
 
 ## Shared Chrome (`components/navbar.tsx`, `components/footer.tsx`)
 
-- Header nav labels live in `NAV_ITEMS` in `lib/constants.ts`; the current public nav is repositioned around the offers: `websites` (`/websites`), `content os`, `dental os`, and `prism infinity` inline on desktop, with `pricing`, `get started`, and `contact` collapsed behind a "more" disclosure dropdown (`PRIMARY_NAV_ITEMS` / `MORE_NAV_ITEMS`), plus a persistent "Order now" CTA. The mobile panel keeps all seven items as a flat list. The nav was overhauled to be fully responsive, using an `xl` breakpoint with a full-height mobile panel that locks scroll on both `html` and `body`, marks the page behind it `inert`, and animates in with staggered links; a compact "Order" CTA stays visible in the header on phones (hidden only below 360px). The footer System column links `Website — $300` and `Content OS` (the old `Founder OS` link became Content OS), and the Company column carries `Refer a friend — $100` (`/refer`).
+- Header nav labels live in `NAV_ITEMS` in `lib/constants.ts`; the current public nav (2026-07-27 redesign) is a flat five-item rail: `websites`, `content os`, `dental os`, `prism infinity`, and `contact` — no dropdown, no `pricing` or `get started` items — plus a persistent "Order now" CTA. Desktop links are quiet rounded pills (active `white/[0.08]` wash) with a hairline divider before contact, taking over from the menu button at `lg` (1024px). The full-height mobile panel keeps the same five items as a flat list with aria-hidden mono index prefixes (01–05), locks scroll on both `html` and `body`, marks the page behind it `inert`, and animates in with staggered links; a compact "Order" CTA stays visible in the header on phones (hidden only below 360px). The footer System column links `PRO Website` and `Content OS` (the old `Founder OS` link became Content OS), and the Company column carries `Refer a friend — $100` (`/refer`).
 - The top-left logo links to `/`, tracks `trackNavigation('logo', '/')`, and has a small hover/focus treatment on the logo mark and wordmark. Keep it tactile but stable: no text reflow, no new route-specific header variants, and respect reduced-motion utilities for transforms.
 - The footer was overhauled to a responsive column grid with monochrome icon socials, and leads with two CTAs: `Order a website` (`/websites`, `label="Order a website"`) and `Get started free` (`/get-started`, `label="Get started free"`), both through `TrackedLink` with `location="footer"`.
 - Do not reintroduce a footer "Book call" button or contact-page demo calendar without changing the funnel docs first.

@@ -25,7 +25,6 @@ const { handleSubmit, getError, isSubmitting } = useFormValidation({
 - `components/forms/FreeAnalysisForm.tsx`
 - `components/forms/ContactForm.tsx`
 - `components/forms/GetStartedForm.tsx` (`/apply`)
-- `components/forms/WebsiteOrderForm.tsx` (`/websites`; replaces the retired `WebsiteBuildEstimatorForm.tsx`)
 - `components/forms/ReferralForm.tsx` (`/refer`; $100-per-closed-referral program)
 - `components/forms/FounderOsApplicationForm.tsx` (legacy archival form code; `/founder-os/apply` now 301-redirects to `/content-os` and should not receive active traffic)
 - `components/forms/ScalingRoadmapForm.tsx`
@@ -130,31 +129,15 @@ The `/apply` route should feel like a focused Growth Dashboard mode, not another
   - `trackLeadConversion(...)` on the apply thank-you view after the pending application context is consumed
 - Do not include user-entered names, emails, URLs, free-text notes, or unique per-event timestamps in GA params.
 
-## `/websites` order flow: fullscreen dialog → staged success → pay `$300`
+## `/websites`: booking-only (order form retired 2026-07-27)
 
-`components/forms/WebsiteOrderForm.tsx` powers the `$300` flat website order on `app/websites/page.tsx`. It replaces the retired `WebsiteBuildEstimatorForm.tsx` (the dynamic price estimator). There is **no** price estimator, no `/thank-you` redirect, and no "reviewed before payment" gate — the buyer pays right after submitting.
-
-- User-facing flow:
-  - The page renders a **launcher panel**; the launcher button, the hero CTA, and the sticky `MobileOrderBar` (both `/websites#order`) open a **fullscreen one-question-at-a-time dialog** (portal; the page behind is scroll-locked on `html`+`body` and marked `inert`; focus is trapped; Escape closes with state preserved).
-  - Six steps (brand → audience/goal → brief → references → contact → review) with per-step validation, Enter-first keyboard flow, and a live **order-manifest rail** (desktop) / commit strip (mobile).
-  - In-progress answers persist in same-tab `sessionStorage` under `prism_website_order_draft_v1` (restored on reopen/reload; cleared on successful submit — the launcher then reads "Resume your order").
-  - On submit from review, the order is **captured via Formspree** (no thank-you redirect), then a **staged in-dialog success state** appears.
-  - Each network submission receives an `order_reference` (`PRISM-...`) that is sent to Formspree and shown in both success surfaces so support can reconcile intake and payment.
-  - The pre-payment success state says the brief/request is saved. It must not claim that a build slot is reserved or that work has started before Stripe confirms payment.
-  - From the success state (and the launcher's post-submit state), a pay button **opens the Stripe `$300` Payment Link in a new tab** to kick off the build. After payment, Stripe redirects that tab to `/checkout/website/thank-you?session_id={CHECKOUT_SESSION_ID}`, which fires the GA4 `purchase` event.
-- Endpoint strategy (unchanged from the old form):
-  - `NEXT_PUBLIC_WEBSITE_BUILD_FORM_ENDPOINT` (defaults to `https://formspree.io/f/xpqebnbz`)
-- Submit flow:
-  - POST via `fetch(form.action, { method: 'POST', headers: { Accept: 'application/json' }, body: new FormData(form) })`
-  - On success, swap to the in-page success state (do **not** `router.push` a thank-you route).
-  - On failure, show inline error and keep the user on the form.
-- Stripe pay step:
-  - The pay button resolves through `lib/payment-links.ts`: `paymentLink("website")` returns the live link (`https://buy.stripe.com/8x2dRa3Aid1gasMeQDdZ60N`, Stripe product "Website by Prism") or the `/contact` fallback, and `hasPaymentLink("website")` gates whether it opens in a new tab vs. routes to `/contact`.
-  - The Website link is live and wired; the optional `$100/month` care, Content OS, and Prism Infinity links still need creating (see `scripts/create-website-link.sh` and `scripts/create-stripe-links.sh`).
-  - The link's `after_completion` must be a **redirect** to `/checkout/website/thank-you?session_id={CHECKOUT_SESSION_ID}`, not Stripe's `hosted_confirmation` — otherwise the buyer never returns to the site and no purchase can be measured. To change an existing link use `scripts/update-website-payment-link.sh` (dry run by default, `--apply` to write), which updates it **in place**; re-running the create scripts would mint a duplicate product/price/link while `lib/payment-links.ts` kept pointing at the old one.
-- Analytics: the funnel emits `website_order_started` / `website_order_step_completed` / `website_order_submitted` / `website_order_begin_checkout`, and on submit also calls `trackFormSubmission(FORM_NAME, FORM_LOCATION, { conversionMode: 'immediate', value: 300, transaction_id: orderReference })` — `immediate` because this flow shows an in-page success screen and never navigates to a thank-you route, so the default `pending` handoff would never be consumed. The buyer's email is hashed for enhanced conversions first (`setEnhancedConversionUserData`), awaited because gtag's `set` only applies to subsequent events. See [`docs/analytics.md`](analytics.md).
-- Keep ops metadata, the honeypot, and any analytics events for this form aligned with the live `WebsiteOrderForm.tsx` source — including the `#order` deep link, the `prism_website_order_draft_v1` draft key, and the dialog scroll-lock/`inert` behavior; do not reintroduce estimator-only fields (`estimated_total`, `estimated_range_*`, `price_formula_version`), the retired `website_build_*` analytics events, or the `?source=website-build` thank-you redirect.
-- Do not include user-entered names, emails, URLs, or free-text notes in analytics params.
+The `/websites` PRO website page has **no form**. The old fullscreen order
+dialog (`WebsiteOrderForm.tsx`), sticky `MobileOrderBar.tsx`, and Stripe
+Payment Link flow (`lib/payment-links.ts`) were deleted when the offer went
+call-first. Every CTA on the page opens the 30-minute Notion Calendar booking
+link (`BOOK_A_CALL_CTA` in `lib/pricing-model.ts`) in a new tab. The noindex
+`/checkout/website/thank-you` route remains only as the landing target for the
+legacy live Stripe link.
 
 ## Retired flow: `/founder-os/apply` + Founder OS application
 

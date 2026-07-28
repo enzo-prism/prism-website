@@ -277,15 +277,14 @@ export function GlobalSchemaGraph() {
       'https://www.tiktok.com/@the_design_prism',
       'https://www.linkedin.com/company/web-prism/?viewAsMember=true',
     ],
-    // Canonical pricing-backed offers so AI/search engines see Prism's core
-    // products. Values come from lib/pricing-model.ts — do not hardcode here.
+    // Canonical offers so AI/search engines see Prism's core products. Values
+    // come from lib/pricing-model.ts — do not hardcode here. Every offer is
+    // scoped on a call, so all Offer nodes stay price-free by policy.
     makesOffer: [
       {
         '@type': 'Offer',
         name: CANONICAL_PRICING_OFFERS.website.name,
         description: CANONICAL_PRICING_OFFERS.website.description,
-        price: String(CANONICAL_PRICING_OFFERS.website.price),
-        priceCurrency: CANONICAL_PRICING_OFFERS.website.priceCurrency,
         availability: 'https://schema.org/InStock',
         url: 'https://www.design-prism.com/websites',
       },
@@ -293,8 +292,6 @@ export function GlobalSchemaGraph() {
         '@type': 'Offer',
         name: CANONICAL_PRICING_OFFERS.content_os.name,
         description: CANONICAL_PRICING_OFFERS.content_os.description,
-        price: String(CANONICAL_PRICING_OFFERS.content_os.price),
-        priceCurrency: CANONICAL_PRICING_OFFERS.content_os.priceCurrency,
         availability: 'https://schema.org/InStock',
         url: 'https://www.design-prism.com/content-os',
       },
@@ -302,15 +299,6 @@ export function GlobalSchemaGraph() {
         '@type': 'Offer',
         name: CANONICAL_PRICING_OFFERS.prism_infinity.name,
         description: CANONICAL_PRICING_OFFERS.prism_infinity.description,
-        price: String(CANONICAL_PRICING_OFFERS.prism_infinity.price),
-        priceCurrency: CANONICAL_PRICING_OFFERS.prism_infinity.priceCurrency,
-        priceSpecification: {
-          '@type': 'UnitPriceSpecification',
-          price: String(CANONICAL_PRICING_OFFERS.prism_infinity.price),
-          priceCurrency: CANONICAL_PRICING_OFFERS.prism_infinity.priceCurrency,
-          billingDuration: 1,
-          unitCode: 'MON',
-        },
         availability: 'https://schema.org/InStock',
         url: 'https://www.design-prism.com/prism-infinity',
       },

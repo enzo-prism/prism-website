@@ -6,7 +6,7 @@ import { buildRouteMetadata } from '@/lib/seo/metadata'
 
 const PAGE_TITLE = 'Prism on YouTube'
 const PAGE_DESCRIPTION =
-  'The studio behind the channel. Order a $300 flat website, see 22 verified case studies, or explore Content OS and Prism Infinity.'
+  'The studio behind the channel. Get a PRO website, see 22 verified case studies, or explore Content OS and Prism Infinity.'
 const CANONICAL_URL = 'https://www.design-prism.com/youtube'
 
 export const metadata: Metadata = buildRouteMetadata({

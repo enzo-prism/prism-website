@@ -24,22 +24,48 @@ describe("pricing consistency guard", () => {
     )
   })
 
-  it("requires the current productized pricing snippets", () => {
+  it("requires the current call-first pricing snippets", () => {
     const violations = collectPricingConsistencyViolations(
       "lib/pricing-model.ts",
-      "Order your website — $300. $300 one-time. $5,000 + $1,000/month. $2,000/month.",
+      "BOOK_A_CALL_CTA. Book a 30-min call. NO offer shows public exact pricing.",
     )
 
     expect(violations).toEqual([])
   })
 
-  it("allows the dedicated one-time website build offer on /websites", () => {
+  it("flags retired public prices for the call-first offers on strict surfaces", () => {
     const violations = collectPricingConsistencyViolations(
-      "app/websites/page.tsx",
-      "One-time website build. $300 flat. price: '300'",
+      "app/pricing/client-page.tsx",
+      "Content OS is $5,000 then $1,000/month, Prism Infinity is $2,000/month.",
     )
 
-    expect(violations).toEqual([])
+    expect(violations.map((violation) => violation.label)).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("$5,000"),
+        expect.stringContaining("$1,000/month"),
+        expect.stringContaining("$2,000/month"),
+      ]),
+    )
+  })
+
+  it("allows the call-first PRO website copy on /websites and flags any $ price", () => {
+    expect(
+      collectPricingConsistencyViolations(
+        "app/websites/page.tsx",
+        "Prism PRO website. BOOK_A_CALL_CTA. Rank on Google. Get cited by AI.",
+      ),
+    ).toEqual([])
+
+    const violations = collectPricingConsistencyViolations(
+      "app/websites/page.tsx",
+      "Prism PRO website. BOOK_A_CALL_CTA. Rank on Google. Get cited by AI. A website for $300 flat with $100/month care.",
+    )
+    expect(violations.map((violation) => violation.label)).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("$300"),
+        expect.stringContaining("$100/month"),
+      ]),
+    )
   })
 
   it("accepts contextual non-core prices when context labels are present", () => {

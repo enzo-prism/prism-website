@@ -147,7 +147,7 @@ export const HOMEPAGE_HERO = {
     headline: `${HOMEPAGE_HERO_REVIEW_COUNT_LABEL} reviews from founders, doctors, operators, and local leaders`,
     linkLabel: 'See results',
   },
-  primaryCta: { label: 'Order now', href: '/websites' },
+  primaryCta: { label: 'Get a PRO website', href: '/websites' },
   secondaryCta: { label: 'Explore plans', href: '#offers' },
 } as const
 

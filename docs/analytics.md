@@ -56,7 +56,7 @@ plus a Google Ads conversion. Two modes:
   mounts `LeadSuccessTracker`, which consumes it and fires. Use when the form
   navigates on success.
 - `immediate` fires inline. Use when the form shows an in-page success screen
-  and never navigates — the `/websites` $300 order form is the case in point.
+  and never navigates — the retired `/websites` order form was the case in point.
 
 **Lead values.** `lib/lead-values.ts` maps `lead_type` to an expected USD value
 so Smart Bidding can weigh a $300 order against a free-audit request. Before it
@@ -90,9 +90,9 @@ load-bearing in both places.
 Checkout Session id is 66. The Ads conversion therefore drops the fixed
 `cs_live_`/`cs_test_` prefix. GA4 keeps the full id (100-char limit).
 
-## The $300 purchase flow
+## The website purchase flow (LEGACY — order form retired 2026-07-27; kept for the still-live Stripe link)
 
-1. Visitor completes `components/forms/WebsiteOrderForm.tsx` → Formspree POST.
+1. (Retired) Visitor completed the deleted `WebsiteOrderForm.tsx` → Formspree POST.
 2. On success: `website_order_submitted`, then hashed identifiers, then
    `trackFormSubmission(..., { conversionMode: 'immediate' })` → GA4
    `generate_lead` + Ads lead conversion, keyed on the `PRISM-XXXX` order
