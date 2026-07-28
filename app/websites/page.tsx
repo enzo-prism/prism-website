@@ -21,7 +21,7 @@ import { cn } from '@/lib/utils'
 
 const PAGE_TITLE = 'Pro websites'
 const PAGE_DESCRIPTION =
-  'Ultra-premium websites for serious businesses — bespoke design systems, precision engineering, and analytics built to rank on Google and be cited by AI.'
+  'Ultra-premium websites for serious businesses: bespoke design systems, precise engineering, and analytics built to rank on Google and be cited by AI.'
 const CANONICAL_URL = 'https://www.design-prism.com/websites'
 
 export const metadata: Metadata = buildRouteMetadata({
@@ -36,7 +36,7 @@ const PILLARS = [
   {
     label: 'Design',
     title: 'A design system, not a template',
-    body: 'Every engagement begins with a dedicated design system — typography, color, spacing, and motion — so every page is composed with intention. Considered art direction that establishes credibility at first glance.',
+    body: 'Every engagement begins with a dedicated design system. Typography, color, spacing, and motion are defined once and applied with intention, so every page signals credibility at first glance.',
     points: [
       'Bespoke design system per brand',
       'Typography, color, and motion standards',
@@ -46,7 +46,7 @@ const PILLARS = [
   {
     label: 'Engineering',
     title: 'Built like software, not a brochure',
-    body: 'A modern architecture with performance and accessibility as baseline requirements. Fast on every device, resilient under audit, and structured so search engines understand each page precisely.',
+    body: 'A modern architecture that treats performance and accessibility as baseline requirements. Fast on every device, resilient under audit, and structured so search engines read each page with precision.',
     points: [
       'Core Web Vitals in the green',
       'Accessible, semantic, hardened markup',
@@ -56,7 +56,7 @@ const PILLARS = [
   {
     label: 'Analytics',
     title: 'Instrumented from day one',
-    body: 'Measurement is part of the build, not an afterthought. Analytics and conversion tracking are configured before launch, so you always know precisely what your website delivers.',
+    body: 'Measurement is part of the build itself. Analytics and conversion tracking are configured before launch, so you know precisely what your website delivers from its first day in service.',
     points: [
       'GA4 and conversion tracking configured at launch',
       'Lead and call attribution',
@@ -79,19 +79,19 @@ const SEARCH_SURFACES = [
 const PROCESS_STEPS = [
   {
     label: 'Book a 30-min call',
-    body: 'A focused 30-minute Zoom call to understand your business, market, and goals. You leave with a clear plan and a clear price.',
+    body: 'A focused 30-minute conversation to understand your business, market, and objectives. You leave with a clear plan and a clear price.',
   },
   {
     label: 'Design & build',
-    body: 'We develop the design system, compose each page, and engineer the build to the Prism standard.',
+    body: 'We develop the design system, compose each page, and engineer the entire build to the Prism standard.',
   },
   {
     label: 'Instrument everything',
-    body: 'Analytics, conversion tracking, structured data, and search foundations are in place before launch — never retrofitted.',
+    body: 'Analytics, conversion tracking, structured data, and search foundations are in place before launch, never retrofitted after it.',
   },
   {
     label: 'Refine and maintain',
-    body: 'We iterate until it is exactly right, then keep the entire presence tuned — search, AI visibility, and conversion.',
+    body: 'We refine until it is exactly right, then keep the entire presence tuned across search, AI visibility, and conversion.',
   },
 ] as const
 
@@ -99,12 +99,12 @@ const FAQ_ITEMS = [
   {
     question: 'What makes a Prism PRO website different?',
     answer:
-      'It is built as a complete online presence rather than a brochure: a bespoke design system, software-grade engineering, analytics from day one, and search foundations that cover both Google and AI assistants such as ChatGPT, Gemini, and Claude.',
+      'It is conceived as a complete online presence rather than a brochure: a bespoke design system, software-grade engineering, analytics from day one, and search foundations that address both Google and AI assistants such as ChatGPT, Gemini, and Claude.',
   },
   {
     question: 'How does pricing work?',
     answer:
-      'Every build is scoped to your business on a 30-minute Zoom call. You leave with a clear plan and a clear price — no email estimates, no surprise scope.',
+      'Every build is scoped to your business on a 30-minute Zoom call. You leave with a clear plan and a clear price. There are no email estimates and no surprises in scope.',
   },
   {
     question: 'How do you make a website rank on AI assistants?',
@@ -114,12 +114,12 @@ const FAQ_ITEMS = [
   {
     question: 'Do I own the website?',
     answer:
-      'Completely. From the moment it ships, the website and everything in it belongs to you. There is no lock-in of any kind.',
+      'Completely. From the moment it ships, the website and everything within it belongs to you. There is no lock-in of any kind.',
   },
   {
     question: 'What happens after launch?',
     answer:
-      'That decision is yours. Prism can continue running the site — updates, analytics, search, and AI visibility — or hand it off entirely. Either way, it remains yours.',
+      'That decision is yours. Prism can continue to run the site, covering updates, analytics, search, and AI visibility, or hand it off entirely. Either way, it remains yours.',
   },
 ] as const
 
@@ -188,9 +188,10 @@ export default function WebsitesPage() {
                 Your online presence, fully dialed.
               </h1>
               <p className="mx-auto mt-6 max-w-2xl text-pretty text-[1.08rem] leading-8 text-[#b8afa2] sm:text-[1.18rem]">
-                Ultra-premium design, engineering, and analytics for serious
-                businesses — built on a bespoke design system, engineered to
-                rank on Google, and structured to be found and cited by AI.
+                Considered design, precise engineering, and analytics of
+                record for serious businesses. Built on a bespoke design
+                system, engineered to rank on Google, and structured to be
+                found and cited by AI.
               </p>
 
               <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
@@ -275,7 +276,7 @@ export default function WebsitesPage() {
             <CoreSectionHeading
               eyebrow="The standard"
               title="Design. Engineering. Analytics."
-              description="Three disciplines, one build. This is what separates a PRO website from a well-decorated homepage."
+              description="Three disciplines brought to a single standard. The difference between a website and a serious online presence."
             />
             <div className="mt-10 grid gap-4 lg:grid-cols-3">
               {PILLARS.map((pillar, index) => (
@@ -284,7 +285,7 @@ export default function WebsitesPage() {
                   className="flex flex-col border border-white/10 bg-[#070707] p-6 sm:p-7"
                 >
                   <p className="font-mono text-[0.7rem] uppercase tracking-[0.24em] text-[#8f877b]">
-                    {String(index + 1).padStart(2, '0')} — {pillar.label}
+                    {String(index + 1).padStart(2, '0')} · {pillar.label}
                   </p>
                   <h2 className="mt-5 text-[1.35rem] font-medium leading-tight tracking-[-0.04em] text-[#f5f0e8]">
                     {pillar.title}
@@ -323,7 +324,7 @@ export default function WebsitesPage() {
               <CoreSectionHeading
                 eyebrow="Visibility"
                 title="Rank on Google. Get cited by AI."
-                description="Your next customer asks a search engine — or an AI assistant. A PRO website is structured to win both: technical SEO and local foundations for Google, with entity-clear content and structured data so AI systems find, trust, and recommend you."
+                description="Your next customer asks a search engine, or asks an AI assistant. A PRO website is structured to win both: technical and local SEO foundations for Google, with entity-clear content and structured data that allow AI systems to find, trust, and recommend you."
               />
               <div className="flex flex-wrap gap-2">
                 {SEARCH_SURFACES.map((surface) => (
@@ -339,7 +340,7 @@ export default function WebsitesPage() {
 
             <div>
               <p className="text-sm leading-7 text-[#b8afa2]">
-                The same Prism website system behind these measured results:
+                The same system, with results measured at the source:
               </p>
               <ul className="mt-5 grid gap-px overflow-hidden border border-white/10 bg-white/10">
                 {PROOF_POINTS.map((proof) => (
@@ -374,7 +375,7 @@ export default function WebsitesPage() {
               <CoreSectionHeading
                 eyebrow="The work"
                 title="Selected work."
-                description="Every build comes from the same Prism system — design, engineering, and analytics held to one standard."
+                description="Every build is produced by the same Prism system, with design, engineering, and analytics held to a single standard."
               />
               <CoreActionLink
                 href="/case-studies"
@@ -419,7 +420,7 @@ export default function WebsitesPage() {
             <CoreSectionHeading
               eyebrow="How it works"
               title="It starts with one call."
-              description="Every engagement is scoped on a 30-minute Zoom call — you leave with a clear plan and a clear price."
+              description="Every engagement is scoped on a 30-minute Zoom call. You leave with a clear plan and a clear price."
             />
             <ol className="mt-10 grid gap-4 md:grid-cols-4">
               {PROCESS_STEPS.map((step, index) => (
@@ -475,7 +476,7 @@ export default function WebsitesPage() {
           >
             <CoreSectionHeading
               title="Get your presence fully dialed."
-              description="Book a 30-minute Zoom call. We'll map your business, define the scope, and give you a clear price."
+              description="Book a 30-minute Zoom call. We will map your business, define the scope, and present a clear price."
             />
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
               <CoreActionLink
@@ -496,13 +497,13 @@ export default function WebsitesPage() {
       <ServiceSchema
         serviceId="pro-website"
         name="Prism PRO website"
-        description="Ultra-premium website builds for serious businesses: a bespoke design system, software-grade engineering, and analytics configured from day one — structured to rank on Google and be cited by AI assistants. Scoped on a 30-minute call."
+        description="Ultra-premium website builds for serious businesses: a bespoke design system, software-grade engineering, and analytics configured from day one, structured to rank on Google and be cited by AI assistants. Scoped on a 30-minute call."
         serviceType="Website design and development"
         areaServed="United States"
         offerDetails={{
           name: 'Prism PRO website',
           description:
-            'An ultra-premium website build — design system, engineering, analytics, and Google + AI search foundations. Scoped to your business on a 30-minute call.',
+            'An ultra-premium website build covering the design system, engineering, analytics, and Google and AI search foundations. Scoped to your business on a 30-minute call.',
           businessFunction: 'http://purl.org/goodrelations/v1#ProvideService',
           availability: 'https://schema.org/InStock',
           url: CANONICAL_URL,
