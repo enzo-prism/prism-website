@@ -380,13 +380,14 @@ The navbar should stay minimal:
 
 It should feel like part of the page shell, not a separate app chrome layer.
 
-The 2026-07 rail is a flat five-item list (the four offers + contact, no
-dropdowns): links are quiet rounded pills — active is a soft `white/[0.08]`
-wash, hover a lighter `white/[0.04]` — with a 1px `white/14` hairline
-separating contact from the offer group, and the filled ivory "Order now" CTA
-staying the only loud element. The inline rail takes over from the menu
-button at `lg` (1024px). The mobile panel keeps the same five items as a flat
-divided list with aria-hidden mono index prefixes (01–05) for texture.
+The 2026-07 rail is a flat seven-item list (the four offers, wall of love +
+case studies, then contact; no dropdowns and no CTA button): links are quiet
+rounded pills — active is a soft `white/[0.08]` wash, hover a lighter
+`white/[0.04]` — with 1px `white/14` hairlines dividing the three groups
+(offers | proof | contact). The inline rail takes over from the menu button
+at `lg` (1024px), and the logo tagline hides between `lg` and `xl` so the
+rail fits. The mobile panel keeps the same seven items as a flat divided
+list with aria-hidden mono index prefixes (01–07) for texture.
 
 ### Social proof
 
