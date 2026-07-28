@@ -36,11 +36,13 @@ export function useRevealAnimation(
       return
     }
 
+    let delayTimer: ReturnType<typeof setTimeout> | null = null
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
           if (delay > 0) {
-            setTimeout(() => {
+            delayTimer = setTimeout(() => {
               setIsVisible(true)
               if (triggerOnce) {
                 setHasTriggered(true)
@@ -65,6 +67,7 @@ export function useRevealAnimation(
     observer.observe(currentElement)
 
     return () => {
+      if (delayTimer) clearTimeout(delayTimer)
       observer.disconnect()
     }
   }, [threshold, rootMargin, once, delay, triggerOnce, hasTriggered])
@@ -91,18 +94,23 @@ export function useStaggeredReveal(
       return
     }
 
+    const staggerTimers: Array<ReturnType<typeof setTimeout>> = []
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          // Stagger the reveal of items
+          // Reveal once; stop observing so re-entering doesn't restart the stagger
+          observer.disconnect()
           for (let i = 0; i < count; i++) {
-            setTimeout(() => {
-              setVisibleItems(prev => {
-                const newState = [...prev]
-                newState[i] = true
-                return newState
-              })
-            }, i * delay)
+            staggerTimers.push(
+              setTimeout(() => {
+                setVisibleItems(prev => {
+                  const newState = [...prev]
+                  newState[i] = true
+                  return newState
+                })
+              }, i * delay)
+            )
           }
         }
       },
@@ -115,6 +123,7 @@ export function useStaggeredReveal(
     observer.observe(currentElement)
 
     return () => {
+      staggerTimers.forEach(clearTimeout)
       observer.disconnect()
     }
   }, [count, delay, restOptions.threshold, restOptions.rootMargin])

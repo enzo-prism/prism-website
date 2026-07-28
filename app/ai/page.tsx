@@ -13,7 +13,6 @@ export const metadata: Metadata = buildRouteMetadata({
   description: PAGE_DESCRIPTION,
   path: "/ai",
   index: false,
-  ogImage: "/og-prism-ai.jpg",
 })
 
 export default function PrismAIPage() {
@@ -24,7 +23,7 @@ export default function PrismAIPage() {
         name={PAGE_TITLE}
         description={PAGE_DESCRIPTION}
         url={CANONICAL_URL}
-        image="https://www.design-prism.com/og-prism-ai.jpg"
+        image="https://www.design-prism.com/prism-opengraph.png"
         isPartOfId="https://www.design-prism.com/#website"
       />
     </>

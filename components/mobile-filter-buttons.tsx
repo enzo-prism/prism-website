@@ -52,7 +52,11 @@ export default function MobileFilterButtons({
     if (scrollElement) {
       checkScrollState()
       scrollElement.addEventListener('scroll', checkScrollState)
-      return () => scrollElement.removeEventListener('scroll', checkScrollState)
+      window.addEventListener('resize', checkScrollState)
+      return () => {
+        scrollElement.removeEventListener('scroll', checkScrollState)
+        window.removeEventListener('resize', checkScrollState)
+      }
     }
   }, [categories])
 

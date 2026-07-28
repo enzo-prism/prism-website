@@ -13,7 +13,7 @@ function toAbsoluteUrl(rawValue: string | null, baseUrl: string): string | null 
   if (!rawValue) return null
   const value = rawValue.trim()
   if (!value) return null
-  if (value.startsWith("javascript:")) return null
+  if (value.toLowerCase().startsWith("javascript:")) return null
 
   try {
     return new URL(value, baseUrl).toString()

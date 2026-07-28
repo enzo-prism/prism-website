@@ -261,7 +261,18 @@ export default function Navbar() {
     const inertTargets = Array.from(
       document.querySelectorAll<HTMLElement>('main, footer'),
     ).filter((element) => !element.closest('header'))
-    inertTargets.forEach((element) => {
+    // Body-level overlays (e.g. the ElevenLabs widget) are siblings of the
+    // app root and can paint above the menu — inert them too, keeping only
+    // subtrees that contain this header.
+    const bodyLevelTargets = Array.from(document.body.children).filter(
+      (element): element is HTMLElement =>
+        element instanceof HTMLElement &&
+        element.tagName !== 'SCRIPT' &&
+        !element.hasAttribute('inert') &&
+        !element.querySelector('header'),
+    )
+    const allInertTargets = [...inertTargets, ...bodyLevelTargets]
+    allInertTargets.forEach((element) => {
       element.setAttribute('inert', '')
     })
 
@@ -283,7 +294,7 @@ export default function Navbar() {
       window.removeEventListener('resize', handleResize)
       body.style.overflow = previousBodyOverflow
       documentElement.style.overflow = previousHtmlOverflow
-      inertTargets.forEach((element) => {
+      allInertTargets.forEach((element) => {
         element.removeAttribute('inert')
       })
     }

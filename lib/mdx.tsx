@@ -78,8 +78,19 @@ const mdxComponents = {
   iframe: ({ src, title, ...props }: React.IframeHTMLAttributes<HTMLIFrameElement>) => {
     // Only allow YouTube and other trusted domains
     const allowedDomains = ['youtube.com', 'youtube-nocookie.com', 'vimeo.com']
-    const url = new URL(src || '')
-    if (!allowedDomains.some(domain => url.hostname.includes(domain))) {
+    if (typeof src !== 'string') return null
+    let url: URL
+    try {
+      url = new URL(src)
+    } catch {
+      // Missing/relative src: never render an untrusted or malformed embed
+      return null
+    }
+    const hostname = url.hostname.toLowerCase()
+    const isAllowed = allowedDomains.some(
+      domain => hostname === domain || hostname.endsWith(`.${domain}`),
+    )
+    if (!isAllowed) {
       return null
     }
     return <iframe src={src} title={title} allowFullScreen {...props} />

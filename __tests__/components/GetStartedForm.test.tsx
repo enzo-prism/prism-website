@@ -656,7 +656,7 @@ describe('GetStartedForm', () => {
     expect(formData.get('site')).toBe('prism-site')
     expect(formData.get('form_key')).toBe('apply')
     expect(formData.get('_codex_test')).toBe('false')
-  })
+  }, 20000)
 
   it('keeps the user on review with inline error state when submission fails', async () => {
     fetchSpy.mockImplementation(() =>

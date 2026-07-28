@@ -46,19 +46,18 @@ export default function MinimalistVideoPlayer({
     if (typeof window !== 'undefined' && (window as any).Vimeo) {
       initializePlayer()
     } else {
-      const script = document.createElement("script")
-      script.src = "https://player.vimeo.com/api/player.js"
-      script.async = true
-      script.onload = initializePlayer
-      document.body.appendChild(script)
-
-      return () => {
-        if (document.body.contains(script)) {
-          document.body.removeChild(script)
-        }
-        if (controlsTimeoutRef.current) {
-          clearTimeout(controlsTimeoutRef.current)
-        }
+      const existingScript = document.getElementById(
+        "vimeo-player-api",
+      ) as HTMLScriptElement | null
+      if (existingScript) {
+        existingScript.addEventListener("load", initializePlayer)
+      } else {
+        const script = document.createElement("script")
+        script.id = "vimeo-player-api"
+        script.src = "https://player.vimeo.com/api/player.js"
+        script.async = true
+        script.onload = initializePlayer
+        document.body.appendChild(script)
       }
     }
 
@@ -66,6 +65,10 @@ export default function MinimalistVideoPlayer({
       if (controlsTimeoutRef.current) {
         clearTimeout(controlsTimeoutRef.current)
       }
+      // Tear down the player so its event handlers stop firing setState
+      // after unmount and the iframe is released.
+      playerRef.current?.destroy?.().catch?.(() => void 0)
+      playerRef.current = null
     }
   }, [])
 

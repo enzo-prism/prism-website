@@ -87,6 +87,7 @@ export const CAMPAIGN_LINKS: Record<string, CampaignLink> = {
 
 export function getCampaignLink(slug: string): CampaignLink | null {
   const normalized = slug.trim().toLowerCase()
+  if (!Object.hasOwn(CAMPAIGN_LINKS, normalized)) return null
   const entry = CAMPAIGN_LINKS[normalized]
   if (!entry || entry.enabled === false) return null
   return entry

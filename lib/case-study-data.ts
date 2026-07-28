@@ -207,7 +207,7 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
     slug: 'olympic-bootworks',
     segments: ['local'],
     structured: {
-      heroImage: 'https://www.design-prism.com/olympic-bootworks-hero.png',
+      heroImage: 'https://www.design-prism.com/olympic-bootworks.png',
       heroVideoId: 'Cgi7CZHMYQ0',
       datePublished: '2025-02-15T00:00:00.000Z',
       dateModified: '2026-06-25T00:00:00.000Z',
@@ -798,7 +798,7 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
     slug: 'mataria-dental-group',
     segments: ['dental', 'local'],
     structured: {
-      heroImage: 'https://www.design-prism.com/mataria-hero.png',
+      heroImage: 'https://www.design-prism.com/case-studies/mataria-dental-group-home-desktop.jpg',
       heroVideoId: 'VIDEO_PLACEHOLDER',
       datePublished: '2025-02-01T00:00:00.000Z',
       dateModified: '2025-02-01T00:00:00.000Z',

@@ -7,6 +7,7 @@ import Navbar from "@/components/navbar"
 import ApplyDashboardClaimCta from "@/components/thank-you/ApplyDashboardClaimCta"
 import ApplySuccessTracker from "@/components/thank-you/ApplySuccessTracker"
 import LeadSuccessTracker from "@/components/thank-you/LeadSuccessTracker"
+import { firstSearchParamString } from "@/lib/search-params"
 import { buildRouteMetadata } from "@/lib/seo/metadata"
 
 export const metadata: Metadata = buildRouteMetadata({
@@ -74,11 +75,12 @@ const WEBSITE_BUILD_NEXT_STEPS = [
 export default async function ThankYouPage({
   searchParams,
 }: {
-  searchParams: Promise<{ source?: string }>
+  searchParams: Promise<{ source?: string | string[] }>
 }) {
   const resolvedSearchParams = await searchParams
-  const isApplyFlow = resolvedSearchParams?.source === "apply"
-  const isWebsiteBuildFlow = resolvedSearchParams?.source === "website-build"
+  const source = firstSearchParamString(resolvedSearchParams?.source)
+  const isApplyFlow = source === "apply"
+  const isWebsiteBuildFlow = source === "website-build"
   const nextSteps = isApplyFlow
     ? APPLY_NEXT_STEPS
     : isWebsiteBuildFlow

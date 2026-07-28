@@ -8,6 +8,13 @@ export default function ScrollToTop() {
   const prevPathname = useRef<string | null>(null)
 
   useEffect(() => {
+    // Skip the initial mount so anchor deep links (/page#section) and the
+    // router's restored scroll position are preserved on first render.
+    if (prevPathname.current === null) {
+      prevPathname.current = pathname
+      return
+    }
+
     // Only scroll to top when the pathname changes
     if (prevPathname.current !== pathname) {
       // Use requestAnimationFrame for smoother scrolling

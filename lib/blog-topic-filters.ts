@@ -87,8 +87,8 @@ const CATEGORY_FILTER_OVERRIDES: Record<string, BlogFilterBucket> = {
   "ai-and-strategy": BLOG_FILTER_BUCKETS.CULTURE,
 }
 
-const MARKETING_HINTS = ["seo", "search", "ad", "growth", "local", "content", "marketing", "reputation"]
-const ENGINEERING_HINTS = ["web", "dev", "development", "technology", "code", "tool", "productivity", "automation", "ops", "software", "engineering", "website", "dentistry"]
+const MARKETING_HINTS = ["seo", "search", "ad", "ads", "growth", "local", "content", "marketing", "reputation"]
+const ENGINEERING_HINTS = ["web", "dev", "development", "technology", "code", "tool", "tooling", "productivity", "automation", "ops", "software", "engineering", "website", "dentistry"]
 const DESIGN_HINTS = ["design", "product", "brand", "ui", "ux"]
 const CULTURE_HINTS = ["leadership", "entrepreneurship", "entrepreneur", "culture", "mindset", "team", "people"]
 
@@ -108,12 +108,15 @@ export const getBlogFilterFromCategory = (category: string): Exclude<BlogFilterB
   const mappedBucket = CATEGORY_FILTER_OVERRIDES[normalizedCategory]
   if (mappedBucket && mappedBucket !== BLOG_FILTER_BUCKETS.ALL) return mappedBucket
 
-  const hasMatch = (haystack: string, needles: string[]) => needles.some((needle) => haystack.includes(needle))
+  // Match whole slug segments, not raw substrings — otherwise a short hint
+  // like "ad" would swallow "leadership", "roadmap", or "ai-adoption".
+  const segments = normalizedCategory.split("-").filter(Boolean)
+  const hasMatch = (needles: string[]) => needles.some((needle) => segments.includes(needle))
 
-  if (hasMatch(normalizedCategory, DESIGN_HINTS)) return BLOG_FILTER_BUCKETS.DESIGN
-  if (hasMatch(normalizedCategory, ENGINEERING_HINTS)) return BLOG_FILTER_BUCKETS.ENGINEERING
-  if (hasMatch(normalizedCategory, MARKETING_HINTS)) return BLOG_FILTER_BUCKETS.MARKETING
-  if (hasMatch(normalizedCategory, CULTURE_HINTS)) return BLOG_FILTER_BUCKETS.CULTURE
+  if (hasMatch(DESIGN_HINTS)) return BLOG_FILTER_BUCKETS.DESIGN
+  if (hasMatch(ENGINEERING_HINTS)) return BLOG_FILTER_BUCKETS.ENGINEERING
+  if (hasMatch(MARKETING_HINTS)) return BLOG_FILTER_BUCKETS.MARKETING
+  if (hasMatch(CULTURE_HINTS)) return BLOG_FILTER_BUCKETS.CULTURE
 
   return BLOG_FILTER_BUCKETS.MARKETING
 }

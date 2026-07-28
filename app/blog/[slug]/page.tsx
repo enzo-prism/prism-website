@@ -85,12 +85,6 @@ export async function generateMetadata({
 
   const base =
     process.env.NEXT_PUBLIC_BASE_URL || 'https://www.design-prism.com'
-  const frontmatterOpenGraphImages = frontmatter.openGraph?.images
-  const normalizedOpenGraphImages = Array.isArray(frontmatterOpenGraphImages)
-    ? frontmatterOpenGraphImages
-    : frontmatterOpenGraphImages
-      ? [frontmatterOpenGraphImages]
-      : []
   const datedOpenGraphImage = getBlogOpenGraphImage(
     frontmatter.date,
     frontmatter.image,
@@ -104,21 +98,9 @@ export async function generateMetadata({
       alt: frontmatter.title,
     },
   ]
-  const frontmatterTwitterImages = frontmatter.twitter?.images
-  const normalizedTwitterImages = Array.isArray(frontmatterTwitterImages)
-    ? frontmatterTwitterImages
-    : frontmatterTwitterImages
-      ? [frontmatterTwitterImages]
-      : []
-  const openGraphImageUrls = normalizedOpenGraphImages
-    .map((image) => (typeof image === 'string' ? image : image?.url))
-    .filter(Boolean)
-  const twitterImages =
-    normalizedTwitterImages.length > 0
-      ? normalizedTwitterImages
-      : openGraphImageUrls.length > 0
-        ? openGraphImageUrls
-        : [datedOpenGraphImage]
+  // Twitter must advertise the same image the OG policy selects; frontmatter
+  // image lists are intentionally overridden by the dated OG image system.
+  const twitterImages = [datedOpenGraphImage]
 
   const canonical = canonicalUrl(frontmatter.canonical || `/blog/${slug}`)
   const seoTitle = buildAbsoluteTitle(frontmatter.seoTitle || frontmatter.title || 'Blog post')

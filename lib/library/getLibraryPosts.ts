@@ -141,6 +141,10 @@ export async function getLibraryPosts(): Promise<LibraryPost[]> {
     results.forEach((result) => {
       if (result.status === "fulfilled") {
         posts = posts.concat(result.value)
+      } else {
+        // A rejected feed silently falling back to seed posts is a live-feed
+        // outage with zero diagnostics — log it so it's visible in server logs.
+        console.error("[library] social feed fetch failed:", result.reason)
       }
     })
   }

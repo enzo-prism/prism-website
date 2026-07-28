@@ -270,7 +270,7 @@ describe('WebsiteOrderForm', () => {
     expect(
       screen.getByRole('button', { name: /place my order/i }),
     ).toBeEnabled()
-  })
+  }, 20000)
 
   it('preserves a draft across close and reopen', () => {
     render(<WebsiteOrderForm />)

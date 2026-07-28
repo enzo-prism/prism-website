@@ -25,18 +25,22 @@ export function startPerformanceTransaction(
     const Sentry = getSentryModule()
     if (!Sentry) return null
 
-    const span = Sentry.startSpan({
+    // startInactiveSpan keeps the span open until .end() is called, so the
+    // recorded duration covers the actual work instead of a synchronous no-op.
+    const sentrySpan = Sentry.startInactiveSpan({
       name,
       op: operation,
-    }, () => {
-      return {
-        name,
-        operation,
-        setData: (key: string, value: any) => Sentry.setTag(key, String(value)),
-        setStatus: (status: string) => Sentry.setTag("status", status),
-        finish: () => {},
-      }
     })
+
+    const span = {
+      name,
+      operation,
+      setData: (key: string, value: any) =>
+        sentrySpan?.setAttribute?.(key, String(value)),
+      setStatus: (status: string) =>
+        sentrySpan?.setStatus?.({ code: status === 'ok' ? 1 : 2, message: status }),
+      finish: () => sentrySpan?.end?.(),
+    }
     
     addBreadcrumb(
       `Started performance transaction: ${name}`,
@@ -71,22 +75,22 @@ export function createPerformanceSpan(
     const Sentry = getSentryModule()
     if (!Sentry) return null
 
-    return Sentry.startSpan({
+    const sentrySpan = Sentry.startInactiveSpan({
       name: description,
       op: operation,
-    }, () => {
-      return {
-        setData: (key: string, value: any) => {
-          if (data) {
-            Object.entries(data).forEach(([k, v]) => {
-              Sentry.setTag(`${operation}_${k}`, String(v))
-            })
-          }
-          Sentry.setTag(key, String(value))
-        },
-        finish: () => {},
-      }
     })
+
+    if (data) {
+      Object.entries(data).forEach(([k, v]) => {
+        sentrySpan?.setAttribute?.(`${operation}_${k}`, String(v))
+      })
+    }
+
+    return {
+      setData: (key: string, value: any) =>
+        sentrySpan?.setAttribute?.(key, String(value)),
+      finish: () => sentrySpan?.end?.(),
+    }
   } catch {
     return {
       setData: () => {},
@@ -167,8 +171,10 @@ export function trackWebVitals() {
   // Track Cumulative Layout Shift (CLS)
   if ('PerformanceObserver' in window) {
     try {
+      // CLS accumulates across the page's lifetime; resetting per callback
+      // would report per-batch deltas instead of the cumulative score.
+      let clsValue = 0
       const clsObserver = new PerformanceObserver((list) => {
-        let clsValue = 0
         for (const entry of list.getEntries()) {
           const layoutShift = entry as any
           if (!layoutShift.hadRecentInput) {
@@ -212,7 +218,7 @@ export function trackPageLoadPerformance(pagePath: string) {
   if (!transaction) return
   
   // Track navigation timing
-  window.addEventListener('load', () => {
+  const reportNavigationTiming = () => {
     const navigationSpan = createPerformanceSpan(
       transaction,
       'navigation.timing',
@@ -248,8 +254,16 @@ export function trackPageLoadPerformance(pagePath: string) {
     setTimeout(() => {
       transaction.finish()
     }, 1000)
-  })
-  
+  }
+
+  // Client components usually mount after the load event has already fired,
+  // in which case a 'load' listener would never run.
+  if (document.readyState === 'complete') {
+    reportNavigationTiming()
+  } else {
+    window.addEventListener('load', reportNavigationTiming, { once: true })
+  }
+
   return transaction
 }
 

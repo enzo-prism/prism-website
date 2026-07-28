@@ -15,7 +15,6 @@ export const metadata: Metadata = buildRouteMetadata({
   titleStem: PAGE_TITLE,
   description: PAGE_DESCRIPTION,
   path: "/prism-flywheel",
-  ogImage: "/og-prism-flywheel.jpg",
 })
 
 export default function PrismFlywheelPage() {
@@ -31,7 +30,7 @@ export default function PrismFlywheelPage() {
         name={PAGE_TITLE}
         description={PAGE_DESCRIPTION}
         url={CANONICAL_URL}
-        image="https://www.design-prism.com/og-prism-flywheel.jpg"
+        image="https://www.design-prism.com/prism-opengraph.png"
         isPartOfId="https://www.design-prism.com/#website"
       />
     </>

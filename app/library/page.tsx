@@ -13,6 +13,11 @@ const PAGE_DESCRIPTION =
   'Short lessons from founders and world-class athletes, curated by Prism to help you build a stronger company and a stronger competitive mindset.'
 const CANONICAL_URL = "https://www.design-prism.com/library"
 
+// The featured post rotates by day-of-year; without a revalidate window the
+// page is fully static when no social-feed tokens are set and the rotation
+// freezes at build time.
+export const revalidate = 3600
+
 export const metadata: Metadata = buildRouteMetadata({
   titleStem: PAGE_TITLE,
   description: PAGE_DESCRIPTION,

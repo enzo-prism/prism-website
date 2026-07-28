@@ -45,7 +45,9 @@ export async function initSentryClient(): Promise<SentryModule | null> {
     if (!initialized) {
       try {
         Sentry.init({
-          dsn: DEFAULT_SENTRY_DSN,
+          // Honor the same env override the server/edge runtimes use
+          // (sentry.server.config.ts / sentry.edge.config.ts).
+          dsn: process.env.NEXT_PUBLIC_SENTRY_DSN || DEFAULT_SENTRY_DSN,
           // 100% tracing sends a performance beacon for every session (CPU +
           // network). 10% keeps useful signal on a marketing site at a fraction
           // of the cost.

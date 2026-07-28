@@ -10,7 +10,7 @@ export const metadata: Metadata = buildRouteMetadata({
   description:
     'How Prism helped Olympic Bootworks, a legendary Tahoe boot-fitting shop, finally sell online without losing the craft that made its reputation.',
   path: '/case-studies/olympic-bootworks',
-  ogImage: cs?.structured?.heroImage ?? '/olympic-bootworks-hero.png',
+  ogImage: cs?.structured?.heroImage ?? '/olympic-bootworks.png',
 })
 
 export default function OlympicBootworksCaseStudyPage() {

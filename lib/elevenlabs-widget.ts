@@ -69,7 +69,13 @@ function normalizePublicWidgetPathname(
 export function getPublicElevenLabsAgentId(
   env: NodeJS.ProcessEnv = process.env,
 ): string {
-  const configuredAgentId = env.NEXT_PUBLIC_ELEVENLABS_AGENT_ID?.trim()
+  // The literal `process.env.NEXT_PUBLIC_*` fallback is required for client
+  // bundles: Next.js only inlines the literal token, so the defaulted `env`
+  // parameter resolves to undefined in the browser.
+  const configuredAgentId = (
+    env.NEXT_PUBLIC_ELEVENLABS_AGENT_ID ??
+    process.env.NEXT_PUBLIC_ELEVENLABS_AGENT_ID
+  )?.trim()
 
   if (configuredAgentId && configuredAgentId.length > 0) {
     return configuredAgentId
@@ -81,8 +87,10 @@ export function getPublicElevenLabsAgentId(
 export function getPublicElevenLabsMarkdownLinkAllowedHosts(
   env: NodeJS.ProcessEnv = process.env,
 ): string {
-  const configuredAllowedHosts =
-    env.NEXT_PUBLIC_ELEVENLABS_MARKDOWN_LINK_ALLOWED_HOSTS?.trim()
+  const configuredAllowedHosts = (
+    env.NEXT_PUBLIC_ELEVENLABS_MARKDOWN_LINK_ALLOWED_HOSTS ??
+    process.env.NEXT_PUBLIC_ELEVENLABS_MARKDOWN_LINK_ALLOWED_HOSTS
+  )?.trim()
 
   if (configuredAllowedHosts) {
     const normalizedConfiguredHosts = normalizeAllowedHosts(

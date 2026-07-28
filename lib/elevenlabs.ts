@@ -87,7 +87,11 @@ function normalizeSharedLinkLabel(
 export function getPublicElevenLabsBookingUrl(
   env: NodeJS.ProcessEnv = process.env,
 ): string {
-  const configuredBookingUrl = env.NEXT_PUBLIC_ELEVENLABS_BOOKING_URL?.trim()
+  // Literal fallback so the value survives Next.js client-bundle inlining.
+  const configuredBookingUrl = (
+    env.NEXT_PUBLIC_ELEVENLABS_BOOKING_URL ??
+    process.env.NEXT_PUBLIC_ELEVENLABS_BOOKING_URL
+  )?.trim()
 
   if (configuredBookingUrl && configuredBookingUrl.length > 0) {
     return configuredBookingUrl
@@ -149,7 +153,9 @@ export function resolveElevenLabsConversationUrl(
     return bookingUrl
   }
 
-  if (trimmedUrl.startsWith('/')) {
+  // Protocol-relative URLs (//host/path) resolve to an external origin, so
+  // they must go through the host allowlist, not the internal-path shortcut.
+  if (trimmedUrl.startsWith('/') && !trimmedUrl.startsWith('//')) {
     return trimmedUrl
   }
 

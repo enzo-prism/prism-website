@@ -27,23 +27,22 @@ export default function ScrollManager() {
 
     // Optimize for different screen sizes
     const mediaQuery = window.matchMedia("(max-width: 768px)")
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)")
     const handleMobileChange = (e: MediaQueryListEvent) => {
       if (e.matches) {
         // Mobile optimizations
         document.body.classList.add("mobile-optimized")
-        // Only apply smooth scroll on mobile, not on desktop Safari
-        if (!isSafariDesktop) {
+        // Only apply smooth scroll on mobile, never for reduced-motion users
+        // and not on desktop Safari
+        if (!isSafariDesktop && !prefersReducedMotion.matches) {
           document.documentElement.style.setProperty("scroll-behavior", "smooth")
         }
       } else {
         // Desktop optimizations
         document.body.classList.remove("mobile-optimized")
-        // Always remove smooth scroll on Safari desktop
-        if (isSafariDesktop) {
-          document.documentElement.style.removeProperty("scroll-behavior")
-          document.documentElement.classList.remove("scroll-smooth")
-          document.body.style.removeProperty("scroll-behavior")
-        }
+        document.documentElement.style.removeProperty("scroll-behavior")
+        document.documentElement.classList.remove("scroll-smooth")
+        document.body.style.removeProperty("scroll-behavior")
       }
     }
 

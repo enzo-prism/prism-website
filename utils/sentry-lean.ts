@@ -23,6 +23,7 @@ export {
   setMeasurement,
   setTag,
   setUser,
+  startInactiveSpan,
   startSpan,
   withScope,
 } from "@sentry/nextjs"

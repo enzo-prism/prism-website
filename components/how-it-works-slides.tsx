@@ -93,6 +93,9 @@ export default function HowItWorksSlides() {
       if (slideContainerRef.current) {
         slideContainerRef.current.style.transform = `translateX(-${currentIndex * 100}%)`
       }
+      touchStartX.current = null
+      touchEndX.current = null
+      setTimeout(() => setIsPaused(false), 2000)
       return
     }
 

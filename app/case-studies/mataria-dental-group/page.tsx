@@ -10,7 +10,7 @@ export const metadata: Metadata = buildRouteMetadata({
   description:
     'How Prism relaunched Mataria Dental Group in Torrance with a new dental website, listings, content, social campaigns, and full analytics.',
   path: '/case-studies/mataria-dental-group',
-  ogImage: cs?.structured?.heroImage ?? '/mataria-hero.png',
+  ogImage: cs?.structured?.heroImage ?? '/case-studies/mataria-dental-group-home-desktop.jpg',
 })
 
 export default function MatariaDentalGroupCaseStudyPage() {
