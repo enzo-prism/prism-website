@@ -215,7 +215,7 @@ export default function SocialLinkHub({
             onClick={() =>
               trackExternalLinkClick(config.profileHref, `${platform} profile`)
             }
-            className="max-w-[46vw] truncate font-mono text-[10px] font-semibold uppercase tracking-[0.18em] text-[#8f877b] transition-colors hover:text-[#f5f0e8] focus-visible:rounded-sm focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-white/25 focus-visible:ring-offset-4 focus-visible:ring-offset-black sm:max-w-none"
+            className="inline-flex min-h-11 max-w-[46vw] items-center truncate font-mono text-[10px] font-semibold uppercase tracking-[0.18em] text-[#8f877b] transition-colors hover:text-[#f5f0e8] focus-visible:rounded-sm focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-white/25 focus-visible:ring-offset-4 focus-visible:ring-offset-black sm:max-w-none"
           >
             {config.handle}
           </Link>
