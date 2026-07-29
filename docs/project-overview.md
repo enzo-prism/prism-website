@@ -8,7 +8,7 @@ Prism is a business growth systems website organized around four productized off
 
 - Framework: Next.js 16.2.11 App Router, React 19, TypeScript, Tailwind v4.
 - Runtime: Node.js 22.x and pnpm 10.x.
-- Production: GitHub Actions publishes to Vercel with source deploys. Vercel Git auto-deploy is disabled for `main`; the locked-route visual job currently runs non-blocking while baselines stabilize.
+- Production: GitHub Actions publishes to Vercel with source deploys. Vercel Git auto-deploy is disabled for `main`; the locked-route visual job is a blocking gate ahead of deploy.
 - Design system: root `DESIGN.md`, generated tokens in `generated/`, shared primitives in `components/core-route/` and `components/ui/`.
 - Active positioning: growth-first, dental-proven. Dental proof should stay visible and credible, while non-dental case studies should appear as first-class proof of the broader growth system.
 - Proof architecture: `/case-studies`, `lib/case-study-data.ts`, `components/schema-markup.tsx`, and `public/llms.txt` now work together so public proof is visible to buyers and machine-readable for AI/search systems. Publish only dated, source-attributed GA4 or Google Search Console metrics in `structured.results`.

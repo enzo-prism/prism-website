@@ -21,7 +21,8 @@ export const metadata: Metadata = buildRouteMetadata({
  * Post-payment confirmation for the flat-$300 website order.
  *
  * Stripe's Payment Link redirects here with `?session_id={CHECKOUT_SESSION_ID}`
- * (see scripts/update-website-payment-link.sh). That id gives GA4 and Google
+ * (link management scripts retired with the call-first move; see git history
+ * for scripts/update-website-payment-link.sh). That id gives GA4 and Google
  * Ads a stable key to de-duplicate on, and PurchaseSuccessTracker shape-checks
  * it before reporting anything.
  *

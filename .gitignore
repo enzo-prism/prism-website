@@ -53,3 +53,10 @@ scripts/logs/
 
 # macOS
 .DS_Store
+
+# unused licensed font binaries (kept local only)
+/font/
+
+# one-off run outputs
+/reports/
+mobile-test-results.json

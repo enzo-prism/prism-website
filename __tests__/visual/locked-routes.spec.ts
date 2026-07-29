@@ -385,7 +385,7 @@ test('home hero layout stays readable across responsive breakpoints', async ({
     const hero = page.locator('#homepage-hero')
     await expect(hero).toBeVisible({ timeout: 20_000 })
     await expect(
-      hero.getByRole('link', { name: /order now/i }),
+      hero.getByRole('link', { name: /get a pro website/i }),
     ).toBeVisible({
       timeout: 20_000,
     })

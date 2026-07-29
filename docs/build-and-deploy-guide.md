@@ -2,7 +2,7 @@
 
 Keep Prism's Next.js builds predictable by following this checklist whenever you touch UI code or ship to Vercel.
 
-Production is intentionally single-path: GitHub Actions publishes with `vercel deploy --prod --yes`. `vercel.json` disables Vercel Git auto-deploy on `main` so production does not get duplicate deploys from both GitHub Actions and the Vercel Git integration. The locked-route screenshot job still runs in CI, but it is temporarily non-blocking while baselines stabilize; typecheck, pricing verification, and deploy remain blocking.
+Production is intentionally single-path: GitHub Actions publishes with `vercel deploy --prod --yes`. `vercel.json` disables Vercel Git auto-deploy on `main` so production does not get duplicate deploys from both GitHub Actions and the Vercel Git integration. The locked-route screenshot job is a blocking gate ahead of the deploy job (with CI-only retries for the occasional mobile navigation timeout); typecheck, pricing verification, and deploy also block.
 
 ## Required toolchain
 
@@ -79,7 +79,7 @@ Production is intentionally single-path: GitHub Actions publishes with `vercel d
 ## CI parity notes
 
 - Production workflow order is:
-  1. `UI Lock Screenshots` (`pnpm test:visual:locked`, currently `continue-on-error: true`)
+  1. `UI Lock Screenshots` (`pnpm test:visual:locked`, blocking)
   2. `Build and Deploy` (`pnpm install --frozen-lockfile`, `pnpm typecheck`, `pnpm lint`, `pnpm test`, `vercel pull --environment=production`, `pnpm verify:pricing-consistency`, `vercel deploy --prod --yes`)
 - Keep local troubleshooting aligned with that order.
 - If production deploy fails, reproduce locally with `pnpm build` first. Most failures are deterministic once you mirror the production bundle.

@@ -128,7 +128,7 @@ export default function HomeHeroSection() {
               >
                 <CoreActionLink
                   href={HOMEPAGE_HERO.primaryCta.href}
-                  label="order now"
+                  label="get a pro website"
                   location="homepage hero"
                   variant="heroPrimary"
                 >

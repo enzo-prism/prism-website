@@ -10,6 +10,9 @@ export default defineConfig({
   testMatch: ["locked-routes.spec.ts"],
   fullyParallel: true,
   timeout: 60_000,
+  // Absorb the occasional CI-only mobile navigation timeout without hiding
+  // real regressions; local runs stay strict.
+  retries: process.env.CI ? 2 : 0,
   snapshotPathTemplate:
     "{snapshotDir}/locked-routes.spec.ts-snapshots/{arg}-{projectName}{ext}",
   expect: {

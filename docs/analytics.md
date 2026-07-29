@@ -204,14 +204,11 @@ was really sending to four.
 
 ### 3. Point the live Stripe link at the confirmation page
 
-```bash
-./scripts/update-website-payment-link.sh          # dry run
-./scripts/update-website-payment-link.sh --apply  # live update
-```
-
-Updates the existing link in place. Do **not** re-run `create-website-link.sh`
-to fix this — it would mint a duplicate product, price, and link while the URL
-hard-coded in `lib/payment-links.ts` kept pointing at the old one.
+Legacy: the site is now call-first, `lib/payment-links.ts` is gone, and the
+Stripe link-management scripts (`update-website-payment-link.sh`,
+`create-website-link.sh`, `create-stripe-links.sh`) were removed — recover them
+from git history if an old payment link ever needs its redirect updated. The
+existing live link already points at `/checkout/website/thank-you`.
 
 ### 4. Exclude `buy.stripe.com` as a referral
 
