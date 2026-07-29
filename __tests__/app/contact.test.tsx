@@ -37,18 +37,23 @@ jest.mock('@/components/schema-markup', () => ({
 }))
 
 describe('/contact page', () => {
-  it('keeps contact paths while removing the demo booking path', () => {
+  it('keeps the minimal form-first layout with a direct email fallback', () => {
     const { container } = render(<ContactPage />)
 
     expect(
-      screen.getByRole('heading', { name: /contact prism/i }),
+      screen.getByRole('heading', { name: /talk to prism\./i }),
     ).toBeInTheDocument()
     expect(screen.getByTestId('contact-form')).toBeInTheDocument()
-    expect(
-      screen.getByRole('heading', { name: /what to expect/i }),
-    ).toBeInTheDocument()
     expect(screen.getByText(/support@design-prism\.com/i)).toBeInTheDocument()
 
+    // The verbose sections stay retired: no "what to expect" checklist and no
+    // demo booking path.
+    expect(
+      screen.queryByRole('heading', { name: /what to expect/i }),
+    ).not.toBeInTheDocument()
+    expect(
+      screen.queryByText(/no-pressure consultation/i),
+    ).not.toBeInTheDocument()
     expect(
       screen.queryByText(/prefer to see it live\?/i),
     ).not.toBeInTheDocument()

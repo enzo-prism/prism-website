@@ -6,7 +6,7 @@ import { buildRouteMetadata } from '@/lib/seo/metadata'
 
 const PAGE_TITLE = 'Prism on TikTok'
 const PAGE_DESCRIPTION =
-  'The studio behind the videos. Get a PRO website, or refer a friend and earn $100 when they become a client.'
+  'The studio behind the videos. Premium website design that ranks on ChatGPT and Google, or refer a friend and earn $100.'
 const CANONICAL_URL = 'https://www.design-prism.com/tiktok'
 
 export const metadata: Metadata = buildRouteMetadata({

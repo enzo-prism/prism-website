@@ -5,7 +5,6 @@ import { ArrowRight } from 'lucide-react'
 import Link from 'next/link'
 import { useEffect, useMemo, useState } from 'react'
 import { trackCTAClick } from '@/utils/analytics'
-import PixelishImg from '@/components/pixelish/PixelishImg'
 import HeroBackgroundLoop from '@/components/HeroBackgroundLoop'
 import {
   formatSocialHandle,
@@ -85,18 +84,7 @@ export default function WallOfLoveClientPage() {
             />
 
             <div className="relative z-10 mx-auto flex min-h-[320px] max-w-4xl flex-col items-center justify-center px-6 py-14 text-center sm:min-h-[360px] md:px-10 md:py-20">
-              <div className="inline-flex items-center gap-3 rounded-full border border-border/70 bg-card/50 px-4 py-2 shadow-sm backdrop-blur-sm">
-                <PixelishImg
-                  src="/pixelish/emoji-heart.svg"
-                  alt="Heart icon"
-                  size={24}
-                />
-                <p className="text-[10px] font-semibold uppercase tracking-[0.32em] text-muted-foreground font-pixel">
-                  testimonials
-                </p>
-              </div>
-
-              <h1 className="mt-5 text-balance text-4xl font-semibold text-foreground sm:text-5xl md:text-6xl">
+              <h1 className="text-balance text-4xl font-semibold text-foreground sm:text-5xl md:text-6xl">
                 Wall of Love
               </h1>
               <p className="mt-5 max-w-2xl text-sm text-muted-foreground sm:text-base">

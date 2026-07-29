@@ -40,7 +40,7 @@ const HEADER_CLASSES =
 const DESKTOP_LINK_CLASSES =
   'whitespace-nowrap rounded-full px-2.5 py-2 text-[11px] font-semibold uppercase tracking-[0.2em] transition-colors'
 const MOBILE_LINK_CLASSES =
-  'flex items-baseline gap-4 py-4 text-sm font-semibold uppercase tracking-[0.24em] transition-colors'
+  'block py-4 text-sm font-semibold uppercase tracking-[0.24em] transition-colors'
 
 function getCaseStudyBreadcrumbs(
   pathname: string | null,
@@ -112,14 +112,6 @@ function NavbarLinks({
               : undefined
           }
         >
-          {variant === 'mobile' ? (
-            <span
-              aria-hidden="true"
-              className="w-6 shrink-0 font-mono text-[10px] font-medium tracking-[0.2em] text-[#7d766a]"
-            >
-              {String(index + 1).padStart(2, '0')}
-            </span>
-          ) : null}
           {item.label}
         </Link>
       ))}

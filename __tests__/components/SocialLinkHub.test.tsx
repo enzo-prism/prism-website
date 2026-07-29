@@ -132,11 +132,11 @@ describe('SocialLinkHub', () => {
     render(<SocialLinkHub platform="tiktok" />)
 
     const orderLink = screen.getByRole('link', {
-      name: /get a pro website/i,
+      name: /premium website design/i,
     })
     expect(orderLink).toHaveAttribute('href', '/websites')
     expect(orderLink).not.toHaveAttribute('target')
-    expect(orderLink).toHaveAttribute('data-cta-text', 'get a pro website')
+    expect(orderLink).toHaveAttribute('data-cta-text', 'premium website design')
     expect(orderLink).toHaveAttribute(
       'data-cta-location',
       'tiktok landing actions',
@@ -144,7 +144,7 @@ describe('SocialLinkHub', () => {
 
     fireEvent.click(orderLink)
     expect(trackCTAClick).toHaveBeenCalledWith(
-      'get a pro website',
+      'premium website design',
       'tiktok landing actions',
     )
     expect(trackExternalLinkClick).not.toHaveBeenCalled()
@@ -165,7 +165,7 @@ describe('SocialLinkHub', () => {
 
     // Call-first offers never show exact public pricing.
     expect(
-      screen.getByText(/Ultra-premium · scoped on a call/i),
+      screen.getByText(/that rank on ChatGPT and Google/i),
     ).toBeInTheDocument()
     expect(screen.queryByText(/\$5,000/)).not.toBeInTheDocument()
     expect(screen.queryByText(/\$2,000/)).not.toBeInTheDocument()
@@ -235,7 +235,7 @@ describe('SocialLinkHub', () => {
     })
     expect(within(youtubeNav).getAllByRole('link')).toHaveLength(2)
     expect(
-      within(youtubeNav).getByRole('link', { name: /get a pro website/i }),
+      within(youtubeNav).getByRole('link', { name: /premium website design/i }),
     ).toHaveAttribute('href', '/websites')
     expect(
       within(youtubeNav).getByRole('link', { name: /refer a friend/i }),

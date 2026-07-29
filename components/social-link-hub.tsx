@@ -224,8 +224,8 @@ export default function SocialLinkHub({
           <nav aria-label={`${config.label} page actions`} className="mt-9">
             <div className="grid gap-3">
               <ActionCard
-                title="Get a PRO website"
-                detail="Ultra-premium · scoped on a call"
+                title="Premium Website Design"
+                detail="that rank on ChatGPT and Google"
                 href="/websites"
                 tone="primary"
                 location={actionsLocation}

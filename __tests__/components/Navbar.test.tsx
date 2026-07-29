@@ -217,8 +217,7 @@ describe('Navbar', () => {
     const panel = document.querySelector('#mobile-site-nav')
     expect(panel).toBeInTheDocument()
 
-    // The mono index prefixes (01–07) are aria-hidden, so accessible names
-    // stay the plain labels.
+    // Plain labels only — the retired mono index prefixes (01–07) stay retired.
     for (const [pattern, href] of [
       [/^websites$/i, '/websites'],
       [/^content os$/i, '/content-os'],

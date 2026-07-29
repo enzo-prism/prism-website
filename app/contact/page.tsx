@@ -3,123 +3,51 @@ import type { Metadata } from 'next'
 import ContactForm from '@/components/forms/ContactForm'
 import Footer from '@/components/footer'
 import Navbar from '@/components/navbar'
-import PixelishIcon from '@/components/pixelish/PixelishIcon'
 import TrackedAnchor from '@/components/tracked-anchor'
 import { ContactPageSchema } from '@/components/schema-markup'
+import {
+  CoreSectionHeading,
+  coreRouteSectionClassName,
+} from '@/components/core-route/CoreRoutePrimitives'
 import { buildRouteMetadata } from '@/lib/seo/metadata'
 
 export const metadata: Metadata = buildRouteMetadata({
   titleStem: 'Contact',
-  description:
-    'Tell Prism what you need for your website, SEO, ads, or growth strategy, and we will map the clearest next step.',
+  description: 'Send Prism a note. We reply within 24 hours.',
   path: '/contact',
   ogImage: '/prism-opengraph.png',
 })
 
 export default function ContactPage() {
   return (
-    <div className="flex min-h-screen flex-col bg-background text-foreground">
+    <div className="flex min-h-screen flex-col bg-transparent font-sans text-[#f5f0e8]">
       <Navbar />
       <main className="flex-1" id="main-content" tabIndex={-1}>
-        <section className="border-b border-border/60 bg-background px-6 py-16 sm:py-24">
-          <div className="mx-auto flex max-w-2xl flex-col gap-10">
-            {/* Header with descriptive content */}
-            <div className="space-y-4 text-center">
-              <p className="text-[10px] font-semibold uppercase tracking-[0.32em] text-muted-foreground font-pixel">
-                contact
-              </p>
-              <h1 className="text-4xl font-semibold text-foreground sm:text-5xl">
-                Contact Prism
-              </h1>
-              <p className="text-lg text-muted-foreground max-w-xl mx-auto">
-                Whether you need a new website, help with SEO, or want to
-                discuss your growth strategy, we are here to help you attract
-                more customers and grow your business.
-              </p>
+        <section className={coreRouteSectionClassName}>
+          <div className="mx-auto max-w-xl">
+            <CoreSectionHeading
+              eyebrow="Contact"
+              title="Talk to Prism."
+              description="Send a note. We reply within 24 hours."
+              as="h1"
+              variant="hero"
+            />
+
+            <div className="mt-10">
+              <ContactForm />
             </div>
 
-            {/* Contact form */}
-            <ContactForm />
-
-            {/* What to expect section */}
-            <div className="rounded-3xl border border-border/60 bg-card/30 p-6 shadow-none backdrop-blur-sm">
-              <h2 className="text-xl font-semibold text-foreground mb-4">
-                What to Expect
-              </h2>
-              <ul className="space-y-3 text-muted-foreground">
-                <li className="flex items-start gap-3">
-                  <PixelishIcon
-                    src="/pixelish/checkmark.svg"
-                    alt=""
-                    size={16}
-                    invert={false}
-                    aria-hidden="true"
-                    className="mt-0.5 opacity-90 dark:invert"
-                  />
-                  <span>
-                    Response within 24 hours from our team in Silicon Valley
-                  </span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <PixelishIcon
-                    src="/pixelish/checkmark.svg"
-                    alt=""
-                    size={16}
-                    invert={false}
-                    aria-hidden="true"
-                    className="mt-0.5 opacity-90 dark:invert"
-                  />
-                  <span>
-                    No-pressure consultation tailored to your business goals
-                  </span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <PixelishIcon
-                    src="/pixelish/checkmark.svg"
-                    alt=""
-                    size={16}
-                    invert={false}
-                    aria-hidden="true"
-                    className="mt-0.5 opacity-90 dark:invert"
-                  />
-                  <span>
-                    Custom recommendations for websites, SEO, and digital
-                    marketing
-                  </span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <PixelishIcon
-                    src="/pixelish/checkmark.svg"
-                    alt=""
-                    size={16}
-                    invert={false}
-                    aria-hidden="true"
-                    className="mt-0.5 opacity-90 dark:invert"
-                  />
-                  <span>
-                    Transparent pricing with no hidden fees or long-term
-                    contracts
-                  </span>
-                </li>
-              </ul>
-            </div>
-
-            {/* Contact info */}
-            <div className="space-y-2 text-center text-sm text-muted-foreground">
-              <p className="font-medium text-foreground">Direct Contact</p>
+            <p className="mt-8 text-center text-[0.95rem] leading-7 text-[#8f877b]">
+              Prefer email?{' '}
               <TrackedAnchor
                 href="mailto:support@design-prism.com"
                 label="Email Prism support"
                 location="contact_page"
-                className="font-semibold text-foreground underline decoration-border/60 underline-offset-4 hover:decoration-border block"
+                className="text-[#f5f0e8] underline decoration-white/25 underline-offset-4 transition-colors hover:decoration-[#d8bc79]"
               >
                 support@design-prism.com
               </TrackedAnchor>
-              <p>
-                Based in Silicon Valley, California — serving businesses
-                nationwide
-              </p>
-            </div>
+            </p>
           </div>
         </section>
       </main>

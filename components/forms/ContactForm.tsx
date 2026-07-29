@@ -90,7 +90,7 @@ export default function ContactForm() {
       />
 
       <div className="grid gap-2">
-        <Label htmlFor="contact-name">Name (optional)</Label>
+        <Label htmlFor="contact-name">Name</Label>
         <Input
           id="contact-name"
           name="name"
@@ -106,7 +106,7 @@ export default function ContactForm() {
       </div>
 
       <div className="grid gap-2">
-        <Label htmlFor="contact-email">Your Email</Label>
+        <Label htmlFor="contact-email">Email</Label>
         <Input
           id="contact-email"
           name="email"
@@ -143,13 +143,13 @@ export default function ContactForm() {
       </div>
 
       <div className="grid gap-2">
-        <Label htmlFor="contact-message">Your Message</Label>
+        <Label htmlFor="contact-message">Message</Label>
         <Textarea
           id="contact-message"
           name="message"
           required
           rows={5}
-          placeholder="Share context, timelines, and what success looks like."
+          placeholder="What do you need?"
           aria-invalid={Boolean(getError('message'))}
           aria-describedby={describedBy('message')}
           onBlur={handleBlur}
@@ -165,7 +165,7 @@ export default function ContactForm() {
           className="w-full rounded-md py-6 text-base font-semibold"
           disabled={isSubmitting}
         >
-          {isSubmitting ? 'Sending…' : 'Send Message →'}
+          {isSubmitting ? 'Sending…' : 'Send message'}
         </Button>
         {submitError ? (
           <Alert variant="destructive" className="rounded-2xl">
@@ -173,7 +173,7 @@ export default function ContactForm() {
           </Alert>
         ) : null}
         <p className="text-xs text-muted-foreground">
-          We reply within one business day and never share your details.
+          We never share your details.
         </p>
       </div>
     </form>
