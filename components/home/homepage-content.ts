@@ -95,11 +95,11 @@ export const HOMEPAGE_HERO = {
   title: 'Prism',
   subheading: 'the #1 growth partner for small businesses',
   description:
-    'One team that builds and runs everything that grows your business: your website, content, ads, search, and social, all driven by AI and proven by results.',
+    'One team that plugs into yours and runs everything that grows your business: website, content, ads, search, and social. You get the results without the workload.',
   supportPoints: [
     {
-      label: 'Can ChatGPT recommend you?',
-      iconSrc: '/home-hero/logos/openai.svg',
+      label: 'The growth team founders keep',
+      iconSrc: '/pixelish/emoji-heart.svg',
       iconInvert: false,
       variant: 'aiRecommendation',
     },
@@ -142,7 +142,15 @@ export const HOMEPAGE_HERO = {
       ],
     },
   },
-  systemStrip: ['Website', 'Content', 'Ads', 'SEO', 'Reviews', 'Social', 'AI'],
+  systemStrip: [
+    'Website',
+    'Content',
+    'Ads',
+    'SEO',
+    'Reviews',
+    'Social',
+    'Tracking',
+  ],
   socialProof: {
     headline: `${HOMEPAGE_HERO_REVIEW_COUNT_LABEL} reviews from founders, doctors, operators, and local leaders`,
     linkLabel: 'See results',
@@ -343,8 +351,7 @@ export const HOMEPAGE_GROWTH_RAMP = {
   eyebrow: 'What to expect',
   title: 'First 90 days.',
   microcopy: 'Clear targets. Real systems. No guesswork.',
-  finePrint:
-    'Targets vary by market, offer, starting point, budget, and team follow-through.',
+  finePrint: 'Targets vary by market, offer, starting point, and budget.',
   metrics: [
     {
       day: 'Day 30',
@@ -362,7 +369,8 @@ export const HOMEPAGE_GROWTH_RAMP = {
       day: 'Day 90',
       value: '10-30',
       label: 'growth opportunities/mo',
-      detail: 'Target range once website, search, proof, ads, and AI compound.',
+      detail:
+        'Target range once website, search, proof, and ads compound for you.',
     },
   ] satisfies readonly HomepageGrowthRampMetric[],
 } as const
@@ -455,7 +463,7 @@ export const HOMEPAGE_SERVICES = {
   eyebrow: 'What Prism does',
   title: 'One team. The whole system.',
   description:
-    'Most businesses juggle five vendors and hope it adds up. With Prism, one team builds every piece and keeps them working together.',
+    'Most businesses juggle five vendors and hope it adds up. Prism plugs into your team, builds every piece, and keeps it all working together.',
   closingLine: '',
 } as const
 
@@ -699,7 +707,7 @@ export const HOMEPAGE_FIT_AUDIENCES: readonly HomepageIconCard[] = [
   {
     title: 'Founders & startup teams',
     description:
-      'You are building something real and need customers to find it, without hiring a marketing department.',
+      'Deep in the tech or done thinking about it, you are building something real and need customers to find it.',
     iconSrc: '/pixelish/graph-chart-high.svg',
   },
   {
@@ -720,7 +728,7 @@ export const HOMEPAGE_FIT = {
   eyebrow: 'Who it is for',
   title: 'Built for the people running the business.',
   description:
-    'You should not have to become the marketing department to grow. That is the point of Prism.',
+    'You should not have to become the marketing department to grow. Prism plugs into your team, results compound, and founders stay.',
   notFitLine:
     'Not a fit if you want the cheapest option or overnight results. Prism builds growth that lasts.',
   fitHeading: 'Prism is a good fit if...',
@@ -887,7 +895,7 @@ export const HOMEPAGE_CTA_NOTES = [
   'Website',
   'Search',
   'Reviews',
-  'AI',
+  'Proof',
   'Tracking',
 ] as const
 

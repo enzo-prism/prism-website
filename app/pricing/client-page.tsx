@@ -74,7 +74,7 @@ const partnerLevels = [
     title: 'Content OS',
     price: 'Scoped on a call',
     description:
-      'AI agents that scale your content and ads across every platform and your website. Implemented over 3 months, then optimized every month.',
+      'A system that runs your content and ads across every platform and your website. Implemented over 3 months, then optimized every month.',
   },
   {
     title: 'Prism Infinity',

@@ -85,7 +85,7 @@ describe('HomeHeroSection', () => {
     ).toBeInTheDocument()
     expect(
       screen.getByText(
-        /one team that builds and runs everything that grows your business/i,
+        /one team that plugs into yours and runs everything that grows your business/i,
       ),
     ).toBeInTheDocument()
 
@@ -109,9 +109,9 @@ describe('HomeHeroSection', () => {
     )
 
     expect(supportPoints).toHaveLength(1)
-    expect(screen.getByText(/can chatgpt recommend you\?/i)).toBeInTheDocument()
+    expect(screen.getByText(/the growth team founders keep/i)).toBeInTheDocument()
     expect(screen.queryByText(/^google maps$/i)).not.toBeInTheDocument()
-    expect(iconSrcs).toContain('/home-hero/logos/openai.svg')
+    expect(iconSrcs).toContain('/pixelish/emoji-heart.svg')
 
     const systemStrip = screen.getByRole('list', {
       name: /what the prism growth system includes/i,

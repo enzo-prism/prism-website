@@ -270,7 +270,7 @@ export default function HomeHeroSection() {
                         className="home-signal-dot mt-2 h-1 w-1 shrink-0 rounded-full bg-[#d8bc79]"
                       />
                       <p className="text-pretty font-sans text-[0.9rem] leading-6 text-[#cfc7ba]">
-                        100% grown by Prism AI Agents, powered by{' '}
+                        Grown end to end by Prism, powered by{' '}
                         <TrackedLink
                           href="/content-os"
                           label="content os"
@@ -298,8 +298,8 @@ export default function HomeHeroSection() {
                   followers and over 17 million views: 24,000 YouTube followers
                   with over 3 million views, 38,000 Instagram followers with over
                   10 million views, and 9,000 TikTok followers with over 4
-                  million views. These channels are grown automatically by Prism
-                  AI Agents, powered by Content OS.
+                  million views. These channels are grown end to end by Prism,
+                  powered by Content OS.
                 </p>
               </div>
 

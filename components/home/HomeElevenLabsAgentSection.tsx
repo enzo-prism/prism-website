@@ -109,7 +109,7 @@ export default function HomeElevenLabsAgentSection() {
               <CoreSectionHeading
                 eyebrow="Prism guide"
                 title="Not sure where to start?"
-                description="Tell Prism what you want to grow. Our AI guide can explain the options, answer questions, and point you to the clearest next step."
+                description="Tell Prism what you want to grow. The guide explains your options, answers questions, and points you to the clearest next step."
                 titleClassName="max-w-[12ch]"
                 descriptionClassName="max-w-[31rem]"
               />

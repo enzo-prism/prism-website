@@ -25,9 +25,9 @@ export default function HomeOffersSection() {
       <div className={coreRouteContainerClassName}>
         <HomeReveal>
           <CoreSectionHeading
-            eyebrow="What you can order"
+            eyebrow="Ways to work together"
             title="Four ways to grow with Prism."
-            description="A PRO website for your online presence, a system that runs your content, your whole dental front office, or every Prism service at once — each scoped on a 30-minute call."
+            description="A PRO website for your online presence, a system that runs your content, your whole dental front office, or every Prism service at once. Each scoped on a 30-minute call."
           />
         </HomeReveal>
 
@@ -100,7 +100,7 @@ export default function HomeOffersSection() {
 
         <div className="mt-6 flex flex-col gap-3 border-t border-white/10 pt-6 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-pretty font-sans text-[0.96rem] leading-7 text-[#b8afa2]">
-            Not ready to buy? Start free — create a Growth Dashboard and request
+            Not ready to buy? Start free. Create a Growth Dashboard and request
             a free deep audit from our team.
           </p>
           <CoreActionLink
