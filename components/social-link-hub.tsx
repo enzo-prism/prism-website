@@ -14,9 +14,9 @@ import { trackCTAClick, trackExternalLinkClick } from '@/utils/analytics'
  * Link-in-bio hub for Prism's social profiles (/tiktok, /ig, /youtube).
  *
  * Visitors arrive warm — they just watched Prism's content — so the page
- * routes intent instead of thanking them: book the PRO website call, read the
- * proof, or explore Content OS ("the system behind this video") and Prism
- * Infinity. One template, platform-aware copy.
+ * routes intent instead of thanking them, with exactly two moves: book the
+ * PRO website call, or refer a friend and earn $100. One template,
+ * platform-aware copy.
  */
 
 export type SocialHubPlatform = 'tiktok' | 'instagram' | 'youtube'
@@ -28,15 +28,10 @@ type PlatformConfig = {
   headline: string
   /** Two-number proof line: one attention stat, one business stat. */
   proofStrip: string
-  contentOsTitle: string
-  caseStudiesDetail: string
-  secondary: 'youtube-channel' | 'wall-of-love'
 }
 
 const SUPPORT_LINE =
   'Prism builds websites, content systems, and growth for founders, owners, and operators.'
-
-const YOUTUBE_CHANNEL_URL = 'https://www.youtube.com/@the_design_prism'
 
 const PLATFORMS: Record<SocialHubPlatform, PlatformConfig> = {
   tiktok: {
@@ -45,9 +40,6 @@ const PLATFORMS: Record<SocialHubPlatform, PlatformConfig> = {
     profileHref: 'https://www.tiktok.com/@the_design_prism',
     headline: 'You found the studio behind the videos.',
     proofStrip: '17M+ views across channels · $100,000+ driven for clients',
-    contentOsTitle: 'The system behind this video',
-    caseStudiesDetail: '22 verified case studies',
-    secondary: 'youtube-channel',
   },
   instagram: {
     label: 'Instagram',
@@ -55,19 +47,13 @@ const PLATFORMS: Record<SocialHubPlatform, PlatformConfig> = {
     profileHref: 'https://www.instagram.com/the_design_prism/',
     headline: 'You found the studio behind the feed.',
     proofStrip: '38,000 followers here · $100,000+ driven for clients',
-    contentOsTitle: 'The system behind this feed',
-    caseStudiesDetail: '22 verified case studies',
-    secondary: 'youtube-channel',
   },
   youtube: {
     label: 'YouTube',
     handle: '@the_design_prism',
-    profileHref: YOUTUBE_CHANNEL_URL,
+    profileHref: 'https://www.youtube.com/@the_design_prism',
     headline: 'You found the studio behind the channel.',
     proofStrip: '24,000 subscribers · 22 verified case studies',
-    contentOsTitle: 'The system behind this channel',
-    caseStudiesDetail: '$100,000+ driven for clients',
-    secondary: 'wall-of-love',
   },
 }
 
@@ -92,7 +78,6 @@ type ActionCardProps = {
   title: string
   detail: string
   href: string
-  external?: boolean
   tone?: ActionTone
   location: string
   icon: ReactNode
@@ -102,7 +87,6 @@ function ActionCard({
   title,
   detail,
   href,
-  external = false,
   tone = 'quiet',
   location,
   icon,
@@ -113,14 +97,8 @@ function ActionCard({
   return (
     <Link
       href={href}
-      target={external ? '_blank' : undefined}
-      rel={external ? 'noopener noreferrer' : undefined}
       onClick={() => {
-        if (external) {
-          trackExternalLinkClick(href, label)
-        } else {
-          trackCTAClick(label, location)
-        }
+        trackCTAClick(label, location)
       }}
       data-cta-text={label}
       data-cta-location={location}
@@ -252,127 +230,36 @@ export default function SocialLinkHub({
 
           <nav aria-label={`${config.label} page actions`} className="mt-9">
             <div className="grid gap-3">
-            <ActionCard
-              title="Get a PRO website"
-              detail="Ultra-premium · scoped on a call"
-              href="/websites"
-              tone="primary"
-              location={actionsLocation}
-              icon={
-                <PixelishIcon
-                  src="/pixelish/browser.svg"
-                  alt=""
-                  size={16}
-                  aria-hidden="true"
-                  invert={false}
-                />
-              }
-            />
-            <ActionCard
-              title="See the proof"
-              detail={config.caseStudiesDetail}
-              href="/case-studies"
-              location={actionsLocation}
-              icon={
-                <PixelishIcon
-                  src="/pixelish/graph-chart-high.svg"
-                  alt=""
-                  size={16}
-                  aria-hidden="true"
-                />
-              }
-            />
-            <ActionCard
-              title={config.contentOsTitle}
-              detail="Scoped on a 30-min call"
-              href="/content-os"
-              location={actionsLocation}
-              icon={
-                <PixelishIcon
-                  src="/pixelish/media-play.svg"
-                  alt=""
-                  size={16}
-                  aria-hidden="true"
-                />
-              }
-            />
-            <ActionCard
-              title="Everything Prism, unlimited"
-              detail="Scoped on a 30-min call · pause anytime"
-              href="/prism-infinity"
-              location={actionsLocation}
-              icon={
-                <span
-                  aria-hidden="true"
-                  className="font-sans text-[1.15rem] font-medium leading-none"
-                >
-                  ∞
-                </span>
-              }
-            />
-            </div>
-
-            <div className="mt-3 grid gap-3">
-            <ActionCard
-              title="Refer a friend"
-              detail="$100 when they become a client"
-              href="/refer"
-              location={actionsLocation}
-              icon={
-                <PixelishIcon
-                  src="/pixelish/currency-dollar.svg"
-                  alt=""
-                  size={15}
-                  aria-hidden="true"
-                />
-              }
-            />
-            <ActionCard
-              title="Start free"
-              detail="growth audit · no pressure"
-              href="/get-started"
-              location={actionsLocation}
-              icon={
-                <PixelishIcon
-                  src="/pixelish/lens-plus.svg"
-                  alt=""
-                  size={15}
-                  aria-hidden="true"
-                />
-              }
-            />
-            {config.secondary === 'youtube-channel' ? (
               <ActionCard
-                title="Prism on YouTube"
-                detail="long-form builds"
-                href={YOUTUBE_CHANNEL_URL}
-                external
-                location={actionsLocation}
-                icon={
-                  <BrandLogo
-                    brand="youtube"
-                    theme="dark"
-                    decorative
-                    className="h-4 w-4"
-                  />
-                }
-              />
-            ) : (
-              <ActionCard
-                title="Wall of love"
-                detail="clients in their own words"
-                href="/wall-of-love"
+                title="Get a PRO website"
+                detail="Ultra-premium · scoped on a call"
+                href="/websites"
+                tone="primary"
                 location={actionsLocation}
                 icon={
                   <PixelishIcon
-                    src="/pixelish/emoji-heart.svg"
+                    src="/pixelish/browser.svg"
+                    alt=""
+                    size={16}
+                    aria-hidden="true"
+                    invert={false}
+                  />
+                }
+              />
+              <ActionCard
+                title="Refer a friend"
+                detail="You get $100 for every friend who becomes a client"
+                href="/refer"
+                location={actionsLocation}
+                icon={
+                  <PixelishIcon
+                    src="/pixelish/currency-dollar.svg"
                     alt=""
                     size={15}
                     aria-hidden="true"
                   />
                 }
               />
-            )}
             </div>
           </nav>
         </main>
