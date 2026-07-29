@@ -163,9 +163,10 @@ describe('SocialLinkHub', () => {
   it('keeps canonical pricing language and spells out the $100 referral reward', () => {
     render(<SocialLinkHub platform="tiktok" />)
 
-    // Call-first offers never show exact public pricing.
+    // Call-first offers never show exact public pricing. The detail line is
+    // sentence copy rendered mixed-case (no uppercase transform).
     expect(
-      screen.getByText(/that rank on ChatGPT and Google/i),
+      screen.getByText('rank on ChatGPT and Google'),
     ).toBeInTheDocument()
     expect(screen.queryByText(/\$5,000/)).not.toBeInTheDocument()
     expect(screen.queryByText(/\$2,000/)).not.toBeInTheDocument()

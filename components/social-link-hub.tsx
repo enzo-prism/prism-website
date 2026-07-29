@@ -57,7 +57,7 @@ const PLATFORMS: Record<SocialHubPlatform, PlatformConfig> = {
 // Shared premium hover language from the core CTA system: a gentle lift, a
 // warm gold-tinted glow (#d8bc79), and the site's signature easing curve.
 const actionCardBaseClassName =
-  'group flex min-h-[4.5rem] w-full items-center gap-4 rounded-xl border px-5 py-4 transition-[transform,border-color,background-color,box-shadow] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-0.5 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-white/25 focus-visible:ring-offset-4 focus-visible:ring-offset-black active:translate-y-0 motion-reduce:transition-none'
+  'group flex min-h-[5rem] w-full items-center gap-4 rounded-xl border px-5 py-[1.125rem] transition-[transform,border-color,background-color,box-shadow] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-0.5 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-white/25 focus-visible:ring-offset-4 focus-visible:ring-offset-black active:translate-y-0 motion-reduce:transition-none'
 
 const quietActionCardClassName = cn(
   actionCardBaseClassName,
@@ -105,7 +105,7 @@ function ActionCard({
     >
       <span
         className={cn(
-          'grid h-11 w-11 shrink-0 place-items-center rounded-lg border',
+          'grid h-12 w-12 shrink-0 place-items-center rounded-[10px] border',
           isPrimary
             ? 'border-black/10 bg-black/[0.04] text-[#050505]'
             : 'border-white/12 bg-white/[0.04] text-[#f5f0e8]',
@@ -116,7 +116,7 @@ function ActionCard({
       <span className="min-w-0 flex-1">
         <span
           className={cn(
-            'block text-[0.97rem] font-medium tracking-[-0.01em]',
+            'block font-sans text-[1.0625rem] font-medium leading-[1.35] tracking-[-0.015em]',
             isPrimary ? 'text-[#050505]' : 'text-[#f5f0e8]',
           )}
         >
@@ -124,8 +124,8 @@ function ActionCard({
         </span>
         <span
           className={cn(
-            'mt-1 block font-mono text-[10px] font-semibold uppercase leading-[1.5] tracking-[0.18em]',
-            isPrimary ? 'text-[#050505]/55' : 'text-[#8f877b]',
+            'mt-1 block font-sans text-[0.875rem] font-normal leading-[1.5] tracking-[-0.01em]',
+            isPrimary ? 'text-[#050505]/60' : 'text-[#b8afa2]',
           )}
         >
           {detail}
@@ -176,7 +176,7 @@ export default function SocialLinkHub({
                 priority
               />
             </span>
-            <span className="truncate font-mono text-[10px] font-semibold uppercase tracking-[0.22em]">
+            <span className="truncate font-mono text-[11px] font-semibold uppercase tracking-[0.2em] text-[#f5f0e8]">
               prism
             </span>
           </Link>
@@ -190,7 +190,7 @@ export default function SocialLinkHub({
             onClick={() =>
               trackExternalLinkClick(config.profileHref, `${platform} profile`)
             }
-            className="inline-flex min-h-11 max-w-[46vw] items-center truncate font-mono text-[10px] font-semibold uppercase tracking-[0.18em] text-[#8f877b] transition-colors hover:text-[#f5f0e8] focus-visible:rounded-sm focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-white/25 focus-visible:ring-offset-4 focus-visible:ring-offset-black sm:max-w-none"
+            className="inline-flex min-h-11 max-w-[46vw] items-center truncate font-sans text-[0.875rem] font-medium leading-none tracking-[-0.01em] text-[#b8afa2] transition-colors hover:text-[#f5f0e8] focus-visible:rounded-sm focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-white/25 focus-visible:ring-offset-4 focus-visible:ring-offset-black sm:max-w-none"
           >
             {config.handle}
           </Link>
@@ -213,19 +213,19 @@ export default function SocialLinkHub({
             />
           </span>
 
-          <h1 className="mt-7 max-w-[16ch] text-balance font-sans text-[clamp(2rem,8vw,2.8rem)] font-medium leading-[1.02] tracking-[-0.045em] text-[#f5f0e8]">
+          <h1 className="mt-6 max-w-[16ch] text-balance font-sans text-[clamp(2rem,8vw,2.8rem)] font-medium leading-[1.02] tracking-[-0.045em] text-[#f5f0e8]">
             {config.headline}
           </h1>
 
-          <p className="mt-5 font-mono text-[10px] font-semibold uppercase leading-relaxed tracking-[0.18em] text-[#8f877b]">
+          <p className="mt-5 font-sans text-[1rem] font-normal leading-[1.6] tracking-[-0.01em] text-[#cfc7ba]">
             {config.proofStrip}
           </p>
 
-          <nav aria-label={`${config.label} page actions`} className="mt-9">
+          <nav aria-label={`${config.label} page actions`} className="mt-10">
             <div className="grid gap-3">
               <ActionCard
                 title="Premium Website Design"
-                detail="that rank on ChatGPT and Google"
+                detail="rank on ChatGPT and Google"
                 href="/websites"
                 tone="primary"
                 location={actionsLocation}
@@ -233,7 +233,7 @@ export default function SocialLinkHub({
                   <PixelishIcon
                     src="/pixelish/browser.svg"
                     alt=""
-                    size={16}
+                    size={17}
                     aria-hidden="true"
                     invert={false}
                   />
@@ -248,7 +248,7 @@ export default function SocialLinkHub({
                   <PixelishIcon
                     src="/pixelish/currency-dollar.svg"
                     alt=""
-                    size={15}
+                    size={16}
                     aria-hidden="true"
                   />
                 }
@@ -257,8 +257,8 @@ export default function SocialLinkHub({
           </nav>
         </main>
 
-        <footer className="flex items-center justify-end gap-4 border-t border-white/12 py-5 font-mono text-[10px] font-semibold uppercase leading-none tracking-[0.18em]">
-          <span className="shrink-0 text-[#6e6e68]">© prism</span>
+        <footer className="flex items-center justify-end gap-4 border-t border-white/12 py-6 font-mono text-[10px] font-semibold uppercase leading-none tracking-[0.18em]">
+          <span className="shrink-0 text-[#8f877b]">© prism</span>
         </footer>
       </div>
     </div>
