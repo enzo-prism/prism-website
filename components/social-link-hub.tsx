@@ -30,30 +30,27 @@ type PlatformConfig = {
   proofStrip: string
 }
 
-const SUPPORT_LINE =
-  'Prism builds websites, content systems, and growth for founders, owners, and operators.'
-
 const PLATFORMS: Record<SocialHubPlatform, PlatformConfig> = {
   tiktok: {
     label: 'TikTok',
     handle: '@the_design_prism',
     profileHref: 'https://www.tiktok.com/@the_design_prism',
-    headline: 'You found the studio behind the videos.',
-    proofStrip: '17M+ views across channels · $100,000+ driven for clients',
+    headline: 'The studio behind the videos.',
+    proofStrip: '17M+ views · $100,000+ driven for clients',
   },
   instagram: {
     label: 'Instagram',
     handle: '@the_design_prism',
     profileHref: 'https://www.instagram.com/the_design_prism/',
-    headline: 'You found the studio behind the feed.',
-    proofStrip: '38,000 followers here · $100,000+ driven for clients',
+    headline: 'The studio behind the feed.',
+    proofStrip: '38k followers · $100,000+ driven for clients',
   },
   youtube: {
     label: 'YouTube',
     handle: '@the_design_prism',
     profileHref: 'https://www.youtube.com/@the_design_prism',
-    headline: 'You found the studio behind the channel.',
-    proofStrip: '24,000 subscribers · 22 verified case studies',
+    headline: 'The studio behind the channel.',
+    proofStrip: '24k subscribers · 22 case studies',
   },
 }
 
@@ -220,10 +217,6 @@ export default function SocialLinkHub({
             {config.headline}
           </h1>
 
-          <p className="mt-4 max-w-[36ch] text-pretty font-sans text-[0.98rem] leading-7 text-[#b8afa2]">
-            {SUPPORT_LINE}
-          </p>
-
           <p className="mt-5 font-mono text-[10px] font-semibold uppercase leading-relaxed tracking-[0.18em] text-[#8f877b]">
             {config.proofStrip}
           </p>
@@ -248,7 +241,7 @@ export default function SocialLinkHub({
               />
               <ActionCard
                 title="Refer a friend"
-                detail="You get $100 for every friend who becomes a client"
+                detail="You get $100 when they become a client"
                 href="/refer"
                 location={actionsLocation}
                 icon={
@@ -264,8 +257,7 @@ export default function SocialLinkHub({
           </nav>
         </main>
 
-        <footer className="flex items-center justify-between gap-4 border-t border-white/12 py-5 font-mono text-[10px] font-semibold uppercase leading-none tracking-[0.18em] text-[#8f877b]">
-          <span>real clients · real numbers · start anytime</span>
+        <footer className="flex items-center justify-end gap-4 border-t border-white/12 py-5 font-mono text-[10px] font-semibold uppercase leading-none tracking-[0.18em]">
           <span className="shrink-0 text-[#6e6e68]">© prism</span>
         </footer>
       </div>

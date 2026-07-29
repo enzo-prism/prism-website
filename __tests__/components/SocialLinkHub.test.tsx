@@ -100,13 +100,13 @@ describe('SocialLinkHub', () => {
 
     expect(
       screen.getByRole('heading', {
-        name: /you found the studio behind the videos\./i,
+        name: /the studio behind the videos\./i,
       }),
     ).toBeInTheDocument()
 
     // Proof strip pairs an attention number with a business number.
     expect(
-      screen.getByText(/17m\+ views across channels · \$100,000\+ driven/i),
+      screen.getByText(/17m\+ views · \$100,000\+ driven/i),
     ).toBeInTheDocument()
 
     const nav = screen.getByRole('navigation', {
@@ -172,7 +172,7 @@ describe('SocialLinkHub', () => {
     expect(screen.queryByText(/\$300/)).not.toBeInTheDocument()
     // The referral card makes the referrer's reward explicit.
     expect(
-      screen.getByText(/you get \$100 for every friend who becomes a client/i),
+      screen.getByText(/you get \$100 when they become a client/i),
     ).toBeInTheDocument()
     // Never the retired "/mo" shorthand.
     expect(screen.queryByText(/\/mo\b/)).not.toBeInTheDocument()
@@ -209,11 +209,11 @@ describe('SocialLinkHub', () => {
     const { unmount } = render(<SocialLinkHub platform="instagram" />)
     expect(
       screen.getByRole('heading', {
-        name: /you found the studio behind the feed\./i,
+        name: /the studio behind the feed\./i,
       }),
     ).toBeInTheDocument()
     expect(
-      screen.getByText(/38,000 followers here/i),
+      screen.getByText(/38k followers/i),
     ).toBeInTheDocument()
     expect(
       within(
@@ -225,10 +225,10 @@ describe('SocialLinkHub', () => {
     render(<SocialLinkHub platform="youtube" />)
     expect(
       screen.getByRole('heading', {
-        name: /you found the studio behind the channel\./i,
+        name: /the studio behind the channel\./i,
       }),
     ).toBeInTheDocument()
-    expect(screen.getByText(/24,000 subscribers/i)).toBeInTheDocument()
+    expect(screen.getByText(/24k subscribers/i)).toBeInTheDocument()
 
     const youtubeNav = screen.getByRole('navigation', {
       name: /youtube page actions/i,
