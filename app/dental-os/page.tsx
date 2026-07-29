@@ -237,7 +237,7 @@ export default function DentalOsPage() {
                     target="_blank"
                     rel="noopener noreferrer"
                     variant="heroPrimary"
-                    label="book a 30-min call"
+                    label="book a free demo"
                     location="dental-os hero"
                   >
                     {BOOK_A_CALL_CTA.label}
@@ -487,7 +487,7 @@ export default function DentalOsPage() {
                   target="_blank"
                   rel="noopener noreferrer"
                   variant="heroPrimary"
-                  label="book a 30-min call"
+                  label="book a free demo"
                   location="dental-os footer cta"
                 >
                   Book a dental growth call

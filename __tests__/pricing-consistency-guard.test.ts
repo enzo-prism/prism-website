@@ -27,7 +27,7 @@ describe("pricing consistency guard", () => {
   it("requires the current call-first pricing snippets", () => {
     const violations = collectPricingConsistencyViolations(
       "lib/pricing-model.ts",
-      "BOOK_A_CALL_CTA. Book a 30-min call. NO offer shows public exact pricing.",
+      "BOOK_A_CALL_CTA. Book a Free Demo. NO offer shows public exact pricing.",
     )
 
     expect(violations).toEqual([])

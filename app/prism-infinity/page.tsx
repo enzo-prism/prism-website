@@ -479,7 +479,7 @@ export default function PrismInfinityPage() {
                     target="_blank"
                     rel="noopener noreferrer"
                     variant="heroPrimary"
-                    label="book a 30-min call"
+                    label="book a free demo"
                     location="prism-infinity hero"
                   >
                     {SUBSCRIBE_LABEL}
@@ -675,7 +675,7 @@ export default function PrismInfinityPage() {
                   target="_blank"
                   rel="noopener noreferrer"
                   variant="primary"
-                  label="book a 30-min call"
+                  label="book a free demo"
                   location="prism-infinity risk reversal"
                 >
                   Ask us how it works
@@ -763,7 +763,7 @@ export default function PrismInfinityPage() {
                     target="_blank"
                     rel="noopener noreferrer"
                     variant="heroPrimary"
-                    label="book a 30-min call"
+                    label="book a free demo"
                     location="prism-infinity pricing recap"
                   >
                     {SUBSCRIBE_LABEL}
@@ -828,7 +828,7 @@ export default function PrismInfinityPage() {
                     target="_blank"
                     rel="noopener noreferrer"
                     variant="heroPrimary"
-                    label="book a 30-min call"
+                    label="book a free demo"
                     location="prism-infinity final cta"
                   >
                     {SUBSCRIBE_LABEL}

@@ -48,7 +48,7 @@ describe("pricing model", () => {
 
   it("points every primary CTA at the 30-min booking link", () => {
     expect(BOOK_A_CALL_CTA).toMatchObject({
-      label: "Book a 30-min call",
+      label: "Book a Free Demo",
       href: BOOKING_URL,
     })
     expect(BOOKING_URL).toMatch(/^https:\/\/calendar\.notion\.so\//)

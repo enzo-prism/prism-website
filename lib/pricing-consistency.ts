@@ -126,7 +126,7 @@ export const REQUIRED_CANONICAL_SNIPPETS: Record<string, string[]> = {
   ],
   'lib/pricing-model.ts': [
     'BOOK_A_CALL_CTA',
-    'Book a 30-min call',
+    'Book a Free Demo',
     'NO offer shows public exact pricing',
   ],
   'app/websites/page.tsx': [

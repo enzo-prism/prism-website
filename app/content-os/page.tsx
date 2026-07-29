@@ -180,7 +180,7 @@ export default function ContentOsPage() {
                     target="_blank"
                     rel="noopener noreferrer"
                     variant="heroPrimary"
-                    label="book a 30-min call"
+                    label="book a free demo"
                     location="content-os hero"
                   >
                     {BOOK_A_CALL_CTA.label}
@@ -339,7 +339,7 @@ export default function ContentOsPage() {
                   target="_blank"
                   rel="noopener noreferrer"
                   variant="heroPrimary"
-                  label="book a 30-min call"
+                  label="book a free demo"
                   location="content-os pricing"
                 >
                   {BOOK_A_CALL_CTA.label}
@@ -387,7 +387,7 @@ export default function ContentOsPage() {
                 target="_blank"
                 rel="noopener noreferrer"
                 variant="heroPrimary"
-                label="book a 30-min call"
+                label="book a free demo"
                 location="content-os final"
               >
                 {BOOK_A_CALL_CTA.label}

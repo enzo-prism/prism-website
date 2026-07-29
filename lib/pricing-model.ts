@@ -54,7 +54,7 @@ export const PRISM_INFINITY_PRICE_LABEL = "Custom — scoped on a call"
  * BOOKING_URL is Enzo's 30-minute Notion Calendar Zoom link.
  */
 export const BOOK_A_CALL_CTA = {
-  label: "Book a 30-min call",
+  label: "Book a Free Demo",
   href: BOOKING_URL,
 } as const
 

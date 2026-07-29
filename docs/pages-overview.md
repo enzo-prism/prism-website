@@ -39,7 +39,7 @@ Quick reference for the pages we edit most often.
 - Main UI sections live in `app/pricing/client-page.tsx`; the hero lives in `components/pricing/PricingHero.tsx` ("A clearer way to invest in growth.").
 - `/pricing` uses the shared dark core-route system from `components/core-route/CoreRoutePrimitives.tsx`, so section headings and CTAs stay aligned with the homepage, `/about`, and `/get-started`.
 - Section order is intentional: hero, "Four offers. Buy once, or run an ongoing system." snapshot, per-offer cards, the call-first engagement steps (the `growthPathSteps` array: book a 30-min call → leave with a clear price → we build), ongoing-system levels (the `partnerLevels` array), FAQ (call-first pricing, the PRO website, care, Content OS, Prism Infinity, Dental OS), and final CTA. The `growthPathSteps`/`pricingSnapshot`/`partnerLevels` variable names were retained (and are still required by `lib/pricing-consistency.ts`) even though their content is now the four-offer model.
-- Every primary CTA is "Book a 30-min call" (`PRICING_PRIMARY_CTA` = `BOOK_A_CALL_CTA` → the Notion Calendar `BOOKING_URL`, opened in a new tab); each offer card keeps an internal explore link as its secondary CTA.
+- Every primary CTA is "Book a Free Demo" (`PRICING_PRIMARY_CTA` = `BOOK_A_CALL_CTA` → the Notion Calendar `BOOKING_URL`, opened in a new tab); each offer card keeps an internal explore link as its secondary CTA.
 - The retired five-tier ladder (free Growth Dashboard pricing, `$500` Deep Growth Audit, `$3,500` Growth Sprint, `$1,500/month` Growth Partner) is no longer shown here; `/get-started` keeps the free Growth Dashboard / free-audit on-ramp.
 
 ## Checkout (`app/checkout/*/page.tsx`)
