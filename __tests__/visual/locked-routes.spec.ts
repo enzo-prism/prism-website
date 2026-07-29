@@ -94,12 +94,14 @@ const lockedRoutes = [
     name: 'home',
     path: '/',
     readyHeading: /^prism$/i,
+    mustContain: [/the #1 growth partner for small businesses/i],
   },
   { name: 'about', path: '/about', readyHeading: /built by enzo sison\./i },
   {
     name: 'pricing',
     path: '/pricing',
     readyHeading: /a clearer way to invest in growth\./i,
+    mustContain: [/scoped on a call/i],
   },
   {
     name: 'get-started',
@@ -112,7 +114,51 @@ const lockedRoutes = [
   },
 ] as const
 
+// Screenshot comparisons alone cannot protect copy on these dark routes: a
+// full pricing-page redesign moves only ~4% of pixels, under the 5%
+// maxDiffPixelRatio needed for macOS<->Linux font drift. These text guards
+// catch what pixel tolerance absorbs: retired public pricing reappearing or
+// call-first copy disappearing. Mirrors lib/pricing-consistency.ts policy.
+const retiredPricingTokens = [
+  /\$1,000 one-time/i,
+  /\$1,000(?:\/| per )month/i,
+  /\$2,000(?:\/| per )month/i,
+  /\$5,000\b/,
+] as const
+
 for (const route of lockedRoutes) {
+  test(`${route.name} copy stays call-first (no retired pricing)`, async ({
+    page,
+  }, testInfo) => {
+    test.skip(
+      testInfo.project.name !== 'desktop-chromium',
+      'Rendered copy is identical across projects; one pass is enough.',
+    )
+
+    await disableElevenLabsWidget(page)
+    await page.goto(route.path, { waitUntil: 'domcontentloaded' })
+    await expect(
+      page.getByRole('heading', { level: 1, name: route.readyHeading }),
+    ).toBeVisible({ timeout: 20_000 })
+
+    const bodyText = await page.evaluate(() => document.body.innerText)
+
+    if ('mustContain' in route && route.mustContain) {
+      for (const phrase of route.mustContain) {
+        expect(bodyText, `${route.path} lost required copy ${phrase}`).toMatch(
+          phrase,
+        )
+      }
+    }
+
+    for (const token of retiredPricingTokens) {
+      expect(
+        bodyText,
+        `${route.path} shows retired public pricing ${token}`,
+      ).not.toMatch(token)
+    }
+  })
+
   test(`${route.name} UI snapshot stays stable`, async ({ page }) => {
     await page.emulateMedia({ reducedMotion: 'reduce' })
     await seedDeterministicRandom(page)
