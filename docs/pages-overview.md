@@ -208,7 +208,7 @@ Quick reference for the pages we edit most often.
 - The "Four ways to grow with Prism" offers section (`components/home/HomeOffersSection.tsx`) renders the four offers and ends with a free on-ramp callout: "Not ready to buy? Start free..." → `/get-started` ("Get started free").
 - Homepage motion runs through small client islands: `components/home/HomeReveal.tsx` (scroll reveal that never hides content for no-JS or reduced-motion visitors), `components/home/HomeCountUp.tsx` (stat count-up in the 90-day band; exposes the final value once to assistive technology while animated and sizing copies remain hidden), and `components/home/HomeSystemGrid.tsx` (pointer-tracked spotlight bento cards).
 - The homepage is growth-first and dental-proven. Default language should speak to founders, owners, operators, qualified demand, Google/AI visibility, reviews, conversion paths, tracking, and measurable growth opportunities.
-- The primary hero CTA is "Get a PRO website" and points to `/websites`; the secondary CTA is "Explore plans" and hash-scrolls to `#offers`.
+- The primary hero CTA is "Get a PRO website" and points to `/websites`; the secondary CTA is "Wall of Love" and points to `/wall-of-love` (2026-07-30; it previously hash-scrolled to `#offers` as "Explore plans").
 - Keep homepage copy extremely short: use labels, one-line headings, and compact cards. Move longer explanations to deeper pages.
 - The client proof surface under the hero is the `HOMEPAGE_CLIENT_WINS` deck, rendered by `components/home/HomeClientCoverFlow.tsx` (mounted via the legacy-named `HomeDentistWinsSection.tsx` wrapper that keeps the "Great companies use Prism" heading + `N client stories · M markets · Verified case studies` line, auto-computed from the slides where relevant). It is a mixed-client set spanning retail, dental, education, community, consulting, nonprofit, hospitality, B2B services, and specialty healthcare proof.
 - There is **one card per published case study** (currently 22) — the deck is kept in sync with the `/case-studies` index and `CASE_STUDIES` in `lib/case-study-data.ts`. When a case study is added/removed there, add/remove the matching slide in `HOMEPAGE_CLIENT_WINS` (slide order is hand-curated to interleave industries, not to mirror the data order). Each slide carries `company` (the brand/business name shown as the prominent card label — **never a person's name**), `location`, `contextLabel`, plus `href` + `image` derived from the slug.
@@ -231,7 +231,7 @@ Quick reference for the pages we edit most often.
 - Hero media uses `public/ascii/motion/wall-of-love/planet-lite.mp4` with reduced-motion/error fallback poster `public/ascii/static/wall-of-love/planet.png`; current crop/visibility tuning is `object-[center_80%]` with `opacity-100`.
 - Route-level policy now passes autoplay decisions to `components/HeroBackgroundLoop.tsx` via policy input instead of branching on route logic.
 - Keep CTA tracking on the primary button (`trackCTAClick("wall_of_love_become_client_cta", "/get-started")`) and keep the testimonials feed anchored at `#testimonials-feed`.
-- Social proof copy in the hero is intentionally hard-coded as: `Instagram: 39,000+`, `TikTok: 6,000+`, `YouTube: 24,000+`.
+- Social proof copy in the hero is intentionally hard-coded as: `Instagram: 37,000+`, `TikTok: 10,000+`, `YouTube: 24,000+` (refreshed 2026-07-30).
 
 ## Prism Library (`app/library/page.tsx`)
 

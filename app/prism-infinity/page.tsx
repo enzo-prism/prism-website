@@ -203,13 +203,13 @@ const PROOF_STATS: readonly {
     brand: 'youtube',
   },
   {
-    value: '38K',
+    value: '37K',
     label: 'Instagram followers',
     detail: '10M+ views',
     brand: 'instagram',
   },
   {
-    value: '9K',
+    value: '10K',
     label: 'TikTok followers',
     detail: '4M+ views',
     brand: 'tiktok',

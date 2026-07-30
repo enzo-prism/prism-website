@@ -91,10 +91,10 @@ const PROOF_TILES = [
   {
     platform: 'Instagram',
     brand: 'instagram',
-    value: '38,000',
+    value: '37,000',
     detail: '10M+ views',
   },
-  { platform: 'TikTok', brand: 'tiktok', value: '9,000', detail: '4M+ views' },
+  { platform: 'TikTok', brand: 'tiktok', value: '10,000', detail: '4M+ views' },
 ] as const satisfies readonly {
   platform: string
   brand: BrandLogoKey

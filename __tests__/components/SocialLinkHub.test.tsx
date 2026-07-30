@@ -214,7 +214,7 @@ describe('SocialLinkHub', () => {
       }),
     ).toBeInTheDocument()
     expect(
-      screen.getByText(/38k followers/i),
+      screen.getByText(/37k followers/i),
     ).toBeInTheDocument()
     expect(
       within(

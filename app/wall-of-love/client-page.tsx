@@ -92,11 +92,11 @@ export default function WallOfLoveClientPage() {
               </p>
 
               <p className="mt-6 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-xs font-semibold text-foreground sm:text-sm">
-                <span>Instagram: 39,000+</span>
+                <span>Instagram: 37,000+</span>
                 <span className="hidden text-muted-foreground sm:inline">
                   •
                 </span>
-                <span>TikTok: 6,000+</span>
+                <span>TikTok: 10,000+</span>
                 <span className="hidden text-muted-foreground sm:inline">
                   •
                 </span>

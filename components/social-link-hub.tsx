@@ -43,7 +43,7 @@ const PLATFORMS: Record<SocialHubPlatform, PlatformConfig> = {
     handle: '@the_design_prism',
     profileHref: 'https://www.instagram.com/the_design_prism/',
     headline: 'The studio behind the feed.',
-    proofStrip: '38k followers · $100,000+ driven for clients',
+    proofStrip: '37k followers · $100,000+ driven for clients',
   },
   youtube: {
     label: 'YouTube',
