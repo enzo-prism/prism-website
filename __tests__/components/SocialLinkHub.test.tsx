@@ -95,24 +95,30 @@ describe('SocialLinkHub', () => {
     jest.clearAllMocks()
   })
 
-  it('frames the page around the studio, not gratitude, with exactly two routed actions', () => {
+  it('frames the page around business growth with exactly three routed actions', () => {
     render(<SocialLinkHub platform="tiktok" />)
 
     expect(
       screen.getByRole('heading', {
-        name: /the studio behind the videos\./i,
+        name: /grow your business with prism/i,
       }),
+    ).toBeInTheDocument()
+    expect(
+      screen.getByText(
+        /we implement the strategies and tactics we post about/i,
+      ),
     ).toBeInTheDocument()
 
     // Proof strip pairs an attention number with a business number.
+    expect(screen.getByText(/17m\+ views/i)).toBeInTheDocument()
     expect(
-      screen.getByText(/17m\+ views · \$100,000\+ driven/i),
+      screen.getByText(/\$5 million\+ revenue driven for clients/i),
     ).toBeInTheDocument()
 
     const nav = screen.getByRole('navigation', {
       name: /tiktok page actions/i,
     })
-    expect(within(nav).getAllByRole('link')).toHaveLength(2)
+    expect(within(nav).getAllByRole('link')).toHaveLength(3)
 
     // The retired cards stay retired.
     expect(screen.queryByText(/see the proof/i)).not.toBeInTheDocument()
@@ -148,6 +154,16 @@ describe('SocialLinkHub', () => {
       'tiktok landing actions',
     )
     expect(trackExternalLinkClick).not.toHaveBeenCalled()
+
+    const infinityLink = screen.getByRole('link', { name: /prism infinity/i })
+    expect(infinityLink).toHaveAttribute('href', '/prism-infinity')
+    expect(infinityLink).toHaveAttribute('data-cta-text', 'prism infinity')
+
+    fireEvent.click(infinityLink)
+    expect(trackCTAClick).toHaveBeenCalledWith(
+      'prism infinity',
+      'tiktok landing actions',
+    )
 
     const referLink = screen.getByRole('link', { name: /refer a friend/i })
     expect(referLink).toHaveAttribute('href', '/refer')
@@ -206,11 +222,11 @@ describe('SocialLinkHub', () => {
     )
   })
 
-  it('tunes the copy per platform while keeping the same two actions', () => {
+  it('tunes the attention stat per platform while keeping the shared headline and three actions', () => {
     const { unmount } = render(<SocialLinkHub platform="instagram" />)
     expect(
       screen.getByRole('heading', {
-        name: /the studio behind the feed\./i,
+        name: /grow your business with prism/i,
       }),
     ).toBeInTheDocument()
     expect(
@@ -220,13 +236,13 @@ describe('SocialLinkHub', () => {
       within(
         screen.getByRole('navigation', { name: /instagram page actions/i }),
       ).getAllByRole('link'),
-    ).toHaveLength(2)
+    ).toHaveLength(3)
     unmount()
 
     render(<SocialLinkHub platform="youtube" />)
     expect(
       screen.getByRole('heading', {
-        name: /the studio behind the channel\./i,
+        name: /grow your business with prism/i,
       }),
     ).toBeInTheDocument()
     expect(screen.getByText(/24k subscribers/i)).toBeInTheDocument()
@@ -234,12 +250,27 @@ describe('SocialLinkHub', () => {
     const youtubeNav = screen.getByRole('navigation', {
       name: /youtube page actions/i,
     })
-    expect(within(youtubeNav).getAllByRole('link')).toHaveLength(2)
+    expect(within(youtubeNav).getAllByRole('link')).toHaveLength(3)
     expect(
       within(youtubeNav).getByRole('link', { name: /premium website design/i }),
     ).toHaveAttribute('href', '/websites')
     expect(
+      within(youtubeNav).getByRole('link', { name: /prism infinity/i }),
+    ).toHaveAttribute('href', '/prism-infinity')
+    expect(
       within(youtubeNav).getByRole('link', { name: /refer a friend/i }),
     ).toHaveAttribute('href', '/refer')
+  })
+
+  it('segments the offer cards by founder revenue with mono micro-labels', () => {
+    render(<SocialLinkHub platform="instagram" />)
+
+    expect(screen.getByText('Under $1M revenue')).toBeInTheDocument()
+    expect(screen.getByText('$1M–$10M revenue')).toBeInTheDocument()
+    // Segment bands are labels, not public pricing; the Infinity detail stays
+    // price-free and avoids the retired "Everything Prism, unlimited" phrase.
+    expect(
+      screen.getByText(/unlimited design, web, content, and ads/i),
+    ).toBeInTheDocument()
   })
 })

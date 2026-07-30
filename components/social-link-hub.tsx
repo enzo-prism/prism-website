@@ -14,9 +14,9 @@ import { trackCTAClick, trackExternalLinkClick } from '@/utils/analytics'
  * Link-in-bio hub for Prism's social profiles (/tiktok, /ig, /youtube).
  *
  * Visitors arrive warm — they just watched Prism's content — so the page
- * routes intent instead of thanking them, with exactly two moves: book the
- * PRO website call, or refer a friend and earn $100. One template,
- * platform-aware copy.
+ * routes intent instead of thanking them, with exactly three moves segmented
+ * by founder revenue: the PRO website (under $1M), Prism Infinity ($1M–$10M),
+ * or refer a friend and earn $100. One template, platform-aware stats.
  */
 
 export type SocialHubPlatform = 'tiktok' | 'instagram' | 'youtube'
@@ -25,9 +25,8 @@ type PlatformConfig = {
   label: string
   handle: string
   profileHref: string
-  headline: string
   /** Two-number proof line: one attention stat, one business stat. */
-  proofStrip: string
+  proofStrip: [attention: string, business: string]
 }
 
 const PLATFORMS: Record<SocialHubPlatform, PlatformConfig> = {
@@ -35,29 +34,26 @@ const PLATFORMS: Record<SocialHubPlatform, PlatformConfig> = {
     label: 'TikTok',
     handle: '@the_design_prism',
     profileHref: 'https://www.tiktok.com/@the_design_prism',
-    headline: 'The studio behind the videos.',
-    proofStrip: '17M+ views · $100,000+ driven for clients',
+    proofStrip: ['17M+ views', '$5 million+ revenue driven for clients'],
   },
   instagram: {
     label: 'Instagram',
     handle: '@the_design_prism',
     profileHref: 'https://www.instagram.com/the_design_prism/',
-    headline: 'The studio behind the feed.',
-    proofStrip: '37k followers · $100,000+ driven for clients',
+    proofStrip: ['37k followers', '$5 million+ revenue driven for clients'],
   },
   youtube: {
     label: 'YouTube',
     handle: '@the_design_prism',
     profileHref: 'https://www.youtube.com/@the_design_prism',
-    headline: 'The studio behind the channel.',
-    proofStrip: '24k subscribers · 22 case studies',
+    proofStrip: ['24k subscribers', '$5 million+ revenue driven for clients'],
   },
 }
 
 // Shared premium hover language from the core CTA system: a gentle lift, a
 // warm gold-tinted glow (#d8bc79), and the site's signature easing curve.
 const actionCardBaseClassName =
-  'group flex min-h-[5rem] w-full items-center gap-4 rounded-xl border px-5 py-[1.125rem] transition-[transform,border-color,background-color,box-shadow] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-0.5 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-white/25 focus-visible:ring-offset-4 focus-visible:ring-offset-black active:translate-y-0 motion-reduce:transition-none'
+  'group flex min-h-[5rem] w-full items-center gap-4 rounded-xl border px-5 py-4 transition-[transform,border-color,background-color,box-shadow] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-0.5 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-white/25 focus-visible:ring-offset-4 focus-visible:ring-offset-black active:translate-y-0 motion-reduce:transition-none'
 
 const quietActionCardClassName = cn(
   actionCardBaseClassName,
@@ -78,6 +74,8 @@ type ActionCardProps = {
   tone?: ActionTone
   location: string
   icon: ReactNode
+  /** Tiny uppercase mono segment label above the title (e.g. a revenue band). */
+  microLabel?: string
 }
 
 function ActionCard({
@@ -87,6 +85,7 @@ function ActionCard({
   tone = 'quiet',
   location,
   icon,
+  microLabel,
 }: ActionCardProps) {
   const label = title.toLowerCase()
   const isPrimary = tone === 'primary'
@@ -114,6 +113,16 @@ function ActionCard({
         {icon}
       </span>
       <span className="min-w-0 flex-1">
+        {microLabel && (
+          <span
+            className={cn(
+              'mb-1 block font-mono text-[10px] font-semibold uppercase leading-[1.2] tracking-[0.18em]',
+              isPrimary ? 'text-[#050505]/45' : 'text-[#8f877b]',
+            )}
+          >
+            {microLabel}
+          </span>
+        )}
         <span
           className={cn(
             'block font-sans text-[1.0625rem] font-medium leading-[1.35] tracking-[-0.015em]',
@@ -199,7 +208,7 @@ export default function SocialLinkHub({
         <main
           id="main-content"
           tabIndex={-1}
-          className="flex flex-1 flex-col justify-center py-12"
+          className="flex flex-1 flex-col justify-center py-8"
         >
           <span
             aria-hidden="true"
@@ -213,19 +222,27 @@ export default function SocialLinkHub({
             />
           </span>
 
-          <h1 className="mt-6 max-w-[16ch] text-balance font-sans text-[clamp(2rem,8vw,2.8rem)] font-medium leading-[1.02] tracking-[-0.045em] text-[#f5f0e8]">
-            {config.headline}
+          <h1 className="mt-6 max-w-[19ch] text-balance font-sans text-[clamp(2rem,8vw,2.8rem)] font-medium leading-[1.02] tracking-[-0.045em] text-[#f5f0e8]">
+            Grow your business with Prism
           </h1>
 
-          <p className="mt-5 font-sans text-[1rem] font-normal leading-[1.6] tracking-[-0.01em] text-[#cfc7ba]">
-            {config.proofStrip}
+          <p className="mt-4 max-w-[40ch] text-pretty font-sans text-[1rem] font-normal leading-[1.6] tracking-[-0.01em] text-[#cfc7ba]">
+            We implement the strategies and tactics we post about to level up
+            your business.
           </p>
 
-          <nav aria-label={`${config.label} page actions`} className="mt-10">
+          <p className="mt-4 font-sans text-[0.875rem] font-normal leading-[1.5] tracking-[-0.01em] text-[#b8afa2]">
+            <span className="whitespace-nowrap">{config.proofStrip[0]}</span>
+            {' · '}
+            <span className="whitespace-nowrap">{config.proofStrip[1]}</span>
+          </p>
+
+          <nav aria-label={`${config.label} page actions`} className="mt-8">
             <div className="grid gap-3">
               <ActionCard
                 title="Premium Website Design"
                 detail="rank on ChatGPT and Google"
+                microLabel="Under $1M revenue"
                 href="/websites"
                 tone="primary"
                 location={actionsLocation}
@@ -236,6 +253,21 @@ export default function SocialLinkHub({
                     size={17}
                     aria-hidden="true"
                     invert={false}
+                  />
+                }
+              />
+              <ActionCard
+                title="Prism Infinity"
+                detail="unlimited design, web, content, and ads"
+                microLabel="$1M–$10M revenue"
+                href="/prism-infinity"
+                location={actionsLocation}
+                icon={
+                  <PixelishIcon
+                    src="/pixelish/arrow-refresh.svg"
+                    alt=""
+                    size={16}
+                    aria-hidden="true"
                   />
                 }
               />
