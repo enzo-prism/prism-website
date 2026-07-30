@@ -262,13 +262,25 @@ describe('SocialLinkHub', () => {
     ).toHaveAttribute('href', '/refer')
   })
 
-  it('segments the offer cards by founder revenue with mono micro-labels', () => {
+  it('segments the offer cards by founder revenue with routing questions', () => {
     render(<SocialLinkHub platform="instagram" />)
 
-    expect(screen.getByText('Under $1M revenue')).toBeInTheDocument()
-    expect(screen.getByText('$1M–$10M revenue')).toBeInTheDocument()
-    // Segment bands are labels, not public pricing; the Infinity detail stays
-    // price-free and avoids the retired "Everything Prism, unlimited" phrase.
+    // Visual routing questions sit above the two offer cards; the cards carry
+    // the same segmentation in their aria-labels so AT users hear it once.
+    expect(screen.getByText('Doing under $1M a year?')).toBeInTheDocument()
+    expect(screen.getByText('Doing $1M–$10M a year?')).toBeInTheDocument()
+    expect(
+      screen.getByRole('link', {
+        name: /premium website design, for businesses under \$1m a year/i,
+      }),
+    ).toHaveAttribute('href', '/websites')
+    expect(
+      screen.getByRole('link', {
+        name: /prism infinity, for businesses doing \$1m–\$10m a year/i,
+      }),
+    ).toHaveAttribute('href', '/prism-infinity')
+    // Revenue bands are routing copy, not public pricing; the Infinity detail
+    // stays price-free and avoids the retired "Everything Prism, unlimited".
     expect(
       screen.getByText(/unlimited design, web, content, and ads/i),
     ).toBeInTheDocument()

@@ -14,9 +14,11 @@ import { trackCTAClick, trackExternalLinkClick } from '@/utils/analytics'
  * Link-in-bio hub for Prism's social profiles (/tiktok, /ig, /youtube).
  *
  * Visitors arrive warm — they just watched Prism's content — so the page
- * routes intent instead of thanking them, with exactly three moves segmented
- * by founder revenue: the PRO website (under $1M), Prism Infinity ($1M–$10M),
- * or refer a friend and earn $100. One template, platform-aware stats.
+ * routes intent instead of thanking them. The two offer cards sit under
+ * short sans routing questions ("Doing under $1M a year?" / "Doing $1M–$10M
+ * a year?") so the revenue segmentation is read before the offer; the
+ * referral card sits after a hairline so it never reads as a third revenue
+ * tier. One template, platform-aware stats.
  */
 
 export type SocialHubPlatform = 'tiktok' | 'instagram' | 'youtube'
@@ -74,8 +76,8 @@ type ActionCardProps = {
   tone?: ActionTone
   location: string
   icon: ReactNode
-  /** Tiny uppercase mono segment label above the title (e.g. a revenue band). */
-  microLabel?: string
+  /** Full accessible name when a visual routing question sits outside the link. */
+  ariaLabel?: string
 }
 
 function ActionCard({
@@ -85,7 +87,7 @@ function ActionCard({
   tone = 'quiet',
   location,
   icon,
-  microLabel,
+  ariaLabel,
 }: ActionCardProps) {
   const label = title.toLowerCase()
   const isPrimary = tone === 'primary'
@@ -93,6 +95,7 @@ function ActionCard({
   return (
     <Link
       href={href}
+      aria-label={ariaLabel}
       onClick={() => {
         trackCTAClick(label, location)
       }}
@@ -113,16 +116,6 @@ function ActionCard({
         {icon}
       </span>
       <span className="min-w-0 flex-1">
-        {microLabel && (
-          <span
-            className={cn(
-              'mb-1 block font-mono text-[10px] font-semibold uppercase leading-[1.2] tracking-[0.18em]',
-              isPrimary ? 'text-[#050505]/45' : 'text-[#8f877b]',
-            )}
-          >
-            {microLabel}
-          </span>
-        )}
         <span
           className={cn(
             'block font-sans text-[1.0625rem] font-medium leading-[1.35] tracking-[-0.015em]',
@@ -208,7 +201,7 @@ export default function SocialLinkHub({
         <main
           id="main-content"
           tabIndex={-1}
-          className="flex flex-1 flex-col justify-center py-8"
+          className="flex flex-1 flex-col justify-center py-6"
         >
           <span
             aria-hidden="true"
@@ -231,18 +224,24 @@ export default function SocialLinkHub({
             your business.
           </p>
 
-          <p className="mt-4 font-sans text-[0.875rem] font-normal leading-[1.5] tracking-[-0.01em] text-[#b8afa2]">
+          <p className="mt-3 font-sans text-[0.875rem] font-normal leading-[1.5] tracking-[-0.01em] text-[#b8afa2]">
             <span className="whitespace-nowrap">{config.proofStrip[0]}</span>
             {' · '}
             <span className="whitespace-nowrap">{config.proofStrip[1]}</span>
           </p>
 
-          <nav aria-label={`${config.label} page actions`} className="mt-8">
-            <div className="grid gap-3">
+          <nav aria-label={`${config.label} page actions`} className="mt-7">
+            <p
+              aria-hidden="true"
+              className="font-sans text-[0.8125rem] font-medium leading-[1.4] tracking-[-0.01em] text-[#f5f0e8]"
+            >
+              Doing under $1M a year?
+            </p>
+            <div className="mt-2">
               <ActionCard
                 title="Premium Website Design"
                 detail="rank on ChatGPT and Google"
-                microLabel="Under $1M revenue"
+                ariaLabel="Premium Website Design, for businesses under $1M a year. Rank on ChatGPT and Google."
                 href="/websites"
                 tone="primary"
                 location={actionsLocation}
@@ -256,10 +255,19 @@ export default function SocialLinkHub({
                   />
                 }
               />
+            </div>
+
+            <p
+              aria-hidden="true"
+              className="mt-5 font-sans text-[0.8125rem] font-medium leading-[1.4] tracking-[-0.01em] text-[#f5f0e8]"
+            >
+              Doing $1M–$10M a year?
+            </p>
+            <div className="mt-2">
               <ActionCard
                 title="Prism Infinity"
                 detail="unlimited design, web, content, and ads"
-                microLabel="$1M–$10M revenue"
+                ariaLabel="Prism Infinity, for businesses doing $1M–$10M a year. Unlimited design, web, content, and ads."
                 href="/prism-infinity"
                 location={actionsLocation}
                 icon={
@@ -271,6 +279,9 @@ export default function SocialLinkHub({
                   />
                 }
               />
+            </div>
+
+            <div className="mt-4 border-t border-white/12 pt-4">
               <ActionCard
                 title="Refer a friend"
                 detail="You get $100 when they become a client"
