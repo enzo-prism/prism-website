@@ -436,7 +436,7 @@ test('home hero layout stays readable across responsive breakpoints', async ({
       timeout: 20_000,
     })
     await expect(
-      hero.getByRole('link', { name: /explore plans/i }),
+      hero.getByRole('link', { name: /wall of love/i }),
     ).toBeVisible({ timeout: 20_000 })
 
     const result = await page.evaluate(() => {
@@ -450,7 +450,7 @@ test('home hero layout stays readable across responsive breakpoints', async ({
         'a[href="/websites"]',
       )
       const secondaryCta = hero.querySelector<HTMLAnchorElement>(
-        'a[href="#offers"], a[href="/#offers"]',
+        'a[href="/wall-of-love"]',
       )
       const primaryCtaRect = primaryCta?.getBoundingClientRect()
       const secondaryCtaRect = secondaryCta?.getBoundingClientRect()

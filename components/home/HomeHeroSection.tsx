@@ -136,7 +136,7 @@ export default function HomeHeroSection() {
                 </CoreActionLink>
                 <CoreActionLink
                   href={HOMEPAGE_HERO.secondaryCta.href}
-                  label="explore plans"
+                  label="wall of love"
                   location="homepage hero"
                   variant="heroSecondary"
                 >
@@ -296,8 +296,8 @@ export default function HomeHeroSection() {
                   based on the latest data from June 2026. Across YouTube,
                   Instagram, and TikTok, Prism&apos;s own channels reach 71,000
                   followers and over 17 million views: 24,000 YouTube followers
-                  with over 3 million views, 38,000 Instagram followers with over
-                  10 million views, and 9,000 TikTok followers with over 4
+                  with over 3 million views, 37,000 Instagram followers with over
+                  10 million views, and 10,000 TikTok followers with over 4
                   million views. These channels are grown end to end by Prism,
                   powered by Content OS.
                 </p>

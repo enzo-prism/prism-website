@@ -123,17 +123,14 @@ describe('HomeHeroSection', () => {
       screen.getByRole('link', { name: /get a pro website/i }),
     ).toHaveAttribute('href', '/websites')
     expect(
-      screen.getByRole('link', { name: /explore plans/i }),
-    ).toHaveAttribute('href', '#offers')
+      screen.getByRole('link', { name: /wall of love/i }),
+    ).toHaveAttribute('href', '/wall-of-love')
 
     expect(
       screen.getByRole('link', {
         name: /5 star rating 20\+ reviews from founders, doctors, operators, and local leaders see results/i,
       }),
     ).toHaveAttribute('href', '/case-studies')
-    expect(
-      screen.queryByRole('link', { name: /wall of love/i }),
-    ).not.toBeInTheDocument()
   })
 
   it('does not render the retired image-led hero treatment', () => {

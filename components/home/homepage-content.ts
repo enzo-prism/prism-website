@@ -129,13 +129,13 @@ export const HOMEPAGE_HERO = {
         },
         {
           platform: 'Instagram',
-          followers: '38,000',
+          followers: '37,000',
           views: '10M+',
           url: 'https://www.instagram.com/the_design_prism/',
         },
         {
           platform: 'TikTok',
-          followers: '9,000',
+          followers: '10,000',
           views: '4M+',
           url: 'https://www.tiktok.com/@the_design_prism',
         },
@@ -156,7 +156,7 @@ export const HOMEPAGE_HERO = {
     linkLabel: 'See results',
   },
   primaryCta: { label: 'Get a PRO website', href: '/websites' },
-  secondaryCta: { label: 'Explore plans', href: '#offers' },
+  secondaryCta: { label: 'Wall of Love', href: '/wall-of-love' },
 } as const
 
 export const HOMEPAGE_CLIENT_WINS = {
