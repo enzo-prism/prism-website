@@ -104,14 +104,13 @@ describe('HomeHeroSection', () => {
     expect(screen.getByLabelText(/5 star rating/i)).toBeInTheDocument()
 
     const supportPoints = screen.getAllByTestId('home-hero-support-point')
-    const iconSrcs = supportPoints.map((point) =>
-      point.querySelector('img')?.getAttribute('src'),
-    )
+    const supportIcon = supportPoints[0]?.querySelector('img')
 
     expect(supportPoints).toHaveLength(1)
     expect(screen.getByText(/the growth team founders keep/i)).toBeInTheDocument()
     expect(screen.queryByText(/^google maps$/i)).not.toBeInTheDocument()
-    expect(iconSrcs).toContain('/pixelish/emoji-heart.svg')
+    expect(supportIcon).toHaveAttribute('src', '/pixelish/emoji-heart.svg')
+    expect(supportIcon).toHaveClass('invert')
 
     const systemStrip = screen.getByRole('list', {
       name: /what the prism growth system includes/i,

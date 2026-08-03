@@ -100,7 +100,7 @@ export const HOMEPAGE_HERO = {
     {
       label: 'The growth team founders keep',
       iconSrc: '/pixelish/emoji-heart.svg',
-      iconInvert: false,
+      iconInvert: true,
       variant: 'aiRecommendation',
     },
   ] satisfies readonly HomepageHeroSupportPoint[],
