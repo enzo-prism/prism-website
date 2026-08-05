@@ -14,6 +14,7 @@ import {
   coreRouteSectionCompactClassName,
 } from '@/components/core-route/CoreRoutePrimitives'
 import { FAQSchema, ServiceSchema } from '@/components/schema-markup'
+import { WEBSITE_INTAKE_PATH } from '@/lib/constants'
 import { BOOK_A_CALL_CTA } from '@/lib/pricing-model'
 import { buildRouteMetadata } from '@/lib/seo/metadata'
 import { websiteProjects } from '@/lib/website-projects'
@@ -196,10 +197,18 @@ export default function WebsitesPage() {
 
               <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
                 <CoreActionLink
+                  href={WEBSITE_INTAKE_PATH}
+                  variant="heroPrimary"
+                  label="start my website"
+                  location="websites hero"
+                >
+                  Start my website
+                </CoreActionLink>
+                <CoreActionLink
                   href={BOOK_A_CALL_CTA.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  variant="heroPrimary"
+                  variant="heroSecondary"
                   label="book a free demo"
                   location="websites hero"
                 >
@@ -476,14 +485,22 @@ export default function WebsitesPage() {
           >
             <CoreSectionHeading
               title="Get your presence fully dialed."
-              description="Book a 30-minute Zoom call. We will map your business, define the scope, and present a clear price."
+              description="Answer four quick questions and we will reach out within 24 hours to scope your new website."
             />
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
+              <CoreActionLink
+                href={WEBSITE_INTAKE_PATH}
+                variant="heroPrimary"
+                label="start my website"
+                location="websites final"
+              >
+                Start my website
+              </CoreActionLink>
               <CoreActionLink
                 href={BOOK_A_CALL_CTA.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                variant="heroPrimary"
+                variant="heroSecondary"
                 label="book a free demo"
                 location="websites final"
               >
