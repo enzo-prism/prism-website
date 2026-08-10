@@ -27,7 +27,7 @@ export default function DesignsPage() {
             <h2 className="text-2xl font-semibold tracking-tight text-neutral-900">design with purpose</h2>
             <p>design is the connective tissue for every engagement we take on.</p>
             <p>
-              we pair beauty with performance, aligning every asset to the outcomes you care about&mdash;so your website,
+              we pair beauty with performance, aligning every asset to the outcomes you care about, so your website,
               campaigns, and internal tools all speak in the same voice.
             </p>
           </div>

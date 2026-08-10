@@ -137,7 +137,7 @@ export default function DesignsPageClient() {
                   how it works.&rdquo;
                 </blockquote>
                 <figcaption className="text-sm font-medium uppercase tracking-[0.35em] text-neutral-500">
-                  &mdash; steve jobs
+                  &ndash; steve jobs
                 </figcaption>
               </figure>
               <div className="space-y-4 text-base leading-relaxed text-neutral-700 sm:text-lg">
