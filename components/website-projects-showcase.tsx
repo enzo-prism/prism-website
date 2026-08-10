@@ -103,7 +103,7 @@ export default function WebsiteProjectsShowcase({ projects }: WebsiteProjectsSho
             <EmptyHeader>
               <EmptyTitle>no websites in that mix yet</EmptyTitle>
               <EmptyDescription>
-                toggle another category or reach out. chances are we have a similar build in progress we can walk you through.
+                toggle another category or reach out. Chances are we have a similar build in progress we can walk you through.
               </EmptyDescription>
             </EmptyHeader>
             <EmptyContent>

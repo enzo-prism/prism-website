@@ -364,7 +364,7 @@ export default function BlogPostLayout({
                       if (c.includes('ai') && c.includes('marketing'))
                         return 'we help you build the context moat, get agent‑discoverable, and instrument bookings end‑to‑end.'
                       if (c.includes('seo') || c.includes('search'))
-                        return 'ai has compressed clicks. let’s rebuild your funnel with task‑first pages, rich context, and interactive wins.'
+                        return 'ai has compressed clicks. Let’s rebuild your funnel with task‑first pages, rich context, and interactive wins.'
                       if (
                         c.includes('design') ||
                         c.includes('product') ||

@@ -17,7 +17,7 @@ const agentFeatures = [
   {
     title: "after-hours coverage",
     description:
-      "emergency calls at 2am get triaged intelligently. your agent captures details, provides guidance, and routes urgent cases to the on-call provider.",
+      "emergency calls at 2am get triaged intelligently. Your agent captures details, provides guidance, and routes urgent cases to the on-call provider.",
   },
   {
     title: "insurance & billing questions",
@@ -77,7 +77,7 @@ const faqs = [
   {
     question: "will patients know they're talking to an ai?",
     answer:
-      "the agent uses elevenlabs' most natural voice technology. most patients won't notice, but we always recommend transparent disclosure. your agent can introduce itself however you prefer.",
+      "the agent uses elevenlabs' most natural voice technology. most patients won't notice, but we always recommend transparent disclosure. Your agent can introduce itself however you prefer.",
   },
   {
     question: "what happens if the ai can't handle a question?",

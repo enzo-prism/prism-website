@@ -418,7 +418,7 @@ export default async function SeoPage() {
       <SeoSection
         eyebrow="dental"
         title="seo for dental practices"
-        description="dental search is high-trust and hyperlocal. the winners are the practices that are easiest to understand, easiest to trust, and easiest to choose."
+        description="dental search is high-trust and hyperlocal. The winners are the practices that are easiest to understand, easiest to trust, and easiest to choose."
       >
         <div className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm">
           <p className="text-sm text-neutral-600">
@@ -459,7 +459,7 @@ export default async function SeoPage() {
       <SeoSection
         eyebrow="ai"
         title="ai seo services"
-        description="ai overviews and assistants are changing how buyers discover brands. the goal is to be easy to cite, easy to corroborate, and easy to choose."
+        description="ai overviews and assistants are changing how buyers discover brands. The goal is to be easy to cite, easy to corroborate, and easy to choose."
       >
         <div className="grid gap-6 md:grid-cols-2">
           <div className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm">

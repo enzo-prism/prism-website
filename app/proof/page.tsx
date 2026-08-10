@@ -139,7 +139,7 @@ export default function ProofPage() {
 
               <h2>Results you can expect</h2>
               <ul>
-                <li><strong>Higher conversion rate</strong> on pages with Proof vs. without (typically +10–30% relative lift over time).</li>
+                <li><strong>Higher conversion rate</strong> on pages with Proof vs. Without (typically +10–30% relative lift over time).</li>
                 <li><strong>Richer search appearance</strong> via Review/Video schema on key pages.</li>
                 <li><strong>Steady stream of on‑brand content</strong> that compounds monthly.</li>
               </ul>

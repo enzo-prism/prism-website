@@ -419,7 +419,7 @@ export default function LocalSeoAgencyPage() {
 
         <SeoTextSection title="what “local seo agency” should mean in practice">
           <p>
-            when someone searches “local seo agency”, they’re usually not looking for theory. They’re looking for a partner who can
+            when someone searches “local seo agency”, they’re usually not looking for theory. they’re looking for a partner who can
             increase visibility and turn it into calls, bookings, and customers. that requires both on-page clarity and off-page proof:
             accurate listings, steady reviews, useful local pages, and clean technical signals that make crawling and indexing easy.
           </p>

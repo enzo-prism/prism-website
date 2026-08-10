@@ -46,7 +46,7 @@ const deliveryPillars = [
   },
   {
     title: "data-driven iteration",
-    description: "analytics guide every decision, so your platform keeps improving while you sleep. No guesswork, just momentum."
+    description: "analytics guide every decision, so your platform keeps improving while you sleep. no guesswork, just momentum."
   }
 ]
 
@@ -131,7 +131,7 @@ const retentionBenefits = [
   { icon: "🔓", text: "Pause or cancel anytime, no long contracts" },
   { icon: "🧾", text: "You fully own every asset we build" },
   { icon: "🛡️", text: "Zero downtime, quiet updates, and continuous improvements" },
-  { icon: "📊", text: "Transparent analytics, see what’s working at a glance" }
+  { icon: "📊", text: "Transparent analytics: see what’s working at a glance" }
 ]
 
 const communityCaseStudies = CASE_STUDIES.filter((study) => study.segments.includes("community"))

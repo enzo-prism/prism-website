@@ -179,7 +179,7 @@ export default function GooglePage() {
             <div className="flex flex-col gap-6 text-base text-neutral-600 sm:text-lg md:w-1/2">
               <p>
                 every day, millions of businesses rely on google products to
-                operate, communicate, and grow. from gmail and google drive to
+                operate, communicate, and grow. From gmail and google drive to
                 google ads, analytics, and business profiles, google provides
                 the infrastructure for small businesses to look professional,
                 stay organized, and attract customers.

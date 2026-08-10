@@ -26,7 +26,7 @@ export default function BookAShootThankYouPage() {
           <div className="container mx-auto max-w-3xl text-center">
             <p className="text-sm font-semibold uppercase tracking-[0.28em] text-neutral-500">shoot request sent</p>
             <h1 className="mt-3 text-4xl font-semibold tracking-tight text-neutral-900 sm:text-5xl">
-              windows received. thanks for the details.
+              windows received. Thanks for the details.
             </h1>
             <p className="mt-4 text-base text-neutral-600">
               We&apos;ll reply within one business day to confirm your preferred time, share travel details, and send the prep

@@ -137,7 +137,7 @@ const faqItems = [
   {
     question: 'Do AI SEO services replace traditional SEO?',
     answer:
-      'No. The best AI SEO work strengthens traditional SEO: clean indexation, clear pages, strong internal linking, and trustworthy off-site signals. The difference is emphasis. Being quotable, unambiguous, and easily corroborated.',
+      'No. The best AI SEO work strengthens traditional SEO: clean indexation, clear pages, strong internal linking, and trustworthy off-site signals. The difference is emphasis: being quotable, unambiguous, and easily corroborated.',
   },
   {
     question: 'How do you measure AI SEO?',

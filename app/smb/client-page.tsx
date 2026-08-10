@@ -55,7 +55,7 @@ export default function SMBClientPage() {
               animate={{ y: 0 }}
               transition={{ duration: 0.6, ease: "easeOut" }}
             >
-              design, software, and data, powered by gpt‑5
+              design, software, and data: powered by gpt‑5
             </motion.h1>
             <motion.p
               className="mt-4 text-neutral-600 md:text-xl lowercase"

@@ -140,7 +140,7 @@ export default function RecentShootsSection({ shoots }: RecentShootsSectionProps
           <p className="text-sm font-semibold uppercase tracking-[0.32em] text-neutral-500">recent shoots</p>
           <h2 className="mt-3 text-3xl font-semibold tracking-tight text-neutral-900 sm:text-4xl">see what practices walk away with</h2>
           <p className="mt-4 text-base text-neutral-600">
-            swipe through the latest office &amp; team sessions. everything below is already live on websites, listings, and socials.
+            swipe through the latest office &amp; team sessions. Everything below is already live on websites, listings, and socials.
           </p>
         </div>
 

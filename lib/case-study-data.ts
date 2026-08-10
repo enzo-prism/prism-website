@@ -268,7 +268,7 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
     structured: {
       story: {
         situation:
-          'After a change in ownership, Laguna Beach Dental Arts needed a fast, confident relaunch. There was no structured SEO, no reliable ad pipeline, and inconsistent intake, and patient trust had to be preserved through the transition.',
+          'After a change in ownership, Laguna Beach Dental Arts needed a fast, confident relaunch. There was no structured SEO, no reliable ad pipeline, and inconsistent intake. Patient trust had to be preserved through the transition.',
         approach:
           'Prism partnered directly with the new owner-dentist to ship a complete relaunch: a clean visual identity and tone of voice, a fast mobile-first website with conversion-oriented UX, geo-targeted search campaigns with high-intent landing flows, and end-to-end tracking.',
         result:
@@ -716,7 +716,7 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
         approach:
           'Prism built a luxury-travel-grade experience: cinematic photography and a warm visual language for each edition, an interactive day-by-day itinerary, integrated hotel booking with group rates, past-attendee proof treated as primary content, and analytics on the path to registration.',
         result:
-          'The retreat looks like what it is, closer to a luxury travel brand than a CE course listing, and moving from “I want to come” to “I’ve booked my room” takes minimal effort.',
+          'The retreat looks like what it is (closer to a luxury travel brand than a CE course listing), and moving from “I want to come” to “I’ve booked my room” takes minimal effort.',
       },
     },
   },
@@ -777,7 +777,7 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
       ],
       story: {
         situation:
-          'Saorsa Growth Partners is a focused advisory firm whose pipeline depends on credibility and the right inquiries, not volume. The firm needed clarity, trust, and lead capture, fast.',
+          'Saorsa Growth Partners is a focused advisory firm whose pipeline depends on credibility and the right inquiries, not volume. The firm needed clarity, trust, and lead capture, and it needed them fast.',
         approach:
           'Prism shipped fast-loading pages, concise offers, and inquiry paths designed to surface the right work, with search and analytics instrumentation in place from launch.',
         result:

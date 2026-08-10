@@ -14,8 +14,8 @@ import path from "node:path"
 
 const REPO_ROOT = path.resolve(__dirname, "..")
 
-const SCANNED_DIRS = ["app", "components", "content", "lib", "utils", "hooks"]
-const SCANNED_EXTENSIONS = [".ts", ".tsx", ".mdx", ".md", ".json"]
+const SCANNED_DIRS = ["app", "components", "content", "lib", "utils", "hooks", "public"]
+const SCANNED_EXTENSIONS = [".ts", ".tsx", ".mdx", ".md", ".json", ".txt"]
 const SKIPPED_DIRS = new Set(["node_modules", ".next", "__snapshots__"])
 
 const EM_DASH = "—"
@@ -41,10 +41,65 @@ const ALLOWED_FILES = new Set([path.join("lib", "seo", "rules.ts")])
  * Keep this list at exactly the lines that qualify. If it starts growing,
  * someone is using it to skip the rewrite.
  */
-const ALLOWED_LINES: Array<{ file: string; contains: string }> = [
+const ALLOWED_LINES: Array<{ file: string; contains: string; reason: string }> = [
   {
     file: path.join("content", "wall-of-love-data.tsx"),
     contains: "Like this to bring me back",
+    reason: "Instagram commenter's ASCII arrow. The dash is a keystroke, not punctuation.",
+  },
+  // Verbatim quotes. HOUSE_RULES rule 3: a quote loses its dash only when we are
+  // quoting a person's sentence. A transcript that feeds schema, a product's own
+  // UI string, and an example prompt or ad reproduced for the reader are records,
+  // not prose, and editing them makes the record wrong.
+  {
+    file: path.join("content", "blog", "gpt-5-1-codex-test-dentist-website.mdx"),
+    contains: "build a full dentist website with multiple pages",
+    reason: "The control brief, quoted verbatim. It is the benchmark's fixed input.",
+  },
+  {
+    file: path.join("content", "blog", "gpt-5-1-codex-test-dentist-website.mdx"),
+    contains: "modern ui, responsive design, and a blog",
+    reason: "Continuation of the same quoted control brief, which wraps across two lines.",
+  },
+  {
+    file: path.join("content", "blog", "gpt-5-1-codex-test-dentist-website.mdx"),
+    contains: "We're going to use this control key",
+    reason: "Video transcript line. Feeds VideoObject schema.",
+  },
+  {
+    file: path.join("content", "blog", "gpt-5-1-codex-test-dentist-website.mdx"),
+    contains: "You can see the prompt result",
+    reason: "Video transcript line. Feeds VideoObject schema.",
+  },
+  {
+    file: path.join("content", "blog", "gpt-5-1-codex-test-dentist-website.mdx"),
+    contains: "Hopefully we can run Gemini CLI",
+    reason: "Video transcript line. Feeds VideoObject schema.",
+  },
+  {
+    file: path.join("content", "blog", "google-ads-health-personalized-warning.mdx"),
+    contains: "eligible (limited)",
+    reason: "Google Ads UI label, quoted exactly as the product renders it.",
+  },
+  {
+    file: path.join("content", "blog", "unlocking-ai-potential-small-business-prompting-strategies-chatgpt-5.mdx"),
+    contains: "Avoid generic phrases like",
+    reason: "Example prompt shown to the reader to copy.",
+  },
+  {
+    file: path.join("content", "blog", "unlocking-ai-potential-small-business-prompting-strategies-chatgpt-5.mdx"),
+    contains: "how would you improve it for better results",
+    reason: "Example prompt shown to the reader to copy.",
+  },
+  {
+    file: path.join("content", "blog", "generate-thousands-leads-without-more-ads.mdx"),
+    contains: "Claim your free audit before Friday",
+    reason: "Blockquoted example ad, reproduced as written.",
+  },
+  {
+    file: path.join("content", "blog", "how-to-rank-1-chatgpt.mdx"),
+    contains: "Make content that AI can",
+    reason: "Blockquoted rule reproduced in the question-to-answer shape it describes.",
   },
 ]
 

@@ -15,7 +15,7 @@ Important notes for LLMs and agents:
 - For "What is Prism?" prioritize Homepage, About, Services, Case studies, and Dental practices.
 - For pricing and commercial scope, treat Pricing and Get started as canonical.
 - Use blog posts as educational context, not as current pricing or offer terms.
-- Every blog post has a clean markdown version: append `/api/blog/<slug>/markdown` to the site origin — prefer it for accurate quoting.
+- Every blog post has a clean markdown version: append `/api/blog/<slug>/markdown` to the site origin. Prefer it for accurate quoting.
 - Ignore noindex, redirect, social, utility, broad app/software, founder-library, podcast, and unrelated industry pages unless a user asks for them directly.
 
 ## Core overview

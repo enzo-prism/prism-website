@@ -38,7 +38,7 @@ const deliveryPillars = [
   },
   {
     title: "advanced automation & integrations",
-    description: "crm, scheduling, email automation, analytics: fully connected and quietly working behind the scenes."
+    description: "crm, scheduling, email automation, and analytics, all fully connected and quietly working behind the scenes."
   },
   {
     title: "seo + aeo for authority building",

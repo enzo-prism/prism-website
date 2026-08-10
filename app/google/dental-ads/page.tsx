@@ -65,7 +65,7 @@ const structurePillars = [
     emoji: "🦷",
     title: "split by service type",
     description:
-      "general / cosmetic (cleanings, whitening, invisalign) → full targeting enabled. implants / surgical (implants, extractions, tmj) → keyword + location targeting only."
+      "general / cosmetic (cleanings, whitening, invisalign) → full targeting enabled. Implants / surgical (implants, extractions, tmj) → keyword + location targeting only."
   },
   {
     emoji: "🔍",

@@ -380,7 +380,7 @@ export default function ModelsPageClient() {
                 </h2>
                 <p className="text-sm text-neutral-600 sm:text-base">
                   join hundreds of real people who’ve worked with prism to
-                  create authentic, confident, and professional content. no
+                  create authentic, confident, and professional content. No
                   modeling agency required.
                 </p>
               </div>

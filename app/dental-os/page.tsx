@@ -189,7 +189,7 @@ const FAQ_ITEMS = [
   {
     question: 'How does pricing work?',
     answer:
-      'Dental OS is scoped to each practice: your locations, services, and goals, so there is no fixed package price. We scope it on a call and price around what will move calls and bookings. Book a call to get a number for your practice.',
+      'Dental OS is scoped to each practice (your locations, services, and goals), so there is no fixed package price. We scope it on a call and price around what will move calls and bookings. Book a call to get a number for your practice.',
   },
   {
     question: 'How long until it is live?',

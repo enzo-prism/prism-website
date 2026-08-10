@@ -37,12 +37,12 @@ const whatConverts = [
   {
     title: "proof-first creative",
     description:
-      "patients don’t want stock ads. they want to see the team, the office, the process, and the calm reassurance that you’re the right fit.",
+      "patients don’t want stock ads. They want to see the team, the office, the process, and the calm reassurance that you’re the right fit.",
   },
   {
     title: "a fast path to booking",
     description:
-      "every click leads to one next step: call, short form, or online booking. no confusion, no dead ends, no five-page detours.",
+      "every click leads to one next step: call, short form, or online booking. No confusion, no dead ends, no five-page detours.",
   },
 ]
 
@@ -237,7 +237,7 @@ export default function FacebookAdsForDentistsPage() {
                 what converts on facebook for dental practices
               </h2>
               <p className="mt-4 text-base leading-relaxed text-neutral-600">
-                dentistry is high-trust. the winners don’t look like ads. they look like calm, credible education with a
+                dentistry is high-trust. the winners don’t look like ads. They look like calm, credible education with a
                 clear next step.
               </p>
             </div>

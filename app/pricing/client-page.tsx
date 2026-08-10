@@ -90,17 +90,17 @@ const partnerLevels = [
 const CTA_PROOF_POINTS = [
   {
     value: '5.3×',
-    label: 'monthly Google clicks in five months, Saorsa Growth Partners',
+    label: 'monthly Google clicks in five months (Saorsa Growth Partners)',
     href: '/case-studies/saorsa-growth-partners',
   },
   {
     value: '593',
-    label: 'Google clicks in the first month after launch, Roseville Dental Academy',
+    label: 'Google clicks in the first month after launch (Roseville Dental Academy)',
     href: '/case-studies/roseville-dental-academy',
   },
   {
     value: '+142%',
-    label: 'Google Search impressions year over year, Dr. Christopher Wong',
+    label: 'Google Search impressions year over year (Dr. Christopher Wong)',
     href: '/case-studies/dr-christopher-wong',
   },
 ] as const
@@ -109,7 +109,7 @@ const faqs = [
   {
     question: 'How does Prism pricing work?',
     answer:
-      'Every offer is scoped to your business on a 30-minute Zoom call: the website, Content OS, Dental OS, and Prism Infinity. You leave the call with a clear plan and a clear price. No estimates by email, no surprise scope.',
+      'Every offer (the website, Content OS, Dental OS, and Prism Infinity) is scoped to your business on a 30-minute Zoom call. You leave the call with a clear plan and a clear price. No estimates by email, no surprise scope.',
   },
   {
     question: 'What does the PRO website include?',

@@ -21,7 +21,7 @@ const agentCapabilities = [
   {
     title: "smart actions",
     description:
-      "agents don’t just talk. they book appointments, check availability, route calls, collect information, and trigger workflows in your existing systems.",
+      "agents don’t just talk. They book appointments, check availability, route calls, collect information, and trigger workflows in your existing systems.",
     highlights: [
       "Real-time calendar and CRM integrations",
       "Automated follow-ups and confirmations",
@@ -109,7 +109,7 @@ const whyPrism = [
   {
     title: "full-stack implementation",
     description:
-      "we don’t just configure a chatbot. we build complete voice agent systems with crm integrations, custom workflows, analytics dashboards, and ongoing optimization.",
+      "we don’t just configure a chatbot. We build complete voice agent systems with crm integrations, custom workflows, analytics dashboards, and ongoing optimization.",
   },
   {
     title: "small business focused",
@@ -183,7 +183,7 @@ export default function AIAgentsPage() {
                 what is an elevenlabs ai agent?
               </h2>
               <p className="mt-3 text-sm text-neutral-600 sm:text-base">
-                ai agents are intelligent voice assistants that handle real phone conversations. they understand context,
+                ai agents are intelligent voice assistants that handle real phone conversations. They understand context,
                 answer questions, schedule appointments, transfer calls, and integrate with your existing tools, all
                 with natural-sounding voices that represent your brand.
               </p>
@@ -309,7 +309,7 @@ export default function AIAgentsPage() {
                 ready to never miss another call?
               </h2>
               <p className="mt-4 text-base text-neutral-600">
-                start with a free growth audit. we&apos;ll map your call flows, identify automation opportunities,
+                start with a free growth audit. We&apos;ll map your call flows, identify automation opportunities,
                 and show how an ai agent fits your business.
               </p>
               <div className="mt-8 flex flex-wrap justify-center gap-3">

@@ -201,7 +201,7 @@ export default function DentalPracticeSeoExpertPage() {
               dentist seo
             </h1>
             <p className="mt-6 text-base text-neutral-600 sm:text-lg">
-              dentist seo (seo for dentists) helps your practice show up when nearby patients search: in google maps (the local pack), organic results, and ai-powered search.
+              dentist seo (seo for dentists) helps your practice show up when nearby patients search in google maps (the local pack), organic results, and ai-powered search.
               prism runs a consultant-led dentist seo system built around high-intent treatments, clean technical structure, and compounding trust signals across local + organic.
             </p>
             <p className="mt-6 text-sm text-neutral-500">
@@ -453,7 +453,7 @@ export default function DentalPracticeSeoExpertPage() {
                   dentist seo, your way
                 </h2>
                 <p className="mt-4 text-base leading-relaxed text-neutral-600">
-                  hire prism for consulting-only, consultant-led implementation, or full done-for-you delivery. the same roadmap either way,
+                  hire prism for consulting-only, consultant-led implementation, or full done-for-you delivery. The same roadmap either way,
                   just different levels of hands-on execution.
                 </p>
                 <div className="mt-8 grid gap-4 sm:grid-cols-3">

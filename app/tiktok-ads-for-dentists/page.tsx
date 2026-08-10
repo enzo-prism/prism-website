@@ -207,7 +207,7 @@ export default function TikTokAdsForDentistsPage() {
                 what converts on tiktok for dental practices
               </h2>
               <p className="mt-4 text-base leading-relaxed text-neutral-600">
-                dentistry is high-trust. the winners don’t look like ads. they look like calm, credible education with a
+                dentistry is high-trust. the winners don’t look like ads. They look like calm, credible education with a
                 clear next step.
               </p>
             </div>
@@ -226,7 +226,7 @@ export default function TikTokAdsForDentistsPage() {
                 {
                   title: "fast path to booking",
                   description:
-                    "every click should lead to a single next step: call, short form, or online booking. no confusion.",
+                    "every click should lead to a single next step: call, short form, or online booking. No confusion.",
                 },
               ].map((item) => (
                 <div key={item.title} className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm">

@@ -74,8 +74,8 @@ export default function PodcastPage() {
                   <li key={`noscript-${episode.number}`}>
                     <a href={episode.youtubeUrl} className="underline">
                       episode {episode.number}: {episode.guest}
-                    </a>{" "}
-                    – {episode.takeaways.join(" · ")}
+                    </a>.{" "}
+                    {episode.takeaways.join(" · ")}
                   </li>
                 ))}
               </ul>

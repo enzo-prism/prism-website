@@ -166,7 +166,7 @@ export default function StoryPage() {
                 the real stories behind your business so every channel speaks with proof.
               </p>
               <div className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm">
-                <p className="text-lg font-semibold lowercase text-neutral-900">marketing isn&apos;t about noise. it&apos;s about signal.</p>
+                <p className="text-lg font-semibold lowercase text-neutral-900">marketing isn&apos;t about noise. It&apos;s about signal.</p>
                 <p className="mt-3 text-base text-neutral-600">
                   The best signal comes from your customers. Their words, their emotions, their outcomes: those are the assets
                   that make your marketing resonate and compound.

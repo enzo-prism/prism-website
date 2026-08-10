@@ -162,7 +162,7 @@ export const seoOnPageContent = {
     },
   ],
   closing:
-    "on-page seo isn’t an add-on for us. it’s the spine of every prism build. depending on your package, we simply add more pages, more schema, and more iteration as you grow.",
+    "on-page seo isn’t an add-on for us. It’s the spine of every prism build. depending on your package, we simply add more pages, more schema, and more iteration as you grow.",
   closingBullets: [
     "start with the right architecture",
     "expand content as services and locations grow",
@@ -225,7 +225,7 @@ export const seoOffPageContent = {
     {
       title: "reviews & reputation",
       description:
-        "reviews show volume, recency, distribution, and narrative, all signals engines monitor.",
+        "reviews show volume, recency, distribution, and narrative: all signals engines monitor.",
       bullets: [
         "google reviews",
         "yelp + facebook",
