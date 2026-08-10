@@ -221,7 +221,7 @@ If you rebrand or change domains, update the `CANONICAL_HOST` constant to keep f
 2. Populate required frontmatter fields.
 3. Write content in Markdown/MDX. Avoid inline styling—`prose-blog` handles typography.
 4. For embeds and interactive widgets, only use MDX components that are registered in `lib/mdx.tsx` / `components/mdx-components.tsx`. Use globally available names like `<YouTubeVideoEmbed />`, `<VideoObjectSchema />`, and `<VideoPlayer />` instead of assuming a post-local import alone will work at runtime.
-5. The layout renders the post title as the single H1. Use H2 for major sections and H3 for sub-sections so the table of contents stays accurate.
+5. The layout renders the post title as the single H1. Use H2 for major sections and H3 for sub-sections to keep the article hierarchy clear.
 6. Decide search visibility:
    - Default/no action: the post remains live by direct URL but noindex and excluded from blog index/RSS/latest-post/sitemap surfaces.
    - Search-visible: add the slug to `INDEXABLE_BLOG_SLUGS` in `lib/seo/search-visibility.ts` only when it supports dental or local-growth authority.

@@ -1915,13 +1915,7 @@ select {
 
 /* Blog Typography Improvements */
 .blog-reading-surface {
-  font-family:
-    Inter,
-    var(--font-sans),
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    sans-serif;
+  font-family: var(--font-sans), -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -1942,15 +1936,15 @@ select {
 }
 
 .blog-reading-surface .blog-post-title {
-  font-size: clamp(1.9rem, 3.3vw, 2.6rem);
-  line-height: 1.1;
+  font-size: clamp(2.2rem, 5vw, 3.75rem);
+  line-height: 1.04;
   font-weight: 650;
   letter-spacing: -0.02em;
 }
 
 .blog-reading-surface .blog-post-lead {
-  font-size: clamp(1rem, 0.96rem + 0.16vw, 1.12rem);
-  line-height: 1.68;
+  font-size: clamp(1.05rem, 1rem + 0.2vw, 1.2rem);
+  line-height: 1.65;
   color: hsl(var(--muted-foreground));
 }
 
@@ -1968,7 +1962,7 @@ select {
 
 .prose-blog {
   @apply prose prose-neutral dark:prose-invert max-w-none;
-  font-size: clamp(1rem, 0.96rem + 0.18vw, 1.12rem);
+  font-size: clamp(1.0625rem, 1.01rem + 0.2vw, 1.125rem);
   line-height: 1.78;
   letter-spacing: 0.003em;
   color: rgb(20 20 20);
@@ -2179,13 +2173,13 @@ select {
 
 @media (max-width: 640px) {
   .prose-blog {
-    font-size: 1rem;
-    line-height: 1.75;
+    font-size: 1.0625rem;
+    line-height: 1.78;
   }
 
   .prose-blog p {
     margin-bottom: 1.4rem;
-    line-height: 1.78;
+    line-height: 1.82;
   }
 
   .prose-blog h1,
