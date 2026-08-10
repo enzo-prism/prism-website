@@ -103,6 +103,7 @@ function findOffences(matches: (line: string) => boolean, stripComments: boolean
     const searched = stripComments && isCodeFile ? stripCodeComments(source) : source
 
     searched.split("\n").forEach((line, index) => {
+      if (isAllowedLine(relative, line)) return
       if (matches(line)) {
         offences.push({ file: relative, line: index + 1, text: line.trim().slice(0, 160) })
       }
