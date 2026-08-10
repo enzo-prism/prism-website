@@ -1,7 +1,4 @@
 import Link from "next/link"
-import { Search, X } from "lucide-react"
-
-import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import {
   BLOG_FILTER_ITEMS,
@@ -44,18 +41,13 @@ export default function BlogFilterNavigationServer({
   return (
     <div
       className={cn(
-        "sticky top-[var(--prism-header-height,0px)] z-40 border-b border-border/60 bg-background/80 backdrop-blur-md supports-[backdrop-filter]:bg-background/60",
+        "px-5 pb-8 sm:px-8 sm:pb-10",
         className,
       )}
     >
-      <div className="container mx-auto px-4 py-3 md:py-4">
-        <div className="space-y-3">
-          <form action="/blog" method="get" className="relative max-w-2xl">
-            <Search
-              className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground"
-              aria-hidden="true"
-              focusable="false"
-            />
+      <div className="border-t border-border/70 pt-6">
+        <div className="space-y-5">
+          <form action="/blog" method="get" className="flex max-w-xl items-center gap-3">
             {normalizedSelected !== "all" ? (
               <input type="hidden" name="category" value={normalizedSelected} />
             ) : null}
@@ -63,32 +55,27 @@ export default function BlogFilterNavigationServer({
               type="search"
               name="q"
               defaultValue={normalizedQuery}
-              placeholder="Search posts…"
+              placeholder="Search writing"
               aria-label="Search posts"
               autoComplete="off"
-              className="h-auto w-full rounded-md border border-border/60 bg-card/30 py-3 pl-10 pr-10 text-base leading-6 transition-colors duration-200 focus:bg-card focus-visible:ring-ring"
+              className="h-11 w-full rounded-none border-x-0 border-t-0 border-border/70 bg-transparent px-0 text-base shadow-none focus-visible:border-foreground focus-visible:ring-0"
             />
             <button type="submit" className="sr-only">
               Search
             </button>
             {normalizedQuery ? (
-              <Button
-                asChild
-                type="button"
-                variant="ghost"
-                size="icon"
-                className="absolute right-2 top-1/2 h-7 w-7 -translate-y-1/2 rounded-md hover:bg-muted/60"
-                aria-label="Clear search"
+              <Link
+                href={buildBlogUrl({ category: normalizedSelected, query: "" })}
+                prefetch={false}
+                className="inline-flex min-h-11 shrink-0 items-center font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground hover:text-foreground"
               >
-                <Link href={buildBlogUrl({ category: normalizedSelected, query: "" })} prefetch={false}>
-                  <X className="h-3 w-3 text-muted-foreground" aria-hidden="true" focusable="false" />
-                </Link>
-              </Button>
+                Clear
+              </Link>
             ) : null}
           </form>
 
-          <div className="w-full overflow-x-auto scrollbar-hide pb-1">
-            <div className="flex w-max min-w-full flex-nowrap items-center justify-start gap-2">
+          <div className="w-full overflow-x-auto scrollbar-hide">
+            <div className="flex w-max min-w-full flex-nowrap items-center justify-start gap-5">
               {BLOG_FILTER_ITEMS.map((category) => {
                 const slug = category.slug.toLowerCase()
                 const isActive = slug === normalizedSelected
@@ -99,18 +86,11 @@ export default function BlogFilterNavigationServer({
                     href={buildBlogUrl({ category: slug, query: normalizedQuery })}
                     prefetch={false}
                     className={cn(
-                      "shrink-0 inline-flex items-center gap-2 rounded-md border border-border/60 bg-muted/40 px-3 py-2 text-xs font-semibold tracking-[0.12em] text-muted-foreground transition-colors duration-200 hover:bg-muted/60 hover:text-foreground",
-                      isActive && "border-primary bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground",
+                      "inline-flex min-h-11 shrink-0 items-center border-b border-transparent font-mono text-[10px] font-medium uppercase tracking-[0.16em] text-muted-foreground transition-colors hover:text-foreground",
+                      isActive && "border-foreground text-foreground",
                     )}
                     aria-current={isActive ? "true" : undefined}
                   >
-                    {category.icon ? (
-                      <category.icon
-                        className={cn("h-3.5 w-3.5 shrink-0", isActive ? "text-primary-foreground" : "text-muted-foreground")}
-                        aria-hidden="true"
-                        focusable="false"
-                      />
-                    ) : null}
                     {category.label}
                   </Link>
                 )

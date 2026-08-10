@@ -99,10 +99,12 @@ This is an informational callout box.
 
 The blog styling system consists of:
 
-1. **`app/blog/layout.tsx`**: Applies Inter only within the blog route segment
+1. **`app/blog/layout.tsx`**: Keeps blog pages on Prism's shared Geist type system
 2. **`blog-reading-surface` + `prose-blog` classes**: Route-scoped typography tuning for long-form reading
-3. **MDX renderer**: Cleans up inline styles automatically
-4. **Dark mode**: Automatic color adjustments for dark theme
+3. **Text-first page chrome**: Article pages omit hero media, sharing controls, table-of-contents panels, promotional modules, related-card grids, and the global footer so the writing stays primary
+4. **Compact index**: The blog index uses a paginated text list instead of image cards, with search and topic filters kept visually quiet
+5. **MDX renderer**: Cleans up inline styles automatically
+6. **Dark mode**: Automatic color adjustments for dark theme
 
 ## Migration from Old Posts
 

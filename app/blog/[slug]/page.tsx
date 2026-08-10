@@ -1,11 +1,8 @@
 import BlogPostLayout from '@/components/blog-post-layout'
-import BlogEmailSignup from '@/components/blog-email-signup'
-import { getAllPosts, getPost } from '@/lib/mdx-data'
+import { getPost } from '@/lib/mdx-data'
 import { getBlogOpenGraphImage } from '@/lib/blog-images'
 import { canonicalUrl } from '@/lib/canonical'
 import { renderPost } from '@/lib/mdx'
-import { getMdxToc } from '@/lib/mdx-toc'
-import { getPrismImpactForPost } from '@/lib/prism-blog-impact'
 import { buildAbsoluteTitle, buildMinimalDescription } from '@/lib/seo/rules'
 import {
   getOutboundLinkRulesForPost,
@@ -65,14 +62,6 @@ const estimateReadingMinutes = (content: string) => {
   if (!content) return 1
   const words = stripMarkdown(content).split(/\s+/).filter(Boolean)
   return Math.max(1, Math.ceil(words.length / WORDS_PER_MINUTE))
-}
-
-function deriveTakeawaysFromToc(toc: Array<{ id: string; label: string; level: number }>) {
-  return toc
-    .filter((item) => item.level === 2)
-    .map((item) => item.label.trim())
-    .filter(Boolean)
-    .slice(0, 4)
 }
 
 export async function generateMetadata({
@@ -150,7 +139,6 @@ export default async function BlogPostPage({ params }: PageProps) {
   const post = await getPost(slug)
   if (!post) notFound()
   const { frontmatter } = post
-  const toc = await getMdxToc(post.content)
   const outboundProfile: BlogOutboundLinkProfile =
     getOutboundLinkRulesForPost({
       slug,
@@ -163,22 +151,6 @@ export default async function BlogPostPage({ params }: PageProps) {
   const updatedDate = frontmatter.openGraph?.modifiedTime
   const publishedDate = frontmatter.openGraph?.publishedTime || frontmatter.date
   const content = await renderPost(slug, { content: enrichedContent })
-  const allPosts = (await getAllPosts()) ?? []
-  const relatedPosts = allPosts
-    .filter((p) => p.slug !== slug)
-    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-  const keyTakeaways = deriveTakeawaysFromToc(toc)
-  const prismImpact = getPrismImpactForPost({
-    slug,
-    category: frontmatter.category,
-    content: post.content,
-  })
-
-  const prioritized = [
-    ...relatedPosts.filter((p) => p.categorySlug === frontmatter.categorySlug),
-    ...relatedPosts.filter((p) => p.categorySlug !== frontmatter.categorySlug),
-  ]
-
   return (
     <BlogPostLayout
       slug={slug}
@@ -194,16 +166,9 @@ export default async function BlogPostPage({ params }: PageProps) {
       image={frontmatter.image}
       openGraph={frontmatter.openGraph}
       canonical={frontmatter.canonical}
-      relatedPosts={prioritized.slice(0, 3)}
-      toc={toc}
       howTo={frontmatter.howTo}
-      keyTakeaways={keyTakeaways}
-      prismImpact={prismImpact ?? undefined}
     >
       {content}
-      <div className="mt-16">
-        <BlogEmailSignup />
-      </div>
     </BlogPostLayout>
   )
 }
