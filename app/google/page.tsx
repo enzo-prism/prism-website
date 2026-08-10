@@ -30,7 +30,7 @@ const servicesHighlights = [
   {
     title: 'google workspace setup & optimization',
     description:
-      'we help you set up professional email, shared drives, forms, and workflows — all under your own business domain. get your team collaborating smarter, not harder.',
+      'we help you set up professional email, shared drives, forms, and workflows, all under your own business domain. get your team collaborating smarter, not harder.',
     ctaLabel: 'Set up Workspace (with discount)',
     href: GOOGLE_WORKSPACE_LINK,
     external: true,
@@ -40,7 +40,7 @@ const servicesHighlights = [
   {
     title: 'google marketing integration',
     description:
-      'we connect and optimize your google business profile, google ads, analytics, and youtube — ensuring every ad click and search result leads to measurable growth.',
+      'we connect and optimize your google business profile, google ads, analytics, and youtube, so every ad click and search result leads to measurable growth.',
     ctaLabel: 'Get started with Prism',
     href: GOOGLE_MARKETING_PLANS_HREF,
     external: false,
@@ -120,8 +120,8 @@ export default function GooglePage() {
                 </h1>
                 <p className="text-base text-white/80 sm:text-lg">
                   we help small businesses and local practices grow faster by
-                  setting up, integrating, and optimizing google products — from
-                  workspace to ads — all under one roof.
+                  setting up, integrating, and optimizing google products, from
+                  workspace to ads, all under one roof.
                 </p>
                 <div className="flex w-full flex-col gap-3 sm:flex-row sm:justify-start">
                   <Button
@@ -185,7 +185,7 @@ export default function GooglePage() {
                 stay organized, and attract customers.
               </p>
               <p>
-                at prism, we help you make the most of these tools — integrating
+                at prism, we help you make the most of these tools, integrating
                 everything into one seamless system built for performance,
                 visibility, and growth.
               </p>
@@ -272,10 +272,10 @@ export default function GooglePage() {
             </div>
             <div className="space-y-6 text-base text-neutral-600 sm:text-lg">
               <p>
-                We’re not just another marketing agency — we’re builders,
+                We’re not just another marketing agency. We’re builders,
                 operators, and problem solvers who live inside the Google
                 ecosystem every day. Our clients use Google products to manage
-                their business, communicate with customers, and drive revenue —
+                their business, communicate with customers, and drive revenue,
                 and we help them do it better.
               </p>
               <p>
@@ -374,7 +374,7 @@ export default function GooglePage() {
             <div className="space-y-6 text-base text-neutral-700 sm:text-lg">
               <p>
                 We regularly publish free guides and videos showing how to use
-                Google tools to grow your business — from running effective ad
+                Google tools to grow your business, from running effective ad
                 campaigns to improving your search ranking and online presence.
               </p>
               <p>Check them out on our blog or YouTube channel:</p>

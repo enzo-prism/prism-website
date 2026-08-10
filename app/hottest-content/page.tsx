@@ -45,7 +45,7 @@ export default function HottestContentPage() {
             <div className="mt-6 rounded-2xl border border-neutral-200 bg-white/70 p-6 shadow-sm backdrop-blur">
               <div className="space-y-5 text-left text-neutral-700 md:text-xl leading-relaxed lowercase">
                 <p className="font-medium text-neutral-900">
-                  we obsess over dropping the most valuable playbooks for founders — clips that teach more in 30 seconds
+                  we obsess over dropping the most valuable playbooks for founders: clips that teach more in 30 seconds
                   than most courses do in hours.
                 </p>
                 <p>

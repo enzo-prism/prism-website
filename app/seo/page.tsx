@@ -80,7 +80,7 @@ export default async function SeoPage() {
               src="https://res.cloudinary.com/dhqpqfw6w/video/upload/q_auto,vc_auto/v1763150128/seo_vsl_prism_website_oqk1xm.mp4"
               poster="https://res.cloudinary.com/dhqpqfw6w/video/upload/so_0,q_auto/seo_vsl_prism_website_oqk1xm.jpg"
               title="Founder Enzo Sison on intentional seo that compounds"
-              caption="Enzo explains why SEO isn’t about tricks—it’s about becoming the obvious answer when buyers are ready. He covers how Prism builds the foundation (on-page clarity, technical structure, schema, AI-search readiness, and location intent), ties it to the metrics that matter (awareness, conversion, lifetime value), and shares why pairing SEO with dialed-in websites and listings plus month-to-month ownership gives you compounding traffic without hiring a full team."
+              caption="Enzo explains why SEO isn’t about tricks. It’s about becoming the obvious answer when buyers are ready. He covers how Prism builds the foundation (on-page clarity, technical structure, schema, AI-search readiness, and location intent), ties it to the metrics that matter (awareness, conversion, lifetime value), and shares why pairing SEO with dialed-in websites and listings plus month-to-month ownership gives you compounding traffic without hiring a full team."
               schema={{
                 id: "https://www.design-prism.com/seo#founder-vsl",
                 name: "Founder Enzo Sison on SEO that compounds",
@@ -143,7 +143,7 @@ export default async function SeoPage() {
 
       <SeoSection
         eyebrow="how seo works today"
-        title="search engines don’t read — they score"
+        title="search engines don’t read. they score"
         description="every algorithm is trying to understand whether your page is the right answer, whether you’re trustworthy, and whether real people engage."
       >
         <div className="grid gap-8 md:grid-cols-2">
@@ -261,7 +261,7 @@ export default async function SeoPage() {
           </ul>
           <div className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm">
             <p className="text-sm text-neutral-600">
-              on-page seo is everything you control on your own site — the structure, the content, the performance. we build it so each page feels like the perfect answer.
+              on-page seo is everything you control on your own site: the structure, the content, the performance. we build it so each page feels like the perfect answer.
             </p>
             <Link
               href={onPagePreview.linkHref}
@@ -285,7 +285,7 @@ export default async function SeoPage() {
           </ul>
           <div className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm">
             <p className="text-sm text-neutral-600">
-              off-page seo is everything happening beyond your domain — listings, links, reviews, proof. when that ecosystem is tight, google and apple get a clear signal that you’re legit.
+              off-page seo is everything happening beyond your domain: listings, links, reviews, proof. when that ecosystem is tight, google and apple get a clear signal that you’re legit.
             </p>
             <Link
               href={offPagePreview.linkHref}

@@ -38,7 +38,7 @@ export const seoOverviewContent = {
   hero: {
     eyebrow: "seo",
     title: "seo that actually moves the needle",
-    subtitle: "we build websites that don’t just look good — they show up, get clicked, and turn strangers into customers.",
+    subtitle: "we build websites that don’t just look good. they show up, get clicked, and turn strangers into customers.",
     primaryCta: { label: "talk with prism", href: "/get-started" },
     secondaryCta: { label: "see on-page seo", href: "/seo/on-page" },
   } satisfies SeoHeroContent,
@@ -58,7 +58,7 @@ export const seoOverviewContent = {
     },
   ],
   onPagePreview: {
-    title: "on-page seo — make your website a perfect answer",
+    title: "on-page seo: make your website a perfect answer",
     bullets: [
       "each page matches real search intent",
       "content is structured clearly for humans and search engines",
@@ -69,7 +69,7 @@ export const seoOverviewContent = {
     linkHref: "/seo/on-page",
   },
   offPagePreview: {
-    title: "off-page seo — prove the world trusts you",
+    title: "off-page seo: prove the world trusts you",
     bullets: [
       "who’s linking to you (quality over quantity)",
       "where your business is listed and how consistent it is",
@@ -104,7 +104,7 @@ export const seoOnPageContent = {
   hero: {
     eyebrow: "on-page seo",
     title: "on-page seo: make your website a perfect answer",
-    subtitle: "everything you control on your own site — designed to match what people are actually searching for.",
+    subtitle: "everything you control on your own site, designed to match what people are actually searching for.",
     primaryCta: { label: "book a prism build", href: "/get-started" },
     secondaryCta: { label: "see off-page seo", href: "/seo/off-page" },
   } satisfies SeoHeroContent,
@@ -119,7 +119,7 @@ export const seoOnPageContent = {
         "location pages for every city or area you serve",
         "blog posts + faqs for the questions people truly ask",
         "clear headers so humans and search engines can scan",
-        "direct answers — what you do, who it’s for, and why it matters",
+        "direct answers: what you do, who it’s for, and why it matters",
         "real examples, photos, and videos for proof",
       ],
     },
@@ -162,7 +162,7 @@ export const seoOnPageContent = {
     },
   ],
   closing:
-    "on-page seo isn’t an add-on for us — it’s the spine of every prism build. depending on your package, we simply add more pages, more schema, and more iteration as you grow.",
+    "on-page seo isn’t an add-on for us. it’s the spine of every prism build. depending on your package, we simply add more pages, more schema, and more iteration as you grow.",
   closingBullets: [
     "start with the right architecture",
     "expand content as services and locations grow",
@@ -196,7 +196,7 @@ export const seoOffPageContent = {
     },
   } satisfies SeoVideoContent,
   intro:
-    "off-page seo is about proof — proof that other sites vouch for you, that your business exists in the real world, and that real people interact with you.",
+    "off-page seo is about proof: proof that other sites vouch for you, that your business exists in the real world, and that real people interact with you.",
   levers: [
     {
       title: "backlinks",
@@ -225,7 +225,7 @@ export const seoOffPageContent = {
     {
       title: "reviews & reputation",
       description:
-        "reviews show volume, recency, distribution, and narrative — all signals engines monitor.",
+        "reviews show volume, recency, distribution, and narrative, all signals engines monitor.",
       bullets: [
         "google reviews",
         "yelp + facebook",

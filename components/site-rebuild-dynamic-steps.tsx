@@ -191,7 +191,7 @@ export default function SiteRebuildDynamicSteps() {
             prep the codex context folder
           </h3>
           <p className="text-base text-neutral-600">
-            Codex reads context from the <span className="font-semibold text-neutral-800">.codex</span> directory — keep instructions
+            Codex reads context from the <span className="font-semibold text-neutral-800">.codex</span> directory, so keep instructions
             and source text here.
           </p>
         </div>
@@ -242,7 +242,7 @@ export default function SiteRebuildDynamicSteps() {
               </code>
             </pre>
             <p className="mt-3 text-sm text-neutral-600 sm:text-base">
-              Codex writes directly into the current folder — expect directories like <code className="rounded bg-neutral-100 px-1 py-0.5">pages/</code>,{" "}
+              Codex writes directly into the current folder, so expect directories like <code className="rounded bg-neutral-100 px-1 py-0.5">pages/</code>,{" "}
               <code className="rounded bg-neutral-100 px-1 py-0.5">components/</code>, and <code className="rounded bg-neutral-100 px-1 py-0.5">public/</code>.
             </p>
           </div>
@@ -280,7 +280,7 @@ pnpm dev`}
             folder layout when you’re done
           </h3>
           <p className="text-base text-neutral-600">
-            Keep this snapshot intact — it&apos;s the fastest way to iterate on the rebuild, hand assets to teammates, or version control the work.
+            Keep this snapshot intact. It&apos;s the fastest way to iterate on the rebuild, hand assets to teammates, or version control the work.
           </p>
         </div>
         <pre className="overflow-x-auto rounded-2xl bg-neutral-950 p-5 text-sm text-white shadow-sm sm:text-base lg:text-lg">

@@ -364,7 +364,7 @@ export default function BlogPostLayout({
                       if (c.includes('ai') && c.includes('marketing'))
                         return 'we help you build the context moat, get agent‑discoverable, and instrument bookings end‑to‑end.'
                       if (c.includes('seo') || c.includes('search'))
-                        return 'ai has compressed clicks—let’s rebuild your funnel with task‑first pages, rich context, and interactive wins.'
+                        return 'ai has compressed clicks. let’s rebuild your funnel with task‑first pages, rich context, and interactive wins.'
                       if (
                         c.includes('design') ||
                         c.includes('product') ||
@@ -373,7 +373,7 @@ export default function BlogPostLayout({
                         return 'from strategy to shipped ui: fast pages, clear messaging, and measured outcomes.'
                       if (c.includes('business'))
                         return 'we’ll help you choose one focus bet, design the experiments, and measure what matters.'
-                      return 'work with prism to apply these steps to your brand—fast, focused, and measured.'
+                      return 'work with prism to apply these steps to your brand: fast, focused, and measured.'
                     })()}
                     analyticsLabel={`blog_post_${slug}`}
                     variant="gradient"

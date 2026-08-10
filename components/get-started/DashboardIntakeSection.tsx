@@ -93,7 +93,7 @@ export default function DashboardIntakeSection() {
         <div className="space-y-8">
           <CoreSectionHeading
             title="One short intake."
-            description="About a minute. Just the essentials Prism needs to prepare your free Growth Audit — delivered in your own free Growth Dashboard."
+            description="About a minute. Just the essentials Prism needs to prepare your free Growth Audit, delivered in your own free Growth Dashboard."
             titleClassName="max-w-[13ch]"
           />
 

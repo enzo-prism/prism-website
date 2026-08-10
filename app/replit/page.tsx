@@ -108,10 +108,10 @@ export default async function ReplitPage() {
                 prism × replit
               </span>
               <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl md:text-6xl">
-                prism × replit — building the next generation of websites
+                prism × replit: building the next generation of websites
               </h1>
               <p className="text-lg font-medium text-white/90 sm:text-xl">
-                build. launch. grow — all on replit.
+                build. launch. grow. all on replit.
               </p>
               <p className="max-w-3xl text-base text-white/80 sm:text-lg">
                 prism partners with replit to design and build high-performance
@@ -180,7 +180,7 @@ export default async function ReplitPage() {
             <div className="flex flex-col gap-6 text-base text-neutral-600 sm:text-lg">
               <p>
                 replit is one of the fastest, most collaborative platforms for
-                web development — letting us design, build, and deploy client
+                web development, letting us design, build, and deploy client
                 websites entirely in the browser. no downloads. no setup. just a
                 link, and we’re live.
               </p>
@@ -351,7 +351,7 @@ export default async function ReplitPage() {
             </div>
             <div className="space-y-6 text-base text-neutral-600 sm:text-lg">
               <p>
-                prism is proud to be part of replit’s creator ecosystem —
+                prism is proud to be part of replit’s creator ecosystem,
                 helping businesses and creators build their online presence
                 faster and smarter. through our partnership, anyone who joins
                 replit using our referral link helps support prism’s mission to

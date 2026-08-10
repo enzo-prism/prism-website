@@ -57,8 +57,8 @@ howTo:
         logs so every action is auditable.
     - title: paste the control prompt
       text: >-
-        feed the exact brief—"build a full dentist website with multiple pages,
-        modern ui, responsive design, and a blog"—and start timing.
+        feed the exact brief, "build a full dentist website with multiple pages,
+        modern ui, responsive design, and a blog", and start timing.
     - title: launch and preview
       text: >-
         run start localhost, document generation time, and review both desktop
@@ -74,7 +74,7 @@ seoDescription: "Prism's no-hype benchmark of GPT-5.1 Codex building a multi-pag
 import YouTubeVideoEmbed from '@/components/youtube-video-embed'
 import { VideoObjectSchema, FAQSchema } from '@/components/schema-markup'
 
-*By Enzo Sison — Founder, Prism*
+*By Enzo Sison, Founder, Prism*
 
 <VideoObjectSchema
   videoId="gpt-5-1-codex-dentist-stress-test"
@@ -86,15 +86,15 @@ import { VideoObjectSchema, FAQSchema } from '@/components/schema-markup'
   embedUrl="https://www.youtube.com/embed/PZnRkuJ9_S0"
   creatorName="Prism"
   transcript={`[00:00:00] So, I'm going to be kicking off a series where I'm just going to be testing these models so that you don't have to.
-[00:00:07] We're going to use this control key—basically a prompt to create a website—and we'll use the exact same prompt for Codex CLI 5.1 today and for models like Gemini 3 or Grok 5 as they land.
+[00:00:07] We're going to use this control key, basically a prompt to create a website, and we'll use the exact same prompt for Codex CLI 5.1 today and for models like Gemini 3 or Grok 5 as they land.
 [00:00:46] I've already got a folder called 5.1-test, so I'll cd into it, call Codex, allow access, set approvals to full, and hand over this prompt.
 [00:01:30] It took 5 minutes and 16 seconds, and then we'll always tell it to start localhost so we can test the URL for each future run.
 [00:02:08] It didn't struggle starting localhost this time, which is funny because sometimes it does.
-[00:02:16] You can see the prompt result—the model really likes these gradients, and I've noticed thin, custom-looking icons that feel a little off.
+[00:02:16] You can see the prompt result. The model really likes these gradients, and I've noticed thin, custom-looking icons that feel a little off.
 [00:02:55] There are spacing issues throughout; it's a services page but a lot of times the button text contrast versus the background is pretty bad.
 [00:03:32] I did ask it to make a full blog and it didn't really do that, and the form styling always seems messed up like this.
 [00:03:56] Overall it's good for desktop, but once I test the breakpoint the nav bar kind of falls apart and the mobile view looks weird.
-[00:04:44] Hopefully we can run Gemini CLI and others soon to compare, because this is still far from perfect even though it's not a bad skeleton—let me know what you think.`}
+[00:04:44] Hopefully we can run Gemini CLI and others soon to compare, because this is still far from perfect even though it's not a bad skeleton. Let me know what you think.`}
 />
 
 > Video walkthrough: watch the live, unedited GPT-5.1 Codex run below.
@@ -152,7 +152,7 @@ This same checklist will power upcoming runs on Gemini 3, Claude Code, Grok 5, L
 GPT-5.1 clearly prefers heavy gradients, ultra-thin custom icons, and minimalist whitespace. The skeleton is promising, but production quality issues stack up quickly:
 
 - custom icons looked hand-drawn and didn’t align with dental branding norms.
-- buttons shipped light text on light backgrounds—low contrast, low accessibility.
+- buttons shipped light text on light backgrounds: low contrast, low accessibility.
 - spacing between hero, services, and testimonial sections oscillated wildly.
 - form styling felt unfinished: mismatched inputs, uneven padding, missing states.
 
@@ -173,7 +173,7 @@ Any clinic depending on mobile bookings would lose leads instantly.
 The prompt requested a home page, services, blog, contact flow, and responsive layout. GPT-5.1 delivered a partial win:
 
 - ✅ hero, services overview, testimonials, CTA forms rendered.
-- ❌ no real blog system—just a placeholder list.
+- ❌ no real blog system, just a placeholder list.
 - ❌ sitemap lacked category routing or breadcrumbs.
 - ❌ code lived in a single directory with minimal component separation.
 
@@ -195,7 +195,7 @@ Bottom line: it does the bare minimum, not a launchable architecture.
 - building scalable component architecture with routing, blog feeds, or localization.
 - shipping SEO-ready metadata, schema, and accessibility without manual fixes.
 
-Our verdict: **5/10** for production readiness—fantastic prototyping fuel, not a stand-alone solution.
+Our verdict: **5/10** for production readiness. Fantastic prototyping fuel, not a stand-alone solution.
 
 ## Why this matters for dentists and local clinics
 
@@ -214,7 +214,7 @@ In other words: AI accelerates the heavy lift, Prism supplies the taste, systems
 
 ## What’s next in the benchmark series
 
-Gemini 3, Claude Code, Grok 5, Llama 4, and the next Codex releases will all run through this same script—full transparency, same rubric, side-by-side comparisons. Subscribe if you want to see how each stack handles local business reality.
+Gemini 3, Claude Code, Grok 5, Llama 4, and the next Codex releases will all run through this same script: full transparency, same rubric, side-by-side comparisons. Subscribe if you want to see how each stack handles local business reality.
 
 ## FAQ: real answers for dentists exploring AI sites
 
@@ -243,7 +243,7 @@ Not even close today. Agencies that blend AI speed with human design, SEO, and C
     { question: "Can GPT-5.1 build a full website from scratch?", answer: "It can generate a strong starting point, but the output still needs human refinement for UI polish, accessibility, and routing." },
     { question: "Is Codex v5.1 good for dentist websites?", answer: "Yes for prototyping and drafting content quickly; no if you expect a production-ready launch without human designers and engineers." },
     { question: "How long does GPT-5.1 Codex take to generate a website?", answer: "Our benchmark clocked in at 5 minutes 16 seconds from prompt submission to final files." },
-    { question: "Does AI-generated code have SEO built in?", answer: "Not reliably—metadata, schema, structured data, and performance tuning still require manual work." },
+    { question: "Does AI-generated code have SEO built in?", answer: "Not reliably. Metadata, schema, structured data, and performance tuning still require manual work." },
     { question: "Can AI replace a web design agency?", answer: "No. Agencies that combine AI acceleration with real design, SEO, and CRO talent deliver faster and better results." }
   ]}
 />

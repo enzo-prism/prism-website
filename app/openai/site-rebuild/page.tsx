@@ -58,7 +58,7 @@ export default function OpenAISiteRebuildGuidePage() {
                 mirror any website and rebuild it with codex
               </h1>
               <p className="mt-5 text-base text-white/80 sm:text-lg">
-                No fluff — just the commands that work on macOS to download a live site, prep Codex context, and run the rebuild
+                No fluff. Just the commands that work on macOS to download a live site, prep Codex context, and run the rebuild
                 locally so you can ship updates fast.
               </p>
               <div className="mt-8 flex flex-wrap justify-center gap-3">

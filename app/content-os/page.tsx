@@ -48,7 +48,7 @@ const CAPABILITIES = [
   },
   {
     title: 'Multi-platform distribution',
-    body: 'Every piece is adapted and published natively across YouTube, Instagram, TikTok, LinkedIn, and more — no manual reformatting.',
+    body: 'Every piece is adapted and published natively across YouTube, Instagram, TikTok, LinkedIn, and more. No manual reformatting.',
     icon: Share2,
   },
   {
@@ -106,7 +106,7 @@ const FAQ_ITEMS = [
   {
     question: 'What do the Content OS agents actually do?',
     answer:
-      'They plan, draft, edit, schedule, and publish content across your social platforms and website, then turn the best performers into paid ad creative — all reviewed against your brand and offers.',
+      'They plan, draft, edit, schedule, and publish content across your social platforms and website, then turn the best performers into paid ad creative, all reviewed against your brand and offers.',
   },
   {
     question: 'What does the 3-month implementation include?',
@@ -121,7 +121,7 @@ const FAQ_ITEMS = [
   {
     question: 'Which platforms do you cover?',
     answer:
-      'Every major social platform — including YouTube, Instagram, TikTok, and LinkedIn — plus content published directly on your own website.',
+      'Every major social platform, including YouTube, Instagram, TikTok, and LinkedIn, plus content published directly on your own website.',
   },
   {
     question: 'Can I cancel?',
@@ -131,7 +131,7 @@ const FAQ_ITEMS = [
   {
     question: 'How much does Content OS cost?',
     answer:
-      'Pricing is scoped to your business. Book a 30-minute Zoom call and we will map your channels, goals, and the right system together — you leave the call with a clear plan and a clear price.',
+      'Pricing is scoped to your business. Book a 30-minute Zoom call and we will map your channels, goals, and the right system together. You leave the call with a clear plan and a clear price.',
   },
 ] as const
 
@@ -162,7 +162,7 @@ export default function ContentOsPage() {
                   variant="hero"
                   eyebrow="Content OS"
                   title="AI agents that scale your content and ads."
-                  description="Across every social platform and your website — implemented in 3 months, then optimized every month."
+                  description="Across every social platform and your website. Implemented in 3 months, then optimized every month."
                   titleClassName="max-w-[20ch]"
                 />
 

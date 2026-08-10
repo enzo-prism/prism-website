@@ -24,7 +24,7 @@ export type PricingOffer = {
   priceCurrency: "USD"
   billingPeriod: PricingBillingPeriod
   priceKind: PricingPriceKind
-  /** Primary price string shown to buyers, e.g. "Custom — scoped on a call". */
+  /** Primary price string shown to buyers, e.g. "Custom, scoped on a call". */
   priceLabel: string
   /** Secondary price line under the primary label. */
   priceSubLabel?: string
@@ -44,10 +44,10 @@ export type PricingOffer = {
 // call booked through BOOK_A_CALL_CTA below. Do not reintroduce public dollar
 // amounts anywhere. (Internal analytics values live in lib/lead-values.ts and
 // are not public pricing.)
-export const WEBSITE_PRICE_LABEL = "Custom — scoped on a call"
-export const CONTENT_OS_PRICE_LABEL = "Custom — scoped on a call"
+export const WEBSITE_PRICE_LABEL = "Custom, scoped on a call"
+export const CONTENT_OS_PRICE_LABEL = "Custom, scoped on a call"
 export const DENTAL_OS_PRICE_LABEL = "Built around your practice"
-export const PRISM_INFINITY_PRICE_LABEL = "Custom — scoped on a call"
+export const PRISM_INFINITY_PRICE_LABEL = "Custom, scoped on a call"
 
 /**
  * The single booking CTA for every offer that is scoped on a call.
@@ -76,7 +76,7 @@ export const CANONICAL_PRICING_OFFERS: Record<PricingOfferId, PricingOffer> = {
     priceLabel: WEBSITE_PRICE_LABEL,
     priceSubLabel: "The PRO website, scoped to your business",
     description:
-      "An ultra-premium PRO website for serious businesses: a bespoke design system, software-grade engineering, and analytics wired from day one — built to rank on Google and get cited by AI.",
+      "An ultra-premium PRO website for serious businesses: a bespoke design system, software-grade engineering, and analytics wired from day one, built to rank on Google and get cited by AI.",
     primaryCta: BOOK_A_CALL_CTA,
     secondaryCta: {
       label: "Explore PRO websites",

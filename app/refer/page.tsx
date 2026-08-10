@@ -8,7 +8,7 @@ import { buildRouteMetadata } from '@/lib/seo/metadata'
 
 const PAGE_TITLE = 'Refer a friend to Prism'
 const PAGE_DESCRIPTION =
-  'Refer a friend to Prism and get $100 when they become a client — website, Content OS, Dental OS, or Prism Infinity.'
+  'Refer a friend to Prism and get $100 when they become a client: website, Content OS, Dental OS, or Prism Infinity.'
 const CANONICAL_URL = 'https://www.design-prism.com/refer'
 
 export const metadata: Metadata = buildRouteMetadata({
@@ -50,8 +50,8 @@ export default function ReferPage() {
               </h1>
               <p className="mt-5 max-w-[44rem] text-pretty font-sans text-[1.05rem] leading-7 text-[#b8afa2]">
                 Tell us about someone who could use Prism. If they become a
-                client — the PRO website, Content OS, Dental OS, or Prism
-                Infinity — we send you $100. Every time.
+                client (the PRO website, Content OS, Dental OS, or Prism
+                Infinity), we send you $100. Every time.
               </p>
             </header>
 
@@ -103,15 +103,15 @@ export default function ReferPage() {
               </h2>
               <p className="mt-3 max-w-[44rem] text-pretty font-sans text-[0.95rem] leading-7 text-[#b8afa2]">
                 We confirm by email once your friend makes their first payment,
-                then send $100 the way that works for you — usually within a
+                then send $100 the way that works for you, usually within a
                 few days.
               </p>
 
               <p className="mt-8 max-w-[44rem] text-pretty font-mono text-[0.72rem] leading-6 text-[#8f877b]">
                 $100 is a referral payout, not service pricing. It is paid
-                after the referred business becomes a paying Prism client —
+                after the referred business becomes a paying Prism client:
                 website, Content OS, Dental OS, or Prism Infinity.
-                Self-referrals don&apos;t count. No cap — every referral that
+                Self-referrals don&apos;t count. No cap. Every referral that
                 closes pays $100.
               </p>
             </section>

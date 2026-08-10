@@ -141,8 +141,8 @@ export default function CaseStudiesPage() {
                 </div>
                 <p className="mt-6 max-w-3xl text-xs leading-5 text-muted-foreground/80">
                   How we measure: every metric quoted on this page comes from a
-                  named, dated source — Google Search Console or GA4 over a
-                  specific date range — and links to the case study where the
+                  named, dated source (Google Search Console or GA4 over a
+                  specific date range) and links to the case study where the
                   full context lives. When a project doesn&apos;t have measured
                   results yet, we say so instead of estimating.
                 </p>
@@ -209,7 +209,7 @@ export default function CaseStudiesPage() {
             </h2>
             <p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-muted-foreground">
               Prism builds websites, search visibility, reviews, ads, and
-              analytics as one connected growth system — then measures what
+                  analytics as one connected growth system, then measures what
               changes.
             </p>
             <div className="mt-7 flex flex-wrap items-center justify-center gap-4">

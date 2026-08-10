@@ -52,7 +52,7 @@ export default function SeoOffPagePage() {
 
       <SeoSection eyebrow="intro" title="build the proof" description={intro}>
         <p className="text-sm text-neutral-600">
-          you can’t fake these signals, but you can design systems that make them show up consistently — so engines see a steady stream of trust.
+          you can’t fake these signals, but you can design systems that make them show up consistently, so engines see a steady stream of trust.
         </p>
       </SeoSection>
 

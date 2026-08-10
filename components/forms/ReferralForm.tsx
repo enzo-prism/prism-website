@@ -175,7 +175,7 @@ export default function ReferralForm() {
         </h3>
         <p className="mt-4 max-w-xl text-[1rem] leading-7 text-[#b8afa2]">
           We&apos;ll reach out to your friend within one business day. The day
-          they become a client, $100 goes to you — then send us the next one.
+          they become a client, $100 goes to you, then send us the next one.
         </p>
         <button
           type="button"
@@ -202,7 +202,7 @@ export default function ReferralForm() {
       <input
         type="hidden"
         name="_subject"
-        value="New referral — $100 program"
+        value="New referral: $100 program"
       />
       <input type="hidden" name="form_name" value={FORM_NAME} />
       <FormspreeOpsFields formKey={FORM_KEY} />
@@ -384,7 +384,7 @@ export default function ReferralForm() {
             id="referral-friend-need"
             name="friend_need"
             value={friendNeed}
-            placeholder="Website, content, dental, everything — your best guess"
+            placeholder="Website, content, dental, everything: your best guess"
             className={fieldClassName}
             onChange={(event) => setFriendNeed(event.currentTarget.value)}
           />

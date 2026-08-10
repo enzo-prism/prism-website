@@ -22,7 +22,7 @@ export const HOTTEST_CONTENT: HottestContentItem[] = [
     likes: 11900,
     shares: 2980,
     summary:
-      "We showed how Prism calibrates creative in real time—analyzing audience comments, edits, and retention to keep reach compounding.",
+      "We showed how Prism calibrates creative in real time, analyzing audience comments, edits, and retention to keep reach compounding.",
     insight:
       "Broke the process into three rapid beats with overlays pulled straight from the analytics dashboard so viewers saw exactly how tweaks drive the next viral clip.",
   },

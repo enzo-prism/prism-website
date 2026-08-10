@@ -137,7 +137,7 @@ const faqItems = [
   {
     question: 'Do AI SEO services replace traditional SEO?',
     answer:
-      'No. The best AI SEO work strengthens traditional SEO: clean indexation, clear pages, strong internal linking, and trustworthy off-site signals. The difference is emphasis—being quotable, unambiguous, and easily corroborated.',
+      'No. The best AI SEO work strengthens traditional SEO: clean indexation, clear pages, strong internal linking, and trustworthy off-site signals. The difference is emphasis. Being quotable, unambiguous, and easily corroborated.',
   },
   {
     question: 'How do you measure AI SEO?',
@@ -388,7 +388,7 @@ export default function AiSeoServicesPage() {
                 what we won’t do
               </h2>
               <p className="mt-4 text-base leading-relaxed text-neutral-600">
-                sustainable visibility comes from clarity and proof — not spam
+                sustainable visibility comes from clarity and proof, not spam
                 tactics that create risk.
               </p>
             </div>

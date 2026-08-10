@@ -177,7 +177,7 @@ const logoConcepts: LogoConcept[] = [
               'Single barn viewed from a slight angle: front wall nearly frontal, roof and side receding gently to the right.',
               'Tall enough proportions that the barn body clearly reads as a tooth when abstracted.',
               'Ground is a soft band of greens and ochres; behind it a narrow horizontal band of rust; above that a large expanse of muted teal sky.',
-              'A single narrow doorway punctures the front wall—a simple dark vertical rectangle.',
+              'A single narrow doorway punctures the front wall, a simple dark vertical rectangle.',
             ],
           },
           {
@@ -233,7 +233,7 @@ const logoConcepts: LogoConcept[] = [
         icon: ShieldCheck,
         body: [
           'Dr. Anderson’s story is about specialization, precision, and stability over decades of work. This barn is not cute or gimmicky; it’s quiet and serious, just like an endodontic specialist should be.',
-          'The composition feels slow and controlled — mirroring his emphasis on careful diagnosis, infection control, and meticulous treatment.',
+          'The composition feels slow and controlled, mirroring his emphasis on careful diagnosis, infection control, and meticulous treatment.',
           'The barn and field root the brand in Wine Country without forcing grapes or cliché vine graphics.',
           'The mood is reassuring and non-threatening, which aligns with his desire to reduce anxiety and build long-term trust with patients.',
         ],
@@ -267,7 +267,7 @@ const logoConcepts: LogoConcept[] = [
             items: [
               'Very clean, poster-like treatment with sharp edges and high contrast.',
               'Pure flat blocks of color, zero texture or detail beyond the door.',
-              'Feels like a logo-ready symbol—the shape reads instantly even at small sizes.',
+              'Feels like a logo-ready symbol. The shape reads instantly even at small sizes.',
             ],
           },
         ],
@@ -277,7 +277,7 @@ const logoConcepts: LogoConcept[] = [
         icon: MapPin,
         body: [
           'Compact, upright house = restored functional tooth.',
-          'The totally symmetrical front face suggests stability and symmetry — like a tooth that’s been structurally reinforced with a root canal and restoration.',
+          'The totally symmetrical front face suggests stability and symmetry, like a tooth that’s been structurally reinforced with a root canal and restoration.',
           'Orange roof = crown / restoration.',
           'The bright roof can be read as the “new crown” placed after a root canal, sitting on a solid underlying structure.',
           'Single dark door = canal access.',
@@ -343,7 +343,7 @@ const logoConcepts: LogoConcept[] = [
             label: 'Style',
             icon: Sparkles,
             items: [
-              'Oval frame instantly feels like a seal or medallion—very brandable.',
+              'Oval frame instantly feels like a seal or medallion, very brandable.',
               'Shapes stay extremely minimal: no trim, no texture beyond a subtle canvas feel, no extra scenery.',
               'Repeating vertical slits create rhythm and reference multiple canals.',
             ],
@@ -355,7 +355,7 @@ const logoConcepts: LogoConcept[] = [
         icon: MapPin,
         body: [
           'Oval = protection and containment.',
-          'It’s as if the building—and by extension the tooth—is cocooned within a safe boundary, aligning with his emphasis on infection control and safety standards (ADA, OSHA, CDC).',
+          'It’s as if the building, and by extension the tooth, is cocooned within a safe boundary, aligning with his emphasis on infection control and safety standards (ADA, OSHA, CDC).',
           'Multiple vertical slits = multiple canals.',
           'The left block with three dark slits plus the single right door can be read as multiple roots/canals that have been located and treated.',
           'House/barn silhouette = local, grounded care.',
@@ -400,7 +400,7 @@ const logoConcepts: LogoConcept[] = [
 
 const logoUsageDetails: LogoUsageDetail[] = [
   {
-    title: 'Website (high impact — #1 priority)',
+    title: 'Website (high impact, #1 priority)',
     priorityLabel: '1 · high impact',
     description: 'The website is the apex of Dr. Anderson’s brand.',
     icon: MonitorSmartphone,
@@ -441,9 +441,9 @@ const logoUsageDetails: LogoUsageDetail[] = [
       {
         label: 'Where it shows up',
         bullets: [
-          'Google Business Profile — Logo field',
-          'Google Business Profile — Cover image (wide landscape hero with brand colors)',
-          'Apple Business Connect — Logo field',
+          'Google Business Profile: Logo field',
+          'Google Business Profile: Cover image (wide landscape hero with brand colors)',
+          'Apple Business Connect: Logo field',
         ],
       },
       {
@@ -495,7 +495,7 @@ const logoUsageDetails: LogoUsageDetail[] = [
       {
         label: 'Impact',
         bullets: [
-          'Referring dentists hand these to patients — the brand enters the referral loop.',
+          'Referring dentists hand these to patients, so the brand enters the referral loop.',
         ],
       },
     ],
@@ -556,7 +556,7 @@ const logoUsageDetails: LogoUsageDetail[] = [
       {
         label: 'Best placements',
         bullets: [
-          'Reception desk wall — large sign or wall print',
+          'Reception desk wall: large sign or wall print',
           'Treatment room art prints with the barn emblem',
           'Hallway signage',
         ],
@@ -564,7 +564,7 @@ const logoUsageDetails: LogoUsageDetail[] = [
       {
         label: 'Impact',
         bullets: [
-          'Patients feel the space is curated, intentional, and calming — exactly the tone an endodontist wants.',
+          'Patients feel the space is curated, intentional, and calming, exactly the tone an endodontist wants.',
         ],
       },
     ],

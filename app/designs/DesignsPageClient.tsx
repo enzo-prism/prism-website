@@ -37,14 +37,14 @@ const slides = [
     id: '3',
     image: '/designs/la28-logos.png',
     quote: '"the man on top of the mountain didn\'t fall there."',
-    author: '— vince lombardi',
+    author: '– vince lombardi',
   },
   {
     id: '4',
     image: '/designs/mountain-stones.jpeg',
     quote:
       '"the man who moves a mountain begins by carrying away small stones."',
-    author: '— confucius',
+    author: '– confucius',
   },
   {
     id: '5',
@@ -62,14 +62,14 @@ const slides = [
     id: '7',
     image: '/designs/the-way-is-training.png',
     quote: '"the way is in training."',
-    author: '— miyamoto musashi',
+    author: '– miyamoto musashi',
   },
   {
     id: '8',
     image: '/designs/hearts-that-bend.png',
     quote:
       '"blessed are the hearts that can bend; they shall never be broken."',
-    author: '— camus',
+    author: '– camus',
   },
   {
     id: '9',
@@ -142,7 +142,7 @@ export default function DesignsPageClient() {
               </figure>
               <div className="space-y-4 text-base leading-relaxed text-neutral-700 sm:text-lg">
                 <p>
-                  design is the backbone of everything we do at prism — it
+                  design is the backbone of everything we do at prism, it
                   connects every part of your business.
                 </p>
                 <p>
@@ -150,7 +150,7 @@ export default function DesignsPageClient() {
                   great design shapes how it all works together.
                 </p>
                 <p>
-                  we design with purpose — blending beauty, performance, and
+                  we design with purpose, blending beauty, performance, and
                   precision to create outcomes that move your brand forward.
                 </p>
               </div>
@@ -317,8 +317,8 @@ export default function DesignsPageClient() {
             </div>
 
             <p className="text-center text-sm leading-relaxed text-neutral-600 sm:text-base sm:text-left">
-              Each piece is crafted to blend seamlessly, so your message looks —
-              and feels — unified everywhere your brand lives.
+              Each piece is crafted to fit together, so your message looks and
+              feels unified everywhere your brand lives.
             </p>
 
             <div className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm">

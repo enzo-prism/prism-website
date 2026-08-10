@@ -55,7 +55,7 @@ export default function SMBClientPage() {
               animate={{ y: 0 }}
               transition={{ duration: 0.6, ease: "easeOut" }}
             >
-              design, software, and data — powered by gpt‑5
+              design, software, and data, powered by gpt‑5
             </motion.h1>
             <motion.p
               className="mt-4 text-neutral-600 md:text-xl lowercase"
@@ -124,7 +124,7 @@ export default function SMBClientPage() {
             <div className="absolute inset-0 opacity-30" style={{ background: "radial-gradient(600px 400px at 50% 50%, rgba(255,255,255,0.15), transparent 60%)" }} />
             <div className="relative z-10">
               <h3 className="text-2xl sm:text-3xl font-semibold tracking-tight lowercase">grow leads, conversions, and ltv</h3>
-              <p className="mt-3 text-neutral-300 lowercase">design, software, and data — implemented and measured with you.</p>
+              <p className="mt-3 text-neutral-300 lowercase">design, software, and data, implemented and measured with you.</p>
               <div className="mt-6">
                 <Link href="/free-analysis">
                   <Button variant="secondary" className="rounded-full px-8 py-6 text-base lowercase">

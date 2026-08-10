@@ -282,7 +282,7 @@ export default async function LocalListingsPage() {
               >
                 local seo services
               </Link>{' '}
-              — or work with Prism as your{' '}
+              or work with Prism as your{' '}
               <Link
                 href="/local-seo-agency"
                 className="font-semibold text-neutral-900 underline underline-offset-4"
@@ -328,7 +328,7 @@ export default async function LocalListingsPage() {
                 id: 'https://www.design-prism.com/local-listings#founder-vsl',
                 name: 'Founder Enzo Sison on local listing domination',
                 description:
-                  'Enzo Sison covers why outdated listings kill trust and how Prism rebuilds Google, Apple, Yelp, and Bing profiles—photos, services, descriptions, posts, and reviews—to lift visibility, conversions, and repeat business.',
+                  'Enzo Sison covers why outdated listings kill trust and how Prism rebuilds Google, Apple, Yelp, and Bing profiles (photos, services, descriptions, posts, and reviews) to lift visibility, conversions, and repeat business.',
                 thumbnailUrl:
                   'https://res.cloudinary.com/dhqpqfw6w/video/upload/so_0,q_auto/local_listings_di9gy7.jpg',
                 uploadDate: '2025-01-24T00:00:00Z',

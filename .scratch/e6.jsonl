@@ -1,0 +1,55 @@
+{"file": "app/why-nonprofits-love-prism/page.tsx", "line": 283, "new": "                You’ll always know what’s happening, and who’s handling it."}
+{"file": "app/why-nonprofits-love-prism/page.tsx", "line": 286, "new": "                You’ll have direct access to Prism’s founder, Enzo, by call, text, or email anytime. We value communication, transparency, and trust above all else, because mission-driven work deserves partners who care just as much as you do."}
+{"file": "app/why-nonprofits-love-prism/page.tsx", "line": 300, "new": "                The world of search, AI, and digital storytelling changes fast, and Prism keeps you ahead of it."}
+{"file": "app/why-nonprofits-love-prism/page.tsx", "line": 334, "new": "                Both organizations share a common story: their missions are too important to be slowed down by tech or communication challenges."}
+{"file": "app/why-nonprofits-love-prism/page.tsx", "line": 368, "new": "                Prism stays aligned with your mission, keeping your website, campaigns, and donor systems responsive to what your community needs."}
+{"file": "app/why-nonprofits-love-prism/page.tsx", "line": 464, "new": "                Prism helps nonprofits raise awareness, attract support, and simplify technology, all with modern tools and a human touch."}
+{"file": "app/smb/page.tsx", "line": 29, "new": "            we implement practical ai into small business workflows: lead handling, support replies,"}
+{"file": "app/smb/client-page.tsx", "line": 58, "new": "              design, software, and data, powered by gpt‑5"}
+{"file": "app/smb/client-page.tsx", "line": 127, "new": "              <p className=\"mt-3 text-neutral-300 lowercase\">design, software, and data, implemented and measured with you.</p>"}
+{"file": "app/podcast/page.tsx", "line": 78, "new": "                    – {episode.takeaways.join(\" · \")}"}
+{"file": "app/podcast/page.tsx", "line": 88, "new": "            candid conversations with founders and operators about what actually works: pricing, hiring,"}
+{"file": "app/podcast/michael-njo/page.tsx", "line": 224, "new": "        name=\"Prism Podcast: Dr. Michael Njo\""}
+{"file": "app/why-local-shop-owners-love-prism/page.tsx", "line": 63, "new": "  \"We ensure your domain, listings, and data transfer perfectly, with no downtime or missing assets.\","}
+{"file": "app/why-local-shop-owners-love-prism/page.tsx", "line": 70, "new": "  \"Every improvement is backed by data, not guesswork.\""}
+{"file": "app/why-local-shop-owners-love-prism/page.tsx", "line": 84, "new": "  \"No repeat‑visit engine, so customers buy once and disappear.\","}
+{"file": "app/why-local-shop-owners-love-prism/page.tsx", "line": 139, "new": "  { icon: \"🔓\", text: \"Pause or cancel anytime, no long contracts\" },"}
+{"file": "app/why-local-shop-owners-love-prism/page.tsx", "line": 170, "new": "                Prism helps local shops stand out online, bring more people through the door, and run smoother than ever, without you having to deal with complicated tech or marketing systems."}
+{"file": "app/why-local-shop-owners-love-prism/page.tsx", "line": 197, "new": "                We help local businesses grow, online and offline."}
+{"file": "app/why-local-shop-owners-love-prism/page.tsx", "line": 200, "new": "                Prism brings design, technology, and data together, so you can focus on running your shop, not managing your website."}
+{"file": "app/why-local-shop-owners-love-prism/page.tsx", "line": 247, "new": "                      or work with Prism as your{\" \"}"}
+{"file": "app/why-local-shop-owners-love-prism/page.tsx", "line": 268, "new": "                Most local business owners dread changing website or marketing vendors. It feels risky and confusing. Prism makes the transition smooth, secure, and stress-free."}
+{"file": "app/why-local-shop-owners-love-prism/page.tsx", "line": 297, "new": "                You’ll always know what’s happening, and who to call."}
+{"file": "app/why-local-shop-owners-love-prism/page.tsx", "line": 300, "new": "                You get direct access to Prism’s founder, Enzo, by call, text, or email anytime. We pride ourselves on communication, transparency, and trust: three things local business owners say are missing from most agencies."}
+{"file": "app/why-local-shop-owners-love-prism/page.tsx", "line": 314, "new": "                The world changes fast, and your marketing should too."}
+{"file": "app/why-local-shop-owners-love-prism/page.tsx", "line": 351, "new": "                Each business is different, but all share the same story: they wanted to grow without the headaches of managing tech, marketing, and communication alone."}
+{"file": "app/why-local-shop-owners-love-prism/page.tsx", "line": 385, "new": "                Prism stays by your side as you grow, keeping your marketing, technology, and customer experience tight and up-to-date."}
+{"file": "app/why-local-shop-owners-love-prism/page.tsx", "line": 481, "new": "                Prism helps local businesses get found, look great, and run smoother, with less stress and better results."}
+{"file": "app/tiktok-ads-for-dentists/page.tsx", "line": 41, "new": "      \"short-form video that looks like real clinic content: team, operatories, patient education, and proof, built for tiktok’s feed.\","}
+{"file": "app/tiktok-ads-for-dentists/page.tsx", "line": 83, "new": "      \"quick reactions to common myths and viral dental takes, then a simple call to action: book a consult.\","}
+{"file": "app/tiktok-ads-for-dentists/page.tsx", "line": 113, "new": "      \"they can, especially for practices that pair credible short-form video with a fast landing page and a clear next step. tiktok is rarely “set it and forget it”. creative iteration is the lever.\","}
+{"file": "app/tiktok-ads-for-dentists/page.tsx", "line": 128, "new": "      \"we track calls and form submissions, and we work backward from booked consults where possible. the goal is simple reporting that ties spend to outcomes, so you know what to scale.\","}
+{"file": "app/tiktok-ads-for-dentists/page.tsx", "line": 173, "new": "              landing pages, and reporting tied to calls and consults, not vanity metrics."}
+{"file": "app/tiktok-ads-for-dentists/page.tsx", "line": 198, "new": "              dentist-first creative + landing pages + tracking, shipped by prism."}
+{"file": "app/tiktok-ads-for-dentists/page.tsx", "line": 210, "new": "                dentistry is high-trust. the winners don’t look like ads. they look like calm, credible education with a"}
+{"file": "app/tiktok-ads-for-dentists/page.tsx", "line": 219, "new": "                    \"show the office, the team, and the real experience patients are buying, not stock footage.\","}
+{"file": "app/tiktok-ads-for-dentists/page.tsx", "line": 229, "new": "                    \"every click should lead to a single next step: call, short form, or online booking. no confusion.\","}
+{"file": "app/local-seo-services/page.tsx", "line": 166, "new": "              Prism helps local businesses show up in Google Maps and organic search with listings, reviews, local content, and clean technical foundations. No keyword stuffing, just a clear system that compounds."}
+{"file": "app/local-seo-services/page.tsx", "line": 232, "new": "              Everything required to be understood, trusted, and chosen across maps, search, and AI answers."}
+{"file": "app/local-seo-services/page.tsx", "line": 275, "new": "              A simple, repeatable system, so improvements keep shipping without chaos."}
+{"file": "app/local-seo-services/page.tsx", "line": 393, "new": "            local seo services exist to help customers find you at the exact moment they’re ready to buy, when they search"}
+{"file": "app/seo/page.tsx", "line": 83, "new": "              caption=\"Enzo explains why SEO isn’t about tricks. It’s about becoming the obvious answer when buyers are ready. He covers how Prism builds the foundation (on-page clarity, technical structure, schema, AI-search readiness, and location intent), ties it to the metrics that matter (awareness, conversion, lifetime value), and shares why pairing SEO with dialed-in websites and listings plus month-to-month ownership gives you compounding traffic without hiring a full team.\""}
+{"file": "app/seo/page.tsx", "line": 146, "new": "        title=\"search engines don’t read. they score\""}
+{"file": "app/seo/page.tsx", "line": 264, "new": "              on-page seo is everything you control on your own site: the structure, the content, the performance. we build it so each page feels like the perfect answer."}
+{"file": "app/seo/page.tsx", "line": 288, "new": "              off-page seo is everything happening beyond your domain: listings, links, reviews, proof. when that ecosystem is tight, google and apple get a clear signal that you’re legit."}
+{"file": "app/seo/off-page/page.tsx", "line": 55, "new": "          you can’t fake these signals, but you can design systems that make them show up consistently, so engines see a steady stream of trust."}
+{"file": "app/dental-photography/before-after/GuideTabs.tsx", "line": 133, "new": "      { title: \"Step 1: Choose the location\", description: \"Pick a neutral wall with no backlighting and enough room for 5-6 feet of distance.\" },"}
+{"file": "app/dental-photography/before-after/GuideTabs.tsx", "line": 134, "new": "      { title: \"Step 2: Install the backdrop\", description: \"Hang a wrinkle-free white or gray fabric/vinyl backdrop about 5-6 feet wide.\" },"}
+{"file": "app/dental-photography/before-after/GuideTabs.tsx", "line": 136, "new": "        title: \"Step 3: Set up lighting\","}
+{"file": "app/dental-photography/before-after/GuideTabs.tsx", "line": 141, "new": "        title: \"Step 4: Mark the floor\","}
+{"file": "app/dental-photography/before-after/GuideTabs.tsx", "line": 145, "new": "        title: \"Step 5: Prepare smartphone + lens\","}
+{"file": "app/dental-photography/office-team/recent-shoots-section.tsx", "line": 143, "new": "            swipe through the latest office &amp; team sessions. everything below is already live on websites, listings, and socials."}
+{"file": "app/apps/page.tsx", "line": 175, "new": "            our team handles the full lifecycle: strategy, design, development, testing, app store"}
+{"file": "app/pricing/client-page.tsx", "line": 29, "new": "      'A 30-minute Zoom call. We map your business, market, and goals. No long discovery process, no email estimates.',"}
+{"file": "app/pricing/client-page.tsx", "line": 43, "new": "      'Design, engineering, and analytics to the Prism standard, with iterations until you love it.',"}
+{"file": "app/pricing/client-page.tsx", "line": 83, "new": "      'Unlimited Prism services across engineering, design, and marketing, one request at a time. Pause or cancel anytime.',"}

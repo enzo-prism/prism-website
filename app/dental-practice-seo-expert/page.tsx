@@ -47,7 +47,7 @@ const whatYouGet = [
   {
     title: "maps + google business profile plan",
     description:
-      "categories, services, attributes, photos, posts, and q&a aligned so your listings reinforce your website — and your website reinforces your listings.",
+      "categories, services, attributes, photos, posts, and q&a aligned so your listings reinforce your website, and your website reinforces your listings.",
   },
   {
     title: "technical seo backlog + implementation",
@@ -99,7 +99,7 @@ const faqItems = [
   {
     question: "What is dentist SEO?",
     answer:
-      "Dentist SEO (SEO for dentists) is improving your visibility in Google Maps/local pack and local organic rankings so nearby patients find you, trust you, and book — driven by Google Business Profile relevance, reviews, citations/NAP consistency, and patient-ready treatment pages.",
+      "Dentist SEO (SEO for dentists) is improving your visibility in Google Maps/local pack and local organic rankings so nearby patients find you, trust you, and book. It is driven by Google Business Profile relevance, reviews, citations/NAP consistency, and patient-ready treatment pages.",
   },
   {
     question: "What does dentist SEO include?",
@@ -119,12 +119,12 @@ const faqItems = [
   {
     question: "How much does dentist SEO cost?",
     answer:
-      "It depends on your market and starting point. Most practices need an initial audit + cleanup, then ongoing monthly work for reviews, listings, content updates, and technical maintenance — priced around the scope you actually need, not a one-size retainer.",
+      "It depends on your market and starting point. Most practices need an initial audit + cleanup, then ongoing monthly work for reviews, listings, content updates, and technical maintenance, priced around the scope you actually need, not a one-size retainer.",
   },
   {
     question: "Do dentists need location pages for SEO?",
     answer:
-      "If you operate from real locations, yes — one clear page per location is usually helpful. Avoid dozens of near-duplicate “dentist in {city}” pages with the same copy (doorway patterns). For service-area coverage, pair correct GBP settings with content that clearly explains where you serve.",
+      "If you operate from real locations, yes. One clear page per location is usually helpful. Avoid dozens of near-duplicate “dentist in {city}” pages with the same copy (doorway patterns). For service-area coverage, pair correct GBP settings with content that clearly explains where you serve.",
   },
   {
     question: "Should dentists focus on Google Maps or organic search first?",
@@ -134,17 +134,17 @@ const faqItems = [
   {
     question: "Are you an SEO consultant for dentists or an agency?",
     answer:
-      "Prism is founder-led and consultant-driven. You can hire us for strategy-only consulting, consultant-led implementation, or full done-for-you delivery — the same roadmap either way, just different levels of hands-on execution.",
+      "Prism is founder-led and consultant-driven. You can hire us for strategy-only consulting, consultant-led implementation, or full done-for-you delivery. It is the same roadmap either way, just different levels of hands-on execution.",
   },
   {
     question: "Do you guarantee #1 rankings?",
     answer:
-      "No — and you should be skeptical of anyone who does. We focus on controllable levers: site structure, content quality, performance, listings consistency, and reputation systems that earn durable visibility.",
+      "No, and you should be skeptical of anyone who does. We focus on controllable levers: site structure, content quality, performance, listings consistency, and reputation systems that earn durable visibility.",
   },
   {
     question: "What should dentists look for in an SEO partner?",
     answer:
-      "A consultant who talks in patient intent (treatments + location), ties work to calls and forms, understands Maps and listings, and can translate strategy into a real implementation backlog — not vague reports.",
+      "A consultant who talks in patient intent (treatments + location), ties work to calls and forms, understands Maps and listings, and can translate strategy into a real implementation backlog, not vague reports.",
   },
   {
     question: "What’s different about dental SEO vs. generic SEO?",
@@ -201,7 +201,7 @@ export default function DentalPracticeSeoExpertPage() {
               dentist seo
             </h1>
             <p className="mt-6 text-base text-neutral-600 sm:text-lg">
-              dentist seo (seo for dentists) helps your practice show up when nearby patients search — in google maps (the local pack), organic results, and ai-powered search.
+              dentist seo (seo for dentists) helps your practice show up when nearby patients search: in google maps (the local pack), organic results, and ai-powered search.
               prism runs a consultant-led dentist seo system built around high-intent treatments, clean technical structure, and compounding trust signals across local + organic.
             </p>
             <p className="mt-6 text-sm text-neutral-500">
@@ -253,7 +253,7 @@ export default function DentalPracticeSeoExpertPage() {
               </h2>
               <p className="mt-4 text-base leading-relaxed text-neutral-600">
                 local rankings are a scoring system built around three signals: relevance, distance, and prominence. dentist seo makes
-                those signals unambiguous — with clean listings, strong reviews, and pages that corroborate what you do and where you do it.
+                those signals unambiguous, with clean listings, strong reviews, and pages that corroborate what you do and where you do it.
               </p>
             </div>
 
@@ -270,7 +270,7 @@ export default function DentalPracticeSeoExpertPage() {
                 },
                 {
                   title: "distance (proximity)",
-                  description: "be eligible in the geos that matter — accurately.",
+                  description: "be eligible in the geos that matter, accurately.",
                   bullets: [
                     "correct address or service-area settings (no “fake” locations)",
                     "one page per real location when you have multiple offices",
@@ -342,7 +342,7 @@ export default function DentalPracticeSeoExpertPage() {
                 what dentist seo includes
               </h2>
               <p className="mt-4 text-base leading-relaxed text-neutral-600">
-                dental seo is two systems working together: maps trust + website clarity. no tricks — just a repeatable process that makes your
+                dental seo is two systems working together: maps trust + website clarity. no tricks, just a repeatable process that makes your
                 practice easier to understand, easier to trust, and easier to choose. these are the core dentist seo deliverables we ship.
               </p>
             </div>
@@ -352,7 +352,7 @@ export default function DentalPracticeSeoExpertPage() {
                 <p className="text-xs font-semibold uppercase tracking-[0.3em] text-neutral-500">google maps</p>
                 <h3 className="mt-3 text-lg font-semibold lowercase text-neutral-900">maps + local pack visibility</h3>
                 <p className="mt-3 text-sm leading-relaxed text-neutral-600">
-                  improve relevance, distance eligibility, and prominence signals — then track actions like calls and direction requests.
+                  improve relevance, distance eligibility, and prominence signals, then track actions like calls and direction requests.
                 </p>
                 <ul className="mt-4 space-y-2 text-sm text-neutral-700">
                   {[
@@ -379,7 +379,7 @@ export default function DentalPracticeSeoExpertPage() {
                 <p className="text-xs font-semibold uppercase tracking-[0.3em] text-neutral-500">organic</p>
                 <h3 className="mt-3 text-lg font-semibold lowercase text-neutral-900">treatment pages that convert</h3>
                 <p className="mt-3 text-sm leading-relaxed text-neutral-600">
-                  become the clearest answer for the services patients actually search — and make the next step obvious.
+                  become the clearest answer for the services patients actually search, and make the next step obvious.
                 </p>
                 <ul className="mt-4 space-y-2 text-sm text-neutral-700">
                   {[
@@ -453,7 +453,7 @@ export default function DentalPracticeSeoExpertPage() {
                   dentist seo, your way
                 </h2>
                 <p className="mt-4 text-base leading-relaxed text-neutral-600">
-                  hire prism for consulting-only, consultant-led implementation, or full done-for-you delivery. the same roadmap either way —
+                  hire prism for consulting-only, consultant-led implementation, or full done-for-you delivery. the same roadmap either way,
                   just different levels of hands-on execution.
                 </p>
                 <div className="mt-8 grid gap-4 sm:grid-cols-3">
@@ -468,7 +468,7 @@ export default function DentalPracticeSeoExpertPage() {
                     },
                     {
                       title: "consultant-led delivery",
-                      description: "we execute the work with your practice — end to end.",
+                      description: "we execute the work with your practice, end to end.",
                     },
                   ].map((item) => (
                     <div key={item.title} className="rounded-2xl border border-neutral-200 bg-white p-5 shadow-sm">
@@ -490,7 +490,7 @@ export default function DentalPracticeSeoExpertPage() {
                 rank for the treatments that pay
               </h2>
               <p className="mt-4 text-base leading-relaxed text-neutral-600">
-                we build around service lines and local intent — so search engines connect the dots and patients find the
+                we build around service lines and local intent, so search engines connect the dots and patients find the
                 exact page they need.
               </p>
             </div>

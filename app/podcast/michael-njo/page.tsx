@@ -221,7 +221,7 @@ export default function MichaelNjoPage() {
       />
       <VideoObjectSchema
         videoId="prism-podcast-michael-njo"
-        name="Prism Podcast — Dr. Michael Njo"
+        name="Prism Podcast: Dr. Michael Njo"
         description="Dr. Michael Njo shares lessons on discipline, mentorship, and evolving a practice."
         thumbnailUrl={episodeThumbnail}
         uploadDate={episodePublishedAt}

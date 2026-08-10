@@ -21,7 +21,7 @@ export default function BlogConversionCta({ slug }: BlogConversionCtaProps) {
         Free to start
       </p>
       <h2 className="mt-3 text-2xl font-medium tracking-[-0.03em] text-[#f5f0e8] sm:text-[1.7rem]">
-        See your biggest growth opportunities — free.
+        See your biggest growth opportunities, free.
       </h2>
       <p className="mt-3 max-w-[60ch] text-sm leading-7 text-[#b8afa2]">
         Create your free Prism Growth Dashboard and get a focused Light Audit of

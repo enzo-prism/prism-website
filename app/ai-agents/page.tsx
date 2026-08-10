@@ -21,7 +21,7 @@ const agentCapabilities = [
   {
     title: "smart actions",
     description:
-      "agents don’t just talk — they book appointments, check availability, route calls, collect information, and trigger workflows in your existing systems.",
+      "agents don’t just talk. they book appointments, check availability, route calls, collect information, and trigger workflows in your existing systems.",
     highlights: [
       "Real-time calendar and CRM integrations",
       "Automated follow-ups and confirmations",
@@ -44,13 +44,13 @@ const useCases = [
   {
     title: "dental practices",
     description:
-      "answer patient calls, schedule appointments, handle insurance questions, and send reminders — even after hours.",
+      "answer patient calls, schedule appointments, handle insurance questions, and send reminders, even after hours.",
     href: "/ai-agents/dental",
   },
   {
     title: "local services",
     description:
-      "plumbers, hvac, electricians — capture emergency calls 24/7, dispatch the right team, and never lose a lead to voicemail.",
+      "plumbers, hvac, electricians: capture emergency calls 24/7, dispatch the right team, and never lose a lead to voicemail.",
     href: null,
   },
   {
@@ -62,7 +62,7 @@ const useCases = [
   {
     title: "professional services",
     description:
-      "law firms, accounting, consulting — qualify leads, schedule consultations, and route calls by expertise.",
+      "law firms, accounting, consulting: qualify leads, schedule consultations, and route calls by expertise.",
     href: null,
   },
   {
@@ -109,7 +109,7 @@ const whyPrism = [
   {
     title: "full-stack implementation",
     description:
-      "we don’t just configure a chatbot — we build complete voice agent systems with crm integrations, custom workflows, analytics dashboards, and ongoing optimization.",
+      "we don’t just configure a chatbot. we build complete voice agent systems with crm integrations, custom workflows, analytics dashboards, and ongoing optimization.",
   },
   {
     title: "small business focused",
@@ -143,7 +143,7 @@ export default function AIAgentsPage() {
             <div className="mx-auto max-w-3xl text-center">
               <p className="text-xs uppercase tracking-[0.35em] text-neutral-400">elevenlabs certified partner</p>
               <h1 className="mt-4 text-4xl font-semibold lowercase tracking-tight text-neutral-900 sm:text-5xl">
-                ai voice agents that answer, book, and convert — 24/7
+                ai voice agents that answer, book, and convert, 24/7
               </h1>
               <p className="mt-4 text-base text-neutral-600 sm:text-lg">
                 prism builds custom elevenlabs ai agents for small and medium businesses. your customers get instant,
@@ -184,7 +184,7 @@ export default function AIAgentsPage() {
               </h2>
               <p className="mt-3 text-sm text-neutral-600 sm:text-base">
                 ai agents are intelligent voice assistants that handle real phone conversations. they understand context,
-                answer questions, schedule appointments, transfer calls, and integrate with your existing tools — all
+                answer questions, schedule appointments, transfer calls, and integrate with your existing tools, all
                 with natural-sounding voices that represent your brand.
               </p>
             </div>

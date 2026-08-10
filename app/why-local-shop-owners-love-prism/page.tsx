@@ -60,14 +60,14 @@ const handledThemes = [
 
 const transitionPoints = [
   "We communicate directly with your old provider on your behalf.",
-  "We ensure your domain, listings, and data transfer perfectly — no downtime or missing assets.",
+  "We ensure your domain, listings, and data transfer perfectly, with no downtime or missing assets.",
   "You’ll never have to chase anyone or manage the switch yourself."
 ]
 
 const innovationHighlights = [
   "We continuously improve your website, listings, and ads with the latest tools and strategies.",
   "AI-driven analytics and AEO keep your business ahead of search and platform changes.",
-  "Every improvement is backed by data — not guesswork."
+  "Every improvement is backed by data, not guesswork."
 ]
 
 const segmentWhoItsFor = [
@@ -81,7 +81,7 @@ const segmentProblemsWeSolve = [
   "Outdated sites that don’t show what’s new or why you’re different.",
   "Listings that drift out of sync across Apple, Yelp, and niche directories.",
   "Ad spend that doesn’t translate into real visits or orders.",
-  "No repeat‑visit engine—customers buy once and disappear.",
+  "No repeat‑visit engine, so customers buy once and disappear.",
 ]
 
 const segmentDeliverables = [
@@ -136,7 +136,7 @@ const segmentFaqItems = [
 const localCaseStudies = CASE_STUDIES.filter((study) => study.segments.includes("local"))
 
 const stayingReasons = [
-  { icon: "🔓", text: "Pause or cancel anytime — no long contracts" },
+  { icon: "🔓", text: "Pause or cancel anytime, no long contracts" },
   { icon: "💼", text: "You own all your assets and data" },
   { icon: "🧠", text: "Ongoing updates and optimizations" },
   { icon: "🛠️", text: "99.9% uptime and fast hosting" },
@@ -167,7 +167,7 @@ export default function LocalShopOwnersPage() {
                 More customers. Less tech stress.
               </h1>
               <p className="mt-6 text-base text-neutral-600 md:text-lg">
-                Prism helps local shops stand out online, bring more people through the door, and run smoother than ever — without you having to deal with complicated tech or marketing systems.
+                Prism helps local shops stand out online, bring more people through the door, and run smoother than ever, without you having to deal with complicated tech or marketing systems.
               </p>
               <div className="mt-10 flex flex-wrap justify-center gap-4">
                 <Link href="/contact">
@@ -194,10 +194,10 @@ export default function LocalShopOwnersPage() {
           <div className="container mx-auto px-4 py-20">
             <div className="mx-auto max-w-3xl text-center">
               <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">
-                We help local businesses grow — online and offline.
+                We help local businesses grow, online and offline.
               </h2>
               <p className="mt-4 text-base text-neutral-600">
-                Prism brings design, technology, and data together — so you can focus on running your shop, not managing your website.
+                Prism brings design, technology, and data together, so you can focus on running your shop, not managing your website.
               </p>
             </div>
             <div className="mt-12 grid gap-6 md:grid-cols-3">
@@ -244,7 +244,7 @@ export default function LocalShopOwnersPage() {
                       <Link href="/local-seo-services" className="font-semibold text-neutral-900 underline underline-offset-4">
                         local seo services
                       </Link>{" "}
-                      — or work with Prism as your{" "}
+                      or work with Prism as your{" "}
                       <Link href="/local-seo-agency" className="font-semibold text-neutral-900 underline underline-offset-4">
                         local seo agency
                       </Link>
@@ -265,7 +265,7 @@ export default function LocalShopOwnersPage() {
                 Switching from your old provider? We make it effortless.
               </h2>
               <p className="mt-4 text-base text-neutral-600">
-                Most local business owners dread changing website or marketing vendors — it feels risky and confusing. Prism makes the transition smooth, secure, and stress-free.
+                Most local business owners dread changing website or marketing vendors. It feels risky and confusing. Prism makes the transition smooth, secure, and stress-free.
               </p>
               <ul className="mt-6 space-y-4 text-sm text-neutral-600">
                 {transitionPoints.map((point) => (
@@ -294,10 +294,10 @@ export default function LocalShopOwnersPage() {
           <div className="container mx-auto px-4 py-24">
             <div className="mx-auto max-w-3xl text-center">
               <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">
-                You’ll always know what’s happening — and who to call.
+                You’ll always know what’s happening, and who to call.
               </h2>
               <p className="mt-4 text-base text-neutral-200">
-                You get direct access to Prism’s founder, Enzo — by call, text, or email anytime. We pride ourselves on communication, transparency, and trust — three things local business owners say are missing from most agencies.
+                You get direct access to Prism’s founder, Enzo, by call, text, or email anytime. We pride ourselves on communication, transparency, and trust: three things local business owners say are missing from most agencies.
               </p>
               <p className="mt-6 text-sm text-neutral-300">
                 We don’t hide behind tickets or dashboards. We show up, explain things clearly, and move fast when you need help.
@@ -311,7 +311,7 @@ export default function LocalShopOwnersPage() {
           <div className="container mx-auto grid gap-10 px-4 py-24 md:grid-cols-[1.05fr_1fr] md:items-center">
             <div>
               <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">
-                The world changes fast — your marketing should too.
+                The world changes fast, and your marketing should too.
               </h2>
               <p className="mt-4 text-base text-neutral-600">
                 Most agencies use cookie-cutter systems that haven’t evolved in years. Prism is built differently.
@@ -348,7 +348,7 @@ export default function LocalShopOwnersPage() {
                 From custom ski boot shops to dental practices, Prism helps local business owners grow with confidence and ease.
               </p>
               <p className="mt-4 text-sm text-neutral-500">
-                Each business is different — but all share the same story: they wanted to grow without the headaches of managing tech, marketing, and communication alone.
+                Each business is different, but all share the same story: they wanted to grow without the headaches of managing tech, marketing, and communication alone.
               </p>
             </div>
             <div className="mt-12 grid gap-4 md:grid-cols-3">
@@ -382,7 +382,7 @@ export default function LocalShopOwnersPage() {
                 Simple, reliable, and built for the long haul.
               </h2>
               <p className="mt-4 text-base text-neutral-600">
-                Prism stays by your side as you grow — keeping your marketing, technology, and customer experience tight and up-to-date.
+                Prism stays by your side as you grow, keeping your marketing, technology, and customer experience tight and up-to-date.
               </p>
             </div>
             <div className="rounded-3xl border border-neutral-200 bg-neutral-50 p-8 shadow-sm">
@@ -478,7 +478,7 @@ export default function LocalShopOwnersPage() {
                 Ready to grow your business the easy way?
               </h2>
               <p className="mt-4 text-base text-neutral-200">
-                Prism helps local businesses get found, look great, and run smoother — with less stress and better results.
+                Prism helps local businesses get found, look great, and run smoother, with less stress and better results.
               </p>
               <div className="mt-10 flex flex-wrap justify-center gap-4">
                 <Link href="/contact">

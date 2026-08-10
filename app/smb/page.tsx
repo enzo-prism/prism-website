@@ -26,7 +26,7 @@ export default function SMBPage() {
         <SMBClientPage />
         <SeoTextSection title="small business ai setup">
           <p>
-            we implement practical ai into small business workflows—lead handling, support replies,
+            we implement practical ai into small business workflows: lead handling, support replies,
             content drafting, and measurement. our approach favors accuracy, governance, and simple
             automations that save hours every week without adding risk.
           </p>

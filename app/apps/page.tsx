@@ -172,7 +172,7 @@ export default function AppsPage() {
         <SeoTextSection title="mobile app development services">
           <p>
             we design and ship production‑ready ios and android apps: architecture, ui, and deployment.
-            our team handles the full lifecycle—strategy, design, development, testing, app store
+            our team handles the full lifecycle: strategy, design, development, testing, app store
             submission, and growth. whether you are validating an mvp or scaling an existing product, we
             prioritize performance, accessibility, and a clean codebase you can maintain.
           </p>

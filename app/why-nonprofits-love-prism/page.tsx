@@ -53,7 +53,7 @@ const nonprofitThemes = [
     bullets: [
       "Automations for newsletters, donor thank-yous, and updates",
       "Centralized analytics to see what’s working",
-      "Continuous improvement — your site gets smarter each month"
+      "Continuous improvement: your site gets smarter each month"
     ]
   }
 ]
@@ -137,7 +137,7 @@ const nonprofitCaseStudies = CASE_STUDIES.filter((study) => study.segments.inclu
 
 const stayingReasons = [
   { icon: "💼", text: "You own 100% of your website and data." },
-  { icon: "🔓", text: "Pause or cancel anytime — no long contracts." },
+  { icon: "🔓", text: "Pause or cancel anytime, no long contracts." },
   { icon: "🧠", text: "Continuous updates and optimizations at no extra cost." },
   { icon: "🧾", text: "Clear, jargon-free reports showing what’s working." },
   { icon: "💬", text: "Direct line to the founder for ongoing support." }
@@ -166,7 +166,7 @@ export default function NonprofitsPage() {
                 Share your mission. Reach more people. Simplify your tech.
               </h1>
               <p className="mt-6 text-base text-neutral-600 md:text-lg">
-                Prism helps nonprofits tell their story beautifully, attract donors and supporters, and manage technology effortlessly — so their teams can stay focused on the work that matters most.
+                Prism helps nonprofits tell their story beautifully, attract donors and supporters, and manage technology easily, so their teams can stay focused on the work that matters most.
               </p>
               <div className="mt-10 flex flex-wrap justify-center gap-4">
                 <Link href="/contact">
@@ -196,7 +196,7 @@ export default function NonprofitsPage() {
                 We help nonprofits amplify impact through clarity, credibility, and connection.
               </h2>
               <p className="mt-4 text-base text-neutral-600">
-                Prism gives mission-driven teams modern tools, simple systems, and stunning design — built for scale, not stress.
+                Prism gives mission-driven teams modern tools, simple systems, and considered design, built for scale, not stress.
               </p>
             </div>
             <div className="mt-12 grid gap-6 md:grid-cols-3">
@@ -251,7 +251,7 @@ export default function NonprofitsPage() {
                 We make switching to Prism effortless and worry-free.
               </h2>
               <p className="mt-4 text-base text-neutral-600">
-                Many nonprofits inherit outdated websites or systems built by volunteers or legacy vendors. Prism makes it easy to modernize — without losing content or history.
+                Many nonprofits inherit outdated websites or systems built by volunteers or legacy vendors. Prism makes it easy to modernize without losing content or history.
               </p>
               <ul className="mt-6 space-y-4 text-sm text-neutral-600">
                 {transitionSteps.map((step) => (
@@ -280,10 +280,10 @@ export default function NonprofitsPage() {
           <div className="container mx-auto px-4 py-24">
             <div className="mx-auto max-w-3xl text-center">
               <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">
-                You’ll always know what’s happening — and who’s handling it.
+                You’ll always know what’s happening, and who’s handling it.
               </h2>
               <p className="mt-4 text-base text-neutral-200">
-                You’ll have direct access to Prism’s founder, Enzo — by call, text, or email anytime. We value communication, transparency, and trust above all else — because mission-driven work deserves partners who care just as much as you do.
+                You’ll have direct access to Prism’s founder, Enzo, by call, text, or email anytime. We value communication, transparency, and trust above all else, because mission-driven work deserves partners who care just as much as you do.
               </p>
             </div>
           </div>
@@ -297,7 +297,7 @@ export default function NonprofitsPage() {
                 We don’t just build your website. We help it grow with you.
               </h2>
               <p className="mt-4 text-base text-neutral-600">
-                The world of search, AI, and digital storytelling changes fast — and Prism keeps you ahead of it.
+                The world of search, AI, and digital storytelling changes fast, and Prism keeps you ahead of it.
               </p>
               <ul className="mt-6 space-y-4 text-sm text-neutral-600">
                 {improvementHighlights.map((highlight) => (
@@ -331,7 +331,7 @@ export default function NonprofitsPage() {
                 From cancer research to child empowerment, Prism supports nonprofits turning purpose into measurable impact.
               </p>
               <p className="mt-4 text-sm text-neutral-500">
-                Both organizations share a common story — their missions are too important to be slowed down by tech or communication challenges.
+                Both organizations share a common story: their missions are too important to be slowed down by tech or communication challenges.
               </p>
             </div>
             <div className="mt-12 grid gap-4 md:grid-cols-2">
@@ -365,7 +365,7 @@ export default function NonprofitsPage() {
                 Transparent. Reliable. Mission-aligned.
               </h2>
               <p className="mt-4 text-base text-neutral-600">
-                Prism stays aligned with your mission — keeping your website, campaigns, and donor systems responsive to what your community needs.
+                Prism stays aligned with your mission, keeping your website, campaigns, and donor systems responsive to what your community needs.
               </p>
             </div>
             <div className="rounded-3xl border border-slate-200 bg-slate-50 p-8 shadow-sm">
@@ -461,7 +461,7 @@ export default function NonprofitsPage() {
                 Ready to expand your impact online?
               </h2>
               <p className="mt-4 text-base text-neutral-200">
-                Prism helps nonprofits raise awareness, attract support, and simplify technology — all with modern tools and a human touch.
+                Prism helps nonprofits raise awareness, attract support, and simplify technology, all with modern tools and a human touch.
               </p>
               <div className="mt-10 flex flex-wrap justify-center gap-4">
                 <Link href="/contact">

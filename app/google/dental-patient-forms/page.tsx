@@ -43,7 +43,7 @@ const accomplishments = [
 ]
 
 const prerequisites = [
-  "Paid Google Workspace tenant (Business or Enterprise) — free Gmail is out.",
+  "Paid Google Workspace tenant (Business or Enterprise). Free Gmail is out.",
   "Practice acknowledges it is a HIPAA Covered Entity/Business Associate handling PHI in Workspace.",
   "Workspace super admin available to configure security and compliance settings.",
   "Documented policies and training for staff handling PHI (minimum necessary, no PHI via email, etc.).",
@@ -303,7 +303,7 @@ const steps: StepDefinition[] = [
           </li>
           <li>
             Notifications: if you rely on add-ons for alerts, only send a “new submission received” email. Do not include PHI
-            in the message — link back to the secure Sheet instead.
+            in the message. Link back to the secure Sheet instead.
           </li>
           <li>
             <span className="font-semibold">Settings → Presentation &amp; Defaults</span>:
@@ -376,7 +376,7 @@ const steps: StepDefinition[] = [
       <div className="space-y-4 text-base leading-relaxed text-neutral-700">
         <ul className="list-disc space-y-2 pl-4 sm:pl-5">
           <li>Never email PHI in plaintext.</li>
-          <li>Submission alerts should be PHI-free (“new intake received — open the Sheet”).</li>
+          <li>Submission alerts should be PHI-free (“new intake received, open the Sheet”).</li>
           <li>
             Enforce TLS for outbound mail; if you ever send PHI, configure S/MIME and document exceptions (safer approach: don’t
             email PHI).
@@ -429,7 +429,7 @@ const steps: StepDefinition[] = [
       <div className="space-y-4 text-base leading-relaxed text-neutral-700">
         <ul className="list-disc space-y-2 pl-4 sm:pl-5">
           <li>Submit multiple dummy entries and confirm they land in the correct Sheet inside the Shared Drive.</li>
-          <li>Attempt to access responses with a non-authorized account — access should be denied.</li>
+          <li>Attempt to access responses with a non-authorized account. Access should be denied.</li>
           <li>Export audit logs and confirm activity appears in Admin reports and Vault.</li>
         </ul>
       </div>
@@ -447,7 +447,7 @@ const steps: StepDefinition[] = [
         <ul className="list-disc space-y-2 pl-4 sm:pl-5">
           <li>Staff access PHI only inside the locked Shared Drive and Sheet.</li>
           <li>No copy/paste of PHI into email, chat, or non-covered tools.</li>
-          <li>When patients request the intake form, send the secure form link — not a PDF attachment.</li>
+          <li>When patients request the intake form, send the secure form link, not a PDF attachment.</li>
         </ul>
       </div>
     ),
@@ -490,7 +490,7 @@ const referenceLinks = [
     href: "https://support.google.com/a/answer/3407054?hl=en&utm_source=chatgpt.com",
   },
   {
-    label: "Google Admin Help — Review & accept BAA",
+    label: "Google Admin Help: Review & accept BAA",
     description: "Step-by-step instructions to execute the HIPAA BAA.",
     href: "https://support.google.com/a/answer/2888485?hl=en&utm_source=chatgpt.com",
   },
@@ -500,7 +500,7 @@ const referenceLinks = [
     href: "https://cloud.google.com/security/compliance/workspace_cloud_identity_hipaa_implementation_guide_workspace_whitepaper?utm_source=chatgpt.com",
   },
   {
-    label: "Spin.AI — HIPAA Compliance for Google Workspace Administrators",
+    label: "Spin.AI: HIPAA Compliance for Google Workspace Administrators",
     description: "Practical admin tips for tightening Workspace security posture.",
     href: "https://spin.ai/blog/hipaa-compliance-google-workspace-administators/?utm_source=chatgpt.com",
   },
@@ -510,12 +510,12 @@ const referenceLinks = [
     href: "https://support.google.com/docs/answer/160166?hl=en&utm_source=chatgpt.com",
   },
   {
-    label: "Jotform — Google Form file upload without sign-in",
+    label: "Jotform: Google Form file upload without sign-in",
     description: "Explains the Google account requirement for uploads and alternatives.",
     href: "https://www.jotform.com/google-forms/google-form-file-upload-without-sign-in/?utm_source=chatgpt.com",
   },
   {
-    label: "Workspace Updates — DLP for file uploads",
+    label: "Workspace Updates: DLP for file uploads",
     description: "Details on protecting file uploads to external forms with Drive DLP.",
     href: "https://workspaceupdates.googleblog.com/2022/06/dlp-file-uploads-to-external-forms.html?utm_source=chatgpt.com",
   },
@@ -558,7 +558,7 @@ export default function GoogleDentalPatientFormsGuide() {
               </h1>
               <p className="text-base text-white/80 sm:text-lg">
                 This zero-fluff guide shows dental teams how to collect new-patient intake data in Google Forms while staying
-                inside HIPAA guardrails — from executing the BAA to locking down Shared Drives, Vault, DLP, and staff training.
+                inside HIPAA guardrails, from executing the BAA to locking down Shared Drives, Vault, DLP, and staff training.
               </p>
               <div className="flex w-full flex-col gap-3 sm:flex-row sm:justify-center">
                 <Button
@@ -651,7 +651,7 @@ export default function GoogleDentalPatientFormsGuide() {
                 ))}
               </ul>
               <p className="text-base text-neutral-600">
-                These steps anchor your compliance story — auditors will ask for proof of BAA execution, policies, and staff
+                These steps anchor your compliance story. Auditors will ask for proof of BAA execution, policies, and staff
                 readiness before they even look at Forms.
               </p>
               <div className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm">
@@ -755,7 +755,7 @@ export default function GoogleDentalPatientFormsGuide() {
               <p className="mt-3 text-base leading-relaxed">
                 AppSheet sits on the Included Functionality list. If you want conditional logic, a mobile app experience, or
                 tighter workflows, build an app that writes to the same secure Shared Drive and Sheet. Apply the same DLP,
-                Vault, and sharing controls — and still avoid emailing PHI.
+                Vault, and sharing controls, and still avoid emailing PHI.
               </p>
             </div>
             <div className="space-y-4 rounded-3xl border border-rose-200 bg-rose-50 p-6 text-rose-900 shadow-sm">
@@ -770,7 +770,7 @@ export default function GoogleDentalPatientFormsGuide() {
               </div>
               <p className="mt-3 text-base leading-relaxed">
                 Consider a dedicated HIPAA intake vendor (IntakeQ, Formstack HIPAA, Jotform HIPAA). They can notify your team
-                without attaching PHI. If you insist on Google Forms uploads, patients must log in with Google — a non-starter
+                without attaching PHI. If you insist on Google Forms uploads, patients must log in with Google, a non-starter
                 for many.
               </p>
             </div>
@@ -781,7 +781,7 @@ export default function GoogleDentalPatientFormsGuide() {
           <div className="container mx-auto grid gap-10 px-4 py-16 md:grid-cols-[minmax(0,_320px)_1fr] md:px-6 lg:py-24">
             <div className="flex flex-col gap-3">
               <p className="text-xs font-semibold tracking-[0.28em] text-neutral-500">TRUTH TABLE</p>
-              <h2 className="text-3xl font-semibold text-neutral-900 md:text-4xl">What This Setup Does — and Doesn’t</h2>
+              <h2 className="text-3xl font-semibold text-neutral-900 md:text-4xl">What This Setup Does, and Doesn’t</h2>
             </div>
             <div className="grid gap-6 md:grid-cols-2">
               <div className="space-y-4 rounded-3xl border border-emerald-200 bg-emerald-50 p-6 text-emerald-900">
@@ -795,7 +795,7 @@ export default function GoogleDentalPatientFormsGuide() {
               <div className="space-y-4 rounded-3xl border border-rose-200 bg-rose-50 p-6 text-rose-900">
                 <h3 className="text-base font-semibold">It Doesn’t</h3>
                 <ul className="list-disc space-y-2 pl-5 text-base leading-relaxed">
-                  <li>Make email magically safe for PHI — never send PHI in plaintext.</li>
+                  <li>Make email magically safe for PHI. Never send PHI in plaintext.</li>
                   <li>Solve anonymous file uploads in Forms (that’s a platform limitation).</li>
                 </ul>
               </div>
@@ -816,7 +816,7 @@ export default function GoogleDentalPatientFormsGuide() {
                 story.
               </p>
               <p>
-                Google publishes a Workspace + Cloud Identity HIPAA implementation guide — your admin should treat it as the
+                Google publishes a Workspace + Cloud Identity HIPAA implementation guide. Your admin should treat it as the
                 playbook for structure, access, and data protection.
               </p>
             </div>

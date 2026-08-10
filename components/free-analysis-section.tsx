@@ -21,7 +21,7 @@ export default function FreeAnalysisSection() {
             Free Website Analysis
           </span>
           <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">
-            See what Prism would build for you — before you ever sign.
+            See what Prism would build for you, before you ever sign.
           </h2>
           <p className="max-w-2xl text-base text-neutral-200 sm:text-lg">
             We’ll review your site, uncover growth opportunities, and map out next steps.

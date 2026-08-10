@@ -276,7 +276,7 @@ export default async function AdsPage() {
                 id: "https://www.design-prism.com/ads#founder-vsl",
                 name: "Founder Enzo Sison on Prism Ads",
                 description:
-                  "Enzo Sison explains Prism’s paid ads system—strategy, creative, offers, and nonstop optimization across Google, Meta, TikTok, and Yelp—to drive more calls, clicks, and loyal customers.",
+                  "Enzo Sison explains Prism’s paid ads system across Google, Meta, TikTok, and Yelp: strategy, creative, offers, and nonstop optimization to drive more calls, clicks, and loyal customers.",
                 thumbnailUrl: "https://res.cloudinary.com/dhqpqfw6w/video/upload/so_0,q_auto/Untitled_xmscby.jpg",
                 uploadDate: "2025-01-24T00:00:00Z",
                 duration: "PT60S",

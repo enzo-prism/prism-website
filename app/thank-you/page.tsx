@@ -97,7 +97,7 @@ export default async function ThankYouPage({
       ? "Website request received."
       : "Review in progress."
   const body = isApplyFlow
-    ? "Thanks, we've got it. Every real business submission receives a Growth Audit. Your audit lives in a free Growth Dashboard — claim it to follow the review from one place."
+    ? "Thanks, we've got it. Every real business submission receives a Growth Audit. Your audit lives in a free Growth Dashboard. Claim it to follow the review from one place."
     : isWebsiteBuildFlow
       ? "Thanks, we've got it. Prism reviews one-time website requests before sending a payment link. If the project is a fit, the team will reply with next steps."
       : "We received your submission. Every real inquiry gets reviewed. If there's a fit, we'll reach out with the right next step."

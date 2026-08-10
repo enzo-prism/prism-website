@@ -163,7 +163,7 @@ export default function LocalSeoServicesPage() {
               Local SEO services that turn searches into customers
             </h1>
             <p className="mt-6 text-base text-neutral-600 sm:text-lg">
-              Prism helps local businesses show up in Google Maps and organic search with listings, reviews, local content, and clean technical foundations. No keyword stuffing — just a clear system that compounds.
+              Prism helps local businesses show up in Google Maps and organic search with listings, reviews, local content, and clean technical foundations. No keyword stuffing, just a clear system that compounds.
             </p>
             <p className="mt-4 text-sm text-neutral-600">
               Want the bigger picture? See our{" "}
@@ -229,7 +229,7 @@ export default function LocalSeoServicesPage() {
           <div className="mx-auto max-w-5xl text-center">
             <h2 className="text-3xl font-semibold lowercase text-neutral-900 sm:text-4xl">what you get</h2>
             <p className="mt-3 text-neutral-600">
-              Everything required to be understood, trusted, and chosen — across maps, search, and AI answers.
+              Everything required to be understood, trusted, and chosen across maps, search, and AI answers.
             </p>
           </div>
           <div className="mx-auto mt-12 grid max-w-5xl gap-6 sm:grid-cols-2">
@@ -272,7 +272,7 @@ export default function LocalSeoServicesPage() {
           <div className="mx-auto max-w-5xl text-center">
             <h2 className="text-3xl font-semibold lowercase text-neutral-900 sm:text-4xl">our process</h2>
             <p className="mt-3 text-neutral-600">
-              A simple, repeatable system — so improvements keep shipping without chaos.
+              A simple, repeatable system, so improvements keep shipping without chaos.
             </p>
           </div>
           <div className="mx-auto mt-12 grid max-w-5xl gap-6 md:grid-cols-2">
@@ -390,7 +390,7 @@ export default function LocalSeoServicesPage() {
 
         <SeoTextSection title="local seo services: what we optimize and why">
           <p>
-            local seo services exist to help customers find you at the exact moment they’re ready to buy — when they search
+            local seo services exist to help customers find you at the exact moment they’re ready to buy, when they search
             “near me”, when they compare options in google maps, and when they ask questions that imply location intent.
             prism focuses on the fundamentals: clear service and location structure on your site, accurate business data across
             the web, steady review signals, and technical hygiene that keeps crawling and indexing clean.

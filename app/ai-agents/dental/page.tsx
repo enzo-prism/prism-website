@@ -12,7 +12,7 @@ const agentFeatures = [
   {
     title: "appointment scheduling",
     description:
-      "patients call, your agent checks real-time availability in dentrix, open dental, or eaglesoft, confirms the slot, and sends confirmation — all in one natural conversation.",
+      "patients call, your agent checks real-time availability in dentrix, open dental, or eaglesoft, confirms the slot, and sends confirmation, all in one natural conversation.",
   },
   {
     title: "after-hours coverage",
@@ -22,7 +22,7 @@ const agentFeatures = [
   {
     title: "insurance & billing questions",
     description:
-      "your agent verifies coverage, explains common procedures and costs, and helps patients understand their benefits — reducing front desk workload significantly.",
+      "your agent verifies coverage, explains common procedures and costs, and helps patients understand their benefits, reducing front desk workload significantly.",
   },
   {
     title: "appointment reminders",
@@ -77,7 +77,7 @@ const faqs = [
   {
     question: "will patients know they're talking to an ai?",
     answer:
-      "the agent uses elevenlabs' most natural voice technology. most patients won't notice — but we always recommend transparent disclosure. your agent can introduce itself however you prefer.",
+      "the agent uses elevenlabs' most natural voice technology. most patients won't notice, but we always recommend transparent disclosure. your agent can introduce itself however you prefer.",
   },
   {
     question: "what happens if the ai can't handle a question?",
@@ -134,7 +134,7 @@ export default function DentalAIAgentsPage() {
               </h1>
               <p className="mx-auto mt-6 max-w-2xl text-base text-neutral-200 md:text-lg">
                 prism builds custom elevenlabs ai agents specifically for dental practices. answer every patient call
-                instantly, schedule appointments 24/7, handle insurance questions, and send reminders — without adding
+                instantly, schedule appointments 24/7, handle insurance questions, and send reminders, without adding
                 staff.
               </p>
               <div className="mt-8 flex flex-wrap justify-center gap-3">
@@ -166,7 +166,7 @@ export default function DentalAIAgentsPage() {
                 what your dental ai agent handles
               </h2>
               <p className="mt-4 text-base leading-relaxed text-neutral-600">
-                every feature is designed around the calls your front desk fields daily — scheduling, insurance, intake,
+                every feature is designed around the calls your front desk fields daily: scheduling, insurance, intake,
                 and after-hours triage.
               </p>
             </div>
@@ -283,7 +283,7 @@ export default function DentalAIAgentsPage() {
                 pair your ai agent with prism&apos;s dental services
               </h2>
               <p className="mt-4 text-base leading-relaxed text-neutral-600">
-                ai phone agents work best when every touchpoint — your website, ads, seo, and follow-up — is working
+                ai phone agents work best when every touchpoint (your website, ads, seo, and follow-up) is working
                 together.
               </p>
             </div>

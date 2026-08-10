@@ -38,7 +38,7 @@ const whatYouGet = [
   {
     title: "native creative that earns trust",
     description:
-      "short-form video that looks like real clinic content: team, operatories, patient education, and proof—built for tiktok’s feed.",
+      "short-form video that looks like real clinic content: team, operatories, patient education, and proof, built for tiktok’s feed.",
     icon: Video,
   },
   {
@@ -80,7 +80,7 @@ const creativeFrameworks = [
   {
     title: "the ‘dentist reacts’ education loop",
     description:
-      "quick reactions to common myths and viral dental takes—then a simple call to action: book a consult.",
+      "quick reactions to common myths and viral dental takes, then a simple call to action: book a consult.",
   },
 ]
 
@@ -110,7 +110,7 @@ const faqItems = [
   {
     question: "do tiktok ads work for dentists?",
     answer:
-      "they can, especially for practices that pair credible short-form video with a fast landing page and a clear next step. tiktok is rarely “set it and forget it”—creative iteration is the lever.",
+      "they can, especially for practices that pair credible short-form video with a fast landing page and a clear next step. tiktok is rarely “set it and forget it”. creative iteration is the lever.",
   },
   {
     question: "what should a dentist advertise on tiktok?",
@@ -125,7 +125,7 @@ const faqItems = [
   {
     question: "how do you track results for tiktok ads?",
     answer:
-      "we track calls and form submissions, and we work backward from booked consults where possible. the goal is simple reporting that ties spend to outcomes—so you know what to scale.",
+      "we track calls and form submissions, and we work backward from booked consults where possible. the goal is simple reporting that ties spend to outcomes, so you know what to scale.",
   },
   {
     question: "how fast can we get campaigns live?",
@@ -170,7 +170,7 @@ export default function TikTokAdsForDentistsPage() {
             </h1>
             <p className="mt-6 text-base text-neutral-600 sm:text-lg">
               prism helps dental practices turn short-form video into booked demand with patient-ready creative, fast
-              landing pages, and reporting tied to calls and consults — not vanity metrics.
+              landing pages, and reporting tied to calls and consults, not vanity metrics.
             </p>
             <p className="mt-6 text-sm text-neutral-500">
               already running search? pair this with{" "}
@@ -195,7 +195,7 @@ export default function TikTokAdsForDentistsPage() {
               </Button>
             </div>
             <p className="mt-6 text-sm text-neutral-500">
-              dentist-first creative + landing pages + tracking — shipped by prism.
+              dentist-first creative + landing pages + tracking, shipped by prism.
             </p>
           </div>
         </section>
@@ -207,7 +207,7 @@ export default function TikTokAdsForDentistsPage() {
                 what converts on tiktok for dental practices
               </h2>
               <p className="mt-4 text-base leading-relaxed text-neutral-600">
-                dentistry is high-trust. the winners don’t look like ads — they look like calm, credible education with a
+                dentistry is high-trust. the winners don’t look like ads. they look like calm, credible education with a
                 clear next step.
               </p>
             </div>
@@ -216,7 +216,7 @@ export default function TikTokAdsForDentistsPage() {
                 {
                   title: "proof-first creative",
                   description:
-                    "show the office, the team, and the real experience patients are buying — not stock footage.",
+                    "show the office, the team, and the real experience patients are buying, not stock footage.",
                 },
                 {
                   title: "one offer per campaign",
@@ -226,7 +226,7 @@ export default function TikTokAdsForDentistsPage() {
                 {
                   title: "fast path to booking",
                   description:
-                    "every click should lead to a single next step: call, short form, or online booking — no confusion.",
+                    "every click should lead to a single next step: call, short form, or online booking. no confusion.",
                 },
               ].map((item) => (
                 <div key={item.title} className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm">

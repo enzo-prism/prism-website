@@ -332,7 +332,7 @@ export default function DentalPracticesPage() {
 	              </h1>
               <p className="mt-6 text-base text-neutral-600 md:text-lg">
                 prism helps dentists get more new-patient calls, modernize their online presence, and switch off outdated
-                providers — without stress or downtime.
+                providers, without stress or downtime.
               </p>
               <div className="mt-6 w-full max-w-2xl rounded-2xl border border-neutral-100 bg-neutral-50/80 p-6 text-left">
                 <p className="text-xs font-semibold uppercase tracking-[0.32em] text-neutral-500">What you get</p>
