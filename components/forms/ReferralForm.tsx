@@ -175,7 +175,7 @@ export default function ReferralForm() {
         </h3>
         <p className="mt-4 max-w-xl text-[1rem] leading-7 text-[#b8afa2]">
           We&apos;ll reach out to your friend within one business day. The day
-          they become a client, $100 goes to you, then send us the next one.
+          they become a client, $100 goes to you. Then send us the next one.
         </p>
         <button
           type="button"

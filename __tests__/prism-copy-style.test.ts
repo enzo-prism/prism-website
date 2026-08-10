@@ -98,6 +98,11 @@ const ALLOWED_LINES: Array<{ file: string; contains: string; reason: string }> =
   },
   {
     file: path.join("content", "blog", "how-to-rank-1-chatgpt.mdx"),
+    contains: "Braces vs. Invisalign",
+    reason: "Example patient search question, quoted as a patient would type it.",
+  },
+  {
+    file: path.join("content", "blog", "how-to-rank-1-chatgpt.mdx"),
     contains: "Make content that AI can",
     reason: "Blockquoted rule reproduced in the question-to-answer shape it describes.",
   },

@@ -142,7 +142,7 @@ export default function DesignsPageClient() {
               </figure>
               <div className="space-y-4 text-base leading-relaxed text-neutral-700 sm:text-lg">
                 <p>
-                  design is the backbone of everything we do at prism, it
+                  design is the backbone of everything we do at prism. it
                   connects every part of your business.
                 </p>
                 <p>
