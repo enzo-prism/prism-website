@@ -228,7 +228,7 @@ export default function DesignsPageClient() {
                 id: 'https://www.design-prism.com/designs#founder-vsl',
                 name: 'Founder Enzo Sison on design as the silent multiplier',
                 description:
-                  'Enzo Sison shares why design is the silent multiplier, how Prism creates cohesive, premium systems across sites, listings, ads, and assets, and how that elevates awareness, conversion, and lifetime value.',
+                  'Enzo Sison shares why design is the silent multiplier, how Prism creates cohesive, premium systems across sites, listings, ads, and assets, and how that lifts awareness, conversion, and lifetime value.',
                 thumbnailUrl:
                   'https://res.cloudinary.com/dhqpqfw6w/video/upload/so_0,q_auto/design-1_ftpmsw.jpg',
                 uploadDate: '2025-01-24T00:00:00Z',
@@ -433,7 +433,7 @@ export default function DesignsPageClient() {
           <div className="max-w-4xl mx-auto rounded-[32px] border border-neutral-200 bg-neutral-900 text-white px-6 py-12 sm:px-10 sm:py-16 shadow-[0_32px_80px_-48px_rgba(15,23,42,0.65)] text-center space-y-6">
             <div className="space-y-4">
               <h2 className="text-3xl sm:text-4xl font-semibold leading-tight">
-                ready to elevate your brand?
+                ready to sharpen your brand?
               </h2>
               <p className="text-base sm:text-lg leading-relaxed text-white/70">
                 whether you&rsquo;re starting fresh or refining what you already

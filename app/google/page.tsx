@@ -186,7 +186,7 @@ export default function GooglePage() {
               </p>
               <p>
                 at prism, we help you make the most of these tools, integrating
-                everything into one seamless system built for performance,
+                everything into one connected system built for performance,
                 visibility, and growth.
               </p>
             </div>

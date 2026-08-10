@@ -33,11 +33,11 @@ const coreOutcomes = [
 
 const deliveryPillars = [
   {
-    title: "world-class design",
+    title: "cohesive design",
     description: "every page and touchpoint feels cohesive, human, and true to your mission. we learn your voice, your visuals, and your values."
   },
   {
-    title: "world-class tech",
+    title: "connected tech",
     description: "seo, aeo, ux analytics, and ai-driven ad targeting operate together behind the scenes so every visit brings sharper insights."
   },
   {
@@ -130,7 +130,7 @@ const segmentFaqItems = [
 const retentionBenefits = [
   { icon: "🔓", text: "Pause or cancel anytime, no long contracts" },
   { icon: "🧾", text: "You fully own every asset we build" },
-  { icon: "🛡️", text: "Zero downtime, seamless updates, and continuous improvements" },
+  { icon: "🛡️", text: "Zero downtime, quiet updates, and continuous improvements" },
   { icon: "📊", text: "Transparent analytics, see what’s working at a glance" }
 ]
 

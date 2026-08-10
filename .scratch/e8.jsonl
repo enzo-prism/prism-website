@@ -1,9 +1,0 @@
-{"file": "content/seo.ts", "line": 199, "new": "    \"off-page seo is about proof: proof that other sites vouch for you, that your business exists in the real world, and that real people interact with you.\","}
-{"file": "content/seo.ts", "line": 228, "new": "        \"reviews show volume, recency, distribution, and narrative, all signals engines monitor.\","}
-{"file": "lib/hottest-content.ts", "line": 25, "new": "      \"We showed how Prism calibrates creative in real time, analyzing audience comments, edits, and retention to keep reach compounding.\","}
-{"file": "lib/website-projects.ts", "line": 85, "new": "    description: \"age boldly: confidence, style, and plant-based longevity\","}
-{"file": "lib/website-projects.ts", "line": 99, "new": "    description: \"santa rosa endodontics: gentle root canal therapy\","}
-{"file": "lib/pricing-model.ts", "line": 47, "new": "export const WEBSITE_PRICE_LABEL = \"Custom, scoped on a call\""}
-{"file": "lib/pricing-model.ts", "line": 48, "new": "export const CONTENT_OS_PRICE_LABEL = \"Custom, scoped on a call\""}
-{"file": "lib/pricing-model.ts", "line": 50, "new": "export const PRISM_INFINITY_PRICE_LABEL = \"Custom, scoped on a call\""}
-{"file": "lib/pricing-model.ts", "line": 79, "new": "      \"An ultra-premium PRO website for serious businesses: a bespoke design system, software-grade engineering, and analytics wired from day one, built to rank on Google and get cited by AI.\","}

@@ -6,7 +6,7 @@ import { buildRouteMetadata } from "@/lib/seo/metadata"
 
 const PAGE_TITLE = 'Graphic design & creative services'
 const PAGE_DESCRIPTION =
-  'Browse logos, branding, marketing assets, and social graphics from Prism that show how intentional design elevates a brand and earns attention.'
+  'Browse logos, branding, marketing assets, and social graphics from Prism that show how intentional design lifts a brand and earns attention.'
 const CANONICAL_URL = "https://www.design-prism.com/designs"
 
 export const metadata: Metadata = buildRouteMetadata({

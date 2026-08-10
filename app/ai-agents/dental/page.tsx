@@ -37,7 +37,7 @@ const agentFeatures = [
   {
     title: "call routing & overflow",
     description:
-      "during busy periods, your agent handles routine calls while your team focuses on patients in the chair. complex cases transfer seamlessly to staff.",
+      "during busy periods, your agent handles routine calls while your team focuses on patients in the chair. complex cases transfer cleanly to staff.",
   },
 ]
 
@@ -45,7 +45,7 @@ const impactStats = [
   {
     stat: "35%",
     label: "of dental calls go unanswered during business hours",
-    context: "industry research shows over a third of patient calls never reach a human",
+    context: "calls that ring out during business hours never reach a human",
   },
   {
     stat: "$200+",
@@ -218,7 +218,7 @@ export default function DentalAIAgentsPage() {
             <div className="grid gap-10 md:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] md:items-center">
               <div className="space-y-6">
                 <p className="text-sm font-medium uppercase tracking-[0.32em] text-neutral-500">
-                  seamless connections
+                  connected tools
                 </p>
                 <h2 className="text-3xl font-semibold tracking-tight text-neutral-900 sm:text-4xl">
                   connects to the tools your practice already uses

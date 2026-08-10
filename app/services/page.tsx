@@ -305,7 +305,7 @@ export default function ServicesPage() {
                 what we run for you
               </h2>
               <p className="mt-3 text-sm text-neutral-600 sm:text-base">
-                Every engagement starts with the essentials, then layers in new channels as we unlock wins. Here's how each service helps.
+                Every engagement starts with the essentials, then layers in new channels as we bank wins. Here's how each service helps.
               </p>
             </div>
             <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">

@@ -444,7 +444,7 @@ export default function ConsultingCompaniesPage() {
                 Ready to modernize your consulting business with Prism?
               </h2>
               <p className="mt-4 text-base text-neutral-600">
-                Let’s elevate your digital presence so you can focus on delivering results, not managing tech.
+                Let’s sharpen your digital presence so you can focus on delivering results, not managing tech.
               </p>
               <div className="mt-10 flex flex-wrap justify-center gap-4">
                 <Link href="/contact">
